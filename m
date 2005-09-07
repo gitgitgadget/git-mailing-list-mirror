@@ -1,97 +1,104 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Tool renames? was Re: First stab at glossary
-Date: Tue, 06 Sep 2005 16:54:01 -0700
-Message-ID: <7v1x41g3c6.fsf@assigned-by-dhcp.cox.net>
-References: <200509050054.j850sC3D023778@laptop11.inf.utfsm.cl>
-	<Pine.LNX.4.58.0509050738340.3504@evo.osdl.org>
-	<46a038f90509051713389c62c8@mail.gmail.com>
-	<Pine.LNX.4.58.0509060013520.4316@evo.osdl.org>
-	<7vll2atz8a.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509060057491.4316@evo.osdl.org>
-	<7vwtlusi9t.fsf@assigned-by-dhcp.cox.net>
-	<u5tek82bmlb.fsf@fidgit.hq.vtech>
+Subject: Re: [PATCH 2/3] Fix the processing of multiple patch files with --check in git-apply.
+Date: Tue, 06 Sep 2005 17:54:22 -0700
+Message-ID: <7vslwhbsu9.fsf@assigned-by-dhcp.cox.net>
+References: <1125360111916-git-send-email-robfitz@273k.net>
+	<11253601111257-git-send-email-robfitz@273k.net>
+	<7vll2ccs4k.fsf@assigned-by-dhcp.cox.net>
+	<20050905123445.GA27107@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Sep 07 01:55:35 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 07 02:54:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECnGR-0005R7-Cr
-	for gcvg-git@gmane.org; Wed, 07 Sep 2005 01:54:07 +0200
+	id 1ECoCw-0005wo-UW
+	for gcvg-git@gmane.org; Wed, 07 Sep 2005 02:54:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751118AbVIFXyE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 19:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751149AbVIFXyE
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 19:54:04 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:39347 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751118AbVIFXyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2005 19:54:03 -0400
+	id S1751178AbVIGAyY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 20:54:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751179AbVIGAyY
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 20:54:24 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:210 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751178AbVIGAyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2005 20:54:24 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao11.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050906235402.FJXH20473.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 6 Sep 2005 19:54:02 -0400
-To: <davidk@lysator.liu.se>
+          id <20050907005422.GQRE17436.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 6 Sep 2005 20:54:22 -0400
+To: Robert Fitzsimons <robfitz@273k.net>
+In-Reply-To: <20050905123445.GA27107@localhost> (Robert Fitzsimons's message
+	of "Mon, 5 Sep 2005 12:34:45 +0000")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8159>
 
-> By the way, I'm not sure how the 'git' script is supposed to be used.
-> I know that if there is a git-foo-script file in your path, you can
-> run it as 'git foo'.  But what about e.g. git-init-db?  You can run
-> that as 'git init-db' today.  And 'git read-cache' should work too.
-> And 'git ls-files', and 'git rev-parse', and 'git merge-one-file' and
-> 'git sh-setup-script' in decreasing order of usefulness...
->
-> But running 'git' without arguments only list the -script commands as
-> available.
+Robert Fitzsimons <robfitz@273k.net> writes:
 
-You are correct.  I think 'git' showing only *-script was done
-as an attempt to give a list of Porcelainish commands, excluding
-the core commands that people are not supposed to be typing from
-the command line.  It so happened that all of the Porcelainish
-commands were scripts.
+> No problem I know it's a controversial change.
 
-But what Linus wants *-script to mean is editability in the
-source tree (his "grep" and "em" examples).  The command being
-Porcelainish and the command being implemented as a script tend
-to have strong correlations, but in principle they are
-orthogonal.  As you mention, 'git merge-one-file' is not really
-useful standalone, neither is 'git sh-setup'.  On the other
-hand, 'git fsck-cache' is.
+Not really controversial anymore, as long as --ignore-applied is
+used only when appropriate.
 
-My proposal to have git-archimport.perl in the source tree and
-install it as $(bindir)/git-archimport solves the editability
-issues (sorry, Linus, you will have to say "em *.sh *.perl"
-instead of "em *-script" if we did this) and simplifies the
-first half of the 'git' wrapper (it just needs to attempt
-running "git-$1"), but does not help what the latter half of
-'git' wrapper does (to give you the list of Porcelainish
-commands).
+>>> Yes my change has a bug with a copy patch which modifies the same file.
+> I'll send on a fix now.
 
-To make 'git' wrapper produce useful 'list of subcommands', we
-need to come up with a list of Porcelainish commands, be they
-written in C or sh or Perl, and tell 'git' about that list.
-Current implementation cheats by assuming everything that ends
-with *-script are such, but it does not have to stay that way.
+Here is another one that the patch seems to regress.
 
-I'd nominate all $(SCRIPTS) in Makefile and tools/Makefile
-except *1*, plus *2* as the list of subcommands 'git' wrapper
-would show.
+Unfortunately this turns out to be a death sentence to the
+'multiple patch touching the same file' patch.
 
-List *1*: implemented as script but not Porcelainish.
-	git
-        git-merge-one-file-script
-        git-sh-setup-script
+Note that patches from a single 'git-diff-*' run are supposed to
+be independent, so the second one that copy-edits from frotz to
+rezrov copies frotz _before_ it is modified and then makes its
+modification.
 
-List *2*: implemented in C but Porcelainish.
-	git-init-db
-        git-fsck-cache
-        git-get-tar-commit-id
-        git-apply
-        git-patch-id
-        git-pack-objects
-        git-show-branch
+On the other hand, we can have one 'git-diff-*' run that
+modifies frotz in place, and then a separate 'git-diff-*' run
+that copies frotz to rezrov and then modifies rezrov, and feed
+the concatenation of the two to git-apply.  That would look very
+similar to a single run that edits frotz and copy-edits rezrov,
+but the pre-image to create rezrov would use the post-edit image
+of frotz from the first patch.  Without an explicit "here an
+output from the next git-diff-*' run begins" marker, we cannot
+tell these two apart.
+
+This means that applying multiple-patches concatenated in a
+single file does not make much sense.  There is no guarantee
+that we can detect where the first 'git-diff-*' output ends, at
+which point we need to reset the status of 'frotz' to
+post-modification image of the first patch.  And if we can
+detect reliably where one 'git-diff-*' output ends and the next
+one begins, we could just split the input there and run
+git-apply independently.  So my conclusion is to just drop this
+patch, and instead tell people not to feed overlapping outputs
+from multiple git-diff-* runs to a single invocation of
+git-apply.
+
+I personally do not mind considering --ignore-applied
+independently from the multiple-patch-files changes, though.
+
+------------
+echo frotz >frotz
+git-apply --check <<\EOF
+diff --git a/frotz b/frotz
+--- a/frotz
++++ b/frotz
+@@ -1 +1 @@
+-frotz
++frottz
+diff --git a/frotz b/rezrov
+similarity index 64%
+copy from frotz
+copy to rezrov
+--- a/frotz
++++ b/rezrov
+@@ -1 +1 @@
+-frotz
++frotttz
+EOF
