@@ -1,65 +1,87 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] git-cvsimport-script: handling of tags
-Date: Tue, 06 Sep 2005 19:48:50 -0700
-Message-ID: <431E5512.7090900@zytor.com>
-References: <431DD381.4050709@zytor.com> <46a038f905090619444f94292e@mail.gmail.com>
+From: Mark Allen <mrallen1@yahoo.com>
+Subject: [PATCH] Add $(LIBS) and set libiconv in tools/Makefile for Darwin
+Date: Tue, 6 Sep 2005 20:08:55 -0700 (PDT)
+Message-ID: <20050907030855.9278.qmail@web34313.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Sep 07 04:49:39 2005
+Content-Type: multipart/mixed; boundary="0-1719237674-1126062535=:8217"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed Sep 07 05:10:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECpzy-0001yG-Ll
-	for gcvg-git@gmane.org; Wed, 07 Sep 2005 04:49:19 +0200
+	id 1ECqJ1-0004IA-HP
+	for gcvg-git@gmane.org; Wed, 07 Sep 2005 05:08:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750829AbVIGCtN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 22:49:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750830AbVIGCtN
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 22:49:13 -0400
-Received: from paleosilicon.orionmulti.com ([209.128.68.66]:37539 "EHLO
-	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
-	id S1750829AbVIGCtL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2005 22:49:11 -0400
-X-Envelope-From: hpa@zytor.com
-Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
-	(authenticated bits=0)
-	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j872mvJv015243
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 6 Sep 2005 19:48:58 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: martin.langhoff@gmail.com
-In-Reply-To: <46a038f905090619444f94292e@mail.gmail.com>
-X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
-X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
-	paleosilicon.orionmulti.com
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on paleosilicon.orionmulti.com
-X-Virus-Status: Clean
+	id S1750887AbVIGDI4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 23:08:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750896AbVIGDI4
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 23:08:56 -0400
+Received: from web34313.mail.mud.yahoo.com ([66.163.178.145]:1719 "HELO
+	web34313.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1750887AbVIGDI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2005 23:08:56 -0400
+Received: (qmail 9280 invoked by uid 60001); 7 Sep 2005 03:08:55 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=OZ07BlresPd1FIxd8JqXu90Hyrm33uwyXyx0dhK3wysf36euqDcRDjGgSzX2aMj6bhHOR4pW5nRMMRBsVsTw0nS5zkf83lgtUwYx3lHAztHyr6dIl8mGU8gOH/tcHPGZoOBdT/oxNe/iHSnNtN5E3i/a3lBlNY+3lQzvkHeqCYU=  ;
+Received: from [66.41.38.150] by web34313.mail.mud.yahoo.com via HTTP; Tue, 06 Sep 2005 20:08:55 PDT
+To: git@vger.kernel.org, junkio@cox.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8164>
 
-Martin Langhoff wrote:
-> On 9/7/05, H. Peter Anvin <hpa@zytor.com> wrote:
-> 
->>This patch changes git-cvsimport-script so that it creates tag objects
->>instead of refs to commits, and adds an option, -u, to convert
->>underscores in branch and tag names to dots (since CVS doesn't allow
->>dots in branches and tags.)
-> 
-> 
-> looks good. Will it add proper tag objects for tags already imported
-> and for tags added to the project post-initial-git-import?
-> 
+--0-1719237674-1126062535=:8217
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+Content-Id: 
+Content-Disposition: inline
 
-No and yes, respectively.
+[PATCH] Add $(LIBS) and set libiconv in tools/Makefile for Darwin 
 
-I incorrectly stated it renamed both branches and tags.  It currently 
-only renames tags.  I'm trying to get branch renaming to work, but it 
-seems to be a lot more work to get right.
+This trivial patch creates $(LIBS) and sets it to iconv in tools/Makefile because MacOS
+10.4 [gcc 4.0] gets cranky about libiconv routines referenced in mailinfo.c
+(convert_to_utf8) and no library pointer to link the symbols against.
 
-	-hpa
+I haven't tested this on Linux yet (but I will tomorrow when I get into work).
+
+Signed-off-by: Mark Allen <mrallen1@yahoo.com>
+--0-1719237674-1126062535=:8217
+Content-Type: text/plain; name="0001-patch.txt"
+Content-Description: 2448049805-0001-patch.txt
+Content-Disposition: inline; filename="0001-patch.txt"
+
+[PATCH] Add LIBS field and populate with iconv to tools/Makefile for Darwin 
+
+OS X.4 [gcc 4.0] gets cranky about iconv data structures and no 
+library pointer to link the symbols against.
+
+Signed-off-by: Mark Allen <mrallen1@yahoo.com>
+---
+
+ tools/Makefile |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+44865be29a83e2b4b0bf65c6dae427203b7be9b9
+diff --git a/tools/Makefile b/tools/Makefile
+--- a/tools/Makefile
++++ b/tools/Makefile
+@@ -7,13 +7,14 @@ ALL_CFLAGS = $(CFLAGS)
+ INSTALL=install
+ prefix=$(HOME)
+ bindir=$(prefix)/bin
++LIBS=iconv
+ # DESTDIR=
+ 
+ PROGRAMS=git-mailsplit git-mailinfo
+ SCRIPTS=git-applymbox git-applypatch
+ 
+ git-%: %.c
+-	$(CC) $(ALL_CFLAGS) -o $@ $(filter %.c,$^)
++	$(CC) $(ALL_CFLAGS) -l$(LIBS) -o $@ $(filter %.c,$^)
+ 
+ all: $(PROGRAMS)
+ 
+
+--0-1719237674-1126062535=:8217--
