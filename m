@@ -1,145 +1,62 @@
-From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
-Subject: [PATCH] Added an option to cvsimport to specify email domain
-Date: Wed, 07 Sep 2005 10:00:02 +0200
-Message-ID: <u5tzmqp8fzx.fsf@lysator.liu.se>
+From: Mark Allen <mrallen1@yahoo.com>
+Subject: Re: [PATCH] Add $(LIBS) and set libiconv in tools/Makefile for Darwin
+Date: Wed, 7 Sep 2005 08:01:02 -0700 (PDT)
+Message-ID: <20050907150103.11609.qmail@web34311.mail.mud.yahoo.com>
+References: <7v8xy9bfaj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Wed Sep 07 10:03:59 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Sep 07 17:01:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECutA-00028c-Dx
-	for gcvg-git@gmane.org; Wed, 07 Sep 2005 10:02:36 +0200
+	id 1ED1QO-00064w-QL
+	for gcvg-git@gmane.org; Wed, 07 Sep 2005 17:01:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932073AbVIGICb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 7 Sep 2005 04:02:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932075AbVIGICb
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Sep 2005 04:02:31 -0400
-Received: from main.gmane.org ([80.91.229.2]:9196 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932073AbVIGICa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Sep 2005 04:02:30 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ECurr-0001sh-HS
-	for git@vger.kernel.org; Wed, 07 Sep 2005 10:01:15 +0200
-Received: from 212214120186-virtutech-ab.host.songnetworks.se ([212.214.120.186])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 Sep 2005 10:01:15 +0200
-Received: from davidk by 212214120186-virtutech-ab.host.songnetworks.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 Sep 2005 10:01:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 212214120186-virtutech-ab.host.songnetworks.se
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:o0s1MuEsDn447afF7M/UFgf64lM=
+	id S932155AbVIGPBP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Sep 2005 11:01:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932157AbVIGPBP
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Sep 2005 11:01:15 -0400
+Received: from web34311.mail.mud.yahoo.com ([66.163.178.143]:36247 "HELO
+	web34311.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932155AbVIGPBN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Sep 2005 11:01:13 -0400
+Received: (qmail 11611 invoked by uid 60001); 7 Sep 2005 15:01:03 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=4Tg+nDVI2bT5fQnLLI9gdrYeuNSMQKZvvwvhhGs3pktj7J1T9fnihMT+4mKGtyy/y2qBmHPhDaswJtoMewzzTtM/zg4a6mcN/n4SZKO22PzNhYaRYRSNpPFyJzTvLCmkMkLp1nS3W3gMDZlJpr7JQNUcs0g4xk6vB7tUHOQ5bjM=  ;
+Received: from [65.173.207.2] by web34311.mail.mud.yahoo.com via HTTP; Wed, 07 Sep 2005 08:01:02 PDT
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+In-Reply-To: <7v8xy9bfaj.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8168>
 
-The authorship info in commits created by git-cvsimport-script
-only contains the username of the CVS committer.  This patch
-adds a flag -e <domain> to git-cvsimport-script that makes it
-possible to specify an email domain that is added to all email
-addresses in the commit "author" and "committer" fields.
+--- Junio C Hamano <junkio@cox.net> wrote:
+> I'd do this slightly differently.  Could you take a look at what
+> I have in the "proposed updates" branch, especially "Flatten
+> tools/ directory" commit?  What I am aiming for is to have
+> platform specific ifeq() thing in only one place.
+
+Looks good to me, Junio.  There's a very small typo in your commit though. :-)
+
+Cheers,
+
+--Mark
 
 ---
-I have stopped using cvsimport, because cvsps seems to produce bad
-output on the repository I'm using it with, but I had already prepared
-this patch.
 
- Documentation/git-cvsimport-script.txt |    8 +++++++-
- git-cvsimport-script                   |   18 +++++++++++++-----
- 2 files changed, 20 insertions(+), 6 deletions(-)
-
-cabbc2b5cae2dcd892d02a3c679698cdfb3b9de5
-diff --git a/Documentation/git-cvsimport-script.txt b/Documentation/git=
--cvsimport-script.txt
---- a/Documentation/git-cvsimport-script.txt
-+++ b/Documentation/git-cvsimport-script.txt
-@@ -12,7 +12,9 @@ SYNOPSIS
- 'git-cvsimport-script' [ -o <branch-for-HEAD> ] [ -h ] [ -v ]
- 			[ -d <CVSROOT> ] [ -p <options-for-cvsps> ]
- 			[ -C <GIT_repository> ] [ -i ] [ -k ]
--			[ -s <subst> ] [ -m ] [ -M regex ] [ <CVS_module> ]
-+			[ -s <subst> ] [ -m ] [ -M regex ]
-+			[ -e <domain> ]
-+			[ <CVS_module> ]
-=20
-=20
- DESCRIPTION
-@@ -86,6 +88,10 @@ OPTIONS
- -s <subst>::
- 	Substitute the character "/" in branch names with <subst>
-=20
-+-e <domain>::
-+        Append '@<domain>' to the author name to use as the email
-+        address in commit objects.
-+
- OUTPUT
- ------
- If '-v' is specified, the script reports what it is doing.
-diff --git a/git-cvsimport-script b/git-cvsimport-script
---- a/git-cvsimport-script
-+++ b/git-cvsimport-script
-@@ -29,19 +29,20 @@ use IPC::Open2;
- $SIG{'PIPE'}=3D"IGNORE";
- $ENV{'TZ'}=3D"UTC";
-=20
--our($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$op=
-t_i,$opt_s,$opt_m,$opt_M);
-+our($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$op=
-t_i,$opt_s,$opt_m,$opt_M,$opt_e);
-=20
- sub usage() {
- 	print STDERR <<END;
- Usage: ${\basename $0}     # fetch/update GIT from CVS
-        [-o branch-for-HEAD] [-h] [-v] [-d CVSROOT]
-        [-p opts-for-cvsps] [-C GIT_repository] [-z fuzz]
--       [-i] [-k] [-u] [-s subst] [-m] [-M regex] [CVS_module]
-+       [-i] [-k] [-u] [-s subst] [-m] [-M regex] [ -e email-domain ]
-+       [CVS_module]
- END
- 	exit(1);
- }
-=20
--getopts("hivmkuo:d:p:C:z:s:M:") or usage();
-+getopts("hivmkuo:d:p:C:z:s:M:e:") or usage();
- usage if $opt_h;
-=20
- @ARGV <=3D 1 or usage();
-@@ -85,6 +86,13 @@ if ($opt_M) {
- 	push (@mergerx, qr/$opt_M/);
- }
-=20
-+our $email_suffix;
-+if ($opt_e) {
-+    $email_suffix =3D "@"."$opt_e";
-+} else {
-+    $email_suffix =3D "";
-+}
-+
- select(STDERR); $|=3D1; select(STDOUT);
-=20
-=20
-@@ -592,10 +600,10 @@ my $commit =3D sub {
-=20
- 		exec("env",
- 			"GIT_AUTHOR_NAME=3D$author",
--			"GIT_AUTHOR_EMAIL=3D$author",
-+			"GIT_AUTHOR_EMAIL=3D$author$email_suffix",
- 			"GIT_AUTHOR_DATE=3D".strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($dat=
-e)),
- 			"GIT_COMMITTER_NAME=3D$author",
--			"GIT_COMMITTER_EMAIL=3D$author",
-+			"GIT_COMMITTER_EMAIL=3D$author$email_suffix",
- 			"GIT_COMMITTER_DATE=3D".strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($=
-date)),
- 			"git-commit-tree", $tree,@par);
- 		die "Cannot exec git-commit-tree: $!\n";
-
---=20
-David K=E5gedal
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -149,7 +149,7 @@ else
+        MOZILLA_SHA1=1
+        OPENSSL_LIBSSL=
+ endif
+-ifdef NEEDS_SSL_WITH_CRIPTO
++ifdef NEEDS_SSL_WITH_CRYPTO
+        LIB_4_CRYPTO = -lcrypto -lssl
+ else
+        LIB_4_CRYPTO = -lcrypto
