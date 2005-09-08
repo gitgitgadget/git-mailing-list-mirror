@@ -1,120 +1,92 @@
-From: Chuck Lever <cel@citi.umich.edu>
+From: Fredrik Kuivinen <freku045@student.liu.se>
 Subject: Re: [PATCH 0/2] A new merge algorithm, take 3
-Date: Thu, 08 Sep 2005 14:58:32 -0400
-Organization: Network Appliance, Inc.
-Message-ID: <432089D8.4060507@citi.umich.edu>
-References: <20050907164734.GA20198@c165.ib.student.liu.se> <7v1x407min.fsf@assigned-by-dhcp.cox.net> <431F34FF.5050301@citi.umich.edu> <7vvf1cz64l.fsf@assigned-by-dhcp.cox.net> <4320536D.2010706@citi.umich.edu> <7v7jdrwlih.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509081012540.3208@g5.osdl.org> <43207FE6.2030108@citi.umich.edu> <Pine.LNX.4.58.0509081131070.5940@g5.osdl.org>
-Reply-To: cel@citi.umich.edu
+Date: Thu, 8 Sep 2005 22:05:59 +0200
+Message-ID: <20050908200559.GA26088@c165.ib.student.liu.se>
+References: <20050907164734.GA20198@c165.ib.student.liu.se> <Pine.LNX.4.63.0509071409470.23242@iabervon.org> <20050908060651.GA22734@c165.ib.student.liu.se> <Pine.LNX.4.63.0509081101471.23242@iabervon.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------080407020900020001000706"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 08 21:00:20 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org,
+	junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Sep 08 22:08:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EDRbo-0005KV-Ab
-	for gcvg-git@gmane.org; Thu, 08 Sep 2005 20:58:52 +0200
+	id 1EDSfH-0007Qr-Ka
+	for gcvg-git@gmane.org; Thu, 08 Sep 2005 22:06:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964925AbVIHS6f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Sep 2005 14:58:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964933AbVIHS6f
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 14:58:35 -0400
-Received: from citi.umich.edu ([141.211.133.111]:33973 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S964925AbVIHS6f (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2005 14:58:35 -0400
-Received: from [10.58.48.252] (nat-198-95-226-230.netapp.com [198.95.226.230])
-	by citi.umich.edu (Postfix) with ESMTP id BFC921BAA9;
-	Thu,  8 Sep 2005 14:58:33 -0400 (EDT)
-User-Agent: Mozilla Thunderbird 1.0 (Windows/20041206)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509081131070.5940@g5.osdl.org>
+	id S964978AbVIHUGU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Sep 2005 16:06:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964979AbVIHUGU
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 16:06:20 -0400
+Received: from [85.8.31.11] ([85.8.31.11]:59106 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S964978AbVIHUGU (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2005 16:06:20 -0400
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 892AA4114; Thu,  8 Sep 2005 22:10:46 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EDSel-0007B3-00; Thu, 08 Sep 2005 22:05:59 +0200
+To: Daniel Barkalow <barkalow@iabervon.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0509081101471.23242@iabervon.org>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8213>
 
-This is a multi-part message in MIME format.
---------------080407020900020001000706
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On Thu, Sep 08, 2005 at 11:27:35AM -0400, Daniel Barkalow wrote:
 
-Linus Torvalds wrote:
+...
+
+> > The two cases my algorithm merges cleanly and git-resolve-script do
+> > not merge cleanly are 0e396ee43e445cb7c215a98da4e76d0ce354d9d7 and
+> > 0c168775709faa74c1b87f1e61046e0c51ade7f3. Both of them have two common
+> > ancestors. The second one have, as far as I know, not been tested with
+> > your read-tree.
 > 
-> On Thu, 8 Sep 2005, Chuck Lever wrote:
+> Okay, I'll have to check whether the result I get seems right. I take it 
+> your result agrees with what the users actually produced by hand?
+ 
+The first one agrees with what was actually committed. For the second
+one the difference between the tree produced by the algorithm and what
+was committed is:
+
+diff --git a/include/net/ieee80211.h b/include/net/ieee80211.h
+--- a/include/net/ieee80211.h
++++ b/include/net/ieee80211.h
+@@ -425,9 +425,7 @@ struct ieee80211_stats {
+ 
+ struct ieee80211_device;
+ 
+-#if 0 /* for later */
+ #include "ieee80211_crypt.h"
+-#endif
+ 
+ #define SEC_KEY_1         (1<<0)
+ #define SEC_KEY_2         (1<<1)
+
+
+I have looked at the files and common ancestors involved and I think
+that this change have been introduced manually. I may have missed
+something when I analysed it though...
+
+
+> > The merge cases reported by Tony Luck and Len Brown are both cleanly
+> > merged by my code.
 > 
->>in my case the merges were taking significantly longer than a half 
->>second.  making this change is certainly not worth it if merges are 
->>running fast...
-> 
-> 
-> Note that in cold-cache cases, all the expense of read-tree is in actually
-> reading the tree objects themselves (a kernel tree has more than a
-> thousand subdirectories). Also, a full "git pull" will do the diffstat 
-> etc, and then the expense ends up being in the actual "git diff" part.
-> 
-> So read-tree itself may be half a second, but a merge ends up having other 
-> parts.
+> Do they come out correctly? Both of those have cases which cannot be 
+> decided correctly with only the ancestor trees, due to one branch 
+> reverting a patch that was only in one ancestor. The correct result is to 
+> revert that patch, but figuring out that requires looking at more trees. I 
+> think your algorithm should work for this case, but it would be good to 
+> have verification. (IIRC, Len got the correct result while Tony got the 
+> wrong result and then corrected it later.)
 
-i measured this using the following test...
+Len's merge case come out identically to the tree he committed. I have
+described what I got for Tony's case in
+<20050826184731.GA13629@c165.ib.student.liu.se> (my merge algorithm
+produces the result Tony expected to get, but he didn't get that from
+git-resolve-script).
 
-i have a linux kernel git repository under control of stgit and it has 
-about 70 patches in it.  i did an "stg status" to heat the page cache. 
-i popped all the patches, then did an "stg pull origin".
-
-i started oprofile, and did an "stg push -a".  it took about 9 minutes.
-
-i stopped oprofile and looked at the results.  roughly 65% of the total 
-CPU time was spent in libc:memmove.  after instrumenting git, i 
-determined that in the "stg push" case the critical memmove was the one 
-in add_cache_entry.
-
-note that i'm not saying that the 9 minutes of wall clock time was 
-entirely due to CPU... catalin has been steadily improving "stg push" so 
-this time has shortened by more than half, recently.  but i do notice 
-that working in a kernel repository is significantly slower than working 
-in my git or stgit source repositories, which are smaller by far.  the 
-small repositories behave just as i expect, the tools respond quite 
-snappily.
-
->>they are still read-only with my linked list implementation.
-> 
-> Btw, in the sparse project, we have this really smart "pointer list" data
-> structure, which is extremely space- and time-efficient. It ends up
-> _looking_ like a linked list, but it batches things up in hunks of 29
-> entries (29 pointers plus overhead gives you blocks of 32 longwords, which
-> is the allocation size) and thus gives basically a cache-friendly
-> doubly-linked list. It knows how to do insertions, traversals etc very 
-> efficiently.
-> 
-> Any interest?
-
-i'm not married to splay trees.  i think we should explore several 
-different data structures before picking one, and this one sounds 
-reasonable to try.
-
---------------080407020900020001000706
-Content-Type: text/x-vcard; charset=utf-8;
- name="cel.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="cel.vcf"
-
-begin:vcard
-fn:Chuck Lever
-n:Lever;Charles
-org:Network Appliance, Incorporated;Linux NFS Client Development
-adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
-email;internet:cel@citi.umich.edu
-title:Member of Technical Staff
-tel;work:+1 734 763-4415
-tel;fax:+1 734 763 4434
-tel;home:+1 734 668-1089
-x-mozilla-html:FALSE
-url:http://www.monkey.org/~cel/
-version:2.1
-end:vcard
-
-
---------------080407020900020001000706--
+- Fredrik
