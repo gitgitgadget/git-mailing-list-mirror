@@ -1,57 +1,105 @@
-From: Tim Ottinger <tottinge@progeny.com>
-Subject: Re: Merges without bases
-Date: Thu, 08 Sep 2005 13:01:54 -0500
-Message-ID: <43207C92.4040103@progeny.com>
-References: <1125004228.4110.20.camel@localhost.localdomain>	 <7vvf1tps9v.fsf@assigned-by-dhcp.cox.net> <1125010764.4110.35.camel@localhost.localdomain>
+From: Chuck Lever <cel@citi.umich.edu>
+Subject: Re: [PATCH 0/2] A new merge algorithm, take 3
+Date: Thu, 08 Sep 2005 14:16:06 -0400
+Organization: Network Appliance, Inc.
+Message-ID: <43207FE6.2030108@citi.umich.edu>
+References: <20050907164734.GA20198@c165.ib.student.liu.se> <7v1x407min.fsf@assigned-by-dhcp.cox.net> <431F34FF.5050301@citi.umich.edu> <7vvf1cz64l.fsf@assigned-by-dhcp.cox.net> <4320536D.2010706@citi.umich.edu> <7v7jdrwlih.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509081012540.3208@g5.osdl.org>
+Reply-To: cel@citi.umich.edu
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed;
+ boundary="------------040004080400080803030508"
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 08 20:05:29 2005
+X-From: git-owner@vger.kernel.org Thu Sep 08 20:17:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EDQjq-00067N-Nt
-	for gcvg-git@gmane.org; Thu, 08 Sep 2005 20:03:07 +0200
+	id 1EDQwc-0001X1-85
+	for gcvg-git@gmane.org; Thu, 08 Sep 2005 20:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964914AbVIHSDD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Sep 2005 14:03:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964916AbVIHSDD
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 14:03:03 -0400
-Received: from zealot.progeny.com ([216.37.46.162]:54941 "EHLO
-	morimoto.progeny.com") by vger.kernel.org with ESMTP
-	id S964914AbVIHSDD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Sep 2005 14:03:03 -0400
-Received: from [192.168.0.65] (pcp961871pcs.brnsbg01.in.comcast.net [68.58.143.126])
-	by morimoto.progeny.com (Postfix) with ESMTP
-	id B73BD636A4; Thu,  8 Sep 2005 13:03:01 -0500 (EST)
-User-Agent: Debian Thunderbird 1.0.6 (X11/20050802)
+	id S964916AbVIHSQK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Sep 2005 14:16:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964921AbVIHSQK
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 14:16:10 -0400
+Received: from citi.umich.edu ([141.211.133.111]:17789 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S964916AbVIHSQJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2005 14:16:09 -0400
+Received: from [10.58.48.252] (nat-198-95-226-230.netapp.com [198.95.226.230])
+	by citi.umich.edu (Postfix) with ESMTP id 8110D1BAA9;
+	Thu,  8 Sep 2005 14:16:07 -0400 (EDT)
+User-Agent: Mozilla Thunderbird 1.0 (Windows/20041206)
 X-Accept-Language: en-us, en
-To: Darrin Thompson <darrint@progeny.com>
-In-Reply-To: <1125010764.4110.35.camel@localhost.localdomain>
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509081012540.3208@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8208>
 
-Darrin Thompson wrote:
+This is a multi-part message in MIME format.
+--------------040004080400080803030508
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
->What I'm going to do is actually an inversion of that. Publishing a
->repository with the _intent_ of being merged into existing history, and
->observing obvious naming conventions as the "prior arrangement".
->
->I thought once I got the initial baseless merges done and committed that
->I do fetch-octopus from that point on. But octopus was still complaining
->about not finding a merge base. I'm going to verify that I didn't just
->mess something up in the process.
->
->If I can get octopus working as the tool for doing merges _after_ the
->baseless merges then I can live with the current situation. 
->  
->
+Linus Torvalds wrote:
+> 
+> On Thu, 8 Sep 2005, Junio C Hamano wrote:
+> 
+>>Yes, the reading of three trees upfront is probably the culprit
+>>in your case
+> 
+> 
+> However, note that _most_ tree reading just reads one.
+> 
+> Merges may take half a second, and yes, when I did it, the fact that we 
+> move things around in the array is by far the highest cost. But the thing 
+> is, if merges take half a second, that's still not only damn good, it's 
+> not even the most common operation.
 
-Heh.  Git repositories as components.
+in my case the merges were taking significantly longer than a half 
+second.  making this change is certainly not worth it if merges are 
+running fast...
 
--- 
-                             ><>
-... either 'way ahead of the game, or 'way out in left field.
+> Yes, the active_cache[] layout as one big array is inconvenient for 
+> read_tree(), which tends to want to interleave different trees in the 
+> array and thus forces things to be moved around.
+> 
+> But remember what the most common use for the index is - it's the "single 
+> tree" case from read_cache(). That's _so_ much more common than 
+> read_tree() that it's not even funny.
+
+read_cache is fast as implemented.  the issue is that the next thing 
+that is often done is a cache insert, which requires a memmove, which is 
+slow.
+
+> So the data structure is optimized for a different case than reading in 
+> trees. Big deal. That optimization is definitely worth it: it allows us to 
+> do the read_cache() with the actual index entries being totally read-only 
+> (a linked list would have to add a "next" pointer to the cache entries and 
+> not allow the in-place thing that read_cache() does).
+
+they are still read-only with my linked list implementation.
+
+--------------040004080400080803030508
+Content-Type: text/x-vcard; charset=utf-8;
+ name="cel.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="cel.vcf"
+
+begin:vcard
+fn:Chuck Lever
+n:Lever;Charles
+org:Network Appliance, Incorporated;Linux NFS Client Development
+adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
+email;internet:cel@citi.umich.edu
+title:Member of Technical Staff
+tel;work:+1 734 763-4415
+tel;fax:+1 734 763 4434
+tel;home:+1 734 668-1089
+x-mozilla-html:FALSE
+url:http://www.monkey.org/~cel/
+version:2.1
+end:vcard
+
+
+--------------040004080400080803030508--
