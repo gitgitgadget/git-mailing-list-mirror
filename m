@@ -1,69 +1,63 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: gitweb feature request: tarball for each commit
-Date: Fri, 9 Sep 2005 10:23:12 +1200
-Message-ID: <46a038f9050908152384d0967@mail.gmail.com>
-References: <46a038f905090721305dcbf61@mail.gmail.com>
-	 <20050908084545.GH15165MdfPADPa@greensroom.kotnet.org>
-	 <20050908113207.GA30178@vrfy.org> <4320449D.2070306@gmail.com>
-Reply-To: martin.langhoff@gmail.com
+From: Greg KH <greg@kroah.com>
+Subject: git applymbox is too anal
+Date: Thu, 8 Sep 2005 16:25:35 -0700
+Message-ID: <20050908232535.GA7700@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Fri Sep 09 00:27:31 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Sep 09 01:27:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EDUox-0000UZ-5Z
-	for gcvg-git@gmane.org; Fri, 09 Sep 2005 00:24:39 +0200
+	id 1EDVnR-0005r1-OZ
+	for gcvg-git@gmane.org; Fri, 09 Sep 2005 01:27:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965060AbVIHWXh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Sep 2005 18:23:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965044AbVIHWX1
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 18:23:27 -0400
-Received: from rproxy.gmail.com ([64.233.170.200]:10158 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965048AbVIHWXR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Sep 2005 18:23:17 -0400
-Received: by rproxy.gmail.com with SMTP id i8so10093rne
-        for <git@vger.kernel.org>; Thu, 08 Sep 2005 15:23:12 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TII4O162Hz7ZxUHWdVYrArc3JlPGJZTVF/BJ19UGgd3gd6URSXvfWxfM0LpXJZWJAC7fZSsS6mjUVQUBx5/yOgKQZVOEuNsL18TKL8pJxNF7A4lyZQusbIaIJvC1Ywluvx60awI2x6607q5QbRgb/tfGxoEuf8eiScSIxe+nybc=
-Received: by 10.38.89.5 with SMTP id m5mr110920rnb;
-        Thu, 08 Sep 2005 15:23:12 -0700 (PDT)
-Received: by 10.38.101.53 with HTTP; Thu, 8 Sep 2005 15:23:12 -0700 (PDT)
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <4320449D.2070306@gmail.com>
+	id S965067AbVIHXZu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Sep 2005 19:25:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965077AbVIHXZt
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 19:25:49 -0400
+Received: from mail.kroah.org ([69.55.234.183]:31196 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S965067AbVIHXZt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2005 19:25:49 -0400
+Received: from [192.168.0.10] (c-24-22-115-24.hsd1.or.comcast.net [24.22.115.24])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j88NPkw23192
+	for <git@vger.kernel.org>; Thu, 8 Sep 2005 16:25:46 -0700
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1EDVlv-228-00 for <git@vger.kernel.org>; Thu, 08 Sep 2005 16:25:35
+ -0700
+To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8227>
 
-> > Yes, this is nice for smaller projects. But I don't think, that we want
-> > to do such a thing on the kernel.org servers. 
->
-> I think this is a very useful feature for for some, but not all,
-> repositories. Default it to off and have a magic file (like git-daemon),
-> or a config variable turn it on.
+Ick.  I'm trying to apply a bunch of patches to a git repo (the kernel
+tree), using 'git applymbox' and it's just dieing on simple patches that
+apply with fuzz.
 
-+1! It'd be murder for large and/or popular projects, but it's a
-really conventient thing to have as an optional feature. Archzoom has
-it, and defaults to off ;)
+for example:
 
-I've checked out Sven's tree as well -- his implementation is pretty
-cool actually, much more sophisticated that I'd planned, and using
-POST to avoid stupid bots requesting the tarballs.
+$ git applymbox ~/linux/patches/u07
 
-In this situation ("look at my repo via gitweb, it has some cool
-patches over otherhacker's branch") it is hard to discriminate what
-patches differentiate Sven's repo from Kay's. I'm thinking of, when
-looking at a branch, having a link that shows the equivalent of 
-`cg-log -r thisbranch:origin` and another one for `cg-log -r
-origin:thisbranch`.
+Applying 'USB: fix up URB_ASYNC_UNLINK usages from the usb-serial drivers'
 
-cheers,
+error: patch failed: drivers/usb/serial/option.c:513
+error: drivers/usb/serial/option.c: patch does not apply
+
+$ patch -p1 --dry-run < ~/linux/patches/u07
+patching file drivers/usb/serial/keyspan.c
+patching file drivers/usb/serial/option.c
+Hunk #3 succeeded at 509 with fuzz 1.
 
 
+So, I have to then do a 'patch, git diff, git checkout-cache -f -u -a,
+git applymbox' type dance to get this patch to apply.
 
-martin
+Or am I missing some option to 'git applymbox' that I can't seem to
+find?
+
+thanks,
+
+greg k-h
