@@ -1,154 +1,97 @@
-From: Chuck Lever <cel@citi.umich.edu>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: [PATCH 0/2] A new merge algorithm, take 3
-Date: Thu, 08 Sep 2005 11:06:21 -0400
-Organization: Network Appliance, Inc.
-Message-ID: <4320536D.2010706@citi.umich.edu>
-References: <20050907164734.GA20198@c165.ib.student.liu.se>	<7v1x407min.fsf@assigned-by-dhcp.cox.net>	<431F34FF.5050301@citi.umich.edu> <7vvf1cz64l.fsf@assigned-by-dhcp.cox.net>
-Reply-To: cel@citi.umich.edu
+Date: Thu, 8 Sep 2005 11:27:35 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0509081101471.23242@iabervon.org>
+References: <20050907164734.GA20198@c165.ib.student.liu.se>
+ <Pine.LNX.4.63.0509071409470.23242@iabervon.org> <20050908060651.GA22734@c165.ib.student.liu.se>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------070401040001040402030802"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 08 17:09:13 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Sep 08 17:25:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EDNyu-0002Sr-N0
-	for gcvg-git@gmane.org; Thu, 08 Sep 2005 17:06:29 +0200
+	id 1EDOFY-0008MH-UH
+	for gcvg-git@gmane.org; Thu, 08 Sep 2005 17:23:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932610AbVIHPGZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Sep 2005 11:06:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932613AbVIHPGZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 11:06:25 -0400
-Received: from citi.umich.edu ([141.211.133.111]:22840 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S932610AbVIHPGX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2005 11:06:23 -0400
-Received: from [10.58.52.58] (nat-198-95-226-230.netapp.com [198.95.226.230])
-	by citi.umich.edu (Postfix) with ESMTP id 49E741BBAE;
-	Thu,  8 Sep 2005 11:06:22 -0400 (EDT)
-User-Agent: Mozilla Thunderbird 1.0 (Windows/20041206)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vvf1cz64l.fsf@assigned-by-dhcp.cox.net>
+	id S932649AbVIHPXi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Sep 2005 11:23:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932681AbVIHPXi
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 11:23:38 -0400
+Received: from iabervon.org ([66.92.72.58]:26131 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932649AbVIHPXh (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2005 11:23:37 -0400
+Received: (qmail 9990 invoked by uid 1000); 8 Sep 2005 11:27:35 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 8 Sep 2005 11:27:35 -0400
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20050908060651.GA22734@c165.ib.student.liu.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8201>
 
-This is a multi-part message in MIME format.
---------------070401040001040402030802
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On Thu, 8 Sep 2005, Fredrik Kuivinen wrote:
 
-Junio C Hamano wrote:
-> Chuck Lever <cel@citi.umich.edu> writes:
+> On Wed, Sep 07, 2005 at 02:33:42PM -0400, Daniel Barkalow wrote:
+> > On Wed, 7 Sep 2005, Fredrik Kuivinen wrote:
+> > 
+> > > Of the 500 merge commits that currently exists in the kernel
+> > > repository 19 produces non-clean merges with git-merge-script. The
+> > > four merge cases listed in
+> > > <20050827014009.GB18880@c165.ib.student.liu.se> are cleanly merged by
+> > > git-merge-script. Every merge commit which is cleanly merged by
+> > > git-resolve-script is also cleanly merged by git-merge-script,
+> > > furthermore the results are identical. There are currently two merges
+> > > in the kernel repository which are not cleanly merged by
+> > > git-resolve-script but are cleanly merged by git-merge-script.
+> > 
+> > If you use my read-tree and change git-resolve-script to pass all of the 
+> > ancestors to it, how does it do? I expect you'll still be slightly ahead, 
+> > because we don't (yet) have content merge with multiple ancestors. You 
+> > should also check the merge that Tony Luck reported, which undid a revert, 
+> > as well as the one that Len Brown reported around the same time which had 
+> > similar problems. I think maintainer trees are a much better test for a 
+> > merge algorithm, because the kernel repository is relatively linear, while 
+> > maintainers tend more to merge things back and forth.
 > 
-> 
->>for the past two weeks i've been attempting to replace the active_cache 
->>array with an abstract data type (linked list just as a prototype) in 
->>order to eliminate the need to use memmove() during insertions and 
->>deletions.
->>
->>one big win is that the merge algorithm no longer needs to overwrite the 
->>active_cache.  you can keep two lists and simply move elements from one 
->>to the other as you do the merge, and then hook the new, merged list 
->>back to the cache head when you're done.
->>
->>anyway, i'm at a point where i could use some help and advice if this is 
->>something you think could be useful in the long run.
-> 
-> 
-> This is interesting.
-> 
-> For something like a kernel tree that has around 18k entries, a
-> single memmove will at the worst case move that many pointers,
-> so naturally a list based implementation would perform well for
-> many insertions and deletions.   On the other hand, the list
-> based implementation would make it very expensive to find an
-> entry read-only, I suspect, unlike the array based
-> implementation which lets us do binary search.
+> Junio tested some of the multiple common ancestor cases with your
+> version of read-tree and reported his results in
+> <7virxeycod.fsf@assigned-by-dhcp.cox.net>.
 
-using a list was an easy prototype to see what issues there are when 
-converting from an array into an abstract data type.  i've created a few 
-helpers that allow me to limit the list implementation changes to 
-cache.h, read-cache.c, and read-tree.c; but having these helpers means 
-it should be fairly simple to switch to any reasonable data structure. 
-(the helper parts are already working and i can post them to the list if 
-folks are interested).
+Oh, right. I'm clearly not paying enough attention here.
 
-once the list implementation is working well, i plan to go back and 
-replace it with something more sophisticated which can perform 
-insertion, deletion, and searching efficiently.
+> The two cases my algorithm merges cleanly and git-resolve-script do
+> not merge cleanly are 0e396ee43e445cb7c215a98da4e76d0ce354d9d7 and
+> 0c168775709faa74c1b87f1e61046e0c51ade7f3. Both of them have two common
+> ancestors. The second one have, as far as I know, not been tested with
+> your read-tree.
 
-in the long run, i see using a balanced tree.  that would make 
-insertions and searches quick, and prevent the tree from degenerating 
-into a linked list due to a series of in-order insertions.  a splay tree 
-might be even more entertaining, as it always remains balanced, and a 
-search operation places the found node or insertion point right at the 
-root of the tree.
+Okay, I'll have to check whether the result I get seems right. I take it 
+your result agrees with what the users actually produced by hand?
 
-each node in the tree would represent a unique path, and have references 
-to the entries of all four stages, contained in an array.  that would 
-simplify several routines in read-cache.c and probably make the merge 
-logic even easier to understand and more efficient.
+> The merge cases reported by Tony Luck and Len Brown are both cleanly
+> merged by my code.
 
-> I haven't timed it like you did, but my gut feeling is that the
-> most wastage during the merge is coming from having to move
-> entries because we "insert into" or "remove from" the same
-> active-cache array.
+Do they come out correctly? Both of those have cases which cannot be 
+decided correctly with only the ancestor trees, due to one branch 
+reverting a patch that was only in one ancestor. The correct result is to 
+revert that patch, but figuring out that requires looking at more trees. I 
+think your algorithm should work for this case, but it would be good to 
+have verification. (IIRC, Len got the correct result while Tony got the 
+wrong result and then corrected it later.)
 
-the merge actually replaces entries in place, so it is already fairly 
-efficient.  the wastage in the merge case arises from the many list 
-insertions done by read_cache, all of which involve moving some of the 
-active cache array.
+> You are probably right about the maintainer trees. I should have a
+> look at some of them. Do you know any specific repositories with
+> interesting merge cases?
 
-> If we allocate a new array and populate it
-> from scratch as we iterate through the paths being merged and
-> replace the active_cache pointer at the very end, we would do
-> much better without going to a linked list implementation, which
-> would penalize the normal read-only case.
+Not especially, except that I would guess that people who have reported 
+hitting bad cases would be more likely to have other interesting merges in 
+their trees. You might also try merging maintainer trees with each other, 
+since it's relatively likely that there would be complicating overlap that 
+only doesn't cause confusion because things get rearranged in -mm. For 
+that matter, I bet you'd get plenty of test cases out of trying to 
+replicate -mm as a git tree.
 
-i can already tell you that using a separate source and destination data 
-structure during the merge simplifies the logic and makes it easier to 
-understand.  i imagine it will also be easier to maintain and enhance in 
-the long run.
-
-> I think what Daniel
-> did to read-tree recently, still in the proposed updates branch,
-> would make this kind of change far easier to implement.
-
-as i'm new to git development, i wasn't aware of the proposed branch.  i 
-will see if i can take a look (or send me a pointer to the list archives 
-if he has posted them here).
-
-> I wanted to cc this message to Daniel but your message to me was
-> somehow private so I did not.  Please feel free to bring this
-> issue up either with him directly or on the list.
-
-i wanted to assess whether this was a reasonable idea or if there was 
-already work in progress in this area.  thanks for your response!
-
---------------070401040001040402030802
-Content-Type: text/x-vcard; charset=utf-8;
- name="cel.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="cel.vcf"
-
-begin:vcard
-fn:Chuck Lever
-n:Lever;Charles
-org:Network Appliance, Incorporated;Linux NFS Client Development
-adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
-email;internet:cel@citi.umich.edu
-title:Member of Technical Staff
-tel;work:+1 734 763-4415
-tel;fax:+1 734 763 4434
-tel;home:+1 734 668-1089
-x-mozilla-html:FALSE
-url:http://www.monkey.org/~cel/
-version:2.1
-end:vcard
-
-
---------------070401040001040402030802--
+	-Daniel
+*This .sig left intentionally blank*
