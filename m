@@ -1,120 +1,103 @@
-From: Amos Waterland <apw@rossby.metr.ou.edu>
-Subject: [PATCH] Do not create bogus branch from flag to git branch
-Date: Wed, 7 Sep 2005 21:13:26 -0500
-Message-ID: <20050908021326.GA18776@rossby.metr.ou.edu>
+From: Martin Atukunda <matlads@dsmagic.com>
+Subject: [PATCH] Re: Add git-version-script.
+Date: Thu, 8 Sep 2005 05:35:25 +0300
+Message-ID: <20050908023525.GA14179@igloo.ds.co.ug>
+References: <11259325781492-git-send-email-matlads@dsmagic.com> <7v1x402wiy.fsf@assigned-by-dhcp.cox.net> <431F9D0F.8070301@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 08 04:14:26 2005
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	A Large Angry SCM <gitzilla@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 08 04:37:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EDBvk-0007a6-Jc
-	for gcvg-git@gmane.org; Thu, 08 Sep 2005 04:14:24 +0200
+	id 1EDCHk-0003Su-Pg
+	for gcvg-git@gmane.org; Thu, 08 Sep 2005 04:37:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932562AbVIHCN7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Sep 2005 22:13:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932565AbVIHCN6
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Sep 2005 22:13:58 -0400
-Received: from rossby.metr.ou.edu ([129.15.192.80]:15118 "EHLO
-	rossby.metr.ou.edu") by vger.kernel.org with ESMTP id S932562AbVIHCN5
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Sep 2005 22:13:57 -0400
-Received: from rossby.metr.ou.edu (localhost.metr.ou.edu [127.0.0.1])
-	by rossby.metr.ou.edu (8.12.9p2/8.12.9) with ESMTP id j882DRP3018902;
-	Wed, 7 Sep 2005 21:13:27 -0500 (CDT)
-	(envelope-from apw@rossby.metr.ou.edu)
-Received: (from apw@localhost)
-	by rossby.metr.ou.edu (8.12.9p2/8.12.9/Submit) id j882DQT0018901;
-	Wed, 7 Sep 2005 21:13:26 -0500 (CDT)
-	(envelope-from apw)
-To: junkio@cox.net
+	id S932569AbVIHCgp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Sep 2005 22:36:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932570AbVIHCgp
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Sep 2005 22:36:45 -0400
+Received: from mail1.starcom.co.ug ([217.113.72.31]:44646 "EHLO
+	mail1.infocom.co.ug") by vger.kernel.org with ESMTP id S932569AbVIHCgp
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Sep 2005 22:36:45 -0400
+Received: from entandikwa.ds.co.ug ([::ffff:217.113.73.39])
+  by mail1.infocom.co.ug with esmtp; Thu, 08 Sep 2005 05:36:31 +0300
+  id 000E5FD5.431FA3AF.00003EF4
+Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
+	by entandikwa.ds.co.ug (Postfix) with ESMTP
+	id 27D12514A; Thu,  8 Sep 2005 05:37:50 +0300 (EAT)
+Received: from matlads by igloo.ds.co.ug with local (Exim 4.52)
+	id 1EDCG5-0003sP-Sh; Thu, 08 Sep 2005 05:35:25 +0300
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>,
+	A Large Angry SCM <gitzilla@gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
-X-yoursite-MailScanner-Information: Please contact the ISP for more information
-X-yoursite-MailScanner: Not scanned: please contact your Internet E-Mail Service Provider for details
-X-yoursite-MailScanner-SpamCheck: not spam, SpamAssassin (score=0,
-	required 6)
+In-Reply-To: <431F9D0F.8070301@gmail.com>
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8193>
 
-If you run `git branch --help', you will unexpectedly have created a new
-branch named "--help".  This simple patch adds logic and a usage
-statement to catch this and similar problems, and adds a testcase for it.
+Add version string to git.
 
-Signed-off-by: Amos Waterland <apw@rossby.metr.ou.edu>
+Signed-off-by: Martin Atukunda <matlads@dsmagic.com>
 
 ---
 
- git-branch-script |   16 ++++++++++++++++
- t/t3200-branch.sh |   27 +++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 0 deletions(-)
- create mode 100755 t/t3200-branch.sh
+ Makefile |    3 ++-
+ git.in   |   25 +++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 1 deletions(-)
+ create mode 100755 git.in
 
-09dc220283888eabd4dbb3ca647d13de6d6c876e
-diff --git a/git-branch-script b/git-branch-script
---- a/git-branch-script
-+++ b/git-branch-script
-@@ -2,6 +2,16 @@
+6a9edfa27c41b7845bfd519e275c24d7e36ad702
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -218,7 +218,8 @@ $(LIB_FILE): $(LIB_OBJS)
+ doc:
+ 	$(MAKE) -C Documentation all
  
- . git-sh-setup-script || die "Not a git archive"
+-
++git: git.in Makefile
++	sed 's/@@VERSION@@/$(GIT_VERSION)/g' < $< > $@
  
-+usage () {
-+    echo >&2 "usage: $(basename $0)"' [<branchname> [start-point]]
-+
-+If no arguments, show available branches and mark current branch with a star.
-+If one argument, create a new branch <branchname> based off of current HEAD.
-+If two arguments, create a new branch <branchname> based off of <start-point>.
-+'
-+    exit 1
-+}
-+
- case "$#" in
- 0)
- 	headref=$(readlink "$GIT_DIR/HEAD" | sed -e 's|^refs/heads/||')
-@@ -25,6 +35,12 @@ case "$#" in
- 	head="$2^0" ;;
- esac
- branchname="$1"
-+
-+case "$branchname" in
-+-*)
-+	usage;;
-+esac
-+
- rev=$(git-rev-parse --verify "$head") || exit
+ ### Testing rules
  
- [ -e "$GIT_DIR/refs/heads/$branchname" ] && die "$branchname already exists"
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+diff --git a/git.in b/git.in
 new file mode 100755
 --- /dev/null
-+++ b/t/t3200-branch.sh
-@@ -0,0 +1,27 @@
++++ b/git.in
+@@ -0,0 +1,25 @@
 +#!/bin/sh
-+#
-+# Copyright (c) 2005 Amos Waterland
-+#
 +
-+test_description='git branch --foo should not create bogus branch
++cmd=
++path=$(dirname $0)
++case "$#" in
++0)	;;
++*)	cmd="$1"
++	shift
++	if [ "$cmd" == "--version" ]; then
++		echo "git version @@VERSION@@"
++		exit 0
++	fi
++	test -x $path/git-$cmd-script && exec $path/git-$cmd-script "$@"
++	test -x $path/git-$cmd && exec $path/git-$cmd "$@" ;;
++esac
 +
-+This test runs git branch --help and checks that the argument is properly
-+handled.  Specifically, that a bogus branch is not created.
-+'
-+. ./test-lib.sh
++echo "git version @@VERSION@@"
++echo "Usage: git COMMAND [OPTIONS] [TARGET]"
++if [ -n "$cmd" ]; then
++    echo " git command '$cmd' not found: commands are:"
++else
++    echo " git commands are:"
++fi
 +
-+test_expect_success \
-+    'prepare an trivial repository' \
-+    'echo Hello > A &&
-+     git update-cache --add A &&
-+     git commit -m "Initial commit."'
-+
-+test_expect_failure \
-+    'git branch --help should return error code' \
-+    'git branch --help'
-+
-+test_expect_failure \
-+    'git branch --help should not have created a bogus branch' \
-+    'test -f .git/refs/heads/--help'
-+
-+test_done
++ls $path | sed -ne 's/^git-\(.*\)-script/  \1/p' | fmt
+
+
+-- 
+Your entire blood supply is filtered through your kidneys in four minutes.
