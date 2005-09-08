@@ -1,116 +1,95 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: [RFC] GIT Repository Annotation Convention
-Date: Thu, 08 Sep 2005 12:03:04 -0400
-Message-ID: <432060B8.6080408@gmail.com>
-References: <87ll2aib73.fsf@gmail.com> <431DA8CD.9060009@gmail.com>
-Reply-To: gitzilla@gmail.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/2] A new merge algorithm, take 3
+Date: Thu, 08 Sep 2005 09:51:34 -0700
+Message-ID: <7v7jdrwlih.fsf@assigned-by-dhcp.cox.net>
+References: <20050907164734.GA20198@c165.ib.student.liu.se>
+	<7v1x407min.fsf@assigned-by-dhcp.cox.net>
+	<431F34FF.5050301@citi.umich.edu>
+	<7vvf1cz64l.fsf@assigned-by-dhcp.cox.net>
+	<4320536D.2010706@citi.umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
-	Kay Sievers <kay.sievers@vrfy.org>
-X-From: git-owner@vger.kernel.org Thu Sep 08 18:05:31 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 08 18:55:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EDOs0-0004bc-9i
-	for gcvg-git@gmane.org; Thu, 08 Sep 2005 18:03:24 +0200
+	id 1EDPch-0002MU-GU
+	for gcvg-git@gmane.org; Thu, 08 Sep 2005 18:51:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964881AbVIHQDU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Sep 2005 12:03:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964885AbVIHQDT
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 12:03:19 -0400
-Received: from wproxy.gmail.com ([64.233.184.205]:24583 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964882AbVIHQDS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2005 12:03:18 -0400
-Received: by wproxy.gmail.com with SMTP id 57so1336755wri
-        for <git@vger.kernel.org>; Thu, 08 Sep 2005 09:03:15 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=cXtllbw6xpnRPsw/ulossvIImtR8474//nqTBWCiCLrQbARhEQw45W+nST5QsFGlMVx0iJZUFKStElsDIYtPSAMTsoH8U0edMZcPxQDT0PZPpx2X43QHYnx9W1+/cT62MJD4ba7Y3aq0aTiiZM77pbiMfPUChn+5691BNpwjiwE=
-Received: by 10.54.52.63 with SMTP id z63mr6128076wrz;
-        Thu, 08 Sep 2005 09:03:09 -0700 (PDT)
-Received: from ?10.0.0.6? ( [70.89.97.97])
-        by mx.gmail.com with ESMTP id g7sm625146wra.2005.09.08.09.03.08;
-        Thu, 08 Sep 2005 09:03:09 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <431DA8CD.9060009@gmail.com>
+	id S932533AbVIHQvh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Sep 2005 12:51:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932537AbVIHQvg
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 12:51:36 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:17130 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932533AbVIHQvg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Sep 2005 12:51:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050908165135.DMUZ24420.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 8 Sep 2005 12:51:35 -0400
+To: cel@citi.umich.edu
+In-Reply-To: <4320536D.2010706@citi.umich.edu> (Chuck Lever's message of "Thu,
+	08 Sep 2005 11:06:21 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8203>
 
-GIT Repository Annotation Convention
-====================================
+Chuck Lever <cel@citi.umich.edu> writes:
 
-GIT repositories can benefit from descriptions of /intent/ for portions
-of the repository. This document formalizes a method to store those
-descriptions in the repository.
+> Junio C Hamano wrote:
+>> Chuck Lever <cel@citi.umich.edu> writes:
+>>
+> once the list implementation is working well, i plan to go back and 
+> replace it with something more sophisticated which can perform 
+> insertion, deletion, and searching efficiently.
 
-Annotations
-------------
-Annotations are UTF8 text files. Each text starts with a one line
-summary, optionally followed by a blank line and a longer, more detailed
-description.
+Well, what I wanted to see was if we can get away without
+introducing more sophisticated data structures, which would add
+complexity.
 
-Annotations describe the /intended/ use or contents of the repository
-portion described. For instance, a branch is defined by a head ref; the
-annotation for that branch would describe what that branch is intended
-to hold, how to interpret and/or use the stored state, etc.
+>> I haven't timed it like you did, but my gut feeling is that the
+>> most wastage during the merge is coming from having to move
+>> entries because we "insert into" or "remove from" the same
+>> active-cache array.
+>
+> the merge actually replaces entries in place, so it is already fairly 
+> efficient.  the wastage in the merge case arises from the many list 
+> insertions done by read_cache, all of which involve moving some of the 
+> active cache array.
 
-Naming and Directory Structure
-------------------------------
-Annotations are named by appending ".txt" to the basename of the
-repository component it describes, and by appending ".dir" to each
-directory patch component leading to the repository component from
-$GIT_DIR, and by prepending "annotations/" to the annotation pathname.
+Yes, the reading of three trees upfront is probably the culprit
+in your case, and I think that is something Daniel's read-tree
+rewrite can help.  I still see some remove_cache_entry_at()
+there because it works on the active_cache in place, but the
+structure of the new code should be much easier to make the kind
+of modification we are talking about.
 
-The use of the ".txt" and ".dir" suffixes is to allow for descriptions
-of hierarchical structures (directories) and well as specific components
-(files).
+>> I think what Daniel
+>> did to read-tree recently, still in the proposed updates branch,
+>> would make this kind of change far easier to implement.
+>
+> as i'm new to git development, i wasn't aware of the proposed branch.  i 
+> will see if i can take a look (or send me a pointer to the list archives 
+> if he has posted them here).
 
-Missing annotations are ignored.
+If you already have a local copy of git.git repository you work in:
 
-The file "$GIT_DIR/description", used by gitweb and other tools, becomes
-a symbolic link to "$GIT_DIR/annotations/description.txt".
+	git fetch http://kernel.org/pub/scm/git/git.git +pu:refs/heads/ko-pu
+        git checkout -f ko-pu
 
-Example Layout
---------------
-$GIT_DIR/
-	...
-	annotations/
-		...
-		annotations.txt
-		...
-		description.txt
-		...
-		refs.dir/
-			...
-			heads.dir/
-				<head dir 1>.dir/
-					<head name 1.1>.txt
-					...
-					<head name 1.M>.txt
-				<head dir 1>.txt
-				...
-				<head dir N>.dir/
-					<head name N.1>.txt
-					...
-					<head name N.P>.txt
-				<head name 1>.txt
-				...
-				<head name Q>.txt
-			...
-			tags.dir/
-				<tag name 1>.txt
-				...
-				<tag name T>.txt
-			...
-	...
-	description -> annotations/description.txt
-	...
+Otherwise
 
---
+	git clone http://kernel.org/pub/scm/git/git.git peek
+        cd peek
+        git checkout -f pu
+
+The interesting change from the mainline is in read-tree.c
+
+You can browse http://kernel.org/git/ and see commitdiffs in the
+"pu" branch if you are not interested in slurping the whole
+proposed updates branch.
