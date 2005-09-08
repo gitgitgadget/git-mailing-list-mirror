@@ -1,72 +1,120 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [RFC] GIT Repository Annotation Convention
-Date: Thu, 08 Sep 2005 14:58:29 -0400
-Message-ID: <432089D5.7000102@gmail.com>
-References: <87ll2aib73.fsf@gmail.com> <431DA8CD.9060009@gmail.com>	<432060B8.6080408@gmail.com> <7vr7bzv3r2.fsf@assigned-by-dhcp.cox.net>
-Reply-To: gitzilla@gmail.com
+From: Chuck Lever <cel@citi.umich.edu>
+Subject: Re: [PATCH 0/2] A new merge algorithm, take 3
+Date: Thu, 08 Sep 2005 14:58:32 -0400
+Organization: Network Appliance, Inc.
+Message-ID: <432089D8.4060507@citi.umich.edu>
+References: <20050907164734.GA20198@c165.ib.student.liu.se> <7v1x407min.fsf@assigned-by-dhcp.cox.net> <431F34FF.5050301@citi.umich.edu> <7vvf1cz64l.fsf@assigned-by-dhcp.cox.net> <4320536D.2010706@citi.umich.edu> <7v7jdrwlih.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509081012540.3208@g5.osdl.org> <43207FE6.2030108@citi.umich.edu> <Pine.LNX.4.58.0509081131070.5940@g5.osdl.org>
+Reply-To: cel@citi.umich.edu
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Sep 08 20:59:19 2005
+Content-Type: multipart/mixed;
+ boundary="------------080407020900020001000706"
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 08 21:00:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EDRbo-0005KV-TU
-	for gcvg-git@gmane.org; Thu, 08 Sep 2005 20:58:53 +0200
+	id 1EDRbo-0005KV-Ab
+	for gcvg-git@gmane.org; Thu, 08 Sep 2005 20:58:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964929AbVIHS6g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Sep 2005 14:58:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964933AbVIHS6g
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 14:58:36 -0400
-Received: from wproxy.gmail.com ([64.233.184.195]:4204 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964929AbVIHS6f (ORCPT
+	id S964925AbVIHS6f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Sep 2005 14:58:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964933AbVIHS6f
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Sep 2005 14:58:35 -0400
+Received: from citi.umich.edu ([141.211.133.111]:33973 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S964925AbVIHS6f (ORCPT
 	<rfc822;git@vger.kernel.org>); Thu, 8 Sep 2005 14:58:35 -0400
-Received: by wproxy.gmail.com with SMTP id i2so1237028wra
-        for <git@vger.kernel.org>; Thu, 08 Sep 2005 11:58:34 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=J2vF/p3K/IIfGi51U5s7lvdjI+6yidGkoPNtEomvoG3BckNd4T9ZjBNk+y90IjbanTfBdIJgwTrlz3Y3V6UZE5fNMkxceQT3NmkO5zsv83nxSkyV27Acq2lsE/QPHiUnCTO8Udi9t7ewFyOdU6XfsiKFPe0yE1Pkk4UGhsLrSMQ=
-Received: by 10.54.53.7 with SMTP id b7mr4830100wra;
-        Thu, 08 Sep 2005 11:58:34 -0700 (PDT)
-Received: from ?10.0.0.6? ( [70.89.97.97])
-        by mx.gmail.com with ESMTP id g9sm806170wra.2005.09.08.11.58.30;
-        Thu, 08 Sep 2005 11:58:32 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+Received: from [10.58.48.252] (nat-198-95-226-230.netapp.com [198.95.226.230])
+	by citi.umich.edu (Postfix) with ESMTP id BFC921BAA9;
+	Thu,  8 Sep 2005 14:58:33 -0400 (EDT)
+User-Agent: Mozilla Thunderbird 1.0 (Windows/20041206)
 X-Accept-Language: en-us, en
-To: git Mailing List <git@vger.kernel.org>
-In-Reply-To: <7vr7bzv3r2.fsf@assigned-by-dhcp.cox.net>
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509081131070.5940@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8212>
 
-Junio C Hamano wrote:
-> A Large Angry SCM <gitzilla@gmail.com> writes:
+This is a multi-part message in MIME format.
+--------------080407020900020001000706
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Linus Torvalds wrote:
 > 
->>Naming and Directory Structure
->>------------------------------
->>Annotations are named by appending ".txt" to the basename of the
->>repository component it describes, and by appending ".dir" to each
->>directory patch component leading to the repository component from
->>$GIT_DIR, and by prepending "annotations/" to the annotation pathname.
+> On Thu, 8 Sep 2005, Chuck Lever wrote:
 > 
-> I suspect you can do the same without .dir but only with .txt.
+>>in my case the merges were taking significantly longer than a half 
+>>second.  making this change is certainly not worth it if merges are 
+>>running fast...
+> 
+> 
+> Note that in cold-cache cases, all the expense of read-tree is in actually
+> reading the tree objects themselves (a kernel tree has more than a
+> thousand subdirectories). Also, a full "git pull" will do the diffstat 
+> etc, and then the expense ends up being in the actual "git diff" part.
+> 
+> So read-tree itself may be half a second, but a merge ends up having other 
+> parts.
 
-Think about a directory containing directories "foo" and "foo.txt":
+i measured this using the following test...
 
-With ".dir":
-	foo.dir/
-		...
-	foo.txt
-	foo.txt.dir/
-		...
-	foo.txt.txt
+i have a linux kernel git repository under control of stgit and it has 
+about 70 patches in it.  i did an "stg status" to heat the page cache. 
+i popped all the patches, then did an "stg pull origin".
 
-Without ".dir":
-	foo/
-		...
-==>	foo.txt
-==>	foo.txt/
-		...
-	foo.txt.txt
+i started oprofile, and did an "stg push -a".  it took about 9 minutes.
+
+i stopped oprofile and looked at the results.  roughly 65% of the total 
+CPU time was spent in libc:memmove.  after instrumenting git, i 
+determined that in the "stg push" case the critical memmove was the one 
+in add_cache_entry.
+
+note that i'm not saying that the 9 minutes of wall clock time was 
+entirely due to CPU... catalin has been steadily improving "stg push" so 
+this time has shortened by more than half, recently.  but i do notice 
+that working in a kernel repository is significantly slower than working 
+in my git or stgit source repositories, which are smaller by far.  the 
+small repositories behave just as i expect, the tools respond quite 
+snappily.
+
+>>they are still read-only with my linked list implementation.
+> 
+> Btw, in the sparse project, we have this really smart "pointer list" data
+> structure, which is extremely space- and time-efficient. It ends up
+> _looking_ like a linked list, but it batches things up in hunks of 29
+> entries (29 pointers plus overhead gives you blocks of 32 longwords, which
+> is the allocation size) and thus gives basically a cache-friendly
+> doubly-linked list. It knows how to do insertions, traversals etc very 
+> efficiently.
+> 
+> Any interest?
+
+i'm not married to splay trees.  i think we should explore several 
+different data structures before picking one, and this one sounds 
+reasonable to try.
+
+--------------080407020900020001000706
+Content-Type: text/x-vcard; charset=utf-8;
+ name="cel.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="cel.vcf"
+
+begin:vcard
+fn:Chuck Lever
+n:Lever;Charles
+org:Network Appliance, Incorporated;Linux NFS Client Development
+adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
+email;internet:cel@citi.umich.edu
+title:Member of Technical Staff
+tel;work:+1 734 763-4415
+tel;fax:+1 734 763 4434
+tel;home:+1 734 668-1089
+x-mozilla-html:FALSE
+url:http://www.monkey.org/~cel/
+version:2.1
+end:vcard
+
+
+--------------080407020900020001000706--
