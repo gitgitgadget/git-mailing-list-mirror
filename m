@@ -1,77 +1,57 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: Merges without bases
-Date: Fri, 09 Sep 2005 06:02:52 -0600
-Message-ID: <m1hdcuo3df.fsf@ebiederm.dsl.xmission.com>
-References: <1125004228.4110.20.camel@localhost.localdomain>
-	<7vvf1tps9v.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0508252333550.23242@iabervon.org>
-	<7vzmr5gmb4.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 09 14:06:07 2005
+From: jdl@freescale.com
+Subject: PATCH Fix tutorial reference to git-*-scripts.
+Date: Fri, 09 Sep 2005 09:11:35 -0500
+Message-ID: <E1EDjbL-0003pZ-DT@jdl.com>
+X-From: git-owner@vger.kernel.org Fri Sep 09 16:14:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EDhbf-0001Gb-OX
-	for gcvg-git@gmane.org; Fri, 09 Sep 2005 14:03:48 +0200
+	id 1EDjcD-00070F-W6
+	for gcvg-git@gmane.org; Fri, 09 Sep 2005 16:12:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932533AbVIIMDg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Sep 2005 08:03:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932520AbVIIMDg
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Sep 2005 08:03:36 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:50624 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S932533AbVIIMDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Sep 2005 08:03:35 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j89C2v9g008711;
-	Fri, 9 Sep 2005 06:02:57 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j89C2spE008710;
-	Fri, 9 Sep 2005 06:02:54 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmr5gmb4.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Fri, 26 Aug 2005 01:00:15 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S964889AbVIIOLq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Sep 2005 10:11:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964899AbVIIOLq
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Sep 2005 10:11:46 -0400
+Received: from jdl.com ([66.118.10.122]:53723 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S964889AbVIIOLp (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2005 10:11:45 -0400
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1EDjbL-0003pZ-DT
+	for git@vger.kernel.org; Fri, 09 Sep 2005 09:11:36 -0500
+To: git@vger.kernel.org
+X-Spam-Score: -105.9 (---------------------------------------------------)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8238>
 
-Junio C Hamano <junkio@cox.net> writes:
+There was a lingering reference to the git-*-scripts in
+the tutorial.  This patch reworks that paragraph a bit.
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
->
->> I'd still like to revive my idea of having projects overlaid on each
->> other, where the commits in the project that absorbed the other project
->> say, essentially, "also include this other commit, but any changes to
->> those files belong to that branch, not this one". That way, Linus could
->> have included gitk in git, but changes to it, even when done in a git
->> working tree, would show up in commits that only include gitk. (git
->> actually can handle this with the alternative index file mechanism that
->> Linus mentioned in a different thread.)
->
-> Yes, I would love to see that cleanly done in a way that does not
-> confuse uninitiated (not being sarcastic at all.  Just cheering
-> up somebody with a better idea than I have --- I would be lost
-> if I were to be tasked to do it by Emperor Penguin himself or
-> somebody else ;-)).
 
-I think when it comes to simplicity it would be better to have 
-something that would filter all of the changes on a branch
-by pathname and create a branch against the original project
-with just those changes.
+Signed-off-by: Jon Loeliger <jdl@freescale.com>
+---
 
-Then we can do the noop merge of that branch into the larger
-project, and we can merge that branch into the original project.
 
-The nice part of doing it after the fact by just filtering changes
-is you don't have to plan ahead to handle that case, which
-should be a lot easier to handle.
-
-The set of pathnames to filter could be easily stored in the .git
-metadata so doing repeatedly is straight forward.
-
-Eric
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -608,11 +608,11 @@ The above can also be written as simply
+ 	git reset
+ 
+ and in fact a lot of the common git command combinations can be scripted
+-with the `git xyz` interfaces, and you can learn things by just looking
+-at what the `git-*-script` scripts do (`git reset` is the above two lines
+-implemented in `git-reset`, but some things like `git status` and
+-`git commit` are slightly more complex scripts around the basic git
+-commands). 
++with the `git xyz` interfaces.  You can learn things by just looking
++at what the various git scripts do.  For example, `git reset` is the
++above two lines implemented in `git-reset`, but some things like
++`git status` and `git commit` are slightly more complex scripts around
++the basic git commands.
+ 
+ Many (most?) public remote repositories will not contain any of
+ the checked out files or even an index file, and will *only* contain the
