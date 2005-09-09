@@ -1,57 +1,67 @@
-From: jdl@freescale.com
-Subject: PATCH Fix tutorial reference to git-*-scripts.
-Date: Fri, 09 Sep 2005 09:11:35 -0500
-Message-ID: <E1EDjbL-0003pZ-DT@jdl.com>
-X-From: git-owner@vger.kernel.org Fri Sep 09 16:14:20 2005
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [RFC] GIT Repository Annotation Convention
+Date: Fri, 09 Sep 2005 10:24:48 -0400
+Message-ID: <43219B30.4040308@gmail.com>
+References: <87ll2aib73.fsf@gmail.com> <431DA8CD.9060009@gmail.com>	<432060B8.6080408@gmail.com> <7vr7bzv3r2.fsf@assigned-by-dhcp.cox.net>	<43208110.6020607@gmail.com> <7vvf1bq64t.fsf@assigned-by-dhcp.cox.net>
+Reply-To: gitzilla@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Sep 09 16:27:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EDjcD-00070F-W6
-	for gcvg-git@gmane.org; Fri, 09 Sep 2005 16:12:30 +0200
+	id 1EDjoL-0002Mt-UK
+	for gcvg-git@gmane.org; Fri, 09 Sep 2005 16:25:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964889AbVIIOLq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Sep 2005 10:11:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964899AbVIIOLq
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Sep 2005 10:11:46 -0400
-Received: from jdl.com ([66.118.10.122]:53723 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S964889AbVIIOLp (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2005 10:11:45 -0400
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1EDjbL-0003pZ-DT
-	for git@vger.kernel.org; Fri, 09 Sep 2005 09:11:36 -0500
-To: git@vger.kernel.org
-X-Spam-Score: -105.9 (---------------------------------------------------)
+	id S964782AbVIIOY5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Sep 2005 10:24:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964881AbVIIOY5
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Sep 2005 10:24:57 -0400
+Received: from wproxy.gmail.com ([64.233.184.205]:28631 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964782AbVIIOY4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Sep 2005 10:24:56 -0400
+Received: by wproxy.gmail.com with SMTP id 57so1512777wri
+        for <git@vger.kernel.org>; Fri, 09 Sep 2005 07:24:53 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=E8AFnZjSZuI3C4G6D9MavskBeF1e4/MDaroMuYUBdOXuxEy/JKY8IJvYmidVdQpewh9aNI3xmKJoCaPC3zxLhnygbWaDHRz++PC4DZQW7lX1rktDXXc+3yKcMGcYNodtWkBVRN9owFuz2dnin0vGENLt5G5ThKiSheEssr9ak8A=
+Received: by 10.54.5.41 with SMTP id 41mr340695wre;
+        Fri, 09 Sep 2005 07:24:53 -0700 (PDT)
+Received: from ?10.0.0.6? ( [70.89.97.97])
+        by mx.gmail.com with ESMTP id 8sm1198801wrl.2005.09.09.07.24.53;
+        Fri, 09 Sep 2005 07:24:53 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: git Mailing List <git@vger.kernel.org>
+In-Reply-To: <7vvf1bq64t.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8239>
 
-There was a lingering reference to the git-*-scripts in
-the tutorial.  This patch reworks that paragraph a bit.
+Junio C Hamano wrote:
+> A Large Angry SCM <gitzilla@gmail.com> writes:
+> 
+>>Junio C Hamano wrote:
+>>>A Large Angry SCM <gitzilla@gmail.com> writes:
+>>>
+>>>>Naming and Directory Structure
+>>>>------------------------------
+>>>>Annotations are named by appending ".txt" to the basename of the
+>>>>repository component it describes, and by appending ".dir" to each
+>>>>directory patch component leading to the repository component from
+>>>>$GIT_DIR, and by prepending "annotations/" to the annotation pathname.
+>>>I suspect you can do the same without .dir but only with .txt.
+>>Think about a directory containing directories "foo" and "foo.txt":
+> 
+> And where do you see foo.txt under $GIT_DIR/ hierarchy?
 
+Are you saying I can't name a branch "foo.txt"? Or have the following
+branches?
 
-Signed-off-by: Jon Loeliger <jdl@freescale.com>
----
-
-
-diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
---- a/Documentation/tutorial.txt
-+++ b/Documentation/tutorial.txt
-@@ -608,11 +608,11 @@ The above can also be written as simply
- 	git reset
- 
- and in fact a lot of the common git command combinations can be scripted
--with the `git xyz` interfaces, and you can learn things by just looking
--at what the `git-*-script` scripts do (`git reset` is the above two lines
--implemented in `git-reset`, but some things like `git status` and
--`git commit` are slightly more complex scripts around the basic git
--commands). 
-+with the `git xyz` interfaces.  You can learn things by just looking
-+at what the various git scripts do.  For example, `git reset` is the
-+above two lines implemented in `git-reset`, but some things like
-+`git status` and `git commit` are slightly more complex scripts around
-+the basic git commands.
- 
- Many (most?) public remote repositories will not contain any of
- the checked out files or even an index file, and will *only* contain the
+$GIT_DIR/refs/head/WidgetSoft/Blue
+$GIT_DIR/refs/head/WidgetSoft/Red
+$GIT_DIR/refs/head/WidgetSoft.txt/Blue
+$GIT_DIR/refs/head/WidgetSoft.txt/Red
