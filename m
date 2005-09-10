@@ -1,100 +1,102 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: [ANNOUNCE qgit-0.94]
-Date: Sat, 10 Sep 2005 10:16:33 -0700 (PDT)
-Message-ID: <20050910171633.1179.qmail@web26303.mail.ukl.yahoo.com>
+From: Blaisorblade <blaisorblade@yahoo.it>
+Subject: git-merge-cache / StGIT - gitmergeonefile.py: merging one tree into another rather than two trees into merge base
+Date: Sat, 10 Sep 2005 20:27:28 +0200
+Message-ID: <200509102027.28812.blaisorblade@yahoo.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: catalin.marinas@gmail.com
-X-From: git-owner@vger.kernel.org Sat Sep 10 19:19:12 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Sep 10 20:31:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EE90E-0001OX-AR
-	for gcvg-git@gmane.org; Sat, 10 Sep 2005 19:18:58 +0200
+	id 1EEA79-000603-2R
+	for gcvg-git@gmane.org; Sat, 10 Sep 2005 20:30:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751062AbVIJRQz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Sep 2005 13:16:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751064AbVIJRQz
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Sep 2005 13:16:55 -0400
-Received: from web26303.mail.ukl.yahoo.com ([217.146.176.14]:3992 "HELO
-	web26303.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1751058AbVIJRQy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Sep 2005 13:16:54 -0400
-Received: (qmail 1181 invoked by uid 60001); 10 Sep 2005 17:16:33 -0000
+	id S932130AbVIJSaE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Sep 2005 14:30:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932133AbVIJSaE
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Sep 2005 14:30:04 -0400
+Received: from smtp006.mail.ukl.yahoo.com ([217.12.11.95]:27570 "HELO
+	smtp006.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S932130AbVIJSaD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Sep 2005 14:30:03 -0400
+Received: (qmail 13691 invoked from network); 10 Sep 2005 18:29:51 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=dgjO9hwmJwkw+NYDDeTLpWGdYJzuvUEnKkA22oke6Beq1rH4sQss/zbHHaoNScjAH0IePlaaTyUIj2fAjAh5h5F3ksuwcupCceGxj6Wx2sWH1aIJ/EsQ5zPK736iDn3iJ/p25Vrx0XM90Louj3XQ/1v2LwNs/GMrzrlUGg3vA6M=  ;
-Received: from [151.38.102.245] by web26303.mail.ukl.yahoo.com via HTTP; Sat, 10 Sep 2005 10:16:33 PDT
-To: git@vger.kernel.org
+  h=Received:From:To:Subject:Date:User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-Disposition:Message-Id;
+  b=v1XW9Jmbsvyt7Q1ziAwI7nIdw6FI5H5jdN0urzBTtedGnLCDy3e2xZbaQJwXv67NZBZqgqA9e4zvV30obEVahINa/enC5oZ0ZlbGuDWa0Ru7UjLLQLQKVTHobdACn7FyUSlLUD2AdcT2UUQZtsE9mCtOddqbfGUGSStdj+RZFZk=  ;
+Received: from unknown (HELO zion.home.lan) (blaisorblade@62.11.72.160 with login)
+  by smtp006.mail.ukl.yahoo.com with SMTP; 10 Sep 2005 18:29:50 -0000
+To: Catalin Marinas <catalin.marinas@gmail.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+User-Agent: KMail/1.8.1
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8257>
 
-With the help and feedback from Catalin qgit now support integration
-with StGIT:
+(Please CC me on replies as I'm not subscribed).
 
--Visualization of applied/unapplied patches in main view
+I experienced a (performance) problem with StGit, but I don't know if it's the 
+culprit or if git-merge-cache is.
 
--Push/pop patches with a mouse right click on selected items. 
- Push supports also multi-selection. (NOTE: you need a clean tree)
+Today I was pushing my patch stack (which was against Linux 2.6.13) on top of 
+the latest snapshot I have (i.e. upstream will likely have some mega of 
+patches). And it was *really* slow (say it pushed 8 patches in 5 minutes).
 
-- Commit changes to a new patch or refresh the topmost patch. 
-  Commit on StGIT has the same behavior of committing on pure 
-  git, i.e. it is possible to chose the single files to commit/refresh.
+After the analisys, it's more or less logical - it'd take more or less the 
+same time to merge upstream changes against local ones. The problem is that 
+it's not how things should go.
 
-- Apply/fold external patches through StGIT
+I looked with "top" at what was happening, and I saw a lot of time spent by 
+either gitmergeonefile.py or git-update-cache --remove*. And looking at the 
+merge algorithm, I realized it merges both HEAD and patch top into the patch 
+bottom (or something like that).
 
+I.e. if upstream rewrote everything, it will merge this rewrite into the patch 
+bottom, together with the patch itself. So, the merge time will depend on the 
+biggest of the two changed trees, not on the least one.
 
-Other important, under the hood, improvment is perfromance. QGit is much more faster 
-then previous release. On my box it's the fastest tool (not that there are many ;-) ) 
-to load the complete git linux tree.
+A more reasonable algorithm would be along "read-tree HEAD"; merge "stg diff 
+-r /" (i.e. the current patch) in it.
 
-Download link is as usual:
-http://prdownloads.sourceforge.net/qgit/qgit-0.94.tar.bz2?download
+I don't know if there's any real difference between cg-Xmergefile, 
+gitmergeonefile.py and git-merge-one-file-script, and if that would matter in 
+this case.
 
-But now there is also a git archive: 
-http://digilander.libero.it/mcostalba/qgit.git
+* About --remove, it was called on files which were present in stage1, removed 
+in stage2 (i.e. upstream) and unchanged in stage3 (i.e. patch).
 
-Please use 'cg-clone http://digilander.libero.it/mcostalba/qgit.git' if interested,
-git pull currently downloads only empty directories. Peraphs it has to do with curl 
-parameters and the settings of the site server but I didn't had the time to look closer.
+In the git-read-tree manpage (which is probably outdated), this is documented 
+as follows:
 
-If you have problems with the sources (Debian users should set QTDIR before compile) 
-you can download a binary: http://digilander.libero.it/mcostalba/qgit
+       o  stage 1 and stage 3 are the same and stage 2 is different: 
+           take stage 2 (some work has been done on stage 2)
 
+But it didn't happen, which is strange.
 
-Complete changelog below
+Additional note: in StGIT, git-read-tree is called with stage1 which is not 
+the merge base between stage2 and stage3.
 
-- added integration with StGIT:
-   1)Visualization of applied and unapplied patches in main view.
-   2)Interface to push/pop patches by a mouse right click on selected items
-     Push supports also multi-selection
-   3)Interface to new/refresh patches
-   4)Interface to patch import/fold 
+It is passed the patch bottom, the current HEAD and the patch top.
 
-- big performance improvements. qgit has been tuned for performance and responsiveness
+For the first patch, the patch bottom is the merge base, but not otherwise; so 
+differences between either stage1 or stage3, and stage2, include files 
+changed in previous patches.
 
-- updated annotate to show only interesting commits, i.e. no empty merges
+So, would stgit delete a file created in patch #1 when merge-applying patch 
+#2?
+-- 
+Inform me of my mistakes, so I can keep imitating Homer Simpson's "Doh!".
+Paolo Giarrusso, aka Blaisorblade (Skype ID "PaoloGiarrusso", ICQ 215621894)
+http://www.user-mode-linux.org/~blaisorblade
 
-- added refresh command by F5 or file->refresh to quick reload archive
+	
 
-- added a setting to disable background load of file names and load only on demand. Can be
-  useful in case of big archives and low memory. Warning, browsing of commits and
-  annotation function are greatly slowed down
-
-- updated to recent git big rename
-
-- various small bug fixes and GUI tweaks
-
-
-
-	Marco
-
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+	
+		
+___________________________________ 
+Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
+http://mail.yahoo.it
