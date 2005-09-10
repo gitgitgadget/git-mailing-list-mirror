@@ -1,63 +1,100 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: SVN import issue
-Date: Sat, 10 Sep 2005 18:23:13 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.09.10.16.23.07.865934@smurf.noris.de>
-References: <pan.2005.08.26.10.40.38.616149@smurf.noris.de> <m3fysuodbg.fsf@lugabout.cloos.reno.nv.us>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: [ANNOUNCE qgit-0.94]
+Date: Sat, 10 Sep 2005 10:16:33 -0700 (PDT)
+Message-ID: <20050910171633.1179.qmail@web26303.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Sat Sep 10 18:27:08 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: catalin.marinas@gmail.com
+X-From: git-owner@vger.kernel.org Sat Sep 10 19:19:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EE8As-0005B2-EW
-	for gcvg-git@gmane.org; Sat, 10 Sep 2005 18:25:54 +0200
+	id 1EE90E-0001OX-AR
+	for gcvg-git@gmane.org; Sat, 10 Sep 2005 19:18:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750839AbVIJQZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Sep 2005 12:25:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750872AbVIJQZs
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Sep 2005 12:25:48 -0400
-Received: from main.gmane.org ([80.91.229.2]:5015 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750839AbVIJQZr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Sep 2005 12:25:47 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EE89Z-0004qa-9u
-	for git@vger.kernel.org; Sat, 10 Sep 2005 18:24:33 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Sep 2005 18:24:33 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Sep 2005 18:24:33 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1751062AbVIJRQz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Sep 2005 13:16:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751064AbVIJRQz
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Sep 2005 13:16:55 -0400
+Received: from web26303.mail.ukl.yahoo.com ([217.146.176.14]:3992 "HELO
+	web26303.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1751058AbVIJRQy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Sep 2005 13:16:54 -0400
+Received: (qmail 1181 invoked by uid 60001); 10 Sep 2005 17:16:33 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=dgjO9hwmJwkw+NYDDeTLpWGdYJzuvUEnKkA22oke6Beq1rH4sQss/zbHHaoNScjAH0IePlaaTyUIj2fAjAh5h5F3ksuwcupCceGxj6Wx2sWH1aIJ/EsQ5zPK736iDn3iJ/p25Vrx0XM90Louj3XQ/1v2LwNs/GMrzrlUGg3vA6M=  ;
+Received: from [151.38.102.245] by web26303.mail.ukl.yahoo.com via HTTP; Sat, 10 Sep 2005 10:16:33 PDT
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8256>
 
-Hi, James Cloos wrote:
+With the help and feedback from Catalin qgit now support integration
+with StGIT:
 
-> Matthias> Paths in SVN are usually prefixed "/trunk/" (main branch) or
-> Matthias> "/branches/foo/" (branch foo); tagging is done by creating
-> Matthias> "/tags/bar", with the trunk (or branch) revision it is
-> Matthias> pointing to as its parent.
-> 
-> Anyone working on this should note that /usually/ is vital above.
+-Visualization of applied/unapplied patches in main view
 
-Thanks; I'll keep that in mind. 
+-Push/pop patches with a mouse right click on selected items. 
+ Push supports also multi-selection. (NOTE: you need a clean tree)
 
-Is it common (possible?) to have more than one of these?
+- Commit changes to a new patch or refresh the topmost patch. 
+  Commit on StGIT has the same behavior of committing on pure 
+  git, i.e. it is possible to chose the single files to commit/refresh.
 
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-There is no distinctly American criminal class except Congress.
-	-- Mark Twain
+- Apply/fold external patches through StGIT
+
+
+Other important, under the hood, improvment is perfromance. QGit is much more faster 
+then previous release. On my box it's the fastest tool (not that there are many ;-) ) 
+to load the complete git linux tree.
+
+Download link is as usual:
+http://prdownloads.sourceforge.net/qgit/qgit-0.94.tar.bz2?download
+
+But now there is also a git archive: 
+http://digilander.libero.it/mcostalba/qgit.git
+
+Please use 'cg-clone http://digilander.libero.it/mcostalba/qgit.git' if interested,
+git pull currently downloads only empty directories. Peraphs it has to do with curl 
+parameters and the settings of the site server but I didn't had the time to look closer.
+
+If you have problems with the sources (Debian users should set QTDIR before compile) 
+you can download a binary: http://digilander.libero.it/mcostalba/qgit
+
+
+Complete changelog below
+
+- added integration with StGIT:
+   1)Visualization of applied and unapplied patches in main view.
+   2)Interface to push/pop patches by a mouse right click on selected items
+     Push supports also multi-selection
+   3)Interface to new/refresh patches
+   4)Interface to patch import/fold 
+
+- big performance improvements. qgit has been tuned for performance and responsiveness
+
+- updated annotate to show only interesting commits, i.e. no empty merges
+
+- added refresh command by F5 or file->refresh to quick reload archive
+
+- added a setting to disable background load of file names and load only on demand. Can be
+  useful in case of big archives and low memory. Warning, browsing of commits and
+  annotation function are greatly slowed down
+
+- updated to recent git big rename
+
+- various small bug fixes and GUI tweaks
+
+
+
+	Marco
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
