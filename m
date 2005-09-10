@@ -1,139 +1,200 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-bisect failure
-Date: Sat, 10 Sep 2005 15:13:34 -0700
-Message-ID: <7vu0gsefld.fsf@assigned-by-dhcp.cox.net>
-References: <20050909011034.12f2bf64.akpm@osdl.org>
-	<7virx9ir3a.fsf@assigned-by-dhcp.cox.net>
-	<20050910022638.20832803.akpm@osdl.org>
-	<Pine.LNX.4.58.0509101202070.30958@g5.osdl.org>
-	<20050910141343.578649c7.akpm@osdl.org>
-	<7vfyscfvoj.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Multi-ancestor read-tree notes
+Date: Sat, 10 Sep 2005 15:50:04 -0700
+Message-ID: <7virx87d2b.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0509050049030.23242@iabervon.org>
+	<7virxeycod.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0509061228090.23242@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 11 00:15:00 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 11 00:50:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEDbr-0000cQ-T8
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 00:14:08 +0200
+	id 1EEEAn-00068P-59
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 00:50:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932321AbVIJWNl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Sep 2005 18:13:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932336AbVIJWNl
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Sep 2005 18:13:41 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:7903 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932321AbVIJWNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Sep 2005 18:13:40 -0400
+	id S932326AbVIJWuI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Sep 2005 18:50:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932347AbVIJWuI
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Sep 2005 18:50:08 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:42225 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932326AbVIJWuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Sep 2005 18:50:05 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050910221335.RRZ3588.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 10 Sep 2005 18:13:35 -0400
-To: Andrew Morton <akpm@osdl.org>
-In-Reply-To: <7vfyscfvoj.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 10 Sep 2005 14:40:44 -0700")
+          id <20050910225005.HLYA20473.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 10 Sep 2005 18:50:05 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.63.0509061228090.23242@iabervon.org> (Daniel
+	Barkalow's message of "Tue, 6 Sep 2005 13:43:08 -0400 (EDT)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8265>
 
-The one I am going to put in the "master" branch later today
-will give you the attached transcript.
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-Highlights:
+> Do you know if there's anything like case #16 in there? I'd be interested 
+> to know if there's anything that gets handled automatically in different 
+> ways depending on which single base is used, and doesn't require manual 
+> intervention with multiple bases, because that's probably wrong.
 
- * After bisecting and checking out a revision to try out, it
-   tells you which revision you are about to test.
+I was playing with a handful of non-Linus 2.6 kernel
+repositories today, and found two case #16 merges.
 
- * It keeps a log in $GIT_DIR/BISECT_LOG as you suggested.  This
-   is a shell script so you can remove everything after you want
-   to redo in an editor, save the result in a different file,
-   and run it -- do not edit the file in place and run it
-   because the re-run will overwrite the log file ;-).
+0c3e091838f02c537ccab3b6e8180091080f7df2
 
- * Even better, 'git bisect' has a new command 'replay'.  After
-   editing the log file from the previous run and saving it in a
-   different file, run 'git bisect replay $that_file'.  This
-   avoids checking things out repeatedly, only to overwrite with
-   the next revision to be tested.
+	case #16; stupid resolves the same way as the actual
+	commit, but that might mean the actual commit is bad.
 
-: siamese; git-bisect reset 
-: siamese; git-bisect good 02b3e4e2d71b6058ec11cc01c72ac651eb3ded2b
-You need to start by "git bisect start"
-Do you want me to do it for you [Y/n]? y
-: siamese; git-bisect bad 4e1491847ef5ca1c5a661601d5f96dcb7d90d2f0
-Bisecting: 901 revisions left to test after this
-[b749bfcd1be72f8cb8310e1cac12825bda029432] ppc64: update xmon helptext
-: siamese; git-bisect good b749bfcd1be72f8cb8310e1cac12825bda029432
-Bisecting: 451 revisions left to test after this
-[439c430e3d448b16112de3f3d92bef6ee2639d89] arm26: one -g is enough for everyone
-: siamese; git-bisect bad 439c430e3d448b16112de3f3d92bef6ee2639d89
-Bisecting: 219 revisions left to test after this
-[fae91e72b79ba9a21f0ce7551a1fd7e8984c85a6] I2C: Drop I2C_DEVNAME and i2c_clientname
-: siamese; git-bisect bad fae91e72b79ba9a21f0ce7551a1fd7e8984c85a6
-Bisecting: 110 revisions left to test after this
-[4c139862b8831261d57de02716b92f82e5fb463b] xtensa: delete accidental file
-: siamese; git-bisect bad 4c139862b8831261d57de02716b92f82e5fb463b
-Bisecting: 55 revisions left to test after this
-[4ad8d38342430f8b52f7a8458dce90caf8c8ca64] i386 boottime for_each_cpu broken
-: siamese; git-bisect bad 4ad8d38342430f8b52f7a8458dce90caf8c8ca64
-Bisecting: 28 revisions left to test after this
-[6fe7f2578fb4903af79abeb29bb9b9ab5eace1b5] mips: remove timex.h for vr41xx
-: siamese; git-bisect good 245067d1674d451855692fcd4647daf9fd47f82d
-Bisecting: 7 revisions left to test after this
-[0998e4228aca046fbd747c3fed909791d52e88eb] x86: privilege cleanup
-: siamese; git-bisect good 0998e4228aca046fbd747c3fed909791d52e88eb
-Bisecting: 3 revisions left to test after this
-[f2f30ebca6c0c95e987cb9a1fd1495770a75432e] x86: introduce a write acessor for updating the current LDT
-: siamese; git-bisect bad f2f30ebca6c0c95e987cb9a1fd1495770a75432e
-Bisecting: 2 revisions left to test after this
-[e9f86e351fda5b3c40192fc3990453613f160779] x86: remove redundant TSS clearing
-: siamese; cat .git/BISECT_LOG 
-git-bisect start
-# good: [02b3e4e2d71b6058ec11cc01c72ac651eb3ded2b] Linux v2.6.13
-git-bisect good 02b3e4e2d71b6058ec11cc01c72ac651eb3ded2b
-# bad: [4e1491847ef5ca1c5a661601d5f96dcb7d90d2f0] Fix up ARM serial driver compile failure
-git-bisect bad 4e1491847ef5ca1c5a661601d5f96dcb7d90d2f0
-# good: [b749bfcd1be72f8cb8310e1cac12825bda029432] ppc64: update xmon helptext
-git-bisect good b749bfcd1be72f8cb8310e1cac12825bda029432
-# bad: [439c430e3d448b16112de3f3d92bef6ee2639d89] arm26: one -g is enough for everyone
-git-bisect bad 439c430e3d448b16112de3f3d92bef6ee2639d89
-# bad: [fae91e72b79ba9a21f0ce7551a1fd7e8984c85a6] I2C: Drop I2C_DEVNAME and i2c_clientname
-git-bisect bad fae91e72b79ba9a21f0ce7551a1fd7e8984c85a6
-# bad: [4c139862b8831261d57de02716b92f82e5fb463b] xtensa: delete accidental file
-git-bisect bad 4c139862b8831261d57de02716b92f82e5fb463b
-# bad: [4ad8d38342430f8b52f7a8458dce90caf8c8ca64] i386 boottime for_each_cpu broken
-git-bisect bad 4ad8d38342430f8b52f7a8458dce90caf8c8ca64
-# good: [245067d1674d451855692fcd4647daf9fd47f82d] i386: cleanup serialize msr
-git-bisect good 245067d1674d451855692fcd4647daf9fd47f82d
-# good: [0998e4228aca046fbd747c3fed909791d52e88eb] x86: privilege cleanup
-git-bisect good 0998e4228aca046fbd747c3fed909791d52e88eb
-# bad: [f2f30ebca6c0c95e987cb9a1fd1495770a75432e] x86: introduce a write acessor for updating the current LDT
-git-bisect bad f2f30ebca6c0c95e987cb9a1fd1495770a75432e
-: siamese; sed -e '$d' .git/BISECT_LOG >./++bisect-replay ;# botched the last one
-: siamese; git-bisect reset
-: siamese; sh ./++bisect-replay ;# we could replay with shell
-Bisecting: 901 revisions left to test after this
-[b749bfcd1be72f8cb8310e1cac12825bda029432] ppc64: update xmon helptext
-Bisecting: 451 revisions left to test after this
-[439c430e3d448b16112de3f3d92bef6ee2639d89] arm26: one -g is enough for everyone
-Bisecting: 219 revisions left to test after this
-[fae91e72b79ba9a21f0ce7551a1fd7e8984c85a6] I2C: Drop I2C_DEVNAME and i2c_clientname
-Bisecting: 110 revisions left to test after this
-[4c139862b8831261d57de02716b92f82e5fb463b] xtensa: delete accidental file
-Bisecting: 55 revisions left to test after this
-[4ad8d38342430f8b52f7a8458dce90caf8c8ca64] i386 boottime for_each_cpu broken
-Bisecting: 28 revisions left to test after this
-[6fe7f2578fb4903af79abeb29bb9b9ab5eace1b5] mips: remove timex.h for vr41xx
-Bisecting: 7 revisions left to test after this
-[0998e4228aca046fbd747c3fed909791d52e88eb] x86: privilege cleanup
-Bisecting: 3 revisions left to test after this
-[f2f30ebca6c0c95e987cb9a1fd1495770a75432e] x86: introduce a write acessor for updating the current LDT
-: siamese; git-bisect reset
-: siamese; git-bisect replay ./++bisect-replay ;# but replay command is faster.
-Bisecting: 3 revisions left to test after this
-[f2f30ebca6c0c95e987cb9a1fd1495770a75432e] x86: introduce a write acessor for updating the current LDT
-: siamese; exit
+84ffa747520edd4556b136bdfc9df9eb1673ce12
+
+	case #16; stupid also fails.
+
+0c168775709faa74c1b87f1e61046e0c51ade7f3
+0e396ee43e445cb7c215a98da4e76d0ce354d9d7
+
+	These two fails both in stupid and resolve.
+
+a855f9a4d29f0ec338c337358844389171b0bae0
+
+	This one stupid fails but resolve succeeds.
+
+19925d7e0af7de645d808fd973ef99049fce52f0
+3190186362466658f01b2e354e639378ce07e1a9
+467ca22d3371f132ee225a5591a1ed0cd518cb3d
+539aeb871b52233b189ae976dfded20e14db645a
+6358924b06cd1aaa031b8ba0c33e5a15e795bef0
+cf70be167c085af820c0c2a606cab8c3ee819dc6
+da28c12089dfcfb8695b6b555cdb8e03dda2b690
+
+	These give good merges in both stupid and resolve.
+
+Here are the logs for the commits involved in the above
+experiments; some of them might be contained in only one
+maintainer tree but I do not keep track of whose tree they came
+from.  The repository I am testing in is `fetch but not merge
+many random trees derived from Linus linux-2.6' repository.
+
+----------------------------------------------------------------
+commit 0c168775709faa74c1b87f1e61046e0c51ade7f3
+tree c40fd8818c64c5d7d1d90afab0bd6ffd94505526
+parent 9bd481f85940726bf66aae5cd03c5b912ad0ae4c
+parent 9b4311eedb17fa88f02e4876cd6aa9a08e383cd6
+author Jeff Garzik <jgarzik@pobox.com> 1120106958 -0400
+committer Jeff Garzik <jgarzik@pobox.com> 1120106958 -0400
+
+    Merge upstream 2.6.13-rc1-git1 into 'ieee80211' branch of netdev-2.6.
+
+commit 0c3e091838f02c537ccab3b6e8180091080f7df2
+tree 61a407356d1e897e0badea552ce69e657cab6108
+parent 7ffacc1a2527c219b834fe226a7a55dc67ca3637
+parent a4cce10492358b33d33bb43f98284c80482037e8
+author Tony Luck <tony.luck@intel.com> 1124808655 -0700
+committer Tony Luck <tony.luck@intel.com> 1124808655 -0700
+
+    Pull release into test branch
+
+commit 0e396ee43e445cb7c215a98da4e76d0ce354d9d7
+tree a6fde6a33965abb6077420cda31e3f1fbe8d3891
+parent b8112df71cae7d6a86158caeb19d215f56c4f9ab
+parent 2089a0d38bc9c2cdd084207ebf7082b18cf4bf58
+author Linus Torvalds <torvalds@ppc970.osdl.org> 1119120155 -0700
+committer Linus Torvalds <torvalds@ppc970.osdl.org> 1119120155 -0700
+
+    Manual merge of rsync://rsync.kernel.org/pub/scm/linux/kernel/git/jgarzik/netdev-2.6.git
+    
+    This is a fixed-up version of the broken "upstream-2.6.13" branch, where
+    I re-did the manual merge of drivers/net/r8169.c by hand, and made sure
+    the history is all good.
+
+commit 19925d7e0af7de645d808fd973ef99049fce52f0
+tree 01e7bf7717582bd70fbf1ba86132c33e61d044d5
+parent cce3217e147b46ec4b7d20d922dadd3016b5fd49
+parent 85f265d887d2389376f1caa191e9682085feb76e
+author Tony Luck <tony.luck@intel.com> 1124143503 -0700
+committer Tony Luck <tony.luck@intel.com> 1124143503 -0700
+
+    Pull CONFIG_PCI description fix
+
+commit 3190186362466658f01b2e354e639378ce07e1a9
+tree 4ef50e96c385ed076465aac23f52902467e7d825
+parent 08848e446bcd2130c26945be966446389d25bcc2
+parent f60f700876cd51de9de69f3a3c865d95e287a24d
+author Tony Luck <tony.luck@intel.com> 1121628606 -0700
+committer Tony Luck <tony.luck@intel.com> 1121628606 -0700
+
+    Auto merge with rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+
+commit 467ca22d3371f132ee225a5591a1ed0cd518cb3d
+tree 0e3d6de84b4ffa379c2c7ddcebd3f55de52b9844
+parent 12725675e26d52c39e856d341035b94bf7802458
+parent 1e86d1c648508fd50e6c9960576b87906a7906ad
+author Steve French <sfrench@hera.kernel.org> 1117748543 -0700
+committer Steve French <sfrench@hera.kernel.org> 1117748543 -0700
+
+    Merge with rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+    
+
+commit 539aeb871b52233b189ae976dfded20e14db645a
+tree ad028270f2b79d74886418014f971d52cb729e11
+parent 04141b215a2a0ba7c2052b53a912c9412f2ed8ea
+parent 30d5b64b63fa69af31b2cba32e6d71d68526eec9
+author Tony Luck <tony.luck@intel.com> 1124407778 -0700
+committer Tony Luck <tony.luck@intel.com> 1124407778 -0700
+
+    Auto-update from upstream
+
+commit 6358924b06cd1aaa031b8ba0c33e5a15e795bef0
+tree 9cc45ad48ba1c1171ceb949294223839c89d1f8c
+parent 1da21e73bdc458f8131e6071072632b4c3b0430f
+parent 344a076110f4ecb16ea6d286b63be696604982ed
+author Tony Luck <tony.luck@intel.com> 1126214972 -0700
+committer Tony Luck <tony.luck@intel.com> 1126214972 -0700
+
+    Pull release into test branch
+
+commit 84ffa747520edd4556b136bdfc9df9eb1673ce12
+tree 1cfe20bd31fce1b5b3024384fcb324c3338d1d32
+parent 702c7e7626deeabb057b6f529167b65ec2eefbdb
+parent 81065e2f415af6c028eac13f481fb9e60a0b487b
+author Len Brown <len.brown@intel.com> 1124849543 -0400
+committer Len Brown <len.brown@intel.com> 1124849543 -0400
+
+    Merge from-linus to-akpm
+
+commit a855f9a4d29f0ec338c337358844389171b0bae0
+tree 211824376a8b170a8087956c8d5ec25269f2bc49
+parent 04c573e1d1625b48b3c90f988579d7835f4c55f3
+parent f505380ba7b98ec97bf25300c2a58aeae903530b
+author Tony Luck <tony.luck@intel.com> 1125729479 -0700
+committer Tony Luck <tony.luck@intel.com> 1125729479 -0700
+
+    Update from linus with manual merge for include/asm-ia64/sn/sn_sal.h
+
+commit cf70be167c085af820c0c2a606cab8c3ee819dc6
+tree 0a587cec3a6bd4fdd53fcfb75f87bc45da5d1a7f
+parent 3844dcf8faae3a163ca2d263ba6468085ffaceb8
+parent ff67b59726a8cd3549b069dfa78de2f538d3b8e3
+author Tony Luck <tony.luck@intel.com> 1125439229 -0700
+committer Tony Luck <tony.luck@intel.com> 1125439229 -0700
+
+    Pull release into test branch
+
+commit da28c12089dfcfb8695b6b555cdb8e03dda2b690
+tree b3ff509f21352ef053cb3d490cb13528090d32ac
+parent 6de7dc2c4c713d037c19aa1e310d240f16973414
+parent 577a4f8102d54b504cb22eb021b89e957e8df18f
+author Dave Kleikamp <shaggy@austin.ibm.com> 1122559416 -0500
+committer Dave Kleikamp <shaggy@austin.ibm.com> 1122559416 -0500
+
+    Merge with /home/shaggy/git/linus-clean/
+    /home/shaggy/git/linus-clean/
+    /home/shaggy/git/linus-clean/
+    
+    Signed-off-by: Dave Kleikamp <shaggy@austin.ibm.com>
