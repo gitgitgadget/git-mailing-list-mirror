@@ -1,58 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE qgit-0.94]
-Date: Sat, 10 Sep 2005 11:59:14 -0700
-Message-ID: <7vmzmkhhq5.fsf@assigned-by-dhcp.cox.net>
-References: <20050910171633.1179.qmail@web26303.mail.ukl.yahoo.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-bisect failure
+Date: Sat, 10 Sep 2005 12:07:47 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509101202070.30958@g5.osdl.org>
+References: <20050909011034.12f2bf64.akpm@osdl.org> <7virx9ir3a.fsf@assigned-by-dhcp.cox.net>
+ <20050910022638.20832803.akpm@osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 10 21:00:40 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 10 21:09:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEAZm-0005Mu-H9
-	for gcvg-git@gmane.org; Sat, 10 Sep 2005 20:59:46 +0200
+	id 1EEAhk-0006h9-8D
+	for gcvg-git@gmane.org; Sat, 10 Sep 2005 21:08:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932214AbVIJS7T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Sep 2005 14:59:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932213AbVIJS7T
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Sep 2005 14:59:19 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:44236 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932214AbVIJS7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Sep 2005 14:59:19 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050910185916.ZOIN18319.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 10 Sep 2005 14:59:16 -0400
-To: Marco Costalba <mcostalba@yahoo.it>
-In-Reply-To: <20050910171633.1179.qmail@web26303.mail.ukl.yahoo.com> (Marco
-	Costalba's message of "Sat, 10 Sep 2005 10:16:33 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750732AbVIJTH5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Sep 2005 15:07:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750748AbVIJTH5
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Sep 2005 15:07:57 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:47554 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750732AbVIJTH5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Sep 2005 15:07:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8AJ7pBo024798
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 10 Sep 2005 12:07:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8AJ7leN029758;
+	Sat, 10 Sep 2005 12:07:49 -0700
+To: Andrew Morton <akpm@osdl.org>
+In-Reply-To: <20050910022638.20832803.akpm@osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8260>
 
-Marco Costalba <mcostalba@yahoo.it> writes:
 
-> But now there is also a git archive: 
-> http://digilander.libero.it/mcostalba/qgit.git
 
-You do not seem to have the following files there:
+On Sat, 10 Sep 2005, Andrew Morton wrote:
+>
+> Junio C Hamano <junkio@cox.net> wrote:
+> >
+> > So it _might_
+> >  be possible that you said "current LDT" was bad when it was
+> >  actually good.  That is one possible explanation.
+> 
+> I agree.  Mea culpa.  Sorry.
 
-    ~mcostalba/qgit.git/info/refs
-    ~mcostalba/qgit.git/objects/info/packs 
+Well, this was actually something I hit when testign bisection too: it 
+_is_ very unforgiving of mistakes.
 
-which explains why git-fetch and git-clone do not slurp from
-there (they think the repository is broken).
+That _may_ be something fundamental (hey, the point of bisection is that
+you can get a lot of work done thanks to the log2(n) behaviour, but it
+also means that a mistake ends up being easily multiplied). But on the 
+other hand, maybe there could be nicer interfaces.
 
-These files are necessary if you publish your repository over
-http for any serious use (i.e. other than only letting people
-slurp from HEAD, known branches and/or tags, without allowing
-discovery).  Especially on a site like digilander.libero.it/
-which does not give directory index, peek into what branches
-you have by looking in ~mcostalba/qgit.git/refs/ hierarchy would
-not even work, and that is the reason why you need to have these
-files to help the downloaders.
+In particular, I suspect that we should save off the sequence of good/bad 
+markers, so that it can be more easily re-created. Right now we only track 
+the last "bad" marker, and we don't keep track of the order of the ones 
+marked good. That's technically _sufficient_ for the job, but maybe we 
+should have more of an audit trail.
+
+With an audit trail, people could re-do the bisection if something goes 
+wrong. Right now, if you by mistake mark something bad, and you 
+immediately realize that it was a mistake, you can't undo it - because the 
+old bad state was overwritten.
+
+So the bisection algorithm may have done the right thing from a technical 
+standpoint, but I suspect it could be made to be a bit more forgiving, or 
+at least when somebody realizes that bisection didn't work right, we could 
+have the trail of good/bad markings to try to debug what happened...
+
+		Linus
