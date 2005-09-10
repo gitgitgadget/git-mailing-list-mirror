@@ -1,80 +1,58 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [ANNOUNCE qgit-0.94]
-Date: Sat, 10 Sep 2005 20:33:01 +0200
-Message-ID: <20050910183301.GQ15165MdfPADPa@greensroom.kotnet.org>
+Date: Sat, 10 Sep 2005 11:59:14 -0700
+Message-ID: <7vmzmkhhq5.fsf@assigned-by-dhcp.cox.net>
 References: <20050910171633.1179.qmail@web26303.mail.ukl.yahoo.com>
-Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, catalin.marinas@gmail.com
-X-From: git-owner@vger.kernel.org Sat Sep 10 20:34:07 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 10 21:00:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEAAM-0006wN-2t
-	for gcvg-git@gmane.org; Sat, 10 Sep 2005 20:33:30 +0200
+	id 1EEAZm-0005Mu-H9
+	for gcvg-git@gmane.org; Sat, 10 Sep 2005 20:59:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932087AbVIJSd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Sep 2005 14:33:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932138AbVIJSd1
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Sep 2005 14:33:27 -0400
-Received: from smtp14.wxs.nl ([195.121.6.28]:17373 "EHLO smtp14.wxs.nl")
-	by vger.kernel.org with ESMTP id S932087AbVIJSd1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Sep 2005 14:33:27 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp14.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0IMM00KLZ672JP@smtp14.wxs.nl> for git@vger.kernel.org; Sat,
- 10 Sep 2005 20:33:02 +0200 (CEST)
-Received: (qmail 25952 invoked by uid 500); Sat, 10 Sep 2005 18:33:01 +0000
-In-reply-to: <20050910171633.1179.qmail@web26303.mail.ukl.yahoo.com>
+	id S932214AbVIJS7T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Sep 2005 14:59:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932213AbVIJS7T
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Sep 2005 14:59:19 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:44236 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932214AbVIJS7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Sep 2005 14:59:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050910185916.ZOIN18319.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 10 Sep 2005 14:59:16 -0400
 To: Marco Costalba <mcostalba@yahoo.it>
-Mail-followup-to: Marco Costalba <mcostalba@yahoo.it>, git@vger.kernel.org,
- catalin.marinas@gmail.com
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+In-Reply-To: <20050910171633.1179.qmail@web26303.mail.ukl.yahoo.com> (Marco
+	Costalba's message of "Sat, 10 Sep 2005 10:16:33 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8259>
 
-On Sat, Sep 10, 2005 at 10:16:33AM -0700, Marco Costalba wrote:
-> If you have problems with the sources (Debian users should set QTDIR before compile) 
-> you can download a binary: http://digilander.libero.it/mcostalba/qgit
+Marco Costalba <mcostalba@yahoo.it> writes:
 
-I'd prefer compiling it myself, but I get this error:
+> But now there is also a git archive: 
+> http://digilander.libero.it/mcostalba/qgit.git
 
-bash-3.00$ make
-scons
-scons: Reading SConscript files ...
-scons: done reading SConscript files.
-scons: Building targets ...
-g++ -O2 -DQT_THREAD_SUPPORT -D_REENTRANT -I/usr/include/qt3 -I/usr/lib/qt3/include -c -o src/annotate.o src/annotate.cpp
-src/annotate.cpp: In member function `void Annotate::run(const QString&, 
-   QStringList&, AnnotateHistory&)':
-src/annotate.cpp:60: error: `count' undeclared (first use this function)
-src/annotate.cpp:60: error: (Each undeclared identifier is reported only once 
-   for each function it appears in.)
-src/annotate.cpp: In member function `void 
-   Annotate::getReachability(ReachList&, const QString&, QStringList&)':
-src/annotate.cpp:161: error: `append' undeclared (first use this function)
-src/annotate.cpp:169: error: `last' undeclared (first use this function)
-src/annotate.cpp: In member function `QString Annotate::getRoot(const QString&, 
-   const ReachList&)':
-src/annotate.cpp:228: error: `count' undeclared (first use this function)
-src/annotate.cpp: In member function `void Annotate::printReachList(const 
-   ReachList&)':
-src/annotate.cpp:303: error: `count' undeclared (first use this function)
-src/annotate.cpp: In member function `QString Annotate::getAuthor(const 
-   QString&, QStringList&, int)':
-src/annotate.cpp:337: error: no matching function for call to `QString::remove(
-   char)'
-/usr/lib/qt3/include/qstring.h:497: error: candidates are: QString& 
-   QString::remove(unsigned int, unsigned int)
-scons: *** [src/annotate.o] Error 1
-scons: building terminated because of errors.
-make: *** [all] Error 2
+You do not seem to have the following files there:
 
-ReachList doesn't seem to be defined anywhere.
+    ~mcostalba/qgit.git/info/refs
+    ~mcostalba/qgit.git/objects/info/packs 
 
-skimo
+which explains why git-fetch and git-clone do not slurp from
+there (they think the repository is broken).
+
+These files are necessary if you publish your repository over
+http for any serious use (i.e. other than only letting people
+slurp from HEAD, known branches and/or tags, without allowing
+discovery).  Especially on a site like digilander.libero.it/
+which does not give directory index, peek into what branches
+you have by looking in ~mcostalba/qgit.git/refs/ hierarchy would
+not even work, and that is the reason why you need to have these
+files to help the downloaders.
