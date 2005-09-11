@@ -1,76 +1,68 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Status of Mac OS/X ports of git and cogito?
-Date: Sun, 11 Sep 2005 14:43:40 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509111427190.23242@iabervon.org>
-References: <deofnh$jl0$1@sea.gmane.org> <7vd5o03uof.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0509111159190.32555@wgmdd8.biozentrum.uni-wuerzburg.de>
- <7vvf17tsoa.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fix pulling into the same branch.
+Date: Sun, 11 Sep 2005 11:41:45 -0700
+Message-ID: <7vvf17saza.fsf@assigned-by-dhcp.cox.net>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F043BA469@scsmsx401.amr.corp.intel.com>
+	<7vzmr43vix.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0509111153380.32555@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<7vk6hntslb.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509111054590.3242@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	John Ellson <ellson@research.att.com>, git@vger.kernel.org,
-	Patrick Mauritz <oxygene@studentenbude.ath.cx>,
-	Jason Riedy <ejr@EECS.Berkeley.EDU>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Sep 11 20:41:22 2005
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 11 20:43:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEWjr-0001DK-Rb
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 20:39:40 +0200
+	id 1EEWly-0001im-NJ
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 20:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751081AbVIKSjh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 14:39:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbVIKSjh
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 14:39:37 -0400
-Received: from iabervon.org ([66.92.72.58]:34060 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751081AbVIKSjh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 14:39:37 -0400
-Received: (qmail 18132 invoked by uid 1000); 11 Sep 2005 14:43:40 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 11 Sep 2005 14:43:40 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vvf17tsoa.fsf@assigned-by-dhcp.cox.net>
+	id S1751113AbVIKSls (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 14:41:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751115AbVIKSls
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 14:41:48 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:62421 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751113AbVIKSlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2005 14:41:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050911184147.DOLL17436.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 11 Sep 2005 14:41:47 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509111054590.3242@g5.osdl.org> (Linus Torvalds's
+	message of "Sun, 11 Sep 2005 10:58:00 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8318>
 
-On Sun, 11 Sep 2005, Junio C Hamano wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> Patrick and Jason CC:'ed because they also have portability
-> issues and seem to have good ideas about how they should be
-> solved.  Linus CC:'ed because he once expressed rather strongly
-> his dislike about autoconf.
-> 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > I have three fixes in my personal tree without which git refuses to 
-> > compile:
-> >
-> > - daemon.c needs a define or typedef for socklen_t.
-> 
-> I still keep that patch around (the patch was end of July), but
-> have not touched it only because I did not hear from you asking
-> about its inclusion.
-> 
-> > - mailinfo.c needs to have a simple strcasestr implementation, because 
-> >   10.2.8 (at least in my setup) is lacking it!
-> 
-> Yes, I've used it knowing that it is marked as a GNU extension,
-> hoping if somebody else can supply a patch to work it around ;-).
-> 
-> I am slightly reluctant to do autoconf [*1*], but I might be
-> tempted to take patches if it is done cleanly.
+> On Sun, 11 Sep 2005, Junio C Hamano wrote:
+>> 
+>> Yes, but the issue becomes how we can reliably tell if a
+>> repository is naked or has an associated working tree.
+>
+> You can't "git pull" into a naked thing anyway. And
+>
+> 	git-read-tree -m -u <old-head> <new-head>
+>
+> should always do the right thing (ie if there is dirty state that would be
+> updated, it will fail gracefully).
+>
+> Or did I miss something?
 
-I've never noticed autoconf successfully improving portability, and it 
-seems to mostly obfuscate errors. E.g., the GNU binutils I was trying to 
-build recently, if you don't have "msgfmt", helpfully runs "no" instead. 
-Of course, that's autoconf being misused, but if binutils can't use it 
-correctly, I doubt any other project can keep from messing up.
+No, I just stated my view poorly.
 
-Compatibility workarounds with simple detection scripts invoked by people 
-who find they actually need workarounds are probably best.
-
-	-Daniel
-*This .sig left intentionally blank*
+You cannot do pull into a naked one, but you can still fetch
+into it.  My comment Johannes was responding to was what to do
+when you do 'git fetch' into the repository associated with your
+working tree and your branch is fast forwarded.  We obviously
+want to prevent it from happening.  However, it is OK to do so
+if the fetch is happening into a naked one and I was wondering
+if there is a reliable way to tell that situation and allowing
+that.
