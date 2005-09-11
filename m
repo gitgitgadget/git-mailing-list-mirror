@@ -1,67 +1,46 @@
-From: Qingning Huo <qhuo@mayhq.co.uk>
-Subject: [PATCH] Fix buffer overflow in ce_flush().
-Date: Sun, 11 Sep 2005 14:27:47 +0100
-Message-ID: <20050911132747.GA26401@mayhq.zapto.org>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [ANNOUNCE qgit-0.94]
+Date: Sun, 11 Sep 2005 16:23:23 +0200
+Message-ID: <20050911142323.GS15165MdfPADPa@greensroom.kotnet.org>
+References: <20050911091832.16214.qmail@web26306.mail.ukl.yahoo.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 11 15:28:15 2005
+X-From: git-owner@vger.kernel.org Sun Sep 11 16:25:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EERsJ-00057m-RZ
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 15:28:05 +0200
+	id 1EESkT-0001xi-71
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 16:24:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750813AbVIKN2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 09:28:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750817AbVIKN2A
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 09:28:00 -0400
-Received: from mta09-winn.ispmail.ntl.com ([81.103.221.49]:15331 "EHLO
-	mta09-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S1750813AbVIKN17 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2005 09:27:59 -0400
-Received: from aamta12-winn.ispmail.ntl.com ([81.103.221.35])
-          by mta09-winn.ispmail.ntl.com with ESMTP
-          id <20050911132750.IODJ9239.mta09-winn.ispmail.ntl.com@aamta12-winn.ispmail.ntl.com>
-          for <git@vger.kernel.org>; Sun, 11 Sep 2005 14:27:50 +0100
-Received: from mayhq.zapto.org ([82.2.192.87])
-          by aamta12-winn.ispmail.ntl.com with SMTP
-          id <20050911132750.UNMH24380.aamta12-winn.ispmail.ntl.com@mayhq.zapto.org>
-          for <git@vger.kernel.org>; Sun, 11 Sep 2005 14:27:50 +0100
-Received: (qmail 26416 invoked by uid 1000); 11 Sep 2005 13:27:47 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
+	id S932385AbVIKOXa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 10:23:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932320AbVIKOXa
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 10:23:30 -0400
+Received: from smtp18.wxs.nl ([195.121.6.14]:39632 "EHLO smtp18.wxs.nl")
+	by vger.kernel.org with ESMTP id S932395AbVIKOX3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 10:23:29 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp18.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0IMN002XVPAZ8X@smtp18.wxs.nl> for git@vger.kernel.org; Sun,
+ 11 Sep 2005 16:23:23 +0200 (CEST)
+Received: (qmail 22006 invoked by uid 500); Sun, 11 Sep 2005 14:23:23 +0000
+In-reply-to: <20050911091832.16214.qmail@web26306.mail.ukl.yahoo.com>
+To: Marco Costalba <mcostalba@yahoo.it>
+Mail-followup-to: Marco Costalba <mcostalba@yahoo.it>, git@vger.kernel.org
+Content-disposition: inline
 User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8295>
 
-Fix buffer overflow in ce_flush().
+On Sun, Sep 11, 2005 at 02:18:32AM -0700, Marco Costalba wrote:
+> Please remove qt4 and install qt3-devel-3.3.4
 
-Add a check before appending SHA1 signature to write_buffer,
-flush it first if necessary.
+Maybe you should mention this in the README
+as well as the fact that you apparently need to compile the -mt version.
 
----
-
- read-cache.c |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
-
-ca84fa808ba3a314d3d9ea5cfb7b8c2462249ca3
-diff --git a/read-cache.c b/read-cache.c
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -462,6 +462,13 @@ static int ce_flush(SHA_CTX *context, in
- 		SHA1_Update(context, write_buffer, left);
- 	}
- 
-+	/* Flush first if not enough space for SHA1 signature */
-+	if (left + 20 > WRITE_BUFFER_SIZE) {
-+		if (write(fd, write_buffer, left) != left)
-+			return -1;
-+		left = 0;
-+	}
-+
- 	/* Append the SHA1 signature at the end */
- 	SHA1_Final(write_buffer + left, context);
- 	left += 20;
+skimo
