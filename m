@@ -1,82 +1,80 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix pulling into the same branch.
-Date: Mon, 12 Sep 2005 01:15:34 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0509120113380.10414@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F043BA469@scsmsx401.amr.corp.intel.com>
- <7vzmr43vix.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0509111153380.32555@wgmdd8.biozentrum.uni-wuerzburg.de>
- <7vk6hntslb.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Status of Mac OS/X ports of git and cogito?
+Date: Mon, 12 Sep 2005 01:18:35 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0509120115500.10414@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <deofnh$jl0$1@sea.gmane.org> <7vd5o03uof.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0509111159190.32555@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <7vvf17tsoa.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509111043430.3242@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 12 01:16:07 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	John Ellson <ellson@research.att.com>, git@vger.kernel.org,
+	Patrick Mauritz <oxygene@studentenbude.ath.cx>,
+	Jason Riedy <ejr@EECS.Berkeley.EDU>
+X-From: git-owner@vger.kernel.org Mon Sep 12 01:19:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEb2x-0000a4-2x
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 01:15:39 +0200
+	id 1EEb5s-0001at-UT
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 01:18:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750985AbVIKXPg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 19:15:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751046AbVIKXPg
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 19:15:36 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:45525 "EHLO
+	id S1751055AbVIKXSi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 19:18:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751059AbVIKXSi
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 19:18:38 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:51413 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750985AbVIKXPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2005 19:15:36 -0400
+	id S1751054AbVIKXSh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2005 19:18:37 -0400
 Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 2FA04E23F7; Mon, 12 Sep 2005 01:15:35 +0200 (CEST)
+	id 73612136814; Mon, 12 Sep 2005 01:18:36 +0200 (CEST)
 Received: from virusscan (localhost [127.0.0.1])
 	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 10C65B2D18; Mon, 12 Sep 2005 01:15:35 +0200 (CEST)
+	id 549C9B2D18; Mon, 12 Sep 2005 01:18:36 +0200 (CEST)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
 	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E36C858FE3; Mon, 12 Sep 2005 01:15:34 +0200 (CEST)
+	id 2C32958FC0; Mon, 12 Sep 2005 01:18:36 +0200 (CEST)
 Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D2CF3E23F7; Mon, 12 Sep 2005 01:15:34 +0200 (CEST)
+	id 85EE2136814; Mon, 12 Sep 2005 01:18:35 +0200 (CEST)
 X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk6hntslb.fsf@assigned-by-dhcp.cox.net>
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509111043430.3242@g5.osdl.org>
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8340>
 
 Hi,
 
-On Sun, 11 Sep 2005, Junio C Hamano wrote:
+On Sun, 11 Sep 2005, Linus Torvalds wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> I personally think autoconf is the devils tool, and have had much more 
+> luck with
 > 
-> > On Fri, 26 Aug 2005, Junio C Hamano wrote:
-> >
-> >> Johannes, what do you think, as the original advocate of "push in
-> >> reverse"?
-> >
-> > I'm fine with it.
+>  - creating "compat" libraries that implement functions that some 
+>    configurations don't have.
 > 
-> Wow, blast from the past ;-).
+>    Sometimes this involves renaming the function, in order to avoid 
+>    clashes with broken implementations of same.
 
-Sorry, I tried to relax for two weeks. That didn't work, though (pun 
-intended).
+That was the original idea of autoconf...
 
-> > Although it might make more sense to check for dirty state, and 
-> > fast-forward only for a clean state (together with a checkout of the new 
-> > HEAD).
-> 
-> Yes, but the issue becomes how we can reliably tell if a
-> repository is naked or has an associated working tree.  I've
-> seen people rsync only .git subdirectory of their live working
-> tree to publish to a public repository, which means their pulic
-> repository has <project>.git/index file, so it is kind of
-> tricky.
+>  - just ignoring the really broken systems (old HP-UX etc is terminally 
+>    diseased, and simply not worth worrying about)
 
-I think it is easy to discern the two states "up to date checkout" and 
-"dirty checkout or no checkout at all". But then, you're right: git fetch 
-should not touch the working copy.
+... which is sometimes no option.
+
+> autoconf generates an unreadable mess that can't be fixed. Doing it by 
+> hand at least means you can fix it.
+
+A real pity! autoconf showed great promise in the first days. But then 
+they started using m4 and other crud crept in.
+
+All that said, autoconf still makes it easy to make a program or library 
+portable. However, for git it would be overkill.
 
 Ciao,
 Dscho
