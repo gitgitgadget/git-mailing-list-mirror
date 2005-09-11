@@ -1,62 +1,67 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: bogus merges
-Date: Sun, 11 Sep 2005 23:48:10 +1200
-Message-ID: <46a038f905091104483cc01a11@mail.gmail.com>
-References: <59a6e58305090507387d412b3d@mail.gmail.com>
-	 <Pine.LNX.4.58.0509050853080.3568@evo.osdl.org>
-	 <20050911112130.A7510@flint.arm.linux.org.uk>
-Reply-To: martin.langhoff@gmail.com
+From: Qingning Huo <qhuo@mayhq.co.uk>
+Subject: [PATCH] Fix buffer overflow in ce_flush().
+Date: Sun, 11 Sep 2005 14:27:47 +0100
+Message-ID: <20050911132747.GA26401@mayhq.zapto.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>, Wayne Scott <wsc9tt@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 11 13:49:10 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 11 15:28:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEQJl-00037l-Eo
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 13:48:17 +0200
+	id 1EERsJ-00057m-RZ
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 15:28:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932440AbVIKLsO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 07:48:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932456AbVIKLsO
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 07:48:14 -0400
-Received: from rproxy.gmail.com ([64.233.170.206]:33047 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932440AbVIKLsN convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2005 07:48:13 -0400
-Received: by rproxy.gmail.com with SMTP id i8so250885rne
-        for <git@vger.kernel.org>; Sun, 11 Sep 2005 04:48:10 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YQB+C2OJzZ3PIGC7XFcoJnZKWVTS68I9c6w7z6zbt194lA1+NfTglam24bbZ+nWSKOKvwxbiwyzDTcS1uJrbWg1i6Iv4P96kcpOo5hQiAe5zYUVr+rMJ+3UyqXXEg+Cppn8ynVjfMklm2/u3by7AU64QTBmb10tH4gCFu1FiUCQ=
-Received: by 10.38.209.4 with SMTP id h4mr198050rng;
-        Sun, 11 Sep 2005 04:48:10 -0700 (PDT)
-Received: by 10.38.101.53 with HTTP; Sun, 11 Sep 2005 04:48:10 -0700 (PDT)
-To: Russell King <rmk@arm.linux.org.uk>
-In-Reply-To: <20050911112130.A7510@flint.arm.linux.org.uk>
+	id S1750813AbVIKN2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 09:28:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750817AbVIKN2A
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 09:28:00 -0400
+Received: from mta09-winn.ispmail.ntl.com ([81.103.221.49]:15331 "EHLO
+	mta09-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S1750813AbVIKN17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2005 09:27:59 -0400
+Received: from aamta12-winn.ispmail.ntl.com ([81.103.221.35])
+          by mta09-winn.ispmail.ntl.com with ESMTP
+          id <20050911132750.IODJ9239.mta09-winn.ispmail.ntl.com@aamta12-winn.ispmail.ntl.com>
+          for <git@vger.kernel.org>; Sun, 11 Sep 2005 14:27:50 +0100
+Received: from mayhq.zapto.org ([82.2.192.87])
+          by aamta12-winn.ispmail.ntl.com with SMTP
+          id <20050911132750.UNMH24380.aamta12-winn.ispmail.ntl.com@mayhq.zapto.org>
+          for <git@vger.kernel.org>; Sun, 11 Sep 2005 14:27:50 +0100
+Received: (qmail 26416 invoked by uid 1000); 11 Sep 2005 13:27:47 -0000
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8294>
 
-On 9/11/05, Russell King <rmk@arm.linux.org.uk> wrote:
-> On Mon, Sep 05, 2005 at 09:01:32AM -0700, Linus Torvalds wrote:
-> > I suspect rmk is using cogito-0.13
-> 
-> Correct, and rmk will probably be extremely nervous about upgrading when
-> 0.14 appears.
+Fix buffer overflow in ce_flush().
 
-Well, *actually* cogito-0.13 didn't include git-core, so we have to
-look for the reasons elsewhere. Could be the leftover MERGE_HEAD
-Daniel mentions.
+Add a check before appending SHA1 signature to write_buffer,
+flush it first if necessary.
 
-Russel, can you confirm what git-core version you are/were running?
+---
 
-cheers,.
+ read-cache.c |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-
-martin
+ca84fa808ba3a314d3d9ea5cfb7b8c2462249ca3
+diff --git a/read-cache.c b/read-cache.c
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -462,6 +462,13 @@ static int ce_flush(SHA_CTX *context, in
+ 		SHA1_Update(context, write_buffer, left);
+ 	}
+ 
++	/* Flush first if not enough space for SHA1 signature */
++	if (left + 20 > WRITE_BUFFER_SIZE) {
++		if (write(fd, write_buffer, left) != left)
++			return -1;
++		left = 0;
++	}
++
+ 	/* Append the SHA1 signature at the end */
+ 	SHA1_Final(write_buffer + left, context);
+ 	left += 20;
