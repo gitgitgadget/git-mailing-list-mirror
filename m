@@ -1,53 +1,61 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Status of Mac OS/X ports of git and cogito?
-Date: Sun, 11 Sep 2005 14:16:56 -0400
-Message-ID: <43247498.40307@gmail.com>
-References: <deofnh$jl0$1@sea.gmane.org> <7vd5o03uof.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0509111159190.32555@wgmdd8.biozentrum.uni-wuerzburg.de> <7vvf17tsoa.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509111043430.3242@g5.osdl.org>
-Reply-To: gitzilla@gmail.com
+From: Nathan Laredo <laredo@hera.kernel.org>
+Subject: Re: git problems on Kernel.org?
+Date: Sun, 11 Sep 2005 11:26:04 -0700
+Message-ID: <20050911182604.GB14417@hera.kernel.org>
+References: <4323E3C0.1090109@tuxrocks.com> <4324531B.3080209@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Sep 11 20:20:38 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Frank Sorenson <frank@tuxrocks.com>, webmaster@kernel.org,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 11 20:27:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEWQZ-00036X-HC
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 20:19:43 +0200
+	id 1EEWWt-0005Xs-Hf
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 20:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965005AbVIKSRA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 14:17:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965010AbVIKSRA
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 14:17:00 -0400
-Received: from wproxy.gmail.com ([64.233.184.196]:729 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965005AbVIKSQ7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 14:16:59 -0400
-Received: by wproxy.gmail.com with SMTP id i2so1691132wra
-        for <git@vger.kernel.org>; Sun, 11 Sep 2005 11:16:58 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=HguuGZKHFtFmrjhKQYd2vnRPgrCVjVloSkpq6eqhUhOaxxT5YYHROZ3tP6Vp5wo7DCihToIjhqrAUi5Iu37Bu2CpLer3+Lqqro2N+sCD/+DUHduXCUElVbTN6AUp1HyjmoaW2MLHxtVBhFMDMzYFSrxAG26MRN+nXxl9bzvzDaw=
-Received: by 10.54.4.14 with SMTP id 14mr1971988wrd;
-        Sun, 11 Sep 2005 11:16:58 -0700 (PDT)
-Received: from ?10.0.0.6? ( [70.89.97.97])
-        by mx.gmail.com with ESMTP id 7sm114252wrl.2005.09.11.11.16.58;
-        Sun, 11 Sep 2005 11:16:58 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.58.0509111043430.3242@g5.osdl.org>
+	id S964997AbVIKS0N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 14:26:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965021AbVIKS0M
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 14:26:12 -0400
+Received: from hera.kernel.org ([209.128.68.125]:28126 "EHLO hera.kernel.org")
+	by vger.kernel.org with ESMTP id S964997AbVIKS0L (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 14:26:11 -0400
+Received: from hera.kernel.org (localhost [127.0.0.1])
+	by hera.kernel.org (8.13.1/8.13.1) with ESMTP id j8BIQ4W1014650;
+	Sun, 11 Sep 2005 11:26:04 -0700
+Received: (from laredo@localhost)
+	by hera.kernel.org (8.13.1/8.13.1/Submit) id j8BIQ4eX014649;
+	Sun, 11 Sep 2005 11:26:04 -0700
+To: A Large Angry SCM <gitzilla@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <4324531B.3080209@gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-6.7 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on hera.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8314>
 
-Linus Torvalds wrote:
+On Sun, Sep 11, 2005 at 11:54:03AM -0400, A Large Angry SCM wrote:
+> >This is probably a temporary error that will periodically (and 
+> >probably very rarely) occur when pulling from a source with more 
+> >than a single IP and some lag before the mirror is updated.
+> >
+> >Is this an issue that we need to watch for and program around (other
+> >than forcing www.kernel.org's IP in /etc/hosts), or is it just one of
+> >those things that should be such a rare occurrance that we shouldn't
+> >have to worry about it?
 > 
-[regarding autoconf]
-> 
-> But hey, I don't care that much any more, since I'm not the sucker who 
-> maintains it ;)
+> From a gitweb perspective, one of the servers appears to be about 24 
+> hours out of date as of Sun Sep 11 15:50:53 UTC 2005. Broken rsync process?
 
-OK, this is just _evil_ coming from you since we all know that you _do_ 
-care, even if you don't maintain it. :-)
+The filesystem on one of the machines got remounted read-only, so
+nothing was being updated.
+
+-- Nathan Laredo
+laredo@kernel.org
