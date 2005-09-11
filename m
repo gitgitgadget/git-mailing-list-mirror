@@ -1,70 +1,53 @@
-From: Roland Dreier <rolandd@cisco.com>
-Subject: Re: What's up with the GIT archive on www.kernel.org?
-Date: Sun, 11 Sep 2005 14:09:30 -0700
-Message-ID: <52irx7cnw5.fsf@cisco.com>
-References: <m3mzmjvbh7.fsf@telia.com>
-	<Pine.LNX.4.58.0509110908590.4912@g5.osdl.org>
-	<20050911185711.GA22556@mars.ravnborg.org>
-	<Pine.LNX.4.58.0509111157360.3242@g5.osdl.org>
-	<20050911194630.GB22951@mars.ravnborg.org>
-	<Pine.LNX.4.58.0509111251150.3242@g5.osdl.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] Omit patches that have already been merged from format-patch output.
+Date: Mon, 12 Sep 2005 09:08:45 +1200
+Message-ID: <46a038f90509111408f9479e2@mail.gmail.com>
+References: <46a038f905091101529e045af@mail.gmail.com>
+	 <7voe6zqr9y.fsf@assigned-by-dhcp.cox.net>
+Reply-To: martin.langhoff@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sam Ravnborg <sam@ravnborg.org>,
-	Peter Osterlund <petero2@telia.com>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 11 23:10:16 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Sep 11 23:10:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEZ52-0003dz-6q
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 23:09:40 +0200
+	id 1EEZ4C-0003QY-WC
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 23:08:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750867AbVIKVJh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 17:09:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750900AbVIKVJh
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 17:09:37 -0400
-Received: from ams-iport-1.cisco.com ([144.254.224.140]:31410 "EHLO
-	ams-iport-1.cisco.com") by vger.kernel.org with ESMTP
-	id S1750867AbVIKVJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2005 17:09:36 -0400
-Received: from ams-core-1.cisco.com ([144.254.224.150])
-  by ams-iport-1.cisco.com with ESMTP; 11 Sep 2005 23:09:36 +0200
-Received: from xbh-ams-332.emea.cisco.com (xbh-ams-332.cisco.com [144.254.231.87])
-	by ams-core-1.cisco.com (8.12.10/8.12.6) with ESMTP id j8BL9WVP013895;
-	Sun, 11 Sep 2005 23:09:32 +0200 (MEST)
-Received: from xfe-ams-331.emea.cisco.com ([144.254.231.72]) by xbh-ams-332.emea.cisco.com with Microsoft SMTPSVC(6.0.3790.0);
-	 Sun, 11 Sep 2005 23:09:31 +0200
-Received: from localhost.localdomain ([171.70.33.55]) by xfe-ams-331.emea.cisco.com with Microsoft SMTPSVC(6.0.3790.0);
-	 Sun, 11 Sep 2005 23:09:31 +0200
-Received: by localhost.localdomain (Postfix, from userid 1113)
-	id 347C94FE46; Sun, 11 Sep 2005 14:09:30 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-X-Message-Flag: Warning: May contain useful information
-In-Reply-To: <Pine.LNX.4.58.0509111251150.3242@g5.osdl.org> (Linus
- Torvalds's message of "Sun, 11 Sep 2005 12:56:12 -0700 (PDT)")
-User-Agent: Gnus/5.1006 (Gnus v5.10.6) XEmacs/21.4 (Jumbo Shrimp, linux)
-X-OriginalArrivalTime: 11 Sep 2005 21:09:31.0534 (UTC) FILETIME=[1A6AF2E0:01C5B715]
+	id S1750873AbVIKVIq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 17:08:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750898AbVIKVIq
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 17:08:46 -0400
+Received: from rproxy.gmail.com ([64.233.170.198]:44452 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750873AbVIKVIp convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2005 17:08:45 -0400
+Received: by rproxy.gmail.com with SMTP id i8so279728rne
+        for <git@vger.kernel.org>; Sun, 11 Sep 2005 14:08:45 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SFadNKqBJsCLAMbnZ12AlHt7x1nrUmf4KGa7LwbGhvxNWi5HzZ7CPBhqjkcdU0UaM/ZawI85TV1+kc69UiAe/N25nn6q3fqCDMNBkRSSeVw/VRuge7tJ9mid7NtIVk423nGrgEq72A/h/StUA0v1sAp1mXGaP6MjvRnjes4PELE=
+Received: by 10.38.209.6 with SMTP id h6mr230533rng;
+        Sun, 11 Sep 2005 14:08:45 -0700 (PDT)
+Received: by 10.38.101.53 with HTTP; Sun, 11 Sep 2005 14:08:45 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7voe6zqr9y.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8332>
 
-    Linus> You can try removing all the packs in your
-    Linus> .git/objects/packs directory. Everything _should_ still
-    Linus> work fine.
+>  git-cherry).  One thing I am reluctant about this is it breaks the
+>  exact example Johannes just posted.
 
-Does "everything" include someone doing
+Well, Johannes example didn't work at all for me. Output was empty,
+when I was expecting 4~6 entries.
 
-    git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/roland/whatever.git
+cheers,
 
-How about http:// instead of rsync://?
-
-In other words, is the git network transport smart enough to handle
-the alternates path?
-
-Or is the idea that everyone will clone your tree and then pull extra
-stuff from other trees?
-
- - R.
+martin
