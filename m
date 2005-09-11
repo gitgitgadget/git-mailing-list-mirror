@@ -1,71 +1,58 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: git problems on Kernel.org?
-Date: Sun, 11 Sep 2005 11:54:03 -0400
-Message-ID: <4324531B.3080209@gmail.com>
-References: <4323E3C0.1090109@tuxrocks.com>
-Reply-To: gitzilla@gmail.com
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [RFC] GIT Repository Annotation Convention
+Date: Sun, 11 Sep 2005 18:37:24 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.09.11.16.37.20.483911@smurf.noris.de>
+References: <87ll2aib73.fsf@gmail.com> <431DA8CD.9060009@gmail.com> <432060B8.6080408@gmail.com> <7vr7bzv3r2.fsf@assigned-by-dhcp.cox.net> <432089D5.7000102@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 11 17:55:02 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Sun Sep 11 18:42:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEU9p-00013K-Tg
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 17:54:18 +0200
+	id 1EEUsb-0005rn-R1
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 18:40:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964816AbVIKPyM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 11:54:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964827AbVIKPyM
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 11:54:12 -0400
-Received: from wproxy.gmail.com ([64.233.184.207]:19269 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964816AbVIKPyM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 11:54:12 -0400
-Received: by wproxy.gmail.com with SMTP id 71so224880wri
-        for <git@vger.kernel.org>; Sun, 11 Sep 2005 08:54:04 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=CS8T7bdtNRWwBvEL8Ijl6E/exlXRTylCrLJx4AgFhN3VgqZ3XROv+WfD3jmXtOlhGeqygiaSbRaLNOEh0l8t+MRlJrE+mEWDtuDjnaRT7FIK06TAKkjGByNWYFpBnKR1+S7wxSN6nDklIH9MqHkZW+xCBJ36TUfU8xPN1IBUvKo=
-Received: by 10.54.33.50 with SMTP id g50mr1864310wrg;
-        Sun, 11 Sep 2005 08:54:04 -0700 (PDT)
-Received: from ?10.0.0.6? ( [70.89.97.97])
-        by mx.gmail.com with ESMTP id d8sm378173wra.2005.09.11.08.54.04;
-        Sun, 11 Sep 2005 08:54:04 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: Frank Sorenson <frank@tuxrocks.com>, webmaster@kernel.org
-In-Reply-To: <4323E3C0.1090109@tuxrocks.com>
+	id S964806AbVIKQkb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 12:40:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964871AbVIKQkb
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 12:40:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:16002 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964806AbVIKQka (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 12:40:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EEUrW-0005Iq-3z
+	for git@vger.kernel.org; Sun, 11 Sep 2005 18:39:26 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 11 Sep 2005 18:39:26 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 11 Sep 2005 18:39:26 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8299>
 
-Frank Sorenson wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Something appears to be something odd going on with the git repos on
-> kernel.org, including both the git and linux trees.  I believe that I've
-> tracked down the problem to differences that occur between the repos
-> located at the various IPs that kernel.org translates to (zeus-pub1:
-> 204.152.191.5 and zeus-pub2: 204.152.191.37).
-> 
-> In this case, it appears that the repo located at zeus-pub1 has been
-> updated, but the changes haven't propagated over to zeus-pub2 yet.  The
-> result is that one call fetches a list of objects, but the next call
-> goes to the other IP, and it can't find an object it needs, so it ends
-> up dying.
-> 
-> This is probably a temporary error that will periodically (and probably
-> very rarely) occur when pulling from a source with more than a single IP
-> and some lag before the mirror is updated.
-> 
-> Is this an issue that we need to watch for and program around (other
-> than forcing www.kernel.org's IP in /etc/hosts), or is it just one of
-> those things that should be such a rare occurrance that we shouldn't
-> have to worry about it?
+Hi, A Large Angry SCM wrote:
 
- From a gitweb perspective, one of the servers appears to be about 24 
-hours out of date as of Sun Sep 11 15:50:53 UTC 2005. Broken rsync process?
+> Think about a directory containing directories "foo" and "foo.txt":
+> 
+Can you tell us why you're using extensions in the first place?
+
+I propose using no extensions whatsoever: simply mirror the refs/ tree.
+
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+The rich get rich, and the poor get poorer.
+The haves get more, the have-nots die.
