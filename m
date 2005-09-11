@@ -1,75 +1,76 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Re: bogus merges
-Date: Sun, 11 Sep 2005 19:36:28 +0100
-Message-ID: <20050911193628.B24984@flint.arm.linux.org.uk>
-References: <59a6e58305090507387d412b3d@mail.gmail.com> <Pine.LNX.4.58.0509050853080.3568@evo.osdl.org> <20050911112130.A7510@flint.arm.linux.org.uk> <46a038f905091104483cc01a11@mail.gmail.com> <43244935.6060703@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Status of Mac OS/X ports of git and cogito?
+Date: Sun, 11 Sep 2005 14:43:40 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0509111427190.23242@iabervon.org>
+References: <deofnh$jl0$1@sea.gmane.org> <7vd5o03uof.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0509111159190.32555@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <7vvf17tsoa.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: martin.langhoff@gmail.com, Linus Torvalds <torvalds@osdl.org>,
-	Wayne Scott <wsc9tt@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 11 20:37:48 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	John Ellson <ellson@research.att.com>, git@vger.kernel.org,
+	Patrick Mauritz <oxygene@studentenbude.ath.cx>,
+	Jason Riedy <ejr@EECS.Berkeley.EDU>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Sep 11 20:41:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEWgv-0000N2-CE
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 20:36:37 +0200
+	id 1EEWjr-0001DK-Rb
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 20:39:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750774AbVIKSgf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 14:36:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbVIKSgf
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 14:36:35 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:11536 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S1750774AbVIKSge (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2005 14:36:34 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with esmtpsa (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.52)
-	id 1EEWgo-0005v3-C2; Sun, 11 Sep 2005 19:36:30 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.52)
-	id 1EEWgm-00076o-Ha; Sun, 11 Sep 2005 19:36:28 +0100
-To: A Large Angry SCM <gitzilla@gmail.com>
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <43244935.6060703@gmail.com>; from gitzilla@gmail.com on Sun, Sep 11, 2005 at 11:11:49AM -0400
+	id S1751081AbVIKSjh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 14:39:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbVIKSjh
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 14:39:37 -0400
+Received: from iabervon.org ([66.92.72.58]:34060 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751081AbVIKSjh (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 14:39:37 -0400
+Received: (qmail 18132 invoked by uid 1000); 11 Sep 2005 14:43:40 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 11 Sep 2005 14:43:40 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvf17tsoa.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8317>
 
-On Sun, Sep 11, 2005 at 11:11:49AM -0400, A Large Angry SCM wrote:
-> Martin Langhoff wrote:
-> > On 9/11/05, Russell King <rmk@arm.linux.org.uk> wrote:
-> >>On Mon, Sep 05, 2005 at 09:01:32AM -0700, Linus Torvalds wrote:
-> >>>I suspect rmk is using cogito-0.13
-> >>Correct, and rmk will probably be extremely nervous about upgrading when
-> >>0.14 appears.
-> > 
-> > Well, *actually* cogito-0.13 didn't include git-core, so we have to
-> > look for the reasons elsewhere. Could be the leftover MERGE_HEAD
-> > Daniel mentions.
-> > 
-> > Russel, can you confirm what git-core version you are/were running?
+On Sun, 11 Sep 2005, Junio C Hamano wrote:
+
+> Patrick and Jason CC:'ed because they also have portability
+> issues and seem to have good ideas about how they should be
+> solved.  Linus CC:'ed because he once expressed rather strongly
+> his dislike about autoconf.
 > 
-> Russel,
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> How are you updating your tree to Linus'? If you are rsyncing from 
-> kernel.org, you're probably getting a MERGE_HEAD with the rsync. A while 
-> ago I got annoyed enough add the equivalent of:
+> > I have three fixes in my personal tree without which git refuses to 
+> > compile:
+> >
+> > - daemon.c needs a define or typedef for socklen_t.
 > 
-> 	rm -f ${LOCAL_REPOS}/.git/MERGE_HEAD
+> I still keep that patch around (the patch was end of July), but
+> have not touched it only because I did not hear from you asking
+> about its inclusion.
 > 
-> to my (very stupid) git rsync script.
+> > - mailinfo.c needs to have a simple strcasestr implementation, because 
+> >   10.2.8 (at least in my setup) is lacking it!
+> 
+> Yes, I've used it knowing that it is marked as a GNU extension,
+> hoping if somebody else can supply a patch to work it around ;-).
+> 
+> I am slightly reluctant to do autoconf [*1*], but I might be
+> tempted to take patches if it is done cleanly.
 
-I think you can forget MERGE_HEAD.  Why?  I use cogito for pulling.
+I've never noticed autoconf successfully improving portability, and it 
+seems to mostly obfuscate errors. E.g., the GNU binutils I was trying to 
+build recently, if you don't have "msgfmt", helpfully runs "no" instead. 
+Of course, that's autoconf being misused, but if binutils can't use it 
+correctly, I doubt any other project can keep from messing up.
 
-cg-pull gets the head, and then rsyncs the objects found in the object
-directory.  It doesn't touch MERGE_HEAD.  None of the cogito scripts
-that I have know anything about MERGE_HEAD itself.
+Compatibility workarounds with simple detection scripts invoked by people 
+who find they actually need workarounds are probably best.
 
-(Plus, it's actually a two stage pull - I have a cron-based cg-pull
-into a master repository on one box, which I then cg-pull to the
-development box which is only powered when I'm working.)
-
--- 
-Russell King
+	-Daniel
+*This .sig left intentionally blank*
