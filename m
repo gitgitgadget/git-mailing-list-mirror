@@ -1,61 +1,80 @@
-From: Nathan Laredo <laredo@hera.kernel.org>
-Subject: Re: git problems on Kernel.org?
-Date: Sun, 11 Sep 2005 11:26:04 -0700
-Message-ID: <20050911182604.GB14417@hera.kernel.org>
-References: <4323E3C0.1090109@tuxrocks.com> <4324531B.3080209@gmail.com>
+From: Peter Eriksen <s022018@student.dtu.dk>
+Subject: git-clone seems dead
+Date: 11 Sep 2005 20:13:24 +0200
+Message-ID: <vhp64t7v5ff.fsf@ebar091.ebar.dtu.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Frank Sorenson <frank@tuxrocks.com>, webmaster@kernel.org,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 11 20:27:42 2005
+X-From: git-owner@vger.kernel.org Sun Sep 11 20:30:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEWWt-0005Xs-Hf
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 20:26:15 +0200
+	id 1EEWbK-000771-IB
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 20:30:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964997AbVIKS0N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 14:26:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965021AbVIKS0M
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 14:26:12 -0400
-Received: from hera.kernel.org ([209.128.68.125]:28126 "EHLO hera.kernel.org")
-	by vger.kernel.org with ESMTP id S964997AbVIKS0L (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 14:26:11 -0400
-Received: from hera.kernel.org (localhost [127.0.0.1])
-	by hera.kernel.org (8.13.1/8.13.1) with ESMTP id j8BIQ4W1014650;
-	Sun, 11 Sep 2005 11:26:04 -0700
-Received: (from laredo@localhost)
-	by hera.kernel.org (8.13.1/8.13.1/Submit) id j8BIQ4eX014649;
-	Sun, 11 Sep 2005 11:26:04 -0700
-To: A Large Angry SCM <gitzilla@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <4324531B.3080209@gmail.com>
-User-Agent: Mutt/1.4.1i
-X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-6.7 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on hera.kernel.org
+	id S1750752AbVIKSar (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 14:30:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750774AbVIKSar
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 14:30:47 -0400
+Received: from main.gmane.org ([80.91.229.2]:15548 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750752AbVIKSar (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 14:30:47 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1EEWbE-00075L-QN
+	for git@vger.kernel.org; Sun, 11 Sep 2005 20:30:44 +0200
+Received: from ebar091.ebar.dtu.dk ([192.38.93.106])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 11 Sep 2005 20:30:44 +0200
+Received: from s022018 by ebar091.ebar.dtu.dk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 11 Sep 2005 20:30:44 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: ebar091.ebar.dtu.dk
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8315>
 
-On Sun, Sep 11, 2005 at 11:54:03AM -0400, A Large Angry SCM wrote:
-> >This is probably a temporary error that will periodically (and 
-> >probably very rarely) occur when pulling from a source with more 
-> >than a single IP and some lag before the mirror is updated.
-> >
-> >Is this an issue that we need to watch for and program around (other
-> >than forcing www.kernel.org's IP in /etc/hosts), or is it just one of
-> >those things that should be such a rare occurrance that we shouldn't
-> >have to worry about it?
-> 
-> From a gitweb perspective, one of the servers appears to be about 24 
-> hours out of date as of Sun Sep 11 15:50:53 UTC 2005. Broken rsync process?
+Hello,
 
-The filesystem on one of the machines got remounted read-only, so
-nothing was being updated.
+The command "git clone" doesn't work for me, and I have no idea why.
+What I want to do is exactly what the tutorial describes:
 
--- Nathan Laredo
-laredo@kernel.org
+<cite>
+Again, this can all be simplified with
+
+git clone rsync://rsync.kernel.org/pub/scm/git/git.git/ my-git
+cd my-git
+git checkout
+</cite>
+
+See
+http://kernel.org/git/?p=git/git.git;a=blob;h=6e100dbb60f5756db0f453193e53c28bf947d7cc;hb=720d150c48fc35fca13c6dfb3c76d60e4ee83b87;f=Documentation/tutorial.txt#l652
+
+The problem is reproduced by the following sequence of commands:
+
+mkdir ~/bin
+wget http://kernel.org/pub/software/scm/git/git-core-0.99.6.tar.gz
+tar -zxf git-core-0.99.6.tar.gz
+cd git-core-0.99.6
+make
+make install
+cd ..
+git clone rsync://rsync.kernel.org/pub/scm/git/git.git/ my-git
+
+All commands works fine except "git clone" which prints:
+
+<cite>
+defaulting to local storage area
+* git clone [-l [-s]] [-q] [-u <upload-pack>] <repo> <dir>
+</cite>
+
+and leaves my-git/.git empty.  So the problem is, that I can't
+get "git clone" to work, and I think, I am making correct steps.
+
+Regards,
+
+Peter
