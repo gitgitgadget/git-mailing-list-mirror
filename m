@@ -1,80 +1,75 @@
-From: Peter Eriksen <s022018@student.dtu.dk>
-Subject: git-clone seems dead
-Date: 11 Sep 2005 20:13:24 +0200
-Message-ID: <vhp64t7v5ff.fsf@ebar091.ebar.dtu.dk>
+From: Russell King <rmk@arm.linux.org.uk>
+Subject: Re: bogus merges
+Date: Sun, 11 Sep 2005 19:36:28 +0100
+Message-ID: <20050911193628.B24984@flint.arm.linux.org.uk>
+References: <59a6e58305090507387d412b3d@mail.gmail.com> <Pine.LNX.4.58.0509050853080.3568@evo.osdl.org> <20050911112130.A7510@flint.arm.linux.org.uk> <46a038f905091104483cc01a11@mail.gmail.com> <43244935.6060703@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Sep 11 20:30:56 2005
+Cc: martin.langhoff@gmail.com, Linus Torvalds <torvalds@osdl.org>,
+	Wayne Scott <wsc9tt@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 11 20:37:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEWbK-000771-IB
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 20:30:50 +0200
+	id 1EEWgv-0000N2-CE
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 20:36:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750752AbVIKSar (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 14:30:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750774AbVIKSar
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 14:30:47 -0400
-Received: from main.gmane.org ([80.91.229.2]:15548 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750752AbVIKSar (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 14:30:47 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1EEWbE-00075L-QN
-	for git@vger.kernel.org; Sun, 11 Sep 2005 20:30:44 +0200
-Received: from ebar091.ebar.dtu.dk ([192.38.93.106])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 11 Sep 2005 20:30:44 +0200
-Received: from s022018 by ebar091.ebar.dtu.dk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 11 Sep 2005 20:30:44 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: ebar091.ebar.dtu.dk
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1750774AbVIKSgf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 14:36:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbVIKSgf
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 14:36:35 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:11536 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S1750774AbVIKSge (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2005 14:36:34 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with esmtpsa (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.52)
+	id 1EEWgo-0005v3-C2; Sun, 11 Sep 2005 19:36:30 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.52)
+	id 1EEWgm-00076o-Ha; Sun, 11 Sep 2005 19:36:28 +0100
+To: A Large Angry SCM <gitzilla@gmail.com>
+Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <43244935.6060703@gmail.com>; from gitzilla@gmail.com on Sun, Sep 11, 2005 at 11:11:49AM -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8316>
 
-Hello,
+On Sun, Sep 11, 2005 at 11:11:49AM -0400, A Large Angry SCM wrote:
+> Martin Langhoff wrote:
+> > On 9/11/05, Russell King <rmk@arm.linux.org.uk> wrote:
+> >>On Mon, Sep 05, 2005 at 09:01:32AM -0700, Linus Torvalds wrote:
+> >>>I suspect rmk is using cogito-0.13
+> >>Correct, and rmk will probably be extremely nervous about upgrading when
+> >>0.14 appears.
+> > 
+> > Well, *actually* cogito-0.13 didn't include git-core, so we have to
+> > look for the reasons elsewhere. Could be the leftover MERGE_HEAD
+> > Daniel mentions.
+> > 
+> > Russel, can you confirm what git-core version you are/were running?
+> 
+> Russel,
+> 
+> How are you updating your tree to Linus'? If you are rsyncing from 
+> kernel.org, you're probably getting a MERGE_HEAD with the rsync. A while 
+> ago I got annoyed enough add the equivalent of:
+> 
+> 	rm -f ${LOCAL_REPOS}/.git/MERGE_HEAD
+> 
+> to my (very stupid) git rsync script.
 
-The command "git clone" doesn't work for me, and I have no idea why.
-What I want to do is exactly what the tutorial describes:
+I think you can forget MERGE_HEAD.  Why?  I use cogito for pulling.
 
-<cite>
-Again, this can all be simplified with
+cg-pull gets the head, and then rsyncs the objects found in the object
+directory.  It doesn't touch MERGE_HEAD.  None of the cogito scripts
+that I have know anything about MERGE_HEAD itself.
 
-git clone rsync://rsync.kernel.org/pub/scm/git/git.git/ my-git
-cd my-git
-git checkout
-</cite>
+(Plus, it's actually a two stage pull - I have a cron-based cg-pull
+into a master repository on one box, which I then cg-pull to the
+development box which is only powered when I'm working.)
 
-See
-http://kernel.org/git/?p=git/git.git;a=blob;h=6e100dbb60f5756db0f453193e53c28bf947d7cc;hb=720d150c48fc35fca13c6dfb3c76d60e4ee83b87;f=Documentation/tutorial.txt#l652
-
-The problem is reproduced by the following sequence of commands:
-
-mkdir ~/bin
-wget http://kernel.org/pub/software/scm/git/git-core-0.99.6.tar.gz
-tar -zxf git-core-0.99.6.tar.gz
-cd git-core-0.99.6
-make
-make install
-cd ..
-git clone rsync://rsync.kernel.org/pub/scm/git/git.git/ my-git
-
-All commands works fine except "git clone" which prints:
-
-<cite>
-defaulting to local storage area
-* git clone [-l [-s]] [-q] [-u <upload-pack>] <repo> <dir>
-</cite>
-
-and leaves my-git/.git empty.  So the problem is, that I can't
-get "git clone" to work, and I think, I am making correct steps.
-
-Regards,
-
-Peter
+-- 
+Russell King
