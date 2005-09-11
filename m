@@ -1,98 +1,75 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: [ANNOUNCE qgit-0.94]
-Date: Sun, 11 Sep 2005 00:58:05 -0700 (PDT)
-Message-ID: <20050911075805.3984.qmail@web26306.mail.ukl.yahoo.com>
+From: Frank Sorenson <frank@tuxrocks.com>
+Subject: git problems on Kernel.org?
+Date: Sun, 11 Sep 2005 01:58:56 -0600
+Message-ID: <4323E3C0.1090109@tuxrocks.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 11 09:59:06 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Sep 11 10:01:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEMjM-0001uz-IZ
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 09:58:28 +0200
+	id 1EEMk5-0002Hc-2Z
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 09:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964820AbVIKH60 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 03:58:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964819AbVIKH60
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 03:58:26 -0400
-Received: from web26306.mail.ukl.yahoo.com ([217.146.176.17]:4718 "HELO
-	web26306.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S964820AbVIKH6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2005 03:58:25 -0400
-Received: (qmail 3986 invoked by uid 60001); 11 Sep 2005 07:58:05 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=zB3FBiXEo7ImP5s48SGTk+fJdFIyK1LvBJv9WEIRj4IVJJb7ht8KzBMkzVKinW49Hv5m8VRP41wVIQv4xGopoFhDTGjhIkpN1OEdWFca5RD+O6LQJLaMP1O59qMkwOS8QcMvvJEaIcVGW1UzqeU8EKeW0Y5mUfJrISWcVDm5jag=  ;
-Received: from [151.42.200.67] by web26306.mail.ukl.yahoo.com via HTTP; Sun, 11 Sep 2005 00:58:05 PDT
-To: skimo@liacs.nl
+	id S964819AbVIKH7L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 03:59:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964821AbVIKH7L
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 03:59:11 -0400
+Received: from www.tuxrocks.com ([64.62.190.123]:55568 "EHLO tuxrocks.com")
+	by vger.kernel.org with ESMTP id S964819AbVIKH7K (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 03:59:10 -0400
+Received: from [10.0.0.10] (216-190-206-130.customer.csolutions.net [216.190.206.130])
+	(authenticated bits=0)
+	by tuxrocks.com (8.13.1/8.13.1) with ESMTP id j8B7x0Yv002148
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Sun, 11 Sep 2005 01:59:08 -0600
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8273>
 
-Sven Verdoolaege wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->
->ReachList doesn't seem to be defined anywhere.
->
+Something appears to be something odd going on with the git repos on
+kernel.org, including both the git and linux trees.  I believe that I've
+tracked down the problem to differences that occur between the repos
+located at the various IPs that kernel.org translates to (zeus-pub1:
+204.152.191.5 and zeus-pub2: 204.152.191.37).
 
-It is defined in annotate.h as a typedef:
+In this case, it appears that the repo located at zeus-pub1 has been
+updated, but the changes haven't propagated over to zeus-pub2 yet.  The
+result is that one call fetches a list of objects, but the next call
+goes to the other IP, and it can't find an object it needs, so it ends
+up dying.
 
-class ReachInfo {
-public:
-	ReachInfo() {};
-	ReachInfo(SCRef s, int i, int t) : sha(s), id(i), type(t) {};
-	~ReachInfo() {};
-	QString sha;
-	int id, type;
-	QStringList roots;
-};
-typedef QValueVector<ReachInfo> ReachList;
+This is probably a temporary error that will periodically (and probably
+very rarely) occur when pulling from a source with more than a single IP
+and some lag before the mirror is updated.
 
+Is this an issue that we need to watch for and program around (other
+than forcing www.kernel.org's IP in /etc/hosts), or is it just one of
+those things that should be such a rare occurrance that we shouldn't
+have to worry about it?
 
-then used in annotate.cpp:
+Thanks,
 
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
-#include <qapplication.h>
-#include "git.h"
-#include "annotate.h"
+Frank
+- --
+Frank Sorenson - KD7TZK
+Systems Manager, Computer Science Department
+Brigham Young University
+frank@tuxrocks.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
-.....
-
-void Annotate::run(SCRef file, SList shaHist, AnnotateHistory& ah) {
-
-	QString d, diffTarget;
-	QStringList tmp;
-	int pos, removed = 0, annID = 0;
-	ReachList rl;
-....
-
-Please, what compiler version and qt dev libraries do you have?
-
-But in any case it is very strange..... really I have no idea now.....I have to think
-about it....
-
-
-Marco
-
-
-P.S: Due to a subtle but nasty bug that I found too late I have upgraded the release to
-qgit-0.94.1 I strongly suggest to upgrade.
-
-I am very sorry for this. 
-
-
-
-	
-		
-______________________________________________________ 
-Yahoo! for Good 
-Watch the Hurricane Katrina Shelter From The Storm concert 
-http://advision.webevents.yahoo.com/shelter 
+iD8DBQFDI+PAaI0dwg4A47wRAgEhAKDPjvyHZwTSw/e+FwE5BXtpH2novACdGBaF
++R64XoAYx+WXGjbczO+ZQtY=
+=vCRj
+-----END PGP SIGNATURE-----
