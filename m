@@ -1,93 +1,61 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: [ANNOUNCE qgit-0.94]
-Date: Sun, 11 Sep 2005 02:18:32 -0700 (PDT)
-Message-ID: <20050911091832.16214.qmail@web26306.mail.ukl.yahoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-rev-list and git-format-patch script oddness
+Date: Sun, 11 Sep 2005 11:20:49 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0509111120020.32244@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <46a038f905091101529e045af@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 11 11:18:50 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 11 11:21:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EENyu-0001Mz-Lj
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 11:18:37 +0200
+	id 1EEO1K-0002oV-HF
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 11:21:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964824AbVIKJSe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 05:18:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964825AbVIKJSe
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 05:18:34 -0400
-Received: from web26306.mail.ukl.yahoo.com ([217.146.176.17]:5006 "HELO
-	web26306.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S964824AbVIKJSd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2005 05:18:33 -0400
-Received: (qmail 16216 invoked by uid 60001); 11 Sep 2005 09:18:32 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=Y+76XoNpd0qclmU2wRw3JUcXAhBA1LNT8CaUicBoJmeCLHoJyD6FqD+Yw1XBghJvZvnk/luAHaegNvTX14V6paCl/8sjhOW5ZXeZgKDwo/UpCf6VuQZWkZMJY4OI7FAKfmJJ4qrQhhPZrqSeZNe8p/AZSxwhhTO3pGa+cDLe7MQ=  ;
-Received: from [151.42.200.67] by web26306.mail.ukl.yahoo.com via HTTP; Sun, 11 Sep 2005 02:18:32 PDT
-To: skimo@liacs.nl
+	id S964830AbVIKJUx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 05:20:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964828AbVIKJUx
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 05:20:53 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:5536 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964830AbVIKJUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2005 05:20:52 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 97B391387BA; Sun, 11 Sep 2005 11:20:49 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 784D758F8E; Sun, 11 Sep 2005 11:20:49 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 5ECC558F76; Sun, 11 Sep 2005 11:20:49 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 3609E1387BA; Sun, 11 Sep 2005 11:20:49 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f905091101529e045af@mail.gmail.com>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8280>
 
-Sven Verdoolaege wrote:
+Hi,
 
+On Sun, 11 Sep 2005, Martin Langhoff wrote:
 
->I had installed qt 4.0.1 in the mean time, because apparently
->the 3.1.2 I had installed before was too old.
+> When I run git-format-patch, it insists on outputting merges that have
+> already been merged upstream, regardless of the fact that
+> git-merge-base knows better.
+> 
+> Is there a way to get it to skip merged-in patches that git already
+> has detected as merged upstream?
 
-QGit is build against qt3-devel-3.3.4
+I always use something like
 
-Qt 4 is known to be NOT compatible with qt3.
+	git-format-patch HEAD ^origin
 
-
->It seems to have installed itself in /usr though.
->Removing the -I/usr/include/qt3 from SConstruct _seems_
->to make annotate.cpp compile.
->
->But now I get this:
->
->bash-3.00$ QTDIR=/usr/ make
->scons
->scons: Reading SConscript files ...
->scons: done reading SConscript files.
->scons: Building targets ...
->/usr//bin/uic -o src/commitbase.h src/commitbase.ui
->/usr//bin/uic -impl commitbase.h -o src/uic_commitbase.cc src/commitbase.ui
->/usr//bin/moc -o src/moc_commitbase.cc src/commitbase.h
->uic: File generated with too old version of Qt Designer
->File 'src/commitbase.ui' is not valid
->scons: *** [src/commitbase.h] Error 1
->scons: building terminated because of errors.
->make: *** [all] Error 2
->
->How can I create src/commitbase.ui ?
->
-
-moc_* files are created by /usr/bin/moc, called automatically by scons, 
-*base.h and *base.cpp files are created by /usr/bin/uic from
-corresponding *base.ui file, also uic  is called automatically.
-
-uic and moc are binary files distributed with qt package
-
-IMHO your uic and moc binary are from Qt4 instead of Qt3. That's could explaing
-the 'uic: File generated with too old version of Qt Designer' error.
-
-Please remove qt4 and install qt3-devel-3.3.4
-
-
-Marco
-
-
-
-
-
-	
-		
-______________________________________________________ 
-Yahoo! for Good 
-Watch the Hurricane Katrina Shelter From The Storm concert 
-http://advision.webevents.yahoo.com/shelter 
+Hth,
+Dscho
