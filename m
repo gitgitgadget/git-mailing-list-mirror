@@ -1,57 +1,67 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] Omit patches that have already been merged from format-patch output.
-Date: Mon, 12 Sep 2005 09:10:45 +1200
-Message-ID: <46a038f905091114106e6e7943@mail.gmail.com>
-References: <46a038f905091101529e045af@mail.gmail.com>
-	 <7voe6zqr9y.fsf@assigned-by-dhcp.cox.net>
-Reply-To: martin.langhoff@gmail.com
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: What's up with the GIT archive on www.kernel.org?
+Date: Sun, 11 Sep 2005 14:24:48 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509111422510.3242@g5.osdl.org>
+References: <m3mzmjvbh7.fsf@telia.com> <Pine.LNX.4.58.0509110908590.4912@g5.osdl.org>
+ <20050911185711.GA22556@mars.ravnborg.org> <Pine.LNX.4.58.0509111157360.3242@g5.osdl.org>
+ <20050911194630.GB22951@mars.ravnborg.org> <Pine.LNX.4.58.0509111251150.3242@g5.osdl.org>
+ <52irx7cnw5.fsf@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 11 23:12:28 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Ravnborg <sam@ravnborg.org>,
+	Peter Osterlund <petero2@telia.com>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 11 23:25:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEZ6A-00049j-JH
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 23:10:50 +0200
+	id 1EEZJs-00081L-Mq
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 23:25:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750902AbVIKVKr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 17:10:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbVIKVKr
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 17:10:47 -0400
-Received: from rproxy.gmail.com ([64.233.170.202]:25259 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750901AbVIKVKq convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2005 17:10:46 -0400
-Received: by rproxy.gmail.com with SMTP id i8so279822rne
-        for <git@vger.kernel.org>; Sun, 11 Sep 2005 14:10:45 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CAnndfi3APl2U5PNPigXvFOn0kyO0LJKd7Vp3EeB2D5gaNAvsg5Xh8LNYV2f5Ww3cnbbABz33U/PKZ307krzeveHGVeeSAuB3vHecSlXZAS/LCCodL8Is1bEOPqRz8m0WQvrNILnGiyrMWW5okUVG9tb0ZxmZeqtz93gbtzCmxM=
-Received: by 10.38.101.51 with SMTP id y51mr230309rnb;
-        Sun, 11 Sep 2005 14:10:45 -0700 (PDT)
-Received: by 10.38.101.53 with HTTP; Sun, 11 Sep 2005 14:10:45 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe6zqr9y.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1750881AbVIKVYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 17:24:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750919AbVIKVYz
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 17:24:55 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:57751 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750881AbVIKVYy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 17:24:54 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8BLOnBo026257
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 11 Sep 2005 14:24:49 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8BLOm1k022803;
+	Sun, 11 Sep 2005 14:24:48 -0700
+To: Roland Dreier <rolandd@cisco.com>
+In-Reply-To: <52irx7cnw5.fsf@cisco.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8333>
-
-On 9/12/05, Junio C Hamano <junkio@cox.net> wrote:
-> This switches the logic to pick which commits to include in the output
-> from git-rev-list to git-cherry; as a side effect, 'format-patch ^up mine'
-> would stop working, although up..mine would continue to work.
-
-Also -- forgot to say thanks for this. I'm interested in porting this
-to cg-log as an option.
-
-BTW, anyone heard of Baudis lately?
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8334>
 
 
-martin
+
+On Sun, 11 Sep 2005, Roland Dreier wrote:
+> 
+> Does "everything" include someone doing
+> 
+>     git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/roland/whatever.git
+
+Nope. Only server-side smart protocols will handle this.
+
+There is such an anonymous server, btw: "git-daemon" implements anonymous 
+access much more efficient than rsync/http. Sadly, kernel.org still 
+doesn't offer it (but it's now used in the wild, ie I've done a couple of 
+merges with people running the git daemon).
+
+> In other words, is the git network transport smart enough to handle
+> the alternates path?
+
+The _git_ network transport is. rsync and http aren't.
+
+		Linus
