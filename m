@@ -1,58 +1,98 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: RFC: s/git-merge-base/git-find-common-ancestor/g
-Date: Sun, 11 Sep 2005 00:38:40 -0700
-Message-ID: <7v64t8xddr.fsf@assigned-by-dhcp.cox.net>
-References: <7vr7c02zgg.fsf@assigned-by-dhcp.cox.net>
-	<7virxbtder.fsf@assigned-by-dhcp.cox.net>
-	<874q8s6q9w.wl@mail2.atmark-techno.com>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: [ANNOUNCE qgit-0.94]
+Date: Sun, 11 Sep 2005 00:58:05 -0700 (PDT)
+Message-ID: <20050911075805.3984.qmail@web26306.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 11 09:39:37 2005
+X-From: git-owner@vger.kernel.org Sun Sep 11 09:59:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEMQP-0000tx-Nw
-	for gcvg-git@gmane.org; Sun, 11 Sep 2005 09:38:54 +0200
+	id 1EEMjM-0001uz-IZ
+	for gcvg-git@gmane.org; Sun, 11 Sep 2005 09:58:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964811AbVIKHip (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 03:38:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964813AbVIKHip
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 03:38:45 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:57305 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S964811AbVIKHip (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Sep 2005 03:38:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050911073841.PLUA20473.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 11 Sep 2005 03:38:41 -0400
-To: Yasushi SHOJI <yashi@atmark-techno.com>
-In-Reply-To: <874q8s6q9w.wl@mail2.atmark-techno.com> (Yasushi SHOJI's message
-	of "Sun, 11 Sep 2005 16:02:19 +0900")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964820AbVIKH60 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 03:58:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964819AbVIKH60
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 03:58:26 -0400
+Received: from web26306.mail.ukl.yahoo.com ([217.146.176.17]:4718 "HELO
+	web26306.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S964820AbVIKH6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Sep 2005 03:58:25 -0400
+Received: (qmail 3986 invoked by uid 60001); 11 Sep 2005 07:58:05 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=zB3FBiXEo7ImP5s48SGTk+fJdFIyK1LvBJv9WEIRj4IVJJb7ht8KzBMkzVKinW49Hv5m8VRP41wVIQv4xGopoFhDTGjhIkpN1OEdWFca5RD+O6LQJLaMP1O59qMkwOS8QcMvvJEaIcVGW1UzqeU8EKeW0Y5mUfJrISWcVDm5jag=  ;
+Received: from [151.42.200.67] by web26306.mail.ukl.yahoo.com via HTTP; Sun, 11 Sep 2005 00:58:05 PDT
+To: skimo@liacs.nl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8272>
 
-Yasushi SHOJI <yashi@atmark-techno.com> writes:
+Sven Verdoolaege wrote:
 
-> I've already got used to it. but, at first, the name gave me the
-> impression that it merge the current branch with given base point.
 >
-> the current documentation says:
+>ReachList doesn't seem to be defined anywhere.
 >
->    Finds as good a common ancestor as possible for a merge
->
-> so would it be better to rename it to:
->
->    git-find-common-ancestor
->
-> That's what the command does after all.
 
-It does not find just any common ancestor, but tries to find a
-set of common ancestors that are good to be used as merge bases.
-So git-find-merge-base _might_ be an acceptable rename, but
-git-find-common-ancestor certainly isn't.
+It is defined in annotate.h as a typedef:
+
+class ReachInfo {
+public:
+	ReachInfo() {};
+	ReachInfo(SCRef s, int i, int t) : sha(s), id(i), type(t) {};
+	~ReachInfo() {};
+	QString sha;
+	int id, type;
+	QStringList roots;
+};
+typedef QValueVector<ReachInfo> ReachList;
+
+
+then used in annotate.cpp:
+
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+#include <qapplication.h>
+#include "git.h"
+#include "annotate.h"
+
+.....
+
+void Annotate::run(SCRef file, SList shaHist, AnnotateHistory& ah) {
+
+	QString d, diffTarget;
+	QStringList tmp;
+	int pos, removed = 0, annID = 0;
+	ReachList rl;
+....
+
+Please, what compiler version and qt dev libraries do you have?
+
+But in any case it is very strange..... really I have no idea now.....I have to think
+about it....
+
+
+Marco
+
+
+P.S: Due to a subtle but nasty bug that I found too late I have upgraded the release to
+qgit-0.94.1 I strongly suggest to upgrade.
+
+I am very sorry for this. 
+
+
+
+	
+		
+______________________________________________________ 
+Yahoo! for Good 
+Watch the Hurricane Katrina Shelter From The Storm concert 
+http://advision.webevents.yahoo.com/shelter 
