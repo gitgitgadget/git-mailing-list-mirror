@@ -1,55 +1,129 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Improve "git grep" flags handling
-Date: Mon, 12 Sep 2005 16:55:19 -0700
-Message-ID: <7voe6x6dug.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0509121203210.4098@g5.osdl.org>
-	<7vbr2y7yfd.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509121500400.3266@g5.osdl.org>
-	<Pine.LNX.4.58.0509121519310.3266@g5.osdl.org>
-	<7vd5nd7w0x.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509121542050.3266@g5.osdl.org>
-	<7vslw96f6j.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509121635060.3266@g5.osdl.org>
+From: Chuck Lever <cel@citi.umich.edu>
+Subject: Re: [PATCH 00/22] cache cursors: an introduction
+Date: Mon, 12 Sep 2005 19:59:49 -0400
+Organization: Network Appliance, Inc.
+Message-ID: <43261675.10905@citi.umich.edu>
+References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu> <7vaciiawrm.fsf@assigned-by-dhcp.cox.net>
+Reply-To: cel@citi.umich.edu
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Sep 13 01:56:46 2005
+Content-Type: multipart/mixed;
+ boundary="------------050908010904090603020307"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 13 02:01:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEy8y-0006X6-89
-	for gcvg-git@gmane.org; Tue, 13 Sep 2005 01:55:24 +0200
+	id 1EEyDq-0007nR-1E
+	for gcvg-git@gmane.org; Tue, 13 Sep 2005 02:00:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932222AbVILXzV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 19:55:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932369AbVILXzV
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 19:55:21 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:62130 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932222AbVILXzU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Sep 2005 19:55:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050912235519.WJG7185.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 12 Sep 2005 19:55:19 -0400
-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.58.0509121635060.3266@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 12 Sep 2005 16:46:53 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932372AbVIMAAA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 20:00:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932370AbVIMAAA
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 20:00:00 -0400
+Received: from citi.umich.edu ([141.211.133.111]:36423 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S932372AbVILX76 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 19:59:58 -0400
+Received: from [10.58.52.181] (nat-198-95-226-230.netapp.com [198.95.226.230])
+	by citi.umich.edu (Postfix) with ESMTP id AC0CD1BACD;
+	Mon, 12 Sep 2005 19:59:57 -0400 (EDT)
+User-Agent: Mozilla Thunderbird 1.0 (Windows/20041206)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vaciiawrm.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8455>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+This is a multi-part message in MIME format.
+--------------050908010904090603020307
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> On Mon, 12 Sep 2005, Junio C Hamano wrote:
->> 
->> Yeah, let's see how tolerant your barf-o-meter is today.
->
-> I'm not barfing, but that's probably because my brain just shut down and 
-> is desperately trying to gouge my eyes out with a spoon.
->
-> Wouldn't it be _much_ nicer to just do
+Junio C Hamano wrote:
+> I have a couple of comments on the API, though.
+> 
+> * Doesn't function to be applied usually want to have its own
+>   data when passed to walk, maybe something like this?
+> 
+>   typedef int (*cache_iterator_fn_t) (struct cache_cursor *cc,
+> 			 struct cache_entry *ce, void *udata);
+>   static inline int walk_cache(cache_iterator_fn_t func, void *udata)
+>   {
+>           struct cache_cursor cc;
+> 
+>           init_cc(&cc);
+>           while (!cache_eof(&cc)) {
+>                   int status = func(&cc, cc_to_ce(&cc), udata);
+>                   if (status < 0)
+>                           return status;
+>           }
+>           return 0;
+>   }
+> 
+>   This was a question I had when I read [PATCH 01/22] before
+>   reading the rest of the patches, but the actual conversion
+>   does not seem to find much need for it.  A new global variable
+>   pathspec is introduced to pass information the API is unable
+>   to pass to diff_one() in diff-index.c, which may be a sign
+>   that an extra "user data" parameter might help.  Your call.
 
-Yes.
+heh.  well, i had something like this earlier, but i know linus doesn't 
+like void *, and it was really kind of ugly.  and as you observed, it's 
+used so rarely.  so i just decided to drop it.
+
+> * It may make sense to give another param to describe which
+>   cache the caller is talking about so that we can later have
+>   more than one cache at the same time:
+> 
+>   struct cache {
+>       struct cache_entry **cache_array;
+>       unsigned int nr;
+>       unsigned int alloc;
+>       unsigned int cache_changed;
+>   };
+>   struct cache active_cache;
+> 
+>   and use it like this:
+> 
+>   static inline struct cache_entry *cc_to_ce(struct cache_cursor *cc,
+>                                              struct cache *cache)
+>   {
+>           return cache->cache_array[cc->pos];
+>   }
+> 
+>   We could argue that this should be left for later rounds.  On
+>   the other hand, we will be changing all the cc_* function call
+>   sites during that round, which is by definition the places you
+>   are touching in this round anyway.
+
+actually this is simple to add now.  i'll give it a shot (and fix up 
+write_cache to use it).
+
+btw, with daniel's changes i don't see where we're using 
+active_cache_changed any more.
+
+--------------050908010904090603020307
+Content-Type: text/x-vcard; charset=utf-8;
+ name="cel.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="cel.vcf"
+
+begin:vcard
+fn:Chuck Lever
+n:Lever;Charles
+org:Network Appliance, Incorporated;Linux NFS Client Development
+adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
+email;internet:cel@citi.umich.edu
+title:Member of Technical Staff
+tel;work:+1 734 763-4415
+tel;fax:+1 734 763 4434
+tel;home:+1 734 668-1089
+x-mozilla-html:FALSE
+url:http://www.monkey.org/~cel/
+version:2.1
+end:vcard
+
+
+--------------050908010904090603020307--
