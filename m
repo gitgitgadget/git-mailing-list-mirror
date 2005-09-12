@@ -1,81 +1,85 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH 00/22] cache cursors: an introduction
-Date: Mon, 12 Sep 2005 11:38:01 -0400
-Message-ID: <4325A0D9.2000806@gmail.com>
-References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
-Reply-To: gitzilla@gmail.com
+From: Greg Louis <glouis@dynamicro.on.ca>
+Subject: Re: [PATCH] Redirect cd output to /dev/null, was: git-clone seems dead
+Date: Mon, 12 Sep 2005 12:36:37 -0400
+Organization: Dynamicro Consulting Limited
+Message-ID: <20050912163637.GA22018@athame.dynamicro.on.ca>
+References: <vhp64t7v5ff.fsf@ebar091.ebar.dtu.dk> <7vd5nfs9y0.fsf@assigned-by-dhcp.cox.net> <20050911220421.GA14593@athame.dynamicro.on.ca> <20050911230136.GA15224@athame.dynamicro.on.ca> <7vwtlnm4zx.fsf@assigned-by-dhcp.cox.net> <20050912105637.GA5290@athame.dynamicro.on.ca> <7vbr2yfp0r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 12 17:41:25 2005
+Content-Type: text/plain; charset=iso-8859-1
+X-From: git-owner@vger.kernel.org Mon Sep 12 18:38:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEqOF-00063U-4m
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 17:38:39 +0200
+	id 1EErIR-0007ms-Vh
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 18:36:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750718AbVILPiX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 11:38:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750715AbVILPiW
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 11:38:22 -0400
-Received: from wproxy.gmail.com ([64.233.184.200]:20649 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750712AbVILPiV (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 11:38:21 -0400
-Received: by wproxy.gmail.com with SMTP id i2so1849980wra
-        for <git@vger.kernel.org>; Mon, 12 Sep 2005 08:38:21 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=Kpu0HbI0Zwd+LkYM7dPXTSkzo7QK8EfaywB0cpIvjENh6DMFIVhaAieLmbCD0enM95qiMWQzDdEBCYUI+KQFjIbuPVuJBpxYgsObuKA5q/S9sBHjWxLBR2eP6L3N5ELbkvTxjzpL/qaPYxW8e5Y/sCaRHHRNWKa20Swsr0w+BXY=
-Received: by 10.54.14.59 with SMTP id 59mr2722197wrn;
-        Mon, 12 Sep 2005 08:38:19 -0700 (PDT)
-Received: from ?10.0.0.6? ( [70.89.97.97])
-        by mx.gmail.com with ESMTP id g9sm120272wra.2005.09.12.08.38.12;
-        Mon, 12 Sep 2005 08:38:18 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: Chuck Lever <cel@citi.umich.edu>
-In-Reply-To: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
+	id S932077AbVILQgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 12:36:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932078AbVILQgl
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 12:36:41 -0400
+Received: from csl2r.consultronics.on.ca ([204.138.93.16]:58506 "EHLO
+	csl2.consultronics.on.ca") by vger.kernel.org with ESMTP
+	id S932077AbVILQgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2005 12:36:40 -0400
+Received: from [70.29.36.34] (helo=athame.dynamicro.internal ident=glouis)
+	by csl2.consultronics.on.ca with esmtpsa (SSLv3:AES256-SHA:256)
+	(Exim 4.52)
+	id 1EErIL-0005IG-Ux
+	for git@vger.kernel.org; Mon, 12 Sep 2005 12:36:38 -0400
+Received: from root by athame.dynamicro.internal with local (Exim 4.52)
+	id 1EErIL-0005o9-GX
+	for git@vger.kernel.org; Mon, 12 Sep 2005 12:36:37 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vbr2yfp0r.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8406>
 
-Chuck Lever wrote:
-> [ This series is posted for review and comments. ]
+On 20050912 (Mon) at 0529:08 -0700, Junio C Hamano wrote:
+> Greg Louis <glouis@dynamicro.on.ca> writes:
 > 
-> The following patch series introduces an abstraction called a "cache
-> cursor" that will eventually allow us to replace the current
-> active_cache array with something else.
+> > I could argue that it's a relatively harmless contribution to
+> > robustness of the git scripts, but if someone replied that total
+> > idiot-proofing isn't a worthwhile goal for a project of this sort, I   
+> > wouldn't necessarily disagree.
 > 
-> A cache cursor represents a position inside the cache.  This position
-> has a cache_entry associated with it, of course, but since the cache
-> is ordered, a cache cursor also has the concept of next, previous,
-> and end-of-cache.
+> We could:
 > 
-> With a cache cursor we can build a simple iterator mechanism that
-> calls a particular function for every entry in the cache, in order.
-> This allows us to hide further the specifics of the active cache
-> implementation -- the function gets to see the cache cursor and
-> an element, but does not have direct access to the cache and cannot
-> assume it has a particular structure.
+>  (0) do nothing and let people shoot in the foot themselves.
 > 
-> Currently the cache cursor type is just a structure with an integer
-> in it, so it largely mimics the existing implementation.
+>  (1) unset CDPATH silently while we run.  Most conveniently done
+>      by doing so at the beginning of git-setup-sh, and scripts
+>      that do not use the setup script but still does "cd".
 > 
-> This patch series is against the "proposed updates" branch, as of
-> a couple of days ago.  It has been tested via "make test" and I'm
-> currently using it for my own work without issue.
+>  (2) detect CDPATH in the same places as (1), complain and die.
 
-I'll let others comment on the need for this type of facility and it's 
-proposed implementation.
+Or (2+1==3) detect CDPATH in the same places as (1), complain with a
+brief explanation ("don't export CDPATH; it's really only useful in
+interactive shells") and unset it.  That way we'd educate, in a friendly
+way, people who thought they needed it for some reason, or who just
+never noticed their vendor's /etc/profile was exporting the damn thing.
 
-Since you are proposing an API, some basic documentation about how to 
-use the API would be nice. Comments in cache.h seems the best place, for 
-now.
+> Among these, (1) would be naturally the approach of least
+> resistance.  It would make things "just work" for everybody,
 
-The sentence "This patch series is against the "proposed updates" 
-branch, as of a couple of days ago." should have also included a commit 
-ID. That way we would know where/when the patches would apply cleanly 
-for testing and dissection.
+My patch was about the equivalent of (1), and (1) is what I'd feel
+was the most that git owes its users.  Option (0) could be justified on
+the grounds that git users are presumably developers and ought to be
+able to catch that sort of blunder, but the facts that you didn't
+originally twig to it, and that it took me a couple of hours to find it
+independently, suggest that that's too cavalier an attitude (neither of
+us being a tyro).  Option (3) does qualify as excess baggage IMHO, and
+option (2) as a bit unhelpfully pedantic.
+
+> I would probably end up doing (1), though.
+
+As would I if the decision were mine. 
+
+(btw I'm on the list -- no Cc: needed)
+-- 
+| G r e g  L o u i s         | gpg public key: 0x400B1AA86D9E3E64 |
+|  http://www.bgl.nu/~glouis |   (on my website or any keyserver) |
+|  http://wecanstopspam.org in signatures helps fight junk email. |
