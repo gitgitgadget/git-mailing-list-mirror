@@ -1,130 +1,221 @@
 From: Chuck Lever <cel@netapp.com>
-Subject: [PATCH 20/22] teach merge-index.c to use cache_find_name()
-Date: Mon, 12 Sep 2005 10:56:27 -0400
-Message-ID: <20050912145627.28120.80905.stgit@dexter.citi.umich.edu>
+Subject: [PATCH 11/22] teach write-tree.c to use cache iterators
+Date: Mon, 12 Sep 2005 10:56:07 -0400
+Message-ID: <20050912145607.28120.80487.stgit@dexter.citi.umich.edu>
 References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
-X-From: git-owner@vger.kernel.org Mon Sep 12 17:03:02 2005
+X-From: git-owner@vger.kernel.org Mon Sep 12 17:03:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEplu-0001hk-Lp
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 16:59:03 +0200
+	id 1EEpll-0001hk-JM
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 16:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300AbVILO5H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 10:57:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751316AbVILO4q
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:56:46 -0400
-Received: from citi.umich.edu ([141.211.133.111]:53254 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S1751301AbVILO41 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:56:27 -0400
+	id S1751307AbVILO5N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 10:57:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751314AbVILO4k
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:56:40 -0400
+Received: from citi.umich.edu ([141.211.133.111]:33164 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S1751298AbVILO4H (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:56:07 -0400
 Received: from dexter.citi.umich.edu (dexter.citi.umich.edu [141.211.133.33])
-	by citi.umich.edu (Postfix) with ESMTP id 2DDB31BAF3
-	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:56:27 -0400 (EDT)
+	by citi.umich.edu (Postfix) with ESMTP id 652741BAF3
+	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:56:07 -0400 (EDT)
 To: git@vger.kernel.org
 In-Reply-To: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8402>
 
 Signed-off-by: Chuck Lever <cel@netapp.com>
 ---
 
- merge-index.c |   44 +++++++++++++++++++++-----------------------
- 1 files changed, 21 insertions(+), 23 deletions(-)
+ write-tree.c |  110 ++++++++++++++++++++++++++++++++++++----------------------
+ 1 files changed, 69 insertions(+), 41 deletions(-)
 
-diff --git a/merge-index.c b/merge-index.c
---- a/merge-index.c
-+++ b/merge-index.c
-@@ -37,11 +37,11 @@ static void run_program(void)
- 	}
+diff --git a/write-tree.c b/write-tree.c
+--- a/write-tree.c
++++ b/write-tree.c
+@@ -5,7 +5,7 @@
+  */
+ #include "cache.h"
+ 
+-static int missing_ok = 0;
++static int funny, missing_ok = 0;
+ 
+ static int check_valid_sha1(unsigned char *sha1)
+ {
+@@ -18,8 +18,9 @@ static int check_valid_sha1(unsigned cha
+ 	return ret ? 0 : -1;
  }
  
--static int merge_entry(int pos, const char *path)
-+static void merge_entry(struct cache_cursor *cc, const char *path)
+-static int write_tree(struct cache_entry **cachep, int maxentries, const char *base, int baselen, unsigned char *returnsha1)
++static int write_tree(struct cache_cursor *cc, int maxentries, const char *base, int baselen, unsigned char *returnsha1)
  {
- 	int found;
- 	
--	if (pos >= active_nr)
-+	if (cache_eof(cc))
- 		die("git-merge-index: %s not in the cache", path);
- 	arguments[0] = pgm;
- 	arguments[1] = "";
-@@ -55,7 +55,7 @@ static int merge_entry(int pos, const ch
- 	do {
- 		static char hexbuf[4][60];
- 		static char ownbuf[4][60];
--		struct cache_entry *ce = active_cache[pos];
-+		struct cache_entry *ce = cc_to_ce(cc);
- 		int stage = ce_stage(ce);
++	struct cache_cursor next = *cc;
+ 	unsigned char subdir_sha1[20];
+ 	unsigned long size, offset;
+ 	char *buffer;
+@@ -32,7 +33,7 @@ static int write_tree(struct cache_entry
  
- 		if (strcmp(ce->name, path))
-@@ -65,34 +65,31 @@ static int merge_entry(int pos, const ch
- 		sprintf(ownbuf[stage], "%o", ntohl(ce->ce_mode) & (~S_IFMT));
- 		arguments[stage] = hexbuf[stage];
- 		arguments[stage + 4] = ownbuf[stage];
--	} while (++pos < active_nr);
-+		next_cc(cc);
-+	} while (!cache_eof(cc));
- 	if (!found)
- 		die("git-merge-index: %s not in the cache", path);
- 	run_program();
--	return found;
- }
+ 	nr = 0;
+ 	while (nr < maxentries) {
+-		struct cache_entry *ce = cachep[nr];
++		struct cache_entry *ce = cc_to_ce(&next);
+ 		const char *pathname = ce->name, *filename, *dirname;
+ 		int pathlen = ce_namelen(ce), entrylen;
+ 		unsigned char *sha1;
+@@ -51,15 +52,20 @@ static int write_tree(struct cache_entry
+ 		if (dirname) {
+ 			int subdir_written;
  
-+/*
-+ * If it already exists in the cache as stage0, it's
-+ * already merged and there is nothing to do.
-+ */
- static void merge_file(const char *path)
- {
--	int pos = cache_name_pos(path, strlen(path));
+-			subdir_written = write_tree(cachep + nr, maxentries - nr, pathname, dirname-pathname+1, subdir_sha1);
+-			nr += subdir_written;
 -
--	/*
--	 * If it already exists in the cache as stage0, it's
--	 * already merged and there is nothing to do.
--	 */
--	if (pos < 0)
--		merge_entry(-pos-1, path);
-+	struct cache_cursor cc;
-+	if (!cache_find_name(path, strlen(path), &cc))
-+		merge_entry(&cc, path);
++			subdir_written = write_tree(&next,
++						    maxentries - nr,
++						    pathname,
++						    dirname - pathname + 1,
++						    subdir_sha1);
++			
+ 			/* Now we need to write out the directory entry into this tree.. */
+ 			mode = S_IFDIR;
+ 			pathlen = dirname - pathname;
+ 
+ 			/* ..but the directory entry doesn't count towards the total count */
+-			nr--;
++			nr += subdir_written - 1;
++			while (--subdir_written)
++				next_cc(&next);
+ 			sha1 = subdir_sha1;
+ 		}
+ 
+@@ -76,6 +82,7 @@ static int write_tree(struct cache_entry
+ 		memcpy(buffer + offset, sha1, 20);
+ 		offset += 20;
+ 		nr++;
++		next_cc(&next);
+ 	}
+ 
+ 	write_sha1_file(buffer, offset, "tree", returnsha1);
+@@ -83,11 +90,57 @@ static int write_tree(struct cache_entry
+ 	return nr;
  }
  
--static void merge_all(void)
-+static int merge_one(struct cache_cursor *cc, struct cache_entry *ce)
- {
--	int i;
--	for (i = 0; i < active_nr; i++) {
--		struct cache_entry *ce = active_cache[i];
--		if (!ce_stage(ce))
--			continue;
--		i += merge_entry(i, ce->name)-1;
--	}
-+	if (ce_stage(ce))
-+		merge_entry(cc, ce->name);
-+	else
-+		next_cc(cc);
++static int verify_merged(struct cache_cursor *cc, struct cache_entry *ce)
++{
++	if (ntohs(ce->ce_flags) & ~CE_NAMEMASK) {
++		if (10 < ++funny) {
++			fprintf(stderr, "...\n");
++			return -1;
++		}
++		fprintf(stderr, "%s: unmerged (%s)\n", ce->name, sha1_to_hex(ce->sha1));
++	}
++
++	next_cc(cc);
 +	return 0;
- }
- 
++}
++
++/*
++ * path/file always comes after path because of the way
++ * the cache is sorted.  Also path can appear only once,
++ * which means conflicting one would immediately follow.
++ */
++static int verify_path(struct cache_cursor *cc, struct cache_entry *ce)
++{
++	struct cache_entry *next;
++	const char *next_name, *this_name = ce->name;
++	int this_len = strlen(this_name);
++
++	/* don't check the last cache entry */
++	next_cc(cc);
++	if (cache_eof(cc))
++		return -1;
++	next = cc_to_ce(cc);
++	next_name = next->name;
++
++	if (this_len < strlen(next_name) &&
++	    strncmp(this_name, next_name, this_len) == 0 &&
++	    next_name[this_len] == '/') {
++		if (10 < ++funny) {
++			fprintf(stderr, "...\n");
++			return -1;
++		}
++		fprintf(stderr, "You have both %s and %s\n",
++			this_name, next_name);
++	}
++
++	return 0;
++}
++
  int main(int argc, char **argv)
-@@ -102,7 +99,8 @@ int main(int argc, char **argv)
- 	if (argc < 3)
- 		usage("git-merge-index [-o] [-q] <merge-program> (-a | <filename>*)");
+ {
+-	int i, funny;
+-	int entries = read_cache();
++	struct cache_cursor cc;
+ 	unsigned char sha1[20];
++	int entries;
+ 	
+ 	if (argc == 2) {
+ 		if (!strcmp(argv[1], "--missing-ok"))
+@@ -99,53 +152,28 @@ int main(int argc, char **argv)
+ 	if (argc > 2)
+ 		die("too many options");
  
--	read_cache();
-+	if (read_cache() < 0)
-+		die("unable to read index file");
++	entries = read_cache();
+ 	if (entries < 0)
+ 		die("git-write-tree: error reading cache");
  
- 	i = 1;
- 	if (!strcmp(argv[i], "-o")) {
-@@ -122,7 +120,7 @@ int main(int argc, char **argv)
- 				continue;
- 			}
- 			if (!strcmp(arg, "-a")) {
--				merge_all();
-+				walk_cache(merge_one);
- 				continue;
- 			}
- 			die("git-merge-index: unknown option %s", arg);
+ 	/* Verify that the tree is merged */
+ 	funny = 0;
+-	for (i = 0; i < entries; i++) {
+-		struct cache_entry *ce = active_cache[i];
+-		if (ntohs(ce->ce_flags) & ~CE_NAMEMASK) {
+-			if (10 < ++funny) {
+-				fprintf(stderr, "...\n");
+-				break;
+-			}
+-			fprintf(stderr, "%s: unmerged (%s)\n", ce->name, sha1_to_hex(ce->sha1));
+-		}
+-	}
++	walk_cache(verify_merged);
+ 	if (funny)
+-		die("git-write-tree: not able to write tree");
++		die("git-write-tree: verify_merged: not able to write tree");
+ 
+ 	/* Also verify that the cache does not have path and path/file
+ 	 * at the same time.  At this point we know the cache has only
+ 	 * stage 0 entries.
+ 	 */
+ 	funny = 0;
+-	for (i = 0; i < entries - 1; i++) {
+-		/* path/file always comes after path because of the way
+-		 * the cache is sorted.  Also path can appear only once,
+-		 * which means conflicting one would immediately follow.
+-		 */
+-		const char *this_name = active_cache[i]->name;
+-		const char *next_name = active_cache[i+1]->name;
+-		int this_len = strlen(this_name);
+-		if (this_len < strlen(next_name) &&
+-		    strncmp(this_name, next_name, this_len) == 0 &&
+-		    next_name[this_len] == '/') {
+-			if (10 < ++funny) {
+-				fprintf(stderr, "...\n");
+-				break;
+-			}
+-			fprintf(stderr, "You have both %s and %s\n",
+-				this_name, next_name);
+-		}
+-	}
++	walk_cache(verify_path);
+ 	if (funny)
+-		die("git-write-tree: not able to write tree");
++		die("git-write-tree: verify_path: not able to write tree");
+ 
+ 	/* Ok, write it out */
+-	if (write_tree(active_cache, entries, "", 0, sha1) != entries)
++	init_cc(&cc);
++	if (write_tree(&cc, entries, "", 0, sha1) != entries)
+ 		die("git-write-tree: internal error");
+ 	printf("%s\n", sha1_to_hex(sha1));
+ 	return 0;
