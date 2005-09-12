@@ -1,168 +1,138 @@
 From: Chuck Lever <cel@netapp.com>
-Subject: [PATCH 12/22] simplify write_cache() calling sequence
-Date: Mon, 12 Sep 2005 10:56:09 -0400
-Message-ID: <20050912145609.28120.67621.stgit@dexter.citi.umich.edu>
+Subject: [PATCH 06/22] teach diff-stages.c about cache iterators
+Date: Mon, 12 Sep 2005 10:55:56 -0400
+Message-ID: <20050912145556.28120.64001.stgit@dexter.citi.umich.edu>
 References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
-X-From: git-owner@vger.kernel.org Mon Sep 12 17:00:51 2005
+X-From: git-owner@vger.kernel.org Mon Sep 12 17:01:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEpjo-0000SG-03
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 16:56:52 +0200
+	id 1EEpjs-0000SG-Bn
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 16:56:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751299AbVILO4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 10:56:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbVILO4b
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:56:31 -0400
-Received: from citi.umich.edu ([141.211.133.111]:16396 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S1751300AbVILO4K (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:56:10 -0400
+	id S1751294AbVILO4v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 10:56:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751297AbVILO4u
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:56:50 -0400
+Received: from citi.umich.edu ([141.211.133.111]:6521 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S1751294AbVILOz4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:55:56 -0400
 Received: from dexter.citi.umich.edu (dexter.citi.umich.edu [141.211.133.33])
-	by citi.umich.edu (Postfix) with ESMTP id A30AF1BAF3
-	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:56:09 -0400 (EDT)
+	by citi.umich.edu (Postfix) with ESMTP id 7A91B1BAF3
+	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:55:56 -0400 (EDT)
 To: git@vger.kernel.org
 In-Reply-To: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8395>
-
-Clean-up:  Hide some external references to "active_cache" and "active_nr"
-by simplifying the calling sequence of write_cache().
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8396>
 
 Signed-off-by: Chuck Lever <cel@netapp.com>
 ---
 
- apply.c          |    3 +--
- cache.h          |    2 +-
- checkout-index.c |    3 +--
- read-cache.c     |   41 +++++++++++++++++++++++++++--------------
- read-tree.c      |    3 +--
- update-index.c   |    3 +--
- 6 files changed, 32 insertions(+), 23 deletions(-)
+ diff-stages.c |   73 +++++++++++++++++++++++++++++----------------------------
+ 1 files changed, 37 insertions(+), 36 deletions(-)
 
-diff --git a/apply.c b/apply.c
---- a/apply.c
-+++ b/apply.c
-@@ -1440,8 +1440,7 @@ static int apply_patch(int fd)
- 		write_out_results(list, skipped_patch);
+diff --git a/diff-stages.c b/diff-stages.c
+--- a/diff-stages.c
++++ b/diff-stages.c
+@@ -17,54 +17,55 @@ static int diff_break_opt = -1;
+ static const char *orderfile = NULL;
+ static const char *diff_filter = NULL;
  
- 	if (write_index) {
--		if (write_cache(newfd, active_cache, active_nr) ||
--		    commit_index_file(&cache_file))
-+		if (write_cache(newfd) || commit_index_file(&cache_file))
- 			die("Unable to write new cachefile");
- 	}
- 
-diff --git a/cache.h b/cache.h
---- a/cache.h
-+++ b/cache.h
-@@ -157,7 +157,7 @@ extern char *prefix_path(const char *pre
- 
- /* Initialize and use the cache information */
- extern int read_cache(void);
--extern int write_cache(int newfd, struct cache_entry **cache, int entries);
-+extern int write_cache(int newfd);
- extern int cache_name_pos(const char *name, int namelen);
- #define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
- #define ADD_CACHE_OK_TO_REPLACE 2	/* Ok to replace file/directory */
-diff --git a/checkout-index.c b/checkout-index.c
---- a/checkout-index.c
-+++ b/checkout-index.c
-@@ -138,8 +138,7 @@ int main(int argc, char **argv)
- 	}
- 
- 	if (0 <= newfd &&
--	    (write_cache(newfd, active_cache, active_nr) ||
--	     commit_index_file(&cache_file)))
-+	    (write_cache(newfd) || commit_index_file(&cache_file)))
- 		die("Unable to write new cachefile");
- 	return 0;
- }
-diff --git a/read-cache.c b/read-cache.c
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -470,30 +470,43 @@ static int ce_flush(SHA_CTX *context, in
- 	return 0;
- }
- 
--int write_cache(int newfd, struct cache_entry **cache, int entries)
-+static int fd, removed = 0;
-+static SHA_CTX c;
++static int stage1, stage2;
 +
-+static int count_removed(struct cache_cursor *cc, struct cache_entry *ce)
-+{
-+	if (ce->ce_mode == 0)
-+		removed++;
-+	next_cc(cc);
-+	return 0;
-+}
-+
-+static int write_one_cache_entry(struct cache_cursor *cc, struct cache_entry *ce)
-+{
-+	if (ce->ce_mode != 0)
-+		if (ce_write(&c, fd, ce, ce_size(ce)) < 0)
-+			return -1;
-+	next_cc(cc);
-+	return 0;
-+}
-+
-+int write_cache(int newfd)
+ static const char diff_stages_usage[] =
+ "git-diff-stages [<common diff options>] <stage1> <stage2> [<path>...]"
+ COMMON_DIFF_OPTIONS_HELP;
+ 
+-static void diff_stages(int stage1, int stage2)
++static int diff_one(struct cache_cursor *cc, struct cache_entry *ce)
  {
--	SHA_CTX c;
- 	struct cache_header hdr;
--	int i, removed;
- 
--	for (i = removed = 0; i < entries; i++)
--		if (!cache[i]->ce_mode)
--			removed++;
-+	walk_cache(count_removed);
- 
- 	hdr.hdr_signature = htonl(CACHE_SIGNATURE);
- 	hdr.hdr_version = htonl(2);
--	hdr.hdr_entries = htonl(entries - removed);
-+	hdr.hdr_entries = htonl(active_nr - removed);
- 
- 	SHA1_Init(&c);
- 	if (ce_write(&c, newfd, &hdr, sizeof(hdr)) < 0)
- 		return -1;
- 
--	for (i = 0; i < entries; i++) {
--		struct cache_entry *ce = cache[i];
--		if (!ce->ce_mode)
+-	int i = 0;
+-	while (i < active_nr) {
+-		struct cache_entry *ce, *stages[4] = { NULL, };
+-		struct cache_entry *one, *two;
+-		const char *name;
+-		int len;
+-		ce = active_cache[i];
+-		len = ce_namelen(ce);
+-		name = ce->name;
+-		for (;;) {
+-			int stage = ce_stage(ce);
+-			stages[stage] = ce;
+-			if (active_nr <= ++i)
+-				break;
+-			ce = active_cache[i];
+-			if (ce_namelen(ce) != len ||
+-			    memcmp(name, ce->name, len))
+-				break;
+-		}
+-		one = stages[stage1];
+-		two = stages[stage2];
+-		if (!one && !two)
 -			continue;
--		if (ce_write(&c, newfd, ce, ce_size(ce)) < 0)
--			return -1;
--	}
-+	fd = newfd;
-+	if (walk_cache(write_one_cache_entry))
-+		return -1;
+-		if (!one)
+-			diff_addremove('+', ntohl(two->ce_mode),
+-				       two->sha1, name, NULL);
+-		else if (!two)
+-			diff_addremove('-', ntohl(one->ce_mode),
+-				       one->sha1, name, NULL);
++	struct cache_entry *one, *two, *stages[4] = { NULL, };
++	const char *name = ce->name;
++	int len = ce_namelen(ce);
 +
- 	return ce_flush(&c, newfd);
++	for (;;) {
++		int stage = ce_stage(ce);
++		stages[stage] = ce;
++		next_cc(cc);
++		if (cache_eof(cc))
++			break;
++		ce = cc_to_ce(cc);
++		if (ce_namelen(ce) != len ||
++			memcmp(name, ce->name, len))
++			break;
++	}
++
++	one = stages[stage1];
++	two = stages[stage2];
++	if (!one && !two)
++		goto out;
++	if (!one)
++		diff_addremove('+', ntohl(two->ce_mode),
++					two->sha1, name, NULL);
++	else if (!two)
++		diff_addremove('-', ntohl(one->ce_mode),
++					one->sha1, name, NULL);
+ 		else if (memcmp(one->sha1, two->sha1, 20) ||
+ 			 (one->ce_mode != two->ce_mode) ||
+-			 find_copies_harder)
++			find_copies_harder)
+ 			diff_change(ntohl(one->ce_mode), ntohl(two->ce_mode),
+-				    one->sha1, two->sha1, name, NULL);
+-	}
++					one->sha1, two->sha1, name, NULL);
++out:
++	next_cc(cc);
++	return 0;
  }
-diff --git a/read-tree.c b/read-tree.c
---- a/read-tree.c
-+++ b/read-tree.c
-@@ -670,8 +670,7 @@ int main(int argc, char **argv)
- 	}
  
- 	unpack_trees(fn);
--	if (write_cache(newfd, active_cache, active_nr) ||
--	    commit_index_file(&cache_file))
-+	if (write_cache(newfd) || commit_index_file(&cache_file))
- 		die("unable to write new index file");
- 	return 0;
- }
-diff --git a/update-index.c b/update-index.c
---- a/update-index.c
-+++ b/update-index.c
-@@ -393,8 +393,7 @@ int main(int argc, char **argv)
- 		if (add_file_to_cache(path))
- 			die("Unable to add %s to database; maybe you want to use --add option?", path);
- 	}
--	if (write_cache(newfd, active_cache, active_nr) ||
--	    commit_index_file(&cache_file))
-+	if (write_cache(newfd) || commit_index_file(&cache_file))
- 		die("Unable to write new cachefile");
+ int main(int ac, const char **av)
+ {
+-	int stage1, stage2;
++	if (read_cache() < 0)
++		die("unable to read index file");
  
- 	return has_errors ? 1 : 0;
+-	read_cache();
+ 	while (1 < ac && av[1][0] == '-') {
+ 		const char *arg = av[1];
+ 		if (!strcmp(arg, "-r"))
+@@ -117,7 +118,7 @@ int main(int ac, const char **av)
+ 	av += 3; /* The rest from av[0] are for paths restriction. */
+ 	diff_setup(diff_setup_opt);
+ 
+-	diff_stages(stage1, stage2);
++	walk_cache(diff_one);
+ 
+ 	diffcore_std(av,
+ 		     detect_rename, diff_score_opt,
