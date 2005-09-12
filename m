@@ -1,53 +1,46 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 00/22] cache cursors: an introduction
-Date: Mon, 12 Sep 2005 13:47:26 -0700
-Message-ID: <7vr7bu9foh.fsf@assigned-by-dhcp.cox.net>
-References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
-	<4325A0D9.2000806@gmail.com> <4325AED6.8050401@citi.umich.edu>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: Re: Add "git grep" helper
+Date: Mon, 12 Sep 2005 16:57:56 -0400
+Message-ID: <118833cc0509121357698005fe@mail.gmail.com>
+References: <Pine.LNX.4.58.0509121203210.4098@g5.osdl.org>
+Reply-To: mwelinder@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 12 22:48:37 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Sep 12 23:00:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEvD8-0007t3-Ou
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 22:47:31 +0200
+	id 1EEvNS-0003AZ-LM
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 22:58:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932227AbVILUr2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 16:47:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbVILUr2
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 16:47:28 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:29315 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932227AbVILUr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Sep 2005 16:47:27 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050912204725.CKSG11315.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 12 Sep 2005 16:47:25 -0400
-To: Chuck Lever <cel@citi.umich.edu>
-In-Reply-To: <4325AED6.8050401@citi.umich.edu> (Chuck Lever's message of "Mon,
-	12 Sep 2005 12:37:42 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932238AbVILU6H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 16:58:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932236AbVILU6H
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 16:58:07 -0400
+Received: from rproxy.gmail.com ([64.233.170.197]:16173 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932238AbVILU6G convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2005 16:58:06 -0400
+Received: by rproxy.gmail.com with SMTP id r35so378477rna
+        for <git@vger.kernel.org>; Mon, 12 Sep 2005 13:57:56 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cK1b/tZDy93wRqfyR/SoqzSNAsmVJuRa2bQxQUq3+zYy+MXILKHTcl+zMK5GbU3qjsXJUw4Xr1I1wAKOo1vjuiJa+V8vXt0Mjo9ETOEy2lUhhmBopyuEx9/kpKLzYfMO2CaqqVRLr+acsaN08/jh6MzilitI8wxD8JLnZLgPsoM=
+Received: by 10.38.24.69 with SMTP id 69mr382568rnx;
+        Mon, 12 Sep 2005 13:57:56 -0700 (PDT)
+Received: by 10.38.76.38 with HTTP; Mon, 12 Sep 2005 13:57:56 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509121203210.4098@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8427>
 
-Chuck Lever <cel@citi.umich.edu> writes:
+Cute, but what about grep flags like "-w", "-n", and "-c"?
 
->> The sentence "This patch series is against the "proposed updates"
->> branch, as of a couple of days ago." should have also included a
->> commit ID. That way we would know where/when the patches would apply
->> cleanly for testing and dissection.
->
-> i'm a dork.
->
-> 6ae3d6e6d0f87cfa75b4bf213a485ff687defce8
->
-> i will include the base ref in my future postings.
-
-No need for any of that.  All the necessary bits are already in
-the "master" branch.
+M.
