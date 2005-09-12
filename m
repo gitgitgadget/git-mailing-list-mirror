@@ -1,221 +1,227 @@
 From: Chuck Lever <cel@netapp.com>
-Subject: [PATCH 11/22] teach write-tree.c to use cache iterators
-Date: Mon, 12 Sep 2005 10:56:07 -0400
-Message-ID: <20050912145607.28120.80487.stgit@dexter.citi.umich.edu>
+Subject: [PATCH 04/22] teach diff-index.c about cache iterators
+Date: Mon, 12 Sep 2005 10:55:52 -0400
+Message-ID: <20050912145552.28120.21880.stgit@dexter.citi.umich.edu>
 References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
-X-From: git-owner@vger.kernel.org Mon Sep 12 17:03:19 2005
+X-From: git-owner@vger.kernel.org Mon Sep 12 17:03:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEpll-0001hk-JM
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 16:58:54 +0200
+	id 1EEpll-0001hk-12
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 16:58:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307AbVILO5N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 10:57:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751314AbVILO4k
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:56:40 -0400
-Received: from citi.umich.edu ([141.211.133.111]:33164 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S1751298AbVILO4H (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:56:07 -0400
+	id S1751286AbVILO44 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 10:56:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbVILO4y
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:56:54 -0400
+Received: from citi.umich.edu ([141.211.133.111]:50774 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S1751286AbVILOzw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:55:52 -0400
 Received: from dexter.citi.umich.edu (dexter.citi.umich.edu [141.211.133.33])
-	by citi.umich.edu (Postfix) with ESMTP id 652741BAF3
-	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:56:07 -0400 (EDT)
+	by citi.umich.edu (Postfix) with ESMTP id 238CC1BAF3
+	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:55:52 -0400 (EDT)
 To: git@vger.kernel.org
 In-Reply-To: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8403>
 
 Signed-off-by: Chuck Lever <cel@netapp.com>
 ---
 
- write-tree.c |  110 ++++++++++++++++++++++++++++++++++++----------------------
- 1 files changed, 69 insertions(+), 41 deletions(-)
+ diff-index.c |  126 +++++++++++++++++++++++++++++-----------------------------
+ 1 files changed, 62 insertions(+), 64 deletions(-)
 
-diff --git a/write-tree.c b/write-tree.c
---- a/write-tree.c
-+++ b/write-tree.c
-@@ -5,7 +5,7 @@
-  */
- #include "cache.h"
+diff --git a/diff-index.c b/diff-index.c
+--- a/diff-index.c
++++ b/diff-index.c
+@@ -14,9 +14,10 @@ static int pickaxe_opts = 0;
+ static int diff_break_opt = -1;
+ static const char *orderfile = NULL;
+ static const char *diff_filter = NULL;
++static const char **pathspec = NULL;
  
--static int missing_ok = 0;
-+static int funny, missing_ok = 0;
- 
- static int check_valid_sha1(unsigned char *sha1)
+ /* A file entry went away or appeared */
+-static void show_file(const char *prefix, struct cache_entry *ce, unsigned char *sha1, unsigned int mode)
++static inline void show_file(const char *prefix, struct cache_entry *ce, unsigned char *sha1, unsigned int mode)
  {
-@@ -18,8 +18,9 @@ static int check_valid_sha1(unsigned cha
- 	return ret ? 0 : -1;
+ 	diff_addremove(prefix[0], ntohl(mode), sha1, ce->name, NULL);
  }
- 
--static int write_tree(struct cache_entry **cachep, int maxentries, const char *base, int baselen, unsigned char *returnsha1)
-+static int write_tree(struct cache_cursor *cc, int maxentries, const char *base, int baselen, unsigned char *returnsha1)
- {
-+	struct cache_cursor next = *cc;
- 	unsigned char subdir_sha1[20];
- 	unsigned long size, offset;
- 	char *buffer;
-@@ -32,7 +33,7 @@ static int write_tree(struct cache_entry
- 
- 	nr = 0;
- 	while (nr < maxentries) {
--		struct cache_entry *ce = cachep[nr];
-+		struct cache_entry *ce = cc_to_ce(&next);
- 		const char *pathname = ce->name, *filename, *dirname;
- 		int pathlen = ce_namelen(ce), entrylen;
- 		unsigned char *sha1;
-@@ -51,15 +52,20 @@ static int write_tree(struct cache_entry
- 		if (dirname) {
- 			int subdir_written;
- 
--			subdir_written = write_tree(cachep + nr, maxentries - nr, pathname, dirname-pathname+1, subdir_sha1);
--			nr += subdir_written;
--
-+			subdir_written = write_tree(&next,
-+						    maxentries - nr,
-+						    pathname,
-+						    dirname - pathname + 1,
-+						    subdir_sha1);
-+			
- 			/* Now we need to write out the directory entry into this tree.. */
- 			mode = S_IFDIR;
- 			pathlen = dirname - pathname;
- 
- 			/* ..but the directory entry doesn't count towards the total count */
--			nr--;
-+			nr += subdir_written - 1;
-+			while (--subdir_written)
-+				next_cc(&next);
- 			sha1 = subdir_sha1;
- 		}
- 
-@@ -76,6 +82,7 @@ static int write_tree(struct cache_entry
- 		memcpy(buffer + offset, sha1, 20);
- 		offset += 20;
- 		nr++;
-+		next_cc(&next);
- 	}
- 
- 	write_sha1_file(buffer, offset, "tree", returnsha1);
-@@ -83,11 +90,57 @@ static int write_tree(struct cache_entry
- 	return nr;
- }
- 
-+static int verify_merged(struct cache_cursor *cc, struct cache_entry *ce)
-+{
-+	if (ntohs(ce->ce_flags) & ~CE_NAMEMASK) {
-+		if (10 < ++funny) {
-+			fprintf(stderr, "...\n");
-+			return -1;
-+		}
-+		fprintf(stderr, "%s: unmerged (%s)\n", ce->name, sha1_to_hex(ce->sha1));
-+	}
-+
-+	next_cc(cc);
-+	return 0;
-+}
-+
-+/*
-+ * path/file always comes after path because of the way
-+ * the cache is sorted.  Also path can appear only once,
-+ * which means conflicting one would immediately follow.
-+ */
-+static int verify_path(struct cache_cursor *cc, struct cache_entry *ce)
-+{
-+	struct cache_entry *next;
-+	const char *next_name, *this_name = ce->name;
-+	int this_len = strlen(this_name);
-+
-+	/* don't check the last cache entry */
-+	next_cc(cc);
-+	if (cache_eof(cc))
-+		return -1;
-+	next = cc_to_ce(cc);
-+	next_name = next->name;
-+
-+	if (this_len < strlen(next_name) &&
-+	    strncmp(this_name, next_name, this_len) == 0 &&
-+	    next_name[this_len] == '/') {
-+		if (10 < ++funny) {
-+			fprintf(stderr, "...\n");
-+			return -1;
-+		}
-+		fprintf(stderr, "You have both %s and %s\n",
-+			this_name, next_name);
-+	}
-+
-+	return 0;
-+}
-+
- int main(int argc, char **argv)
- {
--	int i, funny;
--	int entries = read_cache();
-+	struct cache_cursor cc;
- 	unsigned char sha1[20];
-+	int entries;
- 	
- 	if (argc == 2) {
- 		if (!strcmp(argv[1], "--missing-ok"))
-@@ -99,53 +152,28 @@ int main(int argc, char **argv)
- 	if (argc > 2)
- 		die("too many options");
- 
-+	entries = read_cache();
- 	if (entries < 0)
- 		die("git-write-tree: error reading cache");
- 
- 	/* Verify that the tree is merged */
- 	funny = 0;
--	for (i = 0; i < entries; i++) {
--		struct cache_entry *ce = active_cache[i];
--		if (ntohs(ce->ce_flags) & ~CE_NAMEMASK) {
--			if (10 < ++funny) {
--				fprintf(stderr, "...\n");
--				break;
--			}
--			fprintf(stderr, "%s: unmerged (%s)\n", ce->name, sha1_to_hex(ce->sha1));
--		}
--	}
-+	walk_cache(verify_merged);
- 	if (funny)
--		die("git-write-tree: not able to write tree");
-+		die("git-write-tree: verify_merged: not able to write tree");
- 
- 	/* Also verify that the cache does not have path and path/file
- 	 * at the same time.  At this point we know the cache has only
- 	 * stage 0 entries.
- 	 */
- 	funny = 0;
--	for (i = 0; i < entries - 1; i++) {
--		/* path/file always comes after path because of the way
--		 * the cache is sorted.  Also path can appear only once,
--		 * which means conflicting one would immediately follow.
--		 */
--		const char *this_name = active_cache[i]->name;
--		const char *next_name = active_cache[i+1]->name;
--		int this_len = strlen(this_name);
--		if (this_len < strlen(next_name) &&
--		    strncmp(this_name, next_name, this_len) == 0 &&
--		    next_name[this_len] == '/') {
--			if (10 < ++funny) {
--				fprintf(stderr, "...\n");
--				break;
--			}
--			fprintf(stderr, "You have both %s and %s\n",
--				this_name, next_name);
--		}
--	}
-+	walk_cache(verify_path);
- 	if (funny)
--		die("git-write-tree: not able to write tree");
-+		die("git-write-tree: verify_path: not able to write tree");
- 
- 	/* Ok, write it out */
--	if (write_tree(active_cache, entries, "", 0, sha1) != entries)
-+	init_cc(&cc);
-+	if (write_tree(&cc, entries, "", 0, sha1) != entries)
- 		die("git-write-tree: internal error");
- 	printf("%s\n", sha1_to_hex(sha1));
+@@ -88,62 +89,63 @@ static int show_modified(struct cache_en
  	return 0;
+ }
+ 
+-static int diff_cache(struct cache_entry **ac, int entries, const char **pathspec)
++static int diff_one(struct cache_cursor *cc, struct cache_entry *ce)
+ {
+-	while (entries) {
+-		struct cache_entry *ce = *ac;
+-		int same = (entries > 1) && ce_same_name(ce, ac[1]);
+-
+-		if (!ce_path_match(ce, pathspec))
+-			goto skip_entry;
+-
+-		switch (ce_stage(ce)) {
+-		case 0:
+-			/* No stage 1 entry? That means it's a new file */
+-			if (!same) {
+-				show_new_file(ce);
+-				break;
+-			}
+-			/* Show difference between old and new */
+-			show_modified(ac[1], ce, 1);
++	struct cache_entry *next;
++	int same;
++
++	if (!ce_path_match(ce, pathspec))
++		goto skip_entry;
++
++	next_cc(cc);
++	next = cc_to_ce(cc);
++	/* check eof here to skip the last entry in the cache */
++	same = (!cache_eof(cc) && ce_same_name(ce, next));
++	prev_cc(cc);
++
++	switch (ce_stage(ce)) {
++	case 0:
++		/* No stage 1 entry? That means it's a new file */
++		if (!same) {
++			show_new_file(ce);
+ 			break;
+-		case 1:
+-			/* No stage 3 (merge) entry? That means it's been deleted */
+-			if (!same) {
+-				show_file("-", ce, ce->sha1, ce->ce_mode);
+-				break;
+-			}
+-			/* We come here with ce pointing at stage 1
+-			 * (original tree) and ac[1] pointing at stage
+-			 * 3 (unmerged).  show-modified with
+-			 * report-mising set to false does not say the
+-			 * file is deleted but reports true if work
+-			 * tree does not have it, in which case we
+-			 * fall through to report the unmerged state.
+-			 * Otherwise, we show the differences between
+-			 * the original tree and the work tree.
+-			 */
+-			if (!cached_only && !show_modified(ce, ac[1], 0))
+-				break;
+-			/* fallthru */
+-		case 3:
+-			diff_unmerge(ce->name);
++		}
++		/* Show difference between old and new */
++		show_modified(next, ce, 1);
++		break;
++	case 1:
++		/* No stage 3 (merge) entry? That means it's been deleted */
++		if (!same) {
++			show_file("-", ce, ce->sha1, ce->ce_mode);
+ 			break;
+-
+-		default:
+-			die("impossible cache entry stage");
+ 		}
+-
+-skip_entry:
+-		/*
+-		 * Ignore all the different stages for this file,
+-		 * we've handled the relevant cases now.
++		/* We come here with ce pointing at stage 1
++		 * (original tree) and next pointing at stage
++		 * 3 (unmerged).  show-modified with
++		 * report-mising set to false does not say the
++		 * file is deleted but reports true if work
++		 * tree does not have it, in which case we
++		 * fall through to report the unmerged state.
++		 * Otherwise, we show the differences between
++		 * the original tree and the work tree.
+ 		 */
+-		do {
+-			ac++;
+-			entries--;
+-		} while (entries && ce_same_name(ce, ac[0]));
++		if (!cached_only && !show_modified(ce, next, 0))
++			break;
++		/* fallthru */
++	case 3:
++		diff_unmerge(ce->name);
++		break;
++	default:
++		die("impossible cache entry stage");
++		break;
+ 	}
++
++skip_entry:
++	/*
++	 * Ignore all the different stages for this file,
++	 * we've handled the relevant cases now.
++	 */
++	next_name(cc, ce);
+ 	return 0;
+ }
+ 
+@@ -152,15 +154,12 @@ skip_entry:
+  * when we read in the new tree (into "stage 1"), we won't lose sight
+  * of the fact that we had unmerged entries.
+  */
+-static void mark_merge_entries(void)
++static int mark_one_entry(struct cache_cursor *cc, struct cache_entry *ce)
+ {
+-	int i;
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
+-		if (!ce_stage(ce))
+-			continue;
++	if (ce_stage(ce))
+ 		ce->ce_flags |= htons(CE_STAGEMASK);
+-	}
++	next_cc(cc);
++	return 0;
+ }
+ 
+ static const char diff_cache_usage[] =
+@@ -173,10 +172,8 @@ int main(int argc, char **argv)
+ 	const char *tree_name = NULL;
+ 	unsigned char sha1[20];
+ 	const char *prefix = setup_git_directory();
+-	const char **pathspec = NULL;
+ 	void *tree;
+ 	unsigned long size;
+-	int ret;
+ 	int allow_options = 1;
+ 	int i;
+ 
+@@ -271,12 +268,13 @@ int main(int argc, char **argv)
+ 	if (!tree_name || get_sha1(tree_name, sha1))
+ 		usage(diff_cache_usage);
+ 
+-	read_cache();
++	if (read_cache() < 0)
++		die("unable to read index file");
+ 
+ 	/* The rest is for paths restriction. */
+ 	diff_setup(diff_setup_opt);
+ 
+-	mark_merge_entries();
++	walk_cache(mark_one_entry);
+ 
+ 	tree = read_object_with_reference(sha1, "tree", &size, NULL);
+ 	if (!tree)
+@@ -284,7 +282,7 @@ int main(int argc, char **argv)
+ 	if (read_tree(tree, size, 1, pathspec))
+ 		die("unable to read tree object %s", tree_name);
+ 
+-	ret = diff_cache(active_cache, active_nr, pathspec);
++	walk_cache(diff_one);
+ 
+ 	diffcore_std(pathspec,
+ 		     detect_rename, diff_score_opt,
+@@ -292,5 +290,5 @@ int main(int argc, char **argv)
+ 		     diff_break_opt,
+ 		     orderfile, diff_filter);
+ 	diff_flush(diff_output_format, diff_line_termination);
+-	return ret;
++	return 0;
+ }
