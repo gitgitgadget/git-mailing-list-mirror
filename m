@@ -1,97 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Improve "git grep" flags handling
-Date: Mon, 12 Sep 2005 16:46:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509121635060.3266@g5.osdl.org>
-References: <Pine.LNX.4.58.0509121203210.4098@g5.osdl.org>
- <7vbr2y7yfd.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509121500400.3266@g5.osdl.org>
- <Pine.LNX.4.58.0509121519310.3266@g5.osdl.org> <7vd5nd7w0x.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0509121542050.3266@g5.osdl.org> <7vslw96f6j.fsf@assigned-by-dhcp.cox.net>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: hmm, can't we give the "root" a parent?
+Date: Tue, 13 Sep 2005 01:51:49 +0200
+Message-ID: <20050912235149.GA10513@vrfy.org>
+References: <20050912181101.GA22221@vrfy.org> <Pine.LNX.4.58.0509121123280.3242@g5.osdl.org> <20050912195947.GA28502@vrfy.org> <Pine.LNX.4.58.0509121316030.3266@g5.osdl.org> <20050912210006.GA32211@vrfy.org> <Pine.LNX.4.58.0509121438150.3266@g5.osdl.org> <20050912225032.GA8360@vrfy.org> <Pine.LNX.4.58.0509121608130.3266@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 13 01:48:44 2005
+X-From: git-owner@vger.kernel.org Tue Sep 13 01:53:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEy1E-00041W-T8
-	for gcvg-git@gmane.org; Tue, 13 Sep 2005 01:47:25 +0200
+	id 1EEy61-0005be-1s
+	for gcvg-git@gmane.org; Tue, 13 Sep 2005 01:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932363AbVILXrA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 19:47:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932366AbVILXrA
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 19:47:00 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:3243 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932363AbVILXq7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 19:46:59 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8CNktBo031500
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Sep 2005 16:46:55 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8CNkrhX028864;
-	Mon, 12 Sep 2005 16:46:55 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslw96f6j.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932364AbVILXvx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 19:51:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932367AbVILXvx
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 19:51:53 -0400
+Received: from soundwarez.org ([217.160.171.123]:40590 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S932364AbVILXvw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 19:51:52 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id 96D5959180; Tue, 13 Sep 2005 01:51:49 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0509121608130.3266@g5.osdl.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8453>
 
-
-
-On Mon, 12 Sep 2005, Junio C Hamano wrote:
+On Mon, Sep 12, 2005 at 04:09:58PM -0700, Linus Torvalds wrote:
 > 
-> Yeah, let's see how tolerant your barf-o-meter is today.
+> 
+> On Tue, 13 Sep 2005, Kay Sievers wrote:
+> > 
+> > And I would prefer --pretty=raw with '\0' termination instead of '\n' so I can
+> > replace the output from --header with --pretty=raw and can still use the same
+> > parsing routine.
+> 
+> It struck me that "--header" works fine with "--parents".
+> 
+> So if you're currently already using "git-rev-list --header" and parsing 
+> that, just add "--parents" and off you go. That's basically the same as 
+> --pretty=raw + zero-termination.
 
-I'm not barfing, but that's probably because my brain just shut down and 
-is desperately trying to gouge my eyes out with a spoon.
+Yeah, got the same idea. :) Have it already working. With the history tree
+plugged in after "Linux 2.6.12-rc2":
+   http://ehlo.org/~kay/?p=linux/kernel/git/torvalds/linux-2.6.git;a=shortlog;h=2d137c24e9f433e37ffd10b3d5f418157589a8d2
 
-Wouldn't it be _much_ nicer to just do
+Grafting worked pretty nice by just doing:
+  echo "8d38eadb7a97f265f7b3a9e8a30df358c3a546c8 e7e173af42dbf37b1d946f9ee00219cb3b2bea6a" > $LOCALROOT/linux/kernel/git/torvalds/linux-2.6.git/info/grafts
+  echo $LOCALROOT/linux/kernel/git/tglx/history.git/objects > $LOCALROOT/linux/kernel/git/torvalds/linux-2.6.git/objects/info/alternates
 
-	pattern=
-	flags=()
-	git_flags=()
-	while : ; do
-		case "$1" in
-		--cached|--deleted|--others|--killed|\
-		--ignored|--exclude=*|\
-		--exclude-from=*|\--exclude-per-directory=*)
-			git_flags=("${git_flags[@]}" "$1")
-			;;
-		-e)
-			pattern="$2"
-			shift
-			;;
-		-A|-B|-C|-D|-d|-f|-m)
-			flags=("${flags[@]}" "$1" "$2")
-			shift
-			;;
-		--)
-			shift
-			break
-			;;
-		-*)
-			flags=("${flags[@]}" "$1")
-			;;
-		*)
-			if [ -z "$pattern" ]; then
-				pattern="$1"
-				shift
-			fi
-			break
-			;;
-		esac
-		shift
-	done
-	git-ls-files -z "${git_flags[@]}" | 
-		xargs -0 grep "${flags[@]}" "$pattern"
-
-which does use bash array variables, but dang, it does so for a reason: 
-they really are very very useful, and they make it _so_ much more pleasant 
-to do these things..
-
-		Linus
+Thanks,
+Kay
