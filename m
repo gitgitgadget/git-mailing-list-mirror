@@ -1,57 +1,51 @@
-From: Greg Louis <glouis@dynamicro.on.ca>
-Subject: Re: [PATCH] Redirect cd output to /dev/null, was: git-clone seems dead
-Date: Mon, 12 Sep 2005 06:56:37 -0400
-Organization: Dynamicro Consulting Limited
-Message-ID: <20050912105637.GA5290@athame.dynamicro.on.ca>
-References: <vhp64t7v5ff.fsf@ebar091.ebar.dtu.dk> <7vd5nfs9y0.fsf@assigned-by-dhcp.cox.net> <20050911220421.GA14593@athame.dynamicro.on.ca> <20050911230136.GA15224@athame.dynamicro.on.ca> <7vwtlnm4zx.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Omit patches that have already been merged from format-patch output.
+Date: Mon, 12 Sep 2005 04:48:55 -0700
+Message-ID: <7voe6yik0o.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f905091101529e045af@mail.gmail.com>
+	<7voe6zqr9y.fsf@assigned-by-dhcp.cox.net>
+	<46a038f905091200245f6330d9@mail.gmail.com>
+	<46a038f905091202343306846@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-X-From: git-owner@vger.kernel.org Mon Sep 12 12:58:31 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 12 13:52:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EElzf-0000WC-4C
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 12:56:59 +0200
+	id 1EEmpL-0001xv-5G
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 13:50:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750725AbVILK4n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 06:56:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750731AbVILK4n
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 06:56:43 -0400
-Received: from csl2r.consultronics.on.ca ([204.138.93.16]:13955 "EHLO
-	csl2.consultronics.on.ca") by vger.kernel.org with ESMTP
-	id S1750725AbVILK4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Sep 2005 06:56:43 -0400
-Received: from [70.29.36.34] (helo=athame.dynamicro.internal ident=glouis)
-	by csl2.consultronics.on.ca with esmtpsa (SSLv3:AES256-SHA:256)
-	(Exim 4.52)
-	id 1EElzK-0004tX-34
-	for git@vger.kernel.org; Mon, 12 Sep 2005 06:56:38 -0400
-Received: from root by athame.dynamicro.internal with local (Exim 4.52)
-	id 1EElzJ-0001Op-Ms
-	for git@vger.kernel.org; Mon, 12 Sep 2005 06:56:37 -0400
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vwtlnm4zx.fsf@assigned-by-dhcp.cox.net>
+	id S1750763AbVILLs6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 07:48:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750766AbVILLs5
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 07:48:57 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:43395 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1750763AbVILLs5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2005 07:48:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050912114856.IDYC9510.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 12 Sep 2005 07:48:56 -0400
+To: martin.langhoff@gmail.com
+In-Reply-To: <46a038f905091202343306846@mail.gmail.com> (Martin Langhoff's
+	message of "Mon, 12 Sep 2005 21:34:30 +1200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8377>
 
-On 20050911 (Sun) at 1847:30 -0700, Junio C Hamano wrote:
-> I really do not see a point of having CDPATH as an            
-> environment variable, exported to be honored by any unsuspecting
-> shell scripts.
-> 
-Well, that's why I didn't originally bother submitting the patch -- was 
-just going to use it internally.
-  
-I could argue that it's a relatively harmless contribution to
-robustness of the git scripts, but if someone replied that total
-idiot-proofing isn't a worthwhile goal for a project of this sort, I   
-wouldn't necessarily disagree.
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
--- 
-| G r e g  L o u i s         | gpg public key: 0x400B1AA86D9E3E64 |
-|  http://www.bgl.nu/~glouis |   (on my website or any keyserver) |
-|  http://wecanstopspam.org in signatures helps fight junk email. |
+> Strike that. PEBCAK: my branch entry was pointing to the wrong place. Sorry. 
+
+Thanks for quick correction.  Just from a curiosity, do you run
+GIT from the proposed updates branch?  I am asking because that
+suspect git-format-patch change is supposed to be only in there.
+
+I am somewhat seriously curious.  How many of you on the list
+regularly look at what is in the proposed updates, and how many
+of you actually run it?
