@@ -1,45 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] There are several undocumented dependencies
-Date: Sun, 11 Sep 2005 23:16:23 -0700
-Message-ID: <7vvf16izew.fsf@assigned-by-dhcp.cox.net>
-References: <200509120000.j8C00n9M012603@inti.inf.utfsm.cl>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: replaying commits against CVS
+Date: Mon, 12 Sep 2005 18:56:42 +1200
+Message-ID: <46a038f905091123564b663062@mail.gmail.com>
+Reply-To: martin.langhoff@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 12 08:17:44 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Sep 12 08:57:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEhcy-0003Ee-E3
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 08:17:16 +0200
+	id 1EEiFD-0002wT-0i
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 08:56:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751174AbVILGQZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 02:16:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751154AbVILGQZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 02:16:25 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:7089 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751174AbVILGQZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Sep 2005 02:16:25 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050912061623.OTHL3414.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 12 Sep 2005 02:16:23 -0400
-To: Horst von Brand <vonbrand@inf.utfsm.cl>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751185AbVILG4n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 02:56:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751186AbVILG4n
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 02:56:43 -0400
+Received: from rproxy.gmail.com ([64.233.170.192]:62568 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751185AbVILG4n convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2005 02:56:43 -0400
+Received: by rproxy.gmail.com with SMTP id i8so315414rne
+        for <git@vger.kernel.org>; Sun, 11 Sep 2005 23:56:42 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=LTKqSB/1duZh2/8jd/FPtYTHEFXT2knNvFXXGGTShXRlW9ybYBlHP4UPlDEXqZFWpBkA8I9jQGnT1V63d8PLP0DLJq6V7aUsHQZgeXMc3U4R5Z6Hvd8Q6IqwojuZ1A3/xpX8oHejWHHZG/u3XtTWkKe4TEkO9RYdgP7CVJygYAk=
+Received: by 10.38.79.78 with SMTP id c78mr261718rnb;
+        Sun, 11 Sep 2005 23:56:42 -0700 (PDT)
+Received: by 10.38.101.53 with HTTP; Sun, 11 Sep 2005 23:56:42 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8370>
 
-Horst von Brand <vonbrand@inf.utfsm.cl> writes:
+I am not looking for a full-blown 2 way gateway. But we do work quite
+a bit on some projects where the upstream is using CVS, and it'd be
+great to be able to replay our history against CVS. (And thus, when
+the commits are echoed back, git-cherry will do the right thing and
+skip them).
 
-> There are several undocumented dependencies in the .spec and in the
-> INSTALL files. The following is from Fedora, perhaps other RPM
-> distributions call the packages differently.
+My current plan is to take git-apply-mbox and transform it to perform
+the nasty deed. But smarter people have been merging mbox-formatted
+patches automatically for ages, and perhaps there's a script out there
+that is known to work reliably.
 
-Thanks.  Earlier, I was told that it does not make much sense to
-target for RPM based distributions in general because of the
-package naming issue you mention here, and explicitly targetting
-for Fedora is fine by me.
+cheers,
+
+
+martin
