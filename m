@@ -1,30 +1,30 @@
 From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH 4/5] Make sure we die if we don't get enough arguments.
-Date: Mon, 12 Sep 2005 23:31:22 +0200
-Message-ID: <20050912213122.GF6644@c165.ib.student.liu.se>
+Subject: [PATCH 5/5] Make the ProgramError class printable.
+Date: Mon, 12 Sep 2005 23:31:56 +0200
+Message-ID: <20050912213156.GG6644@c165.ib.student.liu.se>
 References: <20050912212601.GB6644@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Mon Sep 12 23:33:02 2005
+X-From: git-owner@vger.kernel.org Mon Sep 12 23:33:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEvte-0005yK-6k
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 23:31:26 +0200
+	id 1EEvuc-0006Qe-7j
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 23:32:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932264AbVILVbY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 17:31:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932265AbVILVbX
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 17:31:23 -0400
-Received: from [85.8.31.11] ([85.8.31.11]:6893 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S932264AbVILVbX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 17:31:23 -0400
+	id S932266AbVILVb6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 17:31:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932268AbVILVb6
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 17:31:58 -0400
+Received: from [85.8.31.11] ([85.8.31.11]:7405 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S932266AbVILVb5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 17:31:57 -0400
 Received: from c165 (unknown [85.8.2.189])
 	by mail6.wasadata.com (Postfix) with ESMTP
-	id 8FF8F4115; Mon, 12 Sep 2005 23:36:23 +0200 (CEST)
+	id A3A0F4115; Mon, 12 Sep 2005 23:36:57 +0200 (CEST)
 Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EEvta-0001w4-00; Mon, 12 Sep 2005 23:31:22 +0200
+	id 1EEvu8-0001wH-00; Mon, 12 Sep 2005 23:31:56 +0200
 To: git@vger.kernel.org
 Content-Disposition: inline
 In-Reply-To: <20050912212601.GB6644@c165.ib.student.liu.se>
@@ -32,27 +32,27 @@ User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8436>
 
 Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
 
 ---
 
- git-merge-fredrik.py |    3 +++
+ gitMergeCommon.py |    3 +++
  1 files changed, 3 insertions(+), 0 deletions(-)
 
-573c3e6f61eb2cb27b5d67f7a24f01a74980c769
-diff --git a/git-merge-fredrik.py b/git-merge-fredrik.py
---- a/git-merge-fredrik.py
-+++ b/git-merge-fredrik.py
-@@ -392,6 +392,9 @@ def usage():
- # This strategy module figures out merge bases itself, so we only
- # get heads.
+30c12b2a8d3df83b15952f786327ccd0c3c04554
+diff --git a/gitMergeCommon.py b/gitMergeCommon.py
+--- a/gitMergeCommon.py
++++ b/gitMergeCommon.py
+@@ -46,6 +46,9 @@ class ProgramError(Exception):
+         self.progStr = progStr
+         self.error = error
  
-+if len(sys.argv) < 4:
-+    usage()
++    def __str__(self):
++        return self.progStr + ': ' + self.error
 +
- for nextArg in xrange(1, len(sys.argv)):
-     if sys.argv[nextArg] == '--':
-         if len(sys.argv) != nextArg + 3:
+ addDebug('runProgram')
+ def runProgram(prog, input=None, returnCode=False, env=None, pipeOutput=True):
+     debug('runProgram prog:', str(prog), 'input:', str(input))
