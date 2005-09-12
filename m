@@ -1,67 +1,96 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: What's up with the GIT archive on www.kernel.org?
-Date: Mon, 12 Sep 2005 14:42:14 -0400
-Message-ID: <20050912184214.GB5276@mythryan2.michonline.com>
-References: <m3mzmjvbh7.fsf@telia.com> <Pine.LNX.4.58.0509111431400.3242@g5.osdl.org> <7virx7njxa.fsf@assigned-by-dhcp.cox.net> <200509112145.33994.dtor_core@ameritech.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Add "git grep" helper
+Date: Mon, 12 Sep 2005 12:06:10 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509121203210.4098@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Peter Osterlund <petero2@telia.com>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 12 20:44:04 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Sep 12 21:07:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEtGM-0006kU-RD
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 20:42:43 +0200
+	id 1EEtdG-0006A8-PZ
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 21:06:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750893AbVILSmk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 14:42:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932122AbVILSmj
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 14:42:39 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:26345 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S1750893AbVILSmj (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 14:42:39 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1EEtFv-0000Lc-P2; Mon, 12 Sep 2005 14:42:15 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1EEtFv-0003Em-00; Mon, 12 Sep 2005 14:42:15 -0400
-Received: from ryan by mythical with local (Exim 4.52)
-	id 1EEtFv-0001Sc-0O; Mon, 12 Sep 2005 14:42:15 -0400
-To: Dmitry Torokhov <dtor_core@ameritech.net>
-Content-Disposition: inline
-In-Reply-To: <200509112145.33994.dtor_core@ameritech.net>
-User-Agent: Mutt/1.5.9i
+	id S932150AbVILTGU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 15:06:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932153AbVILTGU
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 15:06:20 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:46514 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932150AbVILTGT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 15:06:19 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8CJ6DBo011342
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 12 Sep 2005 12:06:14 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8CJ6AxA012183;
+	Mon, 12 Sep 2005 12:06:12 -0700
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8416>
 
-On Sun, Sep 11, 2005 at 09:45:33PM -0500, Dmitry Torokhov wrote:
-> 
-> Call me brain-dead but all of this just makes me rsync my tree to
-> kernel.org and then manually do "ln -f" for all the packs that Linus
-> has. This way I am sure tht the tree is what I have plus and it is
-> "pullable".
 
-If you have access to make hardlinks, you should be able to use
-git-relink to do the hard work for you.
+Very convenient shorthand for
 
->From memory:
-	git relink my_dir1 my_dir2 ... master_dir
+	git-ls-files [file-patterns] | xargs grep <pattern>
 
-or:
-	git relink my-kernel-tree /pub/scm/.../torvalds/linux.git/
+which I tend to do all the time.
 
-(I think that will work - via a bug in my initial attempt to write
-git-relink, I look to make sure the path ends in ".git/" not "/.git/".
-So the above should work.  I think.)
+Yes, it's trivial, but it's really nice. I can do
 
--- 
+	git grep '\<some_variable\>' arch/i386 include/asm-i386
 
-Ryan Anderson
-  sometimes Pug Majere
+and it does exactly what you'd think it does. And since it just uses the 
+normal git-ls-files file patterns, you can do things like
+
+	git grep something 'include/*.h'
+
+and it will search all header files under the include/ subdirectory.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -76,7 +76,7 @@ SCRIPT_SH = \
+ 	git-tag.sh git-verify-tag.sh git-whatchanged.sh git.sh \
+ 	git-applymbox.sh git-applypatch.sh \
+ 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
+-	git-merge-resolve.sh
++	git-merge-resolve.sh git-grep.sh
+ 
+ SCRIPT_PERL = \
+ 	git-archimport.perl git-cvsimport.perl git-relink.perl \
+diff --git a/git-grep.sh b/git-grep.sh
+new file mode 100755
+--- /dev/null
++++ b/git-grep.sh
+@@ -0,0 +1,20 @@
++#!/bin/sh
++flags=
++while :; do
++  pattern="$1"
++  case "$pattern" in
++  -i|-I|-a|-E|-H|-h|-l)
++    flags="$flags $pattern"
++    shift
++    ;;
++  -*)
++    echo "unknown flag $pattern" >&2
++    exit 1
++    ;;
++  *)
++    break
++    ;;
++  esac
++done
++shift
++git-ls-files -z "$@" | xargs -0 grep $flags "$pattern"
