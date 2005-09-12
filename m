@@ -1,53 +1,57 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] cogito bugfixes and cleanups, mainly Debian things
-Date: Mon, 12 Sep 2005 12:21:52 +0200
-Message-ID: <20050912102152.GB22118@pasky.or.cz>
-References: <11250540944027-git-send-email-tv@debian.org> <11250540952285-git-send-email-tv@debian.org> <20050912003156.GF15630@pasky.or.cz> <43252E5C.5090207@debian.org>
+From: Greg Louis <glouis@dynamicro.on.ca>
+Subject: Re: [PATCH] Redirect cd output to /dev/null, was: git-clone seems dead
+Date: Mon, 12 Sep 2005 06:56:37 -0400
+Organization: Dynamicro Consulting Limited
+Message-ID: <20050912105637.GA5290@athame.dynamicro.on.ca>
+References: <vhp64t7v5ff.fsf@ebar091.ebar.dtu.dk> <7vd5nfs9y0.fsf@assigned-by-dhcp.cox.net> <20050911220421.GA14593@athame.dynamicro.on.ca> <20050911230136.GA15224@athame.dynamicro.on.ca> <7vwtlnm4zx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 12 12:22:56 2005
+Content-Type: text/plain; charset=iso-8859-1
+X-From: git-owner@vger.kernel.org Mon Sep 12 12:58:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EElRn-00007U-TV
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 12:22:00 +0200
+	id 1EElzf-0000WC-4C
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 12:56:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750715AbVILKV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 06:21:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750720AbVILKV5
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 06:21:57 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:33769 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750715AbVILKV4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 06:21:56 -0400
-Received: (qmail 25109 invoked by uid 2001); 12 Sep 2005 12:21:52 +0200
-To: Tommi Virtanen <tv@debian.org>
+	id S1750725AbVILK4n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 06:56:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750731AbVILK4n
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 06:56:43 -0400
+Received: from csl2r.consultronics.on.ca ([204.138.93.16]:13955 "EHLO
+	csl2.consultronics.on.ca") by vger.kernel.org with ESMTP
+	id S1750725AbVILK4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2005 06:56:43 -0400
+Received: from [70.29.36.34] (helo=athame.dynamicro.internal ident=glouis)
+	by csl2.consultronics.on.ca with esmtpsa (SSLv3:AES256-SHA:256)
+	(Exim 4.52)
+	id 1EElzK-0004tX-34
+	for git@vger.kernel.org; Mon, 12 Sep 2005 06:56:38 -0400
+Received: from root by athame.dynamicro.internal with local (Exim 4.52)
+	id 1EElzJ-0001Op-Ms
+	for git@vger.kernel.org; Mon, 12 Sep 2005 06:56:37 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <43252E5C.5090207@debian.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+In-Reply-To: <7vwtlnm4zx.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8376>
 
-Dear diary, on Mon, Sep 12, 2005 at 09:29:32AM CEST, I got a letter
-where Tommi Virtanen <tv@debian.org> told me that...
-> Petr Baudis wrote:
-> >>As long as the cg-cancel name is around, provide docs for it too.
-> > cg-cancel is a compatibility alias only, so adding docs for it would
-> > only encourage its further use, which is precisely what I don't want.
+On 20050911 (Sun) at 1847:30 -0700, Junio C Hamano wrote:
+> I really do not see a point of having CDPATH as an            
+> environment variable, exported to be honored by any unsuspecting
+> shell scripts.
 > 
-> Maybe then it should have documentation that basically states
-> "cg-cancel is deprecated, please use cg-reset".
-
-Well, I don't know if it's worth the trouble - what would be more useful
-would be printing a warning when cg-reset is called as cg-cancel - we
-should remember to do that if we ever alias something else. But I'll
-just remove cg-cancel by now, it's been two releases.
+Well, that's why I didn't originally bother submitting the patch -- was 
+just going to use it internally.
+  
+I could argue that it's a relatively harmless contribution to
+robustness of the git scripts, but if someone replied that total
+idiot-proofing isn't a worthwhile goal for a project of this sort, I   
+wouldn't necessarily disagree.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+| G r e g  L o u i s         | gpg public key: 0x400B1AA86D9E3E64 |
+|  http://www.bgl.nu/~glouis |   (on my website or any keyserver) |
+|  http://wecanstopspam.org in signatures helps fight junk email. |
