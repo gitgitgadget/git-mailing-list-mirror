@@ -1,53 +1,53 @@
-From: Dmitry Torokhov <dtor_core@ameritech.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: What's up with the GIT archive on www.kernel.org?
-Date: Sun, 11 Sep 2005 21:45:33 -0500
-Message-ID: <200509112145.33994.dtor_core@ameritech.net>
-References: <m3mzmjvbh7.fsf@telia.com> <Pine.LNX.4.58.0509111431400.3242@g5.osdl.org> <7virx7njxa.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 11 Sep 2005 20:39:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509112038020.3242@g5.osdl.org>
+References: <m3mzmjvbh7.fsf@telia.com> <Pine.LNX.4.58.0509110908590.4912@g5.osdl.org>
+ <20050911185711.GA22556@mars.ravnborg.org> <Pine.LNX.4.58.0509111157360.3242@g5.osdl.org>
+ <20050911194630.GB22951@mars.ravnborg.org> <Pine.LNX.4.58.0509111251150.3242@g5.osdl.org>
+ <52irx7cnw5.fsf@cisco.com> <Pine.LNX.4.58.0509111422510.3242@g5.osdl.org>
+ <Pine.LNX.4.58.0509111431400.3242@g5.osdl.org> <7virx7njxa.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Sam Ravnborg <sam@ravnborg.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Ravnborg <sam@ravnborg.org>,
 	Peter Osterlund <petero2@telia.com>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751135AbVILCpk@vger.kernel.org Mon Sep 12 04:47:13 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751135AbVILCpk@vger.kernel.org>
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 12 05:41:26 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEeKX-00074N-6F
-	for glk-linux-kernel-3@gmane.org; Mon, 12 Sep 2005 04:46:01 +0200
+	id 1EEfAr-0006Dh-Vd
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 05:40:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbVILCpk (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 11 Sep 2005 22:45:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbVILCpk
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sun, 11 Sep 2005 22:45:40 -0400
-Received: from smtp114.sbc.mail.re2.yahoo.com ([68.142.229.91]:28249 "HELO
-	smtp114.sbc.mail.re2.yahoo.com") by vger.kernel.org with SMTP
-	id S1751134AbVILCpk (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 11 Sep 2005 22:45:40 -0400
-Received: (qmail 49625 invoked from network); 12 Sep 2005 02:45:35 -0000
-Received: from unknown (HELO mail.corenet.homeip.net) (dtor?core@ameritech.net@69.208.153.209 with login)
-  by smtp114.sbc.mail.re2.yahoo.com with SMTP; 12 Sep 2005 02:45:35 -0000
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
+	id S1751147AbVILDkB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 23:40:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbVILDkB
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 23:40:01 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:57286 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751147AbVILDkA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 23:40:00 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8C3dlBo014963
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 11 Sep 2005 20:39:47 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8C3dk59003538;
+	Sun, 11 Sep 2005 20:39:47 -0700
+To: Junio C Hamano <junkio@cox.net>
 In-Reply-To: <7virx7njxa.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-Sender: linux-kernel-owner@vger.kernel.org
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8364>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8365>
 
-On Sunday 11 September 2005 20:39, Junio C Hamano wrote:
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > Btw, there's no reason why a client-side thing couldn't just parse the 
-> > "alternates" thing, and if it doesn't find the objects in the main object 
-> > directory, go and fetch them from the alternates itself.
-> 
-> There is.
+
+
+On Sun, 11 Sep 2005, Junio C Hamano wrote:
 > 
 > For kernel.org, you could say '/pub/scm/blah' in your alternates
 > and expect it to work, only because http://kernel.org/pub
@@ -56,13 +56,13 @@ On Sunday 11 September 2005 20:39, Junio C Hamano wrote:
 > installation, they would need to say /var/www/scm/blah to have
 > alternate work locally, but somebody has to know that the named
 > directory is served as http://machine.xz/pub/scm/blah somewhere.
-> 
 
-Call me brain-dead but all of this just makes me rsync my tree to
-kernel.org and then manually do "ln -f" for all the packs that Linus
-has. This way I am sure tht the tree is what I have plus and it is
-"pullable".
+Yes. We should probably have some well-defined meaning for relative paths
+in there regardless (eg just define that they are always relative to the
+main GIT_OBJECT_DIRECTORY or something).
 
+That would also allow mirrors to mirror the git archives in different 
+places, without upsetting the result (as long as they are mirrored 
+together).
 
--- 
-Dmitry
+		Linus
