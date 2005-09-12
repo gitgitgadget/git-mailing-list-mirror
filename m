@@ -1,61 +1,97 @@
 From: Chuck Lever <cel@netapp.com>
-Subject: [PATCH 16/22] teach apply.c to use cache_find_name()
-Date: Mon, 12 Sep 2005 10:56:18 -0400
-Message-ID: <20050912145618.28120.90781.stgit@dexter.citi.umich.edu>
+Subject: [PATCH 19/22] teach ls-files.c to use cache_find_name()
+Date: Mon, 12 Sep 2005 10:56:25 -0400
+Message-ID: <20050912145624.28120.48523.stgit@dexter.citi.umich.edu>
 References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
-X-From: git-owner@vger.kernel.org Mon Sep 12 17:00:11 2005
+X-From: git-owner@vger.kernel.org Mon Sep 12 17:00:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEpji-0000SG-KY
+	id 1EEpjj-0000SG-9H
 	for gcvg-git@gmane.org; Mon, 12 Sep 2005 16:56:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751306AbVILO4X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 10:56:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751301AbVILO4V
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:56:21 -0400
-Received: from citi.umich.edu ([141.211.133.111]:53141 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S1751304AbVILO4S (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:56:18 -0400
+	id S1751288AbVILO4i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 10:56:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbVILO4h
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:56:37 -0400
+Received: from citi.umich.edu ([141.211.133.111]:38331 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S1751308AbVILO4Z (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:56:25 -0400
 Received: from dexter.citi.umich.edu (dexter.citi.umich.edu [141.211.133.33])
-	by citi.umich.edu (Postfix) with ESMTP id 6FC911BAF3
-	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:56:18 -0400 (EDT)
+	by citi.umich.edu (Postfix) with ESMTP id 0045F1BAF3
+	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:56:24 -0400 (EDT)
 To: git@vger.kernel.org
 In-Reply-To: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8390>
 
 Signed-off-by: Chuck Lever <cel@netapp.com>
 ---
 
- apply.c |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ ls-files.c |   30 ++++++++++++++----------------
+ 1 files changed, 14 insertions(+), 16 deletions(-)
 
-diff --git a/apply.c b/apply.c
---- a/apply.c
-+++ b/apply.c
-@@ -1021,10 +1021,10 @@ static int check_patch(struct patch *pat
- 		if (lstat(old_name, &st) < 0)
- 			return error("%s: %s", old_name, strerror(errno));
- 		if (check_index) {
--			int pos = cache_name_pos(old_name, strlen(old_name));
--			if (pos < 0)
-+			struct cache_entry *ce;
-+			if (!cache_find_entry(old_name, strlen(old_name), &ce))
- 				return error("%s: does not exist in index", old_name);
--			changed = ce_match_stat(active_cache[pos], &st);
-+			changed = ce_match_stat(ce, &st);
- 			if (changed)
- 				return error("%s: does not match index", old_name);
- 		}
-@@ -1041,7 +1041,7 @@ static int check_patch(struct patch *pat
- 	}
+diff --git a/ls-files.c b/ls-files.c
+--- a/ls-files.c
++++ b/ls-files.c
+@@ -216,7 +216,7 @@ static void add_name(const char *pathnam
+ {
+ 	struct nond_on_fs *ent;
  
- 	if (new_name && (patch->is_new | patch->is_rename | patch->is_copy)) {
--		if (check_index && cache_name_pos(new_name, strlen(new_name)) >= 0)
-+		if (check_index && cache_find_entry(new_name, strlen(new_name), NULL))
- 			return error("%s: already exists in index", new_name);
- 		if (!lstat(new_name, &st))
- 			return error("%s: already exists in working directory", new_name);
+-	if (cache_name_pos(pathname, len) >= 0)
++	if (cache_find_entry(pathname, len, NULL))
+ 		return;
+ 
+ 	if (nr_dir == dir_alloc) {
+@@ -349,36 +349,34 @@ static void show_killed_files(void)
+ 	for (i = 0; i < nr_dir; i++) {
+ 		struct nond_on_fs *ent = dir[i];
+ 		char *cp, *sp;
+-		int pos, len, killed = 0;
++		int killed = 0;
+ 
+ 		for (cp = ent->name; cp - ent->name < ent->len; cp = sp + 1) {
+ 			sp = strchr(cp, '/');
+ 			if (!sp) {
++				struct cache_cursor cc;
++				struct cache_entry *ce;
+ 				/* If ent->name is prefix of an entry in the
+ 				 * cache, it will be killed.
+ 				 */
+-				pos = cache_name_pos(ent->name, ent->len);
+-				if (0 <= pos)
++				if (cache_find_name(ent->name, ent->len, &cc))
+ 					die("bug in show-killed-files");
+-				pos = -pos - 1;
+-				while (pos < active_nr &&
+-				       ce_stage(active_cache[pos]))
+-					pos++; /* skip unmerged */
+-				if (active_nr <= pos)
++				while (!cache_eof(&cc) && ce_stage(cc_to_ce(&cc)))
++					next_cc(&cc); /* skip unmerged */
++				if (cache_eof(&cc))
+ 					break;
+-				/* pos points at a name immediately after
++				/* cc points at a name immediately after
+ 				 * ent->name in the cache.  Does it expect
+ 				 * ent->name to be a directory?
+ 				 */
+-				len = ce_namelen(active_cache[pos]);
+-				if ((ent->len < len) &&
+-				    !strncmp(active_cache[pos]->name,
+-					     ent->name, ent->len) &&
+-				    active_cache[pos]->name[ent->len] == '/')
++				ce = cc_to_ce(&cc);
++				if ((ent->len < ce_namelen(ce)) &&
++				    !strncmp(ce->name, ent->name, ent->len) &&
++				    ce->name[ent->len] == '/')
+ 					killed = 1;
+ 				break;
+ 			}
+-			if (0 <= cache_name_pos(ent->name, sp - ent->name)) {
++			if (cache_find_entry(ent->name, sp - ent->name, NULL)) {
+ 				/* If any of the leading directories in
+ 				 * ent->name is registered in the cache,
+ 				 * ent->name will be killed.
