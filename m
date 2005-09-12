@@ -1,48 +1,53 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 21/22] teach the merge algorithm about cache iterators
-Date: Mon, 12 Sep 2005 16:43:05 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509121633480.23242@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 00/22] cache cursors: an introduction
+Date: Mon, 12 Sep 2005 13:47:26 -0700
+Message-ID: <7vr7bu9foh.fsf@assigned-by-dhcp.cox.net>
 References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
- <20050912145629.28120.70337.stgit@dexter.citi.umich.edu>
+	<4325A0D9.2000806@gmail.com> <4325AED6.8050401@citi.umich.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 12 22:39:25 2005
+X-From: git-owner@vger.kernel.org Mon Sep 12 22:48:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEv4y-0005QV-37
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 22:39:04 +0200
+	id 1EEvD8-0007t3-Ou
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 22:47:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932224AbVILUjA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 16:39:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932225AbVILUjA
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 16:39:00 -0400
-Received: from iabervon.org ([66.92.72.58]:44294 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932224AbVILUi7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 16:38:59 -0400
-Received: (qmail 25186 invoked by uid 1000); 12 Sep 2005 16:43:05 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Sep 2005 16:43:05 -0400
-To: Chuck Lever <cel@netapp.com>
-In-Reply-To: <20050912145629.28120.70337.stgit@dexter.citi.umich.edu>
+	id S932227AbVILUr2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 16:47:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbVILUr2
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 16:47:28 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:29315 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932227AbVILUr1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2005 16:47:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050912204725.CKSG11315.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 12 Sep 2005 16:47:25 -0400
+To: Chuck Lever <cel@citi.umich.edu>
+In-Reply-To: <4325AED6.8050401@citi.umich.edu> (Chuck Lever's message of "Mon,
+	12 Sep 2005 12:37:42 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8426>
 
-On Mon, 12 Sep 2005, Chuck Lever wrote:
+Chuck Lever <cel@citi.umich.edu> writes:
 
-> For now, we simply replace indpos with a cache cursor.  Likely more
-> changes will be needed after we successfully replace the cache array
-> with an abstract data type.
+>> The sentence "This patch series is against the "proposed updates"
+>> branch, as of a couple of days ago." should have also included a
+>> commit ID. That way we would know where/when the patches would apply
+>> cleanly for testing and dissection.
+>
+> i'm a dork.
+>
+> 6ae3d6e6d0f87cfa75b4bf213a485ff687defce8
+>
+> i will include the base ref in my future postings.
 
-The right order is probably to add the concept of a cache that isn't the 
-one that normal functions deal with, have read_cache_unmerged return such 
-a thing, call cc_init with that, and rip out all of the removal and 
-position adjustment code. Then read_tree won't care at all about the 
-internal structure of the cache type, and it can be replaced without any 
-problem.
-
-	-Daniel
-*This .sig left intentionally blank*
+No need for any of that.  All the necessary bits are already in
+the "master" branch.
