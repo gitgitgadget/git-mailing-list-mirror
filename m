@@ -1,79 +1,61 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Status of Mac OS/X ports of git and cogito?
-Date: Sun, 11 Sep 2005 16:43:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509111642110.3242@g5.osdl.org>
-References: <deofnh$jl0$1@sea.gmane.org> <7vd5o03uof.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0509111159190.32555@wgmdd8.biozentrum.uni-wuerzburg.de>
- <7vvf17tsoa.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509111100260.3242@g5.osdl.org>
- <Pine.LNX.4.63.0509120119120.10594@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.58.0509111631500.3242@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: cg-update question.
+Date: Mon, 12 Sep 2005 02:02:10 +0200
+Message-ID: <20050912000210.GA15630@pasky.or.cz>
+References: <43082A96.1070700@mozilla.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	John Ellson <ellson@research.att.com>, git@vger.kernel.org,
-	Patrick Mauritz <oxygene@studentenbude.ath.cx>,
-	Jason Riedy <ejr@EECS.Berkeley.EDU>
-X-From: git-owner@vger.kernel.org Mon Sep 12 01:44:55 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 12 02:03:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEbUk-00065f-4l
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 01:44:22 +0200
+	id 1EEbmA-0007dc-NE
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 02:02:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751083AbVIKXoT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 19:44:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751084AbVIKXoT
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 19:44:19 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:30375 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751083AbVIKXoS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 19:44:18 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8BNhwBo001338
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 11 Sep 2005 16:43:58 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8BNhu63027657;
-	Sun, 11 Sep 2005 16:43:57 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.58.0509111631500.3242@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751087AbVILACS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 20:02:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbVILACS
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 20:02:18 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:27305 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751087AbVILACR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 20:02:17 -0400
+Received: (qmail 20882 invoked by uid 2001); 12 Sep 2005 02:02:10 +0200
+To: Johnny Stenback <jst@mozilla.org>
+Content-Disposition: inline
+In-Reply-To: <43082A96.1070700@mozilla.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8345>
 
+Dear diary, on Sun, Aug 21, 2005 at 09:17:42AM CEST, I got a letter
+where Johnny Stenback <jst@mozilla.org> told me that...
+> Hi all,
 
+Hello,
 
-On Sun, 11 Sep 2005, Linus Torvalds wrote:
+> I just realized that if I've got an uncommitted local change in a tree 
+> and I update my tree with cg-update to merge in changes from a different 
+> tree... cg-update will pull the changes and do the merge. So that's all 
+> cool, but as it does the merge, it will re-write my local file that has 
+> the uncommitted change, even if that file didn't change in the 
+> repository I pulled from, i.e. nothing to merge for that file.
 > 
-> And the really sad part is that before the standards bodies started
-> messing around with it, things really _did_ "just work". There was no 
-> question at all about what kind of type to use.
+> This is, to me at least, not the desired behavior, if there's no reason 
+> for cg-update to touch a file it shouldn't.
+> 
+> Thoughts? If someone points me in the right direction I'm willing to 
+> take a stab at fixing this myself...
 
-Btw, here's the result of the "documentation":
+can you provide a concrete example of such a situation? This should
+never ever happen - cg-update should refuse to touch any files
+containing uncommitted changes.
 
-	dnl check for Unix98 socklen_t
-	AC_MSG_CHECKING(for socklen_t)
-	AC_TRY_COMPILE([#include <sys/socket.h>
-	socklen_t x;
-	],[],[AC_MSG_RESULT(yes)],[
-	AC_TRY_COMPILE([#include <sys/socket.h>
-	int accept (int, struct sockaddr *, size_t *);
-	],[],[
-	AC_MSG_RESULT(size_t)
-	AC_DEFINE(socklen_t,size_t)], [
-	AC_MSG_RESULT(int)
-	AC_DEFINE(socklen_t,int)])])
-
-isn't that nice? Before the "documentation", you could just use
-
-	int accept(int, struct sockaddr *, int *);
-
-and it would work. EVERYWHERE. No autoconf crap required.
-
-So don't talk to me about documentation. It's pure and unadulterated crap.
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
