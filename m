@@ -1,55 +1,48 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 00/22] cache cursors: an introduction
-Date: Mon, 12 Sep 2005 13:30:22 -0700
-Message-ID: <7vwtlm9ggx.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 21/22] teach the merge algorithm about cache iterators
+Date: Mon, 12 Sep 2005 16:43:05 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0509121633480.23242@iabervon.org>
 References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
-	<7vaciiawrm.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0509121614140.23242@iabervon.org>
+ <20050912145629.28120.70337.stgit@dexter.citi.umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chuck Lever <cel@citi.umich.edu>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 12 22:33:10 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 12 22:39:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEuwk-0002Md-BT
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 22:30:34 +0200
+	id 1EEv4y-0005QV-37
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 22:39:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932218AbVILUa1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 16:30:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932223AbVILUa1
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 16:30:27 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:65255 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932218AbVILUa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Sep 2005 16:30:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050912203024.QOOE24420.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 12 Sep 2005 16:30:24 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.63.0509121614140.23242@iabervon.org> (Daniel
-	Barkalow's message of "Mon, 12 Sep 2005 16:22:44 -0400 (EDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932224AbVILUjA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 16:39:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932225AbVILUjA
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 16:39:00 -0400
+Received: from iabervon.org ([66.92.72.58]:44294 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932224AbVILUi7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 16:38:59 -0400
+Received: (qmail 25186 invoked by uid 1000); 12 Sep 2005 16:43:05 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 12 Sep 2005 16:43:05 -0400
+To: Chuck Lever <cel@netapp.com>
+In-Reply-To: <20050912145629.28120.70337.stgit@dexter.citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8425>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Mon, 12 Sep 2005, Chuck Lever wrote:
 
->> * It may make sense to give another param to describe which
->>   cache the caller is talking about so that we can later have
->>   more than one cache at the same time:
->> 
-> Wouldn't it be better to only take it in cc_init(), and have the cursor 
-> remember what it's iterating through?
+> For now, we simply replace indpos with a cache cursor.  Likely more
+> changes will be needed after we successfully replace the cache array
+> with an abstract data type.
 
-Yes.
+The right order is probably to add the concept of a cache that isn't the 
+one that normal functions deal with, have read_cache_unmerged return such 
+a thing, call cc_init with that, and rip out all of the removal and 
+position adjustment code. Then read_tree won't care at all about the 
+internal structure of the cache type, and it can be replaced without any 
+problem.
 
-> I'm actually particularly interested in having a pair of caches for 
-> read-tree, because it would actually like to keep the old index separate 
-> from the index it's building.
-
-Yes.
+	-Daniel
+*This .sig left intentionally blank*
