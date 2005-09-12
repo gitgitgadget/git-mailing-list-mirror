@@ -1,58 +1,54 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH 5/5] Make the ProgramError class printable.
-Date: Mon, 12 Sep 2005 23:31:56 +0200
-Message-ID: <20050912213156.GG6644@c165.ib.student.liu.se>
-References: <20050912212601.GB6644@c165.ib.student.liu.se>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Add "git grep" helper
+Date: Mon, 12 Sep 2005 14:37:28 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509121434410.3266@g5.osdl.org>
+References: <Pine.LNX.4.58.0509121203210.4098@g5.osdl.org>
+ <118833cc0509121357698005fe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Mon Sep 12 23:33:47 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Sep 12 23:39:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEvuc-0006Qe-7j
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 23:32:26 +0200
+	id 1EEvzh-0008Tt-5m
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 23:37:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932266AbVILVb6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 17:31:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932268AbVILVb6
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 17:31:58 -0400
-Received: from [85.8.31.11] ([85.8.31.11]:7405 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S932266AbVILVb5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 17:31:57 -0400
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id A3A0F4115; Mon, 12 Sep 2005 23:36:57 +0200 (CEST)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EEvu8-0001wH-00; Mon, 12 Sep 2005 23:31:56 +0200
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050912212601.GB6644@c165.ib.student.liu.se>
-User-Agent: Mutt/1.5.6+20040907i
+	id S932275AbVILVhh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 17:37:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932276AbVILVhh
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 17:37:37 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:34029 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932275AbVILVhg (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 17:37:36 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8CLbUBo022918
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 12 Sep 2005 14:37:30 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8CLbTfr021575;
+	Mon, 12 Sep 2005 14:37:29 -0700
+To: Morten Welinder <mwelinder@gmail.com>
+In-Reply-To: <118833cc0509121357698005fe@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8436>
-
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8437>
 
 
----
 
- gitMergeCommon.py |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+On Mon, 12 Sep 2005, Morten Welinder wrote:
+>
+> Cute, but what about grep flags like "-w", "-n", and "-c"?
 
-30c12b2a8d3df83b15952f786327ccd0c3c04554
-diff --git a/gitMergeCommon.py b/gitMergeCommon.py
---- a/gitMergeCommon.py
-+++ b/gitMergeCommon.py
-@@ -46,6 +46,9 @@ class ProgramError(Exception):
-         self.progStr = progStr
-         self.error = error
- 
-+    def __str__(self):
-+        return self.progStr + ': ' + self.error
-+
- addDebug('runProgram')
- def runProgram(prog, input=None, returnCode=False, env=None, pipeOutput=True):
-     debug('runProgram prog:', str(prog), 'input:', str(input))
+Hey, add them to the flags list. Or just pass in all flags to grep, I
+dunno (I was kind of expecting some flags to go to git-ls-files, but that
+may or may not make any sense, and my script obviously didn't end up doing
+that).
+
+		Linus
