@@ -1,116 +1,60 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Improve "git grep" flags handling
-Date: Mon, 12 Sep 2005 15:22:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509121519310.3266@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Add "git grep" helper
+Date: Mon, 12 Sep 2005 15:31:58 -0700
+Message-ID: <7virx57w9t.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.58.0509121203210.4098@g5.osdl.org>
- <7vbr2y7yfd.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509121500400.3266@g5.osdl.org>
+	<7vbr2y7yfd.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509121500400.3266@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 13 00:25:24 2005
+X-From: git-owner@vger.kernel.org Tue Sep 13 00:33:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEwhS-0005Vc-P1
-	for gcvg-git@gmane.org; Tue, 13 Sep 2005 00:22:55 +0200
+	id 1EEwqK-0008Ea-Lz
+	for gcvg-git@gmane.org; Tue, 13 Sep 2005 00:32:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932309AbVILWWw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 18:22:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932308AbVILWWw
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 18:22:52 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:52879 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932310AbVILWWv (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 18:22:51 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8CMMlBo026321
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Sep 2005 15:22:47 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8CMMiO6024201;
-	Mon, 12 Sep 2005 15:22:46 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.58.0509121500400.3266@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932317AbVILWcB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 18:32:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932318AbVILWcB
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 18:32:01 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:36318 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932317AbVILWcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2005 18:32:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050912223200.VVTB24420.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 12 Sep 2005 18:32:00 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509121500400.3266@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 12 Sep 2005 15:12:32 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8444>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-This allows any arbitrary flags to "grep", and knows about the few special 
-grep flags that take an argument too.
-
-It also allows some flags for git-ls-files, although their usefulness is 
-questionable.
-
-With this, something line
-
-	git grep -w -1 pattern
-
-works, without the script enumerating every possible flag.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-
-On Mon, 12 Sep 2005, Linus Torvalds wrote:
-> 
+> Actually, the more I think about it, the more I think Morten was right, 
+> and the git-grep case statement should just put all flags in "$flags", and 
+> any git-ls-files flags can be handled specially before.
+>
 > We also need special casing for grep flags that take an argument.  So the
 > end result might be something like the following..
 
-diff --git a/git-grep.sh b/git-grep.sh
---- a/git-grep.sh
-+++ b/git-grep.sh
-@@ -1,25 +1,38 @@
- #!/bin/sh
- flags=
-+git_flags=
- while :; do
-   pattern="$1"
-   case "$pattern" in
--  -i|-I|-a|-E|-H|-h|-l)
--    flags="$flags $pattern"
--    shift
--    ;;
-+  # git-ls-file specific flags
-+  --others|--exclude=*|--exclude-from=*|--exclude-per-directory=*)
-+      git_flags="$git_flags $pattern"
-+      shift
-+      ;;
-+
-+  # grep flags with an argument
-+  -B|-C|-m)
-+      flags="$flags $pattern $2"
-+      shift
-+      shift
-+      ;;
-+
-+  # grep 'pattern' argument
-   -e)
--    pattern="$2"
--    shift
--    break
--    ;;
-+      pattern="$2"
-+      shift
-+      break
-+      ;;
-+
-+  # We assume everything else is a regular grep pattern
-   -*)
--    echo "unknown flag $pattern" >&2
--    exit 1
--    ;;
-+      flags="$flags $pattern"
-+      shift
-+      ;;
-   *)
-     break
-     ;;
-   esac
- done
- shift
--git-ls-files -z "$@" | xargs -0 grep $flags -e "$pattern"
-+git-ls-files -z $git_flags "$@" | xargs -0 grep $flags -e "$pattern"
+Arrrrrrrrrrrrrrrrrrrgh.
+
+Now, whose grep are we going to support?  Should we teach every
+flag GNU grep supports that can take a parameter to the script?
+
+Can we cheat and do something like this instead?
+
+    git grep -B 6 -A 2 frotz -- arch/i386
+    git grep -B 6 -A 2 frotz --others arch/i386
+
+That is, things up to a known git-ls-files flag  or -- are
+passed to grep and the rest is given to git-ls-files.
