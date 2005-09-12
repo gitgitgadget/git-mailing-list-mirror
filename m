@@ -1,74 +1,67 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Add note about IANA confirmation
-Date: Mon, 12 Sep 2005 11:23:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509121057520.3242@g5.osdl.org>
+From: Tony Luck <tony.luck@gmail.com>
+Subject: Re: What's up with the GIT archive on www.kernel.org?
+Date: Mon, 12 Sep 2005 11:22:58 -0700
+Message-ID: <12c511ca050912112266470d8b@mail.gmail.com>
+References: <m3mzmjvbh7.fsf@telia.com>
+	 <Pine.LNX.4.58.0509110908590.4912@g5.osdl.org>
+	 <20050911185711.GA22556@mars.ravnborg.org>
+	 <Pine.LNX.4.58.0509111157360.3242@g5.osdl.org>
+	 <20050911194630.GB22951@mars.ravnborg.org>
+	 <Pine.LNX.4.58.0509111251150.3242@g5.osdl.org>
+	 <52irx7cnw5.fsf@cisco.com>
+	 <Pine.LNX.4.58.0509111422510.3242@g5.osdl.org>
+Reply-To: tony.luck@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Sep 12 20:23:37 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Roland Dreier <rolandd@cisco.com>, Sam Ravnborg <sam@ravnborg.org>,
+	Peter Osterlund <petero2@telia.com>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 12 20:24:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEsxW-0006tk-QH
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 20:23:15 +0200
+	id 1EEsxd-0006u8-0W
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 20:23:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932121AbVILSXL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 14:23:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932123AbVILSXL
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 14:23:11 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:58274 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932121AbVILSXK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 14:23:10 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8CIN4Bo007991
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Sep 2005 11:23:05 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8CIN1Iw009517;
-	Mon, 12 Sep 2005 11:23:03 -0700
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932124AbVILSXN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 14:23:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932123AbVILSXN
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 14:23:13 -0400
+Received: from zproxy.gmail.com ([64.233.162.199]:59215 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932126AbVILSXM convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2005 14:23:12 -0400
+Received: by zproxy.gmail.com with SMTP id 13so305913nzn
+        for <git@vger.kernel.org>; Mon, 12 Sep 2005 11:23:06 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=g7jz+SdceMelp/H/oY09LnYxEMx35X8KAHOLilQznCKGFYVxqbFVy1x/hZm9RCvbTpZRo6sCWiRaj5/sifvV3GCwS0/fvkq8Rl5R7/KE7/KqPc0jwx+2oj1bL2/AGMYrJfpEcvWlzF37yXCuSIg6z/ohsQrhkiuu2Jjwpg+w1Rg=
+Received: by 10.36.58.17 with SMTP id g17mr95450nza;
+        Mon, 12 Sep 2005 11:22:59 -0700 (PDT)
+Received: by 10.36.58.18 with HTTP; Mon, 12 Sep 2005 11:22:58 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509111422510.3242@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8411>
 
+On 9/11/05, Linus Torvalds <torvalds@osdl.org> wrote:
+> There is such an anonymous server, btw: "git-daemon" implements anonymous
+> access much more efficient than rsync/http. Sadly, kernel.org still
+> doesn't offer it (but it's now used in the wild, ie I've done a couple of
+> merges with people running the git daemon).
 
-The git port (9418) is officially listed by IANA now.
+Should the git daemon take a look at objects/info/alternates to check
+that if it exists, it
+points to a repository that also has a "git-daemon-export-ok" file?  
+I don't see that this
+could be used for anything nasty, but it does provide a loophole where
+the daemon may
+open files outside the initial repository ... so a sanity check seems in order.
 
-So document it.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-
-Btw, another thing happened yesterday too: I'm now officially using a
-packed archive for my core kernel stuff. The format hasn't changed in
-I-don't-know-how-long, and I can't recall any pack-specific bug either
-(apart from the obvious lack of support by some of the client-side stuff).
-
-Goodie. Me happy.
-
-diff --git a/cache.h b/cache.h
---- a/cache.h
-+++ b/cache.h
-@@ -50,6 +50,17 @@
-  *	Your search - "port 9418" - did not match any documents.
-  *
-  * as www.google.com puts it.
-+ *
-+ * This port has been properly assigned for git use by IANA:
-+ * git (Assigned-9418) [I06-050728-0001].
-+ *
-+ *	git  9418/tcp   git pack transfer service
-+ *	git  9418/udp   git pack transfer service
-+ *
-+ * with Linus Torvalds <torvalds@osdl.org> as the point of
-+ * contact. September 2005.
-+ *
-+ * See http://www.iana.org/assignments/port-numbers
-  */
- #define DEFAULT_GIT_PORT 9418
- 
+-Tony
