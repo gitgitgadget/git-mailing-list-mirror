@@ -1,57 +1,55 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH 00/22] cache cursors: an introduction
-Date: Mon, 12 Sep 2005 16:26:46 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509121622520.23242@iabervon.org>
+Date: Mon, 12 Sep 2005 13:30:22 -0700
+Message-ID: <7vwtlm9ggx.fsf@assigned-by-dhcp.cox.net>
 References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
- <4325A0D9.2000806@gmail.com> <4325AED6.8050401@citi.umich.edu>
+	<7vaciiawrm.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0509121614140.23242@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitzilla@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 12 22:24:47 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Chuck Lever <cel@citi.umich.edu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 12 22:33:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEupA-0007vu-7C
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 22:22:44 +0200
+	id 1EEuwk-0002Md-BT
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 22:30:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932205AbVILUWl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 16:22:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932214AbVILUWl
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 16:22:41 -0400
-Received: from iabervon.org ([66.92.72.58]:47122 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932205AbVILUWk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 16:22:40 -0400
-Received: (qmail 25104 invoked by uid 1000); 12 Sep 2005 16:26:46 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Sep 2005 16:26:46 -0400
-To: Chuck Lever <cel@citi.umich.edu>
-In-Reply-To: <4325AED6.8050401@citi.umich.edu>
+	id S932218AbVILUa1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 16:30:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932223AbVILUa1
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 16:30:27 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:65255 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932218AbVILUa0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2005 16:30:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050912203024.QOOE24420.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 12 Sep 2005 16:30:24 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.63.0509121614140.23242@iabervon.org> (Daniel
+	Barkalow's message of "Mon, 12 Sep 2005 16:22:44 -0400 (EDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8424>
 
-On Mon, 12 Sep 2005, Chuck Lever wrote:
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> A Large Angry SCM wrote:
-> > Since you are proposing an API, some basic documentation about how to use
-> > the API would be nice. Comments in cache.h seems the best place, for now.
-> 
-> actually it might be best to have a list discussion first.  if i can answer
-> questions and provide a few explanations here, the list archive might be a
-> reasonable resting place for documentation.
-> 
-> the API is fairly simple and is documented via the function names. there isn't
-> a whole lot of function-level documentation in the git code base that i have
-> seen, so i erred on the side of less is more.
-> 
-> the main pieces are:
-> 
-> +  next_name
-> 
-> which skips to the next unique name in the cache.
+>> * It may make sense to give another param to describe which
+>>   cache the caller is talking about so that we can later have
+>>   more than one cache at the same time:
+>> 
+> Wouldn't it be better to only take it in cc_init(), and have the cursor 
+> remember what it's iterating through?
 
-Something with "cc" in it?
+Yes.
 
-	-Daniel
-*This .sig left intentionally blank*
+> I'm actually particularly interested in having a pair of caches for 
+> read-tree, because it would actually like to keep the old index separate 
+> from the index it's building.
+
+Yes.
