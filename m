@@ -1,72 +1,76 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git/cogito suggestion: tags with descriptions
-Date: Mon, 12 Sep 2005 03:00:51 +0200
-Message-ID: <20050912010051.GJ15630@pasky.or.cz>
-References: <20050905184551.GA14720@tumblerings.org> <7vd5nn49uz.fsf@assigned-by-dhcp.cox.net> <20050905212431.GB14720@tumblerings.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH] Apply N -> A status change in diff-helper
+Date: Mon, 12 Sep 2005 11:03:43 +1000
+Message-ID: <20050912010343.GA32376@gondor.apana.org.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 12 03:01:52 2005
+Content-Type: multipart/mixed; boundary="azLHFNyN32YCQGCU"
+X-From: git-owner@vger.kernel.org Mon Sep 12 03:04:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEcgr-00058C-Q0
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 03:00:58 +0200
+	id 1EEcjl-0006Uo-0v
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 03:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751112AbVILBAy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Sep 2005 21:00:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751114AbVILBAy
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 21:00:54 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:27782 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751112AbVILBAx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 21:00:53 -0400
-Received: (qmail 29926 invoked by uid 2001); 12 Sep 2005 03:00:51 +0200
-To: Zack Brown <zbrown@tumblerings.org>
+	id S1751114AbVILBDy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Sep 2005 21:03:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbVILBDy
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Sep 2005 21:03:54 -0400
+Received: from jay.exetel.com.au ([220.233.0.8]:10182 "EHLO jay.exetel.com.au")
+	by vger.kernel.org with ESMTP id S1751114AbVILBDy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Sep 2005 21:03:54 -0400
+Received: (qmail 4135 invoked by uid 507); 12 Sep 2005 11:03:46 +1000
+Received: from 22.107.233.220.exetel.com.au (HELO arnor.apana.org.au) (220.233.107.22)
+  by jay.exetel.com.au with SMTP; 12 Sep 2005 11:03:46 +1000
+Received: from gondolin.me.apana.org.au ([192.168.0.6] ident=mail)
+	by arnor.apana.org.au with esmtp (Exim 3.36 #1 (Debian))
+	id 1EEcjZ-0007Cl-00; Mon, 12 Sep 2005 11:03:45 +1000
+Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
+	id 1EEcjX-0008QT-00; Mon, 12 Sep 2005 11:03:43 +1000
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20050905212431.GB14720@tumblerings.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8355>
 
-Dear diary, on Mon, Sep 05, 2005 at 11:24:31PM CEST, I got a letter
-where Zack Brown <zbrown@tumblerings.org> told me that...
-> I'm not sure. I'm not as familiar with the low-level git commands as I am with
-> cogito. But cogito has a -d option for giving a tag description. I guess what
-> would be closest to what I was thinking about would be this:
-> 
-> $ cg-tag -d "First draft, everything in place." 0.3 7540e503b9b9c1b03e44ee7fd700c844b2a02224
-> $ cg-tag-ls
-> 0.1     Initial idea complete                 f953b71b21a0bea682c2bed91362f2dce2cc204f
-> 0.3     First draft, everything in place.     7540e503b9b9c1b03e44ee7fd700c844b2a02224 
-> $
-> 
-> or something like that. Currently when I do the above cg-tag command,
-> a subsequent cg-tag-ls gives just:
-> 
-> $ cg-tag-ls
-> 0.1     f953b71b21a0bea682c2bed91362f2dce2cc204f
-> 0.3     7540e503b9b9c1b03e44ee7fd700c844b2a02224
-> 
-> In fact, I probably wouldn't even be interested in seeing the actual hash key
-> unless I gave a special flag, maybe -f (for "full"):
-> 
-> $ cg-tag-ls
-> 0.1     Initial idea complete
-> 0.3     First draft, everything in place.
-> $ cg-tag-ls -f
-> 0.1     Initial idea complete                 f953b71b21a0bea682c2bed91362f2dce2cc204f
-> 0.3     First draft, everything in place.     7540e503b9b9c1b03e44ee7fd700c844b2a02224
 
-That's a nice idea (except that I'd prefer -l). I'll implement this
-after cogito-0.14.
+--azLHFNyN32YCQGCU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Thanks,
+Hi:
 
+When the git diff status 'N' was changed to 'A', diff-helper.c was
+not updated accordingly.  This means that it no longer shows the
+diff for newly added files.
+
+This patch makes that change in diff-helper.c.
+
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+
+Cheers,
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Visit Openswan at http://www.openswan.org/
+Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+
+--azLHFNyN32YCQGCU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=p
+
+diff --git a/diff-helper.c b/diff-helper.c
+--- a/diff-helper.c
++++ b/diff-helper.c
+@@ -91,7 +91,7 @@ int main(int ac, const char **av) {
+ 			if (*cp++ != ' ')
+ 				break;
+ 			status = *cp++;
+-			if (!strchr("MCRNDU", status))
++			if (!strchr("AMCRDU", status))
+ 				break;
+ 			two_paths = score = 0;
+ 			if (status == DIFF_STATUS_RENAMED ||
+
+--azLHFNyN32YCQGCU--
