@@ -1,125 +1,131 @@
 From: Chuck Lever <cel@netapp.com>
-Subject: [PATCH 15/22] replace cache_name_pos
-Date: Mon, 12 Sep 2005 10:56:16 -0400
-Message-ID: <20050912145616.28120.30912.stgit@dexter.citi.umich.edu>
+Subject: [PATCH 13/22] move purge_cache() to read-cache.c
+Date: Mon, 12 Sep 2005 10:56:11 -0400
+Message-ID: <20050912145611.28120.45845.stgit@dexter.citi.umich.edu>
 References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
-X-From: git-owner@vger.kernel.org Mon Sep 12 16:59:58 2005
+X-From: git-owner@vger.kernel.org Mon Sep 12 17:00:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEpjo-0000SG-LN
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 16:56:53 +0200
+	id 1EEpjm-0000SG-72
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 16:56:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751303AbVILO4Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 10:56:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbVILO4X
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:56:23 -0400
-Received: from citi.umich.edu ([141.211.133.111]:37900 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S1751303AbVILO4Q (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:56:16 -0400
+	id S1751312AbVILO4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 10:56:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbVILO4e
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:56:34 -0400
+Received: from citi.umich.edu ([141.211.133.111]:37421 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S1751299AbVILO4M (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:56:12 -0400
 Received: from dexter.citi.umich.edu (dexter.citi.umich.edu [141.211.133.33])
-	by citi.umich.edu (Postfix) with ESMTP id 42C2E1BAF3
-	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:56:16 -0400 (EDT)
+	by citi.umich.edu (Postfix) with ESMTP id D5F5E1BAF3
+	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:56:11 -0400 (EDT)
 To: git@vger.kernel.org
 In-Reply-To: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8388>
 
-Clean up: Introduce an interface to return a cache_cursor instead of
-an integer.  Note we can also eliminate the need to overload the
-return value of cache_name_pos to return a negative "pos" value to
-signal an insertion point rather than a found entry.
+Functions that manipulate active_cache and active_nr should be in one place.
 
 Signed-off-by: Chuck Lever <cel@netapp.com>
 ---
 
- cache.h      |   13 +++++++++++++
- read-cache.c |   44 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 57 insertions(+), 0 deletions(-)
+ cache.h      |    1 +
+ ls-files.c   |   28 +---------------------------
+ read-cache.c |   26 ++++++++++++++++++++++++++
+ 3 files changed, 28 insertions(+), 27 deletions(-)
 
 diff --git a/cache.h b/cache.h
 --- a/cache.h
 +++ b/cache.h
-@@ -160,6 +160,8 @@ extern int read_cache(void);
- extern int read_cache_unmerged(void);
- extern int write_cache(int newfd);
- extern int cache_name_pos(const char *name, int namelen);
-+extern int cache_find_name(const char *name, int namelen, struct cache_cursor *cc);
-+
- #define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
- #define ADD_CACHE_OK_TO_REPLACE 2	/* Ok to replace file/directory */
- #define ADD_CACHE_SKIP_DFCHECK 4	/* Ok to skip DF conflict checks */
-@@ -350,6 +352,17 @@ static inline int walk_cache(cache_itera
- 	return 0;
+@@ -165,6 +165,7 @@ extern int cache_name_pos(const char *na
+ extern int add_cache_entry(struct cache_entry *ce, int option);
+ extern int remove_cache_entry_at(int pos);
+ extern int remove_file_from_cache(char *path);
++extern void prune_cache(const char *prefix, int prefix_len);
+ extern int ce_same_name(struct cache_entry *a, struct cache_entry *b);
+ extern int ce_match_stat(struct cache_entry *ce, struct stat *st);
+ extern int ce_path_match(const struct cache_entry *ce, const char **pathspec);
+diff --git a/ls-files.c b/ls-files.c
+--- a/ls-files.c
++++ b/ls-files.c
+@@ -463,32 +463,6 @@ static void show_files(void)
+ 		walk_cache(show_one_deleted);
  }
  
-+static inline int cache_find_entry(const char *name, int namelen, struct cache_entry **ce)
-+{
-+	struct cache_cursor cc;
-+	int result;
-+
-+	result = cache_find_name(name, namelen, &cc);
-+	if (ce)
-+		*ce = active_cache[cc.pos];
-+	return result;
-+}
-+
- struct checkout {
- 	const char *base_dir;
- 	int base_dir_len;
+-/*
+- * Prune the index to only contain stuff starting with "prefix"
+- */
+-static void prune_cache(void)
+-{
+-	int pos = cache_name_pos(prefix, prefix_len);
+-	unsigned int first, last;
+-
+-	if (pos < 0)
+-		pos = -pos-1;
+-	active_cache += pos;
+-	active_nr -= pos;
+-	first = 0;
+-	last = active_nr;
+-	while (last > first) {
+-		int next = (last + first) >> 1;
+-		struct cache_entry *ce = active_cache[next];
+-		if (!strncmp(ce->name, prefix, prefix_len)) {
+-			first = next+1;
+-			continue;
+-		}
+-		last = next;
+-	}
+-	active_nr = last;
+-}
+-
+ static void verify_pathspec(void)
+ {
+ 	const char **p, *n, *prev;
+@@ -643,7 +617,7 @@ int main(int argc, char **argv)
+ 	if (read_cache() < 0)
+ 		die("unable to read index file");
+ 	if (prefix)
+-		prune_cache();
++		prune_cache(prefix, prefix_len);
+ 	show_files();
+ 	return 0;
+ }
 diff --git a/read-cache.c b/read-cache.c
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -144,6 +144,50 @@ int cache_name_pos(const char *name, int
- 	return -first-1;
+@@ -165,6 +165,32 @@ int remove_file_from_cache(char *path)
+ 	return 0;
  }
  
 +/*
-+ * Given a name, find the first cache entry that matches.  Returning 1
-+ * means the cursor points to the cache entry with a matching name.
-+ * Returning 0 means the name wasn't found, but the cursor points to an
-+ * appropriate insertion point.
++ * Prune the index to only contain stuff starting with "prefix"
 + */
-+int cache_find_name(const char *name, int namelen, struct cache_cursor *cc)
++void prune_cache(const char *prefix, int prefix_len)
 +{
-+	int first, last;
++	int pos = cache_name_pos(prefix, prefix_len);
++	unsigned int first, last;
 +
-+	/*
-+	 * Look for the right name
-+	 */
-+	cc->pos = first = 0;
++	if (pos < 0)
++		pos = -pos-1;
++	active_cache += pos;
++	active_nr -= pos;
++	first = 0;
 +	last = active_nr;
 +	while (last > first) {
-+		struct cache_entry *ce;
-+		int cmp;
-+		cc->pos = (last + first) >> 1;
-+		ce = active_cache[cc->pos];
-+		cmp = cache_name_compare(name, namelen, ce->name, ntohs(ce->ce_flags));
-+		if (!cmp) {
-+			/* found it */
-+			return 1;
-+		}
-+		if (cmp < 0) {
-+			/* next: search [first, cc->pos] */
-+			last = cc->pos;
++		int next = (last + first) >> 1;
++		struct cache_entry *ce = active_cache[next];
++		if (!strncmp(ce->name, prefix, prefix_len)) {
++			first = next+1;
 +			continue;
 +		}
-+		/* next: search [cc->pos + 1, last] */
-+		first = cc->pos + 1;
++		last = next;
 +	}
-+
-+	/*
-+	 * Name not found, so return an insertion point.
-+	 *
-+	 * On return, callers insert *before* the insertion point,
-+	 * not after it, to maintain proper list order.
-+	 */
-+	cc->pos = first;
-+	return 0;
++	active_nr = last;
 +}
 +
- /* Remove entry, return true if there are more entries to go.. */
- int remove_cache_entry_at(int pos)
+ int ce_same_name(struct cache_entry *a, struct cache_entry *b)
  {
+ 	int len = ce_namelen(a);
