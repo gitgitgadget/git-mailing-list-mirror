@@ -1,59 +1,70 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Improve "git grep" flags handling
-Date: Mon, 12 Sep 2005 15:43:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509121542050.3266@g5.osdl.org>
-References: <Pine.LNX.4.58.0509121203210.4098@g5.osdl.org>
- <7vbr2y7yfd.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509121500400.3266@g5.osdl.org>
- <Pine.LNX.4.58.0509121519310.3266@g5.osdl.org> <7vd5nd7w0x.fsf@assigned-by-dhcp.cox.net>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: hmm, can't we give the "root" a parent?
+Date: Tue, 13 Sep 2005 00:50:32 +0200
+Message-ID: <20050912225032.GA8360@vrfy.org>
+References: <20050912181101.GA22221@vrfy.org> <Pine.LNX.4.58.0509121123280.3242@g5.osdl.org> <20050912195947.GA28502@vrfy.org> <Pine.LNX.4.58.0509121316030.3266@g5.osdl.org> <20050912210006.GA32211@vrfy.org> <Pine.LNX.4.58.0509121438150.3266@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 13 00:44:03 2005
+X-From: git-owner@vger.kernel.org Tue Sep 13 00:51:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEx1t-0003fM-QI
-	for gcvg-git@gmane.org; Tue, 13 Sep 2005 00:44:02 +0200
+	id 1EEx8J-0005En-D6
+	for gcvg-git@gmane.org; Tue, 13 Sep 2005 00:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932323AbVILWn7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 18:43:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932324AbVILWn7
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 18:43:59 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:7064 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932323AbVILWn6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 18:43:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8CMhrBo027603
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Sep 2005 15:43:53 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8CMhq43025337;
-	Mon, 12 Sep 2005 15:43:53 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5nd7w0x.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932331AbVILWug (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 18:50:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932333AbVILWug
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 18:50:36 -0400
+Received: from soundwarez.org ([217.160.171.123]:57735 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S932331AbVILWug (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 18:50:36 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id 968F959114; Tue, 13 Sep 2005 00:50:32 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0509121438150.3266@g5.osdl.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8448>
 
-
-
-On Mon, 12 Sep 2005, Junio C Hamano wrote:
+On Mon, Sep 12, 2005 at 02:42:16PM -0700, Linus Torvalds wrote:
 > 
-> This would not fly well, I am afraid.  --exclude=* are usually
-> shell globs which would be expanded before you use them
-> unquoted.
+> 
+> On Mon, 12 Sep 2005, Kay Sievers wrote:
+> > 
+> > Everthing that walk from one commit to another, uses git-rev-list, sure.
+> > But in the commit view, and the commitdiff the "parent" link and the parent
+> > that is passed to diff is read from the commit itself.
+> > 
+> > > (So instead of trying to parse the parent info from the header of the 
+> > > commit, just do "git-rev-list --pretty --parents" and parse that).
+> > 
+> > I need only one parent:
+> >   git-rev-list --parents --max-count=1 <id>
+> 
+> Who don't you use that to show the comments too? 
+> 
+> So instead of doing
+> 
+> 	git-cat-file commit <id>
+> 
+> (or whatever you do), just do
+> 
+> 	git-rev-list --parents --pretty=raw --max-count=1 <id>
 
-Good point. However, since it's unlikely that anybody will use it, maybe 
-it's not important - more of a "this is how you could do it if you fixed 
-the globbing problem" ;)
+That would be nice, if I could convert everthing to this output format.
 
-It's easy enough to fix if you use bash array variables, but I thought 
-adding that was not supposed to be done? Or have people resigned 
-themselves to bash extensions ;)
+But why does --pretty=raw mangle the text with spaces?
+Well the output of this  weird word combination may be "pretty" but definitely
+not "raw". :)
 
-		Linus
+And I would prefer --pretty=raw with '\0' termination instead of '\n' so I can
+replace the output from --header with --pretty=raw and can still use the same
+parsing routine.
+
+Thanks,
+Kay
