@@ -1,141 +1,168 @@
 From: Chuck Lever <cel@netapp.com>
-Subject: [PATCH 01/22] introduce facility to walk through the active cache
-Date: Mon, 12 Sep 2005 10:55:45 -0400
-Message-ID: <20050912145545.28120.61764.stgit@dexter.citi.umich.edu>
+Subject: [PATCH 12/22] simplify write_cache() calling sequence
+Date: Mon, 12 Sep 2005 10:56:09 -0400
+Message-ID: <20050912145609.28120.67621.stgit@dexter.citi.umich.edu>
 References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
-X-From: git-owner@vger.kernel.org Mon Sep 12 17:00:54 2005
+X-From: git-owner@vger.kernel.org Mon Sep 12 17:00:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEpjq-0000SG-F3
-	for gcvg-git@gmane.org; Mon, 12 Sep 2005 16:56:54 +0200
+	id 1EEpjo-0000SG-03
+	for gcvg-git@gmane.org; Mon, 12 Sep 2005 16:56:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751313AbVILO4i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 10:56:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbVILOzy
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:55:54 -0400
-Received: from citi.umich.edu ([141.211.133.111]:6319 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S1751289AbVILOzp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:55:45 -0400
+	id S1751299AbVILO4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 10:56:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbVILO4b
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 10:56:31 -0400
+Received: from citi.umich.edu ([141.211.133.111]:16396 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S1751300AbVILO4K (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 10:56:10 -0400
 Received: from dexter.citi.umich.edu (dexter.citi.umich.edu [141.211.133.33])
-	by citi.umich.edu (Postfix) with ESMTP id 95E061BAF3
-	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:55:45 -0400 (EDT)
+	by citi.umich.edu (Postfix) with ESMTP id A30AF1BAF3
+	for <git@vger.kernel.org>; Mon, 12 Sep 2005 10:56:09 -0400 (EDT)
 To: git@vger.kernel.org
 In-Reply-To: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8395>
 
-Introduce a mechanism that allows functions to walk through entries
-in the active cache in order and execute an function on each entry.
-
-We also introduce the concept of "cache cursor".  A cursor is simply
-a type-independent way of referring to a unique position in the cache.
-The cache is strongly ordered, so cursors also provide a type-
-independent way of exposing the ordering of the cache positions:
-ie next, previous, and eof?
-
-This facility makes no changes to struct cache_entry, which also
-happens to be the on-disk format of a cache entry.  By mmapping the
-file that contains the cache entries, no data copying is required
-to read in the cache.
+Clean-up:  Hide some external references to "active_cache" and "active_nr"
+by simplifying the calling sequence of write_cache().
 
 Signed-off-by: Chuck Lever <cel@netapp.com>
 ---
 
- cache.h |   75 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 75 insertions(+), 0 deletions(-)
+ apply.c          |    3 +--
+ cache.h          |    2 +-
+ checkout-index.c |    3 +--
+ read-cache.c     |   41 +++++++++++++++++++++++++++--------------
+ read-tree.c      |    3 +--
+ update-index.c   |    3 +--
+ 6 files changed, 32 insertions(+), 23 deletions(-)
 
+diff --git a/apply.c b/apply.c
+--- a/apply.c
++++ b/apply.c
+@@ -1440,8 +1440,7 @@ static int apply_patch(int fd)
+ 		write_out_results(list, skipped_patch);
+ 
+ 	if (write_index) {
+-		if (write_cache(newfd, active_cache, active_nr) ||
+-		    commit_index_file(&cache_file))
++		if (write_cache(newfd) || commit_index_file(&cache_file))
+ 			die("Unable to write new cachefile");
+ 	}
+ 
 diff --git a/cache.h b/cache.h
 --- a/cache.h
 +++ b/cache.h
-@@ -130,6 +130,12 @@ static inline unsigned int create_ce_mod
- extern struct cache_entry **active_cache;
- extern unsigned int active_nr, active_alloc, active_cache_changed;
+@@ -157,7 +157,7 @@ extern char *prefix_path(const char *pre
  
-+struct cache_cursor {
-+	int pos;
-+};
-+
-+typedef int (*cache_iterator_fn_t) (struct cache_cursor *cc, struct cache_entry *ce);
-+
- #define GIT_DIR_ENVIRONMENT "GIT_DIR"
- #define DEFAULT_GIT_DIR_ENVIRONMENT ".git"
- #define DB_ENVIRONMENT "GIT_OBJECT_DIRECTORY"
-@@ -273,6 +279,75 @@ static inline void *xcalloc(size_t nmemb
- 	return ret;
+ /* Initialize and use the cache information */
+ extern int read_cache(void);
+-extern int write_cache(int newfd, struct cache_entry **cache, int entries);
++extern int write_cache(int newfd);
+ extern int cache_name_pos(const char *name, int namelen);
+ #define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
+ #define ADD_CACHE_OK_TO_REPLACE 2	/* Ok to replace file/directory */
+diff --git a/checkout-index.c b/checkout-index.c
+--- a/checkout-index.c
++++ b/checkout-index.c
+@@ -138,8 +138,7 @@ int main(int argc, char **argv)
+ 	}
+ 
+ 	if (0 <= newfd &&
+-	    (write_cache(newfd, active_cache, active_nr) ||
+-	     commit_index_file(&cache_file)))
++	    (write_cache(newfd) || commit_index_file(&cache_file)))
+ 		die("Unable to write new cachefile");
+ 	return 0;
+ }
+diff --git a/read-cache.c b/read-cache.c
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -470,30 +470,43 @@ static int ce_flush(SHA_CTX *context, in
+ 	return 0;
  }
  
-+static inline void init_cc(struct cache_cursor *cc)
-+{
-+	cc->pos = 0;
-+}
+-int write_cache(int newfd, struct cache_entry **cache, int entries)
++static int fd, removed = 0;
++static SHA_CTX c;
 +
-+static inline void next_cc(struct cache_cursor *cc)
++static int count_removed(struct cache_cursor *cc, struct cache_entry *ce)
 +{
-+	cc->pos++;
-+}
-+
-+static inline void prev_cc(struct cache_cursor *cc)
-+{
-+	cc->pos--;
-+}
-+
-+static inline struct cache_entry *cc_to_ce(struct cache_cursor *cc)
-+{
-+	return active_cache[cc->pos];
-+}
-+
-+static inline void set_ce_at_cursor(struct cache_cursor *cc, struct cache_entry *new)
-+{
-+	active_cache[cc->pos] = new;
-+	active_cache_changed = 1;
-+}
-+
-+static inline int cache_empty(void)
-+{
-+	return active_cache == NULL;
-+}
-+
-+static inline int cache_eof(struct cache_cursor *cc)
-+{
-+	if (cc->pos < active_nr)
-+		return 0;
-+	return -1;
-+}
-+
-+static inline int read_cache_needed(void)
-+{
-+	return cache_empty();
-+}
-+
-+static inline void next_name(struct cache_cursor *cc, struct cache_entry *ce)
-+{
-+	do {
-+		next_cc(cc);
-+	} while (!cache_eof(cc) && ce_same_name(ce, cc_to_ce(cc)));
-+}
-+
-+/*
-+ * Walk the entire active cache, invoking "func" on each entry
-+ *
-+ * "func" is responsible for updating the cache_cursor.  To break
-+ * out of the loop, "func" can return a negative result.
-+ */
-+static inline int walk_cache(cache_iterator_fn_t func)
-+{
-+	struct cache_cursor cc;
-+
-+	init_cc(&cc);
-+	while (!cache_eof(&cc)) {
-+		int status = func(&cc, cc_to_ce(&cc));
-+		if (status < 0)
-+			return status;
-+	}
++	if (ce->ce_mode == 0)
++		removed++;
++	next_cc(cc);
 +	return 0;
 +}
 +
- struct checkout {
- 	const char *base_dir;
- 	int base_dir_len;
++static int write_one_cache_entry(struct cache_cursor *cc, struct cache_entry *ce)
++{
++	if (ce->ce_mode != 0)
++		if (ce_write(&c, fd, ce, ce_size(ce)) < 0)
++			return -1;
++	next_cc(cc);
++	return 0;
++}
++
++int write_cache(int newfd)
+ {
+-	SHA_CTX c;
+ 	struct cache_header hdr;
+-	int i, removed;
+ 
+-	for (i = removed = 0; i < entries; i++)
+-		if (!cache[i]->ce_mode)
+-			removed++;
++	walk_cache(count_removed);
+ 
+ 	hdr.hdr_signature = htonl(CACHE_SIGNATURE);
+ 	hdr.hdr_version = htonl(2);
+-	hdr.hdr_entries = htonl(entries - removed);
++	hdr.hdr_entries = htonl(active_nr - removed);
+ 
+ 	SHA1_Init(&c);
+ 	if (ce_write(&c, newfd, &hdr, sizeof(hdr)) < 0)
+ 		return -1;
+ 
+-	for (i = 0; i < entries; i++) {
+-		struct cache_entry *ce = cache[i];
+-		if (!ce->ce_mode)
+-			continue;
+-		if (ce_write(&c, newfd, ce, ce_size(ce)) < 0)
+-			return -1;
+-	}
++	fd = newfd;
++	if (walk_cache(write_one_cache_entry))
++		return -1;
++
+ 	return ce_flush(&c, newfd);
+ }
+diff --git a/read-tree.c b/read-tree.c
+--- a/read-tree.c
++++ b/read-tree.c
+@@ -670,8 +670,7 @@ int main(int argc, char **argv)
+ 	}
+ 
+ 	unpack_trees(fn);
+-	if (write_cache(newfd, active_cache, active_nr) ||
+-	    commit_index_file(&cache_file))
++	if (write_cache(newfd) || commit_index_file(&cache_file))
+ 		die("unable to write new index file");
+ 	return 0;
+ }
+diff --git a/update-index.c b/update-index.c
+--- a/update-index.c
++++ b/update-index.c
+@@ -393,8 +393,7 @@ int main(int argc, char **argv)
+ 		if (add_file_to_cache(path))
+ 			die("Unable to add %s to database; maybe you want to use --add option?", path);
+ 	}
+-	if (write_cache(newfd, active_cache, active_nr) ||
+-	    commit_index_file(&cache_file))
++	if (write_cache(newfd) || commit_index_file(&cache_file))
+ 		die("Unable to write new cachefile");
+ 
+ 	return has_errors ? 1 : 0;
