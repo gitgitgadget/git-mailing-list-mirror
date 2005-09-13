@@ -1,61 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Define relative .git/objects/info/alternates semantics.
-Date: Tue, 13 Sep 2005 10:30:13 -0700
-Message-ID: <7vvf143mfu.fsf@assigned-by-dhcp.cox.net>
-References: <m3mzmjvbh7.fsf@telia.com>
-	<Pine.LNX.4.58.0509110908590.4912@g5.osdl.org>
-	<20050911185711.GA22556@mars.ravnborg.org>
-	<Pine.LNX.4.58.0509111157360.3242@g5.osdl.org>
-	<20050911194630.GB22951@mars.ravnborg.org>
-	<Pine.LNX.4.58.0509111251150.3242@g5.osdl.org>
-	<52irx7cnw5.fsf@cisco.com>
-	<Pine.LNX.4.58.0509111422510.3242@g5.osdl.org>
-	<Pine.LNX.4.58.0509111431400.3242@g5.osdl.org>
-	<7virx7njxa.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509112038020.3242@g5.osdl.org>
-	<7vk6hl4fd9.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509130918170.3351@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 13 19:32:31 2005
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: [PATCH] Improve "git grep" flags handling
+Date: Tue, 13 Sep 2005 13:39:26 -0400
+Message-ID: <200509131739.j8DHdQL1010615@laptop11.inf.utfsm.cl>
+References: <junkio@cox.net>
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 13 19:41:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFEbs-0003ls-9c
-	for gcvg-git@gmane.org; Tue, 13 Sep 2005 19:30:20 +0200
+	id 1EFEl2-0006Vj-2L
+	for gcvg-git@gmane.org; Tue, 13 Sep 2005 19:39:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964915AbVIMRaQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Sep 2005 13:30:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964920AbVIMRaQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 13:30:16 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:11141 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S964915AbVIMRaO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Sep 2005 13:30:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050913173014.NVTY17436.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 13 Sep 2005 13:30:14 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509130918170.3351@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 13 Sep 2005 09:22:42 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964931AbVIMRjo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Sep 2005 13:39:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964934AbVIMRjo
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 13:39:44 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:30347 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S964931AbVIMRjn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2005 13:39:43 -0400
+Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j8DHdQln029779
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 13 Sep 2005 13:39:26 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j8DHdQL1010615;
+	Tue, 13 Sep 2005 13:39:26 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Mon, 12 Sep 2005 17:51:56 MST." <7v64t56b83.fsf_-_@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Tue, 13 Sep 2005 13:39:26 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8474>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
 
-> Which means that the _same_ "alternates" file can be shared with many
-> different project.git/ directories, and thus it's not well-defined to make
-> it relative to GIT_DIR.
+[...]
 
-Good point.
+>  Thanks, Linus.  This is what will go into "master" tonight.
+> 
+>  git-grep.sh |   64 ++++++++++++++++++++++++++++++++++++++---------------------
+>  1 files changed, 41 insertions(+), 23 deletions(-)
+> 
+> 6df4eef9b10c8de2b9bc3dc769f3a008a1200df7
+> diff --git a/git-grep.sh b/git-grep.sh
+> --- a/git-grep.sh
+> +++ b/git-grep.sh
+> @@ -1,25 +1,43 @@
+>  #!/bin/sh
 
-> You can make it relative to "GIT_OBJECTS_DIR/.." of course, which in most
-> cases is the same thing as "GIT_DIR".
+Shouldn't shebang go /bin/bash, as the script uses bash-isms now?
+(For portability to non-enlightened systems the installation would have to
+locate bash too... and/or mention this in the INSTALL file)
 
-Again, good point.
+Or perhaps redo the mess in Perl or some such?
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
