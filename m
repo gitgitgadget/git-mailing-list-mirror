@@ -1,111 +1,168 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH] Rename the 'fredrik' merge strategy to 'recursive'.
-Date: Tue, 13 Sep 2005 08:22:26 +0200
-Message-ID: <20050913062226.GA9101@c165.ib.student.liu.se>
-References: <20050912212601.GB6644@c165.ib.student.liu.se> <7v1x3u7xtk.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Define relative .git/objects/info/alternates semantics.
+Date: Tue, 13 Sep 2005 00:05:22 -0700
+Message-ID: <7vk6hl4fd9.fsf_-_@assigned-by-dhcp.cox.net>
+References: <m3mzmjvbh7.fsf@telia.com>
+	<Pine.LNX.4.58.0509110908590.4912@g5.osdl.org>
+	<20050911185711.GA22556@mars.ravnborg.org>
+	<Pine.LNX.4.58.0509111157360.3242@g5.osdl.org>
+	<20050911194630.GB22951@mars.ravnborg.org>
+	<Pine.LNX.4.58.0509111251150.3242@g5.osdl.org>
+	<52irx7cnw5.fsf@cisco.com>
+	<Pine.LNX.4.58.0509111422510.3242@g5.osdl.org>
+	<Pine.LNX.4.58.0509111431400.3242@g5.osdl.org>
+	<7virx7njxa.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509112038020.3242@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 13 08:23:49 2005
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue Sep 13 09:06:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EF4Bs-0005gB-2k
-	for gcvg-git@gmane.org; Tue, 13 Sep 2005 08:22:48 +0200
+	id 1EF4rJ-0005Mg-07
+	for gcvg-git@gmane.org; Tue, 13 Sep 2005 09:05:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932359AbVIMGWe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Sep 2005 02:22:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932361AbVIMGWe
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 02:22:34 -0400
-Received: from [85.8.31.11] ([85.8.31.11]:25217 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S932359AbVIMGWd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2005 02:22:33 -0400
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 94F4C4115; Tue, 13 Sep 2005 08:27:29 +0200 (CEST)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EF4BW-0002by-00; Tue, 13 Sep 2005 08:22:26 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v1x3u7xtk.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6+20040907i
+	id S932416AbVIMHF1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Sep 2005 03:05:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932426AbVIMHF1
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 03:05:27 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:20706 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932427AbVIMHF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Sep 2005 03:05:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050913070524.NPDW3588.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 13 Sep 2005 03:05:24 -0400
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.58.0509112038020.3242@g5.osdl.org> (Linus Torvalds's
+	message of "Sun, 11 Sep 2005 20:39:46 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8461>
 
-On Mon, Sep 12, 2005 at 02:58:31PM -0700, Junio C Hamano wrote:
-> Thanks.  Will apply.
-> 
-> One request before we hit 0.99.7 (this Saturday) when the name
-> will be cast in stone is to christen it better than 'fredrik'
-> which was what I did as a tentative measure.  Otherwise we would
-> regret when you come up with another merge algorithm with
-> different pros-and-cons with the current one.
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> Yes. We should probably have some well-defined meaning for relative paths
+> in there regardless (eg just define that they are always relative to the
+> main GIT_OBJECT_DIRECTORY or something).
+>
+> That would also allow mirrors to mirror the git archives in different 
+> places, without upsetting the result (as long as they are mirrored 
+> together).
+>
+> 		Linus
 
-I have thought about that too. Is 'git-merge-recursive.py' a good
-enough name?
+This patch is request-for-comments.  I have experimented it and
+have a feeling that it may be more intuitive to make it relative
+to $project.git/ directory, instead of $project.git/objects as
+you originally suggested, in which case a maintainer tree would
+have "../../torvalds/linux-2.6.git/objects" instead (one less
+dotdot), and if nobody objects that is probably what I'll end up
+doing.
 
-- Fredrik
+------------
+An entry in the alternates file can name a directory relative to
+the object store it describes.  A typical linux-2.6 maintainer
+repository would have "../../../torvalds/linux-2.6.git/objects" there,
+because the subsystem maintainer object store would live in
 
+    /pub/scm/linux/kernel/git/$u/$system.git/objects/
 
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
+and the object store of Linus tree is in
 
+    /pub/scm/linux/kernel/git/torvalds/linux-2.6.git/objects/
+
+This unfortunately is different from GIT_ALTERNATE_OBJECT_DIRECTORIES
+which is relative to the cwd of the running process, but there is no
+way to make it consistent with the behaviour of the environment
+variable.  The process typically is run in $system.git/ directory for
+a naked repository, or one level up for a repository with a working
+tree, so we just define it to be relative to the objects/ directory
+to be different from either ;-).
+
+Later, the dumb transport could be updated to read from info/alternates
+and make requests for the repository the repository borrows from.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
 ---
 
- .gitignore             |    2 +-
- Makefile               |    2 +-
- git-merge-recursive.py |    0 
- git-merge.sh           |    4 ++--
- 4 files changed, 4 insertions(+), 4 deletions(-)
- rename git-merge-fredrik.py => git-merge-recursive.py (100%)
+ sha1_file.c |   28 ++++++++++++++++++++++------
+ 1 files changed, 22 insertions(+), 6 deletions(-)
 
-7d5637d2df86406b4f8f3f96cbea57d977231470
-diff --git a/.gitignore b/.gitignore
---- a/.gitignore
-+++ b/.gitignore
-@@ -43,10 +43,10 @@ git-mailinfo
- git-mailsplit
- git-merge
- git-merge-base
--git-merge-fredrik
- git-merge-index
- git-merge-octopus
- git-merge-one-file
-+git-merge-recursive
- git-merge-resolve
- git-merge-stupid
- git-mktag
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -83,7 +83,7 @@ SCRIPT_PERL = \
- 	git-rename.perl git-shortlog.perl
+e2e8a0ba5fc80368bf46c615276e406dd373729c
+diff --git a/sha1_file.c b/sha1_file.c
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -240,10 +240,12 @@ static struct alternate_object_database 
+  * SHA1, an extra slash for the first level indirection, and the
+  * terminating NUL.
+  */
+-static void link_alt_odb_entries(const char *alt, const char *ep, int sep)
++static void link_alt_odb_entries(const char *alt, const char *ep, int sep,
++				 const char *relative_base)
+ {
+ 	const char *cp, *last;
+ 	struct alternate_object_database *ent;
++	int base_len = -1;
  
- SCRIPT_PYTHON = \
--	git-merge-fredrik.py
-+	git-merge-recursive.py
+ 	last = alt;
+ 	while (last < ep) {
+@@ -261,12 +263,25 @@ static void link_alt_odb_entries(const c
+ 			int pfxlen = cp - last;
+ 			int entlen = pfxlen + 43;
  
- # The ones that do not have to link with lcrypto nor lz.
- SIMPLE_PROGRAMS = \
-diff --git a/git-merge-fredrik.py b/git-merge-recursive.py
-similarity index 100%
-rename from git-merge-fredrik.py
-rename to git-merge-recursive.py
-diff --git a/git-merge.sh b/git-merge.sh
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -12,9 +12,9 @@ usage () {
-     die "git-merge [-n] [-s <strategy>]... <merge-message> <head> <remote>+"
++			if (*last != '/' && relative_base) {
++				/* Relative alt-odb */
++				if (base_len < 0)
++					base_len = strlen(relative_base) + 1;
++				entlen += base_len;
++				pfxlen += base_len;
++			}
+ 			ent = xmalloc(sizeof(*ent) + entlen);
+ 			*alt_odb_tail = ent;
+ 			alt_odb_tail = &(ent->next);
+ 			ent->next = NULL;
+-
+-			memcpy(ent->base, last, pfxlen);
++			if (*last != '/' && relative_base) {
++				memcpy(ent->base, relative_base, base_len - 1);
++				ent->base[base_len - 1] = '/';
++				memcpy(ent->base + base_len,
++				       last, cp - last);
++			}
++			else
++				memcpy(ent->base, last, pfxlen);
+ 			ent->name = ent->base + pfxlen + 1;
+ 			ent->base[pfxlen] = ent->base[pfxlen + 3] = '/';
+ 			ent->base[entlen-1] = 0;
+@@ -288,12 +303,12 @@ void prepare_alt_odb(void)
+ 	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
+ 	if (!alt) alt = "";
+ 
+-	sprintf(path, "%s/info/alternates", get_object_directory());
+ 	if (alt_odb_tail)
+ 		return;
+ 	alt_odb_tail = &alt_odb_list;
+-	link_alt_odb_entries(alt, alt + strlen(alt), ':');
++	link_alt_odb_entries(alt, alt + strlen(alt), ':', NULL);
+ 
++	sprintf(path, "%s/info/alternates", get_object_directory());
+ 	fd = open(path, O_RDONLY);
+ 	if (fd < 0)
+ 		return;
+@@ -306,7 +321,8 @@ void prepare_alt_odb(void)
+ 	if (map == MAP_FAILED)
+ 		return;
+ 
+-	link_alt_odb_entries(map, map + st.st_size, '\n');
++	link_alt_odb_entries(map, map + st.st_size, '\n',
++			     get_object_directory());
+ 	munmap(map, st.st_size);
  }
- 
--# all_strategies='resolve fredrik stupid octopus'
-+# all_strategies='resolve recursive stupid octopus'
- 
--all_strategies='fredrik octopus resolve stupid'
-+all_strategies='recursive octopus resolve stupid'
- default_strategies='resolve octopus'
- use_strategies=
  
