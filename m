@@ -1,104 +1,154 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 00/22] cache cursors: an introduction
-Date: Mon, 12 Sep 2005 17:17:32 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509121708430.3266@g5.osdl.org>
-References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
- <7vaciiawrm.fsf@assigned-by-dhcp.cox.net> <43261675.10905@citi.umich.edu>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Improve "git grep" flags handling
+Date: Mon, 12 Sep 2005 17:51:56 -0700
+Message-ID: <7v64t56b83.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0509121203210.4098@g5.osdl.org>
+	<7vbr2y7yfd.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509121500400.3266@g5.osdl.org>
+	<Pine.LNX.4.58.0509121519310.3266@g5.osdl.org>
+	<7vd5nd7w0x.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509121542050.3266@g5.osdl.org>
+	<7vslw96f6j.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509121635060.3266@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 13 02:18:52 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 13 02:52:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EEyUg-0004V6-SE
-	for gcvg-git@gmane.org; Tue, 13 Sep 2005 02:17:51 +0200
+	id 1EEz1y-0007Zf-LX
+	for gcvg-git@gmane.org; Tue, 13 Sep 2005 02:52:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932228AbVIMARs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Sep 2005 20:17:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932384AbVIMARs
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 20:17:48 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:36276 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932228AbVIMARr (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Sep 2005 20:17:47 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8D0HdBo001242
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Sep 2005 17:17:41 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8D0HWvT030524;
-	Mon, 12 Sep 2005 17:17:36 -0700
-To: Chuck Lever <cel@citi.umich.edu>
-In-Reply-To: <43261675.10905@citi.umich.edu>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932255AbVIMAv6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Sep 2005 20:51:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932258AbVIMAv6
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Sep 2005 20:51:58 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:21965 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932255AbVIMAv5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Sep 2005 20:51:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050913005156.MAHY18319.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 12 Sep 2005 20:51:56 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509121635060.3266@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 12 Sep 2005 16:46:53 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8459>
 
+This allows any arbitrary flags to "grep", and knows about the few
+special grep flags that take an argument too.
 
+It also allows some flags for git-ls-files, although their usefulness
+is questionable.
 
-On Mon, 12 Sep 2005, Chuck Lever wrote:
-> 
-> heh.  well, i had something like this earlier, but i know linus doesn't 
-> like void *, and it was really kind of ugly.  and as you observed, it's 
-> used so rarely.  so i just decided to drop it.
+With this, something line
 
-Iterators are _much_ nicer if you can use them in-line instead of with a 
-function pointer. It makes them a hundred times more powerful, and avoids 
-all the crap with trying to pass a magic argument around.
+	git grep -w -1 pattern
 
-That was why I mentioned the sparse "ptrlist" implementation: the data 
-structure itself may not be all that exciting, but the syntax for _using_ 
-it is incredibly powerful. Much better than any other list handling 
-package I've ever seen, if I do say so myself.
+works, without the script enumerating every possible flag.
 
-So check out
+[jc: this was the version after I showed Linus a barf-o-meter test
+ version that avoids shell arrays.  The emperor penguin must have
+ typed this version blindly, since he said:
 
-	kernel.org:/pub/scm/devel/sparse/sparse.git
+    I'm not barfing, but that's probably because my brain just shut
+    down and is desperately trying to gouge my eyes out with a spoon.
 
-and look at how easy it is to iterate over a list. The _true_ power is how 
-you can return out of a function in the middle of the iterator, ie
+ I slightly fixed it to catch the remaining arguments meant to be
+ given git-ls-files.]
 
-	int pseudo_in_list(struct pseudo_list *list, pseudo_t pseudo)
-	{
-	        pseudo_t old;
-	        FOR_EACH_PTR(list,old) {
-	                if (old == pseudo)
-	                        return 1;
-	        } END_FOR_EACH_PTR(old);
-	        return 0;
-	}
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-(and it's type-safe too!)
+---
 
-Now, nested iterators may sound easy, but they aren't easy if you want to 
-actually break out of them in a nested way. Try to do _this_ with a 
-function pointer interface without going crazy:
+    Linus Torvalds <torvalds@osdl.org> writes:
 
-	        /* Remove the pseudos from the "defines" list that are used internally */
-	        FOR_EACH_PTR(ep->bbs, bb) {
-	                pseudo_t def;
-	                FOR_EACH_PTR(bb->defines, def) {
-	                        struct basic_block *child;
-	                        FOR_EACH_PTR(bb->children, child) {
-	                                if (pseudo_in_list(child->needs, def))
-	                                        goto is_used;
-	                        } END_FOR_EACH_PTR(child);
-	                        DELETE_CURRENT_PTR(def);
-	is_used:
-	                ;
-	                } END_FOR_EACH_PTR(def);
-	                PACK_PTR_LIST(&bb->defines);
-	        } END_FOR_EACH_PTR(bb);
+    Wouldn't it be _much_ nicer to just do which does use bash
+    array variables, but dang, it does so for a reason: they
+    really are very very useful, and they make it _so_ much more
+    pleasant to do these things..
 
-all real examples from real code that implements an almost-real compiler.
+ Thanks, Linus.  This is what will go into "master" tonight.
 
-Very dense code too, btw. It's incredible how expressive these iterators 
-are: I started out with a function pointer interface, and it was painful 
-as _hell_ to see what was going on.
+ git-grep.sh |   64 ++++++++++++++++++++++++++++++++++++++---------------------
+ 1 files changed, 41 insertions(+), 23 deletions(-)
 
-		Linus
+6df4eef9b10c8de2b9bc3dc769f3a008a1200df7
+diff --git a/git-grep.sh b/git-grep.sh
+--- a/git-grep.sh
++++ b/git-grep.sh
+@@ -1,25 +1,43 @@
+ #!/bin/sh
+-flags=
+-while :; do
+-  pattern="$1"
+-  case "$pattern" in
+-  -i|-I|-a|-E|-H|-h|-l)
+-    flags="$flags $pattern"
+-    shift
+-    ;;
+-  -e)
+-    pattern="$2"
+-    shift
+-    break
+-    ;;
+-  -*)
+-    echo "unknown flag $pattern" >&2
+-    exit 1
+-    ;;
+-  *)
+-    break
+-    ;;
+-  esac
++#
++# Copyright (c) Linus Torvalds, 2005
++#
++
++pattern=
++flags=()
++git_flags=()
++while : ; do
++	case "$1" in
++	--cached|--deleted|--others|--killed|\
++	--ignored|--exclude=*|\
++	--exclude-from=*|\--exclude-per-directory=*)
++		git_flags=("${git_flags[@]}" "$1")
++		;;
++	-e)
++		pattern="$2"
++		shift
++		;;
++	-A|-B|-C|-D|-d|-f|-m)
++		flags=("${flags[@]}" "$1" "$2")
++		shift
++		;;
++	--)
++		# The rest are git-ls-files paths (or flags)
++		shift
++		break
++		;;
++	-*)
++		flags=("${flags[@]}" "$1")
++		;;
++	*)
++		if [ -z "$pattern" ]; then
++			pattern="$1"
++			shift
++		fi
++		break
++		;;
++	esac
++	shift
+ done
+-shift
+-git-ls-files -z "$@" | xargs -0 grep $flags -e "$pattern"
++git-ls-files -z "${git_flags[@]}" "$@" |
++	xargs -0 grep "${flags[@]}" "$pattern"
