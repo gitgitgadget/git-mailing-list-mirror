@@ -1,77 +1,52 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] cg-clean -d removes "arch" and "include" in Linux
-Date: Tue, 13 Sep 2005 18:04:35 -0400
-Message-ID: <1126649075.28384.15.camel@dv>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Sep 14 00:13:13 2005
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: dumb transports not being welcomed..
+Date: Tue, 13 Sep 2005 18:03:41 -0400
+Message-ID: <200509132203.j8DM3foH008451@laptop11.inf.utfsm.cl>
+References: <junkio@cox.net>
+Cc: Sam Ravnborg <sam@ravnborg.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 14 00:14:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFItV-00030H-8r
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 00:04:49 +0200
+	id 1EFIst-0002zG-NE
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 00:04:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932417AbVIMWEr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Sep 2005 18:04:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932504AbVIMWEq
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 18:04:46 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:36511 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932417AbVIMWEq
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Sep 2005 18:04:46 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EFItK-0004SF-FV
-	for git@vger.kernel.org; Tue, 13 Sep 2005 18:04:38 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.52)
-	id 1EFItH-0007bX-Ef
-	for git@vger.kernel.org; Tue, 13 Sep 2005 18:04:35 -0400
-To: git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	id S932255AbVIMWEI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Sep 2005 18:04:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932417AbVIMWEI
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 18:04:08 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:10714 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S932255AbVIMWEH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2005 18:04:07 -0400
+Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j8DM3gq5021096
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 13 Sep 2005 18:03:42 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j8DM3foH008451;
+	Tue, 13 Sep 2005 18:03:41 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Tue, 13 Sep 2005 14:30:16 MST." <7vacig1wrb.fsf@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Tue, 13 Sep 2005 18:03:42 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8496>
 
-Hello!
+Junio C Hamano <junkio@cox.net> wrote:
 
-"cg-clean -d" would delete directories that don't have versioned files
-in them, even if their subdirectories do.  "arch" and "include" in Linux
-sources are such directories.
+[...]
 
-To be safe, every directory in the directory list should be complemented
-by all its parent directories.
+> Using cogito is not a problem at all.  The mechanism to prepare
+> trees to serve wider audience not being used widely is.
 
-The patch below is a quick hack that shows that bash is not the best
-language to implement this.  Still, it's better to have such fix than
-having cg-clean remove source files.
-
-Signed-off-by: Pavel Roskin <proski@gnu.org>
-
-diff --git a/cg-clean b/cg-clean
---- a/cg-clean
-+++ b/cg-clean
-@@ -53,6 +53,18 @@ clean_dirs()
- 	git-ls-files --cached |
- 		sed -n 's|^'"$_git_relpath"'||p' |
- 		sed -n 's|/[^/]*$||p' |
-+		while IFS='/' read -a dir; do
-+			i=0
-+			while test $i != ${#dir[@]}; do
-+				j=0
-+				while test $i != $j; do
-+					echo -n ${dir[$j]}/
-+					j=$[$j+1]
-+				done
-+				echo ${dir[$i]}
-+				i=$[$i+1]
-+			done
-+		done |
- 		sort -u >"$dirlist"
- 
- 	save_IFS="$IFS"
-
-
+It isn't really documented...
 -- 
-Regards,
-Pavel Roskin
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
