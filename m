@@ -1,60 +1,90 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: Re: dumb transports not being welcomed..
-Date: Tue, 13 Sep 2005 23:42:13 +0200
-Message-ID: <20050913214213.GA2549@mars.ravnborg.org>
-References: <7vek7s1xsh.fsf@assigned-by-dhcp.cox.net> <20050913211444.GA27029@mars.ravnborg.org> <7vacig1wrb.fsf@assigned-by-dhcp.cox.net>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH 4/5] Use a temporary index file when we merge the common ancestors.
+Date: Tue, 13 Sep 2005 23:41:16 +0200
+Message-ID: <20050913214116.GE10953@c165.ib.student.liu.se>
+References: <20050913213730.GA10953@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 13 23:40:55 2005
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Sep 13 23:42:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFIVN-00067t-UL
-	for gcvg-git@gmane.org; Tue, 13 Sep 2005 23:39:54 +0200
+	id 1EFIWm-0006ZE-ID
+	for gcvg-git@gmane.org; Tue, 13 Sep 2005 23:41:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750896AbVIMVjv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Sep 2005 17:39:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750892AbVIMVjv
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 17:39:51 -0400
-Received: from pfepb.post.tele.dk ([195.41.46.236]:34694 "EHLO
-	pfepb.post.tele.dk") by vger.kernel.org with ESMTP id S1750891AbVIMVju
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Sep 2005 17:39:50 -0400
-Received: from mars.ravnborg.org (0x50a0757d.hrnxx9.adsl-dhcp.tele.dk [80.160.117.125])
-	by pfepb.post.tele.dk (Postfix) with ESMTP id CCC1D5EE0A4;
-	Tue, 13 Sep 2005 23:39:49 +0200 (CEST)
-Received: by mars.ravnborg.org (Postfix, from userid 1000)
-	id E33B76AC01D; Tue, 13 Sep 2005 23:42:13 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
+	id S1751034AbVIMVlS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Sep 2005 17:41:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751044AbVIMVlR
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 17:41:17 -0400
+Received: from [85.8.31.11] ([85.8.31.11]:15495 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1751012AbVIMVlR (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2005 17:41:17 -0400
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id DDA2C411B; Tue, 13 Sep 2005 23:46:20 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EFIWi-0002uh-00; Tue, 13 Sep 2005 23:41:16 +0200
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vacig1wrb.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.8i
+In-Reply-To: <20050913213730.GA10953@c165.ib.student.liu.se>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8491>
 
-On Tue, Sep 13, 2005 at 02:30:16PM -0700, Junio C Hamano wrote:
-> Sam Ravnborg <sam@ravnborg.org> writes:
-> 
-> > Whats wrong using cogito?
-> > In other words. Why does you feel like that when we use cogito to do
-> > cg-update.
-> 
-> Using cogito is not a problem at all.  The mechanism to prepare
-> trees to serve wider audience not being used widely is.
+With this change we can get rid of a call to 'git-update-index
+--refresh'.
 
-What is the right method to use at kernel.org then?
+Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
-I did:
 
-rm -rf kbuild.git
-cp -al ../linus/linus-2.6.git kbuild.get
-echo ... > ---/alternates
-GIT_DIR=kbuild.dir git-prune-cache
+---
 
-Worked like a charm although a bit hacky...
-And I had a tree to start out from.
+ git-merge-recursive.py |   23 ++++++++++++++++++-----
+ 1 files changed, 18 insertions(+), 5 deletions(-)
 
-	Sam
+68a73c83a0ba2175cb366bddf3b851f824c6d598
+diff --git a/git-merge-recursive.py b/git-merge-recursive.py
+--- a/git-merge-recursive.py
++++ b/git-merge-recursive.py
+@@ -10,6 +10,22 @@ from gitMergeCommon import *
+ # The actual merge code
+ # ---------------------
+ 
++originalIndexFile = os.environ.get('GIT_INDEX_FILE',
++                                   os.environ.get('GIT_DIR', '.git') + '/index')
++temporaryIndexFile = os.environ.get('GIT_DIR', '.git') + \
++                     '/merge-recursive-tmp-index'
++def setupIndex(temporary):
++    try:
++        os.unlink(temporaryIndexFile)
++    except OSError:
++        pass
++    if temporary:
++        newIndex = temporaryIndexFile
++        os.environ
++    else:
++        newIndex = originalIndexFile
++    os.environ['GIT_INDEX_FILE'] = newIndex
++
+ def merge(h1, h2, branch1Name, branch2Name, graph, callDepth=0):
+     '''Merge the commits h1 and h2, return the resulting virtual
+     commit object and a flag indicating the cleaness of the merge.'''
+@@ -39,13 +55,10 @@ def merge(h1, h2, branch1Name, branch2Na
+         assert(isinstance(Ms, Commit))
+ 
+     if callDepth == 0:
+-        if len(ca) > 1:
+-            runProgram(['git-read-tree', h1.tree()])
+-            runProgram(['git-update-index', '-q', '--refresh'])
+-        # Use the original index if we only have one common ancestor
+-        
++        setupIndex(False)
+         cleanCache = False
+     else:
++        setupIndex(True)
+         runProgram(['git-read-tree', h1.tree()])
+         cleanCache = True
+ 
