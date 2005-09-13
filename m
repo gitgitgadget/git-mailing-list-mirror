@@ -1,66 +1,62 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: [PATCH] Improve "git grep" flags handling
-Date: Tue, 13 Sep 2005 13:39:26 -0400
-Message-ID: <200509131739.j8DHdQL1010615@laptop11.inf.utfsm.cl>
-References: <junkio@cox.net>
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 13 19:41:44 2005
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [RFC] GIT Repository Annotation Convention
+Date: Tue, 13 Sep 2005 19:46:00 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.09.13.17.45.59.307129@smurf.noris.de>
+References: <87ll2aib73.fsf@gmail.com> <431DA8CD.9060009@gmail.com> <432060B8.6080408@gmail.com> <7vr7bzv3r2.fsf@assigned-by-dhcp.cox.net> <432089D5.7000102@gmail.com> <pan.2005.09.11.16.37.20.483911@smurf.noris.de> <43247298.2010500@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Tue Sep 13 19:51:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFEl2-0006Vj-2L
-	for gcvg-git@gmane.org; Tue, 13 Sep 2005 19:39:48 +0200
+	id 1EFEuB-0000cL-6o
+	for gcvg-git@gmane.org; Tue, 13 Sep 2005 19:49:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964931AbVIMRjo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Sep 2005 13:39:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964934AbVIMRjo
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 13:39:44 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:30347 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S964931AbVIMRjn (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2005 13:39:43 -0400
-Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j8DHdQln029779
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 13 Sep 2005 13:39:26 -0400
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j8DHdQL1010615;
-	Tue, 13 Sep 2005 13:39:26 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
-   of "Mon, 12 Sep 2005 17:51:56 MST." <7v64t56b83.fsf_-_@assigned-by-dhcp.cox.net> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Tue, 13 Sep 2005 13:39:26 -0400 (CLT)
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
-X-Virus-Status: Clean
+	id S964935AbVIMRtK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Sep 2005 13:49:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964937AbVIMRtK
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 13:49:10 -0400
+Received: from main.gmane.org ([80.91.229.2]:22148 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964935AbVIMRtI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2005 13:49:08 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EFEsL-00006g-CU
+	for git@vger.kernel.org; Tue, 13 Sep 2005 19:47:21 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 13 Sep 2005 19:47:21 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 13 Sep 2005 19:47:21 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8475>
 
-Junio C Hamano <junkio@cox.net> wrote:
+Hi, A Large Angry SCM wrote:
 
-[...]
-
->  Thanks, Linus.  This is what will go into "master" tonight.
+>> I propose using no extensions whatsoever: simply mirror the refs/ tree.
 > 
->  git-grep.sh |   64 ++++++++++++++++++++++++++++++++++++++---------------------
->  1 files changed, 41 insertions(+), 23 deletions(-)
-> 
-> 6df4eef9b10c8de2b9bc3dc769f3a008a1200df7
-> diff --git a/git-grep.sh b/git-grep.sh
-> --- a/git-grep.sh
-> +++ b/git-grep.sh
-> @@ -1,25 +1,43 @@
->  #!/bin/sh
+> The extensions allow the annotation of directories as well as files. 
+> That's something that can't be done if extensions are not used.
 
-Shouldn't shebang go /bin/bash, as the script uses bash-isms now?
-(For portability to non-enlightened systems the installation would have to
-locate bash too... and/or mention this in the INSTALL file)
+IMHO, that is the sort of information that's best saved in the "how is our
+source organized" section of your ./HACKING file.
 
-Or perhaps redo the mess in Perl or some such?
+Or you can simply use reiserfs4, with its files-are-directories feature.
+(*ducks and runs*)
+
 -- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Ask yourself whether you are happy and you cease to be so.
