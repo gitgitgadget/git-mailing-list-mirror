@@ -1,80 +1,79 @@
-From: Tim Ottinger <tottinge@progeny.com>
-Subject: Re: [PATCH 00/22] cache cursors: an introduction
-Date: Tue, 13 Sep 2005 15:06:05 -0500
-Message-ID: <4327312D.3000208@progeny.com>
-References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>	<4325A0D9.2000806@gmail.com> <4325AED6.8050401@citi.umich.edu>	<43272350.3060801@progeny.com> <7vslw821jl.fsf@assigned-by-dhcp.cox.net>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: [RFH] Merge driver
+Date: Tue, 13 Sep 2005 22:33:06 +0200
+Message-ID: <20050913203252.GA1737@c165.ib.student.liu.se>
+References: <7vvf1cz64l.fsf@assigned-by-dhcp.cox.net> <4320536D.2010706@citi.umich.edu> <7v7jdrwlih.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509081012540.3208@g5.osdl.org> <43207FE6.2030108@citi.umich.edu> <Pine.LNX.4.58.0509081131070.5940@g5.osdl.org> <432089D8.4060507@citi.umich.edu> <7v3boen0rb.fsf_-_@assigned-by-dhcp.cox.net> <20050912210813.GA6644@c165.ib.student.liu.se> <7vmzmi9ebj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: gitzilla@gmail.com, git@vger.kernel.org, cel@citi.umich.edu
-X-From: git-owner@vger.kernel.org Tue Sep 13 22:09:12 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Kuivinen <freku045@student.liu.se>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Linus Torvalds <torvalds@osdl.org>, cel@citi.umich.edu,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 13 22:34:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFH4A-0006qZ-Pr
-	for gcvg-git@gmane.org; Tue, 13 Sep 2005 22:07:43 +0200
+	id 1EFHT3-0005WX-TN
+	for gcvg-git@gmane.org; Tue, 13 Sep 2005 22:33:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932423AbVIMUHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Sep 2005 16:07:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932487AbVIMUHj
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 16:07:39 -0400
-Received: from zealot.progeny.com ([216.37.46.162]:29631 "EHLO
-	morimoto.progeny.com") by vger.kernel.org with ESMTP
-	id S932423AbVIMUHj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Sep 2005 16:07:39 -0400
-Received: from [192.168.0.101] (pcp961871pcs.brnsbg01.in.comcast.net [68.58.143.126])
-	by morimoto.progeny.com (Postfix) with ESMTP
-	id CA1106389E; Tue, 13 Sep 2005 15:07:37 -0500 (EST)
-User-Agent: Debian Thunderbird 1.0.6 (X11/20050802)
-X-Accept-Language: en-us, en
+	id S932275AbVIMUdW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Sep 2005 16:33:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932279AbVIMUdW
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 16:33:22 -0400
+Received: from [85.8.31.11] ([85.8.31.11]:56198 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S932275AbVIMUdW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2005 16:33:22 -0400
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id A5351411B; Tue, 13 Sep 2005 22:38:15 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EFHSn-0002FR-00; Tue, 13 Sep 2005 22:33:09 +0200
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslw821jl.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vmzmi9ebj.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8483>
 
-Junio C Hamano wrote:
+On Mon, Sep 12, 2005 at 02:16:48PM -0700, Junio C Hamano wrote:
+> Fredrik Kuivinen <freku045@student.liu.se> writes:
+> 
+> > git-read-tree A
+> > git-update-cache --refresh
+> > git-read-tree -u -m T A B
+> >
+> > We need the second step because otherwise git-read-tree will complain
+> > that the cache isn't uptodate. But we _know_ that the contents are
+> > uptodate, so the second step is unnecessary and just eats time.
+> 
+> If we _know_ it should match, isn't there a way to tell the
+> first "git-read-tree A" not to mess with the dirtiness, like,
+> ah, one-way merge?
+> 
 
->Tim Ottinger <tottinge@progeny.com> writes:
->
->  
->
->>2) However unimportant, I'm an old OO guy and object_cmd looks like 
->>object.command to me.
->>    
->>
->
->If you are OO then would not object_method remind you of object->method ??
->
->  
->
->>>+  init_cc
->>>+  next_cc, prev_cc
->>>      
->>>
->>cc_init?
->>cc_next, cc_previous
->>    
->>
->
->Nah, either set is fine as long as it is internally consistent.
->I tend to prefer "do-this-to-that" so init_cc and next_cc are
->fine by me (just one person's opinion, not a dictator's ruling).
->
->  
->
-I guess it depends on whether you're looking at command completion or
-not. Most the time I have a thing, and want to do something to it.  Then
-starting with cc_ helps, but starting with init_ only tells me what I can
-init -- more filtering on my part.
+I don't think a one way merge will do what we want in this case.
 
-Of course, i can just open the darned file and read it. ;-)  So it's a 
-matter
-of what you and your tools like best.  Starting with the subject does sort
-better, though. 
+At the start of the merge we know that the working directory is in
+sync with the index. But during the merge we will merge the common
+ancestors, and the index file will be overwritten. When we are done
+with merging the common ancestors we want to merge the heads that we
+wanted to merge from the begining (A and B) using T as the common
+ancestor. When 'git-read-tree A' is executed we get a cache which has
+zeroed stat data, but SHAs and mode information which match the
+working directory. If we do 'git-update-cache --refresh' the stat data
+will be updated to match the working directory.
 
+Using 'git-read-tree -m A' will not work because the stat data in the
+cache is zeroed before we run this command.
 
--- 
-                             ><>
-... either 'way ahead of the game, or 'way out in left field.
+I see two solutions, either allow passing '-i' together with '-u' to
+git-read-tree or use a temporary index file when we are merging the
+common ancestors.
+
+Thinking a bit more about it, maybe it's better to use a temporary
+index file. If go this way we could, at least in principle, allow
+merges which starts with a dirty working directory.
+
+- Fredrik
