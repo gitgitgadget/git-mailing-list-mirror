@@ -1,63 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Improve "git grep" flags handling
-Date: Tue, 13 Sep 2005 12:09:25 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509131203280.3351@g5.osdl.org>
-References: <200509131739.j8DHdQL1010615@laptop11.inf.utfsm.cl>
- <7v8xy03ilk.fsf@assigned-by-dhcp.cox.net>
+From: Tim Ottinger <tottinge@progeny.com>
+Subject: Re: [PATCH 00/22] cache cursors: an introduction
+Date: Tue, 13 Sep 2005 14:06:56 -0500
+Message-ID: <43272350.3060801@progeny.com>
+References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu> <4325A0D9.2000806@gmail.com> <4325AED6.8050401@citi.umich.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Horst von Brand <vonbrand@inf.utfsm.cl>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 13 21:11:52 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: gitzilla@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 13 21:11:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFGA8-0007Qb-CV
-	for gcvg-git@gmane.org; Tue, 13 Sep 2005 21:09:48 +0200
+	id 1EFG8h-0006tW-IX
+	for gcvg-git@gmane.org; Tue, 13 Sep 2005 21:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965103AbVIMTJj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Sep 2005 15:09:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965097AbVIMTJj
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 15:09:39 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:27860 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965093AbVIMTJg (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2005 15:09:36 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8DJ9QBo011072
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 13 Sep 2005 12:09:26 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8DJ9PZu018544;
-	Tue, 13 Sep 2005 12:09:25 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xy03ilk.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965070AbVIMTH7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Sep 2005 15:07:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965071AbVIMTH7
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 15:07:59 -0400
+Received: from zealot.progeny.com ([216.37.46.162]:35003 "EHLO
+	morimoto.progeny.com") by vger.kernel.org with ESMTP
+	id S965070AbVIMTH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Sep 2005 15:07:58 -0400
+Received: from [192.168.0.101] (pcp961871pcs.brnsbg01.in.comcast.net [68.58.143.126])
+	by morimoto.progeny.com (Postfix) with ESMTP
+	id 7209D6389E; Tue, 13 Sep 2005 14:07:53 -0500 (EST)
+User-Agent: Debian Thunderbird 1.0.6 (X11/20050802)
+X-Accept-Language: en-us, en
+To: cel@citi.umich.edu
+In-Reply-To: <4325AED6.8050401@citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8480>
+
+I know it's a little picky, but can we be consistently noun-verb-noun 
+with these?
+I'm not meaning to be a jerk (it just happens unbidden).
+
+My reasons
+1) My editor has word completion, which is handy.
+2) However unimportant, I'm an old OO guy and object_cmd looks like 
+object.command to me.
+3) I'm so stupid I need consistent naming to help me learn the git guts.
+4) I'm generally a butt about naming anyway 
+(http://tottinge.blogsome.com/naming-rules/)
+5) I work with a guy who is a stickler for lexicon, and he revived the 
+passion for consistency.
+
+> which describes a position in the cache.
+>
+> +  init_cc
+
+cc_init?
+
+>
+> +  next_cc, prev_cc, cache_eof
+
+cc_next, cc_previous
+
+Which is that, cc_to_end or cc_at_end?
+
+> +  next_name
+
+cc_next_name?
+
+>
+> +  walk_cache
+
+cache_walk?
+
+The rest of those looked great.  I only listed the ones I was unsure about.
 
 
-
-On Tue, 13 Sep 2005, Junio C Hamano wrote:
-> 
-> I heard somebody say the shell arrays actually came from Korn,
-> so /bin/bash is a wrong thing to do if that is the case.
-
-Me. 
-
-There are differences in indexing the arrays between ksh and bash, but I
-think the git-grep.sh style of usage should work on both bash and ksh.
-
-[ goes off and tests ]
-
-Indeed. I just tested the thing I sent out with "ksh git-grep.sh .." and 
-it worked fine.
-
-Using "zsh" the grep flags don't work, and "tcsh" obviously will never run
-_any_ valid shell code ;)
-
-		Linus
+-- 
+                             ><>
+... either 'way ahead of the game, or 'way out in left field.
