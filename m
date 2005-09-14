@@ -1,52 +1,186 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/4] Recovery after interrupted HTTP(s) fetch
-Date: Wed, 14 Sep 2005 11:16:18 -0700
-Message-ID: <7vpsrbjz0t.fsf@assigned-by-dhcp.cox.net>
-References: <20050914124206.GC24405@master.mivlgu.local>
+From: Blaisorblade <blaisorblade@yahoo.it>
+Subject: Re: git-merge-cache / StGIT - gitmergeonefile.py: merging one tree into another rather than two trees into merge base
+Date: Wed, 14 Sep 2005 20:19:04 +0200
+Message-ID: <200509142019.04667.blaisorblade@yahoo.it>
+References: <200509102027.28812.blaisorblade@yahoo.it> <1126427087.8457.33.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 14 20:18:14 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 14 20:23:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFbo0-0005W5-Ox
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 20:16:25 +0200
+	id 1EFbsl-0006jz-Ge
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 20:21:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932732AbVINSQV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 14:16:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932741AbVINSQU
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 14:16:20 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:24764 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932732AbVINSQU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2005 14:16:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050914181619.SYP2438.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 14 Sep 2005 14:16:19 -0400
-To: Sergey Vlasov <vsu@altlinux.ru>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932536AbVINSVQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 14:21:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932741AbVINSVQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 14:21:16 -0400
+Received: from smtp003.mail.ukl.yahoo.com ([217.12.11.34]:45457 "HELO
+	smtp003.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S932536AbVINSVP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2005 14:21:15 -0400
+Received: (qmail 12682 invoked from network); 14 Sep 2005 18:21:07 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Received:From:To:Subject:Date:User-Agent:Cc:References:In-Reply-To:MIME-Version:Content-Disposition:Content-Type:Content-Transfer-Encoding:Message-Id;
+  b=5hOprqGjn/ot4H5QxvdXTbuNjf4ShAd4vxOpdy1bFFLN8Y3axAlA4/oX90O47P0g2w68WdZmyp3YCeCTBDywrEgwlWgtA9REooKnkKNtQ7oKZwH1VPe+J7WyLag/bfZ6NIJLS4urx6688gZDV1R2XP++cKbF0H+obooFSs91TGk=  ;
+Received: from unknown (HELO zion.home.lan) (blaisorblade@62.11.80.49 with login)
+  by smtp003.mail.ukl.yahoo.com with SMTP; 14 Sep 2005 18:21:05 -0000
+To: Catalin Marinas <catalin.marinas@gmail.com>
+User-Agent: KMail/1.8.1
+In-Reply-To: <1126427087.8457.33.camel@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8550>
 
-Sergey Vlasov <vsu@altlinux.ru> writes:
+On Sunday 11 September 2005 10:24, Catalin Marinas wrote:
+> On Sat, 2005-09-10 at 20:27 +0200, Blaisorblade wrote:
+> > I experienced a (performance) problem with StGit, but I don't know if
+> > it's the culprit or if git-merge-cache is.
 
-> The problem is caused by the behavior of fetch.c:process_commit() - it
-> skips parent commits which already exist locally.  This is a good
-> optimization if your repository is OK, but after an interrupted fetch
-> there will be some missing objects in the object tree; the only way to
-> find them is to scan the whole tree, so stopping at the existing
-> commits is wrong.
+> ('s/cache/index/g' below since I still use the old names)
 
-Hmph.  I could almost swear that I've seen the 'recovery' fix
-from Daniel and merged it some time ago -- but I do not see that
-in the git-whatchanged output.  The only '--recover' I see is
-the leftover command line option description to recover from
-delta-fetch failure, which would not happen because we do not
-have deltified objects anymore.
+> Maybe both. I did some profiling in StGIT but only for trivial patches
+> which did not involved calling gitmergeonefile.py.
 
-Thanks for the patch.
+> It was taking around 
+> 2.5s to push a patch with a changed base (involving merge) on an
+> NFS-mounted directory but most of the time, 1.8s, was spent in
+> git-read-tree to do the actual merge.
+Yes, I even remember you mentioned that.
+> > Today I was pushing my patch stack (which was against Linux 2.6.13) on
+> > top of the latest snapshot I have (i.e. upstream will likely have some
+> > mega of patches). And it was *really* slow (say it pushed 8 patches in 5
+> > minutes).
+
+> That's indeed very slow. How may files are modified in each patch?
+1 files, in most cases - biggest one had 5 files changed (and is big 4,8K).
+
+> Do 
+> you run it over NFS?
+No, local reiserfs.
+> Also for profiling, it is useful to run a 'stg 
+> status' just to warm up the cache a little bit.
+Yes, I realized that -  but processing kept the same speed all the time (it's 
+not like it spent 4:30 minutes for warming the cache).
+
+> > I looked with "top" at what was happening, and I saw a lot of time spent
+> > by either gitmergeonefile.py or git-update-cache --remove*. And looking
+> > at the merge algorithm, I realized it merges both HEAD and patch top into
+> > the patch bottom (or something like that).
+
+> It does a three-way merge between 'HEAD' and 'top' with 'bottom' as the
+> common ancestor. The new 'bottom' will become 'HEAD' and the new 'top'
+> will become the result of the merge.
+
+> > I.e. if upstream rewrote everything, it will merge this rewrite into the
+> > patch bottom, together with the patch itself. So, the merge time will
+> > depend on the biggest of the two changed trees, not on the least one.
+
+> Actually, it will three-way merge the diff between top and bottom with
+> the diff between HEAD and bottom. The time will depend on the size of
+> both diffs, not just the maximum.
+Yes, true, but the problem in this case was that one diff (the upstream one) 
+was extremely huge. And it even involved some files removal - I almost never 
+caught, with top, anything else than gitmergeonefile.py or git-update-cache 
+--remove.
+
+I guess that moves between stages don't have the big memmove() problem, while 
+calling --remove shows it.
+
+And, with master being the SHA1 I pushed onto 
+(8920e8f94c44e31a73bdf923b04721e26e88cadd), 
+
+git-diff-tree -r v2.6.13 master |grep ' D'|wc -l
+
+gives 189. I guess that 2.5 seconds per each removal are enough to justify the 
+time which was needed above. Actually, it even had to be less than a second 
+per removal, otherwise it'd have been even slower.
+> If the merge is not trivial, StGIT 
+> will call git-merge-cache which calls gitmergeonefile.py. The Python
+> script is pretty simple and it simply calls diff3 or updates the cache
+> but if this happens for many files, the cumulated time might be big.
+> It's also worth profiling git-update-cache to check how it re-shuffles
+> the index file. Again, I haven't looked at the algorithm and I can't
+> comment more on this.
+
+> > A more reasonable algorithm would be along "read-tree HEAD"; merge "stg
+> > diff -r /" (i.e. the current patch) in it.
+
+> That's not a three-way diff algorithm. I could generate the diff of the
+> patch and apply it with git-apply but this might fail and you wouldn't
+> even get reject files (not sure whether git-apply supports this).
+Well, true, but either diff3 or merge would work fairly well. Also, trying to 
+apply the patch and resorting to something more complex wouldn't create so 
+many problems.
+> Another problem is that it won't detect upstream merges of your patch,
+> you would need to check it by hand. If all you need is a way to apply a
+> patch using the 'patch' tool, have a look at Quilt. It has similar
+> commands (since StGIT is based on its ideas) but uses the diff/patch
+> tools and is much faster. It also generates rejects if a patch doesn't
+> apply cleanly but I find the diff3 information, together with the
+> original files left in place, much more useful.
+
+Yes, in most cases. I've had something to complain with diff3, however (that's 
+a separate story). Maybe merge would be even better?
+
+> > I don't know if there's any real difference between cg-Xmergefile,
+> > gitmergeonefile.py and git-merge-one-file-script, and if that would
+> > matter in this case.
+
+> There is not big difference since these are only scripts that simply
+> call other tools.
+
+> > In the git-read-tree manpage (which is probably outdated), this is
+> > documented as follows:
+> >
+> >        o  stage 1 and stage 3 are the same and stage 2 is different:
+> >            take stage 2 (some work has been done on stage 2)
+> >
+> > But it didn't happen, which is strange.
+
+> This means that the file is not modified by an StGIT patch but it is
+> modified upstream. This case works fine for me (it's a bug if it
+> doesn't). Did you get a conflict? Are the original files left in place?
+No, it's not a correctness bug for me - just a performance bug. Why did 
+gitupdateonefile.py need to call git-update-cache --remove? If git-read-tree 
+had done his duty, this wouldn't be needed.
+
+> > Additional note: in StGIT, git-read-tree is called with stage1 which is
+> > not the merge base between stage2 and stage3.
+
+> stage1 is the bottom of the patch, stage2 is the HEAD (the upstream
+> hash) and stage3 is the top of the patch.
+Yes, saw that in the code.
+> > For the first patch, the patch bottom is the merge base, but not
+> > otherwise; so differences between either stage1 or stage3, and stage2,
+> > include files changed in previous patches.
+
+> For the first patch, the bottom is the *old* base (== stage1), stage2 is
+> the new base and stage3 is the top of the patch.
+Yes, but the *old* base happens to be, in this case (i.e. upgrading the stack 
+base from upstream), also the merge base.
+> > So, would stgit delete a file created in patch #1 when merge-applying
+> > patch #2?
+
+> Definitely not.
+Gonna test - but if you look at the manpage of read-tree, this would probably 
+be the expected behaviour.
+-- 
+Inform me of my mistakes, so I can keep imitating Homer Simpson's "Doh!".
+Paolo Giarrusso, aka Blaisorblade (Skype ID "PaoloGiarrusso", ICQ 215621894)
+http://www.user-mode-linux.org/~blaisorblade
+
+	
+
+	
+		
+___________________________________ 
+Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
+http://mail.yahoo.it
