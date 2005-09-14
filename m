@@ -1,38 +1,39 @@
 From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: dumb transports not being welcomed..
-Date: Tue, 13 Sep 2005 17:57:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509131742240.26803@g5.osdl.org>
+Date: Tue, 13 Sep 2005 18:42:05 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509131819310.26803@g5.osdl.org>
 References: <7vek7s1xsh.fsf@assigned-by-dhcp.cox.net> <20050913211444.GA27029@mars.ravnborg.org>
  <7vacig1wrb.fsf@assigned-by-dhcp.cox.net> <7vpsrcwrc1.fsf@assigned-by-dhcp.cox.net>
  <Pine.LNX.4.58.0509131525250.26803@g5.osdl.org>
  <Pine.LNX.4.63.0509140152160.24606@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.58.0509131742240.26803@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>, Sam Ravnborg <sam@ravnborg.org>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 14 02:58:30 2005
+X-From: git-owner@vger.kernel.org Wed Sep 14 03:42:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFLao-0004mF-AW
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 02:57:42 +0200
+	id 1EFMHz-0003HN-45
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 03:42:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932511AbVINA5j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Sep 2005 20:57:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932252AbVINA5j
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 20:57:39 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:32720 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932511AbVINA5j (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2005 20:57:39 -0400
+	id S932563AbVINBmQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Sep 2005 21:42:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932564AbVINBmQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Sep 2005 21:42:16 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:39390 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932563AbVINBmQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Sep 2005 21:42:16 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8E0vNBo004418
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8E1g6Bo007271
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 13 Sep 2005 17:57:24 -0700
+	Tue, 13 Sep 2005 18:42:06 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8E0vM2T005518;
-	Tue, 13 Sep 2005 17:57:23 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8E1g5rF007472;
+	Tue, 13 Sep 2005 18:42:05 -0700
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0509140152160.24606@wgmdd8.biozentrum.uni-wuerzburg.de>
+In-Reply-To: <Pine.LNX.4.58.0509131742240.26803@g5.osdl.org>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
 X-MIMEDefang-Filter: osdl$Revision: 1.115 $
@@ -40,52 +41,89 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8507>
 
 
 
-On Wed, 14 Sep 2005, Johannes Schindelin wrote:
+On Tue, 13 Sep 2005, Linus Torvalds wrote:
 > 
-> IMHO the culprit is git-rev-list, which takes ages and ages for big 
-> repositories (beware: this could be my Darwin client which might be 
-> incapable to stop the rev enumeration in time; but if that can be done 
-> unintentionally, this can be intentionally, too!).
+> That said, I do think that --objects handling is _very_ CPU-hungry. The 
+> offender is this old commit of mine:
 
-Packed too?
+No, never mind. Even without that, we end up walking a _lot_ of really
+uninterestng "internal" trees (ie trees where all parents were
+uninteresting, and they were parsed just because we had to parse a lot of 
+commits to determine what they reached). 
 
-git-rev-list will take a long time if the tree is unpacked and not in the 
-cache. It's all disk seeks. That's _especially_ true of a full clone 
-(which will walk the whole way down).
+To explain it a bit better, let's see a common case:
 
-But I have tons of memory in my machines, and I haven't looked at how 
-badly it does if you don't have that. I know that master.kernel.org is 
-certainly not having any trouble at all with me pulling from lots of 
-trees.. Maybe git-rev-list uses up lots of your memory.
 
-I'm seeing 14 seconds of CPU-time for a _full_ kernel history, with
-"--objects". Yes, it's not exactly cheap, and maybe I should optimize it
-(it's all in the "--objects" handling and probably a large portion of it
-is because trees actually pack very well indeed, so it's actually
-unpacking a lot of trees), but considering that that is preparing the
-metadata for pulling down a hundred megs of stuff..
+HEAD:		a
+	       / \
+	      b   \
+	     / \   \
+	    c   d   \
+	   /   / \   \
+	  e   f   g   x
+	   \ /   /   /
+	    h   i   /
+	     \ /   /
+	      j   /
+	       \ /
+Old history:    k
 
-That said, I do think that --objects handling is _very_ CPU-hungry. The 
-offender is this old commit of mine:
 
-	4311d328fee11fbd80862e3c5de06a26a0e80046
-	Author: Linus Torvalds <torvalds@g5.osdl.org>
-	Date:   Sat Jul 23 10:01:49 2005 -0700
+Now, imagine that we do 
 
-	    Be more aggressive about marking trees uninteresting
-	...
+	git-rev-list b..a
 
-which is much better about avoiding objects in old trees, but it does so 
-at the expense of being _horribly_ CPU-inefficient. It will walk through 
-every tree of every commit that we decided was uninteresting.
+which results in just two commits: 'x' and 'a' (everything else is
+reachable from 'b'). This is actually not that uncommon. However, in order 
+to realize that, we had to walk through _all_ of a..k and x before we saw 
+that 'b'..'k' were all uninteresting, and there was nothing else reachable 
+that migt be interesting.
 
-You can try to just undo that one commit - it will make pack-files have a 
-few extraneous objects, but I think it will make a huge difference in the 
-CPU cost of "small pulls" (it won't matter at all for the "git clone" 
-case: for that case we just always have to walk the whole object tree).
+Now, that's pretty cheap per se. git-rev-list is optimized for this case, 
+and hey, it's usually just a few hundred objects. Not a big deal - 
+generating the commit list takes a small fraction of a second.
+
+However, now the true cost of "--objects" is clear: we will walk the two
+"positive" trees ('a' and 'x') and look up all their objects (about 35,000
+of them) interesting. So far so good. Just another fraction of a second. 
+
+HOWEVER, then we walk _every_single_uninteresting_commit_ and walk _their_
+objects to say "we've got this already". And the uninteresting commits are
+often many more than the interesting ones - we might have had to go
+several weeks back to list them all. The above example is not at all
+extreme: we might have something like 20 interesting commits, and several
+hundreds of the uninteresting ones.
+
+Now, the way to optimize things is to realize that there are two "classes" 
+of uninteresting commits. There are the uninteresting commits that are 
+adjacent to an interesting one (in the above example, they are "b" and 
+"k"), and there are the uninteresting commits that are only reachable from 
+-other- uninteresting commits ('c'..'j'). Let's call the latter class 
+"doubly uninteresting commits", and the former class "uninteresting edge 
+commits".
+
+And we really don't need to walk the "doubly uninteresting" trees. But we
+do. Because we don't have another phase to discover the edge (we can't do
+that during the initial discovery phase, because we don't know if a commit
+is going to end up interesting in the end - we migth have another commit
+that we haven't seen yet that might be the parent of a commit that _looks_
+interesting right now, but ends up being uninteresting because that
+eventually seen parent ended up being uninteresting).
+
+In other words: I bet I could make "git-rev-list --objects" go from ten
+seconds to a single second if I did that edge discovery for most small
+incremental updates. Instead, I'm lazy, and I'm describing the problem on 
+the list as an "educational experience", and am callously hoping that 
+somebody will see it as an interesting challenge ;)
+
+Btw, the above is definitely not made up. If I did my statistics right,
+doing "git-rev-list v2.6.14-rc1.." with the current tree results in 178
+"interesting" commits, and 6251 "uninteresting" ones. And I bet 99% of
+those uninteresting ones are "doubly uninteresting" - and we're just
+wasting CPU time looking at what objects are reachable from them..
 
 		Linus
