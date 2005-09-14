@@ -1,184 +1,216 @@
-From: Blaisorblade <blaisorblade@yahoo.it>
-Subject: Re: git-merge-cache / StGIT - gitmergeonefile.py: merging one tree into another rather than two trees into merge base
-Date: Wed, 14 Sep 2005 20:16:27 +0200
-Message-ID: <200509142016.28390.blaisorblade@yahoo.it>
-References: <200509102027.28812.blaisorblade@yahoo.it> <1126427087.8457.33.camel@localhost.localdomain>
+From: Wayne Scott <wsc9tt@gmail.com>
+Subject: Re: git-diff-tree rename detection bug
+Date: Wed, 14 Sep 2005 13:40:27 -0500
+Message-ID: <59a6e583050914114054b1564d@mail.gmail.com>
+References: <59a6e583050914094777c4fe96@mail.gmail.com>
+	 <7vwtljjzc3.fsf@assigned-by-dhcp.cox.net>
+Reply-To: wsc9tt@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 14 20:23:28 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 14 20:41:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFbsm-0006jz-71
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 20:21:20 +0200
+	id 1EFcBc-00044B-Dm
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 20:40:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932560AbVINSVR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 14:21:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932741AbVINSVQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 14:21:16 -0400
-Received: from smtp003.mail.ukl.yahoo.com ([217.12.11.34]:45713 "HELO
-	smtp003.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S932560AbVINSVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2005 14:21:15 -0400
-Received: (qmail 12565 invoked from network); 14 Sep 2005 18:21:04 -0000
+	id S932301AbVINSkh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 14:40:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932504AbVINSkg
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 14:40:36 -0400
+Received: from xproxy.gmail.com ([66.249.82.195]:57646 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932301AbVINSkg convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2005 14:40:36 -0400
+Received: by xproxy.gmail.com with SMTP id i28so35894wxd
+        for <git@vger.kernel.org>; Wed, 14 Sep 2005 11:40:28 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Received:From:To:Subject:Date:User-Agent:Cc:References:In-Reply-To:MIME-Version:Content-Disposition:Content-Type:Content-Transfer-Encoding:Message-Id;
-  b=QiKm9vShS8IxdTuT85pLfMm7n/mMy7sdEkrYkSAHzHwy8N/Dzfl17iVXb6biZwsJvuDLvAVolmrGgz1aUjWate7bx6MCTl7sIvD7jYo123ldDU8L5wBhk7WVkV6rRY6m7b6w/4WcrobXH7HXiIxNjXCWgQUCtDS8okKKCMfdgJs=  ;
-Received: from unknown (HELO zion.home.lan) (blaisorblade@62.11.80.49 with login)
-  by smtp003.mail.ukl.yahoo.com with SMTP; 14 Sep 2005 18:21:02 -0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
-User-Agent: KMail/1.8.1
-In-Reply-To: <1126427087.8457.33.camel@localhost.localdomain>
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qbmcW5eZ+SZpueNZRm5WV1TWMl7I17iC5Q0i3bH5jYnmsJHIb57hr2mxhItROZmdNWQVoY1ZePue/zy+/PaguqKaHHCdu6bfXFVsqkB8l4cM9ga4xX+x+CvPCMVROA6wHG7z0A8h4ABURuW2SfDUqYVmZZTGd3socAtHiNznPFQ=
+Received: by 10.70.84.13 with SMTP id h13mr374644wxb;
+        Wed, 14 Sep 2005 11:40:27 -0700 (PDT)
+Received: by 10.70.7.3 with HTTP; Wed, 14 Sep 2005 11:40:27 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwtljjzc3.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8552>
 
-On Sunday 11 September 2005 10:24, Catalin Marinas wrote:
-> On Sat, 2005-09-10 at 20:27 +0200, Blaisorblade wrote:
-> > I experienced a (performance) problem with StGit, but I don't know if
-> > it's the culprit or if git-merge-cache is.
-
-> ('s/cache/index/g' below since I still use the old names)
-
-> Maybe both. I did some profiling in StGIT but only for trivial patches
-> which did not involved calling gitmergeonefile.py.
-
-> It was taking around 
-> 2.5s to push a patch with a changed base (involving merge) on an
-> NFS-mounted directory but most of the time, 1.8s, was spent in
-> git-read-tree to do the actual merge.
-Yes, I even remember you mentioned that.
-> > Today I was pushing my patch stack (which was against Linux 2.6.13) on
-> > top of the latest snapshot I have (i.e. upstream will likely have some
-> > mega of patches). And it was *really* slow (say it pushed 8 patches in 5
-> > minutes).
-
-> That's indeed very slow. How may files are modified in each patch?
-1 files, in most cases - biggest one had 5 files changed (and is big 4,8K).
-
-> Do 
-> you run it over NFS?
-No, local reiserfs.
-> Also for profiling, it is useful to run a 'stg 
-> status' just to warm up the cache a little bit.
-Yes, I realized that -  but processing kept the same speed all the time (it's 
-not like it spent 4:30 minutes for warming the cache).
-
-> > I looked with "top" at what was happening, and I saw a lot of time spent
-> > by either gitmergeonefile.py or git-update-cache --remove*. And looking
-> > at the merge algorithm, I realized it merges both HEAD and patch top into
-> > the patch bottom (or something like that).
-
-> It does a three-way merge between 'HEAD' and 'top' with 'bottom' as the
-> common ancestor. The new 'bottom' will become 'HEAD' and the new 'top'
-> will become the result of the merge.
-
-> > I.e. if upstream rewrote everything, it will merge this rewrite into the
-> > patch bottom, together with the patch itself. So, the merge time will
-> > depend on the biggest of the two changed trees, not on the least one.
-
-> Actually, it will three-way merge the diff between top and bottom with
-> the diff between HEAD and bottom. The time will depend on the size of
-> both diffs, not just the maximum.
-Yes, true, but the problem in this case was that one diff (the upstream one) 
-was extremely huge. And it even involved some files removal - I almost never 
-caught, with top, anything else than gitmergeonefile.py or git-update-cache 
---remove.
-
-I guess that moves between stages don't have the big memmove() problem, while 
-calling --remove shows it.
-
-And, with master being the SHA1 I pushed onto 
-(8920e8f94c44e31a73bdf923b04721e26e88cadd), 
-
-git-diff-tree -r v2.6.13 master |grep ' D'|wc -l
-gives 189.
-
-I guess that 2.5 seconds (more or less) per each removal are enough to justify 
-the time which was needed above. So fixing this should fix the behaviour I 
-met.
-> If the merge is not trivial, StGIT 
-> will call git-merge-cache which calls gitmergeonefile.py. The Python
-> script is pretty simple and it simply calls diff3 or updates the cache
-> but if this happens for many files, the cumulated time might be big.
-> It's also worth profiling git-update-cache to check how it re-shuffles
-> the index file. Again, I haven't looked at the algorithm and I can't
-> comment more on this.
-
-> > A more reasonable algorithm would be along "read-tree HEAD"; merge "stg
-> > diff -r /" (i.e. the current patch) in it.
-
-> That's not a three-way diff algorithm. I could generate the diff of the
-> patch and apply it with git-apply but this might fail and you wouldn't
-> even get reject files (not sure whether git-apply supports this).
-Well, true, but either diff3 or merge would work fairly well. Also, trying to 
-apply the patch and resorting to something more complex wouldn't create so 
-many problems.
-> Another problem is that it won't detect upstream merges of your patch,
-> you would need to check it by hand. If all you need is a way to apply a
-> patch using the 'patch' tool, have a look at Quilt. It has similar
-> commands (since StGIT is based on its ideas) but uses the diff/patch
-> tools and is much faster. It also generates rejects if a patch doesn't
-> apply cleanly but I find the diff3 information, together with the
-> original files left in place, much more useful.
-
-Yes, in most cases. I've had something to complain with diff3, however.
-
-> > I don't know if there's any real difference between cg-Xmergefile,
-> > gitmergeonefile.py and git-merge-one-file-script, and if that would
-> > matter in this case.
-
-> There is not big difference since these are only scripts that simply
-> call other tools.
-
-> > In the git-read-tree manpage (which is probably outdated), this is
-> > documented as follows:
-> >
-> >        o  stage 1 and stage 3 are the same and stage 2 is different:
-> >            take stage 2 (some work has been done on stage 2)
-> >
-> > But it didn't happen, which is strange.
-
-> This means that the file is not modified by an StGIT patch but it is
-> modified upstream. This case works fine for me (it's a bug if it
-> doesn't). Did you get a conflict? Are the original files left in place?
-No, it's not a correctness bug for me - just a performance bug. Why did 
-gitupdateonefile.py need to call git-update-cache --remove? If git-read-tree 
-had done his duty, this wouldn't be needed.
-
-> > Additional note: in StGIT, git-read-tree is called with stage1 which is
-> > not the merge base between stage2 and stage3.
-
-> stage1 is the bottom of the patch, stage2 is the HEAD (the upstream
-> hash) and stage3 is the top of the patch.
-Yes, saw that in the code.
-> > For the first patch, the patch bottom is the merge base, but not
-> > otherwise; so differences between either stage1 or stage3, and stage2,
-> > include files changed in previous patches.
-
-> For the first patch, the bottom is the *old* base (== stage1), stage2 is
-> the new base and stage3 is the top of the patch.
-Yes, but the *old* base happens to be, in this case (i.e. upgrading the stack 
-base from upstream), also the merge base.
-> > So, would stgit delete a file created in patch #1 when merge-applying
-> > patch #2?
-
-> Definitely not.
-Gonna test - but if you look at the manpage of read-tree, this would probably 
-be the expected behaviour.
--- 
-Inform me of my mistakes, so I can keep imitating Homer Simpson's "Doh!".
-Paolo Giarrusso, aka Blaisorblade (Skype ID "PaoloGiarrusso", ICQ 215621894)
-http://www.user-mode-linux.org/~blaisorblade
+On 9/14/05, Junio C Hamano <junkio@cox.net> wrote:
+> Wayne Scott <wsc9tt@gmail.com> writes:
+> 
+> > Look at the diffs between ad6571a78ac74e9fa27e581834709067dba459af and
+> > it's parent with and without rename detection enabled.  (In linux-2.6
+> > git tree)
+> 
+> > Notice how the the fact that include/asm-ppc64/termios.h is
+> > deleted gets lost?  Looks broken to me.
+> 
+> I suspect that what is deleted is not asm-ppc64/termios.h but
+> asm-ppc/termios.h.  The below is an output without grep which
+> seems to confuse things.
+> 
+> $ git-diff-tree -r -M ad6571a78ac74e9fa27e581834709067dba459af |
+>   sed -ne 's/^.* \([AMCRDU]\)/\1/p'
+> R092    include/asm-ppc64/mman.h        include/asm-powerpc/mman.h
+> R097    include/asm-ppc64/termbits.h    include/asm-powerpc/termbits.h
+> R098    include/asm-ppc64/termios.h     include/asm-powerpc/termios.h
+> D       include/asm-ppc/mman.h
+> D       include/asm-ppc/termbits.h
+> D       include/asm-ppc/termios.h
+> 
+> $ git-diff-tree -r ad6571a78ac74e9fa27e581834709067dba459af |
+>   sed -ne 's/^.* \([AMCRDU]\)/\1/p'
+> A       include/asm-powerpc/mman.h
+> A       include/asm-powerpc/termbits.h
+> A       include/asm-powerpc/termios.h
+> D       include/asm-ppc/mman.h
+> D       include/asm-ppc/termbits.h
+> D       include/asm-ppc/termios.h
+> D       include/asm-ppc64/mman.h
+> D       include/asm-ppc64/termbits.h
+> D       include/asm-ppc64/termios.h
+> 
+> The first 3 A and last 3 D are accounted for in the -M output as
+> renames from asm-ppc64 to asm-powerpc.  Middle 3 D from asm-ppc
+> are shown in the -M output.  So I do not think we are losing
+> anything.  Am I missing something?
 
 
-		
-___________________________________ 
-Yahoo! Messenger: chiamate gratuite in tutto il mondo 
-http://it.messenger.yahoo.com
+Odd.  I get the same answer on my x86 box:
+$ git-diff-tree -r -M ad6571a78ac74e9fa27e581834709067dba459af |   sed
+-ne 's/^.* \([AMCRDU]\)/\1/p'
+R092    include/asm-ppc64/mman.h        include/asm-powerpc/mman.h
+R097    include/asm-ppc64/termbits.h    include/asm-powerpc/termbits.h
+R098    include/asm-ppc64/termios.h     include/asm-powerpc/termios.h
+D       include/asm-ppc/mman.h
+D       include/asm-ppc/termbits.h
+D       include/asm-ppc/termios.h
+
+But here is the output on my quad xeon running in 64-bit mode: (fedora core 2)
+
+$ git-diff-tree -r -M ad6571a78ac74e9fa27e581834709067dba459af |   sed
+-ne 's/^.* \([AMCRDU]\)/\1/p'
+R092    include/asm-ppc64/mman.h        include/asm-powerpc/mman.h
+R097    include/asm-ppc64/termbits.h    include/asm-powerpc/termbits.h
+A       include/asm-powerpc/termios.h
+D       include/asm-ppc/mman.h
+D       include/asm-ppc/termbits.h
+D       include/asm-ppc/termios.h
+
+This is the same version of git both rebuilt just for this test.
+
+However, I noticed a whole collection of errors from valgrind when I
+run this command line:
+
+==13457== Invalid read of size 4
+==13457==    at 0x805402C: locate_rename_dst (diffcore-rename.c:28)
+==13457==    by 0x805464B: diffcore_rename (diffcore-rename.c:356)
+==13457==    by 0x805249D: diffcore_std (diff.c:1093)
+==13457==    by 0x8049B48: call_diff_flush (diff-tree.c:273)
+==13457==    by 0x804A225: diff_tree_sha1_top (diff-tree.c:298)
+==13457==    by 0x804A30B: diff_tree_commit (diff-tree.c:363)
+==13457==    by 0x804A884: main (diff-tree.c:551)
+==13457==  Address 0x1BBD781C is 20 bytes inside a block of size 71 free'd
+==13457==    at 0x1B9003C3: free (vg_replace_malloc.c:235)
+==13457==    by 0x805205B: diff_free_filepair (diff.c:775)
+==13457==    by 0x805422A: diffcore_rename (diffcore-rename.c:415)
+==13457==    by 0x805249D: diffcore_std (diff.c:1093)
+==13457==    by 0x8049B48: call_diff_flush (diff-tree.c:273)
+==13457==    by 0x804A225: diff_tree_sha1_top (diff-tree.c:298)
+==13457==    by 0x804A30B: diff_tree_commit (diff-tree.c:363)
+==13457==    by 0x804A884: main (diff-tree.c:551)
+==13457== 
+==13457== Invalid read of size 1
+==13457==    at 0x1B90140D: strcmp (mac_replace_strmem.c:332)
+==13457==    by 0x8054038: locate_rename_dst (diffcore-rename.c:28)
+==13457==    by 0x805464B: diffcore_rename (diffcore-rename.c:356)
+==13457==    by 0x805249D: diffcore_std (diff.c:1093)
+==13457==    by 0x8049B48: call_diff_flush (diff-tree.c:273)
+==13457==    by 0x804A225: diff_tree_sha1_top (diff-tree.c:298)
+==13457==    by 0x804A30B: diff_tree_commit (diff-tree.c:363)
+==13457==    by 0x804A884: main (diff-tree.c:551)
+==13457==  Address 0x1BBD7830 is 40 bytes inside a block of size 71 free'd
+==13457==    at 0x1B9003C3: free (vg_replace_malloc.c:235)
+==13457==    by 0x805205B: diff_free_filepair (diff.c:775)
+==13457==    by 0x805422A: diffcore_rename (diffcore-rename.c:415)
+==13457==    by 0x805249D: diffcore_std (diff.c:1093)
+==13457==    by 0x8049B48: call_diff_flush (diff-tree.c:273)
+==13457==    by 0x804A225: diff_tree_sha1_top (diff-tree.c:298)
+==13457==    by 0x804A30B: diff_tree_commit (diff-tree.c:363)
+==13457==    by 0x804A884: main (diff-tree.c:551)
+==13457== 
+==13457== Invalid read of size 1
+==13457==    at 0x1B901423: strcmp (mac_replace_strmem.c:332)
+==13457==    by 0x8054038: locate_rename_dst (diffcore-rename.c:28)
+==13457==    by 0x805464B: diffcore_rename (diffcore-rename.c:356)
+==13457==    by 0x805249D: diffcore_std (diff.c:1093)
+==13457==    by 0x8049B48: call_diff_flush (diff-tree.c:273)
+==13457==    by 0x804A225: diff_tree_sha1_top (diff-tree.c:298)
+==13457==    by 0x804A30B: diff_tree_commit (diff-tree.c:363)
+==13457==    by 0x804A884: main (diff-tree.c:551)
+==13504== Invalid read of size 4
+==13504==    at 0x805402C: locate_rename_dst (diffcore-rename.c:28)
+==13504==    by 0x805464B: diffcore_rename (diffcore-rename.c:356)
+==13504==    by 0x805249D: diffcore_std (diff.c:1093)
+==13504==    by 0x8049B48: call_diff_flush (diff-tree.c:273)
+==13504==    by 0x804A225: diff_tree_sha1_top (diff-tree.c:298)
+==13504==    by 0x804A30B: diff_tree_commit (diff-tree.c:363)
+==13504==    by 0x804A884: main (diff-tree.c:551)
+==13504==  Address 0x1BBD781C is 20 bytes inside a block of size 71 free'd
+==13504==    at 0x1B9003C3: free (vg_replace_malloc.c:235)
+==13504==    by 0x805205B: diff_free_filepair (diff.c:775)
+==13504==    by 0x805422A: diffcore_rename (diffcore-rename.c:415)
+==13504==    by 0x805249D: diffcore_std (diff.c:1093)
+==13504==    by 0x8049B48: call_diff_flush (diff-tree.c:273)
+==13504==    by 0x804A225: diff_tree_sha1_top (diff-tree.c:298)
+==13504==    by 0x804A30B: diff_tree_commit (diff-tree.c:363)
+==13504==    by 0x804A884: main (diff-tree.c:551)
+==13504== 
+==13504== Invalid read of size 1
+==13504==    at 0x1B90140D: strcmp (mac_replace_strmem.c:332)
+==13504==    by 0x8054038: locate_rename_dst (diffcore-rename.c:28)
+==13504==    by 0x805464B: diffcore_rename (diffcore-rename.c:356)
+==13504==    by 0x805249D: diffcore_std (diff.c:1093)
+==13504==    by 0x8049B48: call_diff_flush (diff-tree.c:273)
+==13504==    by 0x804A225: diff_tree_sha1_top (diff-tree.c:298)
+==13504==    by 0x804A30B: diff_tree_commit (diff-tree.c:363)
+==13504==    by 0x804A884: main (diff-tree.c:551)
+==13504==  Address 0x1BBD7830 is 40 bytes inside a block of size 71 free'd
+==13504==    at 0x1B9003C3: free (vg_replace_malloc.c:235)
+==13504==    by 0x805205B: diff_free_filepair (diff.c:775)
+==13504==    by 0x805422A: diffcore_rename (diffcore-rename.c:415)
+==13504==    by 0x805249D: diffcore_std (diff.c:1093)
+==13504==    by 0x8049B48: call_diff_flush (diff-tree.c:273)
+==13504==    by 0x804A225: diff_tree_sha1_top (diff-tree.c:298)
+==13504==    by 0x804A30B: diff_tree_commit (diff-tree.c:363)
+==13504==    by 0x804A884: main (diff-tree.c:551)
+==13504== 
+==13504== Invalid read of size 1
+==13504==    at 0x1B901423: strcmp (mac_replace_strmem.c:332)
+==13504==    by 0x8054038: locate_rename_dst (diffcore-rename.c:28)
+==13504==    by 0x805464B: diffcore_rename (diffcore-rename.c:356)
+==13504==    by 0x805249D: diffcore_std (diff.c:1093)
+==13504==    by 0x8049B48: call_diff_flush (diff-tree.c:273)
+==13504==    by 0x804A225: diff_tree_sha1_top (diff-tree.c:298)
+==13504==    by 0x804A30B: diff_tree_commit (diff-tree.c:363)
+==13504==    by 0x804A884: main (diff-tree.c:551)
+==13504==  Address 0x1BBD7831 is 41 bytes inside a block of size 71 free'd
+==13504==    at 0x1B9003C3: free (vg_replace_malloc.c:235)
+==13504==    by 0x805205B: diff_free_filepair (diff.c:775)
+==13504==    by 0x805422A: diffcore_rename (diffcore-rename.c:415)
+==13504==    by 0x805249D: diffcore_std (diff.c:1093)
+==13504==    by 0x8049B48: call_diff_flush (diff-tree.c:273)
+==13504==    by 0x804A225: diff_tree_sha1_top (diff-tree.c:298)
+==13504==    by 0x804A30B: diff_tree_commit (diff-tree.c:363)
+==13504==    by 0x804A884: main (diff-tree.c:551)
+==13504== 
+
+Perhaps that explains the difference.
+
+-Wayne
