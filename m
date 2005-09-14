@@ -1,53 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-diff-tree rename detection bug
-Date: Wed, 14 Sep 2005 12:19:50 -0700
-Message-ID: <7vmzmfh2y1.fsf@assigned-by-dhcp.cox.net>
-References: <59a6e583050914094777c4fe96@mail.gmail.com>
-	<7v3bo7jxdn.fsf@assigned-by-dhcp.cox.net>
-	<59a6e5830509141208282166c8@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Added an option to cvsimport to specify email domain
+Date: Wed, 14 Sep 2005 21:34:57 +0200
+Message-ID: <20050914193457.GE2936@pasky.or.cz>
+References: <u5tzmqp8fzx.fsf@lysator.liu.se> <7vhdcw661g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 14 21:22:36 2005
+Cc: "David K?.A?Negedal" <davidk@lysator.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 14 21:37:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFcnT-0006ld-DM
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 21:19:55 +0200
+	id 1EFd2C-0002kL-9n
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 21:35:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932755AbVINTTx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 15:19:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932756AbVINTTx
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 15:19:53 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:28152 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932755AbVINTTw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2005 15:19:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050914191952.DINT2438.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 14 Sep 2005 15:19:52 -0400
-To: wsc9tt@gmail.com
-In-Reply-To: <59a6e5830509141208282166c8@mail.gmail.com> (Wayne Scott's
-	message of "Wed, 14 Sep 2005 14:08:05 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964842AbVINTfE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 15:35:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964813AbVINTfD
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 15:35:03 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:10967 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964806AbVINTfB (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 15:35:01 -0400
+Received: (qmail 23003 invoked by uid 2001); 14 Sep 2005 21:34:57 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vhdcw661g.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8557>
 
-Could you revert one or both of these commits and try the same
-test on the 64-bit box you saw problems with please?
+Dear diary, on Wed, Sep 07, 2005 at 09:18:03PM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> David K?.A?Negedal <davidk@lysator.liu.se> writes:
+> 
+> > The authorship info in commits created by git-cvsimport-script
+> > only contains the username of the CVS committer.  This patch
+> > adds a flag -e <domain> to git-cvsimport-script that makes it
+> > possible to specify an email domain that is added to all email
+> > addresses in the commit "author" and "committer" fields.
+> >
+> > ---
+> > I have stopped using cvsimport, because cvsps seems to produce bad
+> > output on the repository I'm using it with, but I had already prepared
+> > this patch.
+> 
+> Hmph.  One reason the original implementation did not do this is
+> because Linus and other people wanted to have a repeatability,
+> so making this an optional thing is good, but if we go this
+> route, I think if it would be nicer to have a --author-map
+> option that lets you feed a list of:
+> 
+>     <author> ==> "A U Thor <author@author.dom>"
+> 
+> mappings, instead of a single -e, which essentially does not add
+> much information to the result.
+> 
+> I take that your oob comment indicates that you do not have much
+> incentive/inclination to further hack on this, so I am not
+> asking you to do the above even if you find my suggestion
+> worthwhile.
 
-Commit: 90a734dc7f37a7bd1f3beec4d33acad559360f6c
-Author: Yasushi SHOJI <yashi@atmark-techno.com>
-Date:   Sun Aug 21 16:14:16 2005 +0900
+Various tools use CVSROOT/users to map usernames to realname <email>.
+I actually wanted to send a patch, looked at the cvsimport script and
+got totally scared away (at least for now)... ;-)
 
-    [PATCH] possible memory leak in diff.c::diff_free_filepair()
-
-Commit: 068eac91ce04b9aca163acb1927c3878c45d1a07
-Author: Yasushi SHOJI <yashi@atmark-techno.com>
-Date:   Sat Aug 13 19:58:56 2005 +0900
-
-    [PATCH] plug memory leak in diff.c::diff_free_filepair()
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
