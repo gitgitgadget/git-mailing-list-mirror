@@ -1,71 +1,62 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH] git-http-fetch: Allow caching of retrieved objects by proxy servers
-Date: Wed, 14 Sep 2005 17:12:36 +0400
-Message-ID: <20050914131236.GH24405@master.mivlgu.local>
-References: <20050913153858.GB24405@master.mivlgu.local> <7vfys93qn5.fsf@assigned-by-dhcp.cox.net>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: dumb transports not being welcomed..
+Date: Wed, 14 Sep 2005 09:21:00 -0400
+Message-ID: <432823BC.30305@pobox.com>
+References: <7vek7s1xsh.fsf@assigned-by-dhcp.cox.net>	<20050913211444.GA27029@mars.ravnborg.org>	<7vacig1wrb.fsf@assigned-by-dhcp.cox.net>	<7vpsrcwrc1.fsf@assigned-by-dhcp.cox.net> <432750E1.3020508@pobox.com> <7v7jdkwqj0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="pAwQNkOnpTn9IO2O"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 14 15:15:38 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Sam Ravnborg <sam@ravnborg.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 14 15:24:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFX45-0001aI-FF
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 15:12:41 +0200
+	id 1EFXCP-00040z-B1
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 15:21:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965186AbVINNMi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 09:12:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965187AbVINNMi
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 09:12:38 -0400
-Received: from mivlgu.ru ([81.18.140.87]:8641 "EHLO master.mivlgu.local")
-	by vger.kernel.org with ESMTP id S965186AbVINNMh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 09:12:37 -0400
-Received: by master.mivlgu.local (Postfix, from userid 1000)
-	id 5C2E7180119; Wed, 14 Sep 2005 17:12:36 +0400 (MSD)
+	id S965203AbVINNVO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 09:21:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965202AbVINNVN
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 09:21:13 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:53421 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S965203AbVINNVM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 09:21:12 -0400
+Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
+	id 1EFXCA-0002E5-CV; Wed, 14 Sep 2005 13:21:04 +0000
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vfys93qn5.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7v7jdkwqj0.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8524>
 
+Junio C Hamano wrote:
+> Jeff Garzik <jgarzik@pobox.com> writes:
+> 
+> 
+>>Junio C Hamano wrote:
+>>
+>>>The file $GIT_DIR/info/refs was introduced to solve this by
+>>>listing the available refs for discovery, and hooks/post-update,
+>>>when enabled, runs update-server-info to update the file (among
+>>>other things) whenever you push into the repository.
+>>
+>>This is helpful.  I'll run git-update-server-info before each push, now.
+> 
+> 
+> Just to make sure I am not misunderstanding you, is your "publish"
+> workflow like this?
+> 
+>     - do your work on your private machine
+>     - git-update-server-info in your private repository
+>     - rsync that out to master.kernel.org
+> 
+> If so, then "before each push" makes sense.  
 
---pAwQNkOnpTn9IO2O
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Correct.
 
-On Tue, Sep 13, 2005 at 08:59:26AM -0700, Junio C Hamano wrote:
-> Sergey Vlasov <vsu@altlinux.ru> writes:
->=20
-> > This patch removes the "Pragma: no-cache" header from requests for all
-> > files except the pack list (objects/info/packs) and references
-> > (refs/*), which are really mutable and should not be cached.
->=20
-> Thanks.  What the patch does looks reasonable.
->=20
-> Do you know if we can use it for any reasonably recent version
-> of curl?  I seem to recall we already do things slightly
-> differently depending on LIBCURL_VERSION_NUM.
-
-http://cool.haxx.se/cvs.cgi/curl/include/curl/curl.h?rev=3D1.1&content-type=
-=3Dtext/vnd.viewcvs-markup
-shows that CURLOPT_HTTPHEADER, curl_slist_append() and
-curl_slist_free_all() were available in Dec 1999, curl 6.3.1.  The FAQ
-entry about disabling "Pragma: no-cache" is from Aug 2, 2000.
-
---pAwQNkOnpTn9IO2O
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
-
-iD8DBQFDKCHEW82GfkQfsqIRAghBAJ0UKaqeSqgSURbmhTDhWHJLokzuKgCfULF2
-EGfaSvQuEyC76Qto5HzhDUk=
-=X/PH
------END PGP SIGNATURE-----
-
---pAwQNkOnpTn9IO2O--
+	Jeff
