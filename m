@@ -1,35 +1,35 @@
 From: Blaisorblade <blaisorblade@yahoo.it>
 Subject: Re: git-merge-cache / StGIT - gitmergeonefile.py: merging one tree into another rather than two trees into merge base
-Date: Wed, 14 Sep 2005 20:19:04 +0200
-Message-ID: <200509142019.04667.blaisorblade@yahoo.it>
+Date: Wed, 14 Sep 2005 20:16:27 +0200
+Message-ID: <200509142016.28390.blaisorblade@yahoo.it>
 References: <200509102027.28812.blaisorblade@yahoo.it> <1126427087.8457.33.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 14 20:23:01 2005
+X-From: git-owner@vger.kernel.org Wed Sep 14 20:23:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFbsl-0006jz-Ge
+	id 1EFbsm-0006jz-71
 	for gcvg-git@gmane.org; Wed, 14 Sep 2005 20:21:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932536AbVINSVQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 14:21:16 -0400
+	id S932560AbVINSVR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 14:21:17 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932741AbVINSVQ
 	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 14:21:16 -0400
-Received: from smtp003.mail.ukl.yahoo.com ([217.12.11.34]:45457 "HELO
+Received: from smtp003.mail.ukl.yahoo.com ([217.12.11.34]:45713 "HELO
 	smtp003.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S932536AbVINSVP (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932560AbVINSVP (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 14 Sep 2005 14:21:15 -0400
-Received: (qmail 12682 invoked from network); 14 Sep 2005 18:21:07 -0000
+Received: (qmail 12565 invoked from network); 14 Sep 2005 18:21:04 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.it;
   h=Received:From:To:Subject:Date:User-Agent:Cc:References:In-Reply-To:MIME-Version:Content-Disposition:Content-Type:Content-Transfer-Encoding:Message-Id;
-  b=5hOprqGjn/ot4H5QxvdXTbuNjf4ShAd4vxOpdy1bFFLN8Y3axAlA4/oX90O47P0g2w68WdZmyp3YCeCTBDywrEgwlWgtA9REooKnkKNtQ7oKZwH1VPe+J7WyLag/bfZ6NIJLS4urx6688gZDV1R2XP++cKbF0H+obooFSs91TGk=  ;
+  b=QiKm9vShS8IxdTuT85pLfMm7n/mMy7sdEkrYkSAHzHwy8N/Dzfl17iVXb6biZwsJvuDLvAVolmrGgz1aUjWate7bx6MCTl7sIvD7jYo123ldDU8L5wBhk7WVkV6rRY6m7b6w/4WcrobXH7HXiIxNjXCWgQUCtDS8okKKCMfdgJs=  ;
 Received: from unknown (HELO zion.home.lan) (blaisorblade@62.11.80.49 with login)
-  by smtp003.mail.ukl.yahoo.com with SMTP; 14 Sep 2005 18:21:05 -0000
+  by smtp003.mail.ukl.yahoo.com with SMTP; 14 Sep 2005 18:21:02 -0000
 To: Catalin Marinas <catalin.marinas@gmail.com>
 User-Agent: KMail/1.8.1
 In-Reply-To: <1126427087.8457.33.camel@localhost.localdomain>
@@ -37,7 +37,7 @@ Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8551>
 
 On Sunday 11 September 2005 10:24, Catalin Marinas wrote:
 > On Sat, 2005-09-10 at 20:27 +0200, Blaisorblade wrote:
@@ -98,10 +98,11 @@ And, with master being the SHA1 I pushed onto
 (8920e8f94c44e31a73bdf923b04721e26e88cadd), 
 
 git-diff-tree -r v2.6.13 master |grep ' D'|wc -l
+gives 189.
 
-gives 189. I guess that 2.5 seconds per each removal are enough to justify the 
-time which was needed above. Actually, it even had to be less than a second 
-per removal, otherwise it'd have been even slower.
+I guess that 2.5 seconds (more or less) per each removal are enough to justify 
+the time which was needed above. So fixing this should fix the behaviour I 
+met.
 > If the merge is not trivial, StGIT 
 > will call git-merge-cache which calls gitmergeonefile.py. The Python
 > script is pretty simple and it simply calls diff3 or updates the cache
@@ -127,8 +128,7 @@ many problems.
 > apply cleanly but I find the diff3 information, together with the
 > original files left in place, much more useful.
 
-Yes, in most cases. I've had something to complain with diff3, however (that's 
-a separate story). Maybe merge would be even better?
+Yes, in most cases. I've had something to complain with diff3, however.
 
 > > I don't know if there's any real difference between cg-Xmergefile,
 > > gitmergeonefile.py and git-merge-one-file-script, and if that would
@@ -177,10 +177,8 @@ Inform me of my mistakes, so I can keep imitating Homer Simpson's "Doh!".
 Paolo Giarrusso, aka Blaisorblade (Skype ID "PaoloGiarrusso", ICQ 215621894)
 http://www.user-mode-linux.org/~blaisorblade
 
-	
 
-	
 		
 ___________________________________ 
-Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
-http://mail.yahoo.it
+Yahoo! Messenger: chiamate gratuite in tutto il mondo 
+http://it.messenger.yahoo.com
