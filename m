@@ -1,85 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Fix alloc_filespec() initialization
-Date: Wed, 14 Sep 2005 13:41:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509141334480.26803@g5.osdl.org>
-References: <59a6e583050914094777c4fe96@mail.gmail.com> 
- <7vwtljjzc3.fsf@assigned-by-dhcp.cox.net> <59a6e583050914114054b1564d@mail.gmail.com>
- <Pine.LNX.4.58.0509141321180.26803@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/4] Recovery after interrupted HTTP(s) fetch
+Date: Wed, 14 Sep 2005 13:48:01 -0700
+Message-ID: <7vacifgyv2.fsf@assigned-by-dhcp.cox.net>
+References: <20050914124206.GC24405@master.mivlgu.local>
+	<7vpsrbjz0t.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509141325310.26803@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 14 22:44:12 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 14 22:48:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFe4g-0003PX-Jn
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 22:41:46 +0200
+	id 1EFeAt-00052l-KE
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 22:48:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964996AbVINUln (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 16:41:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965006AbVINUln
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 16:41:43 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:15755 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964996AbVINUlm (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 16:41:42 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8EKfRBo016650
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 14 Sep 2005 13:41:27 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8EKfOrl024632;
-	Wed, 14 Sep 2005 13:41:25 -0700
-To: Wayne Scott <wsc9tt@gmail.com>
-In-Reply-To: <Pine.LNX.4.58.0509141321180.26803@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932495AbVINUsG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 16:48:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932491AbVINUsF
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 16:48:05 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:4583 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932495AbVINUsE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2005 16:48:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050914204802.EEWR8185.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 14 Sep 2005 16:48:02 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509141325310.26803@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 14 Sep 2005 13:27:12 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8563>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-This simplifies and fixes the initialization of a "diff_filespec" when 
-allocated.
+> Any "fetch" logic that writes the refs before all the objects are gathered 
+> is _buggy_. It's not about "recovery", it should never do that in the 
+> first place.
 
-The old code would not initialize "sha1_valid". Noticed by valgrind.
+I agree about refs, but in this case what is stored, and is used
+as a signal not to refetch to the next run, is the commit
+object.  Ideally we should defer creating trees until we store
+all blobs and subtrees, and commits until we do its tree, but
+the fetch.c (formerly called pull.c) is not written that way
+from day one.
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
+> Is it just the http one that is this broken?
 
-This does not fix the issue Wayne saw, but I'm not going to look at the 
-later valgrind errors before I've fixed the first ones.
-
-On Wed, 14 Sep 2005, Linus Torvalds wrote:
-> 
-> I get even more, including:
-> 
-> 	==3234== Use of uninitialised value of size 4
-> 	==3234==    at 0x80507C1: alloc_filespec (diff.c:224)
-> 	==3234==    by 0x8052387: diff_addremove (diff.c:1144)
-> 	==3234==    by 0x8049B74: show_file (diff-tree.c:97)
-> 	==3234==    by 0x8049E17: diff_tree (diff-tree.c:118)
-
-diff --git a/diff.c b/diff.c
---- a/diff.c
-+++ b/diff.c
-@@ -214,14 +214,10 @@ struct diff_filespec *alloc_filespec(con
- {
- 	int namelen = strlen(path);
- 	struct diff_filespec *spec = xmalloc(sizeof(*spec) + namelen + 1);
-+
-+	memset(spec, 0, sizeof(*spec));
- 	spec->path = (char *)(spec + 1);
--	strcpy(spec->path, path);
--	spec->should_free = spec->should_munmap = 0;
--	spec->xfrm_flags = 0;
--	spec->size = 0;
--	spec->data = NULL;
--	spec->mode = 0;
--	memset(spec->sha1, 0, 20);
-+	memcpy(spec->path, path, namelen+1);
- 	return spec;
- }
- 
+I belive all of the commit walkers share this property.
