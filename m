@@ -1,70 +1,67 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-diff-tree rename detection bug
-Date: Wed, 14 Sep 2005 11:51:48 -0700
-Message-ID: <7v3bo7jxdn.fsf@assigned-by-dhcp.cox.net>
-References: <59a6e583050914094777c4fe96@mail.gmail.com>
+Subject: Re: dumb transports not being welcomed..
+Date: Wed, 14 Sep 2005 12:00:23 -0700
+Message-ID: <7vk6hjiiew.fsf@assigned-by-dhcp.cox.net>
+References: <7vek7s1xsh.fsf@assigned-by-dhcp.cox.net>
+	<20050913211444.GA27029@mars.ravnborg.org>
+	<7vacig1wrb.fsf@assigned-by-dhcp.cox.net>
+	<7vpsrcwrc1.fsf@assigned-by-dhcp.cox.net>
+	<1126707016.14036.14.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 14 20:52:53 2005
+Cc: Sam Ravnborg <sam@ravnborg.org>, Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 14 21:02:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFcML-0007Ms-P8
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 20:51:54 +0200
+	id 1EFcUe-0001Lm-K6
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 21:00:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932090AbVINSvv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 14:51:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932495AbVINSvv
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 14:51:51 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:6554 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932090AbVINSvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2005 14:51:50 -0400
+	id S932552AbVINTA0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 15:00:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932555AbVINTAZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 15:00:25 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:38120 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932552AbVINTAZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2005 15:00:25 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050914185148.JNNE7185.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 14 Sep 2005 14:51:48 -0400
-To: wsc9tt@gmail.com
-In-Reply-To: <59a6e583050914094777c4fe96@mail.gmail.com> (Wayne Scott's
-	message of "Wed, 14 Sep 2005 11:47:56 -0500")
+          id <20050914190024.NXJZ24420.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 14 Sep 2005 15:00:24 -0400
+To: Jon Loeliger <jdl@freescale.com>
+In-Reply-To: <1126707016.14036.14.camel@cashmere.sps.mot.com> (Jon Loeliger's
+	message of "Wed, 14 Sep 2005 09:10:16 -0500")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8554>
 
-Wayne Scott <wsc9tt@gmail.com> writes:
+Jon Loeliger <jdl@freescale.com> writes:
 
-> Look at the diffs between ad6571a78ac74e9fa27e581834709067dba459af and
-> it's parent with and without rename detection enabled.  (In linux-2.6
-> git tree)
+> Well, that is sort of just it, too.  Why not make the
+> default, obvious, common repo prep mechanism do all
+> the necessary steps for proper presentation?  Having
+> to remember to do 6 steps just begs for an additional
+> layer of scripting.
 
-> $ git-diff-tree -r  -M $REV^1 $REV | grep termios.h
-> :000000 100644 0000000000000000000000000000000000000000
->    237533bb0e9f1a3e640c4906d8b350deafd315b9 A      include/asm-powerpc/termios.h
-> :100644 000000 97c6287a6cbaa5903ee1a5934a5553e9e485d8e7
->    0000000000000000000000000000000000000000 D      include/asm-ppc/termios.h
->
-> Notice how the the fact that include/asm-ppc64/termios.h is deleted gets lost?
-> Looks broken to me.
+Fair enough.  My excuse is that Linus did not want the
+update-server-info hook enabled by default.  He does not believe
+in dumb transports anyway, but aside from that, it still is a
+valid attitude because it is not necessary when you do not
+intend to publish your repository over dumb transport at all but
+still want to push into it.  And another excuse is I do not
+in general think enabling hooks by default is a good idea.
 
-It looks broken to me, too.  I rebuilt from a reasonably ancient
-source (v0.99) and re-run the test but I could not get it to
-produce 'A' for include/asm-powerpc/termios.h.  So I rewound it
-further to 4d235c8044a638108b67e22f94b2876657130fc8 commit,
-which is really ancient version, but it still says it is renamed
-from asm-ppc64 directory.  FWIW, all the v0.99* tagged versions
-seem to detect that rename correctly and not lose anything in my
-tests.
+Even if you built your repository with older git tools, you
+should be always able to say 'GIT_DIR=that-repository
+git-init-db' without damaging its existing contents to install
+the disabled hooks in its hooks/ directory.
 
-Which version of git do you run and on what platform?  It might
-be that something in the diffcore chain is broken in non-i386
-and/or non-GNU/Linux and/or non-GCC environment.
+> I confess, I've been using rsync as it is what appears
+> to be able to reliably get a repository that works.
 
-Shoot, I thought it would be a good practice-case for me to use
-'git bisect' in reverse to find the commit that fixed a bug ;-).
-My copy of linux-2.6 repository for testing is fully packed so I
-could not try the commit that introduced diffcore-rename.c, but
-that is what I really wanted to try.
+And I thought rsync was a reliable way too, until I saw a
+message from Tony Luck this morning X-<.
