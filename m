@@ -1,39 +1,69 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: does git prune packs?
-Date: Wed, 14 Sep 2005 07:13:42 -0400
-Message-ID: <432805E6.6030905@pobox.com>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: [PATCH 1/4] Do not try to process objects more than once during fetch
+Date: Wed, 14 Sep 2005 16:42:55 +0400
+Message-ID: <20050914124255.GD24405@master.mivlgu.local>
+References: <20050914124206.GC24405@master.mivlgu.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Sep 14 13:15:25 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Sep 14 14:44:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFVDU-0003sc-9O
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 13:14:16 +0200
+	id 1EFWbg-0001bN-M9
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 14:43:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932726AbVINLON (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 07:14:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932728AbVINLON
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 07:14:13 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:57260 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S932726AbVINLOM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 07:14:12 -0400
-Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1EFVDI-00028H-JQ
-	for git@vger.kernel.org; Wed, 14 Sep 2005 11:14:08 +0000
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: 0.0 (/)
+	id S965146AbVINMm6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 08:42:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965147AbVINMm5
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 08:42:57 -0400
+Received: from mivlgu.ru ([81.18.140.87]:64704 "EHLO master.mivlgu.local")
+	by vger.kernel.org with ESMTP id S965146AbVINMm5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 08:42:57 -0400
+Received: by master.mivlgu.local (Postfix, from userid 1000)
+	id D1E2A180119; Wed, 14 Sep 2005 16:42:55 +0400 (MSD)
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050914124206.GC24405@master.mivlgu.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8518>
 
+fetch.c:process() is often called more than once for the same object;
+e.g., for unpacked git repository with 7313 objects there are 320997
+calls to process() for objects which were already seen (and 7528 of
+those calls are for tree objects, which is a real problem because of
+recursive processing).
 
-Does git-prune-packed eliminate packs that have been superceded by other 
-packs?
+---
 
-	Jeff
+ fetch.c |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+f8285569e916a21c28379b55415165a89794272a
+diff --git a/fetch.c b/fetch.c
+--- a/fetch.c
++++ b/fetch.c
+@@ -7,6 +7,8 @@
+ #include "blob.h"
+ #include "refs.h"
+ 
++#define SEEN		(1u << 0)
++
+ const char *write_ref = NULL;
+ 
+ const unsigned char *current_ref = NULL;
+@@ -126,6 +128,12 @@ static int process_object(struct object 
+ static int process(unsigned char *sha1, const char *type)
+ {
+ 	struct object *obj = lookup_object_type(sha1, type);
++
++	/* Do not try to process objects more than once */
++	if (obj->flags & SEEN)
++		return 0;
++	obj->flags |= SEEN;
++
+ 	if (has_sha1_file(sha1)) {
+ 		parse_object(sha1);
+ 		/* We already have it, so we should scan it now. */
