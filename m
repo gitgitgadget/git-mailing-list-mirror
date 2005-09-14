@@ -1,135 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-branch -d <branch>: delete unused branch.
-Date: Wed, 14 Sep 2005 01:46:50 -0700
-Message-ID: <7vvf14ox39.fsf@assigned-by-dhcp.cox.net>
-References: <4326F2AE.50108@citi.umich.edu>
+From: Peter Eriksen <s022018@student.dtu.dk>
+Subject: [PATCH] According to the man page on Solaris the install command takes the -d option before all others
+Date: 14 Sep 2005 12:41:52 +0200
+Message-ID: <vhpwtlkorrj.fsf@bohr.gbar.dtu.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Sep 14 10:48:20 2005
+X-From: git-owner@vger.kernel.org Wed Sep 14 12:46:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFSuy-00087q-Ob
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 10:47:01 +0200
+	id 1EFUkn-0005CY-1L
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 12:44:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965077AbVINIq6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 04:46:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965086AbVINIq6
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 04:46:58 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:64664 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S965077AbVINIq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2005 04:46:58 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050914084651.OKUF7185.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 14 Sep 2005 04:46:51 -0400
-To: Chuck Lever <cel@citi.umich.edu>
-In-Reply-To: <4326F2AE.50108@citi.umich.edu> (Chuck Lever's message of "Tue,
-	13 Sep 2005 11:39:26 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932710AbVINKoe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 06:44:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932712AbVINKoe
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 06:44:34 -0400
+Received: from main.gmane.org ([80.91.229.2]:63201 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932710AbVINKod (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 06:44:33 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EFUjL-0004u2-8c
+	for git@vger.kernel.org; Wed, 14 Sep 2005 12:43:07 +0200
+Received: from bohr.gbar.dtu.dk ([192.38.95.24])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Sep 2005 12:43:07 +0200
+Received: from s022018 by bohr.gbar.dtu.dk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Sep 2005 12:43:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: bohr.gbar.dtu.dk
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8515>
 
-The new flag '-d' lets you delete a branch.  For safety, it does not
-lets you delete the branch you are currently on, nor a branch that
-has been fully merged into your current branch.
+Hello,
 
-The credit for the safety check idea goes to Daniel Barkalow.
+I'm new to this whole way of developing, and I'm still a bit confused
+about the tools and the workflow.  I'm trying to port Git to Solaris, and
+it seems that others are working on this as well, so this post is mostly
+a request to share those Solaris patches with me.  The patch below
+doesn't port git to Solaris, but fixes a small problem for me on the way.
+I tested it on GNU install and it seems to work.  If this patch doesn't
+apply at all feel free to edit the two lines by hand.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Regards,
+
+Peter
+
+=================
+
+ /usr/sbin/install -d | -i [-m mode] [-u user] [-g group]  [-
+     o] [-s] dirx...
+
+Fix the Makefile accordingly.
 
 ---
 
- git-branch.sh |   60 +++++++++++++++++++++++++++++++++++++++++++++++++++------
- 1 files changed, 54 insertions(+), 6 deletions(-)
+ Makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-6a714989f83ccb93188dc37791da8a0f2e32cabe
-diff --git a/git-branch.sh b/git-branch.sh
---- a/git-branch.sh
-+++ b/git-branch.sh
-@@ -3,7 +3,7 @@
- . git-sh-setup || die "Not a git archive"
+27ee13ef78c0a25acc1b8dce508b49c0fc729e41
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -293,12 +293,12 @@ check:
+ ### Installation rules
  
- usage () {
--    echo >&2 "usage: $(basename $0)"' [<branchname> [start-point]]
-+    echo >&2 "usage: $(basename $0)"' [-d <branch>] | [<branch> [start-point]]
+ install: $(PROGRAMS) $(SCRIPTS)
+-       $(INSTALL) -m755 -d $(DESTDIR)$(bindir)
++       $(INSTALL) -d -m755 $(DESTDIR)$(bindir)
+        $(INSTALL) $(PROGRAMS) $(SCRIPTS) $(DESTDIR)$(bindir)
+        $(INSTALL) git-revert $(DESTDIR)$(bindir)/git-cherry-pick
+        sh ./cmd-rename.sh $(DESTDIR)$(bindir)
+        $(MAKE) -C templates install
+-       $(INSTALL) -m755 -d $(DESTDIR)$(GIT_PYTHON_DIR)
++       $(INSTALL) -d -m755 $(DESTDIR)$(GIT_PYTHON_DIR)
+        $(INSTALL) $(PYMODULES) $(DESTDIR)$(GIT_PYTHON_DIR)
  
- If no arguments, show available branches and mark current branch with a star.
- If one argument, create a new branch <branchname> based off of current HEAD.
-@@ -12,6 +12,59 @@ If two arguments, create a new branch <b
-     exit 1
- }
- 
-+delete_branch () {
-+    option="$1" branch_name="$2"
-+    headref=$(readlink "$GIT_DIR/HEAD" | sed -e 's|^refs/heads/||')
-+    case ",$headref," in
-+    ",$branch_name,")
-+	die "Cannot delete the branch you are on." ;;
-+    ,,)
-+	die "What branch are you on anyway?" ;;
-+    esac
-+    branch=$(cat "$GIT_DIR/refs/heads/$branch_name") &&
-+	branch=$(git-rev-parse --verify "$branch^0") ||
-+	    die "Seriously, what branch are you talking about?"
-+    case "$option" in
-+    -D)
-+	;;
-+    *)
-+	mbs=$(git-merge-base -a "$branch" HEAD | tr '\012' ' ')
-+	case " $mbs " in
-+	*' '$branch' '*)
-+	    # the merge base of branch and HEAD contains branch --
-+	    # which means that the HEAD contains everything in the HEAD.
-+	    ;;
-+	*)
-+	    echo >&2 "The branch '$branch_name' is not a strict subset of your current HEAD.
-+If you are sure you want to delete it, run 'git branch -D $branch_name'."
-+	    exit 1
-+	    ;;
-+	esac
-+	;;
-+    esac
-+    rm -f "$GIT_DIR/refs/heads/$branch_name"
-+    echo "Deleted branch $branch_name."
-+    exit 0
-+}
-+
-+while case "$#,$1" in 0,*) break ;; *,-*) ;; *) break ;; esac
-+do
-+	case "$1" in
-+	-d | -D)
-+		delete_branch "$1" "$2"
-+		exit
-+		;;
-+	--)
-+		shift
-+		break
-+		;;
-+	-*)
-+		usage
-+		;;
-+	esac
-+	shift
-+done
-+
- case "$#" in
- 0)
- 	headref=$(readlink "$GIT_DIR/HEAD" | sed -e 's|^refs/heads/||')
-@@ -36,11 +89,6 @@ case "$#" in
- esac
- branchname="$1"
- 
--case "$branchname" in
---*)
--	usage;;
--esac
--
- rev=$(git-rev-parse --verify "$head") || exit
- 
- [ -e "$GIT_DIR/refs/heads/$branchname" ] && die "$branchname already exists"
+ install-doc:
