@@ -1,78 +1,64 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 21/22] teach the merge algorithm about cache iterators
-Date: Wed, 14 Sep 2005 12:41:36 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509141214490.23242@iabervon.org>
-References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu>
- <20050912145629.28120.70337.stgit@dexter.citi.umich.edu>
- <Pine.LNX.4.63.0509121633480.23242@iabervon.org> <43284368.8010004@citi.umich.edu>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: FW: Git pulls failing on ia64 test tree?
+Date: Wed, 14 Sep 2005 09:39:51 -0700
+Message-ID: <7vbr2vob6w.fsf@assigned-by-dhcp.cox.net>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F046279C5@scsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 14 18:39:44 2005
+X-From: git-owner@vger.kernel.org Wed Sep 14 18:42:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFaGJ-0004Ez-Sa
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 18:37:32 +0200
+	id 1EFaIf-0004tr-WB
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 18:39:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030263AbVINQh3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 12:37:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030264AbVINQh2
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 12:37:28 -0400
-Received: from iabervon.org ([66.92.72.58]:50182 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1030263AbVINQh2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 12:37:28 -0400
-Received: (qmail 6713 invoked by uid 1000); 14 Sep 2005 12:41:36 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 14 Sep 2005 12:41:36 -0400
-To: Chuck Lever <cel@citi.umich.edu>
-In-Reply-To: <43284368.8010004@citi.umich.edu>
+	id S1030268AbVINQjy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 12:39:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030270AbVINQjy
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 12:39:54 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:35762 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1030268AbVINQjx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Sep 2005 12:39:53 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050914163953.UNLQ9510.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 14 Sep 2005 12:39:53 -0400
+To: "Luck, Tony" <tony.luck@intel.com>
+In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F046279C5@scsmsx401.amr.corp.intel.com>
+	(Tony Luck's message of "Wed, 14 Sep 2005 08:47:09 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8540>
 
-On Wed, 14 Sep 2005, Chuck Lever wrote:
+"Luck, Tony" <tony.luck@intel.com> writes:
 
-> Daniel Barkalow wrote:
-> > On Mon, 12 Sep 2005, Chuck Lever wrote:
-> > 
-> > 
-> > >For now, we simply replace indpos with a cache cursor.  Likely more
-> > >changes will be needed after we successfully replace the cache array
-> > >with an abstract data type.
-> > 
-> > 
-> > The right order is probably to add the concept of a cache that isn't the one
-> > that normal functions deal with, have read_cache_unmerged return such a
-> > thing, call cc_init with that, and rip out all of the removal and position
-> > adjustment code. Then read_tree won't care at all about the internal
-> > structure of the cache type, and it can be replaced without any problem.
-> 
-> ok, i've done this.  read_cache_unmerged now reads into a separate cache, and
-> read-tree.c does the merge by moving the appropriate cache entries into the
-> active cache.
-> 
-> the linked list prototype is done, and works correctly.  this validates the
-> new cache cursor API.  unfortunately because finding a name is now O(n), many
-> things are slower than before (but i expected this would be the case for
-> lists).
+> After the first complaint, I looked around and found out about
+> "git-update-server-info" (which I'd somehow missed).  So I ran
+> (on master.kernel.org):
+>
+>   $ GIT_DIR=/pub/scm/linux/kernel/git/aegl/linux-2.6.git git-update-server-info
+>
+> and I now have info/refs, info/rev-cache, and objects/info/packs files.
 
-The really exciting thing to do would be to have different programs use 
-different implementations, by way of linker magic.
+That is a nice, but rsync bypasses all of that so I suspect
+there is something else.  If you did not say:
 
-My guess for the ideal is to have a linked list with a hashtable for 
-finding entries by looking up names, because we don't look things up by 
-index. This combination gives O(1) in-order iteration, O(1) lookup by 
-name, O(1) append, O(n) insert, and O(1) remove. This means that 
-git-update-cache --add would be slow, but everything else would be fast. 
-(Except, of course, for the overhead of actually reading and writing the 
-index file, rather than mmaping it.)
+> 12 hours later, I got another complaint.
 
-Another thing to try would be the original dynamic table implementation, 
-plus a hashtable for name lookups, generated the first time a lookup is 
-attempted (since some programs don't do any lookups by name). This has the 
-advantage of skipping the O(n) startup.
+I would have suspected that this was when one of the kernel.org
+mirror machine was misbehaving and did not update for a day or
+so, but I think it is already resolved now so I am puzzled..
 
-	-Daniel
-*This .sig left intentionally blank*
+> I've set up objects/info/alternates to point at linus' tree and deleted
+> all the packs from my tree.  The web view at kernel.org/git looks ok,
+> so I think those changes are ok.
+>
+> So what am I missing?
+
+Let me take a look at your tree on master while I'll try to pull
+from your public tree and see if I can reproduce.
