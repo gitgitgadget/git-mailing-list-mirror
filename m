@@ -1,84 +1,71 @@
 From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: [PATCH 4/4] Document git-fetch options
-Date: Wed, 14 Sep 2005 16:48:05 +0400
-Message-ID: <20050914124805.GG24405@master.mivlgu.local>
-References: <20050914124206.GC24405@master.mivlgu.local>
+Subject: Re: [PATCH] git-http-fetch: Allow caching of retrieved objects by proxy servers
+Date: Wed, 14 Sep 2005 17:12:36 +0400
+Message-ID: <20050914131236.GH24405@master.mivlgu.local>
+References: <20050913153858.GB24405@master.mivlgu.local> <7vfys93qn5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Sep 14 14:50:29 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="pAwQNkOnpTn9IO2O"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 14 15:15:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFWgM-000349-OA
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 14:48:11 +0200
+	id 1EFX45-0001aI-FF
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 15:12:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965154AbVINMsI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 08:48:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965156AbVINMsI
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 08:48:08 -0400
-Received: from mivlgu.ru ([81.18.140.87]:3009 "EHLO master.mivlgu.local")
-	by vger.kernel.org with ESMTP id S965154AbVINMsG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 08:48:06 -0400
+	id S965186AbVINNMi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 09:12:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965187AbVINNMi
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 09:12:38 -0400
+Received: from mivlgu.ru ([81.18.140.87]:8641 "EHLO master.mivlgu.local")
+	by vger.kernel.org with ESMTP id S965186AbVINNMh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 09:12:37 -0400
 Received: by master.mivlgu.local (Postfix, from userid 1000)
-	id 94004180119; Wed, 14 Sep 2005 16:48:05 +0400 (MSD)
-To: git@vger.kernel.org
+	id 5C2E7180119; Wed, 14 Sep 2005 17:12:36 +0400 (MSD)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <20050914124206.GC24405@master.mivlgu.local>
+In-Reply-To: <7vfys93qn5.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8523>
 
-Add documentation for git-fetch options (including the newly added
---recover option).
 
----
+--pAwQNkOnpTn9IO2O
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- Documentation/git-fetch.txt        |    6 ++++++
- Documentation/pull-fetch-param.txt |   19 +++++++++++++++++++
- 2 files changed, 25 insertions(+), 0 deletions(-)
+On Tue, Sep 13, 2005 at 08:59:26AM -0700, Junio C Hamano wrote:
+> Sergey Vlasov <vsu@altlinux.ru> writes:
+>=20
+> > This patch removes the "Pragma: no-cache" header from requests for all
+> > files except the pack list (objects/info/packs) and references
+> > (refs/*), which are really mutable and should not be cached.
+>=20
+> Thanks.  What the patch does looks reasonable.
+>=20
+> Do you know if we can use it for any reasonably recent version
+> of curl?  I seem to recall we already do things slightly
+> differently depending on LIBCURL_VERSION_NUM.
 
-7685a3d50566e908fb8beb2ddb3088877aa9ae0f
-diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
---- a/Documentation/git-fetch.txt
-+++ b/Documentation/git-fetch.txt
-@@ -26,6 +26,12 @@ OPTIONS
- -------
- include::pull-fetch-param.txt[]
- 
-+-u, \--update-head-ok::
-+	By default 'git-fetch' refuses to update the head which
-+	corresponds to the current branch.  This flag disables the
-+	check.  Note that fetching into the current branch will not
-+	update the index and working directory, so use it with care.
-+
- 
- Author
- ------
-diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
---- a/Documentation/pull-fetch-param.txt
-+++ b/Documentation/pull-fetch-param.txt
-@@ -80,3 +80,22 @@
-           <ref>: when pulling/fetching, and <ref>:<ref> when
-           pushing.  That is, do not store it locally if
-           fetching, and update the same name if pushing.
-+
-+-a, \--append::
-+	Append ref names and object names of fetched refs to the
-+	existing contents of $GIT_DIR/FETCH_HEAD.  Without this
-+	option old data in $GIT_DIR/FETCH_HEAD will be overwritten.
-+
-+-f, \--force::
-+	Usually, the command refuses to update a local ref that is
-+	not an ancestor of the remote ref used to overwrite it.
-+	This flag disables the check.  What this means is that the
-+	local repository can lose commits; use it with care.
-+
-+-r, \--recover::
-+	Recover after an interrupted fetch.  When fetching over
-+	HTTP(s), this option is passed to 'git-http-fetch', which
-+	will then walk through the whole commit tree and fetch all
-+	missing objects.  For other protocols this option is
-+	ignored, because they don't have problems with recovery
-+	after an interrupted fetch.
+http://cool.haxx.se/cvs.cgi/curl/include/curl/curl.h?rev=3D1.1&content-type=
+=3Dtext/vnd.viewcvs-markup
+shows that CURLOPT_HTTPHEADER, curl_slist_append() and
+curl_slist_free_all() were available in Dec 1999, curl 6.3.1.  The FAQ
+entry about disabling "Pragma: no-cache" is from Aug 2, 2000.
+
+--pAwQNkOnpTn9IO2O
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
+
+iD8DBQFDKCHEW82GfkQfsqIRAghBAJ0UKaqeSqgSURbmhTDhWHJLokzuKgCfULF2
+EGfaSvQuEyC76Qto5HzhDUk=
+=X/PH
+-----END PGP SIGNATURE-----
+
+--pAwQNkOnpTn9IO2O--
