@@ -1,58 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cg-pull to pull branches, not the whole repository
-Date: Wed, 14 Sep 2005 15:05:12 -0700
-Message-ID: <7vu0gne25j.fsf@assigned-by-dhcp.cox.net>
-References: <1126733516.10827.54.camel@dv>
+From: Chuck Lever <cel@citi.umich.edu>
+Subject: Re: [PATCH 21/22] teach the merge algorithm about cache iterators
+Date: Wed, 14 Sep 2005 18:28:09 -0400
+Organization: Network Appliance, Inc.
+Message-ID: <4328A3F9.1010506@citi.umich.edu>
+References: <20050912145543.28120.7086.stgit@dexter.citi.umich.edu> <20050912145629.28120.70337.stgit@dexter.citi.umich.edu> <Pine.LNX.4.63.0509121633480.23242@iabervon.org> <43284368.8010004@citi.umich.edu> <Pine.LNX.4.63.0509141214490.23242@iabervon.org> <43287ECB.8090308@citi.umich.edu> <Pine.LNX.4.63.0509141622340.23242@iabervon.org>
+Reply-To: cel@citi.umich.edu
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 15 00:15:24 2005
+Content-Type: multipart/mixed;
+ boundary="------------090802060700090700040608"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 15 00:31:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFfOJ-0007Sd-J1
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 00:06:07 +0200
+	id 1EFfle-0004XT-UX
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 00:30:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965028AbVINWFV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 18:05:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965058AbVINWFU
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 18:05:20 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:42704 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S965028AbVINWFS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Sep 2005 18:05:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050914220512.MTX9510.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 14 Sep 2005 18:05:12 -0400
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1126733516.10827.54.camel@dv> (Pavel Roskin's message of "Wed,
-	14 Sep 2005 17:31:56 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030236AbVINW2R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 18:28:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030255AbVINW2R
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 18:28:17 -0400
+Received: from citi.umich.edu ([141.211.133.111]:26207 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S1030236AbVINW2K (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 18:28:10 -0400
+Received: from [141.211.133.33] (dexter.citi.umich.edu [141.211.133.33])
+	by citi.umich.edu (Postfix) with ESMTP id D89AD1BAF1;
+	Wed, 14 Sep 2005 18:28:09 -0400 (EDT)
+User-Agent: Mozilla Thunderbird  (X11/20050322)
+X-Accept-Language: en-us, en
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.63.0509141622340.23242@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8572>
 
-Pavel Roskin <proski@gnu.org> writes:
+This is a multi-part message in MIME format.
+--------------090802060700090700040608
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> ...  Unfortunately, listings are
-> still needed to get refs/tags and refs/heads.  Any fix for that would
-> involve git core, and I don't see an elegant fix.
+Daniel Barkalow wrote:
+> On Wed, 14 Sep 2005, Chuck Lever wrote:
+>>[ i'm not sure why you think insert would be O(n). ]
+> 
+> 
+> You need to find the correct location to insert in the sorted list, and 
+> the hash table won't help you, because it doesn't have the new name. 
+> Remember that the cursors need to go through the index in order, so the 
+> list has to stay sorted.
 
-All the necessary "core" support should already be there, except
-for the client side support.  Please look at yesterday's thread
-with title "dumb transports not being welcomed".
+oh, i see.  the hash table won't help cache_find_name find an insertion 
+point quickly if the name isn't already in the cache.
 
-> For git+ssh protocol, git-fetch-pack already provides a server side
-> solution.  Client side support would be needed for http and rsync.
->
-> I'd like to hear comments before I attempt any hacking in this
-> direction.
+in fact, this will impact the other places that need an insertion point, 
+such as ls-files and merge-index, as well as your new merge algorithm 
+(which inserts all merged entries into the active cache one at a time 
+via add_cache_entry).
 
-Personally I think Cogito should be able to just call git-fetch
-to implement cg-pull -- I do not claim the current git-fetch has
-everything needed (incapable of using objects/info/alternates is
-an example), but we should be able to fix and enhance just one
-program to make everybody happy, not two.
+considering that add_cache_entry can do a cache lookup several times, i 
+think we need the "not found, returning insertion point" case to be fast 
+too.
+
+back to the drawring board.
+
+--------------090802060700090700040608
+Content-Type: text/x-vcard; charset=utf-8;
+ name="cel.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="cel.vcf"
+
+begin:vcard
+fn:Chuck Lever
+n:Lever;Charles
+org:Network Appliance, Incorporated;Linux NFS Client Development
+adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
+email;internet:cel@citi.umich.edu
+title:Member of Technical Staff
+tel;work:+1 734 763 4415
+tel;fax:+1 734 763 4434
+tel;home:+1 734 668 1089
+x-mozilla-html:FALSE
+url:http://www.monkey.org/~cel/
+version:2.1
+end:vcard
+
+
+--------------090802060700090700040608--
