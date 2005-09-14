@@ -1,87 +1,95 @@
-From: "Luck, Tony" <tony.luck@intel.com>
-Subject: FW: Git pulls failing on ia64 test tree?
-Date: Wed, 14 Sep 2005 08:47:09 -0700
-Message-ID: <B8E391BBE9FE384DAA4C5C003888BE6F046279C5@scsmsx401.amr.corp.intel.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Another merge test case from the kernel tree.
+Date: Wed, 14 Sep 2005 12:11:00 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0509141147230.23242@iabervon.org>
+References: <20050907164734.GA20198@c165.ib.student.liu.se>
+ <20050907165012.GA20392@c165.ib.student.liu.se> <7vzmqk2u1w.fsf_-_@assigned-by-dhcp.cox.net>
+ <7vpsrcqjj6.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Sep 14 17:49:33 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org,
+	Tony Luck <tony.luck@intel.com>
+X-From: git-owner@vger.kernel.org Wed Sep 14 18:09:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFZTf-0007LV-Kh
-	for gcvg-git@gmane.org; Wed, 14 Sep 2005 17:47:15 +0200
+	id 1EFZms-0004wg-CJ
+	for gcvg-git@gmane.org; Wed, 14 Sep 2005 18:07:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030201AbVINPrN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Sep 2005 11:47:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030192AbVINPrM
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 11:47:12 -0400
-Received: from fmr14.intel.com ([192.55.52.68]:56767 "EHLO
-	fmsfmr002.fm.intel.com") by vger.kernel.org with ESMTP
-	id S1030202AbVINPrM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 11:47:12 -0400
-Received: from fmsfmr100.fm.intel.com (fmsfmr100.fm.intel.com [10.253.24.20])
-	by fmsfmr002.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j8EFlBnm023917
-	for <git@vger.kernel.org>; Wed, 14 Sep 2005 15:47:11 GMT
-Received: from fmsmsxvs043.fm.intel.com (fmsmsxvs043.fm.intel.com [132.233.42.129])
-	by fmsfmr100.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id j8EFlBHN021082
-	for <git@vger.kernel.org>; Wed, 14 Sep 2005 15:47:11 GMT
-Received: from fmsmsx331.amr.corp.intel.com ([132.233.42.156])
- by fmsmsxvs043.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2005091408471107788
- for <git@vger.kernel.org>; Wed, 14 Sep 2005 08:47:11 -0700
-Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Wed, 14 Sep 2005 08:47:10 -0700
-Received: from scsmsx401.amr.corp.intel.com ([10.3.90.12]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Wed, 14 Sep 2005 08:47:10 -0700
-X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Git pulls failing on ia64 test tree?
-Thread-Index: AcW5J6maqWr79fvqRS227TbpZLyCvAAGoMdQ
-To: <git@vger.kernel.org>
-X-OriginalArrivalTime: 14 Sep 2005 15:47:10.0484 (UTC) FILETIME=[917E2D40:01C5B943]
-X-Scanned-By: MIMEDefang 2.52 on 10.253.24.20
+	id S1030218AbVINQGy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Sep 2005 12:06:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030220AbVINQGy
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Sep 2005 12:06:54 -0400
+Received: from iabervon.org ([66.92.72.58]:27410 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1030218AbVINQGx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Sep 2005 12:06:53 -0400
+Received: (qmail 6500 invoked by uid 1000); 14 Sep 2005 12:11:00 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 14 Sep 2005 12:11:00 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vpsrcqjj6.fsf_-_@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8534>
 
-I've had two complaints that people can't pull from my tree
-on kernel.org.  Here's a snip from the errors.
+On Tue, 13 Sep 2005, Junio C Hamano wrote:
 
- > $ git pull 
-rsync://rsync.kernel.org/pub/scm/linux/kernel/git/aegl/linux-2.6.git test
- > MOTD:
- > MOTD:   Welcome to the Linux Kernel Archive.
-    ... MOTD trimmed ...
- > receiving file list ... done
- >
- > wrote 113 bytes  read 30799 bytes  20608.00 bytes/sec
- > total size is 82275235  speedup is 2661.60
- > * committish: 6c141f61ee4f5fba63d9c54e03cb2faa6877bf1a  refs/heads/test from 
-rsync://rsync.kernel.org/pub/scm/linux/kernel/git/aegl/linux-2.6.git
- > error: Could not read 9401c705f2a6a7e5df102f6443dba395c3c5e5a8
- > error: Could not read 357d596bd552ad157a906289ab13ea6ba7e66e3d
- > Updating from aa2dca4563b0629ecd9d9994dfdf39f29ff1b43f to 
-6c141f61ee4f5fba63d9c54e03cb2faa6877bf1a.
- > fatal: failed to unpack tree object 6c141f61ee4f5fba63d9c54e03cb2faa6877bf1a
- > $
+> One more merge test case you would be interested.  What's most
+> interesting about this commit is that it has three merge bases,
+> not two.
+> 
+> commit c820884e4f35a40f88b787c3891a23d629ef6bfd
+> Merge: aa2dca4563b0629ecd9d9994dfdf39f29ff1b43f 357d596bd552ad157a906289ab13ea6ba7e66e3d
+> Author: Tony Luck <tony.luck@intel.com>
+> Date:   Sun Sep 11 18:35:10 2005 -0700
+> 
+>     Auto-update from upstream
+> 
+> Attempt to reproduce this commit is somewhat troubling.  The
+> 'stupid' strategy and git-resolve resolves cleanly and Tony's
+> commit matches what 'git-resolve' does (obviously that is the
+> algorithm everybody uses).
+> 
+> But the 'resolve' strategy says this is case #16 (and resolves
+> this case differently but I think it is just by luck). This
+> indicates that Tony _might_ have committed what he did not
+> wanted to.  The path involved is arch/mips/kernel/offset.c.
 
-After the first complaint, I looked around and found out about
-"git-update-server-info" (which I'd somehow missed).  So I ran
-(on master.kernel.org):
+It shouldn't resolve it at all if it's case #16; I'll have to check on 
+that.
 
-  $ GIT_DIR=/pub/scm/linux/kernel/git/aegl/linux-2.6.git git-update-server-info
+>     [Tony, I think you've seen this one once in different
+>     commit.  The terminology "case #16" means your merge has
+>     more than one merge base candidates:
+> 
+>         Ancestor#1 -- -- Your tree
+>                      X
+>         Ancestor#2 -- -- Other tree
+> 
+>     and when a path in your tree matches Ancestor #i and the
+>     same path in the other tree matches Ancestor #j (i!=j).
+> 
+>     The default git merge algorithm picks a single ancestor that
+>     gives the least number of conflicting paths during the
+>     merge, and compares your tree and other tree against it and
+>     pick the one that changed since that ancestor if only one
+>     side changed that path.  But in case #16, depending on which
+>     ancestor we pick, the result may come from your tree or
+>     other tree, and obviously we do a wrong thing with 50%
+>     probability.
+> 
+>     Thie _could_ indicate that you _might_ be losing a reverted
+>     you made in your line of development being overwritten by
+>     what the other tree did.]
 
-and I now have info/refs, info/rev-cache, and objects/info/packs files.
+More precisely, case #16 only comes up when, in coming from the ancestors, 
+one side decided to match one ancestor, and the other side decided to 
+match the other; it is rarely the case that this could occur due to the 
+two merges making opposite decisions to entirely ignore the other 
+ancestor, and the only remaining case is that the merges each chose the 
+same ancestor, and one side reverted to the other. So it's pretty certain 
+that you've got a 50-50 chance of losing the correction.
 
-12 hours later, I got another complaint.
-
-I've set up objects/info/alternates to point at linus' tree and deleted
-all the packs from my tree.  The web view at kernel.org/git looks ok,
-so I think those changes are ok.
-
-So what am I missing?
-
--Tony
+	-Daniel
+*This .sig left intentionally blank*
