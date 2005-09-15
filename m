@@ -1,64 +1,164 @@
-From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
-Subject: Re: git version
-Date: Thu, 15 Sep 2005 17:22:05 +0200
-Message-ID: <u5tslw6qrtu.fsf@lysator.liu.se>
-References: <u5tzmqeqw6z.fsf@lysator.liu.se> <432985A7.5070900@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-daemon --inetd
+Date: Thu, 15 Sep 2005 09:03:31 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509150829090.26803@g5.osdl.org>
+References: <43290EFF.3070604@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Sep 15 17:33:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 15 18:06:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFveM-0001LI-GZ
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 17:27:46 +0200
+	id 1EFwDA-0004IC-PX
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 18:03:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030499AbVIOP1o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 15 Sep 2005 11:27:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030500AbVIOP1o
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 11:27:44 -0400
-Received: from main.gmane.org ([80.91.229.2]:45732 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030499AbVIOP1n (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 11:27:43 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EFvcM-0000h9-4P
-	for git@vger.kernel.org; Thu, 15 Sep 2005 17:25:42 +0200
-Received: from 212214120186-virtutech-ab.host.songnetworks.se ([212.214.120.186])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Sep 2005 17:25:42 +0200
-Received: from davidk by 212214120186-virtutech-ab.host.songnetworks.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Sep 2005 17:25:42 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 212214120186-virtutech-ab.host.songnetworks.se
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:ylA9HkL/OZ9OLybzHj9yUgPEu30=
+	id S1030503AbVIOQDm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 12:03:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030505AbVIOQDm
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 12:03:42 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:38064 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030503AbVIOQDm (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 12:03:42 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8FG3cBo029202
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 15 Sep 2005 09:03:40 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8FG3VL7008485;
+	Thu, 15 Sep 2005 09:03:35 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <43290EFF.3070604@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8611>
 
-A Large Angry SCM <gitzilla@gmail.com> writes:
 
-> David K=E5gedal wrote:
->> Why is "git --version" called so, and not "git version"?  It works
->> just like any other command, except that it is implemented internall=
-y
->> in the git script.
->> The "git" command takes a subcommand that does some action or simply
->> prints some informational output.  The "version" subcommand fits
->> nicely into that, and I don't see any need to prepend "--" to it.
->>
->
-> Consistency with other (non Git) commands was why I suggested the=20
-> "--version" form when the discussion happened.
 
-You mean, like, "cvs version"?
+On Wed, 14 Sep 2005, H. Peter Anvin wrote:
+> 
+> On that note, though, it would be very nice if there was a way to run 
+> git-daemon in a chroot, or otherwise restrict it to a specific 
+> subhierarchy of the filesystem.
 
-Actually, cvs has both, with different semantics.
+Hmm.. That should work fine. You can already just run it that way by just 
+wrapping it in "chroot", but if you don't want that for some reason, how 
+about a patch like this?
 
---=20
-David K=E5gedal
+It compiles. That's just about all I can say about it.
+
+		Linus
+
+---
+diff --git a/daemon.c b/daemon.c
+--- a/daemon.c
++++ b/daemon.c
+@@ -1,11 +1,19 @@
++/* setresuid/setresgid. GNU? Who are you kidding, glibc? */
++#define _GNU_SOURCE
++
+ #include "cache.h"
+ #include "pkt-line.h"
+ #include <signal.h>
+ #include <sys/wait.h>
+ #include <sys/socket.h>
+ #include <sys/time.h>
++#include <sys/types.h>
+ #include <netdb.h>
+ #include <netinet/in.h>
++#include <unistd.h>
++
++#include <pwd.h>
++#include <grp.h>
+ 
+ static const char daemon_usage[] = "git-daemon [--inetd | --port=n]";
+ 
+@@ -326,10 +334,50 @@ static int serve(int port)
+ 	}
+ }
+ 
++/*
++ * This will drop our effective uid/gid to the real one,
++ * even if no "--user=" or "--group=" arguments were used.
++ *
++ * So it's not a no-op even without that.
++ */
++static void set_user_group(const char *user, const char *group)
++{
++	uid_t uid = getuid();
++	gid_t gid = getgid();
++	char *end;
++
++	if (user) {
++		struct passwd *pw = getpwnam(user);
++		if (pw) {
++			uid = pw->pw_uid;
++			gid = pw->pw_gid;
++		} else {
++			uid = strtol(user, &end, 10);
++			if (*end || end == user)
++				die("invalid user name '%s'", user);
++		}
++	}
++	if (group) {
++		struct group *grp = getgrnam(group);
++		if (grp) {
++			gid = grp->gr_gid;
++		} else {
++			gid = strtol(group, &end, 10);
++			if (*end || end == group)
++				die("invalid group name '%s'", group);
++		}
++	}
++	if (!uid || !gid)
++		die("I refuse to run as root");
++	if (setresgid(gid, gid, gid) || setresuid(uid, uid, uid))
++		die("I can't run as %d:%d", uid, gid);
++}
++
+ int main(int argc, char **argv)
+ {
+ 	int port = DEFAULT_GIT_PORT;
+ 	int inetd_mode = 0;
++	const char *user = NULL, *group = NULL;
+ 	int i;
+ 
+ 	for (i = 1; i < argc; i++) {
+@@ -350,9 +398,32 @@ int main(int argc, char **argv)
+ 			continue;
+ 		}
+ 
++		if (!strncmp(arg, "--chroot=", 9)) {
++			if (chroot(arg+9) < 0)
++				die("unable to chroot to '%s': %s", arg+9, strerror(errno));
++			if (chdir("/") < 0)
++				die("unable to chdir to new root");
++
++			user = user ? user : "nobody";
++			group = group ? group : "nobody";
++			continue;
++		}
++
++		if (!strncmp(arg, "--user=", 7)) {
++			user = arg+7;
++			continue;
++		}
++
++		if (!strncmp(arg, "--group=", 8)) {
++			group = arg + 8;
++			continue;
++		}
++
+ 		usage(daemon_usage);
+ 	}
+ 
++	set_user_group(user, group);
++
+ 	if (inetd_mode) {
+ 		fclose(stderr); //FIXME: workaround
+ 		return execute();
