@@ -1,52 +1,52 @@
-From: YOSHIFUJI Hideaki / =?iso-2022-jp?B?GyRCNUhGIzFRTEAbKEI=?= 
-	<yoshfuji@linux-ipv6.org>
-Subject: Re: Make test failure!?
-Date: Thu, 15 Sep 2005 20:19:32 +0900 (JST)
-Organization: USAGI/WIDE Project
-Message-ID: <20050915.201932.17321791.yoshfuji@linux-ipv6.org>
-References: <7vu0gm7mxy.fsf@assigned-by-dhcp.cox.net>
-	<20050915.174206.90748347.yoshfuji@linux-ipv6.org>
-	<7vpsra3cdg.fsf@assigned-by-dhcp.cox.net>
+From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
+Subject: git version
+Date: Thu, 15 Sep 2005 15:47:48 +0200
+Message-ID: <u5tzmqeqw6z.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, yoshfuji@linux-ipv6.org
-X-From: git-owner@vger.kernel.org Thu Sep 15 13:20:13 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Sep 15 15:57:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFrlQ-0000rI-TP
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 13:18:49 +0200
+	id 1EFuBe-0002zR-1I
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 15:54:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750896AbVIOLRx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 07:17:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbVIOLRx
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 07:17:53 -0400
-Received: from yue.linux-ipv6.org ([203.178.140.15]:52238 "EHLO
-	yue.st-paulia.net") by vger.kernel.org with ESMTP id S1750896AbVIOLRw
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2005 07:17:52 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by yue.st-paulia.net (Postfix) with ESMTP
-	id 7C00A33CC2; Thu, 15 Sep 2005 20:19:34 +0900 (JST)
-To: junkio@cox.net
-In-Reply-To: <7vpsra3cdg.fsf@assigned-by-dhcp.cox.net>
-X-URL: http://www.yoshifuji.org/%7Ehideaki/
-X-Fingerprint: 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
-X-PGP-Key-URL: http://www.yoshifuji.org/%7Ehideaki/hideaki@yoshifuji.org.asc
-X-Face: "5$Al-.M>NJ%a'@hhZdQm:."qn~PA^gq4o*>iCFToq*bAi#4FRtx}enhuQKz7fNqQz\BYU]
- $~O_5m-9'}MIs`XGwIEscw;e5b>n"B_?j/AkL~i/MEa<!5P`&C$@oP>ZBLP
-X-Mailer: Mew version 2.2 on Emacs 20.7 / Mule 4.1 (AOI)
+	id S1030423AbVIONx4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 15 Sep 2005 09:53:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030421AbVIONx4
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 09:53:56 -0400
+Received: from main.gmane.org ([80.91.229.2]:20928 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030425AbVIONxz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 09:53:55 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EFu8S-0001ts-Ue
+	for git@vger.kernel.org; Thu, 15 Sep 2005 15:50:45 +0200
+Received: from 212214120186-virtutech-ab.host.songnetworks.se ([212.214.120.186])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Sep 2005 15:50:44 +0200
+Received: from davidk by 212214120186-virtutech-ab.host.songnetworks.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Sep 2005 15:50:44 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 212214120186-virtutech-ab.host.songnetworks.se
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:S57O4ePbFZERwK4fczf3Rj5Lg5Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8604>
 
-In article <7vpsra3cdg.fsf@assigned-by-dhcp.cox.net> (at Thu, 15 Sep 2005 02:32:11 -0700), Junio C Hamano <junkio@cox.net> says:
+Why is "git --version" called so, and not "git version"?  It works
+just like any other command, except that it is implemented internally
+in the git script.
 
-> I suspect you have different GNU diff versions between these two
-> machines?
+The "git" command takes a subcommand that does some action or simply
+prints some informational output.  The "version" subcommand fits
+nicely into that, and I don't see any need to prepend "--" to it.
 
-Right. 2.8.1 (ok) vs 2.7 (ng).
-
---yoshfuji
+--=20
+David K=E5gedal
