@@ -1,78 +1,127 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git-daemon --inetd
-Date: Fri, 16 Sep 2005 09:44:13 +1200
-Message-ID: <46a038f905091514447e13404d@mail.gmail.com>
-References: <43290EFF.3070604@zytor.com>
-	 <Pine.LNX.4.58.0509150829090.26803@g5.osdl.org>
-	 <4329BDD9.4010507@zytor.com>
-	 <Pine.LNX.4.58.0509151142570.26803@g5.osdl.org>
-	 <4329C93D.2020701@zytor.com>
-	 <Pine.LNX.4.58.0509151225410.26803@g5.osdl.org>
-Reply-To: martin.langhoff@gmail.com
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Avoid wasting memory in git-rev-list
+Date: Thu, 15 Sep 2005 14:43:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509151434470.26803@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Martin Langhoff <martin@catalyst.net.nz>,
-	Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 15 23:44:53 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Sep 15 23:44:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EG1Wl-0007pF-8P
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 23:44:19 +0200
+	id 1EG1Vu-0007c4-MO
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 23:43:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030507AbVIOVoR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 17:44:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030561AbVIOVoQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 17:44:16 -0400
-Received: from rproxy.gmail.com ([64.233.170.201]:40829 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1030507AbVIOVoQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2005 17:44:16 -0400
-Received: by rproxy.gmail.com with SMTP id i8so81410rne
-        for <git@vger.kernel.org>; Thu, 15 Sep 2005 14:44:13 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SKY3nURpi8tDxLn/LYAaNKIdu6IVcKbYFJrlMYfpShtKSTsCUG9ZNUY42SHmNfBiVQT/YsH0Zl2iolQUv4jtG3GMzO3AJRpaPsOdrtL9MgnDsrICfY0ApaqAnc+BxGyIv0Arh/4Dvh0xtLCOrH3fCcn6eaYeEhZC+2FtBUsTyUQ=
-Received: by 10.38.97.3 with SMTP id u3mr325187rnb;
-        Thu, 15 Sep 2005 14:44:13 -0700 (PDT)
-Received: by 10.38.101.53 with HTTP; Thu, 15 Sep 2005 14:44:13 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509151225410.26803@g5.osdl.org>
-Content-Disposition: inline
+	id S1030468AbVIOVnY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 17:43:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030505AbVIOVnX
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 17:43:23 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:56729 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030468AbVIOVnX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 17:43:23 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8FLhIBo022330
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 15 Sep 2005 14:43:18 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8FLhHY7026575;
+	Thu, 15 Sep 2005 14:43:17 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8641>
-
-On 9/16/05, Linus Torvalds <torvalds@osdl.org> wrote:
-> Btw, I think --merge-order was cool, but its weaker cousin --topo-order is
-> what is actually _used_. Maybe we should deprecate --merge-order? Right
-> now the only real user is git-archimport, and I think that one too really
-> only wants topo-order too. For example, right now I think git-archimport
-> won't actually work if you build without openssl.
-> 
-> Jon? Martin?
-
-I've used merge-order because it made sense... in that it gave me the
-same history and order that walking the arch history would. Most of
-the time, anyway, and decided that I'd rather trust GIT over Arch on
-merging strategies...
-
-If topo-order is sane, then I'll just change that. Let me run a couple
-of tests with it first ;)
-
-WRT SSL... archimport doesn't care a bit about SSL, and if it does,
-it's a bug. It calls tla to perform all the "fetch stuff from the Arch
-repo operations", because I was too lazy to implement native support
-for reading the (trivial) repo format over all the transports. And
-with Arch, access to the remote repos is _fast_ (unlike cvs).
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8642>
 
 
+As pointed out on the list, git-rev-list can use a lot of memory.
 
-martin
+One low-hanging fruit is to free the commit buffer for commits that we
+parse. By default, parse_commit() will save away the buffer, since a lot
+of cases do want it, and re-reading it continually would be unnecessary. 
+However, in many cases the buffer isn't actually necessary and saving it 
+just wastes memory.
+
+We could just free the buffer ourselves, but especially in git-rev-list, 
+we actually end up using the helper functions that automatically add 
+parent commits to the commit lists, so we don't actually control the 
+commit parsing directly. 
+
+Instead, just make this behaviour of "parse_commit()" a global flag.  
+Maybe this is a bit tasteless, but it's very simple, and it makes a
+noticable difference in memory usage.
+
+Before the change:
+
+	[torvalds@g5 linux]$ /usr/bin/time git-rev-list v2.6.12..HEAD > /dev/null
+	0.26user 0.02system 0:00.28elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+	0inputs+0outputs (0major+3714minor)pagefaults 0swaps
+
+after the change:
+
+	[torvalds@g5 linux]$ /usr/bin/time git-rev-list v2.6.12..HEAD > /dev/null
+	0.26user 0.00system 0:00.27elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
+	0inputs+0outputs (0major+2433minor)pagefaults 0swaps
+
+note how the minor faults have decreased from 3714 pages to 2433 pages. 
+That's all due to the fewer anonymous pages allocated to hold the comment 
+buffers and their metadata.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+
+Hey, I'm not proud. If somebody wants to do a prettier patch, go wild.
+
+This still doesn't attack the _big_ memory use by
+
+	"git-rev-list --objects"
+
+where we just parse more stuff than we need to, but it's a first step.
+
+diff --git a/commit.c b/commit.c
+--- a/commit.c
++++ b/commit.c
+@@ -3,6 +3,8 @@
+ #include "commit.h"
+ #include "cache.h"
+ 
++int save_commit_buffer = 1;
++
+ struct sort_node
+ {
+ 	/*
+@@ -264,7 +266,7 @@ int parse_commit(struct commit *item)
+ 			     sha1_to_hex(item->object.sha1));
+ 	}
+ 	ret = parse_commit_buffer(item, buffer, size);
+-	if (!ret) {
++	if (save_commit_buffer && !ret) {
+ 		item->buffer = buffer;
+ 		return 0;
+ 	}
+diff --git a/commit.h b/commit.h
+--- a/commit.h
++++ b/commit.h
+@@ -17,6 +17,7 @@ struct commit {
+ 	char *buffer;
+ };
+ 
++extern int save_commit_buffer;
+ extern const char *commit_type;
+ 
+ struct commit *lookup_commit(const unsigned char *sha1);
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -582,6 +582,8 @@ int main(int argc, char **argv)
+ 		handle_one_commit(commit, &list);
+ 	}
+ 
++	save_commit_buffer = verbose_header;
++
+ 	if (!merge_order) {		
+ 		sort_by_date(&list);
+ 	        if (limited)
