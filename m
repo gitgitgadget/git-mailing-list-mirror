@@ -1,60 +1,64 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 0/4] Recovery after interrupted HTTP(s) fetch
-Date: Thu, 15 Sep 2005 15:02:59 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509151458240.23242@iabervon.org>
-References: <20050914124206.GC24405@master.mivlgu.local>
- <7vpsrbjz0t.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509141325310.26803@g5.osdl.org>
- <Pine.LNX.4.63.0509141641290.23242@iabervon.org> <Pine.LNX.4.58.0509141411510.26803@g5.osdl.org>
- <Pine.LNX.4.63.0509141722500.23242@iabervon.org> <7vk6hjfh9u.fsf@assigned-by-dhcp.cox.net>
- <pan.2005.09.15.10.34.59.363606@smurf.noris.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Shell quoting
+Date: Thu, 15 Sep 2005 12:01:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509151153140.26803@g5.osdl.org>
+References: <43290BB8.90501@zytor.com> <7vy85yahjk.fsf@assigned-by-dhcp.cox.net>
+ <4329C11A.1040302@zytor.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 15 21:01:09 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 15 21:03:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFywe-00058Z-UF
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 20:58:53 +0200
+	id 1EFyz9-0005th-Q2
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 21:01:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932217AbVIOS6u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 14:58:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbVIOS6u
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 14:58:50 -0400
-Received: from iabervon.org ([66.92.72.58]:14097 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932217AbVIOS6u (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 14:58:50 -0400
-Received: (qmail 14829 invoked by uid 1000); 15 Sep 2005 15:02:59 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 15 Sep 2005 15:02:59 -0400
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <pan.2005.09.15.10.34.59.363606@smurf.noris.de>
+	id S1750821AbVIOTBZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 15:01:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750896AbVIOTBZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 15:01:25 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:16861 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750889AbVIOTBY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 15:01:24 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8FJ1KBo010042
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 15 Sep 2005 12:01:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8FJ1HPG018207;
+	Thu, 15 Sep 2005 12:01:18 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <4329C11A.1040302@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8626>
 
-On Thu, 15 Sep 2005, Matthias Urlichs wrote:
 
-> Hi, Junio C Hamano wrote:
-> 
-> > Daniel Barkalow <barkalow@iabervon.org> writes:
-> >> Oh, right. Yeah, that's the obvious solution. I'll do that tonight.
-> > 
-> > Thanks.  In the meantime I have Sergey's patch in the "pu"
-> > branch but we can replace it with your fix.
-> 
-> Personally I'd rather combine the two. The point being, broken
-> repositories do happen -- for instance, when the file system is
-> inconsistent after a crash, or when the referent of an info/alternates
-> directory vanishes. :-/
-> 
-> I'd rather have a simple repair flag than do a "download everything again
-> and then throw most of it away" job when something like that happens.
 
-Agreed; but we want a new patch for --recover, because with the new code, 
-the easy way is to skip the for_each_ref call, at which point it will just 
-not assume you have anything.
+On Thu, 15 Sep 2005, H. Peter Anvin wrote:
+>
+> Okay, I'm trying to put together some rules that should work across shells.
 
-	-Daniel
-*This .sig left intentionally blank*
+Does anybody really still use tcsh? It's a broken mess.
+
+Junio's "sq_quote()" works wonderfully on any valid shells. The fact that 
+tcsh expands ! even inside single quotes is just pure braindamage.
+
+You could expand "sq_quote" to handle '!' and '\' characters the exact
+same way it handles the single tick (end single-tick quoting, do \! or \\
+and start single-tick quoting again) and that might be good enough for
+tcsh.
+
+IOW, the string "a\b'c!d" would become 'a'\\'b'\''c'\!'d' after 
+surrounding sq_quote with single-ticks.
+
+Insane?
+
+		Linus
