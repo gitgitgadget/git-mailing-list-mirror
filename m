@@ -1,51 +1,66 @@
-From: jdl@freescale.com
-Subject: PATCH Documentation/git-rev-list.txt typo fix
-Date: Thu, 15 Sep 2005 17:40:13 -0500
-Message-ID: <E1EG2Or-0005E2-Pw@jdl.com>
-X-From: git-owner@vger.kernel.org Fri Sep 16 00:41:41 2005
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Look at both unpacked and packed objects for short name
+ expansion
+Date: Fri, 16 Sep 2005 01:21:18 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0509160120470.3859@wgmdd8.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Fri Sep 16 01:22:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EG2PA-0003jS-FI
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 00:40:32 +0200
+	id 1EG32x-0004Nz-0K
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 01:21:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161034AbVIOWka (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 18:40:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161036AbVIOWka
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 18:40:30 -0400
-Received: from www.jdl.com ([66.118.10.122]:61577 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S1161034AbVIOWk3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 18:40:29 -0400
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1EG2Or-0005E2-Pw
-	for git@vger.kernel.org; Thu, 15 Sep 2005 17:40:14 -0500
+	id S1751183AbVIOXVU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 19:21:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751213AbVIOXVU
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 19:21:20 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:51332 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751183AbVIOXVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2005 19:21:20 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 2E4E0135323
+	for <git@vger.kernel.org>; Fri, 16 Sep 2005 01:21:19 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id 0F3DA59531
+	for <git@vger.kernel.org>; Fri, 16 Sep 2005 01:21:19 +0200 (CEST)
+Received: from wrzx35.rz.uni-wuerzburg.de (wrzx35.rz.uni-wuerzburg.de [132.187.3.35])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id ECDA95938D
+	for <git@vger.kernel.org>; Fri, 16 Sep 2005 01:21:18 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP id AEF8AE27E1
+	for <git@vger.kernel.org>; Fri, 16 Sep 2005 01:21:18 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
 To: git@vger.kernel.org
-X-Spam-Score: -105.9 (---------------------------------------------------)
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8650>
 
-I'm not positive what the doc conventions are, but I think
-something like this patch fixes the "superscript" problem
-on the git-rev-list doc page.
+We used to check for a unique expansion in the unpacked objects, and if
+one was found, we forgot to check in the packed objects, too.
 
-Signed-off-by: Jon Loeliger <jdl@freescale.com>
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
 ---
 
+ sha1_name.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -32,8 +32,8 @@ I have the commit object 'bar', but not
-
- The *--bisect* flag limits output to the one commit object which is
- roughly halfway between the included and excluded commits. Thus,
--if "git-rev-list --bisect foo ^bar ^baz" outputs 'midpoint', the output
--of "git-rev-list foo ^midpoint" and "git-rev-list midpoint ^bar ^baz"
-+if 'git-rev-list --bisect foo ^bar ^baz' outputs 'midpoint', the output
-+of 'git-rev-list foo ^midpoint' and 'git-rev-list midpoint ^bar ^baz'
- would be of roughly the same length. Finding the change which introduces
- a regression is thus reduced to a binary search: repeatedly generate and
- test new 'midpoint's until the commit chain is of length one.
+213fff36f398fbbbee9b76a9d59339ba60f1d58c
+diff --git a/sha1_name.c b/sha1_name.c
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -115,7 +115,8 @@ static int get_short_sha1(const char *na
+ 	if (i < 4)
+ 		return -1;
+ 	if (find_short_object_filename(i, canonical, sha1))
+-		return 0;
++                /* do not allow non-unique short names */
++                return find_short_packed_object(i, res, canonical)!=0?-1:0;
+ 	if (find_short_packed_object(i, res, sha1))
+ 		return 0;
+ 	return -1;
