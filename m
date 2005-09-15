@@ -1,152 +1,147 @@
-From: Christian Meder <chris@absolutegiganten.org>
-Subject: Re: "Read my lips: no more merges" - aka Linux 2.6.14-rc1
-Date: Fri, 16 Sep 2005 00:08:12 +0200
-Message-ID: <1126822093.27951.74.camel@localhost>
-References: <7255.1126583985@kao2.melbourne.sgi.com>
-	 <1126674993.5681.9.camel@localhost.localdomain>
-	 <1126745323.7199.3.camel@localhost.localdomain>
-	 <Pine.LNX.4.58.0509142018410.26803@g5.osdl.org>
-	 <43290486.5020301@zytor.com> <7v7jdibwqq.fsf@assigned-by-dhcp.cox.net>
-	 <u5tvf12sp1v.fsf@lysator.liu.se>
-	 <Pine.LNX.4.58.0509150905070.26803@g5.osdl.org>
-	 <u5toe6uql1w.fsf@lysator.liu.se>
-	 <Pine.LNX.4.58.0509151106200.26803@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re-organize "git-rev-list --objects" logic
+Date: Thu, 15 Sep 2005 15:14:29 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509151507380.26803@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	David =?ISO-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Fri Sep 16 00:10:31 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Fri Sep 16 00:15:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EG1uB-0005Al-LF
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 00:08:32 +0200
+	id 1EG20A-0006VQ-7o
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 00:14:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932274AbVIOWI1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 15 Sep 2005 18:08:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932597AbVIOWI1
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 18:08:27 -0400
-Received: from a15181680.alturo-server.de ([217.160.108.75]:35535 "EHLO
-	a15181680.alturo-server.de") by vger.kernel.org with ESMTP
-	id S932274AbVIOWI0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 18:08:26 -0400
-Received: from p54a21a4c.dip0.t-ipconnect.de ([84.162.26.76] helo=localhost)
-	by a15181680.alturo-server.de with esmtpsa (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.52)
-	id 1EG1u1-0007qq-RP; Fri, 16 Sep 2005 00:08:22 +0200
-Received: from chris by localhost with local (Exim 4.52)
-	id 1EG1tu-0006re-Ar; Fri, 16 Sep 2005 00:08:14 +0200
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509151106200.26803@g5.osdl.org>
-X-Mailer: Evolution 2.2.3 
+	id S932605AbVIOWOj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 18:14:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932607AbVIOWOj
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 18:14:39 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:6051 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932605AbVIOWOj (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 18:14:39 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8FMEUBo024453
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 15 Sep 2005 15:14:30 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8FMETQ3028098;
+	Thu, 15 Sep 2005 15:14:29 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8645>
-
-On Thu, 2005-09-15 at 11:15 -0700, Linus Torvalds wrote:
->=20
-> On Thu, 15 Sep 2005, David K=E5gedal wrote:
-> >=20
-> > No, you read my message wrong, or I failed to describe it properly.
->=20
-> No, I did get it.
->=20
-> It's the Debian people who don't get it.
->=20
-> Expecting other software projects to make cludges for Debian-specific=
-=20
-> packages is _insane_.
-
-Actually according to Debian policy, sensible-pager is a cludge which
-should be used _only_ in the case that the upstream program is hard to
-adapt to a PAGER environment approach. Only in this case the upstream
-package should be patched to at least use sensible-pager.
-
->=20
-> In other word, no sane package will ever use "sensible-pager", becaus=
-e
-> it's not a sensible thing to do. Once Debian maintainers are "Big Poo=
--Bah
-> And OverLord of the KnownUniverse" and can force everybody else to ha=
-ve
-> "sensible-pager" too, maybe -then- it might make sense, but until the=
-n
-> it's just an odd-ball Debian thing that makes Debian maintainers eith=
-er
-> (a) maintain stupid patches to teach other programs about it or (b) h=
-ave=20
-> normal programs that use the _standard_ pagers in the absense of $PAG=
-ER.
->=20
-> And like it or not, there are two standard pages: "more" and "less". =
-In=20
-> the immortal words: "To two shall you count. You shall not count to o=
-ne,=20
-> except on your way to two. And you shall definitely NOT count to thre=
-e,=20
-> not call it 'sensible-pager'".
->=20
-> The fact is, we HAVE a sensible-pager, and it is called "less".
->=20
-> And for old programs that assume that sensible-pager is "more", we ei=
-ther=20
-> install that _too_, or we make a symlink that points to "less".
-
-Debian prefers to call the symlink "pager" and let the sysadmin decide
-where it should point: less, more, whatever. The e2fsprogs upstream
-package for instance supports PAGER->/usr/bin/pager->/usr/bin/less.
-Granted /usr/bin/pager is probably Debian only but every upstream autho=
-r
-deciding whether to use PAGER:more or PAGER:less is not _that_ much
-better.=20
-
-Just wanted to nitpick. Now you can reignite your flamethrower ;-)=20
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8646>
 
 
+The logic to calculate the full object list used to be very inter-twined 
+with the logic that looked up the commits.
 
-				Christian
+For no good reason - it's actually a lot simpler to just do that logic 
+as a separate pass.
 
->=20
-> And for people who want something else, everybody already supports th=
-e=20
-> STANDARD way of saying so: "$PAGER".
->=20
-> In other words, "sensible-pager" buys you absolutely _nothing_. Excep=
-t for=20
-> confusion and extra work.
->=20
-> > The advantage is, I guess, consistency.  Different programs don't h=
-ave
-> > to encode their own default pager.
->=20
-> No. That's NOT an advantage. It's a disadvantage. Different programs =
-sure=20
-> as hell will not do silly Debian-only things, so it just means that i=
-f=20
-> Debian tries to enforce this, they're only causing more work for thei=
-r own=20
-> maintainers.
->=20
-> They're also causing more work and discomfort for their users, since =
-now=20
-> their users will have to live with the fact that they are used to=20
-> non-standard behaviour.
->=20
-> And it has _zero_ upsides. Exactly because it's not standard. There's=
- a=20
-> lot to be said for "do it like others do it".
->=20
-> 			Linus
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
---=20
-Christian Meder, email: chris@absolutegiganten.org
+This improves performance a bit, and uses slightly less memory in my 
+tests, but more importantly it makes the code simpler to work with and 
+follow what it does.
 
-The Way-Seeking Mind of a tenzo is actualized=20
-by rolling up your sleeves.
+The performance win is less than I had hoped for, but I get:
 
-                (Eihei Dogen Zenji)
+Before:
+
+	[torvalds@g5 linux]$ /usr/bin/time git-rev-list --objects v2.6.12..HEAD | wc -l
+	13.64user 0.42system 0:14.13elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+	0inputs+0outputs (0major+47947minor)pagefaults 0swaps
+	58945
+
+After:
+
+	[torvalds@g5 linux]$ /usr/bin/time git-rev-list --objects v2.6.12..HEAD | wc -l
+	11.80user 0.36system 0:12.16elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+	0inputs+0outputs (0major+42684minor)pagefaults 0swaps
+	58945
+
+ie it improved by 2 seconds, and took a 5000+ fewer pages (hey, that's 
+20MB out of 174MB to go). And got the same number of objects (in theory, 
+the more expensive one might find some more shared objects to avoid. In 
+practice it obviously doesn't).
+
+I know how to make it use _lots_ less memory, which will probably speed it 
+up. But that's for another time, and I'd prefer to see this go in first.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+----
+
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -231,8 +231,6 @@ static void mark_parents_uninteresting(s
+ {
+ 	struct commit_list *parents = commit->parents;
+ 
+-	if (tree_objects)
+-		mark_tree_uninteresting(commit->tree);
+ 	while (parents) {
+ 		struct commit *commit = parents->item;
+ 		commit->object.flags |= UNINTERESTING;
+@@ -272,29 +270,6 @@ static int everybody_uninteresting(struc
+ 			continue;
+ 		return 0;
+ 	}
+-
+-	/*
+-	 * Ok, go back and mark all the edge trees uninteresting,
+-	 * since otherwise we can have situations where a parent
+-	 * that was marked uninteresting (and we never even had
+-	 * to look at) had lots of objects that we don't want to
+-	 * include.
+-	 *
+-	 * NOTE! This still doesn't mean that the object list is
+-	 * "correct", since we may end up listing objects that
+-	 * even older commits (that we don't list) do actually
+-	 * reference, but it gets us to a minimal list (or very
+-	 * close) in practice.
+-	 */
+-	if (!tree_objects)
+-		return 1;
+-
+-	while (orig) {
+-		struct commit *commit = orig->item;
+-		if (!parse_commit(commit) && commit->tree)
+-			mark_tree_uninteresting(commit->tree);
+-		orig = orig->next;
+-	}
+ 	return 1;
+ }
+ 
+@@ -370,6 +345,19 @@ static struct commit_list *find_bisectio
+ 	return best;
+ }
+ 
++static void mark_edges_uninteresting(struct commit_list *list)
++{
++	for ( ; list; list = list->next) {
++		struct commit_list *parents = list->item->parents;
++
++		for ( ; parents; parents = parents->next) {
++			struct commit *commit = parents->item;
++			if (commit->object.flags & UNINTERESTING)
++				mark_tree_uninteresting(commit->tree);
++		}
++	}
++}
++
+ static struct commit_list *limit_list(struct commit_list *list)
+ {
+ 	struct commit_list *newlist = NULL;
+@@ -388,6 +376,8 @@ static struct commit_list *limit_list(st
+ 		}
+ 		p = &commit_list_insert(commit, p)->next;
+ 	}
++	if (tree_objects)
++		mark_edges_uninteresting(newlist);
+ 	if (bisect_list)
+ 		newlist = find_bisection(newlist);
+ 	return newlist;
