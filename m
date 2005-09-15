@@ -1,66 +1,100 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Shell quoting
-Date: Thu, 15 Sep 2005 12:50:48 -0700
-Message-ID: <7vll1yyusn.fsf@assigned-by-dhcp.cox.net>
-References: <43290BB8.90501@zytor.com>
-	<7vy85yahjk.fsf@assigned-by-dhcp.cox.net> <4329C11A.1040302@zytor.com>
-	<Pine.LNX.4.58.0509151153140.26803@g5.osdl.org>
-	<4329CC02.8090104@zytor.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: RE: getting a list of changes I commited
+Date: Thu, 15 Sep 2005 12:54:54 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509151241140.26803@g5.osdl.org>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F04662735@scsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 15 21:54:43 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 15 21:57:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFzmS-0003GY-GR
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 21:52:24 +0200
+	id 1EFzpA-0004Es-Im
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 21:55:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965276AbVIOTuv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 15:50:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965277AbVIOTuv
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 15:50:51 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:44775 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S965276AbVIOTuu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2005 15:50:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050915195050.UQFO8185.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 15 Sep 2005 15:50:50 -0400
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <4329CC02.8090104@zytor.com> (H. Peter Anvin's message of "Thu,
-	15 Sep 2005 12:31:14 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965281AbVIOTzI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 15:55:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965279AbVIOTzI
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 15:55:08 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:13802 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965281AbVIOTzG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 15:55:06 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8FJsxBo014188
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 15 Sep 2005 12:55:01 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8FJstbL021090;
+	Thu, 15 Sep 2005 12:54:57 -0700
+To: "Luck, Tony" <tony.luck@intel.com>, Junio C Hamano <junkio@cox.net>
+In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F04662735@scsmsx401.amr.corp.intel.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8635>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
 
-> Linus Torvalds wrote:
->> Does anybody really still use tcsh? It's a broken mess.
->>
->
-> Yes.
 
-Yes to "still use", or yes to "broken mess" ;-)?
+On Thu, 15 Sep 2005, Luck, Tony wrote:
+> 
+> I can add the "^linus", but I think that with my workflow it
+> will never make a difference.  Any commits that got into your
+> tree with a committer line by me will already be in my "oldhead"
+> (how else did you get them?).  So "^oldhead ^linus" should always
+> be identical to "^oldhead".
 
->> Junio's "sq_quote()" works wonderfully on any valid shells. The fact
->> that tcsh expands ! even inside single quotes is just pure
->> braindamage.
->
->> You could expand "sq_quote" to handle '!' and '\' characters the exact
->> same way it handles the single tick (end single-tick quoting, do \! or \\
->> and start single-tick quoting again) and that might be good enough for
->> tcsh.
->
-> It seems easier to just \-escape any special characters.
+No. "oldhead" has to be the point where you did the last email thing.
 
-I am sympathetic.  The beauty of sq_quote() comes directly from
-the behaviour of single quoting rules of "any valid shells" --
-there is no need to maintain a list of special characters.  Just
-single quote itself is special and nothing else.
+So any time you merge from me, next time your email cron-job (or whatever)  
+hits, ^linus _will_ make a difference. Without it, you'd email out all the 
+stuff that came through my tree.
+
+> Great ... I suspected that everything I needed was already there
+> (after all, all GIT problems are solvable with the right arguments to
+> git-rev-list!)
+
+Good man.
+
+> But "git-shortlog" doesn't like the output from this, so I need
+> a script (or another tip on arguments to git commands).
+
+Ehh. This is getting ugly, but hey, that's my middle name.
+
+	git-rev-list --header newhead ^oldhead |
+		grep -z "committer .*tony\.luck" |
+		tr '\0' '\n' |
+		git-shortlog
+
+
+and btw, this depends on "git-shortlog" also understanding non-pretty log 
+messages, with a patch like below.
+
+Junio?
+
+		Linus "ugly" Torvalds
+
+---
+Subject: Teach git-shortlog about raw log format too
+
+This teaches "git-shortlog" to understand the non-prettified author format 
+too, so you can use it with "--pretty=raw" or "--header" output too.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+diff --git a/git-shortlog.perl b/git-shortlog.perl
+--- a/git-shortlog.perl
++++ b/git-shortlog.perl
+@@ -108,7 +108,7 @@ sub changelog_input {
+ 		if ($pstate == 1) {
+ 			my ($email);
+ 
+-			next unless /^Author: (.*)<(.*)>.*$/;
++			next unless /^Author: (.*)<(.*)>.*$/ || /^author (.*)<(.*)>.*$/;
+ 	
+ 			$n_records++;
+ 	
