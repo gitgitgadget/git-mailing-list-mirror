@@ -1,65 +1,60 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: git-daemon --inetd
-Date: Thu, 15 Sep 2005 12:19:25 -0700
-Message-ID: <4329C93D.2020701@zytor.com>
-References: <43290EFF.3070604@zytor.com> <Pine.LNX.4.58.0509150829090.26803@g5.osdl.org> <4329BDD9.4010507@zytor.com> <Pine.LNX.4.58.0509151142570.26803@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/4] Recovery after interrupted HTTP(s) fetch
+Date: Thu, 15 Sep 2005 12:31:24 -0700
+Message-ID: <7vu0gmyvoz.fsf@assigned-by-dhcp.cox.net>
+References: <20050914124206.GC24405@master.mivlgu.local>
+	<7vpsrbjz0t.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509141325310.26803@g5.osdl.org>
+	<Pine.LNX.4.63.0509141641290.23242@iabervon.org>
+	<Pine.LNX.4.58.0509141411510.26803@g5.osdl.org>
+	<Pine.LNX.4.63.0509141722500.23242@iabervon.org>
+	<7vk6hjfh9u.fsf@assigned-by-dhcp.cox.net>
+	<pan.2005.09.15.10.34.59.363606@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 15 21:22:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 15 21:33:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFzGy-0002Y1-La
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 21:19:53 +0200
+	id 1EFzSG-0005ZT-Nw
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 21:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964800AbVIOTTt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 15:19:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964963AbVIOTTt
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 15:19:49 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:59823 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S964800AbVIOTTs
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2005 15:19:48 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j8FJJSDb013030
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 15 Sep 2005 12:19:29 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509151142570.26803@g5.osdl.org>
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S965270AbVIOTba (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 15:31:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965271AbVIOTba
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 15:31:30 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:52441 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S965270AbVIOTb3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2005 15:31:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050915193125.SAMN18319.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 15 Sep 2005 15:31:25 -0400
+To: Matthias Urlichs <smurf@smurf.noris.de>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8629>
 
-Linus Torvalds wrote:
-> 
-> On Thu, 15 Sep 2005, H. Peter Anvin wrote:
-> 
->>Wrapping it in chroot() would mean having enough things in the chroot 
->>environment to support starting up programs, which is ugly.  I'll test 
->>the patch when I get a chance.
-> 
-> 
-> Fair enough. This still requires "git-upload-pack" and any libraries that
-> requires, of course. You might want to do a statically linked version or
-> something.
-> 
-> Hmm. A quick check seems to say that git-upload-pack only does libz and 
-> libc. And the SHA1 stuff, of course, but that you can always get static by 
-> using the git built-in mozilla versions.
-> 
+Matthias Urlichs <smurf@smurf.noris.de> writes:
 
-Could git-upload-pack be integrated into the git-daemon binary, so that 
-the exec isn't needed?
+> Personally I'd rather combine the two. The point being, broken
+> repositories do happen -- for instance, when the file system is
+> inconsistent after a crash, or when the referent of an info/alternates
+> directory vanishes. :-/
+>
+> I'd rather have a simple repair flag than do a "download everything again
+> and then throw most of it away" job when something like that happens.
 
-	-hpa
+If you are talking about disaster recovery, wouldn't you rather
+clone the remote into a clean repository, and fetch what are
+salvageable from the potentially corrupt old repository into
+this clean repository you know is OK?  I think that would
+suggest that you do not need another "download everything again"
+added to git-http-fetch.  You can already run git-clone from the
+remote to "download everything again", and then git-fetch from
+the repository being salvaged.
