@@ -1,61 +1,78 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-diff-tree rename detection bug
-Date: Thu, 15 Sep 2005 16:57:19 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509151647380.31877@localhost.localdomain>
-References: <59a6e583050914094777c4fe96@mail.gmail.com>
- <7vwtljjzc3.fsf@assigned-by-dhcp.cox.net>
- <59a6e583050914114054b1564d@mail.gmail.com>
- <Pine.LNX.4.58.0509141321180.26803@g5.osdl.org>
- <17192.56103.803096.526568@cargo.ozlabs.ibm.com> <43290DA0.3030402@zytor.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: git-daemon --inetd
+Date: Fri, 16 Sep 2005 09:44:13 +1200
+Message-ID: <46a038f905091514447e13404d@mail.gmail.com>
+References: <43290EFF.3070604@zytor.com>
+	 <Pine.LNX.4.58.0509150829090.26803@g5.osdl.org>
+	 <4329BDD9.4010507@zytor.com>
+	 <Pine.LNX.4.58.0509151142570.26803@g5.osdl.org>
+	 <4329C93D.2020701@zytor.com>
+	 <Pine.LNX.4.58.0509151225410.26803@g5.osdl.org>
+Reply-To: martin.langhoff@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Paul Mackerras <paulus@samba.org>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Wayne Scott <wsc9tt@gmail.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 15 22:58:39 2005
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Martin Langhoff <martin@catalyst.net.nz>,
+	Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 15 23:44:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EG0nP-0004PB-Cr
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 22:57:27 +0200
+	id 1EG1Wl-0007pF-8P
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 23:44:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932598AbVIOU5Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 16:57:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932602AbVIOU5Y
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 16:57:24 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:22408 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932598AbVIOU5Y
+	id S1030507AbVIOVoR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 17:44:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030561AbVIOVoQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 17:44:16 -0400
+Received: from rproxy.gmail.com ([64.233.170.201]:40829 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1030507AbVIOVoQ convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2005 16:57:24 -0400
-Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IMV005RMM7JWE10@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 15 Sep 2005 16:57:19 -0400 (EDT)
-In-reply-to: <43290DA0.3030402@zytor.com>
-X-X-Sender: nico@localhost.localdomain
-To: "H. Peter Anvin" <hpa@zytor.com>
+	Thu, 15 Sep 2005 17:44:16 -0400
+Received: by rproxy.gmail.com with SMTP id i8so81410rne
+        for <git@vger.kernel.org>; Thu, 15 Sep 2005 14:44:13 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SKY3nURpi8tDxLn/LYAaNKIdu6IVcKbYFJrlMYfpShtKSTsCUG9ZNUY42SHmNfBiVQT/YsH0Zl2iolQUv4jtG3GMzO3AJRpaPsOdrtL9MgnDsrICfY0ApaqAnc+BxGyIv0Arh/4Dvh0xtLCOrH3fCcn6eaYeEhZC+2FtBUsTyUQ=
+Received: by 10.38.97.3 with SMTP id u3mr325187rnb;
+        Thu, 15 Sep 2005 14:44:13 -0700 (PDT)
+Received: by 10.38.101.53 with HTTP; Thu, 15 Sep 2005 14:44:13 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509151225410.26803@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8641>
 
-On Wed, 14 Sep 2005, H. Peter Anvin wrote:
-
-> Paul Mackerras wrote:
-> > 
-> > I assume you're compiling git as 32-bit executables on your G5.  I
-> > don't see any reason why the git binaries would need to be 64-bit.
-> > 
+On 9/16/05, Linus Torvalds <torvalds@osdl.org> wrote:
+> Btw, I think --merge-order was cool, but its weaker cousin --topo-order is
+> what is actually _used_. Maybe we should deprecate --merge-order? Right
+> now the only real user is git-archimport, and I think that one too really
+> only wants topo-order too. For example, right now I think git-archimport
+> won't actually work if you build without openssl.
 > 
-> Well, git seems to assume it can mmap() the entirety of any file under its
-> control, so a 64-bit git could handle larger files.
+> Jon? Martin?
 
-But beware that the delta code would break since it currently won't cope 
-with any file offset larger than 32 bits.  I reserved the zero byte to 
-prefix any extended encoding but felt it wasn't really needed yet and I 
-just didn't bother coding it.
+I've used merge-order because it made sense... in that it gave me the
+same history and order that walking the arch history would. Most of
+the time, anyway, and decided that I'd rather trust GIT over Arch on
+merging strategies...
+
+If topo-order is sane, then I'll just change that. Let me run a couple
+of tests with it first ;)
+
+WRT SSL... archimport doesn't care a bit about SSL, and if it does,
+it's a bug. It calls tla to perform all the "fetch stuff from the Arch
+repo operations", because I was too lazy to implement native support
+for reading the (trivial) repo format over all the transports. And
+with Arch, access to the remote repos is _fast_ (unlike cvs).
+
+cheers,
 
 
-Nicolas
+
+martin
