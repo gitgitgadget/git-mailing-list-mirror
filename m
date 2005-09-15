@@ -1,90 +1,60 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: getting a list of changes I commited
-Date: Thu, 15 Sep 2005 11:38:25 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509151128170.26803@g5.osdl.org>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F046625FC@scsmsx401.amr.corp.intel.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Shell quoting
+Date: Thu, 15 Sep 2005 11:44:42 -0700
+Message-ID: <4329C11A.1040302@zytor.com>
+References: <43290BB8.90501@zytor.com> <7vy85yahjk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 15 20:41:34 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 15 20:45:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFyeB-0008Bv-Ib
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 20:39:47 +0200
+	id 1EFyjF-00017T-7S
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 20:45:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030567AbVIOSie (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 14:38:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030568AbVIOSie
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 14:38:34 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:18136 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030567AbVIOSid (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 14:38:33 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8FIcTBo008528
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 15 Sep 2005 11:38:30 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8FIcPBd016956;
-	Thu, 15 Sep 2005 11:38:27 -0700
-To: "Luck, Tony" <tony.luck@intel.com>
-In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F046625FC@scsmsx401.amr.corp.intel.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030572AbVIOSo6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 14:44:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030573AbVIOSo6
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 14:44:58 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:28594 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1030572AbVIOSo5
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2005 14:44:57 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j8FIikjk012059
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 15 Sep 2005 11:44:46 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy85yahjk.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8623>
 
+Okay, I'm trying to put together some rules that should work across shells.
 
+For byte values:
 
-On Thu, 15 Sep 2005, Luck, Tony wrote:
-> 
-> So I think that what I want is to produce a list of changes
-> that I commited when I push a new tree out to kernel.org.
-> But ... such a push usually contains lots of flow-through
-> changes that I pulled from Linus ... so a simple:
-> 
->  $ git-rev-list --no-merges newhead ^oldhead
-> 
-> gives a long list of changes.
+0		Hopeless - not representable in C strings
+1-31,127	Prefix with ^V if (and only if!) entered at a prompt,
+		as opposed to passed in the ssh command field
+32-126		\-escape all characters except -+_@=:.,/ and
+  		ASCII alphanumerics
+128-		Don't escape (would have to be done differently
+  		depending on locale, and shouldn't be needed)
 
-Why not just _also_ limit it by what is already merged in my tree?
+Anyone know of a system for which that breaks horribly?  The 1-31,127 
+stuff is iffy, but I just don't know of anything that's more reliable. 
+Unfortunately \010-style quoting doesn't work in any of the common shells.
 
-Ie just do
-
-	git fetch linus
-	git-rev-list --no-merges newhead ^oldhead ^linus
-
-The problem with your approach:
-
->				 I'd like to filter out
-> all the ones that weren't commited by me.  Is there an
-> argument to git-rev-list that will just print the entries
-> where I'm listed as the commiter, or do I have to use
-> "--pretty-full" and write a little script to do the trim?
-
-This is what "--header" (and it's zero termination) is designed for: you
-can do
-
-	git-rev-list --header --no-merges newhead ^oldhead |
-		grep -z "committer .*tony\.luck"
-
-and it will give a nice NUL-terminated output list of just your commits. 
-No complex script necessary.
-
-HOWEVER. The reason I suggest adding the ^linus instead is that I suspect
-people really wants to see the development stuff, and that's what they'd
-get if you just run the script often enough (and daily is certainly often
-enough). Also, the "grep the committer" approach fundamentally doesn't
-work if you ever plan on having sub-lieutenants that work with you and
-that you use git to merge with.
-
-But hey, that grep thing certainly works too. The output is trivial to 
-parse.
-
-(Oh, and I think "-z" is a GNU grep extension.)
-
-			Linus
+	-hpa
