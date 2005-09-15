@@ -1,59 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-daemon --inetd
-Date: Thu, 15 Sep 2005 12:57:34 -0700
-Message-ID: <7vek7qyuhd.fsf@assigned-by-dhcp.cox.net>
-References: <43290EFF.3070604@zytor.com>
-	<Pine.LNX.4.58.0509150829090.26803@g5.osdl.org>
-	<4329BDD9.4010507@zytor.com>
-	<Pine.LNX.4.58.0509151142570.26803@g5.osdl.org>
-	<4329C93D.2020701@zytor.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Shell quoting
+Date: Thu, 15 Sep 2005 13:02:26 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509151258400.26803@g5.osdl.org>
+References: <43290BB8.90501@zytor.com> <7vy85yahjk.fsf@assigned-by-dhcp.cox.net>
+ <4329C11A.1040302@zytor.com> <Pine.LNX.4.58.0509151153140.26803@g5.osdl.org>
+ <7vpsrayviz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu Sep 15 22:00:16 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 15 22:04:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFzrX-0004v0-QR
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 21:57:40 +0200
+	id 1EFzwO-0006H6-Lq
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 22:02:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030424AbVIOT5h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 15:57:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030428AbVIOT5h
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 15:57:37 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:13804 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1030424AbVIOT5g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2005 15:57:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050915195736.UYXS8185.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 15 Sep 2005 15:57:36 -0400
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <4329C93D.2020701@zytor.com> (H. Peter Anvin's message of "Thu,
-	15 Sep 2005 12:19:25 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030463AbVIOUCf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 16:02:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030471AbVIOUCf
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 16:02:35 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:34540 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030463AbVIOUCf (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 16:02:35 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8FK2UBo014732
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 15 Sep 2005 13:02:30 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8FK2RCJ021510;
+	Thu, 15 Sep 2005 13:02:28 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vpsrayviz.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8637>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
 
-> Could git-upload-pack be integrated into the git-daemon binary, so that 
-> the exec isn't needed?
 
-In the longer term, I'd like to extend git-daemon-export-ok to
-mean:
+On Thu, 15 Sep 2005, Junio C Hamano wrote:
+> 
+> I vaguely recall you had a code that assumes what sq_quote()
+> produces and unquote it without using shell.  If somebody does
+> the above change for '!' and '\', that code may need to be
+> checked and adjusted as well.
 
-    - the presense of empty file means any supported operation
-      not just git-upload-pack is allowed for backward
-      compatibility.
+I sent out a trivial "push-shell" that was meant to be usable as a login 
+shell for an ssh connection that only accepted pushes (and could perhaps 
+be extended to also allow some administrative stuff like creating new 
+archives etc).
 
-    - otherwise list of allowed git-* server side program.
+In that thing, push-shell.c: parse_argument() would need to be trivially
+updated.
 
-and be able to extend daemon.c:execute() function to check
-and execute server side programs other than git-upload-pack.  So
-the answer from me is a mild no.
+I didn't ever test it, and I never got any feedback on it, so.. If anybody 
+is interested in it, I still have it, although I think a better place to 
+find it is probably on the git mailing list archives. I've not done any 
+other work on it.
+
+		Linus
