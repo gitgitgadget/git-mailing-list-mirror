@@ -1,66 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-diff-tree rename detection bug
-Date: Thu, 15 Sep 2005 01:17:16 -0700
-Message-ID: <7vll1y9243.fsf@assigned-by-dhcp.cox.net>
-References: <59a6e583050914094777c4fe96@mail.gmail.com>
-	<7vwtljjzc3.fsf@assigned-by-dhcp.cox.net>
-	<59a6e583050914114054b1564d@mail.gmail.com>
-	<Pine.LNX.4.58.0509141321180.26803@g5.osdl.org>
-	<17192.56103.803096.526568@cargo.ozlabs.ibm.com>
-	<17192.56292.867933.739867@cargo.ozlabs.ibm.com>
-	<Pine.LNX.4.58.0509142032300.26803@g5.osdl.org>
-	<17192.65054.520959.454610@cargo.ozlabs.ibm.com>
+From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
+Subject: Re: "Read my lips: no more merges" - aka Linux 2.6.14-rc1
+Date: Thu, 15 Sep 2005 10:39:08 +0200
+Message-ID: <u5tvf12sp1v.fsf@lysator.liu.se>
+References: <7255.1126583985@kao2.melbourne.sgi.com>
+	<1126674993.5681.9.camel@localhost.localdomain>
+	<1126745323.7199.3.camel@localhost.localdomain>
+	<Pine.LNX.4.58.0509142018410.26803@g5.osdl.org>
+	<43290486.5020301@zytor.com> <7v7jdibwqq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Wayne Scott <wsc9tt@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 15 10:18:58 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Sep 15 10:43:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFovu-00066F-W4
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 10:17:27 +0200
+	id 1EFpJf-0004JG-Ky
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 10:42:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750953AbVIOIRU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 04:17:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751026AbVIOIRU
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 04:17:20 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:20352 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1750953AbVIOIRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2005 04:17:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050915081716.GUXA6784.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 15 Sep 2005 04:17:16 -0400
-To: Paul Mackerras <paulus@samba.org>
+	id S932198AbVIOIlp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 15 Sep 2005 04:41:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932217AbVIOIlp
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 04:41:45 -0400
+Received: from main.gmane.org ([80.91.229.2]:20690 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932198AbVIOIlo (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 04:41:44 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EFpHw-0003vm-PB
+	for git@vger.kernel.org; Thu, 15 Sep 2005 10:40:12 +0200
+Received: from 212214120186-virtutech-ab.host.songnetworks.se ([212.214.120.186])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Sep 2005 10:40:12 +0200
+Received: from davidk by 212214120186-virtutech-ab.host.songnetworks.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Sep 2005 10:40:12 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 212214120186-virtutech-ab.host.songnetworks.se
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:sq+DS+ZqDwoOEr70Oot4LG79xQI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8597>
 
-Paul Mackerras <paulus@samba.org> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> The strlen() in glibc for ppc is unbearably clever hand-coded
-> assembly, which loads up 8 bytes at a time (once it has the address
-> 8-byte aligned), and does various ANDs and ORs and ADDs and
-> conditional branches.  If some of the 8 bytes aren't defined, it will
-> in many cases branch one way or the other based on the undefined
-> bytes, but end up computing the same result on either branch.
+> "H. Peter Anvin" <hpa@zytor.com> writes:
+>
+>> Linus Torvalds wrote:
+>>> On Wed, 14 Sep 2005, Alejandro Bonilla Beeche wrote:
+>>>
+>>>>debian:~# cd linux-2.6/
+>>>>debian:~/linux-2.6# git log
+>>>>/usr/local/bin/git-log-script: line 4: less: command not found
+>>> A very strange Linux installation that doesn't come with "less"...
+>>> What a strange box. Anyway, that does point out that maybe the git
+>>> RPM spec should have "less" as a dependency.
+>>
+>> Generally you want to honour $PAGER if it is defined.
+>
+> We do, in the form of "something | ${PAGER:-less}".
+>
+> On Debian, "less" is Priority "standard" and my understanding is
+> that the only thing we can (and should if I recall correctly)
+> omit from the dependency list is the packages of Priority
+> "essential", so technically we are required to list "less" as
+> our dependency.  I do not know about RPM/Fedora.
 
-This reminds me of what I did in my previous life, writing a
-memory allocation checker -- this was before Valgrind -- and
-found out that strcpy in the C library that came with Solaris
-had a similar clever trick.  What was interesting was that
-copying a string starting at the (PAGESIZE-3)th byte on a page
-and NUL terminated at the end of the same page ended up
-prefetching the first word from the next page (please do not ask
-me about the details -- I do not remember the disassembly of
-that part of the code anymore).  It was not an inconvenience for
-our memory checker but was a real bug -- the next page could
-very well be unaccessible.
+On my Debian system, there is a "sensible-pager" which does a
+${PAGER:-pager}, and "pager" which is a symlink to an installed pager
+(using the 'alternatives' system).  So a Debian package should
+probably use one of those.
 
-The bug was fixed in the next version of the C library when we
-updated our Solaris box.
+--=20
+David K=E5gedal
