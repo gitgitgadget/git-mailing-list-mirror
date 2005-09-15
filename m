@@ -1,54 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Avoid wasting memory in git-rev-list
-Date: Thu, 15 Sep 2005 15:02:26 -0700
-Message-ID: <7v7jdiyop9.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 15 Sep 2005 15:07:29 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509151507150.26803@g5.osdl.org>
 References: <Pine.LNX.4.58.0509151434470.26803@g5.osdl.org>
+ <7v7jdiyop9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 16 00:05:18 2005
+X-From: git-owner@vger.kernel.org Fri Sep 16 00:08:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EG1oR-0003eq-4l
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 00:02:37 +0200
+	id 1EG1tP-0004xl-25
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 00:07:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965054AbVIOWCc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 18:02:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965283AbVIOWCc
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 18:02:32 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:15056 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S965054AbVIOWCc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2005 18:02:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050915220228.YOYQ18319.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 15 Sep 2005 18:02:28 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509151434470.26803@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 15 Sep 2005 14:43:17 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965288AbVIOWHl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 18:07:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965287AbVIOWHl
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 18:07:41 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:26529 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965288AbVIOWHk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 18:07:40 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8FM7WBo024064
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 15 Sep 2005 15:07:33 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8FM7TQx027756;
+	Thu, 15 Sep 2005 15:07:30 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7jdiyop9.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8644>
 
-So using this I could also avoid wasting memory by the "are we
-already walking the commit reachable from our existing refs"
-check by doing something like this?
 
-------------
-git diff
-diff --git a/fetch.c b/fetch.c
---- a/fetch.c
-+++ b/fetch.c
-@@ -207,6 +207,7 @@ int pull(char *target)
- 	unsigned char sha1[20];
- 	int fd = -1;
- 
-+	save_commit_buffer = 0;
- 	if (write_ref && current_ref) {
- 		fd = lock_ref_sha1(write_ref, current_ref);
- 		if (fd < 0)
+
+On Thu, 15 Sep 2005, Junio C Hamano wrote:
+>
+> So using this I could also avoid wasting memory by the "are we
+> already walking the commit reachable from our existing refs"
+> check by doing something like this?
+
+Yes. It's still ugly, but it's _simple_.
+
+		Linus
