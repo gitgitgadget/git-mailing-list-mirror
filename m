@@ -1,82 +1,76 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Shell quoting
-Date: Thu, 15 Sep 2005 13:18:13 -0700
-Message-ID: <4329D705.8050101@zytor.com>
-References: <43290BB8.90501@zytor.com>	<7vy85yahjk.fsf@assigned-by-dhcp.cox.net> <4329C11A.1040302@zytor.com>	<Pine.LNX.4.58.0509151153140.26803@g5.osdl.org>	<4329CC02.8090104@zytor.com> <7vll1yyusn.fsf@assigned-by-dhcp.cox.net>
+From: "Luck, Tony" <tony.luck@intel.com>
+Subject: RE: getting a list of changes I commited
+Date: Thu, 15 Sep 2005 13:23:33 -0700
+Message-ID: <B8E391BBE9FE384DAA4C5C003888BE6F04662802@scsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 15 22:22:14 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 15 22:24:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EG0By-0002fk-2b
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 22:18:46 +0200
+	id 1EG0Gq-0004DW-OQ
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 22:23:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161006AbVIOUSn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 16:18:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161008AbVIOUSn
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 16:18:43 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:2516 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1161006AbVIOUSn
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2005 16:18:43 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j8FKIH38014376
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 15 Sep 2005 13:18:18 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vll1yyusn.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1161009AbVIOUXq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 16:23:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161012AbVIOUXq
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 16:23:46 -0400
+Received: from fmr14.intel.com ([192.55.52.68]:1216 "EHLO
+	fmsfmr002.fm.intel.com") by vger.kernel.org with ESMTP
+	id S1161009AbVIOUXp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 16:23:45 -0400
+Received: from fmsfmr100.fm.intel.com (fmsfmr100.fm.intel.com [10.253.24.20])
+	by fmsfmr002.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j8FKNZJB015241;
+	Thu, 15 Sep 2005 20:23:35 GMT
+Received: from fmsmsxvs043.fm.intel.com (fmsmsxvs043.fm.intel.com [132.233.42.129])
+	by fmsfmr100.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id j8FKNVEY015400;
+	Thu, 15 Sep 2005 20:23:35 GMT
+Received: from fmsmsx332.amr.corp.intel.com ([132.233.42.148])
+ by fmsmsxvs043.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2005091513233426478
+ ; Thu, 15 Sep 2005 13:23:34 -0700
+Received: from fmsmsx312.amr.corp.intel.com ([132.233.42.227]) by fmsmsx332.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Thu, 15 Sep 2005 13:23:34 -0700
+Received: from scsmsx401.amr.corp.intel.com ([10.3.90.12]) by fmsmsx312.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Thu, 15 Sep 2005 13:23:34 -0700
+X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: getting a list of changes I commited
+Thread-Index: AcW6L1++00FCbe9dSIuF/9jGeaauxAAAOMbg
+To: "Linus Torvalds" <torvalds@osdl.org>,
+	"Junio C Hamano" <junkio@cox.net>
+X-OriginalArrivalTime: 15 Sep 2005 20:23:34.0165 (UTC) FILETIME=[588CD450:01C5BA33]
+X-Scanned-By: MIMEDefang 2.52 on 10.253.24.20
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8639>
 
-Junio C Hamano wrote:
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
-> 
->>Linus Torvalds wrote:
->>
->>>Does anybody really still use tcsh? It's a broken mess.
->>>
->>
->>Yes.
-> 
-> Yes to "still use", or yes to "broken mess" ;-)?
-> 
+>No. "oldhead" has to be the point where you did the last email thing.
+>
+>So any time you merge from me, next time your email cron-job (or whatever)  
+>hits, ^linus _will_ make a difference. Without it, you'd email out all the 
+>stuff that came through my tree.
 
-Both :)
+I'm planning on doing this as part of my "push" script.  So
+the oldhead is what is already up on kernel.org (which is when
+I will have done the previous e-mail).  My "newhead" will be
+full of stuff I got from your tree ... but most of the things
+I pull from you were commited by someone else, so the "grep -z"
+will drop them on the floor.  So there are just a few that have
+my commit line on them ... but these *must* have come from my tree
+(unless someone else is putting my name on commits!). That leaves
+me with just my new commits for the e-mail.
 
->>>Junio's "sq_quote()" works wonderfully on any valid shells. The fact
->>>that tcsh expands ! even inside single quotes is just pure
->>>braindamage.
->>
->>>You could expand "sq_quote" to handle '!' and '\' characters the exact
->>>same way it handles the single tick (end single-tick quoting, do \! or \\
->>>and start single-tick quoting again) and that might be good enough for
->>>tcsh.
->>
->>It seems easier to just \-escape any special characters.
-> 
-> I am sympathetic.  The beauty of sq_quote() comes directly from
-> the behaviour of single quoting rules of "any valid shells" --
-> there is no need to maintain a list of special characters.  Just
-> single quote itself is special and nothing else.
+>	git-rev-list --header newhead ^oldhead |
+>		grep -z "committer .*tony\.luck" |
+>		tr '\0' '\n' |
+>		git-shortlog
 
-Well, in the patch I just posted I simply \-escape a blacklist of 
-characters.  It should be quite safe, since the blacklist consists of 
-all ASCII characters that aren't known to be regularly used on the 
-command line.
+I figured out the "tr" part myself.  That's when I saw that git-shortlog
+expected to find "^Author:" and was getting "^author".
 
-	-hpa
+-Tony
