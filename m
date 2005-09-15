@@ -1,78 +1,77 @@
-From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
-Subject: Re: "Read my lips: no more merges" - aka Linux 2.6.14-rc1
-Date: Thu, 15 Sep 2005 10:39:08 +0200
-Message-ID: <u5tvf12sp1v.fsf@lysator.liu.se>
-References: <7255.1126583985@kao2.melbourne.sgi.com>
-	<1126674993.5681.9.camel@localhost.localdomain>
-	<1126745323.7199.3.camel@localhost.localdomain>
-	<Pine.LNX.4.58.0509142018410.26803@g5.osdl.org>
-	<43290486.5020301@zytor.com> <7v7jdibwqq.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Tool renames.
+Date: Thu, 15 Sep 2005 01:52:19 -0700
+Message-ID: <7vr7bq4ssc.fsf@assigned-by-dhcp.cox.net>
+References: <200509050054.j850sC3D023778@laptop11.inf.utfsm.cl>
+	<Pine.LNX.4.58.0509050738340.3504@evo.osdl.org>
+	<46a038f90509051713389c62c8@mail.gmail.com>
+	<Pine.LNX.4.58.0509060013520.4316@evo.osdl.org>
+	<7vll2atz8a.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509060057491.4316@evo.osdl.org>
+	<7vwtlusi9t.fsf@assigned-by-dhcp.cox.net>
+	<u5tek82bmlb.fsf@fidgit.hq.vtech>
+	<7v1x41g3c6.fsf@assigned-by-dhcp.cox.net>
+	<7vfysg2wvo.fsf_-_@assigned-by-dhcp.cox.net>
+	<43290D0F.9060408@zytor.com> <7vr7bqahb8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Sep 15 10:43:34 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, davidk@lysator.liu.se,
+	Linus Torvalds <torvalds@osdl.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu Sep 15 10:54:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EFpJf-0004JG-Ky
-	for gcvg-git@gmane.org; Thu, 15 Sep 2005 10:42:00 +0200
+	id 1EFpUA-0007Af-WD
+	for gcvg-git@gmane.org; Thu, 15 Sep 2005 10:52:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932198AbVIOIlp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 15 Sep 2005 04:41:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932217AbVIOIlp
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 04:41:45 -0400
-Received: from main.gmane.org ([80.91.229.2]:20690 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932198AbVIOIlo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 04:41:44 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EFpHw-0003vm-PB
-	for git@vger.kernel.org; Thu, 15 Sep 2005 10:40:12 +0200
-Received: from 212214120186-virtutech-ab.host.songnetworks.se ([212.214.120.186])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Sep 2005 10:40:12 +0200
-Received: from davidk by 212214120186-virtutech-ab.host.songnetworks.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Sep 2005 10:40:12 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 212214120186-virtutech-ab.host.songnetworks.se
+	id S932251AbVIOIwW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 04:52:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932257AbVIOIwW
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 04:52:22 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:59874 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932251AbVIOIwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2005 04:52:21 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050915085220.RPVR3588.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 15 Sep 2005 04:52:20 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <7vr7bqahb8.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 15 Sep 2005 01:03:39 -0700")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:sq+DS+ZqDwoOEr70Oot4LG79xQI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8598>
 
 Junio C Hamano <junkio@cox.net> writes:
 
 > "H. Peter Anvin" <hpa@zytor.com> writes:
 >
->> Linus Torvalds wrote:
->>> On Wed, 14 Sep 2005, Alejandro Bonilla Beeche wrote:
->>>
->>>>debian:~# cd linux-2.6/
->>>>debian:~/linux-2.6# git log
->>>>/usr/local/bin/git-log-script: line 4: less: command not found
->>> A very strange Linux installation that doesn't come with "less"...
->>> What a strange box. Anyway, that does point out that maybe the git
->>> RPM spec should have "less" as a dependency.
->>
->> Generally you want to honour $PAGER if it is defined.
+>> I noticed you also renamed git-ssh-{push,pull}.  These tools rely on 
+>> having the same names on both sides, so you have introduced a major 
+>> version skew problem.
 >
-> We do, in the form of "something | ${PAGER:-less}".
+> True.  It seems that both myself and Daniel did not think that
+> would be a major problem when we were discussing the tool
+> renames.
 >
-> On Debian, "less" is Priority "standard" and my understanding is
-> that the only thing we can (and should if I recall correctly)
-> omit from the dependency list is the packages of Priority
-> "essential", so technically we are required to list "less" as
-> our dependency.  I do not know about RPM/Fedora.
+> As a workaround, you could always say GIT_SSH_PULL='blah' and
+> GIT_SSH_PUSH='bah' when you run either side to name what will be
+> run on the other end.
 
-On my Debian system, there is a "sensible-pager" which does a
-${PAGER:-pager}, and "pager" which is a symlink to an installed pager
-(using the 'alternatives' system).  So a Debian package should
-probably use one of those.
+Come to think of it, I should be able to build git-ssh-push and
+git-ssh-pull as fully backward compatible way to call the
+counterpart with original name, instead of supplying just
+symlinks the same way I do currently.  Let me work do that
+before I do 0.99.7 this weekend.
 
---=20
-David K=E5gedal
+> Now the interesting problem is if we should rename these
+> environment variables ...
+
+And the old and new binaries will be built separately anyway, I
+could use GIT_SSH_FETCH and GIT_SSH_UPLOAD in the newname
+binaries while keeping the old names in oldname binaries.  Ack?
