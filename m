@@ -1,53 +1,61 @@
 From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: git fsck messages - what to do about it?
-Date: Fri, 16 Sep 2005 15:37:57 -0400
-Message-ID: <200509161937.j8GJbv62018950@inti.inf.utfsm.cl>
-References: <wd@denx.de>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 16 22:11:11 2005
+Subject: [PATCH] asciidoc gets confused by two '^' on the same line
+Date: Fri, 16 Sep 2005 14:14:01 -0400
+Message-ID: <200509161814.j8GIE14h016323@inti.inf.utfsm.cl>
+X-From: git-owner@vger.kernel.org Fri Sep 16 22:11:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGMWI-0005cb-IX
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 22:09:14 +0200
+	id 1EGMXN-0005r0-T4
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 22:10:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161276AbVIPUJM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 16:09:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161278AbVIPUJM
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 16:09:12 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:61932 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1161276AbVIPUJL (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 16:09:11 -0400
+	id S1161280AbVIPUJv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 16:09:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161281AbVIPUJv
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 16:09:51 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:1517 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S1161280AbVIPUJv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 16:09:51 -0400
 Received: from inti.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by inti.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j8GJbv62018950;
-	Fri, 16 Sep 2005 15:37:58 -0400
-To: Wolfgang Denk <wd@denx.de>
-In-Reply-To: Message from Wolfgang Denk <wd@denx.de> 
-   of "Fri, 16 Sep 2005 12:11:38 +0200." <20050916101138.99906352682@atlas.denx.de> 
+	by inti.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j8GIE14h016323
+	for <git@vger.kernel.org>; Fri, 16 Sep 2005 14:14:01 -0400
+To: git@vger.kernel.org
 X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8728>
 
-Wolfgang Denk <wd@denx.de> wrote:
-> When running git fsck I get some messages:
-> 
-> -> git-fsck-cache --unreachable $(cat .git/HEAD .git/refs/heads/*)
-> unreachable commit 08cf4121ad704faa5ae7c7ae7b3dca4476ef2770
-> unreachable tree 29a4c18afd958cc6cee938f0fe7fa59764418097
+Uglify Documentation/git-rev-list.txt to get decent output.
 
-[...]
+Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
 
-> I have to admit that I don't know what to do next...
-> 
-> a) I understand that these  messages  are  indications  of  problems,
->    right? What can I do to clean this up?
 
-One of the nits I'd like to pick is that git-fsck does only check, not
-(like its filesystem counterparts) fix the problems it finds.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+---
+
+ Documentation/git-rev-list.txt |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
+
+ceb9e143038dcf62311bc3514ae4d2d0f7854aa4
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -32,8 +32,11 @@ I have the commit object 'bar', but not 
+ 
+ The *--bisect* flag limits output to the one commit object which is
+ roughly halfway between the included and excluded commits. Thus,
+-if 'git-rev-list --bisect foo ^bar ^baz' outputs 'midpoint', the output
+-of 'git-rev-list foo ^midpoint' and 'git-rev-list midpoint ^bar ^baz'
++if 'git-rev-list --bisect foo ^bar
++^baz' outputs 'midpoint', the output
++of 'git-rev-list foo ^midpoint' and
++'git-rev-list midpoint ^bar
++^baz'
+ would be of roughly the same length. Finding the change which introduces
+ a regression is thus reduced to a binary search: repeatedly generate and
+ test new 'midpoint's until the commit chain is of length one.
+@@ -93,4 +96,3 @@ Documentation by David Greaves, Junio C 
+ GIT
+ ---
+ Part of the link:git.html[git] suite
+-
