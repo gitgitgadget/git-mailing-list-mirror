@@ -1,63 +1,82 @@
-From: "John W. Linville" <linville@tuxdriver.com>
-Subject: Re: Add uninstall target to Makefile
-Date: Fri, 16 Sep 2005 15:19:55 -0400
-Message-ID: <20050916191953.GD22825@tuxdriver.com>
-References: <20050916125814.GA8084@igloo.ds.co.ug> <7vfys5ndor.fsf@assigned-by-dhcp.cox.net> <20050916175402.GC22825@tuxdriver.com> <20050916180810.GK8041@shell0.pdx.osdl.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Martin Atukunda <matlads@dsmagic.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 16 21:26:10 2005
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+Subject: [patch 02/11] Make "empty patch" checking optional in "series" command.
+Date: Fri, 16 Sep 2005 21:35:13 +0200
+Message-ID: <20050916193513.18681.60765.stgit@zion.home.lan>
+References: <20050916193511.18681.24189.stgit@zion.home.lan>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 16 21:39:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGLoi-000203-9X
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 21:24:12 +0200
+	id 1EGM2i-0005rS-DU
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 21:38:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751241AbVIPTYJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 15:24:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbVIPTYJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 15:24:09 -0400
-Received: from ra.tuxdriver.com ([24.172.12.4]:65285 "EHLO ra.tuxdriver.com")
-	by vger.kernel.org with ESMTP id S1751241AbVIPTYI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 15:24:08 -0400
-Received: from bilbo.tuxdriver.com (azure.tuxdriver.com [24.172.12.5])
-	by ra.tuxdriver.com (8.13.3/8.13.3) with ESMTP id j8GJJuwV024014
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 16 Sep 2005 15:19:56 -0400
-Received: from bilbo.tuxdriver.com (localhost.localdomain [127.0.0.1])
-	by bilbo.tuxdriver.com (8.13.1/8.13.1) with ESMTP id j8GJJu1Q006263;
-	Fri, 16 Sep 2005 15:19:56 -0400
-Received: (from linville@localhost)
-	by bilbo.tuxdriver.com (8.13.1/8.13.1/Submit) id j8GJJtTq006262;
-	Fri, 16 Sep 2005 15:19:55 -0400
-To: Chris Wright <chrisw@osdl.org>
-Mail-Followup-To: Chris Wright <chrisw@osdl.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Martin Atukunda <matlads@dsmagic.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050916180810.GK8041@shell0.pdx.osdl.net>
-User-Agent: Mutt/1.4.1i
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4-gr0
-X-Spam-Checker-Version: SpamAssassin 3.0.4-gr0 (2005-06-05) on 
-	ra.tuxdriver.com
+	id S965310AbVIPTi3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 15:38:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965308AbVIPTi3
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 15:38:29 -0400
+Received: from ppp-62-11-79-165.dialup.tiscali.it ([62.11.79.165]:28043 "EHLO
+	zion.home.lan") by vger.kernel.org with ESMTP id S965307AbVIPTi2
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2005 15:38:28 -0400
+Received: from zion.home.lan (localhost [127.0.0.1])
+	by zion.home.lan (Postfix) with ESMTP id E0F4B284E1;
+	Fri, 16 Sep 2005 21:35:13 +0200 (CEST)
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <20050916193511.18681.24189.stgit@zion.home.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8710>
 
-On Fri, Sep 16, 2005 at 11:08:10AM -0700, Chris Wright wrote:
+That's just too slow, and quilt doesn't do it, so user will live with it.
+Don't know if there's a reason to allow dropping the fanciness here
+entirely, but I think there's no user doing one-liner scripts with quilt
+series. And anyway, for that you can do "stg applied; stg unapplied".
 
-> Of course package manager will do better at this, but it is useful to be
-> able to uninstall.  However, I don't think Martin's external script with
-> all the filenames hardcoded is the right approach.  There are $(PROG)
-> and $(SCRIPTS) which already know all these filenames.
+Actually, with this patch you must ask explicitly the checking.
 
-I would agree with that.  Definitely better to use the same Makefile
-vars used for install to do the uninstall.
+Signed-off-by: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+---
 
-John
--- 
-John W. Linville
-linville@tuxdriver.com
+ stgit/commands/series.py |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/stgit/commands/series.py b/stgit/commands/series.py
+--- a/stgit/commands/series.py
++++ b/stgit/commands/series.py
+@@ -31,7 +31,10 @@ Show all the patches in the series. The 
+ with a '+' and the unapplied ones with a '-'. The current patch is
+ prefixed with a '>'. Empty patches are prefixed with a '0'."""
+ 
+-options = []
++options = [make_option('-e', '--empty',
++                       help = 'check whether patches are empty '
++                       '(much slower)',
++                       action = 'store_true') ]
+ 
+ 
+ def func(parser, options, args):
+@@ -43,19 +46,19 @@ def func(parser, options, args):
+     applied = crt_series.get_applied()
+     if len(applied) > 0:
+         for p in applied [0:-1]:
+-            if crt_series.empty_patch(p):
++            if options.empty and crt_series.empty_patch(p):
+                 print '0', p
+             else:
+                 print '+', p
+         p = applied[-1]
+ 
+-        if crt_series.empty_patch(p):
++        if options.empty and crt_series.empty_patch(p):
+             print '0>%s' % p
+         else:
+             print '> %s' % p
+ 
+     for p in crt_series.get_unapplied():
+-        if crt_series.empty_patch(p):
++        if options.empty and crt_series.empty_patch(p):
+             print '0', p
+         else:
+             print '-', p
