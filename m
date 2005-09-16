@@ -1,57 +1,61 @@
-From: Tony Luck <tony.luck@gmail.com>
-Subject: gitweb search in multi-headed tree
-Date: Fri, 16 Sep 2005 08:39:20 -0700
-Message-ID: <12c511ca0509160839391ea012@mail.gmail.com>
-References: <20050912181101.GA22221@vrfy.org>
-Reply-To: tony.luck@gmail.com
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: Should Cogito scripts be renamed?
+Date: Fri, 16 Sep 2005 17:40:23 +0200
+Message-ID: <200509161740.23685.Josef.Weidendorfer@gmx.de>
+References: <20050915234607.GA10867@pasky.or.cz> <E1EG3ku-0005hU-Eb@jdl.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 16 17:40:40 2005
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Sep 16 17:47:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGIJA-0004n5-3m
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 17:39:24 +0200
+	id 1EGIKs-0005MZ-Qz
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 17:41:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161044AbVIPPjV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 11:39:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161093AbVIPPjV
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 11:39:21 -0400
-Received: from zproxy.gmail.com ([64.233.162.204]:45958 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1161072AbVIPPjV convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2005 11:39:21 -0400
-Received: by zproxy.gmail.com with SMTP id 13so455068nzn
-        for <git@vger.kernel.org>; Fri, 16 Sep 2005 08:39:20 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ajRSxsMmLN+uDpkLMj7Mpi42Vrx7i0A8EhfD41T/47vvGc61bfNtNHkiWzHJ+wR1eaoc67mC3dueLvHY4+mEvKR13iheBMoClIy/OBevzPErlzBC86DcrsvUph0KVf9Mx16PjokpF3mbRfyutoQKfjwdFgjPUy5Dr1a0krIlOAU=
-Received: by 10.36.220.26 with SMTP id s26mr335117nzg;
-        Fri, 16 Sep 2005 08:39:20 -0700 (PDT)
-Received: by 10.36.58.18 with HTTP; Fri, 16 Sep 2005 08:39:20 -0700 (PDT)
-To: Kay Sievers <kay.sievers@vrfy.org>
-In-Reply-To: <20050912181101.GA22221@vrfy.org>
+	id S1161093AbVIPPk7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 11:40:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161162AbVIPPk7
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 11:40:59 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:38576 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1161139AbVIPPk6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2005 11:40:58 -0400
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+In-Reply-To: <E1EG3ku-0005hU-Eb@jdl.com>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8688>
 
-Kay,
+On Friday 16 September 2005 02:07, jdl@freescale.com wrote:
+> So, like, the other day Petr asked:
+> >  I'd like to hear the opinion of Cogito users about renaming the Cogito
+> > commands accordingly to the GIT big renames. This would be:
+> >
+> >	cg-pull -> cg-fetch
+> >	cg-update -> cg-pull
+> ...
+> As with git, sooner rather than later, please.
 
-My tree on kernel.org (.../aegl/linux-2.6.git) has two branches in
-refs/heads: release
-and test.  The HEAD symlink points to the release branch.
+Same option here.
+The 4-phased renaming could be shortened by letting cg-pull always ask
+the following if eg. .git/no-cg-pull-warning does not exist:
 
-It seems that a search traverses from HEAD to root, so can only find
-things in the
-release branch.  I tried clicking on the "test" branch link at the
-foot of the top-level
-page before doing the search ... but it still seems to search from HEAD.
+ Warning: cg-pull includes merging after fetch since cogito 0.15
+          Use cg-fetch to do the fetching phase only
+ [To get rid of this warning, run 'touch .git/no-cg-pull-warning']
+ Do you want to continue (y/n) [n] ?
 
-Any syntax I'm missing for this search?
+Getting rid of this annoying question should be easy enough everybody,
+and via the template-system even for git packers...
+Even if disabled, I would still do
 
--Tony
+ Remember: cg-pull includes merging after fetch since cogito 0.15
+           Press Ctrl-C in the next 2 seconds to abort.
+
+Josef
