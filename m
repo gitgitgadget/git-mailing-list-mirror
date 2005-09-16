@@ -1,67 +1,88 @@
-From: "Luck, Tony" <tony.luck@intel.com>
-Subject: RE: getting a list of changes I commited
-Date: Thu, 15 Sep 2005 17:13:03 -0700
-Message-ID: <B8E391BBE9FE384DAA4C5C003888BE6F04662C78@scsmsx401.amr.corp.intel.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Look at both unpacked and packed objects for short name expansion
+Date: Thu, 15 Sep 2005 17:28:00 -0700
+Message-ID: <7vfys5votr.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0509160120470.3859@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 16 02:14:22 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 16 02:28:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EG3qx-0005Eq-05
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 02:13:19 +0200
+	id 1EG45O-0007yq-2w
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 02:28:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965296AbVIPANQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 20:13:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965297AbVIPANQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 20:13:16 -0400
-Received: from fmr15.intel.com ([192.55.52.69]:26534 "EHLO
-	fmsfmr005.fm.intel.com") by vger.kernel.org with ESMTP
-	id S965296AbVIPANP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 20:13:15 -0400
-Received: from fmsfmr100.fm.intel.com (fmsfmr100.fm.intel.com [10.253.24.20])
-	by fmsfmr005.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j8G0D5xp025539;
-	Fri, 16 Sep 2005 00:13:05 GMT
-Received: from fmsmsxvs043.fm.intel.com (fmsmsxvs043.fm.intel.com [132.233.42.129])
-	by fmsfmr100.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id j8G0D5EW023625;
-	Fri, 16 Sep 2005 00:13:05 GMT
-Received: from fmsmsx332.amr.corp.intel.com ([132.233.42.148])
- by fmsmsxvs043.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2005091517130509513
- ; Thu, 15 Sep 2005 17:13:05 -0700
-Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx332.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Thu, 15 Sep 2005 17:13:05 -0700
-Received: from scsmsx401.amr.corp.intel.com ([10.3.90.12]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Thu, 15 Sep 2005 17:13:04 -0700
-X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: getting a list of changes I commited
-Thread-Index: AcW6JK9UM9s6gCuNR7e+AR0myx/x1gALeJ4w
-To: "Linus Torvalds" <torvalds@osdl.org>
-X-OriginalArrivalTime: 16 Sep 2005 00:13:04.0927 (UTC) FILETIME=[68905AF0:01C5BA53]
-X-Scanned-By: MIMEDefang 2.52 on 10.253.24.20
+	id S1030476AbVIPA2I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 20:28:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030539AbVIPA2I
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 20:28:08 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:11167 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1030476AbVIPA2H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Sep 2005 20:28:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050916002801.MTAW3588.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 15 Sep 2005 20:28:01 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0509160120470.3859@wgmdd8.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 16 Sep 2005 01:21:18 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8655>
 
->Why not just _also_ limit it by what is already merged in my tree?
->
->Ie just do
->
->	git fetch linus
->	git-rev-list --no-merges newhead ^oldhead ^linus
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Doh!  Ok, now I see that you mean _instead_ (of trying to select by
-committer) rather than _also_.
+> We used to check for a unique expansion in the unpacked objects, and if
+> one was found, we forgot to check in the packed objects, too.
 
-That is a whole lot simpler!
+> diff --git a/sha1_name.c b/sha1_name.c
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -115,7 +115,8 @@ static int get_short_sha1(const char *na
+>  	if (i < 4)
+>  		return -1;
+>  	if (find_short_object_filename(i, canonical, sha1))
+> -		return 0;
+> +                /* do not allow non-unique short names */
+> +                return find_short_packed_object(i, res, canonical)!=0?-1:0;
+>  	if (find_short_packed_object(i, res, sha1))
+>  		return 0;
+>  	return -1;
 
--Tony
+Sorry, I do not understand what you are doing here.
 
-[But finding out what I committed between two releases is also
-useful for status report writing purposes, so this has been a
-a useful learning exercise]
+We find an unpacked object file in the local object store, and
+then if we find a unique match (otherwise we try if
+short-packed-object finds unique match) we try to see if we have
+the same one in one of the packs we have and refuse?  Wouldn't
+this make things inconvenient for people who run 'git repack'
+without running 'git prune-packed' afterwards?
+
+And reading find_short_object_filename() I noticed it does not
+do anything with alternates, and wonder if is this intentional.
+Who did this part anyway?
+
+Also find_short_packed_object() does not appear to require
+unique prefix when it does its thing.
+
+I would prefer a proper fix to:
+
+ - find_short_object_filename() to look at alt_odb as well;
+
+ - find_short_packed_object() to make sure it is getting a
+   unique match.
+
+ - get_short_sha1() to make sure that the input is overall
+   unique.  I think with the current code structure, with or
+   without your patch, would do a wrong thing if you pass a
+   prefix that matches two unpacked objects and two packed
+   ones.
+
+I suspect your patch is an attempt to fix the last one, but I am
+not sure..
