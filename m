@@ -1,63 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Look at both unpacked and packed objects for short name
- expansion
-Date: Fri, 16 Sep 2005 02:49:16 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0509160246280.10401@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0509160120470.3859@wgmdd8.biozentrum.uni-wuerzburg.de>
- <7vfys5votr.fsf@assigned-by-dhcp.cox.net>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: Current state of GIT fetch/pull clients
+Date: Thu, 15 Sep 2005 21:03:50 -0400
+Message-ID: <432A19F6.8050605@pobox.com>
+References: <Pine.LNX.4.63.0509142319330.23242@iabervon.org> <7vbr2tx51n.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 16 02:50:44 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 16 03:05:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EG4Po-0004ns-Ej
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 02:49:20 +0200
+	id 1EG4eF-00077Q-LT
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 03:04:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030543AbVIPAtS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Sep 2005 20:49:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965288AbVIPAtR
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 20:49:17 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:25992 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S965054AbVIPAtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Sep 2005 20:49:17 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 56FB813C3E8; Fri, 16 Sep 2005 02:49:16 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 38E0591AA0; Fri, 16 Sep 2005 02:49:16 +0200 (CEST)
-Received: from wrzx35.rz.uni-wuerzburg.de (wrzx35.rz.uni-wuerzburg.de [132.187.3.35])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 230648F027; Fri, 16 Sep 2005 02:49:16 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id ED3D8E27F2; Fri, 16 Sep 2005 02:49:15 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+	id S1161017AbVIPBEL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Sep 2005 21:04:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161014AbVIPBEL
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Sep 2005 21:04:11 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:49626 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S1161008AbVIPBEK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Sep 2005 21:04:10 -0400
+Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
+	id 1EG4dx-00065k-3V; Fri, 16 Sep 2005 01:04:00 +0000
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfys5votr.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+In-Reply-To: <7vbr2tx51n.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8657>
 
-Hi,
+Junio C Hamano wrote:
+> Neither http nor rsync transports know about the 'alternates'
+> mechanism yet, so if a downloader does:
+> 
+>     $ git pull http://kernel.org/pub/scm/linux/kernel/git/$u/$tree
+>     $ git pull rsync://kernel.org/pub/scm/linux/kernel/git/$u/$tree
+> 
+> unless the downloader has already fetched from Linus'
+> repository, this will not work.
+> 
+>   * In the case of rsync transport, it would slurp all objects
+>     your repository has, but does not get objects from Linus'
+>     repository.  Also, rsync will overwrite the
+>     objects/info/alternates file the downloader has in his
+>     repository with what you have in your repository, which is
+>     not what we want.
 
-On Thu, 15 Sep 2005, Junio C Hamano wrote:
+Yes, this is why I don't bother with alternates at the present time. 
+Users of my repos, at least, have been trained to use rsync://... and 
+currently expect to get a working tree that way.
 
-> I suspect your patch is an attempt to fix the last one, but I am
-> not sure..
-
-Half correct. I was not thinking it through... I had that case where I 
-called git-whatchanged with a short sha1 and I kept getting the wrong 
-history until I realized that the short sha1 was only unique when looking 
-at the unpacked objects only.
-
-Maybe I find time tomorrow to do something about the three problems you 
-mentioned.
-
-Ciao,
-Dscho
+	Jeff
