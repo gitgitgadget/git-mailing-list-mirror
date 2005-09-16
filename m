@@ -1,70 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Git and cogito uses different exclude files
-Date: Fri, 16 Sep 2005 09:43:27 -0700
-Message-ID: <7vfys5ote8.fsf@assigned-by-dhcp.cox.net>
-References: <432A7902.20603@drzeus.cx> <tnxbr2t9zsk.fsf@arm.com>
-	<20050916104430.GA25169@pasky.or.cz>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: git-daemon --inetd
+Date: Fri, 16 Sep 2005 09:54:00 -0700
+Message-ID: <432AF8A8.6070807@zytor.com>
+References: <43290EFF.3070604@zytor.com>	<Pine.LNX.4.58.0509150829090.26803@g5.osdl.org> <7vbr2tqwl0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Ossman <drzeus-list@drzeus.cx>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 16 18:46:51 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 16 18:56:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGJK0-0008ON-Bx
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 18:44:20 +0200
+	id 1EGJTm-0003JL-F0
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 18:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161189AbVIPQni (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 12:43:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161187AbVIPQnh
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 12:43:37 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:17121 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1161189AbVIPQnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2005 12:43:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050916164329.NJMF3414.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 16 Sep 2005 12:43:29 -0400
-To: Petr Baudis <pasky@suse.cz>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <20050916104430.GA25169@pasky.or.cz> (Petr Baudis's message of
-	"Fri, 16 Sep 2005 12:44:30 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1161188AbVIPQyT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 12:54:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161185AbVIPQyT
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 12:54:19 -0400
+Received: from paleosilicon.orionmulti.com ([209.128.68.66]:57731 "EHLO
+	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
+	id S1161188AbVIPQyS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2005 12:54:18 -0400
+X-Envelope-From: hpa@zytor.com
+Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
+	(authenticated bits=0)
+	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j8GGs0Jv010197
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 16 Sep 2005 09:54:01 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbr2tqwl0.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	paleosilicon.orionmulti.com
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on paleosilicon.orionmulti.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8693>
 
-Petr Baudis <pasky@suse.cz> writes:
+Junio C Hamano wrote:
+> 
+> Later exchanges between you and HPA appeared to me that we would
+> need a chroot environment which has "enough stuff" and that this
+> patch may not help him very much.  Am I mistaken?
+> 
 
->> The latest StGIT snapshot uses .git/info/exclude. Probably next week I
->> will make a new StGIT release.
->
-> So does Cogito now. ;-) It still looks at .git/exclude as well and gives
-> warning if it exists.
+Well, building a chroot environment which supports execing is a bit of a 
+pain, but it's fully doable.  mount --bind especially makes that quite 
+feasible.  It's just more work.
 
-Late last night I could not find in the list archive the "list
-consensus" I used to justify what 'git-status' does in this log
-message:
+> I think resolving user and group to numeric before you do
+> chroot() might make the setting up of chrooted environment a
+> little simpler; no need for supporting getpwnam and getgrnam
+> there.  On the other hand it may not matter -- you can always
+> give numeric uid/gid to begin with.
 
-    Message-ID: <7vfysw89do.fsf@assigned-by-dhcp.cox.net>
-    From: Junio C Hamano <junkio@cox.net>
-    Subject: [PATCH] Teach git-status-script about git-ls-files --others
-    Date: Fri, 26 Aug 2005 18:18:59 -0700
+Yes, resolve the username first.
 
-    When there is non-empty $GIT_DIR/info/exclude file, use it along
-    with .gitignore per-directory exclude pattern files (which was
-    a convention agreed on the list while ago and is compatible with
-    Cogito) to generate a list of ignored files as well.
-
-    Signed-off-by: Junio C Hamano <junkio@cox.net>
-
-I do remember checking Cogito and StGIT and making sure the use
-of .gitignore is consistent with you two, but I do not remember
-if we had consensus on info/exclude now.  It could be that I was
-just hallucinating back then and ended up forcing this change
-onto you and your users by mistake in this round.
-
-Anyway, thanks both.
+	-hpa
