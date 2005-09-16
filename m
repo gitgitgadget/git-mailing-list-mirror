@@ -1,82 +1,74 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: "Read my lips: no more merges" - aka Linux 2.6.14-rc1
-Date: Fri, 16 Sep 2005 00:08:24 -0400
-Message-ID: <200509160415.j8G48Oto006070@inti.inf.utfsm.cl>
-References: <torvalds@osdl.org>
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 16 06:59:45 2005
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Tool renames.
+Date: Thu, 15 Sep 2005 22:44:46 -0700
+Message-ID: <432A5BCE.3030200@zytor.com>
+References: <200509050054.j850sC3D023778@laptop11.inf.utfsm.cl>	<Pine.LNX.4.58.0509050738340.3504@evo.osdl.org>	<46a038f90509051713389c62c8@mail.gmail.com>	<Pine.LNX.4.58.0509060013520.4316@evo.osdl.org>	<7vll2atz8a.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.58.0509060057491.4316@evo.osdl.org>	<7vwtlusi9t.fsf@assigned-by-dhcp.cox.net>	<u5tek82bmlb.fsf@fidgit.hq.vtech>	<7v1x41g3c6.fsf@assigned-by-dhcp.cox.net>	<7vfysg2wvo.fsf_-_@assigned-by-dhcp.cox.net>	<43290D0F.9060408@zytor.com> <7vr7bqahb8.fsf@assigned-by-dhcp.cox.net> <7vr7bq4ssc.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, davidk@lysator.liu.se,
+	Linus Torvalds <torvalds@osdl.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Sep 16 07:46:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EG8Jr-0003rj-Bc
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 06:59:27 +0200
+	id 1EG92B-0003q2-89
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 07:45:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030597AbVIPE6z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 00:58:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030598AbVIPE6z
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 00:58:55 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:209 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1030597AbVIPE6y (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 00:58:54 -0400
-Received: from inti.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by inti.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j8G48Oto006070;
-	Fri, 16 Sep 2005 00:15:52 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: Message from Linus Torvalds <torvalds@osdl.org> 
-   of "Wed, 14 Sep 2005 20:21:33 MST." <Pine.LNX.4.58.0509142018410.26803@g5.osdl.org> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+	id S1030371AbVIPFpL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 01:45:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030600AbVIPFpL
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 01:45:11 -0400
+Received: from paleosilicon.orionmulti.com ([209.128.68.66]:24705 "EHLO
+	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
+	id S1030371AbVIPFpJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2005 01:45:09 -0400
+X-Envelope-From: hpa@zytor.com
+Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
+	(authenticated bits=0)
+	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j8G5ilJv005525
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 15 Sep 2005 22:44:49 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vr7bq4ssc.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	paleosilicon.orionmulti.com
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on paleosilicon.orionmulti.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8660>
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> On Wed, 14 Sep 2005, Alejandro Bonilla Beeche wrote:
-> > 
-> > debian:~# cd linux-2.6/
-> > debian:~/linux-2.6# git log
-> > /usr/local/bin/git-log-script: line 4: less: command not found
+Junio C Hamano wrote:
 > 
-> A very strange Linux installation that doesn't come with "less"...
+> Come to think of it, I should be able to build git-ssh-push and
+> git-ssh-pull as fully backward compatible way to call the
+> counterpart with original name, instead of supplying just
+> symlinks the same way I do currently.  Let me work do that
+> before I do 0.99.7 this weekend.
 > 
-> What a strange box. Anyway, that does point out that maybe the git RPM 
-> spec should have "less" as a dependency. 
 
-Your wish is my command.
+Better yet, always install the links, and have them use the *old* names 
+when calling the remote end.
 
-----
-The git commands assume less(1) as pager. This adds the dependency, as
-suggested by Linus.
+>>Now the interesting problem is if we should rename these
+>>environment variables ...
+> 
+> And the old and new binaries will be built separately anyway, I
+> could use GIT_SSH_FETCH and GIT_SSH_UPLOAD in the newname
+> binaries while keeping the old names in oldname binaries.  Ack?
 
-Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
+Urk.  Why do this rename anyway?
 
+Typically when doing new environment variables like this you do:
 
----
+	foo = getenv("NEW_NAME");
+	if ( !foo )
+		foo = getenv("OLD_NAME");
 
- git-core.spec.in |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-0abd0856f2cb750a019451c7547694f36e60e83b
-diff --git a/git-core.spec.in b/git-core.spec.in
---- a/git-core.spec.in
-+++ b/git-core.spec.in
-@@ -10,7 +10,7 @@ URL: 		http://kernel.org/pub/software/sc
- Source: 	http://kernel.org/pub/software/scm/git/%{name}-%{version}.tar.gz
- BuildRequires:	zlib-devel, openssl-devel, curl-devel  %{!?_without_docs:, xmlto, asciidoc > 6.0.3}
- BuildRoot:	%{_tmppath}/%{name}-%{version}-root
--Requires: 	sh-utils, curl, diffutils, rsync, rcs, openssh-clients, perl, python >= 2.4, tk
-+Requires: 	sh-utils, curl, diffutils, less, rsync, rcs, openssh-clients, perl, python >= 2.4, tk
- 
- %description
- This is a stupid (but extremely fast) directory content manager.  It
-@@ -44,6 +44,9 @@ rm -rf $RPM_BUILD_ROOT
- %{!?_without_docs: %{_mandir}/man7/*.7*}
- 
- %changelog
-+* Fri Sep 16 2005 Horst H. von Brand <vonbrand@inf.utfsm.cl>
-+- Linus noticed that less is required, added to the dependencies
-+
- * Sun Sep 11 2005 Horst H. von Brand <vonbrand@inf.utfsm.cl>
- - Updated dependencies
- - Don't assume manpages are gzipped
+	-hpa
