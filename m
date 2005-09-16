@@ -1,61 +1,84 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: [PATCH] asciidoc gets confused by two '^' on the same line
-Date: Fri, 16 Sep 2005 14:14:01 -0400
-Message-ID: <200509161814.j8GIE14h016323@inti.inf.utfsm.cl>
-X-From: git-owner@vger.kernel.org Fri Sep 16 22:11:39 2005
+From: Chuck Lever <cel@citi.umich.edu>
+Subject: Re: [PATCH/RFC] Build a shared / renamed / "stable" version of the
+ library?
+Date: Fri, 16 Sep 2005 16:17:40 -0400
+Organization: Network Appliance, Inc.
+Message-ID: <432B2864.5010901@citi.umich.edu>
+References: <pan.2005.09.16.12.37.14.736570@smurf.noris.de>	<7vmzmcj1eo.fsf@assigned-by-dhcp.cox.net>	<432B2172.8090803@citi.umich.edu> <7vll1whj5z.fsf@assigned-by-dhcp.cox.net>
+Reply-To: cel@citi.umich.edu
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="------------070709000606000007010003"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 16 22:18:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGMXN-0005r0-T4
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 22:10:22 +0200
+	id 1EGMeW-0007jD-IZ
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 22:17:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161280AbVIPUJv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 16:09:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161281AbVIPUJv
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 16:09:51 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:1517 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1161280AbVIPUJv (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 16:09:51 -0400
-Received: from inti.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by inti.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j8GIE14h016323
-	for <git@vger.kernel.org>; Fri, 16 Sep 2005 14:14:01 -0400
-To: git@vger.kernel.org
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+	id S1750835AbVIPURm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 16:17:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750828AbVIPURm
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 16:17:42 -0400
+Received: from citi.umich.edu ([141.211.133.111]:48929 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S1750835AbVIPURl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 16:17:41 -0400
+Received: from [141.211.133.33] (dexter.citi.umich.edu [141.211.133.33])
+	by citi.umich.edu (Postfix) with ESMTP id AE8571BAD0;
+	Fri, 16 Sep 2005 16:17:56 -0400 (EDT)
+User-Agent: Mozilla Thunderbird  (X11/20050322)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vll1whj5z.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8729>
 
-Uglify Documentation/git-rev-list.txt to get decent output.
+This is a multi-part message in MIME format.
+--------------070709000606000007010003
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
+Junio C Hamano wrote:
+> Chuck Lever <cel@citi.umich.edu> writes:
+> 
+> 
+>>well, i kept the "run-once" mentality.  if that's something you'd like 
+>>to go away, i can do that too, at some later point.
+> 
+> 
+> I did not mean to pressure you or suggest doing it in this
+> round.
+> 
+> I should have said "this will become easier to fix when Chuck is
+> done...".
+> 
+
+no pressure.  i can see a pretty easy way to add it in, though.
+
+--------------070709000606000007010003
+Content-Type: text/x-vcard; charset=utf-8;
+ name="cel.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="cel.vcf"
+
+begin:vcard
+fn:Chuck Lever
+n:Lever;Charles
+org:Network Appliance, Incorporated;Linux NFS Client Development
+adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
+email;internet:cel@citi.umich.edu
+title:Member of Technical Staff
+tel;work:+1 734 763 4415
+tel;fax:+1 734 763 4434
+tel;home:+1 734 668 1089
+x-mozilla-html:FALSE
+url:http://www.monkey.org/~cel/
+version:2.1
+end:vcard
 
 
----
-
- Documentation/git-rev-list.txt |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
-
-ceb9e143038dcf62311bc3514ae4d2d0f7854aa4
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -32,8 +32,11 @@ I have the commit object 'bar', but not 
- 
- The *--bisect* flag limits output to the one commit object which is
- roughly halfway between the included and excluded commits. Thus,
--if 'git-rev-list --bisect foo ^bar ^baz' outputs 'midpoint', the output
--of 'git-rev-list foo ^midpoint' and 'git-rev-list midpoint ^bar ^baz'
-+if 'git-rev-list --bisect foo ^bar
-+^baz' outputs 'midpoint', the output
-+of 'git-rev-list foo ^midpoint' and
-+'git-rev-list midpoint ^bar
-+^baz'
- would be of roughly the same length. Finding the change which introduces
- a regression is thus reduced to a binary search: repeatedly generate and
- test new 'midpoint's until the commit chain is of length one.
-@@ -93,4 +96,3 @@ Documentation by David Greaves, Junio C 
- GIT
- ---
- Part of the link:git.html[git] suite
--
+--------------070709000606000007010003--
