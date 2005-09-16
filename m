@@ -1,89 +1,52 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH/RFC] Build a shared / renamed / "stable" version of the
- library?
-Date: Fri, 16 Sep 2005 10:41:05 -0400
-Message-ID: <432AD981.2080400@gmail.com>
-References: <pan.2005.09.16.12.37.14.736570@smurf.noris.de>
-Reply-To: gitzilla@gmail.com
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: sprintf security holes?
+Date: 16 Sep 2005 07:56:05 -0700
+Message-ID: <86zmqd5aey.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Sep 16 16:44:35 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Sep 16 16:56:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGHP9-0001Yc-5O
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 16:41:31 +0200
+	id 1EGHe2-00079f-DM
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 16:56:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161140AbVIPOlP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 10:41:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161110AbVIPOlP
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 10:41:15 -0400
-Received: from xproxy.gmail.com ([66.249.82.205]:36989 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1161140AbVIPOlO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 10:41:14 -0400
-Received: by xproxy.gmail.com with SMTP id i27so157135wxd
-        for <git@vger.kernel.org>; Fri, 16 Sep 2005 07:41:12 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=RbCUNHvAZy1ZAc6ApgmJDKeNIQ2KaI4gfANzZ/6GrxFgYePivv5zdlHa8OnmVhuT7v37adgLbUxdAIEJW/a9DiVWr4FemUiy6wt4fXsrf0exOx3IMV9dxglWp0mKE86inkr0aJa95Veq7BZYpzEkEFFq+JrK4uay6/zKv0YHOuE=
-Received: by 10.70.37.9 with SMTP id k9mr174060wxk;
-        Fri, 16 Sep 2005 07:41:12 -0700 (PDT)
-Received: from ?10.0.0.6? ( [70.89.97.97])
-        by mx.gmail.com with ESMTP id h8sm675389wxd.2005.09.16.07.41.11;
-        Fri, 16 Sep 2005 07:41:11 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
+	id S965301AbVIPO4o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 10:56:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932701AbVIPO4o
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 10:56:44 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:32554 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932663AbVIPO4o
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2005 10:56:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 06CF48F596
+	for <git@vger.kernel.org>; Fri, 16 Sep 2005 07:56:32 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 05626-01 for <git@vger.kernel.org>;
+ Fri, 16 Sep 2005 07:56:06 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 310BE8F562; Fri, 16 Sep 2005 07:56:06 -0700 (PDT)
 To: git@vger.kernel.org
-In-Reply-To: <pan.2005.09.16.12.37.14.736570@smurf.noris.de>
+x-mayan-date: Long count = 12.19.12.11.7; tzolkin = 3 Manik; haab = 5 Chen
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8686>
 
-Matthias Urlichs wrote:
-> Build (and use) libgit.so instead of libgit.a.
-> 
-> --- 
-> 
-> I have written this nice Python extension that gives me fast access to
-> git objects. Python extensions are built as shared libraries. Linking
-> shared and non-shared objects into one library results in a couple of
-> linker warnings on i386; other architectures are far less forgiving.
-> 
-> So the best choice I seem to have is to build a shared libgit.so.
-> 
-> Unfortunately, libgit doesn't have nice symbol names. I dunno how you
-> all would feel about a big patch which renames absoutely every foo()
-> function in libgit to be git_foo() instead (or one that #ifdef's them)...
-> so I'm taking the easy way out, and use versioned symbols. That should
-> prevent symbol name conflicts with other libraries.
-> 
-> I've had to redefine usage(), error() and die() to git_*(), because
-> they're just too conflict-ish. "error" is even a weak symbol in libc. :-/
-> 
-> To summarize, the choices seem to be:
-> - don't do anything => no script language extensions, need to fork off
->   a git program for absolutely everything. Bah.
-> - build libgit.a with -fpic'd objects => doesn't work on all
->   architectures.
-> - build libgit.shared.a and use that for building script language
->   extensions => works now, but may cause name conflicts down the road.
-> - build a "normal" libgit.so => ditto on the name conflicts.
-> - build a libgit.so with symbol versions => no name conflicts expected,
->   but works only with the GNU linker.
-> - rename all library functions and globals => quite a bit of work,
->   and more typing down the road.
-> - add "#define foo git_foo" to all library functions => ugly.
-> 
-> Opinions?
 
-Renaming all the library functions and globals is the way to go if the 
-long term view is that Git functionality will be desired in other 
-projects. This is my view.
+As I was trying to (unsuccessfully) compile git for OpenBSD, I noticed
+a number of occurances of sprintf(), because OpenBSD thoughtfully
+yells at programmers for using that.
 
-However, it's not clear (to me, anyway) that libgit is structured (other 
-than naming) in a way that's usable for non core-git tools; git-daemon 
-was discussed recently. Some research needs to be done to answer this 
-question.
+Since sprintf() can lead to buffer overflows from unprotected user
+data, and you want to use git in server situtations, wouldn't it be
+prudent to eliminate those in some near-ish timeframe?
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
