@@ -1,54 +1,78 @@
 From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
-Subject: [patch 04/11] Fix "mail" command when description contains "From" lines
-Date: Fri, 16 Sep 2005 21:35:16 +0200
-Message-ID: <20050916193516.18681.83723.stgit@zion.home.lan>
+Subject: [patch 03/11] stg diff / files: don't update directory cache unless needed
+Date: Fri, 16 Sep 2005 21:35:15 +0200
+Message-ID: <20050916193515.18681.83716.stgit@zion.home.lan>
 References: <20050916193511.18681.24189.stgit@zion.home.lan>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 16 21:39:34 2005
+X-From: git-owner@vger.kernel.org Fri Sep 16 21:39:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGM2U-0005pe-Om
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 21:38:27 +0200
+	id 1EGM2D-0005id-Pw
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 21:38:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965306AbVIPTiU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 15:38:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965305AbVIPTiU
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 15:38:20 -0400
-Received: from ppp-62-11-79-165.dialup.tiscali.it ([62.11.79.165]:26507 "EHLO
-	zion.home.lan") by vger.kernel.org with ESMTP id S965306AbVIPTiU
+	id S965047AbVIPTiF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 15:38:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbVIPTiF
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 15:38:05 -0400
+Received: from ppp-62-11-79-165.dialup.tiscali.it ([62.11.79.165]:23947 "EHLO
+	zion.home.lan") by vger.kernel.org with ESMTP id S1750705AbVIPTiE
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2005 15:38:20 -0400
+	Fri, 16 Sep 2005 15:38:04 -0400
 Received: from zion.home.lan (localhost [127.0.0.1])
-	by zion.home.lan (Postfix) with ESMTP id 7A55728542;
-	Fri, 16 Sep 2005 21:35:16 +0200 (CEST)
+	by zion.home.lan (Postfix) with ESMTP id 28D852853F;
+	Fri, 16 Sep 2005 21:35:15 +0200 (CEST)
 To: Catalin Marinas <catalin.marinas@gmail.com>
 In-Reply-To: <20050916193511.18681.24189.stgit@zion.home.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8712>
 
-For kernel patches, the "From" line from the email is often preserved in
-the patch itself, and the one from the email is sometimes lost, so I add an
-explicit one. And mail barfes on this.
-Fix it up.
+Do git-update-cache only when diffing with the working tree, not otherwise.
+Spending something like 1min for a stg files is bad - yes, my laptop
+was really busy and the Linux tree was probably cache-cold, but that's just
+not needed.
+
+Also, in diffstat we currently do it both by hand and by calling git.diff.
+And in files there's no need at all for that - even the comments says that
+"files" has only to do with committed changes.
 
 Signed-off-by: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
 ---
 
- stgit/commands/mail.py |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ stgit/git.py |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
---- a/stgit/commands/mail.py
-+++ b/stgit/commands/mail.py
-@@ -122,7 +122,7 @@ def __parse_addresses(string):
-         elif re.match('(to|cc|bcc):\s+', line, re.I):
-             to_addr_list += __addr_list(line)
+diff --git a/stgit/git.py b/stgit/git.py
+--- a/stgit/git.py
++++ b/stgit/git.py
+@@ -376,11 +376,11 @@ def status(files = [], modified = False,
+ def diff(files = [], rev1 = 'HEAD', rev2 = None, out_fd = None):
+     """Show the diff between rev1 and rev2
+     """
+-    os.system('git-update-cache --refresh > /dev/null')
  
--    if len(from_addr_list) != 1:
-+    if len(from_addr_list) == 0:
-         raise CmdException, 'No "From" address'
-     if len(to_addr_list) == 0:
-         raise CmdException, 'No "To/Cc/Bcc" addresses'
+     if rev2:
+         diff_str = _output(['git-diff-tree', '-p', rev1, rev2] + files)
+     else:
++        os.system('git-update-cache --refresh > /dev/null')
+         diff_str = _output(['git-diff-cache', '-p', rev1] + files)
+ 
+     if out_fd:
+@@ -392,7 +392,6 @@ def diffstat(files = [], rev1 = 'HEAD', 
+     """Return the diffstat between rev1 and rev2
+     """
+ 
+-    os.system('git-update-cache --refresh > /dev/null')
+     p=popen2.Popen3('git-apply --stat')
+     diff(files, rev1, rev2, p.tochild)
+     p.tochild.close()
+@@ -404,7 +403,6 @@ def diffstat(files = [], rev1 = 'HEAD', 
+ def files(rev1, rev2):
+     """Return the files modified between rev1 and rev2
+     """
+-    os.system('git-update-cache --refresh > /dev/null')
+ 
+     str = ''
+     for line in _output_lines('git-diff-tree -r %s %s' % (rev1, rev2)):
