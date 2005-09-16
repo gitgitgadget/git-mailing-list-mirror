@@ -1,77 +1,105 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH/RFC] Build a shared / renamed / "stable" version of the library?
-Date: Fri, 16 Sep 2005 23:10:41 +0200
-Message-ID: <20050916211040.GU7646@kiste.smurf.noris.de>
-References: <pan.2005.09.16.12.37.14.736570@smurf.noris.de> <7vmzmcj1eo.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Improve git-rev-list memory usage further
+Date: Fri, 16 Sep 2005 14:32:48 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509161423400.26803@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: David Roundy <droundy@abridgegame.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 16 23:14:34 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Sep 16 23:33:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGNVu-000424-Lm
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 23:12:55 +0200
+	id 1EGNpU-0000Wl-UL
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 23:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbVIPVMk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 17:12:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbVIPVMj
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 17:12:39 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:46993 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S1751293AbVIPVMj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 17:12:39 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1EGNTn-0002cy-Cn; Fri, 16 Sep 2005 23:11:32 +0200
-Received: (nullmailer pid 3374 invoked by uid 501);
-	Fri, 16 Sep 2005 21:10:41 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vmzmcj1eo.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.6 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S1751299AbVIPVdG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 17:33:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751302AbVIPVdG
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 17:33:06 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:62084 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751299AbVIPVdF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 17:33:05 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8GLWrBo018427
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 16 Sep 2005 14:32:54 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8GLWmaL014273;
+	Fri, 16 Sep 2005 14:32:50 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8734>
 
-Hi,
 
-Junio C Hamano:
-> Matthias, I think you are solving a wrong problem.  More
-> precisely, solving problems in a wrong order.
-> 
-I've since looked a bit more closely at the "library" code, and ...
-well, you're obviously right. :-/
+This avoids keeping tree entries around, and free's them as it traverses
+the list. This avoids building up a huge memory footprint just for these 
+small but very common allocations.
 
-> can read many blobs without spawning git-cat-file for each of
-> them, but that is about how far you could go.
+Before:
 
-Precisely that was the first application I needed the library for. ;-)
+	[torvalds@g5 linux]$ /usr/bin/time git-rev-list --objects v2.6.12..HEAD | wc -l
+	11.65user 0.38system 0:12.65elapsed 95%CPU (0avgtext+0avgdata 0maxresident)k
+	0inputs+0outputs (0major+42934minor)pagefaults 0swaps
+	59124
 
-> Don't get me wrong.  I would really want to see the guts of git
-> libified and SWIG'ed.  That would help not just your Python
-> thing but also StGIT and Fredrik merge (both are Python), as
-> well as gitk (tcl/tk) and gitweb (Perl).  I would not even mind
-> seeing all the git barebone Porcelain redone in Python once we
-> go in that direction, ditching the shell scripts we currently
-> have.
-> 
-You and me both...
+After:
 
-> *5* Maybe we would want separate git_init_cache,
-> git_init_objects, ... and be able to mix and match them.  Maybe
-> not.  
-> 
-Makes sense. First steps would probably be to invent "struct
-git_repository" and "struct git_cache" data structures. Fun. ;-)
+	[torvalds@g5 linux]$ /usr/bin/time git-rev-list --objects v2.6.12..HEAD | wc -l
+	12.28user 0.29system 0:12.57elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+	0inputs+0outputs (0major+26718minor)pagefaults 0swaps
+	59124
 
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-INSIDE, I have the same personality disorder as LUCY RICARDO!!
-		-- Zippy the Pinhead
+note how the minor fault numbers - which ends up being how many pages we 
+needed to map - go down from 42934 (167 MB) to 26718 (104 MB).
+
+That's still a honking big memory footprint, but it's about half of what
+it was just a day or two ago (and this is the object list for a pretty big
+update - almost 60,000 objects. Smaller updates need less memory).
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -147,11 +147,16 @@ static struct object_list **process_tree
+ 		die("bad tree object %s", sha1_to_hex(obj->sha1));
+ 	obj->flags |= SEEN;
+ 	p = add_object(obj, p, name);
+-	for (entry = tree->entries ; entry ; entry = entry->next) {
++	entry = tree->entries;
++	tree->entries = NULL;
++	while (entry) {
++		struct tree_entry_list *next = entry->next;
+ 		if (entry->directory)
+ 			p = process_tree(entry->item.tree, p, entry->name);
+ 		else
+ 			p = process_blob(entry->item.blob, p, entry->name);
++		free(entry);
++		entry = next;
+ 	}
+ 	return p;
+ }
+@@ -218,12 +223,15 @@ static void mark_tree_uninteresting(stru
+ 	if (parse_tree(tree) < 0)
+ 		die("bad tree %s", sha1_to_hex(obj->sha1));
+ 	entry = tree->entries;
++	tree->entries = NULL;
+ 	while (entry) {
++		struct tree_entry_list *next = entry->next;
+ 		if (entry->directory)
+ 			mark_tree_uninteresting(entry->item.tree);
+ 		else
+ 			mark_blob_uninteresting(entry->item.blob);
+-		entry = entry->next;
++		free(entry);
++		entry = next;
+ 	}
+ }
+ 
