@@ -1,45 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Shell quoting
-Date: Fri, 16 Sep 2005 12:20:16 -0700
-Message-ID: <7vfys4izv3.fsf@assigned-by-dhcp.cox.net>
-References: <43290BB8.90501@zytor.com>
-	<7vy85yahjk.fsf@assigned-by-dhcp.cox.net> <4329C11A.1040302@zytor.com>
-	<Pine.LNX.4.58.0509151153140.26803@g5.osdl.org>
+From: "John W. Linville" <linville@tuxdriver.com>
+Subject: Re: Add uninstall target to Makefile
+Date: Fri, 16 Sep 2005 15:19:55 -0400
+Message-ID: <20050916191953.GD22825@tuxdriver.com>
+References: <20050916125814.GA8084@igloo.ds.co.ug> <7vfys5ndor.fsf@assigned-by-dhcp.cox.net> <20050916175402.GC22825@tuxdriver.com> <20050916180810.GK8041@shell0.pdx.osdl.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 16 21:22:15 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Martin Atukunda <matlads@dsmagic.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 16 21:26:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGLl6-000164-2J
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 21:20:28 +0200
+	id 1EGLoi-000203-9X
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 21:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751239AbVIPTUV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 15:20:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbVIPTUV
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 15:20:21 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:2779 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751239AbVIPTUU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2005 15:20:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050916192017.WYMR9510.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 16 Sep 2005 15:20:17 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509151153140.26803@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 15 Sep 2005 12:01:17 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751241AbVIPTYJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 15:24:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbVIPTYJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 15:24:09 -0400
+Received: from ra.tuxdriver.com ([24.172.12.4]:65285 "EHLO ra.tuxdriver.com")
+	by vger.kernel.org with ESMTP id S1751241AbVIPTYI (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 15:24:08 -0400
+Received: from bilbo.tuxdriver.com (azure.tuxdriver.com [24.172.12.5])
+	by ra.tuxdriver.com (8.13.3/8.13.3) with ESMTP id j8GJJuwV024014
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 16 Sep 2005 15:19:56 -0400
+Received: from bilbo.tuxdriver.com (localhost.localdomain [127.0.0.1])
+	by bilbo.tuxdriver.com (8.13.1/8.13.1) with ESMTP id j8GJJu1Q006263;
+	Fri, 16 Sep 2005 15:19:56 -0400
+Received: (from linville@localhost)
+	by bilbo.tuxdriver.com (8.13.1/8.13.1/Submit) id j8GJJtTq006262;
+	Fri, 16 Sep 2005 15:19:55 -0400
+To: Chris Wright <chrisw@osdl.org>
+Mail-Followup-To: Chris Wright <chrisw@osdl.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Martin Atukunda <matlads@dsmagic.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050916180810.GK8041@shell0.pdx.osdl.net>
+User-Agent: Mutt/1.4.1i
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4-gr0
+X-Spam-Checker-Version: SpamAssassin 3.0.4-gr0 (2005-06-05) on 
+	ra.tuxdriver.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8709>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Fri, Sep 16, 2005 at 11:08:10AM -0700, Chris Wright wrote:
 
-> Junio's "sq_quote()" works wonderfully on any valid shells.
+> Of course package manager will do better at this, but it is useful to be
+> able to uninstall.  However, I don't think Martin's external script with
+> all the filenames hardcoded is the right approach.  There are $(PROG)
+> and $(SCRIPTS) which already know all these filenames.
 
-I cannot take credit for that one -- I just picked it up from my
-mentor.
+I would agree with that.  Definitely better to use the same Makefile
+vars used for install to do the uninstall.
+
+John
+-- 
+John W. Linville
+linville@tuxdriver.com
