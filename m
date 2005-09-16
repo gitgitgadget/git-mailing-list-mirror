@@ -1,63 +1,49 @@
-From: Chris Wright <chrisw@osdl.org>
-Subject: Re: PATCH Documentation/git-rev-list.txt typo fix
-Date: Fri, 16 Sep 2005 13:06:42 -0700
-Message-ID: <20050916200642.GN8041@shell0.pdx.osdl.net>
-References: <E1EG2Or-0005E2-Pw@jdl.com> <20050916142412.GA973@brainysmurf.cs.umu.se> <7vy85xotxt.fsf@assigned-by-dhcp.cox.net> <20050916200232.GM8041@shell0.pdx.osdl.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC] Build a shared / renamed / "stable" version of the library?
+Date: Fri, 16 Sep 2005 13:06:16 -0700
+Message-ID: <7vll1whj5z.fsf@assigned-by-dhcp.cox.net>
+References: <pan.2005.09.16.12.37.14.736570@smurf.noris.de>
+	<7vmzmcj1eo.fsf@assigned-by-dhcp.cox.net>
+	<432B2172.8090803@citi.umich.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Peter Hagervall <hager@cs.umu.se>,
-	jdl@freescale.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 16 22:07:42 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 16 22:07:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGMUF-0005AB-Fv
-	for gcvg-git@gmane.org; Fri, 16 Sep 2005 22:07:07 +0200
+	id 1EGMTW-00053h-Iw
+	for gcvg-git@gmane.org; Fri, 16 Sep 2005 22:06:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161275AbVIPUHE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 16:07:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161276AbVIPUHE
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 16:07:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:32989 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161275AbVIPUHC (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 16:07:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8GK6gBo012023
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 16 Sep 2005 13:06:43 -0700
-Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8GK6gC3010038;
-	Fri, 16 Sep 2005 13:06:42 -0700
-Received: (from chrisw@localhost)
-	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j8GK6geI010037;
-	Fri, 16 Sep 2005 13:06:42 -0700
-To: Chris Wright <chrisw@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <20050916200232.GM8041@shell0.pdx.osdl.net>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751248AbVIPUGU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 16:06:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751251AbVIPUGU
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 16:06:20 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:25842 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751248AbVIPUGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Sep 2005 16:06:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050916200617.RKSP7185.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 16 Sep 2005 16:06:17 -0400
+To: cel@citi.umich.edu
+In-Reply-To: <432B2172.8090803@citi.umich.edu> (Chuck Lever's message of "Fri,
+	16 Sep 2005 15:48:02 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8725>
 
-* Chris Wright (chrisw@osdl.org) wrote:
-> * Junio C Hamano (junkio@cox.net) wrote:
-> > Peter Hagervall <hager@cs.umu.se> writes:
-> > 
-> > > This causes a mismatch in <emphasis> and <superscript> tags, one way of
-> > > fixing it is having no more than one caret symbol per line, which is the
-> > > only solution I found in the asciidoc documentation. Ugly, but it works.
-> > 
-> > Thanks.
-> 
-> This is breaking the build.  Reverting fixes the build...
+Chuck Lever <cel@citi.umich.edu> writes:
 
-Err, ignore me.  I was one patch behind.  That patch from Peter fixes
-the broken build introduced by Jon.
+> well, i kept the "run-once" mentality.  if that's something you'd like 
+> to go away, i can do that too, at some later point.
 
-thanks,
--chris
+I did not mean to pressure you or suggest doing it in this
+round.
+
+I should have said "this will become easier to fix when Chuck is
+done...".
