@@ -1,61 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: deprecating more
-Date: Fri, 16 Sep 2005 18:31:54 -0700
-Message-ID: <7vzmqceayd.fsf@assigned-by-dhcp.cox.net>
-References: <7vd5n8fqso.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: deprecating more
+Date: Fri, 16 Sep 2005 18:59:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509161856260.26803@g5.osdl.org>
+References: <7vd5n8fqso.fsf@assigned-by-dhcp.cox.net> <7vzmqceayd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Sep 17 03:33:02 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 17 04:00:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGRYc-0004Gl-E5
-	for gcvg-git@gmane.org; Sat, 17 Sep 2005 03:31:58 +0200
+	id 1EGRzL-00010E-EE
+	for gcvg-git@gmane.org; Sat, 17 Sep 2005 03:59:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750815AbVIQBb4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 21:31:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823AbVIQBb4
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 21:31:56 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:62138 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750815AbVIQBbz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2005 21:31:55 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050917013155.YMXQ17436.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 16 Sep 2005 21:31:55 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7vd5n8fqso.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 16 Sep 2005 18:04:23 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750825AbVIQB7c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 21:59:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750831AbVIQB7c
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 21:59:32 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:57274 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750830AbVIQB7b (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 21:59:31 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8H1xQBo001372
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 16 Sep 2005 18:59:26 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8H1xOcr024526;
+	Fri, 16 Sep 2005 18:59:25 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmqceayd.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8750>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Is anybody actually using this program?  If not I'd like to
-> deprecate it now and remove it before we hit 1.0.  As far as I
-> can tell it is not very useful.
 
-The same goes for the following programs:
+On Fri, 16 Sep 2005, Junio C Hamano wrote:
+> 
+> Among them, I could be talked into keeping git-export on the
+> condition that we will add a counterpart git-import that can
+> read git-export output and recreate an identical repository
 
-    git-diff-helper
-    git-diff-stages
-    git-export
-    git-rev-tree
+I don't think there is any point.
 
-Among them, I could be talked into keeping git-export on the
-condition that we will add a counterpart git-import that can
-read git-export output and recreate an identical repository
-[*1*]; without something like that, I doubt its usefulness,
-especially since "git-whatchanged" is far more useful for
-everyday use.
+git-export was done as a concept example on how easy it is to export the
+git data to something else. It's much less powerful than ny number of
+trivial one-liner scripts now, and real exporters would not ever use
+git-export.
 
-[Footnote]
+It's obviously much less powerful than "git-whatchanged", or just about 
+any combination of git-rev-list + git-diff-tree.
 
-*1* which I think actually is impossible without fixing
-git-export first so that it exports the initial commit.  I may
-be mistaken.
+So drop it.
+
+		Linus
