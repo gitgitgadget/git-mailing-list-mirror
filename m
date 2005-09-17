@@ -1,55 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
 Subject: Re: Newbie falls at first hurdle
-Date: Sat, 17 Sep 2005 09:13:44 -0700
-Message-ID: <7vek7nbrk7.fsf@assigned-by-dhcp.cox.net>
-References: <200509171309.46893.alan@chandlerfamily.org.uk>
+Date: Sat, 17 Sep 2005 17:30:18 +0100
+Message-ID: <200509171730.19055.alan@chandlerfamily.org.uk>
+References: <200509171309.46893.alan@chandlerfamily.org.uk> <7vek7nbrk7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 17 18:15:02 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Sep 17 18:31:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGfK2-0001EJ-HP
-	for gcvg-git@gmane.org; Sat, 17 Sep 2005 18:13:51 +0200
+	id 1EGfa1-0004rT-BT
+	for gcvg-git@gmane.org; Sat, 17 Sep 2005 18:30:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751132AbVIQQNs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Sep 2005 12:13:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbVIQQNs
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Sep 2005 12:13:48 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:64738 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751132AbVIQQNq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Sep 2005 12:13:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050917161346.MVKO18416.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 17 Sep 2005 12:13:46 -0400
-To: Alan Chandler <alan@chandlerfamily.org.uk>
-In-Reply-To: <200509171309.46893.alan@chandlerfamily.org.uk> (Alan Chandler's
-	message of "Sat, 17 Sep 2005 13:09:46 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751139AbVIQQaS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Sep 2005 12:30:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbVIQQaR
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Sep 2005 12:30:17 -0400
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:48027
+	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
+	id S1751139AbVIQQaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Sep 2005 12:30:16 -0400
+Received: from kanger.home ([192.168.0.21])
+	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
+	id 1EGfZt-0000oJ-NU
+	for git@vger.kernel.org; Sat, 17 Sep 2005 17:30:13 +0100
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+In-Reply-To: <7vek7nbrk7.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8766>
 
-Alan Chandler <alan@chandlerfamily.org.uk> writes:
+On Saturday 17 Sep 2005 17:13, Junio C Hamano wrote:
+> Alan Chandler <alan@chandlerfamily.org.uk> writes:
 
-> So 'git-update-cache --add *' would seem to be the next step.
+> We do not track 'directories'.  ...
+
 >
-> However this fails with a message 
->
-> error: JavaSource: is a directory
-> fatal: Unable to add JavaSource to database; maybe you want to use --add 
-> option?
+>     $ find * ! -type d -print0 | xargs -0 git add
 
-Sorry, that is not a very helpful error message.
+I did actually manage to create content with
 
-We do not track 'directories'.  Only files and symlinks, which
-could live within subdirectories, and that's why you got that
-error message -- you told it to add a directory.  You'd need
-something like this:
+find . -wholename './.git' -prune -o -wholename './.deployables' -prune -o 
+\( -type f -print \) | xargs git-update-cache --add 
 
-    $ find * ! -type d -print0 | xargs -0 git add
+and then commited it (with git commit)
+
+The editor file that came up with this listed all the files it was going to 
+commit INCLUDING some .files from the root directory (I am using eclipse, so 
+I had files like .project and .classpath there).  It says in the 
+Documentation that git ignores those - has it done?
+
+
+I then blew away (ie deleted) a couple of directories in my working tree and 
+loaded them from an earlier backup and git diff HEAD showed the differences 
+of the content of these new directories against the committed ones just fine.  
+I then deleted these directories again and then attempted to check them out 
+from the repository with
+
+git checkout master
+
+None of these directories has been created in my working directory.
+
+Does this mean that I have to manually create the directory structure for the 
+files to be checked into?
+
+
+-- 
+Alan Chandler
+http://www.chandlerfamily.org.uk
