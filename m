@@ -1,73 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Add uninstall target to Makefile
-Date: Sat, 17 Sep 2005 01:37:03 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0509170135110.13233@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <20050916125814.GA8084@igloo.ds.co.ug> <7vfys5ndor.fsf@assigned-by-dhcp.cox.net>
- <20050916175402.GC22825@tuxdriver.com> <20050916180810.GK8041@shell0.pdx.osdl.net>
- <20050916191953.GD22825@tuxdriver.com> <7vu0gkfwak.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Fix "git-rev-list" revision range parsing
+Date: Fri, 16 Sep 2005 17:53:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509161750420.26803@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "John W. Linville" <linville@tuxdriver.com>,
-	Martin Atukunda <matlads@dsmagic.com>,
-	Chris Wright <chrisw@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 17 01:37:18 2005
+X-From: git-owner@vger.kernel.org Sat Sep 17 02:53:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGPla-0000Ry-AM
-	for gcvg-git@gmane.org; Sat, 17 Sep 2005 01:37:14 +0200
+	id 1EGQxY-0006uG-3R
+	for gcvg-git@gmane.org; Sat, 17 Sep 2005 02:53:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750732AbVIPXhK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 19:37:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750738AbVIPXhK
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 19:37:10 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:55257 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750732AbVIPXhI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Sep 2005 19:37:08 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 0100013C578; Sat, 17 Sep 2005 01:37:05 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D55E89F1F0; Sat, 17 Sep 2005 01:37:04 +0200 (CEST)
-Received: from wrzx35.rz.uni-wuerzburg.de (wrzx35.rz.uni-wuerzburg.de [132.187.3.35])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BC0015966A; Sat, 17 Sep 2005 01:37:04 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 40337E2703; Sat, 17 Sep 2005 01:37:03 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vu0gkfwak.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1750796AbVIQAxh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Sep 2005 20:53:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbVIQAxh
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 20:53:37 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:46001 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750796AbVIQAxh (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 20:53:37 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8H0rJBo030650
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 16 Sep 2005 17:53:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8H0rJ6Q022723;
+	Fri, 16 Sep 2005 17:53:19 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8745>
 
-Hi,
 
-On Fri, 16 Sep 2005, Junio C Hamano wrote:
+There were two bugs in there:
+ - if the range didn't end up working, we restored the '.' character in 
+   the wrong place.
+ - an empty end-of-range should be interpreted as HEAD.
 
-> "John W. Linville" <linville@tuxdriver.com> writes:
-> 
-> > On Fri, Sep 16, 2005 at 11:08:10AM -0700, Chris Wright wrote:
-> >
-> >> Of course package manager will do better at this, but it is useful to be
-> >> able to uninstall.  However, I don't think Martin's external script with
-> >> all the filenames hardcoded is the right approach.  There are $(PROG)
-> >> and $(SCRIPTS) which already know all these filenames.
-> >
-> > I would agree with that.  Definitely better to use the same Makefile
-> > vars used for install to do the uninstall.
-> 
-> True.  That is something I could live with.
+See rev-parse.c for the reference implementation of this.
 
-Well, IMHO a package manager beats an uninstall target any time of a 
-second. I know that I chose to checkinstall all projects I compiled myself 
-so that I can be sure that no old version keeps lying around taking space 
-for nothin'.
-
-Ciao,
-Dscho
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -561,6 +561,8 @@ int main(int argc, char **argv)
+ 			struct commit *exclude = NULL;
+ 			struct commit *include = NULL;
+ 			*dotdot = 0;
++			if (!*next)
++				next = "HEAD";
+ 			exclude = get_commit_reference(arg, UNINTERESTING);
+ 			include = get_commit_reference(next, 0);
+ 			if (exclude && include) {
+@@ -569,7 +571,7 @@ int main(int argc, char **argv)
+ 				handle_one_commit(include, &list);
+ 				continue;
+ 			}
+-			*next = '.';
++			*dotdot = '.';
+ 		}
+ 		if (*arg == '^') {
+ 			flags = UNINTERESTING;
