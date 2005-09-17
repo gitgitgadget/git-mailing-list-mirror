@@ -1,77 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Git and cogito uses different exclude files
-Date: Sat, 17 Sep 2005 07:50:09 +0200
-Message-ID: <20050917055009.GB31324@pasky.or.cz>
-References: <432A7902.20603@drzeus.cx> <tnxbr2t9zsk.fsf@arm.com> <20050916104430.GA25169@pasky.or.cz> <7vfys5ote8.fsf@assigned-by-dhcp.cox.net>
+From: Tony Luck <tony.luck@gmail.com>
+Subject: Re: deprecating more
+Date: Fri, 16 Sep 2005 23:13:09 -0700
+Message-ID: <12c511ca05091623135ccbcae1@mail.gmail.com>
+References: <7vd5n8fqso.fsf@assigned-by-dhcp.cox.net>
+	 <7vzmqceayd.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0509161856260.26803@g5.osdl.org>
+	 <7vr7boe8a8.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0509161938580.26803@g5.osdl.org>
+	 <7vfys4e003.fsf@assigned-by-dhcp.cox.net>
+Reply-To: tony.luck@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Pierre Ossman <drzeus-list@drzeus.cx>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 17 07:50:54 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: tony.luck@intel.com, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sat Sep 17 08:14:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGVah-0000nC-2J
-	for gcvg-git@gmane.org; Sat, 17 Sep 2005 07:50:23 +0200
+	id 1EGVx2-00043l-Nk
+	for gcvg-git@gmane.org; Sat, 17 Sep 2005 08:13:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750942AbVIQFuP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Sep 2005 01:50:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750947AbVIQFuP
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Sep 2005 01:50:15 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:16357 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750942AbVIQFuN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Sep 2005 01:50:13 -0400
-Received: (qmail 31768 invoked by uid 2001); 17 Sep 2005 07:50:09 +0200
+	id S1750957AbVIQGNQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Sep 2005 02:13:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750961AbVIQGNQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Sep 2005 02:13:16 -0400
+Received: from zproxy.gmail.com ([64.233.162.207]:7839 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750956AbVIQGNP convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Sep 2005 02:13:15 -0400
+Received: by zproxy.gmail.com with SMTP id 13so619565nzn
+        for <git@vger.kernel.org>; Fri, 16 Sep 2005 23:13:09 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=et5bWIpolwIqjR7YTIAyeBZLgfjN1I5pmMoUU5x7Ai2DkfhLHVZ78RPM0540hjx8h5pjTOXbqqNOWidt1rV1MeRNJt8yV4Px1Hf9S072QmwgYZtbQTKeJT5omaHMw7y4Mlk+Bg0Hkh62WgwZ2UCHSBwz4erMOdeYeV4Mm7ztROg=
+Received: by 10.37.12.42 with SMTP id p42mr994305nzi;
+        Fri, 16 Sep 2005 23:13:09 -0700 (PDT)
+Received: by 10.36.58.18 with HTTP; Fri, 16 Sep 2005 23:13:09 -0700 (PDT)
 To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfys4e003.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vfys5ote8.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8756>
 
-Dear diary, on Fri, Sep 16, 2005 at 06:43:27PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Petr Baudis <pasky@suse.cz> writes:
+> I found one in our source.  Tony, is the following change
+> acceptable to you?
 > 
-> >> The latest StGIT snapshot uses .git/info/exclude. Probably next week I
-> >> will make a new StGIT release.
-> >
-> > So does Cogito now. ;-) It still looks at .git/exclude as well and gives
-> > warning if it exists.
-> 
-> Late last night I could not find in the list archive the "list
-> consensus" I used to justify what 'git-status' does in this log
-> message:
-> 
->     Message-ID: <7vfysw89do.fsf@assigned-by-dhcp.cox.net>
->     From: Junio C Hamano <junkio@cox.net>
->     Subject: [PATCH] Teach git-status-script about git-ls-files --others
->     Date: Fri, 26 Aug 2005 18:18:59 -0700
-> 
->     When there is non-empty $GIT_DIR/info/exclude file, use it along
->     with .gitignore per-directory exclude pattern files (which was
->     a convention agreed on the list while ago and is compatible with
->     Cogito) to generate a list of ignored files as well.
-> 
->     Signed-off-by: Junio C Hamano <junkio@cox.net>
-> 
-> I do remember checking Cogito and StGIT and making sure the use
-> of .gitignore is consistent with you two, but I do not remember
-> if we had consensus on info/exclude now.  It could be that I was
-> just hallucinating back then and ended up forcing this change
-> onto you and your users by mistake in this round.
+> ------------
+> [PATCH] Use git-rev-list not git-rev-tree where appropriate.
 
-I'm too tired to search now (just after a night bus trip from Denmark -
-actually, one of the bus drivers looked exactly like Linus, perhaps his
-twin works for a Czech bus company?), but I believe we actually did
-agree on using .git/info/exclude instead of .git/exclude in some old
-now-forgotten thread, or we are having the same hallucinations.
+Sure ... I'll be glad to see git-rev-tree go.  For some reason it got wired
+into my fingers early on, and I keep typing it when I mean to use
+git-rev-list, then stare at the screen all confused when it complains
+about the arguments I gave it.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+-Tony
