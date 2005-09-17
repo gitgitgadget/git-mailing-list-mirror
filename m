@@ -1,88 +1,67 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: deprecating more
-Date: Fri, 16 Sep 2005 19:50:35 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509161938580.26803@g5.osdl.org>
-References: <7vd5n8fqso.fsf@assigned-by-dhcp.cox.net> <7vzmqceayd.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0509161856260.26803@g5.osdl.org> <7vr7boe8a8.fsf@assigned-by-dhcp.cox.net>
+From: Anton Blanchard <anton@samba.org>
+Subject: [PATCH] bisect succeeds but has non zero exit code
+Date: Sat, 17 Sep 2005 14:32:39 +1000
+Message-ID: <20050917043239.GG14962@krispykreme>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 17 04:52:00 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Sep 17 06:35:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGSmy-0000ns-Vv
-	for gcvg-git@gmane.org; Sat, 17 Sep 2005 04:50:53 +0200
+	id 1EGUPr-0007UY-NJ
+	for gcvg-git@gmane.org; Sat, 17 Sep 2005 06:35:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750834AbVIQCul (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Sep 2005 22:50:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750836AbVIQCul
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Sep 2005 22:50:41 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:52418 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750834AbVIQCuk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Sep 2005 22:50:40 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8H2oaBo003652
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 16 Sep 2005 19:50:36 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8H2oZEN025956;
-	Fri, 16 Sep 2005 19:50:35 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr7boe8a8.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750902AbVIQEfD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Sep 2005 00:35:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbVIQEfD
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Sep 2005 00:35:03 -0400
+Received: from ozlabs.org ([203.10.76.45]:19690 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1750903AbVIQEfB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Sep 2005 00:35:01 -0400
+Received: by ozlabs.org (Postfix, from userid 1010)
+	id 204F4682F4; Sat, 17 Sep 2005 14:35:00 +1000 (EST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8753>
 
 
+Hi,
 
-On Fri, 16 Sep 2005, Junio C Hamano wrote:
-> 
-> I'm happy to hear an argument to drop it, but I would like to
-> make sure that you do realize that git-whatchanged is not a
-> convenient way to truly "export" for later recreation of
-> identical repository, due to its indentation and truncation
-> behaviour.  Not that *I* think that matters.
+I was writing some scripts to automate a bisection search and noticed
+I could get a non zero exit code when the command succeeded:
 
-Well, the thing is, a true exporter probably doesn't want to use patches 
-at all.
+# git-bisect start
+# echo $?
+0
 
-A truly good exporter would likely use
+# git-bisect good ef4cbee0b0d0f791bb593f99b702410f3c0efce6
+# echo $?
+1
 
-	git-diff-tree -M -r
+# git bisect bad 6d36ba629e0ef47a03d3703ee1d38143c25532a8
+Bisecting: 13 revisions left to test after this
+[1619cca2921f6927f4240e03f413d4165c7002fc] Partially revert "Fix time
+going twice as fast problem on ATI Xpress chipsets"
+# echo $?
+0
 
-or something to generate the list of filenames and versions, and then work 
-on that. You really _have_ to, in order to get things like binary files 
-right.
+It looks like bisect_next_check returns false and we return a non zero
+exit code. The following patch forces a good exit code in that case.
 
-Anything that is based on diffs would suck.
+Signed-off-by: Anton Blanchard <anton@samba.org>
+---
 
-Also, I suspect that to get the list of commits to export, a real exporter
-is likely to first just do something like
-
-	git-rev-list --parents --topo-order prev..
-
-and generate the commit topology from there. Then just either use the C
-library interfaces to suck in the commit messages, or just use
-git-cat-file. And then git-diff-tree -M (or perhaps -C, if the
-repo-to-be-exported-to knows about copies) to actually generate the 
-revision info.
-
-> What do you think about the other commands I mentioned?
-
-I think they can all go. I think some old scripts migth still use 
-git-rev-tree, but it really is clearly inferior in every way to 
-git-rev-list that such scripts should be fixed anyway. Fixing them should 
-be pretty easy.
-
-(The packed format actually makes git-rev-tree at least ok from a 
-performance angle, even if it has to walk all the way to the root. But I 
-_seriously_ doube you want to use it on any big repo anyway, and 
-definitely not with an unpacked one).
-
-		Linus
+--- git-bisect.sh.orig	2005-09-15 17:37:08.000000000 +1000
++++ git-bisect.sh	2005-09-17 14:24:30.000000000 +1000
+@@ -111,6 +111,7 @@
+ 
+ bisect_auto_next() {
+ 	bisect_next_check && bisect_next
++	true
+ }
+ 
+ bisect_next() {
