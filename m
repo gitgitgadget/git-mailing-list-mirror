@@ -1,67 +1,50 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Improved "git add"
-Date: Mon, 19 Sep 2005 00:17:02 +0200
-Message-ID: <20050918221702.GE22391@pasky.or.cz>
-References: <Pine.LNX.4.58.0509181119040.26803@g5.osdl.org> <20050918212904.GB1463@schottelius.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: first impressions to git
+Date: Sun, 18 Sep 2005 15:23:17 -0700
+Message-ID: <7v7jde10dm.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0509181201220.23242@iabervon.org>
+	<20050918145434.GA22391@pasky.or.cz>
+	<94fc236b050918073351075bb4@mail.gmail.com>
+	<20050918211855.GA1463@schottelius.org>
+	<20050918221125.GD22391@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 19 00:17:40 2005
+Cc: git@vger.kernel.org, Kay Sievers <kay.sievers@vrfy.org>,
+	Christian Gierke <ch@gierke.de>
+X-From: git-owner@vger.kernel.org Mon Sep 19 00:24:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EH7T9-0006kC-Me
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 00:17:08 +0200
+	id 1EH7ZF-0007yz-K5
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 00:23:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932228AbVIRWRF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Sep 2005 18:17:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbVIRWRF
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 18:17:05 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:15339 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932228AbVIRWRE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2005 18:17:04 -0400
-Received: (qmail 22227 invoked by uid 2001); 19 Sep 2005 00:17:02 +0200
-To: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Content-Disposition: inline
-In-Reply-To: <20050918212904.GB1463@schottelius.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S932234AbVIRWXU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Sep 2005 18:23:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbVIRWXU
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 18:23:20 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:58004 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932234AbVIRWXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Sep 2005 18:23:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050918222319.WYBI28889.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 18 Sep 2005 18:23:19 -0400
+To: Petr Baudis <pasky@suse.cz>
+cc: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+In-Reply-To: <20050918221125.GD22391@pasky.or.cz> (Petr Baudis's message of
+	"Mon, 19 Sep 2005 00:11:25 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8818>
 
-Dear diary, on Sun, Sep 18, 2005 at 11:29:04PM CEST, I got a letter
-where Nico -telmich- Schottelius <nico-linux-git@schottelius.org> told me that...
-> Linus Torvalds [Sun, Sep 18, 2005 at 11:27:45AM -0700]:
-> > [git-add/directory fix]
-> 
-> Nice, first cogito and now git itself. You are pretty fast.
-> 
-> > [...]
-> > Also, I think we should have a default ignore list if we don't find a 
-> > .git/info/exclude file. Ignoring "*.o" and ".*" by default would probably 
-> > be the right thing to do.
-> 
-> I do use doc/.warning or similar in some projects files for outputting
-> a warning when somebody simply types 'make', so he'll get instructions
-> on what to do.
-> 
-> Other people may even want to include *.o in their tree, because it's
-> used by their program for another purpose.
-> 
-> I do not think that a VCS should ignore anything from itself. If we
-> generate a standard .git/info/excludes (or whatever the name of it is)
-> and write those standard values in there, this is a different thing.
+Petr Baudis <pasky@suse.cz> writes:
 
-But .git/info/exclude mostly sucks, you really want these kinds of rules
-in .gitignore if anywhere. E.g. CVS by default ignores some stuff and it
-seems as a fine strategy for me, and is working out in the vast majority
-of cases. You can unignore files by doing '!pattern', so if you want to
-throw away all the defaults, just specify '!*'.
+> I believe it'd be a much more reasonable and less confusing policy for
+> Git to have the docs for the last release on the web.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Makes sense.  Either that, or have two links for the last
+released version and the in-development version.
