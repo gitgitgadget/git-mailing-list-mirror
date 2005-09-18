@@ -1,59 +1,65 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: deprecating more
-Date: Fri, 16 Sep 2005 21:58:24 -0400
-Message-ID: <200509170158.j8H1wOVh027636@inti.inf.utfsm.cl>
-References: <junkio@cox.net>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 18 04:02:43 2005
+From: Dmitry Torokhov <dtor_core@ameritech.net>
+Subject: Garbage in .git directories???
+Date: Sat, 17 Sep 2005 21:41:30 -0500
+Message-ID: <200509172141.31591.dtor_core@ameritech.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sun Sep 18 04:42:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGoUt-0000sI-1q
-	for gcvg-git@gmane.org; Sun, 18 Sep 2005 04:01:39 +0200
+	id 1EGp83-0005xO-O4
+	for gcvg-git@gmane.org; Sun, 18 Sep 2005 04:42:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751268AbVIRCBg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Sep 2005 22:01:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbVIRCBg
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Sep 2005 22:01:36 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:62156 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1751268AbVIRCBg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Sep 2005 22:01:36 -0400
-Received: from inti.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by inti.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j8H1wOVh027636;
-	Fri, 16 Sep 2005 21:58:24 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
-   of "Fri, 16 Sep 2005 18:31:54 MST." <7vzmqceayd.fsf@assigned-by-dhcp.cox.net> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+	id S1751278AbVIRCli convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 17 Sep 2005 22:41:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751279AbVIRCli
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Sep 2005 22:41:38 -0400
+Received: from smtp106.sbc.mail.re2.yahoo.com ([68.142.229.99]:33396 "HELO
+	smtp106.sbc.mail.re2.yahoo.com") by vger.kernel.org with SMTP
+	id S1751278AbVIRClh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Sep 2005 22:41:37 -0400
+Received: (qmail 1126 invoked from network); 18 Sep 2005 02:41:33 -0000
+Received: from unknown (HELO mail.corenet.homeip.net) (dtor?core@ameritech.net@69.208.153.209 with login)
+  by smtp106.sbc.mail.re2.yahoo.com with SMTP; 18 Sep 2005 02:41:33 -0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8775>
 
-Junio C Hamano <junkio@cox.net> wrote:
+Hi,
 
-[About axing programs]
+I just did:
 
-> Among them, I could be talked into keeping git-export on the
-> condition that we will add a counterpart git-import that can
-> read git-export output and recreate an identical repository
-> [*1*]; without something like that, I doubt its usefulness,
-> especially since "git-whatchanged" is far more useful for
-> everyday use.
-> 
-> [Footnote]
-> 
-> *1* which I think actually is impossible without fixing
-> git-export first so that it exports the initial commit.  I may
-> be mistaken.
+git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/li=
+nux-2.6.git work
 
-Given that you can just tar the whole repository up and handle it that way,
-all that work makes little sense.
+and it seems there is some garbage in .git directory:
 
-Note that bk export (and cg-export) copy the current snapshot into a
-directory or tarball, so this doesn't do what I'd expected.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+[dtor@anvil work]$ ls -la .git/
+total 40
+drwxrwxr-x    9 dtor dtor 4096 Sep 17 21:17 .
+drwxrwxr-x    3 dtor dtor 4096 Sep 17 21:17 ..
+drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 branches
+-rw-rw-r--    1 dtor dtor   58 Sep 17 21:17 description
+lrwxrwxrwx    1 dtor dtor   17 Sep 17 21:17 HEAD -> refs/heads/master
+drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 hooks
+drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 info
+drwxr-xr-x  260 dtor dtor 4096 Sep 17 17:41 objects
+drwxrwxr-x    4 dtor dtor 4096 May  1 19:15 refs
+drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:28 remotes
+drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 V?Cl?=ED=AE=9F?E ???#V?C??=C5=
+=BFl??E#V?C??;H
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^=
+^
+
+The similar garbage(?) shows when I clone git's repository.
+
+Is this expected?
+
+--=20
+Dmitry
