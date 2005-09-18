@@ -1,222 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Improve the safety check used in fetch.c
-Date: Sun, 18 Sep 2005 10:38:39 -0700
-Message-ID: <7vbr2q46ow.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0509142120020.23242@iabervon.org>
-	<7vhdckceas.fsf@assigned-by-dhcp.cox.net>
-	<7vacicccxl.fsf@assigned-by-dhcp.cox.net>
-	<7vvf10axia.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0509171235330.23242@iabervon.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Newbie falls at first hurdle
+Date: Sun, 18 Sep 2005 10:40:06 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509181033520.26803@g5.osdl.org>
+References: <alan@chandlerfamily.org.uk> <200509180135.j8I1Z34n023252@inti.inf.utfsm.cl>
+ <46a038f9050918035436352f71@mail.gmail.com> <200509181347.11403.alan@chandlerfamily.org.uk>
+ <7vek7m5m0z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Sun Sep 18 19:39:59 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alan Chandler <alan@chandlerfamily.org.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 18 19:41:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EH37q-00057s-PC
-	for gcvg-git@gmane.org; Sun, 18 Sep 2005 19:38:51 +0200
+	id 1EH39M-0005UE-E4
+	for gcvg-git@gmane.org; Sun, 18 Sep 2005 19:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932111AbVIRRis (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Sep 2005 13:38:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932137AbVIRRis
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 13:38:48 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:47812 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932111AbVIRRip (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2005 13:38:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050918173841.OCSV24382.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 18 Sep 2005 13:38:41 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.63.0509171235330.23242@iabervon.org> (Daniel
-	Barkalow's message of "Sat, 17 Sep 2005 13:37:16 -0400 (EDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932137AbVIRRkW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Sep 2005 13:40:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932139AbVIRRkW
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 13:40:22 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:37279 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932137AbVIRRkV (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2005 13:40:21 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8IHe7Bo006872
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 18 Sep 2005 10:40:08 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8IHe6c4023040;
+	Sun, 18 Sep 2005 10:40:07 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vek7m5m0z.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8797>
 
-The recent safety check to trust only the commits we have made
-things impossibly slow and wastes a lot of memory.
 
-This commit fixes it with the following improvements:
 
- - mark already scanned objects and avoid rescanning the same
-   object again;
+On Sun, 18 Sep 2005, Junio C Hamano wrote:
+> 
+> An example to pick a couple of commits from one branch to another.
 
- - free the tree entries when we have scanned the tree entries;
-   this is the same as b0d8923ec01fd91b75ab079034f89ced91500157
-   which reduced memory usage by rev-list;
+Your examples scare even me.
 
- - plug memory leak from the object_list dequeuing code;
+How about you add this to the tutorial as an "advanced usage" example, and 
+explain everything that was done in terms of what the "stupid usage" 
+examples earlier in the tutorial did.
 
- - use the process_queue not just for fetching but for scanning,
-   to make things tail recursive to avoid deep recursion; the
-   deep recursion was especially prominent when we cloned a big
-   pack.
+In other words, you'd have to explain what "pu^2~3" means.
 
- - avoid has_sha1_file() call when we already know we do not have
-   that object.
+And octopus merges, for that matter. I don't think the tutorial ever 
+explains those.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- fetch.c |   76 ++++++++++++++++++++++++++++++++++++---------------------------
- 1 files changed, 44 insertions(+), 32 deletions(-)
-
-85d106c267ec26f398e0aaf352d8011f661c459a
-diff --git a/fetch.c b/fetch.c
---- a/fetch.c
-+++ b/fetch.c
-@@ -33,36 +33,33 @@ static void report_missing(const char *w
- 		what, missing_hex, sha1_to_hex(current_commit_sha1));
- }
- 
--static int make_sure_we_have_it(const char *what, unsigned char *sha1)
--{
--	int status = 0;
--
--	if (!has_sha1_file(sha1)) {
--		status = fetch(sha1);
--		if (status && what)
--			report_missing(what, sha1);
--	}
--	return status;
--}
--
- static int process(unsigned char *sha1, const char *type);
- 
- static int process_tree(struct tree *tree)
- {
--	struct tree_entry_list *entries;
-+	struct tree_entry_list *entry;
- 
- 	if (parse_tree(tree))
- 		return -1;
- 
--	for (entries = tree->entries; entries; entries = entries->next) {
--		if (process(entries->item.any->sha1,
--			    entries->directory ? tree_type : blob_type))
-+	entry = tree->entries;
-+	tree->entries = NULL;
-+	while (entry) {
-+		struct tree_entry_list *next = entry->next;
-+		if (process(entry->item.any->sha1,
-+			    entry->directory ? tree_type : blob_type))
- 			return -1;
-+		free(entry);
-+		entry = next;
- 	}
- 	return 0;
- }
- 
- #define COMPLETE	1U
-+#define TO_FETCH	2U
-+#define TO_SCAN		4U
-+#define SCANNED		8U
-+
- static struct commit_list *complete = NULL;
- 
- static int process_commit(struct commit *commit)
-@@ -73,13 +70,14 @@ static int process_commit(struct commit 
- 	while (complete && complete->item->date >= commit->date) {
- 		pop_most_recent_commit(&complete, COMPLETE);
- 	}
--		
- 
- 	if (commit->object.flags & COMPLETE)
- 		return 0;
- 
- 	memcpy(current_commit_sha1, commit->object.sha1, 20);
- 
-+	pull_say("walk %s\n", sha1_to_hex(commit->object.sha1));
-+
- 	if (get_tree) {
- 		if (process(commit->tree->object.sha1, tree_type))
- 			return -1;
-@@ -89,8 +87,7 @@ static int process_commit(struct commit 
- 	if (get_history) {
- 		struct commit_list *parents = commit->parents;
- 		for (; parents; parents = parents->next) {
--			if (process(parents->item->object.sha1,
--				    commit_type))
-+			if (process(parents->item->object.sha1, commit_type))
- 				return -1;
- 		}
- 	}
-@@ -109,6 +106,10 @@ static struct object_list **process_queu
- 
- static int process_object(struct object *obj)
- {
-+	if (obj->flags & SCANNED)
-+		return 0;
-+	obj->flags |= SCANNED;
-+
- 	if (obj->type == commit_type) {
- 		if (process_commit((struct commit *)obj))
- 			return -1;
-@@ -139,14 +140,19 @@ static int process(unsigned char *sha1, 
- 	if (has_sha1_file(sha1)) {
- 		parse_object(sha1);
- 		/* We already have it, so we should scan it now. */
--		return process_object(obj);
-+		if (obj->flags & (SCANNED | TO_SCAN))
-+			return 0;
-+		object_list_insert(obj, process_queue_end);
-+		process_queue_end = &(*process_queue_end)->next;
-+		obj->flags |= TO_SCAN;
-+		return 0;
- 	}
--	if (object_list_contains(process_queue, obj))
-+	if (obj->flags & (COMPLETE | TO_FETCH))
- 		return 0;
- 	object_list_insert(obj, process_queue_end);
- 	process_queue_end = &(*process_queue_end)->next;
-+	obj->flags |= TO_FETCH;
- 
--	//fprintf(stderr, "prefetch %s\n", sha1_to_hex(sha1));
- 	prefetch(sha1);
- 		
- 	return 0;
-@@ -154,21 +160,27 @@ static int process(unsigned char *sha1, 
- 
- static int loop(void)
- {
-+	struct object_list *elem;
-+
- 	while (process_queue) {
- 		struct object *obj = process_queue->item;
--		/*
--		fprintf(stderr, "%d objects to pull\n", 
--			object_list_length(process_queue));
--		*/
--		process_queue = process_queue->next;
-+		elem = process_queue;
-+		process_queue = elem->next;
-+		free(elem);
- 		if (!process_queue)
- 			process_queue_end = &process_queue;
- 
--		//fprintf(stderr, "fetch %s\n", sha1_to_hex(obj->sha1));
--		
--		if (make_sure_we_have_it(obj->type ? obj->type : "object", 
--					 obj->sha1))
--			return -1;
-+		/* If we are not scanning this object, we placed it in
-+		 * the queue because we needed to fetch it first.
-+		 */
-+		if (! (obj->flags & TO_SCAN)) {
-+			if (fetch(obj->sha1)) {
-+				report_missing(obj->type
-+					       ? obj->type
-+					       : "object", obj->sha1);
-+				return -1;
-+			}
-+		}
- 		if (!obj->type)
- 			parse_object(obj->sha1);
- 		if (process_object(obj))
+		Linus
