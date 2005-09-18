@@ -1,57 +1,58 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] Better mail handling in stgit
-Date: Sun, 18 Sep 2005 09:19:51 +0100
-Message-ID: <1127031591.6959.3.camel@localhost.localdomain>
-References: <432C1B71.4090105@drzeus.cx>
+From: Martin Atukunda <matlads@dsmagic.com>
+Subject: Re: Add uninstall target to Makefile
+Date: Sun, 18 Sep 2005 13:03:00 +0300
+Message-ID: <20050918100300.GA9890@igloo.ds.co.ug>
+References: <20050916125814.GA8084@igloo.ds.co.ug> <7vfys5ndor.fsf@assigned-by-dhcp.cox.net> <20050916175402.GC22825@tuxdriver.com> <20050916180810.GK8041@shell0.pdx.osdl.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 18 10:20:55 2005
+X-From: git-owner@vger.kernel.org Sun Sep 18 12:06:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGuP0-0001wz-Jl
-	for gcvg-git@gmane.org; Sun, 18 Sep 2005 10:19:58 +0200
+	id 1EGw3W-0003EP-P1
+	for gcvg-git@gmane.org; Sun, 18 Sep 2005 12:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751328AbVIRITz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Sep 2005 04:19:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbVIRITz
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 04:19:55 -0400
-Received: from mta07-winn.ispmail.ntl.com ([81.103.221.47]:34538 "EHLO
-	mta07-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S1751328AbVIRITz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2005 04:19:55 -0400
-Received: from aamta09-winn.ispmail.ntl.com ([81.103.221.35])
-          by mta07-winn.ispmail.ntl.com with ESMTP
-          id <20050918081953.BEF21883.mta07-winn.ispmail.ntl.com@aamta09-winn.ispmail.ntl.com>;
-          Sun, 18 Sep 2005 09:19:53 +0100
-Received: from cpc3-cmbg5-3-0-cust199.cmbg.cable.ntl.com ([81.104.194.199])
-          by aamta09-winn.ispmail.ntl.com with ESMTP
-          id <20050918081953.SJNQ13031.aamta09-winn.ispmail.ntl.com@cpc3-cmbg5-3-0-cust199.cmbg.cable.ntl.com>;
-          Sun, 18 Sep 2005 09:19:53 +0100
-To: Pierre Ossman <drzeus-list@drzeus.cx>
-In-Reply-To: <432C1B71.4090105@drzeus.cx>
-X-Mailer: Evolution 2.2.1.1 
+	id S1750828AbVIRKFi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Sep 2005 06:05:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750829AbVIRKFi
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 06:05:38 -0400
+Received: from mail1.imul.com ([217.113.72.31]:57391 "EHLO mail1.infocom.co.ug")
+	by vger.kernel.org with ESMTP id S1750828AbVIRKFi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2005 06:05:38 -0400
+Received: from entandikwa.ds.co.ug ([::ffff:217.113.73.39])
+  by mail1.infocom.co.ug with esmtp; Sun, 18 Sep 2005 13:05:22 +0300
+  id 000E5E2D.432D3BE2.00003E40
+Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
+	by entandikwa.ds.co.ug (Postfix) with ESMTP id A27554DC0
+	for <git@vger.kernel.org>; Sun, 18 Sep 2005 13:06:20 +0300 (EAT)
+Received: from matlads by igloo.ds.co.ug with local (Exim 4.52)
+	id 1EGw0i-0002ad-MJ
+	for git@vger.kernel.org; Sun, 18 Sep 2005 13:03:00 +0300
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050916180810.GK8041@shell0.pdx.osdl.net>
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8778>
 
-On Sat, 2005-09-17 at 15:34 +0200, Pierre Ossman wrote:
-> Fix some issues with the mail function in StGIT:
+
+On Fri, Sep 16, 2005 at 11:08:10AM -0700, Chris Wright wrote:
+> * John W. Linville (linville@tuxdriver.com) wrote:
+> > > Sorry, I absolutely detest other peoples' Makefiles that has
+> > > this target.  Why would anybody want this?
+> > 
+> > Is this a serious question?  To uninstall the binaries e.g. if you
+> > installed them in the wrong place?
 > 
->  * Allow multiple To/Cc/Bcc command line options.
-> 
->  * Better parsing of mail addresses.
+> Of course package manager will do better at this, but it is useful to be
+> able to uninstall.  However, I don't think Martin's external script with
+> all the filenames hardcoded is the right approach.  There are $(PROG)
+> and $(SCRIPTS) which already know all these filenames.
 
-Applied. Thanks.
+The external script only removes the symlinks created by ./cmd-rename.sh
 
-On a side note, since people don't usually send patches against the
-latest HEAD and git-apply fails, I implemented a --base option for
-import which applies the patch on a given commit id and performs a
-three-way merge with the current HEAD. It's much easier to fix the diff3
-conflicts than modify the patch file to apply cleanly (with no fuzz).
-
--- 
-Catalin
+- Martin -
