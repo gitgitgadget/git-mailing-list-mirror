@@ -1,70 +1,101 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: Newbie falls at first hurdle
-Date: Sun, 18 Sep 2005 13:47:11 +0100
-Message-ID: <200509181347.11403.alan@chandlerfamily.org.uk>
-References: <alan@chandlerfamily.org.uk> <200509180135.j8I1Z34n023252@inti.inf.utfsm.cl> <46a038f9050918035436352f71@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: first impressions to git
+Date: Sun, 18 Sep 2005 16:54:34 +0200
+Message-ID: <20050918145434.GA22391@pasky.or.cz>
+References: <20050918111259.GA10882@schottelius.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Sep 18 14:47:36 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Kay Sievers <kay.sievers@vrfy.org>,
+	Christian Gierke <ch@gierke.de>
+X-From: git-owner@vger.kernel.org Sun Sep 18 16:55:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGyZj-0000oZ-HR
-	for gcvg-git@gmane.org; Sun, 18 Sep 2005 14:47:19 +0200
+	id 1EH0Z2-0008J6-BT
+	for gcvg-git@gmane.org; Sun, 18 Sep 2005 16:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751115AbVIRMrN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Sep 2005 08:47:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751191AbVIRMrM
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 08:47:12 -0400
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:13727
-	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
-	id S1751115AbVIRMrM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2005 08:47:12 -0400
-Received: from kanger.home ([192.168.0.21])
-	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
-	id 1EGyZa-00033g-V0
-	for git@vger.kernel.org; Sun, 18 Sep 2005 13:47:10 +0100
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-In-Reply-To: <46a038f9050918035436352f71@mail.gmail.com>
+	id S932093AbVIROym (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Sep 2005 10:54:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbVIROym
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 10:54:42 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:52199 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751108AbVIROyl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2005 10:54:41 -0400
+Received: (qmail 11015 invoked by uid 2001); 18 Sep 2005 16:54:34 +0200
+To: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
 Content-Disposition: inline
+In-Reply-To: <20050918111259.GA10882@schottelius.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8782>
 
-On Sunday 18 Sep 2005 11:54, Martin Langhoff wrote:
-> On 9/18/05, Horst von Brand <vonbrand@inf.utfsm.cl> wrote:
-> > The easiest way of doing this is using cogito (near where you found
-> > git). It automates some tasks using git as backendq, in this case it
-> > would only need:
-> >
-> >    cg-init
->
-> +1 -- I work with a small team and we are migrating to cogito/git.
-> There's still a few things we have to call git utilities for (change
-> branch, for instance) but for "intuitive" usage, cogito is the cat's
-> whiskers.
+Dear diary, on Sun, Sep 18, 2005 at 01:12:59PM CEST, I got a letter
+where Nico -telmich- Schottelius <nico-linux-git@schottelius.org> told me that...
+> Hello!
 
-Yes - I had increasingly believed that with all the scripts being generated 
-with git that cogito was becoming irrelevant.  However experience of the last 
-day has shown me that is far from the case.
+Hello,
 
-I really like cg-commit where it lists the files its going to commit for you, 
-and where if you delete the line it doesn't.  If I've been doing a bit too 
-many things at once it helps commit in small chunks
+> My first impressions are:
+> 
+> - many commands, reminds me of arch/tla
 
-Seems cogito branch handling only really deals with linking to others. I have 
-ended up also using git branch and git checkout -f to keep lots of little 
-local branches in my repository.
+this is one of Cogito's considerations, I try to keep the number of
+commands low. It's 26 non-admin commands now, which might raise a bit
+yet, but hopefully not by much. And I was thinking about coupling stuff
+like cg-branch-* to a single command.
 
-Still struggling with how to cherry pick parts a previous update (between 
-possibly two other branches) and apply them to a current branch - all the 
-tutorials assume you want it all, and I can't really understand what the 
-cherry pick commands do from their manuals.
+> - I am not able to upload cinit, because
+>    o adding directories with files and files I want to exclude is not easily
+>      possible
+
+Just fixed, cg-init should now DTRT.
+
+>    o it's not clear to me, how I should publish (push)
+>       - scp/rsync from outside
+>       - git/cogito push
+
+Push works fine for anything but the initial push - recursive scp or
+rsync of the whole repository is probably the easiest solution. It would
+be nice if git-send-pack would support the initial push.
+
+>    o excluding *.o seems not to work, neither through .gitignore nor through
+>      .git/info/exlude
+
+It should now work during the initial commit.
+
+> - How do I check integrity of files, is signed files somehow implemented?
+
+This was discussed on IRC, it seems signed tags were the answer you
+were looking for.
+
+> I've written some notes down in
+>    http://creme.schottelius.org/~nico/temp/cogito
+
+Pretty much all of this solved now, I think.
+
+>    http://creme.schottelius.org/~nico/temp/git-erfahrungen
+> 
+> Adding directories with git-script-add (or whatever) would be nice in the way
+> it adds the contents of the directory recursively.
+
+cg-add -r implemented now.
+
+>    o cogito could in fact be a nice frontend, after removing the current bugs
+>      and if it has nicer error messaeges, which tell me WHAT I did wrong and
+>      HOW to do it right.
+
+This was one thing I kept in mind when making Cogito as well, I tried to
+make its error messages as helpful as possible. It would be great if you
+could point out where _Cogito_'s error messages might be more helpful
+(it's tougher with Git, but I'm sure they'll love to make their error
+messages more helpful as well - one thing I _really_ don't want to get
+into is filtering Git's error messages and rewriting them ;-).
 
 -- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
