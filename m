@@ -1,56 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Newbie falls at first hurdle
-Date: Sun, 18 Sep 2005 10:54:20 -0700
-Message-ID: <7vzmqa2reb.fsf@assigned-by-dhcp.cox.net>
-References: <alan@chandlerfamily.org.uk>
-	<200509180135.j8I1Z34n023252@inti.inf.utfsm.cl>
-	<46a038f9050918035436352f71@mail.gmail.com>
-	<200509181347.11403.alan@chandlerfamily.org.uk>
-	<7vek7m5m0z.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509181033520.26803@g5.osdl.org>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: Re: Unexpected behavior in git-rev-list
+Date: Sun, 18 Sep 2005 19:58:50 +0200
+Message-ID: <20050918175847.GA10427@ebar091.ebar.dtu.dk>
+References: <20050918144931.GA9561@ebar091.ebar.dtu.dk> <Pine.LNX.4.58.0509181013250.26803@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alan Chandler <alan@chandlerfamily.org.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 18 19:55:37 2005
+X-From: git-owner@vger.kernel.org Sun Sep 18 20:09:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EH3Mu-00087C-VS
-	for gcvg-git@gmane.org; Sun, 18 Sep 2005 19:54:25 +0200
+	id 1EH3bI-0002Qh-BR
+	for gcvg-git@gmane.org; Sun, 18 Sep 2005 20:09:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932143AbVIRRyX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Sep 2005 13:54:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932144AbVIRRyX
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 13:54:23 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:32468 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932143AbVIRRyW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2005 13:54:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050918175419.YPQ18416.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 18 Sep 2005 13:54:19 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509181033520.26803@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 18 Sep 2005 10:40:06 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932150AbVIRSJE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Sep 2005 14:09:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932151AbVIRSJE
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 14:09:04 -0400
+Received: from ebar091.ebar.dtu.dk ([192.38.93.106]:60355 "HELO
+	ebar091.ebar.dtu.dk") by vger.kernel.org with SMTP id S932150AbVIRSJC
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Sep 2005 14:09:02 -0400
+Received: (qmail 10486 invoked by uid 5842); 18 Sep 2005 17:58:50 -0000
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0509181013250.26803@g5.osdl.org>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8800>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Sun, Sep 18, 2005 at 10:18:10AM -0700, Linus Torvalds wrote:
+> 
+> 
+> On Sun, 18 Sep 2005, Peter Eriksen wrote:
+> > 
+> > There's something I don't quite understand about git-rev-list.
+> > After adding two files only one shows up with the --objects option.
+...
+> Well, it looks like some other file has _exactly_ the same contents as the 
+> new "Dependencies", which means that git notices that the blob isn't 
+> actually new.
+> 
+> Which doesn't surprise me at all - you've got a lot of projects there that 
+> seem to have a Dependencies thing. Why wouldn't some other project have 
+> the exact same ones?
 
-> In other words, you'd have to explain what "pu^2~3" means.
->
-> And octopus merges, for that matter. I don't think the tutorial ever 
-> explains those.
+Ah!  You are right, there is a Dependencies file in each of the 1000+
+directories and they are generated from almost the same setup, so it
+must be that there is another one like the one, I just commited.  That
+explains it.  Now I will try to see, if I actually can get the effect I
+expected somehow. :-) 
 
-Sorry, my excuses are (1) I just did a quick example from a tree
-I had handy -- my live tree; (2) as long as the user knows the
-commit show-branch labeled with the cryptic "pu^2~3" is the one
-s/he wants, it does not matter much what that label exactly
-means.
+So my new challenge to myself: Given two commit objects A and B list all
+the tree and blob objects which are not in both A and B. 
 
-But of course you are right.
+After that I think writing a command which does the same as 
+'cvs annotate' would be a good exercise.
+
+Thanks for the explanation.
+
+Regards,
+
+Peter
+
+
+P.S.
+I'm on the list, so it's not necessary to cc me. 
