@@ -1,82 +1,53 @@
-From: "Peter Eriksen" <s022018@student.dtu.dk>
-Subject: Unexpected behavior in git-rev-list
-Date: Sun, 18 Sep 2005 16:49:31 +0200
-Message-ID: <20050918144931.GA9561@ebar091.ebar.dtu.dk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Sep 18 17:15:26 2005
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+Subject: [PATCH] Fix series mismerge
+Date: Sun, 18 Sep 2005 18:47:12 +0200
+Message-ID: <20050918164712.13735.86782.stgit@zion.home.lan>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 18 18:50:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EH0ri-0003AL-4p
-	for gcvg-git@gmane.org; Sun, 18 Sep 2005 17:14:02 +0200
+	id 1EH2M6-0003hL-N9
+	for gcvg-git@gmane.org; Sun, 18 Sep 2005 18:49:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932100AbVIRPNz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Sep 2005 11:13:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932101AbVIRPNz
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 11:13:55 -0400
-Received: from ebar091.ebar.dtu.dk ([192.38.93.106]:35013 "HELO
-	ebar091.ebar.dtu.dk") by vger.kernel.org with SMTP id S932100AbVIRPNz
+	id S1751181AbVIRQtF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Sep 2005 12:49:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbVIRQtF
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 12:49:05 -0400
+Received: from ppp-62-11-72-222.dialup.tiscali.it ([62.11.72.222]:48323 "EHLO
+	zion.home.lan") by vger.kernel.org with ESMTP id S1751181AbVIRQtE
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2005 11:13:55 -0400
-Received: (qmail 9629 invoked by uid 5842); 18 Sep 2005 14:49:31 -0000
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
+	Sun, 18 Sep 2005 12:49:04 -0400
+Received: from zion.home.lan (localhost [127.0.0.1])
+	by zion.home.lan (Postfix) with ESMTP id E0ABB4392C;
+	Sun, 18 Sep 2005 18:47:14 +0200 (CEST)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8785>
 
-Hello people,
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
 
-There's something I don't quite understand about git-rev-list.
-After adding two files only one shows up with the --objects option.
+Mismerge with my addition of -e. Sorry for not pulling that time.
 
-I'm looking at commit e621a691e9bdbbe263ce34dd20458d9fbbf1a126 at
+Signed-off-by: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+---
 
-http://www.student.dtu.dk/~s022018/git/gitweb.cgi?p=recipes.git;a=summary
+ stgit/commands/series.py |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-I can find the difference between the latest commit and it's parent:
-
-> git diff HEAD^ HEAD
-diff --git a/HS-Plugins/20050403/Recipe b/HS-Plugins/20050403/Recipe
-new file mode 100644
---- /dev/null
-+++ b/HS-Plugins/20050403/Recipe
-@@ -0,0 +1,16 @@
- [snip]
-diff --git a/HS-Plugins/20050403/Resources/Dependencies
-b/HS-Plugins/20050403/Resources/Dependencies
-new file mode 100644
---- /dev/null
-+++ b/HS-Plugins/20050403/Resources/Dependencies
-@@ -0,0 +1,5 @@
- [snip] 
-
-Notice that it creates exactly two files.  Now I expect the folllowing
-objects:
-
-tree HS-Plugins
-tree 20050403
-blob Recipe
-tree Resources
-blob Dependencies
-
-Now what I understand so far is that we can list all objects reachable
-from the HEAD commit but not reachable from its parent commit by: 
-
-> git-rev-list --objects ^HEAD^ HEAD
-e621a691e9bdbbe263ce34dd20458d9fbbf1a126
-609c26436053564e8df145b175d75df339b2318b
-fe47bcfb8f47b55e3f6fabd2b2d188030fb57e1f HS-Plugins
-6c8582e49c9f792f4f550fcf510432c84d24d868 20050403
-808a68c33f87693c873f8f9c5f66c050a5ddc81e Recipe
-
-My question is now: Why doesn't "git-rev-list --objects ^HEAD^ HEAD"
-list the Dependencies blob?  I'm a bit confused.
-
-Regards,
-
-Peter
+diff --git a/stgit/commands/series.py b/stgit/commands/series.py
+--- a/stgit/commands/series.py
++++ b/stgit/commands/series.py
+@@ -32,8 +32,8 @@ with a '+' and the unapplied ones with a
+ prefixed with a '>'. Empty patches are prefixed with a '0'."""
+ 
+ options = [make_option('-b', '--branch',
+-                       help = 'use BRANCH instead of the default one')]
+-options = [make_option('-e', '--empty',
++                       help = 'use BRANCH instead of the default one'),
++           make_option('-e', '--empty',
+                        help = 'check whether patches are empty '
+                        '(much slower)',
+                        action = 'store_true') ]
