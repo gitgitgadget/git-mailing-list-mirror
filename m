@@ -1,70 +1,82 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Newbie falls at first hurdle
-Date: Sun, 18 Sep 2005 16:59:58 +0200
-Message-ID: <20050918145958.GB22391@pasky.or.cz>
-References: <200509171309.46893.alan@chandlerfamily.org.uk>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: Unexpected behavior in git-rev-list
+Date: Sun, 18 Sep 2005 16:49:31 +0200
+Message-ID: <20050918144931.GA9561@ebar091.ebar.dtu.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 18 17:01:32 2005
+X-From: git-owner@vger.kernel.org Sun Sep 18 17:15:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EH0eF-0000gZ-Az
-	for gcvg-git@gmane.org; Sun, 18 Sep 2005 17:00:07 +0200
+	id 1EH0ri-0003AL-4p
+	for gcvg-git@gmane.org; Sun, 18 Sep 2005 17:14:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932095AbVIRPAD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Sep 2005 11:00:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbVIRPAC
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 11:00:02 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:57760 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751108AbVIRPAA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Sep 2005 11:00:00 -0400
-Received: (qmail 13381 invoked by uid 2001); 18 Sep 2005 16:59:58 +0200
-To: Alan Chandler <alan@chandlerfamily.org.uk>
+	id S932100AbVIRPNz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Sep 2005 11:13:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932101AbVIRPNz
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 11:13:55 -0400
+Received: from ebar091.ebar.dtu.dk ([192.38.93.106]:35013 "HELO
+	ebar091.ebar.dtu.dk") by vger.kernel.org with SMTP id S932100AbVIRPNz
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Sep 2005 11:13:55 -0400
+Received: (qmail 9629 invoked by uid 5842); 18 Sep 2005 14:49:31 -0000
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <200509171309.46893.alan@chandlerfamily.org.uk>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8784>
 
-Dear diary, on Sat, Sep 17, 2005 at 02:09:46PM CEST, I got a letter
-where Alan Chandler <alan@chandlerfamily.org.uk> told me that...
-> I have been lurking on this mailing list since the beginning, but have just 
-> got to the point where I want to use git to manage something I am doing.
-> 
-> I have already got a working directory (or rather a directory hierarchy) of an 
-> application with files (combination of html and java), and I need to start 
-> applying some control to it.  The Tutorial unfortunately does not cover this 
-> case.  Nevertheless I have proceeded.
-> 
-> So at the top-level I have done 'git-init-db'
-> 
-> but I now assume I have to add all the files to the cache
-> 
-> So 'git-update-cache --add *' would seem to be the next step.
-> 
-> However this fails with a message 
-> 
-> error: JavaSource: is a directory
-> fatal: Unable to add JavaSource to database; maybe you want to use --add 
-> option?
-> 
-> Since I am already using the --add option, I really don't understand what I am 
-> doing wrong.
+Hello people,
 
-Two reports about this error message in one day, and I've seen more in
-the past. Heh. ;-) I'd submit a patch, but I'm still staying at the last
-git release because of the command renames.
+There's something I don't quite understand about git-rev-list.
+After adding two files only one shows up with the --objects option.
 
-BTW, cg-add should be now (not in the last release yet, though) totally
-directory-friendly.
+I'm looking at commit e621a691e9bdbbe263ce34dd20458d9fbbf1a126 at
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+http://www.student.dtu.dk/~s022018/git/gitweb.cgi?p=recipes.git;a=summary
+
+I can find the difference between the latest commit and it's parent:
+
+> git diff HEAD^ HEAD
+diff --git a/HS-Plugins/20050403/Recipe b/HS-Plugins/20050403/Recipe
+new file mode 100644
+--- /dev/null
++++ b/HS-Plugins/20050403/Recipe
+@@ -0,0 +1,16 @@
+ [snip]
+diff --git a/HS-Plugins/20050403/Resources/Dependencies
+b/HS-Plugins/20050403/Resources/Dependencies
+new file mode 100644
+--- /dev/null
++++ b/HS-Plugins/20050403/Resources/Dependencies
+@@ -0,0 +1,5 @@
+ [snip] 
+
+Notice that it creates exactly two files.  Now I expect the folllowing
+objects:
+
+tree HS-Plugins
+tree 20050403
+blob Recipe
+tree Resources
+blob Dependencies
+
+Now what I understand so far is that we can list all objects reachable
+from the HEAD commit but not reachable from its parent commit by: 
+
+> git-rev-list --objects ^HEAD^ HEAD
+e621a691e9bdbbe263ce34dd20458d9fbbf1a126
+609c26436053564e8df145b175d75df339b2318b
+fe47bcfb8f47b55e3f6fabd2b2d188030fb57e1f HS-Plugins
+6c8582e49c9f792f4f550fcf510432c84d24d868 20050403
+808a68c33f87693c873f8f9c5f66c050a5ddc81e Recipe
+
+My question is now: Why doesn't "git-rev-list --objects ^HEAD^ HEAD"
+list the Dependencies blob?  I'm a bit confused.
+
+Regards,
+
+Peter
