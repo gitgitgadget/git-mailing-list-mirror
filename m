@@ -1,65 +1,67 @@
-From: Dmitry Torokhov <dtor_core@ameritech.net>
-Subject: Garbage in .git directories???
-Date: Sat, 17 Sep 2005 21:41:30 -0500
-Message-ID: <200509172141.31591.dtor_core@ameritech.net>
+From: Dave Jones <davej@redhat.com>
+Subject: Re: Fix archive-destroying "git repack -a -d" bug
+Date: Sat, 17 Sep 2005 23:18:37 -0400
+Message-ID: <20050918031837.GB23405@redhat.com>
+References: <Pine.LNX.4.58.0509171839590.26803@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sun Sep 18 04:42:25 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Sep 18 05:21:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EGp83-0005xO-O4
-	for gcvg-git@gmane.org; Sun, 18 Sep 2005 04:42:08 +0200
+	id 1EGphu-0002Xz-Fz
+	for gcvg-git@gmane.org; Sun, 18 Sep 2005 05:19:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751278AbVIRCli convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 17 Sep 2005 22:41:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751279AbVIRCli
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Sep 2005 22:41:38 -0400
-Received: from smtp106.sbc.mail.re2.yahoo.com ([68.142.229.99]:33396 "HELO
-	smtp106.sbc.mail.re2.yahoo.com") by vger.kernel.org with SMTP
-	id S1751278AbVIRClh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Sep 2005 22:41:37 -0400
-Received: (qmail 1126 invoked from network); 18 Sep 2005 02:41:33 -0000
-Received: from unknown (HELO mail.corenet.homeip.net) (dtor?core@ameritech.net@69.208.153.209 with login)
-  by smtp106.sbc.mail.re2.yahoo.com with SMTP; 18 Sep 2005 02:41:33 -0000
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
+	id S1751286AbVIRDSw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Sep 2005 23:18:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbVIRDSw
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Sep 2005 23:18:52 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:10722 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S1751286AbVIRDSv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Sep 2005 23:18:51 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j8I3Iclw003196;
+	Sat, 17 Sep 2005 23:18:38 -0400
+Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j8I3IcV26566;
+	Sat, 17 Sep 2005 23:18:38 -0400
+Received: from nwo.kernelslacker.org (vpn83-125.boston.redhat.com [172.16.83.125])
+	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j8I3IcfI014766;
+	Sat, 17 Sep 2005 23:18:38 -0400
+Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
+	by nwo.kernelslacker.org (8.13.4/8.13.4) with ESMTP id j8I3IcLR028295;
+	Sat, 17 Sep 2005 23:18:38 -0400
+Received: (from davej@localhost)
+	by nwo.kernelslacker.org (8.13.4/8.13.4/Submit) id j8I3IbiO028294;
+	Sat, 17 Sep 2005 23:18:37 -0400
+X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0509171839590.26803@g5.osdl.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8776>
 
-Hi,
+On Sat, Sep 17, 2005 at 06:46:40PM -0700, Linus Torvalds wrote:
+ > 
+ > Using "git repack -a -d" can destroy your git archive if you use it twice 
+ > in succession.
+ > 
+ > Why? Because the new pack will be called the same as the old pack. And we 
+ > delete the old packs _after_ we've moved the new pack to the .git/objects/ 
+ > directory, which means that we'll delete the new pack too!
 
-I just did:
+Hmm, I'm sure I've done this several times in my x86info git repo
+(http://www.codemonkey.org.uk/projects/x86info/x86info.git)
 
-git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/li=
-nux-2.6.git work
+It seems to look ok to git-fsck-cache though. Would that pick up
+any breakage if present ?
 
-and it seems there is some garbage in .git directory:
+Running git-whatchanged, the history seems to go all the way
+back to the beginning of its cvs doppelganger.
 
-[dtor@anvil work]$ ls -la .git/
-total 40
-drwxrwxr-x    9 dtor dtor 4096 Sep 17 21:17 .
-drwxrwxr-x    3 dtor dtor 4096 Sep 17 21:17 ..
-drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 branches
--rw-rw-r--    1 dtor dtor   58 Sep 17 21:17 description
-lrwxrwxrwx    1 dtor dtor   17 Sep 17 21:17 HEAD -> refs/heads/master
-drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 hooks
-drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 info
-drwxr-xr-x  260 dtor dtor 4096 Sep 17 17:41 objects
-drwxrwxr-x    4 dtor dtor 4096 May  1 19:15 refs
-drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:28 remotes
-drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 V?Cl?=ED=AE=9F?E ???#V?C??=C5=
-=BFl??E#V?C??;H
-                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^=
-^
-
-The similar garbage(?) shows when I clone git's repository.
-
-Is this expected?
-
---=20
-Dmitry
+		Dave
