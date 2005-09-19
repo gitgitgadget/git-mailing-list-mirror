@@ -1,46 +1,68 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Why does git-core 0.99.7 require python 2.4?
-Date: Mon, 19 Sep 2005 12:07:18 -0700
-Message-ID: <432F0C66.7060402@zytor.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: Newbie falls at first hurdle
+Date: Mon, 19 Sep 2005 21:09:47 +0200
+Message-ID: <20050919190947.GF15165MdfPADPa@greensroom.kotnet.org>
+References: <alan@chandlerfamily.org.uk>
+ <200509181347.11403.alan@chandlerfamily.org.uk>
+ <7vek7m5m0z.fsf@assigned-by-dhcp.cox.net>
+ <200509182011.10689.alan@chandlerfamily.org.uk>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Sep 19 21:07:29 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 19 21:12:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHQz9-0001i1-9O
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 21:07:27 +0200
+	id 1EHR1y-0002YV-CD
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 21:10:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932588AbVISTHY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 15:07:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932589AbVISTHY
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 15:07:24 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:17618 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932588AbVISTHY
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2005 15:07:24 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j8JJ7Nah005909
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 19 Sep 2005 12:07:23 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
+	id S932590AbVISTJw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 15:09:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932589AbVISTJw
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 15:09:52 -0400
+Received: from smtp16.wxs.nl ([195.121.6.39]:40844 "EHLO smtp16.wxs.nl")
+	by vger.kernel.org with ESMTP id S932590AbVISTJv (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 15:09:51 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp16.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0IN20014LVWBA9@smtp16.wxs.nl> for git@vger.kernel.org; Mon,
+ 19 Sep 2005 21:09:47 +0200 (CEST)
+Received: (qmail 20758 invoked by uid 500); Mon, 19 Sep 2005 19:09:47 +0000
+In-reply-to: <200509182011.10689.alan@chandlerfamily.org.uk>
+To: Alan Chandler <alan@chandlerfamily.org.uk>
+Mail-followup-to: Alan Chandler <alan@chandlerfamily.org.uk>,
+ git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8897>
 
-I just tried to update the kernel.org hosts to git-core 0.99.7, but I 
-got stuck due to the fact that git-core 0.99.7 requires python >= 2.4, 
-which isn't in RHEL4 (python-2.3.2) nor in FC3 (python-2.3.4).
+On Sun, Sep 18, 2005 at 08:11:10PM +0100, Alan Chandler wrote:
+> What I was then trying to do, via various attempts with git diff -p was to 
+> extract small chunks of updates (ie limit scope over a few files).  Edit the 
+> result to limit the diff to cover a small update and then apply it to a my 
+> current stuff to slowly undo some of the mess that I had made. 
 
-Updating Python beyond what the distribution provides is a major operation.
+Yoy may find my changes to dirdiff useful if you do things like that.
+(http://www.liacs.nl/~sverdool/gitweb.cgi?p=dirdiff.git;a=summary)
+I've basically changed it to allow "merging" (i.e., commiting) to a branch.
 
-Can it be changed to work with python 2.3, to give a bit of leeway?
+You'd start it like this
 
-	-hpa
+girdiff master .
+
+Then you loop through the files with differences, for each
+file selecting the changes you want to copy and selecting
+Merge/"update master".
+Then you fill in a commit message and select File/Commit
+from the commit message window.
+
+Only lightly tested so far.
+Rediff'ing doesn't work yet, so you'll have to restart
+girdiff after each commit for now.
+
+skimo
