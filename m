@@ -1,53 +1,48 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: first impressions to git
-Date: Mon, 19 Sep 2005 21:14:28 +0200
-Message-ID: <20050919191428.GG15165MdfPADPa@greensroom.kotnet.org>
-References: <20050918111259.GA10882@schottelius.org>
-Reply-To: skimo@liacs.nl
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: git-core and cogito now in Fedora Extras
+Date: Mon, 19 Sep 2005 12:22:22 -0700
+Message-ID: <432F0FEE.6090107@zytor.com>
+References: <20050918173725.GS7762@shell0.pdx.osdl.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Kay Sievers <kay.sievers@vrfy.org>,
-	Christian Gierke <ch@gierke.de>
-X-From: git-owner@vger.kernel.org Mon Sep 19 21:14:56 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 19 21:25:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHR68-0003cc-SN
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 21:14:41 +0200
+	id 1EHRDr-0006SF-Rb
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 21:22:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932563AbVISTOi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 15:14:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932589AbVISTOi
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 15:14:38 -0400
-Received: from smtp13.wxs.nl ([195.121.6.27]:6807 "EHLO smtp13.wxs.nl")
-	by vger.kernel.org with ESMTP id S932563AbVISTOh (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 15:14:37 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp13.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0IN200AHYW44UE@smtp13.wxs.nl> for git@vger.kernel.org; Mon,
- 19 Sep 2005 21:14:28 +0200 (CEST)
-Received: (qmail 20807 invoked by uid 500); Mon, 19 Sep 2005 19:14:28 +0000
-In-reply-to: <20050918111259.GA10882@schottelius.org>
-To: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Mail-followup-to: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>,
- git@vger.kernel.org, Kay Sievers <kay.sievers@vrfy.org>,
- Christian Gierke <ch@gierke.de>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S932599AbVISTWh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 15:22:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932601AbVISTWh
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 15:22:37 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:45991 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932599AbVISTWg
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2005 15:22:36 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j8JJMRGF006243
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 19 Sep 2005 12:22:28 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Chris Wright <chrisw@osdl.org>
+In-Reply-To: <20050918173725.GS7762@shell0.pdx.osdl.net>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8900>
 
-On Sun, Sep 18, 2005 at 01:12:59PM +0200, Nico -telmich- Schottelius wrote:
-> - gitweb.cgi could be better documentated and supported
->    recursive directories when using $projects_list = $projectroot;
->    and splitting configuration completly outside of gitweb.cgi would be nice
->    (having .gitweb in the same directory as gitweb.cgi for instance)
+Chris Wright wrote:
+> If you're a Fedora user, you should now find git-core and cogito packages
+> in extras/.  Should be available in FC-3, FC-4, and current devel.
 
-If you don't mind running an "unofficial" gitweb, then you could use this:
+How long do you expect the lag to be between a new version being 
+released and it showing up in FE?
 
-http://www.liacs.nl/~sverdool/gitweb.cgi?p=gitweb.git;a=commitdiff;h=4e9ef72b3ad9a072c3b3a78d8f44ef7d592b7303;hp=cf893c76de670164e8d90be5ccf1d871e60188ae
-
-skimo
+	-hpa
