@@ -1,76 +1,62 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Joining cg-*-id
-Date: Tue, 20 Sep 2005 00:58:38 +0200
-Message-ID: <20050919225838.GH18320@pasky.or.cz>
-References: <1127166049.26772.26.camel@dv> <20050919215608.GA13845@pasky.or.cz> <1127169021.26772.58.camel@dv>
+From: jepler@unpythonic.net
+Subject: Re: Why does git-core 0.99.7 require python 2.4?
+Date: Mon, 19 Sep 2005 18:17:07 -0500
+Message-ID: <20050919231704.GA19276@unpythonic.net>
+References: <432F0C66.7060402@zytor.com> <20050919200222.GA11322@c165.ib.student.liu.se> <7vslw0lqvd.fsf@assigned-by-dhcp.cox.net> <432F26E9.9090707@zytor.com> <7v7jdclpme.fsf@assigned-by-dhcp.cox.net> <432F3253.3070201@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 20 00:59:32 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
+Cc: Junio C Hamano <junkio@cox.net>,
+	Fredrik Kuivinen <freku045@student.liu.se>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 20 01:17:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHUb5-00081f-Ic
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 00:58:51 +0200
+	id 1EHUst-0003JN-Pe
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 01:17:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750715AbVISW6l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 18:58:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750721AbVISW6l
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 18:58:41 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:14553 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750715AbVISW6k (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 18:58:40 -0400
-Received: (qmail 30226 invoked by uid 2001); 20 Sep 2005 00:58:38 +0200
-To: Pavel Roskin <proski@gnu.org>
+	id S932637AbVISXRL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 19:17:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932654AbVISXRK
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 19:17:10 -0400
+Received: from craie.unpythonic.net ([206.222.212.219]:9128 "EHLO
+	craie.unpythonic.net") by vger.kernel.org with ESMTP
+	id S932648AbVISXRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2005 19:17:09 -0400
+Received: by craie.unpythonic.net (Postfix, from userid 405)
+	id 0C98D5DC16E; Mon, 19 Sep 2005 18:17:08 -0500 (CDT)
+To: "H. Peter Anvin" <hpa@zytor.com>
 Content-Disposition: inline
-In-Reply-To: <1127169021.26772.58.camel@dv>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+In-Reply-To: <432F3253.3070201@zytor.com>
+User-Agent: Mutt/1.4.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8922>
 
-Dear diary, on Tue, Sep 20, 2005 at 12:30:21AM CEST, I got a letter
-where Pavel Roskin <proski@gnu.org> told me that...
-> On Mon, 2005-09-19 at 23:56 +0200, Petr Baudis wrote:
-> > Dear diary, on Mon, Sep 19, 2005 at 11:40:49PM CEST, I got a letter
-> > where Pavel Roskin <proski@gnu.org> told me that...
-> > > I believe Cogito should keep the command list short.  When the *-id
-> > > utilities got the cg-prefix, the list became longer by 3 commands.
-> > 
-> > well, those commands are semi-public, actually. E.g. cg-help does not
-> > list them.
-> 
-> But cg-<TAB><TAB> does.
 
-Good point.
+--YZ5djTAD1cGYuMQK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> > > What if we join cg-commit-id, cg-parent-id and cg-tree-id into one cg-id
-> > > (or cg-admin-id) utility?  It would work like cg-commit-id in absence of
-> > > switches, -p would make it work like cg-parent-id, and -t would make it
-> > > cg-tree-id.
-> > 
-> > Perhaps cg-object-id? I'm not principially opposed to that, but I don't
-> > see much value in it either. Perhaps if this would come along with
-> > the usage of git-rev-parse (see below)...
-> 
-> The value is having one command, one manpage and one place to fix little
-> bugs and add more functionality.  Potentially, cg-Xnormid could be
-> incorporated into that script, so bash wouldn't have to open one more
-> file.
+It looks like Python2.4's subprocess module is pure Python, and works
+with python2.3.
 
-Well, cg-Xnormid is basically pointless if it's not going to be a common
-backend for multiple other commands. So I'd say either supersede it with
-git-rev-parse or just merge it with cg-object-id.
+Could subprocess.py just be included in git?
 
-> Please don't apply my patch yet - I forgot to document the optional
-> argument.  I'll try to make cg-object-id now.
+Jeff
 
-Which patch?
+--YZ5djTAD1cGYuMQK
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.6 (GNU/Linux)
+
+iD8DBQFDL0bwJd01MZaTXX0RAq+YAJ9QsBQLq3TQrLsqiVuGrVH75hSHNACfTzFt
+LYuoo4vmz/xhkNIr+RvGxIc=
+=wWL7
+-----END PGP SIGNATURE-----
+
+--YZ5djTAD1cGYuMQK--
