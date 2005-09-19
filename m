@@ -1,59 +1,80 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: What to expect after GIT 0.99.7
-Date: Mon, 19 Sep 2005 08:06:28 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509190803270.9106@g5.osdl.org>
-References: <7vr7c02zgg.fsf@assigned-by-dhcp.cox.net> <7vwtleyml5.fsf@assigned-by-dhcp.cox.net>
- <7vpsr6ymg3.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509181829310.9106@g5.osdl.org>
- <85slw1rvne.fsf@riget.hn.org>
+From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [PATCH] Added -d and -e options to the "git" script.
+Date: Mon, 19 Sep 2005 17:08:23 +0200
+Message-ID: <u5tpsr5aye0.fsf@lysator.liu.se>
+References: <Pine.LNX.4.58.0509181114190.26803@g5.osdl.org>
+	<u5tmzm9bbrb.fsf@lysator.liu.se> <432EC7D6.6080105@gmail.com>
+	<u5tvf0xb0fp.fsf@lysator.liu.se> <432ECE5A.7040703@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 19 17:09:27 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Mon Sep 19 17:16:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHNED-0001zz-Kx
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 17:06:46 +0200
+	id 1EHNKH-0003j1-T4
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 17:13:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932453AbVISPGn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 11:06:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932454AbVISPGn
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 11:06:43 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:62628 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932453AbVISPGm (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 11:06:42 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8JF6YBo013386
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 19 Sep 2005 08:06:34 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8JF6SRF029850;
-	Mon, 19 Sep 2005 08:06:31 -0700
-To: Joachim B Haga <cjhaga@fys.uio.no>
-In-Reply-To: <85slw1rvne.fsf@riget.hn.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932457AbVISPM7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 19 Sep 2005 11:12:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932459AbVISPM7
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 11:12:59 -0400
+Received: from main.gmane.org ([80.91.229.2]:40340 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932457AbVISPM6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 11:12:58 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EHNH6-0002s0-GD
+	for git@vger.kernel.org; Mon, 19 Sep 2005 17:09:44 +0200
+Received: from 212214120186-virtutech-ab.host.songnetworks.se ([212.214.120.186])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Sep 2005 17:09:44 +0200
+Received: from davidk by 212214120186-virtutech-ab.host.songnetworks.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Sep 2005 17:09:44 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 212214120186-virtutech-ab.host.songnetworks.se
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:mwtCBJWc+mwbUaSIYItyglOCfqI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8876>
 
+A Large Angry SCM <gitzilla@gmail.com> writes:
 
+> There are better methods of setting environment variables than an=20
+> endless set of command options. Use the env command or you own=20
+> (personal) command wrapper instead.
 
-On Mon, 19 Sep 2005, Joachim B Haga wrote:
->
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > >   * strcasestr() in mailinfo.  We may need compat/strcasestr.c;
-> > 
-> > Totally untested, of course.
-> >
-> > +	int hlen = strlen(haystack) - nlen;
-> 
-> int hlen = strlen(haystack) - nlen + 1;
+Remember that, to the user, this isn't about setting environment
+variables, It's about providing git parameters.
 
-Yeah. Duh.
+Currently, the only of doing this is by setting environment variables;
+what I'm suggesting is an *alternative* to that.
 
-		Linus
+The fact that the implementation of these flags would actually use
+environment variables to propagate these parameters to subprocesses
+doesn't necessary mean that it is the only sane way to specify it
+originally.
+
+Anyway, there are other options, such as
+
+   $ git GIT_DIR=3D/foo/bar status
+
+and today we already have
+
+   $ env GIT_DIR=3D/foo/bar status
+
+The advantage of these forms is of course that they don't limit the
+parameters that can be set, so I could keep setting EDITOR if I want
+to.  But if setting GIT_DIR is common enough it might make sense to
+provide a short flag for that.
+
+The summary of my ramblings are probably that I think the -d flag is a
+good idea, but no way of specifying other parameters is needed.
+
+--=20
+David K=E5gedal
