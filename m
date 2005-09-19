@@ -1,65 +1,67 @@
-From: Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: What shall we do with the GECOS field again?
-Date: Mon, 19 Sep 2005 18:32:19 +0200
-Message-ID: <20050919163219.GA8862@puritan.pnetwork>
-References: <20050919134838.GC2903@pasky.or.cz>
+Date: Mon, 19 Sep 2005 09:32:38 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509190924280.9106@g5.osdl.org>
+References: <20050919134838.GC2903@pasky.or.cz> <7vll1trqiq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Sep 19 18:34:36 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 19 18:34:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHOZ8-0001sQ-Pz
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 18:32:27 +0200
+	id 1EHOZe-00025J-1j
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 18:32:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932429AbVISQcY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 12:32:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932440AbVISQcY
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 12:32:24 -0400
-Received: from mxfep02.bredband.com ([195.54.107.73]:58033 "EHLO
-	mxfep02.bredband.com") by vger.kernel.org with ESMTP
-	id S932429AbVISQcX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2005 12:32:23 -0400
-Received: from puritan.petwork ([213.112.43.228] [213.112.43.228])
-          by mxfep02.bredband.com with ESMTP
-          id <20050919163218.HAFA3281.mxfep02.bredband.com@puritan.petwork>
-          for <git@vger.kernel.org>; Mon, 19 Sep 2005 18:32:18 +0200
-Received: by puritan.petwork (Postfix, from userid 1000)
-	id 354A5ADFEA; Mon, 19 Sep 2005 18:32:19 +0200 (CEST)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050919134838.GC2903@pasky.or.cz>
-User-Agent: Mutt/1.5.8i
+	id S932440AbVISQcz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 12:32:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932462AbVISQcz
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 12:32:55 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:50874 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932440AbVISQcz (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 12:32:55 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8JGWhBo019447
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 19 Sep 2005 09:32:44 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8JGWcCY001062;
+	Mon, 19 Sep 2005 09:32:41 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vll1trqiq.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8884>
 
-Petr Baudis wrote:
 
->   So my proposal (patch will follow soon) is to cut everything after the
-> first , or ; from the GECOS field. These are the usual delimiters used
-> in the GECOS field, and hopefully this will prevent polluting the
-> realname fields of commit headers with crap and surprising the users.
-> In the (I think rather rare) situation of the "Baudis, Petr"-like GECOS
-> fields, this will just result in only the surname being in the realname
-> field, which seems to be much less harmful and comparably less evil to
-> me. 
 
-If we stop using GECOS, then can we please start using $EMAIL (or
-perhaps use it regardless of whether we use GECOS or not)?  A lot of
-applications seem to look for $EMAIL and I think that it's universal
-enough for git to use it as well.  To me it seems that both
-GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, GIT_COMMITTER_NAME, and
-GIT_COMMITTER_EMAIL can use it, as I set $EMAIL as
+On Mon, 19 Sep 2005, Junio C Hamano wrote:
+> 
+> What do popular MUAs do to come up with the real-name fields?
+> Don't they face the same problem, trying to using GECOS?
 
-EMAIL="Nikolai Weibull <something@something.something>"
+Since I have my pine installed in git, I could git grep it. It says
 
-Perhaps I should provide a patch instead of just putting out requests?,
-        nikolai
+    /* full name is all chars up to first ',' (or whole gcos, if no ',') */
+    /* replace any & with logname in upper case */
 
--- 
-Nikolai Weibull: now available free of charge at http://bitwi.se/!
-Born in Chicago, IL USA; currently residing in Gothenburg, Sweden.
-main(){printf(&linux["\021%six\012\0"],(linux)["have"]+"fun"-97);}
+I don't know why the & rule, but there you have it..
+
+The Perl User::pwent module seems to agree, btw (also about '&'):
+
+   "Interpretation of the gecos field varies between systems, but
+    traditionally holds 4 comma-separated fields containing the user's
+    full name, office location, work phone number, and home phone number.  
+
+    An & in the gecos field should be replaced by the user's properly
+    capitalized login name."
+
+I still worry about names of the type "Torvalds, Linus", but maybe that's 
+just not an issue.
+
+		Linus
