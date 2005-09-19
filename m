@@ -1,54 +1,56 @@
-From: Peter Williams <pwil3058@bigpond.net.au>
-Subject: Strange dependency problem installing GIT 0.99.7
-Date: Mon, 19 Sep 2005 12:15:04 +1000
-Message-ID: <432E1F28.9060909@bigpond.net.au>
+From: Nigel Cunningham <ncunningham@cyclades.com>
+Subject: Re: [ANNOUNCE] GIT 0.99.7
+Date: Mon, 19 Sep 2005 12:24:01 +1000
+Organization: Cyclades
+Message-ID: <1127096641.9696.44.camel@localhost>
+References: <7vr7c02zgg.fsf@assigned-by-dhcp.cox.net>
+	 <7vwtleyml5.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ncunningham@cyclades.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 19 04:16:26 2005
-Return-path: <git-owner@vger.kernel.org>
+Cc: git@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932296AbVISCYP@vger.kernel.org Mon Sep 19 04:24:50 2005
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932296AbVISCYP@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHBBf-0003b1-Oq
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 04:15:20 +0200
+	id 1EHBKa-0004jH-DR
+	for glk-linux-kernel-3@gmane.org; Mon, 19 Sep 2005 04:24:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932293AbVISCPJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Sep 2005 22:15:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932294AbVISCPJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 22:15:09 -0400
-Received: from omta04ps.mx.bigpond.com ([144.140.83.156]:24393 "EHLO
-	omta04ps.mx.bigpond.com") by vger.kernel.org with ESMTP
-	id S932293AbVISCPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2005 22:15:07 -0400
-Received: from [192.168.0.4] (really [147.10.133.38])
-          by omta04ps.mx.bigpond.com with ESMTP
-          id <20050919021505.SGPJ5303.omta04ps.mx.bigpond.com@[192.168.0.4]>;
-          Mon, 19 Sep 2005 02:15:05 +0000
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
+	id S932296AbVISCYP (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 18 Sep 2005 22:24:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932298AbVISCYP
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Sun, 18 Sep 2005 22:24:15 -0400
+Received: from b3162.static.pacific.net.au ([203.143.238.98]:42154 "EHLO
+	cunningham.myip.net.au") by vger.kernel.org with ESMTP
+	id S932296AbVISCYO (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 18 Sep 2005 22:24:14 -0400
+Received: (qmail 19957 invoked by uid 89); 19 Sep 2005 02:24:01 -0000
+Received: from unknown (HELO ?127.0.0.1?) (127.0.0.1)
+  by 0 with SMTP; 19 Sep 2005 02:24:01 -0000
 To: Junio C Hamano <junkio@cox.net>
-X-Authentication-Info: Submitted using SMTP AUTH PLAIN at omta04ps.mx.bigpond.com from [147.10.133.38] using ID pwil3058@bigpond.net.au at Mon, 19 Sep 2005 02:15:05 +0000
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <7vwtleyml5.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Ximian Evolution 1.4.6-1mdk 
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8828>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8829>
 
-When I tried to install GIT 0.99.7 from the rpm package (on a Fedora 
-Core 4 system) I got the following error message:
+Hi.
 
-error: Failed dependencies:
-         perl(String::ShellQuote) is needed by git-core-0.99.7-1.i386
+On Mon, 2005-09-19 at 09:37, Junio C Hamano wrote:
+> I am hoping that sending this out to the kernel list is not
+> considered too much of useless spamming, but I promise I
+> wouldn't do thit next time for 0.99.8, if I hear from somebody
+> not to.
+> 
+> Here comes GIT 0.99.7
 
-So I installed String::ShellQuote from CPAN and tried again with the 
-same result.  So I then rebuilt the rpm on my system and still got the 
-same error message.  So I've installed the rpm using the --nodeps option 
-but would like to test whether it is successfully finding 
-String::ShellQuote.  Which command(s) would exercise this perl package?
+Could you please include a url for anyone who might not know the
+canonical address from which to download?
 
-Peter
--- 
-Peter Williams                                   pwil3058@bigpond.net.au
+Regards,
 
-"Learning, n. The kind of ignorance distinguishing the studious."
-  -- Ambrose Bierce
+Nigel
