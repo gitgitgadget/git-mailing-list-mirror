@@ -1,92 +1,61 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] Fixing --help, usage for *-id
-Date: Mon, 19 Sep 2005 17:29:41 -0400
-Message-ID: <1127165381.26772.16.camel@dv>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Why does git-core 0.99.7 require python 2.4?
+Date: Mon, 19 Sep 2005 14:33:10 -0700
+Message-ID: <432F2E96.1040307@zytor.com>
+References: <432F0C66.7060402@zytor.com>	<20050919200222.GA11322@c165.ib.student.liu.se>	<7vslw0lqvd.fsf@assigned-by-dhcp.cox.net> <432F26E9.9090707@zytor.com> <7v7jdclpme.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Sep 19 23:30:32 2005
+Cc: Fredrik Kuivinen <freku045@student.liu.se>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 19 23:35:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHTD5-0002nX-V6
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 23:30:00 +0200
+	id 1EHTGR-0003rW-GV
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 23:33:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932706AbVISV3w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 17:29:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932705AbVISV3w
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 17:29:52 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:37335 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932704AbVISV3v
+	id S932708AbVISVdY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 17:33:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932709AbVISVdY
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 17:33:24 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:64990 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932708AbVISVdX
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2005 17:29:51 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EHTCr-0001LB-ES
-	for git@vger.kernel.org; Mon, 19 Sep 2005 17:29:45 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.52)
-	id 1EHTCn-0000Zd-JW; Mon, 19 Sep 2005 17:29:41 -0400
-To: Petr Baudis <pasky@suse.cz>, git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	Mon, 19 Sep 2005 17:33:23 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j8JLXFNm010022
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 19 Sep 2005 14:33:15 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7jdclpme.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8911>
 
-Hello!
+Junio C Hamano wrote:
+> "H. Peter Anvin" <hpa@zytor.com> writes:
+> 
+> 
+>>My suggestion would be to fork off the recursive merge into a separate 
+>>binary package which can have the python >= 2.4 requirement (unless 
+>>Fredrik just fixes it.)
+> 
+> 
+> It sounds like the right thing to do, not that I know much about
+> how RPM world deals with situations like this (aside from what I
+> learnt from the list).  If we go this route probably we should
+> the same for gitk and git-send-email as well?
 
-Removal of cg-Xlib inclusion in *-id scripts broke "--help" switch.
-When cg-Xlib is sourced indirectly through cg-Xnormid, the help text is
-treated like an ID, and its last word is dropped.
+Yes, that probably would make sense, at least for gitk.
 
-Lack of USAGE string in the *-id scripts breaks the documentation
-generation because empty synopsis causes invalid XML.  Thus the USAGE
-strings should be provided.
+I'll try to work on the spec file.  It's a bit messier than I'd like, 
+because a whole bunch of wildcard patterns don't work anymore.
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
-
-diff --git a/cg-commit-id b/cg-commit-id
---- a/cg-commit-id
-+++ b/cg-commit-id
-@@ -5,6 +5,10 @@
- #
- # Takes the appropriate ID, defaults to HEAD.
- 
-+USAGE="cg-commit-id"
-+
-+. ${COGITO_LIB}cg-Xlib
-+
- id="$1"
- normid=$(. ${COGITO_LIB}cg-Xnormid "$id") || exit 1
- type=${normid#* }
-diff --git a/cg-parent-id b/cg-parent-id
---- a/cg-parent-id
-+++ b/cg-parent-id
-@@ -7,5 +7,9 @@
- #
- # NOTE: Will return multiple SHA1s if ID is a commit with multiple parents.
- 
-+USAGE="cg-parent-id"
-+
-+. ${COGITO_LIB}cg-Xlib
-+
- normid=$(. ${COGITO_LIB}cg-Xnormid "$1"^)
- echo ${normid%% *}
-diff --git a/cg-tree-id b/cg-tree-id
---- a/cg-tree-id
-+++ b/cg-tree-id
-@@ -5,6 +5,10 @@
- #
- # Takes ID of the appropriate commit, defaults to HEAD.
- 
-+USAGE="cg-tree-id"
-+
-+. ${COGITO_LIB}cg-Xlib
-+
- id="$1"
- normid=$(. ${COGITO_LIB}cg-Xnormid "$id") || exit 1
- type=${normid#* }
-
-
--- 
-Regards,
-Pavel Roskin
+	-hpa
