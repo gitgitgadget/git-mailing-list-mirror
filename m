@@ -1,64 +1,91 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: What shall we do with the GECOS field again?
-Date: Mon, 19 Sep 2005 18:34:39 +0200
-Message-ID: <20050919163439.GB18320@pasky.or.cz>
-References: <20050919134838.GC2903@pasky.or.cz> <432ECB92.5000505@gmail.com> <pan.2005.09.19.14.47.51.811409@smurf.noris.de> <432EE46F.9000806@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCHES] CURLDIR support, more usable cmd-rename.sh
+Date: Mon, 19 Sep 2005 09:34:35 -0700
+Message-ID: <7vhdchqan8.fsf@assigned-by-dhcp.cox.net>
+References: <1127128475.781.6.camel@divert>
+	<20050919133731.GB2903@pasky.or.cz> <1127139079.781.9.camel@divert>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 19 18:36:37 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 19 18:36:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHObO-0002Wn-PH
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 18:34:47 +0200
+	id 1EHObI-0002U8-7i
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 18:34:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932468AbVISQem (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 12:34:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932477AbVISQem
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 12:34:42 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56484 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932468AbVISQel (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 12:34:41 -0400
-Received: (qmail 22967 invoked by uid 2001); 19 Sep 2005 18:34:39 +0200
-To: A Large Angry SCM <gitzilla@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <432EE46F.9000806@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S932463AbVISQeh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 12:34:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932468AbVISQeh
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 12:34:37 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:51624 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932463AbVISQeh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2005 12:34:37 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050919163436.LSPM4028.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 19 Sep 2005 12:34:36 -0400
+To: Patrick Mauritz <oxygene@studentenbude.ath.cx>
+In-Reply-To: <1127139079.781.9.camel@divert> (Patrick Mauritz's message of
+	"Mon, 19 Sep 2005 16:11:19 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8886>
 
-Dear diary, on Mon, Sep 19, 2005 at 06:16:47PM CEST, I got a letter
-where A Large Angry SCM <gitzilla@gmail.com> told me that...
-> >Sure, many organizations bake their own, but I'd argue that the majority
-> >doesn't.
-> 
-> The point is we should not be telling them what and how to put stuff in 
-> the GECOS field.
+Patrick Mauritz <oxygene@studentenbude.ath.cx> writes:
 
-The point is that our guess should be something which works for the most
-people.
+> diff -ur git-core-0.99.7.orig//Makefile git-core-0.99.7/Makefile
+> --- git-core-0.99.7.orig//Makefile	Mon Sep 19 12:43:04 2005
+> +++ git-core-0.99.7/Makefile	Mon Sep 19 12:45:45 2005
 
-> >>AND/OR to include 
-> >>the what Git thinks the user's name name might be in the commit message
-> >>template they're editing (like the file list).
-> >
-> >I think that's a good idea, as long as people are told how to change it
-> >(i.e., an envvar -- NOT by editing the file).
-> 
-> Yes.
+Why not a patch from either git or cogito or stgit ;-)?
+Anyway, thanks for your patch.
 
-I'll change cg-commit to always include the name/email fields in its
-template. I think it's verbose enough as it is now, though, and I don't
-want it to bloat it with more generic help text. I've expanded the
-documentation of cg-commit on the GIT_ variables and that ought to be
-enough. :-)
+> -CFLAGS = -g -O2 -Wall
+> +CFLAGS = -g -O2
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Not relevant to the current topic as far as I can tell (unless
+your non-standard curl include files trip under -Wall).
+
+> +ifdef CURLDIR
+> +CFLAGS+=-I$(CURLDIR)/include
+> +endif
+>  ALL_CFLAGS = $(CFLAGS) $(PLATFORM_DEFINES) $(DEFINES)
+>  
+>  prefix = $(HOME)
+> @@ -261,7 +264,11 @@
+>  git-ssh-pull: rsh.o fetch.o
+>  git-ssh-push: rsh.o
+>  
+> +ifdef CURLDIR
+> +git-http-fetch: LIBS += -L$(CURLDIR)/lib -R$(CURLDIR)/lib -lcurl
+> +else
+>  git-http-fetch: LIBS += -lcurl
+> +endif
+
+I do not have any objections to helping installations where CURL
+is installed somewhere nonstandard, but if that is the case I am
+wondering if assuming that they are all in the same directory
+hierarchy covers enough.  CURLDIR=/usr/local/ would be OK and
+CURLDIR=/opt/curl/ would be as well with this patch, so this
+probably is fine.  Installations without ld.so.conf need -R, but
+is it safe to always force -R like this?
+
+Also I wonder if we need similar customization for openssl
+stuff, but that is a separate topic.
+
+> --- cmd-rename.sh~	Mon Sep 19 12:53:40 2005
+> +++ git-core-0.99.7/cmd-rename.sh	Mon Sep 19 12:53:58 2005
+> @@ -4,7 +4,9 @@
+>  while read old new
+>  do
+>  	rm -f "$d/$old"
+> +	if [ -x "$d/$new" ]; then
+>  	ln -s "$new" "$d/$old"
+> +	fi
+
+No questions about this part.  Thanks for the fix.
