@@ -1,74 +1,53 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Garbage in .git directories???
-Date: Mon, 19 Sep 2005 12:10:19 -0700
-Message-ID: <432F0D1B.60303@zytor.com>
-References: <200509172141.31591.dtor_core@ameritech.net>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: first impressions to git
+Date: Mon, 19 Sep 2005 21:14:28 +0200
+Message-ID: <20050919191428.GG15165MdfPADPa@greensroom.kotnet.org>
+References: <20050918111259.GA10882@schottelius.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 19 21:13:14 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Kay Sievers <kay.sievers@vrfy.org>,
+	Christian Gierke <ch@gierke.de>
+X-From: git-owner@vger.kernel.org Mon Sep 19 21:14:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHR28-0002aL-0C
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 21:10:32 +0200
+	id 1EHR68-0003cc-SN
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 21:14:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932592AbVISTK1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 19 Sep 2005 15:10:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932594AbVISTK1
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 15:10:27 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:35467 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932593AbVISTK1
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2005 15:10:27 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j8JJAOGC005979
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 19 Sep 2005 12:10:24 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Dmitry Torokhov <dtor_core@ameritech.net>
-In-Reply-To: <200509172141.31591.dtor_core@ameritech.net>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
+	id S932563AbVISTOi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 15:14:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932589AbVISTOi
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 15:14:38 -0400
+Received: from smtp13.wxs.nl ([195.121.6.27]:6807 "EHLO smtp13.wxs.nl")
+	by vger.kernel.org with ESMTP id S932563AbVISTOh (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 15:14:37 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp13.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0IN200AHYW44UE@smtp13.wxs.nl> for git@vger.kernel.org; Mon,
+ 19 Sep 2005 21:14:28 +0200 (CEST)
+Received: (qmail 20807 invoked by uid 500); Mon, 19 Sep 2005 19:14:28 +0000
+In-reply-to: <20050918111259.GA10882@schottelius.org>
+To: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+Mail-followup-to: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>,
+ git@vger.kernel.org, Kay Sievers <kay.sievers@vrfy.org>,
+ Christian Gierke <ch@gierke.de>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8899>
 
-Dmitry Torokhov wrote:
->=20
-> git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/=
-linux-2.6.git work
->=20
-> and it seems there is some garbage in .git directory:
->=20
-> [dtor@anvil work]$ ls -la .git/
-> total 40
-> drwxrwxr-x    9 dtor dtor 4096 Sep 17 21:17 .
-> drwxrwxr-x    3 dtor dtor 4096 Sep 17 21:17 ..
-> drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 branches
-> -rw-rw-r--    1 dtor dtor   58 Sep 17 21:17 description
-> lrwxrwxrwx    1 dtor dtor   17 Sep 17 21:17 HEAD -> refs/heads/master
-> drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 hooks
-> drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 info
-> drwxr-xr-x  260 dtor dtor 4096 Sep 17 17:41 objects
-> drwxrwxr-x    4 dtor dtor 4096 May  1 19:15 refs
-> drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:28 remotes
-> drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 V?Cl?=EF=BF=BD?E ???#V?C?=
-?=C5=BFl??E#V?C??;H
->                                             ^^^^^^^^^^^^^^^^^^^^^^^^^=
-^^^
->=20
-> The similar garbage(?) shows when I clone git's repository.
->=20
+On Sun, Sep 18, 2005 at 01:12:59PM +0200, Nico -telmich- Schottelius wrote:
+> - gitweb.cgi could be better documentated and supported
+>    recursive directories when using $projects_list = $projectroot;
+>    and splitting configuration completly outside of gitweb.cgi would be nice
+>    (having .gitweb in the same directory as gitweb.cgi for instance)
 
-=46WIW, using cg-clone (using git-core 0.99.6 and cogito 0.14.1) I keep=
-=20
-finding a directory in .git which consists of a single DEL character (\=
-177).
+If you don't mind running an "unofficial" gitweb, then you could use this:
 
-	-hpa
+http://www.liacs.nl/~sverdool/gitweb.cgi?p=gitweb.git;a=commitdiff;h=4e9ef72b3ad9a072c3b3a78d8f44ef7d592b7303;hp=cf893c76de670164e8d90be5ccf1d871e60188ae
+
+skimo
