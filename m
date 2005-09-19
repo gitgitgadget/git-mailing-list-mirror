@@ -1,63 +1,62 @@
-From: Patrick Mauritz <oxygene@studentenbude.ath.cx>
-Subject: Re: [PATCHES] CURLDIR support, more usable cmd-rename.sh
-Date: Mon, 19 Sep 2005 19:40:42 +0200
-Message-ID: <1127151642.781.15.camel@divert>
-References: <1127128475.781.6.camel@divert>
-	 <20050919133731.GB2903@pasky.or.cz> <1127139079.781.9.camel@divert>
-	 <7vhdchqan8.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: omitted test scripts?
+Date: Mon, 19 Sep 2005 20:54:39 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.09.19.18.54.38.742376@smurf.noris.de>
+References: <200509102027.28812.blaisorblade@yahoo.it> <1126427087.8457.33.camel@localhost.localdomain> <200509142019.04667.blaisorblade@yahoo.it> <tnxslw6d4qt.fsf@arm.com> <7vvf10hji1.fsf@assigned-by-dhcp.cox.net> <1126949517.6941.19.camel@localhost.localdomain> <432EDE3F.7070407@citi.umich.edu> <7v1x3lrpxi.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 19 19:42:28 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Mon Sep 19 21:01:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHPcO-0003Wk-9C
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 19:39:52 +0200
+	id 1EHQqt-0007mF-4x
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 20:58:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932518AbVISRju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 13:39:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932519AbVISRju
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 13:39:50 -0400
-Received: from khepri.openbios.org ([80.190.231.112]:62085 "EHLO
-	khepri.openbios.org") by vger.kernel.org with ESMTP id S932518AbVISRjt
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2005 13:39:49 -0400
-Received: from dsl-082-083-077-252.arcor-ip.net ([82.83.77.252] helo=t-stueck.streichelzoo)
-	by khepri.openbios.org with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.50)
-	id 1EHPcJ-0007Yc-Oi; Mon, 19 Sep 2005 19:39:48 +0200
-Received: from 192.168.1.201 (divert.studentenbude.ath.cx [192.168.1.201])
-	by t-stueck.streichelzoo (8.13.4+Sun/8.13.3) with ESMTP id j8JHdfnR007507;
-	Mon, 19 Sep 2005 19:39:46 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhdchqan8.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Ximian Evolution 1.4.6.316 
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0 (t-stueck.streichelzoo [192.168.1.200]); Mon, 19 Sep 2005 19:39:46 +0200 (CEST)
-X-Spam-Score: -1.3 (-)
-X-Duff: Orig. Duff, Duff Lite, Duff Dry, Duff Dark,
-	Raspberry Duff, Lady Duff, Red Duff, Tartar Control Duff
+	id S932577AbVISS6v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 14:58:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbVISS6v
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 14:58:51 -0400
+Received: from main.gmane.org ([80.91.229.2]:48064 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932577AbVISS6u (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 14:58:50 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EHQod-0006zk-JO
+	for git@vger.kernel.org; Mon, 19 Sep 2005 20:56:35 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Sep 2005 20:56:35 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Sep 2005 20:56:35 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8894>
 
-On Mon, 2005-09-19 at 18:34, Junio C Hamano wrote:
-> Why not a patch from either git or cogito or stgit ;-)?
-because my only use for git is with monotone's git import.
+Hi, Junio C Hamano wrote:
 
-> Not relevant to the current topic as far as I can tell (unless
-> your non-standard curl include files trip under -Wall).
-the only issue with this is that sunpro's cc doesn't like -Wall
+> In the past, when I did any major butchering of existing code or
+> made nontrivial additions, I wrote test scripts to cover what
+> should happen (and what to be preserved) first to make sure the
+> changes or additions would not introduce regression.
 
-> Installations without ld.so.conf need -R, but
-> is it safe to always force -R like this?
-the only case that comes to mind is where you want to link git against
-a library which is at a different location now than it is later, eg. in
-conjunction with DESTDIR or similar means.
-as long as git doesn't build any shared libraries by itself and links to
-them, this shouldn't be an issue.
+... which is very good programming practice regardless.
 
+One of the better tenets of Extreme Programming says that any feature
+for which you don't have a test basically doesn't exist. 
 
-patrick mauritz
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Buddha most emphatically insists that what he teaches is nothing
+unusual, being simply the recognition of a plain fact which can be
+attested to by every mortal...
