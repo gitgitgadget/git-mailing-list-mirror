@@ -1,80 +1,82 @@
-From: Chris White <chriswhite@gentoo.org>
-Subject: Re: [ANNOUNCE] GIT 0.99.7
-Date: Mon, 19 Sep 2005 21:01:55 +0900
-Organization: Gentoo
-Message-ID: <200509192102.03431.chriswhite@gentoo.org>
-References: <7vr7c02zgg.fsf@assigned-by-dhcp.cox.net> <7vwtleyml5.fsf@assigned-by-dhcp.cox.net> <1127096641.9696.44.camel@localhost>
-Reply-To: chriswhite@gentoo.org
+From: Dmitry Torokhov <dtor_core@ameritech.net>
+Subject: Re: Garbage in .git directories???
+Date: Sun, 18 Sep 2005 23:33:57 -0500
+Message-ID: <200509182333.58227.dtor_core@ameritech.net>
+References: <200509172141.31591.dtor_core@ameritech.net> <Pine.LNX.4.58.0509181009160.26803@g5.osdl.org> <200509181254.14646.dtor_core@ameritech.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart10166638.9iiRnuBeyp";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 19 05:33:31 2005
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 19 06:34:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHCP6-0006WM-Gw
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 05:33:16 +0200
+	id 1EHDMG-0006rp-8b
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 06:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932153AbVISDdN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Sep 2005 23:33:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932168AbVISDdN
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 23:33:13 -0400
-Received: from sls-ce5p321.hostitnow.com ([72.9.236.50]:42649 "EHLO
-	sls-ce5p321.hostitnow.com") by vger.kernel.org with ESMTP
-	id S932153AbVISDdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2005 23:33:12 -0400
-Received: from c-67-181-55-15.hsd1.ca.comcast.net ([67.181.55.15] helo=[192.168.0.106])
-	by sls-ce5p321.hostitnow.com with esmtpa (Exim 4.52)
-	id 1EHCOm-0005dq-2f; Sun, 18 Sep 2005 22:32:56 -0500
-To: ncunningham@cyclades.com
+	id S932163AbVISEeI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 19 Sep 2005 00:34:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932170AbVISEeI
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 00:34:08 -0400
+Received: from smtp114.sbc.mail.re2.yahoo.com ([68.142.229.91]:45918 "HELO
+	smtp114.sbc.mail.re2.yahoo.com") by vger.kernel.org with SMTP
+	id S932163AbVISEeG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 00:34:06 -0400
+Received: (qmail 56724 invoked from network); 19 Sep 2005 04:34:00 -0000
+Received: from unknown (HELO mail.corenet.homeip.net) (dtor?core@ameritech.net@69.208.153.209 with login)
+  by smtp114.sbc.mail.re2.yahoo.com with SMTP; 19 Sep 2005 04:34:00 -0000
+To: Linus Torvalds <torvalds@osdl.org>
 User-Agent: KMail/1.8.2
-In-Reply-To: <1127096641.9696.44.camel@localhost>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - sls-ce5p321.hostitnow.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - gentoo.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <200509181254.14646.dtor_core@ameritech.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8833>
 
---nextPart10166638.9iiRnuBeyp
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+On Sunday 18 September 2005 12:54, Dmitry Torokhov wrote:
+> On Sunday 18 September 2005 12:10, Linus Torvalds wrote:
+> >=20
+> > On Sat, 17 Sep 2005, Dmitry Torokhov wrote:
+> > >=20
+> > > git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torva=
+lds/linux-2.6.git work
+> > >=20
+> > > and it seems there is some garbage in .git directory:
+> > >
+> > > drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 V?Cl?=ED=AE=9F?E ???#=
+V?C??=C5=BFl??E#V?C??;H
+> > >                                             ^^^^^^^^^^^^^^^^^^^^^=
+^^^^^^^=20
+> > > The similar garbage(?) shows when I clone git's repository.
+> > >=20
+> > > Is this expected?
+> >=20
+> > Absolutely not. And I don't see it when I try. What filesystem are =
+you=20
+> > running this on? Looks like something did a "mkdir()" with an=20
+> > uninitialized pointer, but I don't see how that would happen.
+> >=20
+> > 		Linus
+> >=20
+>=20
+> It is ext3 on 2.6.12-rc6.
+>=20
 
-On Monday 19 September 2005 11:24, Nigel Cunningham wrote:
+Couple more points - just using rsync to get the data (without using gi=
+t)
+does not not produce that wierd directory, only got clone does.
 
-> Could you please include a url for anyone who might not know the
-> canonical address from which to download?
+Btw, after doing a pull from git repository git cone now produces the
+following:
 
-http://www.kernel.org/pub/software/scm/git/
+sent 403 bytes  received 2164 bytes  570.44 bytes/sec
+total size is 533  speedup is 0.21
+rsync: link_stat "/scm/git/git.git/objects/info/alternates" (in pub) fa=
+iled: No such file or directory (2)
+rsync error: some files could not be transferred (code 23) at main.c(11=
+73)
 
-> Regards,
 
-> Nigel
-
-Chris White
-
---nextPart10166638.9iiRnuBeyp
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQBDLqi7FdQwWVoAgN4RAsidAKC42kihq0t08J7KzZoksC1J/PxwawCggMkT
-+aob2jNs/EaAX/cnSG4b1yY=
-=mPFN
------END PGP SIGNATURE-----
-
---nextPart10166638.9iiRnuBeyp--
+--=20
+Dmitry
