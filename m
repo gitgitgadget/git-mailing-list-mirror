@@ -1,57 +1,53 @@
-From: Pavel Machek <pavel@suse.cz>
-Subject: Re: [ANNOUNCE] Cogito-0.15
-Date: Tue, 20 Sep 2005 01:15:38 +0200
-Message-ID: <20050919231538.GA4074@elf.ucw.cz>
-References: <7vr7c02zgg.fsf@assigned-by-dhcp.cox.net> <7vwtleyml5.fsf@assigned-by-dhcp.cox.net> <20050919011428.GF22391@pasky.or.cz>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Garbage in .git directories???
+Date: Mon, 19 Sep 2005 16:16:14 -0700
+Message-ID: <432F46BE.5000406@zytor.com>
+References: <200509172141.31591.dtor_core@ameritech.net> <432F0D1B.60303@zytor.com> <20050919194445.GD18320@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 01:17:31 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Dmitry Torokhov <dtor_core@ameritech.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 20 01:17:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHUsS-0003EK-7z
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 01:16:48 +0200
+	id 1EHUsH-0003Cy-TI
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 01:16:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932626AbVISXQp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 19:16:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932637AbVISXQp
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 19:16:45 -0400
-Received: from gprs189-60.eurotel.cz ([160.218.189.60]:40407 "EHLO amd.ucw.cz")
-	by vger.kernel.org with ESMTP id S932626AbVISXQo (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 19:16:44 -0400
-Received: by amd.ucw.cz (Postfix, from userid 8)
-	id 2E5DD8B254; Tue, 20 Sep 2005 01:15:38 +0200 (CEST)
+	id S932469AbVISXQd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 19:16:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932626AbVISXQd
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 19:16:33 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:35505 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932469AbVISXQc
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2005 19:16:32 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j8JNGJE1011627
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 19 Sep 2005 16:16:19 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
 To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <20050919011428.GF22391@pasky.or.cz>
-X-Warning: Reading this can be dangerous to your mental health.
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20050919194445.GD18320@pasky.or.cz>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8924>
 
-Hi!
-
->   this is the release of Cogito-0.15. It fixes several minor bugs, and
-> adds a feature or two. The most important thing though is that this
-> depends on Git-core-0.99.7 and uses the new command names. Everyone is
-> encouraged to upgrade at least to this Cogito version in the next few
-> days, since the older Cogito versions likely won't work with the future
-> Git-core releases.
+Petr Baudis wrote:
+>>
+>>FWIW, using cg-clone (using git-core 0.99.6 and cogito 0.14.1) I keep 
+>>finding a directory in .git which consists of a single DEL character (\177).
 > 
->   To stay in sync with the Git terminology, Cogito also renames its
-> cg-pull to cg-fetch. Since this is a major naming change (I'm not too
-> happy about it, personally), cg-pull will stay aliased to cg-fetch for
-> at least one (likely two) next major Cogito releases (it also produces a
-> warning when invoked as cg-pull). In the more distant future, cg-pull
-> will slowly become the new name of cg-update, to make it confusing.
+> Does cg-init produce it too? It really seems that this has to be a bug
+> in git-init-db. If that is the case, could you try temporarily renaming
+> the templates directory?
 
-Could we keep at least the cg-update name? It is certainly not a
-*pull* because it does update local repository (and tree, too).
+cg-init does produce it, too.  I'm not sure what you mean with 
+temporarily renaming the templates directory?
 
-								Pavel
--- 
-if you have sharp zaurus hardware you don't need... you know my address
+	-hpa
