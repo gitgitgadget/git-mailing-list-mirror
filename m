@@ -1,63 +1,60 @@
-From: Martin Atukunda <matlads@dsmagic.com>
-Subject: [PATCH][COGITO] Update Debian control file
-Date: Mon, 19 Sep 2005 15:54:13 +0300
-Message-ID: <20050919125413.GB5048@igloo.ds.co.ug>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] git-http-fetch: Allow caching of retrieved objects byproxy servers
+Date: Mon, 19 Sep 2005 15:35:08 +0200
+Message-ID: <20050919133508.GA2903@pasky.or.cz>
+References: <20050913153858.GB24405@master.mivlgu.local> <43285B24.7050907@b-i-t.de> <Pine.LNX.4.62.0509181720290.14003@qynat.qvtvafvgr.pbz> <432E91ED.7050605@b-i-t.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Sep 19 14:58:51 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 19 15:35:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHLCq-0008A0-MY
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 14:57:13 +0200
+	id 1EHLnv-0001AV-UZ
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 15:35:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932330AbVISM47 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 08:56:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932313AbVISM47
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 08:56:59 -0400
-Received: from mail1.imul.com ([217.113.72.31]:24155 "EHLO mail1.infocom.co.ug")
-	by vger.kernel.org with ESMTP id S932301AbVISM46 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 08:56:58 -0400
-Received: from entandikwa.ds.co.ug ([::ffff:217.113.73.39])
-  by mail1.infocom.co.ug with esmtp; Mon, 19 Sep 2005 15:56:41 +0300
-  id 000E9CE8.432EB589.00001617
-Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
-	by entandikwa.ds.co.ug (Postfix) with ESMTP id 923D6514A
-	for <git@vger.kernel.org>; Mon, 19 Sep 2005 15:57:58 +0300 (EAT)
-Received: from matlads by igloo.ds.co.ug with local (Exim 4.52)
-	id 1EHL9x-0002ON-UE
-	for git@vger.kernel.org; Mon, 19 Sep 2005 15:54:13 +0300
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
+	id S932371AbVISNfS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 09:35:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932378AbVISNfS
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 09:35:18 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:1200 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932371AbVISNfQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 09:35:16 -0400
+Received: (qmail 8309 invoked by uid 2001); 19 Sep 2005 15:35:08 +0200
+To: sf <sf@b-i-t.de>
 Content-Disposition: inline
+In-Reply-To: <432E91ED.7050605@b-i-t.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8858>
 
-Update Debian control file
+Dear diary, on Mon, Sep 19, 2005 at 12:24:45PM CEST, I got a letter
+where sf <sf@b-i-t.de> told me that...
+> >remember that git objects are identified by their sha1, if the sha1 is 
+> >what you want (and the file matches the sha1 after you decompress it) 
+> >then it really doesn't matter what it's on-disk representation is.
+> 
+> You are arguing on the git tool level but we are talking about HTTP 
+> which knows nothing about the uncompressed sha1.
+> 
+> The OP assumed that "files in a GIT repository are immutable" which is 
+> not true. If you consider the sequence
+> 
+> pack -> prune -> update zlib or git -> unpack
+> 
+> you can end up with different files if the new zlib implementation 
+> changes imcompatibly (with respect to byte-by-byte compression results) 
+> or if git suddenly does not use the default compression level any more.
 
-Signed-Off-By: Martin Atukunda <matlads@dsmagic.com>
+Yes, but why should this matter? It shouldn't matter if you get the old
+"version" or the new version of the file over HTTP, the actual object's
+contents is still the same, and GIT shouldn't care.
 
----
-diff --git a/debian/changelog b/debian/changelog
---- a/debian/changelog
-+++ b/debian/changelog
-@@ -1,3 +1,15 @@
-+cogito (0.15-1) stable; urgency=low
-+
-+  * New Version
-+  * Now depends on git-core-0.99.7
-+  * cg-pull is now called cg-fetch
-+  * cg-update will become cg-pull in a future release
-+  * the *-id scriptlets renamed to cg-*-id
-+  * cg-init respects the ignore rules
-+  * cg-add now support directories (-r)
-+
-+ -- Martin Atukunda <matlads@dsmagic.com>  Mon, 19 Sep 2005 10:01:40 +0300
-+
- cogito (0.13-1) stable; urgency=low
- 
-   * New version.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
