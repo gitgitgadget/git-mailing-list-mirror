@@ -1,53 +1,74 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Strange dependency problem installing GIT 0.99.7
-Date: Mon, 19 Sep 2005 12:23:59 -0700
-Message-ID: <432F104F.8030206@zytor.com>
-References: <432E1F28.9060909@bigpond.net.au>    <7v8xxtzmtl.fsf@assigned-by-dhcp.cox.net> <53717.10.10.10.28.1127107066.squirrel@linux1> <432E598A.7020306@bigpond.net.au>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Garbage in .git directories???
+Date: Mon, 19 Sep 2005 21:44:45 +0200
+Message-ID: <20050919194445.GD18320@pasky.or.cz>
+References: <200509172141.31591.dtor_core@ameritech.net> <432F0D1B.60303@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 19 21:26:57 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Torokhov <dtor_core@ameritech.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 19 21:45:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHRGJ-0007HZ-0t
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 21:25:11 +0200
+	id 1EHRZK-0004gF-FA
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 21:44:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932600AbVISTYx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 15:24:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932603AbVISTYw
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 15:24:52 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:17601 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932600AbVISTYw
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2005 15:24:52 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j8JJO3QA006274
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 19 Sep 2005 12:24:04 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Peter Williams <pwil3058@bigpond.net.au>
-In-Reply-To: <432E598A.7020306@bigpond.net.au>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
+	id S932618AbVISTor (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 15:44:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932619AbVISTor
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 15:44:47 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:57534 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932618AbVISTor (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 15:44:47 -0400
+Received: (qmail 14074 invoked by uid 2001); 19 Sep 2005 21:44:45 +0200
+To: "H. Peter Anvin" <hpa@zytor.com>
+Content-Disposition: inline
+In-Reply-To: <432F0D1B.60303@zytor.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8902>
 
-Peter Williams wrote:
+Dear diary, on Mon, Sep 19, 2005 at 09:10:19PM CEST, I got a letter
+where "H. Peter Anvin" <hpa@zytor.com> told me that...
+> Dmitry Torokhov wrote:
+> >
+> >git clone 
+> >rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git 
+> >work
+> >
+> >and it seems there is some garbage in .git directory:
+> >
+> >[dtor@anvil work]$ ls -la .git/
+> >total 40
+> >drwxrwxr-x    9 dtor dtor 4096 Sep 17 21:17 .
+> >drwxrwxr-x    3 dtor dtor 4096 Sep 17 21:17 ..
+> >drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 branches
+> >-rw-rw-r--    1 dtor dtor   58 Sep 17 21:17 description
+> >lrwxrwxrwx    1 dtor dtor   17 Sep 17 21:17 HEAD -> refs/heads/master
+> >drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 hooks
+> >drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 info
+> >drwxr-xr-x  260 dtor dtor 4096 Sep 17 17:41 objects
+> >drwxrwxr-x    4 dtor dtor 4096 May  1 19:15 refs
+> >drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:28 remotes
+> >drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 V?Cl?????E 
+> >???#V?C????l??E#V?C??;H
+> >                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> >
+> >The similar garbage(?) shows when I clone git's repository.
+> >
 > 
-> IMHO rpm shouldn't care how ShellQuote got there unless it (how it got 
-> there) is stated as an explicit dependency in the spec file (which it 
-> isn't).  So I still think this is a bug in rpm's (automatic) dependency 
-> mechanism that needs fixing.
-> 
+> FWIW, using cg-clone (using git-core 0.99.6 and cogito 0.14.1) I keep 
+> finding a directory in .git which consists of a single DEL character (\177).
 
-Unfortunately it doesn't work that way (and this is the wrong mailing 
-list to discuss it on.)  Anyway, the best way to install CPAN modules on 
-an RPM-based system is to use cpan2rpm.
+Does cg-init produce it too? It really seems that this has to be a bug
+in git-init-db. If that is the case, could you try temporarily renaming
+the templates directory?
 
-	-hpa
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
