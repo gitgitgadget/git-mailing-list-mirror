@@ -1,90 +1,60 @@
-From: sf <sf@b-i-t.de>
-Subject: Re: [PATCH] git-http-fetch: Allow caching of retrieved objects  
- byproxy servers
-Date: Mon, 19 Sep 2005 12:24:45 +0200
-Message-ID: <432E91ED.7050605@b-i-t.de>
-References: <20050913153858.GB24405@master.mivlgu.local> <43285B24.7050907@b-i-t.de> <Pine.LNX.4.62.0509181720290.14003@qynat.qvtvafvgr.pbz>
+From: Patrick Mauritz <oxygene@studentenbude.ath.cx>
+Subject: [PATCHES] CURLDIR support, more usable cmd-rename.sh
+Date: Mon, 19 Sep 2005 13:14:36 +0200
+Message-ID: <1127128475.781.6.camel@divert>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Sep 19 13:04:23 2005
+X-From: git-owner@vger.kernel.org Mon Sep 19 13:16:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHJPs-0006L3-3n
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 13:02:32 +0200
+	id 1EHJb3-0000Cv-9l
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 13:14:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750729AbVISLCS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 07:02:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbVISLCS
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 07:02:18 -0400
-Received: from main.gmane.org ([80.91.229.2]:63447 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750729AbVISLCR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 07:02:17 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1EHJO9-0005yg-Jh
-	for git@vger.kernel.org; Mon, 19 Sep 2005 13:00:45 +0200
-Received: from ip-213157000067.dialin.heagmedianet.de ([213.157.0.67])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 19 Sep 2005 13:00:45 +0200
-Received: from sf by ip-213157000067.dialin.heagmedianet.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 19 Sep 2005 13:00:45 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1750708AbVISLNs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 07:13:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbVISLNs
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 07:13:48 -0400
+Received: from khepri.openbios.org ([80.190.231.112]:35987 "EHLO
+	khepri.openbios.org") by vger.kernel.org with ESMTP
+	id S1750708AbVISLNr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2005 07:13:47 -0400
+Received: from dsl-082-083-077-252.arcor-ip.net ([82.83.77.252] helo=t-stueck.streichelzoo)
+	by khepri.openbios.org with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.50)
+	id 1EHJaf-0007L7-2c
+	for git@vger.kernel.org; Mon, 19 Sep 2005 13:13:41 +0200
+Received: from 192.168.1.201 (divert.studentenbude.ath.cx [192.168.1.201])
+	by t-stueck.streichelzoo (8.13.4+Sun/8.13.3) with ESMTP id j8JBDYWp007206
+	for <git@vger.kernel.org>; Mon, 19 Sep 2005 13:13:40 +0200 (CEST)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: ip-213157000067.dialin.heagmedianet.de
-User-Agent: Mozilla Thunderbird 1.0.6 (X11/20050725)
-X-Accept-Language: en-us, en
-In-Reply-To: <Pine.LNX.4.62.0509181720290.14003@qynat.qvtvafvgr.pbz>
+X-Mailer: Ximian Evolution 1.4.6.316 
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0 (t-stueck.streichelzoo [192.168.1.200]); Mon, 19 Sep 2005 13:13:40 +0200 (CEST)
+X-Spam-Score: -1.3 (-)
+X-Duff: Orig. Duff, Duff Lite, Duff Dry, Duff Dark,
+	Raspberry Duff, Lady Duff, Red Duff, Tartar Control Duff
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8855>
 
-David Lang wrote:
-> On Wed, 14 Sep 2005, sf wrote:
-> 
->> Sergey Vlasov wrote:
->>
->>> By default the curl library adds "Pragma: no-cache" header to all
->>> requests, which disables caching by proxy servers.  However, most
->>> files in a GIT repository are immutable, and caching them is safe and
->>> could be useful.
->>
->>
->> Is caching really safe? Because of compression one git object can have 
->> many file representations.
-> 
-> 
-> only if you use different compression algorithums.
+hello,
 
-Even different implementations and different compression levels can lead 
-to different file representations.
+attached are two patches.
 
-> remember that git objects are identified by their sha1, if the sha1 is 
-> what you want (and the file matches the sha1 after you decompress it) 
-> then it really doesn't matter what it's on-disk representation is.
+the first is an updated implementation of CURLDIR support (for those who
+have libcurl outside their library search path)
 
-You are arguing on the git tool level but we are talking about HTTP 
-which knows nothing about the uncompressed sha1.
+the second changes cmd-rename.sh so that it only adds symlinks to
+executables that actually exist (eg. when building with NO_CURL,
+git-http-pull would still be created).
 
-The OP assumed that "files in a GIT repository are immutable" which is 
-not true. If you consider the sequence
+another issue I had was that mailinfo uses strcasestr, which isn't in
+solaris' libc (and not in posix according to
+http://lists.gnu.org/archive/html/bug-gnulib/2005-08/msg00076.html). I
+disabled it in my build for now, and might come up with a patch later,
+unless someone beats me to it.
 
-pack -> prune -> update zlib or git -> unpack
 
-you can end up with different files if the new zlib implementation 
-changes imcompatibly (with respect to byte-by-byte compression results) 
-or if git suddenly does not use the default compression level any more.
-
-And surely in the future there will be other git implementations than 
-this one which may not even use zlib.
-
-I do not say that caching is not possible at all but HTTP caching has 
-its pitfalls so just be careful.
-
-Regards
-
-	Stephan
+patrick mauritz
