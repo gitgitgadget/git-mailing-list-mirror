@@ -1,109 +1,90 @@
-From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
-Subject: [PATCH] Added -d and -e options to the "git" script.
-Date: Mon, 19 Sep 2005 12:19:36 +0200
-Message-ID: <u5tmzm9bbrb.fsf@lysator.liu.se>
-References: <Pine.LNX.4.58.0509181114190.26803@g5.osdl.org>
+From: sf <sf@b-i-t.de>
+Subject: Re: [PATCH] git-http-fetch: Allow caching of retrieved objects  
+ byproxy servers
+Date: Mon, 19 Sep 2005 12:24:45 +0200
+Message-ID: <432E91ED.7050605@b-i-t.de>
+References: <20050913153858.GB24405@master.mivlgu.local> <43285B24.7050907@b-i-t.de> <Pine.LNX.4.62.0509181720290.14003@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Mon Sep 19 12:24:00 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Sep 19 13:04:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHIn6-0006Y4-Ti
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 12:22:29 +0200
+	id 1EHJPs-0006L3-3n
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 13:02:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932218AbVISKWT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 19 Sep 2005 06:22:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932257AbVISKWT
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 06:22:19 -0400
-Received: from main.gmane.org ([80.91.229.2]:18116 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932218AbVISKWS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 06:22:18 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EHIlQ-00068C-Bi
-	for git@vger.kernel.org; Mon, 19 Sep 2005 12:20:44 +0200
-Received: from 212214120186-virtutech-ab.host.songnetworks.se ([212.214.120.186])
+	id S1750729AbVISLCS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 07:02:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbVISLCS
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 07:02:18 -0400
+Received: from main.gmane.org ([80.91.229.2]:63447 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750729AbVISLCR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 07:02:17 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1EHJO9-0005yg-Jh
+	for git@vger.kernel.org; Mon, 19 Sep 2005 13:00:45 +0200
+Received: from ip-213157000067.dialin.heagmedianet.de ([213.157.0.67])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 19 Sep 2005 12:20:44 +0200
-Received: from davidk by 212214120186-virtutech-ab.host.songnetworks.se with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Mon, 19 Sep 2005 13:00:45 +0200
+Received: from sf by ip-213157000067.dialin.heagmedianet.de with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 19 Sep 2005 12:20:44 +0200
+        for <git@vger.kernel.org>; Mon, 19 Sep 2005 13:00:45 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 212214120186-virtutech-ab.host.songnetworks.se
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:tg+85bdlLKUvNYlrc27rOTa1wcc=
+X-Gmane-NNTP-Posting-Host: ip-213157000067.dialin.heagmedianet.de
+User-Agent: Mozilla Thunderbird 1.0.6 (X11/20050725)
+X-Accept-Language: en-us, en
+In-Reply-To: <Pine.LNX.4.62.0509181720290.14003@qynat.qvtvafvgr.pbz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8854>
 
-These flags override the GIT_DIR and EDITOR environment variables.
+David Lang wrote:
+> On Wed, 14 Sep 2005, sf wrote:
+> 
+>> Sergey Vlasov wrote:
+>>
+>>> By default the curl library adds "Pragma: no-cache" header to all
+>>> requests, which disables caching by proxy servers.  However, most
+>>> files in a GIT repository are immutable, and caching them is safe and
+>>> could be useful.
+>>
+>>
+>> Is caching really safe? Because of compression one git object can have 
+>> many file representations.
+> 
+> 
+> only if you use different compression algorithums.
 
----
-This is more generic way to specify GIT_DIR than Linus' suggestion,
-although it is only targeted at more porcelainish usage of the git
-driver script.
+Even different implementations and different compression levels can lead 
+to different file representations.
 
-I needed this for the Emacs commands I've been hacking on, since it's
-hard to set environment variables for single commands without
-involving /bin/env or a shell.
+> remember that git objects are identified by their sha1, if the sha1 is 
+> what you want (and the file matches the sha1 after you decompress it) 
+> then it really doesn't matter what it's on-disk representation is.
 
- git.sh |   37 +++++++++++++++++++++++++------------
- 1 files changed, 25 insertions(+), 12 deletions(-)
+You are arguing on the git tool level but we are talking about HTTP 
+which knows nothing about the uncompressed sha1.
 
-b9a38ed5a16289f86b353c0bb541e607d35180a9
-diff --git a/git.sh b/git.sh
---- a/git.sh
-+++ b/git.sh
-@@ -2,19 +2,32 @@
-=20
- cmd=3D
- path=3D$(dirname $0)
--case "$#" in
--0)	;;
--*)	cmd=3D"$1"
--	shift
--	case "$cmd" in
--	-v|--v|--ve|--ver|--vers|--versi|--versio|--version)
--		echo "git version @@GIT_VERSION@@"
--		exit 0 ;;
--	esac
--	test -x $path/git-$cmd && exec $path/git-$cmd "$@" ;;
--esac
-=20
--echo "Usage: git COMMAND [OPTIONS] [TARGET]"
-+while test "$#" -gt 0
-+do
-+        case "$1" in
-+        -d)	export GIT_DIR
-+                GIT_DIR=3D$2
-+                shift
-+                ;;
-+        -e)	export EDITOR
-+                EDITOR=3D$2
-+                shift
-+                ;;
-+        *)	cmd=3D"$1"
-+                shift
-+                case "$cmd" in
-+                -v|--v|--ve|--ver|--vers|--versi|--versio|--version)
-+                        echo "git version @@GIT_VERSION@@"
-+                        exit 0 ;;
-+                esac
-+                test -x $path/git-$cmd && exec $path/git-$cmd "$@"
-+                ;;
-+        esac
-+        shift
-+done
-+
-+echo "Usage: git [GLOBAL OPTIONS] COMMAND [COMMAND OPTIONS]"
- if [ -n "$cmd" ]; then
-     echo " git command '$cmd' not found: commands are:"
- else
+The OP assumed that "files in a GIT repository are immutable" which is 
+not true. If you consider the sequence
 
---=20
-David K=E5gedal
+pack -> prune -> update zlib or git -> unpack
+
+you can end up with different files if the new zlib implementation 
+changes imcompatibly (with respect to byte-by-byte compression results) 
+or if git suddenly does not use the default compression level any more.
+
+And surely in the future there will be other git implementations than 
+this one which may not even use zlib.
+
+I do not say that caching is not possible at all but HTTP caching has 
+its pitfalls so just be careful.
+
+Regards
+
+	Stephan
