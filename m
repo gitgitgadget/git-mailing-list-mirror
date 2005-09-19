@@ -1,74 +1,59 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Garbage in .git directories???
-Date: Mon, 19 Sep 2005 21:44:45 +0200
-Message-ID: <20050919194445.GD18320@pasky.or.cz>
-References: <200509172141.31591.dtor_core@ameritech.net> <432F0D1B.60303@zytor.com>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: Why does git-core 0.99.7 require python 2.4?
+Date: Mon, 19 Sep 2005 22:02:23 +0200
+Message-ID: <20050919200222.GA11322@c165.ib.student.liu.se>
+References: <432F0C66.7060402@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Torokhov <dtor_core@ameritech.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 19 21:45:05 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 19 22:07:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHRZK-0004gF-FA
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 21:44:50 +0200
+	id 1EHRqX-0001GN-Mb
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 22:02:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932618AbVISTor (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 15:44:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932619AbVISTor
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 15:44:47 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:57534 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932618AbVISTor (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 15:44:47 -0400
-Received: (qmail 14074 invoked by uid 2001); 19 Sep 2005 21:44:45 +0200
+	id S932613AbVISUCf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 16:02:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932615AbVISUCf
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 16:02:35 -0400
+Received: from [85.8.31.11] ([85.8.31.11]:14496 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S932613AbVISUCe (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 16:02:34 -0400
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id EB6F340FF; Mon, 19 Sep 2005 22:07:50 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EHRqJ-0002wp-00; Mon, 19 Sep 2005 22:02:23 +0200
 To: "H. Peter Anvin" <hpa@zytor.com>
 Content-Disposition: inline
-In-Reply-To: <432F0D1B.60303@zytor.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+In-Reply-To: <432F0C66.7060402@zytor.com>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8903>
 
-Dear diary, on Mon, Sep 19, 2005 at 09:10:19PM CEST, I got a letter
-where "H. Peter Anvin" <hpa@zytor.com> told me that...
-> Dmitry Torokhov wrote:
-> >
-> >git clone 
-> >rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git 
-> >work
-> >
-> >and it seems there is some garbage in .git directory:
-> >
-> >[dtor@anvil work]$ ls -la .git/
-> >total 40
-> >drwxrwxr-x    9 dtor dtor 4096 Sep 17 21:17 .
-> >drwxrwxr-x    3 dtor dtor 4096 Sep 17 21:17 ..
-> >drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 branches
-> >-rw-rw-r--    1 dtor dtor   58 Sep 17 21:17 description
-> >lrwxrwxrwx    1 dtor dtor   17 Sep 17 21:17 HEAD -> refs/heads/master
-> >drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 hooks
-> >drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 info
-> >drwxr-xr-x  260 dtor dtor 4096 Sep 17 17:41 objects
-> >drwxrwxr-x    4 dtor dtor 4096 May  1 19:15 refs
-> >drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:28 remotes
-> >drwxrwxr-x    2 dtor dtor 4096 Sep 17 21:17 V?Cl?????E 
-> >???#V?C????l??E#V?C??;H
-> >                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> >
-> >The similar garbage(?) shows when I clone git's repository.
-> >
+On Mon, Sep 19, 2005 at 12:07:18PM -0700, H. Peter Anvin wrote:
+> I just tried to update the kernel.org hosts to git-core 0.99.7, but I 
+> got stuck due to the fact that git-core 0.99.7 requires python >= 2.4, 
+> which isn't in RHEL4 (python-2.3.2) nor in FC3 (python-2.3.4).
 > 
-> FWIW, using cg-clone (using git-core 0.99.6 and cogito 0.14.1) I keep 
-> finding a directory in .git which consists of a single DEL character (\177).
+> Updating Python beyond what the distribution provides is a major operation.
+> 
+> Can it be changed to work with python 2.3, to give a bit of leeway?
+> 
 
-Does cg-init produce it too? It really seems that this has to be a bug
-in git-init-db. If that is the case, could you try temporarily renaming
-the templates directory?
+It is git-merge-recursive which wants Python 2.4. Unfortunately Python
+2.3 do not ship with the 'subprocess' module which is currently used
+by the 'recursive' merge strategy. RPMs for Python 2.4 can be
+downloaded from http://www.python.org/2.4.1/rpms.html
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Python isn't used by the rest of Git so if you don't use the recursive
+merge strategy it will work fine without Python.
+
+Not supporting one of the major Linux distributions isn't ideal
+though, so maybe we should do something about this. I will have a look
+at rewriting the code to not use subprocess.
+
+- Fredrik
