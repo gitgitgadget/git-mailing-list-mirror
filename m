@@ -1,59 +1,50 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: Why does git-core 0.99.7 require python 2.4?
-Date: Mon, 19 Sep 2005 22:02:23 +0200
-Message-ID: <20050919200222.GA11322@c165.ib.student.liu.se>
-References: <432F0C66.7060402@zytor.com>
+From: Martin Atukunda <matlads@dsmagic.com>
+Subject: Re: cogito-0.15: Broken documentation
+Date: Mon, 19 Sep 2005 23:19:23 +0300
+Message-ID: <20050919201923.GA17503@igloo.ds.co.ug>
+References: <200509190221.j8J2LUOf021975@inti.inf.utfsm.cl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 19 22:07:04 2005
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Sep 19 22:24:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHRqX-0001GN-Mb
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 22:02:38 +0200
+	id 1EHS96-0008Ro-NF
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 22:21:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932613AbVISUCf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 16:02:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932615AbVISUCf
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 16:02:35 -0400
-Received: from [85.8.31.11] ([85.8.31.11]:14496 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S932613AbVISUCe (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 16:02:34 -0400
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id EB6F340FF; Mon, 19 Sep 2005 22:07:50 +0200 (CEST)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EHRqJ-0002wp-00; Mon, 19 Sep 2005 22:02:23 +0200
-To: "H. Peter Anvin" <hpa@zytor.com>
+	id S932622AbVISUVq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 16:21:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932621AbVISUVq
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 16:21:46 -0400
+Received: from mail1.imul.com ([217.113.72.31]:1120 "EHLO mail1.infocom.co.ug")
+	by vger.kernel.org with ESMTP id S932622AbVISUVp (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 16:21:45 -0400
+Received: from entandikwa.ds.co.ug ([::ffff:217.113.73.39])
+  by mail1.infocom.co.ug with esmtp; Mon, 19 Sep 2005 23:21:29 +0300
+  id 000E5E3A.432F1DC9.00002451
+Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
+	by entandikwa.ds.co.ug (Postfix) with ESMTP id 545AD525E
+	for <git@vger.kernel.org>; Mon, 19 Sep 2005 23:22:52 +0300 (EAT)
+Received: from matlads by igloo.ds.co.ug with local (Exim 4.52)
+	id 1EHS6l-0004b7-AH
+	for git@vger.kernel.org; Mon, 19 Sep 2005 23:19:23 +0300
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <432F0C66.7060402@zytor.com>
-User-Agent: Mutt/1.5.6+20040907i
+In-Reply-To: <200509190221.j8J2LUOf021975@inti.inf.utfsm.cl>
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8904>
 
-On Mon, Sep 19, 2005 at 12:07:18PM -0700, H. Peter Anvin wrote:
-> I just tried to update the kernel.org hosts to git-core 0.99.7, but I 
-> got stuck due to the fact that git-core 0.99.7 requires python >= 2.4, 
-> which isn't in RHEL4 (python-2.3.2) nor in FC3 (python-2.3.4).
-> 
-> Updating Python beyond what the distribution provides is a major operation.
-> 
-> Can it be changed to work with python 2.3, to give a bit of leeway?
-> 
+On Sun, Sep 18, 2005 at 10:21:30PM -0400, Horst von Brand wrote:
+> cg-parent-id.txt and cg-tree-id.txt don't validate as xml.
 
-It is git-merge-recursive which wants Python 2.4. Unfortunately Python
-2.3 do not ship with the 'subprocess' module which is currently used
-by the 'recursive' merge strategy. RPMs for Python 2.4 can be
-downloaded from http://www.python.org/2.4.1/rpms.html
+I traced this to the fact that cg-parent-id and cg-tree-id do not have
+USAGE=... lines. btw, this also affects cg-commit-id.
 
-Python isn't used by the rest of Git so if you don't use the recursive
-merge strategy it will work fine without Python.
-
-Not supporting one of the major Linux distributions isn't ideal
-though, so maybe we should do something about this. I will have a look
-at rewriting the code to not use subprocess.
-
-- Fredrik
+Patch to follow soon.
+-- 
+Your entire blood supply is filtered through your kidneys in four minutes.
