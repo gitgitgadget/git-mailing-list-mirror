@@ -1,61 +1,50 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Why does git-core 0.99.7 require python 2.4?
-Date: Mon, 19 Sep 2005 14:33:10 -0700
-Message-ID: <432F2E96.1040307@zytor.com>
-References: <432F0C66.7060402@zytor.com>	<20050919200222.GA11322@c165.ib.student.liu.se>	<7vslw0lqvd.fsf@assigned-by-dhcp.cox.net> <432F26E9.9090707@zytor.com> <7v7jdclpme.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Joining cg-*-id
+Date: Mon, 19 Sep 2005 17:40:49 -0400
+Message-ID: <1127166049.26772.26.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Fredrik Kuivinen <freku045@student.liu.se>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 19 23:35:19 2005
+X-From: git-owner@vger.kernel.org Mon Sep 19 23:42:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHTGR-0003rW-GV
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 23:33:27 +0200
+	id 1EHTO6-0005vv-7w
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 23:41:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932708AbVISVdY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 17:33:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932709AbVISVdY
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 17:33:24 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:64990 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932708AbVISVdX
+	id S932658AbVISVk6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 17:40:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932659AbVISVk6
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 17:40:58 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:60631 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932658AbVISVk5
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2005 17:33:23 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j8JLXFNm010022
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 19 Sep 2005 14:33:15 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7jdclpme.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
+	Mon, 19 Sep 2005 17:40:57 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EHTNf-0001Tc-Vx
+	for git@vger.kernel.org; Mon, 19 Sep 2005 17:40:56 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.52)
+	id 1EHTNZ-0000f9-9e; Mon, 19 Sep 2005 17:40:49 -0400
+To: Petr Baudis <pasky@suse.cz>, git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8912>
 
-Junio C Hamano wrote:
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
-> 
->>My suggestion would be to fork off the recursive merge into a separate 
->>binary package which can have the python >= 2.4 requirement (unless 
->>Fredrik just fixes it.)
-> 
-> 
-> It sounds like the right thing to do, not that I know much about
-> how RPM world deals with situations like this (aside from what I
-> learnt from the list).  If we go this route probably we should
-> the same for gitk and git-send-email as well?
+Hello!
 
-Yes, that probably would make sense, at least for gitk.
+I believe Cogito should keep the command list short.  When the *-id
+utilities got the cg-prefix, the list became longer by 3 commands.
 
-I'll try to work on the spec file.  It's a bit messier than I'd like, 
-because a whole bunch of wildcard patterns don't work anymore.
+What if we join cg-commit-id, cg-parent-id and cg-tree-id into one cg-id
+(or cg-admin-id) utility?  It would work like cg-commit-id in absence of
+switches, -p would make it work like cg-parent-id, and -t would make it
+cg-tree-id.
 
-	-hpa
+Alternatively, this functionality should go to git.  It's low-level
+enough to be there.
+
+-- 
+Regards,
+Pavel Roskin
