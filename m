@@ -1,62 +1,57 @@
-From: jepler@unpythonic.net
-Subject: Re: Why does git-core 0.99.7 require python 2.4?
-Date: Mon, 19 Sep 2005 18:17:07 -0500
-Message-ID: <20050919231704.GA19276@unpythonic.net>
-References: <432F0C66.7060402@zytor.com> <20050919200222.GA11322@c165.ib.student.liu.se> <7vslw0lqvd.fsf@assigned-by-dhcp.cox.net> <432F26E9.9090707@zytor.com> <7v7jdclpme.fsf@assigned-by-dhcp.cox.net> <432F3253.3070201@zytor.com>
+From: Pavel Machek <pavel@suse.cz>
+Subject: Re: [ANNOUNCE] Cogito-0.15
+Date: Tue, 20 Sep 2005 01:15:38 +0200
+Message-ID: <20050919231538.GA4074@elf.ucw.cz>
+References: <7vr7c02zgg.fsf@assigned-by-dhcp.cox.net> <7vwtleyml5.fsf@assigned-by-dhcp.cox.net> <20050919011428.GF22391@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
-Cc: Junio C Hamano <junkio@cox.net>,
-	Fredrik Kuivinen <freku045@student.liu.se>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 20 01:17:23 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 20 01:17:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHUst-0003JN-Pe
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 01:17:16 +0200
+	id 1EHUsS-0003EK-7z
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 01:16:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932637AbVISXRL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 19:17:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932654AbVISXRK
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 19:17:10 -0400
-Received: from craie.unpythonic.net ([206.222.212.219]:9128 "EHLO
-	craie.unpythonic.net") by vger.kernel.org with ESMTP
-	id S932648AbVISXRJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2005 19:17:09 -0400
-Received: by craie.unpythonic.net (Postfix, from userid 405)
-	id 0C98D5DC16E; Mon, 19 Sep 2005 18:17:08 -0500 (CDT)
-To: "H. Peter Anvin" <hpa@zytor.com>
+	id S932626AbVISXQp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 19:16:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932637AbVISXQp
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 19:16:45 -0400
+Received: from gprs189-60.eurotel.cz ([160.218.189.60]:40407 "EHLO amd.ucw.cz")
+	by vger.kernel.org with ESMTP id S932626AbVISXQo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 19:16:44 -0400
+Received: by amd.ucw.cz (Postfix, from userid 8)
+	id 2E5DD8B254; Tue, 20 Sep 2005 01:15:38 +0200 (CEST)
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-In-Reply-To: <432F3253.3070201@zytor.com>
-User-Agent: Mutt/1.4.2i
+In-Reply-To: <20050919011428.GF22391@pasky.or.cz>
+X-Warning: Reading this can be dangerous to your mental health.
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8923>
 
+Hi!
 
---YZ5djTAD1cGYuMQK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+>   this is the release of Cogito-0.15. It fixes several minor bugs, and
+> adds a feature or two. The most important thing though is that this
+> depends on Git-core-0.99.7 and uses the new command names. Everyone is
+> encouraged to upgrade at least to this Cogito version in the next few
+> days, since the older Cogito versions likely won't work with the future
+> Git-core releases.
+> 
+>   To stay in sync with the Git terminology, Cogito also renames its
+> cg-pull to cg-fetch. Since this is a major naming change (I'm not too
+> happy about it, personally), cg-pull will stay aliased to cg-fetch for
+> at least one (likely two) next major Cogito releases (it also produces a
+> warning when invoked as cg-pull). In the more distant future, cg-pull
+> will slowly become the new name of cg-update, to make it confusing.
 
-It looks like Python2.4's subprocess module is pure Python, and works
-with python2.3.
+Could we keep at least the cg-update name? It is certainly not a
+*pull* because it does update local repository (and tree, too).
 
-Could subprocess.py just be included in git?
-
-Jeff
-
---YZ5djTAD1cGYuMQK
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.6 (GNU/Linux)
-
-iD8DBQFDL0bwJd01MZaTXX0RAq+YAJ9QsBQLq3TQrLsqiVuGrVH75hSHNACfTzFt
-LYuoo4vmz/xhkNIr+RvGxIc=
-=wWL7
------END PGP SIGNATURE-----
-
---YZ5djTAD1cGYuMQK--
+								Pavel
+-- 
+if you have sharp zaurus hardware you don't need... you know my address
