@@ -1,50 +1,61 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Joining cg-*-id
-Date: Mon, 19 Sep 2005 17:40:49 -0400
-Message-ID: <1127166049.26772.26.camel@dv>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Fixing --help, usage for *-id
+Date: Mon, 19 Sep 2005 23:40:54 +0200
+Message-ID: <20050919214054.GF18320@pasky.or.cz>
+References: <1127165381.26772.16.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
 X-From: git-owner@vger.kernel.org Mon Sep 19 23:42:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHTO6-0005vv-7w
+	id 1EHTO5-0005vv-N1
 	for gcvg-git@gmane.org; Mon, 19 Sep 2005 23:41:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932658AbVISVk6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 17:40:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932659AbVISVk6
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 17:40:58 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:60631 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932658AbVISVk5
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2005 17:40:57 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EHTNf-0001Tc-Vx
-	for git@vger.kernel.org; Mon, 19 Sep 2005 17:40:56 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.52)
-	id 1EHTNZ-0000f9-9e; Mon, 19 Sep 2005 17:40:49 -0400
-To: Petr Baudis <pasky@suse.cz>, git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	id S932657AbVISVk7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 17:40:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932659AbVISVk7
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 17:40:59 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:53958 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932657AbVISVk5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 17:40:57 -0400
+Received: (qmail 23970 invoked by uid 2001); 19 Sep 2005 23:40:54 +0200
+To: Pavel Roskin <proski@gnu.org>
+Content-Disposition: inline
+In-Reply-To: <1127165381.26772.16.camel@dv>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8913>
 
-Hello!
+Dear diary, on Mon, Sep 19, 2005 at 11:29:41PM CEST, I got a letter
+where Pavel Roskin <proski@gnu.org> told me that...
+> Hello!
 
-I believe Cogito should keep the command list short.  When the *-id
-utilities got the cg-prefix, the list became longer by 3 commands.
+Hello,
 
-What if we join cg-commit-id, cg-parent-id and cg-tree-id into one cg-id
-(or cg-admin-id) utility?  It would work like cg-commit-id in absence of
-switches, -p would make it work like cg-parent-id, and -t would make it
-cg-tree-id.
+> Removal of cg-Xlib inclusion in *-id scripts broke "--help" switch.
+> When cg-Xlib is sourced indirectly through cg-Xnormid, the help text is
+> treated like an ID, and its last word is dropped.
 
-Alternatively, this functionality should go to git.  It's low-level
-enough to be there.
+do we really need --help in *-id? They are some kind of scripts
+half-internal and half for the user - their _primary_ use is from the
+other scripts, but they are standalone since they can be useful for the
+end user as well in various situations. I can roughly remember cg-Xlib
+inclusion in those scripts being significantly visible on the running
+times of the users.
+
+> Lack of USAGE string in the *-id scripts breaks the documentation
+> generation because empty synopsis causes invalid XML.  Thus the USAGE
+> strings should be provided.
+
+Thanks, this was already taken care of by Martin Atukunda.
 
 -- 
-Regards,
-Pavel Roskin
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
