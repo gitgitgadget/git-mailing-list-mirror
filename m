@@ -1,47 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Ugly merge messages
-Date: Sun, 18 Sep 2005 17:12:57 -0700
-Message-ID: <7vd5n5zzhy.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0509181649390.9106@g5.osdl.org>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: [PATCH] git-http-fetch: Allow caching of retrieved objects
+ byproxy servers
+Date: Sun, 18 Sep 2005 17:23:23 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0509181720290.14003@qynat.qvtvafvgr.pbz>
+References: <20050913153858.GB24405@master.mivlgu.local> <43285B24.7050907@b-i-t.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 19 02:13:44 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 19 02:24:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EH9HO-00011o-Gp
-	for gcvg-git@gmane.org; Mon, 19 Sep 2005 02:13:06 +0200
+	id 1EH9Rw-0002ae-02
+	for gcvg-git@gmane.org; Mon, 19 Sep 2005 02:24:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932276AbVISAM7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Sep 2005 20:12:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932280AbVISAM7
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 20:12:59 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:11990 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932276AbVISAM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Sep 2005 20:12:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050919001258.JOFG29184.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 18 Sep 2005 20:12:58 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509181649390.9106@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 18 Sep 2005 17:05:18 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932280AbVISAXp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Sep 2005 20:23:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932281AbVISAXp
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Sep 2005 20:23:45 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:17113 "HELO
+	warden.diginsite.com") by vger.kernel.org with SMTP id S932280AbVISAXp
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Sep 2005 20:23:45 -0400
+Received: from no.name.available by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Sun, 18 Sep 2005 17:23:40 -0700
+Received: from wlvexc02.digitalinsight.com ([10.201.10.15]) by wlvims02.corp.ad.diginsite.com with InterScan Messaging Security Suite; Sun, 18 Sep 2005 17:23:28 -0700
+Received: by wlvexc02.diginsite.com with Internet Mail Service (5.5.2657.72)
+	id <T1SRBD7F>; Sun, 18 Sep 2005 17:23:26 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
+	id T1S3L3NW; Sun, 18 Sep 2005 17:23:22 -0700
+To: sf-git@stephan-feder.de
+X-X-Sender: dlang@dlang.diginsite.com
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <43285B24.7050907@b-i-t.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8824>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Wed, 14 Sep 2005, sf wrote:
 
->  your merge messages are pretty ugly.
+> Sergey Vlasov wrote:
+>> By default the curl library adds "Pragma: no-cache" header to all
+>> requests, which disables caching by proxy servers.  However, most
+>> files in a GIT repository are immutable, and caching them is safe and
+>> could be useful.
+>
+> Is caching really safe? Because of compression one git object can have many 
+> file representations.
 
-Sorry, I've been using what have been in "pu" branch for some
-time but this time around I used what is in the master (and
-0.99.7).   Post-0.99.7 one produces a single liner for an
-Octopus.  I think it makes sense as you suggest to say just
-branch names of what are merged when we know they come from
-local.
+only if you use different compression algorithums.
+
+remember that git objects are identified by their sha1, if the sha1 is 
+what you want (and the file matches the sha1 after you decompress it) then 
+it really doesn't matter what it's on-disk representation is.
+
+David Lang
+
+-- 
+There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
+  -- C.A.R. Hoare
