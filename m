@@ -1,30 +1,30 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Make time-based commit filtering work with topological ordering
-Date: Tue, 20 Sep 2005 14:00:59 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509201358200.2553@g5.osdl.org>
+Subject: Teach "git-rev-parse" about date-based cut-offs
+Date: Tue, 20 Sep 2005 14:13:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509201406190.2553@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue Sep 20 23:04:00 2005
+X-From: git-owner@vger.kernel.org Tue Sep 20 23:15:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHpEr-0002fp-1V
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 23:01:17 +0200
+	id 1EHpQl-0007s3-RU
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 23:13:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965159AbVITVBJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Sep 2005 17:01:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965157AbVITVBI
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 17:01:08 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:48331 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965159AbVITVBH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 17:01:07 -0400
+	id S965115AbVITVNd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Sep 2005 17:13:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965060AbVITVNd
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 17:13:33 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:35278 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965115AbVITVNc (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 17:13:32 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8KL11Bo013785
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8KLDQBo014609
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 20 Sep 2005 14:01:01 -0700
+	Tue, 20 Sep 2005 14:13:26 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8KL0xf5005824;
-	Tue, 20 Sep 2005 14:01:00 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8KLDPSs006523;
+	Tue, 20 Sep 2005 14:13:25 -0700
 To: Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
 X-Spam-Status: No, hits=0 required=5 tests=
@@ -34,64 +34,95 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9022>
 
 
-The trick is to consider the time-based filtering a limiter, the same way 
-we do for release ranges.
+This adds the options "--since=date" and "--before=date" to git-rev-parse, 
+which knows how to translate them into seconds since the epoch for 
+git-rev-list.
 
-That means that the time-based filtering runs _before_ the topological 
-sorting, which makes it meaningful again. It also simplifies the code 
-logic.
+With this, you can do
 
-This makes "gitk" useful with time ranges.
+	git log --since="2 weeks ago"
+
+or
+
+	git log --until=yesterday
+
+to show the commits that have happened in the last two weeks or are 
+older than 24 hours, respectively.
+
+The flags "--after=" and "--before" are synonyms for --since and --until, 
+and you can combine them, so
+
+	git log --after="Aug 5" --before="Aug 10"
+
+is a valid (but strange) thing to do. 
 
 Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 ---
-diff --git a/rev-list.c b/rev-list.c
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -82,12 +82,6 @@ static int filter_commit(struct commit *
- 		return STOP;
- 	if (commit->object.flags & (UNINTERESTING|SHOWN))
- 		return CONTINUE;
--	if (min_age != -1 && (commit->date > min_age))
--		return CONTINUE;
--	if (max_age != -1 && (commit->date < max_age)) {
--		stop_traversal=1;
--		return merge_order?CONTINUE:STOP;
--	}
- 	if (max_count != -1 && !max_count--)
- 		return STOP;
- 	if (no_merges && (commit->parents && commit->parents->next))
-@@ -374,6 +368,8 @@ static struct commit_list *limit_list(st
- 		struct commit *commit = pop_most_recent_commit(&list, SEEN);
- 		struct object *obj = &commit->object;
+diff --git a/rev-parse.c b/rev-parse.c
+--- a/rev-parse.c
++++ b/rev-parse.c
+@@ -6,6 +6,7 @@
+ #include "cache.h"
+ #include "commit.h"
+ #include "refs.h"
++#include "quote.h"
  
-+		if (max_age != -1 && (commit->date < max_age))
-+			obj->flags |= UNINTERESTING;
- 		if (unpacked && has_sha1_pack(obj->sha1))
- 			obj->flags |= UNINTERESTING;
- 		if (obj->flags & UNINTERESTING) {
-@@ -382,6 +378,8 @@ static struct commit_list *limit_list(st
- 				break;
- 			continue;
- 		}
-+		if (min_age != -1 && (commit->date > min_age))
-+			continue;
- 		p = &commit_list_insert(commit, p)->next;
- 	}
- 	if (tree_objects)
-@@ -494,10 +492,12 @@ int main(int argc, char **argv)
- 		}
- 		if (!strncmp(arg, "--max-age=", 10)) {
- 			max_age = atoi(arg + 10);
-+			limited = 1;
- 			continue;
- 		}
- 		if (!strncmp(arg, "--min-age=", 10)) {
- 			min_age = atoi(arg + 10);
-+			limited = 1;
- 			continue;
- 		}
- 		if (!strcmp(arg, "--header")) {
+ #define DO_REVS		1
+ #define DO_NOREV	2
+@@ -125,6 +126,30 @@ static int show_reference(const char *re
+ 	return 0;
+ }
+ 
++static void show_datestring(const char *flag, const char *datestr)
++{
++	FILE *date;
++	static char buffer[100];
++	static char cmd[1000];
++	int len;
++
++	/* date handling requires both flags and revs */
++	if ((filter & (DO_FLAGS | DO_REVS)) != (DO_FLAGS | DO_REVS))
++		return;
++	len = strlen(flag);
++	memcpy(buffer, flag, len);
++
++	snprintf(cmd, sizeof(cmd), "date --date=%s +%%s", sq_quote(datestr));
++	date = popen(cmd, "r");
++	if (!date || !fgets(buffer + len, sizeof(buffer) - len, date))
++		die("git-rev-list: bad date string");
++	pclose(date);
++	len = strlen(buffer);
++	if (buffer[len-1] == '\n')
++		buffer[--len] = 0;
++	show(buffer);
++}
++
+ int main(int argc, char **argv)
+ {
+ 	int i, as_is = 0, verify = 0;
+@@ -207,6 +232,22 @@ int main(int argc, char **argv)
+ 				printf("%s/.git\n", cwd);
+ 				continue;
+ 			}
++			if (!strncmp(arg, "--since=", 8)) {
++				show_datestring("--max-age=", arg+8);
++				continue;
++			}
++			if (!strncmp(arg, "--after=", 8)) {
++				show_datestring("--max-age=", arg+8);
++				continue;
++			}
++			if (!strncmp(arg, "--before=", 9)) {
++				show_datestring("--min-age=", arg+9);
++				continue;
++			}
++			if (!strncmp(arg, "--until=", 8)) {
++				show_datestring("--min-age=", arg+8);
++				continue;
++			}
+ 			if (verify)
+ 				die("Needed a single revision");
+ 			show_flag(arg);
