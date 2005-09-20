@@ -1,74 +1,75 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [ANNOUNCE] Cogito-0.15
-Date: Tue, 20 Sep 2005 02:35:15 +0200
-Message-ID: <20050920003515.GC13537@pasky.or.cz>
-References: <7vr7c02zgg.fsf@assigned-by-dhcp.cox.net> <7vwtleyml5.fsf@assigned-by-dhcp.cox.net> <20050919011428.GF22391@pasky.or.cz> <20050919231538.GA4074@elf.ucw.cz>
+From: Dmitry Torokhov <dtor_core@ameritech.net>
+Subject: Re: Garbage in .git directories???
+Date: Mon, 19 Sep 2005 19:09:21 -0500
+Message-ID: <200509191909.22026.dtor_core@ameritech.net>
+References: <200509172141.31591.dtor_core@ameritech.net> <200509182333.58227.dtor_core@ameritech.net> <Pine.LNX.4.58.0509190747210.9106@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S964802AbVITAfT@vger.kernel.org Tue Sep 20 02:37:12 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S964802AbVITAfT@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 20 02:37:26 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHW6f-0003bI-NO
-	for glk-linux-kernel-3@gmane.org; Tue, 20 Sep 2005 02:35:34 +0200
+	id 1EHW7b-0003ma-E5
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 02:36:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964802AbVITAfT (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 19 Sep 2005 20:35:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964804AbVITAfS
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Mon, 19 Sep 2005 20:35:18 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58323 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964803AbVITAfR (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 19 Sep 2005 20:35:17 -0400
-Received: (qmail 15556 invoked by uid 2001); 20 Sep 2005 02:35:15 +0200
-To: Pavel Machek <pavel@suse.cz>
+	id S964804AbVITAfz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 19 Sep 2005 20:35:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964805AbVITAfz
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 20:35:55 -0400
+Received: from smtp104.sbc.mail.re2.yahoo.com ([68.142.229.101]:1444 "HELO
+	smtp104.sbc.mail.re2.yahoo.com") by vger.kernel.org with SMTP
+	id S964804AbVITAfy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 20:35:54 -0400
+Received: (qmail 33389 invoked from network); 20 Sep 2005 00:35:53 -0000
+Received: from unknown (HELO mail.corenet.homeip.net) (dtor?core@ameritech.net@69.219.239.52 with login)
+  by smtp104.sbc.mail.re2.yahoo.com with SMTP; 20 Sep 2005 00:35:53 -0000
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: KMail/1.8.2
+In-Reply-To: <Pine.LNX.4.58.0509190747210.9106@g5.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <20050919231538.GA4074@elf.ucw.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
-Sender: linux-kernel-owner@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8936>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8937>
 
-Dear diary, on Tue, Sep 20, 2005 at 01:15:38AM CEST, I got a letter
-where Pavel Machek <pavel@suse.cz> told me that...
-> Hi!
+On Monday 19 September 2005 09:51, Linus Torvalds wrote:
+>=20
+> On Sun, 18 Sep 2005, Dmitry Torokhov wrote:
+> >=20
+> > Couple more points - just using rsync to get the data (without usin=
+g git)
+> > does not not produce that wierd directory, only got clone does.
+>=20
+> Does a plain "git-init-db" in a newly created empty directory do the =
+same? =20
+> There was a bug (a long time ago)  that created garbage instead of th=
+e
+> template files, I think.
+>
 
-Hi,
+Yes, plain git-init-db produces the garbage.
 
-> >   this is the release of Cogito-0.15. It fixes several minor bugs, and
-> > adds a feature or two. The most important thing though is that this
-> > depends on Git-core-0.99.7 and uses the new command names. Everyone is
-> > encouraged to upgrade at least to this Cogito version in the next few
-> > days, since the older Cogito versions likely won't work with the future
-> > Git-core releases.
-> > 
-> >   To stay in sync with the Git terminology, Cogito also renames its
-> > cg-pull to cg-fetch. Since this is a major naming change (I'm not too
-> > happy about it, personally), cg-pull will stay aliased to cg-fetch for
-> > at least one (likely two) next major Cogito releases (it also produces a
-> > warning when invoked as cg-pull). In the more distant future, cg-pull
-> > will slowly become the new name of cg-update, to make it confusing.
-> 
-> Could we keep at least the cg-update name?
+[dtor@anvil tst]$ git-init-db
+defaulting to local storage area
+[dtor@anvil tst]$ ls -l .git/
+total 32
+drwxrwxr-x    2 dtor dtor 4096 Sep 19 19:08 branches
+-rw-rw-r--    1 dtor dtor   58 Sep 19 19:08 description
+lrwxrwxrwx    1 dtor dtor   17 Sep 19 19:08 HEAD -> refs/heads/master
+drwxrwxr-x    2 dtor dtor 4096 Sep 19 19:08 hooks
+drwxrwxr-x    2 dtor dtor 4096 Sep 19 19:08 info
+drwxrwxr-x  260 dtor dtor 4096 Sep 19 19:08 objects
+drwxrwxr-x    4 dtor dtor 4096 Sep 19 19:08 refs
+drwxrwxr-x    2 dtor dtor 4096 Sep 19 19:08 remotes
+drwxrwxr-x    2 dtor dtor 4096 Sep 19 19:08 V?Cl???E ???#V?C??=D5=BFl??=
+E#V?C??;H
+[dtor@anvil tst]$ git --version
+git version 0.99.7
 
-yes, I want to retain it. I'm not 100% decided yet whether to actually
-use the pull term for anything in Cogito. Previous usage reportedly
-confused some, the new usage actually confuses me and apparently some
-other people. So I might just avoid the 'pull' term in the future
-altogether. Not decided yet, though, and opinions obviously welcomed.
+(Actually this is last night's pull).
 
-> It is certainly not a *pull* because it does update local repository
-> (and tree, too).
 
-AIUI, that's what makes it a pull for *cough* some people. ;-)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+--=20
+Dmitry
