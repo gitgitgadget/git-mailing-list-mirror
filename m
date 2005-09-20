@@ -1,61 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Joining cg-*-id
-Date: Mon, 19 Sep 2005 22:52:27 -0700
-Message-ID: <7vy85s9tgk.fsf@assigned-by-dhcp.cox.net>
-References: <1127166049.26772.26.camel@dv>
-	<20050919215608.GA13845@pasky.or.cz>
-	<Pine.LNX.4.58.0509191505470.2553@g5.osdl.org>
+From: Chris Wright <chrisw@osdl.org>
+Subject: Re: Ship our own copy of subprocess.py
+Date: Mon, 19 Sep 2005 23:14:13 -0700
+Message-ID: <20050920061413.GP8041@shell0.pdx.osdl.net>
+References: <432F0C66.7060402@zytor.com> <20050919200222.GA11322@c165.ib.student.liu.se> <7vslw0lqvd.fsf@assigned-by-dhcp.cox.net> <432F26E9.9090707@zytor.com> <7v7jdclpme.fsf@assigned-by-dhcp.cox.net> <432F3253.3070201@zytor.com> <20050919231704.GA19276@unpythonic.net> <432F48C7.8070405@zytor.com> <7v8xxsebsc.fsf@assigned-by-dhcp.cox.net> <7vfys0cpyj.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Pavel Roskin <proski@gnu.org>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 20 07:53:48 2005
+Cc: Fredrik Kuivinen <freku045@student.liu.se>,
+	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 20 08:16:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHb3U-00086W-3h
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 07:52:36 +0200
+	id 1EHbOp-0003kG-6w
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 08:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932499AbVITFwc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Sep 2005 01:52:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932581AbVITFwc
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 01:52:32 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:35580 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932499AbVITFwb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Sep 2005 01:52:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050920055229.EHLG3875.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 20 Sep 2005 01:52:29 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509191505470.2553@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 19 Sep 2005 15:16:03 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932587AbVITGOV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Sep 2005 02:14:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932628AbVITGOV
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 02:14:21 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:23177 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932587AbVITGOU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 02:14:20 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8K6EDBo007924
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 19 Sep 2005 23:14:13 -0700
+Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8K6EDfI006092;
+	Mon, 19 Sep 2005 23:14:13 -0700
+Received: (from chrisw@localhost)
+	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j8K6EDbA006091;
+	Mon, 19 Sep 2005 23:14:13 -0700
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vfys0cpyj.fsf_-_@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.117 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8979>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+* Junio C Hamano (junkio@cox.net) wrote:
+> I'll be cutting 0.99.7a with this, to help RHEL instalation.
+> Proofreading appreciated.
+> ------------
+> so people without the latest Python could run merge-recursive.
 
-> That lack of sha1 completion is a bug. 
->
-> How does the date thing work? It sounds like something horribly ambiguous, 
-> but hey, maybe some useful semantics could be found.
+Sorry I don't think this one will work.  It's not going to install
+compat/subprocess.py, and if it did, I don't think it'd be able to import
+(how will it find subprocess.py?).
 
-I am not even sure what I would want to see, let alone what I
-could show, when I say "show logs of what happened last week",
-after I just pulled from a remote or two.
-
-I would imagine a gitk graph with nodes colored red for commits
-with last week's timestamps, would be what I would want, but
-probably that is useful only because I can see in the same gitk
-window how those red nodes connect with each other and with
-commits outside the specified time window.  Without that context
-information I would probably be lost.
-
-> The short sha1 problem is fixed thus,
-
-Thanks.  Applied.
+thanks,
+-chris
