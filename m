@@ -1,61 +1,38 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Make "gitk" work with time-based arguments
-Date: Tue, 20 Sep 2005 14:16:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509201413300.2553@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Make time-based commit filtering work with topological ordering
+Date: Tue, 20 Sep 2005 15:28:32 -0700
+Message-ID: <7vpsr31ii7.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0509201358200.2553@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue Sep 20 23:18:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 21 00:30:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHpTg-0000aH-L0
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 23:16:37 +0200
+	id 1EHqbN-0001SG-GL
+	for gcvg-git@gmane.org; Wed, 21 Sep 2005 00:28:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965125AbVITVQd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Sep 2005 17:16:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965126AbVITVQd
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 17:16:33 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:18127 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965125AbVITVQd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 17:16:33 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8KLGQBo014766
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 20 Sep 2005 14:16:26 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8KLGNIv006676;
-	Tue, 20 Sep 2005 14:16:25 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.117 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965171AbVITW2f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Sep 2005 18:28:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965174AbVITW2f
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 18:28:35 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:1496 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S965171AbVITW2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2005 18:28:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050920222832.KDPE26890.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 20 Sep 2005 18:28:32 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9024>
 
+This seems to break t6001 merge-order with max-age test.
 
-gitk wasn't able to take to take advantage of the new date parsing of 
-git-rev-parse, because it didn't pass on arguments that needed quoting 
-properly.
-
-This is the black magic incantation necessary to make tcl do this right.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-diff --git a/gitk b/gitk
---- a/gitk
-+++ b/gitk
-@@ -33,8 +33,8 @@ proc getcommits {rargs} {
-     set nextupdate [expr $startmsecs + 100]
-     set ncmupdate 1
-     if [catch {
--	set parse_args [concat --default HEAD $rargs]
--	set parsed_args [split [eval exec git-rev-parse $parse_args] "\n"]
-+	set parse_cmd [concat git-rev-parse --default HEAD $rargs]
-+	set parsed_args [split [eval exec $parse_cmd] "\n"]
-     }] {
- 	# if git-rev-parse failed for some reason...
- 	if {$rargs == {}} {
+* FAIL 23: --max-age=c3, --merge-order
