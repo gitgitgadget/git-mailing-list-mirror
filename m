@@ -1,60 +1,72 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [Terminology] Push vs. upload?
-Date: Mon, 19 Sep 2005 18:59:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509191858020.2553@g5.osdl.org>
-References: <20050920001136.GK18320@pasky.or.cz> <Pine.LNX.4.58.0509191753100.2553@g5.osdl.org>
- <20050920014448.GA30912@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Why does git-core 0.99.7 require python 2.4?
+Date: Mon, 19 Sep 2005 19:02:59 -0700
+Message-ID: <7v8xxsebsc.fsf@assigned-by-dhcp.cox.net>
+References: <432F0C66.7060402@zytor.com>
+	<20050919200222.GA11322@c165.ib.student.liu.se>
+	<7vslw0lqvd.fsf@assigned-by-dhcp.cox.net> <432F26E9.9090707@zytor.com>
+	<7v7jdclpme.fsf@assigned-by-dhcp.cox.net> <432F3253.3070201@zytor.com>
+	<20050919231704.GA19276@unpythonic.net> <432F48C7.8070405@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 04:00:37 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Kuivinen <freku045@student.liu.se>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 20 04:04:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHXQ9-0002UR-OH
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 03:59:46 +0200
+	id 1EHXTV-00038Q-6J
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 04:03:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964833AbVITB7d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 21:59:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964834AbVITB7d
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 21:59:33 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60106 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964833AbVITB7c (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 21:59:32 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8K1xIBo025903
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 19 Sep 2005 18:59:19 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8K1xFLN029544;
-	Mon, 19 Sep 2005 18:59:16 -0700
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050920014448.GA30912@pasky.or.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.117 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964832AbVITCDI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 22:03:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964834AbVITCDI
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 22:03:08 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:61685 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S964832AbVITCDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2005 22:03:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050920020300.BXEN18416.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 19 Sep 2005 22:03:00 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <432F48C7.8070405@zytor.com> (H. Peter Anvin's message of "Mon,
+	19 Sep 2005 16:24:55 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8950>
 
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
+> jepler@unpythonic.net wrote:
+>> It looks like Python2.4's subprocess module is pure Python, and works
+>> with python2.3.
+>> Could subprocess.py just be included in git?
+>
+> I think that would be the best solution.
 
-On Tue, 20 Sep 2005, Petr Baudis wrote:
-> 
-> Yes, but I'm just arguing about the naming - if you just take the word
-> "pull", "push" is the obvious opposite to that and vice versa, so if we
-> are going to use words "pull" and "push" in the same context, this
-> relation should be preserved. So "push" really _should_ mean
-> 
-> 	ssh other-end 'git-pull'
+OK, it appears that I'd better be doing a 0.99.7a real soon to
+only include:
 
-Well, I actually called it "send" as in "git-send-pack".
+ - merge-recursive not requiring 2.4 but checking the result
+   from 'import subprocess', and optionally install its own
+   subprocess.py (I could do this myself but Fredrik could help
+   me);
 
-But anybody who has ever used BK would still type "push", so I'd make that 
-an alias anyway.
+ - 'git-init-db' template installation fix from Pasky (thanks
+   both Peter and Petr for diagnosis and fix);
 
-Not "upload". Upload is the reverse of "download", and we don't do that.
+ - 'git checkout' error message fix from Linus;
 
-		Linus
+ - 'git show-branch' not barfing on corrupt repository (me);
+
+ - not installing compatibility symlink for commands we do not
+   install (Patrick Mauritz).
+
+There are other patches for some other things discussed on the
+list since 0.99.7 but they do not belong to "fixing breakage"
+category.
