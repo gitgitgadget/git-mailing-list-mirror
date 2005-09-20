@@ -1,91 +1,74 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: GIT - breaking backward compatibility
-Date: Tue, 20 Sep 2005 15:23:51 +0200
-Message-ID: <20050920132351.GB1884@pasky.or.cz>
-References: <7vpsr4cx0f.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Joining cg-*-id
+Date: Tue, 20 Sep 2005 15:57:36 +0200
+Message-ID: <20050920135735.GC1884@pasky.or.cz>
+References: <1127166049.26772.26.camel@dv> <20050919215608.GA13845@pasky.or.cz> <Pine.LNX.4.58.0509191505470.2553@g5.osdl.org> <20050919225422.GG18320@pasky.or.cz> <Pine.LNX.4.58.0509191746130.2553@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 15:25:23 2005
+Cc: Junio C Hamano <junkio@cox.net>, Pavel Roskin <proski@gnu.org>,
+	fonseca@diku.dk, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 20 15:58:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHi6S-0006SP-4n
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 15:24:08 +0200
+	id 1EHidf-00083Y-7f
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 15:58:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964963AbVITNXy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Sep 2005 09:23:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965009AbVITNXy
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 09:23:54 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:10894 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964963AbVITNXx (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 09:23:53 -0400
-Received: (qmail 5546 invoked by uid 2001); 20 Sep 2005 15:23:51 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S932267AbVITN5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Sep 2005 09:57:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932416AbVITN5n
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 09:57:43 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:7903 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932267AbVITN5m (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 09:57:42 -0400
+Received: (qmail 7916 invoked by uid 2001); 20 Sep 2005 15:57:37 +0200
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <7vpsr4cx0f.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <Pine.LNX.4.58.0509191746130.2553@g5.osdl.org>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8996>
 
-Dear diary, on Tue, Sep 20, 2005 at 04:07:28AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> I raised the following issues in my previous messages but did
-> not hear many opinions [*1*].  I do not want to take it as a
-> blank check from the community to do whatever I please.  So here
-> is a recap.
-
-When I'm active on the mailing list, you can be sure that I'd complain
-if I didn't like it. ;-)
-
->  * Tools renaming plan calls for removal of the backward
->    compatible command names (e.g. git-fsck-cache and
->    git-update-cache) sometime in the future.  This is scheduled
->    for 0.99.8 around beginning of October.  If somebody wants
->    extended amnesty period, this can be pushed back but unless I
->    hear otherwise...
-
-I think the start of October is fine for Cogito. Cogito users usually
-upgrade both Cogito and GIT at once, it seems.
-
->  * After reviewing the current set of commands, the following do
->    not seem to be useful anymore; Linus said he feels they can
->    go, and nobody else objected:
+Dear diary, on Tue, Sep 20, 2005 at 02:50:21AM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
+> On Tue, 20 Sep 2005, Petr Baudis wrote:
+> > But that semantics sucks, and I wouldn't mind changing it at all. I
+> > think taking the previous commit works for everything but the start of
+> > cg-log range, and it is how CVS behaves.
 > 
->    git-diff-helper git-diff-stages git-export git-rev-tree
+> The thing is, it may have sensible behaviour for CVS, but only because CVS 
+> doesn't have any notion of concurrent development (even a branch isn't 
+> concurrent - it's totally separate, and when you merge it, it becomes just 
+> one big diff at the time of the merge).
 > 
->    I'd like to remove them before 1.0, and planning to do it
->    within the 0.99.8 timeframe unless I hear otherwise.
-
-Cogito does not use any of those.
-
->  * After Brian Gerst posted a patch to show 'modified' files in
->    ls-files [*2*], there was a brief discussion to change the
->    tagged output markings to make them more readable, but
->    neither Cogito nor StGIT seems to use tagged output.  I am
->    currently thinking about removing '-t' altogether.
+> So I'd love to have
 > 
->    Again, unless I hear otherwise, I'd like to remove it within
->    the 0.99.8 timeframe.
-
-Well, if it should be kept, it should certainly be in sync with
-git-diff-* tag letters. But Cogito uses only the diff tag letters and
-I'm not sure if tag letters for all files in repository would really be
-useful for anything.
-
-> [Footnote]
+> 	git diff yesterday..
 > 
-> *1* Well, Pasky indicated he does not like some of the terms in
-> the glossary in his recent Cogito release announcement, but that
-> was unfortunately after the fact.
+> but the fact is, there's no sensible semantics for it. _which_ yesterday? 
+> There might be five different points that are "close to 24 hours ago", 
+> along five different paths backwards in the history.
 
-Yes. I would complain loudly during the discussion, but I unwisely
-skipped it at first and then didn't read the list for a few weeks.
-My fault, I have to make the best way out of the terminology mess I'm
-in now.
+A well-defined meaning for this from Cogito standpoint would be "the
+last commit on our HEAD before the date and all commits committed and
+merged to the HEAD". In Cogito, you don't merge two branches _together_,
+you merge one branch _into_ another (represented by the parents order),
+so this would be sensible.
+
+But we would have to sort the log in merge order for this to be possible
+(and probably teach git-rev-list about it anyway).  I would absolutely
+*love* to have cg-log in merge order instead of date order - longer I
+see it the more I believe that it's evil and you should really want
+merge order instead. The trouble is that cg-log would be no longer
+incremental and would have to load the whole history first, a no-go for
+any measurably long history.
+
+By the way, did I understand it right that the only difference between
+the results of merge ordering and topo ordering is the order commits
+with regard to the order of parents?
 
 -- 
 				Petr "Pasky" Baudis
