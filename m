@@ -1,82 +1,215 @@
-From: sf <sf@b-i-t.de>
-Subject: Re: [PATCH] git-http-fetch: Allow caching of retrieved objects byproxy
- servers
-Date: Tue, 20 Sep 2005 13:34:22 +0200
-Message-ID: <432FF3BE.8060501@b-i-t.de>
-References: <20050913153858.GB24405@master.mivlgu.local> <43285B24.7050907@b-i-t.de> <Pine.LNX.4.62.0509181720290.14003@qynat.qvtvafvgr.pbz> <432E91ED.7050605@b-i-t.de> <20050919133508.GA2903@pasky.or.cz>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: [PATCH] gitk: add Update menu item.
+Date: Tue, 20 Sep 2005 14:24:23 +0200
+Message-ID: <20050920122423.GA4228MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Sep 20 13:40:13 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 20 14:26:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHgSJ-0004Ab-M6
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 13:38:36 +0200
+	id 1EHhAs-0007PB-VI
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 14:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964976AbVITLi2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Sep 2005 07:38:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964978AbVITLi2
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 07:38:28 -0400
-Received: from main.gmane.org ([80.91.229.2]:22952 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964976AbVITLi1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 07:38:27 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EHgQI-0003Zo-8e
-	for git@vger.kernel.org; Tue, 20 Sep 2005 13:36:30 +0200
-Received: from ip-213157000067.dialin.heagmedianet.de ([213.157.0.67])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Sep 2005 13:36:30 +0200
-Received: from sf by ip-213157000067.dialin.heagmedianet.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Sep 2005 13:36:30 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: ip-213157000067.dialin.heagmedianet.de
-User-Agent: Mozilla Thunderbird 1.0.6 (X11/20050725)
-X-Accept-Language: en-us, en
-In-Reply-To: <20050919133508.GA2903@pasky.or.cz>
+	id S964991AbVITMYe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Sep 2005 08:24:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964987AbVITMYe
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 08:24:34 -0400
+Received: from smtp16.wxs.nl ([195.121.6.39]:29645 "EHLO smtp16.wxs.nl")
+	by vger.kernel.org with ESMTP id S964994AbVITMYd (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 08:24:33 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp16.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0IN400CSX7SNID@smtp16.wxs.nl> for git@vger.kernel.org; Tue,
+ 20 Sep 2005 14:24:23 +0200 (CEST)
+Received: (qmail 4246 invoked by uid 500); Tue, 20 Sep 2005 12:24:23 +0000
+To: Paul Mackerras <paulus@samba.org>
+Mail-followup-to: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8992>
 
-Petr Baudis wrote:
-> Dear diary, on Mon, Sep 19, 2005 at 12:24:45PM CEST, I got a letter
-> where sf <sf@b-i-t.de> told me that...
-...
->> The OP assumed that "files in a GIT repository are immutable" which is 
->> not true. If you consider the sequence
->> 
->> pack -> prune -> update zlib or git -> unpack
->> 
->> you can end up with different files if the new zlib implementation 
->> changes imcompatibly (with respect to byte-by-byte compression results) 
->> or if git suddenly does not use the default compression level any more.
-> 
-> Yes, but why should this matter? It shouldn't matter if you get the old
-> "version" or the new version of the file over HTTP, the actual object's
-> contents is still the same, and GIT shouldn't care.
-> 
+Update will redraw the commits if any commits have been added to any
+of the selected heads.  The new commits appear on the top.
 
-This is correct as long as you take care to always get each file in one go.
+Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
 
-Recently there was talk about how git handles objects larger than 4GB. 
-But you do not have to go this far. Think about fetching 1MB (or 10MB or 
-100MB) compressed objects over a slow link. If the transfer gets 
-interrupted some people or some clever piece of software - perhaps even 
-in git-core - might try to continue the interrupted download. Now if the 
-file representation has changed in the meantime the downloaded file is 
-going to be corrupt.
+---
 
-The git tools will of course take note of the corruption but then the 
-head scratching begins: "What went wrong?"
+ gitk |   91 +++++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 files changed, 73 insertions(+), 18 deletions(-)
 
-The more I think about this I realize that my worries have nothing to do 
-with caching but with HTTP fetching in general.
-
-Regards
-
-	Stephan
+7f319aaadb801da3bccd7b78d372f03e09575b47
+diff --git a/gitk b/gitk
+--- a/gitk
++++ b/gitk
+@@ -16,8 +16,22 @@ proc gitdir {} {
+     }
+ }
+ 
++proc parse_args {rargs} {
++    if [catch {
++	set parse_args [concat --default HEAD $rargs]
++	set parsed_args [split [eval exec git-rev-parse $parse_args] "\n"]
++    }] {
++	# if git-rev-parse failed for some reason...
++	if {$rargs == {}} {
++	    set rargs HEAD
++	}
++	set parsed_args $rargs
++    }
++    return $parsed_args
++}
++
+ proc getcommits {rargs} {
+-    global commits commfd phase canv mainfont env
++    global oldcommits commits commfd phase canv mainfont env
+     global startmsecs nextupdate ncmupdate
+     global ctext maincursor textcursor leftover
+ 
+@@ -27,21 +41,13 @@ proc getcommits {rargs} {
+ 	error_popup "Cannot find the git directory \"$gitdir\"."
+ 	exit 1
+     }
++    set oldcommits {}
+     set commits {}
+     set phase getcommits
+     set startmsecs [clock clicks -milliseconds]
+     set nextupdate [expr $startmsecs + 100]
+     set ncmupdate 1
+-    if [catch {
+-	set parse_args [concat --default HEAD $rargs]
+-	set parsed_args [split [eval exec git-rev-parse $parse_args] "\n"]
+-    }] {
+-	# if git-rev-parse failed for some reason...
+-	if {$rargs == {}} {
+-	    set rargs HEAD
+-	}
+-	set parsed_args $rargs
+-    }
++    set parsed_args [parse_args $rargs]
+     if [catch {
+ 	set commfd [open "|git-rev-list --header --topo-order --parents $parsed_args" r]
+     } err] {
+@@ -59,7 +65,7 @@ proc getcommits {rargs} {
+ }
+ 
+ proc getcommitlines {commfd}  {
+-    global commits parents cdate children
++    global oldcommits commits parents cdate children
+     global commitlisted phase commitinfo nextupdate
+     global stopped redisplaying leftover
+ 
+@@ -119,6 +125,11 @@ to allow selection of commits to be disp
+ 	set id [lindex $ids 0]
+ 	set olds [lrange $ids 1 end]
+ 	set cmit [string range $cmit [expr {$j + 1}] end]
++	if {$phase == "updatecommits"} {
++	    set oldcommits $commits
++	    set commits {}
++	    set phase getcommits
++	}
+ 	lappend commits $id
+ 	set commitlisted($id) 1
+ 	parsecommit $id $cmit 1 [lrange $ids 1 end]
+@@ -324,7 +335,7 @@ proc error_popup msg {
+     tkwait window $w
+ }
+ 
+-proc makewindow {} {
++proc makewindow {rargs} {
+     global canv canv2 canv3 linespc charspc ctext cflist textfont
+     global findtype findtypemenu findloc findstring fstring geometry
+     global entries sha1entry sha1string sha1but
+@@ -334,6 +345,7 @@ proc makewindow {} {
+     menu .bar
+     .bar add cascade -label "File" -menu .bar.file
+     menu .bar.file
++    .bar.file add command -label "Update" -command "updatecommits [list $rargs]"
+     .bar.file add command -label "Reread references" -command rereadrefs
+     .bar.file add command -label "Quit" -command doquit
+     menu .bar.help
+@@ -1470,16 +1482,22 @@ proc drawcommit {id} {
+ }
+ 
+ proc finishcommits {} {
+-    global phase
++    global phase oldcommits
+     global canv mainfont ctext maincursor textcursor
+ 
+-    if {$phase != "incrdraw"} {
++    if {$phase == "incrdraw"} {
++	foreach id $oldcommits {
++	    drawcommit $id
++	}
++	set oldcommits {}
++	drawrest
++    } elseif {$phase == "updatecommits"} {
++	set phase {}
++    } else {
+ 	$canv delete all
+ 	$canv create text 3 3 -anchor nw -text "No commits selected" \
+ 	    -font $mainfont -tags textitems
+ 	set phase {}
+-    } else {
+-	drawrest
+     }
+     . config -cursor $maincursor
+     settextcursor $textcursor
+@@ -3617,6 +3635,43 @@ proc rereadrefs {} {
+     }
+ }
+ 
++proc updatecommits {rargs} {
++    global phase
++    global startmsecs nextupdate ncmupdate
++    global idtags idheads idotherrefs
++    global leftover
++
++    set refids [concat [array names idtags] \
++		    [array names idheads] [array names idotherrefs]]
++    foreach id $refids {
++	if {[info exists ref($id)]} continue
++	set ref($id) $id
++	lappend ignore "^$id"
++    }
++    set parsed_args {}
++    foreach a [parse_args $rargs] {
++	if {![info exists ref($a)]} {
++	    lappend parsed_args $a
++	}
++    }
++    rereadrefs
++    if [catch {
++	set commfd [open "|git-rev-list --header --topo-order --parents $parsed_args $ignore" r]
++    } err] {
++	puts stderr "Error executing git-rev-list: $err"
++	exit 1
++    }
++    set phase updatecommits
++    set startmsecs [clock clicks -milliseconds]
++    set nextupdate [expr $startmsecs + 100]
++    set ncmupdate 1
++    set leftover {}
++    fconfigure $commfd -blocking 0 -translation lf
++    fileevent $commfd readable [list getcommitlines $commfd]
++    . config -cursor watch
++    settextcursor watch
++}
++
+ proc showtag {tag isnew} {
+     global ctext cflist tagcontents tagids linknum
+ 
+@@ -3684,6 +3739,6 @@ set redisplaying 0
+ set stuffsaved 0
+ set patchnum 0
+ setcoords
+-makewindow
++makewindow $revtreeargs
+ readrefs
+ getcommits $revtreeargs
