@@ -1,99 +1,59 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Joining cg-*-id
-Date: Tue, 20 Sep 2005 12:34:10 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509201224360.2553@g5.osdl.org>
-References: <1127166049.26772.26.camel@dv> <20050919215608.GA13845@pasky.or.cz>
- <Pine.LNX.4.58.0509191505470.2553@g5.osdl.org> <20050919225422.GG18320@pasky.or.cz>
- <Pine.LNX.4.58.0509191746130.2553@g5.osdl.org> <20050920135735.GC1884@pasky.or.cz>
- <Pine.LNX.4.58.0509200734440.2553@g5.osdl.org> <20050920150719.GB1836@pasky.or.cz>
- <Pine.LNX.4.58.0509200906120.2553@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] cg-diff fixed to work with BSD xargs
+Date: Tue, 20 Sep 2005 21:36:06 +0200
+Message-ID: <20050920193606.GD28621@pasky.or.cz>
+References: <46a038f905091921154a70123f@mail.gmail.com> <11253960093915-git-send-email-martin@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Pavel Roskin <proski@gnu.org>,
-	fonseca@diku.dk, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 20 21:36:26 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, kevin@catalyst.net.nz
+X-From: git-owner@vger.kernel.org Tue Sep 20 21:38:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHntL-0007JD-Pu
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 21:35:00 +0200
+	id 1EHnuf-0007hC-QD
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 21:36:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965095AbVITTey (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Sep 2005 15:34:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965097AbVITTey
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 15:34:54 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:32185 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965095AbVITTey (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 15:34:54 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8KJYJBo009522
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 20 Sep 2005 12:34:19 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8KJYBOm001937;
-	Tue, 20 Sep 2005 12:34:14 -0700
-To: Petr Baudis <pasky@suse.cz>, Paul Mackerras <paulus@samba.org>
-In-Reply-To: <Pine.LNX.4.58.0509200906120.2553@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.117 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965097AbVITTgK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Sep 2005 15:36:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965098AbVITTgK
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 15:36:10 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:58500 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S965097AbVITTgI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 15:36:08 -0400
+Received: (qmail 4929 invoked by uid 2001); 20 Sep 2005 21:36:06 +0200
+To: Martin Langhoff <martin@catalyst.net.nz>,
+	Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f905091921154a70123f@mail.gmail.com> <11253960093915-git-send-email-martin@catalyst.net.nz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9018>
 
-
-
-On Tue, 20 Sep 2005, Linus Torvalds wrote:
+Dear diary, on Tue, Aug 30, 2005 at 12:00:10PM CEST, I got a letter
+where Martin Langhoff <martin@catalyst.net.nz> told me that...
+> Calls to cg-diff without filename parameters were dependent on GNU xargs
+> traits. BSD xargs is hardcoded to do --no-run-if-empty -- so if the filter
+> is effectively empty we avoid calling xargs.
 > 
-> (Side note: the "gitk" thing works really badly. gitk doesn't quote its 
-> arguments to "git-rev-list", so something like
-> 
-> 	gitk --since="1 month ago"
-> 
-> does NOT work, while "--since=yesterday" does, because it has no spaces. 
-> Gaah. "Obi-Paul Mackerras, you're our only hope")
+> Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
 
-Fixed thusly, I think.
+Thanks, I've applied it and also fixed the second git-diff-tree usage.
 
-There is 'eval' magic with pure lists. I'm getting convinced that tcl is 
-evil after all - that's just _confusing_. A real language shouldn't have 
-semantic differences from this change, but it clearly does.
+Dear diary, on Tue, Sep 20, 2005 at 06:15:28AM CEST, I got a letter
+where Martin Langhoff <martin.langhoff@gmail.com> told me that...
+> We still have a bug in cg-diff when using the BSD xargs. I posted a
+> fix, and Junio posted an alternative approach. The original patches
+> are here http://marc.theaimsgroup.com/?l=git&m=112541165904627&w=2
 
-However, getting gitk working also shows a problem with --topo-order
-(which gitk uses) and the time limits. See
+Looks like I've overlooked it in my fast Cogito patch scan. There are
+still parts of mailing list history in late August and early September
+that I didn't read.
 
-	[torvalds@g5 git]$ git-rev-list $(git-rev-parse --since="8 days ago" HEAD) | wc
-	     80      80    3280
-	[torvalds@g5 git]$ git-rev-list --topo-order $(git-rev-parse --since="8 days ago" HEAD) | wc
-	     10      10     410
-
-which is because when we sort things topologically, they won't be in date 
-order any more (surprise surprise), so the whole date-cut-off logic 
-doesn't actually work.
-
-So I'm sad to say that
-
-	gitk --since="5 days ago"
-
-still doesn't do what you'd actually _want_ it to do with gitk. But at 
-least gitk can now parse the arguments right.
-
-		Linus
-
----
-diff --git a/gitk b/gitk
---- a/gitk
-+++ b/gitk
-@@ -33,8 +33,8 @@ proc getcommits {rargs} {
-     set nextupdate [expr $startmsecs + 100]
-     set ncmupdate 1
-     if [catch {
--	set parse_args [concat --default HEAD $rargs]
--	set parsed_args [split [eval exec git-rev-parse $parse_args] "\n"]
-+	set parse_cmd [concat git-rev-parse --default HEAD $rargs]
-+	set parsed_args [split [eval exec $parse_cmd] "\n"]
-     }] {
- 	# if git-rev-parse failed for some reason...
- 	if {$rargs == {}} {
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
