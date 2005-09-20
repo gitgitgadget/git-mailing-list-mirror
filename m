@@ -1,74 +1,64 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: Joining cg-*-id
-Date: Mon, 19 Sep 2005 20:19:50 -0400
-Message-ID: <1127175590.31115.10.camel@dv>
-References: <1127166049.26772.26.camel@dv>
-	 <20050919215608.GA13845@pasky.or.cz> <1127169021.26772.58.camel@dv>
-	 <20050919225838.GH18320@pasky.or.cz>
+From: Stefhen Hovland <stefhen.hovland@gmail.com>
+Subject: [PATCH][COGITO] Add .deb build support to Makefile
+Date: Mon, 19 Sep 2005 19:23:56 -0500
+Message-ID: <7c278d0c05091917232c79b909@mail.gmail.com>
+Reply-To: stefhen.hovland@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 20 02:21:01 2005
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_950_30897807.1127175836619"
+X-From: git-owner@vger.kernel.org Tue Sep 20 02:24:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHVrb-0006q5-0M
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 02:19:59 +0200
+	id 1EHVvU-0007YK-65
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 02:24:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932724AbVITAT4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 20:19:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932726AbVITAT4
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 20:19:56 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:9894 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932724AbVITATz
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2005 20:19:55 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EHVrV-0004NN-Kz
-	for git@vger.kernel.org; Mon, 19 Sep 2005 20:19:53 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.52)
-	id 1EHVrT-00087C-2q; Mon, 19 Sep 2005 20:19:51 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050919225838.GH18320@pasky.or.cz>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	id S964796AbVITAX5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 20:23:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964797AbVITAX5
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 20:23:57 -0400
+Received: from xproxy.gmail.com ([66.249.82.194]:10769 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964796AbVITAX5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 20:23:57 -0400
+Received: by xproxy.gmail.com with SMTP id i27so230867wxd
+        for <git@vger.kernel.org>; Mon, 19 Sep 2005 17:23:56 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type;
+        b=evB2mSoMU7GGJcs829Vr8wjLGetVK8sALwbDp3DJOMu94amRoY1xb+5x+G9Y2CroWeL0a5f5/bv4bH/Ksy93iTRQV6AKExv0iCXK5Q+rEONNXTtudHWd4Xzthq9BIDL3kpfkTflg26gIUBpMo+H2zhL6BNn98QQgcCFNogfnvmE=
+Received: by 10.70.37.9 with SMTP id k9mr1662813wxk;
+        Mon, 19 Sep 2005 17:23:56 -0700 (PDT)
+Received: by 10.70.12.11 with HTTP; Mon, 19 Sep 2005 17:23:56 -0700 (PDT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8933>
 
-On Tue, 2005-09-20 at 00:58 +0200, Petr Baudis wrote:
-> Dear diary, on Tue, Sep 20, 2005 at 12:30:21AM CEST, I got a letter
-> where Pavel Roskin <proski@gnu.org> told me that...
-> > The value is having one command, one manpage and one place to fix little
-> > bugs and add more functionality.  Potentially, cg-Xnormid could be
-> > incorporated into that script, so bash wouldn't have to open one more
-> > file.
-> 
-> Well, cg-Xnormid is basically pointless if it's not going to be a common
-> backend for multiple other commands. So I'd say either supersede it with
-> git-rev-parse or just merge it with cg-object-id.
+------=_Part_950_30897807.1127175836619
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Agreed.
+Attached is a simple patch adding support to cogito for "make deb".
+Please use if useful or let me know if this patch is offbase..
 
-> > Please don't apply my patch yet - I forgot to document the optional
-> > argument.  I'll try to make cg-object-id now.
-> 
-> Which patch?
+Thanks,
+Stefhen
 
-The one that adds USAGE.  Never mind - I see it's fixed already.
+------=_Part_950_30897807.1127175836619
+Content-Type: text/plain; name="2005-09-19.Makefile.diff"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="2005-09-19.Makefile.diff"
 
-As for merging, I see that the existing *-id scripts are a mess.  For
-instance, cg-parent returns parents separated by spaces, but cg-diff
-used "head -1" on its output to get the first parent, i.e it assumes
-newline separated output.
-
-Another thing that is broken is "cg-commit-id origin^" - apparently the
-"^" parsing is only designed for cg-parent-id.
-
-I think I'll start a local branch for fixing this, and then I'll send
-separate patches.
-
--- 
-Regards,
-Pavel Roskin
+ZGlmZiAtLWdpdCBhL01ha2VmaWxlIGIvTWFrZWZpbGUKLS0tIGEvTWFrZWZpbGUKKysrIGIvTWFr
+ZWZpbGUKQEAgLTEyNSw2ICsxMjUsMTIgQEAgZGlzdDogY29naXRvLnNwZWMKIHJwbTogZGlzdAog
+CXJwbWJ1aWxkIC10YSAkKEdJVF9UQVJOQU1FKS50YXIuZ3oKIAorZGViOiBkaXN0CisJcm0gLXJm
+ICQoR0lUX1RBUk5BTUUpCisJdGFyIHp4ZiAkKEdJVF9UQVJOQU1FKS50YXIuZ3oKKwlkcGtnLXNv
+dXJjZSAtYiAkKEdJVF9UQVJOQU1FKQorCWNkICQoR0lUX1RBUk5BTUUpICYmIGZha2Vyb290IGRl
+Ymlhbi9ydWxlcyBiaW5hcnkKKwogUG9ydGZpbGU6IFBvcnRmaWxlLmluICQoVkVSU0lPTikgZGlz
+dAogCXNlZCAtZSAncy9AQFZFUlNJT05AQC8kKHNoZWxsIGNhdCAkKFZFUlNJT04pIHwgY3V0IC1k
+Ii0iIC1mMikvZycgPCBQb3J0ZmlsZS5pbiA+IFBvcnRmaWxlCiAJZWNobyAiY2hlY2tzdW1zIG1k
+NSAiIGBtZDVzdW0gJChHSVRfVEFSTkFNRSkudGFyLmd6IHwgY3V0IC1kICcgJyAtZiAxYCA+PiBQ
+b3J0ZmlsZQo=
+------=_Part_950_30897807.1127175836619--
