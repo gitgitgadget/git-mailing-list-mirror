@@ -1,60 +1,98 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] cg-diff fixed to work with BSD xargs
-Date: Tue, 20 Sep 2005 21:39:56 +0200
-Message-ID: <20050920193956.GE28621@pasky.or.cz>
-References: <11253960093915-git-send-email-martin@catalyst.net.nz> <7v7je3ld53.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin@catalyst.net.nz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 21:40:14 2005
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: [PATCH] Make the git-fsck-objects diagnostics more useful
+Date: Tue, 20 Sep 2005 15:55:32 -0400
+Message-ID: <200509201955.j8KJtWAr003157@laptop11.inf.utfsm.cl>
+References: <pasky@ucw.cz>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 20 21:57:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHnyH-0000JD-3n
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 21:40:05 +0200
+	id 1EHoDW-0005Ih-Sh
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 21:55:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965099AbVITTj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Sep 2005 15:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965104AbVITTj6
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 15:39:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:29382 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S965099AbVITTj5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 15:39:57 -0400
-Received: (qmail 5908 invoked by uid 2001); 20 Sep 2005 21:39:56 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v7je3ld53.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S965103AbVITTzo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Sep 2005 15:55:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965104AbVITTzn
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 15:55:43 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:35035 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S965103AbVITTzn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 15:55:43 -0400
+Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j8KJtWmB019055
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 20 Sep 2005 15:55:32 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j8KJtWAr003157;
+	Tue, 20 Sep 2005 15:55:32 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: Message from Petr Baudis <pasky@ucw.cz> 
+   of "Tue, 20 Sep 2005 20:56:05 +0200." <20050920185605.GA28621@pasky.or.cz> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.19.1]); Tue, 20 Sep 2005 15:55:32 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9020>
 
-Dear diary, on Tue, Aug 30, 2005 at 04:20:40PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> But the code you are fixing looks to me like it is already
-> somewhat obsolete, even if it is still working.  The munging of
-> user-given paths into $filter temporary file was necessary only
-> because older git-diff-* family did not work from anywhere but
-> the top-level directory; they do, thanks to Linus' enhancements,
-> these days.
+Petr Baudis <pasky@ucw.cz> wrote:
+> Actually report what exactly is wrong with the object, instead of an
+> ambiguous 'bad sha1 file' or such. In places where we already do, unify
+> the format and clean the messages up.
 > 
-> I think it is time to start updating Cogito to take advantage of
-> the modern core.  I do not do Porcelains, but here is my stab at
-> it.
+> Signed-off-by: Petr Baudis <pasky@suse.cz>
+> 
+> ---
+> commit ff0b3368b45a07ac080574eb721a607892413b99
+> tree c5e730edddb7679bee63a7d76fb088a7378a9d8b
+> parent 12913234050c07785b7fc5929e4c8b5f80606609
+> author Petr Baudis <pasky@suse.cz> Tue, 20 Sep 2005 20:54:33 +0200
+> committer Petr Baudis <xpasky@machine.(none)> Tue, 20 Sep 2005 20:54:33 +0200
+> 
+>  fsck-objects.c |   82 +++++++++++++++++++++++++++++++++-----------------------
+>  1 files changed, 48 insertions(+), 34 deletions(-)
+> 
+> diff --git a/fsck-objects.c b/fsck-objects.c
+> --- a/fsck-objects.c
+> +++ b/fsck-objects.c
+> @@ -20,6 +20,35 @@ static int check_strict = 0;
+>  static int keep_cache_objects = 0; 
+>  static unsigned char head_sha1[20];
+>  
+> +
+> +static void objreport(struct object *obj, const char *severity,
+> +                      const char *err, va_list params)
+> +{
+> +	fprintf(stderr, "%s in %s %s: ",
+> +	        severity, obj->type, sha1_to_hex(obj->sha1));
+> +	vfprintf(stderr, err, params);
+> +	fputs("\n", stderr);
+> +}
 
-Thanks for the patch - it'd be actually very nice to get rid of the
-complexity. But more than that, I want to be consistent - so do all the
-GIT core commands work in subdirectories by now, or only a subset of
-them? I'd hate to have half of the scripts stay in the subdirectory
-and half use the Cogito's old relpath logic, so it's either everything
-or anything from my POV.
+Is this legal? I am under the impression you have to call
+va_start()/va_end() always, even if you just pass the va_list down.
 
-Thanks,
+The comp.lang.c FAQ <http://www.eskimo.com/~scs/C-faq/q15.5.html> agrees
+with me here... it should be:
 
+static void objreport(struct object *obj, const char *severity,
+                      const char *err, ...)
+{
+	va_list params;
+	
+	fprintf(stderr, "%s in %s %s: ",
+	        severity, obj->type, sha1_to_hex(obj->sha1));
+	va_start(params, err);
+        vfprintf(stderr, err, params);	
+	va_end(params);
+	fputs("\n", stderr);
+}
+
+[Yes, I know. "We all are using gcc and glibc on Linux". But anyway.]
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
