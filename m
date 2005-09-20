@@ -1,71 +1,125 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Ship our own copy of subprocess.py
-Date: Tue, 20 Sep 2005 07:55:41 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509200753570.2553@g5.osdl.org>
-References: <432F0C66.7060402@zytor.com> <20050919200222.GA11322@c165.ib.student.liu.se>
- <7vslw0lqvd.fsf@assigned-by-dhcp.cox.net> <432F26E9.9090707@zytor.com>
- <7v7jdclpme.fsf@assigned-by-dhcp.cox.net> <432F3253.3070201@zytor.com>
- <20050919231704.GA19276@unpythonic.net> <432F48C7.8070405@zytor.com>
- <7v8xxsebsc.fsf@assigned-by-dhcp.cox.net> <7vfys0cpyj.fsf_-_@assigned-by-dhcp.cox.net>
- <20050920053024.GA12979@c165.ib.student.liu.se>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH] gitk: add Update menu item.
+Date: Tue, 20 Sep 2005 16:56:58 +0200
+Message-ID: <20050920145658.GA13292MdfPADPa@greensroom.kotnet.org>
+References: <20050920122423.GA4228MdfPADPa@greensroom.kotnet.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, "H. Peter Anvin" <hpa@zytor.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 16:58:57 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Sep 20 16:59:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHjXh-0000eV-Ir
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 16:56:22 +0200
+	id 1EHjYM-0000rN-J9
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 16:57:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965024AbVITO4E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Sep 2005 10:56:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965026AbVITO4E
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 10:56:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:40148 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965024AbVITO4C (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 10:56:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8KEtkBo027213
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 20 Sep 2005 07:55:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8KEtfvf020455;
-	Tue, 20 Sep 2005 07:55:43 -0700
-To: Fredrik Kuivinen <freku045@student.liu.se>
-In-Reply-To: <20050920053024.GA12979@c165.ib.student.liu.se>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.117 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965026AbVITO5A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Sep 2005 10:57:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965027AbVITO5A
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 10:57:00 -0400
+Received: from smtp13.wxs.nl ([195.121.6.27]:52457 "EHLO smtp13.wxs.nl")
+	by vger.kernel.org with ESMTP id S965026AbVITO47 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 10:56:59 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp13.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0IN400I4HEUYW1@smtp13.wxs.nl> for git@vger.kernel.org; Tue,
+ 20 Sep 2005 16:56:58 +0200 (CEST)
+Received: (qmail 13309 invoked by uid 500); Tue, 20 Sep 2005 14:56:58 +0000
+In-reply-to: <20050920122423.GA4228MdfPADPa@greensroom.kotnet.org>
+To: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+Mail-followup-to: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8999>
 
-
-
-On Tue, 20 Sep 2005, Fredrik Kuivinen wrote:
-
-> On Mon, Sep 19, 2005 at 09:39:48PM -0700, Junio C Hamano wrote:
-> > Junio C Hamano <junkio@cox.net> writes:
-> > 
-> > >  - merge-recursive not requiring 2.4 but checking the result
-> > >    from 'import subprocess', and optionally install its own
-> > >    subprocess.py (I could do this myself but Fredrik could help
-> > >    me);
-> > 
-> > I'll be cutting 0.99.7a with this, to help RHEL instalation.
-> > Proofreading appreciated.
-> > 
+On Tue, Sep 20, 2005 at 02:24:23PM +0200, Sven Verdoolaege wrote:
+> Update will redraw the commits if any commits have been added to any
+> of the selected heads.  The new commits appear on the top.
 > 
-> The patch looks good. I am obviously too slow for this kind of thing :)
 
-Quick issue: the subprocess.py thing seems to be the old-style BSD license 
-with the anti-advertizing clause. It's not compatible with the GPL.
+It appears I sent this patch to soon.
+With the additional patch below, it seems to work,
+that is, it survives a rebase.
 
-Now, it's arguable that this is "mere aggregation" (git is bulding a 
-mini-distribution), but still..
+I can send a replacement patch combining the two patches if
+anyone is interested.
 
-		Linus
+skimo
+
+diff --git a/gitk b/gitk
+--- a/gitk
++++ b/gitk
+@@ -68,6 +68,7 @@ proc getcommitlines {commfd}  {
+     global oldcommits commits parents cdate children
+     global commitlisted phase commitinfo nextupdate
+     global stopped redisplaying leftover
++    global canv
+ 
+     set stuff [read $commfd]
+     if {$stuff == {}} {
+@@ -126,6 +127,7 @@ to allow selection of commits to be disp
+ 	set olds [lrange $ids 1 end]
+ 	set cmit [string range $cmit [expr {$j + 1}] end]
+ 	if {$phase == "updatecommits"} {
++	    $canv delete all
+ 	    set oldcommits $commits
+ 	    set commits {}
+ 	    set phase getcommits
+@@ -133,7 +135,7 @@ to allow selection of commits to be disp
+ 	lappend commits $id
+ 	set commitlisted($id) 1
+ 	parsecommit $id $cmit 1 [lrange $ids 1 end]
+-	drawcommit $id
++	drawcommit $id 1
+ 	if {[clock clicks -milliseconds] >= $nextupdate} {
+ 	    doupdate 1
+ 	}
+@@ -143,7 +145,7 @@ to allow selection of commits to be disp
+ 		set stopped 0
+ 		set phase "getcommits"
+ 		foreach id $commits {
+-		    drawcommit $id
++		    drawcommit $id 1
+ 		    if {$stopped} break
+ 		    if {[clock clicks -milliseconds] >= $nextupdate} {
+ 			doupdate 1
+@@ -1449,7 +1451,7 @@ proc decidenext {{noread 0}} {
+     return $level
+ }
+ 
+-proc drawcommit {id} {
++proc drawcommit {id reading} {
+     global phase todo nchildren datemode nextupdate
+     global numcommits ncmupdate displayorder todo onscreen
+ 
+@@ -1478,7 +1480,7 @@ proc drawcommit {id} {
+ 	    break
+ 	}
+     }
+-    drawmore 1
++    drawmore $reading
+ }
+ 
+ proc finishcommits {} {
+@@ -1487,7 +1489,7 @@ proc finishcommits {} {
+ 
+     if {$phase == "incrdraw"} {
+ 	foreach id $oldcommits {
+-	    drawcommit $id
++	    drawcommit $id 0
+ 	}
+ 	set oldcommits {}
+ 	drawrest
+@@ -3636,7 +3638,7 @@ proc rereadrefs {} {
+ }
+ 
+ proc updatecommits {rargs} {
+-    global phase
++    global commfd phase
+     global startmsecs nextupdate ncmupdate
+     global idtags idheads idotherrefs
+     global leftover
