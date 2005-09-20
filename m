@@ -1,53 +1,67 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: that was supposed to be a [PATCH:COGITO] ...
-Date: Tue, 20 Sep 2005 18:22:33 +0200
-Message-ID: <20050920162233.GB8251@pasky.or.cz>
-References: <112722842995-git-send-email-smurf@smurf.noris.de> <20050920160754.GL14206@kiste.smurf.noris.de>
+From: Pavel Roskin <proski@gnu.org>
+Subject: What's wrong with cogito repository today?
+Date: Tue, 20 Sep 2005 12:27:13 -0400
+Message-ID: <1127233633.8374.26.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 18:24:47 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Sep 20 18:29:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHktV-0001dR-8B
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 18:22:57 +0200
+	id 1EHkxs-0003DW-Ap
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 18:27:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965059AbVITQWg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Sep 2005 12:22:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965061AbVITQWg
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 12:22:36 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:23232 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S965059AbVITQWg (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 12:22:36 -0400
-Received: (qmail 19405 invoked by uid 2001); 20 Sep 2005 18:22:33 +0200
-To: Matthias Urlichs <smurf@smurf.noris.de>
-Content-Disposition: inline
-In-Reply-To: <20050920160754.GL14206@kiste.smurf.noris.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S964784AbVITQ1R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Sep 2005 12:27:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964782AbVITQ1R
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 12:27:17 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:15574 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S964784AbVITQ1Q
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2005 12:27:16 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EHkxe-0000gC-VM
+	for git@vger.kernel.org; Tue, 20 Sep 2005 12:27:15 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.52)
+	id 1EHkxd-0004UH-P0
+	for git@vger.kernel.org; Tue, 20 Sep 2005 12:27:13 -0400
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9005>
 
-Dear diary, on Tue, Sep 20, 2005 at 06:08:06PM CEST, I got a letter
-where Matthias Urlichs <smurf@smurf.noris.de> told me that...
-> Hi,
+Hello!
 
-Hi,
+cogito repository is broken today:
 
-> Matthias Urlichs:
-> > Cc: Subject:  [PATCH:  Matthias Urlichs <smurf@smurf.noris.de>
-> > Subject:
-> 
-> OK, that was the result of using this file:
+$ git-fetch
+Fetching refs/heads/master from http://www.kernel.org/pub/scm/cogito/cogito.git/ using http
+Getting pack list
+Getting alternates list
+error: Unable to find 69ba00668be16e44cae699098694286f703ec61d under http://www.kernel.org/pub/scm/cogito/cogito.git//
 
-I think the list didn't get it...? I didn't get any mails, at least.
-Also, it never hurts to Cc' me on Cogito patches. ;-)
+Cannot obtain needed object 69ba00668be16e44cae699098694286f703ec61d
+while processing commit 0000000000000000000000000000000000000000.
+
+[proski@dv cogito]$ curl http://www.kernel.org/pub/scm/cogito/cogito.git/refs/heads/master
+69ba00668be16e44cae699098694286f703ec61d
+
+[proski@dv cogito]$ wget http://www.kernel.org/pub/scm/cogito/cogito.git/objects/69/ba00668be16e44cae699098694286f703ec61d
+--12:19:49--  http://www.kernel.org/pub/scm/cogito/cogito.git/objects/69/ba00668be16e44cae699098694286f703ec61d
+           => `ba00668be16e44cae699098694286f703ec61d'
+Resolving www.kernel.org... 204.152.191.5
+Connecting to www.kernel.org[204.152.191.5]:80... connected.
+HTTP request sent, awaiting response... 404 Not Found
+12:19:49 ERROR 404: Not Found.
+
+
+I don't know how the commits are pushed to kernel.org, but maybe it's
+possible to prevent such breakage by ensuring that the head is only
+updated if the objects have been uploaded?
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Regards,
+Pavel Roskin
