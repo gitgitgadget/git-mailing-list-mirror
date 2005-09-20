@@ -1,85 +1,74 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Fix git-init-db creating crap directories (zeroth try)
-Date: Tue, 20 Sep 2005 02:19:50 +0200
-Message-ID: <20050920001949.GL18320@pasky.or.cz>
-References: <200509172141.31591.dtor_core@ameritech.net> <432F0D1B.60303@zytor.com> <20050919194445.GD18320@pasky.or.cz> <432F46BE.5000406@zytor.com> <20050919234030.GI18320@pasky.or.cz> <432F50BC.5000304@zytor.com> <20050920000731.GJ18320@pasky.or.cz> <432F5345.3020303@zytor.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: Joining cg-*-id
+Date: Mon, 19 Sep 2005 20:19:50 -0400
+Message-ID: <1127175590.31115.10.camel@dv>
+References: <1127166049.26772.26.camel@dv>
+	 <20050919215608.GA13845@pasky.or.cz> <1127169021.26772.58.camel@dv>
+	 <20050919225838.GH18320@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Dmitry Torokhov <dtor_core@ameritech.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 02:20:32 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 20 02:21:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHVra-0006q5-FJ
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 02:19:58 +0200
+	id 1EHVrb-0006q5-0M
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 02:19:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964794AbVITATy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 20:19:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932726AbVITATy
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 20:19:54 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:42120 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932724AbVITATx (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 20:19:53 -0400
-Received: (qmail 13432 invoked by uid 2001); 20 Sep 2005 02:19:51 +0200
-To: "H. Peter Anvin" <hpa@zytor.com>
-Content-Disposition: inline
-In-Reply-To: <432F5345.3020303@zytor.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S932724AbVITAT4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 20:19:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932726AbVITAT4
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 20:19:56 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:9894 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932724AbVITATz
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Sep 2005 20:19:55 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EHVrV-0004NN-Kz
+	for git@vger.kernel.org; Mon, 19 Sep 2005 20:19:53 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.52)
+	id 1EHVrT-00087C-2q; Mon, 19 Sep 2005 20:19:51 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050919225838.GH18320@pasky.or.cz>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8932>
 
-Dear diary, on Tue, Sep 20, 2005 at 02:09:41AM CEST, I got a letter
-where "H. Peter Anvin" <hpa@zytor.com> told me that...
-> Petr Baudis wrote:
-> >diff --git a/init-db.c b/init-db.c
-> >--- a/init-db.c
-> >+++ b/init-db.c
-> >@@ -153,7 +153,8 @@ static void copy_templates(const char *g
-> > 		return;
-> > 	}
-> > 
-> >-	memcpy(path, git_dir, len);
-> >+	memcpy(path, git_dir, len-1);
-> >+	path[len] = 0;
-> > 	copy_templates_1(path, len,
+On Tue, 2005-09-20 at 00:58 +0200, Petr Baudis wrote:
+> Dear diary, on Tue, Sep 20, 2005 at 12:30:21AM CEST, I got a letter
+> where Pavel Roskin <proski@gnu.org> told me that...
+> > The value is having one command, one manpage and one place to fix little
+> > bugs and add more functionality.  Potentially, cg-Xnormid could be
+> > incorporated into that script, so bash wouldn't have to open one more
+> > file.
 > 
-> Wrong!  You're not initializing path[len-1]!
+> Well, cg-Xnormid is basically pointless if it's not going to be a common
+> backend for multiple other commands. So I'd say either supersede it with
+> git-rev-parse or just merge it with cg-object-id.
 
-Oops, sorry. That's what you get when you want to make things marginally
-better. ;-) We indeed want to pass copy_templates_1() the trailing slash
-as well.
+Agreed.
 
-Let's just settle with the original patch then.
+> > Please don't apply my patch yet - I forgot to document the optional
+> > argument.  I'll try to make cg-object-id now.
+> 
+> Which patch?
 
---
+The one that adds USAGE.  Never mind - I see it's fixed already.
 
-The base target directory for the templates copying was initialized
-to git_dir, but git_dir[len] is not zero but / at the time we do the
-initialization. This is not what we want for our target directory string
-since we pass it to mkdir(), so make it zero-terminated manually.
+As for merging, I see that the existing *-id scripts are a mess.  For
+instance, cg-parent returns parents separated by spaces, but cg-diff
+used "head -1" on its output to get the first parent, i.e it assumes
+newline separated output.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
+Another thing that is broken is "cg-commit-id origin^" - apparently the
+"^" parsing is only designed for cg-parent-id.
 
----
-diff --git a/init-db.c b/init-db.c
---- a/init-db.c
-+++ b/init-db.c
-@@ -154,6 +154,7 @@ static void copy_templates(const char *g
- 	}
- 
- 	memcpy(path, git_dir, len);
-+	path[len] = 0;
- 	copy_templates_1(path, len,
- 			 template_path, template_len,
- 			 dir);
-
+I think I'll start a local branch for fixing this, and then I'll send
+separate patches.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Regards,
+Pavel Roskin
