@@ -1,72 +1,75 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: Joining cg-*-id
-Date: Tue, 20 Sep 2005 17:13:24 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.09.20.15.13.21.656923@smurf.noris.de>
-References: <1127166049.26772.26.camel@dv> <20050919215608.GA13845@pasky.or.cz> <Pine.LNX.4.58.0509191505470.2553@g5.osdl.org> <20050919225422.GG18320@pasky.or.cz> <Pine.LNX.4.58.0509191746130.2553@g5.osdl.org> <20050920135735.GC1884@pasky.or.cz> <Pine.LNX.4.58.0509200734440.2553@g5.osdl.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Don't create broken symlinks
+Date: Tue, 20 Sep 2005 11:59:55 -0400
+Message-ID: <1127231995.8374.6.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Tue Sep 20 17:23:31 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Sep 20 18:04:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHjtr-0007Hn-1L
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 17:19:15 +0200
+	id 1EHkXm-0003eR-5d
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 18:00:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965029AbVITPTM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Sep 2005 11:19:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965031AbVITPTM
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 11:19:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:11984 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965029AbVITPTL (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 11:19:11 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EHjoS-0005o6-Fy
-	for git@vger.kernel.org; Tue, 20 Sep 2005 17:13:40 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Sep 2005 17:13:40 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Sep 2005 17:13:40 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S965051AbVITQAP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Sep 2005 12:00:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965055AbVITQAP
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 12:00:15 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:62421 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S965051AbVITQAN
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2005 12:00:13 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EHkXG-0000NK-51
+	for git@vger.kernel.org; Tue, 20 Sep 2005 12:00:11 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.52)
+	id 1EHkXD-0004Ou-Us
+	for git@vger.kernel.org; Tue, 20 Sep 2005 11:59:55 -0400
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9002>
 
-Hi, Linus Torvalds wrote:
+cmd-rename.sh creates links for files that are not installed.
+git-send-email is not installed by default, so git-send-email-script is
+a broken link.
 
-> And if you select one of them at random (or by deciding which parent is
-> the "primary" one), then
-> 
-> 	git diff yesterday..
-> 
-> will show not the changes since yesterday, but _all_ the changes that came
-> in through the merge.
+cmd-rename.sh should only create a link if the link target exists.
+Also, the patchs add explicit exit codes for failures and ensures exit
+code 0 if the script is successful.
 
-IMHO the way out is to realize that you did the same thing yesterday,
-so presumably, if we teach git to remember what yesterday's head was,
-there's no problem.
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-So let's do a "git diff-since yesterday" which simply forks a
-"git diff since/yesterday..HEAD", and then copies .git/HEAD to
-.git/refs/since/yesterday.
+diff --git a/cmd-rename.sh b/cmd-rename.sh
+--- a/cmd-rename.sh
++++ b/cmd-rename.sh
+@@ -1,10 +1,12 @@
+ #!/bin/sh
+ d="$1"
+-test -d "$d" || exit
++test -d "$d" || exit 1
+ while read old new
+ do
+-	rm -f "$d/$old"
+-	ln -s "$new" "$d/$old"
++	rm -f "$d/$old" || exit 1
++	if [ -f "$new/$d" ]; then
++		ln -s "$new" "$d/$old"
++	fi
+ done <<\EOF
+ git-add-script	git-add
+ git-archimport-script	git-archimport
+@@ -53,3 +55,5 @@ EOF
+ # These two are a bit more than symlinks now.
+ # git-ssh-push	git-ssh-upload
+ # git-ssh-pull	git-ssh-fetch
++
++exit 0
 
-Just don't call it "yesterday" in the documentation ;-)  and print a nice
-error message instead of an ugly one if the user hasn't run the program
-before. (But still do the copy.)
 
 -- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-What if everything is an illusion and nothing exists?  In that case, I
-definitely overpaid for my carpet.
-		-- Woody Allen, "Without Feathers"
+Regards,
+Pavel Roskin
