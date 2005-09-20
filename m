@@ -1,48 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What shall we do with the GECOS field again?
-Date: Mon, 19 Sep 2005 18:53:55 -0700
-Message-ID: <7v8xxsfqrw.fsf@assigned-by-dhcp.cox.net>
-References: <20050919134838.GC2903@pasky.or.cz>
-	<20050919163219.GA8862@puritan.pnetwork>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [Terminology] Push vs. upload?
+Date: Mon, 19 Sep 2005 18:59:15 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509191858020.2553@g5.osdl.org>
+References: <20050920001136.GK18320@pasky.or.cz> <Pine.LNX.4.58.0509191753100.2553@g5.osdl.org>
+ <20050920014448.GA30912@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 03:54:41 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 20 04:00:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHXKi-0000Pc-BF
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 03:54:08 +0200
+	id 1EHXQ9-0002UR-OH
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 03:59:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964826AbVITByE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 21:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964831AbVITByE
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 21:54:04 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:56304 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S964826AbVITByD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2005 21:54:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050920015358.HRZB11028.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 19 Sep 2005 21:53:58 -0400
-To: Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964833AbVITB7d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 21:59:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964834AbVITB7d
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 21:59:33 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:60106 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964833AbVITB7c (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 21:59:32 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8K1xIBo025903
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 19 Sep 2005 18:59:19 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8K1xFLN029544;
+	Mon, 19 Sep 2005 18:59:16 -0700
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050920014448.GA30912@pasky.or.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.117 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8949>
 
-Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org> writes:
 
-> If we stop using GECOS, then can we please start using $EMAIL (or
-> perhaps use it regardless of whether we use GECOS or not)?  A lot of
-> applications seem to look for $EMAIL and I think that it's universal
-> enough for git to use it as well.  To me it seems that both
-> GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, GIT_COMMITTER_NAME, and
-> GIT_COMMITTER_EMAIL can use it,...
 
-I am not convinced $EMAIL is used as widely as you claim above
-(could you give a list of applications please?), but if it is
-that sounds like a sensible idea.
+On Tue, 20 Sep 2005, Petr Baudis wrote:
+> 
+> Yes, but I'm just arguing about the naming - if you just take the word
+> "pull", "push" is the obvious opposite to that and vice versa, so if we
+> are going to use words "pull" and "push" in the same context, this
+> relation should be preserved. So "push" really _should_ mean
+> 
+> 	ssh other-end 'git-pull'
+
+Well, I actually called it "send" as in "git-send-pack".
+
+But anybody who has ever used BK would still type "push", so I'd make that 
+an alias anyway.
+
+Not "upload". Upload is the reverse of "download", and we don't do that.
+
+		Linus
