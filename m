@@ -1,64 +1,60 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [Terminology] Push vs. upload?
-Date: Tue, 20 Sep 2005 03:44:48 +0200
-Message-ID: <20050920014448.GA30912@pasky.or.cz>
-References: <20050920001136.GK18320@pasky.or.cz> <Pine.LNX.4.58.0509191753100.2553@g5.osdl.org>
+Subject: Re: [PATCH] Fix git-init-db creating crap directories (zeroth try)
+Date: Tue, 20 Sep 2005 03:51:54 +0200
+Message-ID: <20050920015154.GA25115@pasky.or.cz>
+References: <200509172141.31591.dtor_core@ameritech.net> <432F0D1B.60303@zytor.com> <20050919194445.GD18320@pasky.or.cz> <432F46BE.5000406@zytor.com> <20050919234030.GI18320@pasky.or.cz> <432F50BC.5000304@zytor.com> <20050920000731.GJ18320@pasky.or.cz> <432F5345.3020303@zytor.com> <20050920001949.GL18320@pasky.or.cz> <432F5B07.2060803@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 03:46:28 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Dmitry Torokhov <dtor_core@ameritech.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 20 03:53:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHXBu-0007Zk-39
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 03:45:02 +0200
+	id 1EHXIp-00008Z-6q
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 03:52:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964816AbVITBov (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Sep 2005 21:44:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964825AbVITBov
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 21:44:51 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:20933 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964816AbVITBou (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 21:44:50 -0400
-Received: (qmail 3377 invoked by uid 2001); 20 Sep 2005 03:44:48 +0200
-To: Linus Torvalds <torvalds@osdl.org>
+	id S964818AbVITBv5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Sep 2005 21:51:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964825AbVITBv5
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Sep 2005 21:51:57 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:17116 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964818AbVITBv4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Sep 2005 21:51:56 -0400
+Received: (qmail 1837 invoked by uid 2001); 20 Sep 2005 03:51:54 +0200
+To: "H. Peter Anvin" <hpa@zytor.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0509191753100.2553@g5.osdl.org>
+In-Reply-To: <432F5B07.2060803@zytor.com>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8945>
 
-Dear diary, on Tue, Sep 20, 2005 at 02:55:08AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
+Dear diary, on Tue, Sep 20, 2005 at 02:42:47AM CEST, I got a letter
+where "H. Peter Anvin" <hpa@zytor.com> told me that...
+> Petr Baudis wrote:
+> >>>
+> >>>-	memcpy(path, git_dir, len);
+> >>>+	memcpy(path, git_dir, len-1);
+> >>>+	path[len] = 0;
+> >>>	copy_templates_1(path, len,
+> >>
+> >>Wrong!  You're not initializing path[len-1]!
+> >
+> >
+> >Oops, sorry. That's what you get when you want to make things marginally
+> >better. ;-) We indeed want to pass copy_templates_1() the trailing slash
+> >as well.
+> >
+> >Let's just settle with the original patch then.
+> >
 > 
-> 
-> On Tue, 20 Sep 2005, Petr Baudis wrote:
-> > 
-> >   I've realized today that I "forgot" to rename cg-push to cg-upload, so
-> > I impulsively did so right away, but now I'm seeing that the core git
-> > still has git-push and no git-upload. This is confusing and appears to
-> > be quite inconsistent - push should be the opposite of pull
-> 
-> No. There is no opposite of pull. You can't update the tree on the other 
-> end. It's fundamentally an unsafe operation - the other end is by 
-> definition not a private tree.
-> 
-> (Or, if you want to see it another way: "pull" is "pull"s own opposite:  
-> "ssh other-end + git pull from that end" ends up being what you mean.)
+> But if len is the index of the '/', then you're not.
 
-Yes, but I'm just arguing about the naming - if you just take the word
-"pull", "push" is the obvious opposite to that and vice versa, so if we
-are going to use words "pull" and "push" in the same context, this
-relation should be preserved. So "push" really _should_ mean
-
-	ssh other-end 'git-pull'
-
-whether it's a safe operation or not - if not, then GIT should have
-nothing called "push". But the current "push" is really an opposite of
-"fetch", so it should be called "upload", I believe.
+But fortunately len is not the index of the '/', len-1 is. len is the length
+of the leading path fragment including the trailing slash.
 
 -- 
 				Petr "Pasky" Baudis
