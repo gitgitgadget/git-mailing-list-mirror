@@ -1,95 +1,61 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: Yet another set of merge test cases from the kernel tree.
-Date: Tue, 20 Sep 2005 07:50:22 +0200
-Message-ID: <20050920055022.GB12979@c165.ib.student.liu.se>
-References: <20050907164734.GA20198@c165.ib.student.liu.se> <20050907165012.GA20392@c165.ib.student.liu.se> <7vzmqk2u1w.fsf_-_@assigned-by-dhcp.cox.net> <7vpsrcqjj6.fsf_-_@assigned-by-dhcp.cox.net> <7vvf13b1hi.fsf_-_@assigned-by-dhcp.cox.net> <20050919161312.GB1782@c165.ib.student.liu.se> <7vek7kfqs2.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Joining cg-*-id
+Date: Mon, 19 Sep 2005 22:52:27 -0700
+Message-ID: <7vy85s9tgk.fsf@assigned-by-dhcp.cox.net>
+References: <1127166049.26772.26.camel@dv>
+	<20050919215608.GA13845@pasky.or.cz>
+	<Pine.LNX.4.58.0509191505470.2553@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 20 07:50:42 2005
+Cc: Petr Baudis <pasky@suse.cz>, Pavel Roskin <proski@gnu.org>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 20 07:53:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHb1e-0007ej-4l
-	for gcvg-git@gmane.org; Tue, 20 Sep 2005 07:50:42 +0200
+	id 1EHb3U-00086W-3h
+	for gcvg-git@gmane.org; Tue, 20 Sep 2005 07:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932462AbVITFuY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Sep 2005 01:50:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932499AbVITFuY
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 01:50:24 -0400
-Received: from [85.8.31.11] ([85.8.31.11]:46496 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S932462AbVITFuX (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 01:50:23 -0400
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 8A07840FD; Tue, 20 Sep 2005 07:55:49 +0200 (CEST)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EHb1K-0003PI-00; Tue, 20 Sep 2005 07:50:22 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vek7kfqs2.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6+20040907i
+	id S932499AbVITFwc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Sep 2005 01:52:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932581AbVITFwc
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 01:52:32 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:35580 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932499AbVITFwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Sep 2005 01:52:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050920055229.EHLG3875.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 20 Sep 2005 01:52:29 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509191505470.2553@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 19 Sep 2005 15:16:03 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8978>
 
-On Mon, Sep 19, 2005 at 06:53:49PM -0700, Junio C Hamano wrote:
-> Fredrik Kuivinen <freku045@student.liu.se> writes:
-> 
-> > +def mergeFile(path, oSha, oMode, aSha, aMode, bSha, bMode,
-> > +              branch1Name, branch2Name):
-> >...
-> > +    if aMode == oMode:
-> > +        mode = bMode
-> > +    else:
-> > +        mode = aMode
-> 
-> Note: preferring "our" mode if there is a conflict instead of
-> barfing.  I do not know which is more useful in practice.
-> 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-I just realized that this piece of code is broken with respect to type
-changes. Trying to merge a symlink with a file should give us a
-conflict.
+> That lack of sha1 completion is a bug. 
+>
+> How does the date thing work? It sounds like something horribly ambiguous, 
+> but hey, maybe some useful semantics could be found.
 
-> > +
-> > +    return [sha, mode, clean, merge]
-> > +
-> > +def updateFile(clean, sha, mode, path, cleanCache, onlyWd=False):
-> > +    updateCache = not onlyWd and (cleanCache or (not cleanCache and clean))
-> > +    updateWd = onlyWd or (not cleanCache and clean)
-> > +
-> > +    if updateWd:
-> > +        prog = ['git-cat-file', 'blob', sha]
-> > +        if stat.S_ISREG(mode):
-> > +            try:
-> > +                os.unlink(path)
-> > +            except OSError:
-> > +                pass
-> > +            if mode & 0100:
-> > +                mode = 0777
-> > +            else:
-> > +                mode = 0666
-> > +            fd = os.open(path, os.O_WRONLY | os.O_TRUNC | os.O_CREAT, mode)
-> > +            proc = subprocess.Popen(prog, stdout=fd)
-> > +            proc.wait()
-> > +            os.close(fd)
-> > +        elif stat.S_ISLNK(mode):
-> > +            linkTarget = runProgram(prog)
-> > +            os.symlink(linkTarget, path)
-> > +        else:
-> > +            assert(False)
-> 
-> Could it happen trying to update a file 'foo' when the working
-> tree has 'foo/bar' file (i.e. D/F conflict)?
-> 
+I am not even sure what I would want to see, let alone what I
+could show, when I say "show logs of what happened last week",
+after I just pulled from a remote or two.
 
-We get a list of all files and directories in getFilesAndDirs. This
-list is then used in processEntry to check for d/f conflicts, so it
-shouldn't happen in that case.
+I would imagine a gitk graph with nodes colored red for commits
+with last week's timestamps, would be what I would want, but
+probably that is useful only because I can see in the same gitk
+window how those red nodes connect with each other and with
+commits outside the specified time window.  Without that context
+information I would probably be lost.
 
-The rename path do currently not check for d/f conflicts so it could
-probably happen there.
+> The short sha1 problem is fixed thus,
 
-- Fredrik
+Thanks.  Applied.
