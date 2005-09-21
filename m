@@ -1,105 +1,113 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [Core GIT] Long-term cherrypicking
-Date: Thu, 22 Sep 2005 00:19:31 +0200
-Message-ID: <20050921221931.GC10575@pasky.or.cz>
-References: <20050921164015.GC21971@pasky.or.cz> <7vzmq6p2an.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Fix strange timezone handling
+Date: Wed, 21 Sep 2005 15:50:28 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509211527500.2553@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 00:20:09 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Sep 22 00:51:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EICwI-0000oi-Nr
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 00:19:43 +0200
+	id 1EIDQF-0007u6-TE
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 00:50:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964912AbVIUWTi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Sep 2005 18:19:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965106AbVIUWTh
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 18:19:37 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:14226 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964912AbVIUWTh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 18:19:37 -0400
-Received: (qmail 581 invoked by uid 2001); 22 Sep 2005 00:19:33 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vzmq6p2an.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S965024AbVIUWug (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Sep 2005 18:50:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965067AbVIUWug
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 18:50:36 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:13289 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965024AbVIUWug (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 18:50:36 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8LMoUBo024402
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 21 Sep 2005 15:50:31 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8LMoShR002269;
+	Wed, 21 Sep 2005 15:50:29 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.117 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9084>
-
-Dear diary, on Wed, Sep 21, 2005 at 10:57:04PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> You solved this by 'git cherry' to go
-> beyond M, which is a valid workaround, but then the problem
-> becomes how to find where to stop.
-
-When forking your branch, record that in a tag. When running git-cherry
-with the tag as base, take the earliest cherrypick found and find the
-LCA of the two corresponding commits. Reset the tag to that.
-
-> I am assuming the reason this is a cherry-pick problem is
-> because S does not necessarily send everything out, and whenever
-> S does 'format-patch L' to generate a list of patches, only a
-> subset of them is actually sent out.  If that is the case, how
-> about maintaining another branch T on the S side, which is
-> private to S?
-
-That is not the case, this is a cherry-pick problem since L dropped some
-of the patches (if the git's definition of "cherry-pick problem" isn't
-something different to what I'd expect)...
-
-> T starts out as the same commit as the head of L.  Whenever S
-> has merge-worthy commits, run 'git-cherry-pick' to copy them
-> over to T, and 'format-patch L' is run in T, not in S, to
-> generate patches to be sent out.
-> 
-> T being a private tree allows you to rebase every once in a
-> while to L [*3*], so that already applied patches are dropped
-> from it.
-
-...nevertheless your solution still seems to apply and sounds good to
-me, thanks. I wonder why this didn't occur to me. :-) Perhaps it could
-be noted in the tutorial?
-
-The disadvantage is that this seems as a lot of work. You have to
-explicitly cherry-pick each commit, and the fact that you have a
-floating (continuously rebased) tree means that you can conveniently
-keep it only on just one machine. [*1*]
-
-The advantage is that it is easy to "forget" commits which were dropped
-altogether or applied modified. You could put together some filter and
-grep -v, but that's ugly and doesn't scale.
-
-Well, I guess that if you are going to do this all, it really gets
-visible that this rebasing stuff is really quite an ugly hack and that
-you are probably much better off with something like StGIT. ;-)
-
-> [Footnote]
-> 
-> *1* I am assuming that merge M would not be made any more
-> difficult by having A and A' on both sides.  Is it a problem in
-> practice?
-
-That's something Karsten Keil would be more qualified to reply to, but
-unfortunately you removed him from the Cc list. ;-)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9085>
 
 
-*1* I find the fast-forward restriction more and more annoying in this
-context, actually, and I'm seriously considering dropping it from Cogito
-altogether. GIT seems to care a lot about it, but Cogito doesn't so far,
-it would only have problems fast-forwarding your master to catch up with
-the branch you are merging, trying to do a tree merge instead. But
+We generate the ASCII representation of our internal date representation 
+("seconds since 1970, UTC + timezone information") in two different 
+places.
 
-	if old_ref == master then master = new_ref
+One of them uses the stupid and obvious way to make sure that it gets the
+sexagecimal representation right for negative timezones even if they might
+not be exact hours, and the other one depends on the modulus operator
+always matching the sign of argument.
 
-would solve that. Can it ever really hurt?
+Hey, the clever one works. And C90 even specifies that behaviour. But I
+had to think about it for a while when I was re-visiting this area, and
+even if I didn't have to, it's kind of strange to have two different ways
+to print out the same data format.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+So use a common helper for this. And select the stupid and straighforward
+way.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+
+Yeah. Maybe I should have picked the smart one-liner one. Somebody should
+double-check this and make an informed decision.
+
+diff --git a/date.c b/date.c
+--- a/date.c
++++ b/date.c
+@@ -386,12 +386,23 @@ static int match_tz(const char *date, in
+ 	return end - date;
+ }
+ 
++static int date_string(unsigned long date, int offset, char *buf, int len)
++{
++	int sign = '+';
++
++	if (offset < 0) {
++		offset = -offset;
++		sign = '-';
++	}
++	return snprintf(buf, len, "%lu %c%02d%02d", date, sign, offset / 60, offset % 60);
++}
++
+ /* Gr. strptime is crap for this; it doesn't have a way to require RFC2822
+    (i.e. English) day/month names, and it doesn't work correctly with %z. */
+ int parse_date(const char *date, char *result, int maxlen)
+ {
+ 	struct tm tm;
+-	int offset, sign, tm_gmt;
++	int offset, tm_gmt;
+ 	time_t then;
+ 
+ 	memset(&tm, 0, sizeof(tm));
+@@ -435,14 +446,7 @@ int parse_date(const char *date, char *r
+ 
+ 	if (!tm_gmt)
+ 		then -= offset * 60;
+-
+-	sign = '+';
+-	if (offset < 0) {
+-		offset = -offset;
+-		sign = '-';
+-	}
+-
+-	return snprintf(result, maxlen, "%lu %c%02d%02d", then, sign, offset/60, offset % 60);
++	return date_string(then, offset, result, maxlen);
+ }
+ 
+ void datestamp(char *buf, int bufsize)
+@@ -455,5 +459,5 @@ void datestamp(char *buf, int bufsize)
+ 	offset = my_mktime(localtime(&now)) - now;
+ 	offset /= 60;
+ 
+-	snprintf(buf, bufsize, "%lu %+05d", now, offset/60*100 + offset%60);
++	date_string(now, offset, buf, bufsize);
+ }
