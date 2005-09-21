@@ -1,75 +1,63 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Another gitweb wishlist
-Date: Wed, 21 Sep 2005 22:16:56 +0200
-Message-ID: <20050921201656.GA10575@pasky.or.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Please undo "Use git-merge instead of git-resolve in git-pull"
+Date: Wed, 21 Sep 2005 13:20:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509211318550.2553@g5.osdl.org>
+References: <Pine.LNX.4.58.0509211310150.2553@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 21 22:19:39 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Fredrik Kuivinen <freku045@student.liu.se>
+X-From: git-owner@vger.kernel.org Wed Sep 21 22:22:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIB1a-0004co-FR
-	for gcvg-git@gmane.org; Wed, 21 Sep 2005 22:17:04 +0200
+	id 1EIB5L-00066S-6A
+	for gcvg-git@gmane.org; Wed, 21 Sep 2005 22:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964808AbVIUUQ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Sep 2005 16:16:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964809AbVIUUQ7
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 16:16:59 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:43161 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964808AbVIUUQ6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 16:16:58 -0400
-Received: (qmail 21061 invoked by uid 2001); 21 Sep 2005 22:16:56 +0200
-To: kay.sievers@vrfy.org, ch@gierke.de
-Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S1750786AbVIUUUw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Sep 2005 16:20:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbVIUUUw
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 16:20:52 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:62404 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750786AbVIUUUw (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 16:20:52 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8LKKaBo015919
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 21 Sep 2005 13:20:37 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8LKKY7f026876;
+	Wed, 21 Sep 2005 13:20:36 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.58.0509211310150.2553@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.117 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9075>
 
-  Hello,
 
-  I have accumulated some more stuff I'm missing in gitweb, so I'm
-dumping it on you now. ;-)
 
-  (i) Speed - the http://kernel.org/git/ document takes anytime between
-roughly 30 seconds to one minute to load. What's taking so long?
+On Wed, 21 Sep 2005, Linus Torvalds wrote:
+> 
+> If the new merge policies do not allow that, then the new merge policies 
+> are incredibly broken.
 
-  (ii) I need persistent links to the latest version of <file>. Obvious
+I just checked.
 
-	http://kernel.org/git/?p=cogito/cogito.git;a=blob;f=contrib/ciabot.pl
+It _is_ incredibly broken. 
 
-does not quite work right, since there are no links to (most
-importantly) the plain view (and blob_plain link doesn't work), tree
-view and such.
+It will do 
 
-  (iii) Too hard to follow history of renamed files. Let's take
-git-log.sh.  I'll immediately stop at the big rename commit:
+	echo "Rewinding the tree to pristine..."
+	git reset --hard $head
 
-	http://kernel.org/git/?p=git/git.git;a=commit;h=215a7ad1ef790467a4cd3f0dcffbd6e5f04c38f7
+if any merge strategy every fails, so that check is needed for the new 
+merger.
 
-If I want to continue following its history before the rename, I have to
-manually go to the tree of the parent commit and get the history of the
-original file there. This is quite annoying and significantly reduces
-practicality of the feature on the GIT repository precisely because of
-the big rename.
+This makes merges totally unusable. It feels like the dark ages.
 
-  (iv) Related to (iii), if you get the hb  parameter to the blob view,
-you should offer the 'diff' and 'history' links in the blob view. Also
-the 'log' and 'shortlog' links should point to more sensible locations,
-either the same as in the relevant commit's view, or see (v).
-
-  (v) Only shortlog is available for per-file history. Perhaps it would
-be nicer to make 'log' and 'shortlog' links in blob context go to the
-file's history, and in file history switch between shortlog/log display
-mode.
-
-  Thanks,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+		Linus
