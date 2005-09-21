@@ -1,52 +1,53 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: SVN interpreter (Re: [PATCH] cg-diff fixed to work with BSD xargs)
-Date: Thu, 22 Sep 2005 07:32:31 +1200
-Message-ID: <46a038f905092112326485c50b@mail.gmail.com>
-Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/8] fetch.c: Remove useless lookup_object_type() call in process()
+Date: Wed, 21 Sep 2005 12:45:13 -0700
+Message-ID: <7v3bnyurw6.fsf@assigned-by-dhcp.cox.net>
+References: <20050921161829.GA20944@master.mivlgu.local>
+	<20050921161855.896F1E010FC@center4.mivlgu.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 21 21:35:21 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 21 21:47:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIAKZ-0005Su-Gr
-	for gcvg-git@gmane.org; Wed, 21 Sep 2005 21:32:36 +0200
+	id 1EIAWu-0001Od-6X
+	for gcvg-git@gmane.org; Wed, 21 Sep 2005 21:45:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751396AbVIUTcd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Sep 2005 15:32:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751399AbVIUTcd
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 15:32:33 -0400
-Received: from qproxy.gmail.com ([72.14.204.206]:20781 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751396AbVIUTcc convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Sep 2005 15:32:32 -0400
-Received: by qproxy.gmail.com with SMTP id v40so367027qbe
-        for <git@vger.kernel.org>; Wed, 21 Sep 2005 12:32:31 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=KziD2Oa27eyyhoLD3B8V6bzxXR+O2a9R+idOOHjf3xx5LIn9gJsLDn6VX0Fr/oYzxRNa9eIxsnVOFmZvj8xDkqWUDGlJ5a2ieFQVDbXA6MYCnWW1uzu4sbPtGOl8qrke+bRBVAtsoKqgB3so2TZ71jLI8SpLC4F1H/P5HqU1wdo=
-Received: by 10.65.38.2 with SMTP id q2mr134434qbj;
-        Wed, 21 Sep 2005 12:32:31 -0700 (PDT)
-Received: by 10.64.232.18 with HTTP; Wed, 21 Sep 2005 12:32:31 -0700 (PDT)
-To: Matthias Urlichs <smurf@smurf.noris.de>
-Content-Disposition: inline
+	id S1751407AbVIUTpQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Sep 2005 15:45:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751406AbVIUTpQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 15:45:16 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:2775 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751407AbVIUTpP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2005 15:45:15 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050921194515.JMMU28168.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 21 Sep 2005 15:45:15 -0400
+To: Sergey Vlasov <vsu@altlinux.ru>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9071>
 
-On 9/21/05, Matthias Urlichs <smurf@smurf.noris.de> wrote:
-> Of course, I also need a few hours to complete the SVN interpreter, and
+Sergey Vlasov <vsu@altlinux.ru> writes:
 
-Have you had a look at Tailor.py? I think it'll do SVN to GIT... it
-definitely does Arch to GIT. Its main limitation is that it doesn't
-know a thing about branches or merges. But it'll import a linear
-history reasonably well, I hear.
+> In all places where process() is called except the one in pull() (which
+> is executed only once) the pointer to the object is already available,
+> so pass it as the argument to process() instead of sha1 and avoid an
+> unneeded call to lookup_object_type().
 
-cheers,
+Agreed, except we probably would want to pass the expected type
+to process() so that we can make sure the object is of that type,
+perhaps?
 
+Having said that, I am really happy that you seem to have fixed
+it a lot better than my previous attempt, after which I was
+really dissapointed that 'git clone' was still unusablly slow,
+just walking commits in huge packs.
 
-martin
+Thanks.
