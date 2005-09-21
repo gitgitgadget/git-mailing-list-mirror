@@ -1,60 +1,68 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: StGIT cannot import properly from stdin
-Date: Wed, 21 Sep 2005 09:03:34 +0100
-Message-ID: <b0943d9e05092101033dd5d366@mail.gmail.com>
-References: <433107C7.60901@drzeus.cx>
-Reply-To: catalin.marinas@gmail.com
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] cg-diff fixed to work with BSD xargs
+Date: Wed, 21 Sep 2005 10:15:47 +0200
+Message-ID: <20050921081547.GA24902@pasky.or.cz>
+References: <11253960093915-git-send-email-martin@catalyst.net.nz> <pan.2005.09.21.07.33.14.533314@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 21 10:05:39 2005
+X-From: git-owner@vger.kernel.org Wed Sep 21 10:18:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHzZq-0007Gv-Mz
-	for gcvg-git@gmane.org; Wed, 21 Sep 2005 10:03:39 +0200
+	id 1EHzm6-0003pv-8C
+	for gcvg-git@gmane.org; Wed, 21 Sep 2005 10:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750749AbVIUIDf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Sep 2005 04:03:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750750AbVIUIDf
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 04:03:35 -0400
-Received: from xproxy.gmail.com ([66.249.82.207]:63911 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750749AbVIUIDe convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Sep 2005 04:03:34 -0400
-Received: by xproxy.gmail.com with SMTP id t15so88836wxc
-        for <git@vger.kernel.org>; Wed, 21 Sep 2005 01:03:34 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=l/63czD2xvblL6FvOWM45I71xKo05RIJLk3Xc/mACyjspPYeRycAR++vIp4EK/v2fg+p+pHjsScT1+uGev20mkXcQyvrbm/85ArOwmLjwXjGeRYfH0YNvVmtszoJmqlqUfiDAW1N66MpFTmhq2KUjXIAesmCZKveg0gY6aSPIzo=
-Received: by 10.70.31.17 with SMTP id e17mr2385590wxe;
-        Wed, 21 Sep 2005 01:03:34 -0700 (PDT)
-Received: by 10.70.27.20 with HTTP; Wed, 21 Sep 2005 01:03:34 -0700 (PDT)
-To: Pierre Ossman <drzeus-list@drzeus.cx>
-In-Reply-To: <433107C7.60901@drzeus.cx>
+	id S1750758AbVIUIPw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Sep 2005 04:15:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750760AbVIUIPw
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 04:15:52 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:27596 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750758AbVIUIPv (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 04:15:51 -0400
+Received: (qmail 25077 invoked by uid 2001); 21 Sep 2005 10:15:47 +0200
+To: Matthias Urlichs <smurf@smurf.noris.de>
 Content-Disposition: inline
+In-Reply-To: <pan.2005.09.21.07.33.14.533314@smurf.noris.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9030>
 
-On 21/09/05, Pierre Ossman <drzeus-list@drzeus.cx> wrote:
-> The import command of stgit does not handle stdin in a very sane way.
-> The logic expects to be able to read the patch several times which isn't
-> possible with stdin. So for it to work you have to give it the patch twice.
+Dear diary, on Wed, Sep 21, 2005 at 09:33:15AM CEST, I got a letter
+where Matthias Urlichs <smurf@smurf.noris.de> told me that...
+> Hi, Martin Langhoff wrote:
+> 
+> > Calls to cg-diff without filename parameters were dependent on GNU xargs
+> > traits. 
+> 
+> I don't know what drugs your shell was on when you tested this (assuming
+> that you did ;-)  but this patch is wrong -- your test always succeeds,
+> due to the vagaries of test / [ ] semantics.
+> 
+> > -	cat $filter | xargs git-diff-cache -r -p $tree | colorize | pager
+> > +	if [ -s $filter ]; then
+> > +		cat $filter | xargs git-diff-cache -r -p $tree | colorize | pager  
+> > +	else
+> > +		git-diff-cache -r -p $tree | colorize | pager
+> > +	fi
+> >  
+>  $ foo=""
+>  $ [ -s $foo ]
+>  $ echo $?
+> 0
+>  $ [ -s "$foo" ]
+>  $ echo $?
+> 1
+>  $
 
-It works for me with the latest snapshot. What might happen in your
-case is a missing "---" line after the patch description. The import
-command reads the sys.stdin file descriptor until the first "---"
-line. After that, the git.apply() function will read the rest of the
-lines and pass them to git-apply. You can put some prints in the
-git.apply() function to check where it starts reading from.
-
-Patches without description cannot be read from stdin at the moment.
-Maybe I could add another option to prevent it from reading the
-description.
+$filter is a file name. -s tests whether the file of that name exists
+and is non-empty.
 
 -- 
-Catalin
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
