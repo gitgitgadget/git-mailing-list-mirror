@@ -1,49 +1,65 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 0/8] fetch.c optimizations
-Date: Wed, 21 Sep 2005 17:03:31 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509211700161.23242@iabervon.org>
-References: <20050921161829.GA20944@master.mivlgu.local>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Joining cg-*-id
+Date: Thu, 22 Sep 2005 07:19:42 +1000
+Message-ID: <17201.52846.627734.327798@cargo.ozlabs.ibm.com>
+References: <1127166049.26772.26.camel@dv>
+	<20050919215608.GA13845@pasky.or.cz>
+	<Pine.LNX.4.58.0509191505470.2553@g5.osdl.org>
+	<20050919225422.GG18320@pasky.or.cz>
+	<Pine.LNX.4.58.0509191746130.2553@g5.osdl.org>
+	<20050920135735.GC1884@pasky.or.cz>
+	<Pine.LNX.4.58.0509200734440.2553@g5.osdl.org>
+	<20050920150719.GB1836@pasky.or.cz>
+	<Pine.LNX.4.58.0509200906120.2553@g5.osdl.org>
+	<Pine.LNX.4.58.0509201224360.2553@g5.osdl.org>
+	<17201.14169.150101.991868@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.58.0509210750060.2553@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 21 23:01:11 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	Pavel Roskin <proski@gnu.org>, fonseca@diku.dk,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 21 23:21:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIBgT-00039J-RP
-	for gcvg-git@gmane.org; Wed, 21 Sep 2005 22:59:18 +0200
+	id 1EIC0N-00022Q-J4
+	for gcvg-git@gmane.org; Wed, 21 Sep 2005 23:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964838AbVIUU7M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Sep 2005 16:59:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964835AbVIUU7M
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 16:59:12 -0400
-Received: from iabervon.org ([66.92.72.58]:63494 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S964833AbVIUU7K (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 16:59:10 -0400
-Received: (qmail 10498 invoked by uid 1000); 21 Sep 2005 17:03:31 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 21 Sep 2005 17:03:31 -0400
-To: Sergey Vlasov <vsu@altlinux.ru>
-In-Reply-To: <20050921161829.GA20944@master.mivlgu.local>
+	id S964912AbVIUVTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Sep 2005 17:19:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964897AbVIUVTs
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 17:19:48 -0400
+Received: from ozlabs.org ([203.10.76.45]:27091 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S964912AbVIUVTr (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 17:19:47 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id B02EC682FA; Thu, 22 Sep 2005 07:19:46 +1000 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509210750060.2553@g5.osdl.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9079>
 
-On Wed, 21 Sep 2005, Sergey Vlasov wrote:
+Linus Torvalds writes:
 
-> Hello!
-> 
-> I have noticed that git-*-fetch now uses much more CPU than it was
-> before the modifications to fix recovery after interrupted fetch.
-> Here is a series of small patches which fix the problems which I have
-> found (some of the fixes give pretty impressive results, like a 14x
-> decrease of CPU time); as a positive side effect, fetch.c becomes
-> slightly smaller and hopefully simpler than before.
+> Oooh. I can't. Very strange. I definitely could yesterday:  
+> "--since=yesterday" worked, but "--since='1 week ago'" didn't.
 
-These all look like good changes. It would also be worth doing some 
-optimization in the library, like making parse_object just return the 
-object if we already have it.
+Ahhh... "--since='1 week ago'" doesn't work because of the extra set
+of single quotes: we end up doing:
 
-	-Daniel
-*This .sig left intentionally blank*
+	git-rev-parse --default HEAD "--since='1 week ago'"
+
+which gives this error:
+
+	date: invalid date `'1 week ago''
+	fatal: git-rev-list: bad date string
+
+Gitk's error message is admittedly less than informative, but that's
+the worst it's guilty of (this time :).
+
+Paul.
