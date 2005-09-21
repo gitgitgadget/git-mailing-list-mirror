@@ -1,41 +1,34 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Joining cg-*-id
-Date: Wed, 21 Sep 2005 07:51:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509210750060.2553@g5.osdl.org>
-References: <1127166049.26772.26.camel@dv> <20050919215608.GA13845@pasky.or.cz>
- <Pine.LNX.4.58.0509191505470.2553@g5.osdl.org> <20050919225422.GG18320@pasky.or.cz>
- <Pine.LNX.4.58.0509191746130.2553@g5.osdl.org> <20050920135735.GC1884@pasky.or.cz>
- <Pine.LNX.4.58.0509200734440.2553@g5.osdl.org> <20050920150719.GB1836@pasky.or.cz>
- <Pine.LNX.4.58.0509200906120.2553@g5.osdl.org> <Pine.LNX.4.58.0509201224360.2553@g5.osdl.org>
- <17201.14169.150101.991868@cargo.ozlabs.ibm.com>
+Subject: Re: kernel.org rsync processes
+Date: Wed, 21 Sep 2005 08:12:05 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509210808080.2553@g5.osdl.org>
+References: <4331537F.8060402@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
-	Pavel Roskin <proski@gnu.org>, fonseca@diku.dk,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 21 16:57:46 2005
+Cc: webmaster@kernel.org, git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 21 17:14:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EI5xA-00035v-Of
-	for gcvg-git@gmane.org; Wed, 21 Sep 2005 16:52:09 +0200
+	id 1EI6Gm-00022a-GW
+	for gcvg-git@gmane.org; Wed, 21 Sep 2005 17:12:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751036AbVIUOwF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Sep 2005 10:52:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042AbVIUOwF
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 10:52:05 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60607 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751036AbVIUOwD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 10:52:03 -0400
+	id S1751073AbVIUPMO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Sep 2005 11:12:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751088AbVIUPMO
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 11:12:14 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:45767 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751073AbVIUPMN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 11:12:13 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8LEpbBo027327
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8LFC7Bo028795
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 21 Sep 2005 07:51:37 -0700
+	Wed, 21 Sep 2005 08:12:08 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8LEpXxW009628;
-	Wed, 21 Sep 2005 07:51:35 -0700
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17201.14169.150101.991868@cargo.ozlabs.ibm.com>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8LFC5Df010466;
+	Wed, 21 Sep 2005 08:12:06 -0700
+To: A Large Angry SCM <gitzilla@gmail.com>
+In-Reply-To: <4331537F.8060402@gmail.com>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
 X-MIMEDefang-Filter: osdl$Revision: 1.117 $
@@ -43,17 +36,22 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9049>
 
 
 
-On Wed, 21 Sep 2005, Paul Mackerras wrote:
-> 
-> Can you still replicate the problem with an unmodified gitk?
+On Wed, 21 Sep 2005, A Large Angry SCM wrote:
+>
+> Did the kernel.org rsync processes get stuck again?
 
-Oooh. I can't. Very strange. I definitely could yesterday:  
-"--since=yesterday" worked, but "--since='1 week ago'" didn't.
+It may still see the effect of a disk failure.. According to hpa as of 
+Monday evening:
 
-Magic. Maybe I mistyped something.
+> zeus2.kernel.org is coming back online after a severe disk failure.
+> It's pretty out of date (in particular, it's missed the daily --checksum
+> syncs), and I think it's still rebuilding its RAID, so it's running slow.
+
+So it looks like kernel.org just had a few difficult days (fist the move
+of master, then some problems at the outer fringes).
 
 		Linus
