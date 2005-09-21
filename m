@@ -1,63 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Please undo "Use git-merge instead of git-resolve in git-pull"
-Date: Wed, 21 Sep 2005 13:20:34 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509211318550.2553@g5.osdl.org>
-References: <Pine.LNX.4.58.0509211310150.2553@g5.osdl.org>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: Another gitweb wishlist
+Date: Wed, 21 Sep 2005 22:54:16 +0200
+Message-ID: <20050921205416.GU15165MdfPADPa@greensroom.kotnet.org>
+References: <20050921201656.GA10575@pasky.or.cz>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Fredrik Kuivinen <freku045@student.liu.se>
-X-From: git-owner@vger.kernel.org Wed Sep 21 22:22:26 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: kay.sievers@vrfy.org, ch@gierke.de, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 21 22:56:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIB5L-00066S-6A
-	for gcvg-git@gmane.org; Wed, 21 Sep 2005 22:20:55 +0200
+	id 1EIBbj-0001Ip-DV
+	for gcvg-git@gmane.org; Wed, 21 Sep 2005 22:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750786AbVIUUUw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Sep 2005 16:20:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbVIUUUw
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 16:20:52 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:62404 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750786AbVIUUUw (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 16:20:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8LKKaBo015919
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 21 Sep 2005 13:20:37 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8LKKY7f026876;
-	Wed, 21 Sep 2005 13:20:36 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.58.0509211310150.2553@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.117 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964826AbVIUUyV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Sep 2005 16:54:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964829AbVIUUyV
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 16:54:21 -0400
+Received: from smtp13.wxs.nl ([195.121.6.27]:40618 "EHLO smtp13.wxs.nl")
+	by vger.kernel.org with ESMTP id S964826AbVIUUyU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 16:54:20 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp13.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0IN600L85Q2GR1@smtp13.wxs.nl> for git@vger.kernel.org; Wed,
+ 21 Sep 2005 22:54:17 +0200 (CEST)
+Received: (qmail 28808 invoked by uid 500); Wed, 21 Sep 2005 20:54:16 +0000
+In-reply-to: <20050921201656.GA10575@pasky.or.cz>
+To: Petr Baudis <pasky@suse.cz>
+Mail-followup-to: Petr Baudis <pasky@suse.cz>, kay.sievers@vrfy.org,
+ ch@gierke.de, git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9076>
 
-
-
-On Wed, 21 Sep 2005, Linus Torvalds wrote:
+On Wed, Sep 21, 2005 at 10:16:56PM +0200, Petr Baudis wrote:
+>   (ii) I need persistent links to the latest version of <file>. Obvious
 > 
-> If the new merge policies do not allow that, then the new merge policies 
-> are incredibly broken.
+> 	http://kernel.org/git/?p=cogito/cogito.git;a=blob;f=contrib/ciabot.pl
+> 
 
-I just checked.
+Works for me:
+http://www.liacs.nl/~sverdool/gitweb.cgi?p=barvinok.git;a=blob;f=README
 
-It _is_ incredibly broken. 
+It's probably this one:
 
-It will do 
+diff --git a/gitweb.cgi b/gitweb.cgi
+--- a/gitweb.cgi
++++ b/gitweb.cgi
+@@ -1269,9 +1269,9 @@ sub git_get_hash_by_path {
+ }
+ 
+ sub git_blob {
++	$hash_base ||= git_read_hash("$project/HEAD");
+ 	if (!defined $hash && defined $file_name) {
+-		my $base = $hash_base || git_read_hash("$project/HEAD");
+-		$hash = git_get_hash_by_path($base, $file_name, "blob");
++		$hash = git_get_hash_by_path($hash_base, $file_name, "blob");
+ 	}
+ 	open my $fd, "-|", "$gitbin/git-cat-file blob $hash" or die_error(undef, "Open failed.");
+ 	my $base = $file_name || "";
 
-	echo "Rewinding the tree to pristine..."
-	git reset --hard $head
-
-if any merge strategy every fails, so that check is needed for the new 
-merger.
-
-This makes merges totally unusable. It feels like the dark ages.
-
-		Linus
+skimo
