@@ -1,65 +1,78 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] cg-diff fixed to work with BSD xargs
-Date: Wed, 21 Sep 2005 10:15:47 +0200
-Message-ID: <20050921081547.GA24902@pasky.or.cz>
-References: <11253960093915-git-send-email-martin@catalyst.net.nz> <pan.2005.09.21.07.33.14.533314@smurf.noris.de>
+Subject: Re: [PATCH] Make the git-fsck-objects diagnostics more useful
+Date: Wed, 21 Sep 2005 10:19:54 +0200
+Message-ID: <20050921081954.GB24902@pasky.or.cz>
+References: <20050920185605.GA28621@pasky.or.cz> <200509201955.j8KJtWAr003157@laptop11.inf.utfsm.cl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 21 10:18:27 2005
+X-From: git-owner@vger.kernel.org Wed Sep 21 10:22:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EHzm6-0003pv-8C
-	for gcvg-git@gmane.org; Wed, 21 Sep 2005 10:16:18 +0200
+	id 1EHzpg-000590-31
+	for gcvg-git@gmane.org; Wed, 21 Sep 2005 10:20:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750758AbVIUIPw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Sep 2005 04:15:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750760AbVIUIPw
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 04:15:52 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:27596 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750758AbVIUIPv (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 04:15:51 -0400
-Received: (qmail 25077 invoked by uid 2001); 21 Sep 2005 10:15:47 +0200
-To: Matthias Urlichs <smurf@smurf.noris.de>
+	id S1750760AbVIUIT5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Sep 2005 04:19:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750764AbVIUIT5
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 04:19:57 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:29580 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750760AbVIUIT5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 04:19:57 -0400
+Received: (qmail 25690 invoked by uid 2001); 21 Sep 2005 10:19:55 +0200
+To: Horst von Brand <vonbrand@inf.utfsm.cl>
 Content-Disposition: inline
-In-Reply-To: <pan.2005.09.21.07.33.14.533314@smurf.noris.de>
+In-Reply-To: <200509201955.j8KJtWAr003157@laptop11.inf.utfsm.cl>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9031>
 
-Dear diary, on Wed, Sep 21, 2005 at 09:33:15AM CEST, I got a letter
-where Matthias Urlichs <smurf@smurf.noris.de> told me that...
-> Hi, Martin Langhoff wrote:
+Dear diary, on Tue, Sep 20, 2005 at 09:55:32PM CEST, I got a letter
+where Horst von Brand <vonbrand@inf.utfsm.cl> told me that...
+> > +static void objreport(struct object *obj, const char *severity,
+> > +                      const char *err, va_list params)
+> > +{
+> > +	fprintf(stderr, "%s in %s %s: ",
+> > +	        severity, obj->type, sha1_to_hex(obj->sha1));
+> > +	vfprintf(stderr, err, params);
+> > +	fputs("\n", stderr);
+> > +}
 > 
-> > Calls to cg-diff without filename parameters were dependent on GNU xargs
-> > traits. 
-> 
-> I don't know what drugs your shell was on when you tested this (assuming
-> that you did ;-)  but this patch is wrong -- your test always succeeds,
-> due to the vagaries of test / [ ] semantics.
-> 
-> > -	cat $filter | xargs git-diff-cache -r -p $tree | colorize | pager
-> > +	if [ -s $filter ]; then
-> > +		cat $filter | xargs git-diff-cache -r -p $tree | colorize | pager  
-> > +	else
-> > +		git-diff-cache -r -p $tree | colorize | pager
-> > +	fi
-> >  
->  $ foo=""
->  $ [ -s $foo ]
->  $ echo $?
-> 0
->  $ [ -s "$foo" ]
->  $ echo $?
-> 1
->  $
+> Is this legal? I am under the impression you have to call
+> va_start()/va_end() always, even if you just pass the va_list down.
 
-$filter is a file name. -s tests whether the file of that name exists
-and is non-empty.
+va_list will probably be/contain some pointer, and with va_start() you
+"seed" it to point at the stack after the given parameter and slurp the
+additional function parameters from there. If you already have it
+initialized, va_start() makes no sense.
+
+> The comp.lang.c FAQ <http://www.eskimo.com/~scs/C-faq/q15.5.html> agrees
+> with me here... it should be:
+
+That says nothing about passing va_list down.
+
+> static void objreport(struct object *obj, const char *severity,
+>                       const char *err, ...)
+> {
+> 	va_list params;
+> 	
+> 	fprintf(stderr, "%s in %s %s: ",
+> 	        severity, obj->type, sha1_to_hex(obj->sha1));
+> 	va_start(params, err);
+>         vfprintf(stderr, err, params);	
+> 	va_end(params);
+> 	fputs("\n", stderr);
+> }
+
+How do you then call objreport() ? params would contain another va_list
+if you called it the same as before, which would probably surprise
+vfprintf() a bit.
+
+BTW, we do the same in usage.c.
 
 -- 
 				Petr "Pasky" Baudis
