@@ -1,74 +1,64 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] gitk: add Update menu item.
-Date: Thu, 22 Sep 2005 09:46:43 +1000
-Message-ID: <17201.61667.465005.53654@cargo.ozlabs.ibm.com>
-References: <20050920122423.GA4228MdfPADPa@greensroom.kotnet.org>
+From: "David S. Miller" <davem@davemloft.net>
+Subject: Re: Please undo "Use git-merge instead of git-resolve in git-pull"
+Date: Wed, 21 Sep 2005 17:28:49 -0700 (PDT)
+Message-ID: <20050921.172849.103555057.davem@davemloft.net>
+References: <Pine.LNX.4.58.0509211310150.2553@g5.osdl.org>
+	<7vu0genlc1.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509211501130.2553@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: Text/Plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 02:11:37 2005
+Cc: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 22 02:29:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIEec-0008OW-Qk
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 02:09:35 +0200
+	id 1EIExS-0004a4-RA
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 02:29:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965186AbVIVAJc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Sep 2005 20:09:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965188AbVIVAJc
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 20:09:32 -0400
-Received: from ozlabs.org ([203.10.76.45]:12505 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S965186AbVIVAJb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 20:09:31 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 98311682FA; Thu, 22 Sep 2005 10:09:30 +1000 (EST)
-To: Sven Verdoolaege <skimo@kotnet.org>
-In-Reply-To: <20050920122423.GA4228MdfPADPa@greensroom.kotnet.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S965193AbVIVA2z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Sep 2005 20:28:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965194AbVIVA2z
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 20:28:55 -0400
+Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:30185
+	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
+	id S965193AbVIVA2x (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2005 20:28:53 -0400
+Received: from localhost ([127.0.0.1] ident=davem)
+	by sunset.davemloft.net with esmtp (Exim 4.52)
+	id 1EIExG-00011q-3t; Wed, 21 Sep 2005 17:28:50 -0700
+To: torvalds@osdl.org
+In-Reply-To: <Pine.LNX.4.58.0509211501130.2553@g5.osdl.org>
+X-Mailer: Mew version 4.2.53 on Emacs 21.4 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9088>
 
-Sven Verdoolaege writes:
+From: Linus Torvalds <torvalds@osdl.org>
+Date: Wed, 21 Sep 2005 15:03:39 -0700 (PDT)
 
-> Update will redraw the commits if any commits have been added to any
-> of the selected heads.  The new commits appear on the top.
+> I've always multi-tasked, but when I started git I was ready to drop it. 
+> Then I came up with that wonderful "merge in the index" approach, and I 
+> could do it again, and I was _soo_ happy.
+> 
+> I often have local changes in my tree that I don't want to commit but that 
+> I'm testing out. Havign them interfere with merging other peoples work 
+> would mean that I'd have to have a totally separate tree for that, which I 
+> could do, but I'm much much happier not having to.
 
-I like the idea but I am not sure if you have implemented it the best
-way.
+You know, I personally was unaware that this was supported until now.
+I have been always reverting local debugging changes in order to merge
+other people's work in, then reapply the debugging changes afterwards.
 
-Are we sure that all the commits we had before doing the update will
-still be there after the update?  What if I had checked in some
-changes and run gitk, and then decided that the commit I just created
-was wrong, and so I set HEAD to HEAD^1 and did a git prune, then told
-gitk to update - shouldn't I see the top commit disappear?
+I guess I won't have to do that any more. :-)
 
-Maybe it would be better to just clean out everything and re-read all
-the commits from scratch.
+So as long as they don't interfere, you can keep local debugging
+changes out of GITs way for just about anything right?  For example,
+as long as you don't "git-update-cache foo.c" those files in your
+local debugging hack, you can just "git commit" afterwards and
+only put in the changes you want.  It won't myseriously find those
+modified files and what to do something with them right?
 
-Also, I'm not convinced that doing ^$id for all tags, heads and other
-refs is correct.  Although we have read the reference and know the ID,
-that doesn't mean we have seen that commit and displayed it.
-
-The more general problem is to provide a way for the user to change
-the set of commits displayed using a dialog box.  That would require
-gitk to understand its command-line arguments so that the elements of
-the dialog box could be initialized properly, though.
-
-Some other comments:
-
-> +    .bar.file add command -label "Update" -command "updatecommits [list $rargs]"
-
-This would be better as:
-
-    .bar.file add command -label "Update" -command [list updatecommits $rargs]
-
-> +    rereadrefs
-
-We don't need the redrawing part of rereadrefs, just the bit that
-unsets tagids etc. and calls readrefs.
-
-Regards,
-Paul.
+This goes with the idea that GIT only works with what you tell it
+about, I suppose.
