@@ -1,94 +1,56 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Please undo "Use git-merge instead of git-resolve in
-Date: Thu, 22 Sep 2005 14:37:43 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509221427520.2553@g5.osdl.org>
-References: <E1EIWUv-0004HR-F6@jdl.com> <Pine.LNX.4.58.0509221413400.2553@g5.osdl.org>
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: 'bad file' error updating from Linus
+Date: Thu, 22 Sep 2005 14:44:34 -0700
+Organization: none
+Message-ID: <dgv8jv$amv$1@sea.gmane.org>
+References: <dgu56t$d2p$1@sea.gmane.org> <509c8057050922054272b823fe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 23:39:58 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Sep 22 23:49:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIYlu-0006b7-8r
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 23:38:26 +0200
+	id 1EIYv0-0000PT-KT
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 23:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751198AbVIVViE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 17:38:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751201AbVIVViE
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 17:38:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:32202 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751198AbVIVViB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 17:38:01 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8MLbnBo016822
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 22 Sep 2005 14:37:50 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8MLbi9w021716;
-	Thu, 22 Sep 2005 14:37:47 -0700
-To: Jon Loeliger <jdl@freescale.com>
-In-Reply-To: <Pine.LNX.4.58.0509221413400.2553@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.117 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751203AbVIVVrq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 17:47:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751204AbVIVVrp
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 17:47:45 -0400
+Received: from main.gmane.org ([80.91.229.2]:14264 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751203AbVIVVrp (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 17:47:45 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EIYtO-0008QJ-7V
+	for git@vger.kernel.org; Thu, 22 Sep 2005 23:46:10 +0200
+Received: from adsl-69-234-234-116.dsl.irvnca.pacbell.net ([69.234.234.116])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Sep 2005 23:46:10 +0200
+Received: from wa1ter by adsl-69-234-234-116.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Sep 2005 23:46:10 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-234-116.dsl.irvnca.pacbell.net
+User-Agent: Mail/News 1.6a1 (X11/20050922)
+In-Reply-To: <509c8057050922054272b823fe@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9146>
 
+porpen@gmail.com wrote:
+> You aren't alone.  I had a look at http://www.kernel.org/git/  only to
+> find that the 2.6 kernel has been taken off the list...  /me thinks
+> Linus is pushing an update as I type...
 
+I think it was a disk failure, but no matter -- it's fixed now.
 
-On Thu, 22 Sep 2005, Linus Torvalds wrote:
-> 
-> Now, the fixing up any merges is pretty much exactly the same as under 
-> CVS - you'll get the same "<<<<" "====" ">>>>" markers.
+For the benefit of future googlers with the same 'bad file' error:
 
-I should have continued this. 
-
-What you do is you just edit the end result to be what it should be 
-(exactly as under CVS), and then you do "git commit --all" to commit the 
-manual merge.
-
-NOTE NOTE NOTE! This is one case where if you had dirty state in your tree
-before the merge, that you need to be careful. In that case you obviously
-must NOT use "--all", since that will commit all the dirty state - both
-your old dirty state _and_ your manual merge resolve. So if you had other 
-changes in your tree that you don't want to commit, you need to do
-
-	git commit <list manually merged files individually here>
-
-so that it doesn't commit anything else. 
-
-Oh. And while preparing the merge, you can use
-
-	git diff
-
-to see what the manual part was: the automated part of the merge will have
-updated index for the automatic side, so this will _not_ show the part 
-of the merge that was done automatically for you.
-
-Or, of you want to see _everything_ the merge has done, just do
-
-	git diff HEAD
-
-to see what the _total_ diff from your pre-merge head was to what is now
-in your tree. But that will be the diff for what you're merging - so it
-can be _huge_ if you're pulling my tree and merging everything I've
-accepted over the last week or two.
-
-And if the merge ends up being too complex, and you decide that you need 
-help and want to undo the partial merge entirely and not even try to fix 
-it up, do
-
-	git reset --hard
-
-which will roll back the index and the working tree to your old HEAD (BUT 
-LOOK OUT! IT WILL ALSO DESTROY ANY DIRTY STATE YOU HAD BEFORE THE MERGE!).
-
-Basically: having dirty state in your tree and then ending up having to do 
-a manual merge is a big pain. Not worth it. I just keep really small dirty 
-stuff so that I don't mind blowing it away if I need to.
-
-		Linus
+After I repeated the cg-update (successfully) I was still left with
+the 'bad file' error.  I tried 'cg-restore' and the error went away.
+Very nifty!
