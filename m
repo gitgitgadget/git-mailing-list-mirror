@@ -1,70 +1,92 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Please undo "Use git-merge instead of git-resolve in git-pull"
-Date: Wed, 21 Sep 2005 19:10:08 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509211902010.2553@g5.osdl.org>
-References: <Pine.LNX.4.58.0509211310150.2553@g5.osdl.org> 
- <7vu0genlc1.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.58.0509211501130.2553@g5.osdl.org>
-  <20050921.172849.103555057.davem@davemloft.net> <46a038f905092118464b98e149@mail.gmail.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH 6/8] cogito: Don't ever assume object type in
+	cg-object-id
+Date: Wed, 21 Sep 2005 23:27:05 -0400
+Message-ID: <1127359625.8074.18.camel@dv>
+References: <1127183120.31115.34.camel@dv>
+	 <20050921100040.GE24902@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "David S. Miller" <davem@davemloft.net>, junkio@cox.net,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 04:13:17 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 22 05:27:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIGZG-0000Oj-VU
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 04:12:11 +0200
+	id 1EIHju-0005BJ-OL
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 05:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750813AbVIVCLw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Sep 2005 22:11:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbVIVCLw
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 22:11:52 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60315 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750813AbVIVCLw (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 22:11:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8M2ABBo000420
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 21 Sep 2005 19:10:12 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8M2A8It009325;
-	Wed, 21 Sep 2005 19:10:10 -0700
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f905092118464b98e149@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.117 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030200AbVIVD1M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Sep 2005 23:27:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030201AbVIVD1M
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 23:27:12 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:51158 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1030200AbVIVD1L
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Sep 2005 23:27:11 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EIHjo-0000Af-C7
+	for git@vger.kernel.org; Wed, 21 Sep 2005 23:27:08 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.52)
+	id 1EIHjl-0003Ry-D4; Wed, 21 Sep 2005 23:27:05 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050921100040.GE24902@pasky.or.cz>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9093>
+
+Hello, Petr!
+
+On Wed, 2005-09-21 at 12:00 +0200, Petr Baudis wrote:
+> Dear diary, on Tue, Sep 20, 2005 at 04:25:20AM CEST, I got a letter
+> where Pavel Roskin <proski@gnu.org> told me that...
+> > Don't ever assume object type in cg-object-id.
+> > 
+> > If type is unknown in normalize_id(), make it empty so it's checked
+> > later.  Check parent ID that it's a commit.
+> 
+> Why? In most of the cases, you have one pointless fork() more, and we
+> "assume" only if it was in a parent line, and if that's not a commit,
+> you've got a *serious* problem with your database. fsck should yell you
+> to death, and I don't think you could even normally commit such a
+> commit, so this should never happen. There's no point in wasting time
+> trying to handle seriously messed up database.
+
+I agree in this case.  I actually was unsure, but I decided to play safe
+after reading this comment in cg-tag:
+
+#       This is most usually the ID of the commit to tag. Tagging 
+#       other objects than commits is possible, but rather "unusual". 
+
+As for fsck "yelling to death", when was the last time you tried that on
+the cogito repository fetched by cogito?  That's what I get:
+
+[proski@dv cogito]$ git-fsck-objects
+missing tree 0842d4cb3cd36675c518c241b16cf25fad0c5384
+broken link from  commit 2c70421be7d88fbee49986d7a5584d1f010a25de
+              to    tree 8c365c79293c9a8a86dc6802f6230e389e876acb
+broken link from  commit 2c70421be7d88fbee49986d7a5584d1f010a25de
+              to  commit 659bd6b6489ae254a07b1bc578ff44778ed7b8b4
+broken link from  commit 463d05c7c4fe7f24da29749f4c7f25893fc20b8c
+              to    tree 0842d4cb3cd36675c518c241b16cf25fad0c5384
+broken link from  commit 463d05c7c4fe7f24da29749f4c7f25893fc20b8c
+              to  commit ed34298a39b05e05bd333d9dac658df19e5b2dab
+missing commit 659bd6b6489ae254a07b1bc578ff44778ed7b8b4
+missing tree 8c365c79293c9a8a86dc6802f6230e389e876acb
+missing commit c4cd9bc72a6e0ed355041d331bb4034d99738f82
+broken link from  commit d14925c87cdb6ca6345bcb3c8e34a2d659c79451
+              to    tree e5ea614d1884a02314a3be8e09cb3f8c786fc0e9
+broken link from  commit d14925c87cdb6ca6345bcb3c8e34a2d659c79451
+              to  commit c4cd9bc72a6e0ed355041d331bb4034d99738f82
+missing tree e5ea614d1884a02314a3be8e09cb3f8c786fc0e9
+missing commit ed34298a39b05e05bd333d9dac658df19e5b2dab
 
 
+It's not like broken trees are exceedingly rare.  Sure, this must be
+some "better" kind of breakage, but anyway.
 
-On Thu, 22 Sep 2005, Martin Langhoff wrote:
->
-> Using Cogito, we've found a couple of cases where merging on a dirty
-> tree messed things up. The local changes were lost after the merge.
-
-Hmm. I merge a ton of stuff, and as mentioned, I probably have a dirty 
-tree at least half the time. I don't think I've seen a problem yet.
-
-But cogito at least _used_ to have some special logic for moving patches
-forward. git-resolve-script never had that - it only ever did the per-file
-three-way merge, and refused to touch dirty state except for the
-"everything stays the same" case.
-
-Oh. I'm looking at the current cg-merge thing, and I think I see the
-problem: it's doing
-
-	git-checkout-index -f -u -a
-
-at the end. That's not only unnecessary, since it uses the "-u" flag to 
-"git-read-tree", but it will force an overwrite of the working tree, and 
-is thus actively incorrect.
-
-Pasky?
-
-		Linus
+-- 
+Regards,
+Pavel Roskin
