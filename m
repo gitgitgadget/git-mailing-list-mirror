@@ -1,71 +1,70 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Please undo "Use git-merge instead of git-resolve in git-pull"
-Date: Thu, 22 Sep 2005 13:46:55 +1200
-Message-ID: <46a038f905092118464b98e149@mail.gmail.com>
-References: <Pine.LNX.4.58.0509211310150.2553@g5.osdl.org>
-	 <7vu0genlc1.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.58.0509211501130.2553@g5.osdl.org>
-	 <20050921.172849.103555057.davem@davemloft.net>
-Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
+Date: Wed, 21 Sep 2005 19:10:08 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509211902010.2553@g5.osdl.org>
+References: <Pine.LNX.4.58.0509211310150.2553@g5.osdl.org> 
+ <7vu0genlc1.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.58.0509211501130.2553@g5.osdl.org>
+  <20050921.172849.103555057.davem@davemloft.net> <46a038f905092118464b98e149@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: torvalds@osdl.org, junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 03:48:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "David S. Miller" <davem@davemloft.net>, junkio@cox.net,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 22 04:13:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIGB0-0003Vf-NV
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 03:47:07 +0200
+	id 1EIGZG-0000Oj-VU
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 04:12:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965206AbVIVBq5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Sep 2005 21:46:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965207AbVIVBq5
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 21:46:57 -0400
-Received: from qproxy.gmail.com ([72.14.204.195]:37505 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965206AbVIVBq4 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Sep 2005 21:46:56 -0400
-Received: by qproxy.gmail.com with SMTP id v40so12688qbe
-        for <git@vger.kernel.org>; Wed, 21 Sep 2005 18:46:55 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Sdo6R699IvqA/+s0T7i7xc1p10O0xZmReMd99UQXgYSHCYYn64HRCRIeHx+KxcD/VqA+HDvR8QNuu+USRzmlMU4PMoufUlWyyGt4HBBbpWewQOyr/UHMjprnZ+UWunqiQt239t7aC5eG+nVMaqJbabnRkC6/0F4L99P+b1ezB3Y=
-Received: by 10.64.204.12 with SMTP id b12mr147681qbg;
-        Wed, 21 Sep 2005 18:46:55 -0700 (PDT)
-Received: by 10.64.232.18 with HTTP; Wed, 21 Sep 2005 18:46:55 -0700 (PDT)
-To: "David S. Miller" <davem@davemloft.net>
-In-Reply-To: <20050921.172849.103555057.davem@davemloft.net>
-Content-Disposition: inline
+	id S1750813AbVIVCLw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Sep 2005 22:11:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbVIVCLw
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Sep 2005 22:11:52 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:60315 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750813AbVIVCLw (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Sep 2005 22:11:52 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8M2ABBo000420
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 21 Sep 2005 19:10:12 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8M2A8It009325;
+	Wed, 21 Sep 2005 19:10:10 -0700
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f905092118464b98e149@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.117 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9092>
 
-On 9/22/05, David S. Miller <davem@davemloft.net> wrote:
-> From: Linus Torvalds <torvalds@osdl.org>
-> > I often have local changes in my tree that I don't want to commit but that
-> > I'm testing out. Havign them interfere with merging other peoples work
-> > would mean that I'd have to have a totally separate tree for that, which I
-> > could do, but I'm much much happier not having to.
+
+
+On Thu, 22 Sep 2005, Martin Langhoff wrote:
 >
-> You know, I personally was unaware that this was supported until now.
-> I have been always reverting local debugging changes in order to merge
-> other people's work in, then reapply the debugging changes afterwards.
->
-> I guess I won't have to do that any more. :-)
+> Using Cogito, we've found a couple of cases where merging on a dirty
+> tree messed things up. The local changes were lost after the merge.
 
-Using Cogito, we've found a couple of cases where merging on a dirty
-tree messed things up. The local changes were lost after the merge.
+Hmm. I merge a ton of stuff, and as mentioned, I probably have a dirty 
+tree at least half the time. I don't think I've seen a problem yet.
 
-I didn't bother to investigate further, because I didn't know whether
-it was supported "formally", or meant to be supported for long.
-Instead, I added a check in cg-merge that refuses to run on a dirty
-tree.
+But cogito at least _used_ to have some special logic for moving patches
+forward. git-resolve-script never had that - it only ever did the per-file
+three-way merge, and refused to touch dirty state except for the
+"everything stays the same" case.
 
-I guess I'll take that out, and try and debug any future sightings of
-the problem...
+Oh. I'm looking at the current cg-merge thing, and I think I see the
+problem: it's doing
 
+	git-checkout-index -f -u -a
 
-martin
+at the end. That's not only unnecessary, since it uses the "-u" flag to 
+"git-read-tree", but it will force an overwrite of the working tree, and 
+is thus actively incorrect.
+
+Pasky?
+
+		Linus
