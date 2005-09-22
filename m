@@ -1,57 +1,69 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: command to show diff of a commit
-Date: Thu, 22 Sep 2005 12:04:58 +0200
-Message-ID: <20050922100458.GF21019@pasky.or.cz>
-References: <72499e3b05092202583f9a751d@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [Core GIT] Long-term cherrypicking
+Date: Thu, 22 Sep 2005 11:17:16 +0100
+Message-ID: <tnxll1p2yqb.fsf@arm.com>
+References: <20050921164015.GC21971@pasky.or.cz>
+	<20050922083142.GA6866@kroah.com> <tnxpsr12zu0.fsf@arm.com>
+	<20050922095845.GE21019@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 12:06:30 2005
+Cc: Greg KH <greg@kroah.com>, git@vger.kernel.org, kkeil@suse.de
+X-From: git-owner@vger.kernel.org Thu Sep 22 12:20:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EINwu-0008D4-Az
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 12:05:04 +0200
+	id 1EIOAa-0002wh-HI
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 12:19:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030242AbVIVKFA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 06:05:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbVIVKFA
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 06:05:00 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:5249 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751462AbVIVKFA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 06:05:00 -0400
-Received: (qmail 30436 invoked by uid 2001); 22 Sep 2005 12:04:58 +0200
-To: Robert Watson <robert.oo.watson@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <72499e3b05092202583f9a751d@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S1751463AbVIVKRk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 06:17:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751464AbVIVKRk
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 06:17:40 -0400
+Received: from [63.80.46.197] ([63.80.46.197]:8355 "EHLO
+	incsun1.losgatos.arm.com") by vger.kernel.org with ESMTP
+	id S1751463AbVIVKRj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2005 06:17:39 -0400
+Received: from ASHWA.Asiapac.Arm.com (localhost [127.0.0.1])
+	by incsun1.losgatos.arm.com (8.12.6/8.12.6) with ESMTP id j8MAHKcx000935;
+	Thu, 22 Sep 2005 03:17:24 -0700 (PDT)
+Received: from ZIPPY.Emea.Arm.com ([10.1.255.57]) by ASHWA.Asiapac.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Thu, 22 Sep 2005 15:47:20 +0530
+Received: from localhost.localdomain ([10.1.69.3]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Thu, 22 Sep 2005 11:17:17 +0100
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050922095845.GE21019@pasky.or.cz> (Petr Baudis's message of
+ "Thu, 22 Sep 2005 11:58:45 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 22 Sep 2005 10:17:17.0760 (UTC) FILETIME=[CF6A2C00:01C5BF5E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9106>
 
-Dear diary, on Thu, Sep 22, 2005 at 11:58:32AM CEST, I got a letter
-where Robert Watson <robert.oo.watson@gmail.com> told me that...
-> Hi,
+Petr Baudis <pasky@suse.cz> wrote:
+> Dear diary, on Thu, Sep 22, 2005 at 11:53:27AM CEST, I got a letter
+> where Catalin Marinas <catalin.marinas@gmail.com> told me that...
+>> But what I understand from Petr's e-mail is that re-basing the patches
+>> is not acceptable for a repository which is public. One option would
+>> be to keep a private tree where the patches are re-based and a public
+>> one which periodically pulls from Linus' tree and your private
+>> one. Not sure how complicated the commit graph would look.
+>
+> It would be pretty ugly since the same patches would re-appear in the
+> commit graph in another incarnations many times.
 
-Hi,
+True. And re-basing patches in the public branch would generate the
+same complicated graph in people's repositories which were pulling
+from it. If this is not desirable, StGIT on the public branch wouldn't
+help much (and neither quilt since quilt patches are not visible via
+GIT anyway).
 
-> I am wondering what is the best way to show the change introduced by a
-> commit. In the other words, is there a better way to do this:
-> 
-> git-diff b163512d4eb36ee946908b682c7863658c5a8db4^
-> b163512d4eb36ee946908b682c7863658c5a8db4
-
-with Cogito, you would say
-
-	cg-diff -p -r b163512d4eb36ee946908b682c7863658c5a8db4
-
-to see the diff against its parent. (You should still choose the parent
-manually in case of merge commits.)
+As Junio said, using 'git cherry-pick' (or 'stg import --commit') on a
+private branch would help organising the patches to be sent
+upstream. One problem with this approach is that the conflicts
+generated by merging with Linus in the public branch (and already
+fixed there) would need to be re-solved in the private one after
+cherry-picking.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Catalin
