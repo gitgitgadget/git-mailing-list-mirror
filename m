@@ -1,87 +1,97 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH 6/8] cogito: Don't ever assume object type in
-	cg-object-id
-Date: Thu, 22 Sep 2005 12:55:55 -0400
-Message-ID: <1127408155.14856.30.camel@dv>
-References: <1127183120.31115.34.camel@dv>
-	 <20050921100040.GE24902@pasky.or.cz> <1127359625.8074.18.camel@dv>
-	 <20050922094643.GC21019@pasky.or.cz> <1127403479.14856.13.camel@dv>
-	 <20050922155025.GK21019@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 22 18:59:55 2005
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: Please undo "Use git-merge instead of git-resolve in
+Date: Thu, 22 Sep 2005 13:32:45 -0500
+Message-ID: <E1EIVsD-0001Hu-9m@jdl.com>
+X-From: git-owner@vger.kernel.org Thu Sep 22 20:33:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIUMh-0006aa-H8
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 18:56:08 +0200
+	id 1EIVsR-0000a0-3t
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 20:32:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030449AbVIVQ4A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 12:56:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030444AbVIVQ4A
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 12:56:00 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:5525 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1030449AbVIVQz7
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2005 12:55:59 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EIUMX-0001Yr-QG
-	for git@vger.kernel.org; Thu, 22 Sep 2005 12:55:57 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.52)
-	id 1EIUMV-0008DY-OE; Thu, 22 Sep 2005 12:55:55 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050922155025.GK21019@pasky.or.cz>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	id S1751011AbVIVScz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 14:32:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751013AbVIVScz
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 14:32:55 -0400
+Received: from jdl.com ([66.118.10.122]:2476 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S1750969AbVIVScz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 14:32:55 -0400
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1EIVsD-0001Hu-9m
+	for git@vger.kernel.org; Thu, 22 Sep 2005 13:32:46 -0500
+To: git@vger.kernel.org
+In-Reply-To: Pine.LNX.4.58.0509220826460.2553@g5.osdl.org
+X-Spam-Score: -105.9 (---------------------------------------------------)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9136>
 
-On Thu, 2005-09-22 at 17:50 +0200, Petr Baudis wrote:
-> Dear diary, on Thu, Sep 22, 2005 at 05:37:59PM CEST, I got a letter
-> where Pavel Roskin <proski@gnu.org> told me that...
-> > [proski@dv cogito]$ for i in .git/refs/tags/*; do git-tar-tree `cat $i` >/dev/null || echo $i; done
-> > fatal: not a reference to a tag, commit or tree object: 463d05c7c4fe7f24da29749f4c7f25893fc20b8c
-> > .git/refs/tags/git-pasky-0.1
-> > fatal: not a reference to a tag, commit or tree object: 2c70421be7d88fbee49986d7a5584d1f010a25de
-> > .git/refs/tags/git-pasky-0.2
-> > fatal: not a reference to a tag, commit or tree object: d14925c87cdb6ca6345bcb3c8e34a2d659c79451
-> > .git/refs/tags/git-pasky-0.3
-> 
-> Huh. Huh?
-> 
-> xpasky@machine[1:0]~/git-devel$ git-cat-file -t $(cg-object-id git-pasky-0.1)
-> commit
+Linus schreib:
+>
+>	git fetch rsync:..../linus-2.6-git <src>:<dst>
+>
+> will fetch the <src> branch (ie you'd usually use "master") from my tree 
+> and write it to the <dst> branch on your tree.
 
-The error message is misleading.  In fact, it's the tree referred to by
-the commit that was missing.  Anyway, that object exists on the server,
-so it was my local problem.
+... "origin".  OK.
 
-It would be nice to have a script fetch an object by SHA1, possibly with
-the dependencies.  git-fetch doesn't do it yet.
+Und, Petr schreib auch:
+> Then it creates an 'origin' head, and will copy all the history from
+> the remote repository's 'master' head there. So this head exists to
+> reflect the state of the remote repository. The important point is
+> that it is called 'origin' in our new repository, even through it
+> corresponds to a 'master' head in the old repository. This is normal -
+> you can name your local heads whatever you want.
 
-I copied the whole objects tree for cogito using rsync, and I see lots
-or error messages from git-fsck-objects.  I'll wait for your changes to
-propagate.  As it stands now, b3e9704ecdf48869f635f0aa99ddfb513f885aff
-(a file you said you have removed) and
-11ed64c1b141c9ba397a1ca76aef2cd250976007 are still present and empty.
+Wait.
 
-Are you sure rsync that copies to kernel.org uses the "delete" option?
-If not, we should treat kernel.org as "dumb transport" where directory
-listings should never be used.
+For me, this paragraph suddenly turned on one missing light:
+The default construction of repository branches/heads _mismatches_
+names on local and remote ends: "origin" local came from "master"
+remote.  Did I miss reading that somewhere else? (Likely.)
 
-> > How come that cogito-0.12 - cogito-0.15 are not on the origin tree, but
-> > older cogito tags are?
-> 
-> That's because the older tags tag commits directly, not tag objects.
-> git-prune removed the tag objects because they were unreferenced by its
-> perspective. Anyway, git-prune without any arguments should get it
-> right.
+And I sat through the Great Remote Name Discussion of '05
+("How is working on arbitrary remote heads supposed to work in Cogito")
+but I just didn't get it back then.
 
-Thanks for the explanation.  I'll be more careful with git-prune.
+(This is an intentional asymmetry, right?  Distributed systems, right?)
 
--- 
-Regards,
-Pavel Roskin
+In any case, I just tried this:
+
+    git fetch rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.gi\t master:origin
+
+And got this mess:
+
+    sent 18136 bytes  received 2731519 bytes  60431.98 bytes/sec
+    total size is 97584183  speedup is 35.49
+    rsync: link_stat "/scm/linux/kernel/git/torvalds/linux-2.6.git/objects/info/alt\ernates" (in pub) failed: No such file or directory (2)
+    rsync error: some files could not be transferred (code 23) at main.c(1173)
+    * non-commit: 3fd07d3bf0077dcc0f5a33d2eb1938ea050da8da
+      branch 'master' of rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/l\inux-2.6
+    * refs/heads/origin: does not fast forward to branch 'master' of rsync://www.ke\rnel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6;
+      leaving it in 'refs/heads/origin.remote'
+
+And this is due to kernel.org being Not Quite Right, right?
+
+Which points out one of the other points of frustration
+that I feel should be addressed eventually:  A whole section
+about "What To Do When It Goes Wonky" needs to be written.
+
+OK, so it didn't merge?  Now what?  What got left where?
+How do I recover?  What bits are in my tree, and what bits
+are in the Index, and what bits are in the Object store now?
+
+OK, so it didn't download it left you "refs/heads/rigin.remote".
+What should I do with it now?  And later, should I re-execute
+the same "git fetch" command and hope it recovers and patches
+the pieces together?  Should I do a round of house cleaning
+before attempting to re-run some (the same?) command?
+
+Things of that nature.
+
+And more as I get further too. :-)
+
+Thanks!
+jdl
