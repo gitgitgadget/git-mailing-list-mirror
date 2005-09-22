@@ -1,88 +1,102 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: StGIT cannot import properly from stdin
-Date: Thu, 22 Sep 2005 16:42:28 +0100
-Message-ID: <b0943d9e050922084232f704d@mail.gmail.com>
-References: <433107C7.60901@drzeus.cx>
-	 <b0943d9e05092101033dd5d366@mail.gmail.com>
-	 <433290A5.5070008@drzeus.cx> <tnxhdcd2tfn.fsf@arm.com>
-	 <4332BA3E.2080607@drzeus.cx> <tnxr7bh188q.fsf@arm.com>
-	 <4332C880.1060906@drzeus.cx>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH 6/8] cogito: Don't ever assume object type in cg-object-id
+Date: Thu, 22 Sep 2005 17:50:25 +0200
+Message-ID: <20050922155025.GK21019@pasky.or.cz>
+References: <1127183120.31115.34.camel@dv> <20050921100040.GE24902@pasky.or.cz> <1127359625.8074.18.camel@dv> <20050922094643.GC21019@pasky.or.cz> <1127403479.14856.13.camel@dv>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_9029_16492160.1127403748298"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 17:45:29 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 22 17:52:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EITDU-0001PE-3g
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 17:42:32 +0200
+	id 1EITLI-00042c-3y
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 17:50:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030409AbVIVPm3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 11:42:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030411AbVIVPm3
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 11:42:29 -0400
-Received: from xproxy.gmail.com ([66.249.82.204]:50422 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1030409AbVIVPm3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 11:42:29 -0400
-Received: by xproxy.gmail.com with SMTP id i30so486206wxd
-        for <git@vger.kernel.org>; Thu, 22 Sep 2005 08:42:28 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=FOmT3PhBaYKOeyMu1VbPz2r/nVBsbEYqXVTBEy/PZ28OQc0N4Uxp4mTRuYj6iqQz8Afva+UawGiJePMPer7m7T8CPC/fFjqZs3gQnIEKd9pssU4+BYUSgeBq6GGToJk97ZcJt/vulHZAfi8wxfxygr+Awe/xJq3ci75ocvmDWTE=
-Received: by 10.70.53.9 with SMTP id b9mr337998wxa;
-        Thu, 22 Sep 2005 08:42:28 -0700 (PDT)
-Received: by 10.70.27.20 with HTTP; Thu, 22 Sep 2005 08:42:28 -0700 (PDT)
-To: Pierre Ossman <drzeus-list@drzeus.cx>
-In-Reply-To: <4332C880.1060906@drzeus.cx>
+	id S1030415AbVIVPud (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 11:50:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030416AbVIVPud
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 11:50:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:63209 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1030415AbVIVPud (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 11:50:33 -0400
+Received: (qmail 18108 invoked by uid 2001); 22 Sep 2005 17:50:25 +0200
+To: Pavel Roskin <proski@gnu.org>
+Content-Disposition: inline
+In-Reply-To: <1127403479.14856.13.camel@dv>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9129>
 
-------=_Part_9029_16492160.1127403748298
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Dear diary, on Thu, Sep 22, 2005 at 05:37:59PM CEST, I got a letter
+where Pavel Roskin <proski@gnu.org> told me that...
+> Hi, Petr!
 
-On 22/09/05, Pierre Ossman <drzeus-list@drzeus.cx> wrote:
-> Bummer. I checked with the local Python guru here and he suggested
-> changing the for loop to an infinite while and f.readline().
+Hi,
 
-It works, thanks for this. I attached a patch if you want to try.
+> On Thu, 2005-09-22 at 11:46 +0200, Petr Baudis wrote:
+> > $ git-fsck-objects
+> > error: b3e9704ecdf48869f635f0aa99ddfb513f885aff: object not found
+> > 
+> > and some dangling stuff, that's all I get. This seems to be caused by
+> > the mere existence of that (empty) file, so I just removed it from the
+> > objects database and all is fine now.
+> 
+> Maybe kernel.org site is not in sync yet, but anyway, here's what I
+> found.
 
---
-Catalin
+root      4036  2.7  2.8 106756 104080 ?     SN   00:04  14:32 rsync
 
-------=_Part_9029_16492160.1127403748298
-Content-Type: application/octet-stream; name="import-stdin"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="import-stdin"
+:/
 
-Rml4IGltcG9ydGluZyBmcm9tIHN0ZGluCgpUaGUgY3VycmVudCBzdGRpbiBwYXRjaCBpbXBvcnRp
-bmcgZXhwZWN0cyB0d28gRU9GcyBzaW5jZSB0aGUgJ2ZvcicgbG9vcApkb2Vzbid0IHN0YXJ0IGJl
-Zm9yZSBvbmUgRU9GIGlzIHJlY2VpdmVkLiBBcyBzdWdnZXN0ZWQsIHRoaXMgcGF0Y2ggY2hhbmdl
-cwp0aGUgJ2ZvcicgbG9vcCB3aXRoIGEgJ3doaWxlIFRydWUnIGxvb3AuCgpTaWduZWQtb2ZmLWJ5
-OiBDYXRhbGluIE1hcmluYXMgPGNhdGFsaW4ubWFyaW5hc0BnbWFpbC5jb20+Ci0tLQoKIHN0Z2l0
-L2NvbW1hbmRzL2ltcHJ0LnB5IHwgICAgNiArKysrKy0KIHN0Z2l0L2dpdC5weSAgICAgICAgICAg
-IHwgICAgNSArKysrLQogMiBmaWxlcyBjaGFuZ2VkLCA5IGluc2VydGlvbnMoKyksIDIgZGVsZXRp
-b25zKC0pCgpkaWZmIC0tZ2l0IGEvc3RnaXQvY29tbWFuZHMvaW1wcnQucHkgYi9zdGdpdC9jb21t
-YW5kcy9pbXBydC5weQotLS0gYS9zdGdpdC9jb21tYW5kcy9pbXBydC5weQorKysgYi9zdGdpdC9j
-b21tYW5kcy9pbXBydC5weQpAQCAtMTM0LDcgKzEzNCwxMSBAQCBkZWYgX19wYXJzZV9wYXRjaChm
-aWxlbmFtZSA9IE5vbmUpOgogICAgIGF1dGhuYW1lID0gYXV0aGVtYWlsID0gYXV0aGRhdGUgPSBO
-b25lCiAKICAgICBkZXNjciA9ICcnCi0gICAgZm9yIGxpbmUgaW4gZjoKKyAgICB3aGlsZSBUcnVl
-OgorICAgICAgICBsaW5lID0gZi5yZWFkbGluZSgpCisgICAgICAgIGlmIG5vdCBsaW5lOgorICAg
-ICAgICAgICAgYnJlYWsKKwogICAgICAgICAjIHRoZSBmaXJzdCAnU2lnbmVkLW9mLWJ5OicgaXMg
-dGhlIGF1dGhvcgogICAgICAgICBpZiBub3QgYXV0aG5hbWUgYW5kIHJlLm1hdGNoKCdzaWduZWQt
-b2ZmLWJ5OlxzKycsIGxpbmUsIHJlLkkpOgogICAgICAgICAgICAgYXV0aCA9IHJlLmZpbmRhbGwo
-J14uKj86XHMrKC4qKSQnLCBsaW5lKVswXQpkaWZmIC0tZ2l0IGEvc3RnaXQvZ2l0LnB5IGIvc3Rn
-aXQvZ2l0LnB5Ci0tLSBhL3N0Z2l0L2dpdC5weQorKysgYi9zdGdpdC9naXQucHkKQEAgLTExMyw3
-ICsxMTMsMTAgQEAgZGVmIGdldF9jb25mbGljdHMoKToKIAogZGVmIF9pbnB1dChjbWQsIGZpbGVf
-ZGVzYyk6CiAgICAgcCA9IHBvcGVuMi5Qb3BlbjMoY21kKQotICAgIGZvciBsaW5lIGluIGZpbGVf
-ZGVzYzoKKyAgICB3aGlsZSBUcnVlOgorICAgICAgICBsaW5lID0gZmlsZV9kZXNjLnJlYWRsaW5l
-KCkKKyAgICAgICAgaWYgbm90IGxpbmU6CisgICAgICAgICAgICBicmVhawogICAgICAgICBwLnRv
-Y2hpbGQud3JpdGUobGluZSkKICAgICBwLnRvY2hpbGQuY2xvc2UoKQogICAgIGlmIHAud2FpdCgp
-Ogo=
-------=_Part_9029_16492160.1127403748298--
+> I ran this script:
+> 
+> [proski@dv cogito]$ for i in .git/refs/tags/*; do git-tar-tree `cat $i` >/dev/null || echo $i; done
+> fatal: not a reference to a tag, commit or tree object: 463d05c7c4fe7f24da29749f4c7f25893fc20b8c
+> .git/refs/tags/git-pasky-0.1
+> fatal: not a reference to a tag, commit or tree object: 2c70421be7d88fbee49986d7a5584d1f010a25de
+> .git/refs/tags/git-pasky-0.2
+> fatal: not a reference to a tag, commit or tree object: d14925c87cdb6ca6345bcb3c8e34a2d659c79451
+> .git/refs/tags/git-pasky-0.3
+
+Huh. Huh?
+
+xpasky@machine[1:0]~/git-devel$ git-cat-file -t $(cg-object-id git-pasky-0.1)
+commit
+xpasky@machine[1:0]~/git-devel$ git-cat-file -t $(cg-object-id git-pasky-0.2)
+commit
+xpasky@machine[1:0]~/git-devel$ git-cat-file -t $(cg-object-id git-pasky-0.3)
+commit
+
+Same on master.kernel.org.
+
+> I can run "git-prune origin", but then cg-fetch would refetch objects
+> for more tags:
+> 
+> Missing object of tag cogito-0.12... retrieved
+> Missing object of tag cogito-0.12.1... retrieved
+> Missing object of tag cogito-0.13... retrieved
+> Missing object of tag cogito-0.14... retrieved
+> Missing object of tag cogito-0.14.1... retrieved
+> Missing object of tag cogito-0.14.2... retrieved
+> Missing object of tag cogito-0.15... retrieved
+> Missing object of tag git-pasky-0.1... retrieved
+> Missing object of tag git-pasky-0.2... retrieved
+> Missing object of tag git-pasky-0.3... retrieved
+> 
+> How come that cogito-0.12 - cogito-0.15 are not on the origin tree, but
+> older cogito tags are?
+
+That's because the older tags tag commits directly, not tag objects.
+git-prune removed the tag objects because they were unreferenced by its
+perspective. Anyway, git-prune without any arguments should get it
+right.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
