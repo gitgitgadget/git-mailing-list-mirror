@@ -1,78 +1,138 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Unexpected behavior in git-rev-list
-Date: Thu, 22 Sep 2005 17:04:11 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509221617300.23242@iabervon.org>
-References: <20050918144931.GA9561@ebar091.ebar.dtu.dk>
- <Pine.LNX.4.58.0509181013250.26803@g5.osdl.org> <20050918175847.GA10427@ebar091.ebar.dtu.dk>
- <20050921164948.GB23525@ebar091.ebar.dtu.dk> <Pine.LNX.4.58.0509211022180.2553@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Please undo "Use git-merge instead of git-resolve in
+Date: Thu, 22 Sep 2005 14:12:38 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509221355330.2553@g5.osdl.org>
+References: <E1EIVsD-0001Hu-9m@jdl.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Peter Eriksen <s022018@student.dtu.dk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 23:03:26 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 22 23:15:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIYAb-0005P3-3v
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 22:59:53 +0200
+	id 1EIYNc-00007q-86
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 23:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751188AbVIVU7u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 16:59:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbVIVU7u
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 16:59:50 -0400
-Received: from iabervon.org ([66.92.72.58]:50948 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751188AbVIVU7u (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 16:59:50 -0400
-Received: (qmail 17213 invoked by uid 1000); 22 Sep 2005 17:04:11 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 22 Sep 2005 17:04:11 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509211022180.2553@g5.osdl.org>
+	id S1030341AbVIVVM5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 17:12:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030365AbVIVVM5
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 17:12:57 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:41155 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030344AbVIVVM4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 17:12:56 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8MLCgBo015661
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 22 Sep 2005 14:12:44 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8MLCcom020623;
+	Thu, 22 Sep 2005 14:12:40 -0700
+To: Jon Loeliger <jdl@freescale.com>
+In-Reply-To: <E1EIVsD-0001Hu-9m@jdl.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.117 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9142>
 
-On Wed, 21 Sep 2005, Linus Torvalds wrote:
 
-> Anyway, I've seriously considered adding a mode to "git-rev-list" that
-> automatically avoids following the parents that aren't relevant for a
-> certain set of files.
+
+On Thu, 22 Sep 2005, Jon Loeliger wrote:
 > 
-> Ie if you did
+> For me, this paragraph suddenly turned on one missing light:
+> The default construction of repository branches/heads _mismatches_
+> names on local and remote ends: "origin" local came from "master"
+> remote.  Did I miss reading that somewhere else? (Likely.)
 > 
-> 	git-rev-list rev1 rev2 ^rev3 ^rev4 .. pathname
+> And I sat through the Great Remote Name Discussion of '05
+> ("How is working on arbitrary remote heads supposed to work in Cogito")
+> but I just didn't get it back then.
 > 
-> it would only show the revisions that actually _change_ the pathname.
->
-> It's not entirely trivial. The biggest bummer is that we'd have to fake
-> out the parent info (ie the "parent" would have to be the previous entry
-> that changes it, not the real one).
+> (This is an intentional asymmetry, right?  Distributed systems, right?)
 
-How about a program that made the fake thing real? That is, actually wrote 
-to the database the entire history with only those paths included, and 
-only commits that change those paths.
+Right. It's intentional. The "master" branch tends to be the main one for
+everybody, but _my_ "master" branch is clearly _your_ "linus" branch, and
+_your_ "master" branch would be the "jon" branch for me.
 
-This would be exactly the right thing for the people who want kbuild to be 
-a separate project from the kernel, because "the kbuild project", with 
-full history, could be automatically generated.
+So it's not "asymmetric". It _is_ symmetric, but it's symmetric the same
+way "left" and "right" are symmetric when facing each other - my left is
+your right, your left is my right. It's a symmetry, but it's not an 
+_identity_.
 
-For that matter, Sam could actually use that repository for maintaining 
-kbuild, because if mainline merges that instead of merging the present 
-kbuild-in-kernel repository, it'll be exactly the same. He could pick up 
-stuff from the mainline by subsetting mainline.
+And obviously, nobody is going to have every possible branch anyway. You
+just name the ones you care about (and that, in turn, _will_ break the
+symmetry ;)
 
-In fact, this operation would allow Junio to push gitk changes upstream, 
-as well; "git subset -w heads/gitk gitk" would generate the gitk 
-repository, with the addition of any changes to gitk made and committed in 
-the git repository.
+> In any case, I just tried this:
+> 
+>     git fetch rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git master:origin
+> 
+> And got this mess:
+> 
+>     sent 18136 bytes  received 2731519 bytes  60431.98 bytes/sec
+>     total size is 97584183  speedup is 35.49
+>     rsync: link_stat "/scm/linux/kernel/git/torvalds/linux-2.6.git/objects/info/alternates" (in pub) failed: No such file or directory (2)
+>     rsync error: some files could not be transferred (code 23) at main.c(1173)
 
-I think the only problem with this scheme would be that, if someone does a 
-commit that changes both gitk and something else, the commit message might 
-be a bit confusing in the gitk tree.
+Ok, ignore that error.
 
-(I'm not sure, but this might also generate just the right thing for 
-driver maintainers who want to distribute the latest version of their 
-drivers as an out-of-tree module)
+>     * non-commit: 3fd07d3bf0077dcc0f5a33d2eb1938ea050da8da
+>       branch 'master' of rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
 
-	-Daniel
-*This .sig left intentionally blank*
+Ok, 3fd07d3bf0077dcc0f5a33d2eb1938ea050da8da is my current head, so that 
+part looks good. However, the "non-commit" part doesn't look good. It 
+_should_ say "committish".
+
+What does
+
+	git-cat-file -t 3fd07d3bf0077dcc0f5a33d2eb1938ea050da8da
+
+say in your tree? I suspect you don't have that object at all, and that
+the mirrors are still not in sync (ie I suspect you get a "error: unable
+to find 3fd..")
+
+This, btw, is why I hate the rsync protocol. Quite frankly, it sucks. It
+was wonderful for bootstrapping git when we didn't have anything else, but
+dammit, it's horrid. It has no git knowledge at all, does _zero_ sanity
+checking, and leaves the user going "huh" when it fails.
+
+>     * refs/heads/origin: does not fast forward to branch 'master' of rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6;
+>       leaving it in 'refs/heads/origin.remote'
+> 
+> And this is due to kernel.org being Not Quite Right, right?
+
+Yes. It tries to verify that the new commit it stuffs into "origin" is a 
+proper superset of the old one (so that you're not losing any data), and 
+it fails, since the new commit doesn't even exist in your object list yet.
+
+> Which points out one of the other points of frustration
+> that I feel should be addressed eventually:  A whole section
+> about "What To Do When It Goes Wonky" needs to be written.
+
+Hey, you seem to have a good example of Wonky, maybe you want to write it?
+
+> OK, so it didn't merge?  Now what?  What got left where?
+> How do I recover?  What bits are in my tree, and what bits
+> are in the Index, and what bits are in the Object store now?
+
+The good news is, I don't think there's anything to recover. It refused to 
+write the new head, because it wasn't valid yet.
+
+Actually, the fact that it even left it as a head might cause problems 
+(because now you have a reference to something that doesn't exist), so you 
+are probably best off just removing the .git/refs/heads/origin.remote file 
+entirely. 
+
+You just need to try again when the mirroring is doing better.
+
+Oh. And I think you might want to change that "rsync:" to "http:" instead. 
+It's going to be slower, but at least git-http-fetch should be more 
+careful, since it's fetching one object at a time, and validating what it 
+fetches that way. The rsync: protocol just does everything totally blidly 
+(which makes it fairly efficient, but also means that when things go 
+wrong, they are _really_ confusing).
+
+		Linus
