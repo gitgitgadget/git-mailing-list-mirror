@@ -1,166 +1,59 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: Please undo "Use git-merge instead of git-resolve in
-Date: Thu, 22 Sep 2005 09:55:26 -0500
-Message-ID: <E1EISTu-0000MI-Gz@jdl.com>
-X-From: git-owner@vger.kernel.org Thu Sep 22 17:01:01 2005
+From: Pierre Ossman <drzeus-list@drzeus.cx>
+Subject: Re: StGIT cannot import properly from stdin
+Date: Thu, 22 Sep 2005 17:06:40 +0200
+Message-ID: <4332C880.1060906@drzeus.cx>
+References: <433107C7.60901@drzeus.cx>	<b0943d9e05092101033dd5d366@mail.gmail.com>	<433290A5.5070008@drzeus.cx> <tnxhdcd2tfn.fsf@arm.com>	<4332BA3E.2080607@drzeus.cx> <tnxr7bh188q.fsf@arm.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 22 17:07:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EISU9-0002m1-Mb
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 16:55:42 +0200
+	id 1EISep-0006hT-Mp
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 17:06:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030389AbVIVOzj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 10:55:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030390AbVIVOzi
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 10:55:38 -0400
-Received: from colo.jdl.com ([66.118.10.122]:3243 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S1030389AbVIVOzi (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 10:55:38 -0400
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1EISTu-0000MI-Gz
-	for git@vger.kernel.org; Thu, 22 Sep 2005 09:55:28 -0500
-To: git@vger.kernel.org
-In-Reply-To: 20050921.172849.103555057.davem@davemloft.net
-X-Spam-Score: -105.9 (---------------------------------------------------)
+	id S1030390AbVIVPGl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 11:06:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030393AbVIVPGl
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 11:06:41 -0400
+Received: from [85.8.12.41] ([85.8.12.41]:11395 "EHLO smtp.drzeus.cx")
+	by vger.kernel.org with ESMTP id S1030390AbVIVPGk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 11:06:40 -0400
+Received: from [192.168.128.82] (alcatraz.cendio.se [::ffff:193.12.253.67])
+  (AUTH: PLAIN drzeus, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
+  by smtp.drzeus.cx with esmtp; Thu, 22 Sep 2005 17:06:39 +0200
+  id 00062717.4332C87F.00002B4B
+User-Agent: Mozilla Thunderbird 1.0.6-5 (X11/20050818)
+X-Accept-Language: en-us, en
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <tnxr7bh188q.fsf@arm.com>
+X-Enigmail-Version: 0.90.1.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9125>
 
-Dave Wrote:
-> From: Linus Torvalds <torvalds@osdl.org>
-> 
-> > I often have local changes in my tree that I don't want to commit but that 
-> > I'm testing out. Havign them interfere with merging other peoples work 
-> > would mean that I'd have to have a totally separate tree for that, which I 
-> > could do, but I'm much much happier not having to.
-> 
-> You know, I personally was unaware that this was supported until now.
-> I have been always reverting local debugging changes in order to merge
-> other people's work in, then reapply the debugging changes afterwards.
+Catalin Marinas wrote:
 
-So, interesting that this comes up now, as I recently had a
-discussion on this topic with a few coworkers.  We concluded
-that we were clueless and what would help us out a whole bunch
-would be a few more Use Cases down this line added to the Tutorial.
+>It looks like a problem with Python since it re-opens sys.stdin once
+>it receives EOF.
+>
+>  
+>
 
-I'll include my original (internal) question as an example
-use case.  Perhaps it will illustrate two things:
+Bummer. I checked with the local Python guru here and he suggested
+changing the for loop to an infinite while and f.readline().
 
-    - How clueless I am about Git still
-    - Where some of the Git Frustration still lies
+>I was referring to the 'cache the input to memory' variant, which is a
+>bit more complicated. Caching to a file is simple but do you need to
+>read patches from the terminal directly?
+>
+>  
+>
 
-I'd offer to write it, but I'm just flat in the dark here and
-need to _read_ it first. :-)  I'll offer this instead:  If you
-(someone) tells me the commands that illustrate how to do what
-I'm after here, I'll make a stab at writing up the tutorial
-Use Case for it.
-
-(Yes, I know there is a Use Case very similar to this in
-the Tutorial, but it is not quite the same.  And I can't
-see how to intuit a step towards what I'm wanting here.)
-
-Thanks,
-jdl
-
-
-
-    OK, so I have a git tree that looks like this:
-
-    241 % git show-branch --more=5
-    * [jdl] Merge with rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-     ! [master] Merge branch 'master' of /home/src/linux-2.6/
-      ! [origin] Merge branch 'master' of /home/src/linux-2.6/
-       ! [paul] Merge with rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-    ----
-    +  + [jdl] Merge with rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-    ++++ [master] Merge branch 'master' of /home/src/linux-2.6/
-    ++++ [master~1] NTFS: Fix ntfs_{read,write}page() to cope with concurrent truncates better.
-    ++++ [master~2] NTFS: Fix handling of compressed directories that I broke in earlier changeset.
-    ++++ [master~3] NTFS: Fix various bugs in the runlist merging code.  (Based on libntfs
-    ++++ [master~4] vc: Use correct size on buffer copy in vc_resize
-    +  + [jdl~1] Merge rsync://rsync.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc-merge
-    +  + [jdl^2] ppc32: Allow user to individual select CHRP/PMAC/PREP config
-    +  + [jdl^2~1] powerpc: Merge simplified sections.h into asm-powerpc
-    +  + [jdl^2~2] powerpc: Remove section free() and linker script bits
-    +  + [jdl^2~3] powerpc: Remove sections use from ppc64 and drivers
-    +  + [jdl^2~4] powerpc: Remove sections use from ppc
-    +  + [jdl^2~5] ppc32: Removed non-inlined versions of local_irq* functions
-    ++++ [jdl~2] Merge master.kernel.org:/home/rmk/linux-2.6-arm
-
-    I have current, modified, non-committed files in my working tree
-    in the "jdl" branch.  I don't want to commit them now (yet).
-
-    I now know that Linus has updated his tree with new -rc2 parts.
-    I want it.  In fact, I want it on the "origin" or "master" branch.
-    (Or both.  And I don't know which.)
-
-    How do I get Linus' updates and merge them into the "origin" branch
-    without changing to that branch first?
-
-    How do I get Paul's updates and merge them into the "paul" branch
-    without changing to that branch first?
-
-    I think I can fetch the Linus updates by doing something like this:
-
-	git fetch origin
-    or
-	git fetch rsync://....path/to/linus-2.6-git
-
-    That will just grab the Objects and throw them into my .git/objects.
-
-    But how to do the merge?  I think that the merges all require
-    the "target branch" to be the "active"/checkedout branch, right?
-    I don't know how to now say "Merge-up those new Objects on the
-    origin branch".
-
-    I think what's confusing me still is that the previous
-    World View According to CVS was essentially that you have
-    this import branch into which you dragged all the external
-    updates.  Then you merged that over to your working branch.
-    And, you could easily have views of _both_ of those
-    branches simultaneously.
-
-    With Git, you can't really do that in quite the same way.
-    Sure, you can treat a branch as an "import branch".  But
-    if you have uncommitted files over in a different branch,
-    you can't change your cehckout-view to do so.
-
-    However, I _could_ just stick in my "jdl" working branch and
-    directly pull-in and merge the linus changes.  I mean, my next
-    step after pulling those changes into the so-called import
-    branch was going to be to merge them to my branch anyway.
-
-    OK, so let's say I did pull linus' update into the jdl branch.
-    And they merge up nicely.  How do I now propogate _just_ the
-    linus changes to the origin branch?  Again, I don't think I
-    can without first checking out the "origin" branch.
-
-    Am I missing something here?  Fighting against the tool?
-
-
-A coworker replied:
-
-    > I read your message, and I read the git documentation, and I
-    > scratched my head a bit, and the end result is that I still don't
-    > know.  The docs really suck.  Everything you say seems to make
-    > sense, but I just can't confirm that it's actually how things
-    > work.  And I don't know how to do a merge like you propose.
-
-I responded:
-
-    So, you will all be pleased to know that I tried
-    some stuff and was not successful.  In the "jdl"
-    branch, I did a "git pull linus".  It happily went
-    out and grabbed all the new objects from his tree.
-    Spiffy.  It then announced that my branch of the
-    working tree was "dirty" and quit.
-
-    At this point, I _think_ this is where a "cg-pull"
-    instead of a "git pull" would have gone on, done
-    some figuring, and decided that it needed to
-    rebase my current changes after merging in the
-    fetched objects.
-
-    Not sure.
+I don't explicitly need it, but it keeps things simple for me. I can
+copy and paste the patch from my mailer without having to bother with
+saving it to a temporary file.
