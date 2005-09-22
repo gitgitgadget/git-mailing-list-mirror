@@ -1,75 +1,83 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH 1/8] fetch.c: Remove useless lookup_object_type() call in process()
-Date: Thu, 22 Sep 2005 12:50:09 +0400
-Message-ID: <20050922085009.GC20944@master.mivlgu.local>
-References: <20050921161829.GA20944@master.mivlgu.local> <20050921161855.896F1E010FC@center4.mivlgu.local> <7v3bnyurw6.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Verbose git-daemon logging
+Date: Thu, 22 Sep 2005 01:52:18 -0700
+Message-ID: <7vwtl9mqm5.fsf@assigned-by-dhcp.cox.net>
+References: <20050921213933.GB10575@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="zCKi3GIZzVBPywwA"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 10:52:08 2005
+X-From: git-owner@vger.kernel.org Thu Sep 22 10:54:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIMmd-0005Fu-CV
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 10:50:23 +0200
+	id 1EIMoY-0005td-VE
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 10:52:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751453AbVIVIuU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 04:50:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbVIVIuU
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 04:50:20 -0400
-Received: from mivlgu.ru ([81.18.140.87]:9446 "EHLO master.mivlgu.local")
-	by vger.kernel.org with ESMTP id S1751453AbVIVIuT (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 04:50:19 -0400
-Received: by master.mivlgu.local (Postfix, from userid 1000)
-	id F052C180110; Thu, 22 Sep 2005 12:50:09 +0400 (MSD)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v3bnyurw6.fsf@assigned-by-dhcp.cox.net>
+	id S1751455AbVIVIwU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 04:52:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751456AbVIVIwU
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 04:52:20 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:40864 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751455AbVIVIwT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2005 04:52:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050922085218.JFAF29515.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 22 Sep 2005 04:52:18 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050921213933.GB10575@pasky.or.cz> (Petr Baudis's message of
+	"Wed, 21 Sep 2005 23:39:33 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9097>
 
+Overall looks very informative to me.  Couple of points,
+although your patch was not directly addressed to me... ;-).
 
---zCKi3GIZzVBPywwA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +static void logreport(const char *err, va_list params)
+> +{
+> +	/* We should do a single write so that it is atomic and output
+> +	 * of several threads does not get intermangled. */
 
-On Wed, Sep 21, 2005 at 12:45:13PM -0700, Junio C Hamano wrote:
-> Sergey Vlasov <vsu@altlinux.ru> writes:
->=20
-> > In all places where process() is called except the one in pull() (which
-> > is executed only once) the pointer to the object is already available,
-> > so pass it as the argument to process() instead of sha1 and avoid an
-> > unneeded call to lookup_object_type().
->=20
-> Agreed, except we probably would want to pass the expected type
-> to process() so that we can make sure the object is of that type,
-> perhaps?
+"threads"?  Nevertheless yes it is nicer to do a single write.
 
-This is not needed - all parse_*_buffer() functions, which fill in
-pointers to referenced objects, specify required types themselves by
-using lookup_commit(), lookup_tree(), etc.; even parse_tag_buffer()
-uses lookup_object_type().
+> +	char buf[1024];
+> +	int buflen;
+> +
+> +	buflen = snprintf(buf, 1024, "[%d] ", getpid());
 
-The only way to get a "struct object" with an unspecified type is by
-calling lookup_unknown_object() (or lookup_object_type() with NULL
-type) - grep shows than nothing in GIT does this, except the pull()
-function in fetch.c (which obviously does not know type of the object
-to be fetched in advance).
+sizeof(buf)?
 
---zCKi3GIZzVBPywwA
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> +	buflen += vsnprintf(buf + buflen, 1024 - buflen, err, params);
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
+vsnprintf() would return number of characters that would have
+been written if the buffer were sufficiently long, so buflen can
+grow outside buf[].  I could ask for a deeeeeeeeeeep directory
+to git-daemon, have it say "Request for 'diiiiiiiiiiiiii....r'",
+and have this code
 
-iD8DBQFDMnBBW82GfkQfsqIRAstFAJwK6aXCrIU2GTIUNxF2R7YvyZgnOACgjALX
-68OITJNC1DOTmDQ7hMOvKyA=
-=Jr4y
------END PGP SIGNATURE-----
+> +	buf[buflen++] = '\n';
+> +	buf[buflen] = '\0';
 
---zCKi3GIZzVBPywwA--
+overwrite the stack with these two bytes; overwriting with
+constant bytes may or may not be exploitable, though.
+
+Also the man page says glibc 2.0.6 returned -1 upon output
+truncation.  Do we care?
+
+> @@ -212,6 +275,9 @@ static void child_handler(int signo)
+>  			unsigned reaped = children_reaped;
+>  			dead_child[reaped % MAX_CHILDREN] = pid;
+>  			children_reaped = reaped + 1;
+> +			/* XXX: Custom logging, since we don't wanna getpid() */
+> +			if (verbose)
+> +				fprintf(stderr, "[%d] Disconnected\n", pid);
+
+"we don't wanna getpid()" because the guy reporting is the
+parent?  I would presume knowing parent PID would also useful,
+so maybe we could say "[1012] child 1014 disconnected\n" for
+parent 1012 reaping chilid 1014? 
