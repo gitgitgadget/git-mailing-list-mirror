@@ -1,56 +1,45 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: Re: 'bad file' error updating from Linus
-Date: Thu, 22 Sep 2005 14:44:34 -0700
-Organization: none
-Message-ID: <dgv8jv$amv$1@sea.gmane.org>
-References: <dgu56t$d2p$1@sea.gmane.org> <509c8057050922054272b823fe@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Please undo "Use git-merge instead of git-resolve in
+Date: Thu, 22 Sep 2005 17:57:36 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0509221747340.23242@iabervon.org>
+References: <E1EIWUv-0004HR-F6@jdl.com> <Pine.LNX.4.58.0509221413400.2553@g5.osdl.org>
+ <Pine.LNX.4.58.0509221427520.2553@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Sep 22 23:49:34 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 22 23:53:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIYv0-0000PT-KT
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 23:47:51 +0200
+	id 1EIZ0H-0001cS-KJ
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 23:53:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751203AbVIVVrq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 17:47:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751204AbVIVVrp
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 17:47:45 -0400
-Received: from main.gmane.org ([80.91.229.2]:14264 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751203AbVIVVrp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 17:47:45 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EIYtO-0008QJ-7V
-	for git@vger.kernel.org; Thu, 22 Sep 2005 23:46:10 +0200
-Received: from adsl-69-234-234-116.dsl.irvnca.pacbell.net ([69.234.234.116])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Sep 2005 23:46:10 +0200
-Received: from wa1ter by adsl-69-234-234-116.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Sep 2005 23:46:10 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-234-116.dsl.irvnca.pacbell.net
-User-Agent: Mail/News 1.6a1 (X11/20050922)
-In-Reply-To: <509c8057050922054272b823fe@mail.gmail.com>
+	id S1751267AbVIVVxP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 17:53:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbVIVVxP
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 17:53:15 -0400
+Received: from iabervon.org ([66.92.72.58]:5128 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751267AbVIVVxO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 17:53:14 -0400
+Received: (qmail 17415 invoked by uid 1000); 22 Sep 2005 17:57:36 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 22 Sep 2005 17:57:36 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509221427520.2553@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9147>
 
-porpen@gmail.com wrote:
-> You aren't alone.  I had a look at http://www.kernel.org/git/  only to
-> find that the 2.6 kernel has been taken off the list...  /me thinks
-> Linus is pushing an update as I type...
+On Thu, 22 Sep 2005, Linus Torvalds wrote:
 
-I think it was a disk failure, but no matter -- it's fixed now.
+> Basically: having dirty state in your tree and then ending up having to do 
+> a manual merge is a big pain. Not worth it. I just keep really small dirty 
+> stuff so that I don't mind blowing it away if I need to.
 
-For the benefit of future googlers with the same 'bad file' error:
+Would it be worthwhile to have a flag to make git-read-tree abort rather 
+than making a mess if you have any dirty state and the merge isn't 
+completely automatic? It's certainly easy enough to write.
 
-After I repeated the cg-update (successfully) I was still left with
-the 'bad file' error.  I tried 'cg-restore' and the error went away.
-Very nifty!
+	-Daniel
+*This .sig left intentionally blank*
