@@ -1,106 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] Verbose git-daemon logging
-Date: Thu, 22 Sep 2005 16:42:39 -0700
-Message-ID: <7vd5n0lle8.fsf@assigned-by-dhcp.cox.net>
-References: <20050921213933.GB10575@pasky.or.cz>
-	<7vwtl9mqm5.fsf@assigned-by-dhcp.cox.net>
-	<20050922092528.GB21019@pasky.or.cz>
+Date: Thu, 22 Sep 2005 16:58:32 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509221651000.2553@g5.osdl.org>
+References: <20050921213933.GB10575@pasky.or.cz> <7vwtl9mqm5.fsf@assigned-by-dhcp.cox.net>
+ <20050922092528.GB21019@pasky.or.cz> <7vd5n0lle8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 01:43:24 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 23 01:59:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIaiD-0008G2-Ee
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 01:42:45 +0200
+	id 1EIayC-0002wM-L6
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 01:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbVIVXmm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 19:42:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbVIVXmm
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 19:42:42 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:30179 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751209AbVIVXmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2005 19:42:42 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050922234241.OJQS6597.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 22 Sep 2005 19:42:41 -0400
-To: Petr Baudis <pasky@suse.cz>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751071AbVIVX6y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 19:58:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbVIVX6y
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 19:58:54 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:36494 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751071AbVIVX6w (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 19:58:52 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8MNwdBo022982
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 22 Sep 2005 16:58:41 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8MNwW9D028185;
+	Thu, 22 Sep 2005 16:58:36 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vd5n0lle8.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.117 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9154>
 
-Petr Baudis <pasky@suse.cz> writes:
 
-> What would be knowing parent PID be useful for? (It's not really the PID
-> number that's useful anyway (at least mostly), it's just a good unique
-> identifier to distinguish between several simultaneous sessions.)
 
-Maybe running two daemons serving two sets of repos?  But anyway
-what you have look more consistent so let's keep that.
+On Thu, 22 Sep 2005, Junio C Hamano wrote:
+> 
+> The tail part still looks odd here.  Maybe something like this?
 
-> Fixed up patch follows.
+And if you actually want it to be more reliable, don't use fputs. That 
+can still split lines, and even if it doesn't, it doesn't help.
 
-Thanks.
-
-> +static void logreport(const char *err, va_list params)
-> +{
-> +	/* We should do a single write so that it is atomic and output
-> +	 * of several processes does not get intermangled. */
-> +	char buf[1024];
-> +	int buflen;
-> +	int maxlen, msglen;
-> +
-> +	buflen = snprintf(buf, sizeof(buf), "[%d] ", getpid());
-> +
-> +	maxlen = sizeof(buf) - buflen - 1;
-> +	msglen = vsnprintf(buf + buflen, maxlen, err, params);
-> +	if (msglen > maxlen)
-> +		msglen = maxlen;
-> +	else if (msglen < 0)
-> +		msglen = -1; /* Protect against weird return values. */
-> +	buflen += msglen;
-> +
 > +	buf[buflen++] = '\n';
 > +	buf[buflen] = '\0';
 > +
 > +	fputs(buf, stderr);
-> +}
 
-The tail part still looks odd here.  Maybe something like this?
+Why use "fputs()", when you migth as well do write()?
 
-+static void logreport(const char *err, va_list params)
-+{
-+	/* We should do a single write so that it is atomic and output
-+	 * of several processes does not get intermangled. */
-+	char buf[1024];
-+	int buflen;
-+	int maxlen, msglen;
-+
-+	/* sizeof(buf) should be big enough for "[pid] \n" */
-+	buflen = snprintf(buf, sizeof(buf), "[%d] ", getpid());
-+
-+	maxlen = sizeof(buf) - buflen - 1; /* -1 for our own LF */
-+	msglen = vsnprintf(buf + buflen, maxlen, err, params);
-+
-+	/* maxlen counted our own LF but also counts space given to
-+	 * vsnprintf for the terminating NUL.  We want to make sure that
-+	 * we have space for our own LF and NUL after the "meat" of the
-+	 * message, so truncate it at maxlen - 1.
-+	 */
-+	if (msglen > maxlen - 1)
-+		msglen = maxlen - 1;
-+	else if (msglen < 0)
-+		msglen = 0; /* Protect against weird return values. */
-+	buflen += msglen;
-+
-+	buf[buflen++] = '\n';
-+	buf[buflen] = '\0';
-+
-+	fputs(buf, stderr);
-+}
+Also, it would probably be nice if you allow the use of syslog().. 
+
+		Linus
