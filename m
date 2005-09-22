@@ -1,38 +1,92 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Please undo "Use git-merge instead of git-resolve in
-Date: Thu, 22 Sep 2005 18:01:13 +0200
-Message-ID: <20050922160113.GL21019@pasky.or.cz>
+Date: Thu, 22 Sep 2005 09:06:09 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509220826460.2553@g5.osdl.org>
 References: <E1EISTu-0000MI-Gz@jdl.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 18:01:46 2005
+X-From: git-owner@vger.kernel.org Thu Sep 22 18:09:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EITVe-0007JP-PY
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 18:01:19 +0200
+	id 1EITaZ-0000Zo-0p
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 18:06:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751127AbVIVQBP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 12:01:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbVIVQBP
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 12:01:15 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:34699 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751127AbVIVQBP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 12:01:15 -0400
-Received: (qmail 19200 invoked by uid 2001); 22 Sep 2005 18:01:13 +0200
+	id S1030421AbVIVQGU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 12:06:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751471AbVIVQGU
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 12:06:20 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:45011 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751468AbVIVQGU (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 12:06:20 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8MG6DBo001103
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 22 Sep 2005 09:06:13 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8MG691w005757;
+	Thu, 22 Sep 2005 09:06:11 -0700
 To: Jon Loeliger <jdl@freescale.com>
-Content-Disposition: inline
 In-Reply-To: <E1EISTu-0000MI-Gz@jdl.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.117 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9133>
 
-Dear diary, on Thu, Sep 22, 2005 at 04:55:26PM CEST, I got a letter
-where Jon Loeliger <jdl@freescale.com> told me that...
+
+
+On Thu, 22 Sep 2005, Jon Loeliger wrote:
+> 
+>     - Where some of the Git Frustration still lies
+
+Btw, I'd love to have more "this frustrates me" stories. I used to ask for 
+them from the (few) people that used git early on, just to see what the 
+problems were.
+
+I can't really help you with documentation, and would just hope that 
+people who figure out a problem they had would actually document it so 
+that others don't have to figure it out the hard way.
+
+But if there is some usage pattern that doesn't make sense, post about it,
+and I can try to at least say why it happens that way (and then it's back
+to the "please send a patch to the documentation" case above ;). 
+
+Alternatively, maybe it is something that doesn't need to happen at all, 
+and it's just git being stupid, and we can just fix it.
+
+So to look at your care.
+
+>     OK, so I have a git tree that looks like this:
+> 
+>     241 % git show-branch --more=5
+>     * [jdl] Merge with rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+>      ! [master] Merge branch 'master' of /home/src/linux-2.6/
+>       ! [origin] Merge branch 'master' of /home/src/linux-2.6/
+>        ! [paul] Merge with rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+>     ----
+>     +  + [jdl] Merge with rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+>     ++++ [master] Merge branch 'master' of /home/src/linux-2.6/
+>     ++++ [master~1] NTFS: Fix ntfs_{read,write}page() to cope with concurrent truncates better.
+>     ++++ [master~2] NTFS: Fix handling of compressed directories that I broke in earlier changeset.
+>     ++++ [master~3] NTFS: Fix various bugs in the runlist merging code.  (Based on libntfs
+>     ++++ [master~4] vc: Use correct size on buffer copy in vc_resize
+>     +  + [jdl~1] Merge rsync://rsync.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc-merge
+>     +  + [jdl^2] ppc32: Allow user to individual select CHRP/PMAC/PREP config
+>     +  + [jdl^2~1] powerpc: Merge simplified sections.h into asm-powerpc
+>     +  + [jdl^2~2] powerpc: Remove section free() and linker script bits
+>     +  + [jdl^2~3] powerpc: Remove sections use from ppc64 and drivers
+>     +  + [jdl^2~4] powerpc: Remove sections use from ppc
+>     +  + [jdl^2~5] ppc32: Removed non-inlined versions of local_irq* functions
+>     ++++ [jdl~2] Merge master.kernel.org:/home/rmk/linux-2.6-arm
+> 
+>     I have current, modified, non-committed files in my working tree
+>     in the "jdl" branch.  I don't want to commit them now (yet).
+> 
 >     I now know that Linus has updated his tree with new -rc2 parts.
 >     I want it.  In fact, I want it on the "origin" or "master" branch.
 >     (Or both.  And I don't know which.)
@@ -40,12 +94,22 @@ where Jon Loeliger <jdl@freescale.com> told me that...
 >     How do I get Linus' updates and merge them into the "origin" branch
 >     without changing to that branch first?
 > 
+>     How do I get Paul's updates and merge them into the "paul" branch
+>     without changing to that branch first?
+> 
 >     I think I can fetch the Linus updates by doing something like this:
 > 
 > 	git fetch origin
->     or
+
+Yes, this works. This will fetch the new objects, and automatically update
+the right branch (ie it will also update the "origin" branch).
+
 > 	git fetch rsync://....path/to/linus-2.6-git
-> 
+
+This will _not_ work. Or rather, it will "work" in the sense that it 
+fetches the objects, but without a place to put them into, it won't update 
+any of the branches, so it's kind of pointless.
+
 >     That will just grab the Objects and throw them into my .git/objects.
 > 
 >     But how to do the merge?  I think that the merges all require
@@ -53,182 +117,157 @@ where Jon Loeliger <jdl@freescale.com> told me that...
 >     I don't know how to now say "Merge-up those new Objects on the
 >     origin branch".
 
-[I say 'master', but I mean the whatever branch you are currently
-working on.]
+The first one should have done that already.
 
-Your origin branch just represents what Linus has in his master branch.
-You don't ever merge anything to it - if you fetch new stuff from Linus,
-it simply gets updated to point at the newest Linus' stuff. You can then
-merge your 'origin' branch to your 'master' branch, therefore getting
-the newest Linus' stuff there.
+You can also specify _precisely_ what branches you want to use as a source 
+and as a destination.
 
-About two nights ago I tried to describe all this branching stuff in
-Cogito's README. It is aimed at Cogito, but generally appliable to GIT
-as well. s/cg-/git-/, cg-update is git-pull, and instead of using
-cg-branch-* you edit stuff in .git/remotes. It'd be interesting to know
-how much more light it manages to shed on the issue, and generally what
-do people think about it:
+Ie
 
+	git fetch rsync:..../linus-2.6-git <src>:<dst>
 
-Understanding GIT branching and merging
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+will fetch the <src> branch (ie you'd usually use "master") from my tree 
+and write it to the <dst> branch on your tree.
 
-Cogito's (inherited from GIT) concept of branching and merging may be a little
-confusing at first, since it can be different from what you knew so far. First,
-"branch" is too abstract word for us, so we will abandon it for now. We will
-present two other key concepts instead:
+And it's not a "merge" - it's just an update. A merge implies that you 
+take two trees that have had development on them and try to join them 
+together. A "git fetch" does _not_ merge anything: it just _fetches_ the 
+other side, and writes the objects (and top branch).
 
-	- Repository - when you did `cg-clone` or `cg-init`, you created
-	  a repository. That is a kind of container holding (usually) all your
-	  history and data.
+>     I think what's confusing me still is that the previous
+>     World View According to CVS was essentially that you have
+>     this import branch into which you dragged all the external
+>     updates.  Then you merged that over to your working branch.
+>     And, you could easily have views of _both_ of those
+>     branches simultaneously.
 
-	- Head - each repository has some heads available. Those are kind of
-	  handles for various sequences of commit. A head contains simply a
-	  pointer to the last commit in the sequence, and if you commit 'onto'
-	  a head, the pointer will be advanced to the new commit. Your
-	  "current" head is the one you are currently working on. It is
-	  normally called 'master'.
+Hmm.. I'm not sure exactly what you want, but
 
-Now let's take an hypothetical repository:
+	git fetch origin
 
-	repository
-	+--------+
-	|  master<  heads
-	|   unoji<
-	+--------+
+will fetch my stuff without touching your changes AT ALL, and then you can 
+do things like
 
-Let's suppose that we want to fork off master's development. We have two
-possibilities, either make new repository for it, or a new head.
+	gitk --all
 
-Let's say that we want to fork it off for our work offline on a notebook,
-so we will make it through cloning the repository to our notebook. What
-will `cg-clone` do?
+to see both your development series _and_ my stuff at the same time. And 
+yes, it works fine even if you have "dirty state" in your tree.
 
-	+--------+
-	+--------+
-First it creates an empty repository
+>     However, I _could_ just stick in my "jdl" working branch and
+>     directly pull-in and merge the linus changes.  I mean, my next
+>     step after pulling those changes into the so-called import
+>     branch was going to be to merge them to my branch anyway.
 
-	+--------+
-	$  origin<
-	+--------+
-Then it creates an 'origin' head, and will copy all the history from the
-remote repository's 'master' head there. So this head exists to reflect
-the state of the remote repository. The important point is that it is
-called 'origin' in our new repository, even through it corresponds to
-a 'master' head in the old repository. This is normal - you can name your
-local heads whatever you want.
+And indeed, if you just did
 
-The dollar sign denotes that this head is associated with a "remote branch"
-- a source location of the head is saved somewhere and you can fetch the
-head and possibly push to it.
+	git pull origin
 
-	+--------+
-	|  master<
-	$  origin<
-	+--------+
-Finally it copied over the 'origin' head to the 'master' head, which will
-from now as your current head represent your local development in the
-repository.
+then now you're doing a _pull_ instead of a fetch, which means that you do 
+both the fetch _and_ the merge.
 
-So you do some local development, do few commits on the 'master' head and
-want to catch up with the upstream repository. You use 'cg-update', but what
-will it do?
+In fact, if you use the shorthand with a named branch, the above really 
+_will_ do a "git fetch origin" first, ie it will actually _update_ the 
+"origin" branch before merging it into your current branch. So you'll have 
+_both_.
 
-	+--------+
-	|  master<
-	$  origin< < < < <
-	+--------+
-First, it will populate your 'origin' head with the new commits from the
-remote's 'master' head.
+You can see that (again) with
 
-	+--------+
-	|  master<-M-.
-	$  origin>---'
-	+--------+
-Then, it will merge those new commits to your 'master' head.
+	gitk --all
 
-Now let's imagine that there is also another head 'unoji' on the other side
-besides 'master', containing some cool commits not in 'master' (it has such an
-exotic name, after all...). You want to merge its commits to your head too?
+where you can actually see that "origin" got updated, and also merged into 
+whatever branch you were working on.
 
-	$ cg-branch-add r-unoji 'http://remote/repository#unoji'
-	$ cg-fetch r-unoji
+>     OK, so let's say I did pull linus' update into the jdl branch.
+>     And they merge up nicely.  How do I now propogate _just_ the
+>     linus changes to the origin branch?  Again, I don't think I
+>     can without first checking out the "origin" branch.
 
-will make your repository look like
+The "origin" branch was already updated automatically if you used
 
-	+--------+
-	|  master<
-	$  origin<
-	$ r-unoji<
-	+--------+
+	git pull origin
 
-with 'r-unoji' containing stuff from the remote's 'unoji' branch.
+However, if you used
 
-Ok, you did some development, but you decided not to merge it into upstream's
-'master' yet since it is not yet stable enough. However, you want to upload it
-into the upstream repository since it is public and you want people to be able
-to try out your stuff. Easy, let's push it to a new head on the server.
+	git pull rsync:..../linus-2.6.git
 
-	$ cg-branch-add upmirror 'git+ssh://remote/repository#nislu'
+then git would only have fetched the objects, and _not_ updated the 
+"origin" branch (because you didn't tell it about the "origin" branch). 
 
-will make your repository look like:
+But you can trivially fix that by doing
 
-	+--------+
-	|  master<
-	$  origin<
-	$ r-unoji<
-	$upmirror|
-	+--------+
+	git fetch origin
 
-Note that 'upmirror' has no head associated, it has just the "remote branch"
-info. That is because it needs no head since it's solely for pushing. It is
-however normal to have a head (frequently it's the 'origin') both for pulling
-and pushing.
+at this point, which will end up doing the equivalent of
 
-	$ cg-push upmirror
+	git fetch rsync:..../linus-2.6.git master:origin
 
-will then make the remote repository look like:
+(depending on what the contents of your .git/remotes/origin are, of 
+course, the above is just an example).
 
-	+--------+
-	|  master<
-	|   unoji<
-	|   nislu<
-	+--------+
+>     Am I missing something here?  Fighting against the tool?
 
-with 'nislu' on the remote side corresponding to the 'master' in your local
-repository.
+No, you just didn't realize how "git pull" and "git fetch" worked. Git
+should actually do what you want to do very naturally. Its' really how 
+it's designed to work, you just didn't realize ;)
 
-Ok, so this is how it goes for multiple repositories, where the cloned
-repositories are essentially single branches. Note that if you clone the
-repository locally, it can be actually very cheap, basically for free with
-`cg-clone -l` (but please read its documentation).
+>     So, you will all be pleased to know that I tried
+>     some stuff and was not successful.  In the "jdl"
+>     branch, I did a "git pull linus".  It happily went
+>     out and grabbed all the new objects from his tree.
+>     Spiffy.  It then announced that my branch of the
+>     working tree was "dirty" and quit.
 
-But what if you still do not want multiple repositories? The key here is to
-change your "current head" from 'master' to some new head, and then to be
-able to switch back and forth. This is unfortunately something Cogito does
-not let you do directly right now, but you can use core GIT commands
+Ok, it really depends on what your ".git/remotes/linus" looks like.
 
-	$ git-checkout -b aspyk
+For example, it _may_ just contain something like
 
-to create a new 'aspyk' head and switch to it, and
+	URL: rsync:..../linus2.6.git
 
-	$ git-checkout master
+in which case there is no explicit heads specified. In that case, you 
+really should specify _which_ of the heads you want to pull, and what the 
+target should be. For example, you can do that with
 
-to switch back to 'master' later, etc. Note that between the switching,
-Cogito will work just fine even if your current head is not 'master'.
+	git fetch linus master:linus
 
-You can get the list of available heads by
+which says: "fetch the branch 'master' from the repository described by 
+'linus' (.git/remotes/linus) into _my_ branch 'linus'".
 
-	$ cg-status -g
+NOTE! This really is a _fetch_. It will fetch the objects, and _overwrite_ 
+the old value of the branch "linus".
 
-where the current head is marked by '>' and remote heads are marked by 'R'.
-You can also get the list of source locations for remote heads by
+Now, you can specify that this is what you _always_ want to do, and 
+actually set the branches in the ".git/remotes/linus" file explicitly. You 
+can make your .git/remotes/linus file look like this instead:
 
-	$ cg-branch-ls
+	URL: rsync:..../linus2.6.git
+	Pull: master:linus
 
+and now you've told it that whenever you fetch (or pull) from "linus", you
+want to fetch the "master" branch from the remote end, and you always want
+to store it in the "linus" branch in the local repository.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+NOTE NOTE NOTE! Your branch-name does _not_ have to match the shorthand 
+name. So you can make the "Pull:" line say "master:linus-branch", and that 
+will mean that when you do "git fetch linus", it will update the 
+"linus-branch" instead.
+
+Still with me?
+
+Finally (or _instead_ of the "fetch"), we can do
+
+	git pull linus
+
+now. It will do the fetch, and since you now specify a destination in your 
+"remotes/linus" file, it will always update the "linus" part (it a "git 
+pull" is a _superset_ of what "git fetch" does). But in _addition_ to 
+fetching the "linus" branch, it will then try to merge it.
+
+Now, this is where "dirty" comes in. The merge will fail if you have 
+changed any files that the merge wants to modify. So do a
+
+	git diff --name-only HEAD
+
+to see if there are any changes, and commit them - or undo them - if so.  
+Then try to pull again.
+	
+		Linus
