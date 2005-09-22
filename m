@@ -1,45 +1,47 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Please undo "Use git-merge instead of git-resolve in
-Date: Thu, 22 Sep 2005 17:57:36 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509221747340.23242@iabervon.org>
-References: <E1EIWUv-0004HR-F6@jdl.com> <Pine.LNX.4.58.0509221413400.2553@g5.osdl.org>
- <Pine.LNX.4.58.0509221427520.2553@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: uncommon shell code
+Date: Thu, 22 Sep 2005 15:03:59 -0700
+Message-ID: <7vu0gclpyo.fsf@assigned-by-dhcp.cox.net>
+References: <72499e3b05092207326abadd91@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 22 23:53:20 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 23 00:05:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIZ0H-0001cS-KJ
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 23:53:17 +0200
+	id 1EIZAr-0004IJ-4J
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 00:04:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751267AbVIVVxP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 17:53:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbVIVVxP
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 17:53:15 -0400
-Received: from iabervon.org ([66.92.72.58]:5128 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751267AbVIVVxO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 17:53:14 -0400
-Received: (qmail 17415 invoked by uid 1000); 22 Sep 2005 17:57:36 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 22 Sep 2005 17:57:36 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509221427520.2553@g5.osdl.org>
+	id S1751206AbVIVWEH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 18:04:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbVIVWEH
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 18:04:07 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:5542 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751207AbVIVWEF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Sep 2005 18:04:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050922220400.LOKT1974.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 22 Sep 2005 18:04:00 -0400
+To: Robert Watson <robert.oo.watson@gmail.com>
+In-Reply-To: <72499e3b05092207326abadd91@mail.gmail.com> (Robert Watson's
+	message of "Thu, 22 Sep 2005 15:32:43 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9148>
 
-On Thu, 22 Sep 2005, Linus Torvalds wrote:
+Robert Watson <robert.oo.watson@gmail.com> writes:
 
-> Basically: having dirty state in your tree and then ending up having to do 
-> a manual merge is a big pain. Not worth it. I just keep really small dirty 
-> stuff so that I don't mind blowing it away if I need to.
+> I found the following shell code in git-tag.sh (and others):
 
-Would it be worthwhile to have a flag to make git-read-tree abort rather 
-than making a mess if you have any dirty state and the merge isn't 
-completely automatic? It's certainly easy enough to write.
+My fault; see point 2. in this article:
 
-	-Daniel
-*This .sig left intentionally blank*
+	http://marc.theaimsgroup.com/?l=git&m=112386506308820&w=2
+
+Please either get used to it or wait until I decide to modernize
+the scripts wholesale, whichever comes first.
