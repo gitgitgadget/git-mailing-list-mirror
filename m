@@ -1,49 +1,49 @@
-From: Robert Watson <robert.oo.watson@gmail.com>
-Subject: command to show diff of a commit
-Date: Thu, 22 Sep 2005 10:58:32 +0100
-Message-ID: <72499e3b05092202583f9a751d@mail.gmail.com>
-Reply-To: Robert Watson <robert.oo.watson@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [Core GIT] Long-term cherrypicking
+Date: Thu, 22 Sep 2005 11:58:45 +0200
+Message-ID: <20050922095845.GE21019@pasky.or.cz>
+References: <20050921164015.GC21971@pasky.or.cz> <20050922083142.GA6866@kroah.com> <tnxpsr12zu0.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Sep 22 12:00:25 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Greg KH <greg@kroah.com>, git@vger.kernel.org, kkeil@suse.de
+X-From: git-owner@vger.kernel.org Thu Sep 22 12:00:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EINqf-0006Pj-Ez
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 11:58:37 +0200
+	id 1EINqs-0006V1-DZ
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 11:58:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458AbVIVJ6e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 05:58:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751447AbVIVJ6e
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 05:58:34 -0400
-Received: from qproxy.gmail.com ([72.14.204.203]:20269 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751458AbVIVJ6d convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2005 05:58:33 -0400
-Received: by qproxy.gmail.com with SMTP id v40so38435qbe
-        for <git@vger.kernel.org>; Thu, 22 Sep 2005 02:58:32 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=g/RIjvUlfNsjks+VJAN9TjYgCbuqSWrNZIV4/fby46t/xVniCDU22Q3x5T4uOcoQsAF563RDpLN4fiwZDT0atIrY1X4Tey9eb0RWz+2XkWr9dy1PRPiPtbiJhRTyoafYM9meZecc02RECGO/QzJ08HYn0QWMgOWwEgXYJCA2LqM=
-Received: by 10.64.204.19 with SMTP id b19mr158167qbg;
-        Thu, 22 Sep 2005 02:58:32 -0700 (PDT)
-Received: by 10.64.203.14 with HTTP; Thu, 22 Sep 2005 02:58:32 -0700 (PDT)
-To: git@vger.kernel.org
+	id S1751447AbVIVJ6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 05:58:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbVIVJ6s
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 05:58:48 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:31197 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751447AbVIVJ6r (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 05:58:47 -0400
+Received: (qmail 28062 invoked by uid 2001); 22 Sep 2005 11:58:45 +0200
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <tnxpsr12zu0.fsf@arm.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9103>
 
-Hi,
+Dear diary, on Thu, Sep 22, 2005 at 11:53:27AM CEST, I got a letter
+where Catalin Marinas <catalin.marinas@gmail.com> told me that...
+> But what I understand from Petr's e-mail is that re-basing the patches
+> is not acceptable for a repository which is public. One option would
+> be to keep a private tree where the patches are re-based and a public
+> one which periodically pulls from Linus' tree and your private
+> one. Not sure how complicated the commit graph would look.
 
-I am wondering what is the best way to show the change introduced by a
-commit. In the other words, is there a better way to do this:
+It would be pretty ugly since the same patches would re-appear in the
+commit graph in another incarnations many times.
 
-git-diff b163512d4eb36ee946908b682c7863658c5a8db4^
-b163512d4eb36ee946908b682c7863658c5a8db4
-
-Thanks.
-Robertoo
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
