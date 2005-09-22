@@ -1,81 +1,65 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: Please undo "Use git-merge instead of git-resolve in
-Date: Thu, 22 Sep 2005 18:54:34 -0400 (EDT)
-Message-ID: <BAYC1-PASMTP0529AB50E9E3F8BACFE1EFAE970@CEZ.ICE>
-References: <E1EIVsD-0001Hu-9m@jdl.com> <20050922191058.GM21019@pasky.or.cz>
-    <BAYC1-PASMTP0510EEC44C7F787F27215AAE970@CEZ.ICE>
-    <7vk6h8lp3k.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: 'bad file' error updating from Linus
+Date: Thu, 22 Sep 2005 16:32:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509221630200.2553@g5.osdl.org>
+References: <dgu56t$d2p$1@sea.gmane.org> <509c8057050922054272b823fe@mail.gmail.com>
+ <dgv8jv$amv$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 01:20:10 2005
+X-From: git-owner@vger.kernel.org Fri Sep 23 01:32:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIaLD-0003Uk-7O
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 01:18:59 +0200
+	id 1EIaYe-0006Vz-Tm
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 01:32:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751060AbVIVXSq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 19:18:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751181AbVIVXSq
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 19:18:46 -0400
-Received: from bayc1-pasmtp05.bayc1.hotmail.com ([65.54.191.165]:62895 "EHLO
-	BAYC1-PASMTP05.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1751060AbVIVXSq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2005 19:18:46 -0400
-X-Originating-IP: [64.231.205.75]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([64.231.205.75]) by BAYC1-PASMTP05.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 22 Sep 2005 16:18:12 -0700
-Received: by linux1.attic.local (Postfix, from userid 48)
-	id B8D43644C0E; Thu, 22 Sep 2005 18:54:34 -0400 (EDT)
-Received: from 10.10.10.28
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Thu, 22 Sep 2005 18:54:34 -0400 (EDT)
-Message-ID: <55917.10.10.10.28.1127429674.squirrel@linux1>
-In-Reply-To: <7vk6h8lp3k.fsf@assigned-by-dhcp.cox.net>
-To: "Junio C Hamano" <junkio@cox.net>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
-X-OriginalArrivalTime: 22 Sep 2005 23:18:13.0069 (UTC) FILETIME=[E75AEFD0:01C5BFCB]
+	id S1751140AbVIVXc2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 19:32:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751187AbVIVXc2
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 19:32:28 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:23939 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751140AbVIVXc1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 19:32:27 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8MNWPBo022062
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 22 Sep 2005 16:32:25 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8MNWMBW027090;
+	Thu, 22 Sep 2005 16:32:24 -0700
+To: walt <wa1ter@myrealbox.com>
+In-Reply-To: <dgv8jv$amv$1@sea.gmane.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.117 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9152>
 
-On Thu, September 22, 2005 6:22 pm, Junio C Hamano said:
-> "Sean" <seanlkml@sympatico.ca> writes:
->
->> Why doesn't cogito just use the git fetch/pull commands?   Why does it
->> need anything special?   It seems like cogito is doing more than just
->> being an ease-of-use layer above git.
->
-> The way this question is posed is quite unfair to Pasky -- it
-> makes him look needlessly bad.
 
-Will try to pose it differently then, because it was not meant to make him
-"look bad".  In a different email Pasky seemed to be musing that cogito
-might do away with fast forward merges.  This too seemed like a decision
-best left to the plumbing, so i have been wondering how Pasky views
-cogito's relationship to git.
 
-But the immediate question really was, wouldn't it be better if cogito
-used the same code paths that git uses for push/pull/fetch?  Is there a
-reason that this isn't possible?
+On Thu, 22 Sep 2005, walt wrote:
+> 
+> I think it was a disk failure, but no matter -- it's fixed now.
 
-> The simple reason is because Cogito had its own richer
-> fetch/pull first.  The development of git aware pack transfer
-> protocols by Linus and the list discussion for multi-head pushes
-> and pulls came much later, which resulted in the current 'git
-> fetch/pull' interface.
+Nope, it's not.
 
-Yes, cogito had it first but once this functionality gets pushed down into
-git (where it's been for a while now) it makes a lot of sense for the
-procelain layers to use it.   That way the functionality only has to be
-maintained in one place and nobody has to guess what transports work with
-cogito or git etc.  But perhaps there are reasons that this just isn't
-possible with the cogito code, i dunno.
+It just depends on which IP address you happen to get when you look at 
+www.kernel.org.
 
-Sean
+www.kernel.org resolves to two addresses:
+
+	Name:   zeus-pub.kernel.org
+	Address: 204.152.191.5
+	Name:   zeus-pub.kernel.org
+	Address: 204.152.191.37
+
+and the .5 address is working, but the .37 address has the broken mirror.
+
+I thought hpa took it out of service while it was re-syncing, but 
+apparently not. 
+
+		Linus
