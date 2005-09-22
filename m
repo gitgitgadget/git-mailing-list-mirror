@@ -1,96 +1,88 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH 6/8] cogito: Don't ever assume object type in
-	cg-object-id
-Date: Thu, 22 Sep 2005 11:37:59 -0400
-Message-ID: <1127403479.14856.13.camel@dv>
-References: <1127183120.31115.34.camel@dv>
-	 <20050921100040.GE24902@pasky.or.cz> <1127359625.8074.18.camel@dv>
-	 <20050922094643.GC21019@pasky.or.cz>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: StGIT cannot import properly from stdin
+Date: Thu, 22 Sep 2005 16:42:28 +0100
+Message-ID: <b0943d9e050922084232f704d@mail.gmail.com>
+References: <433107C7.60901@drzeus.cx>
+	 <b0943d9e05092101033dd5d366@mail.gmail.com>
+	 <433290A5.5070008@drzeus.cx> <tnxhdcd2tfn.fsf@arm.com>
+	 <4332BA3E.2080607@drzeus.cx> <tnxr7bh188q.fsf@arm.com>
+	 <4332C880.1060906@drzeus.cx>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 22 17:38:29 2005
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_9029_16492160.1127403748298"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 22 17:45:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIT9J-0008Ol-Gb
-	for gcvg-git@gmane.org; Thu, 22 Sep 2005 17:38:13 +0200
+	id 1EITDU-0001PE-3g
+	for gcvg-git@gmane.org; Thu, 22 Sep 2005 17:42:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030407AbVIVPiK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 11:38:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030411AbVIVPiK
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 11:38:10 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:31119 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1030407AbVIVPiI
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Sep 2005 11:38:08 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EIT9A-0007xF-Q6
-	for git@vger.kernel.org; Thu, 22 Sep 2005 11:38:04 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.52)
-	id 1EIT95-0006P5-Vi; Thu, 22 Sep 2005 11:37:59 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050922094643.GC21019@pasky.or.cz>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	id S1030409AbVIVPm3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 11:42:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030411AbVIVPm3
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 11:42:29 -0400
+Received: from xproxy.gmail.com ([66.249.82.204]:50422 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1030409AbVIVPm3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 11:42:29 -0400
+Received: by xproxy.gmail.com with SMTP id i30so486206wxd
+        for <git@vger.kernel.org>; Thu, 22 Sep 2005 08:42:28 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=FOmT3PhBaYKOeyMu1VbPz2r/nVBsbEYqXVTBEy/PZ28OQc0N4Uxp4mTRuYj6iqQz8Afva+UawGiJePMPer7m7T8CPC/fFjqZs3gQnIEKd9pssU4+BYUSgeBq6GGToJk97ZcJt/vulHZAfi8wxfxygr+Awe/xJq3ci75ocvmDWTE=
+Received: by 10.70.53.9 with SMTP id b9mr337998wxa;
+        Thu, 22 Sep 2005 08:42:28 -0700 (PDT)
+Received: by 10.70.27.20 with HTTP; Thu, 22 Sep 2005 08:42:28 -0700 (PDT)
+To: Pierre Ossman <drzeus-list@drzeus.cx>
+In-Reply-To: <4332C880.1060906@drzeus.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9128>
 
-Hi, Petr!
+------=_Part_9029_16492160.1127403748298
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-On Thu, 2005-09-22 at 11:46 +0200, Petr Baudis wrote:
-> $ git-fsck-objects
-> error: b3e9704ecdf48869f635f0aa99ddfb513f885aff: object not found
-> 
-> and some dangling stuff, that's all I get. This seems to be caused by
-> the mere existence of that (empty) file, so I just removed it from the
-> objects database and all is fine now.
+On 22/09/05, Pierre Ossman <drzeus-list@drzeus.cx> wrote:
+> Bummer. I checked with the local Python guru here and he suggested
+> changing the for loop to an infinite while and f.readline().
 
-Maybe kernel.org site is not in sync yet, but anyway, here's what I
-found.
+It works, thanks for this. I attached a patch if you want to try.
 
-I ran this script:
+--
+Catalin
 
-[proski@dv cogito]$ for i in .git/refs/tags/*; do git-tar-tree `cat $i` >/dev/null || echo $i; done
-fatal: not a reference to a tag, commit or tree object: 463d05c7c4fe7f24da29749f4c7f25893fc20b8c
-.git/refs/tags/git-pasky-0.1
-fatal: not a reference to a tag, commit or tree object: 2c70421be7d88fbee49986d7a5584d1f010a25de
-.git/refs/tags/git-pasky-0.2
-fatal: not a reference to a tag, commit or tree object: d14925c87cdb6ca6345bcb3c8e34a2d659c79451
-.git/refs/tags/git-pasky-0.3
+------=_Part_9029_16492160.1127403748298
+Content-Type: application/octet-stream; name="import-stdin"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="import-stdin"
 
-If I delete the bad tags and prune the tree, git-fsck-objects has
-nothing to complain about:
-
-[proski@dv cogito]$ rm .git/refs/tags/git-pasky-0.1
-[proski@dv cogito]$ rm .git/refs/tags/git-pasky-0.2
-[proski@dv cogito]$ rm .git/refs/tags/git-pasky-0.3
-[proski@dv cogito]$ git-prune origin `cat .git/refs/tags/*`
-[proski@dv cogito]$ git-fsck-objects 
-[proski@dv cogito]$
-
-That's probably what you should do on the master tree if you haven't
-done it.
-
-I can run "git-prune origin", but then cg-fetch would refetch objects
-for more tags:
-
-Missing object of tag cogito-0.12... retrieved
-Missing object of tag cogito-0.12.1... retrieved
-Missing object of tag cogito-0.13... retrieved
-Missing object of tag cogito-0.14... retrieved
-Missing object of tag cogito-0.14.1... retrieved
-Missing object of tag cogito-0.14.2... retrieved
-Missing object of tag cogito-0.15... retrieved
-Missing object of tag git-pasky-0.1... retrieved
-Missing object of tag git-pasky-0.2... retrieved
-Missing object of tag git-pasky-0.3... retrieved
-
-How come that cogito-0.12 - cogito-0.15 are not on the origin tree, but
-older cogito tags are?
-
--- 
-Regards,
-Pavel Roskin
+Rml4IGltcG9ydGluZyBmcm9tIHN0ZGluCgpUaGUgY3VycmVudCBzdGRpbiBwYXRjaCBpbXBvcnRp
+bmcgZXhwZWN0cyB0d28gRU9GcyBzaW5jZSB0aGUgJ2ZvcicgbG9vcApkb2Vzbid0IHN0YXJ0IGJl
+Zm9yZSBvbmUgRU9GIGlzIHJlY2VpdmVkLiBBcyBzdWdnZXN0ZWQsIHRoaXMgcGF0Y2ggY2hhbmdl
+cwp0aGUgJ2ZvcicgbG9vcCB3aXRoIGEgJ3doaWxlIFRydWUnIGxvb3AuCgpTaWduZWQtb2ZmLWJ5
+OiBDYXRhbGluIE1hcmluYXMgPGNhdGFsaW4ubWFyaW5hc0BnbWFpbC5jb20+Ci0tLQoKIHN0Z2l0
+L2NvbW1hbmRzL2ltcHJ0LnB5IHwgICAgNiArKysrKy0KIHN0Z2l0L2dpdC5weSAgICAgICAgICAg
+IHwgICAgNSArKysrLQogMiBmaWxlcyBjaGFuZ2VkLCA5IGluc2VydGlvbnMoKyksIDIgZGVsZXRp
+b25zKC0pCgpkaWZmIC0tZ2l0IGEvc3RnaXQvY29tbWFuZHMvaW1wcnQucHkgYi9zdGdpdC9jb21t
+YW5kcy9pbXBydC5weQotLS0gYS9zdGdpdC9jb21tYW5kcy9pbXBydC5weQorKysgYi9zdGdpdC9j
+b21tYW5kcy9pbXBydC5weQpAQCAtMTM0LDcgKzEzNCwxMSBAQCBkZWYgX19wYXJzZV9wYXRjaChm
+aWxlbmFtZSA9IE5vbmUpOgogICAgIGF1dGhuYW1lID0gYXV0aGVtYWlsID0gYXV0aGRhdGUgPSBO
+b25lCiAKICAgICBkZXNjciA9ICcnCi0gICAgZm9yIGxpbmUgaW4gZjoKKyAgICB3aGlsZSBUcnVl
+OgorICAgICAgICBsaW5lID0gZi5yZWFkbGluZSgpCisgICAgICAgIGlmIG5vdCBsaW5lOgorICAg
+ICAgICAgICAgYnJlYWsKKwogICAgICAgICAjIHRoZSBmaXJzdCAnU2lnbmVkLW9mLWJ5OicgaXMg
+dGhlIGF1dGhvcgogICAgICAgICBpZiBub3QgYXV0aG5hbWUgYW5kIHJlLm1hdGNoKCdzaWduZWQt
+b2ZmLWJ5OlxzKycsIGxpbmUsIHJlLkkpOgogICAgICAgICAgICAgYXV0aCA9IHJlLmZpbmRhbGwo
+J14uKj86XHMrKC4qKSQnLCBsaW5lKVswXQpkaWZmIC0tZ2l0IGEvc3RnaXQvZ2l0LnB5IGIvc3Rn
+aXQvZ2l0LnB5Ci0tLSBhL3N0Z2l0L2dpdC5weQorKysgYi9zdGdpdC9naXQucHkKQEAgLTExMyw3
+ICsxMTMsMTAgQEAgZGVmIGdldF9jb25mbGljdHMoKToKIAogZGVmIF9pbnB1dChjbWQsIGZpbGVf
+ZGVzYyk6CiAgICAgcCA9IHBvcGVuMi5Qb3BlbjMoY21kKQotICAgIGZvciBsaW5lIGluIGZpbGVf
+ZGVzYzoKKyAgICB3aGlsZSBUcnVlOgorICAgICAgICBsaW5lID0gZmlsZV9kZXNjLnJlYWRsaW5l
+KCkKKyAgICAgICAgaWYgbm90IGxpbmU6CisgICAgICAgICAgICBicmVhawogICAgICAgICBwLnRv
+Y2hpbGQud3JpdGUobGluZSkKICAgICBwLnRvY2hpbGQuY2xvc2UoKQogICAgIGlmIHAud2FpdCgp
+Ogo=
+------=_Part_9029_16492160.1127403748298--
