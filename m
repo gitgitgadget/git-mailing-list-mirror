@@ -1,59 +1,45 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH]: cg-clean confused by symlinks to directories
-Date: Fri, 23 Sep 2005 18:12:50 -0400
-Message-ID: <1127513570.4708.4.camel@dv>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: How to make Cogito use git-fetch-pack?
+Date: Fri, 23 Sep 2005 15:20:08 -0700
+Message-ID: <43347F98.6020101@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Sep 24 00:14:19 2005
+Cc: Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Sat Sep 24 00:21:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIvmw-0005LJ-J5
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 00:13:02 +0200
+	id 1EIvuG-0007Ea-Hf
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 00:20:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbVIWWNA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 18:13:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbVIWWM7
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 18:12:59 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:10727 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751321AbVIWWM7
+	id S1751323AbVIWWUc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 18:20:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751324AbVIWWUc
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 18:20:32 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:58304 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751323AbVIWWUb
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2005 18:12:59 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EIvmr-0008QF-Nk
-	for git@vger.kernel.org; Fri, 23 Sep 2005 18:12:58 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.52)
-	id 1EIvmk-0001lt-Ek; Fri, 23 Sep 2005 18:12:50 -0400
-To: Petr Baudis <pasky@suse.cz>, git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	Fri, 23 Sep 2005 18:20:31 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j8NMKDQR007898
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 23 Sep 2005 15:20:14 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9209>
 
-cg-clean confused by symlinks to directories
+Is there any way to make Cogito use git-fetch-pack instead of 
+git-ssh-fetch?  git+ssh:// seems to invoke the latter.
 
-It turns out that "git-ls-files --others" shows symlinks to directories.
-That shouldn't trigger internal error in cg-clean.  Such symlinks should
-be treated like files and removed even without the "-d" option.
-
-Signed-off-by: Pavel Roskin <proski@gnu.org>
-
-diff --git a/cg-clean b/cg-clean
---- a/cg-clean
-+++ b/cg-clean
-@@ -111,7 +111,7 @@ clean_files()
- 	cg-status "$xopt" -w | sed -n 's/^? //p' |
- 	for file in $(cat); do
- 		path="${_git_relpath}$file"
--		if [ -d "$path" ]; then
-+		if [ -d "$path" -a ! -L "$path" ]; then
- 			# Sanity check, shouldn't happen
- 			echo "FATAL: cg-status reports directories (internal error)" >&2
- 			exit 1
-
-
--- 
-Regards,
-Pavel Roskin
+	-hpa
