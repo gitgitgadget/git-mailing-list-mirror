@@ -1,60 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 0.99.7b
-Date: Thu, 22 Sep 2005 23:18:44 -0700
-Message-ID: <7voe6ki9x7.fsf@assigned-by-dhcp.cox.net>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: /bin/sh portability question
+Date: Fri, 23 Sep 2005 09:50:58 +0200
+Message-ID: <20050923075058.GA25473@bohr.gbar.dtu.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Sep 23 08:18:59 2005
+X-From: git-owner@vger.kernel.org Fri Sep 23 09:52:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIgtW-0004bx-N3
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 08:18:52 +0200
+	id 1EIiKp-0007eS-B0
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 09:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750702AbVIWGSr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 02:18:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750703AbVIWGSr
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 02:18:47 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:241 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1750702AbVIWGSr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2005 02:18:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050923061846.ZUHF13739.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 23 Sep 2005 02:18:46 -0400
+	id S1750732AbVIWHvE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 03:51:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750733AbVIWHvE
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 03:51:04 -0400
+Received: from bohr.gbar.dtu.dk ([192.38.95.24]:64954 "HELO bohr.gbar.dtu.dk")
+	by vger.kernel.org with SMTP id S1750732AbVIWHvD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2005 03:51:03 -0400
+Received: (qmail 230 invoked by uid 5842); 23 Sep 2005 07:50:59 -0000
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+User-Agent: Mutt/1.4i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9160>
 
-GIT 0.99.7b
+Hello,
 
-Contains the following post-0.99.7a fixes:
+It seems things are progressing nicely with regard to
+Solaris portability.  However, I still have a few problems:
 
- - Commit walker performance fix, mostly during walking commits
-   in a downloaded packfile, thanks to Sergey Vlasov.
+1) Maybe I didn't notice some new configuration option,
+   but strcasestr is still not found with a simple "gmake".
 
- - Squelch unnecessarily alarming error message from fetch and
-   clone over rsync transport, when remote repository does not
-   borrow anything from other repositories.
+2) In many of the shell scripts there is the idiom:
 
-   I've seen enough people got annoyed/worried/alarmed after
-   seeing this one on both git and linux-kernel list.
+      #!/bin/sh
+      
+      cmd=
+      path=$(dirname $0)
+      case "$#" in
+      0)      ;;
+      *)      cmd="$1"
+              shift
+ 
+   When run, this gives the error:
 
- - Documentation was not rebuilt before installation, noticed by
-   Randal L Schwartz.
+      ./git.sh: syntax error at line 4: `path=$' unexpected
 
- - Fetching of objects over http transport got a bit safer.
+   I think it's because (on my Solaris at least), sh is really 
+   sh and is not symlinked to bash, and sh doesn't like that 
+   syntax.  Are there any good solutions to this other than
+   making the administrators actually change sh to a symlink,
+   (which I tried)?
 
-
-Tarballs, RPMs and Debs are available at
-
-	http://kernel.org/pub/software/scm/git/
-
-Or, if you use git already:
-
-	{http,rsync}://kernel.org/pub/scm/git/git.git/
+/Peter
