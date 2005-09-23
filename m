@@ -1,96 +1,56 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Cogito: Minor documentation fixes
-Date: Fri, 23 Sep 2005 02:40:33 +0200
-Message-ID: <20050923004033.GA23708@diku.dk>
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: 'bad file' error updating from Linus
+Date: Thu, 22 Sep 2005 17:56:34 -0700
+Organization: none
+Message-ID: <dgvjs3$4so$1@sea.gmane.org>
+References: <dgu56t$d2p$1@sea.gmane.org> <509c8057050922054272b823fe@mail.gmail.com> <dgv8jv$amv$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 02:42:06 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Sep 23 03:00:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIbcW-0003ve-BF
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 02:40:56 +0200
+	id 1EIbuH-0007H5-Kl
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 02:59:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750939AbVIWAky (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 20:40:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751124AbVIWAkx
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 20:40:53 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:51141 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S1750939AbVIWAkx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 20:40:53 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id B08656E0DCE; Fri, 23 Sep 2005 02:39:31 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 7437D6E0DB7; Fri, 23 Sep 2005 02:39:31 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 94CD860E21; Fri, 23 Sep 2005 02:40:33 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
+	id S1751140AbVIWA7K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 20:59:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbVIWA7K
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 20:59:10 -0400
+Received: from main.gmane.org ([80.91.229.2]:49833 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751140AbVIWA7J (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 20:59:09 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EIbsu-00075M-V8
+	for git@vger.kernel.org; Fri, 23 Sep 2005 02:57:52 +0200
+Received: from adsl-69-234-234-116.dsl.irvnca.pacbell.net ([69.234.234.116])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Sep 2005 02:57:52 +0200
+Received: from wa1ter by adsl-69-234-234-116.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Sep 2005 02:57:52 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-234-116.dsl.irvnca.pacbell.net
+User-Agent: Mail/News 1.6a1 (X11/20050922)
+In-Reply-To: <dgv8jv$amv$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9157>
 
- - Link to the new cg-object-id man page from cogito(7).
- - Fix cg-help usage string listing in cogito(7).
- - Make the cg-commit -m option more conforming to other options taking
-   arguments (the old usage remains).
- - Use COMMIT_ID consistently.
+walt wrote:
+[...]
+> After I repeated the cg-update (successfully) I was still left with
+> the 'bad file' error.  I tried 'cg-restore' and the error went away.
 
-Signed-of-by: Jonas Fonseca <fonseca@diku.dk>
+Oops -- correction!
 
----
+After encountering the same problem on a different machine, I find
+that 'cg-reset' is the one which fixed the error, not 'cg-restore'.
 
- Documentation/make-cogito-asciidoc |    4 ++--
- cg-commit                          |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/make-cogito-asciidoc b/Documentation/make-cogito-asciidoc
---- a/Documentation/make-cogito-asciidoc
-+++ b/Documentation/make-cogito-asciidoc
-@@ -24,11 +24,11 @@ print_command_info()
- 
- 	echo
- 	case "$cmdname" in
--	cg-X*|*-id)
-+	cg-X*)
- 		echo "$cmdname::"
- 		;;
- 	cg-*)
--		usage=$(sed -n '/^USAGE=/,0s/.*cg-[^ ]*\(.*\)"/\1/p' < $command)
-+		usage=$(sed -n '/^USAGE=/,0s/.*"cg-[^ ]*\(.*\)"/\1/p' < $command)
- 		echo "gitlink:$cmdname[] $usage::"
- 		;;
- 	esac
-diff --git a/cg-commit b/cg-commit
---- a/cg-commit
-+++ b/cg-commit
-@@ -25,7 +25,7 @@
- #	Note, this is used internally by 'Cogito' when merging. This option
- #	does not make sense when files are given on the command line.
- #
--# -mMESSAGE::
-+# -m MESSAGE::
- #	Specify the commit message, which is used instead of starting
- #	up an editor (if the input is not `stdin`, the input is appended
- #	after all the '-m' messages). Multiple '-m' parameters are appended
-@@ -111,7 +111,7 @@
- # EDITOR::
- #	The editor used for entering revision log information.
- 
--USAGE="cg-commit [-mMESSAGE]... [-C] [-e | -E] [-c COMMITID] [FILE]... [< MESSAGE]"
-+USAGE="cg-commit [-m MESSAGE]... [-C] [-e | -E] [-c COMMIT_ID] [FILE]... [< MESSAGE]"
- 
- . ${COGITO_LIB}cg-Xlib || exit 1
- 
-
--- 
-Jonas Fonseca
+I believe that I tried both commands on the first machine, so I was
+uncertain which one actually did the fix.
