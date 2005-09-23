@@ -1,80 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Please undo "Use git-merge instead of git-resolve in
-Date: Fri, 23 Sep 2005 17:07:37 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509231648310.23242@iabervon.org>
-References: <E1EIVsD-0001Hu-9m@jdl.com> <20050922191058.GM21019@pasky.or.cz>
- <34462.10.10.10.28.1127417134.squirrel@linux1> <20050923091012.GA10255@pasky.or.cz>
- <7vslvwcelj.fsf@assigned-by-dhcp.cox.net> <20050923095742.GC10255@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [ANNOUNCE] GIT 0.99.7b
+Date: Fri, 23 Sep 2005 14:45:43 -0700
+Message-ID: <7v4q8ba260.fsf@assigned-by-dhcp.cox.net>
+References: <7voe6ki9x7.fsf@assigned-by-dhcp.cox.net>
+	<dh0uur$h4g$1@sea.gmane.org> <7v8xxnbjhl.fsf@assigned-by-dhcp.cox.net>
+	<20050923205242.GY27375@ca-server1.us.oracle.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 23:04:12 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: walt <wa1ter@myrealbox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 23 23:46:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIuhR-0007Y2-9S
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 23:03:17 +0200
+	id 1EIvMb-0005Gj-Ii
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 23:45:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbVIWVDO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 17:03:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbVIWVDO
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 17:03:14 -0400
-Received: from iabervon.org ([66.92.72.58]:23315 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751293AbVIWVDO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2005 17:03:14 -0400
-Received: (qmail 27101 invoked by uid 1000); 23 Sep 2005 17:07:37 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 23 Sep 2005 17:07:37 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050923095742.GC10255@pasky.or.cz>
+	id S932071AbVIWVpq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 17:45:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932072AbVIWVpq
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 17:45:46 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:4045 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932071AbVIWVpq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2005 17:45:46 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050923214544.XAWE1974.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 23 Sep 2005 17:45:44 -0400
+To: Joel Becker <Joel.Becker@oracle.com>
+In-Reply-To: <20050923205242.GY27375@ca-server1.us.oracle.com> (Joel Becker's
+	message of "Fri, 23 Sep 2005 13:52:42 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9206>
 
-On Fri, 23 Sep 2005, Petr Baudis wrote:
+Joel Becker <Joel.Becker@oracle.com> writes:
 
-> Dear diary, on Fri, Sep 23, 2005 at 11:34:16AM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> told me that...
-> > Petr Baudis <pasky@suse.cz> writes:
-> > 
-> > > 	* cg-fetch can do with symlinked object database
-> > 
-> > Do you mean ".git/object" in the repository you are fetching
-> > into is a symlink to somewhere, or something else?
-> 
-> Yes, exactly that. You get it by doing cg-clone -l /local/path.  O(1)
-> cloning, but it has its downsides and dangers which I tried to describe
-> in the cg-clone documentation.
+> On Fri, Sep 23, 2005 at 01:46:14PM -0700, Junio C Hamano wrote:
+>> If you pulled from "master" branch, then --version would still
+>> say 0.99.7; I agree it is confusing.  On the other hand, I do
+>> not think we would want to increment the version string with
+>> every little changes, so...
+>
+> 	Every little change, no.  But ANNOUNCEd releases should be
+> considered 'major' from this point of view.  I don't think a little
+> extra version number incrementing is too big a deal.
 
-That's actually how I use git, and it works for me. (To be precise, I 
-have:
+Yes, 'maint' has the GIT_VERSION bumped in the Makefile
+(0.99.7a, 0.99.7b) and that is propagated to 'git --version'.
 
- ~/git/project.git/{objects,refs,info}
+What I was having trouble was what to do with the stuff we put
+in the 'master' between 0.99.7 and 0.99.8.  'maint' was *forked*
+from 0.99.7, not just tagging some midpoint in 'master' line for
+obvious reasons, so the 'git --version' on the 'master' side
+does not have much to do with what happens on the 'maint' side.
 
-and I have
+We could say, immediately after 0.99.7 is released, bump the
+GIT_VERSION in the 'master' branch to 0.99.8-pre or something
+like that.
 
- ~/working/git/current-work/, with .git/{objects,refs,info} symlinks to 
-                              the above.
-
-git fetch works fine, with the exception that remotes aren't shared 
-between working trees.
-
-> > > 	* cg-fetch won't do useless fetches when we are already
-> > > 	  up-to-date
-> > 
-> > Care to explain?  Perhaps you are talking about rsync transport
-> > (in which case I would not be surprised)?
-> 
-> Just that if the reference pointer did not change, you don't try to pull
-> any objects. Speeds things up somewhat, and now it should always work
-> (well, cg-fetch has -f which makes it always try objects as well, in
-> case something went wrong anyway).
-
-I assume you mean with rsync? The current git-http-fetch won't try any 
-objects if the ref didn't change (or, for that matter, if we have a 
-different ref that's the same), and the old one would make a local check 
-for the objects before trying to downlaod anything.
-
-	-Daniel
-*This .sig left intentionally blank*
+We need to pick something that sorts after '0.99.7a', '0.99.7b',
+etc. and before '0.99.8'.  Somebody needs to come up with what
+is appropriate for version number ordering scheme employed by
+binary packaged distributions.  I know 0.99.8-pre does not sort
+before 0.99.8 on Debian.  Probably '0.99.7zzz'?
