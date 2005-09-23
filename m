@@ -1,67 +1,70 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: /bin/sh portability question
-Date: Fri, 23 Sep 2005 06:34:45 -0400 (EDT)
-Message-ID: <BAYC1-PASMTP03087B2B759861CF1C864AAE960@CEZ.ICE>
-References: <20050923075058.GA25473@bohr.gbar.dtu.dk>
-    <7vzmq4faz6.fsf@assigned-by-dhcp.cox.net>
-    <BAYC1-PASMTP05141C92C0F083A17B2EEFAE960@CEZ.ICE>
-    <7vfyrwdtv0.fsf@assigned-by-dhcp.cox.net>
+From: Robert Watson <robert.oo.watson@gmail.com>
+Subject: [RFC] Do we still need the git command?
+Date: Fri, 23 Sep 2005 12:24:42 +0100
+Message-ID: <72499e3b050923042466011c4f@mail.gmail.com>
+Reply-To: Robert Watson <robert.oo.watson@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 12:36:41 2005
+X-From: git-owner@vger.kernel.org Fri Sep 23 13:25:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIktd-0004O7-Fk
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 12:35:13 +0200
+	id 1EIlfw-00078E-KF
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 13:25:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750849AbVIWKex (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 06:34:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750879AbVIWKex
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 06:34:53 -0400
-Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:15377 "EHLO
-	BAYC1-PASMTP03.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1750848AbVIWKew (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2005 06:34:52 -0400
-X-Originating-IP: [64.231.205.75]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([64.231.205.75]) by BAYC1-PASMTP03.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 23 Sep 2005 03:34:15 -0700
-Received: by linux1.attic.local (Postfix, from userid 48)
-	id 436F9644C12; Fri, 23 Sep 2005 06:34:45 -0400 (EDT)
-Received: from 10.10.10.28
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Fri, 23 Sep 2005 06:34:45 -0400 (EDT)
-Message-ID: <39450.10.10.10.28.1127471685.squirrel@linux1>
-In-Reply-To: <7vfyrwdtv0.fsf@assigned-by-dhcp.cox.net>
-To: "Junio C Hamano" <junkio@cox.net>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
-X-OriginalArrivalTime: 23 Sep 2005 10:34:16.0094 (UTC) FILETIME=[58CD5BE0:01C5C02A]
+	id S1750841AbVIWLYq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 07:24:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750850AbVIWLYp
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 07:24:45 -0400
+Received: from qproxy.gmail.com ([72.14.204.194]:8576 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750841AbVIWLYp convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2005 07:24:45 -0400
+Received: by qproxy.gmail.com with SMTP id v40so154232qbe
+        for <git@vger.kernel.org>; Fri, 23 Sep 2005 04:24:42 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=JJcyXDiSb2LLJRhjDI1BIHxfrFysPhH3g4Nbt8Ljdgw2V2k002jnzY8OMWdxu5e4rVUE+Xw4M1DNIxvCZBE4KRKoyPD+x7wiefD36a+CMRK5WJh+ytpJJGiJifrLouJzidHTrc82cB6tA0YQPbWwtblDw39TBTSzGf2sWA1k3mo=
+Received: by 10.64.249.16 with SMTP id w16mr216740qbh;
+        Fri, 23 Sep 2005 04:24:42 -0700 (PDT)
+Received: by 10.64.203.14 with HTTP; Fri, 23 Sep 2005 04:24:42 -0700 (PDT)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9177>
 
-On Fri, September 23, 2005 5:19 am, Junio C Hamano said:
-> "Sean" <seanlkml@sympatico.ca> writes:
->
->> If not, would you accept a patch that first converted the shell scripts
->> to
->> #!/bin/bash and then added a "make install" option that allowed them to
->> be
->> replaced?   Something like "make install S=/bin/ash" for instance?
->
->     $ make SHELL_PATH=/bin/bash
->
-> Perhaps?
->
+Hello,
 
-Heh.. so you've already got that working :o)   So on Solaris one fix would
-be to just use the SHELL_PATH setting when installing to point to
-/bin/bash.   What do you think about making /bin/bash the default?
+The function of the git command:
 
-Sean
+(1) As an alias for git-command.  After the recent big tool rename,
+all "git                         command" can be replaced by
+"git-command".
+(2) Report version number.  This can be solved by a git-version
+command.                             (3) List interesting commands. 
+This can be taken care by man git(7) or TAB-TAB.  Or, add a git-help
+command to list only interesting commands.
+
+How about get rid of the git command all together?
+
+Cons:
+(1) Another change of the user interface;
+(2) Different style from CVS/SVN.
+
+Pros:
+(1) Consistency.  There is only one way to do it.  People won't be
+wondering what's the difference between "git-diff" and "git diff".
+(2) Performance.  One less shell script to parse and one less exec system call.
+(3) TAB completion.  git-whatchanged and other long commands are
+easier to type with TAB completion.  TAB-TAB also shows you all
+available commands.
+(4) Do not conflict with GNU Interactive Tools.  Make the life of
+Debian people easier.
+
+What do you think?
+
+Robertoo
