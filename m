@@ -1,71 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [ANNOUNCE] Cogito-0.15.1 (important bugfix)
-Date: Fri, 23 Sep 2005 15:12:14 +0200
-Message-ID: <20050923131213.GE10255@pasky.or.cz>
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: [ANNOUNCE] GIT 0.99.7b
+Date: Fri, 23 Sep 2005 06:11:54 -0700
+Organization: none
+Message-ID: <dh0uur$h4g$1@sea.gmane.org>
+References: <7voe6ki9x7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 15:13:10 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Sep 23 15:17:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EInLg-00021H-Sa
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 15:12:21 +0200
+	id 1EInOE-0002fd-QF
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 15:14:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750966AbVIWNMR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 09:12:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750968AbVIWNMR
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 09:12:17 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:42189 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750964AbVIWNMQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2005 09:12:16 -0400
-Received: (qmail 21253 invoked by uid 2001); 23 Sep 2005 15:12:14 +0200
+	id S1750971AbVIWNO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 09:14:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750972AbVIWNO4
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 09:14:56 -0400
+Received: from main.gmane.org ([80.91.229.2]:11243 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750970AbVIWNOz (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2005 09:14:55 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EInMl-0002M9-LL
+	for git@vger.kernel.org; Fri, 23 Sep 2005 15:13:27 +0200
+Received: from adsl-69-234-234-116.dsl.irvnca.pacbell.net ([69.234.234.116])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Sep 2005 15:13:27 +0200
+Received: from wa1ter by adsl-69-234-234-116.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Sep 2005 15:13:27 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-234-116.dsl.irvnca.pacbell.net
+User-Agent: Mail/News 1.6a1 (X11/20050923)
+In-Reply-To: <7voe6ki9x7.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9190>
 
-  Hello,
+Junio C Hamano wrote:
+> GIT 0.99.7b
+[...]
+> Or, if you use git already:
+> 
+> 	{http,rsync}://kernel.org/pub/scm/git/git.git/
 
-  I'm announcing the release of 0.15.1 of Cogito, the human-friendly UI
-for Linus' GIT. You can find it at
+I did it that way and now I see this:
 
-	http://www.kernel.org/pub/software/scm/cogito/
+$git --version
+git version 0.99.7
 
-when kernel.org mirroring will go through another short period of
-actually working. ;-)
-
-  I'm cc'ing the Linux Kernel mailing list since this release contains
-a bugfix for an ugly potential data loss bug, which actually probably
-covers nearly all Cogito users (it was introduced in cogito-0.11.2).
-If you had some local uncommitted changes and merge new stuff (either
-using cg-update or cg-merge), in some cases it would silently trash your
-local changes. It was caused by a bogus git-checkout-cache invocation
-pointed out by Linus.
-
-  Other interesting stuff:
-
-  * cg-clean -d would remove the arch/ and include/ subdirs in Linux
-    kernel - just any directories containing only subdirectories
-    (this isn't as horrible as it sounds since you didn't lose anything
-    precious you didn't want to lose - you can recover by just doing
-    cg-restore)
-  * Support for fetching from URLs of the 'git' protocol scheme
-  * cg-log -d filters based on date
-  * cg-diff works on BSD now
-  * Merge cg-(commit|parent|tree)-id to cg-object-id
-  * Some significant documentation enhancements
-  * Some new tests in the testsuite (for cg-merge ;-)
-  * Usual squad of minor bugfixes
-
-  Happy hacking,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+This is a bit confusing.  Did I upgrade or downgrade?
+Maybe the version string should contain the same kind
+of hexadecimal string that Linus is appending to his
+kernel version?
