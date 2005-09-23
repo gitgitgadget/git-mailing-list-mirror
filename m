@@ -1,57 +1,59 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git 0.99.7b doesn't build on Cygwin
-Date: Sat, 24 Sep 2005 10:08:28 +1200
-Message-ID: <46a038f905092315081de776c3@mail.gmail.com>
-References: <ud5mznc1x.fsf@peter-b.co.uk>
-	 <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
-	 <14403.62.254.128.6.1127483455.squirrel@mail.twu.net>
-Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH]: cg-clean confused by symlinks to directories
+Date: Fri, 23 Sep 2005 18:12:50 -0400
+Message-ID: <1127513570.4708.4.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 00:09:51 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Sep 24 00:14:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIvic-0004FE-Qo
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 00:08:35 +0200
+	id 1EIvmw-0005LJ-J5
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 00:13:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751320AbVIWWIc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 18:08:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751321AbVIWWIc
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 18:08:32 -0400
-Received: from qproxy.gmail.com ([72.14.204.201]:5171 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751320AbVIWWIb convert rfc822-to-8bit
+	id S1751321AbVIWWNA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 18:13:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbVIWWM7
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 18:12:59 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:10727 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751321AbVIWWM7
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2005 18:08:31 -0400
-Received: by qproxy.gmail.com with SMTP id v40so216379qbe
-        for <git@vger.kernel.org>; Fri, 23 Sep 2005 15:08:28 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IPcHDU6/dn5spSNRKDBEgQ9iJIJGaZUDykhkiNN1Bb3XVYFigXlZ8D9HmFluiET2UWL9Aug4nXn/cmh8RfzaQAQnzFpjoYtQzYHtHqL/IOOb9Qgpi5lUq/WX3lkSyOE52TzXGzXvdrImxCxNv9LnKWAKUB87ji5Hix3P3dvifz0=
-Received: by 10.65.11.15 with SMTP id o15mr249271qbi;
-        Fri, 23 Sep 2005 15:08:28 -0700 (PDT)
-Received: by 10.64.232.18 with HTTP; Fri, 23 Sep 2005 15:08:28 -0700 (PDT)
-To: Peter TB Brett <peter@peter-b.co.uk>
-In-Reply-To: <14403.62.254.128.6.1127483455.squirrel@mail.twu.net>
-Content-Disposition: inline
+	Fri, 23 Sep 2005 18:12:59 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EIvmr-0008QF-Nk
+	for git@vger.kernel.org; Fri, 23 Sep 2005 18:12:58 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.52)
+	id 1EIvmk-0001lt-Ek; Fri, 23 Sep 2005 18:12:50 -0400
+To: Petr Baudis <pasky@suse.cz>, git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9208>
 
-On 9/24/05, Peter TB Brett <peter@peter-b.co.uk> wrote:
-> Ah well, I'll just have to use something else -- I know Mercurial works on
-> Windows.  To be honest, I'd prefer to use git though; I've used it on
-> other projects and it's really nice.
+cg-clean confused by symlinks to directories
 
-Petr Baudis was working on a Mercurial-GIT gateway which could be
-useful, or perhaps you can use tailor.py. OTOH, if you have a unix
-machine in the network, you can probably make cretive use of samba...
+It turns out that "git-ls-files --others" shows symlinks to directories.
+That shouldn't trigger internal error in cg-clean.  Such symlinks should
+be treated like files and removed even without the "-d" option.
 
-cheers,
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+
+diff --git a/cg-clean b/cg-clean
+--- a/cg-clean
++++ b/cg-clean
+@@ -111,7 +111,7 @@ clean_files()
+ 	cg-status "$xopt" -w | sed -n 's/^? //p' |
+ 	for file in $(cat); do
+ 		path="${_git_relpath}$file"
+-		if [ -d "$path" ]; then
++		if [ -d "$path" -a ! -L "$path" ]; then
+ 			# Sanity check, shouldn't happen
+ 			echo "FATAL: cg-status reports directories (internal error)" >&2
+ 			exit 1
 
 
-martin
+-- 
+Regards,
+Pavel Roskin
