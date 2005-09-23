@@ -1,87 +1,80 @@
-From: Peter TB Brett <peter@peter-b.co.uk>
-Subject: git 0.99.7b doesn't build on Cygwin
-Date: 23 Sep 2005 14:33:46 +0100
-Message-ID: <ud5mznc1x.fsf@peter-b.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git 0.99.7b doesn't build on Cygwin
+Date: Fri, 23 Sep 2005 15:44:09 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <ud5mznc1x.fsf@peter-b.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Sep 23 15:36:04 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 23 15:45:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIngj-0007GS-49
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 15:34:05 +0200
+	id 1EInqf-0001KG-OQ
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 15:44:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750986AbVIWNd7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 09:33:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750989AbVIWNd7
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 09:33:59 -0400
-Received: from mta09-winn.ispmail.ntl.com ([81.103.221.49]:48177 "EHLO
-	mta09-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S1750986AbVIWNd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2005 09:33:59 -0400
-Received: from aamta10-winn.ispmail.ntl.com ([81.103.221.35])
-          by mta09-winn.ispmail.ntl.com with ESMTP
-          id <20050923133346.NAQQ9239.mta09-winn.ispmail.ntl.com@aamta10-winn.ispmail.ntl.com>
-          for <git@vger.kernel.org>; Fri, 23 Sep 2005 14:33:46 +0100
-Received: from VIMES ([82.9.228.97]) by aamta10-winn.ispmail.ntl.com
-          with ESMTP
-          id <20050923133346.KVKS6183.aamta10-winn.ispmail.ntl.com@VIMES>
-          for <git@vger.kernel.org>; Fri, 23 Sep 2005 14:33:46 +0100
-To: git@vger.kernel.org
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1750990AbVIWNoP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 09:44:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750991AbVIWNoP
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 09:44:15 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:62108 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750989AbVIWNoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2005 09:44:14 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 70990E2752; Fri, 23 Sep 2005 15:44:11 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 55CD39D9DF; Fri, 23 Sep 2005 15:44:11 +0200 (CEST)
+Received: from wrzx35.rz.uni-wuerzburg.de (wrzx35.rz.uni-wuerzburg.de [132.187.3.35])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 4450E9D9D1; Fri, 23 Sep 2005 15:44:11 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E0FF7E286F; Fri, 23 Sep 2005 15:44:08 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Peter TB Brett <peter@peter-b.co.uk>
+In-Reply-To: <ud5mznc1x.fsf@peter-b.co.uk>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9192>
 
+Hi,
 
-Hi folks,
+On Fri, 23 Sep 2005, Peter TB Brett wrote:
 
-I wanted to use git on a Windows-based project (yes, there are some
-out there still), so I fired up my Cygwin xterm, untarred the git
-sources and totally failed to succeed in building them:
+> I wanted to use git on a Windows-based project (yes, there are some
+> out there still), so I fired up my Cygwin xterm, untarred the git
+> sources and totally failed to succeed in building them:
 
-                              ---- ----
+Also see my mail regarding cygwin:
 
-$ make
-gcc -o apply.o -c -g -O2 -Wall  '-DSHA1_HEADER=<openssl/sha.h>' apply.c
-gcc -o blob.o -c -g -O2 -Wall  '-DSHA1_HEADER=<openssl/sha.h>' blob.c
-gcc -o commit.o -c -g -O2 -Wall  '-DSHA1_HEADER=<openssl/sha.h>' commit.c
-gcc -o connect.o -c -g -O2 -Wall  '-DSHA1_HEADER=<openssl/sha.h>' connect.c
-connect.c: In function `git_tcp_connect':
-connect.c:298: error: storage size of 'hints' isn't known
-connect.c:322: warning: implicit declaration of function `getaddrinfo'
-connect.c:324: warning: implicit declaration of function `gai_strerror'
-connect.c:324: warning: format argument is not a pointer (arg 3)
-connect.c:326: error: dereferencing pointer to incomplete type
-connect.c:327: error: dereferencing pointer to incomplete type
-connect.c:327: error: dereferencing pointer to incomplete type
-connect.c:327: error: dereferencing pointer to incomplete type
-connect.c:330: error: dereferencing pointer to incomplete type
-connect.c:330: error: dereferencing pointer to incomplete type
-connect.c:338: warning: implicit declaration of function `freeaddrinfo'
-connect.c:298: warning: unused variable `hints'
-make: *** [connect.o] Error 1
+http://www.gelato.unsw.edu.au/archives/git/0508/7956.html
 
-$ gcc --version
-gcc (GCC) 3.4.4 (cygming special) (gdc 0.12, using dmd 0.125)
-...
+> gcc -o connect.o -c -g -O2 -Wall  '-DSHA1_HEADER=<openssl/sha.h>' connect.c
+> connect.c: In function `git_tcp_connect':
+> connect.c:298: error: storage size of 'hints' isn't known
+> connect.c:322: warning: implicit declaration of function `getaddrinfo'
+> connect.c:324: warning: implicit declaration of function `gai_strerror'
+> [...]
 
-                              ---- ----
+This is the IPv6 stuff. There are patches to cygwin to support IPv6 
+somewhere, but they haven't made it into mainline.
 
-It looks like the sort of problems I get when I'm missing header
-files, but all the headers #included by connect.c are present on my
-system, so I'm really not sure what's going on there...
+As for the other problem I mentioned in my original mail:
 
-Peter
+It seems that the fixup of the mmap()ed regions after a fork() does not 
+work properly in cygwin. Remember that cygwin just wraps the non-POSIX 
+Win32API and tries to make it sort of POSIX compliant. The problem is that 
+Win32API lacks a proper fork(). This is therefore emulated, and after 
+that, all the mmap()ed regions have to be mapped again. That fails.
 
+Sidenote: I ran it inside gdb, and it worked fine! So I tried to recompile 
+the cygwin1.dll, but that wrecked my whole installation of cygwin and I 
+spent 2 hours just to be able to "gcc -o" again.
 
-P.S. Please Cc: me on any replies, I'm not subscribed to the list.
-
-
--- 
-Quake II build tools:  http://peter-b.co.uk/
-Latest QuArK:          http://quark.sourceforge.net/LatestVersion
-
-v2sw6YShw7ln5pr6ck3ma8u7Lw3+2m0l7CFi6e4+8t4Eb8Aen4g6Pa2Xs5MSr5p4
-  hackerkey.com
+Ciao,
+Dscho
