@@ -1,82 +1,90 @@
-From: "Peter TB Brett" <peter@peter-b.co.uk>
-Subject: Re: git 0.99.7b doesn't build on Cygwin
-Date: Fri, 23 Sep 2005 09:50:55 -0400 (EDT)
-Message-ID: <14403.62.254.128.6.1127483455.squirrel@mail.twu.net>
-References: <ud5mznc1x.fsf@peter-b.co.uk>
-    <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 15:54:04 2005
+From: Jon Loeliger <jdl@jdl.com>
+Subject: Re: Please undo "Use git-merge instead of git-resolve in
+Date: Fri, 23 Sep 2005 08:51:13 -0500
+Message-ID: <E1EInxJ-00026N-Ll@jdl.com>
+X-From: git-owner@vger.kernel.org Fri Sep 23 15:55:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EInxT-000367-Eb
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 15:51:23 +0200
+	id 1EInxU-000367-0h
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 15:51:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750992AbVIWNvR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 09:51:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750993AbVIWNvR
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 09:51:17 -0400
-Received: from bilbo.twu.net ([64.246.24.15]:5550 "EHLO twu.net")
-	by vger.kernel.org with ESMTP id S1750991AbVIWNvQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2005 09:51:16 -0400
-Received: from mail.twu.net (localhost.localdomain [127.0.0.1])
-	by twu.net (8.12.9/8.12.9) with ESMTP id j8NDot99010742;
-	Fri, 23 Sep 2005 09:50:55 -0400
-Received: from 62.254.128.6 (proxying for 82.9.228.97)
-        (SquirrelMail authenticated user brettp)
-        by mail.twu.net with HTTP;
-        Fri, 23 Sep 2005 09:50:55 -0400 (EDT)
-In-Reply-To: <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-User-Agent: SquirrelMail/1.4.4
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1750994AbVIWNvW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 09:51:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbVIWNvW
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 09:51:22 -0400
+Received: from www.jdl.com ([66.118.10.122]:43439 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S1750993AbVIWNvW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2005 09:51:22 -0400
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1EInxJ-00026N-Ll
+	for git@vger.kernel.org; Fri, 23 Sep 2005 08:51:14 -0500
+To: git@vger.kernel.org
+In-Reply-To: Pine.LNX.4.58.0509221355330.2553@g5.osdl.org
+X-Spam-Score: -5.9 (-----)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9194>
 
 
-Johannes Schindelin wrote:
 
->> I wanted to use git on a Windows-based project (yes, there are some
->> out there still), so I fired up my Cygwin xterm, untarred the git
->> sources and totally failed to succeed in building them:
+>> (This is an intentional asymmetry, right?  Distributed systems, right?)
 >
-> Also see my mail regarding cygwin:
+>Right. It's intentional. The "master" branch tends to be the main one for
+>everybody, but _my_ "master" branch is clearly _your_ "linus" branch, and
+>_your_ "master" branch would be the "jon" branch for me.
+
+OK, I'm being clued slowly... :-)
+
+>So it's not "asymmetric". It _is_ symmetric, but it's symmetric the same
+>way "left" and "right" are symmetric when facing each other - my left is
+>your right, your left is my right. It's a symmetry, but it's not an 
+>_identity_.
+
+Ah, right.  I mis-spoke myself, I see. :-)
+
+> What does
 >
-> http://www.gelato.unsw.edu.au/archives/git/0508/7956.html
+>	git-cat-file -t 3fd07d3bf0077dcc0f5a33d2eb1938ea050da8da
 
-Yes. I found that just after I'd spammed the list.
+It used to be nothing at all.  It is now (after another fetch)
+a commit.  And, it did leave this:
 
-> This is the IPv6 stuff. There are patches to cygwin to support IPv6
-> somewhere, but they haven't made it into mainline.
->
-> As for the other problem I mentioned in my original mail:
->
-> It seems that the fixup of the mmap()ed regions after a fork() does not
-> work properly in cygwin. Remember that cygwin just wraps the non-POSIX
-> Win32API and tries to make it sort of POSIX compliant. The problem is that
-> Win32API lacks a proper fork(). This is therefore emulated, and after
-> that, all the mmap()ed regions have to be mapped again. That fails.
-
-Hmph. Sounds like I'm stuffed.
-
-Ah well, I'll just have to use something else -- I know Mercurial works on
-Windows.  To be honest, I'd prefer to use git though; I've used it on
-other projects and it's really nice.
-
-Ah well, can't have everything you want all of the time, neh?
-
-Peter
+    jdl.com 231 % cat .git/refs/heads/origin.remote
+    3fd07d3bf0077dcc0f5a33d2eb1938ea050da8da
 
 
--- 
-Quake II build tools: http://peter-b.co.uk/
-Latest QuArK:         http://quark.sourceforge.net/LatestVersion
+> Actually, the fact that it even left it as a head might
+> cause problems (because now you have a reference to something
+> that doesn't exist), so you are probably best off just removing
+> the .git/refs/heads/origin.remote file entirely.
 
-v2sw6YShw7ln5pr6ck3ma8u7Lw3+2m0l7CFi6e4+8t4Eb8Aen4g6Pa2Xs5MSr5p4
-  hackerkey.com
+Excellent.
+
+<aside stage=left>
+IMO, one of the things that distinguishes those "who get git"
+and those who don't yet git it, are the ones who can casually
+toss out phrases like, "Oh, you don't need that, just rm it."
+The rest of us sit around and ponder "Do I need _that_ data?
+How do I know I can toss it?  If I toss it, what will be lost
+with it?  But if I revert the index, I lose... _it_, right?"
+
+There is a certain amount of opacity to Git and its Object
+store that makes it a bit scary.  And, at least for me, as
+a result I am a bit reluctant to go wildly experimenting.
+With more certainty as to "recovering from badness", I'll
+be more familiar and more willing to experiment, I'm sure.
+</aside>
+
+Things are better, I've now been able to:
+
+    * committish: e484585ec3ee66cd07a627d3a9e2364640a3807f
+      branch 'master' of rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+    * refs/heads/origin: fast forward to branch 'master' of rsync://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+
+
+Thanks for your help!
+
+jdl
