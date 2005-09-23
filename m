@@ -1,51 +1,104 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git 0.99.7b doesn't build on Cygwin
-Date: Sat, 24 Sep 2005 00:34:52 +0200
-Message-ID: <20050923223452.GH10255@pasky.or.cz>
-References: <ud5mznc1x.fsf@peter-b.co.uk> <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de> <14403.62.254.128.6.1127483455.squirrel@mail.twu.net> <46a038f905092315081de776c3@mail.gmail.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: [PATCH] rsh.c unterminated string
+Date: Fri, 23 Sep 2005 16:30:50 -0700
+Message-ID: <4334902A.3010905@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter TB Brett <peter@peter-b.co.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 00:36:20 2005
+Content-Type: multipart/mixed;
+ boundary="------------060104090106000604000104"
+X-From: git-owner@vger.kernel.org Sat Sep 24 01:32:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIw8F-0003di-VM
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 00:35:04 +0200
+	id 1EIx0y-00056D-Hk
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 01:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750822AbVIWWe4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 18:34:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbVIWWez
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 18:34:55 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:1225 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750822AbVIWWez (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2005 18:34:55 -0400
-Received: (qmail 15384 invoked by uid 2001); 24 Sep 2005 00:34:52 +0200
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f905092315081de776c3@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S932105AbVIWXbN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 19:31:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbVIWXbN
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 19:31:13 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:33996 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751345AbVIWXbL
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2005 19:31:11 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j8NNUsAv016821
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 23 Sep 2005 16:30:55 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9212>
 
-Dear diary, on Sat, Sep 24, 2005 at 12:08:28AM CEST, I got a letter
-where Martin Langhoff <martin.langhoff@gmail.com> told me that...
-> On 9/24/05, Peter TB Brett <peter@peter-b.co.uk> wrote:
-> > Ah well, I'll just have to use something else -- I know Mercurial works on
-> > Windows.  To be honest, I'd prefer to use git though; I've used it on
-> > other projects and it's really nice.
-> 
-> Petr Baudis was working on a Mercurial-GIT gateway which could be
-> useful, or perhaps you can use tailor.py. OTOH, if you have a unix
-> machine in the network, you can probably make cretive use of samba...
+This is a multi-part message in MIME format.
+--------------060104090106000604000104
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Clarification: that was a Monotone-GIT gateway.
+The change I made to rsh.c would leave the string unterminated under 
+certain conditions, which unfortunately always applied!  This patch 
+fixes this.  For some reason this never bit on i386 or ppc, but bit me 
+on x86-64.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Signed-off-by: H. Peter Anvin <hpa@zytor.com>
+
+--------------060104090106000604000104
+Content-Type: text/plain;
+ name="patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="patch"
+
+Fix situation where the buffer was not properly null-terminated.
+
+---
+commit 62f7819792e7152ae0dc241ed2f7e05e10c0d345
+tree 865683d54a0c4d7604711d6b74233f79291eb8ac
+parent acfadcfb48e34fdc441e9cffbb385fce9693b363
+author Peter Anvin <hpa@tazenda.sc.orionmulti.com> Fri, 23 Sep 2005 16:22:33 -0700
+committer Peter Anvin <hpa@tazenda.sc.orionmulti.com> Fri, 23 Sep 2005 16:22:33 -0700
+
+ rsh.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/rsh.c b/rsh.c
+--- a/rsh.c
++++ b/rsh.c
+@@ -53,6 +53,7 @@ static int add_to_string(char **ptrp, in
+ 	char *p = *ptrp;
+ 	int size = *sizep;
+ 	int oc;
++	int err = 0;
+ 
+ 	if ( quote ) {
+ 		oc = shell_quote(p, size, str);
+@@ -62,15 +63,14 @@ static int add_to_string(char **ptrp, in
+ 	}
+ 
+ 	if ( oc >= size ) {
+-		p[size-1] = '\0';
+-		*ptrp += size-1;
+-		*sizep = 1;
+-		return 1;	/* Overflow, string unusable */
++		err = 1;
++		oc = size-1;
+ 	}
+ 
+ 	*ptrp  += oc;
++	**ptrp  = '\0';
+ 	*sizep -= oc;
+-	return 0;
++	return err;
+ }
+ 
+ int setup_connection(int *fd_in, int *fd_out, const char *remote_prog, 
+
+--------------060104090106000604000104--
