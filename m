@@ -1,56 +1,44 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: Re: 'bad file' error updating from Linus
-Date: Thu, 22 Sep 2005 17:56:34 -0700
-Organization: none
-Message-ID: <dgvjs3$4so$1@sea.gmane.org>
-References: <dgu56t$d2p$1@sea.gmane.org> <509c8057050922054272b823fe@mail.gmail.com> <dgv8jv$amv$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: GIT - breaking backward compatibility
+Date: Thu, 22 Sep 2005 23:02:59 -0700
+Message-ID: <7vfyrwjp7w.fsf@assigned-by-dhcp.cox.net>
+References: <7vpsr4cx0f.fsf@assigned-by-dhcp.cox.net>
+	<20050922144124.GJ21019@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Sep 23 03:00:36 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 23 08:04:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIbuH-0007H5-Kl
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 02:59:18 +0200
+	id 1EIgez-0002JY-Bh
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 08:03:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751140AbVIWA7K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 20:59:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbVIWA7K
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 20:59:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:49833 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751140AbVIWA7J (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 20:59:09 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EIbsu-00075M-V8
-	for git@vger.kernel.org; Fri, 23 Sep 2005 02:57:52 +0200
-Received: from adsl-69-234-234-116.dsl.irvnca.pacbell.net ([69.234.234.116])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Sep 2005 02:57:52 +0200
-Received: from wa1ter by adsl-69-234-234-116.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Sep 2005 02:57:52 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-234-116.dsl.irvnca.pacbell.net
-User-Agent: Mail/News 1.6a1 (X11/20050922)
-In-Reply-To: <dgv8jv$amv$1@sea.gmane.org>
+	id S1751419AbVIWGDE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 02:03:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbVIWGDD
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 02:03:03 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:59334 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751419AbVIWGDC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2005 02:03:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050923060300.TWJE15799.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 23 Sep 2005 02:03:00 -0400
+To: Petr Baudis <pasky@suse.cz>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9158>
 
-walt wrote:
-[...]
-> After I repeated the cg-update (successfully) I was still left with
-> the 'bad file' error.  I tried 'cg-restore' and the error went away.
+Petr Baudis <pasky@suse.cz> writes:
 
-Oops -- correction!
+> Actually, could we please keep the old git-ssh-* stuff for a bit
+> (perhaps a lot) longer?
 
-After encountering the same problem on a different machine, I find
-that 'cg-reset' is the one which fixed the error, not 'cg-restore'.
+Yeah, I think that's very sensible.  Thanks!
 
-I believe that I tried both commands on the first machine, so I was
-uncertain which one actually did the fix.
+Updated the renames plan in the TODO document.
