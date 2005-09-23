@@ -1,73 +1,66 @@
-From: Joel Becker <Joel.Becker@oracle.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: /bin/sh portability question
-Date: Fri, 23 Sep 2005 12:57:06 -0700
-Message-ID: <20050923195706.GV27375@ca-server1.us.oracle.com>
-References: <20050923075058.GA25473@bohr.gbar.dtu.dk> <43345C17.7060402@zytor.com>
+Date: Fri, 23 Sep 2005 13:00:45 -0700
+Message-ID: <43345EED.5060706@zytor.com>
+References: <20050923075058.GA25473@bohr.gbar.dtu.dk> <43345C17.7060402@zytor.com> <20050923195706.GV27375@ca-server1.us.oracle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Peter Eriksen <s022018@student.dtu.dk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 21:58:55 2005
+X-From: git-owner@vger.kernel.org Fri Sep 23 22:03:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EItfe-0000XI-2X
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 21:57:22 +0200
+	id 1EItjb-0001dv-3e
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 22:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751029AbVIWT5T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 15:57:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbVIWT5T
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 15:57:19 -0400
-Received: from agminet02.oracle.com ([141.146.126.229]:51441 "EHLO
-	agminet02.oracle.com") by vger.kernel.org with ESMTP
-	id S1751029AbVIWT5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2005 15:57:19 -0400
-Received: from rgmsgw04.us.oracle.com (rgmsgw04.us.oracle.com [138.1.186.54])
-	by agminet02.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id j8NJx0dQ000921;
-	Fri, 23 Sep 2005 14:59:01 -0500
-Received: from rgmsgw04.us.oracle.com (localhost.localdomain [127.0.0.1])
-	by rgmsgw04.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id j8NJv7BX026010;
-	Fri, 23 Sep 2005 13:57:07 -0600
-Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
-	by rgmsgw04.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id j8NJv6NJ026003
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 23 Sep 2005 13:57:07 -0600
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.52)
-	id 1EItfO-0005rV-Qg; Fri, 23 Sep 2005 12:57:06 -0700
-To: "H. Peter Anvin" <hpa@zytor.com>
-Content-Disposition: inline
-In-Reply-To: <43345C17.7060402@zytor.com>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
-User-Agent: Mutt/1.5.10i
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
+	id S1751199AbVIWUBR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 16:01:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751200AbVIWUBR
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 16:01:17 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:40675 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751199AbVIWUBQ
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2005 16:01:16 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j8NK0nIC026319
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 23 Sep 2005 13:00:50 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Joel Becker <Joel.Becker@oracle.com>
+In-Reply-To: <20050923195706.GV27375@ca-server1.us.oracle.com>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9200>
 
-On Fri, Sep 23, 2005 at 12:48:39PM -0700, H. Peter Anvin wrote:
-> Peter Eriksen wrote:
-> >      path=$(dirname $0)
-> > ...
-> >      ./git.sh: syntax error at line 4: `path=$' unexpected
+Joel Becker wrote:
+> On Fri, Sep 23, 2005 at 12:48:39PM -0700, H. Peter Anvin wrote:
 > 
-> I think $(foo) is required by POSIX.
+>>Peter Eriksen wrote:
+>>
+>>>     path=$(dirname $0)
+>>>...
+>>>     ./git.sh: syntax error at line 4: `path=$' unexpected
+>>
+>>I think $(foo) is required by POSIX.
+> 
+> 
+> 	I believe that Solaris and others (AIX IIRC) have /bin/sh linked
+> to /bin/ksh, and it behaves as the POSIX shell when run as /bin/ksh, but
+> behaves as a much more true-to-bourne shell when run as /bin/sh.
+> 
 
-	I believe that Solaris and others (AIX IIRC) have /bin/sh linked
-to /bin/ksh, and it behaves as the POSIX shell when run as /bin/ksh, but
-behaves as a much more true-to-bourne shell when run as /bin/sh.
+But "sh" is required to be the POSIX shell (XSH page 850.)
 
-Joel
+Thus, they might have some braindamage where /usr/bin/sh is the POSIX 
+shell and /bin/sh is a braindead shell.  Sigh.
 
--- 
-
-"Nearly all men can stand adversity, but if you really want to
- test a man's character, give him power."
-	- Abraham Lincoln
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+	-hpa
