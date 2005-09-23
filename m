@@ -1,49 +1,59 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: Re: [PATCH] Verbose git-daemon logging
-Date: Fri, 23 Sep 2005 08:08:02 -0400
-Message-ID: <118833cc05092305083757bd9b@mail.gmail.com>
-References: <20050921213933.GB10575@pasky.or.cz>
-Reply-To: Morten Welinder <mwelinder@gmail.com>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: Re: /bin/sh portability question
+Date: Fri, 23 Sep 2005 14:17:05 +0200
+Message-ID: <20050923121705.GA11377@sunq05.gbar.dtu.dk>
+References: <20050923075058.GA25473@bohr.gbar.dtu.dk> <7vmzm4duf8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 14:10:59 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Sep 23 14:20:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EImLk-0001GX-A6
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 14:08:20 +0200
+	id 1EImUx-00045z-Qv
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 14:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750900AbVIWMIF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 08:08:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750902AbVIWMIF
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 08:08:05 -0400
-Received: from qproxy.gmail.com ([72.14.204.203]:52494 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750900AbVIWMIE convert rfc822-to-8bit
+	id S1750906AbVIWMRI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 08:17:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbVIWMRI
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 08:17:08 -0400
+Received: from sunq05.gbar.dtu.dk ([192.38.95.20]:31367 "HELO
+	sunq05.gbar.dtu.dk") by vger.kernel.org with SMTP id S1750906AbVIWMRH
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2005 08:08:04 -0400
-Received: by qproxy.gmail.com with SMTP id f11so181851qba
-        for <git@vger.kernel.org>; Fri, 23 Sep 2005 05:08:02 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FZyokZLw4njoJNxBa2x+wzdVVr0DgZhyAT4De4IpvdmcUBCLP9Nf8qS5t967tgAJhrj6YbQnehj+6jl7e3VmIXq9LA9C82OlbRYMx/8NdxoyBx8y3uJ8xQJHus0rLD05doXSn3wLpiXtdmEDp6uquIYGmcZXN4jNxYuyYtf6uRM=
-Received: by 10.65.100.12 with SMTP id c12mr231370qbm;
-        Fri, 23 Sep 2005 05:08:02 -0700 (PDT)
-Received: by 10.65.107.8 with HTTP; Fri, 23 Sep 2005 05:08:02 -0700 (PDT)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050921213933.GB10575@pasky.or.cz>
+	Fri, 23 Sep 2005 08:17:07 -0400
+Received: (qmail 14577 invoked by uid 5842); 23 Sep 2005 12:17:05 -0000
+To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <7vmzm4duf8.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9180>
 
-> +       buflen = snprintf(buf, 1024, "[%d] ", getpid());
+On Fri, Sep 23, 2005 at 02:07:07AM -0700, Junio C Hamano wrote:
+> "Peter Eriksen" <s022018@student.dtu.dk> writes:
+> 
+> > It seems things are progressing nicely with regard to
+> > Solaris portability.
+> 
+> Good to have a Solaris user.  I have one patch that I've been
+> keeping in the proposed updates branch, waiting for a
+> comfirmation or 'not-good-enough-for-me' answer from people that
+> have cURL installed in nonstandard places.
 
-pid_t is not int.
+GCC is not complaining.  :-)
 
-Please cast it to int, or use %ld and cast it to long int.
+My current make command is like this:
 
-Morten
+gmake NO_STRCASESTR=YesPlease CURLDIR=/opt/sfw/  \
+      SHELL_PATH=/bin/bash INSTALL=ginstall install
+
+There are two problems:
+
+* First of all there really needs to be a TAR variable, 
+  since Solaris tar doesn't like the C option. 
+
+* Secondly I've noticed that git.sh and gitk don't get 
+  their /bin/sh line changed during install.
+
+/Peter
