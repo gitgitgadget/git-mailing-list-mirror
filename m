@@ -1,69 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE] GIT 0.99.7b
-Date: Fri, 23 Sep 2005 14:45:43 -0700
-Message-ID: <7v4q8ba260.fsf@assigned-by-dhcp.cox.net>
-References: <7voe6ki9x7.fsf@assigned-by-dhcp.cox.net>
-	<dh0uur$h4g$1@sea.gmane.org> <7v8xxnbjhl.fsf@assigned-by-dhcp.cox.net>
-	<20050923205242.GY27375@ca-server1.us.oracle.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: git 0.99.7b doesn't build on Cygwin
+Date: Sat, 24 Sep 2005 10:08:28 +1200
+Message-ID: <46a038f905092315081de776c3@mail.gmail.com>
+References: <ud5mznc1x.fsf@peter-b.co.uk>
+	 <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
+	 <14403.62.254.128.6.1127483455.squirrel@mail.twu.net>
+Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: walt <wa1ter@myrealbox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 23:46:17 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 24 00:09:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIvMb-0005Gj-Ii
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 23:45:49 +0200
+	id 1EIvic-0004FE-Qo
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 00:08:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932071AbVIWVpq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 17:45:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932072AbVIWVpq
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 17:45:46 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:4045 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932071AbVIWVpq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2005 17:45:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050923214544.XAWE1974.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 23 Sep 2005 17:45:44 -0400
-To: Joel Becker <Joel.Becker@oracle.com>
-In-Reply-To: <20050923205242.GY27375@ca-server1.us.oracle.com> (Joel Becker's
-	message of "Fri, 23 Sep 2005 13:52:42 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751320AbVIWWIc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 18:08:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751321AbVIWWIc
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 18:08:32 -0400
+Received: from qproxy.gmail.com ([72.14.204.201]:5171 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751320AbVIWWIb convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2005 18:08:31 -0400
+Received: by qproxy.gmail.com with SMTP id v40so216379qbe
+        for <git@vger.kernel.org>; Fri, 23 Sep 2005 15:08:28 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IPcHDU6/dn5spSNRKDBEgQ9iJIJGaZUDykhkiNN1Bb3XVYFigXlZ8D9HmFluiET2UWL9Aug4nXn/cmh8RfzaQAQnzFpjoYtQzYHtHqL/IOOb9Qgpi5lUq/WX3lkSyOE52TzXGzXvdrImxCxNv9LnKWAKUB87ji5Hix3P3dvifz0=
+Received: by 10.65.11.15 with SMTP id o15mr249271qbi;
+        Fri, 23 Sep 2005 15:08:28 -0700 (PDT)
+Received: by 10.64.232.18 with HTTP; Fri, 23 Sep 2005 15:08:28 -0700 (PDT)
+To: Peter TB Brett <peter@peter-b.co.uk>
+In-Reply-To: <14403.62.254.128.6.1127483455.squirrel@mail.twu.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9207>
 
-Joel Becker <Joel.Becker@oracle.com> writes:
+On 9/24/05, Peter TB Brett <peter@peter-b.co.uk> wrote:
+> Ah well, I'll just have to use something else -- I know Mercurial works on
+> Windows.  To be honest, I'd prefer to use git though; I've used it on
+> other projects and it's really nice.
 
-> On Fri, Sep 23, 2005 at 01:46:14PM -0700, Junio C Hamano wrote:
->> If you pulled from "master" branch, then --version would still
->> say 0.99.7; I agree it is confusing.  On the other hand, I do
->> not think we would want to increment the version string with
->> every little changes, so...
->
-> 	Every little change, no.  But ANNOUNCEd releases should be
-> considered 'major' from this point of view.  I don't think a little
-> extra version number incrementing is too big a deal.
+Petr Baudis was working on a Mercurial-GIT gateway which could be
+useful, or perhaps you can use tailor.py. OTOH, if you have a unix
+machine in the network, you can probably make cretive use of samba...
 
-Yes, 'maint' has the GIT_VERSION bumped in the Makefile
-(0.99.7a, 0.99.7b) and that is propagated to 'git --version'.
+cheers,
 
-What I was having trouble was what to do with the stuff we put
-in the 'master' between 0.99.7 and 0.99.8.  'maint' was *forked*
-from 0.99.7, not just tagging some midpoint in 'master' line for
-obvious reasons, so the 'git --version' on the 'master' side
-does not have much to do with what happens on the 'maint' side.
 
-We could say, immediately after 0.99.7 is released, bump the
-GIT_VERSION in the 'master' branch to 0.99.8-pre or something
-like that.
-
-We need to pick something that sorts after '0.99.7a', '0.99.7b',
-etc. and before '0.99.8'.  Somebody needs to come up with what
-is appropriate for version number ordering scheme employed by
-binary packaged distributions.  I know 0.99.8-pre does not sort
-before 0.99.8 on Debian.  Probably '0.99.7zzz'?
+martin
