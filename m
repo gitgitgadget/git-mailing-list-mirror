@@ -1,60 +1,77 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Verbose git-daemon logging
-Date: Thu, 22 Sep 2005 16:58:32 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509221651000.2553@g5.osdl.org>
-References: <20050921213933.GB10575@pasky.or.cz> <7vwtl9mqm5.fsf@assigned-by-dhcp.cox.net>
- <20050922092528.GB21019@pasky.or.cz> <7vd5n0lle8.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Please undo "Use git-merge instead of git-resolve in git-pull"
+Date: Fri, 23 Sep 2005 02:28:44 +0200
+Message-ID: <20050923002844.GO21019@pasky.or.cz>
+References: <Pine.LNX.4.58.0509211310150.2553@g5.osdl.org> <7vu0genlc1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0509211501130.2553@g5.osdl.org> <20050921.172849.103555057.davem@davemloft.net> <46a038f905092118464b98e149@mail.gmail.com> <Pine.LNX.4.58.0509211902010.2553@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 23 01:59:56 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>, junkio@cox.net,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 23 02:29:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIayC-0002wM-L6
-	for gcvg-git@gmane.org; Fri, 23 Sep 2005 01:59:17 +0200
+	id 1EIbQo-0008Gc-Ru
+	for gcvg-git@gmane.org; Fri, 23 Sep 2005 02:28:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751071AbVIVX6y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Sep 2005 19:58:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbVIVX6y
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 19:58:54 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:36494 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751071AbVIVX6w (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 19:58:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8MNwdBo022982
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 22 Sep 2005 16:58:41 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8MNwW9D028185;
-	Thu, 22 Sep 2005 16:58:36 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5n0lle8.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.117 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751239AbVIWA2r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Sep 2005 20:28:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751237AbVIWA2r
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Sep 2005 20:28:47 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:19085 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751239AbVIWA2q (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Sep 2005 20:28:46 -0400
+Received: (qmail 20788 invoked by uid 2001); 23 Sep 2005 02:28:44 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0509211902010.2553@g5.osdl.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9155>
 
+Dear diary, on Thu, Sep 22, 2005 at 04:10:08AM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
+> But cogito at least _used_ to have some special logic for moving patches
+> forward.
 
+Yes, but it is used only in case of fast-forward commits.
 
-On Thu, 22 Sep 2005, Junio C Hamano wrote:
+> git-resolve-script never had that - it only ever did the per-file
+> three-way merge, and refused to touch dirty state except for the
+> "everything stays the same" case.
 > 
-> The tail part still looks odd here.  Maybe something like this?
+> Oh. I'm looking at the current cg-merge thing, and I think I see the
+> problem: it's doing
+> 
+> 	git-checkout-index -f -u -a
+> 
+> at the end. That's not only unnecessary, since it uses the "-u" flag to 
+> "git-read-tree", but it will force an overwrite of the working tree, and 
+> is thus actively incorrect.
+> 
+> Pasky?
 
-And if you actually want it to be more reliable, don't use fputs. That 
-can still split lines, and even if it doesn't, it doesn't help.
+Oops. How brown-paper-bag-ish. Thanks for pointing this out, that was
+obviously horribly wrong, and it was indeed apparently happily trashing
+all the local changes. I've removed it, and added proper handling for
+cases when conflicts arise from merge over a tree with local changes -
+that was troublesome since cg-commit after resolving the conflicts would
+commit the local changes too. It won't anymore, and cg-status will mark
+those files appropriately. Woohoo.
 
-> +	buf[buflen++] = '\n';
-> +	buf[buflen] = '\0';
-> +
-> +	fputs(buf, stderr);
+I've also added a rather elaborate regression testing for cg-merge, so I
+hope that will help catch any future breakages. Hmm, I have to say that
+while I find writing those tests incredibly boring and annoying, it is
+pretty nice when I already have them. ;-)
 
-Why use "fputs()", when you migth as well do write()?
+This fix alone is worthy a release, so I'll do one tomorrow.
 
-Also, it would probably be nice if you allow the use of syslog().. 
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
