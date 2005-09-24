@@ -1,59 +1,55 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Cogito: cg-clone doesn't like packed tag objects
-Date: Sat, 24 Sep 2005 13:13:29 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509241302450.23242@iabervon.org>
-References: <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz>
- <7vvf0r6x97.fsf@assigned-by-dhcp.cox.net> <20050924125001.GB25069@pasky.or.cz>
+From: Patrick Mauritz <oxygene@studentenbude.ath.cx>
+Subject: Re: /bin/sh portability question
+Date: Sat, 24 Sep 2005 19:35:15 +0200
+Message-ID: <1127583315.895.11.camel@tetris>
+References: <20050923075058.GA25473@bohr.gbar.dtu.dk>
+	 <7vmzm4duf8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 19:10:50 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Peter Eriksen <s022018@student.dtu.dk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 24 19:37:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJDWb-0006xs-SH
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 19:09:22 +0200
+	id 1EJDwE-00068d-Bb
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 19:35:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932197AbVIXRJF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Sep 2005 13:09:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932198AbVIXRJF
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 13:09:05 -0400
-Received: from iabervon.org ([66.92.72.58]:55813 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932197AbVIXRJF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Sep 2005 13:09:05 -0400
-Received: (qmail 5206 invoked by uid 1000); 24 Sep 2005 13:13:29 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 24 Sep 2005 13:13:29 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050924125001.GB25069@pasky.or.cz>
+	id S932205AbVIXRfr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Sep 2005 13:35:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932206AbVIXRfr
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 13:35:47 -0400
+Received: from khepri.openbios.org ([80.190.231.112]:37287 "EHLO
+	khepri.openbios.org") by vger.kernel.org with ESMTP id S932205AbVIXRfq
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2005 13:35:46 -0400
+Received: from dsl-082-083-078-010.arcor-ip.net ([82.83.78.10] helo=t-stueck.streichelzoo)
+	by khepri.openbios.org with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.50)
+	id 1EJDw3-000315-NJ; Sat, 24 Sep 2005 19:35:40 +0200
+Received: from 192.168.1.202 ([192.168.1.202])
+	by t-stueck.streichelzoo (8.13.4+Sun/8.13.3) with ESMTP id j8OHZWAK015588;
+	Sat, 24 Sep 2005 19:35:38 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzm4duf8.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Ximian Evolution 1.4.6.316 
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0 (t-stueck.streichelzoo [192.168.1.200]); Sat, 24 Sep 2005 19:35:38 +0200 (CEST)
+X-Spam-Score: -1.3 (-)
+X-Duff: Orig. Duff, Duff Lite, Duff Dry, Duff Dark,
+	Raspberry Duff, Lady Duff, Red Duff, Tartar Control Duff
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9239>
 
-On Sat, 24 Sep 2005, Petr Baudis wrote:
+On Fri, 2005-09-23 at 11:07, Junio C Hamano wrote:
+> Good to have a Solaris user.  I have one patch that I've been
+> keeping in the proposed updates branch, waiting for a
+> comfirmation or 'not-good-enough-for-me' answer from people that
+> have cURL installed in nonstandard places.
+sorry for the lack of reponse.. apart from fixing up context (to match
+0.99.7), this patch works here.
 
-> Dear diary, on Sat, Sep 24, 2005 at 04:00:04AM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> told me that...
-> > Petr Baudis <pasky@suse.cz> writes:
-> > 
-> > > It takes loooong time, unfortunately - scp -r takes its time itself on
-> > > many small files, and then we have to make a separate call to
-> > > git-ssh-fetch for each tag. Isn't that braindamaged... :/
-> > 
-> > I think you could run git-peek-remote to find all the refs and
-> > then run git-fetch-pack to slurp all the tags (and heads for
-> > that matter) at once.  Is there a particular reason you would
-> > prefer the commit walker?
-> 
-> Actually, probably not, except consistency with rsync and http handling
-> - but that's obviously not too good reason. I did it this way since I'm
-> going to be a bit busy again from now on.
 
-It wouldn't actually be very hard to rewrite git-*-fetch programs to fetch 
-with a bunch of starting points. The main reason I haven't is actually 
-that I don't have any ideas for a way to extend the command line argument 
-format to include it.
-
-	-Daniel
-*This .sig left intentionally blank*
+thanks,
+patrick mauritz
