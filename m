@@ -1,83 +1,133 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git 0.99.7b doesn't build on Cygwin
-Date: Sat, 24 Sep 2005 11:10:14 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509241102450.3308@g5.osdl.org>
-References: <ud5mznc1x.fsf@peter-b.co.uk>
- <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.58.0509231647300.3308@g5.osdl.org>
- <Pine.LNX.4.63.0509240305450.26220@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.58.0509231935360.3308@g5.osdl.org>
- <Pine.LNX.4.63.0509232220330.30718@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cogito: cg-clone doesn't like packed tag objects
+Date: Sat, 24 Sep 2005 11:10:40 -0700
+Message-ID: <7virwqwd3z.fsf@assigned-by-dhcp.cox.net>
+References: <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz>
+	<7vvf0r6x97.fsf@assigned-by-dhcp.cox.net>
+	<20050924125001.GB25069@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Peter TB Brett <peter@peter-b.co.uk>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 24 20:12:24 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 24 20:12:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJETs-0005Rs-6J
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 20:10:36 +0200
+	id 1EJEU4-0005Xz-92
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 20:10:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932215AbVIXSKV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Sep 2005 14:10:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932217AbVIXSKV
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 14:10:21 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:40626 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932215AbVIXSKU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Sep 2005 14:10:20 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8OIAG4s019950
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 24 Sep 2005 11:10:16 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8OIAEFl020770;
-	Sat, 24 Sep 2005 11:10:15 -0700
-To: Davide Libenzi <davidel@xmailserver.org>
-In-Reply-To: <Pine.LNX.4.63.0509232220330.30718@localhost.localdomain>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.118 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932217AbVIXSKo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Sep 2005 14:10:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932219AbVIXSKo
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 14:10:44 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:53658 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932217AbVIXSKn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2005 14:10:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050924181043.HETE29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 24 Sep 2005 14:10:43 -0400
+To: Petr Baudis <pasky@suse.cz>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9241>
 
+Petr Baudis <pasky@suse.cz> writes:
 
+>> I think you could run git-peek-remote to find all the refs and
+>> then run git-fetch-pack to slurp all the tags (and heads for
+>> that matter) at once.  Is there a particular reason you would
+>> prefer the commit walker?
+>
+> Actually, probably not, except consistency with rsync and http handling
+> - but that's obviously not too good reason.
 
-On Fri, 23 Sep 2005, Davide Libenzi wrote:
-> 
-> If you have only to run diff/patch, just use the native Win32 CreateProcess().
-> You abstract that on a git_exec(), and you use fork/exec on Unix and 
-> CreateProcess() on Winblows. If fork() is slow on Cygwin, fork+exec is 
-> pathetic. They do all that work to give you a fork(), and you throw it 
-> away with an exec().
+We would end up doing things internally differently between
+git-native (fetch/clone-pack) and other protocols (commit walker
+which is git-aware, and rsync which is not) anyway.
 
-CreateProcess doesn't work all that well, since we want to dup file 
-descriptors around and close them in the child.
+I misspoke for 'git-fetch-pack' in the above -- git-fetch-pack
+without any refspec fetches all the refs, so you do not need a
+separate peek-remote.  Right now 'git fetch' wrapper does not
+let you take advantage of this, but if we wanted to add '--all'
+flag to 'git fetch' wrapper, it can be implemented very easily
+and efficiently for the git-native protocol.  An implementation
+of such a flag for other protocols would use git-ls-remote to
+find out the refs upfront.
 
-In general, CreateProcess() is a totally crap interface. I realize it's 
-common (and especially in the VMS/Windows world it's how things are done), 
-but hey, at that point it's better if somebody just waits until git is 
-stable, and just makes a totally separate "git for windows" thing. The 
-interfaces are certainly simple. There's no point in trying to maintain 
-one tree.
+> I will probably rewrite the tags fetching to use git-peek-remote
+> (info/refs for http) the next weekend.
 
-However, vfork() really _is_ a nice interface. It's faster even on UNIX,
-and at least in theory it should be possible to do an efficient vfork()  
-implementation on top of crap like windows. Does cygwin support that well?
+If you are targetting multiple protocols, git-ls-remote is the
+one to use, not peek-remote.  It internally uses peek-remote for
+git-native protocol, and emulates it using info/refs for http
+and recursive get for rsync, so no new coding on Cogito part
+should be necessary.
 
-Yes, git uses lots of filesystem stuff, and they suck under windows. Maybe 
-cygwin adds its own overhead, but from everything I've ever been able to 
-tell, filesystem access sucks under Windows regardless of any cygwin 
-stuff. Add to an already slow FS interface the fact that virus checkers 
-tend to hook into it and make it _even_slower_, and hey, you have a truly 
-sucky OS. 
+> default post-update hook could change to
+>
+> 	[ -e "$_git/git-dummy-support" ] && exec git-update-server-info
+>
+> and be enabled by default?
 
-But at least with pack-files, the filesystem access patterns are much 
-less common. Opening one pack-file and mapping it gets the FS out of the 
-way. So I don't think that's necessarily a huge problem.
+That is a thought.  While I think doing update-server-info
+everywhere whenever you update ref is going a bit overboard, I
+agree there should be an easy way for the end user to keep
+repositories that are public accessible all times.  But running
+server-info upon every commit does not make much sense to me --
+something is seriously broken if we need to do that.
 
-		Linus
+Cases when you would want to make your repository accessible
+from outside itself varies and preferred transport obviously
+depends on it.
+
+ - Your private working area.  Typically does not allow
+   anonymous downloads.  You are the only one to use git tools
+   and compilation there (that's what 'private' means).
+
+ - A CVS style shared repository.  May allow anonymous
+   downloads, and allow uploads to people with 'commit
+   privilege' in CVS lingo.
+
+ - A public distribution point, like kernel.org repository.
+   This is just a special case of the 'shared repository' above,
+   with yourself as the only uploader.
+
+I thought there would be more classes, but it really boils down
+to whether you would allow anonymous downloads or not -- so
+let's call them private and public.
+
+Fetching over non git-native protocol is the only case where
+server-info matters; so obviously it is nicer if public
+repository is arranged so that update-server-info is run
+everytime refs and set of packs change.
+
+I do not think of a good reason not to use git-aware protocol
+when one is fetching from a private repo -- so if we just say
+people should not use non git-aware protocol when doing so, we
+do not have to do server-info in the private repositories at
+all.
+
+So the question is, how often do we need to run update to keep
+the refs and set of packs in public repository in sync with the
+server-info.  What do people do in public repository to affect
+set of packs and the refs?
+
+ - Initiate a push into it from somewhere else; this case is
+   covered by enabling post-update hook.
+
+ - You log on to the machine of public repository and run 'git
+   repack'; this runs update-server-info, so it is OK.
+
+ - You log on to the machine of public repository and run fetch
+   of another repository -- you may even end up hand merging and
+   creating new commits.
+
+ - You log on to the machine of public repository and do your
+   development, making your own commits.
+
+It is the latter two cases where your 'update-server-info
+everywhere in Cogito' would be needed -- but is it realistic?
