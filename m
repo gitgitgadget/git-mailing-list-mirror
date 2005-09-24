@@ -1,91 +1,78 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Cogito: cg-clone doesn't like packed tag objects
-Date: Sat, 24 Sep 2005 14:50:01 +0200
-Message-ID: <20050924125001.GB25069@pasky.or.cz>
-References: <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz> <7vvf0r6x97.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+Subject: [PATCH] Fix earlier "import quilt patches" patch
+Date: Sat, 24 Sep 2005 12:46:23 +0200
+Message-ID: <20050924104622.17274.18611.stgit@zion.home.lan>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 14:51:56 2005
+X-From: git-owner@vger.kernel.org Sat Sep 24 16:12:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJ9Tr-0005Z7-L4
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 14:50:16 +0200
+	id 1EJAjr-00014X-BK
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 16:10:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750743AbVIXMuE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Sep 2005 08:50:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbVIXMuE
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 08:50:04 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58079 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750743AbVIXMuD (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Sep 2005 08:50:03 -0400
-Received: (qmail 31171 invoked by uid 2001); 24 Sep 2005 14:50:01 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vvf0r6x97.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S1750752AbVIXOKj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Sep 2005 10:10:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750753AbVIXOKj
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 10:10:39 -0400
+Received: from [151.97.230.9] ([151.97.230.9]:42717 "EHLO ssc.unict.it")
+	by vger.kernel.org with ESMTP id S1750752AbVIXOKj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Sep 2005 10:10:39 -0400
+Received: (qmail 11862 invoked by uid 508); 24 Sep 2005 16:10:32 +0200
+Received: from unknown (HELO ssc.unict.it) (151.97.230.9)
+  by ssc.unict.it with SMTP; 24 Sep 2005 16:10:32 +0200
+Received: from zion.home.lan (localhost [127.0.0.1])
+	by zion.home.lan (Postfix) with ESMTP id 5C5BB2855D;
+	Sat, 24 Sep 2005 12:46:37 +0200 (CEST)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9231>
 
-Dear diary, on Sat, Sep 24, 2005 at 04:00:04AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > It takes loooong time, unfortunately - scp -r takes its time itself on
-> > many small files, and then we have to make a separate call to
-> > git-ssh-fetch for each tag. Isn't that braindamaged... :/
-> 
-> I think you could run git-peek-remote to find all the refs and
-> then run git-fetch-pack to slurp all the tags (and heads for
-> that matter) at once.  Is there a particular reason you would
-> prefer the commit walker?
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
 
-Actually, probably not, except consistency with rsync and http handling
-- but that's obviously not too good reason. I did it this way since I'm
-going to be a bit busy again from now on.
+I forgot to update all cases - I updated __parse_mail, not __parse_patch, so
+refactor together this duplication and use the fixed version.
 
-I will probably rewrite the tags fetching to use git-peek-remote
-(info/refs for http) the next weekend. One problem with this is that in
-many repositories, git-update-server-info does not get ever run and
-things would break "mysteriously". I don't want the policy that the user
-has to take care of this on his own for Cogito, so I will probably add
-something that will automagically append git-update-server-info at least
-to the post-update hook (like
+Btw, I don't like those regexps - they'd match in the middle of line too. What
+about adding ^ to their beginning like for the "^Index: " regexp?
 
-	uphook="$_git/hooks/update-post"
-	if ! [ -x "$uphook" ]; then
-		if ! [ -e "$uphook" ]; then
-			echo '#!/bin/sh' >>"$uphook"
-			echo 'exec git-update-server-info' >>"$uphook"
-		fi
-		# If the user added something custom and left the hook
-		# disabled, he knew what he was doing. Also don't
-		# reenable the hook if we already did that once.
-		if [[ "$(grep -v '^#\($\|[^#]\)\|^$' "$uphook")" == "*exec git-update-server-info*" ]]; then
-			chmod a+x "$uphook"
-			echo "## Enabled by Cogito. It won't try to enable it again as long as this comment is here." >>"$uphook"
-		fi
-	fi
+Signed-off-by: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+---
 
-or something).
+ stgit/commands/imprt.py |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
 
-Actually, I might also add something like
-
-	[ -e "$_git/git-dummy-support" ] && git-update-server-info
-
-at all the places in Cogito where I update the refs. Then the
-default post-update hook could change to
-
-	[ -e "$_git/git-dummy-support" ] && exec git-update-server-info
-
-and be enabled by default?
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+diff --git a/stgit/commands/imprt.py b/stgit/commands/imprt.py
+--- a/stgit/commands/imprt.py
++++ b/stgit/commands/imprt.py
+@@ -75,6 +75,10 @@ options = [make_option('-m', '--mail',
+                        help = 'use COMMEMAIL as the committer e-mail')]
+ 
+ 
++def __end_descr(line):
++    return re.match('---\s*$', line) or re.match('diff -', line) or \
++            re.match('^Index: ', line)
++    
+ def __parse_mail(filename = None):
+     """Parse the input file in a mail format and return (description,
+     authname, authemail, authdate)
+@@ -116,8 +120,7 @@ def __parse_mail(filename = None):
+         line = f.readline()
+         if not line:
+             break
+-        if re.match('---\s*$', line) or re.match('diff -', line) or \
+-                re.match('^Index: ', line):
++        if __end_descr(line):
+             break
+         else:
+             descr += line
+@@ -150,7 +153,7 @@ def __parse_patch(filename = None):
+             auth = re.findall('^.*?:\s+(.*)$', line)[0]
+             authname, authemail = name_email(auth)
+ 
+-        if re.match('---\s*$', line) or re.match('diff -', line):
++        if __end_descr(line):
+             break
+         else:
+             descr += line
