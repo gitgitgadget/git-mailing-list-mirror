@@ -1,47 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cogito: cg-clone doesn't like packed tag objects
-Date: Fri, 23 Sep 2005 19:00:04 -0700
-Message-ID: <7vvf0r6x97.fsf@assigned-by-dhcp.cox.net>
-References: <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: How to make Cogito use git-fetch-pack?
+Date: Fri, 23 Sep 2005 19:04:24 -0700
+Message-ID: <4334B428.7020608@zytor.com>
+References: <43347F98.6020101@zytor.com> <20050924011912.GK10255@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 04:00:24 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 24 04:04:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIzKv-0000Zy-96
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 04:00:21 +0200
+	id 1EIzOy-0001RY-Hd
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 04:04:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751126AbVIXCAL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 22:00:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751361AbVIXCAL
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 22:00:11 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:59025 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751126AbVIXCAK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2005 22:00:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050924020006.ZFTV26651.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 23 Sep 2005 22:00:06 -0400
+	id S1751360AbVIXCE3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 22:04:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751361AbVIXCE3
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 22:04:29 -0400
+Received: from paleosilicon.orionmulti.com ([209.128.68.66]:23234 "EHLO
+	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
+	id S1751360AbVIXCE2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2005 22:04:28 -0400
+X-Envelope-From: hpa@zytor.com
+Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
+	(authenticated bits=0)
+	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j8O24OJv010751
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 23 Sep 2005 19:04:25 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050924011833.GJ10255@pasky.or.cz> (Petr Baudis's message of
-	"Sat, 24 Sep 2005 03:18:33 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+In-Reply-To: <20050924011912.GK10255@pasky.or.cz>
+X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	paleosilicon.orionmulti.com
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on paleosilicon.orionmulti.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9224>
 
-Petr Baudis <pasky@suse.cz> writes:
+Petr Baudis wrote:
+> Dear diary, on Sat, Sep 24, 2005 at 12:20:08AM CEST, I got a letter
+> where "H. Peter Anvin" <hpa@zytor.com> told me that...
+> 
+>>Is there any way to make Cogito use git-fetch-pack instead of 
+>>git-ssh-fetch?  git+ssh:// seems to invoke the latter.
+> 
+> I just added git+packed+ssh:// to be used for this purpose.
+> 
 
-> It takes loooong time, unfortunately - scp -r takes its time itself on
-> many small files, and then we have to make a separate call to
-> git-ssh-fetch for each tag. Isn't that braindamaged... :/
+Since git tends to use "pack" (e.g. git-fetch-pack) I'd suggest use 
+git+pack+ssh:// instead.  It's shorter, too.
 
-I think you could run git-peek-remote to find all the refs and
-then run git-fetch-pack to slurp all the tags (and heads for
-that matter) at once.  Is there a particular reason you would
-prefer the commit walker?
+	-hpa
