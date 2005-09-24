@@ -1,7 +1,7 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Davide Libenzi <davidel@xmailserver.org>
 Subject: Re: git 0.99.7b doesn't build on Cygwin
-Date: Sat, 24 Sep 2005 15:27:34 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509241526180.3308@g5.osdl.org>
+Date: Sat, 24 Sep 2005 15:41:27 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0509241540170.16554@localhost.localdomain>
 References: <ud5mznc1x.fsf@peter-b.co.uk>
  <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
  <Pine.LNX.4.58.0509231647300.3308@g5.osdl.org>
@@ -13,51 +13,55 @@ References: <ud5mznc1x.fsf@peter-b.co.uk>
  <7vbr2iw6l3.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0509241426240.16554@localhost.localdomain>
  <Pine.LNX.4.58.0509241524270.3308@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 25 00:28:22 2005
+X-From: git-owner@vger.kernel.org Sun Sep 25 00:40:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJIUk-00065I-HI
-	for gcvg-git@gmane.org; Sun, 25 Sep 2005 00:27:46 +0200
+	id 1EJIgm-0000sM-5P
+	for gcvg-git@gmane.org; Sun, 25 Sep 2005 00:40:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750773AbVIXW1k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Sep 2005 18:27:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750774AbVIXW1k
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 18:27:40 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60386 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750773AbVIXW1k (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Sep 2005 18:27:40 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8OMRZ4s028256
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 24 Sep 2005 15:27:35 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8OMRYb8027419;
-	Sat, 24 Sep 2005 15:27:34 -0700
-To: Davide Libenzi <davidel@xmailserver.org>
+	id S1750777AbVIXWjB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Sep 2005 18:39:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750778AbVIXWjA
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 18:39:00 -0400
+Received: from x35.xmailserver.org ([69.30.125.51]:16775 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP
+	id S1750777AbVIXWjA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2005 18:39:00 -0400
+X-AuthUser: davidel@xmailserver.org
+Received: from debstar.dev.mdolabs.com
+	by xmailserver.org with [XMail 1.22 ESMTP Server]
+	id <S1A0F5E> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Sat, 24 Sep 2005 15:39:52 -0700
+X-X-Sender: davide@localhost.localdomain
+To: Linus Torvalds <torvalds@osdl.org>
 In-Reply-To: <Pine.LNX.4.58.0509241524270.3308@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.118 $
-X-Scanned-By: MIMEDefang 2.36
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9253>
-
-
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9254>
 
 On Sat, 24 Sep 2005, Linus Torvalds wrote:
-> 
+
+>
+>
+> On Sat, 24 Sep 2005, Davide Libenzi wrote:
+>>
+>> http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createhardlink.asp
+>
+> Don't you mean
+>
+> 	http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createsymboliclink.asp
+>
+> rather?
+>
 > It mentions longhorn.
 
-Anyway, regardless, we could certainly make HEAD be a regular file 
-containing the name of the head instead.
+Hah, didn't know this one. Requiring LongHorn is pretty strict though ;)
 
-It probably wouldn't even require a whole lot of changes. HEAD already 
-ends up getting some special attention, since most of the things that look 
-for refs only look inside the .git/refs directory.
 
-		Linus
+- Davide
