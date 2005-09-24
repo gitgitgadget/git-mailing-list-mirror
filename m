@@ -1,52 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE] GIT 0.99.7b
-Date: Sat, 24 Sep 2005 14:59:05 -0700
-Message-ID: <7v64squnyu.fsf@assigned-by-dhcp.cox.net>
-References: <7voe6ki9x7.fsf@assigned-by-dhcp.cox.net>
-	<dh0uur$h4g$1@sea.gmane.org> <7v8xxnbjhl.fsf@assigned-by-dhcp.cox.net>
-	<20050923205436.GF10255@pasky.or.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git 0.99.7b doesn't build on Cygwin
+Date: Sat, 24 Sep 2005 15:26:02 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509241524270.3308@g5.osdl.org>
+References: <ud5mznc1x.fsf@peter-b.co.uk>
+ <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.58.0509231647300.3308@g5.osdl.org>
+ <Pine.LNX.4.63.0509240305450.26220@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.58.0509231935360.3308@g5.osdl.org>
+ <Pine.LNX.4.63.0509232220330.30718@localhost.localdomain>
+ <Pine.LNX.4.58.0509241102450.3308@g5.osdl.org>
+ <Pine.LNX.4.63.0509241129300.31327@localhost.localdomain>
+ <7vbr2iw6l3.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0509241426240.16554@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 25 00:00:47 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 25 00:26:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJI3L-0005af-69
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 23:59:27 +0200
+	id 1EJITf-0005qJ-6I
+	for gcvg-git@gmane.org; Sun, 25 Sep 2005 00:26:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750771AbVIXV7M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Sep 2005 17:59:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750772AbVIXV7L
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 17:59:11 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:59638 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1750771AbVIXV7K (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Sep 2005 17:59:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050924215910.RWBV9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 24 Sep 2005 17:59:10 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050923205436.GF10255@pasky.or.cz> (Petr Baudis's message of
-	"Fri, 23 Sep 2005 22:54:36 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750772AbVIXW0K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Sep 2005 18:26:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750773AbVIXW0K
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 18:26:10 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:15330 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750772AbVIXW0J (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Sep 2005 18:26:09 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8OMQ34s028212
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 24 Sep 2005 15:26:04 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8OMQ2Pl027390;
+	Sat, 24 Sep 2005 15:26:03 -0700
+To: Davide Libenzi <davidel@xmailserver.org>
+In-Reply-To: <Pine.LNX.4.63.0509241426240.16554@localhost.localdomain>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.118 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9252>
 
-Petr Baudis <pasky@suse.cz> writes:
 
-> Dear diary, on Fri, Sep 23, 2005 at 10:46:14PM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> told me that...
->> If you pulled from "master" branch, then --version would still
->> say 0.99.7; I agree it is confusing.  On the other hand, I do
->> not think we would want to increment the version string with
->> every little changes, so...
->
-> In ELinks, we pseudo-bump the version number from v1.2.3 to v1.2.3.CVS
-> (now v1.2.3.GIT) right after the release.
 
-That's a nice way of doing it.  Maybe I should follow suit.
+On Sat, 24 Sep 2005, Davide Libenzi wrote:
+> 
+> http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createhardlink.asp
+
+Don't you mean
+
+	http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createsymboliclink.asp
+
+rather?
+
+It mentions longhorn.
+
+		Linus
