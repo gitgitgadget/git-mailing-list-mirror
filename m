@@ -1,58 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Davide Libenzi <davidel@xmailserver.org>
 Subject: Re: git 0.99.7b doesn't build on Cygwin
-Date: Sat, 24 Sep 2005 14:47:35 -0700
-Message-ID: <7vd5myuoi0.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 24 Sep 2005 14:52:39 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0509241451510.16554@localhost.localdomain>
 References: <ud5mznc1x.fsf@peter-b.co.uk>
-	<Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.58.0509231647300.3308@g5.osdl.org>
-	<Pine.LNX.4.63.0509240305450.26220@wgmdd8.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.58.0509231935360.3308@g5.osdl.org>
-	<Pine.LNX.4.63.0509232220330.30718@localhost.localdomain>
-	<Pine.LNX.4.58.0509241102450.3308@g5.osdl.org>
-	<Pine.LNX.4.63.0509241129300.31327@localhost.localdomain>
-	<7vbr2iw6l3.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0509241426240.16554@localhost.localdomain>
+ <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.58.0509231647300.3308@g5.osdl.org>
+ <Pine.LNX.4.63.0509240305450.26220@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.58.0509231935360.3308@g5.osdl.org>
+ <Pine.LNX.4.63.0509232220330.30718@localhost.localdomain>
+ <Pine.LNX.4.58.0509241102450.3308@g5.osdl.org>
+ <Pine.LNX.4.63.0509241129300.31327@localhost.localdomain>
+ <7vbr2iw6l3.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0509241426240.16554@localhost.localdomain>
+ <7vd5myuoi0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 23:48:20 2005
+X-From: git-owner@vger.kernel.org Sat Sep 24 23:50:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJHrx-0001xK-Q4
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 23:47:42 +0200
+	id 1EJHu8-0002mj-SZ
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 23:49:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750765AbVIXVrj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Sep 2005 17:47:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750766AbVIXVrj
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 17:47:39 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:1197 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1750765AbVIXVri (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Sep 2005 17:47:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050924214738.LJNJ29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 24 Sep 2005 17:47:38 -0400
-To: Davide Libenzi <davidel@xmailserver.org>
-In-Reply-To: <Pine.LNX.4.63.0509241426240.16554@localhost.localdomain> (Davide
-	Libenzi's message of "Sat, 24 Sep 2005 14:28:29 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750766AbVIXVty (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Sep 2005 17:49:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750771AbVIXVty
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 17:49:54 -0400
+Received: from x35.xmailserver.org ([69.30.125.51]:2439 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP
+	id S1750766AbVIXVty (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Sep 2005 17:49:54 -0400
+X-AuthUser: davidel@xmailserver.org
+Received: from debstar.dev.mdolabs.com
+	by xmailserver.org with [XMail 1.22 ESMTP Server]
+	id <S1A0F51> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Sat, 24 Sep 2005 14:51:04 -0700
+X-X-Sender: davide@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vd5myuoi0.fsf@assigned-by-dhcp.cox.net>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9250>
 
-Davide Libenzi <davidel@xmailserver.org> writes:
+On Sat, 24 Sep 2005, Junio C Hamano wrote:
 
-> On Sat, 24 Sep 2005, Junio C Hamano wrote:
+> Davide Libenzi <davidel@xmailserver.org> writes:
 >
->> Making really really core part usable on Windows would not need
->> this, but there is another thing: .git/HEAD symlink.
+>> On Sat, 24 Sep 2005, Junio C Hamano wrote:
+>>
+>>> Making really really core part usable on Windows would not need
+>>> this, but there is another thing: .git/HEAD symlink.
+>>
+>> Starting from Win2k, they *finally* added:
+>>
+>> http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createhardlink.asp
 >
-> Starting from Win2k, they *finally* added:
->
-> http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createhardlink.asp
+> It talks about "a hard link".  Can we readlink it?
 
-It talks about "a hard link".  Can we readlink it?
+Nope. It's an hardlink (ala link(2)).
+
+
+- Davide
