@@ -1,133 +1,138 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cogito: cg-clone doesn't like packed tag objects
-Date: Sat, 24 Sep 2005 11:10:40 -0700
-Message-ID: <7virwqwd3z.fsf@assigned-by-dhcp.cox.net>
-References: <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz>
-	<7vvf0r6x97.fsf@assigned-by-dhcp.cox.net>
-	<20050924125001.GB25069@pasky.or.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE qgit-0.95]
+Date: Sat, 24 Sep 2005 20:16:36 +0200
+Message-ID: <20050924181636.GD25069@pasky.or.cz>
+References: <20050924160641.60151.qmail@web26307.mail.ukl.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 24 20:12:26 2005
+X-From: git-owner@vger.kernel.org Sat Sep 24 20:17:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJEU4-0005Xz-92
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 20:10:48 +0200
+	id 1EJEZo-0007x4-QR
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 20:16:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932217AbVIXSKo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Sep 2005 14:10:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932219AbVIXSKo
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 14:10:44 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:53658 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932217AbVIXSKn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Sep 2005 14:10:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050924181043.HETE29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 24 Sep 2005 14:10:43 -0400
-To: Petr Baudis <pasky@suse.cz>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932218AbVIXSQm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Sep 2005 14:16:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932219AbVIXSQm
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Sep 2005 14:16:42 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:52950 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932218AbVIXSQl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Sep 2005 14:16:41 -0400
+Received: (qmail 28113 invoked by uid 2001); 24 Sep 2005 20:16:36 +0200
+To: Marco Costalba <mcostalba@yahoo.it>
+Content-Disposition: inline
+In-Reply-To: <20050924160641.60151.qmail@web26307.mail.ukl.yahoo.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9242>
 
-Petr Baudis <pasky@suse.cz> writes:
+Dear diary, on Sat, Sep 24, 2005 at 06:06:40PM CEST, I got a letter
+where Marco Costalba <mcostalba@yahoo.it> told me that...
+> This is a performance update release.
+> 
+> The detailed list of changes is below, but the bottom line is 
+> qgit-0.95 is _really_ fast.
+> 
+> It tooks about 4 seconds, on my box, to run qgit --all on today linux tree against 
+> about 65 seconds with gitk. Also the used memory it seems lower.
+> 
+> As a 'theoretical maximum speed' a bare:
+> 
+> git-rev-list --header --topo-order --parents HEAD > /dev/null
+> 
+> Runs in about 2 seconds.
+> 
+> So this is the main reason I post this release. I doubt a little bit about this results 
+> because the spread with gitk it seems too much, so I would like a double check.
 
->> I think you could run git-peek-remote to find all the refs and
->> then run git-fetch-pack to slurp all the tags (and heads for
->> that matter) at once.  Is there a particular reason you would
->> prefer the commit walker?
->
-> Actually, probably not, except consistency with rsync and http handling
-> - but that's obviously not too good reason.
+Yes, it is several times faster than gitk, good work. Had to do this in
+order to be able to compile it with gcc-3.3.6, though (it complained
+about goto'ing after initialization of nc - that's bogus since there's
+the return, but...):
 
-We would end up doing things internally differently between
-git-native (fetch/clone-pack) and other protocols (commit walker
-which is git-aware, and rsync which is not) anyway.
+diff --git a/src/git_startup.cpp b/src/git_startup.cpp
+--- a/src/git_startup.cpp
++++ b/src/git_startup.cpp
+@@ -469,7 +469,9 @@ again:
+ 			if (!resumeTimer.isActive())
+ 				resumeTimer.start(1, true); // with 0 ms there is an oops in libqt-mt
+  			return; // we suspend here to let GUI updating
++		}
+ 
++		if (false) {
+ resume:
+ 			suspended = false;
+ 			processTime.start();
 
-I misspoke for 'git-fetch-pack' in the above -- git-fetch-pack
-without any refspec fetches all the refs, so you do not need a
-separate peek-remote.  Right now 'git fetch' wrapper does not
-let you take advantage of this, but if we wanted to add '--all'
-flag to 'git fetch' wrapper, it can be implemented very easily
-and efficiently for the git-native protocol.  An implementation
-of such a flag for other protocols would use git-ls-remote to
-find out the refs upfront.
 
-> I will probably rewrite the tags fetching to use git-peek-remote
-> (info/refs for http) the next weekend.
+Besides that, this is what I don't like about qgit:
 
-If you are targetting multiple protocols, git-ls-remote is the
-one to use, not peek-remote.  It internally uses peek-remote for
-git-native protocol, and emulates it using info/refs for http
-and recursive get for rsync, so no new coding on Cogito part
-should be necessary.
+* It'd be nice to be able to choose to see all commits in the initial
+dialog by single click (I know about --all). Perhaps a radio buttons
+choosing between all and selected? Also, you might add the "diff against
+working copy" option to that dialog as well.
 
-> default post-update hook could change to
->
-> 	[ -e "$_git/git-dummy-support" ] && exec git-update-server-info
->
-> and be enabled by default?
+* The graph column is too narrow. It should be auto-sized so that the
+graph fits in, or at least there should be some clear indication that
+the graph does not fit to the column at the given point. This confused
+me a lot at first.
 
-That is a thought.  While I think doing update-server-info
-everywhere whenever you update ref is going a bit overboard, I
-agree there should be an easy way for the end user to keep
-repositories that are public accessible all times.  But running
-server-info upon every commit does not make much sense to me --
-something is seriously broken if we need to do that.
+* Could you make the grey background for odd commits span to the whole
+line, including the commit graph?
 
-Cases when you would want to make your repository accessible
-from outside itself varies and preferred transport obviously
-depends on it.
+* The commit time is relative to now, which makes no sense to me. Also,
+it is in the second column instead of the last one like in gitk, which
+seems better to me. At least, the column is too narrow and then it
+blends together with the commit title.
 
- - Your private working area.  Typically does not allow
-   anonymous downloads.  You are the only one to use git tools
-   and compilation there (that's what 'private' means).
+* In the filter radio buttons groups, only first few letters of the
+labels are visible, and apparently no tooltips. Same problem in the
+settings dialog, most of the options have the labels cut around 2/3, and
+the window is non-resizable on top of that - why? I hate non-resizable
+windows, especially because they are usually too small. :-)
 
- - A CVS style shared repository.  May allow anonymous
-   downloads, and allow uploads to people with 'commit
-   privilege' in CVS lingo.
+* Single-clicking at a commit produces a significantly slower response
+than in gitk, where I see the difflist and stuff nearly instantly - it
+takes several hundreds of ms in qgit. That's quite annoying.
 
- - A public distribution point, like kernel.org repository.
-   This is just a special case of the 'shared repository' above,
-   with yourself as the only uploader.
+* Getting to the diff view was non-obvious for me. It'd be nice to have
+some [diff] button as well somewhere. Or you could also show the diff in
+the bottom part of screen in the commit view, I think gitk solved this
+nicely.
 
-I thought there would be more classes, but it really boils down
-to whether you would allow anonymous downloads or not -- so
-let's call them private and public.
+* Clicking on the file was supposed to bring some annotated view, but if
+it is so, it should write "Annotate" in the window title, and should
+indicate that it is computing it on the background (and is really slow
+in that, or I don't know, but always only single revision was shown
+there). It is unclear what the "pin file" checkbox is supposed to mean,
+and the whole dialog is just very confusing. :-)
 
-Fetching over non git-native protocol is the only case where
-server-info matters; so obviously it is nicer if public
-repository is arranged so that update-server-info is run
-everytime refs and set of packs change.
+* The lane information might be available as a tooltip in addition to
+right-clicking on it - that wouldn't occur to me.
 
-I do not think of a good reason not to use git-aware protocol
-when one is fetching from a private repo -- so if we just say
-people should not use non git-aware protocol when doing so, we
-do not have to do server-info in the private repositories at
-all.
+* Why is the Edit menu aligned to the right?
 
-So the question is, how often do we need to run update to keep
-the refs and set of packs in public repository in sync with the
-server-info.  What do people do in public repository to affect
-set of packs and the refs?
+* Well - I don't like the line graphics and prefer gitk's. This is
+perhaps a matter of taste, though. I find the graphics to be too tiny,
+thin and not so clear as gitk's, which makes it harder to see the commit
+flow. I also like diagonal lines more than angles, but that might be
+just because I'm used to them.
 
- - Initiate a push into it from somewhere else; this case is
-   covered by enabling post-update hook.
+OTOH, qgit actually flows the commits around the 0.99.6 release and such
+better than gitk, keeping them all in a single lane instead of flowing
+off to the right. It is still a bit hard to see what actually went on,
+but curing that would require sorting the commits by date.
 
- - You log on to the machine of public repository and run 'git
-   repack'; this runs update-server-info, so it is OK.
 
- - You log on to the machine of public repository and run fetch
-   of another repository -- you may even end up hand merging and
-   creating new commits.
+Nice work otherwise. :-)
 
- - You log on to the machine of public repository and do your
-   development, making your own commits.
-
-It is the latter two cases where your 'update-server-info
-everywhere in Cogito' would be needed -- but is it realistic?
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
