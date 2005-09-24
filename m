@@ -1,98 +1,45 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git 0.99.7b doesn't build on Cygwin
-Date: Sat, 24 Sep 2005 03:13:31 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0509240305450.26220@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <ud5mznc1x.fsf@peter-b.co.uk>
- <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.58.0509231647300.3308@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: How to make Cogito use git-fetch-pack?
+Date: Sat, 24 Sep 2005 03:19:12 +0200
+Message-ID: <20050924011912.GK10255@pasky.or.cz>
+References: <43347F98.6020101@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Peter TB Brett <peter@peter-b.co.uk>,
-	Git Mailing List <git@vger.kernel.org>,
-	Davide Libenzi <davidel@xmailserver.org>
-X-From: git-owner@vger.kernel.org Sat Sep 24 03:14:56 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 24 03:19:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIybw-0005vE-AA
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 03:13:52 +0200
+	id 1EIyhD-0007BI-HZ
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 03:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932143AbVIXBNe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 21:13:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751362AbVIXBNe
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 21:13:34 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:38356 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751361AbVIXBNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2005 21:13:34 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 922FF1364BB; Sat, 24 Sep 2005 03:13:32 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 7A4839DA02; Sat, 24 Sep 2005 03:13:32 +0200 (CEST)
-Received: from wrzx35.rz.uni-wuerzburg.de (wrzx35.rz.uni-wuerzburg.de [132.187.3.35])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5D0C79D9FC; Sat, 24 Sep 2005 03:13:32 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 31240E1010; Sat, 24 Sep 2005 03:13:31 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509231647300.3308@g5.osdl.org>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932145AbVIXBTR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 21:19:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751361AbVIXBTQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 21:19:16 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:52389 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751360AbVIXBTQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Sep 2005 21:19:16 -0400
+Received: (qmail 23610 invoked by uid 2001); 24 Sep 2005 03:19:14 +0200
+To: "H. Peter Anvin" <hpa@zytor.com>
+Content-Disposition: inline
+In-Reply-To: <43347F98.6020101@zytor.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9219>
 
-Hi,
+Dear diary, on Sat, Sep 24, 2005 at 12:20:08AM CEST, I got a letter
+where "H. Peter Anvin" <hpa@zytor.com> told me that...
+> Is there any way to make Cogito use git-fetch-pack instead of 
+> git-ssh-fetch?  git+ssh:// seems to invoke the latter.
 
-On Fri, 23 Sep 2005, Linus Torvalds wrote:
+I just added git+packed+ssh:// to be used for this purpose.
 
-> On Fri, 23 Sep 2005, Johannes Schindelin wrote:
-> > 
-> > It seems that the fixup of the mmap()ed regions after a fork() does not 
-> > work properly in cygwin. Remember that cygwin just wraps the non-POSIX 
-> > Win32API and tries to make it sort of POSIX compliant. The problem is that 
-> > Win32API lacks a proper fork(). This is therefore emulated, and after 
-> > that, all the mmap()ed regions have to be mapped again. That fails.
-> 
-> Now, I'm not a big fan of windows ("No, really? Tell us more!") but I'd 
-> actually like it if the _core_ git stuff worked in as wide a variety of 
-> situations as possible.
-
-It is sure worth to try to be as portable as possible. Just look at the 
-bugs found by running git on x86_64 (for example by HPA), which were not 
-apparent from x86 or PowerPC.
-
-> Screw the shell scripts and the daemon or secondary things like that 
-> which windows users might as well generate their own stuff for, but I'd 
-> hope the really core stuff would work.
-
-Whoa, slow! The shell scripts and the networking are important parts even 
-of the core git suite. Without them, work is next to impossible.
-
-> If I understood correctly, you said that "git-diff-tree" doesn't work due
-> to the fork/mmap issue. Now, I assume that means that it's the builtin
-> diff that has problems. 
-
-No. It means that there is something weird going on inside cygwin1.dll. 
-This library works perfectly when the program is run inside gdb. Which 
-could well mean some timing issue. Unfortunately, I have problems 
-rebuilding cygwin1.dll, and therefore cannot debug in detail.
-
-BTW I am fairly convinced that the same issues would trouble a git-pull, 
-once the networking is running, since the pack transfer relies on 
-fork()ing.
-
-> I'm wondering if there is some stupid way to turn a diff generated by 
-> diff_delta() into a line-based one? If you have the original file and the 
-> xdiff, I think we should be able to just walk the original file and output 
-> a unified diff.
-
-It sure would be nice to have a unified diff generator included, but I 
-doubt that a reliable (=simple) one is easy to come by.
-
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
