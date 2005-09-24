@@ -1,232 +1,98 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: /bin/sh portability question
-Date: Fri, 23 Sep 2005 18:13:54 -0700
-Message-ID: <7vwtl78dyl.fsf@assigned-by-dhcp.cox.net>
-References: <20050923075058.GA25473@bohr.gbar.dtu.dk>
-	<7vmzm4duf8.fsf@assigned-by-dhcp.cox.net>
-	<20050923121705.GA11377@sunq05.gbar.dtu.dk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git 0.99.7b doesn't build on Cygwin
+Date: Sat, 24 Sep 2005 03:13:31 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0509240305450.26220@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <ud5mznc1x.fsf@peter-b.co.uk>
+ <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.58.0509231647300.3308@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Sean" <seanlkml@sympatico.ca>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Peter TB Brett <peter@peter-b.co.uk>,
+	Git Mailing List <git@vger.kernel.org>,
+	Davide Libenzi <davidel@xmailserver.org>
 X-From: git-owner@vger.kernel.org Sat Sep 24 03:14:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EIycG-0005z9-0D
-	for gcvg-git@gmane.org; Sat, 24 Sep 2005 03:14:12 +0200
+	id 1EIybw-0005vE-AA
+	for gcvg-git@gmane.org; Sat, 24 Sep 2005 03:13:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932144AbVIXBN7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Sep 2005 21:13:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbVIXBN7
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 21:13:59 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:65232 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751356AbVIXBN6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Sep 2005 21:13:58 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050924011356.YAMQ6597.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 23 Sep 2005 21:13:56 -0400
-To: "Peter Eriksen" <s022018@student.dtu.dk>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932143AbVIXBNe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Sep 2005 21:13:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751362AbVIXBNe
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Sep 2005 21:13:34 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:38356 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751361AbVIXBNe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Sep 2005 21:13:34 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 922FF1364BB; Sat, 24 Sep 2005 03:13:32 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 7A4839DA02; Sat, 24 Sep 2005 03:13:32 +0200 (CEST)
+Received: from wrzx35.rz.uni-wuerzburg.de (wrzx35.rz.uni-wuerzburg.de [132.187.3.35])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 5D0C79D9FC; Sat, 24 Sep 2005 03:13:32 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 31240E1010; Sat, 24 Sep 2005 03:13:31 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509231647300.3308@g5.osdl.org>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9218>
 
-"Peter Eriksen" <s022018@student.dtu.dk> writes:
+Hi,
 
-> GCC is not complaining.  :-)
->
-> My current make command is like this:
->
-> gmake NO_STRCASESTR=YesPlease CURLDIR=/opt/sfw/  \
->       SHELL_PATH=/bin/bash INSTALL=ginstall install
->
-> There are two problems:
->
-> * First of all there really needs to be a TAR variable, 
->   since Solaris tar doesn't like the C option. 
->
-> * Secondly I've noticed that git.sh and gitk don't get 
->   their /bin/sh line changed during install.
+On Fri, 23 Sep 2005, Linus Torvalds wrote:
 
-Thanks.
+> On Fri, 23 Sep 2005, Johannes Schindelin wrote:
+> > 
+> > It seems that the fixup of the mmap()ed regions after a fork() does not 
+> > work properly in cygwin. Remember that cygwin just wraps the non-POSIX 
+> > Win32API and tries to make it sort of POSIX compliant. The problem is that 
+> > Win32API lacks a proper fork(). This is therefore emulated, and after 
+> > that, all the mmap()ed regions have to be mapped again. That fails.
+> 
+> Now, I'm not a big fan of windows ("No, really? Tell us more!") but I'd 
+> actually like it if the _core_ git stuff worked in as wide a variety of 
+> situations as possible.
 
-Would something like the attached patch, on top of what I sent
-out, look good?  I do not think bash vs ksh vs bourne makes a
-difference in the case of gitk.
+It is sure worth to try to be as portable as possible. Just look at the 
+bugs found by running git on x86_64 (for example by HPA), which were not 
+apparent from x86 or PowerPC.
 
-------------
-[PATCH] Solaris: give a bit more built-in defaults.
+> Screw the shell scripts and the daemon or secondary things like that 
+> which windows users might as well generate their own stuff for, but I'd 
+> hope the really core stuff would work.
 
-Taking the make command line Peter Eriksen uses, give defaults
-to SHELL_PATH, TAR, CURLDIR, NO_STRCASESTR, and INSTALL.
+Whoa, slow! The shell scripts and the networking are important parts even 
+of the core git suite. Without them, work is next to impossible.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+> If I understood correctly, you said that "git-diff-tree" doesn't work due
+> to the fork/mmap issue. Now, I assume that means that it's the builtin
+> diff that has problems. 
 
----
+No. It means that there is something weird going on inside cygwin1.dll. 
+This library works perfectly when the program is run inside gdb. Which 
+could well mean some timing issue. Unfortunately, I have problems 
+rebuilding cygwin1.dll, and therefore cannot debug in detail.
 
- Makefile           |   43 ++++++++++++++++++++++++++-----------------
- git-clone.sh       |    3 ++-
- templates/Makefile |   10 ++++++----
- 3 files changed, 34 insertions(+), 22 deletions(-)
+BTW I am fairly convinced that the same issues would trouble a git-pull, 
+once the networking is running, since the pack transfer relies on 
+fork()ing.
 
-49cbdf77449687da471ee9289796f7c480e7bd73
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -27,8 +27,6 @@
- # Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
- # Patrick Mauritz).
- #
--# Define NO_GETDOMAINNAME if your library lack it (SunOS, Patrick Mauritz).
--#
- # Define WITH_OWN_SUBPROCESS_PY if you want to use with python 2.3.
- #
- # Define COLLISION_CHECK below if you believe that SHA1's
-@@ -63,6 +61,7 @@ GIT_PYTHON_DIR = $(prefix)/share/git-cor
- 
- CC = gcc
- AR = ar
-+TAR = tar
- INSTALL = install
- RPMBUILD = rpmbuild
- 
-@@ -133,17 +132,6 @@ ifdef WITH_SEND_EMAIL
- 	SCRIPT_PERL += git-send-email.perl
- endif
- 
--ifndef NO_CURL
--	ifdef CURLDIR
--		# This is still problematic -- gcc does not want -R.
--		CFLAGS += -I$(CURLDIR)/include
--		CURL_LIBCURL = -L$(CURLDIR)/lib -R$(CURLDIR)/lib -lcurl
--	else
--		CURL_LIBCURL = -lcurl
--	endif
--	PROGRAMS += git-http-fetch
--endif
--
- LIB_FILE=libgit.a
- 
- LIB_H = \
-@@ -166,6 +154,9 @@ LIB_OBJS = \
- LIBS = $(LIB_FILE)
- LIBS += -lz
- 
-+#
-+# Platform specific tweaks
-+#
- ifeq ($(shell uname -s),Darwin)
- 	NEEDS_SSL_WITH_CRYPTO = YesPlease
- 	NEEDS_LIBICONV = YesPlease
-@@ -173,12 +164,28 @@ endif
- ifeq ($(shell uname -s),SunOS)
- 	NEEDS_SOCKET = YesPlease
- 	NEEDS_NSL = YesPlease
-+	SHELL_PATH = /bin/bash
-+	NO_STRCASESTR = YesPlease
-+	CURLDIR = /opt/sfw
-+	INSTALL = ginstall
-+	TAR = gtar
- 	PLATFORM_DEFINES += -D__EXTENSIONS__
- endif
- ifneq (,$(findstring arm,$(shell uname -m)))
- 	ARM_SHA1 = YesPlease
- endif
- 
-+ifndef NO_CURL
-+	ifdef CURLDIR
-+		# This is still problematic -- gcc does not want -R.
-+		CFLAGS += -I$(CURLDIR)/include
-+		CURL_LIBCURL = -L$(CURLDIR)/lib -R$(CURLDIR)/lib -lcurl
-+	else
-+		CURL_LIBCURL = -lcurl
-+	endif
-+	PROGRAMS += git-http-fetch
-+endif
-+
- ifndef SHELL_PATH
- 	SHELL_PATH = /bin/sh
- endif
-@@ -245,6 +252,7 @@ SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)
- 	  $(patsubst %.py,%,$(SCRIPT_PYTHON)) \
- 	  gitk
- 
-+export TAR INSTALL DESTDIR
- ### Build rules
- 
- all: $(PROGRAMS) $(SCRIPTS)
-@@ -254,7 +262,8 @@ all:
- 
- git: git.sh Makefile
- 	rm -f $@+ $@
--	sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' <$@.sh >$@+
-+	sed -e '1s|#!.*/sh|#!$(SHELL_PATH)|' \
-+	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' <$@.sh >$@+
- 	chmod +x $@+
- 	mv $@+ $@
- 
-@@ -356,7 +365,7 @@ dist: git-core.spec git-tar-tree
- 	./git-tar-tree HEAD $(GIT_TARNAME) > $(GIT_TARNAME).tar
- 	@mkdir -p $(GIT_TARNAME)
- 	@cp git-core.spec $(GIT_TARNAME)
--	tar rf $(GIT_TARNAME).tar $(GIT_TARNAME)/git-core.spec
-+	$(TAR) rf $(GIT_TARNAME).tar $(GIT_TARNAME)/git-core.spec
- 	@rm -rf $(GIT_TARNAME)
- 	gzip -f -9 $(GIT_TARNAME).tar
- 
-@@ -365,7 +374,7 @@ rpm: dist
- 
- deb: dist
- 	rm -rf $(GIT_TARNAME)
--	tar zxf $(GIT_TARNAME).tar.gz
-+	$(TAR) zxf $(GIT_TARNAME).tar.gz
- 	dpkg-source -b $(GIT_TARNAME)
- 	cd $(GIT_TARNAME) && fakeroot debian/rules binary
- 
-@@ -380,5 +389,5 @@ clean:
- 	rm -f git-core_$(GIT_VERSION)-*.deb git-core_$(GIT_VERSION)-*.dsc
- 	rm -f git-tk_$(GIT_VERSION)-*.deb
- 	$(MAKE) -C Documentation/ clean
--	$(MAKE) -C templates/ clean
-+	$(MAKE) -C templates clean
- 	$(MAKE) -C t/ clean
-diff --git a/git-clone.sh b/git-clone.sh
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -139,7 +139,8 @@ yes,yes)
- 	then
- 		HEAD=HEAD
- 	fi
--	tar Ccf "$repo" - refs $HEAD | tar Cxf "$D/.git" - || exit 1
-+	(cd "$repo" && tar cf - refs $HEAD) |
-+	(cd "$D/.git" && tar xf -) || exit 1
- 	;;
- *)
- 	case "$repo" in
-diff --git a/templates/Makefile b/templates/Makefile
---- a/templates/Makefile
-+++ b/templates/Makefile
-@@ -1,8 +1,9 @@
- # make and install sample templates
- 
--INSTALL=install
--prefix=$(HOME)
--template_dir=$(prefix)/share/git-core/templates/
-+INSTALL ?= install
-+TAR ?= tar
-+prefix ?= $(HOME)
-+template_dir ?= $(prefix)/share/git-core/templates/
- # DESTDIR=
- 
- all: boilerplates custom
-@@ -35,4 +36,5 @@ clean:
- 
- install: all
- 	$(INSTALL) -d -m755 $(DESTDIR)$(template_dir)
--	tar Ccf blt - . | tar Cxf $(DESTDIR)$(template_dir) -
-+	(cd blt && $(TAR) cf - .) | \
-+	(cd $(DESTDIR)$(template_dir) && $(TAR) xf -)
+> I'm wondering if there is some stupid way to turn a diff generated by 
+> diff_delta() into a line-based one? If you have the original file and the 
+> xdiff, I think we should be able to just walk the original file and output 
+> a unified diff.
+
+It sure would be nice to have a unified diff generator included, but I 
+doubt that a reliable (=simple) one is easy to come by.
+
+Ciao,
+Dscho
