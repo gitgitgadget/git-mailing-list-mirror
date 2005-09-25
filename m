@@ -1,85 +1,49 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: [ANNOUNCE qgit-0.95]
-Date: Sun, 25 Sep 2005 00:07:19 -0700 (PDT)
-Message-ID: <20050925070719.67119.qmail@web26309.mail.ukl.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git 0.99.7b doesn't build on Cygwin
+Date: Sun, 25 Sep 2005 00:52:54 -0700
+Message-ID: <7vzmq1twh5.fsf@assigned-by-dhcp.cox.net>
+References: <ud5mznc1x.fsf@peter-b.co.uk>
+	<Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.58.0509231647300.3308@g5.osdl.org>
+	<Pine.LNX.4.58.0509231737140.3308@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 25 09:08:46 2005
+X-From: git-owner@vger.kernel.org Sun Sep 25 09:53:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJQbo-00037Q-8a
-	for gcvg-git@gmane.org; Sun, 25 Sep 2005 09:07:36 +0200
+	id 1EJRJw-0002Kp-09
+	for gcvg-git@gmane.org; Sun, 25 Sep 2005 09:53:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751186AbVIYHHV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Sep 2005 03:07:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbVIYHHV
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Sep 2005 03:07:21 -0400
-Received: from web26309.mail.ukl.yahoo.com ([217.146.176.20]:8382 "HELO
-	web26309.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1751186AbVIYHHU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Sep 2005 03:07:20 -0400
-Received: (qmail 67121 invoked by uid 60001); 25 Sep 2005 07:07:19 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=CjLabSkGoE9QYvQCBiO2gq5eM+J/HQLhbX4maj7dB0+xxbJPpQpnGVeXw1wSQ13ROWFYi+3GdkBtC7eerKTUDluIObYQU7Phgtm/xtcyiwjqUrkIPdX2x1C6iyOaKPMCN5Io7oaeMXPh+OuG8OC046gzI2gscfbYODyWaiJMN6k=  ;
-Received: from [151.38.74.126] by web26309.mail.ukl.yahoo.com via HTTP; Sun, 25 Sep 2005 00:07:19 PDT
-To: Alan Chandler <alan@chandlerfamily.org.uk>
+	id S1751235AbVIYHw6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Sep 2005 03:52:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbVIYHw6
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Sep 2005 03:52:58 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:5302 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751235AbVIYHw5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Sep 2005 03:52:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050925075254.LMIC776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 25 Sep 2005 03:52:54 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509231737140.3308@g5.osdl.org> (Linus Torvalds's
+	message of "Fri, 23 Sep 2005 17:43:20 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9261>
 
-Alan Chandler wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
 
->On Sunday 25 Sep 2005 07:32, Alan Chandler wrote:
->...
->
->>However when I run make I get errors of the form shown below (QSettings
->>errors) and eventually the compile stage fails.
->>
->>/usr/share/qt3/bin/uic -o src/rangeselectbase.h src/rangeselectbase.ui
->>/usr/share/qt3/bin/uic -impl rangeselectbase.h -o
->>src/uic_rangeselectbase.cc src/rangeselectbase.ui
->>/usr/share/qt3/bin/moc -o src/moc_rangeselectbase.cc src/rangeselectbase.h
->>QSettings: error creating /.qt
->>QSettings: error creating /.qt
->>QSettings: error creating /.qt
->>QSettings: error creating /.qt
->>QSettings: error creating /.qt
->>QSettings::sync: filename is null/empty
->>QSettings: error creating /.qt
->>QSettings::sync: filename is null/empty
->>QSettings: error creating /.qt
->>QSettings::sync: filename is null/empty
->>g++ -O2 -DQT_THREAD_SUPPORT -D_REENTRANT -I/usr/include/qt3
->>-I/usr/share/qt3/include -c -o src/git_startup.o src/git_startup.cpp
->>src/git_startup.cpp: In member function `void Git::parseReadFromStdout()':
->>src/git_startup.cpp:473: error: jump to label `resume'
->>src/git_startup.cpp:439: error:   from here
->>src/git_startup.cpp:467: error:   crosses initialization of `newCommits*nc'
->>scons: *** [src/git_startup.o] Error 1
->>scons: building terminated because of errors.
->>make: *** [all] Error 2
->>alan@kanger qgit-0.95 $
->
->
->Although the QSettings are still there, fixing up git_startup.cpp as per 
->Pasky's patch fixed it for me
->
+> The GNU diff sources are hard enough to read that I don't think we want to 
+> try to merge the unified diff generation from there.
 
-QSettings are there from day one :-<
-I am not able to let them disappear.....very bad. In any case should be harmless.
-
-This morining I have updated the downloads with Pasky's patch.
-
-Marco
-
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+I was talking with GNU diff maintainer and his impression was
+that CVS folks may have done enough libification -- I'll find
+time to look at CVS code and see how much damage we are talking
+about.
