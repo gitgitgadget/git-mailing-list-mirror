@@ -1,49 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Add "git-update-ref" to update the HEAD (or other) ref
-Date: Sun, 25 Sep 2005 21:25:32 -0700
-Message-ID: <7vd5mwlakj.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0509251134480.3308@g5.osdl.org>
-	<7vhdc8n2xb.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509251747290.3308@g5.osdl.org>
+From: Giuseppe Bilotta <bilotta78@hotpop.com>
+Subject: Re: git 0.99.7b doesn't build on Cygwin
+Date: Sun, 25 Sep 2005 21:59:42 +0200
+Message-ID: <1o29so2d1zd0i$.1d0cf386vluxi.dlg@40tude.net>
+References: <ud5mznc1x.fsf@peter-b.co.uk> <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.58.0509231647300.3308@g5.osdl.org> <Pine.LNX.4.63.0509240305450.26220@wgmdd8.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.58.0509231935360.3308@g5.osdl.org> <Pine.LNX.4.63.0509232220330.30718@localhost.localdomain> <Pine.LNX.4.58.0509241102450.3308@g5.osdl.org> <Pine.LNX.4.63.0509241129300.31327@localhost.localdomain> <7vbr2iw6l3.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0509241426240.16554@localhost.localdomain> <Pine.LNX.4.58.0509241524270.3308@g5.osdl.org> <Pine.LNX.4.63.0509241540170.16554@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Davide Libenzi <davidel@xmailserver.org>
-X-From: git-owner@vger.kernel.org Mon Sep 26 06:26:28 2005
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Sep 26 06:52:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJkYi-00038a-LR
-	for gcvg-git@gmane.org; Mon, 26 Sep 2005 06:25:45 +0200
+	id 1EJkxd-0007Wi-2C
+	for gcvg-git@gmane.org; Mon, 26 Sep 2005 06:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932371AbVIZEZh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Sep 2005 00:25:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932368AbVIZEZh
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 00:25:37 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:7862 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932371AbVIZEZg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2005 00:25:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050926042534.HLSV776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 26 Sep 2005 00:25:34 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509251747290.3308@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 25 Sep 2005 17:50:33 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932375AbVIZEvZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Sep 2005 00:51:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932378AbVIZEvZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 00:51:25 -0400
+Received: from main.gmane.org ([80.91.229.2]:5014 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932375AbVIZEvY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2005 00:51:24 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1EJkwU-0007Ks-6Z
+	for git@vger.kernel.org; Mon, 26 Sep 2005 06:50:18 +0200
+Received: from host-84-221-19-69.cust-adsl.tiscali.it ([84.221.19.69])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Sep 2005 06:50:18 +0200
+Received: from bilotta78 by host-84-221-19-69.cust-adsl.tiscali.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Sep 2005 06:50:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-84-221-19-69.cust-adsl.tiscali.it
+User-Agent: 40tude_Dialog/2.0.15.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9300>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Sat, 24 Sep 2005 15:41:27 -0700 (PDT), Davide Libenzi wrote:
 
-> I was actually thinking of maybe entirely replacing "read_ref()" with the
-> more powerful "resolve_ref()" - moving resolve_ref() into refs.c.
->
-> That way there's only one place that knows about the "ref:" thing.
+> On Sat, 24 Sep 2005, Linus Torvalds wrote:
+> 
+>>
+>>
+>> On Sat, 24 Sep 2005, Davide Libenzi wrote:
+>>>
+>>> http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createhardlink.asp
+>>
+>> Don't you mean
+>>
+>> 	http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createsymboliclink.asp
+>>
+>> rather?
+>>
+>> It mentions longhorn.
+> 
+> Hah, didn't know this one. Requiring LongHorn is pretty strict though ;)
 
-That would make sense.  But I am feeling a bit too weak tonight
-and am going to crash now.
+However, it might be possible to use .lnk files, which would work on
+both NTFS and FAT32, and even under Win9x.
+
+-- 
+Giuseppe "Oblomov" Bilotta
+
+"I weep for our generation" -- Charlie Brown
