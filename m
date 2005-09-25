@@ -1,227 +1,153 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Add "git-update-ref" to update the HEAD (or other) ref
-Date: Sun, 25 Sep 2005 11:43:05 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509251134480.3308@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: GIT 0.99.7d, and end of week status.
+Date: Sun, 25 Sep 2005 11:47:33 -0700
+Message-ID: <7vaci1nfwa.fsf@assigned-by-dhcp.cox.net>
+References: <7vll1lr1bq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Davide Libenzi <davidel@xmailserver.org>
-X-From: git-owner@vger.kernel.org Sun Sep 25 20:44:40 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Sep 25 20:48:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJbTC-0006Lw-94
-	for gcvg-git@gmane.org; Sun, 25 Sep 2005 20:43:26 +0200
+	id 1EJbXJ-0006wm-QQ
+	for gcvg-git@gmane.org; Sun, 25 Sep 2005 20:47:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751554AbVIYSnM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Sep 2005 14:43:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbVIYSnM
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Sep 2005 14:43:12 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:61861 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751553AbVIYSnL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Sep 2005 14:43:11 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8PIh64s013034
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 25 Sep 2005 11:43:07 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8PIh5cd024894;
-	Sun, 25 Sep 2005 11:43:06 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.118 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932263AbVIYSri (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Sep 2005 14:47:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932266AbVIYSri
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Sep 2005 14:47:38 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:41666 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932263AbVIYSrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Sep 2005 14:47:37 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050925184734.BFT4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 25 Sep 2005 14:47:34 -0400
+To: git@vger.kernel.org
+In-Reply-To: <7vll1lr1bq.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 25 Sep 2005 01:36:25 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9273>
 
+I said:
 
-This is a careful version of the script stuff that currently just
-blindly writes HEAD with a new value.
+> * The fourth minor fix release, GIT 0.99.7d, is available at the
+>   usual places.
+>
+>   With git:
+>
+>   $ git fetch http://kernel.org/pub/scm/git/git.git tag v0.99.7d
+>   $ git checkout -b <new-branch> v0.99.7d
 
-You can use
+If you pick a suitable name as <new-branch> that the repository
+in which you keep track git.git does not yet have, "maint997" for
+example, and if your working tree is identical to whatever your
+HEAD happens to be, then the above instruction should be read as:
 
-	git-update-ref HEAD <newhead>
+    $ git fetch http://kernel.org/pub/scm/git/git.git tag v0.99.7d
+    $ git checkout -b maint997 v0.99.7d
 
-or
+and that would give you the exact contents of v0.99.7d in your
+working tree.
 
-	git-update-ref HEAD <newhead> <oldhead>
+But this was really a stupid way to give instructions, and would
+probably have caused confusion.  Sorry about that, if you were
+one of the people who were bitten.
 
-where the latter version verifies that the old value of HEAD matches
-oldhead.
+I deliberately did not say:
 
-It basically allows a "ref" file to be a symbolic pointer to another ref
-file by starting with the four-byte header sequence of "ref:".
+    $ git pull http://kernel.org/pub/scm/git/git.git tag v0.99.7d
 
-More importantly, it allows the update of a ref file to follow these 
-symbolic pointers, whether they are symlinks or these "regular file 
-symbolic refs".
+because the result would be affected by whatever the random
+state the repository was in.
 
-NOTE! It follows _real_ symlinks only if they start with "refs/": 
-otherwise it will just try to read them and update them as a regular file 
-(ie it will allow the filesystem to follow them, but will overwrite such a 
-symlink to somewhere else with a regular filename).
+Folks using CVS seem to announce "A new release is available and
+tagged as r0.99.7d", people seem to know what they need to do
+when seeing that announcement ("cvs update -r r0.99.7d"), and
+this command line, as long as the working tree tracks that
+remote project CVS repository, would give more-or-less the same
+result for everyone no matter what the original state of the
+working tree was.  GIT is a bit different in that branch names
+are local and you do not really "check out a tag".
 
-In general, using
+One straightforward way which would work for everybody would be
+(provided you do not have git-src in the current directory):
 
-	git-update-ref HEAD "$head"
+   $ git clone http://kernel.org/pub/scm/git/git.git git-src
+   $ cd git-src
+   $ git reset --hard v0.99.7d
 
-should be a _lot_ safer than doing
+This will give all the public branches and tags (renaming of
+public "master" to "origin" is done by "git clone"), and match
+your "master" to "v0.99.7d".
 
-	echo "$head" > "$GIT_DIR/HEAD"
+When you already have a repository to track git.git, I would
+recommend to have something like this in .git/remote/origin:
 
-both from a symlink following standpoint _and_ an error checking
-standpoint.  The "refs/" rule for symlinks means that symlinks that point
-to "outside" the tree are safe: they'll be followed for reading but not 
-for writing (so we'll never write through a ref symlink to some other 
-tree, if you have copied a whole archive by creating a symlink tree).
+    URL: http://kernel.org/pub/scm/git/git.git
+    Pull: master:origin maint:maint +pu:pu
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
+Then you can say:
 
-This is independent of my previous patch, but in the same basic series. It 
-is useful regardless of whether you use the new symbolic refs or not 
-because of the much improved error checking.
+    $ git fetch origin tag v0.99.7d
 
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -114,6 +114,7 @@ PROGRAMS = \
- 	git-ssh-upload git-tar-tree git-unpack-file \
- 	git-unpack-objects git-update-index git-update-server-info \
- 	git-upload-pack git-verify-pack git-write-tree \
-+	git-update-ref \
- 	$(SIMPLE_PROGRAMS)
- 
- # Backward compatibility -- to be removed in 0.99.8
-diff --git a/update-ref.c b/update-ref.c
-new file mode 100644
---- /dev/null
-+++ b/update-ref.c
-@@ -0,0 +1,124 @@
-+#include "cache.h"
-+#include "refs.h"
-+
-+static const char git_update_ref_usage[] = "git-update-ref <refname> <value> [<oldval>]";
-+
-+#define MAXDEPTH 5
-+
-+const char *resolve_ref(const char *path, unsigned char *sha1)
-+{
-+	int depth = MAXDEPTH, len;
-+	char buffer[256];
-+
-+	for (;;) {
-+		struct stat st;
-+		char *buf;
-+		int fd;
-+
-+		if (--depth < 0)
-+			return NULL;
-+
-+		/* Special case: non-existing file */
-+		if (lstat(path, &st) < 0) {
-+			if (errno != ENOENT)
-+				return NULL;
-+			memset(sha1, 0, 20);
-+			return path;
-+		}
-+
-+		/* Follow "normalized" - ie "refs/.." symlinks by hand */
-+		if (S_ISLNK(st.st_mode)) {
-+			len = readlink(path, buffer, sizeof(buffer)-1);
-+			if (len >= 5 && !memcmp("refs/", buffer, 5)) {
-+				path = git_path("%.*s", len, buffer);
-+				continue;
-+			}
-+		}
-+
-+		/*
-+		 * Anything else, just open it and try to use it as
-+		 * a ref
-+		 */
-+		fd = open(path, O_RDONLY);
-+		if (fd < 0)
-+			return NULL;
-+		len = read(fd, buffer, sizeof(buffer)-1);
-+		close(fd);
-+
-+		/*
-+		 * Is it a symbolic ref?
-+		 */
-+		if (len < 4 || memcmp("ref:", buffer, 4))
-+			break;
-+		buf = buffer + 4;
-+		len -= 4;
-+		while (len && isspace(*buf))
-+			buf++, len--;
-+		while (len && isspace(buf[len-1]))
-+			buf[--len] = 0;
-+		path = git_path("%.*s", len, buf);
-+	}
-+	if (len < 40 || get_sha1_hex(buffer, sha1))
-+		return NULL;
-+	return path;
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	char *hex;
-+	const char *refname, *value, *oldval, *path, *lockpath;
-+	unsigned char sha1[20], oldsha1[20], currsha1[20];
-+	int fd, written;
-+
-+	setup_git_directory();
-+	if (argc < 3 || argc > 4)
-+		usage(git_update_ref_usage);
-+
-+	refname = argv[1];
-+	value = argv[2];
-+	oldval = argv[3];
-+	if (get_sha1(value, sha1) < 0)
-+		die("%s: not a valid SHA1", value);
-+	memset(oldsha1, 0, 20);
-+	if (oldval && get_sha1(oldval, oldsha1) < 0)
-+		die("%s: not a valid old SHA1", oldval);
-+
-+	path = resolve_ref(git_path("%s", refname), currsha1);
-+	if (!path)
-+		die("No such ref: %s", refname);
-+
-+	if (oldval) {
-+		if (memcmp(currsha1, oldsha1, 20))
-+			die("Ref %s changed to %s", refname, sha1_to_hex(currsha1));
-+		/* Nothing to do? */
-+		if (!memcmp(oldsha1, sha1, 20))
-+			exit(0);
-+	}
-+	path = strdup(path);
-+	lockpath = mkpath("%s.lock", path);
-+
-+	fd = open(lockpath, O_CREAT | O_EXCL | O_WRONLY, 0666);
-+	if (fd < 0)
-+		die("Unable to create %s", lockpath);
-+	hex = sha1_to_hex(sha1);
-+	hex[40] = '\n';
-+	written = write(fd, hex, 41);
-+	close(fd);
-+	if (written != 41) {
-+		unlink(lockpath);
-+		die("Unable to write to %s", lockpath);
-+	}
-+		
-+	/*
-+	 * FIXME!
-+	 *
-+	 * We should re-read the old ref here, and re-verify that it
-+	 * matches "oldsha1". Otherwise there's a small race.
-+	 */
-+
-+	if (rename(lockpath, path) < 0) {
-+		unlink(lockpath);
-+		die("Unable to create %s", path);
-+	}
-+	return 0;
-+}
+This only updates your .git/refs/tags/v0.99.7d and downloads
+necessary objects.  To see them in your working tree (e.g. for
+compilation), you would need to check it out.
+
+Now, how would you check out the v0.99.7d tag?  There are two
+ways to think about it.
+
+If the reason you want v0.99.7d, not "master" nor "pu", is you
+would want to stay with the 0.99.7 but get all the latest safer
+fixes, then you can just checkout "maint" branch instead, like
+this:
+
+    $ git checkout -f maint
+
+This will get you everything in the maintenance branch and may
+contain fixes that happened after v0.99.7d -- you are taking my
+0.99.7d announce as just a hint to say: "Junio has accumulated
+enough maintenance fixes in the maint branch and tagged its tip".
+
+And the announcement is just that.  I try to make sure that what
+are in the maint branch are just "safer fixes that do not break
+existing setup", but I do not do any more special testing than
+what I already do to make commits into the maint branch when I
+tag the tip of it.  In other words, the one that happens to be
+tagged as 0.99.7d is not any safer than the next commit that
+comes on the maint branch (there is none at this moment).  The
+later tip of the maint branch had better be more correct than
+v0.99.7d -- that is what "fix" usually means ;-).
+
+On the other hand, if the reason you want v0.99.7d is to point
+out things broke at that exact commit, you would need to check
+out that exact version, not just a random commit that happens to
+be at the tip of maint.  And you need a branch to check it out
+onto in that case.  Assuming that you do not have a branch
+called "throwaway":
+
+    $ git checkout -f -b throwaway v0.99.7d
+
+would give you the working tree that matches what is in v0.99.7d
+and a new branch "throwaway" whose tip is the commit tagged as
+v0.99.7d.  The usual caveat applies: if your working tree and
+index had changes since the HEAD commit you had before you did
+the above checkout, that change may be lost with '-f' flag.  But
+the point of this checkout is to get what is in the named tag
+exactly, you would want to lose them -- otherwise make a commit
+to your branch, or stash away 'git diff HEAD' output, before
+doing the checkout.
+
+After that, if you want to see what v0.99.7c used to do, you
+could (still remaining on the "throwaway" branch):
+
+    $ git reset --hard v0.99.7c
+
+[jc: maybe somebody can send a patch to add the later part of
+this message as Documentation/howto/checking-out-a-tag.txt ].
