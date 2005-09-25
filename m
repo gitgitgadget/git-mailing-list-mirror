@@ -1,76 +1,67 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH] recursive-merge: Don't print a stack trace when read-tree fails.
-Date: Sun, 25 Sep 2005 16:48:24 +0200
-Message-ID: <20050925144824.GB20527@c165.ib.student.liu.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Implementing diff, was Re: git 0.99.7b doesn't build on Cygwin
+Date: Sun, 25 Sep 2005 17:47:17 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0509251745160.17672@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <ud5mznc1x.fsf@peter-b.co.uk>
+ <Pine.LNX.4.63.0509231537390.11109@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.58.0509231647300.3308@g5.osdl.org> <Pine.LNX.4.58.0509231737140.3308@g5.osdl.org>
+ <7vzmq1twh5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 25 16:49:35 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 25 17:48:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJXo2-00089S-VH
-	for gcvg-git@gmane.org; Sun, 25 Sep 2005 16:48:43 +0200
+	id 1EJYjX-00017i-Fu
+	for gcvg-git@gmane.org; Sun, 25 Sep 2005 17:48:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751469AbVIYOsd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Sep 2005 10:48:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbVIYOsc
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Sep 2005 10:48:32 -0400
-Received: from [85.8.31.11] ([85.8.31.11]:44202 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S1751469AbVIYOsc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Sep 2005 10:48:32 -0400
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 2BA304100; Sun, 25 Sep 2005 16:54:12 +0200 (CEST)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EJXnl-0007B6-00; Sun, 25 Sep 2005 16:48:25 +0200
-To: junkio@cox.net
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
+	id S1751516AbVIYPrZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Sep 2005 11:47:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751520AbVIYPrZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Sep 2005 11:47:25 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:45265 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751516AbVIYPrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Sep 2005 11:47:24 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A252613C510; Sun, 25 Sep 2005 17:47:19 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 849319DA08; Sun, 25 Sep 2005 17:47:19 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 70CB19D9EC; Sun, 25 Sep 2005 17:47:19 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E776513C510; Sun, 25 Sep 2005 17:47:16 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmq1twh5.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9266>
 
-If the working tree is dirty read-tree will fail, and we don't want an
-ugly stack trace in that case. Also make sure we don't print stack
-traces when we use 'die'.
+Hi,
 
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
+On Sun, 25 Sep 2005, Junio C Hamano wrote:
 
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > The GNU diff sources are hard enough to read that I don't think we want to 
+> > try to merge the unified diff generation from there.
+> 
+> I was talking with GNU diff maintainer and his impression was
+> that CVS folks may have done enough libification -- I'll find
+> time to look at CVS code and see how much damage we are talking
+> about.
 
----
+I am not sure if it would be wise to completely do away with the current 
+method: Often, I call git-diff with my own wdiff-helper. Also, options 
+like "-b" to diff are very useful, and would have to be implemented, too.
 
- git-merge-recursive.py |   12 +++++++++---
- 1 files changed, 9 insertions(+), 3 deletions(-)
-
-5f47cf871d07317d42470f5fa261257e74b57f0e
-diff --git a/git-merge-recursive.py b/git-merge-recursive.py
---- a/git-merge-recursive.py
-+++ b/git-merge-recursive.py
-@@ -149,7 +149,10 @@ def mergeTrees(head, merge, common, bran
-     else:
-         updateArg = '-u'
- 
--    runProgram(['git-read-tree', updateArg, '-m', common, head, merge])
-+    [out, code] = runProgram(['git-read-tree', updateArg, '-m', common, head, merge], returnCode = True)
-+    if code != 0:
-+        die('git-read-tree:', out)
-+
-     cleanMerge = True
- 
-     [tree, code] = runProgram('git-write-tree', returnCode=True)
-@@ -430,8 +433,11 @@ try:
- 
-     print ''
- except:
--    traceback.print_exc(None, sys.stderr)
--    sys.exit(2)
-+    if isinstance(sys.exc_info()[1], SystemExit):
-+        raise
-+    else:
-+        traceback.print_exc(None, sys.stderr)
-+        sys.exit(2)
- 
- if clean:
-     sys.exit(0)
+Ciao,
+Dscho
