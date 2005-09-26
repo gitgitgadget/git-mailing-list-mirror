@@ -1,66 +1,51 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Nick Hengeveld <nickh@reactrix.com>
 Subject: Re: [PATCH 1/3] Support for SSL client cert
-Date: Mon, 26 Sep 2005 20:23:41 +0200
-Message-ID: <20050926182341.GA26340@pasky.or.cz>
-References: <20050926175156.GB9410@reactrix.com>
+Date: Mon, 26 Sep 2005 11:36:18 -0700
+Message-ID: <20050926183617.GA11382@reactrix.com>
+References: <20050926175156.GB9410@reactrix.com> <20050926182341.GA26340@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 26 20:25:17 2005
+X-From: git-owner@vger.kernel.org Mon Sep 26 20:37:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJxdk-0008E5-Pz
-	for gcvg-git@gmane.org; Mon, 26 Sep 2005 20:23:52 +0200
+	id 1EJxqA-0004Ds-FG
+	for gcvg-git@gmane.org; Mon, 26 Sep 2005 20:36:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932457AbVIZSXo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Sep 2005 14:23:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932458AbVIZSXo
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 14:23:44 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:47821 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932457AbVIZSXn (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2005 14:23:43 -0400
-Received: (qmail 26993 invoked by uid 2001); 26 Sep 2005 20:23:41 +0200
-To: Nick Hengeveld <nickh@reactrix.com>
+	id S932464AbVIZSgf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Sep 2005 14:36:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932466AbVIZSgf
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 14:36:35 -0400
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:11022 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S932464AbVIZSge (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2005 14:36:34 -0400
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id j8QIaKI9011495;
+	Mon, 26 Sep 2005 11:36:20 -0700
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id j8QIaIuJ011493;
+	Mon, 26 Sep 2005 11:36:18 -0700
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-In-Reply-To: <20050926175156.GB9410@reactrix.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+In-Reply-To: <20050926182341.GA26340@pasky.or.cz>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9320>
 
-Dear diary, on Mon, Sep 26, 2005 at 07:51:57PM CEST, I got a letter
-where Nick Hengeveld <nickh@reactrix.com> told me that...
-> @@ -491,11 +495,19 @@ int main(int argc, char **argv)
->  		} else if (argv[arg][1] == 'w') {
->  			write_ref = argv[arg + 1];
->  			arg++;
-> +		} else if (arg+1 < argc && !strcmp(argv[arg], "--cert")) {
-> +			ssl_cert = argv[++arg];
-> +		} else if (arg+1 < argc && !strcmp(argv[arg], "--key")) {
-> +			ssl_key = argv[++arg];
-> +		} else if (arg+1 < argc && !strcmp(argv[arg], "--capath")) {
-> +			ssl_capath = argv[++arg];
-> +		} else if (arg+1 < argc && !strcmp(argv[arg], "--cacert")) {
-> +			ssl_cacert = argv[++arg];
->  		}
->  		arg++;
->  	}
->  	if (argc < arg + 2) {
-> -		usage("git-http-fetch [-c] [-t] [-a] [-d] [-v] [--recover] [-w ref] commit-id url");
-> +		usage("git-http-fetch [-c] [-t] [-a] [-d] [-v] [--recover] [-w ref] [--cert ssl-cert-file] [--key ssl-key-file] [--capath CA-dir] [--cacert CA-cert-file] commit-id url");
->  		return 1;
->  	}
->  	commit_id = argv[arg];
+On Mon, Sep 26, 2005 at 08:23:41PM +0200, Petr Baudis wrote:
 
-Could we please have at least --sslkey, if not having 'ssl' prepended to
-all of them? You never know when you'll want to call something else like
-that in the future... ;-)
+> Could we please have at least --sslkey, if not having 'ssl' prepended to
+> all of them? You never know when you'll want to call something else like
+> that in the future... ;-)
+
+Makes sense - I wasn't comfortable deciding what those parameters should be
+so I used the curl command-line options.  Who gets to make the official
+call on that?
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
