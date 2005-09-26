@@ -1,60 +1,107 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: rsync deprecated but promoted?
-Date: Mon, 26 Sep 2005 22:12:09 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0509262208550.12539@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <20050925163201.GA29198@tumblerings.org> <4d4586301dca616f42880612fae01492@cream.org>
- <20050926133204.GB21019@pasky.or.cz> <Pine.LNX.4.58.0509260801430.3308@g5.osdl.org>
- <dh98gk$6rp$1@sea.gmane.org> <Pine.LNX.4.58.0509261038460.3308@g5.osdl.org>
- <dh9hqs$6nl$1@sea.gmane.org>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: GIT 0.99.7d, and end of week status.
+Date: Mon, 26 Sep 2005 15:17:32 -0500
+Message-ID: <1127765852.5735.36.camel@cashmere.sps.mot.com>
+References: <7vll1lr1bq.fsf@assigned-by-dhcp.cox.net>
+	 <7vaci1nfwa.fsf@assigned-by-dhcp.cox.net> <87psqwzs3x.fsf@ualberta.net>
+	 <7v7jd4n22i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 26 22:14:26 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Sep 26 22:19:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJzKr-0004cP-VO
-	for gcvg-git@gmane.org; Mon, 26 Sep 2005 22:12:26 +0200
+	id 1EJzPu-0006Uh-Kf
+	for gcvg-git@gmane.org; Mon, 26 Sep 2005 22:17:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932497AbVIZUMR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Sep 2005 16:12:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932500AbVIZUMQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 16:12:16 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:21640 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932498AbVIZUMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2005 16:12:15 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5AB5313D472; Mon, 26 Sep 2005 22:12:10 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 40D4DB385C; Mon, 26 Sep 2005 22:12:10 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 24691B3858; Mon, 26 Sep 2005 22:12:10 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 9793013D472; Mon, 26 Sep 2005 22:12:09 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: walt <wa1ter@myrealbox.com>
-In-Reply-To: <dh9hqs$6nl$1@sea.gmane.org>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932503AbVIZURf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Sep 2005 16:17:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932504AbVIZURf
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 16:17:35 -0400
+Received: from az33egw02.freescale.net ([192.88.158.103]:19846 "EHLO
+	az33egw02.freescale.net") by vger.kernel.org with ESMTP
+	id S932503AbVIZURe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2005 16:17:34 -0400
+Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
+	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id j8QKPcZX029976
+	for <git@vger.kernel.org>; Mon, 26 Sep 2005 13:25:38 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
+	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id j8QKNY0Z006595
+	for <git@vger.kernel.org>; Mon, 26 Sep 2005 15:23:34 -0500 (CDT)
+To: Git List <git@vger.kernel.org>
+In-Reply-To: <7v7jd4n22i.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9326>
 
-Hi,
+On Sun, 2005-09-25 at 18:46, Junio C Hamano wrote:
+> Tom Prince <tom.prince@ualberta.net> writes:
+> 
+> >> When you already have a repository to track git.git, I would
+> >> recommend to have something like this in .git/remote/origin:
+> >>
+> >>     URL: http://kernel.org/pub/scm/git/git.git
+> >>     Pull: master:origin maint:maint +pu:pu
+> >>
+> >
+> > A warning when you do this. If you say 
+> >
+> >   git pull origin
+> >
+> > then your master will be updated with an octopus merge of the three heads.
+> 
+> Ahhhhhhhh.  That is true.  I always do "git fetch" and never do
+> "git pull" against anything but a local repository, heads
+> explicitly specified.  You are right.  The defaulting behaviour
+> is incredibly broken.
+> 
+> Do people agree it is a good idea to change the "git pull
+> origin" to mean "fetch all the default refs specified on Pull:
+> lines, and merge only the first one into the current branch"?
+> 
+> "git pull" without remote nor refspecs is a synonym to "git pull
+> origin" as before, and 99.99% of the time "git pull" from a
+> remote repo without explicit refspec is doing just one head
+> merge, so I think this is a sane default, much saner than the
+> current mess, while still allowing you to keep track of what's
+> happening in the other branches by doing fetches of all the
+> heads at once.
+> 
+> Opinions?
 
-On Mon, 26 Sep 2005, walt wrote:
+Hmmm...  Would it make sense to introduce something
+like this instead:
 
-> Using the --full flag made the error disappear for your kernel tree,
-> but had no effect on the git tree.
+    # When fetching, get bits from here:
+    URL: http://...../git.git
+    # When fetching, grab and map like this:
+    Fetch: master:origin maint:maint +pu:pu
+    # When merging, merge origin, maint and pu into master
+    Merge: master origin maint pu
 
-I think it is because of the "pu" branch, which gets fetched using rsync, 
-but no ref is pointing to it. Since the "pu" branch is rebased quite 
-often, it would also happen if you fetched the "pu" branch, though.
+With the intent that the "Fetch:" line effectively
+limits the fetching operation to git-fetch, and doesn't
+specify how to merge.  Then, the "Merge:" line specifies
+how to do the git-merge bits.  If you didn't want to
+merge in the maint and pu bits, this would have been
+the line instead:
 
-Ciao,
-Dscho
+    # Merge into master the just the origin bits
+    Merge: master origin
+
+If you want the dual-step fetch+merge, the leave the "Pull:"
+line as originally written:
+
+    # Fetch and merge
+    Pull: master:origin maint:maint +pu:pu
+
+Syntax can be argued, of course.  My point being to
+introduce another line to the remote file that
+distinguishes the default behavior for each step
+along the way.
+
+Thanks,
+jdl
