@@ -1,97 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: GIT 0.99.7d, and end of week status.
-Date: Mon, 26 Sep 2005 15:03:47 -0700
-Message-ID: <7vr7bba3lo.fsf@assigned-by-dhcp.cox.net>
-References: <7vll1lr1bq.fsf@assigned-by-dhcp.cox.net>
-	<7vaci1nfwa.fsf@assigned-by-dhcp.cox.net>
-	<87psqwzs3x.fsf@ualberta.net>
-	<7v7jd4n22i.fsf@assigned-by-dhcp.cox.net>
-	<1127765852.5735.36.camel@cashmere.sps.mot.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: The latest commit to add new keybindings
+Date: Mon, 26 Sep 2005 15:04:55 -0700
+Message-ID: <43387087.60708@zytor.com>
+References: <7v4q8b8d5j.fsf@assigned-by-dhcp.cox.net> <17207.16457.551775.470665@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 00:05:14 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 27 00:06:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EK14k-00016w-UX
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 00:03:55 +0200
+	id 1EK16G-0001at-38
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 00:05:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932342AbVIZWDw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Sep 2005 18:03:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932343AbVIZWDw
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 18:03:52 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:45556 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932342AbVIZWDv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2005 18:03:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050926220347.CDVL29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 26 Sep 2005 18:03:47 -0400
-To: Jon Loeliger <jdl@freescale.com>
-In-Reply-To: <1127765852.5735.36.camel@cashmere.sps.mot.com> (Jon Loeliger's
-	message of "Mon, 26 Sep 2005 15:17:32 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932343AbVIZWFZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Sep 2005 18:05:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932345AbVIZWFZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 18:05:25 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:47062 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932343AbVIZWFZ
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2005 18:05:25 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j8QM4uok002528
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 26 Sep 2005 15:04:58 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17207.16457.551775.470665@cargo.ozlabs.ibm.com>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9343>
 
-Jon Loeliger <jdl@freescale.com> writes:
+Paul Mackerras wrote:
+> Junio C Hamano writes:
+> 
+> 
+>>Do you actually require 8.4, or any reasonably recent wish would
+>>do?
+> 
+> 
+> Checking in the change from "wish" to "wish8.4" was a mistake - that
+> was a change I made for some tests, and I forgot to change it back.
+> However, gitk does need tk 8.4 or later, since it uses the panedwindow
+> widget, which tk 8.3 doesn't have.  I have tk8.5a2 installed here,
+> which is nice because it does antialiased fonts, although it is a bit
+> slower (clock format is much slower because they changed it from being
+> implemented in C to Tcl).
+> 
 
-There is a small problem in that proposal.  "Merging" in git
-does not work that way.  Specifically,
+It would be good if the dependency then said tk >= 8.4.
 
->     # When merging, merge origin, maint and pu into master
->     Merge: master origin maint pu
->     # Merge into master the just the origin bits
->     Merge: master origin
-
-the problem with these is that you may be in your "test" branch
-and say "git pull".  'git pull' does not let you say 'pull into
-this branch which is not my current branch', and "into master"
-part would not work -- merge in git always merges things into
-the current branch, so writing
-
->     # When merging, merge origin, maint and pu into the current
->     Merge: origin maint pu
->     # Merge just the origin bits into the current
->     Merge: origin
-
-may make sense.
-
-Having said that I doubt Octopus is what people do regularly, so
-being able to write "Merge: origin maint pu" (or "Merge: ncq
-chs-support") as a short-hand makes much sense.
-
-There is not much inherent reason to require that the merge
-happens only to the current branch, if we stop using the files
-in the working tree for resolving conflicts (either manually or
-automatically).  We could rewrite 'git pull' like this:
-
- - have it take 'merge into this branch' parameter, defaulting
-   to the current branch, or your "Merge: <into> <remote>..."
-   proposal.
-
- - if the merge is not to happen in the current branch, then
-   use a temporary index file and a temporary working directory
-   to do the merge -- when manual conflict resolution is needed,
-   ask the user to go to that temporary working directory and
-   resolve conflicts there and make commits there.  The
-   temporary working directory is actually cheap because we do
-   not have to checkout all the paths -- only the paths involved
-   in the merge.
-
-I remember the merge Linus originally envisioned would have
-worked along the above lines, until he changed his mind around
-2a68a8659f7dc55fd285d235ae2d19e7a8116c30 commit, beginning of
-June, for 1.0 (ewww, we were already aiming for 1.0 back then).
-
-	http://marc.theaimsgroup.com/?l=git&m=111806925225305&w=2
-
-declared the merge in separate directory is post 1.0 item, and I
-tend to agree with that.  Most of the time you will be merging
-into the current branch, and otherwise you could make it so by
-switching to that branch before pulling.
+	-hpa
