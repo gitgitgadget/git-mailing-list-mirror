@@ -1,46 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] Return CURL error message when object transfer fails
-Date: Mon, 26 Sep 2005 14:22:56 -0700
-Message-ID: <7v4q87ed73.fsf@assigned-by-dhcp.cox.net>
-References: <20050926175211.GD9410@reactrix.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Cogito: cg-clone doesn't like packed tag objects
+Date: Mon, 26 Sep 2005 23:25:36 +0200
+Message-ID: <20050926212536.GF26340@pasky.or.cz>
+References: <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 26 23:24:23 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 26 23:26:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EK0RB-0004lj-Af
-	for gcvg-git@gmane.org; Mon, 26 Sep 2005 23:23:01 +0200
+	id 1EK0Tm-0005ts-0T
+	for gcvg-git@gmane.org; Mon, 26 Sep 2005 23:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932318AbVIZVW7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Sep 2005 17:22:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932323AbVIZVW6
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 17:22:58 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:13965 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932318AbVIZVW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2005 17:22:58 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050926212256.CITS29747.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 26 Sep 2005 17:22:56 -0400
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20050926175211.GD9410@reactrix.com> (Nick Hengeveld's message of
-	"Mon, 26 Sep 2005 10:52:11 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932319AbVIZVZj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Sep 2005 17:25:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932322AbVIZVZj
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 17:25:39 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:12959 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932319AbVIZVZi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2005 17:25:38 -0400
+Received: (qmail 12549 invoked by uid 2001); 26 Sep 2005 23:25:36 +0200
+To: "H. Peter Anvin" <hpa@zytor.com>
+Content-Disposition: inline
+In-Reply-To: <20050924011833.GJ10255@pasky.or.cz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9337>
 
-Nick Hengeveld <nickh@reactrix.com> writes:
+Dear diary, on Sat, Sep 24, 2005 at 03:18:33AM CEST, I got a letter
+where Petr Baudis <pasky@suse.cz> told me that...
+> Dear diary, on Sat, Sep 24, 2005 at 12:24:06AM CEST, I got a letter
+> where "H. Peter Anvin" <hpa@zytor.com> told me that...
+> > Packed tag objects breaks Cogito when using git+ssh:// transport.
+> > 
+> > Example:
+> > 
+> > cg-clone -s git+ssh://master.kernel.org/pub/scm/libs/klibc/klibc.git
+> 
+> I changed the code to use the git-*-fetch tools to fetch the objects
+> referenced by tags, so this works properly now. Thanks for the report.
 
-> It might be better to extend this to all places that curl_easy_perform
-> is called, rather than just in fetch_object.
+And now thanks to "walt" I realized that this is a completely wrong way
+to go. The problem is that the tags don't have to tag anything on your
+branch, and if you are fetching a given branch, you want only commits
+from that branch. But fetching the tags will cause all the commits
+connected to the tags getting slurped too, and we didn't want that.
 
-Sounds like a good idea.  Also if you happen to know if this
-option is not available in older versions of the library, it
-might not hurt to guard it with "#if LIBCURL_VERSION_NUM" like
-we do with other options.
+So the strategy I'm thinking of now is to manually (I think no GIT tool
+can do that for me) dereference the possible tag chain until I end up at
+some non-tag object. Now, if it is a commit and I don't have it yet, it
+means that it is not interesting to me because it does not belong to a
+branch I'm following, so I will just ignore the tag (won't download
+anything else and won't record it in the refs/tags directory).
+
+If it's NOT a commit, well, that's a question.  On the assumption that
+it won't be a great deal of data and it's likely to be assumed that we
+have it, I would be inclined to fetching it, but I don't feel strongly
+about it.
+
+The ideal and the least expensive solution for this, obviously, would be
+having this logic in git-fetch-pack. :-)
+
+Opinions?
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
