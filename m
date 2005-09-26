@@ -1,112 +1,49 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Add "git-update-ref" to update the HEAD (or other) ref
-Date: Sun, 25 Sep 2005 18:07:37 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509251753460.3308@g5.osdl.org>
+Date: Sun, 25 Sep 2005 21:25:32 -0700
+Message-ID: <7vd5mwlakj.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.58.0509251134480.3308@g5.osdl.org>
- <7vhdc8n2xb.fsf@assigned-by-dhcp.cox.net>
+	<7vhdc8n2xb.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509251747290.3308@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
 	Davide Libenzi <davidel@xmailserver.org>
-X-From: git-owner@vger.kernel.org Mon Sep 26 03:08:36 2005
+X-From: git-owner@vger.kernel.org Mon Sep 26 06:26:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJhTF-0001qS-Gm
-	for gcvg-git@gmane.org; Mon, 26 Sep 2005 03:07:53 +0200
+	id 1EJkYi-00038a-LR
+	for gcvg-git@gmane.org; Mon, 26 Sep 2005 06:25:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751590AbVIZBHq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Sep 2005 21:07:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751591AbVIZBHq
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Sep 2005 21:07:46 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:47831 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751587AbVIZBHp (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Sep 2005 21:07:45 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8Q17f4s026287
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 25 Sep 2005 18:07:41 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8Q17boB003219;
-	Sun, 25 Sep 2005 18:07:39 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhdc8n2xb.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.118 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932371AbVIZEZh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Sep 2005 00:25:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932368AbVIZEZh
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 00:25:37 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:7862 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932371AbVIZEZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Sep 2005 00:25:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050926042534.HLSV776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 26 Sep 2005 00:25:34 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509251747290.3308@g5.osdl.org> (Linus Torvalds's
+	message of "Sun, 25 Sep 2005 17:50:33 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9299>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> I was actually thinking of maybe entirely replacing "read_ref()" with the
+> more powerful "resolve_ref()" - moving resolve_ref() into refs.c.
+>
+> That way there's only one place that knows about the "ref:" thing.
 
-On Sun, 25 Sep 2005, Junio C Hamano wrote:
-> 
-> Is something like the one at the end acceptable?
-
-Looking at the patch closer, no, that's incorrect.
-
-"oldsha" doesn't necessarily exist, since there has to be some way to 
-force the new one. So if "oldval" is NULL, we shouldn't re-verify 
-anything.
-
-Also, independently of that your patch is buggy because calling
-"resolve_ref()" again will overwrite the lockpath, since it's re-used by
-the static buffer in git_path(). That's why the "strdup()" is there.
-
-Yeah, yeah, static buffers are evil, but they are also simple and 
-efficient. 
-
-But something like this (on top of my original one) might work.
-
-		Linus
-----
-diff --git a/update-ref.c b/update-ref.c
---- a/update-ref.c
-+++ b/update-ref.c
-@@ -63,6 +63,19 @@ const char *resolve_ref(const char *path
- 	return path;
- }
- 
-+static int re_verify(const char *path, unsigned char *oldsha1, unsigned char *currsha1)
-+{
-+	char buf[40];
-+	int fd = open(path, O_RDONLY), nr;
-+	if (fd < 0)
-+		return -1;
-+	nr = read(fd, buf, 40);
-+	close(fd);
-+	if (nr != 40 || get_sha1_hex(buf, currsha1) < 0)
-+		return -1;
-+	return memcmp(oldsha1, currsha1, 20) ? -1 : 0;
-+}
-+
- int main(int argc, char **argv)
- {
- 	char *hex;
-@@ -108,14 +121,18 @@ int main(int argc, char **argv)
- 		unlink(lockpath);
- 		die("Unable to write to %s", lockpath);
- 	}
--		
-+
- 	/*
--	 * FIXME!
--	 *
--	 * We should re-read the old ref here, and re-verify that it
--	 * matches "oldsha1". Otherwise there's a small race.
-+	 * Re-read the ref after getting the lock to verify
- 	 */
-+	if (oldval && re_verify(path, oldsha1, currsha1) < 0) {
-+		unlink(lockpath);
-+		die("Ref lock failed");
-+	}
- 
-+	/*
-+	 * Finally, replace the old ref with the new one
-+	 */
- 	if (rename(lockpath, path) < 0) {
- 		unlink(lockpath);
- 		die("Unable to create %s", path);
+That would make sense.  But I am feeling a bit too weak tonight
+and am going to crash now.
