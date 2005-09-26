@@ -1,165 +1,91 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: [PATCH 2/3] Support for partial HTTP transfers
-Date: Mon, 26 Sep 2005 10:52:04 -0700
-Message-ID: <20050926175204.GC9410@reactrix.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: rsync deprecated but promoted?
+Date: Mon, 26 Sep 2005 10:55:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509261038460.3308@g5.osdl.org>
+References: <20050925163201.GA29198@tumblerings.org> <4d4586301dca616f42880612fae01492@cream.org>
+ <20050926133204.GB21019@pasky.or.cz> <Pine.LNX.4.58.0509260801430.3308@g5.osdl.org>
+ <dh98gk$6rp$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Sep 26 19:54:39 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 26 19:56:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EJx97-0005qO-G9
-	for gcvg-git@gmane.org; Mon, 26 Sep 2005 19:52:09 +0200
+	id 1EJxCk-00071d-PL
+	for gcvg-git@gmane.org; Mon, 26 Sep 2005 19:55:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932443AbVIZRwG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Sep 2005 13:52:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932446AbVIZRwG
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 13:52:06 -0400
-Received: from 195.37.26.69.virtela.com ([69.26.37.195]:5112 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S932443AbVIZRwE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Sep 2005 13:52:04 -0400
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id j8QHq4Ax009446
-	for <git@vger.kernel.org>; Mon, 26 Sep 2005 10:52:04 -0700
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id j8QHq4eR009444
-	for git@vger.kernel.org; Mon, 26 Sep 2005 10:52:04 -0700
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
+	id S932450AbVIZRzw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Sep 2005 13:55:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932449AbVIZRzw
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Sep 2005 13:55:52 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:31913 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932450AbVIZRzw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Sep 2005 13:55:52 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8QHtn4s001945
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 26 Sep 2005 10:55:50 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8QHtnYm005380;
+	Mon, 26 Sep 2005 10:55:49 -0700
+To: walt <wa1ter@myrealbox.com>
+In-Reply-To: <dh98gk$6rp$1@sea.gmane.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.118 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9317>
 
 
-Support for partial HTTP transfers - if a previous temp file is detected,
-read it in and start the HTTP transfer from where the previous left off.
 
-Signed-off-by: Nick Hengeveld <nickh@reactrix.com>
+On Mon, 26 Sep 2005, walt wrote:
+> 
+> Just because you mentioned it, I did a git-fsck-objects on my local
+> copies of your kernel tree and Junio's git tree.
+> 
+>  From git I got this:
+> $git-fsck-objects
+> missing commit 00d8bbd3c4bba72a6dfd48c2c0c9cbaa000f13c2
+> broken link from     tag 02b2acff8bafb6d73c6513469cdda0c6c18c4138
+>                to  commit d5bc7eecbbb0b9f6122708bf5cd62f78ebdaafd8
+> <similar lines snipped>
+> 
+>  From your tree I got only this single line:
+> dangling commit 02459eaab98a6a57717bc0cacede148fc76af881
 
+That commit shouldn't be dangling, but I suspect it is harmless and is
+most likely because you have pack-files. Use "git-fsck-cache --full" if
+you are downloading with http/rsync (since that gets packs without
+unpacking them, and you haven't re-packed everything).
 
----
+The git thing may be similar, although it sounds unlikely. A more likely
+reason is that earlier http pulling got incomplete trees if you ever
+interrupted it with ^C.
 
- http-fetch.c |   72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 files changed, 67 insertions(+), 5 deletions(-)
+> Yet both trees compile and run perfectly.  Are these messages
+> worrisome?  (BTW, git was cloned and updated using http.)
 
-34a692953368188cbaefbd6c60e400053f8528b4
-diff --git a/http-fetch.c b/http-fetch.c
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -13,8 +13,12 @@
- #define curl_global_init(a) do { /* nothing */ } while(0)
- #endif
- 
-+#define PREV_BUF_SIZE 4096
-+#define RANGE_HEADER_SIZE 30
-+
- static CURL *curl;
- static struct curl_slist *no_pragma_header;
-+static struct curl_slist *no_range_header;
- 
- static char *initial_base;
- 
-@@ -351,14 +355,26 @@ int fetch_object(struct alt_base *repo, 
- 	char *filename = sha1_file_name(sha1);
- 	unsigned char real_sha1[20];
- 	char tmpfile[PATH_MAX];
-+	char prevfile[PATH_MAX];
- 	int ret;
- 	char *url;
- 	char *posn;
-+	int prevlocal;
-+	unsigned char prev_buf[PREV_BUF_SIZE];
-+	ssize_t prev_read = 0;
-+	long prev_posn = 0;
-+	char range[RANGE_HEADER_SIZE];
-+	struct curl_slist *range_header = NULL;
-+	CURLcode curl_result;
-+
-+	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
-+	snprintf(prevfile, sizeof(prevfile), "%s.prev", filename);
-+	unlink(prevfile);
-+	rename(tmpfile, prevfile);
-+	unlink(tmpfile);
- 
--	snprintf(tmpfile, sizeof(tmpfile), "%s/obj_XXXXXX",
--		 get_object_directory());
-+	local = open(tmpfile, O_WRONLY | O_CREAT | O_EXCL, 0666);
- 
--	local = mkstemp(tmpfile);
- 	if (local < 0)
- 		return error("Couldn't create temporary file %s for %s: %s\n",
- 			     tmpfile, filename, strerror(errno));
-@@ -386,8 +402,52 @@ int fetch_object(struct alt_base *repo, 
- 
- 	curl_easy_setopt(curl, CURLOPT_URL, url);
- 
--	if (curl_easy_perform(curl)) {
--		unlink(filename);
-+	/* If a previous temp file is present, process what was already
-+	   fetched. */
-+	prevlocal = open(prevfile, O_RDONLY);
-+	if (prevlocal != -1) {
-+		do {
-+			prev_read = read(prevlocal, prev_buf, PREV_BUF_SIZE);
-+			if (prev_read>0) {
-+				if (fwrite_sha1_file(prev_buf,
-+						     1,
-+						     prev_read,
-+						     NULL) == prev_read) {
-+					prev_posn += prev_read;
-+				} else {
-+					prev_read = -1;
-+				}
-+			}
-+		} while (prev_read > 0);
-+		close(prevlocal);
-+	}
-+	unlink(prevfile);
-+
-+	/* Reset inflate/SHA1 if there was an error reading the previous temp
-+	   file; also rewind to the beginning of the local file. */
-+	if (prev_read == -1) {
-+		memset(&stream, 0, sizeof(stream));
-+		inflateInit(&stream);
-+		SHA1_Init(&c);
-+		if (prev_posn>0) {
-+			prev_posn = 0;
-+			lseek(local, SEEK_SET, 0);
-+		}
-+	}
-+
-+	/* If we have successfully processed data from a previous fetch
-+	   attempt, only fetch the data we don't already have. */
-+	if (prev_posn>0) {
-+		sprintf(range, "Range: bytes=%ld-", prev_posn);
-+		range_header = curl_slist_append(range_header, range);
-+		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, range_header);
-+	}
-+
-+	/* Clear out the Range: header after performing the request, so
-+	   other curl requests don't inherit inappropriate header data */
-+	curl_result = curl_easy_perform(curl);
-+	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, no_range_header);
-+	if (curl_result != 0) {
- 		return -1;
- 	}
- 
-@@ -517,6 +577,7 @@ int main(int argc, char **argv)
- 
- 	curl = curl_easy_init();
- 	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
-+	no_range_header = curl_slist_append(no_range_header, "Range:");
- 
-         /* Set SSL parameters if they were provided */
- 	if (ssl_cert != NULL) {
-@@ -549,6 +610,7 @@ int main(int argc, char **argv)
- 		return 1;
- 
- 	curl_slist_free_all(no_pragma_header);
-+	curl_slist_free_all(no_range_header);
- 	curl_global_cleanup();
- 	return 0;
- }
+Yes, they can be worrisome. Some of it may be normal (I really suspect 
+that the kernel tree is that kind - a "dangling commit" is almost always 
+either because you've lost a tag or because of a pack-file that wasn't 
+examined).
+
+Your git tree is quote possibly corrupted.
+
+The good news is that if "git checkout" works, then the corruption is all
+old - you may not have all of the history, but the corruption is
+"harmless".
+
+There's nothing fundamentally wrong with not having all of history: it
+will cause fsck to complain (unless you "plug" the history by using a
+graft file). And obviously it means that you may not be able to go back in 
+time - but you may never even care. 
+
+A "git-http-fetch --recover HEAD <url>" _should_ fix it, but I don't think 
+that works right now. It's documented, but it doesn't do anything. Junio?
+
+			Linus
