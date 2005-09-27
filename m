@@ -1,56 +1,51 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: GIT 0.99.7d, and end of week status.
-Date: Tue, 27 Sep 2005 12:13:06 +0200
-Message-ID: <20050927101306.GC30889@pasky.or.cz>
-References: <7vll1lr1bq.fsf@assigned-by-dhcp.cox.net> <7vaci1nfwa.fsf@assigned-by-dhcp.cox.net> <87psqwzs3x.fsf@ualberta.net> <7v7jd4n22i.fsf@assigned-by-dhcp.cox.net> <1127765852.5735.36.camel@cashmere.sps.mot.com> <7vr7bba3lo.fsf@assigned-by-dhcp.cox.net>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: Cogito: cg-clone doesn't like packed tag objects
+Date: Tue, 27 Sep 2005 12:14:31 +0200
+Message-ID: <200509271214.31933.Josef.Weidendorfer@gmx.de>
+References: <7virwna2oi.fsf@assigned-by-dhcp.cox.net> <7v4q875bbj.fsf@assigned-by-dhcp.cox.net> <20050927094029.GA30889@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 12:14:47 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Sep 27 12:16:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKCSo-0001Xa-Co
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 12:13:30 +0200
+	id 1EKCU4-0002IW-Oa
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 12:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964884AbVI0KNJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 06:13:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964889AbVI0KNJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 06:13:09 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:6112 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964884AbVI0KNI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2005 06:13:08 -0400
-Received: (qmail 5634 invoked by uid 2001); 27 Sep 2005 12:13:06 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S964886AbVI0KOn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 06:14:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964888AbVI0KOn
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 06:14:43 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:40409 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S964886AbVI0KOm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2005 06:14:42 -0400
+Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
+	by mail.in.tum.de (Postfix) with ESMTP id 4F48526DD
+	for <git@vger.kernel.org>; Tue, 27 Sep 2005 12:14:41 +0200 (MEST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+In-Reply-To: <20050927094029.GA30889@pasky.or.cz>
 Content-Disposition: inline
-In-Reply-To: <7vr7bba3lo.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9388>
 
-Dear diary, on Tue, Sep 27, 2005 at 12:03:47AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
->  - if the merge is not to happen in the current branch, then
->    use a temporary index file and a temporary working directory
->    to do the merge -- when manual conflict resolution is needed,
->    ask the user to go to that temporary working directory and
->    resolve conflicts there and make commits there.  The
->    temporary working directory is actually cheap because we do
->    not have to checkout all the paths -- only the paths involved
->    in the merge.
+On Tuesday 27 September 2005 11:40, Petr Baudis wrote:
+> Another thing I proposed back then (I think it was in June) was having
+> the refs/tags directory further divised based on heads, so all tags for
+> head A would be in refs/tags/A/, etc. I didn't pursue this idea now
+> because it seemed that there would be way too many duplicate stuff in
+> refs/tags/ since most tags are likely to be shared across heads, but
+> perhaps it is the beast and cleanest solution after all.
 
-By the way, this is how Cogito did merging for some (rather short) time
-period (actually, there's perhaps still some remnant of this, I think
-Cogito still by default ignores ,,merge* which was the subdirectory
-where the merge happenned). I removed it because IIRC the people weren't
-eventually all that excited about it after all and Linus changed his
-mind too.
+The problem here is that currently there are no global, public branches.
+And you should not mix private heads in refs/heads with global tags.
+Perhaps interpret tag objects as global branch names, similar to
+the "mixture" in .git/refs ?
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Josef
