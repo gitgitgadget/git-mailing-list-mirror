@@ -1,92 +1,92 @@
-From: David Mansfield <david@cobite.com>
-Subject: Re: [PATCH] Added an option to cvsimport to specify email domain
-Date: Tue, 27 Sep 2005 08:54:16 -0400
-Organization: Cobite, Inc
-Message-ID: <1127825656.30421.15.camel@gandalf.cobite.com>
-References: <u5tzmqp8fzx.fsf@lysator.liu.se>
-	 <7vhdcw661g.fsf@assigned-by-dhcp.cox.net>
-	 <20050914193457.GE2936@pasky.or.cz> <200509270834.55486.snake@penza-gsm.ru>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Fix default pull not to do an unintended Octopus.
+Date: Tue, 27 Sep 2005 14:54:34 +0200
+Message-ID: <20050927125434.GF30889@pasky.or.cz>
+References: <7vll1lr1bq.fsf@assigned-by-dhcp.cox.net> <7vr7bba3lo.fsf@assigned-by-dhcp.cox.net> <7vu0g72c4y.fsf_-_@assigned-by-dhcp.cox.net> <200509271152.42963.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 14:57:06 2005
+X-From: git-owner@vger.kernel.org Tue Sep 27 14:57:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKEyU-0003EE-Bq
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 14:54:22 +0200
+	id 1EKEym-0003PL-Dc
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 14:54:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964917AbVI0MyT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 08:54:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964919AbVI0MyT
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 08:54:19 -0400
-Received: from iris.cobite.com ([208.222.83.2]:20450 "EHLO
-	email-pri.cobite.com") by vger.kernel.org with ESMTP
-	id S964917AbVI0MyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2005 08:54:18 -0400
-Received: from localhost (iris.cobite.com [127.0.0.1])
-	by email-pri.cobite.com (Postfix) with ESMTP
-	id CD10E985E5; Tue, 27 Sep 2005 08:53:47 -0400 (EDT)
-Received: from email-pri.cobite.com ([127.0.0.1])
- by localhost (iris.cobite.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 00424-01; Tue, 27 Sep 2005 08:53:47 -0400 (EDT)
-Received: by email-pri.cobite.com (Postfix, from userid 45000)
-	id 96E0F987DD; Tue, 27 Sep 2005 08:53:47 -0400 (EDT)
-Received: from gandalf.cobite.com (gandalf.cobite.com [208.222.80.105])
-	by email-pri.cobite.com (Postfix) with ESMTP
-	id C9824985E5; Tue, 27 Sep 2005 08:53:46 -0400 (EDT)
-To: Alexey Nezhdanov <snake@penza-gsm.ru>
-In-Reply-To: <200509270834.55486.snake@penza-gsm.ru>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
-X-Virus-Scanned: by amavisd-new at cobite.com
+	id S964918AbVI0Myh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 08:54:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964919AbVI0Myh
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 08:54:37 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:30938 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964918AbVI0Myh (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2005 08:54:37 -0400
+Received: (qmail 16853 invoked by uid 2001); 27 Sep 2005 14:54:34 +0200
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <200509271152.42963.Josef.Weidendorfer@gmx.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9394>
 
-On Tue, 2005-09-27 at 08:34 +0400, Alexey Nezhdanov wrote:
-> (Re-post. Sorry for any inconvenience.)
-> On September 14, 2005 23:34 Petr Baudis wrote:
-> > Dear diary, on Wed, Sep 07, 2005 at 09:18:03PM CEST, I got a letter
-> > where Junio C Hamano <junkio@cox.net> told me that...
-> >
-> > > David K?.A?Negedal <davidk@lysator.liu.se> writes:
-> > > > The authorship info in commits created by git-cvsimport-script
-> > > > only contains the username of the CVS committer.  This patch
-> > > > adds a flag -e <domain> to git-cvsimport-script that makes it
-> > > > possible to specify an email domain that is added to all email
-> > > > addresses in the commit "author" and "committer" fields.
-> > > >
-> > > > ---
-> > > > I have stopped using cvsimport, because cvsps seems to produce bad
-> > > > output on the repository I'm using it with, but I had already prepared
-> > > > this patch.
-> > >
-> > > Hmph.  One reason the original implementation did not do this is
-> > > because Linus and other people wanted to have a repeatability,
-> > > so making this an optional thing is good, but if we go this
-> > > route, I think if it would be nicer to have a --author-map
-> > > option that lets you feed a list of:
-> > >
-> > >     <author> ==> "A U Thor <author@author.dom>"
-> > >
-> > > mappings, instead of a single -e, which essentially does not add
-> > > much information to the result.
-> > >
-> > > I take that your oob comment indicates that you do not have much
-> > > incentive/inclination to further hack on this, so I am not
-> > > asking you to do the above even if you find my suggestion
-> > > worthwhile.
-> >
-> > Various tools use CVSROOT/users to map usernames to realname <email>.
-> > I actually wanted to send a patch, looked at the cvsimport script and
-> > got totally scared away (at least for now)... ;-)
-> git uses cvsps output to determine authorship. Do you think if this problem 
-> should be solved on cvsps side? It should be relatively easy IMHO.
-> David, can you add another key to output CVSROOT/users mapping result instead 
-> of usernames if available?
+Dear diary, on Tue, Sep 27, 2005 at 11:52:42AM CEST, I got a letter
+where Josef Weidendorfer <Josef.Weidendorfer@gmx.de> told me that...
+> As Cogito does, I expect the porcelain to store the mapping of a
+> local head to a remote head, automatically using the right remote
+> repository.
 
-I apologize that I probably won't have time to look at this right now...
+Yes. I'm actually inclined to keep this setup, simply because it is
 
-David
+  * easy
+  * simple
+  * sufficient in most of the cases
+
+Cogito's fetch/update should certainly support the remotes stuff, since
+they are obviously much more useful and practical for more complicated
+setup, but I think I will keep the branches/ setup (the name of the
+directory is the only thing I don't like on it ;) as the primary mean of
+configuring remote branches.  I will only have to add possibility to
+cg-fetch multiple branches at once, which could also make branches/
+significantly more practical.
+
+> Perhaps we should have extended the branches file to allow different
+> remote reps and heads depending on the command (fetch/pull/merge/push).
+> A "URL:" is not needed, as you probably like to have different repos for pull 
+> and push. And in contrast to the remotes stuff above, a "Merge:" line makes 
+> quite sense here: When on "mybranch", a merge should default to merging
+> the heads specified on the Merge line in branches/mybranch.
+
+No. If you are in the branches/ playground, please keep it strictly
+one-to-one mapping. That's what makes it easy and simple and that's what
+makes it good.
+
+> When cloning a remote head, Cogito creates a local "origin" head and
+> corresponding mapping in branches/origin. Afterwards, it automatically
+> generates a new local branch "master", which branches of at the
+> origin. Further "cg-updates" (=git fetch+merge) fetch origin, and merge
+> origin into master.
+> I assume that this currently is hardcoded in scripts?
+
+Yes.
+
+> Shouldn't there be created a branches/master, specifying that a default
+> merge should happen with "origin"? This way, an "cg-update" would look
+> into "branches/master" on the "Merge:" line. It sees that "origin" is
+> bound to a remote head, and thus, does a fetch before merging.
+
+If ever doing that, this should be done at some other place than
+branches/. And I'm sceptical about it anyway. Really, introducing some
+new configuration mechanism just to tell Cogito what default branch name
+should it pick up when you call fetch/update/merge without a parameter?
+I don't know if that wouldn't make more evil than good.
+
+Well, if you _really_ _really_ badly want it, we can make
+.git/default-origin/ or something... duh, what a stupid name. :)
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
