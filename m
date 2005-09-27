@@ -1,72 +1,64 @@
-From: Mariano Videla <mvidela@ases.com.ar>
-Subject: Re: More Porcelains?
-Date: Tue, 27 Sep 2005 14:02:51 -0300
-Organization: ASES S.R.L.
-Message-ID: <1127840572.16026.29.camel@mariano>
-References: <20050926175156.GB9410@reactrix.com>
-	 <20050926182341.GA26340@pasky.or.cz>
-	 <7v3bnrh85g.fsf@assigned-by-dhcp.cox.net>
-	 <20050927001542.GC15615@reactrix.com>
-	 <7v64sn8hml.fsf_-_@assigned-by-dhcp.cox.net>  <tnxll1jvsc8.fsf@arm.com>
-Reply-To: mvidela@ases.com.ar
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cogito: cg-clone doesn't like packed tag objects
+Date: Tue, 27 Sep 2005 10:07:38 -0700
+Message-ID: <7v64sm30dh.fsf@assigned-by-dhcp.cox.net>
+References: <7virwna2oi.fsf@assigned-by-dhcp.cox.net>
+	<7v3bnra20z.fsf@assigned-by-dhcp.cox.net> <43348086.2040006@zytor.com>
+	<20050924011833.GJ10255@pasky.or.cz>
+	<20050926212536.GF26340@pasky.or.cz>
+	<7virwna2oi.fsf@assigned-by-dhcp.cox.net>
+	<20050926222944.GG26340@pasky.or.cz>
+	<7vr7bb5d8w.fsf@assigned-by-dhcp.cox.net>
+	<8764snyufn.fsf@ualberta.net>
+	<7v4q875bbj.fsf@assigned-by-dhcp.cox.net>
+	<20050927094029.GA30889@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 19:04:19 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Tom Prince <tom.prince@ualberta.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 27 19:09:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKIrW-0002PO-3W
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 19:03:26 +0200
+	id 1EKIvg-00042G-0k
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 19:07:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965015AbVI0RDI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 13:03:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965014AbVI0RDI
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 13:03:08 -0400
-Received: from mx0.comintec.net ([64.76.24.252]:19403 "EHLO mx0.comintec.net")
-	by vger.kernel.org with ESMTP id S965016AbVI0RDH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2005 13:03:07 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mx0.comintec.net (Postfix) with ESMTP id 5E85A24700D;
-	Tue, 27 Sep 2005 14:03:00 -0300 (ART)
-Received: from mx0.comintec.net ([127.0.0.1])
- by localhost (ds9.comintec.net [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 13227-01-6; Tue, 27 Sep 2005 14:03:00 -0300 (ART)
-Received: from [192.168.0.4] (OL9-198.fibertel.com.ar [24.232.198.9])
-	by mx0.comintec.net (Postfix) with ESMTP id 2313E246E17;
-	Tue, 27 Sep 2005 14:03:00 -0300 (ART)
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <tnxll1jvsc8.fsf@arm.com>
-X-Mailer: Evolution 2.2.1.1 
-X-Virus-Scanned: by amavisd-new at comintec.net
+	id S965010AbVI0RHl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 13:07:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965017AbVI0RHl
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 13:07:41 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:56991 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S965010AbVI0RHk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2005 13:07:40 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050927170737.LLZE776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 27 Sep 2005 13:07:37 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050927094029.GA30889@pasky.or.cz> (Petr Baudis's message of
+	"Tue, 27 Sep 2005 11:40:29 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9406>
 
-Mmm...It's no porcelain.
+Petr Baudis <pasky@suse.cz> writes:
 
-I setup a git repository for gipy... Didn't upload any files in
-sourceforge because I don't think is ready.
+> Yes, that's perhaps a fine solution for the core GIT plumbing, but in
+> Cogito, I _really_ want to have this working automagically.
 
-http://24.232.198.9:7978/gipy.git
-http://24.232.198.9:7978/cgi/gitweb.cgi
+I agree that would be nice.  If you are only interested in tags
+that refer to commits that anchor points in published branches,
+maybe we should have something along the lines of info/refs to
+help the downloaders?  Perhaps info/refs showing the SHA1 id of
+the non-tag object each tag dereferences to in addition to the
+current output?
 
-By the way... you can 'steel' it all!
-
-Mariano
-
-On mar, 2005-09-27 at 09:16 +0100, Catalin Marinas wrote:
-> Junio C Hamano <junkio@cox.net> wrote:
-> > How many of you are working on your own Porcelains, announced or
-> > unannounced?  I know about Cogito and StGIT ;-).  In a distant
-> > past I have heard of something called JIT but I think it is now
-> > defunct.  Matthias Urlichs said he is doing something with
-> > Python.  Anybody else?
-> 
-> I just found gipy on sf.net - http://sourceforge.net/projects/gipy.
-> 
-> There are no files uploaded yet but hopefully I can soon 'steal' some
-> code for StGIT ;-)
-> 
+This is a bit hard and needs some thinking to do cleanly,
+because what is in info/refs is what is sent from the publisher
+side over git-native protocol at the beginning of the handshake,
+and it is not easy to add that to git-native protocol cleanly
+and backward-compatibly (I think I know how without breaking
+existing clients, but it is not clean).
