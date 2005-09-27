@@ -1,84 +1,88 @@
-From: Alexey Nezhdanov <snake@penza-gsm.ru>
-Subject: Re: [PATCH] Added an option to cvsimport to specify email domain
-Date: Tue, 27 Sep 2005 08:34:55 +0400
-Message-ID: <200509270834.55486.snake@penza-gsm.ru>
-References: <u5tzmqp8fzx.fsf@lysator.liu.se> <7vhdcw661g.fsf@assigned-by-dhcp.cox.net> <20050914193457.GE2936@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cogito: cg-clone doesn't like packed tag objects
+Date: Mon, 26 Sep 2005 21:46:39 -0700
+Message-ID: <7vr7bb5d8w.fsf@assigned-by-dhcp.cox.net>
+References: <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz>
+	<20050926212536.GF26340@pasky.or.cz>
+	<7virwna2oi.fsf@assigned-by-dhcp.cox.net>
+	<20050926222944.GG26340@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: David Mansfield <david@cobite.com>
-X-From: git-owner@vger.kernel.org Tue Sep 27 06:37:27 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 27 06:48:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EK7BI-00018K-5c
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 06:35:05 +0200
+	id 1EK7Me-0004KI-1F
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 06:46:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964800AbVI0Ee7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 00:34:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964802AbVI0Ee7
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 00:34:59 -0400
-Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:13503
-	"HELO penza-gsm.ru") by vger.kernel.org with SMTP id S964800AbVI0Ee7
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2005 00:34:59 -0400
-Received: (qmail 2683 invoked from network); 27 Sep 2005 04:35:47 -0000
-Received: from unknown (HELO snake) (192.168.0.20)
-  by fileserver.penza-gsm.ru with SMTP; 27 Sep 2005 04:35:47 -0000
-To: git@vger.kernel.org
-User-Agent: KMail/1.7.2
-In-Reply-To: <20050914193457.GE2936@pasky.or.cz>
-Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
-X-Spam-Level: 
-X-Spam-Status: No, score=-102.8 required=5.0 tests=ALL_TRUSTED,AWL,
-	USER_IN_WHITELIST autolearn=unavailable version=3.0.2
+	id S964803AbVI0Eqn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 00:46:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964804AbVI0Eqn
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 00:46:43 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:65466 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S964803AbVI0Eqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2005 00:46:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050927044642.RNSZ16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 27 Sep 2005 00:46:42 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050926222944.GG26340@pasky.or.cz> (Petr Baudis's message of
+	"Tue, 27 Sep 2005 00:29:45 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9367>
 
-(Re-post. Sorry for any inconvenience.)
-On September 14, 2005 23:34 Petr Baudis wrote:
-> Dear diary, on Wed, Sep 07, 2005 at 09:18:03PM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> told me that...
->
-> > David K?.A?Negedal <davidk@lysator.liu.se> writes:
-> > > The authorship info in commits created by git-cvsimport-script
-> > > only contains the username of the CVS committer.  This patch
-> > > adds a flag -e <domain> to git-cvsimport-script that makes it
-> > > possible to specify an email domain that is added to all email
-> > > addresses in the commit "author" and "committer" fields.
-> > >
-> > > ---
-> > > I have stopped using cvsimport, because cvsps seems to produce bad
-> > > output on the repository I'm using it with, but I had already prepared
-> > > this patch.
-> >
-> > Hmph.  One reason the original implementation did not do this is
-> > because Linus and other people wanted to have a repeatability,
-> > so making this an optional thing is good, but if we go this
-> > route, I think if it would be nicer to have a --author-map
-> > option that lets you feed a list of:
-> >
-> >     <author> ==> "A U Thor <author@author.dom>"
-> >
-> > mappings, instead of a single -e, which essentially does not add
-> > much information to the result.
-> >
-> > I take that your oob comment indicates that you do not have much
-> > incentive/inclination to further hack on this, so I am not
-> > asking you to do the above even if you find my suggestion
-> > worthwhile.
->
-> Various tools use CVSROOT/users to map usernames to realname <email>.
-> I actually wanted to send a patch, looked at the cvsimport script and
-> got totally scared away (at least for now)... ;-)
-git uses cvsps output to determine authorship. Do you think if this problem 
-should be solved on cvsps side? It should be relatively easy IMHO.
-David, can you add another key to output CVSROOT/users mapping result instead 
-of usernames if available?
--- 
-Respectfully
-Alexey Nezhdanov
+Petr Baudis <pasky@suse.cz> writes:
+
+> Yes - so you can't save the tag objects either, but then
+> you'll re-slurp them again and again, which is kind of
+> silly. Alternatively, you could actually make git-fsck-object
+> silent about the case when an unreachable (not referenced in
+> refs/) tag object references a non-existing object - perhaps
+> unless --strict is passed to it. If you think the rest of my
+> logic is ok, I think this change to facilitate this "tags
+> caching" is not unreasonable.
+
+Now you completely lost me.  I really do not understand what you
+mean by tags caching and re-slurping.
+
+If your user _is_ interested in the tag, say v0.99.7d, wouldn't
+it make sense to make sure that, after the user fetches the tag,
+the user can build v0.99.7d point release as well?  What do you
+think the reason is when your user says he is interested in
+another tag, junio-gpg-pub?  Wouldn't it be the most natural
+interpretation that he wants to get the blob the tag refers to,
+so that he can use it with git-verify-tag?  What good does it do
+for the user if you get only the tag object and do not get the
+blob the tag refers to?  Yes, he can say "git cat-file tag
+junio-gpg-pub", but that by itself is not that interesting if it
+cannot be used to validate the other tags (or itself).
+
+If the users ask for a tag, I think it is easier for them to
+understand if you made sure you give them the complete set of
+objects that need to support that tag, at least by default.
+Giving the user an option to override it to make a sparse,
+incomplete, fsck-unclean repository is fine as a spacesaver
+option, but I think that should be left for "more advanced
+users" who understand the ramification of using the option.
+
+I happen to publish maint branch, but I could have done without.
+I can make a temporary branch out of v0.99.7c tag, add fixes to
+extend that branch, tag the branch head as v0.99.7d, and delete
+the temporary branch without publishing it at all.
+
+The tree needed to build v0.99.7d point release would be only
+reachable by fetching that tag (and here, "fetching the tag"
+really means "making sure the receiving repository has the tag
+object, and all the objects that are reachable from that tag
+object"), so "fetching only the tag object and not the object it
+refers to" in that case does not make much sense for the end
+user.  Yes, he can say "git cat-file tag v0.99.7d", but that by
+itself is not that interesting if he cannot use it to build that
+release.
