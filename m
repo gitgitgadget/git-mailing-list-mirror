@@ -1,84 +1,130 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: [PATCH] Support for more CURL SSL settings via environment variables
-Date: Tue, 27 Sep 2005 10:45:27 -0700
-Message-ID: <20050927174526.GD1377@reactrix.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Cogito: cg-clone doesn't like packed tag objects
+Date: Tue, 27 Sep 2005 10:56:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509271020530.3308@g5.osdl.org>
+References: <7virwna2oi.fsf@assigned-by-dhcp.cox.net> <7v3bnra20z.fsf@assigned-by-dhcp.cox.net>
+ <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz>
+ <20050926212536.GF26340@pasky.or.cz> <7virwna2oi.fsf@assigned-by-dhcp.cox.net>
+ <20050926222944.GG26340@pasky.or.cz> <7vr7bb5d8w.fsf@assigned-by-dhcp.cox.net>
+ <8764snyufn.fsf@ualberta.net> <7v4q875bbj.fsf@assigned-by-dhcp.cox.net>
+ <20050927094029.GA30889@pasky.or.cz> <7v64sm30dh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Sep 27 19:49:01 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, Tom Prince <tom.prince@ualberta.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 27 19:57:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKJWE-0006AA-Rp
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 19:45:31 +0200
+	id 1EKJh8-0003oy-BZ
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 19:56:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965031AbVI0Rp2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 13:45:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965030AbVI0Rp2
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 13:45:28 -0400
-Received: from 195.37.26.69.virtela.com ([69.26.37.195]:62716 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S965031AbVI0Rp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2005 13:45:27 -0400
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id j8RHjRBs005776
-	for <git@vger.kernel.org>; Tue, 27 Sep 2005 10:45:27 -0700
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id j8RHjRL6005774
-	for git@vger.kernel.org; Tue, 27 Sep 2005 10:45:27 -0700
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
+	id S965034AbVI0R4m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 13:56:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965033AbVI0R4m
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 13:56:42 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:63888 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965034AbVI0R4l (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2005 13:56:41 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8RHuP4s030738
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Sep 2005 10:56:25 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8RHuOta023739;
+	Tue, 27 Sep 2005 10:56:24 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64sm30dh.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.118 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9410>
-
-Added support for additional CURL SSL settings via environment variables.
-Client certificate/key files can be specified as well as alternate CA
-information.
-
-Signed-off-by: Nick Hengeveld <nickh@reactrix.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9411>
 
 
----
 
- http-fetch.c |   19 +++++++++++++++++++
- 1 files changed, 19 insertions(+), 0 deletions(-)
+On Tue, 27 Sep 2005, Junio C Hamano wrote:
+> 
+> This is a bit hard and needs some thinking to do cleanly,
+> because what is in info/refs is what is sent from the publisher
+> side over git-native protocol at the beginning of the handshake,
+> and it is not easy to add that to git-native protocol cleanly
+> and backward-compatibly (I think I know how without breaking
+> existing clients, but it is not clean).
 
-8ce3710b0b838d6f4c9813ad3631afced80ce346
-diff --git a/http-fetch.c b/http-fetch.c
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -35,6 +35,10 @@ static int local;
- static int zret;
+Argh.
+
+"git-upload-pack" very much on purpose never sends partial object stores: 
+it really doesn't want to send a tag-object for you to even _look_ at 
+unless it also sends all the objects that you are missing that the tag 
+refers to.
+
+I'd really be much happier with the tag fetching being separate.
+
+For example, making
+
+	git fetch --tags <dest>
+
+fetch all tags _and_ the objects that they depend on would seem a _lot_ 
+more appropriate.
+
+The thing is, tags really may be totally private. For example, it makes 
+sense to fetch tags when you pull an official tree (ie my kernel tree, or 
+your git tree), but it does NOT make sense for me to fetch tags 
+(automatically or not) when I pull from a developers tree.
+
+That's why git fetch doesn't get the tags by default. It's WRONG. 
+
+But we could certainly make it _easier_ to get tags when you want them. 
+"git-ls-remote" already helps you, and
+
+	git-ls-remote ... | cut -f2 | grep '^refs/tags/'
+
+completes the picture. No protocol changes necessary, just some added 
+magic to git-fetch.sh.
+
+Actually, here's a simple and stupid patch.
+
+Untested as usual, but hey, how hard can it be?
+
+		Linus
+
+----
+diff --git a/git-fetch.sh b/git-fetch.sh
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -5,6 +5,7 @@
+ _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
+ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
  
- static int curl_ssl_verify;
-+static char *ssl_cert;
-+static char *ssl_key;
-+static char *ssl_capath;
-+static char *ssl_cainfo;
++tags=
+ append=
+ force=
+ update_head_ok=
+@@ -17,6 +18,9 @@ do
+ 	-f|--f|--fo|--for|--forc|--force)
+ 		force=t
+ 		;;
++	--tags)
++		tags=t
++		;;
+ 	-u|--u|--up|--upd|--upda|--updat|--update|--update-|--update-h|\
+ 	--update-he|--update-hea|--update-head|--update-head-|\
+ 	--update-head-o|--update-head-ok)
+@@ -151,7 +155,12 @@ case "$update_head_ok" in
+ 	;;
+ esac
  
- struct buffer
- {
-@@ -512,6 +516,21 @@ int main(int argc, char **argv)
- 	curl_easy_setopt(curl, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
- #endif
- 
-+	if ((ssl_cert = getenv("GIT_SSL_CERT")) != NULL) {
-+		curl_easy_setopt(curl, CURLOPT_SSLCERT, ssl_cert);
-+	}
-+	if ((ssl_key = getenv("GIT_SSL_KEY")) != NULL) {
-+		curl_easy_setopt(curl, CURLOPT_SSLKEY, ssl_key);
-+	}
-+#if LIBCURL_VERSION_NUM >= 0x070908
-+	if ((ssl_capath = getenv("GIT_SSL_CAPATH")) != NULL) {
-+		curl_easy_setopt(curl, CURLOPT_CAPATH, ssl_capath);
-+	}
-+#endif
-+	if ((ssl_cainfo = getenv("GIT_SSL_CAINFO")) != NULL) {
-+		curl_easy_setopt(curl, CURLOPT_CAINFO, ssl_cainfo);
-+	}
+-for ref in $(get_remote_refs_for_fetch "$@")
++taglist=
++if [ "$tags" ]; then
++	taglist=$(git-ls-remote "$remote" | awk '/refs\/tags/ { print $2":"$2 }')
++fi
 +
- 	alt = xmalloc(sizeof(*alt));
- 	alt->base = url;
- 	alt->got_indices = 0;
++for ref in $(get_remote_refs_for_fetch "$@" $taglist)
+ do
+     refs="$refs $ref"
+ 
