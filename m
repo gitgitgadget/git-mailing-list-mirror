@@ -1,73 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: shared GIT repos
-Date: Tue, 27 Sep 2005 00:13:43 -0700
-Message-ID: <7vu0g70yqg.fsf_-_@assigned-by-dhcp.cox.net>
-References: <20050925163201.GA29198@tumblerings.org>
-	<4d4586301dca616f42880612fae01492@cream.org>
-	<20050926133204.GB21019@pasky.or.cz>
-	<pan.2005.09.27.06.35.35.834134@smurf.noris.de>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: Cogito: cg-clone doesn't like packed tag objects
+Date: Tue, 27 Sep 2005 03:25:42 -0400
+Message-ID: <4338F3F6.8040401@michonline.com>
+References: <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz> <20050926212536.GF26340@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 09:15:16 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig0B67FE4C66B10A193FF574A1"
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 27 09:27:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EK9eu-0007GY-Em
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 09:13:48 +0200
+	id 1EK9ql-0003mV-QJ
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 09:26:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964842AbVI0HNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 03:13:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964840AbVI0HNq
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 03:13:46 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:62098 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S964844AbVI0HNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2005 03:13:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050927071344.TIGY16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 27 Sep 2005 03:13:44 -0400
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <pan.2005.09.27.06.35.35.834134@smurf.noris.de> (Matthias
-	Urlichs's message of "Tue, 27 Sep 2005 08:35:37 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964848AbVI0HZ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 03:25:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964847AbVI0HZ7
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 03:25:59 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:4031 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S964848AbVI0HZ7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2005 03:25:59 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1EK9qU-0000JO-SL; Tue, 27 Sep 2005 03:25:46 -0400
+Received: from [10.254.251.12] (helo=mythryan)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1EK9qU-0003L6-00; Tue, 27 Sep 2005 03:25:46 -0400
+Received: from localhost ([127.0.0.1])
+	by mythryan with esmtp (Exim 4.52)
+	id 1EK9qU-0007S2-7X; Tue, 27 Sep 2005 03:25:46 -0400
+User-Agent: Debian Thunderbird 1.0.6 (X11/20050802)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050926212536.GF26340@pasky.or.cz>
+X-Enigmail-Version: 0.92.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9377>
 
-Matthias Urlichs <smurf@smurf.noris.de> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig0B67FE4C66B10A193FF574A1
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-> Speaking of which -- is anybody working on that one?
->
-> I find myself in need of a multiuser shared repository that cannot
-> be corrupted (i.e. I want to prevent the users from removing objects,
-> and replacing a ref with something that is not a child of the sha1 that's
-> already there should also be prevented).
+Petr Baudis wrote:
+> So the strategy I'm thinking of now is to manually (I think no GIT tool
+> can do that for me) dereference the possible tag chain until I end up at
+> some non-tag object. Now, if it is a commit and I don't have it yet, it
+> means that it is not interesting to me because it does not belong to a
+> branch I'm following, so I will just ignore the tag (won't download
+> anything else and won't record it in the refs/tags directory).
 
-Do you want to guard the repository from malicious users?  Or is
-it enough to guard a casual/careless user from making mistakes?
+git-rev-parse $tagname^0
 
-If one has commit privileges, then one can already do enough
-harm to the project without being able to remove objects nor
-updating a ref with non-fast-forward ref.  So let's assume for
-now that malicious users are not something we worry about.  In
-that case, "working on" might be too scary a word.  I think most
-of the pieces are already there and you only need to assemble
-them and write a howto ;-).
 
- - Place the users that has write access to the repository in
-   the same Unix group, and have the repository owned by that
-   group;
+--------------enig0B67FE4C66B10A193FF574A1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
- - Give the users ssh access, perhaps with authorized_keys set
-   up to only allow running git-receive-pack and nothing else
-   (like normal shell access);
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
- - Set up hooks/update to make sure the ref updates are fast
-   forward.  Additionally, you could set up a mapping that says
-   which user can/cannot update which refs if you wanted to.
+iD8DBQFDOPP5fhVDhkBuUKURAjq/AKCl7nY2RN5NBG8FgcfuIPJSiEMejACgiuj1
+UilvLx4husjZT3djoOa3sbs=
+=3C7k
+-----END PGP SIGNATURE-----
 
--jc
+--------------enig0B67FE4C66B10A193FF574A1--
