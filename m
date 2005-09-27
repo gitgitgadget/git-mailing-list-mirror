@@ -1,53 +1,73 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: Cogito: cg-clone doesn't like packed tag objects
-Date: Tue, 27 Sep 2005 08:54:37 +0200
-Message-ID: <20050927065436.GL15165MdfPADPa@greensroom.kotnet.org>
-References: <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz>
- <20050926212536.GF26340@pasky.or.cz>
-Reply-To: skimo@liacs.nl
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: shared GIT repos
+Date: Tue, 27 Sep 2005 00:13:43 -0700
+Message-ID: <7vu0g70yqg.fsf_-_@assigned-by-dhcp.cox.net>
+References: <20050925163201.GA29198@tumblerings.org>
+	<4d4586301dca616f42880612fae01492@cream.org>
+	<20050926133204.GB21019@pasky.or.cz>
+	<pan.2005.09.27.06.35.35.834134@smurf.noris.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 27 08:55:28 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 27 09:15:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EK9Ma-0007L9-SB
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 08:54:53 +0200
+	id 1EK9eu-0007GY-Em
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 09:13:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964832AbVI0Gyp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 02:54:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964833AbVI0Gyp
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 02:54:45 -0400
-Received: from smtp16.wxs.nl ([195.121.6.39]:4326 "EHLO smtp16.wxs.nl")
-	by vger.kernel.org with ESMTP id S964832AbVI0Gyo (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2005 02:54:44 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp16.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0ING0012KR71P3@smtp16.wxs.nl> for git@vger.kernel.org; Tue,
- 27 Sep 2005 08:54:37 +0200 (CEST)
-Received: (qmail 10707 invoked by uid 500); Tue, 27 Sep 2005 06:54:37 +0000
-In-reply-to: <20050926212536.GF26340@pasky.or.cz>
-To: Petr Baudis <pasky@suse.cz>
-Mail-followup-to: Petr Baudis <pasky@suse.cz>,
- "H. Peter Anvin" <hpa@zytor.com>, Git Mailing List <git@vger.kernel.org>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S964842AbVI0HNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 03:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964840AbVI0HNq
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 03:13:46 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:62098 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S964844AbVI0HNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2005 03:13:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050927071344.TIGY16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 27 Sep 2005 03:13:44 -0400
+To: Matthias Urlichs <smurf@smurf.noris.de>
+In-Reply-To: <pan.2005.09.27.06.35.35.834134@smurf.noris.de> (Matthias
+	Urlichs's message of "Tue, 27 Sep 2005 08:35:37 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9376>
 
-On Mon, Sep 26, 2005 at 11:25:36PM +0200, Petr Baudis wrote:
-> So the strategy I'm thinking of now is to manually (I think no GIT tool
-> can do that for me) dereference the possible tag chain until I end up at
-> some non-tag object. 
+Matthias Urlichs <smurf@smurf.noris.de> writes:
 
-If it _is_ a commit, you could use 
-git-rev-list --max-count=1 $tag
+> Speaking of which -- is anybody working on that one?
+>
+> I find myself in need of a multiuser shared repository that cannot
+> be corrupted (i.e. I want to prevent the users from removing objects,
+> and replacing a ref with something that is not a child of the sha1 that's
+> already there should also be prevented).
 
-It won't help you though if it isn't.
+Do you want to guard the repository from malicious users?  Or is
+it enough to guard a casual/careless user from making mistakes?
 
-skimo
+If one has commit privileges, then one can already do enough
+harm to the project without being able to remove objects nor
+updating a ref with non-fast-forward ref.  So let's assume for
+now that malicious users are not something we worry about.  In
+that case, "working on" might be too scary a word.  I think most
+of the pieces are already there and you only need to assemble
+them and write a howto ;-).
+
+ - Place the users that has write access to the repository in
+   the same Unix group, and have the repository owned by that
+   group;
+
+ - Give the users ssh access, perhaps with authorized_keys set
+   up to only allow running git-receive-pack and nothing else
+   (like normal shell access);
+
+ - Set up hooks/update to make sure the ref updates are fast
+   forward.  Additionally, you could set up a mapping that says
+   which user can/cannot update which refs if you wanted to.
+
+-jc
