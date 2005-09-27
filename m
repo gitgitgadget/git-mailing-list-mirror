@@ -1,46 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Parallelize building rpm
-Date: Mon, 26 Sep 2005 21:21:34 -0700
-Message-ID: <7voe6f6sz5.fsf@assigned-by-dhcp.cox.net>
-References: <4338B307.7010405@zytor.com>
+From: Alexey Nezhdanov <snake@penza-gsm.ru>
+Subject: Re: [PATCH] Added an option to cvsimport to specify email domain
+Date: Tue, 27 Sep 2005 08:34:55 +0400
+Message-ID: <200509270834.55486.snake@penza-gsm.ru>
+References: <u5tzmqp8fzx.fsf@lysator.liu.se> <7vhdcw661g.fsf@assigned-by-dhcp.cox.net> <20050914193457.GE2936@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 06:23:25 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: David Mansfield <david@cobite.com>
+X-From: git-owner@vger.kernel.org Tue Sep 27 06:37:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EK6ym-0006Oe-2S
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 06:22:09 +0200
+	id 1EK7BI-00018K-5c
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 06:35:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932223AbVI0EVi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 00:21:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932310AbVI0EVi
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 00:21:38 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:43192 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932223AbVI0EVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2005 00:21:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050927042135.NIZN2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 27 Sep 2005 00:21:35 -0400
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <4338B307.7010405@zytor.com> (H. Peter Anvin's message of "Mon,
-	26 Sep 2005 19:48:39 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964800AbVI0Ee7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 00:34:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964802AbVI0Ee7
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 00:34:59 -0400
+Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:13503
+	"HELO penza-gsm.ru") by vger.kernel.org with SMTP id S964800AbVI0Ee7
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2005 00:34:59 -0400
+Received: (qmail 2683 invoked from network); 27 Sep 2005 04:35:47 -0000
+Received: from unknown (HELO snake) (192.168.0.20)
+  by fileserver.penza-gsm.ru with SMTP; 27 Sep 2005 04:35:47 -0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.7.2
+In-Reply-To: <20050914193457.GE2936@pasky.or.cz>
+Content-Disposition: inline
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
+X-Spam-Level: 
+X-Spam-Status: No, score=-102.8 required=5.0 tests=ALL_TRUSTED,AWL,
+	USER_IN_WHITELIST autolearn=unavailable version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9366>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
-
-Could you also fix COPTS while you are at it, please?  I think
-it is caleld CFLAGS these days.
-
->  %build
-> -make COPTS="$RPM_OPT_FLAGS" WITH_OWN_SUBPROCESS_PY=YesPlease \
-> +make %{_smp_mflags} COPTS="$RPM_OPT_FLAGS" WITH_OWN_SUBPROCESS_PY=YesPlease \
->       prefix=%{_prefix} all %{!?_without_docs: doc}
+(Re-post. Sorry for any inconvenience.)
+On September 14, 2005 23:34 Petr Baudis wrote:
+> Dear diary, on Wed, Sep 07, 2005 at 09:18:03PM CEST, I got a letter
+> where Junio C Hamano <junkio@cox.net> told me that...
+>
+> > David K?.A?Negedal <davidk@lysator.liu.se> writes:
+> > > The authorship info in commits created by git-cvsimport-script
+> > > only contains the username of the CVS committer.  This patch
+> > > adds a flag -e <domain> to git-cvsimport-script that makes it
+> > > possible to specify an email domain that is added to all email
+> > > addresses in the commit "author" and "committer" fields.
+> > >
+> > > ---
+> > > I have stopped using cvsimport, because cvsps seems to produce bad
+> > > output on the repository I'm using it with, but I had already prepared
+> > > this patch.
+> >
+> > Hmph.  One reason the original implementation did not do this is
+> > because Linus and other people wanted to have a repeatability,
+> > so making this an optional thing is good, but if we go this
+> > route, I think if it would be nicer to have a --author-map
+> > option that lets you feed a list of:
+> >
+> >     <author> ==> "A U Thor <author@author.dom>"
+> >
+> > mappings, instead of a single -e, which essentially does not add
+> > much information to the result.
+> >
+> > I take that your oob comment indicates that you do not have much
+> > incentive/inclination to further hack on this, so I am not
+> > asking you to do the above even if you find my suggestion
+> > worthwhile.
+>
+> Various tools use CVSROOT/users to map usernames to realname <email>.
+> I actually wanted to send a patch, looked at the cvsimport script and
+> got totally scared away (at least for now)... ;-)
+git uses cvsps output to determine authorship. Do you think if this problem 
+should be solved on cvsps side? It should be relatively easy IMHO.
+David, can you add another key to output CVSROOT/users mapping result instead 
+of usernames if available?
+-- 
+Respectfully
+Alexey Nezhdanov
