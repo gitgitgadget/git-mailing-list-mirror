@@ -1,48 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-daemon: path validation, export all option
-Date: Tue, 27 Sep 2005 09:56:18 -0700
-Message-ID: <7vd5mu30wd.fsf@assigned-by-dhcp.cox.net>
-References: <4338AACC.1050305@zytor.com>
-	<7vslvr6t1u.fsf@assigned-by-dhcp.cox.net> <43396FF9.1000900@zytor.com>
+From: Mariano Videla <mvidela@ases.com.ar>
+Subject: Re: More Porcelains?
+Date: Tue, 27 Sep 2005 14:02:51 -0300
+Organization: ASES S.R.L.
+Message-ID: <1127840572.16026.29.camel@mariano>
+References: <20050926175156.GB9410@reactrix.com>
+	 <20050926182341.GA26340@pasky.or.cz>
+	 <7v3bnrh85g.fsf@assigned-by-dhcp.cox.net>
+	 <20050927001542.GC15615@reactrix.com>
+	 <7v64sn8hml.fsf_-_@assigned-by-dhcp.cox.net>  <tnxll1jvsc8.fsf@arm.com>
+Reply-To: mvidela@ases.com.ar
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 18:59:00 2005
+X-From: git-owner@vger.kernel.org Tue Sep 27 19:04:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKIkk-00088I-KM
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 18:56:27 +0200
+	id 1EKIrW-0002PO-3W
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 19:03:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964995AbVI0Q4Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 12:56:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965005AbVI0Q4Y
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 12:56:24 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:33449 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S964995AbVI0Q4X (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2005 12:56:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050927165621.EYWT24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 27 Sep 2005 12:56:21 -0400
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <43396FF9.1000900@zytor.com> (H. Peter Anvin's message of "Tue,
-	27 Sep 2005 09:14:49 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965015AbVI0RDI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 13:03:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965014AbVI0RDI
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 13:03:08 -0400
+Received: from mx0.comintec.net ([64.76.24.252]:19403 "EHLO mx0.comintec.net")
+	by vger.kernel.org with ESMTP id S965016AbVI0RDH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2005 13:03:07 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mx0.comintec.net (Postfix) with ESMTP id 5E85A24700D;
+	Tue, 27 Sep 2005 14:03:00 -0300 (ART)
+Received: from mx0.comintec.net ([127.0.0.1])
+ by localhost (ds9.comintec.net [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 13227-01-6; Tue, 27 Sep 2005 14:03:00 -0300 (ART)
+Received: from [192.168.0.4] (OL9-198.fibertel.com.ar [24.232.198.9])
+	by mx0.comintec.net (Postfix) with ESMTP id 2313E246E17;
+	Tue, 27 Sep 2005 14:03:00 -0300 (ART)
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <tnxll1jvsc8.fsf@arm.com>
+X-Mailer: Evolution 2.2.1.1 
+X-Virus-Scanned: by amavisd-new at comintec.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9405>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+Mmm...It's no porcelain.
 
-> I have restored this and make the requested RPM changes.  I have left a 
-> pullable tree at:
->
-> master.kernel.org:/home/hpa/git/daemon.git
->
-> ... in order to preserve the commit structure.
+I setup a git repository for gipy... Didn't upload any files in
+sourceforge because I don't think is ready.
 
-Thanks.  Will pull tonight.
+http://24.232.198.9:7978/gipy.git
+http://24.232.198.9:7978/cgi/gitweb.cgi
+
+By the way... you can 'steel' it all!
+
+Mariano
+
+On mar, 2005-09-27 at 09:16 +0100, Catalin Marinas wrote:
+> Junio C Hamano <junkio@cox.net> wrote:
+> > How many of you are working on your own Porcelains, announced or
+> > unannounced?  I know about Cogito and StGIT ;-).  In a distant
+> > past I have heard of something called JIT but I think it is now
+> > defunct.  Matthias Urlichs said he is doing something with
+> > Python.  Anybody else?
+> 
+> I just found gipy on sf.net - http://sourceforge.net/projects/gipy.
+> 
+> There are no files uploaded yet but hopefully I can soon 'steal' some
+> code for StGIT ;-)
+> 
