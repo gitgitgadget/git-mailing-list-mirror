@@ -1,62 +1,53 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: hared GIT repos (was Re: rsync deprecated but promoted?)
-Date: Tue, 27 Sep 2005 08:35:37 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.09.27.06.35.35.834134@smurf.noris.de>
-References: <20050925163201.GA29198@tumblerings.org> <4d4586301dca616f42880612fae01492@cream.org> <20050926133204.GB21019@pasky.or.cz>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: Cogito: cg-clone doesn't like packed tag objects
+Date: Tue, 27 Sep 2005 08:54:37 +0200
+Message-ID: <20050927065436.GL15165MdfPADPa@greensroom.kotnet.org>
+References: <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz>
+ <20050926212536.GF26340@pasky.or.cz>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Tue Sep 27 08:39:25 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 27 08:55:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EK96I-0007NV-Jw
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 08:38:02 +0200
+	id 1EK9Ma-0007L9-SB
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 08:54:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964825AbVI0Gh4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 02:37:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964830AbVI0Gh4
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 02:37:56 -0400
-Received: from main.gmane.org ([80.91.229.2]:63435 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964826AbVI0Ghz (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2005 02:37:55 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EK956-0006w8-3t
-	for git@vger.kernel.org; Tue, 27 Sep 2005 08:36:48 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 Sep 2005 08:36:48 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 Sep 2005 08:36:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S964832AbVI0Gyp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 02:54:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964833AbVI0Gyp
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 02:54:45 -0400
+Received: from smtp16.wxs.nl ([195.121.6.39]:4326 "EHLO smtp16.wxs.nl")
+	by vger.kernel.org with ESMTP id S964832AbVI0Gyo (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2005 02:54:44 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp16.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0ING0012KR71P3@smtp16.wxs.nl> for git@vger.kernel.org; Tue,
+ 27 Sep 2005 08:54:37 +0200 (CEST)
+Received: (qmail 10707 invoked by uid 500); Tue, 27 Sep 2005 06:54:37 +0000
+In-reply-to: <20050926212536.GF26340@pasky.or.cz>
+To: Petr Baudis <pasky@suse.cz>
+Mail-followup-to: Petr Baudis <pasky@suse.cz>,
+ "H. Peter Anvin" <hpa@zytor.com>, Git Mailing List <git@vger.kernel.org>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9375>
 
-Hi, Petr Baudis wrote:
+On Mon, Sep 26, 2005 at 11:25:36PM +0200, Petr Baudis wrote:
+> So the strategy I'm thinking of now is to manually (I think no GIT tool
+> can do that for me) dereference the possible tag chain until I end up at
+> some non-tag object. 
 
-> The thing is, rsync is bad - it will happily put
-> duplicate, redundant, and especially unwanted data to your repository,
-> especially when the shared GIT repositories happen.
+If it _is_ a commit, you could use 
+git-rev-list --max-count=1 $tag
 
-Speaking of which -- is anybody working on that one?
+It won't help you though if it isn't.
 
-I find myself in need of a multiuser shared repository that cannot
-be corrupted (i.e. I want to prevent the users from removing objects,
-and replacing a ref with something that is not a child of the sha1 that's
-already there should also be prevented).
-
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Beware of bugs in the above code; I have only proved it correct, not tried it.
-		-- Donald Knuth
+skimo
