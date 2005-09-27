@@ -1,76 +1,60 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: [PATCH 2/3] Support for partial HTTP transfers
-Date: Tue, 27 Sep 2005 08:36:36 -0700
-Message-ID: <20050927153636.GA1377@reactrix.com>
-References: <20050926175204.GC9410@reactrix.com> <7vd5mvedcs.fsf@assigned-by-dhcp.cox.net> <20050927000931.GA15615@reactrix.com> <7vfyrr3vwp.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: git-daemon: path validation, export all option
+Date: Tue, 27 Sep 2005 08:36:18 -0700
+Message-ID: <433966F2.3090304@zytor.com>
+References: <4338AACC.1050305@zytor.com> <Pine.LNX.4.58.0509270802140.3308@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 17:41:38 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 27 17:41:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKHVl-00015B-7b
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 17:36:53 +0200
+	id 1EKHVJ-0000pc-KA
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 17:36:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964975AbVI0Pgv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 11:36:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964977AbVI0Pgv
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 11:36:51 -0400
-Received: from 195.37.26.69.virtela.com ([69.26.37.195]:16857 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S964975AbVI0Pgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2005 11:36:50 -0400
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id j8RFabhb001585;
-	Tue, 27 Sep 2005 08:36:37 -0700
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id j8RFaam3001583;
-	Tue, 27 Sep 2005 08:36:36 -0700
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vfyrr3vwp.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.1i
+	id S964974AbVI0PgX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 11:36:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964975AbVI0PgX
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 11:36:23 -0400
+Received: from paleosilicon.orionmulti.com ([209.128.68.66]:11219 "EHLO
+	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
+	id S964974AbVI0PgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2005 11:36:22 -0400
+X-Envelope-From: hpa@zytor.com
+Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
+	(authenticated bits=0)
+	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j8RFaIJv025357
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 27 Sep 2005 08:36:19 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509270802140.3308@g5.osdl.org>
+X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	paleosilicon.orionmulti.com
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on paleosilicon.orionmulti.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9401>
 
-On Mon, Sep 26, 2005 at 10:46:30PM -0700, Junio C Hamano wrote:
-
-> I think (O_CREAT|O_EXCL) in your code can be easily defeated by
-> this sequence:
+Linus Torvalds wrote:
 > 
->     one                 	two
+> Removing the "chdir(".git")" thing is very wrong, though. Why do it?
 > 
->     unlink prevfile
->     rename tmpfile, prevfile
->     unlink tmpfile
->     local = open tmpfile
->                                 unlink prevfile
->                                 rename tmpfile, prevfile
->                                 unlink tmpfile
->                                 local = open tmpfile
->                                 prevlocal = open prevfile
->     write local
->                                 copyfile prevlocal, local
->     write local
-> 				???
+> It's very much on purpose: you can export even "regular" git trees (ie 
+> trees you have checked out) without the other side having to say
+> 
+> 	git clone machine.com:/home/torvalds/v2.6/linux/.git
+> 
+> where the final "/.git" is just stupid.
+> 
 
-The way I understand this sequence, one and two will not be writing to
-the same file.  When two unlinks tmpfile, one will still be able to 
-write to its local, but the body of the file that one is writing will
-be removed when it closes local.
+Agreed.  I wasn't thinking too hard about it, and it doesn't do any harm 
+since failure is ignored.
 
-> Not that I think the multiple instances should be prevented at
-> this low level --- if they stomp on each other at this level, it
-> is very likely the they are doing duplicated work on the network
-> side as well, and should be prevented from doing so at much
-> higher level than this, I think.  That's why I said I do not
-> mind BKL upfront in git-fetch.sh.
-
-True, is that something I should include with the partial patch?
-
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+	-hpa
