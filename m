@@ -1,165 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] Return CURL error message when object transfer fails
-Date: Mon, 26 Sep 2005 23:13:14 -0700
-Message-ID: <7vpsqv2g3p.fsf@assigned-by-dhcp.cox.net>
-References: <20050926175211.GD9410@reactrix.com>
-	<7v4q87ed73.fsf@assigned-by-dhcp.cox.net>
-	<20050927001241.GB15615@reactrix.com>
-	<7v3bnr3vo5.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: hared GIT repos (was Re: rsync deprecated but promoted?)
+Date: Tue, 27 Sep 2005 08:35:37 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.09.27.06.35.35.834134@smurf.noris.de>
+References: <20050925163201.GA29198@tumblerings.org> <4d4586301dca616f42880612fae01492@cream.org> <20050926133204.GB21019@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 08:14:33 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Tue Sep 27 08:39:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EK8iP-0001Bh-Oi
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 08:13:22 +0200
+	id 1EK96I-0007NV-Jw
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 08:38:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964828AbVI0GNT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 02:13:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964830AbVI0GNT
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 02:13:19 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:8577 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S964828AbVI0GNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2005 02:13:17 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050927061315.VFKI19461.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 27 Sep 2005 02:13:15 -0400
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <7v3bnr3vo5.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 26 Sep 2005 22:51:38 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964825AbVI0Gh4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 02:37:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964830AbVI0Gh4
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 02:37:56 -0400
+Received: from main.gmane.org ([80.91.229.2]:63435 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964826AbVI0Ghz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Sep 2005 02:37:55 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EK956-0006w8-3t
+	for git@vger.kernel.org; Tue, 27 Sep 2005 08:36:48 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Sep 2005 08:36:48 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Sep 2005 08:36:48 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9374>
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi, Petr Baudis wrote:
 
-> If that is the case, I'll take your patch verbatim.  Thanks.
+> The thing is, rsync is bad - it will happily put
+> duplicate, redundant, and especially unwanted data to your repository,
+> especially when the shared GIT repositories happen.
 
-Oops.  I spoke too fast.  That "sounds like a good idea" of mine
-was a response to your:
+Speaking of which -- is anybody working on that one?
 
-> It might be better to extend this to all places that curl_easy_perform
-> is called, rather than just in fetch_object.
+I find myself in need of a multiuser shared repository that cannot
+be corrupted (i.e. I want to prevent the users from removing objects,
+and replacing a ref with something that is not a child of the sha1 that's
+already there should also be prevented).
 
-... so the patch still needed some fixups.  It had minor
-dependencies on the previous patches in the series as well, so I
-tried to fix them up myself.
-
-Could you take a look at it and see if the following is good
-enough, please?
-
-------------
-Subject: [PATCH] Return CURL error message when object transfer fails
-From: Nick Hengeveld <nickh@reactrix.com>
-Date: 1127757131 -0700
-
-Return CURL error message when object transfer fails
-
-[jc: added similar curl_errorstr errors to places where we
- use curl_easy_perform() to run fetch that _must_ succeed.]
-
-Signed-off-by: Nick Hengeveld <nickh@reactrix.com>
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- http-fetch.c |   24 ++++++++++++++++--------
- 1 files changed, 16 insertions(+), 8 deletions(-)
-
-4f1da6322aa5d11091005b23716bcc3c65151a32
-diff --git a/http-fetch.c b/http-fetch.c
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -15,6 +15,7 @@
- 
- static CURL *curl;
- static struct curl_slist *no_pragma_header;
-+static char curl_errorstr[CURL_ERROR_SIZE];
- 
- static char *initial_base;
- 
-@@ -112,10 +113,12 @@ static int fetch_index(struct alt_base *
- 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite);
- 	curl_easy_setopt(curl, CURLOPT_URL, url);
- 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, no_pragma_header);
-+	curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, curl_errorstr);
- 	
- 	if (curl_easy_perform(curl)) {
- 		fclose(indexfile);
--		return error("Unable to get pack index %s", url);
-+		return error("Unable to get pack index %s\n%s", url,
-+			     curl_errorstr);
- 	}
- 
- 	fclose(indexfile);
-@@ -264,10 +267,10 @@ static int fetch_indices(struct alt_base
- 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(curl, CURLOPT_URL, url);
- 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, NULL);
-+	curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, curl_errorstr);
- 	
--	if (curl_easy_perform(curl)) {
--		return -1;
--	}
-+	if (curl_easy_perform(curl))
-+		return error("%s", curl_errorstr);
- 
- 	while (i < buffer.posn) {
- 		switch (data[i]) {
-@@ -327,10 +330,12 @@ static int fetch_pack(struct alt_base *r
- 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite);
- 	curl_easy_setopt(curl, CURLOPT_URL, url);
- 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, no_pragma_header);
--	
-+	curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, curl_errorstr);
-+
- 	if (curl_easy_perform(curl)) {
- 		fclose(packfile);
--		return error("Unable to get pack file %s", url);
-+		return error("Unable to get pack file %s\n%s", url,
-+			     curl_errorstr);
- 	}
- 
- 	fclose(packfile);
-@@ -373,6 +378,7 @@ int fetch_object(struct alt_base *repo, 
- 	curl_easy_setopt(curl, CURLOPT_FILE, NULL);
- 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
- 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, no_pragma_header);
-+	curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, curl_errorstr);
- 
- 	url = xmalloc(strlen(repo->base) + 50);
- 	strcpy(url, repo->base);
-@@ -388,7 +394,7 @@ int fetch_object(struct alt_base *repo, 
- 
- 	if (curl_easy_perform(curl)) {
- 		unlink(filename);
--		return -1;
-+		return error("%s", curl_errorstr);
- 	}
- 
- 	fchmod(local, 0444);
-@@ -453,6 +459,7 @@ int fetch_ref(char *ref, unsigned char *
-         curl_easy_setopt(curl, CURLOPT_FILE, &buffer);
-         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, NULL);
-+	curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, curl_errorstr);
- 
-         url = xmalloc(strlen(base) + 6 + strlen(ref));
-         strcpy(url, base);
-@@ -464,7 +471,8 @@ int fetch_ref(char *ref, unsigned char *
-         curl_easy_setopt(curl, CURLOPT_URL, url);
- 
-         if (curl_easy_perform(curl))
--                return error("Couldn't get %s for %s\n", url, ref);
-+                return error("Couldn't get %s for %s\n%s",
-+			     url, ref, curl_errorstr);
- 
-         hex[40] = '\0';
-         get_sha1_hex(hex, sha1);
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Beware of bugs in the above code; I have only proved it correct, not tried it.
+		-- Donald Knuth
