@@ -1,93 +1,75 @@
-From: Anton Altaparmakov <aia21@cam.ac.uk>
-Subject: Re: git-daemon: path validation, export all option
-Date: Tue, 27 Sep 2005 09:30:31 +0100
-Organization: Computing Service, University of Cambridge, UK
-Message-ID: <1127809831.28407.6.camel@imp.csi.cam.ac.uk>
-References: <4338AACC.1050305@zytor.com>
-	 <7vslvr6t1u.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: shared GIT repos
+Date: Tue, 27 Sep 2005 10:45:13 +0200
+Message-ID: <20050927084513.GU31276@kiste.smurf.noris.de>
+References: <20050925163201.GA29198@tumblerings.org> <4d4586301dca616f42880612fae01492@cream.org> <20050926133204.GB21019@pasky.or.cz> <pan.2005.09.27.06.35.35.834134@smurf.noris.de> <7vu0g70yqg.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 27 10:31:52 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 27 10:48:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKAro-0006P5-UW
-	for gcvg-git@gmane.org; Tue, 27 Sep 2005 10:31:13 +0200
+	id 1EKB6E-0004GH-2k
+	for gcvg-git@gmane.org; Tue, 27 Sep 2005 10:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964860AbVI0Ias (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Sep 2005 04:30:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964862AbVI0Iar
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 04:30:47 -0400
-Received: from ppsw-0.csi.cam.ac.uk ([131.111.8.130]:151 "EHLO
-	ppsw-0.csi.cam.ac.uk") by vger.kernel.org with ESMTP
-	id S964860AbVI0Iar (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Sep 2005 04:30:47 -0400
-X-Cam-SpamDetails: Not scanned
-X-Cam-AntiVirus: No virus found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from imp.csi.cam.ac.uk ([131.111.10.57]:49366)
-	by ppsw-0.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.150]:465)
-	with esmtpsa (LOGIN:aia21) (SSLv3:RC4-MD5:128)
-	id 1EKArA-0003VQ-1H (Exim 4.53)
-	(return-path <aia21@hermes.cam.ac.uk>); Tue, 27 Sep 2005 09:30:32 +0100
+	id S964868AbVI0IqD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Sep 2005 04:46:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964869AbVI0IqC
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Sep 2005 04:46:02 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:36265 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S964868AbVI0IqA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Sep 2005 04:46:00 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1EKB5O-0007oy-55; Tue, 27 Sep 2005 10:45:50 +0200
+Received: (nullmailer pid 12530 invoked by uid 501);
+	Tue, 27 Sep 2005 08:45:13 -0000
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslvr6t1u.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.2.1 
+Content-Disposition: inline
+In-Reply-To: <7vu0g70yqg.fsf_-_@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
+X-Smurf-Spam-Score: -2.6 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9382>
 
-On Mon, 2005-09-26 at 21:19 -0700, Junio C Hamano wrote:
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
-> > A first attempt to make git-daemon a bit more suitable for kernel.org 
-> > use: it allows the user to specify a whitelist of directories, rejects 
-> > paths which have . or .. in them (to avoid bypassing the whitelist), and 
-> > allows for an --export-all option.
-> >
-> > Signed-off-by: H. Peter Anvin <hpa@zytor.com>
-> 
-> I understand the motivation behind --export-all and directory
-> whitelist and these changes look good.  Thanks.
-> 
-> > +	if ( ok_paths && *ok_paths ) {
-> > +		int ok = 0;
-> > +...
-> > +	}
-> > +
-> > +	return 1;		/* Path acceptable */
-> > +}
-> 
-> A microNit.  You could lose 'int ok' and return 1 directly where
-> you assign 1 to it and break.
-> 
-> > -	chdir(".git");
-> 
-> I am unsure about this removal of "minor convenience feature".
-> Although I do not think git-daemon is widely used on the field,
-> this change breaks existing setup if there is any.
+Hi,
 
-Please drop this one line change.  It certainly breaks my personal
-setup.  And all git tools are happy with being given the "master"
-directory or the "master/.git" so there is no reason for git-daemon not
-to accept that, too.
+Junio C Hamano:
+> Do you want to guard the repository from malicious users?  Or is
+> it enough to guard a casual/careless user from making mistakes?
+> 
+Well, s/malicious users/somebody who wants to cover up an ugly mistake/
+would be more accurate.
 
-If hpa really can't live with the chdir, maybe we could add a
-"--strict-git-paths" option or something that will not do the chdir?  It
-would be only a few lines of code in git-daemon to parse the option and
-then the chdir would become
+What I am doing: I'm writing a system management frontend which allows
+people to install version-controlled stuff (like, the configuration for
+a backup server, or Yet Another PHPBB Installation) on servers -- without
+even having a login there.
 
-if (!strict_git_paths)
-	chdir(".git");
+Some of these contain login scripts that might need root privileges or
+similar (like, "restart Apache"). I want people to be unable to simply
+remove the commit that included the "rm -rf /" command, move the ref
+back, upload a new version, and pretend that nothing happened *la la la*.
 
-Best regards,
+> If one has commit privileges, then one can already do enough
+> harm to the project without being able to remove objects nor
+> updating a ref with non-fast-forward ref.
 
-        Anton
+But in that case it's traceable what happened and whodunit.
+
+> I think most of the pieces are already there and you only need to
+> assemble them and write a howto ;-).
+> [ list ]
+
+OK, thanks, that helps. I'll write something up.
+
 -- 
-Anton Altaparmakov <aia21 at cam.ac.uk> (replace at with @)
-Unix Support, Computing Service, University of Cambridge, CB2 3QH, UK
-Linux NTFS maintainer / IRC: #ntfs on irc.freenode.net
-WWW: http://linux-ntfs.sf.net/ & http://www-stu.christs.cam.ac.uk/~aia21/
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+When angry, count four; when very angry, swear.
