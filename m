@@ -1,53 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix git-pull output message
-Date: Wed, 28 Sep 2005 04:00:33 -0700
-Message-ID: <7v64slxxri.fsf@assigned-by-dhcp.cox.net>
-References: <72499e3b05092803027175bab0@mail.gmail.com>
+From: tab@snarc.org (Vincent Hanquez)
+Subject: Re: More Porcelains?
+Date: Wed, 28 Sep 2005 13:30:08 +0200
+Message-ID: <20050928113008.GA11309@snarc.org>
+References: <20050926175156.GB9410@reactrix.com> <20050926182341.GA26340@pasky.or.cz> <7v3bnrh85g.fsf@assigned-by-dhcp.cox.net> <20050927001542.GC15615@reactrix.com> <7v64sn8hml.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 28 13:01:56 2005
+Cc: git@vger.kernel.org, Nick Hengeveld <nickh@reactrix.com>
+X-From: git-owner@vger.kernel.org Wed Sep 28 13:31:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKZhA-0003q2-8i
-	for gcvg-git@gmane.org; Wed, 28 Sep 2005 13:01:52 +0200
+	id 1EKa8e-0002GU-1z
+	for gcvg-git@gmane.org; Wed, 28 Sep 2005 13:30:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751215AbVI1LAl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Sep 2005 07:00:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbVI1LAl
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 07:00:41 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:62626 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751215AbVI1LAk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2005 07:00:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050928110033.NVRO16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 28 Sep 2005 07:00:33 -0400
-To: Robert Watson <robert.oo.watson@gmail.com>
-In-Reply-To: <72499e3b05092803027175bab0@mail.gmail.com> (Robert Watson's
-	message of "Wed, 28 Sep 2005 11:02:38 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751223AbVI1LaM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Sep 2005 07:30:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbVI1LaL
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 07:30:11 -0400
+Received: from darwin.snarc.org ([81.56.210.228]:2509 "EHLO darwin.snarc.org")
+	by vger.kernel.org with ESMTP id S1751223AbVI1LaK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2005 07:30:10 -0400
+Received: by darwin.snarc.org (Postfix, from userid 1000)
+	id 03FC34BE14; Wed, 28 Sep 2005 13:30:08 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v64sn8hml.fsf_-_@assigned-by-dhcp.cox.net>
+X-Warning: Email may contain unsmilyfied humor and/or satire.
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9426>
 
-Robert Watson <robert.oo.watson@gmail.com> writes:
+On Mon, Sep 26, 2005 at 05:43:46PM -0700, Junio C Hamano wrote:
+> Now you made me curious.
+> 
+> How many of you are working on your own Porcelains, announced or
+> unannounced?  I know about Cogito and StGIT ;-).  In a distant
+> past I have heard of something called JIT but I think it is now
+> defunct.  Matthias Urlichs said he is doing something with
+> Python.  Anybody else?
 
-> Notice that the git.git directory is truncated.  It seems the
-> intension is to truncate at the .git directory level.
+Hi Junio,
 
-c5434dead6a52a48c520dfa3d8ed24dc3673ab1a commit introduced this
-behaviour, and we kept it ever since.
+Well, I kinda work on one written in C using a libgit (using exec of git
+executable for the moment) It doesn't do that much at the moment:
+commiting, adding files, removing files.
 
-It may look a bit weird when it is applied to git.git/, but the
-intention is to shorten the log message without losing much
-information.  ".../torvalds/linux-2.6.git" is similarly
-shortened to ".../torvalds/linux-2.6".
+At some point I'ld like to have a very integrated and easy to use
+porcelain, but for now that's more a learning git by practice kind of
+project.
 
-You can see 'git log' output in the kernel repository and look
-for commit log messages of merge commits, and notice all those
-repository names with trailing ".git" stripped.
+Cheers,
+-- 
+Vincent Hanquez
