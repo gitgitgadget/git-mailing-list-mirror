@@ -1,65 +1,53 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: git cvsimport?
-Date: Wed, 28 Sep 2005 17:18:12 +0200
-Message-ID: <20050928151812.GS15165MdfPADPa@greensroom.kotnet.org>
-References: <20050928124029.1BF6D352B7B@atlas.denx.de>
-Reply-To: skimo@liacs.nl
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Use git-update-ref in scripts.
+Date: Wed, 28 Sep 2005 08:21:40 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509280819000.3308@g5.osdl.org>
+References: <Pine.LNX.4.58.0509251134480.3308@g5.osdl.org>
+ <Pine.LNX.4.58.0509251153090.3308@g5.osdl.org> <7vpsqtykor.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 28 17:22:00 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 28 17:25:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKdhJ-0001SW-5t
-	for gcvg-git@gmane.org; Wed, 28 Sep 2005 17:18:17 +0200
+	id 1EKdkn-0002XX-33
+	for gcvg-git@gmane.org; Wed, 28 Sep 2005 17:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751048AbVI1PSO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Sep 2005 11:18:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751067AbVI1PSO
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 11:18:14 -0400
-Received: from smtp13.wxs.nl ([195.121.6.27]:31200 "EHLO smtp13.wxs.nl")
-	by vger.kernel.org with ESMTP id S1751046AbVI1PSO (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2005 11:18:14 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp13.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0INJ003NK96C21@smtp13.wxs.nl> for git@vger.kernel.org; Wed,
- 28 Sep 2005 17:18:13 +0200 (CEST)
-Received: (qmail 32082 invoked by uid 500); Wed, 28 Sep 2005 15:18:12 +0000
-In-reply-to: <20050928124029.1BF6D352B7B@atlas.denx.de>
-To: Wolfgang Denk <wd@denx.de>
-Mail-followup-to: Wolfgang Denk <wd@denx.de>, git@vger.kernel.org
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1751073AbVI1PVq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Sep 2005 11:21:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbVI1PVq
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 11:21:46 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:44726 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751073AbVI1PVp (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2005 11:21:45 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8SFLf4s015334
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 28 Sep 2005 08:21:41 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8SFLea5002728;
+	Wed, 28 Sep 2005 08:21:40 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vpsqtykor.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.118 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9432>
 
-On Wed, Sep 28, 2005 at 02:40:29PM +0200, Wolfgang Denk wrote:
-> 
-> I have problems importing a CVS repository:
-> 
-> -> git cvsimport -v -d :pserver:denx@cvs.semihalf.com:/cvs -C /home/git/duts duts
-> cvs_direct initialized to CVSROOT /cvs
-> cvs rlog: Logging duts
-> cvs rlog: Logging duts/core
-> NOTICE: used alternate strip path /home/cvs/duts/core/duts
-> DONE; creating master branch
-> cp: cannot stat `/home/git/duts/.git/refs/heads/origin': No such file or directory
-> usage: git-read-tree (<sha> | -m [-u | -i] <sha1> [<sha2> [<sha3>]])
-> checkout failed: 256
-> -> git --version
-> git version 0.99.7
-> 
-> Am I doing anything wrong here?
-> 
 
-What does 
 
-cvsps -u -A --cvs-direct --root :pserver:denx@cvs.semihalf.com:/cvs duts
+On Tue, 27 Sep 2005, Junio C Hamano wrote:
+>
+> This uses the git-update-ref command in scripts for safer updates.
 
-say ?
+Looks good.
 
-skimo
+git-resolve might want to verify the old head. On the other hand, it looks 
+like it's being phased out, so maybe nobody cares?
+
+		Linus
