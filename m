@@ -1,63 +1,53 @@
-From: Robert Watson <robert.oo.watson@gmail.com>
-Subject: [PATCH] Fix git-pull output message
-Date: Wed, 28 Sep 2005 11:02:38 +0100
-Message-ID: <72499e3b05092803027175bab0@mail.gmail.com>
-Reply-To: Robert Watson <robert.oo.watson@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fix git-pull output message
+Date: Wed, 28 Sep 2005 04:00:33 -0700
+Message-ID: <7v64slxxri.fsf@assigned-by-dhcp.cox.net>
+References: <72499e3b05092803027175bab0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Sep 28 12:03:29 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 28 13:01:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKYlt-0007Ko-N6
-	for gcvg-git@gmane.org; Wed, 28 Sep 2005 12:02:42 +0200
+	id 1EKZhA-0003q2-8i
+	for gcvg-git@gmane.org; Wed, 28 Sep 2005 13:01:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208AbVI1KCj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Sep 2005 06:02:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751209AbVI1KCj
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 06:02:39 -0400
-Received: from qproxy.gmail.com ([72.14.204.204]:57310 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751208AbVI1KCi convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2005 06:02:38 -0400
-Received: by qproxy.gmail.com with SMTP id v40so315475qbe
-        for <git@vger.kernel.org>; Wed, 28 Sep 2005 03:02:38 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=feuFI/icdmEwr5+CSnLrRISXYtvTNhWu1EYHv1PIPJ00Nh+Kq9jpHKK3nZyksxC6868Y+d3mJhSHkDjmwBX5KdcVN9dhYh8BUVYfypNYuVkmP8dnB0tOeCsI7u4Ct5CpL6rvdK+dZGb95Q6sCnJ9nuORJzVwFsKcnNqkmh/z8pc=
-Received: by 10.64.241.5 with SMTP id o5mr984188qbh;
-        Wed, 28 Sep 2005 03:02:38 -0700 (PDT)
-Received: by 10.64.203.14 with HTTP; Wed, 28 Sep 2005 03:02:38 -0700 (PDT)
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
+	id S1751215AbVI1LAl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Sep 2005 07:00:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbVI1LAl
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 07:00:41 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:62626 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751215AbVI1LAk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2005 07:00:40 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050928110033.NVRO16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 28 Sep 2005 07:00:33 -0400
+To: Robert Watson <robert.oo.watson@gmail.com>
+In-Reply-To: <72499e3b05092803027175bab0@mail.gmail.com> (Robert Watson's
+	message of "Wed, 28 Sep 2005 11:02:38 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9425>
 
-(git)$ git-pull
-Fetching refs/heads/master from
-http://www.kernel.org/pub/scm/git/git.git using http
-* committish: 3cc35e29ec252d0dca1139106fbaa70cb9ad6ef1
-  branch 'master' of http://www.kernel.org/pub/scm/git/git
-* refs/heads/origin: same as branch 'master' of
-http://www.kernel.org/pub/scm/git/git
-Already up-to-date. Yeeah!
+Robert Watson <robert.oo.watson@gmail.com> writes:
 
-Notice that the git.git directory is truncated.  It seems the
-intension is to truncate at the .git
-directory level.  The following patch fixes it.
+> Notice that the git.git directory is truncated.  It seems the
+> intension is to truncate at the .git directory level.
 
-diff --git a/git-fetch.sh b/git-fetch.sh
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -70,7 +70,7 @@ append_fetch_head () {
-     *)
-        note_="$remote_name of " ;;
-     esac
--    remote_1_=$(expr "$remote_" : '\(.*\)\.git/*$') &&
-+    remote_1_=$(expr "$remote_" : '\(.*/\)\.git/*$') &&
-        remote_="$remote_1_"
-     note_="$note_$remote_"
+c5434dead6a52a48c520dfa3d8ed24dc3673ab1a commit introduced this
+behaviour, and we kept it ever since.
+
+It may look a bit weird when it is applied to git.git/, but the
+intention is to shorten the log message without losing much
+information.  ".../torvalds/linux-2.6.git" is similarly
+shortened to ".../torvalds/linux-2.6".
+
+You can see 'git log' output in the kernel repository and look
+for commit log messages of merge commits, and notice all those
+repository names with trailing ".git" stripped.
