@@ -1,69 +1,109 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: git cvsimport?
-Date: Wed, 28 Sep 2005 14:40:29 +0200
-Message-ID: <20050928124029.1BF6D352B7B@atlas.denx.de>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: [PATCH] Fix git-add argument parsing
+Date: Wed, 28 Sep 2005 17:27:53 +0300
+Message-ID: <20050928172753.0e883738.tihirvon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Sep 28 14:43:07 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 28 16:31:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKbFJ-0004Qx-Mi
-	for gcvg-git@gmane.org; Wed, 28 Sep 2005 14:41:14 +0200
+	id 1EKcun-0002cQ-PO
+	for gcvg-git@gmane.org; Wed, 28 Sep 2005 16:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905AbVI1Mk5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Sep 2005 08:40:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbVI1Mk5
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 08:40:57 -0400
-Received: from mailout06.sul.t-online.com ([194.25.134.19]:46794 "EHLO
-	mailout06.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1750905AbVI1Mk5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2005 08:40:57 -0400
-Received: from fwd28.aul.t-online.de 
-	by mailout06.sul.t-online.com with smtp 
-	id 1EKbEx-0007jR-03; Wed, 28 Sep 2005 14:40:51 +0200
-Received: from denx.de (Tt4DxOZFreyfMXuZ5BVDYCZ36dh6tH5WRYObcdOtDdl+AivREpsncq@[84.150.99.17]) by fwd28.sul.t-online.de
-	with esmtp id 1EKbEi-0zSQi00; Wed, 28 Sep 2005 14:40:36 +0200
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by denx.de (Postfix) with ESMTP id 431A642B5F
-	for <git@vger.kernel.org>; Wed, 28 Sep 2005 14:40:35 +0200 (MEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id 1BF6D352B7B
-	for <git@vger.kernel.org>; Wed, 28 Sep 2005 14:40:29 +0200 (MEST)
-To: git@vger.kernel.org
-X-ID: Tt4DxOZFreyfMXuZ5BVDYCZ36dh6tH5WRYObcdOtDdl+AivREpsncq@t-dialin.net
-X-TOI-MSGID: e54fd114-6e3e-4490-9f78-bc334f24ee02
+	id S1751318AbVI1O2H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Sep 2005 10:28:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751325AbVI1O2G
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 10:28:06 -0400
+Received: from marski.suomi.net ([212.50.131.142]:63430 "EHLO marski.suomi.net")
+	by vger.kernel.org with ESMTP id S1751318AbVI1O2F (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2005 10:28:05 -0400
+Received: from spam1.suomi.net (spam1.suomi.net [212.50.131.165])
+ by marski.suomi.net (Sun Java System Messaging Server 6.2 (built Dec  2 2004))
+ with ESMTP id <0INJ004536UNJ260@marski.suomi.net> for git@vger.kernel.org;
+ Wed, 28 Sep 2005 17:27:59 +0300 (EEST)
+Received: from garlic.home.net (addr-213-216-219-96.suomi.net [213.216.219.96])
+	by spam1.suomi.net (Postfix) with SMTP id 541CE1AA2B4; Wed,
+ 28 Sep 2005 17:27:54 +0300 (EEST)
+To: junkio@cox.net
+X-Mailer: Sylpheed version 2.0.1 (GTK+ 2.8.3; i686-pc-linux-gnu)
+X-OPOY-MailScanner-Information: Please contact the OPOY for more information
+X-OPOY-MailScanner: Not virus scanned: please contact OPOY for details
+X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (score=-2.553,	required 5,
+ autolearn=not spam, AWL 2.35, BAYES_00 -4.90)
+X-MailScanner-From: tihirvon@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9429>
 
+Complain if no arguments given instead of adding all files
+to the index.
 
-I have problems importing a CVS repository:
+Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
 
--> git cvsimport -v -d :pserver:denx@cvs.semihalf.com:/cvs -C /home/git/duts duts
-cvs_direct initialized to CVSROOT /cvs
-cvs rlog: Logging duts
-cvs rlog: Logging duts/core
-NOTICE: used alternate strip path /home/cvs/duts/core/duts
-DONE; creating master branch
-cp: cannot stat `/home/git/duts/.git/refs/heads/origin': No such file or directory
-usage: git-read-tree (<sha> | -m [-u | -i] <sha1> [<sha2> [<sha3>]])
-checkout failed: 256
--> git --version
-git version 0.99.7
+---
 
-Am I doing anything wrong here?
+ git-add.sh |   44 ++++++++++++++++++++++++++++++--------------
+ 1 files changed, 30 insertions(+), 14 deletions(-)
 
-Best regards,
-
-Wolfgang Denk
-
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-Mandrell: "You know what I think?"
-Doctor:   "Ah, ah that's a catch question. With a brain your size you
-          don't think, right?"
-                - Dr. Who
+60d2803555831a9a9bfa2d97cec5ab2fbed1fb2c
+diff --git a/git-add.sh b/git-add.sh
+--- a/git-add.sh
++++ b/git-add.sh
+@@ -1,23 +1,39 @@
+ #!/bin/sh
+ 
++usage()
++{
++	echo "usage: git add [-n] [-v] <file>..."
++	exit 1
++}
++
+ show_only=
+ verbose=
+-while : ; do
+-  case "$1" in
+-    -n)
+-	show_only=true
+-	verbose=true
+-	;;
+-    -v)
+-	verbose=true
+-	;;
+-    *)
+-	break
+-	;;
+-  esac
+-  shift
++while test $# -gt 0
++do
++	case "$1" in
++	-n)
++		show_only=true
++		verbose=true
++		;;
++	-v)
++		verbose=true
++		;;
++	--)
++		shift
++		break
++		;;
++	-*)
++		usage
++		;;
++	*)
++		break
++		;;
++	esac
++	shift
+ done
+ 
++test $# -eq 0 && usage
++
+ GIT_DIR=$(git-rev-parse --git-dir) || exit
+ global_exclude=
+ if [ -f "$GIT_DIR/info/exclude" ]; then
