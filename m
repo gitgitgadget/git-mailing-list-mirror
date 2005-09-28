@@ -1,71 +1,59 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: Re: git cvsimport?
-Date: Wed, 28 Sep 2005 18:35:08 +0200
-Message-ID: <20050928163508.3CDB4352B7B@atlas.denx.de>
-References: <20050928160427.GU15165MdfPADPa@greensroom.kotnet.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Use git-update-ref in scripts.
+Date: Wed, 28 Sep 2005 09:56:31 -0700
+Message-ID: <7vek79w2ps.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0509251134480.3308@g5.osdl.org>
+	<Pine.LNX.4.58.0509251153090.3308@g5.osdl.org>
+	<7vpsqtykor.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509280819000.3308@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 28 18:39:51 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 28 18:57:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKeuG-0007th-Cr
-	for gcvg-git@gmane.org; Wed, 28 Sep 2005 18:35:44 +0200
+	id 1EKfES-0005LD-Ng
+	for gcvg-git@gmane.org; Wed, 28 Sep 2005 18:56:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400AbVI1Qfk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Sep 2005 12:35:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751407AbVI1Qfk
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 12:35:40 -0400
-Received: from mailout01.sul.t-online.com ([194.25.134.80]:21381 "EHLO
-	mailout01.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1751400AbVI1Qfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2005 12:35:39 -0400
-Received: from fwd29.aul.t-online.de 
-	by mailout01.sul.t-online.com with smtp 
-	id 1EKeu4-0002Db-04; Wed, 28 Sep 2005 18:35:32 +0200
-Received: from denx.de (rXRIA2ZpoeYu28+4Dz4QLxkyiIIPdby5lx7xe-U8amykCe6rybA1UU@[84.150.99.17]) by fwd29.sul.t-online.de
-	with esmtp id 1EKetn-0M58Vc0; Wed, 28 Sep 2005 18:35:15 +0200
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by denx.de (Postfix) with ESMTP
-	id 52DA042F90; Wed, 28 Sep 2005 18:35:14 +0200 (MEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id 3CDB4352B7B;
-	Wed, 28 Sep 2005 18:35:08 +0200 (MEST)
-To: skimo@liacs.nl
-In-reply-to: Your message of "Wed, 28 Sep 2005 18:04:27 +0200."
-             <20050928160427.GU15165MdfPADPa@greensroom.kotnet.org> 
-X-ID: rXRIA2ZpoeYu28+4Dz4QLxkyiIIPdby5lx7xe-U8amykCe6rybA1UU@t-dialin.net
-X-TOI-MSGID: 8df60755-47cc-4e3a-a2ca-0a4c581ebb62
+	id S1751108AbVI1Q4d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Sep 2005 12:56:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751112AbVI1Q4d
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 12:56:33 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:37041 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751108AbVI1Q4c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2005 12:56:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050928165629.YOGX4169.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 28 Sep 2005 12:56:29 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9438>
 
-In message <20050928160427.GU15165MdfPADPa@greensroom.kotnet.org> you wrote:
->
-> > -> cvsps -u -A --cvs-direct --root :pserver:denx@cvs.semihalf.com:/cvs duts
-> > connect error: Network is unreachable
-> > cvs rlog: cannot find module `duts' - ignored
-> 
-> Does leaving out the --cvs-direct have any effect ?
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Yes, the "Network is unreachable" disappears:
+> git-resolve might want to verify the old head. On the other hand, it looks 
+> like it's being phased out, so maybe nobody cares?
 
--> cvsps -u -A --root :pserver:denx@cvs.semihalf.com:/cvs duts
-cvs rlog: cannot find module `duts' - ignored
+It was my mistake -- git-merge does it, and I should do the
+same in git-resolve.  Thanks for pointing it out.
 
-This is cvsps version 2.1.
+Have you had a chance to look at the git-merge change to remove
+the stupid clean-tree requirements?  I have been planning to
+inflict the 'use git-merge instead of git-resolve' change on you
+sometime soonish (like today ;-).  Having said that, I myself
+would vote against phasing out 'git-resolve' -- being able to
+say 'git resolve master hold fast' to fast forward the master
+head to topic branch head of 'hold' (my topic branches are often
+rebased to allow this) is quite useful.
 
-Best regards,
+I have one unrelated request.
 
-Wolfgang Denk
-
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-Your csh still thinks true is false. Write to your vendor  today  and
-tell them that next year Configure ought to "rm /bin/csh" unless they
-fix  their blasted shell. :-)
-                 - Larry Wall in Configure from the perl distribution
+Could I have a copy of .git/{branches,remotes,refs}/* from the
+primary repository you do your kernel work please?
