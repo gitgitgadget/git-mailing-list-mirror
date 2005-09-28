@@ -1,106 +1,69 @@
-From: Peter Hagervall <hager@cs.umu.se>
-Subject: [PATCH] Make some needlessly global stuff static
-Date: Wed, 28 Sep 2005 14:04:54 +0200
-Message-ID: <20050928120454.GB3906@peppar.cs.umu.se>
+From: Wolfgang Denk <wd@denx.de>
+Subject: git cvsimport?
+Date: Wed, 28 Sep 2005 14:40:29 +0200
+Message-ID: <20050928124029.1BF6D352B7B@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 28 14:06:07 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Sep 28 14:43:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKagb-0002gf-Aa
-	for gcvg-git@gmane.org; Wed, 28 Sep 2005 14:05:21 +0200
+	id 1EKbFJ-0004Qx-Mi
+	for gcvg-git@gmane.org; Wed, 28 Sep 2005 14:41:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750887AbVI1MFO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Sep 2005 08:05:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbVI1MFO
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 08:05:14 -0400
-Received: from mail.cs.umu.se ([130.239.40.25]:38125 "EHLO mail.cs.umu.se")
-	by vger.kernel.org with ESMTP id S1750887AbVI1MFM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2005 08:05:12 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by amavisd-new (Postfix) with ESMTP id D7FE52E04;
-	Wed, 28 Sep 2005 14:05:11 +0200 (MEST)
-Received: from mail.cs.umu.se ([127.0.0.1])
- by localhost (mimmi.cs.umu.se [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 06926-01-10; Wed, 28 Sep 2005 14:04:54 +0200 (MEST)
-Received: from peppar.cs.umu.se (peppar.cs.umu.se [130.239.40.13])
-	by mail.cs.umu.se (Postfix) with ESMTP id AE79D2DAB;
-	Wed, 28 Sep 2005 14:04:54 +0200 (MEST)
-Received: by peppar.cs.umu.se (Postfix, from userid 12006)
-	id 8FB5B2E2E; Wed, 28 Sep 2005 14:04:54 +0200 (MEST)
-To: junkio@cox.net
-Content-Disposition: inline
-User-Agent: Mutt/1.5.10i
-X-Virus-Scanned: amavisd-new at cs.umu.se
+	id S1750905AbVI1Mk5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Sep 2005 08:40:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbVI1Mk5
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 08:40:57 -0400
+Received: from mailout06.sul.t-online.com ([194.25.134.19]:46794 "EHLO
+	mailout06.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1750905AbVI1Mk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2005 08:40:57 -0400
+Received: from fwd28.aul.t-online.de 
+	by mailout06.sul.t-online.com with smtp 
+	id 1EKbEx-0007jR-03; Wed, 28 Sep 2005 14:40:51 +0200
+Received: from denx.de (Tt4DxOZFreyfMXuZ5BVDYCZ36dh6tH5WRYObcdOtDdl+AivREpsncq@[84.150.99.17]) by fwd28.sul.t-online.de
+	with esmtp id 1EKbEi-0zSQi00; Wed, 28 Sep 2005 14:40:36 +0200
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by denx.de (Postfix) with ESMTP id 431A642B5F
+	for <git@vger.kernel.org>; Wed, 28 Sep 2005 14:40:35 +0200 (MEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id 1BF6D352B7B
+	for <git@vger.kernel.org>; Wed, 28 Sep 2005 14:40:29 +0200 (MEST)
+To: git@vger.kernel.org
+X-ID: Tt4DxOZFreyfMXuZ5BVDYCZ36dh6tH5WRYObcdOtDdl+AivREpsncq@t-dialin.net
+X-TOI-MSGID: e54fd114-6e3e-4490-9f78-bc334f24ee02
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9427>
-
-Insert 'static' where appropriate.
-
-Signed-off-by: Peter Hagervall <hager@cs.umu.se>
----
-
- fsck-objects.c |    4 ++--
- http-fetch.c   |    4 ++--
- update-ref.c   |    2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9428>
 
 
-diff --git a/fsck-objects.c b/fsck-objects.c
---- a/fsck-objects.c
-+++ b/fsck-objects.c
-@@ -30,7 +30,7 @@ static void objreport(struct object *obj
- 	fputs("\n", stderr);
- }
- 
--int objerror(struct object *obj, const char *err, ...)
-+static int objerror(struct object *obj, const char *err, ...)
- {
- 	va_list params;
- 	va_start(params, err);
-@@ -39,7 +39,7 @@ int objerror(struct object *obj, const c
- 	return -1;
- }
- 
--int objwarning(struct object *obj, const char *err, ...)
-+static int objwarning(struct object *obj, const char *err, ...)
- {
- 	va_list params;
- 	va_start(params, err);
-diff --git a/http-fetch.c b/http-fetch.c
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -26,7 +26,7 @@ struct alt_base
- 	struct alt_base *next;
- };
- 
--struct alt_base *alt = NULL;
-+static struct alt_base *alt = NULL;
- 
- static SHA_CTX c;
- static z_stream stream;
-@@ -345,7 +345,7 @@ static int fetch_pack(struct alt_base *r
- 	return 0;
- }
- 
--int fetch_object(struct alt_base *repo, unsigned char *sha1)
-+static int fetch_object(struct alt_base *repo, unsigned char *sha1)
- {
- 	char *hex = sha1_to_hex(sha1);
- 	char *filename = sha1_file_name(sha1);
-diff --git a/update-ref.c b/update-ref.c
---- a/update-ref.c
-+++ b/update-ref.c
-@@ -6,7 +6,7 @@ static const char git_update_ref_usage[]
- 
- #define MAXDEPTH 5
- 
--const char *resolve_ref(const char *path, unsigned char *sha1)
-+static const char *resolve_ref(const char *path, unsigned char *sha1)
- {
- 	int depth = MAXDEPTH, len;
- 	char buffer[256];
+I have problems importing a CVS repository:
+
+-> git cvsimport -v -d :pserver:denx@cvs.semihalf.com:/cvs -C /home/git/duts duts
+cvs_direct initialized to CVSROOT /cvs
+cvs rlog: Logging duts
+cvs rlog: Logging duts/core
+NOTICE: used alternate strip path /home/cvs/duts/core/duts
+DONE; creating master branch
+cp: cannot stat `/home/git/duts/.git/refs/heads/origin': No such file or directory
+usage: git-read-tree (<sha> | -m [-u | -i] <sha1> [<sha2> [<sha3>]])
+checkout failed: 256
+-> git --version
+git version 0.99.7
+
+Am I doing anything wrong here?
+
+Best regards,
+
+Wolfgang Denk
+
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+Mandrell: "You know what I think?"
+Doctor:   "Ah, ah that's a catch question. With a brain your size you
+          don't think, right?"
+                - Dr. Who
