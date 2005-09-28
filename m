@@ -1,87 +1,65 @@
-From: Chuck Lever <cel@citi.umich.edu>
-Subject: index file screwed up
-Date: Wed, 28 Sep 2005 11:06:24 -0400
-Organization: Network Appliance, Inc.
-Message-ID: <433AB170.90608@citi.umich.edu>
-Reply-To: cel@citi.umich.edu
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: git cvsimport?
+Date: Wed, 28 Sep 2005 17:18:12 +0200
+Message-ID: <20050928151812.GS15165MdfPADPa@greensroom.kotnet.org>
+References: <20050928124029.1BF6D352B7B@atlas.denx.de>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------080307030805010608090200"
-X-From: git-owner@vger.kernel.org Wed Sep 28 17:08:43 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 28 17:22:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKdVs-0006VL-Ks
-	for gcvg-git@gmane.org; Wed, 28 Sep 2005 17:06:29 +0200
+	id 1EKdhJ-0001SW-5t
+	for gcvg-git@gmane.org; Wed, 28 Sep 2005 17:18:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751045AbVI1PGZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Sep 2005 11:06:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbVI1PGZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 11:06:25 -0400
-Received: from citi.umich.edu ([141.211.133.111]:19463 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S1751041AbVI1PGZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2005 11:06:25 -0400
-Received: from [141.211.133.33] (dexter.citi.umich.edu [141.211.133.33])
-	by citi.umich.edu (Postfix) with ESMTP id 7C96E1BBD4
-	for <git@vger.kernel.org>; Wed, 28 Sep 2005 11:06:24 -0400 (EDT)
-User-Agent: Mozilla Thunderbird 1.0.6-1.4.1 (X11/20050719)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
+	id S1751048AbVI1PSO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Sep 2005 11:18:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751067AbVI1PSO
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 11:18:14 -0400
+Received: from smtp13.wxs.nl ([195.121.6.27]:31200 "EHLO smtp13.wxs.nl")
+	by vger.kernel.org with ESMTP id S1751046AbVI1PSO (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2005 11:18:14 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp13.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0INJ003NK96C21@smtp13.wxs.nl> for git@vger.kernel.org; Wed,
+ 28 Sep 2005 17:18:13 +0200 (CEST)
+Received: (qmail 32082 invoked by uid 500); Wed, 28 Sep 2005 15:18:12 +0000
+In-reply-to: <20050928124029.1BF6D352B7B@atlas.denx.de>
+To: Wolfgang Denk <wd@denx.de>
+Mail-followup-to: Wolfgang Denk <wd@denx.de>, git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9431>
 
-This is a multi-part message in MIME format.
---------------080307030805010608090200
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On Wed, Sep 28, 2005 at 02:40:29PM +0200, Wolfgang Denk wrote:
+> 
+> I have problems importing a CVS repository:
+> 
+> -> git cvsimport -v -d :pserver:denx@cvs.semihalf.com:/cvs -C /home/git/duts duts
+> cvs_direct initialized to CVSROOT /cvs
+> cvs rlog: Logging duts
+> cvs rlog: Logging duts/core
+> NOTICE: used alternate strip path /home/cvs/duts/core/duts
+> DONE; creating master branch
+> cp: cannot stat `/home/git/duts/.git/refs/heads/origin': No such file or directory
+> usage: git-read-tree (<sha> | -m [-u | -i] <sha1> [<sha2> [<sha3>]])
+> checkout failed: 256
+> -> git --version
+> git version 0.99.7
+> 
+> Am I doing anything wrong here?
+> 
 
-i was working with a version of git that had a bug in add_cache_entry() 
-that introduced a sorting error in my index.
+What does 
 
-[cel@dexter main]$ stg refresh -f
-Refreshing patch "git-switch-branch"...AUTHORS: unmerged 
-(098c1d3e9fe5c39b859ccff6c7d36d2c193d1b62)
-AUTHORS: unmerged (098c1d3e9fe5c39b859ccff6c7d36d2c193d1b62)
-COPYING: unmerged (d60c31a97a544b53039088d14fe9114583c0efc3)
-COPYING: unmerged (d60c31a97a544b53039088d14fe9114583c0efc3)
-INSTALL: unmerged (8d2bebd9d1824f1b7af5cfe6fbd11f9cbfde6d74)
-INSTALL: unmerged (8d2bebd9d1824f1b7af5cfe6fbd11f9cbfde6d74)
-MANIFEST.in: unmerged (581d0be2a5fb3569b06681b7d559f1279aa4104b)
-MANIFEST.in: unmerged (581d0be2a5fb3569b06681b7d559f1279aa4104b)
-README: unmerged (184ded8e08cb92a14b79c79f9919469ba352ab70)
-README: unmerged (184ded8e08cb92a14b79c79f9919469ba352ab70)
-...
-fatal: git-write-tree: verify_merged: not able to write tree
-stg refresh: git-write-tree failed
+cvsps -u -A --cvs-direct --root :pserver:denx@cvs.semihalf.com:/cvs duts
 
-[cel@dexter main]$
+say ?
 
-
-how do i recover?
-
---------------080307030805010608090200
-Content-Type: text/x-vcard; charset=utf-8;
- name="cel.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="cel.vcf"
-
-begin:vcard
-fn:Chuck Lever
-n:Lever;Charles
-org:Network Appliance, Incorporated;Linux NFS Client Development
-adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
-email;internet:cel@citi.umich.edu
-title:Member of Technical Staff
-tel;work:+1 734 763 4415
-tel;fax:+1 734 763 4434
-tel;home:+1 734 668 1089
-x-mozilla-html:FALSE
-url:http://www.monkey.org/~cel/
-version:2.1
-end:vcard
-
-
---------------080307030805010608090200--
+skimo
