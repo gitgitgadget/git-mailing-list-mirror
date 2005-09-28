@@ -1,95 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: index file screwed up
-Date: Wed, 28 Sep 2005 08:37:20 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509280831130.3308@g5.osdl.org>
-References: <433AB170.90608@citi.umich.edu>
+From: Wolfgang Denk <wd@denx.de>
+Subject: Re: git cvsimport?
+Date: Wed, 28 Sep 2005 17:49:55 +0200
+Message-ID: <20050928154955.EB723353BE5@atlas.denx.de>
+References: <20050928151812.GS15165MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 28 17:39:21 2005
+X-From: git-owner@vger.kernel.org Wed Sep 28 17:50:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKdzr-0007aU-H9
-	for gcvg-git@gmane.org; Wed, 28 Sep 2005 17:37:27 +0200
+	id 1EKeCQ-0002qA-JJ
+	for gcvg-git@gmane.org; Wed, 28 Sep 2005 17:50:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750977AbVI1PhY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Sep 2005 11:37:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751298AbVI1PhY
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 11:37:24 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:33466 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750977AbVI1PhY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2005 11:37:24 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8SFbL4s016112
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 28 Sep 2005 08:37:22 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8SFbKRH003360;
-	Wed, 28 Sep 2005 08:37:21 -0700
-To: Chuck Lever <cel@citi.umich.edu>
-In-Reply-To: <433AB170.90608@citi.umich.edu>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.118 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751015AbVI1PuX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Sep 2005 11:50:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbVI1PuX
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 11:50:23 -0400
+Received: from mailout06.sul.t-online.com ([194.25.134.19]:37331 "EHLO
+	mailout06.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1751010AbVI1PuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2005 11:50:23 -0400
+Received: from fwd26.aul.t-online.de 
+	by mailout06.sul.t-online.com with smtp 
+	id 1EKeCE-0001D0-03; Wed, 28 Sep 2005 17:50:14 +0200
+Received: from denx.de (V+j34MZ6oez+abJN-119Q-ANEv24OwKzj5w9jQI9WVb6eTfEQD2Ig2@[84.150.99.17]) by fwd26.sul.t-online.de
+	with esmtp id 1EKeC3-0yHHhQ0; Wed, 28 Sep 2005 17:50:03 +0200
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by denx.de (Postfix) with ESMTP
+	id 1EDCF42B8F; Wed, 28 Sep 2005 17:50:01 +0200 (MEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id EB723353BE5;
+	Wed, 28 Sep 2005 17:49:55 +0200 (MEST)
+To: skimo@liacs.nl
+In-reply-to: Your message of "Wed, 28 Sep 2005 17:18:12 +0200."
+             <20050928151812.GS15165MdfPADPa@greensroom.kotnet.org> 
+X-ID: V+j34MZ6oez+abJN-119Q-ANEv24OwKzj5w9jQI9WVb6eTfEQD2Ig2@t-dialin.net
+X-TOI-MSGID: 895e4f1a-4466-48bc-9796-1c4a3c24b449
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9435>
 
-
-
-On Wed, 28 Sep 2005, Chuck Lever wrote:
+In message <20050928151812.GS15165MdfPADPa@greensroom.kotnet.org> you wrote:
 >
-> i was working with a version of git that had a bug in add_cache_entry() 
-> that introduced a sorting error in my index.
-> 
-> [cel@dexter main]$ stg refresh -f
-> Refreshing patch "git-switch-branch"...AUTHORS: unmerged 
-> (098c1d3e9fe5c39b859ccff6c7d36d2c193d1b62)
-> AUTHORS: unmerged (098c1d3e9fe5c39b859ccff6c7d36d2c193d1b62)
-> COPYING: unmerged (d60c31a97a544b53039088d14fe9114583c0efc3)
-> COPYING: unmerged (d60c31a97a544b53039088d14fe9114583c0efc3)
-> INSTALL: unmerged (8d2bebd9d1824f1b7af5cfe6fbd11f9cbfde6d74)
-> INSTALL: unmerged (8d2bebd9d1824f1b7af5cfe6fbd11f9cbfde6d74)
-> MANIFEST.in: unmerged (581d0be2a5fb3569b06681b7d559f1279aa4104b)
-> MANIFEST.in: unmerged (581d0be2a5fb3569b06681b7d559f1279aa4104b)
-> README: unmerged (184ded8e08cb92a14b79c79f9919469ba352ab70)
-> README: unmerged (184ded8e08cb92a14b79c79f9919469ba352ab70)
-> ...
-> fatal: git-write-tree: verify_merged: not able to write tree
-> stg refresh: git-write-tree failed
-> 
-> [cel@dexter main]$
-> 
-> how do i recover?
+> > I have problems importing a CVS repository:
+...
+> What does 
+> cvsps -u -A --cvs-direct --root :pserver:denx@cvs.semihalf.com:/cvs duts
+> say ?
 
-You don't. Your index is toast.
+-> cvsps -u -A --cvs-direct --root :pserver:denx@cvs.semihalf.com:/cvs duts
+connect error: Network is unreachable
+cvs rlog: cannot find module `duts' - ignored
 
-Let's hope you didn't write any unsorted trees with _earlier_ (non-merge) 
-commits.
 
-Do this:
+But "cvs -d :pserver:denx@cvs.semihalf.com:/cvs co duts" works fine...
 
- - build a new and trustworthy git somewhere else (from a tar-file if 
-   nothing else). Install it.
+Best regards,
 
- - get rid of the index and any half-way data in your working tree (you 
-   might want to save any diffs with "git diff HEAD" first, but I suspect  
-   you don't really care, since the changes came from some stg stuff, so
-   you can always re-create them, no?)
+Wolfgang Denk
 
-	git reset --hard HEAD
-
- - run fsck, to verify that all your trees are sorted (if they aren't, you 
-   be screwed, but "git-convert-objects" should be able to fix it for 
-   you - possibly with some additional logic).
-
-	git-fsck-objects --full
-
- - restart and try again.
-
-That _should_ get you running again.
-
-		Linus
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+I have a very small mind and must live with it.    -- Edsger Dijkstra
