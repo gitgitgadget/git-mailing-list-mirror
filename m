@@ -1,68 +1,56 @@
-From: Wolfgang Denk <wd@denx.de>
+From: Sven Verdoolaege <skimo@kotnet.org>
 Subject: Re: git cvsimport?
-Date: Wed, 28 Sep 2005 17:49:55 +0200
-Message-ID: <20050928154955.EB723353BE5@atlas.denx.de>
+Date: Wed, 28 Sep 2005 18:04:27 +0200
+Message-ID: <20050928160427.GU15165MdfPADPa@greensroom.kotnet.org>
 References: <20050928151812.GS15165MdfPADPa@greensroom.kotnet.org>
+ <20050928154955.EB723353BE5@atlas.denx.de>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 28 17:50:51 2005
+X-From: git-owner@vger.kernel.org Wed Sep 28 18:05:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKeCQ-0002qA-JJ
-	for gcvg-git@gmane.org; Wed, 28 Sep 2005 17:50:26 +0200
+	id 1EKeQR-0007Di-Ms
+	for gcvg-git@gmane.org; Wed, 28 Sep 2005 18:04:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751015AbVI1PuX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Sep 2005 11:50:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbVI1PuX
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 11:50:23 -0400
-Received: from mailout06.sul.t-online.com ([194.25.134.19]:37331 "EHLO
-	mailout06.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1751010AbVI1PuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2005 11:50:23 -0400
-Received: from fwd26.aul.t-online.de 
-	by mailout06.sul.t-online.com with smtp 
-	id 1EKeCE-0001D0-03; Wed, 28 Sep 2005 17:50:14 +0200
-Received: from denx.de (V+j34MZ6oez+abJN-119Q-ANEv24OwKzj5w9jQI9WVb6eTfEQD2Ig2@[84.150.99.17]) by fwd26.sul.t-online.de
-	with esmtp id 1EKeC3-0yHHhQ0; Wed, 28 Sep 2005 17:50:03 +0200
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by denx.de (Postfix) with ESMTP
-	id 1EDCF42B8F; Wed, 28 Sep 2005 17:50:01 +0200 (MEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id EB723353BE5;
-	Wed, 28 Sep 2005 17:49:55 +0200 (MEST)
-To: skimo@liacs.nl
-In-reply-to: Your message of "Wed, 28 Sep 2005 17:18:12 +0200."
-             <20050928151812.GS15165MdfPADPa@greensroom.kotnet.org> 
-X-ID: V+j34MZ6oez+abJN-119Q-ANEv24OwKzj5w9jQI9WVb6eTfEQD2Ig2@t-dialin.net
-X-TOI-MSGID: 895e4f1a-4466-48bc-9796-1c4a3c24b449
+	id S1751049AbVI1QEb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Sep 2005 12:04:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751083AbVI1QEb
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 12:04:31 -0400
+Received: from smtp16.wxs.nl ([195.121.6.39]:39110 "EHLO smtp16.wxs.nl")
+	by vger.kernel.org with ESMTP id S1751049AbVI1QEb (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Sep 2005 12:04:31 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp16.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0INJ00FG5BBFDR@smtp16.wxs.nl> for git@vger.kernel.org; Wed,
+ 28 Sep 2005 18:04:27 +0200 (CEST)
+Received: (qmail 32354 invoked by uid 500); Wed, 28 Sep 2005 16:04:27 +0000
+In-reply-to: <20050928154955.EB723353BE5@atlas.denx.de>
+To: Wolfgang Denk <wd@denx.de>
+Mail-followup-to: Wolfgang Denk <wd@denx.de>, git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9436>
 
-In message <20050928151812.GS15165MdfPADPa@greensroom.kotnet.org> you wrote:
->
-> > I have problems importing a CVS repository:
-...
-> What does 
-> cvsps -u -A --cvs-direct --root :pserver:denx@cvs.semihalf.com:/cvs duts
-> say ?
+On Wed, Sep 28, 2005 at 05:49:55PM +0200, Wolfgang Denk wrote:
+> In message <20050928151812.GS15165MdfPADPa@greensroom.kotnet.org> you wrote:
+> >
+> > > I have problems importing a CVS repository:
+> ...
+> > What does 
+> > cvsps -u -A --cvs-direct --root :pserver:denx@cvs.semihalf.com:/cvs duts
+> > say ?
+> 
+> -> cvsps -u -A --cvs-direct --root :pserver:denx@cvs.semihalf.com:/cvs duts
+> connect error: Network is unreachable
+> cvs rlog: cannot find module `duts' - ignored
 
--> cvsps -u -A --cvs-direct --root :pserver:denx@cvs.semihalf.com:/cvs duts
-connect error: Network is unreachable
-cvs rlog: cannot find module `duts' - ignored
+Does leaving out the --cvs-direct have any effect ?
 
-
-But "cvs -d :pserver:denx@cvs.semihalf.com:/cvs co duts" works fine...
-
-Best regards,
-
-Wolfgang Denk
-
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-I have a very small mind and must live with it.    -- Edsger Dijkstra
+skimo
