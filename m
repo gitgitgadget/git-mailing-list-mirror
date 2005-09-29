@@ -1,46 +1,49 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] fetch-pack should not ask for a ref which is already there
-Date: Thu, 29 Sep 2005 00:22:51 -0700
-Message-ID: <7vll1gl4ms.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0509290149230.19126@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Kevin Leung <hysoka@gmail.com>
+Subject: Re: Edit log message after commit
+Date: Thu, 29 Sep 2005 15:45:49 +0800
+Message-ID: <dhg5vl$9ac$1@sea.gmane.org>
+References: <dhfjcu$36f$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 29 09:25:11 2005
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Sep 29 09:48:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKslH-0002Fy-NA
-	for gcvg-git@gmane.org; Thu, 29 Sep 2005 09:23:24 +0200
+	id 1EKt8K-00082n-9z
+	for gcvg-git@gmane.org; Thu, 29 Sep 2005 09:47:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932143AbVI2HWy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Sep 2005 03:22:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932144AbVI2HWy
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 03:22:54 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:22170 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932143AbVI2HWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2005 03:22:53 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050929072251.VSVF9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 29 Sep 2005 03:22:51 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0509290149230.19126@wgmdd8.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 29 Sep 2005 01:49:47 +0200
-	(CEST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932097AbVI2HrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Sep 2005 03:47:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932188AbVI2HrI
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 03:47:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:29595 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932097AbVI2HrH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2005 03:47:07 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EKt6s-0007kn-2Y
+	for git@vger.kernel.org; Thu, 29 Sep 2005 09:45:42 +0200
+Received: from cm218-255-247-62.hkcable.com.hk ([218.255.247.62])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Sep 2005 09:45:42 +0200
+Received: from hysoka by cm218-255-247-62.hkcable.com.hk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Sep 2005 09:45:42 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm218-255-247-62.hkcable.com.hk
+User-Agent: Mozilla Thunderbird 1.0.6 (Windows/20050716)
+X-Accept-Language: en-us, en
+In-Reply-To: <dhfjcu$36f$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9474>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Thank you all of you. I was able to redo the commit.
 
-> With this patch, instead of blindly asking for every remote ref, fetch-pack
-> first looks in the local repository if that ref is already there.
+But as Tony has pointed out. I would have needed to redo all the subsequent commits if I was to change non-HEAD commit message. What is the proper way of doing that? Is it the same as Documentation/howto/revert-branch-rebase.txt ?
 
-This patch breaks things.  git-fetch-pack is supposed to report
-the resulting SHA1 and refs on its standard output.  If you are
-up to date with this patch you would lose that.
+One more question is that, how to use the git commit --reedit-message flag? According to Documentation/howto/rebase-and-edit.txt, I guess the meaning is to re-apply one commit to current HEAD?
