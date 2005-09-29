@@ -1,78 +1,62 @@
-From: Dave Jones <davej@redhat.com>
+From: Jeff Garzik <jgarzik@pobox.com>
 Subject: Re: [howto] Kernel hacker's guide to git, updated
-Date: Thu, 29 Sep 2005 16:11:27 -0400
-Message-ID: <20050929201127.GB31516@redhat.com>
-References: <433BC9E9.6050907@pobox.com> <20050929200252.GA31516@redhat.com> <Pine.LNX.4.60.0509292106080.17860@hermes-1.csi.cam.ac.uk>
+Date: Thu, 29 Sep 2005 16:15:41 -0400
+Message-ID: <433C4B6D.6030701@pobox.com>
+References: <433BC9E9.6050907@pobox.com> <20050929200252.GA31516@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff Garzik <jgarzik@pobox.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932191AbVI2ULp@vger.kernel.org Thu Sep 29 22:12:26 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932191AbVI2ULp@vger.kernel.org>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S964884AbVI2UPt@vger.kernel.org Thu Sep 29 22:17:49 2005
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S964884AbVI2UPt@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EL4lN-0006Na-DG
-	for glk-linux-kernel-3@gmane.org; Thu, 29 Sep 2005 22:12:17 +0200
+	id 1EL4pF-0007RF-0I
+	for glk-linux-kernel-3@gmane.org; Thu, 29 Sep 2005 22:16:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932191AbVI2ULp (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 29 Sep 2005 16:11:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932436AbVI2ULp
+	id S964884AbVI2UPt (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 29 Sep 2005 16:15:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932457AbVI2UPs
 	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Thu, 29 Sep 2005 16:11:45 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:33233 "EHLO mx1.redhat.com")
-	by vger.kernel.org with ESMTP id S932191AbVI2ULn (ORCPT
+	Thu, 29 Sep 2005 16:15:48 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:17134 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S932447AbVI2UPr (ORCPT
 	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 29 Sep 2005 16:11:43 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j8TKBTdk005036;
-	Thu, 29 Sep 2005 16:11:29 -0400
-Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
-	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j8TKBTV05502;
-	Thu, 29 Sep 2005 16:11:29 -0400
-Received: from nwo.kernelslacker.org (vpn-4-5.stuttgart.redhat.com [10.32.4.5])
-	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j8TKBSS8000429;
-	Thu, 29 Sep 2005 16:11:29 -0400
-Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
-	by nwo.kernelslacker.org (8.13.5/8.13.4) with ESMTP id j8TKBRpM003231;
-	Thu, 29 Sep 2005 16:11:27 -0400
-Received: (from davej@localhost)
-	by nwo.kernelslacker.org (8.13.5/8.13.5/Submit) id j8TKBR6o003230;
-	Thu, 29 Sep 2005 16:11:27 -0400
-X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
-To: Anton Altaparmakov <aia21@cam.ac.uk>
-Mail-Followup-To: Dave Jones <davej@redhat.com>,
-	Anton Altaparmakov <aia21@cam.ac.uk>,
-	Jeff Garzik <jgarzik@pobox.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.60.0509292106080.17860@hermes-1.csi.cam.ac.uk>
-User-Agent: Mutt/1.4.2.1i
+	Thu, 29 Sep 2005 16:15:47 -0400
+Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
+	id 1EL4oj-0002ej-RF; Thu, 29 Sep 2005 20:15:47 +0000
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Dave Jones <davej@redhat.com>
+In-Reply-To: <20050929200252.GA31516@redhat.com>
+X-Spam-Score: 0.0 (/)
 Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9504>
 
-On Thu, Sep 29, 2005 at 09:07:29PM +0100, Anton Altaparmakov wrote:
+Dave Jones wrote:
+> You wrote..
+> 
+> $ git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux-2.6
+> $ cd linux-2.6
+> $ rsync -a --verbose --stats --progress \
+>   rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ \
+>   .git/
+> 
+> Could be just..
+> 
+> $ git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux-2.6
+> $ cd linux-2.6
+> $ git pull
+> 
+> Likewise, in the next section, git pull doesn't need an argument
+> if pulling from the repo it cloned.
 
- > > $ git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux-2.6
- > > $ cd linux-2.6
- > > $ rsync -a --verbose --stats --progress \
- > >   rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ \
- > >   .git/
- > > 
- > > Could be just..
- > > 
- > > $ git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux-2.6
- > > $ cd linux-2.6
- > > $ git pull
- > 
- > That is not actually the same.  "git pull" for example will not download 
- > Linus' tags whilst the rsync would get everything.
 
-Ah. I didn't know this. Thanks.
-Hmm, it'd be nice to have a shorthand 'not have to type the url, pull everything'.
-Something like 'git pull all'.
+Nope.  It intentionally includes the manual rsync because clone/pull 
+doesn't seem to grab tags.  Or at least last time I checked...
 
-		Dave
+	Jeff
