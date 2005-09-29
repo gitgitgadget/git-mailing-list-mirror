@@ -1,104 +1,88 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] fetch-pack should not ask for a ref which is already there
-Date: Thu, 29 Sep 2005 01:49:47 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0509290149230.19126@wgmdd8.biozentrum.uni-wuerzburg.de>
+Subject: Multi-head fetch proposal
+Date: Thu, 29 Sep 2005 02:25:37 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0509290149540.19126@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Sep 29 01:50:24 2005
+X-From: git-owner@vger.kernel.org Thu Sep 29 02:25:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKlgP-0001E4-VH
-	for gcvg-git@gmane.org; Thu, 29 Sep 2005 01:49:54 +0200
+	id 1EKmF7-0007X3-MW
+	for gcvg-git@gmane.org; Thu, 29 Sep 2005 02:25:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751250AbVI1Xtv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Sep 2005 19:49:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbVI1Xtv
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 19:49:51 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:19674 "EHLO
+	id S1751248AbVI2AZk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Sep 2005 20:25:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbVI2AZk
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Sep 2005 20:25:40 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:48091 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751250AbVI1Xtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Sep 2005 19:49:50 -0400
+	id S1751248AbVI2AZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Sep 2005 20:25:39 -0400
 Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id A74A6136815
-	for <git@vger.kernel.org>; Thu, 29 Sep 2005 01:49:47 +0200 (CEST)
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 9B67D13D1FB
+	for <git@vger.kernel.org>; Thu, 29 Sep 2005 02:25:38 +0200 (CEST)
 Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id 8406CB3CFC
-	for <git@vger.kernel.org>; Thu, 29 Sep 2005 01:49:47 +0200 (CEST)
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id 7DC35B3CFC
+	for <git@vger.kernel.org>; Thu, 29 Sep 2005 02:25:38 +0200 (CEST)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id 5E3C2A885D
-	for <git@vger.kernel.org>; Thu, 29 Sep 2005 01:49:47 +0200 (CEST)
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id 60C3E59CFD
+	for <git@vger.kernel.org>; Thu, 29 Sep 2005 02:25:38 +0200 (CEST)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 25BD8136815
-	for <git@vger.kernel.org>; Thu, 29 Sep 2005 01:49:47 +0200 (CEST)
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 416CE13D1FB
+	for <git@vger.kernel.org>; Thu, 29 Sep 2005 02:25:38 +0200 (CEST)
 X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
 To: Git Mailing List <git@vger.kernel.org>
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9451>
 
-With this patch, instead of blindly asking for every remote ref, fetch-pack
-first looks in the local repository if that ref is already there.
+Hi,
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+I reported a while ago that a fetch downloaded objects which were already 
+in the repository. While that was true, it was not the whole truth: This 
+only happened with multi-head fetch.
 
----
+As far as I can tell, what happened was this:
 
- fetch-pack.c |   30 ++++++++++++++++++++----------
- 1 files changed, 20 insertions(+), 10 deletions(-)
+- fetch-pack connected to the server
+- it asked correctly for the remote refs
+- it then opened a (local) pipe to git-rev-list
+- it sent quite a few refs from that pipe over the wire
+- on the other side, upload-pack marked these refs as "fetcher got those"
+- since upload-pack has a limit on that list (only 16) it soon said STFU 
+- it turned out that quite a few common refs were not yet marked
+- so upload-pack would upload these
 
-6bf41421bed0d640677c5233d2be6813b2211979
-diff --git a/fetch-pack.c b/fetch-pack.c
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -16,20 +16,27 @@ static int find_common(int fd[2], unsign
- 	int count = 0, flushes = 0, retval;
- 	FILE *revs;
- 
--	revs = popen("git-rev-list $(git-rev-parse --all)", "r");
--	if (!revs)
--		die("unable to run 'git-rev-list'");
--
- 	while (refs) {
- 		unsigned char *remote = refs->old_sha1;
--		if (verbose)
--			fprintf(stderr,
--				"want %s (%s)\n", sha1_to_hex(remote),
--				refs->name);
--		packet_write(fd[1], "want %s\n", sha1_to_hex(remote));
-+		if(!has_sha1_file(remote)) {
-+			if (verbose)
-+				fprintf(stderr,
-+					"want %s (%s)\n", sha1_to_hex(remote),
-+					refs->name);
-+			packet_write(fd[1], "want %s\n", sha1_to_hex(remote));
-+			count++;
-+		}
- 		refs = refs->next;
- 	}
- 	packet_flush(fd[1]);
-+
-+	if(count==0)
-+		return 1;
-+
-+	revs = popen("git-rev-list $(git-rev-parse --all)", "r");
-+	if (!revs)
-+		die("unable to run 'git-rev-list'");
-+
- 	flushes = 1;
- 	retval = -1;
- 	while (fgets(line, sizeof(line), revs) != NULL) {
-@@ -86,7 +93,10 @@ static int fetch_pack(int fd[2], int nr_
- 		packet_flush(fd[1]);
- 		die("no matching remote head");
- 	}
--	if (find_common(fd, sha1, ref) < 0)
-+	status = find_common(fd, sha1, ref);
-+	if(status > 0)
-+		return 0;
-+	if(status < 0)
- 		fprintf(stderr, "warning: no common commits\n");
- 	pid = fork();
- 	if (pid < 0)
+The reason is that git-rev-list would happily output parents of refs 
+which were already acknowledged by upload-pack to be common refs.
+
+I just sent out a patch which makes this irrelevant for the case that most 
+or all of these heads are already fetched.
+
+Now, to really solve the multi-head problem, which really is the problem 
+"how to find the edges of the common commits", I propose the following:
+
+For each remote ref known to be not in the local repository, find the 1st, 
+2nd, 4th, 8th, ... parents. Send these to upload-pack to be marked. For 
+each ack'ed ref (i.e. remote side also has it), do a binary search to find 
+the edge (i.e. the youngest common ref) on that DAG branch.
+
+(To ease the burden on the server side, one coul mark only the edges 
+as stop gaps for upload-pack. However, it might make things too 
+complicated.)
+
+Of course, the trick is to do that asynchronously, so that the network 
+bandwidth is used optimally. This means that not each ack'ed ref 
+leads to a binary search, but only those refs where no descendant was 
+ack'ed.
+
+BTW this does not need any change of the protocol. In fact, it only needs 
+a change to fetch-pack.
+
+I'd also increase MAX_HAS in upload-pack.
+
+Ciao,
+Dscho
