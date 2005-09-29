@@ -1,70 +1,67 @@
 From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] Support SPARSE in Makefile, better SPARSE_FLAGS
-Date: Thu, 29 Sep 2005 16:46:05 -0400
-Message-ID: <1128026765.24397.46.camel@dv>
+Subject: [PATCH] Make logerror() and loginfo() static
+Date: Thu, 29 Sep 2005 16:53:14 -0400
+Message-ID: <1128027194.24397.50.camel@dv>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Sep 29 22:48:12 2005
+X-From: git-owner@vger.kernel.org Thu Sep 29 22:54:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EL5IG-0007N6-NS
-	for gcvg-git@gmane.org; Thu, 29 Sep 2005 22:46:17 +0200
+	id 1EL5Pa-0000nb-RE
+	for gcvg-git@gmane.org; Thu, 29 Sep 2005 22:53:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751180AbVI2UqJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Sep 2005 16:46:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751297AbVI2UqJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 16:46:09 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:21892 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751180AbVI2UqI
+	id S1751332AbVI2Ux0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Sep 2005 16:53:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbVI2Ux0
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 16:53:26 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:30852 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751332AbVI2UxZ
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2005 16:46:08 -0400
+	Thu, 29 Sep 2005 16:53:25 -0400
 Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EL5I7-00016k-6t
-	for git@vger.kernel.org; Thu, 29 Sep 2005 16:46:07 -0400
+	id 1EL5P1-0001FO-89
+	for git@vger.kernel.org; Thu, 29 Sep 2005 16:53:19 -0400
 Received: from proski by dv.roinet.com with local (Exim 4.52)
-	id 1EL5I5-0008Tv-WC
-	for git@vger.kernel.org; Thu, 29 Sep 2005 16:46:06 -0400
+	id 1EL5P0-0008Vg-5K
+	for git@vger.kernel.org; Thu, 29 Sep 2005 16:53:14 -0400
 To: git <git@vger.kernel.org>
 X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9506>
 
-Support SPARSE in Makefile, better SPARSE_FLAGS
+Make logerror() and loginfo() static
 
-This patch makes it possible to use some other program instead of sparse
-(e.g. a wrapper around sparse).  It also provides a better default for
-SPARSE_FLAGS.  __BIG_ENDIAN__ should not be needed.
+logerror() and loginfo() in daemon.c are never declared and never called
+from other files, therefore they should be declared static.  Found by
+sparse.
 
 Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -66,8 +66,9 @@ INSTALL = install
- RPMBUILD = rpmbuild
+diff --git a/daemon.c b/daemon.c
+--- a/daemon.c
++++ b/daemon.c
+@@ -57,7 +57,7 @@ static void logreport(int priority, cons
+ 	write(2, buf, buflen);
+ }
  
- # sparse is architecture-neutral, which means that we need to tell it
--# explicitly what architecture to check for. Fix this up for yours..
--SPARSE_FLAGS = -D__BIG_ENDIAN__ -D__powerpc__
-+# explicitly what architecture to check for.
-+SPARSE = sparse
-+SPARSE_FLAGS = -D__$(shell uname -i)__
+-void logerror(const char *err, ...)
++static void logerror(const char *err, ...)
+ {
+ 	va_list params;
+ 	va_start(params, err);
+@@ -65,7 +65,7 @@ void logerror(const char *err, ...)
+ 	va_end(params);
+ }
  
- 
- 
-@@ -335,7 +336,7 @@ test-delta: test-delta.c diff-delta.o pa
- 	$(CC) $(ALL_CFLAGS) -o $@ $^
- 
- check:
--	for i in *.c; do sparse $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i; done
-+	for i in *.c; do $(SPARSE) $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i; done
- 
- 
- 
+-void loginfo(const char *err, ...)
++static void loginfo(const char *err, ...)
+ {
+ 	va_list params;
+ 	if (!verbose)
 
 
 -- 
