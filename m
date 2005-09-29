@@ -1,81 +1,57 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Pull from one branch to another?
-Date: Thu, 29 Sep 2005 02:07:57 -0400
-Message-ID: <433B84BD.8030003@pobox.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: First cut at git port to Cygwin
+Date: Wed, 28 Sep 2005 23:19:39 -0700
+Message-ID: <433B877B.6010004@zytor.com>
+References: <433B3B10.5050407@zytor.com> <46a038f905092821462d08f86a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------090407050300090404070503"
-X-From: git-owner@vger.kernel.org Thu Sep 29 08:09:14 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 29 08:20:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKraQ-0002ki-FA
-	for gcvg-git@gmane.org; Thu, 29 Sep 2005 08:08:06 +0200
+	id 1EKrls-0004mP-On
+	for gcvg-git@gmane.org; Thu, 29 Sep 2005 08:19:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750831AbVI2GID (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Sep 2005 02:08:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbVI2GID
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 02:08:03 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:41192 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1750831AbVI2GIB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2005 02:08:01 -0400
-Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1EKraK-00023z-Cl
-	for git@vger.kernel.org; Thu, 29 Sep 2005 06:08:00 +0000
+	id S1751172AbVI2GTr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Sep 2005 02:19:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751226AbVI2GTr
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 02:19:47 -0400
+Received: from paleosilicon.orionmulti.com ([209.128.68.66]:13540 "EHLO
+	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
+	id S1751172AbVI2GTq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2005 02:19:46 -0400
+X-Envelope-From: hpa@zytor.com
+Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
+	(authenticated bits=0)
+	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j8T6JeJv015833
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 28 Sep 2005 23:19:41 -0700
 User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
 X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: 0.0 (/)
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f905092821462d08f86a@mail.gmail.com>
+X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	paleosilicon.orionmulti.com
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on paleosilicon.orionmulti.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9467>
 
-This is a multi-part message in MIME format.
---------------090407050300090404070503
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Martin Langhoff wrote:
+> 
+>>I have set up a git-on-Cygwin temporary tree at:
+>>
+>>http://www.kernel.org/pub/scm/git/git-cygwin.git
+> 
+> Getting a 404 on that. Doesn't show up on gitweb either. I guess I
+> have to wait...
+> 
 
+Well, it's up there now.
 
-I currently use the attached script to merge the contents of one branch 
-into another branch, in my kernel trees:
-
-	$ cd /repo/netdev-2.6
-	$ git checkout -f sky2
-	$ ... merge patches ...
-	$ git checkout -f upstream
-	$ ... merge more patches ...
-	$ git checkout -f ALL
-	$ git-pull-branch upstream
-	$ git-pull-branch sky2
-
-End result:  'ALL' branch contains everything in 'sky2' and 'upstream' 
-branches.  I use the above for creating an all-inclusive branch that 
-users can test, and that Andrew Morton can pull into his -mm kernel tree.
-
-Right now, my git-pull-branch script (attached) simply calls 
-git-resolve-script, which nicely skips the fetch step and any 
-complications related to that.
-
-My question:  is this the best/right way to pull one branch into 
-another?  It's been working for me, for months, but...
-
-	Jeff
-
-
-
-
---------------090407050300090404070503
-Content-Type: text/plain;
- name="git-pull-branch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="git-pull-branch"
-
-#!/bin/sh
-
-git-resolve-script HEAD $1 "`pwd` branch '$1'"
-
-
---------------090407050300090404070503--
+	-hpa
