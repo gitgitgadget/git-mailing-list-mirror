@@ -1,62 +1,72 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: [howto] Kernel hacker's guide to git, updated
-Date: Thu, 29 Sep 2005 16:15:41 -0400
-Message-ID: <433C4B6D.6030701@pobox.com>
-References: <433BC9E9.6050907@pobox.com> <20050929200252.GA31516@redhat.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Support SPARSE in Makefile, better SPARSE_FLAGS
+Date: Thu, 29 Sep 2005 16:46:05 -0400
+Message-ID: <1128026765.24397.46.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S964884AbVI2UPt@vger.kernel.org Thu Sep 29 22:17:49 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S964884AbVI2UPt@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 29 22:48:12 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EL4pF-0007RF-0I
-	for glk-linux-kernel-3@gmane.org; Thu, 29 Sep 2005 22:16:17 +0200
+	id 1EL5IG-0007N6-NS
+	for gcvg-git@gmane.org; Thu, 29 Sep 2005 22:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964884AbVI2UPt (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 29 Sep 2005 16:15:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932457AbVI2UPs
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Thu, 29 Sep 2005 16:15:48 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:17134 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S932447AbVI2UPr (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 29 Sep 2005 16:15:47 -0400
-Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1EL4oj-0002ej-RF; Thu, 29 Sep 2005 20:15:47 +0000
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Dave Jones <davej@redhat.com>
-In-Reply-To: <20050929200252.GA31516@redhat.com>
-X-Spam-Score: 0.0 (/)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751180AbVI2UqJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Sep 2005 16:46:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751297AbVI2UqJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 16:46:09 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:21892 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751180AbVI2UqI
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2005 16:46:08 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EL5I7-00016k-6t
+	for git@vger.kernel.org; Thu, 29 Sep 2005 16:46:07 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.52)
+	id 1EL5I5-0008Tv-WC
+	for git@vger.kernel.org; Thu, 29 Sep 2005 16:46:06 -0400
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9504>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9505>
 
-Dave Jones wrote:
-> You wrote..
-> 
-> $ git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux-2.6
-> $ cd linux-2.6
-> $ rsync -a --verbose --stats --progress \
->   rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ \
->   .git/
-> 
-> Could be just..
-> 
-> $ git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux-2.6
-> $ cd linux-2.6
-> $ git pull
-> 
-> Likewise, in the next section, git pull doesn't need an argument
-> if pulling from the repo it cloned.
+Support SPARSE in Makefile, better SPARSE_FLAGS
+
+This patch makes it possible to use some other program instead of sparse
+(e.g. a wrapper around sparse).  It also provides a better default for
+SPARSE_FLAGS.  __BIG_ENDIAN__ should not be needed.
+
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -66,8 +66,9 @@ INSTALL = install
+ RPMBUILD = rpmbuild
+ 
+ # sparse is architecture-neutral, which means that we need to tell it
+-# explicitly what architecture to check for. Fix this up for yours..
+-SPARSE_FLAGS = -D__BIG_ENDIAN__ -D__powerpc__
++# explicitly what architecture to check for.
++SPARSE = sparse
++SPARSE_FLAGS = -D__$(shell uname -i)__
+ 
+ 
+ 
+@@ -335,7 +336,7 @@ test-delta: test-delta.c diff-delta.o pa
+ 	$(CC) $(ALL_CFLAGS) -o $@ $^
+ 
+ check:
+-	for i in *.c; do sparse $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i; done
++	for i in *.c; do $(SPARSE) $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i; done
+ 
+ 
+ 
 
 
-Nope.  It intentionally includes the manual rsync because clone/pull 
-doesn't seem to grab tags.  Or at least last time I checked...
-
-	Jeff
+-- 
+Regards,
+Pavel Roskin
