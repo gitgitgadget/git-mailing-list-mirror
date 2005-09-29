@@ -1,105 +1,64 @@
-From: Elfyn McBratney <beu@gentoo.org>
-Subject: Re: [PATCH] Cogito README: add a block describing team workflow with git+ssh
-Date: Thu, 29 Sep 2005 23:19:26 +0100
-Message-ID: <20050929221926.GB13542@zippy.emcb.local>
-References: <11279754774179-git-send-email-martin@catalyst.net.nz> <20050929212511.GA28106@zippy.emcb.local> <46a038f905092914524d3cd8c1@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [howto] Kernel hacker's guide to git, updated
+Date: Thu, 29 Sep 2005 15:25:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0509291521300.5362@g5.osdl.org>
+References: <433BC9E9.6050907@pobox.com> <20050929200252.GA31516@redhat.com>
+ <Pine.LNX.4.60.0509292106080.17860@hermes-1.csi.cam.ac.uk>
+ <20050929201127.GB31516@redhat.com> <Pine.LNX.4.64.0509291413060.5362@g5.osdl.org>
+ <Pine.LNX.4.64.0509291425560.5362@g5.osdl.org> <20050929213312.GD31516@redhat.com>
+ <Pine.LNX.4.64.0509291451540.5362@g5.osdl.org>
+ <Pine.LNX.4.60.0509292309470.17860@hermes-1.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="b5gNqxB1S1yM7hjW"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 30 00:21:00 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dave Jones <davej@redhat.com>, Jeff Garzik <jgarzik@pobox.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 30 00:30:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EL6kW-00073K-TV
-	for gcvg-git@gmane.org; Fri, 30 Sep 2005 00:19:33 +0200
+	id 1EL6tu-00014r-0F
+	for gcvg-git@gmane.org; Fri, 30 Sep 2005 00:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932142AbVI2WTa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Sep 2005 18:19:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932150AbVI2WTa
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 18:19:30 -0400
-Received: from anchor-post-35.mail.demon.net ([194.217.242.85]:21766 "EHLO
-	anchor-post-35.mail.demon.net") by vger.kernel.org with ESMTP
-	id S932142AbVI2WT3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2005 18:19:29 -0400
-Received: from beu1.demon.co.uk ([83.105.51.149] helo=zippy)
-	by anchor-post-35.mail.demon.net with smtp (Exim 4.42)
-	id 1EL6ev-0009LC-Gc; Thu, 29 Sep 2005 22:13:45 +0000
-Received: by zippy (sSMTP sendmail emulation); Thu, 29 Sep 2005 23:19:26 +0100
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Mail-Followup-To: Elfyn McBratney <beu@gentoo.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <46a038f905092914524d3cd8c1@mail.gmail.com>
-User-Agent: mutt-ng/devel (Linux)
+	id S1751344AbVI2W3E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Sep 2005 18:29:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbVI2W3E
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 18:29:04 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:898 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750776AbVI2W3C (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2005 18:29:02 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8TMPa4s031857
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 29 Sep 2005 15:25:36 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8TMPY0B008458;
+	Thu, 29 Sep 2005 15:25:35 -0700
+To: Anton Altaparmakov <aia21@cam.ac.uk>
+In-Reply-To: <Pine.LNX.4.60.0509292309470.17860@hermes-1.csi.cam.ac.uk>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.118 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9522>
 
 
---b5gNqxB1S1yM7hjW
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 30, 2005 at 09:52:11AM +1200, Martin Langhoff wrote:
- > On 9/30/05, Elfyn McBratney <beu@gentoo.org> wrote:
- > > > +        $ chgroup gitcommit /var/git
- > >
- > > s/chgroup/chgrp/
- >=20
- > Ooops! Thanks for catching that
+On Thu, 29 Sep 2005, Anton Altaparmakov wrote:
+> 
+> Why don't you enable "enable-alternate-editor-implicitly" and set 
+> editor = "your-editor-of-choice" in the pine config?  It is integrated in 
+> a quite seamless way.
 
-Np :)
+You think so? I don't find it that way.
 
- > > > +        $ chmod  2775 /var/git
- > > > +        $ mkdir -p /var/git/projectname.git
- > > > +        $ GIT_DIR=3D/var/git/projectname.git git-init-db
- > >
- > > Hmm .. if you're you're going to be using cogito anyway, might it be an
- > > idea to instead do:
- > >
- > >         $ GIT_DIR=3D/var/git/projectname.git/.git cg-init [-I]
- >=20
- > You only really need git on the repo server, and I think that's a plus.
+With an alternate editor you have to edit the headers separately, and 
+things like postponing a message suddenly turns into a big deal, not just 
+a trivial ^O. In fact, almost everything gets more involved.
 
-*nods*
+And pico _is_ pretty close to uemacs.
 
- > > > +        $ git-push  remoteserver:/var/git/projectname.git master br=
-anchname
- > >
- > > Ditto here, tho' that'll require that remotes have been set-up, of
- > > course. ;)
- >=20
- > Yes, the cogito way of doing this seems messy. Is there a simple way
- > to set up the remote branch and push to it?
-
-Not that I know of, tho' I'm still quite new to cogito, mind. ;)
-
-Best,
-Elfyn
-
---=20
-Elfyn McBratney
-Gentoo Developer/Perl Team Lead
-beu/irc.freenode.net                            http://dev.gentoo.org/~beu/
-+------------O.o--------------------- http://dev.gentoo.org/~beu/pubkey.asc
-
-PGP Key ID: 0x69DF17AD
-PGP Key Fingerprint:
-  DBD3 B756 ED58 B1B4 47B9  B3BD 8D41 E597 69DF 17AD
-
---b5gNqxB1S1yM7hjW
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFDPGhtjUHll2nfF60RAhkpAJ0S4Dr6uyhuQTRqtNrLlIPo8ssr2ACeJp/B
-+YI/IdeRdq8+SaKTyG58f34=
-=WkRY
------END PGP SIGNATURE-----
-
---b5gNqxB1S1yM7hjW--
+		Linus
