@@ -1,65 +1,67 @@
-From: David Leimbach <leimy2k@gmail.com>
-Subject: Re: [howto] Kernel hacker's guide to git, updated
-Date: Thu, 29 Sep 2005 09:13:19 -0700
-Message-ID: <3e1162e605092909137a0da92e@mail.gmail.com>
-References: <433BC9E9.6050907@pobox.com>
-	 <3e1162e605092908187e181936@mail.gmail.com>
-	 <4489a22a050929090358badd29@mail.gmail.com>
-Reply-To: David Leimbach <leimy2k@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Old curl does not know about CURLOPT_SSLKEY
+Date: Thu, 29 Sep 2005 18:19:50 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0509291819090.7007@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff Garzik <jgarzik@pobox.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 29 18:16:08 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Sep 29 18:22:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EL12C-00012d-LR
-	for gcvg-git@gmane.org; Thu, 29 Sep 2005 18:13:25 +0200
+	id 1EL18V-0003H1-FW
+	for gcvg-git@gmane.org; Thu, 29 Sep 2005 18:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932225AbVI2QNV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Sep 2005 12:13:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbVI2QNV
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 12:13:21 -0400
-Received: from zproxy.gmail.com ([64.233.162.202]:15670 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932226AbVI2QNU convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2005 12:13:20 -0400
-Received: by zproxy.gmail.com with SMTP id i11so171686nzi
-        for <git@vger.kernel.org>; Thu, 29 Sep 2005 09:13:20 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gvdeGDxX8S2N7BTRYkN280OeqovVZ8Ul/YtZsmeYpydOwG1fxqul6wmTWBZdu7Rcdj/GLKNlbzBUV8GjgvVztxUb+IDBbRWnxWR96EeGKl8tcFnCXmP6/+z9crkDZh1TGOn/Tl7bcAL19HZHiftTMBj46UPm6RUvfJiA0xQGrgU=
-Received: by 10.36.50.7 with SMTP id x7mr5128763nzx;
-        Thu, 29 Sep 2005 09:13:19 -0700 (PDT)
-Received: by 10.36.42.7 with HTTP; Thu, 29 Sep 2005 09:13:19 -0700 (PDT)
-To: Alberto Patino <pato.lukaz@gmail.com>
-In-Reply-To: <4489a22a050929090358badd29@mail.gmail.com>
-Content-Disposition: inline
+	id S932229AbVI2QTw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Sep 2005 12:19:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932231AbVI2QTw
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 12:19:52 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:3773 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932229AbVI2QTv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2005 12:19:51 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id C52CE13C2D2
+	for <git@vger.kernel.org>; Thu, 29 Sep 2005 18:19:50 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id A829CB3D4D
+	for <git@vger.kernel.org>; Thu, 29 Sep 2005 18:19:50 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id 91ADFB3D3E
+	for <git@vger.kernel.org>; Thu, 29 Sep 2005 18:19:50 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 535A313C2D2
+	for <git@vger.kernel.org>; Thu, 29 Sep 2005 18:19:50 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9492>
 
-On 9/29/05, Alberto Patino <pato.lukaz@gmail.com> wrote:
-> On 9/29/05, David Leimbach <leimy2k@gmail.com> wrote:
-> > On 9/29/05, Jeff Garzik <jgarzik@pobox.com> wrote:
-> > >
-> > > Just updated my KHGtG to include the latest goodies available in
-> > > git-core, the Linux kernel standard SCM tool:
-> > >
-> > >         http://linux.yyz.us/git-howto.html
-> >
-> > Can you update the date on that page to reflect your latest updates?
-> > - Dave
->
-> The  KHGtG page is updated to September 29, 2005.
->
->
-Awesome!  Thanks. :-)  I'm looking at cogito and darcs-git for working
-with v9fs and other goodies.
 
-Dave
+... so try to set it only in later versions.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+ http-fetch.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+d1d3438564c8407b916aa374fbac89a5aa902eb1
+diff --git a/http-fetch.c b/http-fetch.c
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -529,9 +529,11 @@ int main(int argc, char **argv)
+ 	if ((ssl_cert = getenv("GIT_SSL_CERT")) != NULL) {
+ 		curl_easy_setopt(curl, CURLOPT_SSLCERT, ssl_cert);
+ 	}
++#if LIBCURL_VERSION_NUM >= 0x070902
+ 	if ((ssl_key = getenv("GIT_SSL_KEY")) != NULL) {
+ 		curl_easy_setopt(curl, CURLOPT_SSLKEY, ssl_key);
+ 	}
++#endif
+ #if LIBCURL_VERSION_NUM >= 0x070908
+ 	if ((ssl_capath = getenv("GIT_SSL_CAPATH")) != NULL) {
+ 		curl_easy_setopt(curl, CURLOPT_CAPATH, ssl_capath);
