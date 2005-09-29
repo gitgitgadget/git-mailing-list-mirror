@@ -1,64 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [howto] Kernel hacker's guide to git, updated
-Date: Thu, 29 Sep 2005 16:19:23 -0700
-Message-ID: <7vek77ea2s.fsf@assigned-by-dhcp.cox.net>
-References: <433BC9E9.6050907@pobox.com> <20050929200252.GA31516@redhat.com>
-	<Pine.LNX.4.60.0509292106080.17860@hermes-1.csi.cam.ac.uk>
-	<20050929201127.GB31516@redhat.com>
-	<Pine.LNX.4.64.0509291413060.5362@g5.osdl.org>
-	<Pine.LNX.4.64.0509291425560.5362@g5.osdl.org>
-	<20050929213312.GD31516@redhat.com>
-	<Pine.LNX.4.64.0509291451540.5362@g5.osdl.org>
-	<Pine.LNX.4.60.0509292309470.17860@hermes-1.csi.cam.ac.uk>
+From: Richard Curnow <rc@rc0.org.uk>
+Subject: git push to a local directory with no .git in it
+Date: Thu, 29 Sep 2005 23:25:59 +0000 (UTC)
+Message-ID: <loom.20050930T011606-58@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 30 01:22:15 2005
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Sep 30 01:33:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EL7gn-0003CT-JK
-	for gcvg-git@gmane.org; Fri, 30 Sep 2005 01:19:45 +0200
+	id 1EL7tJ-0005R4-Me
+	for gcvg-git@gmane.org; Fri, 30 Sep 2005 01:32:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751274AbVI2XT0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Sep 2005 19:19:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbVI2XT0
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 19:19:26 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:41615 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751274AbVI2XTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2005 19:19:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050929231921.IKLL4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 29 Sep 2005 19:19:21 -0400
-To: Anton Altaparmakov <aia21@cam.ac.uk>
-In-Reply-To: <Pine.LNX.4.60.0509292309470.17860@hermes-1.csi.cam.ac.uk> (Anton
-	Altaparmakov's message of "Thu, 29 Sep 2005 23:12:37 +0100 (BST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751366AbVI2Xcj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Sep 2005 19:32:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751374AbVI2Xcj
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 19:32:39 -0400
+Received: from main.gmane.org ([80.91.229.2]:28134 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751366AbVI2Xci (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2005 19:32:38 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1EL7sG-0005Jg-0m
+	for git@vger.kernel.org; Fri, 30 Sep 2005 01:31:36 +0200
+Received: from rpcurnow.force9.co.uk ([84.92.131.215])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Sep 2005 01:31:36 +0200
+Received: from rc by rpcurnow.force9.co.uk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Sep 2005 01:31:36 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 84.92.131.215 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050512 Firefox/1.0.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9525>
 
-Anton Altaparmakov <aia21@cam.ac.uk> writes:
+Background: I have to use plain FTP to upload content to my web site.  I keep a
+local mirror of the entire site, then use an automated upload mechanism to do
+the FTP step.
 
-> On Thu, 29 Sep 2005, Linus Torvalds wrote:
->> On Thu, 29 Sep 2005, Dave Jones wrote:
->> > What I find amusing is that it was a patch rejection mail from you
->> > *years* back (circa 2000 iirc), telling me my pine corrupted whitespace,
->> > that made me switch MUA ;-)
->> > 
->> > All these years later, and it's still buggered ?
->> 
->> Actually, it seems better. It seems to be buggered by default, but it used 
->> to be that you had to actually recompile pine to make it behave. Now you 
->> can just disable "strip-whitespace-before-send" and _enable_ 
->> "quell-flowed-text" and those together seem to do the trick. No extra 
->> patches or recompiles necessary.
->
-> Indeed.  I use those two options like that, too.  (-:
+To release a git repository onto my site, I want to 'git push' from my working
+area to the release area in the local mirror.  So what ends up as
 
-Anybody interested in adding entry to SubmittingPatches MUA
-Specific Help section?
+    http://www.rpcurnow.force9.co.uk/git/mairix.git
+
+lives in ~/homepage/git/mairix.git locally.  That directory contains
+HEAD, refs, objects, hooks; I don't have a .git subdirectory in the middle.
+
+If I cd to ~/gitwork/mairix (which is a regular working area) and do
+
+    git push ~/homepage/git/mairix.git master:master
+
+I get
+
+fatal: /home/richard/homepage/git/mairix.git doesn't appear to be a git directory
+
+presumably because there is no .git in it.
+
+I could cd to ~/homepage/git/mairix.git and do things like
+
+    GIT_DIR=. gitk --all
+
+but what's the equivalent of this GIT_DIR trick when it's the remote end of
+a 'git push' that has the problem?
+
+Cheers
+Richard
