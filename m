@@ -1,65 +1,51 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: First cut at git port to Cygwin
-Date: Wed, 28 Sep 2005 22:07:10 -0700
-Message-ID: <433B767E.7050704@zytor.com>
-References: <433B3B10.5050407@zytor.com> <7v64skpkbb.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: GIT 0.99.7d, and end of week status.
+Date: Wed, 28 Sep 2005 22:11:20 -0700
+Message-ID: <7vk6h0o3uv.fsf@assigned-by-dhcp.cox.net>
+References: <7vll1lr1bq.fsf@assigned-by-dhcp.cox.net>
+	<7vaci1nfwa.fsf@assigned-by-dhcp.cox.net>
+	<87psqwzs3x.fsf@ualberta.net>
+	<7v7jd4n22i.fsf@assigned-by-dhcp.cox.net>
+	<20050926191037.GD26340@pasky.or.cz>
+	<7vll1jh8zr.fsf@assigned-by-dhcp.cox.net>
+	<20050927101744.GD30889@pasky.or.cz>
+	<pan.2005.09.29.04.40.14.655977@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 29 07:08:29 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Sep 29 07:12:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKqe1-0008JD-Q9
-	for gcvg-git@gmane.org; Thu, 29 Sep 2005 07:07:46 +0200
+	id 1EKqhd-0000fE-Iy
+	for gcvg-git@gmane.org; Thu, 29 Sep 2005 07:11:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751199AbVI2FH3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Sep 2005 01:07:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751201AbVI2FH3
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 01:07:29 -0400
-Received: from paleosilicon.orionmulti.com ([209.128.68.66]:41443 "EHLO
-	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
-	id S1751199AbVI2FH2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2005 01:07:28 -0400
-X-Envelope-From: hpa@zytor.com
-Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
-	(authenticated bits=0)
-	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j8T57BJv015305
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 28 Sep 2005 22:07:11 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64skpkbb.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
-X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
-	paleosilicon.orionmulti.com
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on paleosilicon.orionmulti.com
-X-Virus-Status: Clean
+	id S1751206AbVI2FLY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Sep 2005 01:11:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751201AbVI2FLY
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 01:11:24 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:16829 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1751206AbVI2FLX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2005 01:11:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050929051121.TXYJ9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 29 Sep 2005 01:11:21 -0400
+To: git@vger.kernel.org
+In-Reply-To: <pan.2005.09.29.04.40.14.655977@smurf.noris.de> (Matthias
+	Urlichs's message of "Thu, 29 Sep 2005 06:40:14 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9463>
 
-Junio C Hamano wrote:
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
-> 
->>There are still funnies.  In particular, Cygwin and Samba handle 
->>symlinks differently, so you can't trivially share a repository via 
->>Samba.  Linus' "symbolic refs" changes should eventually take care of that.
-> 
-> 
-> I just sent out "The other side of Linus' symbolic refs" patch,
-> saying that Cygwin capable of doing symlink would probably made
-> it irrelevant.  But it may not be a waste after all, considering
-> what you said above.
-> 
+Matthias Urlichs <smurf@smurf.noris.de> writes:
 
-After looking at it some more, what Samba does when talking to a host 
-that doesn't support Unix extensions is that it simply resolves the 
-symlink, in effect turning it into a hard link.  That might be all git 
-needs.  The reverse still doesn't work, though.
+> I tend to agree -- intentional octopus merges are rare enough.
+> For most people, anyway. ;-)
 
-	-hpa
+I agree, *and* I think what I proposed is consistent with that.
+Essentially, you cannot create an Octopus without asking from
+the command line, period.
