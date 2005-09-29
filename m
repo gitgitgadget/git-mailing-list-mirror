@@ -1,49 +1,59 @@
-From: Kevin Leung <hysoka@gmail.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
 Subject: Re: Edit log message after commit
-Date: Thu, 29 Sep 2005 15:45:49 +0800
-Message-ID: <dhg5vl$9ac$1@sea.gmane.org>
+Date: Thu, 29 Sep 2005 09:35:23 +0100
+Message-ID: <tnxbr2ce0fo.fsf@arm.com>
 References: <dhfjcu$36f$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Sep 29 09:48:51 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 29 10:36:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EKt8K-00082n-9z
-	for gcvg-git@gmane.org; Thu, 29 Sep 2005 09:47:12 +0200
+	id 1EKttY-000643-Pr
+	for gcvg-git@gmane.org; Thu, 29 Sep 2005 10:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932097AbVI2HrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Sep 2005 03:47:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932188AbVI2HrI
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 03:47:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:29595 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932097AbVI2HrH (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2005 03:47:07 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EKt6s-0007kn-2Y
-	for git@vger.kernel.org; Thu, 29 Sep 2005 09:45:42 +0200
-Received: from cm218-255-247-62.hkcable.com.hk ([218.255.247.62])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Sep 2005 09:45:42 +0200
-Received: from hysoka by cm218-255-247-62.hkcable.com.hk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Sep 2005 09:45:42 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm218-255-247-62.hkcable.com.hk
-User-Agent: Mozilla Thunderbird 1.0.6 (Windows/20050716)
-X-Accept-Language: en-us, en
-In-Reply-To: <dhfjcu$36f$1@sea.gmane.org>
+	id S1751125AbVI2Ift (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Sep 2005 04:35:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbVI2Ift
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 04:35:49 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:4790 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S1751125AbVI2Ift (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2005 04:35:49 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j8T8ZRSV019408;
+	Thu, 29 Sep 2005 09:35:27 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id JAA24461;
+	Thu, 29 Sep 2005 09:35:25 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.3]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Thu, 29 Sep 2005 09:35:24 +0100
+To: Kevin Leung <hysoka@gmail.com>
+In-Reply-To: <dhfjcu$36f$1@sea.gmane.org> (Kevin Leung's message of "Thu, 29
+ Sep 2005 10:28:39 +0800")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 29 Sep 2005 08:35:24.0932 (UTC) FILETIME=[BCC6E440:01C5C4D0]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9475>
 
-Thank you all of you. I was able to redo the commit.
+Kevin Leung <hysoka@gmail.com> wrote:
+> Is there any method to edit the log message after committed? I
+> couldn't find any information in Documentation and in git mailing
+> list.
 
-But as Tony has pointed out. I would have needed to redo all the subsequent commits if I was to change non-HEAD commit message. What is the proper way of doing that? Is it the same as Documentation/howto/revert-branch-rebase.txt ?
+As the others said, a commit object is immutable but it can be
+replaced with a new one and the path from HEAD changed. If you need to
+do this often, have a look at StGIT. It allows you to create patches
+as git commit objects and indefinitely edit them (both file changes
+and commit information like log messages, author etc.).
 
-One more question is that, how to use the git commit --reedit-message flag? According to Documentation/howto/rebase-and-edit.txt, I guess the meaning is to re-apply one commit to current HEAD?
+In the latest snapshot, I also added a commit command to permanently
+store the patches into the repository after which you won't be able to
+edit them anymore (that's useful for maintainers using StGIT, not only
+contributors).
+
+-- 
+Catalin
