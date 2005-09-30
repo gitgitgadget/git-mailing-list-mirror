@@ -1,61 +1,111 @@
-From: Alberto Patino <pato.lukaz@gmail.com>
-Subject: Re: [howto] Kernel hacker's guide to git, updated
-Date: Fri, 30 Sep 2005 10:10:57 -0500
-Message-ID: <4489a22a0509300810y723e5ef5tb9109a29508a1e38@mail.gmail.com>
-References: <433BC9E9.6050907@pobox.com>
-	 <7virwjegb5.fsf@assigned-by-dhcp.cox.net> <433D1E5D.20303@pobox.com>
-	 <200509301402.46740.oliver@neukum.org> <433D447E.9030103@pobox.com>
-Reply-To: Alberto Patino <pato.lukaz@gmail.com>
+From: Wolfgang Denk <wd@denx.de>
+Subject: Destructive side-effect of "cg-status"
+Date: Fri, 30 Sep 2005 18:03:53 +0200
+Message-ID: <20050930160353.F025C352B7B@atlas.denx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Oliver Neukum <oliver@neukum.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 30 17:12:08 2005
+X-From: git-owner@vger.kernel.org Fri Sep 30 18:05:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ELMXO-0000pu-6Z
-	for gcvg-git@gmane.org; Fri, 30 Sep 2005 17:11:02 +0200
+	id 1ELNMt-00011X-J0
+	for gcvg-git@gmane.org; Fri, 30 Sep 2005 18:04:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030309AbVI3PK6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Sep 2005 11:10:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030333AbVI3PK6
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 11:10:58 -0400
-Received: from zproxy.gmail.com ([64.233.162.192]:29930 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1030309AbVI3PK5 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2005 11:10:57 -0400
-Received: by zproxy.gmail.com with SMTP id 13so1009517nzn
-        for <git@vger.kernel.org>; Fri, 30 Sep 2005 08:10:57 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YHaSUMoDOS8wtdMAC1are2IJsJAK9yqDK6QaKp05TZBDZ5Pf4HC7rksWLlQgiXVSFqE3SDVFcNXt0h5kdPSRv1gwII3ObPelgs4he8NHipxMujeSu0buerGkhiuFzCU5m9BYIFGjxXBX362kvm2bzBLc53ix93KJkPnxtE9/qEI=
-Received: by 10.36.12.9 with SMTP id 9mr5687568nzl;
-        Fri, 30 Sep 2005 08:10:57 -0700 (PDT)
-Received: by 10.36.65.20 with HTTP; Fri, 30 Sep 2005 08:10:57 -0700 (PDT)
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <433D447E.9030103@pobox.com>
-Content-Disposition: inline
+	id S1030351AbVI3QEM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Sep 2005 12:04:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030355AbVI3QEM
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 12:04:12 -0400
+Received: from mailout04.sul.t-online.com ([194.25.134.18]:21120 "EHLO
+	mailout04.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1030351AbVI3QEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2005 12:04:12 -0400
+Received: from fwd26.aul.t-online.de 
+	by mailout04.sul.t-online.com with smtp 
+	id 1ELNMo-0000X1-02; Fri, 30 Sep 2005 18:04:10 +0200
+Received: from denx.de (E1C4xsZ18eVv+rJJaVaTOsEb9w8HhJ08bkeXqvj4xzNDqQEMXQIK0u@[84.150.101.119]) by fwd26.sul.t-online.de
+	with esmtp id 1ELNMf-0J7it60; Fri, 30 Sep 2005 18:04:01 +0200
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by denx.de (Postfix) with ESMTP id 08A3842A2B
+	for <git@vger.kernel.org>; Fri, 30 Sep 2005 18:03:59 +0200 (MEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id F025C352B7B
+	for <git@vger.kernel.org>; Fri, 30 Sep 2005 18:03:53 +0200 (MEST)
+To: git@vger.kernel.org
+X-ID: E1C4xsZ18eVv+rJJaVaTOsEb9w8HhJ08bkeXqvj4xzNDqQEMXQIK0u@t-dialin.net
+X-TOI-MSGID: 36a1d5e3-73ea-4c26-81f2-cc25e5978e20
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9565>
 
-On 9/30/05, Jeff Garzik <jgarzik@pobox.com> wrote:
-> Oliver Neukum wrote:
-> >
-> > The error is still there.
-> >
-> > oliver@oenone:~/linux-2.6> git checkout -f master
-> > usage: read-tree (<sha> | -m <sha1> [<sha2> <sha3>])
->
-> Something's wrong with your installation, not the instructions.  Works
-> fine here.
->
+So far I  thought  "cg-status"  is  a  harmless  command  which  just
+displays  some  status information. It ain't so. One of our engineers
+reported a  corrupted  repository  after  I  ran  "cg-status"  in  his
+directory:
 
-Right , you must have a corrupted copy of the git repo. Do the initial
-cloning of the linux repository again, and then retry the git
-checkout.
+$ cg-status
+Heads:
+   >master      805f93e4ca96d0c0cb2d2f9532d9666b22961e88
+  R origin      805f93e4ca96d0c0cb2d2f9532d9666b22961e88
+
+error: open failed
+fatal: cache corrupted
+error: open failed
+? COPYING
+? CREDITS
+? Documentation/00-INDEX
+? Documentation/BUG-HUNTING
+...
+error: open failed
+read_cache: Permission denied
+...
+error: open failed
+read_cache: Permission denied
+...
+
+
+As mentioned before,  all  I  did  was  running  "cg-status"  in  his
+directory. Here is what happens:
+
+Before:
+
+	-> rpm -q cogito
+	cogito-0.15.1-1
+	-> id
+	uid=500(wd) gid=500(wd) groups=200(gitmaster),400(denx),500(wd)
+	-> umask
+	0002
+	-> ls -ld .git
+	drwxrwxrwx  6 sr sr 80 Sep 30 17:49 .git
+	-> ls -l .git/index
+	-rw-r--r--  1 sr sr 1728032 Sep 30 17:17 .git/index
+
+Then:
+
+	-> cg-status
+	Heads:
+	   >master      805f93e4ca96d0c0cb2d2f9532d9666b22961e88
+	  R origin      805f93e4ca96d0c0cb2d2f9532d9666b22961e88
+
+	M arch/ppc/configs/bubinga_defconfig
+	M arch/ppc/configs/walnut_defconfig
+	-> ls -l .git/index
+	-rw-------  1 wd wd 1728032 Sep 30 17:49 .git/index
+	^^^^^^^^^^    ^^^^^
+
+That means, that "cg-status" actually *rewrote* .git/index,  with  me
+(wd)  as  new  owner, and - ignoring my umask - with permissions that
+prevent the original owner (sr) to access the file!
+
+Arghhhh!!!
+
+Best regards,
+
+Wolfgang Denk
+
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+Generally speaking, there are other ways to accomplish whatever it is
+that you think you need ...                               - Doug Gwyn
