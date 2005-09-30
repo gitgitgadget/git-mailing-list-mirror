@@ -1,61 +1,69 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [howto] Kernel hacker's guide to git, updated
-Date: Fri, 30 Sep 2005 14:13:33 -0400
-Message-ID: <200509301813.j8UIDXr5015488@laptop11.inf.utfsm.cl>
-References: <jgarzik@pobox.com>
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 30 20:15:52 2005
-Return-path: <git-owner@vger.kernel.org>
+Date: Fri, 30 Sep 2005 11:14:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0509301112100.3378@g5.osdl.org>
+References: <433BC9E9.6050907@pobox.com> <20050929200252.GA31516@redhat.com>
+ <433C4B6D.6030701@pobox.com> <7virwjegb5.fsf@assigned-by-dhcp.cox.net>
+ <433D1E5D.20303@pobox.com> <7v64si4von.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff Garzik <jgarzik@pobox.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	git@vger.kernel.org
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932560AbVI3SOc@vger.kernel.org Fri Sep 30 20:17:49 2005
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932560AbVI3SOc@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ELPOT-0004kM-CL
-	for gcvg-git@gmane.org; Fri, 30 Sep 2005 20:14:01 +0200
+	id 1ELPPy-000592-3L
+	for glk-linux-kernel-3@gmane.org; Fri, 30 Sep 2005 20:15:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932559AbVI3SNy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Sep 2005 14:13:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932560AbVI3SNx
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 14:13:53 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:19089 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S932559AbVI3SNu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Sep 2005 14:13:50 -0400
-Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j8UIDYQB006683
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 30 Sep 2005 14:13:34 -0400
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j8UIDXr5015488;
-	Fri, 30 Sep 2005 14:13:33 -0400
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: Message from Jeff Garzik <jgarzik@pobox.com> 
-   of "Fri, 30 Sep 2005 07:15:41 -0400." <433D1E5D.20303@pobox.com> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.19.1]); Fri, 30 Sep 2005 14:13:35 -0400 (CLT)
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
-X-Virus-Status: Clean
-Sender: git-owner@vger.kernel.org
+	id S932560AbVI3SOc (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 30 Sep 2005 14:14:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932581AbVI3SOb
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Fri, 30 Sep 2005 14:14:31 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:55012 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932560AbVI3SOa (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 30 Sep 2005 14:14:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8UIEN4s012564
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 30 Sep 2005 11:14:23 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8UIEM21016189;
+	Fri, 30 Sep 2005 11:14:23 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64si4von.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.118 $
+X-Scanned-By: MIMEDefang 2.36
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9568>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9569>
 
-Jeff Garzik <jgarzik@pobox.com> wrote:
-> Thanks for all the comments.  I just updated the KHGtG with the
-> feedback I received.  Go to
+
+
+On Fri, 30 Sep 2005, Junio C Hamano wrote:
 > 
-> 	http://linux.yyz.us/git-howto.html
-> 
-> and click reload.  Continued criticism^H^H^Hcomments welcome!
+> I suspect the version Linus posted has a funny interaction with
+> 'git-pull'; 'git pull --tags' by mistake, or intentionally to
+> file a bug report to annoy me ;-), would create an Octopus out
+> of those tags, if I am not mistaken.
 
-- To know the current branch, "git branch" is enough (the one '*'-ed)
-- rsync(1) a repository is dangerous, it might catch it in the middle of
-  a update and give you an incomplete/messed up copy. Repeat rsync until no
-  change, perhaps?
-- I understand "git checkout -f" blows away any local changes, no questions
-  asked. Not very nice to suggest that to a newbie...
+Hey, even more impressive is "git pull --all", which will happily try to 
+create an octopus of every single ref available at the other end.
 
-Thanks for the docu!
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+Now, I think that octopus merges in _general_ are likely to be driver 
+error, and that it might make sense to have a separate flag to enable 
+them in the first place. That would solve the confusion..
+
+So then you could do
+
+	git pull --all --octopus xyzzy
+
+if you _really_ meant to do that. 
+
+		Linus
