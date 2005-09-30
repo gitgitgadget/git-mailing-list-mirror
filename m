@@ -1,152 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: First cut at git port to Cygwin
-Date: Fri, 30 Sep 2005 03:02:57 -0700
-Message-ID: <7v4q826ffy.fsf@assigned-by-dhcp.cox.net>
-References: <433B3B10.5050407@zytor.com>
+From: Alexey Nezhdanov <snake@penza-gsm.ru>
+Subject: Re: [PATCH] Added an option to cvsimport to specify email domain
+Date: Fri, 30 Sep 2005 14:22:14 +0400
+Message-ID: <200509301422.14677.snake@penza-gsm.ru>
+References: <u5tzmqp8fzx.fsf@lysator.liu.se> <200509301219.42087.snake@penza-gsm.ru> <7v64sj6iva.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="koi8-r"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 30 12:05:00 2005
+X-From: git-owner@vger.kernel.org Fri Sep 30 12:24:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ELHjQ-0002Fo-AM
-	for gcvg-git@gmane.org; Fri, 30 Sep 2005 12:03:08 +0200
+	id 1ELI2N-0007RS-8j
+	for gcvg-git@gmane.org; Fri, 30 Sep 2005 12:22:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964917AbVI3KDA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Sep 2005 06:03:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964922AbVI3KC7
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 06:02:59 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:45296 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S964917AbVI3KC7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2005 06:02:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050930100255.NMRJ4169.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 30 Sep 2005 06:02:55 -0400
-To: "H. Peter Anvin" <hpa@zytor.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965017AbVI3KWV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Sep 2005 06:22:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965031AbVI3KWV
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 06:22:21 -0400
+Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:63119
+	"HELO penza-gsm.ru") by vger.kernel.org with SMTP id S965033AbVI3KWU
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2005 06:22:20 -0400
+Received: (qmail 18405 invoked from network); 30 Sep 2005 10:23:03 -0000
+Received: from unknown (HELO snake) (192.168.0.20)
+  by fileserver.penza-gsm.ru with SMTP; 30 Sep 2005 10:23:02 -0000
+To: Junio C Hamano <junkio@cox.net>,
+	Matthias Urlichs <smurf@smurf.noris.de>,
+	David Mansfield <david@cobite.com>
+User-Agent: KMail/1.7.2
+In-Reply-To: <7v64sj6iva.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
+X-Spam-Level: 
+X-Spam-Status: No, score=-102.8 required=5.0 tests=ALL_TRUSTED,AWL,
+	USER_IN_WHITELIST autolearn=unavailable version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9552>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
-
-> I have set up a git-on-Cygwin temporary tree at:
+On Friday 30, September 2005 12:48 Junio C Hamano wrote:
+> Alexey Nezhdanov <snake@penza-gsm.ru> writes:
+> > Unfortunately I do not know perl so I can not write a patch for
+> > git-cvsimport-script. So I asking you, Matthias, to help with this or may
+> > somebody on this list can do it instead.
 >
-> http://www.kernel.org/pub/scm/git/git-cygwin.git
+> Untested, but something like this?
+<skipped/>
+Yes, now it works correctly and can go down to master IMHO. One little notice, 
+though. It is still prints out "* UNKNOWN LINE *" for each authorname in the 
+new format.
+This is not result of your patch - it started doing this immidiatedly after I 
+tried updated version of cvsps (I have not mentioned this in my previous 
+mail, sorry). Let's wait if somebody will fix it.
+In any way, 
 
-: siamese; git clone http://kernel.org/pub/scm/git/git-cygwin.git/ git-cygwin
-defaulting to local storage area
-Cannot get remote repository information.
-Perhaps git-update-server-info needs to be run there?
+ANNOUNCE:
+=========
+With my patch to cvsps and Junio's patch to git-cvsimport.perl it is now 
+possible to import authorname+email pairs correctly basing on contents of 
+CVSROOT/users file. Currently cvsps can't retrieve this file in --cvs-direct 
+mode (that git-cvsimport.perl uses) so you'll need to check it out by hand. 
+May be if David will find some time for it this limitation will be lifted.
 
-Could you do update-server-info there, please?
+So now you can do either:
+cvs checkout CVSROOT/users
+or
+mkdir CVSROOT && echo "author:A U Thor <author@domain.xz>" >CVSROOT/users
+and then
+git cvsimport -p "--users-file,CVSROOT/users"
 
-hera$ cd /pub/scm/git/git-cygwin.git
-hera$ GIT_DIR=. git-update-server-info
+you will import all mapped usernames correctly.
 
-
-
-Knowing nothing about Cygwin environment, here are some
-comments.
-
-        +# Define NO_IPV6 if you lack IPv6 support and getaddrinfo().
-
-This part probably is applicable outside Cygwin.  At some point,
-can we have it in the mainline please?
-
-         # The ones that do not have to link with lcrypto nor lz.
-         SIMPLE_PROGRAMS = \
-        -	git-get-tar-commit-id git-mailinfo git-mailsplit git-stripspace \
-        -	git-daemon git-var
-        +	git-get-tar-commit-id$(X) git-mailinfo$(X) git-mailsplit$(X) \
-        +	git-stripspace$(X) git-var$(X) git-daemon$(X)
- 
-I have seen these $(X) in other programs' ports and found them
-quite distasteful.  Since I do not have immediate suggestions
-for improvements, I do not have rights to complain, though.
-
-Spelling it $X is a bit less distracting but not that much
-better.  Maybe "SIMPLE_PROGRAM_NAMES = git-foo git-bar" and
-"SIMPLE_PROGRAMS = $(patsubst %,%$X,$(SIMPLE_PROGRAM_NAMES))"...
-but that would not help bits like this:
-
-        -	PROGRAMS += git-http-fetch
-        +	PROGRAMS += git-http-fetch$(X)
-
-or this: 
-
-        -git-%: %.o $(LIB_FILE)
-        +git-%$(X): %.o $(LIB_FILE)
-
-... so I'd shut up about this part.
-
-        diff --git a/daemon.c b/daemon.c
-        --- a/daemon.c
-        +++ b/daemon.c
-        @@ -1,9 +1,11 @@
-         #include "cache.h"
-         #include "pkt-line.h"
-        +#include <alloca.h>
-
-Why?  I do not see any use of alloca in the added code...
-
-        +#include <sys/poll.h>
-
-Is poll preferrable over select in general?  Some may have only
-select available and others may have only poll available,
-perhaps?  In any case, this is probably relevant to wider
-audience than just Cygwin; please give it to mainline at some
-point, perhaps conditionally allowing either/both.
-
-        +	*socklist_p = malloc(sizeof(int));
-        +	pfd = calloc(socknum, sizeof(struct pollfd));
-
-Please use xmalloc and xcalloc just for consistency.
-
-                test -x $path/git-$cmd && exec $path/git-$cmd "$@" ;;
-        +
-        +	# In case we're running on Cygwin...
-        +	test -x $path/git-$cmd.exe && exec $path/git-$cmd.exe "$@" ;;
-         esac
- 
-Hmph, I think you forgot to drop double semicolon there.
-
-The git.sh script is munged by Makefile so presumably we could
-fix this part up there, like:
-
-        git: git.sh Makefile
-                rm -f $@+ $@
-                sed -e '1s|#!.*/sh|#!$(SHELL_PATH)|' \
-                    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-                    -e 's/@@X@@/$X/g' <$@.sh >$@+
-                chmod +x $@+
-                mv $@+ $@
-
-And then (a patch on top of your "master"):
-
-diff --git a/git.sh b/git.sh
---- a/git.sh
-+++ b/git.sh
-@@ -12,10 +12,14 @@ case "$#" in
- 		exit 0 ;;
- 	esac
- 
--	test -x $path/git-$cmd && exec $path/git-$cmd "$@" ;;
-+	test -x $path/git-$cmd && exec $path/git-$cmd "$@"
- 
--	# In case we're running on Cygwin...
--	test -x $path/git-$cmd.exe && exec $path/git-$cmd.exe "$@" ;;
-+	case '@@X@@' in
-+	'')
-+		;;
-+	*)
-+		test -x $path/git-$cmd@@X@@ && exec $path/git-$cmd@@X@@ "$@" ;;
-+	esac		
- esac
- 
- echo "Usage: git COMMAND [OPTIONS] [TARGET]"
+-- 
+Respectfully
+Alexey Nezhdanov
