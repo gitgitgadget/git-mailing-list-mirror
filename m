@@ -1,66 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix handling of not_for_merge '.' flag in refspec.
-Date: Thu, 29 Sep 2005 17:47:39 -0700
-Message-ID: <7vk6gzcrf8.fsf@assigned-by-dhcp.cox.net>
-References: <11280379894186-git-send-email-tom.prince@ualberta.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [howto] Kernel hacker's guide to git, updated
+Date: Thu, 29 Sep 2005 17:47:58 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0509291742170.3378@g5.osdl.org>
+References: <200509292317.j8TNHC7S022247@inti.inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 30 02:48:12 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dave Jones <davej@redhat.com>,
+	Anton Altaparmakov <aia21@cam.ac.uk>,
+	Jeff Garzik <jgarzik@pobox.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 30 02:49:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EL93z-00033v-G3
-	for gcvg-git@gmane.org; Fri, 30 Sep 2005 02:47:47 +0200
+	id 1EL94i-0003G7-FW
+	for gcvg-git@gmane.org; Fri, 30 Sep 2005 02:48:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932454AbVI3Arm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Sep 2005 20:47:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932456AbVI3Arm
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 20:47:42 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:64453 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932454AbVI3Arl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2005 20:47:41 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050930004737.UTX19461.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 29 Sep 2005 20:47:37 -0400
-To: Tom Prince <tom.prince@ualberta.net>
-In-Reply-To: <11280379894186-git-send-email-tom.prince@ualberta.net> (Tom
-	Prince's message of "Thu, 29 Sep 2005 17:53:09 -0600")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932471AbVI3As0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Sep 2005 20:48:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932503AbVI3As0
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 20:48:26 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:55963 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932506AbVI3AsX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Sep 2005 20:48:23 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8U0lx4s005519
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 29 Sep 2005 17:47:59 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8U0lwZS014235;
+	Thu, 29 Sep 2005 17:47:58 -0700
+To: Horst von Brand <vonbrand@inf.utfsm.cl>
+In-Reply-To: <200509292317.j8TNHC7S022247@inti.inf.utfsm.cl>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.118 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9531>
 
-Tom Prince <tom.prince@ualberta.net> writes:
 
-> canon_refs_list_for_fetch did not know about '.', so it mangled any
-> reference with it. Further, it added '.' to any refspec on the command
-> line other than the first.
 
-The dot trick was supposed to be internal.  If you have the
-following three lines in a remotes/xyzzy file:
+On Thu, 29 Sep 2005, Horst von Brand wrote:
+> 
+> Can I get a URL for the source for your editor? The one on kernel.org
+> doesn't compile, and probably hasn't for a long time.
 
-	URL: http://xyzzy.xz/balances.git
-        Pull: frotz nitfol
-        Pull: rezrov
+Oh, it compiles with trivial modifications. Not cleanly, but it works.
 
-    $ git pull xyzzy
+I put my git repo on 
 
-    - fetch frotz, nitfol, and rezrov; merge frotz into the
-      current branch
+	kernel.org:/pub/software/editors/uemacs/uemacs.git
 
-    $ git pull xyzzy nitfol
+but it will take a moment to mirror out. 
 
-    - fetch nitfol only; merge nitfol into the current branch.
+The "readme" says non-commercial only, but I asked Daniel Lawrence if it 
+was ok to include it in commercial distributions a long time ago, and he 
+said yes. Sadly, I've lost that email, so I don't have any paper trail for 
+that. So you should consider the readme binding.
 
-    $ git pull xyzzy nitfol rezrov
+> [Yes, there is some (perverse) fun in telling people you use the very same
+>  editor than Linus Torvalds :-]> 
 
-    - fetch nitfol and rezrov; merge them into the current
-      branch (an Octopus).
+The thing is, it's not a wonderful editor. It's small, and good enough, 
+but I really wished somebody wrote something that handled UTF-8, for 
+example.  But I've got the keybindings hardcoded in my spine, so I can't 
+ever change.
 
-The '.' is in no way part of the <refspec> format.  It may not
-be a bad idea to explicitly forbid it, but currently we don't.
+		Linus
