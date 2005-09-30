@@ -1,95 +1,78 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [howto] Kernel hacker's guide to git, updated
-Date: Fri, 30 Sep 2005 14:22:25 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0509301421160.15604@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <433BC9E9.6050907@pobox.com> <20050929200252.GA31516@redhat.com>
- <Pine.LNX.4.60.0509292106080.17860@hermes-1.csi.cam.ac.uk>
- <20050929201127.GB31516@redhat.com> <Pine.LNX.4.64.0509291413060.5362@g5.osdl.org>
- <Pine.LNX.4.64.0509291425560.5362@g5.osdl.org> <20050929213312.GD31516@redhat.com>
- <Pine.LNX.4.64.0509291451540.5362@g5.osdl.org>
- <Pine.LNX.4.60.0509292309470.17860@hermes-1.csi.cam.ac.uk>
- <7vek77ea2s.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] fetch-pack should not ask for a ref which is already
+ there
+Date: Fri, 30 Sep 2005 14:20:51 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0509301418380.15604@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0509290149230.19126@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.58.0509291120170.3308@g5.osdl.org>
+ <Pine.LNX.4.63.0509292058020.8413@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0509292124190.8668@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0509291403050.5362@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Anton Altaparmakov <aia21@cam.ac.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 30 14:23:40 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 30 14:24:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ELJuN-00053x-TT
-	for gcvg-git@gmane.org; Fri, 30 Sep 2005 14:22:36 +0200
+	id 1ELJtE-0004lE-7K
+	for gcvg-git@gmane.org; Fri, 30 Sep 2005 14:21:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030284AbVI3MW2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Sep 2005 08:22:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030290AbVI3MW1
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 08:22:27 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:62862 "EHLO
+	id S1030274AbVI3MU7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Sep 2005 08:20:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030284AbVI3MU7
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 08:20:59 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:40334 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1030284AbVI3MW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2005 08:22:27 -0400
+	id S1030274AbVI3MU6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2005 08:20:58 -0400
 Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 286B013E6DF; Fri, 30 Sep 2005 14:22:26 +0200 (CEST)
+	id 5123313E6DF; Fri, 30 Sep 2005 14:20:55 +0200 (CEST)
 Received: from virusscan (localhost [127.0.0.1])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 0E1029DB61; Fri, 30 Sep 2005 14:22:26 +0200 (CEST)
+	id 36C239DB62; Fri, 30 Sep 2005 14:20:55 +0200 (CEST)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id EC1BE91280; Fri, 30 Sep 2005 14:22:25 +0200 (CEST)
+	id 23DF89DB60; Fri, 30 Sep 2005 14:20:55 +0200 (CEST)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D352B13E6DF; Fri, 30 Sep 2005 14:22:25 +0200 (CEST)
+	id C544613E6DF; Fri, 30 Sep 2005 14:20:54 +0200 (CEST)
 X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vek77ea2s.fsf@assigned-by-dhcp.cox.net>
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0509291403050.5362@g5.osdl.org>
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9558>
 
 Hi,
 
-On Thu, 29 Sep 2005, Junio C Hamano wrote:
+On Thu, 29 Sep 2005, Linus Torvalds wrote:
 
-> Anton Altaparmakov <aia21@cam.ac.uk> writes:
+> On Thu, 29 Sep 2005, Johannes Schindelin wrote:
+> > 
+> > Wouldn't it make much more sense to add a flag which repairs an 
+> > incomplete fetch?
 > 
-> > On Thu, 29 Sep 2005, Linus Torvalds wrote:
-> >> On Thu, 29 Sep 2005, Dave Jones wrote:
-> >> > What I find amusing is that it was a patch rejection mail from you
-> >> > *years* back (circa 2000 iirc), telling me my pine corrupted whitespace,
-> >> > that made me switch MUA ;-)
-> >> > 
-> >> > All these years later, and it's still buggered ?
-> >> 
-> >> Actually, it seems better. It seems to be buggered by default, but it used 
-> >> to be that you had to actually recompile pine to make it behave. Now you 
-> >> can just disable "strip-whitespace-before-send" and _enable_ 
-> >> "quell-flowed-text" and those together seem to do the trick. No extra 
-> >> patches or recompiles necessary.
-> >
-> > Indeed.  I use those two options like that, too.  (-:
+> No.
 > 
-> Anybody interested in adding entry to SubmittingPatches MUA
-> Specific Help section?
+> We've seen crap. We've _seen_ people use the old git-ssh-pull etc that 
+> would result in incomplete repositories, and having people use the 
+> "--recover" flag.
+> 
+> THAT KIND OF CRAP IS UNACCEPTABLE! I had to walk Andrew through a broken 
+> repository because he had used those unreliable fetch methods. I was 
+> ashamed of git at that point.
+> 
+> If a ^C results in a repository that needs to be fixed up, the "source 
+> control management" is BROKEN. It's not source control, it's a buggy 
+> mess.
 
-Did I miss something? Straight from my local git directory:
+Okay, fair enough, I had that coming. But how about the opposite? A flag, 
+that says "I want to take the fast path, and if I fsck up, it is my fault 
+alone", just like "-f" to git-checkout?
 
--- snip --
-
-Pine
-----
-
-(Johannes Schindelin)
-
-I don't know how many people still use pine, but for those poor
-souls it may be good to mention that the quell-flowed-text is
-needed for recent versions.
-
-... the "no-strip-whitespace-before-send" option, too. AFAIK it
-was introduced in 4.60.
-
--- snap --
-
-Hth,
+Ciao,
 Dscho
