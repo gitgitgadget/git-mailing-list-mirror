@@ -1,64 +1,56 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] Fix gcc-4 warning in accept() call
-Date: Thu, 29 Sep 2005 21:46:18 -0700
-Message-ID: <433CC31A.9090808@zytor.com>
-References: <200509292311.j8TNBZDm022135@inti.inf.utfsm.cl> <20050930000917.rrwggw4g0gogs8w4@webmail.spamcop.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Support SPARSE in Makefile, better SPARSE_FLAGS
+Date: Thu, 29 Sep 2005 22:46:39 -0700
+Message-ID: <7vek779kg0.fsf@assigned-by-dhcp.cox.net>
+References: <1128026765.24397.46.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Horst von Brand <vonbrand@inf.utfsm.cl>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 30 06:47:52 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 30 07:47:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ELCnZ-00020B-FO
-	for gcvg-git@gmane.org; Fri, 30 Sep 2005 06:47:06 +0200
+	id 1ELDjg-0004io-TJ
+	for gcvg-git@gmane.org; Fri, 30 Sep 2005 07:47:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932267AbVI3Eqx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Sep 2005 00:46:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932268AbVI3Eqx
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 00:46:53 -0400
-Received: from paleosilicon.orionmulti.com ([209.128.68.66]:9707 "EHLO
-	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
-	id S932267AbVI3Eqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2005 00:46:52 -0400
-X-Envelope-From: hpa@zytor.com
-Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
-	(authenticated bits=0)
-	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j8U4kJJv027480
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 29 Sep 2005 21:46:21 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
+	id S932390AbVI3Fqp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Sep 2005 01:46:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbVI3Fqp
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 01:46:45 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:44162 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751361AbVI3Fqo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2005 01:46:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050930054640.LTQY9394.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 30 Sep 2005 01:46:40 -0400
 To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <20050930000917.rrwggw4g0gogs8w4@webmail.spamcop.net>
-X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
-X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
-	paleosilicon.orionmulti.com
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on paleosilicon.orionmulti.com
-X-Virus-Status: Clean
+In-Reply-To: <1128026765.24397.46.camel@dv> (Pavel Roskin's message of "Thu,
+	29 Sep 2005 16:46:05 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9536>
 
-Pavel Roskin wrote:
-> Quoting Horst von Brand <vonbrand@inf.utfsm.cl>:
-> 
-> 
->>>+				unsigned int sslen = sizeof(ss);
->>
->>Shouldn't this be size_t?
-> 
-> 
-> No.  That would actually break things on big-endian 64-bit platforms.
-> 
-> You can see "info libc" for the whole story.  My (limited!) understanding is
-> that it should be 32-bit for compatibility reasons, so socklen_t was a trick to
-> fool size_t proponents from the POSIX committee :-)
-> 
+Pavel Roskin <proski@gnu.org> writes:
 
-Formally it should be "socklen_t" or "int".  It should *not* be 
-"unsigned int"!
+> +# explicitly what architecture to check for.
+> +SPARSE = sparse
+> +SPARSE_FLAGS = -D__$(shell uname -i)__
 
-	-hpa
+        : siamese; uname --version
+        uname (coreutils) 5.2.1
+        Written by David MacKenzie.
+
+        Copyright (C) 2004 Free Software Foundation, Inc.
+        This is free software; see the source for copying conditions.
+        There is NO
+        warranty; not even for MERCHANTABILITY or FITNESS FOR A
+        PARTICULAR PURPOSE.
+        : siamese; uname -i
+        Try `uname --help' for more information.
+
+Better alternatives?
