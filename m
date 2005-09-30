@@ -1,110 +1,152 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Added an option to cvsimport to specify email domain
-Date: Fri, 30 Sep 2005 01:48:57 -0700
-Message-ID: <7v64sj6iva.fsf@assigned-by-dhcp.cox.net>
-References: <u5tzmqp8fzx.fsf@lysator.liu.se>
-	<200509270834.55486.snake@penza-gsm.ru>
-	<1127825656.30421.15.camel@gandalf.cobite.com>
-	<200509301219.42087.snake@penza-gsm.ru>
+Subject: Re: First cut at git port to Cygwin
+Date: Fri, 30 Sep 2005 03:02:57 -0700
+Message-ID: <7v4q826ffy.fsf@assigned-by-dhcp.cox.net>
+References: <433B3B10.5050407@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 30 10:50:24 2005
+X-From: git-owner@vger.kernel.org Fri Sep 30 12:05:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ELGZw-0008PJ-38
-	for gcvg-git@gmane.org; Fri, 30 Sep 2005 10:49:17 +0200
+	id 1ELHjQ-0002Fo-AM
+	for gcvg-git@gmane.org; Fri, 30 Sep 2005 12:03:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932580AbVI3ItA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Sep 2005 04:49:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932581AbVI3ItA
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 04:49:00 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:59274 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932580AbVI3Is7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Sep 2005 04:48:59 -0400
+	id S964917AbVI3KDA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Sep 2005 06:03:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964922AbVI3KC7
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 06:02:59 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:45296 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S964917AbVI3KC7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2005 06:02:59 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050930084859.UOGN9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 30 Sep 2005 04:48:59 -0400
-To: Alexey Nezhdanov <snake@penza-gsm.ru>
-In-Reply-To: <200509301219.42087.snake@penza-gsm.ru> (Alexey Nezhdanov's
-	message of "Fri, 30 Sep 2005 12:19:41 +0400")
+          id <20050930100255.NMRJ4169.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 30 Sep 2005 06:02:55 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9551>
 
-Alexey Nezhdanov <snake@penza-gsm.ru> writes:
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-> Unfortunately I do not know perl so I can not write a patch for git-cvsimport-script.
-> So I asking you, Matthias, to help with this or may somebody on this list can do it instead.
+> I have set up a git-on-Cygwin temporary tree at:
+>
+> http://www.kernel.org/pub/scm/git/git-cygwin.git
 
-Untested, but something like this?
+: siamese; git clone http://kernel.org/pub/scm/git/git-cygwin.git/ git-cygwin
+defaulting to local storage area
+Cannot get remote repository information.
+Perhaps git-update-server-info needs to be run there?
 
-------------
-[PATCH] Pass CVSps generated A U Thor <author@domain.xz> intact.
+Could you do update-server-info there, please?
 
-Alexey Nezhdanov updated CVSps to generate author-name and
-author-email information in its output.
+hera$ cd /pub/scm/git/git-cygwin.git
+hera$ GIT_DIR=. git-update-server-info
 
-If the input looks like it has that already properly formatted,
-use that without our own munging.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
 
----
+Knowing nothing about Cygwin environment, here are some
+comments.
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -510,7 +510,7 @@ unless($pid) {
+        +# Define NO_IPV6 if you lack IPv6 support and getaddrinfo().
+
+This part probably is applicable outside Cygwin.  At some point,
+can we have it in the mainline please?
+
+         # The ones that do not have to link with lcrypto nor lz.
+         SIMPLE_PROGRAMS = \
+        -	git-get-tar-commit-id git-mailinfo git-mailsplit git-stripspace \
+        -	git-daemon git-var
+        +	git-get-tar-commit-id$(X) git-mailinfo$(X) git-mailsplit$(X) \
+        +	git-stripspace$(X) git-var$(X) git-daemon$(X)
  
- my $state = 0;
+I have seen these $(X) in other programs' ports and found them
+quite distasteful.  Since I do not have immediate suggestions
+for improvements, I do not have rights to complain, though.
+
+Spelling it $X is a bit less distracting but not that much
+better.  Maybe "SIMPLE_PROGRAM_NAMES = git-foo git-bar" and
+"SIMPLE_PROGRAMS = $(patsubst %,%$X,$(SIMPLE_PROGRAM_NAMES))"...
+but that would not help bits like this:
+
+        -	PROGRAMS += git-http-fetch
+        +	PROGRAMS += git-http-fetch$(X)
+
+or this: 
+
+        -git-%: %.o $(LIB_FILE)
+        +git-%$(X): %.o $(LIB_FILE)
+
+... so I'd shut up about this part.
+
+        diff --git a/daemon.c b/daemon.c
+        --- a/daemon.c
+        +++ b/daemon.c
+        @@ -1,9 +1,11 @@
+         #include "cache.h"
+         #include "pkt-line.h"
+        +#include <alloca.h>
+
+Why?  I do not see any use of alloca in the added code...
+
+        +#include <sys/poll.h>
+
+Is poll preferrable over select in general?  Some may have only
+select available and others may have only poll available,
+perhaps?  In any case, this is probably relevant to wider
+audience than just Cygwin; please give it to mainline at some
+point, perhaps conditionally allowing either/both.
+
+        +	*socklist_p = malloc(sizeof(int));
+        +	pfd = calloc(socknum, sizeof(struct pollfd));
+
+Please use xmalloc and xcalloc just for consistency.
+
+                test -x $path/git-$cmd && exec $path/git-$cmd "$@" ;;
+        +
+        +	# In case we're running on Cygwin...
+        +	test -x $path/git-$cmd.exe && exec $path/git-$cmd.exe "$@" ;;
+         esac
  
--my($patchset,$date,$author,$branch,$ancestor,$tag,$logmsg);
-+my($patchset,$date,$author_name,$author_email,$branch,$ancestor,$tag,$logmsg);
- my(@old,@new);
- my $commit = sub {
- 	my $pid;
-@@ -591,11 +591,11 @@ my $commit = sub {
- 		}
+Hmph, I think you forgot to drop double semicolon there.
+
+The git.sh script is munged by Makefile so presumably we could
+fix this part up there, like:
+
+        git: git.sh Makefile
+                rm -f $@+ $@
+                sed -e '1s|#!.*/sh|#!$(SHELL_PATH)|' \
+                    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+                    -e 's/@@X@@/$X/g' <$@.sh >$@+
+                chmod +x $@+
+                mv $@+ $@
+
+And then (a patch on top of your "master"):
+
+diff --git a/git.sh b/git.sh
+--- a/git.sh
++++ b/git.sh
+@@ -12,10 +12,14 @@ case "$#" in
+ 		exit 0 ;;
+ 	esac
  
- 		exec("env",
--			"GIT_AUTHOR_NAME=$author",
--			"GIT_AUTHOR_EMAIL=$author",
-+			"GIT_AUTHOR_NAME=$author_name",
-+			"GIT_AUTHOR_EMAIL=$author_email",
- 			"GIT_AUTHOR_DATE=".strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($date)),
--			"GIT_COMMITTER_NAME=$author",
--			"GIT_COMMITTER_EMAIL=$author",
-+			"GIT_COMMITTER_NAME=$author_name",
-+			"GIT_COMMITTER_EMAIL=$author_email",
- 			"GIT_COMMITTER_DATE=".strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($date)),
- 			"git-commit-tree", $tree,@par);
- 		die "Cannot exec git-commit-tree: $!\n";
-@@ -638,7 +638,7 @@ my $commit = sub {
- 		print $out "object $cid\n".
- 		    "type commit\n".
- 		    "tag $xtag\n".
--		    "tagger $author <$author>\n"
-+		    "tagger $author_name <$author_email>\n"
- 		    or die "Cannot create tag object $xtag: $!\n";
- 		close($out)
- 		    or die "Cannot create tag object $xtag: $!\n";
-@@ -683,7 +683,11 @@ while(<CVS>) {
- 		$state=3;
- 	} elsif($state == 3 and s/^Author:\s+//) {
- 		s/\s+$//;
--		$author = $_;
-+		if (/^(.*?)\s+<(.*)>/) {
-+		    ($author_name, $author_email) = ($1, $2);
-+		} else {
-+		    $author_name = $author_email = $_;
-+		}
- 		$state = 4;
- 	} elsif($state == 4 and s/^Branch:\s+//) {
- 		s/\s+$//;
+-	test -x $path/git-$cmd && exec $path/git-$cmd "$@" ;;
++	test -x $path/git-$cmd && exec $path/git-$cmd "$@"
+ 
+-	# In case we're running on Cygwin...
+-	test -x $path/git-$cmd.exe && exec $path/git-$cmd.exe "$@" ;;
++	case '@@X@@' in
++	'')
++		;;
++	*)
++		test -x $path/git-$cmd@@X@@ && exec $path/git-$cmd@@X@@ "$@" ;;
++	esac		
+ esac
+ 
+ echo "Usage: git COMMAND [OPTIONS] [TARGET]"
