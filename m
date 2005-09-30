@@ -1,132 +1,80 @@
-From: Tom Prince <tom.prince@ualberta.net>
-Subject: [PATCH] Fix handling of not_for_merge '.' flag in refspec.
-Date: Thu, 29 Sep 2005 17:53:09 -0600
-Message-ID: <11280379894186-git-send-email-tom.prince@ualberta.net>
-Reply-To: Tom Prince <tom.prince@ualberta.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git push to a local directory with no .git in it
+Date: Thu, 29 Sep 2005 17:05:33 -0700
+Message-ID: <7v7jcze7xu.fsf@assigned-by-dhcp.cox.net>
+References: <loom.20050930T011606-58@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Tom Prince <tom.prince@ualberta.net>
-X-From: git-owner@vger.kernel.org Fri Sep 30 01:54:21 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 30 02:06:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EL8DG-0000bG-HH
-	for gcvg-git@gmane.org; Fri, 30 Sep 2005 01:53:18 +0200
+	id 1EL8PC-0002f3-Pp
+	for gcvg-git@gmane.org; Fri, 30 Sep 2005 02:05:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932378AbVI2XxP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Sep 2005 19:53:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932380AbVI2XxP
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 19:53:15 -0400
-Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:20325 "EHLO
-	pd2mo2so.prod.shaw.ca") by vger.kernel.org with ESMTP
-	id S932378AbVI2XxO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Sep 2005 19:53:14 -0400
-Received: from pd5mr2so.prod.shaw.ca
- (pd5mr2so-qfe3.prod.shaw.ca [10.0.141.233]) by l-daemon
- (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0INL00HTXROJN870@l-daemon> for git@vger.kernel.org; Thu,
- 29 Sep 2005 17:53:07 -0600 (MDT)
-Received: from pn2ml6so.prod.shaw.ca ([10.0.121.150])
- by pd5mr2so.prod.shaw.ca (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar
- 15 2004)) with ESMTP id <0INL004IGROJXH10@pd5mr2so.prod.shaw.ca> for
- git@vger.kernel.org; Thu, 29 Sep 2005 17:53:07 -0600 (MDT)
-Received: from socrates (S0106000fea73ae52.ed.shawcable.net [68.148.44.80])
- by l-daemon (iPlanet Messaging Server 5.2 HotFix 1.18 (built Jul 28 2003))
- with ESMTP id <0INL00346ROIMF@l-daemon> for git@vger.kernel.org; Thu,
- 29 Sep 2005 17:53:07 -0600 (MDT)
-Received: from socrates (localhost [127.0.0.1])	by socrates (8.13.4/8.13.4)
- with SMTP id j8TNr9Ap007837; Thu, 29 Sep 2005 17:53:09 -0600
-In-reply-to: 
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-Mailer: git-send-email
+	id S932391AbVI3AFg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Sep 2005 20:05:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932401AbVI3AFg
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Sep 2005 20:05:36 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:10941 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932391AbVI3AFf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Sep 2005 20:05:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050930000529.STWZ29747.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 29 Sep 2005 20:05:29 -0400
+To: Richard Curnow <rc@rc0.org.uk>
+In-Reply-To: <loom.20050930T011606-58@post.gmane.org> (Richard Curnow's
+	message of "Thu, 29 Sep 2005 23:25:59 +0000 (UTC)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9529>
 
-canon_refs_list_for_fetch did not know about '.', so it mangled any
-reference with it. Further, it added '.' to any refspec on the command
-line other than the first.
+Richard Curnow <rc@rc0.org.uk> writes:
 
-Signed-off-by: Tom Prince <tom.prince@ualberta.net>
+> I get
+>
+> fatal: /home/richard/homepage/git/mairix.git doesn't appear to be a git directory
+>
+> presumably because there is no .git in it.
 
+Please don't presume, but dig.
 
----
+        $ git grep -n 'doesn.t appear to be'
+        receive-pack.c:275:		die("%s doesn't appear to be a git directory", dir);
 
- Documentation/pull-fetch-param.txt |    5 +++--
- git-parse-remote.sh                |   16 +++++++++++++++-
- 2 files changed, 18 insertions(+), 3 deletions(-)
+And the lines around there are:
 
-446dda983492e3c07dc73b271cb9208a4359a734
-diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
---- a/Documentation/pull-fetch-param.txt
-+++ b/Documentation/pull-fetch-param.txt
-@@ -49,7 +49,7 @@
- 
- <refspec>::
- 	The canonical format of a <refspec> parameter is
--	'+?<src>:<dst>'; that is, an optional plus '+', followed
-+	'.?+?<src>:<dst>'; that is, an optional plus '+', followed
- 	by the source ref, followed by a colon ':', followed by
- 	the destination ref.
- 
-@@ -68,7 +68,8 @@
- 	ref that matches it is fast forwarded using <src>.
- 	Again, if the optional plus '+' is used, the local ref
- 	is updated even if it does not result in a fast forward
--	update.
-+	update. If the optional dot '.' is used, the remote ref
-+	is fetched, but not used for merging.
- 
- 	Some short-cut notations are also supported.
- 
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -72,8 +72,15 @@ canon_refs_list_for_fetch () {
- 	dot_prefix=
- 	for ref
- 	do
-+		not_for_merge=
- 		force=
- 		case "$ref" in
-+		.*)
-+			ref=$(expr "$ref" : '\.\(.*\)')
-+			not_for_merge=.
-+			;;
-+		esac
-+		case "$ref" in
- 		+*)
- 			ref=$(expr "$ref" : '\+\(.*\)')
- 			force=+
-@@ -94,7 +101,12 @@ canon_refs_list_for_fetch () {
- 		heads/* | tags/* ) local="refs/$local" ;;
- 		*) local="refs/heads/$local" ;;
- 		esac
--		echo "${dot_prefix}${force}${remote}:${local}"
-+		case "$octopus$not_for_merge" in
-+		'')	
-+			not_for_merge=$dot_prefix
-+			;;
-+		esac
-+		echo "${not_for_merge}${force}${remote}:${local}"
- 		dot_prefix=.
- 	done
- }
-@@ -114,6 +126,7 @@ get_remote_default_refs_for_fetch () {
- 		# This prefixes the second and later default refspecs
- 		# with a '.', to signal git-fetch to mark them
- 		# not-for-merge.
-+		octopus=
- 		canon_refs_list_for_fetch $(sed -ne '/^Pull: */{
- 						s///p
- 					}' "$GIT_DIR/remotes/$1")
-@@ -155,6 +168,7 @@ get_remote_refs_for_fetch () {
- 			;;
- 		    esac
- 		fi
-+		octopus=t
- 		canon_refs_list_for_fetch "$ref"
- 	    done
- 	    ;;
+	/* chdir to the directory. If that fails, try appending ".git" */
+	if (chdir(dir) < 0) {
+		if (chdir(mkpath("%s.git", dir)) < 0)
+			die("unable to cd to %s", dir);
+	}
+
+	/* If we have a ".git" directory, chdir to it */
+	chdir(".git");
+	putenv("GIT_DIR=.");
+
+	if (access("objects", X_OK) < 0 || access("refs/heads", X_OK) < 0)
+		die("%s doesn't appear to be a git directory", dir);
+	write_head_info();
+
+We chdir to mairix.git/, and then try to chdir to .git beneath
+it _if_ _exists_; we do not care if the second chdir fails.  So
+if you do not have mairix.git/.git, that's OK.  We will stay in
+mairix.git/ directory and then set the GIT_DIR there.
+
+If you do not have mairix.git/objects or mairix.git/refs/heads/
+then that's when you get that error message.
+
+	$ cd /home/richard/homepage/git/mairix.git
+        $ ls -ld objects refs refs/heads
+
+would tell us more.
+
+        
