@@ -1,69 +1,99 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [howto] Kernel hacker's guide to git, updated
-Date: Fri, 30 Sep 2005 11:14:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0509301112100.3378@g5.osdl.org>
-References: <433BC9E9.6050907@pobox.com> <20050929200252.GA31516@redhat.com>
- <433C4B6D.6030701@pobox.com> <7virwjegb5.fsf@assigned-by-dhcp.cox.net>
- <433D1E5D.20303@pobox.com> <7v64si4von.fsf@assigned-by-dhcp.cox.net>
+From: Elfyn McBratney <beu@gentoo.org>
+Subject: [COGITO] cg-status in an empty repo spits out git-diff-index usage info
+Date: Fri, 30 Sep 2005 19:18:09 +0100
+Message-ID: <20050930181809.GB13582@emcb.local>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff Garzik <jgarzik@pobox.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	git@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932560AbVI3SOc@vger.kernel.org Fri Sep 30 20:17:49 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932560AbVI3SOc@vger.kernel.org>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="nVMJ2NtxeReIH9PS"
+Cc: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Sep 30 20:21:30 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ELPPy-000592-3L
-	for glk-linux-kernel-3@gmane.org; Fri, 30 Sep 2005 20:15:34 +0200
+	id 1ELPSr-00061y-MM
+	for gcvg-git@gmane.org; Fri, 30 Sep 2005 20:18:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932560AbVI3SOc (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 30 Sep 2005 14:14:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932581AbVI3SOb
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Fri, 30 Sep 2005 14:14:31 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:55012 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932560AbVI3SOa (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 30 Sep 2005 14:14:30 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j8UIEN4s012564
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 30 Sep 2005 11:14:23 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j8UIEM21016189;
-	Fri, 30 Sep 2005 11:14:23 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64si4von.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.118 $
-X-Scanned-By: MIMEDefang 2.36
-Sender: linux-kernel-owner@vger.kernel.org
+	id S932575AbVI3SSV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Sep 2005 14:18:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932585AbVI3SSU
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Sep 2005 14:18:20 -0400
+Received: from anchor-post-35.mail.demon.net ([194.217.242.85]:35334 "EHLO
+	anchor-post-35.mail.demon.net") by vger.kernel.org with ESMTP
+	id S932576AbVI3SSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Sep 2005 14:18:10 -0400
+Received: from beu1.demon.co.uk ([83.105.51.149] helo=emcb.local)
+	by anchor-post-35.mail.demon.net with esmtp (Exim 4.42)
+	id 1ELPMx-000FVD-H4; Fri, 30 Sep 2005 18:12:27 +0000
+Received: by emcb.local (Postfix, from userid 1001)
+	id 3EE3E148040; Fri, 30 Sep 2005 19:18:09 +0100 (BST)
+To: git mailing list <git@vger.kernel.org>
+Mail-Followup-To: Elfyn McBratney <beu@gentoo.org>,
+	git mailing list <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
+Content-Disposition: inline
+Organisation: Gentoo Foundation, Inc.
+User-Agent: mutt-ng/devel (Linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9569>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9570>
 
 
+--nVMJ2NtxeReIH9PS
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 30 Sep 2005, Junio C Hamano wrote:
-> 
-> I suspect the version Linus posted has a funny interaction with
-> 'git-pull'; 'git pull --tags' by mistake, or intentionally to
-> file a bug report to annoy me ;-), would create an Octopus out
-> of those tags, if I am not mistaken.
+[Re-sending ..]
 
-Hey, even more impressive is "git pull --all", which will happily try to 
-create an octopus of every single ref available at the other end.
+Hello Petr, git list,
 
-Now, I think that octopus merges in _general_ are likely to be driver 
-error, and that it might make sense to have a separate flag to enable 
-them in the first place. That would solve the confusion..
+A `cg-status` in an empty repo (i.e., straight after a `cg-init -I`)
+spits out git-diff-index usage information, a la:
 
-So then you could do
+	[($) 09:03:42] beu@zippy ~/git/test
+	> cg-status
+	Heads:
+	    >master
+	   =20
+	    usage: git-diff-index [-m] [--cached] [<common diff options>] <tree-is=
+h> [<path>...]
+	    common diff options:
+	    [...]
 
-	git pull --all --octopus xyzzy
+which I'm guessing isn't expected behaviour ;)  `git status` does the
+same, FWIW.  I'm having a look around to try and figure out why, and
+will try to work up a patch to fix it, but in case I don't find the bug
+(or feature ;), consider this a heads-up. :)
 
-if you _really_ meant to do that. 
+(And I've just used gitk for the first time, too, and I must say it's
+one invaluable piece of software !  Kudos to it's creators :)
 
-		Linus
+This is with latest cogito.git (b06f2a707963c8712f7a6bbd4b89bae758bcf92a,
+though the 'bug' is also present in 0.15.1) with git 0.99.7d.
+
+Best,
+Elfyn
+
+--=20
+Elfyn McBratney
+Gentoo Developer/Perl Team Lead
+beu/irc.freenode.net                            http://dev.gentoo.org/~beu/
++------------O.o--------------------- http://dev.gentoo.org/~beu/pubkey.asc
+
+PGP Key ID: 0x69DF17AD
+PGP Key Fingerprint:
+  DBD3 B756 ED58 B1B4 47B9  B3BD 8D41 E597 69DF 17AD
+
+--nVMJ2NtxeReIH9PS
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQFDPYFhjUHll2nfF60RAiivAJwNJepg6gnq/dN0DlQYLRfstY0D0ACgjQh8
+wzSOan4qJTL1Hm2lkznoI6g=
+=tg7J
+-----END PGP SIGNATURE-----
+
+--nVMJ2NtxeReIH9PS--
