@@ -1,69 +1,56 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] Support SPARSE in Makefile, better SPARSE_FLAGS
-Date: Sat,  1 Oct 2005 00:13:58 -0400
-Message-ID: <20051001001358.n59rjyg48400c0kw@webmail.spamcop.net>
-References: <1128026765.24397.46.camel@dv>
-	<7vek779kg0.fsf@assigned-by-dhcp.cox.net> <1128087662.14543.14.camel@dv>
-	<433D8FA6.2080808@zytor.com> <1128118469.7352.15.camel@dv>
-	<433DB950.3010909@zytor.com>
+From: Tony Luck <tony.luck@gmail.com>
+Subject: time to update with new packs
+Date: Fri, 30 Sep 2005 21:40:23 -0700
+Message-ID: <12c511ca0509302140o4263020bsc337594609175173@mail.gmail.com>
+Reply-To: Tony Luck <tony.luck@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 01 06:14:35 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sat Oct 01 06:41:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ELYl8-0007vC-St
-	for gcvg-git@gmane.org; Sat, 01 Oct 2005 06:14:03 +0200
+	id 1ELZAu-0003tX-8g
+	for gcvg-git@gmane.org; Sat, 01 Oct 2005 06:40:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750724AbVJAEOA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Oct 2005 00:14:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750725AbVJAEOA
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Oct 2005 00:14:00 -0400
-Received: from c60.cesmail.net ([216.154.195.49]:35985 "EHLO c60.cesmail.net")
-	by vger.kernel.org with ESMTP id S1750724AbVJAEN7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Oct 2005 00:13:59 -0400
-Received: from unknown (HELO epsilon.cesmail.net) ([192.168.1.40])
-  by c60.cesmail.net with SMTP; 01 Oct 2005 00:14:00 -0400
-Received: (qmail 20545 invoked by uid 99); 1 Oct 2005 04:13:58 -0000
-Received: from static-68-161-241-229.ny325.east.verizon.net
-	(static-68-161-241-229.ny325.east.verizon.net [68.161.241.229]) by
-	webmail.spamcop.net (Horde) with HTTP for <proski@spamcop.net@cesmail.net>;
-	Sat,  1 Oct 2005 00:13:58 -0400
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <433DB950.3010909@zytor.com>
+	id S1750728AbVJAEkZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Oct 2005 00:40:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750729AbVJAEkY
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Oct 2005 00:40:24 -0400
+Received: from zproxy.gmail.com ([64.233.162.203]:42567 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750728AbVJAEkY convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 1 Oct 2005 00:40:24 -0400
+Received: by zproxy.gmail.com with SMTP id 13so46704nzn
+        for <git@vger.kernel.org>; Fri, 30 Sep 2005 21:40:23 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=CsVSjMAHXbfzWmG6XsEiA/ASCI9ak1sXljFIFTCJjB+yQnN5NNn16lLTraPEfjj8mkR/VsaCdR021mNock/FteANEN/6t66uCvgs/txMaeXdOYk57zYb6tBeLk+d9P3NQfZR1pfKsdggUhmzGUSM3U2uH3k70cW3mPEOwYRXk1c=
+Received: by 10.36.227.68 with SMTP id z68mr2929116nzg;
+        Fri, 30 Sep 2005 21:40:23 -0700 (PDT)
+Received: by 10.36.58.18 with HTTP; Fri, 30 Sep 2005 21:40:23 -0700 (PDT)
+To: git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.0-cvs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9584>
 
-Quoting "H. Peter Anvin" <hpa@zytor.com>:
+I see that Linus made a new incremental pack when he
+released 2.6.14-rc3 ... so to be nice to the kernel.org
+mirroring daemons I should make use of them.
 
-> Pavel Roskin wrote:
-> >
-> > I know.  That's what I'm using in the wrapper (plus -m64 and some
-> > warnings).  But it should be the default.  Until then, hassle-free
-> > sparse support in the Makefile is only possible for the projects that
-> > already know the architecture (e.g. the Linux kernel).
-> >
->
-> I think that's debatable.  It introduces main-compiler dependencies into
-> sparse which is undesirable.
+After the excitement I had last time with packs and trying to
+make use of alternate directories, I thought I'd check the
+process before I touched anything.
 
-I see sparse is already moving in this direction.  Right now, it's somewhere in
-the middle, which is quite inconvenient.  It hardcodes gcc version numbers but
-not the architecture.
+1) Link the new pack files from Linus' objects/pack directory
+to my objects/pack directory.
 
-> A much simpler option would be to write a "sparsegcc" script which would
-> be invoked just like gcc, extract the appropriate macro information
-> based on options, and then invoke sparse.
+2) $ GIT_DIR=. git prune-packed # in my directory
 
-I guess that's what cgcc is trying to be.  Since it also runs the compiler, no
-special support for cgcc should be needed in Makefile other than using $(CC).
+3) $ GIT_DIR=. git update-server-info # ditto
 
---
-Regards,
-Pavel Roskin
+Ok?
+
+-Tony
