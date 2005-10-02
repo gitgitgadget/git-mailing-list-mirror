@@ -1,63 +1,92 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: [ANNOUNCE] Stacked GIT 0.7
-Date: Sun, 2 Oct 2005 14:10:59 +0200
-Message-ID: <20051002121059.GA32367@elte.hu>
-References: <1128244627.9740.6.camel@localhost.localdomain>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH] Teach git-ls-files about '--' to denote end of options.
+Date: Sun, 2 Oct 2005 17:33:38 +0200
+Message-ID: <20051002153338.GA1685@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 02 14:11:04 2005
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Sun Oct 02 17:35:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EM2fe-0007QZ-Q6
-	for gcvg-git@gmane.org; Sun, 02 Oct 2005 14:10:23 +0200
+	id 1EM5qb-0008Gp-Vl
+	for gcvg-git@gmane.org; Sun, 02 Oct 2005 17:33:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751086AbVJBMKR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Oct 2005 08:10:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751088AbVJBMKR
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Oct 2005 08:10:17 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:40126 "EHLO mx3.mail.elte.hu")
-	by vger.kernel.org with ESMTP id S1751086AbVJBMKQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2005 08:10:16 -0400
-Received: from chiara.elte.hu ([157.181.151.252])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1EM2fX-00033c-8m
-	from <mingo@elte.hu>; Sun, 02 Oct 2005 14:10:15 +0200
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id BECA11FC2; Sun,  2 Oct 2005 14:10:14 +0200 (CEST)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+	id S1751110AbVJBPdr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Oct 2005 11:33:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbVJBPdr
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Oct 2005 11:33:47 -0400
+Received: from [85.8.31.11] ([85.8.31.11]:12987 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1751110AbVJBPdq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2005 11:33:46 -0400
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id F04854100; Sun,  2 Oct 2005 17:39:50 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EM5qN-0006eO-00; Sun, 02 Oct 2005 17:33:39 +0200
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <1128244627.9740.6.camel@localhost.localdomain>
-User-Agent: Mutt/1.4.2.1i
-Received-SPF: softfail (mx3.mail.elte.hu: transitioning domain of elte.hu does not designate 157.181.151.252 as permitted sender) client-ip=157.181.151.252; envelope-from=mingo@elte.hu; helo=chiara.elte.hu;
-X-ELTE-SpamScore: 0.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=0.0 required=5.9 tests=AWL autolearn=disabled SpamAssassin version=3.0.3
-	0.0 AWL                    AWL: From: address is in the auto white-list
-X-ELTE-VirusStatus: clean
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9618>
+
+Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
 
-* Catalin Marinas <catalin.marinas@gmail.com> wrote:
+---
 
-> Stacked GIT 0.7 release is available from 
-> http://www.procode.org/stgit/
-> 
-> StGIT is a Python application providing similar functionality to Quilt 
-> (i.e. pushing/popping patches to/from a stack) on top of GIT. These 
-> operations are performed using GIT commands and the patches are stored 
-> as GIT commit objects, allowing easy merging of the StGIT patches into 
-> other repositories using standard GIT functionality.
+ Documentation/git-ls-files.txt |    9 ++++++++-
+ ls-files.c                     |    5 ++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-i'm wondering - have you (or anyone else) done performance comparisons 
-of quilt vs. stgit, using the same stack of patches? One of the most 
-important features of quilt (for me) is that it's very fast at 
-popping/pushing through hundreds of patches.
-
-	Ingo
+1d1f81648fe42497daff2e95320698fa22ca6440
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 		(-[c|d|o|i|s|u|k|m])\*
+ 		[-x <pattern>|--exclude=<pattern>]
+ 		[-X <file>|--exclude-from=<file>]
+-		[--exclude-per-directory=<file>]
++		[--exclude-per-directory=<file>] [--] [<file>]\*
+ 
+ DESCRIPTION
+ -----------
+@@ -77,6 +77,13 @@ OPTIONS
+ 	K	to be killed
+ 	?	other
+ 
++--::
++	Do not interpret any more arguments as options.
++
++<file>:: 
++	Files to show. If no files are given all files which match the other
++	specified criteria are shown.
++
+ Output
+ ------
+ show files just outputs the filename unless '--stage' is specified in
+diff --git a/ls-files.c b/ls-files.c
+--- a/ls-files.c
++++ b/ls-files.c
+@@ -530,7 +530,7 @@ static void verify_pathspec(void)
+ static const char ls_files_usage[] =
+ 	"git-ls-files [-z] [-t] (--[cached|deleted|others|stage|unmerged|killed|modified])* "
+ 	"[ --ignored ] [--exclude=<pattern>] [--exclude-from=<file>] "
+-	"[ --exclude-per-directory=<filename> ]";
++	"[ --exclude-per-directory=<filename> ] [--] [<file>]*";
+ 
+ int main(int argc, const char **argv)
+ {
+@@ -544,6 +544,9 @@ int main(int argc, const char **argv)
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
++		if (!strcmp(arg, "--")) {
++			break;
++		}
+ 		if (!strcmp(arg, "-z")) {
+ 			line_terminator = 0;
+ 			continue;
