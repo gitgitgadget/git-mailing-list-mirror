@@ -1,58 +1,123 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Honor extractor's umask in git-tar-tree.
-Date: Sat, 01 Oct 2005 20:24:12 -0700
-Message-ID: <433F52DC.5090906@zytor.com>
-References: <20050930160353.F025C352B7B@atlas.denx.de>	<Pine.LNX.4.64.0510010934290.3378@g5.osdl.org>	<7vr7b53y0n.fsf@assigned-by-dhcp.cox.net> <7vk6gx3vkt.fsf_-_@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [howto] Kernel hacker's guide to git, updated
+Date: Sun, 02 Oct 2005 01:47:24 -0700
+Message-ID: <7vr7b41f1f.fsf@assigned-by-dhcp.cox.net>
+References: <433BC9E9.6050907@pobox.com> <20050929200252.GA31516@redhat.com>
+	<433C4B6D.6030701@pobox.com> <7virwjegb5.fsf@assigned-by-dhcp.cox.net>
+	<433D1E5D.20303@pobox.com> <7v64si4von.fsf@assigned-by-dhcp.cox.net>
+	<433D477A.4010009@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Oct 02 05:25:30 2005
-Return-path: <git-owner@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751026AbVJBIr2@vger.kernel.org Sun Oct 02 10:48:54 2005
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751026AbVJBIr2@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ELuSj-0004WX-57
-	for gcvg-git@gmane.org; Sun, 02 Oct 2005 05:24:29 +0200
+	id 1ELzVj-0003bG-Gi
+	for glk-linux-kernel-3@gmane.org; Sun, 02 Oct 2005 10:47:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750953AbVJBDY0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Oct 2005 23:24:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750955AbVJBDY0
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Oct 2005 23:24:26 -0400
-Received: from paleosilicon.orionmulti.com ([209.128.68.66]:56457 "EHLO
-	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
-	id S1750952AbVJBDYZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Oct 2005 23:24:25 -0400
-X-Envelope-From: hpa@zytor.com
-Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
-	(authenticated bits=0)
-	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j923OCJv025825
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 1 Oct 2005 20:24:13 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk6gx3vkt.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
-X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
-	paleosilicon.orionmulti.com
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on paleosilicon.orionmulti.com
-X-Virus-Status: Clean
-Sender: git-owner@vger.kernel.org
+	id S1751026AbVJBIr2 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 2 Oct 2005 04:47:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbVJBIr2
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Sun, 2 Oct 2005 04:47:28 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:54929 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751020AbVJBIr1 (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 2 Oct 2005 04:47:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051002084719.GRHY29747.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 2 Oct 2005 04:47:19 -0400
+To: Jeff Garzik <jgarzik@pobox.com>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9606>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9607>
 
-Junio C Hamano wrote:
-> The archive generated with git-tar-tree had 0755 and 0644 mode bits.
-> This inconvenienced the extractor with umask 002 by robbing g+w bit
-> unconditionally.  Just write it out with loose permissions bits and
-> let the umask of the extractor do its job.
+Jeff Garzik <jgarzik@pobox.com> writes:
 
-I've thought that it would be nice if the files/directories were written 
-into the archive with 0666/0777 permissions by default, and then 
-extracted with the umask honoured.  A special option then could be used 
-to add files with special permissions, like files in .ssh, which *have* 
-to be g-w or sshd will reject them.
+> Junio C Hamano wrote:
+>> Jeff Garzik <jgarzik@pobox.com> writes:
 
-	-hpa
+>>> 2) What is the easiest way to obtain a list of changes present in
+>>> repository B, that are not present in repository A?  I used to use
+>>> git-changes-script [hacked cg-log script] for this:
+
+I haven't really *read* that script, but I think it is trying to
+make a list of commits from both repositories and trying to find
+the set that are in one side and not in the other using diff (a
+real shell programer probably would have used "comm" for this
+kind of task, not "diff"), then doing a handcrafted git-log on
+each of them.
+
+Attached is my quick hack, based on your original question,
+without really trying to understand what the script is doing, so
+I cannot claim it is a rewrite nor even attempting to be
+compatible.  Please take a look at it and tell me if this is
+any close to what you need.
+
+I have a suspition that this might be better done as a natural
+extension of git-log, though.
+
+------------
+#!/bin/sh
+#
+# Copyright (c) 2005 Junio C Hamano
+#
+
+. git-sh-setup || die "Not a git archive"
+
+usage () {
+	echo >&2 "$0 ( -L | -R ) <dir> [<ref>] [<ref>]
+
+-L shows changes in local not in remote.
+-R shows changes in remote not in local.
+<dir> names the remote repository.
+
+If given no refs, local and remote HEADs are compared.
+If given one ref, local HEAD and named remote ref are compared.
+If given two refs, the first names a local ref, and the second names
+remote ref to be compared.
+"
+	exit 1
+}
+
+case "$1" in
+-L | -R)
+	;;
+*)
+	usage ;;
+esac
+
+other="$2"
+
+(
+	unset GIT_DIR GIT_OBJECT_DIRECTORY
+	cd "$other" && . git-sh-setup ||
+	die "$other is not a valid git repository."
+)
+
+local=${3:-HEAD}
+remote=${4:-HEAD}
+
+# Basic validation.
+local=$(git-rev-parse --verify "$local^0" 2>/dev/null) ||
+die "local ref $local is not valid."
+remote=$(GIT_DIR="$other" git-rev-parse --verify "$remote^0" 2>/dev/null) ||
+die "remote ref $remote is not valid."
+
+case "$1" in
+-L)
+	list_args="$local ^$remote" ;;
+-R)
+	list_args="^$local $remote" ;;
+esac
+
+GAOD="$GIT_ALTERNATE_OBJECT_DIRECTORIES"
+
+GIT_ALTERNATE_OBJECT_DIRECTORIES="$other/.git/objects:$GAOD" \
+git-rev-list --pretty $list_args |
+LESS=-S ${PAGER:-less}
