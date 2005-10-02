@@ -1,103 +1,172 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH Cogito] Fix README asciidoc formatting
-Date: Sun, 2 Oct 2005 12:56:01 +0200
-Message-ID: <20051002105601.GB9934@diku.dk>
+From: Blaisorblade <blaisorblade@yahoo.it>
+Subject: StGit command completions - and Git ones?
+Date: Sun, 2 Oct 2005 13:03:44 +0200
+Message-ID: <200510021303.44960.blaisorblade@yahoo.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 02 12:56:39 2005
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_Q67PD2LaizDb1Uu"
+X-From: git-owner@vger.kernel.org Sun Oct 02 13:05:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EM1W7-0007Bw-L2
-	for gcvg-git@gmane.org; Sun, 02 Oct 2005 12:56:27 +0200
+	id 1EM1da-0000jO-1x
+	for gcvg-git@gmane.org; Sun, 02 Oct 2005 13:04:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbVJBK4D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Oct 2005 06:56:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbVJBK4D
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Oct 2005 06:56:03 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:46565 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S1751072AbVJBK4C (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2005 06:56:02 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 39D836DFFDB; Sun,  2 Oct 2005 12:55:58 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id F289F6DFF9D; Sun,  2 Oct 2005 12:55:57 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 6F7DA60EF6; Sun,  2 Oct 2005 12:56:01 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Level: 
+	id S1751075AbVJBLD6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Oct 2005 07:03:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbVJBLD6
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Oct 2005 07:03:58 -0400
+Received: from smtp004.mail.ukl.yahoo.com ([217.12.11.35]:43886 "HELO
+	smtp004.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1751075AbVJBLD6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Oct 2005 07:03:58 -0400
+Received: (qmail 94247 invoked from network); 2 Oct 2005 11:03:56 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Received:From:To:Subject:Date:User-Agent:MIME-Version:Content-Type:Message-Id;
+  b=D/3FwVDBqcnP+wJCH6df+p/D/c4u39AJPraB9EKGdxLQf2Ui3/QX06qz8U9i62Z3fNQGbP0Bw1+mAZz9flmy0TuOd1ZWZSK86E+nmz3uFI3qx4678O4m4QBWj25IIgF1xnps3LINtjMdqkLMj1IEVxSQHSQNz8yCYL4h2xjzSag=  ;
+Received: from unknown (HELO zion.home.lan) (blaisorblade@62.11.75.57 with login)
+  by smtp004.mail.ukl.yahoo.com with SMTP; 2 Oct 2005 11:03:55 -0000
+To: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+User-Agent: KMail/1.8.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9615>
 
-Add empty lines after code blocks to switch back to normal text.
+--Boundary-00=_Q67PD2LaizDb1Uu
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+I noticed in your TODO you talk about adding command line completions. I've 
+been doing it for my needs, and the thing is still very incomplete, even if 
+it's not a "XXX hack hack hack", and I wanted to send this first draft.
 
----
+Note: I've not tried to add any completion which isn't StGit specific:
+a) I didn't need them
 
-BTW, what about adding some notatation info for those boxes? It looks
-very creative for an introduction document.
+b) they should be implemented for git and cogito first
 
-commit ca52918a9a6e02e55d878d8f5e68672432940337
-tree 60d270e8b45beeee9361b13284ff2eefec746fd6
-parent 9356837de630644323c800e2accad2618d7393f9
-author Jonas Fonseca <fonseca@diku.dk> Sun, 02 Oct 2005 12:45:03 +0200
-committer Jonas Fonseca <fonseca@antimatter.(none)> Sun, 02 Oct 2005 12:45:03 +0200
-
- README |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/README b/README
---- a/README
-+++ b/README
-@@ -305,11 +305,13 @@ will `cg-clone` do?
- 
- 	+--------+
- 	+--------+
-+
- First it creates an empty repository
- 
- 	+--------+
- 	$  origin<
- 	+--------+
-+
- Then it creates an 'origin' head, and will copy all the history from the
- remote repository's 'master' head there. So this head exists to reflect
- the state of the remote repository. The important point is that it is
-@@ -325,6 +327,7 @@ head and possibly push to it.
- 	|  master<
- 	$  origin<
- 	+--------+
-+
- Finally it copied over the 'origin' head to the 'master' head, which will
- from now as your current head represent your local development in the
- repository.
-@@ -337,6 +340,7 @@ will it do?
- 	|  master<
- 	$  origin< < < < <
- 	+--------+
-+
- First, it will populate your 'origin' head with the new commits from the
- remote's 'master' head.
- 
-@@ -344,6 +348,7 @@ remote's 'master' head.
- 	|  master<-M-.
- 	$  origin>---'
- 	+--------+
-+
- Then, it will merge those new commits to your 'master' head.
- 
- Now let's imagine that there is also another head 'unoji' on the other side
+c) not everything is clear. For instance, I think that SHA1 completion is 
+pretty useless (I never type a SHA1), while only branch and tag completion 
+is, but maybe other disagree: there's support for it in Cogito, in fact, and 
+a shortened SHA1 is used as kernel revision.
 
 -- 
-Jonas Fonseca
+Inform me of my mistakes, so I can keep imitating Homer Simpson's "Doh!".
+Paolo Giarrusso, aka Blaisorblade (Skype ID "PaoloGiarrusso", ICQ 215621894)
+http://www.user-mode-linux.org/~blaisorblade
+
+--Boundary-00=_Q67PD2LaizDb1Uu
+Content-Type: text/plain;
+  charset="us-ascii";
+  name="stg-compl"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+	filename="stg-compl"
+
+_stg () 
+{
+	local cur cmd cmds 
+	cur=${COMP_WORDS[COMP_CWORD]}
+	COMPREPLY=()
+	if [ $COMP_CWORD -eq 1 ]; then
+		cmds=$(stg help|tail +4|awk '{print $1}')
+		COMPREPLY=( $(compgen -W "${cmds}" -- $cur) )
+	else
+		local cmd=${COMP_WORDS[1]}
+		local prev=${COMP_WORDS[COMP_CWORD-1]}
+		#if [ $COMP_CWORD -eq 2 -o "$prev" = "-t" -o "$prev" = "--to" -o "$prev" = "-r" ]; then
+		local patches
+		#Add -b support - pass "-b branch" to unapplied and applied.
+		case $cmd in
+			push)
+			patches=$(stg unapplied)
+			;;
+			pop|mail)
+			patches=$(stg applied)
+			;;
+			diff|id)
+			patches=$((stg applied; stg unapplied)|while read i; do echo $i/; done)
+			;;
+		esac
+		case $cmd in
+			push)
+			if [ "$prev" = "-t" -o "$prev" = "--to" ]; then
+				if [ "${cur#*:}" != "${cur}" ]; then
+					COMPREPLY=( $(compgen -W "${patches}" -- ${cur#*:}) )
+				else
+					COMPREPLY=( $(compgen -W "${patches}" -- $cur) )
+				fi
+			else
+				cmds="-a --all -n --number -t --to --reverse --undo -h --help"
+				COMPREPLY=( $(compgen -W "${cmds} ${patches}" -- $cur) )
+			fi
+			;;
+
+			pop)
+			if [ "$prev" = "-t" -o "$prev" = "--to" ]; then
+				COMPREPLY=( $(compgen -W "${patches}" -- $cur) )
+			else
+				cmds="-a --all -n --number -t --to -h --help"
+				COMPREPLY=( $(compgen -W "${cmds}" -- $cur) )
+			fi
+			;;
+
+			mail)
+			if [ "$prev" = "-r" -o "$prev" = "--range" ]; then
+				if [ "${cur#*:}" != "${cur}" ]; then
+					COMPREPLY=( $(compgen -W "${patches}" -- ${cur#*:}) )
+				else
+					COMPREPLY=( $(compgen -W "${patches}" -- $cur) )
+				fi
+			else
+				cmds="-a --all -r --range --to --cc --bcc -v --version \
+				-t --template -f --first -s --sleep --refid -u --smtp-user \
+				-p --smtp-password -b --branch -h --help"
+
+				COMPREPLY=( $(compgen -o bashdefault -W "${cmds} ${patches}" -- $cur) )
+			fi
+			;;
+			diff)
+			if [ "$prev" = "-r" ]; then
+				if [ "${cur#*:}" != "${cur}" ]; then
+					COMPREPLY=( $(compgen -W "${patches}" -- ${cur#*:}) )
+				else
+					COMPREPLY=( $(compgen -W "${patches}" -- $cur) )
+				fi
+			else
+				cmds="-r -s --stat -h --help"
+
+				COMPREPLY=( $(compgen -W "${cmds}" -- $cur) )
+			fi
+			;;
+			id)
+				cmds="-b --branch -h --help"
+				COMPREPLY=( $(compgen -W "${cmds} ${patches}" -- $cur) )
+			;;
+			*)
+			COMPREPLY=( $(compgen -f -- $cur) )
+			;;
+		esac
+		#else
+			#COMPREPLY=( $(compgen -f -- $cur) )
+		#fi
+	fi
+}
+
+complete -o default -F _stg stg
+
+# vi: set ft=sh:
+
+--Boundary-00=_Q67PD2LaizDb1Uu--
+
+	
+
+	
+		
+___________________________________ 
+Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
+http://mail.yahoo.it
