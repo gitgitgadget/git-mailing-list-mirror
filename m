@@ -1,44 +1,38 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: StGit command completions - and Git ones?
-Date: Sun, 02 Oct 2005 13:37:45 -0400
-Message-ID: <200510021737.j92HbjkK015752@inti.inf.utfsm.cl>
-References: <blaisorblade@yahoo.it>
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 03 00:33:45 2005
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Update git-clone documentation
+Date: Sun, 02 Oct 2005 15:54:43 -0700
+Message-ID: <7virwfzg0c.fsf@assigned-by-dhcp.cox.net>
+References: <m1wtkv903i.fsf@ebiederm.dsl.xmission.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 03 00:55:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMCOb-0000yM-1q
-	for gcvg-git@gmane.org; Mon, 03 Oct 2005 00:33:25 +0200
+	id 1EMCjK-0004eH-NT
+	for gcvg-git@gmane.org; Mon, 03 Oct 2005 00:54:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750738AbVJBWdL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Oct 2005 18:33:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750742AbVJBWdL
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Oct 2005 18:33:11 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:18905 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1750738AbVJBWdK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2005 18:33:10 -0400
-Received: from inti.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by inti.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j92HbjkK015752;
-	Sun, 2 Oct 2005 13:37:45 -0400
-To: Blaisorblade <blaisorblade@yahoo.it>
-In-Reply-To: Message from Blaisorblade <blaisorblade@yahoo.it> 
-   of "Sun, 02 Oct 2005 13:03:44 +0200." <200510021303.44960.blaisorblade@yahoo.it> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+	id S1750809AbVJBWys (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Oct 2005 18:54:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750828AbVJBWys
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Oct 2005 18:54:48 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:25024 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750809AbVJBWyr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Oct 2005 18:54:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051002225436.NFOK29747.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 2 Oct 2005 18:54:36 -0400
+To: ebiederm@xmission.com (Eric W. Biederman)
+In-Reply-To: <m1wtkv903i.fsf@ebiederm.dsl.xmission.com> (Eric W. Biederman's
+	message of "Sun, 02 Oct 2005 13:42:57 -0600")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9624>
 
-Blaisorblade <blaisorblade@yahoo.it> wrote:
-
-> I noticed in your TODO you talk about adding command line completions. I've 
-> been doing it for my needs, and the thing is still very incomplete, even if 
-> it's not a "XXX hack hack hack", and I wanted to send this first draft.
-
-Why don't just lay this at the bash-completion people's feet?
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+Thanks.
