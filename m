@@ -1,123 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [howto] Kernel hacker's guide to git, updated
-Date: Sun, 02 Oct 2005 01:47:24 -0700
-Message-ID: <7vr7b41f1f.fsf@assigned-by-dhcp.cox.net>
-References: <433BC9E9.6050907@pobox.com> <20050929200252.GA31516@redhat.com>
-	<433C4B6D.6030701@pobox.com> <7virwjegb5.fsf@assigned-by-dhcp.cox.net>
-	<433D1E5D.20303@pobox.com> <7v64si4von.fsf@assigned-by-dhcp.cox.net>
-	<433D477A.4010009@pobox.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [ANNOUNCE] Stacked GIT 0.7
+Date: Sun, 02 Oct 2005 10:17:07 +0100
+Message-ID: <1128244627.9740.6.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751026AbVJBIr2@vger.kernel.org Sun Oct 02 10:48:54 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751026AbVJBIr2@vger.kernel.org>
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Oct 02 11:18:03 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ELzVj-0003bG-Gi
-	for glk-linux-kernel-3@gmane.org; Sun, 02 Oct 2005 10:47:56 +0200
+	id 1ELzyH-000095-Cw
+	for gcvg-git@gmane.org; Sun, 02 Oct 2005 11:17:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751026AbVJBIr2 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 2 Oct 2005 04:47:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbVJBIr2
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sun, 2 Oct 2005 04:47:28 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:54929 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751020AbVJBIr1 (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 2 Oct 2005 04:47:27 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051002084719.GRHY29747.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 2 Oct 2005 04:47:19 -0400
-To: Jeff Garzik <jgarzik@pobox.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751034AbVJBJRP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Oct 2005 05:17:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751035AbVJBJRP
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Oct 2005 05:17:15 -0400
+Received: from mta09-winn.ispmail.ntl.com ([81.103.221.49]:43467 "EHLO
+	mta09-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S1751032AbVJBJRP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Oct 2005 05:17:15 -0400
+Received: from aamta10-winn.ispmail.ntl.com ([81.103.221.35])
+          by mta09-winn.ispmail.ntl.com with ESMTP
+          id <20051002091708.OYXS9239.mta09-winn.ispmail.ntl.com@aamta10-winn.ispmail.ntl.com>;
+          Sun, 2 Oct 2005 10:17:08 +0100
+Received: from cpc1-cmbg5-3-0-cust202.cmbg.cable.ntl.com ([81.104.192.202])
+          by aamta10-winn.ispmail.ntl.com with ESMTP
+          id <20051002091708.OXMG6183.aamta10-winn.ispmail.ntl.com@cpc1-cmbg5-3-0-cust202.cmbg.cable.ntl.com>;
+          Sun, 2 Oct 2005 10:17:08 +0100
+To: GIT <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.1.1 
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9607>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9608>
 
-Jeff Garzik <jgarzik@pobox.com> writes:
+Stacked GIT 0.7 release is available from http://www.procode.org/stgit/
 
-> Junio C Hamano wrote:
->> Jeff Garzik <jgarzik@pobox.com> writes:
+StGIT is a Python application providing similar functionality to Quilt
+(i.e. pushing/popping patches to/from a stack) on top of GIT. These
+operations are performed using GIT commands and the patches are stored
+as GIT commit objects, allowing easy merging of the StGIT patches into
+other repositories using standard GIT functionality.
 
->>> 2) What is the easiest way to obtain a list of changes present in
->>> repository B, that are not present in repository A?  I used to use
->>> git-changes-script [hacked cg-log script] for this:
+What's new in this release (the full ChangeLog is in the archive):
 
-I haven't really *read* that script, but I think it is trying to
-make a list of commits from both repositories and trying to find
-the set that are in one side and not in the other using diff (a
-real shell programer probably would have used "comm" for this
-kind of task, not "diff"), then doing a handcrafted git-log on
-each of them.
+      * Uses the renamed GIT commands (requires GIT >= 0.99.7) 
+      * 'pick' command to cherry-pick a commit object as an StGIT patch
+        using a three-way merge. It also allows reverse-applying 
+      * 'commit' command to permanently store the applied patches into
+        the repository 
+      * 'push' can now fast-forward the patches if the base tree object
+        has not changed 
+      * The configuration file supports the 'editor' field 
+      * '--version' option for the 'mail' command to generate the e-mail
+        subject in the form '[PATCH version nr/total]' 
+      * '--showpatch' option for 'refresh' to show the patch content
+        when editing the patch description 
+      * '--branch' option for several commands to work on a given branch
+        instead of the current one without switching 
+      * the 'pull' command was updated to follow the 'git pull' API 
+      * '--base' option for 'import' to import a diff file on a
+        different base and perform a three-way merge with the HEAD
+        afterwards 
+      * Support for the '.gitignore' file 
+      * Several other optimisations 
+      * Bug fixes
 
-Attached is my quick hack, based on your original question,
-without really trying to understand what the script is doing, so
-I cannot claim it is a rewrite nor even attempting to be
-compatible.  Please take a look at it and tell me if this is
-any close to what you need.
+Many thanks to Paolo 'Blaisorblade' Giarrusso, Chuck Lever, Pierre
+Ossman and Junio C Hamano for contributing patches to this release.
 
-I have a suspition that this might be better done as a natural
-extension of git-log, though.
-
-------------
-#!/bin/sh
-#
-# Copyright (c) 2005 Junio C Hamano
-#
-
-. git-sh-setup || die "Not a git archive"
-
-usage () {
-	echo >&2 "$0 ( -L | -R ) <dir> [<ref>] [<ref>]
-
--L shows changes in local not in remote.
--R shows changes in remote not in local.
-<dir> names the remote repository.
-
-If given no refs, local and remote HEADs are compared.
-If given one ref, local HEAD and named remote ref are compared.
-If given two refs, the first names a local ref, and the second names
-remote ref to be compared.
-"
-	exit 1
-}
-
-case "$1" in
--L | -R)
-	;;
-*)
-	usage ;;
-esac
-
-other="$2"
-
-(
-	unset GIT_DIR GIT_OBJECT_DIRECTORY
-	cd "$other" && . git-sh-setup ||
-	die "$other is not a valid git repository."
-)
-
-local=${3:-HEAD}
-remote=${4:-HEAD}
-
-# Basic validation.
-local=$(git-rev-parse --verify "$local^0" 2>/dev/null) ||
-die "local ref $local is not valid."
-remote=$(GIT_DIR="$other" git-rev-parse --verify "$remote^0" 2>/dev/null) ||
-die "remote ref $remote is not valid."
-
-case "$1" in
--L)
-	list_args="$local ^$remote" ;;
--R)
-	list_args="^$local $remote" ;;
-esac
-
-GAOD="$GIT_ALTERNATE_OBJECT_DIRECTORIES"
-
-GIT_ALTERNATE_OBJECT_DIRECTORIES="$other/.git/objects:$GAOD" \
-git-rev-list --pretty $list_args |
-LESS=-S ${PAGER:-less}
+-- 
+Catalin
