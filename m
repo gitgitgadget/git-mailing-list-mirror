@@ -1,76 +1,76 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: What to expect after 0.99.8
-Date: Mon, 03 Oct 2005 22:48:54 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.10.03.20.48.52.132570@smurf.noris.de>
+Date: Mon, 03 Oct 2005 14:00:55 -0700
+Message-ID: <7vmzlqnwmw.fsf@assigned-by-dhcp.cox.net>
 References: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0510031522590.23242@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Mon Oct 03 22:53:33 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 03 23:02:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMXI4-0003Ez-2X
-	for gcvg-git@gmane.org; Mon, 03 Oct 2005 22:52:04 +0200
+	id 1EMXQw-0005bx-I6
+	for gcvg-git@gmane.org; Mon, 03 Oct 2005 23:01:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932348AbVJCUwA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Oct 2005 16:52:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932363AbVJCUv7
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Oct 2005 16:51:59 -0400
-Received: from main.gmane.org ([80.91.229.2]:11953 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932348AbVJCUv7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Oct 2005 16:51:59 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EMXG6-0002hn-HM
-	for git@vger.kernel.org; Mon, 03 Oct 2005 22:50:02 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Oct 2005 22:50:02 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Oct 2005 22:50:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S932385AbVJCVBF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Oct 2005 17:01:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932400AbVJCVBF
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Oct 2005 17:01:05 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:25022 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932385AbVJCVBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2005 17:01:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051003210051.MPYM19461.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 3 Oct 2005 17:00:51 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.63.0510031522590.23242@iabervon.org> (Daniel
+	Barkalow's message of "Mon, 3 Oct 2005 15:43:02 -0400 (EDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9652>
 
-Hi, Junio C Hamano wrote:
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> * Libification.  There are many places "run once" mentality is
->   ingrained in the management of basic data structures, which need to be
->   fixed.
+> Are these all before 1.0, or are some of them supposed to happen 
+> eventually but later?
 
-I have started work on doing this "the right way"
-(as per earlier discussion).
+The latter.
 
-Current status: There's a toplevel "struct git_env", an associated "struct
-git_objdb", and (thread-safe and globals-free) library code to read
-sha1-identified object (meta)data, including packs and all.
+>> * Libification.  There are many places "run once" mentality is
+>>   ingrained in the management of basic data structures, which
+>>   need to be fixed.
+>
+> I think this should be a post-1.0 thing; I think after 1.0, we should 
+> rearrange a lot of the code to make more sense from a programmer 
+> perspective.
 
-http://netz.smurf.noris.de/git/git.git#libize
+I agree.
 
-Next on my TODO list: introduce a "struct git_obj" which represents
-exactly one sha1 and the metadata associated with it, rename the
-accessor functions to be more consistent, add SWIG interface code and
-Python testcases, submit to everybody's scrutinity.
+>> * Look at libified GNU diff CVS seems to use, or libxdiff.
+>
+> I've almost got a suffix-tree-based diff that works reasonably well, 
+> that's built as a library, and outputs unified diff. I need to merge it 
+> with git, hook up input from trees and blobs, and test it on a wider set 
+> of data.
 
-After that, the task can hopefully be parallelized.
+Sounds like fun.
 
-Definitely a post-1.0 job; the job is too big, and shipping 1.0 with a
-partial library that doesn't do much that's useful does not make sense.
+> I'd also like to add:
+>
+>  * Accept patches to fetch multiple objects by HTTP in parallel.
+>
+> I think this may be necessary to get good performance without rsync for 
+> repositories hosted without specific git support.
 
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-We've sent a man to the moon, and that's 29,000 miles away.  The center
-of the Earth is only 4,000 miles away.  You could drive that in a week,
-but for some reason nobody's ever done it.
-		-- Andy Rooney
+Surely.  I'd love to see you work with Nick Hengeveld on this
+one, perhaps even before 1.0.  Looking out the fetch.c code, I
+think you already have set up a reasonable "work queue" during
+the last round, with a lot of simplification thanks to Sergey,
+and parallel fetching would be a very nice addition.
