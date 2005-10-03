@@ -1,119 +1,69 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [ANNOUNCE] Stacked GIT 0.7
-Date: Mon, 03 Oct 2005 15:44:12 +0100
-Message-ID: <tnxpsqmwthf.fsf@arm.com>
-References: <1128244627.9740.6.camel@localhost.localdomain>
-	<20051002121059.GA32367@elte.hu>
-	<b0943d9e0510021233n39daa5bao@mail.gmail.com>
-	<b0943d9e0510030656l4535bec7u@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 03 16:46:37 2005
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: What to expect after 0.99.8
+Date: Mon, 03 Oct 2005 11:09:07 -0400
+Message-ID: <200510031509.j93F97Ij018270@laptop11.inf.utfsm.cl>
+References: <junkio@cox.net>
+Cc: gitzilla@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 03 17:11:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMRYY-00064H-ET
-	for gcvg-git@gmane.org; Mon, 03 Oct 2005 16:44:42 +0200
+	id 1EMRwU-0005Gr-58
+	for gcvg-git@gmane.org; Mon, 03 Oct 2005 17:09:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750934AbVJCOoh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Oct 2005 10:44:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750953AbVJCOoh
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Oct 2005 10:44:37 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:42389 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S1750912AbVJCOog (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Oct 2005 10:44:36 -0400
-Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
-	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j93EiASV029020;
-	Mon, 3 Oct 2005 15:44:10 +0100 (BST)
-Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
-	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id PAA24937;
-	Mon, 3 Oct 2005 15:44:14 +0100 (BST)
-Received: from localhost.localdomain ([10.1.69.3]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Mon, 3 Oct 2005 15:44:13 +0100
-To: Ingo Molnar <mingo@elte.hu>
-In-Reply-To: <b0943d9e0510030656l4535bec7u@mail.gmail.com> (Catalin
- Marinas's message of "Mon, 3 Oct 2005 14:56:39 +0100")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 03 Oct 2005 14:44:13.0961 (UTC) FILETIME=[EC5BBF90:01C5C828]
+	id S1751038AbVJCPJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Oct 2005 11:09:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751049AbVJCPJT
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Oct 2005 11:09:19 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:60646 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S1751038AbVJCPJS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Oct 2005 11:09:18 -0400
+Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j93F98ms021394
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 3 Oct 2005 11:09:08 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j93F97Ij018270;
+	Mon, 3 Oct 2005 11:09:07 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Sun, 02 Oct 2005 21:00:12 MST." <7vfyrjw8qb.fsf@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Mon, 03 Oct 2005 11:09:08 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9636>
 
-Catalin Marinas <catalin.marinas@gmail.com> wrote:
-> After some tests, it looks like 'git-diff-tree -p ... | git-apply
-> --index' is about 3 times faster than 'git-read-tree -m' (in the best
-> case for git-read-tree with minor modifications of the base). It now
-> takes ~0.5s to push a single patch (compared to ~1.5s).
+Junio C Hamano <junkio@cox.net> wrote:
+> A Large Angry SCM <gitzilla@gmail.com> writes:
+> 
+> > If you were to publish the ToDo to the mailing list once a week it might 
+> > encourage more of those patches you want to accept.
+> 
+> Hmph.  I tend to dislike periodical posting that is more often
+> than once a month.
+> 
+> >> * Accept patches to finish missing docs.
+> >
+> > A list of missing, incomplete, and/or wrong docs in the ToDo file would 
+> > help focus effort when people (like me) have space cycles.
 
-And that's the patch for whoever wants to try. I will also add it to
-the repository tonight:
+> Well, the thing is, I am not good at documentation, especially
+> when I have other interests, and once I start writing a list of
+> missing or incomplete docs, my interests _will_ shift to fill in
+> those gaps and I will end up doing them myself, which means I
+> would not have a chance to place the list in the TODO file.
 
+Then put the following on the TODO list:
 
-Optimise 'push' to use git-apply instead of git-read-tree
+* Accept patches to the TODO list for missing/incomplete/... documentation
 
-With this patch, 'push' will use 'git-diff-tree | git-apply' first. If this
-operation fails, it will fall back to the three-way merge with
-git-read-tree.
-
-Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
----
-
- stgit/git.py   |    9 +++++++++
- stgit/stack.py |   19 +++++++++++--------
- 2 files changed, 20 insertions(+), 8 deletions(-)
-
-diff --git a/stgit/git.py b/stgit/git.py
---- a/stgit/git.py
-+++ b/stgit/git.py
-@@ -355,6 +355,15 @@ def commit(message, files = [], parents 
- 
-     return commit_id
- 
-+def apply_diff(rev1, rev2):
-+    """Apply the diff between rev1 and rev2 onto the current
-+    index. This function doesn't need to raise an exception since it
-+    is only used for fast-pushing a patch. If this operation fails,
-+    the pushing would fall back to the three-way merge.
-+    """
-+    return os.system('git-diff-tree -p %s %s | git-apply --index 2> /dev/null'
-+                     % (rev1, rev2)) == 0
-+
- def merge(base, head1, head2):
-     """Perform a 3-way merge between base, head1 and head2 into the
-     local tree
-diff --git a/stgit/stack.py b/stgit/stack.py
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -598,14 +598,17 @@ class Series:
-             # The current patch is empty after merge.
-             patch.set_bottom(head, backup = True)
-             patch.set_top(head, backup = True)
--            # merge/refresh can fail but the patch needs to be pushed
--            try:
--                git.merge(bottom, head, top)
--            except git.GitException, ex:
--                print >> sys.stderr, \
--                      'The merge failed during "push". ' \
--                      'Use "refresh" after fixing the conflicts'
--                pass
-+
-+            # Try the fast applying first. If this fails, fall back to the
-+            # three-way merge
-+            if not git.apply_diff(bottom, top):
-+                # merge can fail but the patch needs to be pushed
-+                try:
-+                    git.merge(bottom, head, top)
-+                except git.GitException, ex:
-+                    print >> sys.stderr, \
-+                          'The merge failed during "push". ' \
-+                          'Use "refresh" after fixing the conflicts'
- 
-         append_string(self.__applied_file, name)
- 
-
-
+;-)
 -- 
-Catalin
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
