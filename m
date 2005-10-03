@@ -1,77 +1,150 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [howto] Kernel hacker's guide to git, updated
-Date: Sun, 2 Oct 2005 18:03:12 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510021752390.31407@g5.osdl.org>
-References: <200510010158.j911wiB3005296@inti.inf.utfsm.cl>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: What to expect after 0.99.8
+Date: Sun, 02 Oct 2005 20:06:07 -0700
+Message-ID: <4340A01F.7040901@gmail.com>
+References: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dave Jones <davej@redhat.com>,
-	Anton Altaparmakov <aia21@cam.ac.uk>,
-	Jeff Garzik <jgarzik@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 03 03:07:32 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 03 05:07:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMEnA-0006Fr-Od
-	for gcvg-git@gmane.org; Mon, 03 Oct 2005 03:06:57 +0200
+	id 1EMGel-0005v9-3Q
+	for gcvg-git@gmane.org; Mon, 03 Oct 2005 05:06:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932102AbVJCBGy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Oct 2005 21:06:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932104AbVJCBGx
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Oct 2005 21:06:53 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:6891 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932102AbVJCBGx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2005 21:06:53 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9313F4s009361
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 2 Oct 2005 18:03:16 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9313CvA006619;
-	Sun, 2 Oct 2005 18:03:13 -0700
-To: Horst von Brand <vonbrand@inf.utfsm.cl>
-In-Reply-To: <200510010158.j911wiB3005296@inti.inf.utfsm.cl>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.118 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932122AbVJCDGQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Oct 2005 23:06:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932123AbVJCDGQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Oct 2005 23:06:16 -0400
+Received: from qproxy.gmail.com ([72.14.204.197]:59005 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932122AbVJCDGP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Oct 2005 23:06:15 -0400
+Received: by qproxy.gmail.com with SMTP id e12so373082qbe
+        for <git@vger.kernel.org>; Sun, 02 Oct 2005 20:06:13 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=ppj7sn4mudiKp0/+dcZNS1h0ti01FbW2s9EJVhRI1yH89xE++1cAxRbRtHlcG/41mmCkEWa1zwS+3PDqPHX57itzyNIZmGXNV7/RBRbnQp3QhFUz9C3GVKFWohhRkgdSpdWZgEUL8gSFvBmJCvEexmFAMtmW/xSjIrtE39nh/Co=
+Received: by 10.65.112.18 with SMTP id p18mr892281qbm;
+        Sun, 02 Oct 2005 20:06:13 -0700 (PDT)
+Received: from ?10.0.0.6? ( [66.171.49.207])
+        by mx.gmail.com with ESMTP id f14sm2499143qba.2005.10.02.20.06.12;
+        Sun, 02 Oct 2005 20:06:13 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9628>
 
-
-[ Sorry about the spam, most of you probably have never cared ]
-
-On Fri, 30 Sep 2005, Horst von Brand wrote:
+Junio C Hamano wrote:
+> As I mentioned in teh 0.99.8 announcement, let's start aiming
+> for 1.0, really this time.  From now on, brown paper bags,
+> bugfixes, portability fixes, usability enhancements including
+> documentation updates take precedence over any new features.
+> One exception area is probably merge strategy modules -- they
+> are like adding new device drivers or adding new filesystem, and
+> can come in anytime as long as they do not touch the coreish.
 > 
-> I'd been trying my hand at the original version. Need to merge my changes
-> with yours...
+> 
+> The GIT To-Do File
+> ==================
+> 
+>   The latest copy of this document is found at 
+> 
+>     http://kernel.org/git/?p=git/git.git;a=blob;hb=todo;f=TODO
 
-Heh, now that I got into cleaning things up, I've also been actually 
-fixing things that have long irritated me, but the code was just too messy 
-for me, and my level of care wasn't high enough to overcome.
+If you were to publish the ToDo to the mailing list once a week it might 
+encourage more of those patches you want to accept.
 
-I fixed the "outputs binary data in the 128-159 range to the terminal" 
-yesterday (which would quite possibly corrupt terminal state if trying to 
-edit binary files), and today I added a "utf-8" mode.
+> 
+...
+> 
+> * Maybe update tutorial with a toy project that involves two or
+>   three developers..
 
-The utf-8 mode is purely about the _terminal_ being in UTF-8. The actual 
-editor is still very much byte-char based, but now it understands 8-bit 
-input that comes in UTF8-encoded, and can output things in UTF-8 format. 
+This is *important* to have for 1.0.
 
-(Since UTF-8 is basically always used with Unicode, and the 8-bit subset 
-of Unicode is iso-8859-1 aka Latin1, this is probably _less_ international 
-than the non-UTF8, but hey, what can I say? If you want more, you'd need 
-to teach uemacs about actual UTF8 contents).
+> 
+> * Update tutorial to cover setting up repository hooks to do
+>   common tasks.
 
-The new "emacs.rc" will enable utf-8 mode automatically if $LANG contains 
-the substring "UTF-8", since that _usually_ means that the terminal is in 
-utf-8 mode. If it's wrong, you can add or delete the mode by hand (just 
-like any global mode: Meta-X to add, Meta-Ctrl-X to delete).
+This is nice to have for 1.0.
 
-Basically, it means that you don't have to switch the whole terminal into 
-latin1 just to use uemacs.
+> 
+> * Accept patches to finish missing docs.
 
-			Linus
+A list of missing, incomplete, and/or wrong docs in the ToDo file would 
+help focus effort when people (like me) have space cycles.
+
+> 
+> * Accept patches to talk about "Whoops, it broke.  What's
+>   next?".
+
+This is *important* to have for 1.0.
+
+> 
+> * Accept patches to make formatted tables in asciidoc to work
+>   well in both html and man pages (see git-diff(1)).
+
+A Git documentation asciidoc style guide and howto would be _very_ 
+useful. The current Git documentation is not all that consistent. (and I 
+accept the blame for the docs I wrote)
+
+> 
+> 
+> Technical (heavier)
+> -------------------
+...
+> 
+> * Maybe a pack optimizer.
+
+Huh?
+
+...
+
+> 
+> * Internally split the project into non-doc and doc parts; add
+>   an extra root for the doc part and merge from it; move the
+>   internal doc source to a separate repository, like the +Meta
+>   repository; experiment if this results in a reasonable
+>   workflow, and document it in howto form if it does.
+
+I think this is a bad idea. The docs should be part of the project 
+(repository and head) as the code. Otherwise, they'll become even more 
+out-of-sync.
+
+> 
+...
+> 
+> Technical (trivial)
+> -------------------
+> 
+...
+> 
+> * 'git merge-projects'?
+
+Huh?
+
+> 
+> * 'git lost-and-found'?  Link dangling commits found by
+>   fsck-objects under $GIT_DIR/refs/lost-found/.  Then
+>   show-branch or gitk can be used to find any lost commit. [A
+>   feeler patch sent out. Very underwhelming response X-<.]
+
+The response may have been underwhelming but it's still a good idea.
+
+> 
+>   Do not name it /lost+found/; that would probably confuse
+>   things that mistake it a mount point (not our code but
+>   somebody else's).
+
+I the this concern is overblown.
+
+> 
+...
