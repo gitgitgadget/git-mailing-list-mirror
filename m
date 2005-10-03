@@ -1,106 +1,64 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH] Enable and fix support for base less merges.
-Date: Mon, 3 Oct 2005 08:13:09 +0200
-Message-ID: <20051003061309.GA1712@c165.ib.student.liu.se>
-References: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net> <4340A01F.7040901@gmail.com> <7vfyrjw8qb.fsf@assigned-by-dhcp.cox.net>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: What to expect after 0.99.8
+Date: Mon, 3 Oct 2005 14:55:30 +0200
+Message-ID: <200510031455.30187.Josef.Weidendorfer@gmx.de>
+References: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitzilla@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 03 08:13:35 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Oct 03 14:57:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMJZj-0003qp-6X
-	for gcvg-git@gmane.org; Mon, 03 Oct 2005 08:13:23 +0200
+	id 1EMPr5-0007Xm-GN
+	for gcvg-git@gmane.org; Mon, 03 Oct 2005 14:55:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932138AbVJCGNQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Oct 2005 02:13:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932154AbVJCGNQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Oct 2005 02:13:16 -0400
-Received: from [85.8.31.11] ([85.8.31.11]:43708 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S932138AbVJCGNP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Oct 2005 02:13:15 -0400
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id A04C84114; Mon,  3 Oct 2005 08:19:22 +0200 (CEST)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EMJZV-0000yr-00; Mon, 03 Oct 2005 08:13:09 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S1750871AbVJCMzi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Oct 2005 08:55:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750872AbVJCMzi
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Oct 2005 08:55:38 -0400
+Received: from imap.gmx.net ([213.165.64.20]:4569 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750851AbVJCMzh (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Oct 2005 08:55:37 -0400
+Received: (qmail invoked by alias); 03 Oct 2005 12:55:35 -0000
+Received: from p5496B984.dip0.t-ipconnect.de (EHLO linux) [84.150.185.132]
+  by mail.gmx.net (mp018) with SMTP; 03 Oct 2005 14:55:35 +0200
+X-Authenticated: #352111
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+In-Reply-To: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vfyrjw8qb.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6+20040907i
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9633>
 
-Let the merge strategies handle the base less case if they are able to
-do it. It also fixes git-resolve.sh to die if no common ancestors
-exists, instead of doing the wrong thing. Furthermore, it contains a
-small independent fix for git-merge.sh and a fix for a base less code
-path in gitMergeCommon.py.
+On Monday 03 October 2005 02:14, Junio C Hamano wrote:
+> * Perhaps accept patches to introduce the concept of "patch flow
+>   expressed as ref mappings" Josef has been advocating about.
 
-With this it's possible to use
-    git merge -s recursive 'merge message' A B
-to do a base less merge of A and B.
+This was about a central place to store local/remote ref mappings.
+I proposed the Pull/Push lines in remote/ files changing to hold
+these mappings, and putting the defaults into Pull-Default and
+Push-Default.
 
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
+I changed my mind: IMHO for simplicity, porcelain commands should
+mostly deal with refspecs (default: current head), and thus,
+above mappings should be stored per ref/head, not per remote repository.
+I.e. I won't provide a patch for this.
 
+But why did we choose to make git-pull/git-push
+to accept a remote repository as first argument, and not a head/refspec
+in the first place? [Of course, this needs the remote repository be
+retrievable by head name: see branches/ files. And currently missing here is 
+the distinction between fetch and push direction].
 
----
+In the current state, it would be better to get rid of branches/
+parsing in GIT at all: By keeping it in, we force Cogito to keep the current
+format.
+[BTW: the git-push man page is wrong about branches/: the name of the file
+in branches/ corresponds to a local refspec, and not to a remote name]
 
- git-merge-resolve.sh |    6 ++++++
- git-merge.sh         |    4 ++--
- gitMergeCommon.py    |    2 +-
- 3 files changed, 9 insertions(+), 3 deletions(-)
-
-d298deec60a0fac7a16f43135f390c285251f613
-diff --git a/git-merge-resolve.sh b/git-merge-resolve.sh
---- a/git-merge-resolve.sh
-+++ b/git-merge-resolve.sh
-@@ -31,6 +31,12 @@ case "$remotes" in
- 	exit 2 ;;
- esac
- 
-+# Give up if this is a baseless merge.
-+if test '' == "$bases"
-+then
-+	exit 2
-+fi
-+
- git-update-index --refresh 2>/dev/null
- git-read-tree -u -m $bases $head $remotes || exit 2
- echo "Trying simple merge."
-diff --git a/git-merge.sh b/git-merge.sh
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -26,7 +26,7 @@ dropsave() {
- savestate() {
- 	# Stash away any local modifications.
- 	git-diff-index -r -z --name-only $head |
--	cpio -0 -o >"$GIR_DIR/MERGE_SAVE"
-+	cpio -0 -o >"$GIT_DIR/MERGE_SAVE"
- }
- 
- restorestate() {
-@@ -103,7 +103,7 @@ echo "$head" >"$GIT_DIR/ORIG_HEAD"
- 
- case "$#,$common" in
- *,'')
--	die "Unable to find common commit between $head_arg and $*"
-+	# No common ancestors found. We need a real merge.
- 	;;
- 1,"$1")
- 	# If head can reach all the merge then we are up to date.
-diff --git a/gitMergeCommon.py b/gitMergeCommon.py
---- a/gitMergeCommon.py
-+++ b/gitMergeCommon.py
-@@ -213,7 +213,7 @@ def buildGraph(heads):
- 
- # Write the empty tree to the object database and return its SHA1
- def writeEmptyTree():
--    tmpIndex = os.environ['GIT_DIR'] + '/merge-tmp-index'
-+    tmpIndex = os.environ.get('GIT_DIR', '.git') + '/merge-tmp-index'
-     def delTmpIndex():
-         try:
-             os.unlink(tmpIndex)
+Josef
