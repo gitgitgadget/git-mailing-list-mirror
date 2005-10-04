@@ -1,71 +1,48 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What to expect after 0.99.8
-Date: Mon, 03 Oct 2005 22:57:19 -0700
-Message-ID: <7v1x31hlj4.fsf@assigned-by-dhcp.cox.net>
-References: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net>
-	<200510031455.30187.Josef.Weidendorfer@gmx.de>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: [PATCH] Enable and fix support for base less merges.
+Date: Tue, 4 Oct 2005 08:07:55 +0200
+Message-ID: <20051004060755.GA1687@c165.ib.student.liu.se>
+References: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net> <4340A01F.7040901@gmail.com> <7vfyrjw8qb.fsf@assigned-by-dhcp.cox.net> <20051003061309.GA1712@c165.ib.student.liu.se> <46a038f90510022334k63884c6x377104e7eca29c48@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 04 07:58:01 2005
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 04 08:08:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMfoF-0007sq-SC
-	for gcvg-git@gmane.org; Tue, 04 Oct 2005 07:57:52 +0200
+	id 1EMfyW-0001O2-6b
+	for gcvg-git@gmane.org; Tue, 04 Oct 2005 08:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932361AbVJDF5s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Oct 2005 01:57:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932363AbVJDF5s
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 01:57:48 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:26571 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932361AbVJDF5r (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2005 01:57:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051004055713.FCWJ776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 4 Oct 2005 01:57:13 -0400
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200510031455.30187.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Mon, 3 Oct 2005 14:55:30 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932239AbVJDGIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Oct 2005 02:08:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932363AbVJDGIF
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 02:08:05 -0400
+Received: from [85.8.31.11] ([85.8.31.11]:21411 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S932239AbVJDGIE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2005 02:08:04 -0400
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id CB3C44100; Tue,  4 Oct 2005 08:14:12 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EMfxz-0000Ug-00; Tue, 04 Oct 2005 08:07:55 +0200
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f90510022334k63884c6x377104e7eca29c48@mail.gmail.com>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9663>
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+On Mon, Oct 03, 2005 at 07:34:19PM +1300, Martin Langhoff wrote:
+> > With this it's possible to use
+> >     git merge -s recursive 'merge message' A B
+> > to do a base less merge of A and B.
+> 
+> Would it be possible/useful to teach git-apply about this?
+> 
 
-> But why did we choose to make git-pull/git-push
-> to accept a remote repository as first argument, and not a head/refspec
-> in the first place? [Of course, this needs the remote repository be
-> retrievable by head name: see branches/ files. And currently missing here is 
-> the distinction between fetch and push direction].
+I don't really understand what you mean. In what way could git-apply
+use this? Is there a specific use case you are thinking about?
 
-I do not understand this comment.  I do not think you are just
-talking about the syntax: 
-
-        $ git-push <remote> <refspec1> <refspec2>...
-    vs
-        $ git-push' <refspec1> <refspec2>... <remote>
-
-There must be something deeper you are talking about I am
-missing.  The branches/ file allowed optionally specifying one
-single refname (otherwise defaulting HEAD) since we tried to
-become compatible with what Cogito did.
-
-It appears that cg-push uses the same branches information for
-pushing into remote, which is what I missed when I did
-git-parse-remote --- we do not use this information to decide
-the default ref to push into, and not to break expectations of
-Cogito users we may need to fix this.  Is this what you are
-discussing here?
-
-> In the current state, it would be better to get rid of branches/
-> parsing in GIT at all: By keeping it in, we force Cogito to keep the current
-> format.
-
-Hmph.  The intent was to keep people's existing Cogito derived
-configuration working.
+- Fredrik
