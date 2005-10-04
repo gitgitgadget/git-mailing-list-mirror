@@ -1,81 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What to expect after 0.99.8
-Date: Tue, 04 Oct 2005 11:53:26 -0700
-Message-ID: <7vfyrhcdw9.fsf@assigned-by-dhcp.cox.net>
-References: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net>
-	<200510031455.30187.Josef.Weidendorfer@gmx.de>
-	<7v1x31hlj4.fsf@assigned-by-dhcp.cox.net>
-	<200510041108.36202.Josef.Weidendorfer@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: [PATCH] Return error when not checking out an entry due to dirtiness.
+Date: Tue, 04 Oct 2005 15:52:01 -0400
+Message-ID: <200510041952.j94Jq1Hs016453@laptop11.inf.utfsm.cl>
+References: <junkio@cox.net>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 04 20:56:29 2005
+X-From: git-owner@vger.kernel.org Tue Oct 04 21:53:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMrwH-0001TO-E3
-	for gcvg-git@gmane.org; Tue, 04 Oct 2005 20:54:57 +0200
+	id 1EMsph-00037c-UF
+	for gcvg-git@gmane.org; Tue, 04 Oct 2005 21:52:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964912AbVJDSx3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Oct 2005 14:53:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964914AbVJDSx3
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 14:53:29 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:12231 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S964912AbVJDSx2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2005 14:53:28 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051004185319.RTRY29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 4 Oct 2005 14:53:19 -0400
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200510041108.36202.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Tue, 4 Oct 2005 11:08:35 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964943AbVJDTwK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Oct 2005 15:52:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964944AbVJDTwK
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 15:52:10 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:42699 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S964943AbVJDTwJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2005 15:52:09 -0400
+Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j94Jq2Dr018221
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 4 Oct 2005 15:52:02 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j94Jq1Hs016453;
+	Tue, 4 Oct 2005 15:52:01 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Mon, 03 Oct 2005 22:11:03 MST." <7vu0fxhno8.fsf@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.19.1]); Tue, 04 Oct 2005 15:52:02 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9687>
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> Without -f flag, 'git-checkout-index foo.c' issued an error message
+> when foo.c already existed in the working tree and did not match index.
+> However it did not return an error from the underlying checkout_entry()
+> function and resulted in a successful exit(0).
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> 
+> ---
+> 
+>  * I've made sure that the existing scripts do not use
+>    checkout-index without -f in a way that could be affected by
+>    this change.  However, third-party scripts may be affected by
+>    this.  Cogito and StGIT should be OK -- they either run
+>    checkout with -f, do not check the error return when it does
+>    not use -f, or runs checkout without -f in an empty working
+>    tree.
+> 
+>  checkout-index.c |   11 ++++++++---
+>  entry.c          |    2 +-
+>  2 files changed, 9 insertions(+), 4 deletions(-)
+> 
+> 5a166f6a9d1b7ca2de673139fbfc4112b1b2e308
+> diff --git a/checkout-index.c b/checkout-index.c
+> --- a/checkout-index.c
+> +++ b/checkout-index.c
+> @@ -63,15 +63,20 @@ static int checkout_file(const char *nam
+>  
+>  static int checkout_all(void)
+>  {
+> -	int i;
+> +	int i, errs;
+>  
+> -	for (i = 0; i < active_nr ; i++) {
+> +	for (errs = i = 0; i < active_nr ; i++) {
 
-> On Tuesday 04 October 2005 07:57, Junio C Hamano wrote:
->> I do not understand this comment.
->
-> I talk about configuration per remote repository vs. configuration per
-> local head, and a consistent user interface regarding these.
->
-> Cogito is using configuration per head: If there is a remote fetch mapping,
-> this is stored in branches/<headname>. There is no new shortcut to
-> remember, because every file in branches corresponds to a local head.
+This is ugly. Why not just:
 
-Thanks.  This is "lightbulb" moment for me.  I did not realize
-branches/ files are "per head configuration" -- I just thought
-they are arbitrary tokens, and by convention it can only slurp
-into the branch with the same name as the file.  I even thought
-about mentioning the possibility to enhance the current
+        errs = 0;
+        for (i = 0; i < active_nr ; i++) {    
 
-    url://to/repo#rembranch
-
-to
-    url://to/repo#rembranch1:localbranch1,rembranch2:localbranch2,...
-
-but I am glad I didn't -- localbranch cannot be anything other
-than the filename because by definition the file is to describe
-the local branch of the same name, and describing more than one
-localbranch does not make sense.  OTOH,
-
-    url://to/repo#rembranch1,rembranch2,...
-
-may make sense now --- you are telling this local branch pulls
-(and makes Octopus) from multiple remote branches.
-
-Anyway, I think I understand what you meant to say now.
-
-> I still think it is wrong to use one head name of a repository as the
-> default for the repository's name.
-
-I think this is about branches/ file: "One head name of the
-local repository is used as a shorthand to name the remote
-repository described by the file, inside the local repository".  
+(errs is in no way the variable controlled by the for).
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
