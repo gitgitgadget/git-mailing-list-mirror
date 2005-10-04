@@ -1,37 +1,37 @@
 From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: What to expect after 0.99.8
-Date: Tue, 04 Oct 2005 07:51:29 -0700
-Message-ID: <434296F1.5030006@zytor.com>
-References: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0510031522590.23242@iabervon.org> <7vmzlqnwmw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0510031709360.23242@iabervon.org> <7v1x32l0gz.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0510031606550.31407@g5.osdl.org> <20051004071210.GA18716@localdomain> <Pine.LNX.4.63.0510040321170.23242@iabervon.org> <pan.2005.10.04.14.18.59.102722@smurf.noris.de>
+Subject: Re: First cut at git port to Cygwin
+Date: Tue, 04 Oct 2005 08:03:55 -0700
+Message-ID: <434299DB.7020805@zytor.com>
+References: <433B3B10.5050407@zytor.com> <81b0412b0510040531m441ca759k6d1f3fbf0cd248ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 04 16:53:59 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 04 17:07:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMo9Y-0003lg-3K
-	for gcvg-git@gmane.org; Tue, 04 Oct 2005 16:52:24 +0200
+	id 1EMoLC-00083B-Ls
+	for gcvg-git@gmane.org; Tue, 04 Oct 2005 17:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932509AbVJDOwV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Oct 2005 10:52:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932510AbVJDOwV
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 10:52:21 -0400
-Received: from paleosilicon.orionmulti.com ([209.128.68.66]:16535 "EHLO
+	id S932524AbVJDPEK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Oct 2005 11:04:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932525AbVJDPEJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 11:04:09 -0400
+Received: from paleosilicon.orionmulti.com ([209.128.68.66]:20887 "EHLO
 	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
-	id S932509AbVJDOwU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2005 10:52:20 -0400
+	id S932524AbVJDPEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2005 11:04:08 -0400
 X-Envelope-From: hpa@zytor.com
 Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
 	(authenticated bits=0)
-	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j94EpWJv027194
+	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j94F3xJv027309
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 4 Oct 2005 07:51:33 -0700
+	Tue, 4 Oct 2005 08:04:00 -0700
 User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
 X-Accept-Language: en-us, en
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <pan.2005.10.04.14.18.59.102722@smurf.noris.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0510040531m441ca759k6d1f3fbf0cd248ce@mail.gmail.com>
 X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
 X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
 	paleosilicon.orionmulti.com
@@ -40,22 +40,20 @@ X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9681>
 
-Matthias Urlichs wrote:
-> Hi, Daniel Barkalow wrote:
+Alex Riesen wrote:
 > 
->>I'd guess that UNIX sockets have a
->>similar capacity (although I'm not going to look it up tonight).
+> I noticed that rename(2) in my copy of cygwin (1.5.18-1) does not remove the
+> target and returns an error (probably EPERM, but I have reasons not to trust
+> strerror on that thing).
+> The repository was on FAT.
+> Taking "rename(2)" from cygwin's libiberty solved this (they unlink if link(2)
+> returns EEXIST).
 > 
-> You can set TCP options to change the buffer sizes.
-> 
-> I would however assume that *nobody* sets both the send and receive
-> buffers such that their cumulative size is <4k, so 99 object IDs
-> at 41 bytes definitely should be OK.
-> 
+> PS: Does broken rename(2) qualify a system "not worthy to support"?
 
-For TCP, I think we should simply get our own (or set) packet buffer 
-size and conform to it.  Problem solved...
+I just tried this with Cygwin 1.5.18-1 and didn't have any such 
+problems.  I tried it on NTFS, FAT and Samba, using WinXP.
 
 	-hpa
