@@ -1,61 +1,45 @@
-From: Mitchell Blank Jr <mitch@sfgoth.com>
-Subject: [ANNOUNCE] gitfs pre-release 0.02
-Date: Tue, 4 Oct 2005 03:51:54 -0700
-Message-ID: <20051004105154.GH32664@gaz.sfgoth.com>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: git-commits-head@vger.kernel.org mailbomb
+Date: Tue, 04 Oct 2005 12:32:33 +0100
+Message-ID: <1128425554.15094.80.camel@baythorne.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Oct 04 12:42:13 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 04 13:34:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMkDs-0005hS-2p
-	for gcvg-git@gmane.org; Tue, 04 Oct 2005 12:40:36 +0200
+	id 1EMl2M-0002G0-4c
+	for gcvg-git@gmane.org; Tue, 04 Oct 2005 13:32:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932245AbVJDKkb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Oct 2005 06:40:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932247AbVJDKkb
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 06:40:31 -0400
-Received: from gaz.sfgoth.com ([69.36.241.230]:20730 "EHLO gaz.sfgoth.com")
-	by vger.kernel.org with ESMTP id S932245AbVJDKka (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2005 06:40:30 -0400
-Received: from gaz.sfgoth.com (localhost.sfgoth.com [127.0.0.1])
-	by gaz.sfgoth.com (8.12.10/8.12.10) with ESMTP id j94Apsi0003779
-	for <git@vger.kernel.org>; Tue, 4 Oct 2005 03:51:54 -0700 (PDT)
-	(envelope-from mitch@gaz.sfgoth.com)
-Received: (from mitch@localhost)
-	by gaz.sfgoth.com (8.12.10/8.12.6/Submit) id j94ApsFE003778
-	for git@vger.kernel.org; Tue, 4 Oct 2005 03:51:54 -0700 (PDT)
-	(envelope-from mitch)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.2.2 (gaz.sfgoth.com [127.0.0.1]); Tue, 04 Oct 2005 03:51:54 -0700 (PDT)
+	id S932280AbVJDLcm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Oct 2005 07:32:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932294AbVJDLcm
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 07:32:42 -0400
+Received: from baythorne.infradead.org ([81.187.2.161]:37269 "EHLO
+	baythorne.infradead.org") by vger.kernel.org with ESMTP
+	id S932280AbVJDLcl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2005 07:32:41 -0400
+Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
+	by baythorne.infradead.org with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
+	id 1EMl2A-0003AP-QL; Tue, 04 Oct 2005 12:32:34 +0100
+To: linux-kernel@vger.kernel.org
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9674>
 
-When I announced the first pre-release of my little gitfs tool back in
-June[1] I didn't get much response.  (Actually, that's not quite true -- I
-got zero response :-)  I've been very busy and haven't had the chance to
-implement any of the big missing functionality yet, nor will I have time
-for at least awhile.  Hopefully I'll have some time over the holidays to
-hack on it.
+Apologies for the mailbomb of ancient patches yesterday; the git
+installation on master.kernel.org was upgraded and one of the tools
+which I was using (git-rev-tree) disappeared.
 
-However, two things HAVE changed:
-  1. FUSE is now in the latest mainline kernels, so the barrier-to-entry for
-     toying with it is lower now
-  2. The introduction of git packs a couple months ago broke it; this is now
-     fixed
+I've just updated the script which feeds the mailing list, and it ought
+to be behaving itself again with this week's git tools. Until the next
+time... :)
 
-Other than rebasing against git-core-0.99.8 the only major changes are:
-  * now runs in non-debugging mode by default (use '-d' to enable debugging
-    mode)
-  * some efficiency improvements in the directory-handling code
-All the limitations and caveats in the original announcement still apply.
-
-As always --  http://www.sfgoth.com/~mitch/linux/gitfs/
-
--Mitch
-
-[1] -- http://marc.theaimsgroup.com/?l=git&m=111975978111303&w=2
+-- 
+dwmw2
