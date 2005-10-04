@@ -1,59 +1,102 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: First cut at git port to Cygwin
-Date: Tue, 4 Oct 2005 14:31:40 +0200
-Message-ID: <81b0412b0510040531m441ca759k6d1f3fbf0cd248ce@mail.gmail.com>
-References: <433B3B10.5050407@zytor.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Elfyn McBratney <beu@gentoo.org>
+Subject: Re: [COGITO] cg-status in an empty repo spits out git-diff-index usage info
+Date: Tue, 4 Oct 2005 14:02:54 +0100
+Message-ID: <20051004130254.GA13377@gentoo.org>
+References: <20050930181809.GB13582@emcb.local> <7vpsqp905i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 04 14:33:16 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Q68bSM7Ycu6FN28Q"
+Cc: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 04 15:04:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMlxR-0001SR-Li
-	for gcvg-git@gmane.org; Tue, 04 Oct 2005 14:31:46 +0200
+	id 1EMmRf-0001cX-SL
+	for gcvg-git@gmane.org; Tue, 04 Oct 2005 15:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750912AbVJDMbm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Oct 2005 08:31:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932396AbVJDMbm
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 08:31:42 -0400
-Received: from nproxy.gmail.com ([64.233.182.196]:52203 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750871AbVJDMbm convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 4 Oct 2005 08:31:42 -0400
-Received: by nproxy.gmail.com with SMTP id x37so234701nfc
-        for <git@vger.kernel.org>; Tue, 04 Oct 2005 05:31:40 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IJhJIM3uP3kSpAwXnYDoQkjChucy+u6JOjGv8OLOEhcFbHg014Vrq90gqx4dncOcTANW9lgFtZ7pmyj1t1xAYYLHo3chbloHEhqXbHm6TRwm8eGWwH1Lih2Mb55jU6wR1QUiwy8abMtA9eQUh5e9n0A1p1Bf/aHo/YwRhITf7qM=
-Received: by 10.48.226.17 with SMTP id y17mr285011nfg;
-        Tue, 04 Oct 2005 05:31:40 -0700 (PDT)
-Received: by 10.48.247.10 with HTTP; Tue, 4 Oct 2005 05:31:40 -0700 (PDT)
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <433B3B10.5050407@zytor.com>
+	id S932424AbVJDNC5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Oct 2005 09:02:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932439AbVJDNC5
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 09:02:57 -0400
+Received: from anchor-post-30.mail.demon.net ([194.217.242.88]:15878 "EHLO
+	anchor-post-30.mail.demon.net") by vger.kernel.org with ESMTP
+	id S932424AbVJDNC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2005 09:02:56 -0400
+Received: from beu1.demon.co.uk ([83.105.51.149] helo=zippy.emcb.local)
+	by anchor-post-30.mail.demon.net with esmtp (Exim 4.42)
+	id 1EMmRa-000Bu9-1y; Tue, 04 Oct 2005 13:02:54 +0000
+Received: by zippy.emcb.local (Postfix, from userid 1001)
+	id 696D6148040; Tue,  4 Oct 2005 14:02:54 +0100 (BST)
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Elfyn McBratney <beu@gentoo.org>,
+	Junio C Hamano <junkio@cox.net>,
+	git mailing list <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <7vpsqp905i.fsf@assigned-by-dhcp.cox.net>
+Organisation: Gentoo Foundation, Inc.
+User-Agent: mutt-ng/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9676>
 
-On 9/29/05, H. Peter Anvin <hpa@zytor.com> wrote:
-> I have made a first cut at a git port to Cygwin.  It looks like the
-> "git-diff-tree -p" problem has been resolved independently, or at least
-> I can't reproduce it on a fresh Cygwin install (running on XP Home), but
-> I have added support for running without the IPv6 and the getaddrinfo() API.
->
-> There are still funnies.  In particular, Cygwin and Samba handle
-> symlinks differently, so you can't trivially share a repository via
-> Samba.  Linus' "symbolic refs" changes should eventually take care of that.
 
-I noticed that rename(2) in my copy of cygwin (1.5.18-1) does not remove the
-target and returns an error (probably EPERM, but I have reasons not to trust
-strerror on that thing).
-The repository was on FAT.
-Taking "rename(2)" from cygwin's libiberty solved this (they unlink if link(2)
-returns EEXIST).
+--Q68bSM7Ycu6FN28Q
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-PS: Does broken rename(2) qualify a system "not worthy to support"?
+On Sat, Oct 01, 2005 at 12:17:13 -0700, Junio C Hamano wrote:
+ > Elfyn McBratney <beu@gentoo.org> writes:
+ >=20
+ > > which I'm guessing isn't expected behaviour ;)  `git status` does the
+ > > same, FWIW.
+ >=20
+ > Yes, I noticed 'git status' did it that some time ago, and I
+ > thought "gee, that was ugly".  But then I imagined what any
+ > other realist maintainer would have said if I reported it as a
+ > bug.
+ >=20
+ >     Lbh xabj lbh'ir whfg perngrq lbhe ercb naq vg vf rzcgl.
+ >     Jung qvq lbh rkcrpg sebz 'fgnghf' bhgchg?  Jub pnerf!  Naq
+ >     ubj bsgra jbhyq lbh rkcrpg gb eha 'tvg fgnghf' va n arjyl
+ >     perngrq ercbfvgbel sebz abj ba, abj lbh xabj jung lbh jbhyq
+ >     frr?  Trg hfrq gb vg.
+ >=20
+ > But I fixed it anyway, exactly a month ago.
+ >=20
+ >=20
+ > -
+ > To unsubscribe from this list: send the line "unsubscribe git" in
+ > the body of a message to majordomo@vger.kernel.org
+ > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+ >=20
+
+Hehe - cool, thanks. :)
+
+Best,
+Elfyn
+
+--=20
+Elfyn McBratney
+Gentoo Developer/Perl Team Lead
+beu/irc.freenode.net                            http://dev.gentoo.org/~beu/
++------------O.o--------------------- http://dev.gentoo.org/~beu/pubkey.asc
+
+PGP Key ID: 0x69DF17AD
+PGP Key Fingerprint:
+  DBD3 B756 ED58 B1B4 47B9  B3BD 8D41 E597 69DF 17AD
+
+--Q68bSM7Ycu6FN28Q
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQFDQn1+jUHll2nfF60RAl4sAJ4kWIuhi47ennhu9201HEB73/29XwCgovDK
+lz/8NJnw20E7gBAz8nCO8Lo=
+=hTIL
+-----END PGP SIGNATURE-----
+
+--Q68bSM7Ycu6FN28Q--
