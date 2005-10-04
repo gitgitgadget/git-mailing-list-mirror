@@ -1,93 +1,67 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: What to expect after 0.99.8
-Date: Mon, 3 Oct 2005 16:16:27 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510031606550.31407@g5.osdl.org>
-References: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0510031522590.23242@iabervon.org> <7vmzlqnwmw.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0510031709360.23242@iabervon.org> <7v1x32l0gz.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's new in GIT today
+Date: Mon, 03 Oct 2005 19:20:21 -0700
+Message-ID: <7virwehvkq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	Dan Aloni <da-x@monatomic.org>
-X-From: git-owner@vger.kernel.org Tue Oct 04 01:17:47 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Oct 04 04:21:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMZYT-0003IT-8I
-	for gcvg-git@gmane.org; Tue, 04 Oct 2005 01:17:09 +0200
+	id 1EMcPs-0005OP-O9
+	for gcvg-git@gmane.org; Tue, 04 Oct 2005 04:20:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932440AbVJCXQm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Oct 2005 19:16:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932459AbVJCXQm
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Oct 2005 19:16:42 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:9942 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932440AbVJCXQl (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Oct 2005 19:16:41 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j93NGT4s009051
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 3 Oct 2005 16:16:29 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j93NGRMI028364;
-	Mon, 3 Oct 2005 16:16:28 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1x32l0gz.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.118 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932273AbVJDCU0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Oct 2005 22:20:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932292AbVJDCU0
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Oct 2005 22:20:26 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:6295 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932273AbVJDCUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Oct 2005 22:20:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051004022018.CNQD9394.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 3 Oct 2005 22:20:18 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9658>
 
+GIT 0.99.8a is found in the usual places.  It contains the
+following fixes:
 
+ - Documentation formatting updates, by Jonas Fonseca.
 
-On Mon, 3 Oct 2005, Junio C Hamano wrote:
-> 
-> This reminds me of one patch:
-> 
->     From: Dan Aloni <da-x@monatomic.org>
->     Subject: [PATCH] Fix git+ssh's indefinite halts during long fetches
->     Date: Sat, 1 Oct 2005 21:39:42 +0300
->     Message-ID: <20051001183942.GA2099@localdomain>
-> 
-> I'd appreciate it if you had a chance to take a look at it and
-> comment on it.
+ - Fredrik Kuivinen fixed git-merge to stash away the original
+   tree state correctly when using more than one merge
+   strategy.  The same commit also adds support for baseless
+   merges.
 
-I personally hate it.
+ - 'git repack' can get confused if the tree had a funny
+   filename. 
 
-It adds horrible patches to fairly core stuff, all because the prefetching 
-is not limited.
+ - Specifying object name with just a short SHA1 prefix sort-of
+   worked, but did not do the right thing when ambiguities
+   existed between packed and unpacked objects; after thinking
+   about it more, I realize that the fixed code still misses
+   some ambiguities, but it is a bit better than before.
 
-As far as I can tell, it should be much easier to just limit the 
-prefetching to some reasonable limit (say, a few objects deep), which 
-guarantees that the prefetching doesn't fill up the write queues on the 
-fetching side.
+On the "master" branch front:
 
-It's not like prefetching improves performance once you get to the point 
-where you can stream. I suspect having more than two or three objects "in 
-flight" really only helps with
+ - All of the above, plus the missing fix for SHA1 prefix
+   uniqueness check (to be included in 0.99.8b).
 
- - lots of small objects
- - high latency
- - high bandwidth
+ - Cygwin port by H. Peter Anvin.
 
-and the thing is, high latency together with high bandwidth is really 
-quite uncommon - usually high latency goes along with _low_ bandwidth (the 
-one exception is things like satellite links, which can have latencies in 
-the seconds, even with good throughput).
+ - Option parsing in 'git pull' was buggy and could not
+   recognize the following sequence:
 
-It should be pretty easy to benchmark, but my _suspicion_ is that limiting 
-the read-ahead to even just five is likely to get you 99% of the way, and 
-that the performance impact of going higher is very limited.
+   $ git fetch http://kernel.org/pub/scm/git/git-cygwin.git/
+   $ git pull -a . fixes pull
 
-(It might need some extra code to make the synchronous receiving side 
-re-start the prefetching if the prefetching has stopped after a few 
-entries - but at that point the extra code is where it is supposed to be, 
-rather than having core code work around problems in the fetching. I also 
-suspect that the prefetch limiting can happily be done in the generic 
-"pull" code, rather than separately for each protocol, so it would need to 
-be done in just one place).
-
-		Linus
+   to fetch a remote and use that head along with two other
+   local heads to create a four-head Octopus.
