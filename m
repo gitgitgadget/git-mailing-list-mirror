@@ -1,34 +1,34 @@
 From: Dan Aloni <da-x@monatomic.org>
-Subject: Re: What to expect after 0.99.8
-Date: Tue, 4 Oct 2005 10:12:13 +0300
-Message-ID: <20051004071210.GA18716@localdomain>
-References: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0510031522590.23242@iabervon.org> <7vmzlqnwmw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0510031709360.23242@iabervon.org> <7v1x32l0gz.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0510031606550.31407@g5.osdl.org>
+Subject: Re: [PATCH] Limit the number of requests outstanding in ssh-fetch.
+Date: Tue, 4 Oct 2005 10:16:38 +0300
+Message-ID: <20051004071638.GA23725@localdomain>
+References: <Pine.LNX.4.63.0510040016110.23242@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 04 09:09:49 2005
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue Oct 04 09:14:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMgud-0004E7-Qa
-	for gcvg-git@gmane.org; Tue, 04 Oct 2005 09:08:32 +0200
+	id 1EMgyq-0005CT-Ve
+	for gcvg-git@gmane.org; Tue, 04 Oct 2005 09:12:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932452AbVJDHI3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Oct 2005 03:08:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932451AbVJDHI3
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 03:08:29 -0400
-Received: from noname.neutralserver.com ([70.84.186.210]:19432 "EHLO
+	id S932451AbVJDHMu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Oct 2005 03:12:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932453AbVJDHMu
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 03:12:50 -0400
+Received: from noname.neutralserver.com ([70.84.186.210]:16361 "EHLO
 	noname.neutralserver.com") by vger.kernel.org with ESMTP
-	id S932452AbVJDHI2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Oct 2005 03:08:28 -0400
+	id S932451AbVJDHMu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2005 03:12:50 -0400
 Received: from bzq-82-80-223-232.red.bezeqint.net
-	([82.80.223.232]:34239 helo=callisto.yi.org ident=karrde)
+	([82.80.223.232]:34606 helo=callisto.yi.org ident=karrde)
 	by noname.neutralserver.com with esmtpa (Exim 4.52)
-	id 1EMguV-000748-7n; Tue, 04 Oct 2005 02:08:23 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+	id 1EMgyj-000810-Em; Tue, 04 Oct 2005 02:12:45 -0500
+To: Daniel Barkalow <barkalow@iabervon.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0510031606550.31407@g5.osdl.org>
+In-Reply-To: <Pine.LNX.4.63.0510040016110.23242@iabervon.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - noname.neutralserver.com
@@ -41,41 +41,22 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9665>
 
-On Mon, Oct 03, 2005 at 04:16:27PM -0700, Linus Torvalds wrote:
+On Tue, Oct 04, 2005 at 12:24:55AM -0400, Daniel Barkalow wrote:
+> This completes fetches if there are more than 100 outstanding requests
+> and there are more to prefetch.
 > 
+> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> ---
 > 
-> On Mon, 3 Oct 2005, Junio C Hamano wrote:
-> > 
-> > This reminds me of one patch:
-> > 
-> >     From: Dan Aloni <da-x@monatomic.org>
-> >     Subject: [PATCH] Fix git+ssh's indefinite halts during long fetches
-> >     Date: Sat, 1 Oct 2005 21:39:42 +0300
-> >     Message-ID: <20051001183942.GA2099@localdomain>
-> > 
-> > I'd appreciate it if you had a chance to take a look at it and
-> > comment on it.
-> 
-> I personally hate it.
-> 
-> It adds horrible patches to fairly core stuff, all because the prefetching 
-> is not limited.
+> Lightly tested; I reduced the limit to 5, and pulled a small tree 
+> successfully with some of the requests being completed early. I didn't 
+> have the test case to verify that a limit of 100 is sufficiently low, but 
+> handwaving suggests that it should be.
 
-Well it can be reworked to be more clean...
- 
-> As far as I can tell, it should be much easier to just limit the 
-> prefetching to some reasonable limit (say, a few objects deep), which 
-> guarantees that the prefetching doesn't fill up the write queues on the 
-> fetching side.
-
-I'm not sure how this will be completely reliable, even if you limit the
-prefetching to one object.
-
-Suppose that this one object's size is larger than the receiving queues of 
-the receiving end (like 1 MB?) and the bandwidth is high, wouldn't that 
-break?
+Good, it seems that your patch works alright with the local Linux complete 
+database fetch.
 
 -- 
 Dan Aloni
