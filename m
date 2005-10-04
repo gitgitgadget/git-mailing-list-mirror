@@ -1,82 +1,71 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: What to expect after 0.99.8
-Date: Tue, 4 Oct 2005 03:31:00 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0510040321170.23242@iabervon.org>
-References: <7v7jcvxxrl.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0510031522590.23242@iabervon.org> <7vmzlqnwmw.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0510031709360.23242@iabervon.org> <7v1x32l0gz.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0510031606550.31407@g5.osdl.org> <20051004071210.GA18716@localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [RFH] commit object name in git-diff-tree output header?
+Date: Tue, 04 Oct 2005 00:28:20 -0700
+Message-ID: <7virwdeo6j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 04 09:27:32 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Oct 04 09:28:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EMhBz-0008Kx-6c
-	for gcvg-git@gmane.org; Tue, 04 Oct 2005 09:26:27 +0200
+	id 1EMhDu-0000EX-0u
+	for gcvg-git@gmane.org; Tue, 04 Oct 2005 09:28:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932463AbVJDH0T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Oct 2005 03:26:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932464AbVJDH0T
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 03:26:19 -0400
-Received: from iabervon.org ([66.92.72.58]:14088 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932463AbVJDH0T (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Oct 2005 03:26:19 -0400
-Received: (qmail 32144 invoked by uid 1000); 4 Oct 2005 03:31:00 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Oct 2005 03:31:00 -0400
-To: Dan Aloni <da-x@monatomic.org>
-In-Reply-To: <20051004071210.GA18716@localdomain>
+	id S932464AbVJDH2W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Oct 2005 03:28:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932467AbVJDH2W
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Oct 2005 03:28:22 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:57574 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932464AbVJDH2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Oct 2005 03:28:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051004072811.TDCQ29747.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 4 Oct 2005 03:28:11 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9668>
 
-On Tue, 4 Oct 2005, Dan Aloni wrote:
+This is a request for help from your clueless/forgetful
+maintainer.
 
-> On Mon, Oct 03, 2005 at 04:16:27PM -0700, Linus Torvalds wrote:
-> > 
-> > 
-> > On Mon, 3 Oct 2005, Junio C Hamano wrote:
-> > > 
-> > > This reminds me of one patch:
-> > > 
-> > >     From: Dan Aloni <da-x@monatomic.org>
-> > >     Subject: [PATCH] Fix git+ssh's indefinite halts during long fetches
-> > >     Date: Sat, 1 Oct 2005 21:39:42 +0300
-> > >     Message-ID: <20051001183942.GA2099@localdomain>
-> > > 
-> > > I'd appreciate it if you had a chance to take a look at it and
-> > > comment on it.
-> > 
-> > I personally hate it.
-> > 
-> > It adds horrible patches to fairly core stuff, all because the prefetching 
-> > is not limited.
-> 
-> Well it can be reworked to be more clean...
->  
-> > As far as I can tell, it should be much easier to just limit the 
-> > prefetching to some reasonable limit (say, a few objects deep), which 
-> > guarantees that the prefetching doesn't fill up the write queues on the 
-> > fetching side.
-> 
-> I'm not sure how this will be completely reliable, even if you limit the
-> prefetching to one object.
-> 
-> Suppose that this one object's size is larger than the receiving queues of 
-> the receiving end (like 1 MB?) and the bandwidth is high, wouldn't that 
-> break?
+With a single commit as its parameter, 'git-diff-tree' outputs
+the name of the commit object when run without the -v flag as
+its first line, like this:
 
-It shouldn't cause any problem, unless there isn't a 4K buffer between the 
-git-ssh-fetch and ssh; the fetch side would have to fill this buffer 
-before getting stuck, even if ssh can't send out any more data until the 
-object has been read, and 100 requests (each 21 bytes) wouldn't be enough. 
-I remember that there's a lot that depends on being able to put 4K into an 
-empty pipe without blocking, and I'd guess that UNIX sockets have a 
-similar capacity (although I'm not going to look it up tonight).
+    $ git-diff-tree -p HEAD
+    22a27042603fc9068ca562a8b5c46b3417f99777
+    diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+    --- a/Documentation/git-apply.txt
+    +++ b/Documentation/git-apply.txt
+    @@ -9,7 +9,7 @@ git-apply - Apply patch on a GIT index f
 
-	-Daniel
-*This .sig left intentionally blank*
+     SYNOPSIS
+     --------
+     ...
+
+I have a vague recollection to have seen some code that detects
+this ^[0-9a-f]{40}$ pattern and uses it as a separator between
+logical patchset, but I seem to be unable to find it now.
+
+Does anybody have scripts that depend on this behaviour?  This
+commit object name is carried over to format-patch output, and I
+would like to change it now.  So if your own patch acceptance
+script relies on this behaviour, please speak up before I break
+it.
+
+This has been the format since Jun 23, change made by Linus.
+Before that change, we used to say two commit object ID, like
+this:
+
+    $ git-diff-tree -p HEAD
+    aefa4a5... (from 5fca669...)
+    diff --git a/apply.c b/apply.c
+    --- a/apply.c
+    +++ b/apply.c
+    @@ -860,7 +860,6 @@ static int find_offset(const char *buf,
+    ...
