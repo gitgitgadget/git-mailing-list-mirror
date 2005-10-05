@@ -1,102 +1,69 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: First cut at git port to Cygwin
-Date: Wed, 5 Oct 2005 15:16:31 +0200
-Message-ID: <20051005131631.GA9442@diku.dk>
-References: <433B3B10.5050407@zytor.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: cvsimport using proxy?
+Date: Wed, 5 Oct 2005 15:55:55 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510051554310.14244@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7v4q7xc62d.fsf@assigned-by-dhcp.cox.net>
+ <46a038f90510050309t1d075d7fj37c60a6052ec62f3@mail.gmail.com>
+ <20051005125055.GF4682@kiste.smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 05 15:19:31 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Martin Langhoff <martin@ng.eduforge.org>,
+	Sven Verdoolaege <skimo@kotnet.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 05 15:58:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EN98R-0007xZ-4q
-	for gcvg-git@gmane.org; Wed, 05 Oct 2005 15:16:39 +0200
+	id 1EN9kd-0003gM-LG
+	for gcvg-git@gmane.org; Wed, 05 Oct 2005 15:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965164AbVJENQg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Oct 2005 09:16:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965166AbVJENQf
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 09:16:35 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:17120 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S965164AbVJENQf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Oct 2005 09:16:35 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id E5BA06E1520; Wed,  5 Oct 2005 15:16:26 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 92CEA6E147C; Wed,  5 Oct 2005 15:16:24 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 10D4060F42; Wed,  5 Oct 2005 15:16:32 +0200 (CEST)
-To: "H. Peter Anvin" <hpa@zytor.com>
-Content-Disposition: inline
-In-Reply-To: <433B3B10.5050407@zytor.com>
-User-Agent: Mutt/1.5.6i
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Level: 
+	id S965178AbVJEN4D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Oct 2005 09:56:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965177AbVJEN4C
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 09:56:02 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:3739 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S965178AbVJEN4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2005 09:56:00 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 7BFA813EBDF; Wed,  5 Oct 2005 15:55:57 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 5F3A69DB9F; Wed,  5 Oct 2005 15:55:57 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 3831C9DBB6; Wed,  5 Oct 2005 15:55:57 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 005AF13EBDF; Wed,  5 Oct 2005 15:55:56 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Matthias Urlichs <smurf@smurf.noris.de>
+In-Reply-To: <20051005125055.GF4682@kiste.smurf.noris.de>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9707>
 
-I have a few things I experienced with the merged cygwin stuff. Sorry I
-haven't investigated it further, but there should be enough for a few
-fixes.
+Hi,
 
-When I ...
+On Wed, 5 Oct 2005, Matthias Urlichs wrote:
 
-  user@machine /usr/local/dev/git/git
-  $ make prefix=/usr/local install
-  install -d -m755 /usr/local/bin
-  install git-apply.exe [...]
-  sh ./cmd-rename.sh /usr/local/bin
-  ln: creating symbolic link `/usr/local/bin/git-http-pull.exe' to `git-http-fetch.exe': File exists
-  make: *** [install] Error 1
+> HTTP proxies are quite simple, you say 
+> 
+>    1. Connect to Proxy Server.
+>    2. Issue CONNECT Host:Port HTTP/1.1<CR><LF>.
+>    3. Issue <CR><LF>.
+>    4. Wait for a line of response.
+>       If it contains HTTP/1.X 200 , the connection is successful.
+>    5. Read further lines of response until you receive an empty line.
+>    6. Now, you are connected to outside world through a proxy.
+>       Do any data exchange you want.
 
-Can be fixed by the patch below. I don't know if it would be cleaner to
-pass cmd-rename.sh "$X" as a second argument from the Makefile.
+Even simpler is to use transconnect, which transparently uses the proxy by 
+intercepting the connect method using LD_PRELOAD.
 
---- cmd-rename.sh	2005-10-05 14:42:00.000000000 +0200
-+++ cmd-rename.sh-orig	2005-10-05 14:43:48.000000000 +0200
-@@ -3,7 +3,7 @@
- test -d "$d" || exit
- while read old new
- do
--	rm -f "$d/$old" "$d/$old.exe" 
-+	rm -f "$d/$old"
- 	if test -f "$d/$new"
- 	then
- 		ln -s "$new" "$d/$old" || exit
-
-
-Some other obscurities ...
-
-  user@machine /usr/local/dev/git/git
-  $ git-log
-  fatal: Not a git repository
-
-  user@machine /usr/local/dev/git/git
-  $ GIT_DIR=.git git-log | wc -l
-  26094
-
-and I cannot rebuild the index file with git-reset. First time I run it
-it creates the index.lock file and errors out when writing. The second
-time it errors out because the lock file was not removed in the first
-case.
-
-  user@machine /usr/local/dev/git/git
-  $ GIT_DIR=.git git-reset
-  fatal: unable to write new index file
-  
-  user@machine /usr/local/dev/git/git
-  $ GIT_DIR=.git git-reset
-  fatal: unable to create new cachefile
-  
-  user@machine /usr/local/dev/git/git
-  $ uname -a
-  CYGWIN_NT-5.1 antimatter 1.5.18(0.132/4/2) 2005-07-02 20:30 i686 unknown unknown Cygwin
-
--- 
-Jonas Fonseca
+Ciao,
+Dscho
