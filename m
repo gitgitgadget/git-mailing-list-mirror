@@ -1,335 +1,212 @@
-From: Christian Meder <chris@absolutegiganten.org>
-Subject: [PATCH] Some typos and light editing of various manpages
-Date: Wed, 05 Oct 2005 23:48:10 +0200
-Message-ID: <1128548890.11363.11.camel@localhost>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] upload-pack: Do not choke on too many heads request.
+Date: Wed, 05 Oct 2005 14:51:33 -0700
+Message-ID: <7vslvfiqe2.fsf@assigned-by-dhcp.cox.net>
+References: <20051005191300.GC17475@hexapodia.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Oct 05 23:50:56 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 05 23:53:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENH8H-0004wW-GI
-	for gcvg-git@gmane.org; Wed, 05 Oct 2005 23:49:02 +0200
+	id 1ENHAo-0005gD-6C
+	for gcvg-git@gmane.org; Wed, 05 Oct 2005 23:51:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965060AbVJEVs6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Oct 2005 17:48:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965072AbVJEVs6
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 17:48:58 -0400
-Received: from a15181680.alturo-server.de ([217.160.108.75]:31461 "EHLO
-	a15181680.alturo-server.de") by vger.kernel.org with ESMTP
-	id S965060AbVJEVs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2005 17:48:57 -0400
-Received: from p54a2345f.dip0.t-ipconnect.de ([84.162.52.95] helo=localhost)
-	by a15181680.alturo-server.de with esmtpsa (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.52)
-	id 1ENH8C-0001UP-2i
-	for git@vger.kernel.org; Wed, 05 Oct 2005 23:48:56 +0200
-Received: from chris by localhost with local (Exim 4.52)
-	id 1ENH7S-0004lC-VV
-	for git@vger.kernel.org; Wed, 05 Oct 2005 23:48:10 +0200
-To: git@vger.kernel.org
-X-Mailer: Evolution 2.2.3 
+	id S965072AbVJEVvf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Oct 2005 17:51:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965113AbVJEVvf
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 17:51:35 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:36490 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S965072AbVJEVve (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2005 17:51:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051005215128.QAEZ4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 5 Oct 2005 17:51:28 -0400
+To: Andy Isaacson <adi@hexapodia.org>
+In-Reply-To: <20051005191300.GC17475@hexapodia.org> (Andy Isaacson's message
+	of "Wed, 5 Oct 2005 12:13:00 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9737>
 
-Typos, light editing and clarifications.
+Cloning from a repository with more than 256 refs (heads and tags
+included) will choke, because upload-pack has a built-in limit of
+feeding not more than MAX_NEEDS (currently 256) heads to underlying
+git-rev-list.  This is a problem when cloning a repository with many
+tags, like http://www.linux-mips.org/pub/scm/linux.git, which has 290+
+tags.
 
-Signed-off-by: Christian Meder <chris@absolutegiganten.org>
+This commit introduces a new flag, --all, to git-rev-list, to include
+all refs in the repository.  Updated upload-pack detects requests that
+ask more than MAX_NEEDS refs, and sends everything back instead.
 
---- 
-Christian Meder, email: chris@absolutegiganten.org
+We may probably want to tweak the definitions of MAX_NEEDS and
+MAX_HAS, but that is a separate topic.
 
-The Way-Seeking Mind of a tenzo is actualized 
-by rolling up your sleeves.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-                (Eihei Dogen Zenji)
+---
 
+  Andy Isaacson <adi@hexapodia.org> writes:
 
-diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
---- a/Documentation/cvs-migration.txt
-+++ b/Documentation/cvs-migration.txt
-@@ -24,7 +24,7 @@ The good news is that most people don't 
- people think it's a bug in CVS that makes it tag (and check in changes)
- one file at a time.  So most projects you'll ever see will use CVS
- 'as if' it was sane.  In which case you'll find it very easy indeed to
--move over to Git. 
-+move over to git. 
+  > Trying to do a local clone of the linux-mips.org git repo:
+  >
+  > % git clone /home/adi/linux/git/lmo/linux foo
+  > defaulting to local storage area
+  > fatal: I'm only doing a max of 256 requests
+  > % git -v
+  > git version 0.99.8.GIT
+  >
+  > I got git/lmo/linux from http://www.linux-mips.org/pub/scm/linux.git.
+  >
+  > Am I doing something wrong, or what?
+
+  You are not doing anything wrong.  Please try this patch.
+
+ rev-list.c    |   21 +++++++++++++++++++++
+ rev-parse.c   |    1 +
+ upload-pack.c |   50 ++++++++++++++++++++++++++++++++++----------------
+ 3 files changed, 56 insertions(+), 16 deletions(-)
+
+applies-to: dc721a63b8221995616e3013de11e71d94da01ef
+e091eb93258f05a58bc5d1c60f058f5f57dd92b6
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "refs.h"
+ #include "tag.h"
+ #include "commit.h"
+ #include "tree.h"
+@@ -489,6 +490,22 @@ static void handle_one_commit(struct com
+ 	commit_list_insert(com, lst);
+ }
  
- First off: this is not a git tutorial. See
- link:tutorial.html[Documentation/tutorial.txt] for how git
-@@ -229,7 +229,7 @@ does rename or copy would not show in th
- "o-file.c", it would find the commit that changed the statement
- when it was in "o-file.c".
++/* for_each_ref() callback does not allow user data -- Yuck. */
++static struct commit_list **global_lst;
++
++static int include_one_commit(const char *path, const unsigned char *sha1)
++{
++	struct commit *com = get_commit_reference(path, 0);
++	handle_one_commit(com, global_lst);
++	return 0;
++}
++
++static void handle_all(struct commit_list **lst)
++{
++	global_lst = lst;
++	for_each_ref(include_one_commit);
++	global_lst = NULL;
++}
  
--NOTE: The current versions of "git-diff-tree -C" is not eager
-+NOTE: The current version of "git-diff-tree -C" is not eager
-   enough to find copies, and it will miss the fact that a-file.c
-   was created by copying o-file.c unless o-file.c was somehow
-   changed in the same commit.
-diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
---- a/Documentation/diff-format.txt
-+++ b/Documentation/diff-format.txt
-@@ -1,8 +1,8 @@
- The output format from "git-diff-index", "git-diff-tree" and
- "git-diff-files" are very similar.
+ int main(int argc, char **argv)
+ {
+@@ -542,6 +559,10 @@ int main(int argc, char **argv)
+ 			bisect_list = 1;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--all")) {
++			handle_all(&list);
++			continue;
++		}
+ 		if (!strcmp(arg, "--objects")) {
+ 			tag_objects = 1;
+ 			tree_objects = 1;
+diff --git a/rev-parse.c b/rev-parse.c
+--- a/rev-parse.c
++++ b/rev-parse.c
+@@ -32,6 +32,7 @@ static int revs_count = 0;
+ static int is_rev_argument(const char *arg)
+ {
+ 	static const char *rev_args[] = {
++		"--all",
+ 		"--bisect",
+ 		"--header",
+ 		"--max-age=",
+diff --git a/upload-pack.c b/upload-pack.c
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -30,10 +30,18 @@ static void create_pack_file(void)
  
--These commands all compare two sets of things; what are
--compared are different:
-+These commands all compare two sets of things; what is 
-+compared differs:
+ 	if (!pid) {
+ 		int i;
+-		int args = nr_has + nr_needs + 5;
+-		char **argv = xmalloc(args * sizeof(char *));
+-		char *buf = xmalloc(args * 45);
+-		char **p = argv;
++		int args;
++		char **argv;
++		char *buf;
++		char **p;
++
++		if (MAX_NEEDS <= nr_needs)
++			args = nr_has + 10;
++		else
++			args = nr_has + nr_needs + 5;
++		argv = xmalloc(args * sizeof(char *));
++		buf = xmalloc(args * 45);
++		p = argv;
  
- git-diff-index <tree-ish>::
-         compares the <tree-ish> and the files on the filesystem.
-@@ -46,7 +46,7 @@ That is, from the left to the right:
- . path for "dst"; only exists for C or R.
- . an LF or a NUL when '-z' option is used, to terminate the record.
+ 		dup2(fd[1], 1);
+ 		close(0);
+@@ -41,10 +49,14 @@ static void create_pack_file(void)
+ 		close(fd[1]);
+ 		*p++ = "git-rev-list";
+ 		*p++ = "--objects";
+-		for (i = 0; i < nr_needs; i++) {
+-			*p++ = buf;
+-			memcpy(buf, sha1_to_hex(needs_sha1[i]), 41);
+-			buf += 41;
++		if (MAX_NEEDS <= nr_needs)
++			*p++ = "--all";
++		else {
++			for (i = 0; i < nr_needs; i++) {
++				*p++ = buf;
++				memcpy(buf, sha1_to_hex(needs_sha1[i]), 41);
++				buf += 41;
++			}
+ 		}
+ 		for (i = 0; i < nr_has; i++) {
+ 			*p++ = buf;
+@@ -129,18 +141,24 @@ static int receive_needs(void)
  
--<sha1> is shown as all 0's if new is a file on the filesystem
-+<sha1> is shown as all 0's if a file is new on the filesystem
- and it is out of sync with the cache.
+ 	needs = 0;
+ 	for (;;) {
++		unsigned char dummy[20], *sha1_buf;
+ 		len = packet_read_line(0, line, sizeof(line));
+ 		if (!len)
+ 			return needs;
  
- Example:
-@@ -91,7 +91,7 @@ For a path that is added, removed, or mo
- where:
- 
-      <old|new>-file:: are files GIT_EXTERNAL_DIFF can use to read the
--		      contents of <old|ne>,
-+		      contents of <old|new>,
-      <old|new>-hex:: are the 40-hexdigit SHA1 hashes,
-      <old|new>-mode:: are the octal representation of the file modes.
- 
-@@ -121,12 +121,11 @@ The `a/` and `b/` filenames are the same
- involved.  Especially, even for a creation or a deletion,
- `/dev/null` is _not_ used in place of `a/` or `b/` filenames.
- +
--When rename/copy is involved, `file1` and `file2` shows the
-+When rename/copy is involved, `file1` and `file2` show the
- name of the source file of the rename/copy and the name of
- the file that rename/copy produces, respectively.
- 
--2.   It is followed by extended header lines that are one or
--     more of:
-+2.   It is followed by one or more extended header lines:
- 
-        old mode <mode>
-        new mode <mode>
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -5,9 +5,8 @@
- 	Synonym for "-p".
- 
- -r::
--	Look recursively in subdirectories; this flag does not
--	mean anything to commands other than "git-diff-tree";
--	other diff commands always look at all the subdirectories.
-+	Look recursively in subdirectories; only used by "git-diff-tree";
-+	other diff commands always work recursively.
- 
- -z::
- 	\0 line termination on output
-@@ -28,26 +27,26 @@
- 	Detect copies as well as renames.
- 
- --find-copies-harder::
--	By default, -C option finds copies only if the original
--	file of the copy was modified in the same changeset for
--	performance reasons.  This flag makes the command
-+	For performance reasons, by default, -C option finds copies only 
-+	if the original file of the copy was modified in the same 
-+	changeset.  This flag makes the command
- 	inspect unmodified files as candidates for the source of
- 	copy.  This is a very expensive operation for large
- 	projects, so use it with caution.
- 
- -l<num>::
- 	-M and -C options require O(n^2) processing time where n
--	in the number of potential rename/copy targets.  This
-+	is the number of potential rename/copy targets.  This
- 	option prevents rename/copy detection from running if
--	the number of rename/copy targets exceed the specified
-+	the number of rename/copy targets exceeds the specified
- 	number.
- 
- -S<string>::
--	Look for differences that contains the change in <string>.
-+	Look for differences that contain the change in <string>.
- 
- --pickaxe-all::
- 	When -S finds a change, show all the changes in that
--	changeset, not just the files that contains the change
-+	changeset, not just the files that contain the change
- 	in <string>.
- 
- -O<orderfile>::
-diff --git a/Documentation/diffcore.txt b/Documentation/diffcore.txt
---- a/Documentation/diffcore.txt
-+++ b/Documentation/diffcore.txt
-@@ -177,7 +177,7 @@ diffcore-merge-broken
- ---------------------
- 
- This transformation is used to merge filepairs broken by
--diffcore-break, and were not transformed into rename/copy by
-+diffcore-break, and not transformed into rename/copy by
- diffcore-rename, back into a single modification.  This always
- runs when diffcore-break is used.
- 
-@@ -206,10 +206,10 @@ like these:
- * -B/60 (the same as above, since diffcore-break defaults to 50%).
- 
- Note that earlier implementation left a broken pair as a separate
--creation and deletion patches.  This was unnecessary hack and
-+creation and deletion patches.  This was an unnecessary hack and
- the latest implementation always merges all the broken pairs
- back into modifications, but the resulting patch output is
--formatted differently to still let the reviewing easier for such
-+formatted differently for easier review in case of such
- a complete rewrite by showing the entire contents of old version
- prefixed with '-', followed by the entire contents of new
- version prefixed with '+'.
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--A simple wrapper to git-update-index to add files to the cache for people used
-+A simple wrapper for git-update-index to add files to the cache for people used
- to do "cvs add".
- 
- OPTIONS
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Reads supplied diff output and applies it on a GIT index file
-+Reads supplied diff output and applies it on a git index file
- and a work tree.
- 
- OPTIONS
-diff --git a/Documentation/git-applymbox.txt b/Documentation/git-applymbox.txt
---- a/Documentation/git-applymbox.txt
-+++ b/Documentation/git-applymbox.txt
-@@ -22,7 +22,7 @@ OPTIONS
- -q::
- 	Apply patches interactively.  The user will be given
- 	opportunity to edit the log message and the patch before
--	attempting to apply patch in each e-mail message.
-+	attempting to apply it.
- 
- -k::
- 	Usually the program 'cleans up' the Subject: header line
-diff --git a/Documentation/git-archimport.txt b/Documentation/git-archimport.txt
---- a/Documentation/git-archimport.txt
-+++ b/Documentation/git-archimport.txt
-@@ -20,20 +20,23 @@ it will just import it as a regular comm
- as a merge whenever possible (see discussion below). 
- 
- The script expects you to provide the key roots where it can start the import 
--from an 'initial import' or 'tag' type of Arch commit. It will follow and import 
--new branches within the provided roots. 
-+from an 'initial import' or 'tag' type of Arch commit. It will follow and 
-+import new branches within the provided roots. 
- 
- It expects to be dealing with one project only. If it sees 
--branches that have different roots, it will refuse to run. In that case, edit your
--<archive/branch> parameters to define clearly the scope of the import. 
-+branches that have different roots, it will refuse to run. In that case, 
-+edit your <archive/branch> parameters to define clearly the scope of the 
-+import. 
- 
--`git-archimport` uses `tla` extensively in the background to access the Arch repository.
-+`git-archimport` uses `tla` extensively in the background to access the 
-+Arch repository.
- Make sure you have a recent version of `tla` available in the path. `tla` must
- know about the repositories you pass to `git-archimport`. 
- 
- For the initial import `git-archimport` expects to find itself in an empty 
- directory. To follow the development of a project that uses Arch, rerun 
--`git-archimport` with the same parameters as the initial import to perform incremental imports.
-+`git-archimport` with the same parameters as the initial import to perform 
-+incremental imports.
- 
- MERGES
- ------
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -76,7 +76,7 @@ During the bisection process, you can sa
- 
- to see the currently remaining suspects in `gitk`.
- 
--The good/bad you told the command is logged, and `git bisect
-+The good/bad input is logged, and `git bisect
- log` shows what you have done so far.  You can truncate its
- output somewhere and save it in a file, and run
- 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -23,7 +23,7 @@ OPTIONS
- 	The name of the branch to create.
- 
- start-point::
--	Where to make the branch; defaults to HEAD.
-+	Where to create the branch; defaults to HEAD.
- 
- Author
- ------
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -32,7 +32,7 @@ OPTIONS
- 
- <type>::
- 	Typically this matches the real type of <object> but asking
--	for a type that can trivially dereferenced from the given
-+	for a type that can trivially be dereferenced from the given
- 	<object> is also permitted.  An example is to ask for a
- 	"tree" with <object> being a commit object that contains it,
- 	or to ask for a "blob" with <object> being a tag object that
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -22,7 +22,7 @@ OPTIONS
- 	Commit to cherry-pick.
- 
- -r::
--	Usuall the command appends which commit was
-+	Usually the command appends which commit was
- 	cherry-picked after the original commit message when
- 	making a commit.  This option, '--replay', causes it to
- 	use the original commit message intact.  This is useful
-diff --git a/Documentation/git-clone-pack.txt b/Documentation/git-clone-pack.txt
---- a/Documentation/git-clone-pack.txt
-+++ b/Documentation/git-clone-pack.txt
-@@ -26,8 +26,8 @@ OPTIONS
- 
- --exec=<git-upload-pack>::
- 	Use this to specify the path to 'git-upload-pack' on the
--	remote side, if is not found on your $PATH.
--	Installations of sshd ignores the user's environment
-+	remote side, if it is not found on your $PATH.
-+	Installations of sshd ignore the user's environment
- 	setup scripts for login shells (e.g. .bash_profile) and
- 	your privately installed GIT may not be found on the system
- 	default $PATH.  Another workaround suggested is to set
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -36,7 +36,7 @@ OPTIONS
- 	An existing tree object
- 
- -p <parent commit>::
--	Each '-p' indicates a the id of a parent commit object.
-+	Each '-p' indicates the id of a parent commit object.
- 	
- 
- Commit Information
+-		/*
+-		 * This is purely theoretical right now: git-fetch-pack only
+-		 * ever asks for a single HEAD
+-		 */
+-		if (needs >= MAX_NEEDS)
+-			die("I'm only doing a max of %d requests", MAX_NEEDS);
+-		if (strncmp("want ", line, 5) || get_sha1_hex(line+5, needs_sha1[needs]))
+-			die("git-upload-pack: protocol error, expected to get sha, not '%s'", line);
++		sha1_buf = dummy;
++		if (needs == MAX_NEEDS) {
++			fprintf(stderr,
++				"warning: supporting only a max of %d requests. "
++				"sending everything instead.\n",
++				MAX_NEEDS);
++		}
++		else if (needs < MAX_NEEDS)
++			sha1_buf = needs_sha1[needs];
++
++		if (strncmp("want ", line, 5) || get_sha1_hex(line+5, sha1_buf))
++			die("git-upload-pack: protocol error, "
++			    "expected to get sha, not '%s'", line);
+ 		needs++;
+ 	}
+ }
+---
+0.99.8.GIT
