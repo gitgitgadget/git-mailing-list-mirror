@@ -1,96 +1,73 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Fix symbolic ref validation
-Date: Wed, 5 Oct 2005 17:52:12 +0200
-Message-ID: <20051005155212.GA16391@diku.dk>
-References: <433B3B10.5050407@zytor.com> <20051005131631.GA9442@diku.dk> <Pine.LNX.4.63.0510051556320.14244@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Christopher Faylor <me@cgf.cx>
+Subject: Re: First cut at git port to Cygwin
+Date: Wed, 5 Oct 2005 11:54:57 -0400
+Message-ID: <20051005155457.GA30303@trixie.casa.cgf.cx>
+References: <433B3B10.5050407@zytor.com> <81b0412b0510040531m441ca759k6d1f3fbf0cd248ce@mail.gmail.com> <434299DB.7020805@zytor.com> <81b0412b0510050424h21fc06bav7677911f52b38426@mail.gmail.com> <81b0412b0510050846l2258775co117bada2d2b5a1ad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 05 17:55:27 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Oct 05 17:58:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENBZ3-0000gc-9D
-	for gcvg-git@gmane.org; Wed, 05 Oct 2005 17:52:17 +0200
+	id 1ENBc8-0001oL-Sr
+	for gcvg-git@gmane.org; Wed, 05 Oct 2005 17:55:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030186AbVJEPwO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 5 Oct 2005 11:52:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030190AbVJEPwO
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 11:52:14 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:57593 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S1030186AbVJEPwN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Oct 2005 11:52:13 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 19D8A6DFD36; Wed,  5 Oct 2005 17:52:05 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id CBE926DFD14; Wed,  5 Oct 2005 17:52:04 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 63D6360F44; Wed,  5 Oct 2005 17:52:12 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
+	id S1030191AbVJEPy7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Oct 2005 11:54:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030193AbVJEPy6
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 11:54:58 -0400
+Received: from c-24-61-23-223.hsd1.ma.comcast.net ([24.61.23.223]:31118 "EHLO
+	cgf.cx") by vger.kernel.org with ESMTP id S1030191AbVJEPy6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Oct 2005 11:54:58 -0400
+Received: by cgf.cx (Postfix, from userid 201)
+	id 7FCE313C101; Wed,  5 Oct 2005 15:54:57 +0000 (UTC)
+To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0510051556320.14244@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.6i
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Level: 
+In-Reply-To: <81b0412b0510050846l2258775co117bada2d2b5a1ad@mail.gmail.com>
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9714>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote Wed, Oct 05, 200=
-5:
-> Hi,
+On Wed, Oct 05, 2005 at 05:46:08PM +0200, Alex Riesen wrote:
+>On 10/5/05, Alex Riesen <raa.lkml@gmail.com> wrote:
+>> On 10/4/05, H. Peter Anvin <hpa@zytor.com> wrote:
+>> > > I noticed that rename(2) in my copy of cygwin (1.5.18-1) does not remove the
+>> > > target and returns an error (probably EPERM, but I have reasons not to trust
+>> > > strerror on that thing).
+>> > > The repository was on FAT.
+>> > > Taking "rename(2)" from cygwin's libiberty solved this (they unlink if link(2)
+>> > > returns EEXIST).
+>> > >
+>> > > PS: Does broken rename(2) qualify a system "not worthy to support"?
+>> >
+>> > I just tried this with Cygwin 1.5.18-1 and didn't have any such
+>> > problems.  I tried it on NTFS, FAT and Samba, using WinXP.
+>>
+>> It's on Win2k, there was multiple cygwin installations in path, the other one
+>> supposedly is 1.5.5 (it's from QNX Momentics installation).
+>> I had that old "cygwin1.dll" renamed into "cygwin1.dll-disabled" long
+>> ago, though...
+>> I can't reproduce this out of GIT context, and the error is not
+>> reproducable after
+>> I removed the other cygwin installation out of PATH.
+>> Anyway, sorry, I should have tried this before posting.
+>
+>Still does not work for me. I cannot isolate the problem out of git,
+>but at the moment the only way for me to make commit_index_file to work
+>is to put unlink(indexfile) before rename(cf->lockfile, indexfile).
+>
+>For everyone interested, I attach cygwin's strace output here.
 
-Hello,
+I'm sorry that I missed this thread.  I'm usually pretty alert to the word
+"cygwin" showing up in a subject.
 
-> On Wed, 5 Oct 2005, Jonas Fonseca wrote:
->=20
-> >   user@machine /usr/local/dev/git/git
-> >   $ git-log
-> >   fatal: Not a git repository
-> >=20
-> >   user@machine /usr/local/dev/git/git
-> >   $ GIT_DIR=3D.git git-log | wc -l
-> >   26094
->=20
-> That could have its cause in your .git/HEAD being no symlink. That ha=
-ppens=20
-> when rsync=B4ing the .git directory.
+I'll go back and read the archives to catch up but, at the risk of
+making an observation that has already been made, under windows you
+can't always rename a file that is open.  Is that what's happening here?
 
-Yes, used rsync when I cloned. Seems validate_symref() was buggy.=20
-
-> The other errors could also stem from the fact that quite a few place=
-s=20
-> expect HEAD to be a symlink.
-
-git-reset still error out ...
-
----
-
-Use the correct buffer when validating 'ref: refs/...'
-
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
-
----
-diff --git a/refs.c b/refs.c
---- a/refs.c
-+++ b/refs.c
-@@ -46,7 +46,7 @@ int validate_symref(const char *path)
- 	len -=3D 4;
- 	while (len && isspace(*buf))
- 		buf++, len--;
--	if (len >=3D 5 && !memcmp("refs/", buffer, 5))
-+	if (len >=3D 5 && !memcmp("refs/", buf, 5))
- 		return 0;
- 	return -1;
- }
-
---=20
-Jonas Fonseca
+--
+Christopher Faylor			spammer? ->	aaaspam@sourceware.org
+Cygwin Co-Project Leader				aaaspam@duffek.com
+TimeSys, Inc.
