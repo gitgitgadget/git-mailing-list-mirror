@@ -1,56 +1,52 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Fall back to three-way merge when applying a patch.
-Date: Tue, 4 Oct 2005 21:56:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510042155090.31407@g5.osdl.org>
-References: <7vd5mk7pv6.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: First cut at git port to Cygwin
+Date: Tue, 04 Oct 2005 22:25:22 -0700
+Message-ID: <434363C2.2040501@zytor.com>
+References: <433B3B10.5050407@zytor.com> <81b0412b0510040531m441ca759k6d1f3fbf0cd248ce@mail.gmail.com> <434299DB.7020805@zytor.com> <20051005031642.GD1393@trixie.casa.cgf.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 05 06:58:18 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 05 07:27:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EN1Lw-0000XV-Oc
-	for gcvg-git@gmane.org; Wed, 05 Oct 2005 06:58:05 +0200
+	id 1EN1mx-0004i2-6r
+	for gcvg-git@gmane.org; Wed, 05 Oct 2005 07:25:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965084AbVJEE5G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Oct 2005 00:57:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965085AbVJEE5G
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 00:57:06 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:19424 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965084AbVJEE5F (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Oct 2005 00:57:05 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j954ux4s020319
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 4 Oct 2005 21:57:00 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j954uwQi029720;
-	Tue, 4 Oct 2005 21:56:58 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5mk7pv6.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.119 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932539AbVJEFZw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Oct 2005 01:25:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932544AbVJEFZw
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 01:25:52 -0400
+Received: from paleosilicon.orionmulti.com ([209.128.68.66]:26782 "EHLO
+	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
+	id S932539AbVJEFZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2005 01:25:52 -0400
+X-Envelope-From: hpa@zytor.com
+Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
+	(authenticated bits=0)
+	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j955PiJv003782
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 4 Oct 2005 22:25:46 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Christopher Faylor <me@cgf.cx>
+In-Reply-To: <20051005031642.GD1393@trixie.casa.cgf.cx>
+X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	paleosilicon.orionmulti.com
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on paleosilicon.orionmulti.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9700>
 
+Christopher Faylor wrote:
+> That's a relief.  Btw, AFAIK, strerror is working correctly under
+> Cygwin also.
 
+Now if we can only figure out why gitk is messed up...
 
-On Tue, 4 Oct 2005, Junio C Hamano wrote:
-> 
->  * I will be placing this in the proposed updates branch.
->    Hopefully this would alleviate the complaints from people who
->    find the "no fuzz" policy of git-apply is too strict.
-
-This should definitely be enabled by a switch only. 
-
-For example, I use git-applypatch _only_ through git-applymbox. Ie 
-non-interactively. I definitely do _not_ want it to try random other trees 
-unless I tell it to, especially when applying a series of 175 patches in 
-one go.
-
-		Linus
+	-hpa
