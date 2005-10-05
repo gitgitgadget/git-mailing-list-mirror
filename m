@@ -1,91 +1,50 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] hold_index_file_for_update should not unlink failed to open .lock files atexit
-Date: Wed, 5 Oct 2005 16:58:11 +0200
-Message-ID: <81b0412b0510050758v26b88f4o5f15e3ff01e9cd87@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Luben Tuikov <luben_tuikov@adaptec.com>
+Subject: Question on git clone
+Date: Wed, 05 Oct 2005 11:42:56 -0400
+Message-ID: <4343F480.30501@adaptec.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_13398_22211458.1128524291463"
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Oct 05 17:00:24 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Oct 05 17:46:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENAit-0007Z1-FJ
-	for gcvg-git@gmane.org; Wed, 05 Oct 2005 16:58:23 +0200
+	id 1ENBRB-0006G3-33
+	for gcvg-git@gmane.org; Wed, 05 Oct 2005 17:44:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965193AbVJEO6P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Oct 2005 10:58:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965199AbVJEO6O
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 10:58:14 -0400
-Received: from nproxy.gmail.com ([64.233.182.204]:7447 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965193AbVJEO6N (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Oct 2005 10:58:13 -0400
-Received: by nproxy.gmail.com with SMTP id n15so76443nfc
-        for <git@vger.kernel.org>; Wed, 05 Oct 2005 07:58:11 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:mime-version:content-type;
-        b=WdhQTJAEGjMEJ68ulVB2GD29wmeK04yybZMC+O4Gfoy9/MVPDS/7ZfikDsZEwpUDy43xQRZ8bVZUOD3jtiWpq+0jHw0v5pS324wFURi0L9c7NKB9jZe/0MWzB0JrUzmAVuM02ZGaXneBSrBlrcWrfUxqK5Q4zdx/WoqvfqJNVvc=
-Received: by 10.48.108.1 with SMTP id g1mr51282nfc;
-        Wed, 05 Oct 2005 07:58:11 -0700 (PDT)
-Received: by 10.48.247.10 with HTTP; Wed, 5 Oct 2005 07:58:11 -0700 (PDT)
-To: git@vger.kernel.org
+	id S965225AbVJEPnE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Oct 2005 11:43:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965229AbVJEPnD
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 11:43:03 -0400
+Received: from magic.adaptec.com ([216.52.22.17]:35717 "EHLO magic.adaptec.com")
+	by vger.kernel.org with ESMTP id S965225AbVJEPm6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Oct 2005 11:42:58 -0400
+Received: from redfish.adaptec.com (redfish.adaptec.com [162.62.50.11])
+	by magic.adaptec.com (8.11.6/8.11.6) with ESMTP id j95Fguc24975
+	for <git@vger.kernel.org>; Wed, 5 Oct 2005 08:42:56 -0700
+Received: from rtpe2k01.adaptec.com (rtpe2k01.adaptec.com [10.110.12.40])
+	by redfish.adaptec.com (8.11.6/8.11.6) with ESMTP id j95Fgvg15623
+	for <git@vger.kernel.org>; Wed, 5 Oct 2005 08:42:57 -0700
+Received: from [10.110.10.142] ([10.110.10.142]) by rtpe2k01.adaptec.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Wed, 5 Oct 2005 11:42:57 -0400
+User-Agent: Mozilla Thunderbird 1.0.6 (X11/20050716)
+X-Accept-Language: en-us, en
+To: git <git@vger.kernel.org>
+X-OriginalArrivalTime: 05 Oct 2005 15:42:57.0367 (UTC) FILETIME=[754C5670:01C5C9C3]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9711>
 
-------=_Part_13398_22211458.1128524291463
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-Hello,
+Any reason why "git clone" barfs, but cg-clone works without
+a problem?
 
-I noticed that index.lock is one time removed by git-update-index
-and the other time not (I am still trying to make the rename behave on
-my cygwin installation). The atexit callback removes .lock file uncoditiona=
-lly,
-whether it was opened by the current process or not.
+The message I get is this:
 
-I fixed this with the attached (sorry, it's windows+firefox+gmail) patch.
+Cannot get remote repository information.
+Perhaps git-update-server-info needs to be run there?
 
-The patch sets up atexit only if the file was opened successfully.
-
-------=_Part_13398_22211458.1128524291463
-Content-Type: application/xxxxx; name=hold_index_file_for_update.patch
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="hold_index_file_for_update.patch"
-
-
-Set up atexit only if the .lock-file was opened successfully.
-
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-
-diff --git a/index.c b/index.c
---- a/index.c
-+++ b/index.c
-@@ -22,14 +22,16 @@ static void remove_lock_file_on_signal(i
- 
- int hold_index_file_for_update(struct cache_file *cf, const char *path)
- {
-+	int fd;
- 	sprintf(cf->lockfile, "%s.lock", path);
--	cf->next = cache_file_list;
--	cache_file_list = cf;
--	if (!cf->next) {
-+	fd = open(cf->lockfile, O_RDWR | O_CREAT | O_EXCL, 0666);
-+	if (fd >=0 && !cf->next) {
-+		cf->next = cache_file_list;
-+		cache_file_list = cf;
- 		signal(SIGINT, remove_lock_file_on_signal);
- 		atexit(remove_lock_file);
- 	}
--	return open(cf->lockfile, O_RDWR | O_CREAT | O_EXCL, 0666);
-+	return fd;
- }
- 
- int commit_index_file(struct cache_file *cf)
-
-------=_Part_13398_22211458.1128524291463--
+Thanks,
+	Luben
