@@ -1,63 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Write .editmsg in GIT_DIR to avoid being in git-status.
-Date: Wed, 05 Oct 2005 14:54:58 -0700
-Message-ID: <7vk6griq8d.fsf@assigned-by-dhcp.cox.net>
-References: <87achnq4z7.fsf@gmail.com>
+From: Christian Meder <chris@absolutegiganten.org>
+Subject: Notes and questions while reading the documentation
+Date: Thu, 06 Oct 2005 00:06:06 +0200
+Message-ID: <1128549966.11363.29.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp-2
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 05 23:56:39 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Oct 06 00:18:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENHEU-0006TQ-3T
-	for gcvg-git@gmane.org; Wed, 05 Oct 2005 23:55:26 +0200
+	id 1ENHQ2-0001Jv-Px
+	for gcvg-git@gmane.org; Thu, 06 Oct 2005 00:07:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965137AbVJEVzB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Oct 2005 17:55:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965148AbVJEVzB
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 17:55:01 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:42637 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S965137AbVJEVzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Oct 2005 17:55:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051005215454.QBRJ4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 5 Oct 2005 17:54:54 -0400
-To: <sbejar@gmail.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030385AbVJEWGy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Oct 2005 18:06:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030389AbVJEWGy
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Oct 2005 18:06:54 -0400
+Received: from a15181680.alturo-server.de ([217.160.108.75]:34007 "EHLO
+	a15181680.alturo-server.de") by vger.kernel.org with ESMTP
+	id S1030385AbVJEWGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Oct 2005 18:06:53 -0400
+Received: from p54a2345f.dip0.t-ipconnect.de ([84.162.52.95] helo=localhost)
+	by a15181680.alturo-server.de with esmtpsa (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.52)
+	id 1ENHPY-0001xT-CB
+	for git@vger.kernel.org; Thu, 06 Oct 2005 00:06:52 +0200
+Received: from chris by localhost with local (Exim 4.52)
+	id 1ENHOp-0004ov-Bf
+	for git@vger.kernel.org; Thu, 06 Oct 2005 00:06:07 +0200
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.2.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9739>
 
-Santi B.ANijar <sbejar@gmail.com> writes:
+Hi,
 
-> It appears in the git-status output during a git-commit if you have
-> something in info/exclude.
+while (proof-)reading the Documentation I noted down some remarks and
+questions:
 
-... which does not worry me too much; you'll get used to it ;-).
+* a lot of the manpages include something like "v0.1, June 2005" in the
+header; these versions tags are pretty obscure to interpret, timestamp
+when last edited ? version of the manpage ? version of git when the
+manpage was included ? maturity the author assigned to the content ?
+If these tags don't follow some sane schema they should be removed.
 
-> Also for .cmitmsg and .cmitchk to make git-commit work
-> in read-only working trees.
+* git-applymbox: -q for interactivity seems like a strange choice, ok I
+knew -i for interactive and -q for quiet but -q for interactive editing
+is _not_ really intuitive
 
-If a working tree is read-only, I wonder what you are committing.
+* the usage of git, Git and GIT isn't consistent in the documentation.
+I'd vote for only using git.
 
-It might not be a bad idea to think about this a bit more before
-actually coding.  You are moving things out of the working tree
-root level, which is a valid thing to do when worrying about a
-repository (or working tree) that you do not have write access
-to.  We've had a fix similar to this for temporary files used by
-diff commands, which moved them to $TMPDIR or something like
-that.  If the working tree root level is not writable for you,
-is it valid/reasonable to assume that $GIT_DIR is?  Are there
-better places?  E.g. perhaps $HOME/.gittmp/?
+* git-clone says that http transport is not supported yet I used it to
+clone the git repo from kernel.org yesterday. Should the documentation
+get updated ?
 
->  ret="$?"
-> -rm -f .cmitmsg .editmsg .cmitchk
-> +rm -f "$GIT_DIR"/{.cmitmsg,.editmsg,.cmitchk}
+* the manpage synopsises aren't consistent wrt command naming; it's "git
+commit" but "git-branch"; I guess all the manpages should reference
+their commands as "git-x" and not "git x"
 
-Please do not do "{a,b,c}".  I think ksh can grok the rest of
-the git-commit.sh code, but not this.
+Greetings,
+
+
+
+				Christian 
+-- 
+Christian Meder, email: chris@absolutegiganten.org
+
+The Way-Seeking Mind of a tenzo is actualized 
+by rolling up your sleeves.
+
+                (Eihei Dogen Zenji)
