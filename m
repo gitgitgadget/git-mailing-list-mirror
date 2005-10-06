@@ -1,49 +1,58 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: clone: I'm only doing a max of 256 requests
-Date: Thu, 06 Oct 2005 13:16:51 -0700
-Message-ID: <7v1x2y9z9o.fsf@assigned-by-dhcp.cox.net>
-References: <20051005191300.GC17475@hexapodia.org>
-	<Pine.LNX.4.64.0510051541300.31407@g5.osdl.org>
-	<81b0412b0510060641g3a3c6e02m6827370dd61b5ea6@mail.gmail.com>
-	<Pine.LNX.4.64.0510060737160.31407@g5.osdl.org>
+Subject: Re: [PATCH] Write .editmsg in GIT_DIR to avoid being in git-status.
+Date: Thu, 06 Oct 2005 13:19:45 -0700
+Message-ID: <7vpsqi8kke.fsf@assigned-by-dhcp.cox.net>
+References: <87achnq4z7.fsf@gmail.com>
+	<7vk6griq8d.fsf@assigned-by-dhcp.cox.net>
+	<8aa486160510060630m2afb18ffx@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	Andy Isaacson <adi@hexapodia.org>
-X-From: git-owner@vger.kernel.org Thu Oct 06 22:19:19 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 06 22:21:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENcAl-0006aq-PM
-	for gcvg-git@gmane.org; Thu, 06 Oct 2005 22:17:00 +0200
+	id 1ENcDX-0007vM-W9
+	for gcvg-git@gmane.org; Thu, 06 Oct 2005 22:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750926AbVJFUQ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Oct 2005 16:16:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750933AbVJFUQ5
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 16:16:57 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:40432 "EHLO
+	id S1751346AbVJFUTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Oct 2005 16:19:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbVJFUTs
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 16:19:48 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:55538 "EHLO
 	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1750913AbVJFUQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2005 16:16:56 -0400
+	id S1751346AbVJFUTr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2005 16:19:47 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
           by fed1rmmtao03.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051006201647.HNAL4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 6 Oct 2005 16:16:47 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0510060737160.31407@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 6 Oct 2005 07:39:02 -0700 (PDT)")
+          id <20051006201941.HOLC4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 6 Oct 2005 16:19:41 -0400
+To: Santi Bejar <sbejar@gmail.com>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9782>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Santi Bejar <sbejar@gmail.com> writes:
 
-> Junio, please apply.
+>> If a working tree is read-only, I wonder what you are committing.
+>
+> I keep my /etc modifications in git, and I want to commit as a
+> user not as root.
 
-I've been considering about this myself for quite a while, but
-haven't done so only because I suspected the removal of the
-checks are probably not good enough.  I'll apply the patch, and
-we will see what happens.
+OK.  Your /etc/.git is writable by you but /etc is not.
+Although I personally would do it a bit differently (my /etc
+sources would live in a different area which is a source tree
+and 'make install' as root would install the latest to /etc; no
+need for anything user writable under /etc, including
+/etc/.git/), I do not think your set-up is wrong -- we should
+support it.
+
+>> ... If the working tree root level is not writable for you,
+>> is it valid/reasonable to assume that $GIT_DIR is?
+
+I changed my mind about this.  $GIT_DIR by definition should be
+writable by you since we are talking about committing -- I think
+moving them to $GIT_DIR/ is a good change.
