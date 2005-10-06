@@ -1,74 +1,338 @@
-From: robfitz@273k.net
-Subject: [PATCH] Reduce memory usage in git-update-server-info.
-Date: Thu, 6 Oct 2005 22:49:03 +0000
-Message-ID: <11286389433926-git-send-email-robfitz@273k.net>
-Reply-To: robfitz@273k.net
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Create object subdirectories on demand
+Date: Thu, 6 Oct 2005 16:23:48 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510061612080.31407@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Robert Fitzsimons <robfitz@273k.net>
-X-From: git-owner@vger.kernel.org Fri Oct 07 00:40:40 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Fri Oct 07 01:25:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENePU-00030P-5b
-	for gcvg-git@gmane.org; Fri, 07 Oct 2005 00:40:20 +0200
+	id 1ENf5x-0001sp-32
+	for gcvg-git@gmane.org; Fri, 07 Oct 2005 01:24:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751132AbVJFWkR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Oct 2005 18:40:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751137AbVJFWkR
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 18:40:17 -0400
-Received: from igraine.blacknight.ie ([217.114.173.147]:64176 "EHLO
-	igraine.blacknight.ie") by vger.kernel.org with ESMTP
-	id S1751132AbVJFWkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2005 18:40:15 -0400
-Received: from [212.17.39.138] (helo=earth)
-	by igraine.blacknight.ie with smtp (Exim 4.42)
-	id 1ENeP9-0001UO-JK; Thu, 06 Oct 2005 23:39:59 +0100
-In-Reply-To: 
-X-Mailer: git-send-email
-To: git@vger.kernel.org
-X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
-X-blacknight-igraine-MailScanner: Found to be clean
-X-blacknight-igraine-MailScanner-SpamCheck: not spam,
-	SpamAssassin (score=0.178, required 7.5, NO_REAL_NAME 0.18)
-X-MailScanner-From: robfitz@273k.net
+	id S1751228AbVJFXX4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Oct 2005 19:23:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbVJFXX4
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 19:23:56 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:20194 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751228AbVJFXXz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2005 19:23:55 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j96NNo4s026834
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 6 Oct 2005 16:23:50 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j96NNmME027646;
+	Thu, 6 Oct 2005 16:23:49 -0700
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.51__
+X-MIMEDefang-Filter: osdl$Revision: 1.122 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9789>
 
-Modify parse_object_cheap() to also free all the entries from the tree
-data structures.
 
-Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
+This makes it possible to have a "sparse" git object subdirectory 
+structure, something that has become much more attractive now that people 
+use pack-files all the time.
 
+As a result of pack-files, a git object directory doesn't necessarily have 
+any individual objects lying around, and in that case it's just wasting 
+space to keep the empty first-level object directories around: on many 
+filesystems the 256 empty directories will be aboue 1MB of diskspace.
+
+Even more importantly, after you re-pack a project that _used_ to be 
+unpacked, you could be left with huge directories that no longer contain 
+anything, but that waste space and take time to look through.
+
+With this change, "git prune-packed" can just do an rmdir() on the 
+directories, and they'll get removed if empty, and re-created on demand.
+
+This patch also tries to fix up "write_sha1_from_fd()" to use the new 
+common infrastructure for creating the object files, closing a hole where 
+we might otherwise leave half-written objects in the object database.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 ---
 
- server-info.c |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
 
-applies-to: fc843c89d12160dfe9704e7a0dd678cc729459cb
-67be887f195205e36c7eec39b9caea249a435e95
-diff --git a/server-info.c b/server-info.c
---- a/server-info.c
-+++ b/server-info.c
-@@ -59,6 +59,16 @@ static struct object *parse_object_cheap
- 		struct commit *commit = (struct commit *)o;
- 		free(commit->buffer);
- 		commit->buffer = NULL;
-+	} else if (o->type == tree_type) {
-+		struct tree *tree = (struct tree *)o;
-+		struct tree_entry_list *e, *n;
-+		for (e = tree->entries; e; e = n) {
-+			free(e->name);
-+			e->name = NULL;
-+			n = e->next;
-+			free(e);
-+		}
-+		tree->entries = NULL;
- 	}
- 	return o;
+This has _not_ gotten a lot of testing, but I verified that basic things 
+seem to work, and that packing an archive properly removes the unnecessary 
+subdirectories.
+
+I'd suggest it sit in "pu" for a while.
+
+The primary reason for this was that a big git archive (the historic one) 
+ends up with lots of objects, and the object subdirectories end up being 
+about 150kB in size. Even repacking the archive did nothing for it - you 
+still ended up with 256 of these monster directories, never mind that they 
+were empty. Walking through them in the cold-cache case was actually 
+really painful - it would walk through about 40MB of disk very very 
+inefficiently, for no actual gain.
+
+However, somebody should really check my code carefully before merging 
+this. In particular, I didn't test "git-ssh-pull" at all, so I'm not sure 
+I actually fixed the "write temp-file" thing properly.
+
+
+diff --git a/daemon.c b/daemon.c
+--- a/daemon.c
++++ b/daemon.c
+@@ -142,7 +142,7 @@ static int upload(char *dir, int dirlen)
+ 	 * is ok with us doing this.
+ 	 */
+ 	if ((!export_all_trees && access("git-daemon-export-ok", F_OK)) ||
+-	    access("objects/00", X_OK) ||
++	    access("objects/", X_OK) ||
+ 	    access("HEAD", R_OK)) {
+ 		logerror("Not a valid git-daemon-enabled repository: '%s'", dir);
+ 		return -1;
+diff --git a/fsck-objects.c b/fsck-objects.c
+--- a/fsck-objects.c
++++ b/fsck-objects.c
+@@ -329,9 +329,8 @@ static int fsck_dir(int i, char *path)
+ 	DIR *dir = opendir(path);
+ 	struct dirent *de;
+ 
+-	if (!dir) {
+-		return error("missing sha1 directory '%s'", path);
+-	}
++	if (!dir)
++		return 0;
+ 
+ 	while ((de = readdir(dir)) != NULL) {
+ 		char name[100];
+diff --git a/git-rename.perl b/git-rename.perl
+--- a/git-rename.perl
++++ b/git-rename.perl
+@@ -15,7 +15,7 @@ sub usage($);
+ my $GIT_DIR = $ENV{'GIT_DIR'} || ".git";
+ 
+ unless ( -d $GIT_DIR && -d $GIT_DIR . "/objects" && 
+-	-d $GIT_DIR . "/objects/00" && -d $GIT_DIR . "/refs") {
++	-d $GIT_DIR . "/objects/" && -d $GIT_DIR . "/refs") {
+ 	usage("Git repository not found.");
  }
----
-0.99.8.GIT
+ 
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -22,4 +22,4 @@ refs/*)	: ;;
+ *)	false ;;
+ esac &&
+ [ -d "$GIT_DIR/refs" ] &&
+-[ -d "$GIT_OBJECT_DIRECTORY/00" ]
++[ -d "$GIT_OBJECT_DIRECTORY/" ]
+diff --git a/init-db.c b/init-db.c
+--- a/init-db.c
++++ b/init-db.c
+@@ -244,10 +244,6 @@ int main(int argc, char **argv)
+ 	memcpy(path, sha1_dir, len);
+ 
+ 	safe_create_dir(sha1_dir);
+-	for (i = 0; i < 256; i++) {
+-		sprintf(path+len, "/%02x", i);
+-		safe_create_dir(path);
+-	}
+ 	strcpy(path+len, "/pack");
+ 	safe_create_dir(path);
+ 	strcpy(path+len, "/info");
+diff --git a/prune-packed.c b/prune-packed.c
+--- a/prune-packed.c
++++ b/prune-packed.c
+@@ -26,6 +26,8 @@ static void prune_dir(int i, DIR *dir, c
+ 		else if (unlink(pathname) < 0)
+ 			error("unable to unlink %s", pathname);
+ 	}
++	pathname[len] = 0;
++	rmdir(pathname);
+ }
+ 
+ static void prune_packed_objects(void)
+@@ -46,7 +48,7 @@ static void prune_packed_objects(void)
+ 		sprintf(pathname + len, "%02x/", i);
+ 		d = opendir(pathname);
+ 		if (!d)
+-			die("unable to open %s", pathname);
++			continue;
+ 		prune_dir(i, d, pathname, len + 3);
+ 		closedir(d);
+ 	}
+diff --git a/sha1_file.c b/sha1_file.c
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1248,6 +1248,73 @@ char *write_sha1_file_prepare(void *buf,
+ 	return sha1_file_name(sha1);
+ }
+ 
++/*
++ * Link the tempfile to the final place, possibly creating the
++ * last directory level as you do so.
++ *
++ * Returns the errno on failure, 0 on success.
++ */
++static int link_temp_to_file(const char *tmpfile, char *filename)
++{
++	int ret;
++
++	if (!link(tmpfile, filename))
++		return 0;
++
++	/*
++	 * Try to mkdir the last path component if that failed
++	 * with an ENOENT.
++	 *
++	 * Re-try the "link()" regardless of whether the mkdir
++	 * succeeds, since a race might mean that somebody
++	 * else succeeded.
++	 */
++	ret = errno;
++	if (ret == ENOENT) {
++		char *dir = strrchr(filename, '/');
++		if (dir) {
++			*dir = 0;
++			mkdir(filename, 0777);
++			*dir = '/';
++			if (!link(tmpfile, filename))
++				return 0;
++			ret = errno;
++		}
++	}
++	return ret;
++}
++
++/*
++ * Move the just written object into its final resting place
++ */
++static int move_temp_to_file(const char *tmpfile, char *filename)
++{
++	int ret = link_temp_to_file(tmpfile, filename);
++	if (ret) {
++		/*
++		 * Coda hack - coda doesn't like cross-directory links,
++		 * so we fall back to a rename, which will mean that it
++		 * won't be able to check collisions, but that's not a
++		 * big deal.
++		 *
++		 * When this succeeds, we just return 0. We have nothing
++		 * left to unlink.
++		 */
++		if (ret == EXDEV && !rename(tmpfile, filename))
++			return 0;
++	}
++	unlink(tmpfile);
++	if (ret) {
++		if (ret != EEXIST) {
++			fprintf(stderr, "unable to write sha1 filename %s: %s", filename, strerror(ret));
++			return -1;
++		}
++		/* FIXME!!! Collision check here ? */
++	}
++
++	return 0;
++}
++
+ int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned char *returnsha1)
+ {
+ 	int size;
+@@ -1257,7 +1324,7 @@ int write_sha1_file(void *buf, unsigned 
+ 	char *filename;
+ 	static char tmpfile[PATH_MAX];
+ 	unsigned char hdr[50];
+-	int fd, hdrlen, ret;
++	int fd, hdrlen;
+ 
+ 	/* Normally if we have it in the pack then we do not bother writing
+ 	 * it out into .git/objects/??/?{38} file.
+@@ -1320,32 +1387,7 @@ int write_sha1_file(void *buf, unsigned 
+ 	close(fd);
+ 	free(compressed);
+ 
+-	ret = link(tmpfile, filename);
+-	if (ret < 0) {
+-		ret = errno;
+-
+-		/*
+-		 * Coda hack - coda doesn't like cross-directory links,
+-		 * so we fall back to a rename, which will mean that it
+-		 * won't be able to check collisions, but that's not a
+-		 * big deal.
+-		 *
+-		 * When this succeeds, we just return 0. We have nothing
+-		 * left to unlink.
+-		 */
+-		if (ret == EXDEV && !rename(tmpfile, filename))
+-			return 0;
+-	}
+-	unlink(tmpfile);
+-	if (ret) {
+-		if (ret != EEXIST) {
+-			fprintf(stderr, "unable to write sha1 filename %s: %s", filename, strerror(ret));
+-			return -1;
+-		}
+-		/* FIXME!!! Collision check here ? */
+-	}
+-
+-	return 0;
++	return move_temp_to_file(tmpfile, filename);
+ }
+ 
+ int write_sha1_to_fd(int fd, const unsigned char *sha1)
+@@ -1420,8 +1462,7 @@ int write_sha1_to_fd(int fd, const unsig
+ int write_sha1_from_fd(const unsigned char *sha1, int fd, char *buffer,
+ 		       size_t bufsize, size_t *bufposn)
+ {
+-	char *filename = sha1_file_name(sha1);
+-
++	char tmpfile[PATH_MAX];
+ 	int local;
+ 	z_stream stream;
+ 	unsigned char real_sha1[20];
+@@ -1429,10 +1470,11 @@ int write_sha1_from_fd(const unsigned ch
+ 	int ret;
+ 	SHA_CTX c;
+ 
+-	local = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0666);
++	snprintf(tmpfile, sizeof(tmpfile), "%s/obj_XXXXXX", get_object_directory());
+ 
++	local = mkstemp(tmpfile);
+ 	if (local < 0)
+-		return error("Couldn't open %s\n", filename);
++		return error("Couldn't open %s for %s\n", tmpfile, sha1_to_hex(sha1));
+ 
+ 	memset(&stream, 0, sizeof(stream));
+ 
+@@ -1462,7 +1504,7 @@ int write_sha1_from_fd(const unsigned ch
+ 		size = read(fd, buffer + *bufposn, bufsize - *bufposn);
+ 		if (size <= 0) {
+ 			close(local);
+-			unlink(filename);
++			unlink(tmpfile);
+ 			if (!size)
+ 				return error("Connection closed?");
+ 			perror("Reading from connection");
+@@ -1475,15 +1517,15 @@ int write_sha1_from_fd(const unsigned ch
+ 	close(local);
+ 	SHA1_Final(real_sha1, &c);
+ 	if (ret != Z_STREAM_END) {
+-		unlink(filename);
++		unlink(tmpfile);
+ 		return error("File %s corrupted", sha1_to_hex(sha1));
+ 	}
+ 	if (memcmp(sha1, real_sha1, 20)) {
+-		unlink(filename);
++		unlink(tmpfile);
+ 		return error("File %s has bad hash\n", sha1_to_hex(sha1));
+ 	}
+-	
+-	return 0;
++
++	return move_temp_to_file(tmpfile, sha1_file_name(sha1));
+ }
+ 
+ int has_pack_index(const unsigned char *sha1)
