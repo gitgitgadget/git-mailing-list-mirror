@@ -1,137 +1,68 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] gitk: Add "Refs" menu - revised
-Date: Thu, 06 Oct 2005 00:11:23 -0400
-Message-ID: <1128571883.32103.48.camel@dv>
-References: <1128559088.32103.8.camel@dv>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fall back to three-way merge when applying a patch.
+Date: Wed, 05 Oct 2005 21:17:05 -0700
+Message-ID: <7v1x2zb7pa.fsf@assigned-by-dhcp.cox.net>
+References: <7vd5mk7pv6.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0510042155090.31407@g5.osdl.org>
+	<7vslvg1mcs.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0510050725510.31407@g5.osdl.org>
+	<7vslvfcy0g.fsf@assigned-by-dhcp.cox.net>
+	<m1mzln9zi1.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.64.0510051909390.31407@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Oct 06 06:12:31 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 06 06:18:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENN76-0006VH-0O
-	for gcvg-git@gmane.org; Thu, 06 Oct 2005 06:12:12 +0200
+	id 1ENNCT-0007GR-7x
+	for gcvg-git@gmane.org; Thu, 06 Oct 2005 06:17:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbVJFEL1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Oct 2005 00:11:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751219AbVJFEL1
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 00:11:27 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:45029 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751211AbVJFEL1
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 6 Oct 2005 00:11:27 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1ENN6K-0007Ny-Gy
-	for git@vger.kernel.org; Thu, 06 Oct 2005 00:11:24 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1ENN6J-0007ts-AU; Thu, 06 Oct 2005 00:11:23 -0400
-To: git <git@vger.kernel.org>
-In-Reply-To: <1128559088.32103.8.camel@dv>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	id S1751219AbVJFERe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Oct 2005 00:17:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbVJFERe
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 00:17:34 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:20181 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751219AbVJFERd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2005 00:17:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051006041657.PMOP776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 6 Oct 2005 00:16:57 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9759>
 
-Hello!
+Linus Torvalds <torvalds@osdl.org> writes:
 
-This is an updated revision of the original patch.  Unneeded concat has
-been removed.  Error message uses name, not SHA1 ID.  If there is
-information for the tag, it's displayed even in the ID is not in the
-list.  Thanks to Brett Schwarz for help.
+> ... But I doubt it works very well to rely on 
+> commit-level SHA1's - it's more likely to work if you try the "last few 
+> tagged releases etc", since patches that don't apply are often against the 
+> previous release (and if they don't apply there either, then it's probably 
+> not worth fighting over anyway).
 
----------------------------------
+That is the heuristics git-applypatch in the proposed updates
+branch tries to attempt.  Recorded tree if exists (which is not
+very interesting), last few commits from the current branch, and
+then tagged releases.
 
-This patch adds "Refs" menu to gitk.  It makes all branches, tags and
-other ref objects appear as menu items.  Selecting one of the items
-selects the corresponding line in the view.
+Ideally, if we had the path following git-rev-list you talked
+about, we could first ask git-apply the set of paths the patch
+touches, and instead of trying every commits from the HEAD, try
+only commits that touch one (or more) of the given paths.
 
-It's only possible to go to the refs present in the current view.
-However, information for tags is shown even if the corresponding ID is
-not available.
+Another possible git-rev-list enhancement that might be useful
+is to pop commits not based on time but based on the depth from
+branch heads.  Then we could:
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
+    git-rev-list --depth-order --max-count=$N --all \
+    	$(git-apply --show-files $patch | sed -e 's/^[^ ]* [^ ]* //p')
 
-diff -u b/gitk b/gitk
---- b/gitk
-+++ b/gitk
-@@ -285,6 +285,7 @@
- 	}
-     }
-     readotherrefs refs {} {tags heads}
-+    setrefsmenu
- }
- 
- proc readotherrefs {base dname excl} {
-@@ -538,6 +539,65 @@
-     $rowctxmenu add command -label "Write commit to file" -command writecommit
- }
- 
-+proc gotocommit_menu {sha1 name} {
-+    global idline tagids tagcontents
-+
-+    if {[info exists idline($sha1)]} {
-+	selectline $idline($sha1) 1
-+    } else {
-+	# Should we re-run git-rev-list?
-+	error_popup "$name is not in the current view"
-+    }
-+
-+    if {[info exists tagcontents($name)]} {
-+	showtag $name 1
-+    }
-+}
-+
-+proc setrefsmenu {} {
-+    global headids tagids otherrefids
-+
-+    if {[winfo exists .bar.refs]} {
-+	foreach w [winfo children .bar.refs] {
-+	    destroy $w
-+	}
-+	.bar.refs delete 1 3
-+    } else {
-+	.bar add cascade -label "Refs" -menu .bar.refs
-+	menu .bar.refs
-+    }
-+
-+    set refids [lsort -unique [array names headids]]
-+    if {[llength $refids] > 0} {
-+	.bar.refs add cascade -label "Branches" -menu .bar.refs.heads
-+	menu .bar.refs.heads
-+	foreach v $refids {
-+	    .bar.refs.heads add command -label $v \
-+		-command [list gotocommit_menu $headids($v) $v]
-+	}
-+    }
-+
-+    set refids [lsort -unique [array names tagids]]
-+    if {[llength $refids] > 0} {
-+	.bar.refs add cascade -label "Tags" -menu .bar.refs.tags
-+	menu .bar.refs.tags
-+	foreach v $refids {
-+	    .bar.refs.tags add command -label $v \
-+		-command [list gotocommit_menu $tagids($v) $v]
-+	}
-+    }
-+
-+    set refids [lsort -unique [array names otherrefids]]
-+    if {[llength $refids] > 0} {
-+	.bar.refs add cascade -label "Other" -menu .bar.refs.other
-+	menu .bar.refs.other
-+	foreach v $refids {
-+	    .bar.refs.other add command -label $v \
-+		-command [list gotocommit_menu $otherrefids($v) $v]
-+	}
-+    }
-+}
-+
- # when we make a key binding for the toplevel, make sure
- # it doesn't get triggered when that key is pressed in the
- # find string entry widget.
-
-
--- 
-Regards,
-Pavel Roskin
+to obtain list of the last few commits that touch the paths
+involved, in the order that is closer-to-tip first.
