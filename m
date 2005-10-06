@@ -1,83 +1,83 @@
-From: Elfyn McBratney <beu@gentoo.org>
-Subject: Re: your mail
-Date: Thu, 6 Oct 2005 11:52:10 +0100
-Message-ID: <20051006105210.GA3131@gentoo.org>
-References: <11E379B4363F884A913C18A99C40976D1F4F35@simmail.adsintranet.corp>
+From: Santi Bejar <sbejar@gmail.com>
+Subject: Re: [PATCH] Write .editmsg in GIT_DIR to avoid being in git-status.
+Date: Thu, 6 Oct 2005 15:30:30 +0200
+Message-ID: <8aa486160510060630m2afb18ffx@mail.gmail.com>
+References: <87achnq4z7.fsf@gmail.com>
+	 <7vk6griq8d.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Santi Bejar <sbejar@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="gKMricLos+KVdGMg"
-Cc: Willem Swart <willems@adsmr.co.za>
-X-From: git-owner@vger.kernel.org Thu Oct 06 12:52:34 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 06 15:32:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENTMT-0002Bi-3l
-	for gcvg-git@gmane.org; Thu, 06 Oct 2005 12:52:29 +0200
+	id 1ENVpS-0002VL-Nx
+	for gcvg-git@gmane.org; Thu, 06 Oct 2005 15:30:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750778AbVJFKwU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Oct 2005 06:52:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750789AbVJFKwU
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 06:52:20 -0400
-Received: from anchor-post-33.mail.demon.net ([194.217.242.91]:16133 "EHLO
-	anchor-post-33.mail.demon.net") by vger.kernel.org with ESMTP
-	id S1750778AbVJFKwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2005 06:52:19 -0400
-Received: from beu1.demon.co.uk ([83.105.51.149] helo=zippy.emcb.local)
-	by anchor-post-33.mail.demon.net with esmtp (Exim 4.42)
-	id 1ENTMB-000EuI-BI; Thu, 06 Oct 2005 10:52:16 +0000
-Received: by zippy.emcb.local (Postfix, from userid 1001)
-	id CA5BE148040; Thu,  6 Oct 2005 11:52:10 +0100 (BST)
-To: git@vger.kernel.org
-Mail-Followup-To: Elfyn McBratney <beu@gentoo.org>, git@vger.kernel.org,
-	Willem Swart <willems@adsmr.co.za>
+	id S1750914AbVJFNab (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Oct 2005 09:30:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbVJFNab
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 09:30:31 -0400
+Received: from xproxy.gmail.com ([66.249.82.197]:5711 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750911AbVJFNab convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 6 Oct 2005 09:30:31 -0400
+Received: by xproxy.gmail.com with SMTP id i30so259294wxd
+        for <git@vger.kernel.org>; Thu, 06 Oct 2005 06:30:30 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KysgceLuaDHoEFiZ7IbOEMVgHHXBxXyDB2R5JE7v4uHgH5BKK8u3GzJmlv0ruQjgzwlXuL4nsKAY4WUKZcTaVckF+hxUSyeE9CneInNyIZR5UnUM9kIxsCnY0r9l9p+kDw2I1s7E1JqxNIG6eox19FS6fLggjn8N5TfscTTXeQo=
+Received: by 10.70.100.16 with SMTP id x16mr1255461wxb;
+        Thu, 06 Oct 2005 06:30:30 -0700 (PDT)
+Received: by 10.70.73.19 with HTTP; Thu, 6 Oct 2005 06:30:30 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk6griq8d.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <11E379B4363F884A913C18A99C40976D1F4F35@simmail.adsintranet.corp>
-Organisation: Gentoo Foundation, Inc.
-User-Agent: mutt-ng/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9768>
 
+2005/10/5, Junio C Hamano <junkio@cox.net>:
+> Santi B.ANijar <sbejar@gmail.com> writes:
+>
+> > It appears in the git-status output during a git-commit if you have
+> > something in info/exclude.
+>
+> ... which does not worry me too much; you'll get used to it ;-).
+>
 
---gKMricLos+KVdGMg
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm used too, but I don't think it's a 1.0 thing.
 
-On Wed, Oct 05, 2005 at 08:10:24AM +0200, Willem Swart wrote:
- > subscribe git
- > -
- > To unsubscribe from this list: send the line "unsubscribe git" in
- > the body of a message to majordomo@vger.kernel.org
- > More majordomo info at  http://vger.kernel.org/majordomo-info.html
-s/unsubscribe/subscribe/g
+> > Also for .cmitmsg and .cmitchk to make git-commit work
+> > in read-only working trees.
+>
+> If a working tree is read-only, I wonder what you are committing.
+>
 
-Might want to re-send that to majordomo@vger.kernel.org ;)
+I keep my /etc modifications in git, and I want to commit as a user not as root.
 
-Best,
-Elfyn
+> It might not be a bad idea to think about this a bit more before
+> actually coding.  You are moving things out of the working tree
+> root level, which is a valid thing to do when worrying about a
+> repository (or working tree) that you do not have write access
+> to.  We've had a fix similar to this for temporary files used by
+> diff commands, which moved them to $TMPDIR or something like
+> that.  If the working tree root level is not writable for you,
+> is it valid/reasonable to assume that $GIT_DIR is?  Are there
+> better places?  E.g. perhaps $HOME/.gittmp/?
 
---=20
-Elfyn McBratney
-Gentoo Developer/Perl Team Lead
-beu/irc.freenode.net                            http://dev.gentoo.org/~beu/
-+------------O.o--------------------- http://dev.gentoo.org/~beu/pubkey.asc
+Yes, it was just quick. I think the best way would be to write to /tmp
+but honor $TMPDIR.
 
-PGP Key ID: 0x69DF17AD
-PGP Key Fingerprint:
-  DBD3 B756 ED58 B1B4 47B9  B3BD 8D41 E597 69DF 17AD
+>
+> >  ret="$?"
+> > -rm -f .cmitmsg .editmsg .cmitchk
+> > +rm -f "$GIT_DIR"/{.cmitmsg,.editmsg,.cmitchk}
+>
+> Please do not do "{a,b,c}".  I think ksh can grok the rest of
+> the git-commit.sh code, but not this.
 
---gKMricLos+KVdGMg
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFDRQHajUHll2nfF60RAs1pAKDFUR1iIHNUWDNlNtXPrMFpSsaKwACeNzhs
-IzRfE9fgdrIwjU77t2yBMow=
-=93+p
------END PGP SIGNATURE-----
-
---gKMricLos+KVdGMg--
+OK.
