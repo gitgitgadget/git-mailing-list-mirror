@@ -1,83 +1,94 @@
-From: Santi Bejar <sbejar@gmail.com>
-Subject: Re: [PATCH] Write .editmsg in GIT_DIR to avoid being in git-status.
-Date: Thu, 6 Oct 2005 15:30:30 +0200
-Message-ID: <8aa486160510060630m2afb18ffx@mail.gmail.com>
-References: <87achnq4z7.fsf@gmail.com>
-	 <7vk6griq8d.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Santi Bejar <sbejar@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: clone: I'm only doing a max of 256 requests
+Date: Thu, 6 Oct 2005 15:41:29 +0200
+Message-ID: <81b0412b0510060641g3a3c6e02m6827370dd61b5ea6@mail.gmail.com>
+References: <20051005191300.GC17475@hexapodia.org>
+	 <Pine.LNX.4.64.0510051541300.31407@g5.osdl.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 06 15:32:59 2005
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_20415_29338163.1128606089102"
+Cc: Andy Isaacson <adi@hexapodia.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Oct 06 15:45:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENVpS-0002VL-Nx
-	for gcvg-git@gmane.org; Thu, 06 Oct 2005 15:30:35 +0200
+	id 1ENW08-00089O-5T
+	for gcvg-git@gmane.org; Thu, 06 Oct 2005 15:41:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750914AbVJFNab (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Oct 2005 09:30:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbVJFNab
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 09:30:31 -0400
-Received: from xproxy.gmail.com ([66.249.82.197]:5711 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750911AbVJFNab convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 6 Oct 2005 09:30:31 -0400
-Received: by xproxy.gmail.com with SMTP id i30so259294wxd
-        for <git@vger.kernel.org>; Thu, 06 Oct 2005 06:30:30 -0700 (PDT)
+	id S1750927AbVJFNlc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Oct 2005 09:41:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750936AbVJFNlc
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 09:41:32 -0400
+Received: from nproxy.gmail.com ([64.233.182.204]:46617 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750915AbVJFNlb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2005 09:41:31 -0400
+Received: by nproxy.gmail.com with SMTP id n15so171515nfc
+        for <git@vger.kernel.org>; Thu, 06 Oct 2005 06:41:29 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KysgceLuaDHoEFiZ7IbOEMVgHHXBxXyDB2R5JE7v4uHgH5BKK8u3GzJmlv0ruQjgzwlXuL4nsKAY4WUKZcTaVckF+hxUSyeE9CneInNyIZR5UnUM9kIxsCnY0r9l9p+kDw2I1s7E1JqxNIG6eox19FS6fLggjn8N5TfscTTXeQo=
-Received: by 10.70.100.16 with SMTP id x16mr1255461wxb;
-        Thu, 06 Oct 2005 06:30:30 -0700 (PDT)
-Received: by 10.70.73.19 with HTTP; Thu, 6 Oct 2005 06:30:30 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk6griq8d.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=JrsVfGbQ3D5g65y8c1BtwNhPg9tTcnGLpWMxCubAKMABlMQpIGm2u4CCoPR4gRPwNeSOuB44oygkkBXdJEtToRBlvjlKYsJCeHL++cj+FSibwecm/N9kUSzV173fCmkXqb/1v/4GzKmUvTykGXbeBHNn6r9eHNz/0u1p0sV/bhA=
+Received: by 10.48.142.15 with SMTP id p15mr114296nfd;
+        Thu, 06 Oct 2005 06:41:29 -0700 (PDT)
+Received: by 10.48.247.10 with HTTP; Thu, 6 Oct 2005 06:41:29 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0510051541300.31407@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9769>
 
-2005/10/5, Junio C Hamano <junkio@cox.net>:
-> Santi B.ANijar <sbejar@gmail.com> writes:
->
-> > It appears in the git-status output during a git-commit if you have
-> > something in info/exclude.
->
-> ... which does not worry me too much; you'll get used to it ;-).
->
+------=_Part_20415_29338163.1128606089102
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I'm used too, but I don't think it's a 1.0 thing.
-
-> > Also for .cmitmsg and .cmitchk to make git-commit work
-> > in read-only working trees.
+On 10/6/05, Linus Torvalds <torvalds@osdl.org> wrote:
 >
-> If a working tree is read-only, I wonder what you are committing.
+>         git ls-remote http://www.linux-mips.org/pub/scm/linux.git | wc -l
 >
 
-I keep my /etc modifications in git, and I want to commit as a user not as root.
+Which, btw, failed for me, when I tried to run it home (which has no
+.git in it yet).
+Do the scripts git-ls-remote.sh and git-parse-remote.sh really need .git/..=
+.?
 
-> It might not be a bad idea to think about this a bit more before
-> actually coding.  You are moving things out of the working tree
-> root level, which is a valid thing to do when worrying about a
-> repository (or working tree) that you do not have write access
-> to.  We've had a fix similar to this for temporary files used by
-> diff commands, which moved them to $TMPDIR or something like
-> that.  If the working tree root level is not writable for you,
-> is it valid/reasonable to assume that $GIT_DIR is?  Are there
-> better places?  E.g. perhaps $HOME/.gittmp/?
+Just in case they don't, the attached patch removes the die("Not a git arch=
+ive")
 
-Yes, it was just quick. I think the best way would be to write to /tmp
-but honor $TMPDIR.
+------=_Part_20415_29338163.1128606089102
+Content-Type: application/xxxxx; name=git-ls-remote.patch
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="git-ls-remote.patch"
 
->
-> >  ret="$?"
-> > -rm -f .cmitmsg .editmsg .cmitchk
-> > +rm -f "$GIT_DIR"/{.cmitmsg,.editmsg,.cmitchk}
->
-> Please do not do "{a,b,c}".  I think ksh can grok the rest of
-> the git-commit.sh code, but not this.
+The scripts work perfectly without a repository.
 
-OK.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+
+diff --git a/git-ls-remote.sh b/git-ls-remote.sh
+--- a/git-ls-remote.sh
++++ b/git-ls-remote.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ #
+-. git-sh-setup || die "Not a git archive"
++. git-sh-setup
+ 
+ usage () {
+     echo >&2 "usage: $0 [--heads] [--tags] <repository> <refs>..."
+diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+--- a/git-parse-remote.sh
++++ b/git-parse-remote.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-. git-sh-setup || die "Not a git archive"
++. git-sh-setup
+ 
+ get_data_source () {
+ 	case "$1" in
+
+------=_Part_20415_29338163.1128606089102--
