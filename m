@@ -1,51 +1,54 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Still unsafe: write_sha1_from_fd()
-Date: Thu, 6 Oct 2005 15:26:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510061520400.31407@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Still unsafe: write_sha1_from_fd()
+Date: Thu, 06 Oct 2005 15:37:40 -0700
+Message-ID: <7vvf0a5l1n.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0510061520400.31407@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Oct 07 00:28:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 07 00:39:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENeCX-0005f2-Ju
-	for gcvg-git@gmane.org; Fri, 07 Oct 2005 00:26:58 +0200
+	id 1ENeMz-0002BF-Oa
+	for gcvg-git@gmane.org; Fri, 07 Oct 2005 00:37:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019AbVJFW0z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Oct 2005 18:26:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbVJFW0z
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 18:26:55 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:1236 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751019AbVJFW0y (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2005 18:26:54 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j96MQr4s023305
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
-	for <git@vger.kernel.org>; Thu, 6 Oct 2005 15:26:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j96MQrUe025175
-	for <git@vger.kernel.org>; Thu, 6 Oct 2005 15:26:54 -0700
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.51__
-X-MIMEDefang-Filter: osdl$Revision: 1.122 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751136AbVJFWhm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Oct 2005 18:37:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751137AbVJFWhm
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 18:37:42 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:38875 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751136AbVJFWhm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2005 18:37:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051006223729.URIQ29747.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 6 Oct 2005 18:37:29 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510061520400.31407@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 6 Oct 2005 15:26:52 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9787>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-I was looking over the object writing functions, and noticed that 
-"write_sha1_from_fd()" writes its object directly into the final object 
-name, which means that if it is interrupted with ^C at an inopportune 
-time, it will leave a corrupt object behind.
+> The only user is apparently ssh-fetch, but especially since the input-fd 
+> is a network connection, it looks like it is not at all unlikely that this 
+> case will trigger - all it takes is somebody impatient waiting for a large 
+> object.
+>
+> Ugh,
 
-The only user is apparently ssh-fetch, but especially since the input-fd 
-is a network connection, it looks like it is not at all unlikely that this 
-case will trigger - all it takes is somebody impatient waiting for a large 
-object.
+Ugh indeed.
 
-Ugh,
+I'd vote for renaming it to a less generic name, moving it out
+of sha1_file.c -- make it static in ssh-fetch.c -- and slowly
+deprecate the use of ssh-fetch/ssh-upload pair.
 
-		Linus
+I do not see much point prefering it over the pack transfer
+protocol anyway, if you already have ssh access to the box.
