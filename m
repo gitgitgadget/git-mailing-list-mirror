@@ -1,100 +1,63 @@
-From: Luben Tuikov <luben_tuikov@adaptec.com>
-Subject: Re: Question on git clone
-Date: Thu, 06 Oct 2005 15:56:31 -0400
-Message-ID: <4345816F.1080003@adaptec.com>
-References: <4343F480.30501@adaptec.com> <7v64sbyk5e.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Add support for parallel HTTP transfers
+Date: Thu, 6 Oct 2005 16:07:07 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0510061550510.23242@iabervon.org>
+References: <20051005214447.GF15593@reactrix.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 06 21:58:17 2005
+X-From: git-owner@vger.kernel.org Thu Oct 06 22:06:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENbr3-0004cT-OE
-	for gcvg-git@gmane.org; Thu, 06 Oct 2005 21:56:38 +0200
+	id 1ENbwf-0006Z6-QD
+	for gcvg-git@gmane.org; Thu, 06 Oct 2005 22:02:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbVJFT4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Oct 2005 15:56:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbVJFT4e
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 15:56:34 -0400
-Received: from magic.adaptec.com ([216.52.22.17]:13442 "EHLO magic.adaptec.com")
-	by vger.kernel.org with ESMTP id S1751337AbVJFT4e (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2005 15:56:34 -0400
-Received: from redfish.adaptec.com (redfish.adaptec.com [162.62.50.11])
-	by magic.adaptec.com (8.11.6/8.11.6) with ESMTP id j96JuXc21233;
-	Thu, 6 Oct 2005 12:56:33 -0700
-Received: from rtpe2k01.adaptec.com (rtpe2k01.adaptec.com [10.110.12.40])
-	by redfish.adaptec.com (8.11.6/8.11.6) with ESMTP id j96JuXg10299;
-	Thu, 6 Oct 2005 12:56:33 -0700
-Received: from [10.110.10.142] ([10.110.10.142]) by rtpe2k01.adaptec.com with Microsoft SMTPSVC(5.0.2195.6713);
-	 Thu, 6 Oct 2005 15:56:33 -0400
-User-Agent: Mozilla Thunderbird 1.0.6 (X11/20050716)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64sbyk5e.fsf@assigned-by-dhcp.cox.net>
-X-OriginalArrivalTime: 06 Oct 2005 19:56:33.0423 (UTC) FILETIME=[0D2FF9F0:01C5CAB0]
+	id S1751338AbVJFUCW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Oct 2005 16:02:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbVJFUCW
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 16:02:22 -0400
+Received: from iabervon.org ([66.92.72.58]:62990 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751338AbVJFUCV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Oct 2005 16:02:21 -0400
+Received: (qmail 30337 invoked by uid 1000); 6 Oct 2005 16:07:07 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 6 Oct 2005 16:07:07 -0400
+To: Nick Hengeveld <nickh@reactrix.com>
+In-Reply-To: <20051005214447.GF15593@reactrix.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9780>
 
-On 10/05/05 12:59, Junio C Hamano wrote:
-> Luben Tuikov <luben_tuikov@adaptec.com> writes:
-> 
-> 
->>Cannot get remote repository information.
->>Perhaps git-update-server-info needs to be run there?
-> 
-> 
-> Because HTTP support in git-fetch chooses not to trust the
-> directory index the HTTP server may spit out, and relies solely
-> on having info/refs file available there for discovering refs.
-> 
-> It is debatable if HTTP support in git-fetch should fall back on
-> discovery using "wget -r" like Cogito does, when the info/refs
-> file is not found.  I've written about this once on this list --
-> I demonstrated what you would see if you do "wget -r" against
-> git.git/refs/ on kernel.org; you will see why I do not think it
-> is necessarily a better approach.
+On Wed, 5 Oct 2005, Nick Hengeveld wrote:
 
-Thanks Junio for the reply.
+> Add support for parallel HTTP transfers.  Prefetch populates a queue of
+> objects to transfer and starts feeding requests to an active request
+> queue for processing; fetch_object keeps the active queue moving
+> while the specified object is being transferred.  The size of the active
+> queue can be restricted using -r and defaults to 5 concurrent transfers.
 
-I looked and indeed info/refs was ug+r while it should've been
-a+r.  That fixed it.
+Somewhat weirdly, the version of curl on my desktop doesn't actually have 
+an implementation of curl_multi_info_read, although it's in the header 
+file and documentation. So you'll want a version check somewhere, I think, 
+which should probably just disable parallel transfers.
 
-Thanks again,
-	Luben
+> ---
+> 
+> I could use extra eyes on this patch - it seems to be stable although I have
+> seen periodic cases during testing where it detects an empty server response
+> (from kernel.org?)  Are there implications to downloading a (potentially large)
+> pack while objects contained in that pack have been prefetched and are in the
+> transfer and/or active queue?
 
+It should be fine to download objects and a pack that contains them at the 
+same time, although there's currently a check in fetch.c which should be 
+removed, so that it will call fetch() for an object if the object appears 
+between the prefetch() and the fetch().
 
-> 
-> Not doing refs discovery using directory index forces the owner
-> of an HTTP reachable repository to create info/refs by running
-> update-server-info.  This is a good thing -- it trains him to
-> behave.
-> 
-> update-server-info does not just create info/refs. It also
-> creates another file objects/info/packs, which is needed for
-> fetching over a commit walker if the repository is packed.
-> AFAIK, even if you are using Cogito, you would not succeed
-> pulling from a repository that is packed and does not have this
-> file.
-> 
-> There was a discussion about helping Cogito's tag-tracking.  The
-> downloading side needs to know if any new tag available on the
-> other side refers to a commit on the branches the downloader
-> tracks, without pulling everything that tag object refers to
-> first.  One way to help achieving this has been offered, which
-> would involve adding a bit more information to info/refs, to say
-> what object each tag refers to.  It could be done on the client
-> side, but it is far simpler if this kind of help is given on the
-> server side.
-> 
-> I anticipate in the future we may need to have more auxiliary
-> files, or to add more information to existing auxiliary files,
-> that summarize what the repository has for downloaders, and 
-> code to do so would be added to update-server-info, so the
-> repository owner needs to learn to run only one command.
-> 
-> 
-> 
+I should be able to review this over the weekend. What sort of performance 
+are you getting at this point (in terms of bandwidth utilization)?
+
+	-Daniel
+*This .sig left intentionally blank*
