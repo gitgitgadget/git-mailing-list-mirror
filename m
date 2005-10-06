@@ -1,54 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Still unsafe: write_sha1_from_fd()
-Date: Thu, 06 Oct 2005 15:37:40 -0700
-Message-ID: <7vvf0a5l1n.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0510061520400.31407@g5.osdl.org>
+From: robfitz@273k.net
+Subject: [PATCH] Reduce memory usage in git-update-server-info.
+Date: Thu, 6 Oct 2005 22:49:03 +0000
+Message-ID: <11286389433926-git-send-email-robfitz@273k.net>
+Reply-To: robfitz@273k.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 07 00:39:06 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Robert Fitzsimons <robfitz@273k.net>
+X-From: git-owner@vger.kernel.org Fri Oct 07 00:40:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENeMz-0002BF-Oa
-	for gcvg-git@gmane.org; Fri, 07 Oct 2005 00:37:46 +0200
+	id 1ENePU-00030P-5b
+	for gcvg-git@gmane.org; Fri, 07 Oct 2005 00:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751136AbVJFWhm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Oct 2005 18:37:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751137AbVJFWhm
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 18:37:42 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:38875 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751136AbVJFWhm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2005 18:37:42 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051006223729.URIQ29747.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 6 Oct 2005 18:37:29 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0510061520400.31407@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 6 Oct 2005 15:26:52 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751132AbVJFWkR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Oct 2005 18:40:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751137AbVJFWkR
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 18:40:17 -0400
+Received: from igraine.blacknight.ie ([217.114.173.147]:64176 "EHLO
+	igraine.blacknight.ie") by vger.kernel.org with ESMTP
+	id S1751132AbVJFWkP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Oct 2005 18:40:15 -0400
+Received: from [212.17.39.138] (helo=earth)
+	by igraine.blacknight.ie with smtp (Exim 4.42)
+	id 1ENeP9-0001UO-JK; Thu, 06 Oct 2005 23:39:59 +0100
+In-Reply-To: 
+X-Mailer: git-send-email
+To: git@vger.kernel.org
+X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
+X-blacknight-igraine-MailScanner: Found to be clean
+X-blacknight-igraine-MailScanner-SpamCheck: not spam,
+	SpamAssassin (score=0.178, required 7.5, NO_REAL_NAME 0.18)
+X-MailScanner-From: robfitz@273k.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9788>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Modify parse_object_cheap() to also free all the entries from the tree
+data structures.
 
-> The only user is apparently ssh-fetch, but especially since the input-fd 
-> is a network connection, it looks like it is not at all unlikely that this 
-> case will trigger - all it takes is somebody impatient waiting for a large 
-> object.
->
-> Ugh,
+Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
 
-Ugh indeed.
+---
 
-I'd vote for renaming it to a less generic name, moving it out
-of sha1_file.c -- make it static in ssh-fetch.c -- and slowly
-deprecate the use of ssh-fetch/ssh-upload pair.
+ server-info.c |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-I do not see much point prefering it over the pack transfer
-protocol anyway, if you already have ssh access to the box.
+applies-to: fc843c89d12160dfe9704e7a0dd678cc729459cb
+67be887f195205e36c7eec39b9caea249a435e95
+diff --git a/server-info.c b/server-info.c
+--- a/server-info.c
++++ b/server-info.c
+@@ -59,6 +59,16 @@ static struct object *parse_object_cheap
+ 		struct commit *commit = (struct commit *)o;
+ 		free(commit->buffer);
+ 		commit->buffer = NULL;
++	} else if (o->type == tree_type) {
++		struct tree *tree = (struct tree *)o;
++		struct tree_entry_list *e, *n;
++		for (e = tree->entries; e; e = n) {
++			free(e->name);
++			e->name = NULL;
++			n = e->next;
++			free(e);
++		}
++		tree->entries = NULL;
+ 	}
+ 	return o;
+ }
+---
+0.99.8.GIT
