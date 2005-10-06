@@ -1,82 +1,65 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: [PATCH] Fall back to three-way merge when applying a patch.
-Date: Thu, 06 Oct 2005 11:07:11 -0600
-Message-ID: <m1slvek20w.fsf@ebiederm.dsl.xmission.com>
-References: <7vd5mk7pv6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0510042155090.31407@g5.osdl.org>
-	<7vslvg1mcs.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0510050725510.31407@g5.osdl.org>
-	<7vslvfcy0g.fsf@assigned-by-dhcp.cox.net>
-	<m1mzln9zi1.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0510051909390.31407@g5.osdl.org>
-	<m1y8575i9y.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0510060731560.31407@g5.osdl.org>
-	<m1wtkqk89a.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0510060756060.31407@g5.osdl.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Allow "-u" flag to tag signing
+Date: Thu, 06 Oct 2005 10:15:40 -0700
+Message-ID: <43455BBC.6020908@zytor.com>
+References: <Pine.LNX.4.64.0510060952410.31407@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 06 19:12:56 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 06 19:18:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENZEu-0006dk-Jk
-	for gcvg-git@gmane.org; Thu, 06 Oct 2005 19:09:04 +0200
+	id 1ENZLj-0001FI-EP
+	for gcvg-git@gmane.org; Thu, 06 Oct 2005 19:16:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751152AbVJFRIn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Oct 2005 13:08:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbVJFRIn
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 13:08:43 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:45962 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S1751152AbVJFRIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Oct 2005 13:08:42 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j96H7CuY024388;
-	Thu, 6 Oct 2005 11:07:12 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j96H7B90024387;
-	Thu, 6 Oct 2005 11:07:11 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+	id S1751156AbVJFRQE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Oct 2005 13:16:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751161AbVJFRQE
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Oct 2005 13:16:04 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:44250 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751156AbVJFRQC
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 6 Oct 2005 13:16:02 -0400
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j96HFeIn004900
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 6 Oct 2005 10:15:42 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0510060756060.31407@g5.osdl.org> (Linus
- Torvalds's message of "Thu, 6 Oct 2005 07:59:36 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.64.0510060952410.31407@g5.osdl.org>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-1.3 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9776>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Linus Torvalds wrote:
+> The current "git tag -s" thing always uses the tagger name as the signing 
+> user key, which is very irritating, since my key is under my email 
+> address, but the tagger key obviously contains the actual machine name 
+> too.
+> 
+> Now, I could just use "GIT_COMMITTER_EMAIL" and force it to be my real 
+> email, but I actually think that it's nice to see which machine I use for 
+> my work. 
+> 
+> So rather than force my tagger ID to have to match the gpg key name, just 
+> support the "-u" flag to "git tag" instead. It implicitly enables signing, 
+> since it doesn't make any sense without it. Thus:
+> 
+> 	git tag -u <gpg-key-name> <tag-name> [<tagged-object>]
+> 
+> will use the named gpg key for signing.
 
-> On Thu, 6 Oct 2005, Eric W. Biederman wrote:
->> 
->> After thinking about it I don't think you need to look through the
->> history to use it for a merge3 operation.   As I recall merge3 only
->> looks at the base and the two derived versions of the file.  If we
->> have the sha1 of the original in the git repository I think all we
->> need to compute is the diff between that sha1 the current version
->> file.  And then apply the merge3 algorithm to combine the two sets of
->> changes.
->
-> Ahh, that I can definitely agree with. In fact, it makes perfect sense.
->
-> However, it assumes that everybody is a git user, which isn't actually 
-> true. 
+This is important for another reason as well: a lot of people have 
+multiple keys.
 
-Agreed.  The question is the subset of everyone large enough to
-make it a useful technique.  Given that a standalone diff utility can
-be taught how to generate the extra information, and a standalone
-patch could use it to verify you are at least patching the version
-of the file the patch was intended for I suspect the subset of
-everyone is large enough to be interesting.
-
-> Also, I'm wondering whether the advantages outweigh the 
-> disadvantages: it would make the diff uglier. We'd have to add that SHA1 
-> there somewhere (either on the "diff" line itself, or as anothe rextended 
-> git line like the "rename from/to" lines - a "original <sha1>" line).
-
-I don't think an extra line in the header is going to be much of a problem.
-Just more header noise.  
-
-Eric
+	-hpa
