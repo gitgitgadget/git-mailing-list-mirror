@@ -1,96 +1,67 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [RFC] embedded TAB and LF in pathnames
-Date: Fri, 07 Oct 2005 12:35:19 -0700
-Message-ID: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Some ASCII Art
+Date: Fri, 07 Oct 2005 12:42:52 -0700
+Message-ID: <7vk6gpyuyr.fsf@assigned-by-dhcp.cox.net>
+References: <1128621923.29904.30.camel@cashmere.sps.mot.com>
+	<7v8xx67559.fsf@assigned-by-dhcp.cox.net>
+	<1128713749.29904.84.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kai Ruemmler <kai.ruemmler@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Oct 07 21:36:44 2005
+Cc: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 07 21:43:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENy0G-0000rm-5S
-	for gcvg-git@gmane.org; Fri, 07 Oct 2005 21:35:36 +0200
+	id 1ENy7O-0002qS-70
+	for gcvg-git@gmane.org; Fri, 07 Oct 2005 21:42:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030510AbVJGTf0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Oct 2005 15:35:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030514AbVJGTf0
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Oct 2005 15:35:26 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:59341 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1030510AbVJGTf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2005 15:35:26 -0400
+	id S1030535AbVJGTmy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Oct 2005 15:42:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030537AbVJGTmy
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Oct 2005 15:42:54 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:29672 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1030535AbVJGTmx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Oct 2005 15:42:53 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051007193507.KOZI29747.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 7 Oct 2005 15:35:07 -0400
-To: git@vger.kernel.org
+          id <20051007194239.NTFD776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 7 Oct 2005 15:42:39 -0400
+To: Jon Loeliger <jdl@freescale.com>
+In-Reply-To: <1128713749.29904.84.camel@cashmere.sps.mot.com> (Jon Loeliger's
+	message of "Fri, 07 Oct 2005 14:35:50 -0500")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9814>
 
-While I was reviewing git-status fix by Kai Ruemmler, it struck
-me that our barebone Porcelain-ish layer got a bit sloppier over
-time.  The core layer does not care about any metacharacters in
-the pathname, and it has provisions, primarily in the form of
-'-z' flag, for carefully written Porcelain layers to handle
-pathnames with embedded metacharacters correctly.
+Jon Loeliger <jdl@freescale.com> writes:
 
-One exception, however, is the interaction between the git-diff
-family output and git-apply.  We needed to be compatible with
-other people's diff, which meant that we should not have to
-worry too much about pathnames with embedded TABs and LFs
-because GNU diff would not produce usable diff for such things
-anyway.  But 'git-diff --names' barfing if a pathname contained
-these characters when run without '-z' flag was too much.  This
-still breaks 'git-status'.
+> Would it be a useful option to git-show-branch
+> that would state the commit SHA1s as well?
+>
+>     % git show-branch --show-revs
+>
+>     * [master] Merge paul's branch
+>      ! [origin] Fix drm 'debug' sysfs permissions
+>       ! [paul] powerpc: Fix idle.c compile warning
+>     ---
+>     +   [06a41091c93e529e6cef68ba60deeb1b9ceabc7f] Merge paul's branch
+>     + + [05f62a5c049845eab8dfb3aeda55c18a2d4396e3] powerpc: Fix idle.c compile warning
+>     + + [c16ff7e44883afc05cbf6fde0e6913bb10c66885] powerpc: Define a _sdata symbol
+>     + + [8dad3f9257414f151cd821bfe01f54d7f52d2507] powerpc: Merge traps.c a bit more
+>     + + [b3491269f5604e4265ee2f27b47a76ce1e3678b6] powerpc: Use the merged of_device.c with ARCH=powerpc
 
-So I am considering the following changes:
+In practice, probably 30 or so bits prefix would identify an
+object uniquely within a repository, so one possibility is to
+use the first 7 or so letters from 40-byte SHA1, after making
+sure 7 is enough for that particular prefix -- otherwise use
+more for that particular object.
 
- - 'raw' output format without '-z', upon finding a TAB or LF,
-   would not die, but just issue a warning.  However, the paths
-   are "munged" in a way described later.
-
- - '--name-only' and '--name-status' format issue the same
-   warning when finding these characters and run without '-z'.
-   And the paths are "munged" as well.
-
- - 'patch' output format also issues a warning.  The paths are
-   "munged" but in a slightly different manner from the above.
-
- - 'git-apply' is taught about the path munging in the diff
-   input for git diffs (i.e. 'diff --git') and do sensible
-   things.
-
-One possible way for path munging goes like this.  We could take
-advantage of the fact that we do not ever output '//' ourselves,
-and '//' never appears in valid diffs by other people's tools,
-unless done deliberately by hand ("diff -u a//foo. b//foo.c"
-from the command line).  So we could use '//' as if it is a
-backslash.  Examples.
-
-  "foo/bar.c" --> "foo/bar.c"	(no funny letters - as before)
-  "foo\nbar"  --> "foo//0Abar" (double slash followed by 2 hex)
-  "foo\tbar"  --> "foo//09bar" (double slash followed by 2 hex)
-
-So a diff output to rename "foo/bar.c" to "foo\nbar.c" would
-become:
-
-  diff --git a/foo/bar.c b/foo//0Abar.c
-  similarity index 100%
-  rename from foo
-  rename to foo//0Abar.c
-
-The byte-values subject to this munging is LF for patch output
-(because git-apply seems to grok TABs in pathnames just fine),
-and TAB and LF for 'raw', '--name-only', '--name-status' without
-'-z'.
-
-I have not made up my mind on the exact choice of the quoting
-convention.  We could say '///' instead of '//', for example, or
-even '//{LF}//' instead of '//0A' proposed above.  One thing I
-am trying to avoid is "foo\nbar", which I suspect would be
-unfriendly to the Cygwin folks.
+The current "relative to the head" notation is descriptive and
+easier to see when you do not have too many branches and complex
+merge structure but one major drawback is that it is not stable;
+you add a commit then what was used to be master~5 now suddenly
+become master~6.
