@@ -1,118 +1,96 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: Some ASCII Art
-Date: Fri, 07 Oct 2005 14:35:50 -0500
-Message-ID: <1128713749.29904.84.camel@cashmere.sps.mot.com>
-References: <1128621923.29904.30.camel@cashmere.sps.mot.com>
-	 <7v8xx67559.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [RFC] embedded TAB and LF in pathnames
+Date: Fri, 07 Oct 2005 12:35:19 -0700
+Message-ID: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 07 21:36:00 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Kai Ruemmler <kai.ruemmler@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Oct 07 21:36:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENy0e-0000w1-JT
-	for gcvg-git@gmane.org; Fri, 07 Oct 2005 21:36:00 +0200
+	id 1ENy0G-0000rm-5S
+	for gcvg-git@gmane.org; Fri, 07 Oct 2005 21:35:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030495AbVJGTf4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Oct 2005 15:35:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030514AbVJGTf4
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Oct 2005 15:35:56 -0400
-Received: from az33egw01.freescale.net ([192.88.158.102]:61369 "EHLO
-	az33egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S1030495AbVJGTf4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2005 15:35:56 -0400
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id j97JkV5P017245;
-	Fri, 7 Oct 2005 12:46:31 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id j97Jg7uw002763;
-	Fri, 7 Oct 2005 14:42:07 -0500 (CDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xx67559.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+	id S1030510AbVJGTf0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Oct 2005 15:35:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030514AbVJGTf0
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Oct 2005 15:35:26 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:59341 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1030510AbVJGTf0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Oct 2005 15:35:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051007193507.KOZI29747.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 7 Oct 2005 15:35:07 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9813>
 
-On Thu, 2005-10-06 at 15:38, Junio C Hamano wrote:
-> Jon Loeliger <jdl@freescale.com> writes:
-> 
-> > Fundamental Git Index Operations
-> > Git Index Operations
-> 
-> These two look almost the same.
+While I was reviewing git-status fix by Kai Ruemmler, it struck
+me that our barebone Porcelain-ish layer got a bit sloppier over
+time.  The core layer does not care about any metacharacters in
+the pathname, and it has provisions, primarily in the form of
+'-z' flag, for carefully written Porcelain layers to handle
+pathnames with embedded metacharacters correctly.
 
-Yeah, the first one was intended to capture the
-operations discussed the first four points of the
-"The Workflow" section of the main Git doc page.
+One exception, however, is the interaction between the git-diff
+family output and git-apply.  We needed to be compatible with
+other people's diff, which meant that we should not have to
+worry too much about pathnames with embedded TABs and LFs
+because GNU diff would not produce usable diff for such things
+anyway.  But 'git-diff --names' barfing if a pathname contained
+these characters when run without '-z' flag was too much.  This
+still breaks 'git-status'.
 
-The second is "more of same", but the one picture with
-every ASCII arc on it was getting confusing and crowded.
+So I am considering the following changes:
 
-> I find the label "commit-tree" on index -> odb in the second
-> picture a bit misleading.  "commit-tree" takes a tree and zero
-> or more commit objects to create a new commit object, so it
-> works solely inside odb.
+ - 'raw' output format without '-z', upon finding a TAB or LF,
+   would not die, but just issue a warning.  However, the paths
+   are "munged" in a way described later.
 
-Ah!  Of course.  Thanks!
+ - '--name-only' and '--name-status' format issue the same
+   warning when finding these characters and run without '-z'.
+   And the paths are "munged" as well.
 
-> It is good that you mention that "read-tree -u" form updates
-> working tree in the second picture.
+ - 'patch' output format also issues a warning.  The paths are
+   "munged" but in a slightly different manner from the above.
 
-Discovering how this related was a key insight for me. :-)
+ - 'git-apply' is taught about the path munging in the diff
+   input for git diffs (i.e. 'diff --git') and do sensible
+   things.
 
->   In the same spirit, you
-> might also want to mention that "checkout-index -u" updates the
-> index (i.e. matches the stat information) in the same picture.
+One possible way for path munging goes like this.  We could take
+advantage of the fact that we do not ever output '//' ourselves,
+and '//' never appears in valid diffs by other people's tools,
+unless done deliberately by hand ("diff -u a//foo. b//foo.c"
+from the command line).  So we could use '//' as if it is a
+backslash.  Examples.
 
-Ooh.  Yes!  Good idea.
+  "foo/bar.c" --> "foo/bar.c"	(no funny letters - as before)
+  "foo\nbar"  --> "foo//0Abar" (double slash followed by 2 hex)
+  "foo\tbar"  --> "foo//09bar" (double slash followed by 2 hex)
 
+So a diff output to rename "foo/bar.c" to "foo\nbar.c" would
+become:
 
-> > Commit DAG Revision Naming
-> > ==========================
-> >
-> > Both node B and C are a commit parents of node A.
-> 
-> I assume that parents are left to right in this picture, that
-> is, B's first parent is D, second E, and third F.
+  diff --git a/foo/bar.c b/foo//0Abar.c
+  similarity index 100%
+  rename from foo
+  rename to foo//0Abar.c
 
-Yeah, I even meant to add that sentence before
-sending the mail. 
+The byte-values subject to this munging is LF for patch output
+(because git-apply seems to grok TABs in pathnames just fine),
+and TAB and LF for 'raw', '--name-only', '--name-status' without
+'-z'.
 
-> > Is there a way to name node C, E, F, H, I or J?
-> 
-> C = A^2
-> E = B^2 = A^^2
-> F = B^3 = A^^3
-> H = D^2 = B^^2 = A^^^2 = A~2^2
-> I = F^ = B^3^ = A^^3^
-> J = F^2 = B^3^2 = A^^3^2
-
-Ah!
-
-> They look like line noise ;-)
-
-Indeed. :-)
-
-Would it be a useful option to git-show-branch
-that would state the commit SHA1s as well?
-
-    % git show-branch --show-revs
-
-    * [master] Merge paul's branch
-     ! [origin] Fix drm 'debug' sysfs permissions
-      ! [paul] powerpc: Fix idle.c compile warning
-    ---
-    +   [06a41091c93e529e6cef68ba60deeb1b9ceabc7f] Merge paul's branch
-    + + [05f62a5c049845eab8dfb3aeda55c18a2d4396e3] powerpc: Fix idle.c compile warning
-    + + [c16ff7e44883afc05cbf6fde0e6913bb10c66885] powerpc: Define a _sdata symbol
-    + + [8dad3f9257414f151cd821bfe01f54d7f52d2507] powerpc: Merge traps.c a bit more
-    + + [b3491269f5604e4265ee2f27b47a76ce1e3678b6] powerpc: Use the merged of_device.c with ARCH=powerpc
-
-
-Thanks for your feedback!
-
-jdl
+I have not made up my mind on the exact choice of the quoting
+convention.  We could say '///' instead of '//', for example, or
+even '//{LF}//' instead of '//0A' proposed above.  One thing I
+am trying to avoid is "foo\nbar", which I suspect would be
+unfriendly to the Cygwin folks.
