@@ -1,67 +1,103 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Some ASCII Art
-Date: Fri, 07 Oct 2005 12:42:52 -0700
-Message-ID: <7vk6gpyuyr.fsf@assigned-by-dhcp.cox.net>
-References: <1128621923.29904.30.camel@cashmere.sps.mot.com>
-	<7v8xx67559.fsf@assigned-by-dhcp.cox.net>
-	<1128713749.29904.84.camel@cashmere.sps.mot.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: First cut at git port to Cygwin
+Date: Fri, 7 Oct 2005 22:54:50 +0200
+Message-ID: <20051007205450.GA14827@steel.home>
+References: <434299DB.7020805@zytor.com> <81b0412b0510050424h21fc06bav7677911f52b38426@mail.gmail.com> <81b0412b0510050846l2258775co117bada2d2b5a1ad@mail.gmail.com> <20051005155457.GA30303@trixie.casa.cgf.cx> <20051005191741.GA25493@steel.home> <20051005202947.GA6184@trixie.casa.cgf.cx> <81b0412b0510060205v4cd510c9wb4b06a3ed9242c8@mail.gmail.com> <81b0412b0510060307q431b64edt4196553bce28346c@mail.gmail.com> <81b0412b0510070544v3e7cf0b4n521db8ff7e4e335a@mail.gmail.com> <Pine.LNX.4.64.0510070828270.31407@g5.osdl.org>
+Reply-To: Alex Riesen <fork0@users.sourceforge.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 07 21:43:05 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, Christopher Faylor <me@cgf.cx>,
+	Junio C Hamano <junkio@cox.net>,
+	"H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Fri Oct 07 22:56:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ENy7O-0002qS-70
-	for gcvg-git@gmane.org; Fri, 07 Oct 2005 21:42:58 +0200
+	id 1ENzFh-0005O2-OL
+	for gcvg-git@gmane.org; Fri, 07 Oct 2005 22:55:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030535AbVJGTmy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Oct 2005 15:42:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030537AbVJGTmy
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Oct 2005 15:42:54 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:29672 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1030535AbVJGTmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Oct 2005 15:42:53 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051007194239.NTFD776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 7 Oct 2005 15:42:39 -0400
-To: Jon Loeliger <jdl@freescale.com>
-In-Reply-To: <1128713749.29904.84.camel@cashmere.sps.mot.com> (Jon Loeliger's
-	message of "Fri, 07 Oct 2005 14:35:50 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030554AbVJGUzT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Oct 2005 16:55:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030558AbVJGUzT
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Oct 2005 16:55:19 -0400
+Received: from devrace.com ([198.63.210.113]:62477 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S1030554AbVJGUzS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Oct 2005 16:55:18 -0400
+Received: from tigra.home (p54A0E11D.dip.t-dialin.net [84.160.225.29])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id j97L7JEP080430;
+	Fri, 7 Oct 2005 16:07:20 -0500 (CDT)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1ENzEy-0005W4-00; Fri, 07 Oct 2005 22:54:52 +0200
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1ENzEx-0000NW-E2; Fri, 07 Oct 2005 22:54:51 +0200
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0510070828270.31407@g5.osdl.org>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=1.3 required=4.5 tests=AWL,BAYES_40,
+	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9815>
 
-Jon Loeliger <jdl@freescale.com> writes:
+Linus Torvalds, Fri, Oct 07, 2005 17:34:19 +0200:
+> > it suddenly get worse: now I'm stuck on git-pull.
+> > 
+> > git-merge-index (called at some point by git-pull) maps the index
+> > in, and starts git-merge-one-file for each (or the given) entry in
+> > the index.  git-merge-one-file calls git-update-index, which wants
+> > to update the index. Which doesn't work, because it's locked by
+> > that piece of s$%^.
+> 
+> NOTE! git doesn't use mmap() because it _needs_ to use mmap(), but because 
+> it was simple to do that way, and it's a total idiosyncracy of mine that I 
+> often try to mmap the data. I often also tend to do my own allocators 
+> instead of using malloc() (see my "sparse" project in case you're 
+> interested in other idiosyncracies of mine - macros to do list traversal 
+> etc).
+> 
+> The fact is, "mmap()" isn't really any better than "read()": it has some 
+> advantages wrt memory management for the kernel, which is probably one big 
+> reason why I do it, but quite frankly, if you were to change every single 
+> mmap() to be a "map_file()" instead, and made it optional whether it used 
+> mmap() or "malloc + read()", I personally don't think it would be 
+> horrible.
+> 
+> And it might make things much simpler for portability. The "use mmap" 
+> approach is very much a unixism, particularly the way unix people do it 
+> (mmap followed by close, making the file descriptor "go away"). Sure, 
+> other OS's have mmap too, but I think on them it tends to be less commonly 
+> used.
 
-> Would it be a useful option to git-show-branch
-> that would state the commit SHA1s as well?
->
->     % git show-branch --show-revs
->
->     * [master] Merge paul's branch
->      ! [origin] Fix drm 'debug' sysfs permissions
->       ! [paul] powerpc: Fix idle.c compile warning
->     ---
->     +   [06a41091c93e529e6cef68ba60deeb1b9ceabc7f] Merge paul's branch
->     + + [05f62a5c049845eab8dfb3aeda55c18a2d4396e3] powerpc: Fix idle.c compile warning
->     + + [c16ff7e44883afc05cbf6fde0e6913bb10c66885] powerpc: Define a _sdata symbol
->     + + [8dad3f9257414f151cd821bfe01f54d7f52d2507] powerpc: Merge traps.c a bit more
->     + + [b3491269f5604e4265ee2f27b47a76ce1e3678b6] powerpc: Use the merged of_device.c with ARCH=powerpc
+"Sounds like a thinly veiled threat or a very effective prodding" 8)
 
-In practice, probably 30 or so bits prefix would identify an
-object uniquely within a repository, so one possibility is to
-use the first 7 or so letters from 40-byte SHA1, after making
-sure 7 is enough for that particular prefix -- otherwise use
-more for that particular object.
+---
 
-The current "relative to the head" notation is descriptive and
-easier to see when you do not have too many branches and complex
-merge structure but one major drawback is that it is not stable;
-you add a commit then what was used to be master~5 now suddenly
-become master~6.
+Make read_cache copy the index into memory, to improve portability on
+other OS's which have mmap too, tend to use it less commonly.
+
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+
+diff --git a/read-cache.c b/read-cache.c
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -497,9 +497,11 @@ int read_cache(void)
+ 	offset = sizeof(*hdr);
+ 	for (i = 0; i < active_nr; i++) {
+ 		struct cache_entry *ce = map + offset;
+-		offset = offset + ce_size(ce);
+-		active_cache[i] = ce;
++		size_t size = ce_size(ce);
++		offset = offset + size;
++		active_cache[i] = malloc(ce, size);
+ 	}
++	munmap(map, size);
+ 	return active_nr;
+ 
+ unmap:
