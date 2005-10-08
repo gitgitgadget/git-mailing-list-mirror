@@ -1,74 +1,76 @@
-From: Elfyn McBratney <beu@gentoo.org>
-Subject: Re: First cut at git port to Cygwin
-Date: Sat, 8 Oct 2005 18:43:06 +0100
-Message-ID: <20051008174306.GB20870@gentoo.org>
-References: <20051005202947.GA6184@trixie.casa.cgf.cx> <81b0412b0510060205v4cd510c9wb4b06a3ed9242c8@mail.gmail.com> <81b0412b0510060307q431b64edt4196553bce28346c@mail.gmail.com> <81b0412b0510070544v3e7cf0b4n521db8ff7e4e335a@mail.gmail.com> <Pine.LNX.4.64.0510070828270.31407@g5.osdl.org> <20051007205450.GA14827@steel.home> <20051007212250.GA1423@steel.home> <4346E8AC.5030503@citi.umich.edu> <20051007213952.GA8821@steel.home> <Pine.LNX.4.64.0510080900510.31407@g5.osdl.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH Cogito] cg-fetch: fix local cloning with symbolic refs
+Date: Sat, 8 Oct 2005 19:48:57 +0200
+Message-ID: <20051008174857.GB28875@diku.dk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="MW5yreqqjyrRcusr"
-X-From: git-owner@vger.kernel.org Sat Oct 08 19:44:41 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 08 19:50:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOIj3-0006IL-G7
-	for gcvg-git@gmane.org; Sat, 08 Oct 2005 19:43:14 +0200
+	id 1EOIpA-0007Uy-CM
+	for gcvg-git@gmane.org; Sat, 08 Oct 2005 19:49:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932170AbVJHRnJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Oct 2005 13:43:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932172AbVJHRnJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 13:43:09 -0400
-Received: from anchor-post-33.mail.demon.net ([194.217.242.91]:6663 "EHLO
-	anchor-post-33.mail.demon.net") by vger.kernel.org with ESMTP
-	id S932170AbVJHRnI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Oct 2005 13:43:08 -0400
-Received: from beu1.demon.co.uk ([83.105.51.149] helo=zippy.emcb.local)
-	by anchor-post-33.mail.demon.net with esmtp (Exim 4.42)
-	id 1EOIix-0001sd-Ab
-	for git@vger.kernel.org; Sat, 08 Oct 2005 17:43:07 +0000
-Received: by zippy.emcb.local (Postfix, from userid 1001)
-	id E5710148041; Sat,  8 Oct 2005 18:43:06 +0100 (BST)
-To: Git Mailing List <git@vger.kernel.org>
-Mail-Followup-To: Elfyn McBratney <beu@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>
+	id S932174AbVJHRtZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Oct 2005 13:49:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932178AbVJHRtZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 13:49:25 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:5852 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S932174AbVJHRtZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Oct 2005 13:49:25 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id A8E4C6E0D9C; Sat,  8 Oct 2005 19:49:12 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 747036E0223; Sat,  8 Oct 2005 19:49:12 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 0116F60F95; Sat,  8 Oct 2005 19:49:23 +0200 (CEST)
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0510080900510.31407@g5.osdl.org>
-Organisation: Gentoo Foundation, Inc.
-User-Agent: mutt-ng/devel (Linux)
+User-Agent: Mutt/1.5.6i
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9844>
 
+Ugly workaround for making the HEAD getter use 'git-symbolic-ref HEAD'
+so that git-local-fetch is passed the proper ID and not 'ref: ...'.
 
---MW5yreqqjyrRcusr
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+---
 
-Er, apologies for the dups - postfix crapped itself :/
+Yeah, it is ugly, it assumes we are getting the HEAD (which is currently
+the only one using the -b flag.
 
-*goes and stands in the corner donning the 'D' hat*
+diff --git a/cg-fetch b/cg-fetch
+index d0d37e1..57096cd 100755
+--- a/cg-fetch
++++ b/cg-fetch
+@@ -248,9 +248,10 @@ fetch_ssh()
+ 
+ get_local()
+ {
++	symref=
+ 	cp_flags_l="-vdpR"
+ 	if [ "$1" = "-b" ]; then
+-		cp_flags_l="-vb" # Dereference symlinks
++		symref=1
+ 		shift
+ 	fi
+ 
+@@ -270,6 +271,7 @@ get_local()
+ 
+ 	src="$1"
+ 	dest="$2"
++	[ "$symref" ] && src="$(dirname $src)/$(git-symbolic-ref HEAD)"
+ 	[ "$cut_last" ] && dest=${dest%/*}
+ 
+ 	cp $cp_flags_l "$src" "$dest"
 
---=20
-Elfyn McBratney
-Gentoo Developer/Perl Team Lead
-beu/irc.freenode.net                            http://dev.gentoo.org/~beu/
-+------------O.o--------------------- http://dev.gentoo.org/~beu/pubkey.asc
-
-PGP Key ID: 0x69DF17AD
-PGP Key Fingerprint:
-  DBD3 B756 ED58 B1B4 47B9  B3BD 8D41 E597 69DF 17AD
-
---MW5yreqqjyrRcusr
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFDSAUqjUHll2nfF60RAu7zAJ9m0oEaDlEFj84gAssAQcAihxklQgCeLrbw
-Np5b+J/81WchHSV3q9ggmCU=
-=+G76
------END PGP SIGNATURE-----
-
---MW5yreqqjyrRcusr--
+-- 
+Jonas Fonseca
