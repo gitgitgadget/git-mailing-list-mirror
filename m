@@ -1,76 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: First cut at git port to Cygwin
-Date: Sat, 8 Oct 2005 20:27:06 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510082023130.25971@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20051005155457.GA30303@trixie.casa.cgf.cx> <20051005191741.GA25493@steel.home>
- <20051005202947.GA6184@trixie.casa.cgf.cx> <81b0412b0510060205v4cd510c9wb4b06a3ed9242c8@mail.gmail.com>
- <81b0412b0510060307q431b64edt4196553bce28346c@mail.gmail.com>
- <81b0412b0510070544v3e7cf0b4n521db8ff7e4e335a@mail.gmail.com>
- <Pine.LNX.4.64.0510070828270.31407@g5.osdl.org> <20051007205450.GA14827@steel.home>
- <20051007212250.GA1423@steel.home> <4346E8AC.5030503@citi.umich.edu>
- <20051007213952.GA8821@steel.home> <Pine.LNX.4.64.0510080900510.31407@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Try URI quoting for embedded TAB and LF in pathnames
+Date: Sat, 08 Oct 2005 11:30:21 -0700
+Message-ID: <7v64s7svya.fsf@assigned-by-dhcp.cox.net>
+References: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net>
+	<20051007232909.GB8893@steel.home>
+	<7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net>
+	<20051008064555.GA3831@steel.home>
+	<7vachks7aq.fsf@assigned-by-dhcp.cox.net>
+	<20051008133032.GA32079@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alex Riesen <fork0@users.sourceforge.net>,
-	Chuck Lever <cel@citi.umich.edu>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Christopher Faylor <me@cgf.cx>,
-	"H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sat Oct 08 20:27:58 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Kai Ruemmler <kai.ruemmler@gmx.net>
+X-From: git-owner@vger.kernel.org Sat Oct 08 20:30:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOJPn-0006SC-Iz
-	for gcvg-git@gmane.org; Sat, 08 Oct 2005 20:27:23 +0200
+	id 1EOJSm-00070N-12
+	for gcvg-git@gmane.org; Sat, 08 Oct 2005 20:30:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750793AbVJHS1L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Oct 2005 14:27:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750815AbVJHS1K
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 14:27:10 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:9701 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750793AbVJHS1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Oct 2005 14:27:09 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 8279513EC38; Sat,  8 Oct 2005 20:27:08 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 652A5B4409; Sat,  8 Oct 2005 20:27:08 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3AE3BAC86C; Sat,  8 Oct 2005 20:27:08 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 947CD13EC38; Sat,  8 Oct 2005 20:27:06 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0510080900510.31407@g5.osdl.org>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1750815AbVJHSaX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Oct 2005 14:30:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbVJHSaX
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 14:30:23 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:24253 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1750815AbVJHSaX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Oct 2005 14:30:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051008183012.HSCQ4169.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 8 Oct 2005 14:30:12 -0400
+To: Robert Fitzsimons <robfitz@273k.net>
+In-Reply-To: <20051008133032.GA32079@localhost> (Robert Fitzsimons's message
+	of "Sat, 8 Oct 2005 13:30:32 +0000")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9847>
 
-Hi,
+Robert Fitzsimons <robfitz@273k.net> writes:
 
-On Sat, 8 Oct 2005, Linus Torvalds wrote:
+> Instead of using //{LF}// and //{TAG}// to quote embedded tab and
+> linefeed characters in pathnames use URI quoting.
+>
+> '\t' becomes %09
+> '\n' becomes %10
+> '%' becomes %25
+>
+> Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
 
-> I really think that you should just get rid of the mmap.
-> 
-> As it is, you're just slowing the code down on sane architectures. That's 
-> not good.
-> 
-> So I'd suggest something like this instead.
-> 
-> Totally untested, of course.
-
-Am I missing something? I don't see where the changes are written back to 
-the fd. After all, mmap() is called with PROT_WRITE...
-
-*shameless plug* Of course, this problem does not come up with my NO_MMAP 
-patch.
-
-Ciao,
-Dscho
+This would break existing setup where people *has* per-cent
+letter in their pathname -- which I think is worse than the
+backslash proposal.
