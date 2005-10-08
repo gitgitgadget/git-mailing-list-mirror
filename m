@@ -1,154 +1,76 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Seeing various mode changes on cygwin
-Date: Sat, 8 Oct 2005 20:00:23 +0200
-Message-ID: <20051008180023.GC28875@diku.dk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: First cut at git port to Cygwin
+Date: Sat, 8 Oct 2005 20:27:06 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510082023130.25971@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051005155457.GA30303@trixie.casa.cgf.cx> <20051005191741.GA25493@steel.home>
+ <20051005202947.GA6184@trixie.casa.cgf.cx> <81b0412b0510060205v4cd510c9wb4b06a3ed9242c8@mail.gmail.com>
+ <81b0412b0510060307q431b64edt4196553bce28346c@mail.gmail.com>
+ <81b0412b0510070544v3e7cf0b4n521db8ff7e4e335a@mail.gmail.com>
+ <Pine.LNX.4.64.0510070828270.31407@g5.osdl.org> <20051007205450.GA14827@steel.home>
+ <20051007212250.GA1423@steel.home> <4346E8AC.5030503@citi.umich.edu>
+ <20051007213952.GA8821@steel.home> <Pine.LNX.4.64.0510080900510.31407@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Oct 08 20:00:57 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <fork0@users.sourceforge.net>,
+	Chuck Lever <cel@citi.umich.edu>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Christopher Faylor <me@cgf.cx>,
+	"H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Sat Oct 08 20:27:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOIzy-0001QO-RY
-	for gcvg-git@gmane.org; Sat, 08 Oct 2005 20:00:43 +0200
+	id 1EOJPn-0006SC-Iz
+	for gcvg-git@gmane.org; Sat, 08 Oct 2005 20:27:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932133AbVJHSA0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Oct 2005 14:00:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932163AbVJHSAZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 14:00:25 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:49885 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S932133AbVJHSAZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Oct 2005 14:00:25 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id B176E6E263E; Sat,  8 Oct 2005 20:00:12 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP id 4C4826E1E2A
-	for <git@vger.kernel.org>; Sat,  8 Oct 2005 20:00:12 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id D349B60F95; Sat,  8 Oct 2005 20:00:23 +0200 (CEST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Level: 
+	id S1750793AbVJHS1L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Oct 2005 14:27:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750815AbVJHS1K
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 14:27:10 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:9701 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750793AbVJHS1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Oct 2005 14:27:09 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8279513EC38; Sat,  8 Oct 2005 20:27:08 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 652A5B4409; Sat,  8 Oct 2005 20:27:08 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 3AE3BAC86C; Sat,  8 Oct 2005 20:27:08 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 947CD13EC38; Sat,  8 Oct 2005 20:27:06 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510080900510.31407@g5.osdl.org>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9846>
 
 Hi,
 
-It seems that git on cygwin still have a few problems. I've experienced it both
-when cloning with git and Cogito. It seems that cygwin overrides the previous
-modes and sets the executable bit. git-reset doesn't fix it. Can this even be
-fixed then?
+On Sat, 8 Oct 2005, Linus Torvalds wrote:
 
-A few examples below ...
+> I really think that you should just get rid of the mmap.
+> 
+> As it is, you're just slowing the code down on sane architectures. That's 
+> not good.
+> 
+> So I'd suggest something like this instead.
+> 
+> Totally untested, of course.
 
-jonas@cygwin /usr/local/dev/git/git
-$ git reset
-Documentation/sort_glossary.pl: needs update
-t/lib-read-tree-m-3way.sh: needs update
-t/t4109-apply-multifrag.sh: needs update
-t/t4110-apply-scan.sh: needs update
-t/t6000lib.sh: needs update
-t/t6101-rev-parse-parents.sh: needs update
-templates/hooks--applypatch-msg: needs update
-templates/hooks--commit-msg: needs update
-templates/hooks--post-commit: needs update
-templates/hooks--post-update: needs update
-templates/hooks--pre-applypatch: needs update
-templates/hooks--pre-commit: needs update
-templates/hooks--update: needs update
+Am I missing something? I don't see where the changes are written back to 
+the fd. After all, mmap() is called with PROT_WRITE...
 
-jonas@cygwin /usr/local/dev/git/git
-$ git diff
-diff --git a/Documentation/sort_glossary.pl b/Documentation/sort_glossary.pl
-old mode 100644
-new mode 100755
-diff --git a/t/lib-read-tree-m-3way.sh b/t/lib-read-tree-m-3way.sh
-old mode 100755
-new mode 100644
-diff --git a/t/t4109-apply-multifrag.sh b/t/t4109-apply-multifrag.sh
-old mode 100644
-new mode 100755
-diff --git a/t/t4110-apply-scan.sh b/t/t4110-apply-scan.sh
-old mode 100644
-new mode 100755
-diff --git a/t/t6000lib.sh b/t/t6000lib.sh
-old mode 100755
-new mode 100644
-diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
-old mode 100644
-new mode 100755
-diff --git a/templates/hooks--applypatch-msg b/templates/hooks--applypatch-msg
-old mode 100644
-new mode 100755
-diff --git a/templates/hooks--commit-msg b/templates/hooks--commit-msg
-old mode 100644
-new mode 100755
-diff --git a/templates/hooks--post-commit b/templates/hooks--post-commit
-old mode 100644
-new mode 100755
-diff --git a/templates/hooks--post-update b/templates/hooks--post-update
-old mode 100644
-new mode 100755
-diff --git a/templates/hooks--pre-applypatch b/templates/hooks--pre-applypatch
-old mode 100644
-new mode 100755
-diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-commit
-old mode 100644
-new mode 100755
-diff --git a/templates/hooks--update b/templates/hooks--update
-old mode 100644
-new mode 100755
+*shameless plug* Of course, this problem does not come up with my NO_MMAP 
+patch.
 
-jonas@cygwin /usr/local/dev/git/cogito
-$ cg diff debian/
-diff --git a/debian/helper-scripts/make-orig.tgz
-b/debian/helper-scripts/make-orig.tgz
-old mode 100644
-new mode 100755
-diff --git a/debian/helper-scripts/make-package
-b/debian/helper-scripts/make-package
-old mode 100644
-new mode 100755
-diff --git a/debian/helper-scripts/make-test
-b/debian/helper-scripts/make-test
-old mode 100644
-new mode 100755
-
-jonas@cygwin /usr/local/dev/elinks/0.11
-$ cg diff
-diff --git a/config/config.guess b/config/config.guess
-old mode 100644
-new mode 100755
-diff --git a/config/config.sub b/config/config.sub
-old mode 100644
-new mode 100755
-diff --git a/contrib/conv/w3m2links.awk.in b/contrib/conv/w3m2links.awk.in
-old mode 100644
-new mode 100755
-diff --git a/contrib/lua/bm-to-elinks-bookmarks.lua b/contrib/lua/bm-to-elinks-bookmarks.lua
-old mode 100644
-new mode 100755
-diff --git a/contrib/wipe-out-ssl.awk b/contrib/wipe-out-ssl.awk
-old mode 100644
-new mode 100755
-diff --git a/debian/elinks.postinst b/debian/elinks.postinst
-old mode 100644
-new mode 100755
-diff --git a/debian/elinks.preinst b/debian/elinks.preinst
-old mode 100644
-new mode 100755
-diff --git a/debian/elinks.prerm b/debian/elinks.prerm
-old mode 100644
-new mode 100755
-diff --git a/po/gen_translations_stats.sh b/po/gen_translations_stats.sh
-old mode 100644
-new mode 100755
-
--- 
-Jonas Fonseca
+Ciao,
+Dscho
