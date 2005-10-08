@@ -1,152 +1,187 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH Cogito] Use git-{update,symbolic}-ref for updating HEAD
-Date: Sat, 8 Oct 2005 18:57:23 +0200
-Message-ID: <20051008165723.GA28414@diku.dk>
-References: <20051002101224.GA9219@diku.dk>
+From: Elfyn McBratney <beu@gentoo.org>
+Subject: Re: First cut at git port to Cygwin
+Date: Sat, 8 Oct 2005 18:38:13 +0100
+Message-ID: <20051008173812.GA20870@gentoo.org>
+References: <20051005202947.GA6184@trixie.casa.cgf.cx> <81b0412b0510060205v4cd510c9wb4b06a3ed9242c8@mail.gmail.com> <81b0412b0510060307q431b64edt4196553bce28346c@mail.gmail.com> <81b0412b0510070544v3e7cf0b4n521db8ff7e4e335a@mail.gmail.com> <Pine.LNX.4.64.0510070828270.31407@g5.osdl.org> <20051007205450.GA14827@steel.home> <20051007212250.GA1423@steel.home> <4346E8AC.5030503@citi.umich.edu> <20051007213952.GA8821@steel.home> <Pine.LNX.4.64.0510080900510.31407@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 08 18:57:57 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="3V7upXqbjpZ4EhLz"
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Alex Riesen <fork0@users.sourceforge.net>,
+	Chuck Lever <cel@citi.umich.edu>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Christopher Faylor <me@cgf.cx>,
+	"H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Sat Oct 08 19:40:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOI0u-0005SP-Kb
-	for gcvg-git@gmane.org; Sat, 08 Oct 2005 18:57:36 +0200
+	id 1EOIen-0005Vc-1J
+	for gcvg-git@gmane.org; Sat, 08 Oct 2005 19:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932161AbVJHQ50 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Oct 2005 12:57:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932163AbVJHQ50
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 12:57:26 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:40145 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S932161AbVJHQ5Z (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Oct 2005 12:57:25 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 303AE6E1E4C; Sat,  8 Oct 2005 18:57:12 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 689036E17A4; Sat,  8 Oct 2005 18:57:12 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id E051260F94; Sat,  8 Oct 2005 18:57:23 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
+	id S932171AbVJHRiV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Oct 2005 13:38:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932172AbVJHRiV
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 13:38:21 -0400
+Received: from anchor-post-30.mail.demon.net ([194.217.242.88]:1542 "EHLO
+	anchor-post-30.mail.demon.net") by vger.kernel.org with ESMTP
+	id S932171AbVJHRiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Oct 2005 13:38:20 -0400
+Received: from beu1.demon.co.uk ([83.105.51.149] helo=zippy.emcb.local)
+	by anchor-post-30.mail.demon.net with esmtp (Exim 4.42)
+	id 1EOIeF-0009RV-1J; Sat, 08 Oct 2005 17:38:15 +0000
+Received: by zippy.emcb.local (Postfix, from userid 1001)
+	id 45F85148041; Sat,  8 Oct 2005 18:38:13 +0100 (BST)
+To: Git Mailing List <git@vger.kernel.org>
+Mail-Followup-To: Elfyn McBratney <beu@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Alex Riesen <fork0@users.sourceforge.net>,
+	Chuck Lever <cel@citi.umich.edu>, Junio C Hamano <junkio@cox.net>,
+	Christopher Faylor <me@cgf.cx>, "H. Peter Anvin" <hpa@zytor.com>
 Content-Disposition: inline
-In-Reply-To: <20051002101224.GA9219@diku.dk>
-User-Agent: Mutt/1.5.6i
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Level: 
+In-Reply-To: <Pine.LNX.4.64.0510080900510.31407@g5.osdl.org>
+Organisation: Gentoo Foundation, Inc.
+User-Agent: mutt-ng/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9841>
 
-Conditionally make git-update-ref check the old head. For this to succeed
-for the initial commit, cg-init should not touch .git/refs/heads/master,
-and the touching seems to be redundant anyway, so remove it.
 
-This should make Cogito mostly work on cygwin.
+--3V7upXqbjpZ4EhLz
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+On Sat, Oct 08, 2005 at 09:11:03AM -0700, Linus Torvalds wrote:
+ >=20
+ > On Fri, 7 Oct 2005, Alex Riesen wrote:
+ > >=20
+ > > Make read_cache copy the index into memory, to improve portability on
+ > > other OS's which have mmap too, tend to use it less commonly.
+ >=20
+ > I really think that you should just get rid of the mmap.
+ >=20
+ > As it is, you're just slowing the code down on sane architectures. That'=
+s=20
+ > not good.
+ >=20
+ > So I'd suggest something like this instead.
+ >=20
+ > Totally untested, of course.
+ >=20
+ > 		Linus
 
----
+Slightly adjusted diff below so it compiles ;)  (Note: only the second
+die() un hunk #1 was changed.)
 
-This is an incremental update to make Cogito handle symbolic refs.
+Best,
+Elfyn
 
- I am not sure whether the change from using '[ -L .git/HEAD ]' to using
-'[ -e .git/HEAD ]' is the thing to do. And I haven't used it so much
-yet; did a few commit and so on. And the tests fails do to local cloning
-not working yet (git-local-fetch needs to be fixed).
+----
+diff --git a/read-cache.c b/read-cache.c
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -454,13 +454,39 @@ static int verify_hdr(struct cache_heade
+ 	return 0;
+ }
+=20
++static void *map_index_file(int fd, size_t size)
++{
++	void *map;
++#ifdef NO_MMAP
++	map =3D malloc(size);
++	if (!map)
++		die("Unable to allocate index file mapping");
++	if (read(fd, map, size) !=3D size)
++		die("Unable to read %z bytes from index", size);
++#else
++	map =3D mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
++	if (map =3D=3D MAP_FAILED)
++		die("index file mmap failed (%s)", strerror(errno));
++#endif
++	return map;
++}
++
++static void unmap_index_file(void *map, size_t size)
++{
++#ifdef NO_MMAP
++	free(map);
++#else
++	munmap(map, size);
++#endif
++}
++
+ int read_cache(void)
+ {
+ 	int fd, i;
+ 	struct stat st;
+ 	unsigned long size, offset;
+-	void *map;
+ 	struct cache_header *hdr;
++	void *map;
+=20
+ 	errno =3D EBUSY;
+ 	if (active_cache)
+@@ -475,16 +501,15 @@ int read_cache(void)
+ 	}
+=20
+ 	size =3D 0; // avoid gcc warning
+-	map =3D MAP_FAILED;
+-	if (!fstat(fd, &st)) {
+-		size =3D st.st_size;
+-		errno =3D EINVAL;
+-		if (size >=3D sizeof(struct cache_header) + 20)
+-			map =3D mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+-	}
++	if (fstat(fd, &st))
++		die("unable to fstat index file");
++
++	size =3D st.st_size;
++	errno =3D EINVAL;
++	if (size < sizeof(struct cache_header) + 20)
++		goto corrupt;
++	map =3D map_index_file(fd, size);
+ 	close(fd);
+-	if (map =3D=3D MAP_FAILED)
+-		die("index file mmap failed (%s)", strerror(errno));
+=20
+ 	hdr =3D map;
+ 	if (verify_hdr(hdr, size) < 0)
+@@ -503,8 +528,9 @@ int read_cache(void)
+ 	return active_nr;
+=20
+ unmap:
+-	munmap(map, size);
++	unmap_index_file(map, size);
+ 	errno =3D EINVAL;
++corrupt:
+ 	die("index file corrupt");
+ }
 
- Makefile                        |    2 +-
- cg-Xlib                         |    4 ++--
- cg-commit                       |    4 ++--
- cg-init                         |    1 -
- cg-object-id                    |    2 +-
 
----
+--=20
+Elfyn McBratney
+Gentoo Developer/Perl Team Lead
+beu/irc.freenode.net                            http://dev.gentoo.org/~beu/
++------------O.o--------------------- http://dev.gentoo.org/~beu/pubkey.asc
 
-diff --git a/Makefile b/Makefile
-index f0a0590..9eacade 100644
---- a/Makefile
-+++ b/Makefile
-@@ -35,7 +35,7 @@ all: cogito
- cogito: $(GEN_SCRIPT)
- 
- ifneq (,$(wildcard .git))
--GIT_HEAD=.git/HEAD
-+GIT_HEAD=.git/$(shell git-symbolic-ref HEAD)
- GIT_HEAD_ID=" \($(shell cat $(GIT_HEAD))\)"
- endif
- cg-version: $(VERSION) $(GIT_HEAD) Makefile
-diff --git a/cg-Xlib b/cg-Xlib
-index b27e8b9..dcf9aa3 100755
---- a/cg-Xlib
-+++ b/cg-Xlib
-@@ -246,7 +246,7 @@ tree_timewarp()
- 	fi
- 
- 	git-read-tree -m "$branch" || die "$branch: bad commit"
--	[ "$no_head_update" ] || echo "$branch" > $_git/HEAD
-+	[ "$no_head_update" ] || git-update-ref HEAD "$branch"
- 
- 	# Kill gone files
- 	git-diff-tree -z -r $base $branch | xargs -0 bash -c '
-@@ -471,7 +471,7 @@ if [ ! "$_git_repo_unneeded" ]; then
- 	       exit 1
- 	fi
- 	_git_head=master
--	[ -L "$_git/HEAD" ] && _git_head="$(basename "$(readlink "$_git/HEAD")")"
-+	[ -e "$_git/HEAD" ] && _git_head="$(basename "$(git-symbolic-ref HEAD)")"
- 	[ -s "$_git/head-name" ] && _git_head="$(cat "$_git/head-name")"
- fi
- 
-diff --git a/cg-commit b/cg-commit
-index 4345bd5..6024f17 100755
---- a/cg-commit
-+++ b/cg-commit
-@@ -396,7 +396,7 @@ fi
- 
- oldhead=
- if [ -s "$_git/HEAD" ]; then
--	oldhead=$(cat $_git/HEAD)
-+	oldhead=$(git-symbolic-ref HEAD)
- 	oldheadstr="-p $oldhead"
- fi
- 
-@@ -420,7 +420,7 @@ fi
- 
- if [ "$newhead" ]; then
- 	echo "Committed as $newhead."
--	echo $newhead >$_git/HEAD
-+	git-update-ref HEAD $newhead $oldhead 
- 	[ "$merging" ] && rm $_git/merging $_git/merging-sym $_git/merge-base
- 	rm -f "$_git/commit-ignore"
- 
-diff --git a/cg-init b/cg-init
-index 570c83e..65faf84 100755
---- a/cg-init
-+++ b/cg-init
-@@ -48,7 +48,6 @@ done
- cleanup_trap "rm -rf $_git"
- 
- git-init-db
--touch $_git/refs/heads/master
- 
- git-read-tree # Seed the dircache
- if ! [ "$no_initial_commit" ]; then
-diff --git a/cg-object-id b/cg-object-id
-index 2ae9420..5c03626 100755
---- a/cg-object-id
-+++ b/cg-object-id
-@@ -53,7 +53,7 @@ normalize_id()
- 	fi
- 
- 	if [ ! "$id" ] || [ "$id" = "this" ] || [ "$id" = "HEAD" ]; then
--		read id < "$_git/HEAD"
-+		read id < "$_git/$(git-symbolic-ref HEAD)"
- 
- 	elif [ -r "$_git/refs/tags/$id" ]; then
- 		read id < "$_git/refs/tags/$id"
--- 
-Jonas Fonseca
+PGP Key ID: 0x69DF17AD
+PGP Key Fingerprint:
+  DBD3 B756 ED58 B1B4 47B9  B3BD 8D41 E597 69DF 17AD
+
+--3V7upXqbjpZ4EhLz
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQFDSAQEjUHll2nfF60RAnOLAKC7SLYKjtc6NCztQv+wgXcCa6fmrQCfSc3O
+aIsuZvR2WgXTGTM/9eAjZQ8=
+=eDNn
+-----END PGP SIGNATURE-----
+
+--3V7upXqbjpZ4EhLz--
