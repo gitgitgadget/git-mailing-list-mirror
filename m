@@ -1,65 +1,55 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: First cut at git port to Cygwin
-Date: Sat, 8 Oct 2005 20:49:25 +0200
-Message-ID: <20051008184925.GA6347@steel.home>
-References: <81b0412b0510060205v4cd510c9wb4b06a3ed9242c8@mail.gmail.com> <81b0412b0510060307q431b64edt4196553bce28346c@mail.gmail.com> <81b0412b0510070544v3e7cf0b4n521db8ff7e4e335a@mail.gmail.com> <Pine.LNX.4.64.0510070828270.31407@g5.osdl.org> <20051007205450.GA14827@steel.home> <20051007212250.GA1423@steel.home> <4346E8AC.5030503@citi.umich.edu> <20051007213952.GA8821@steel.home> <Pine.LNX.4.64.0510080900510.31407@g5.osdl.org> <Pine.LNX.4.63.0510082023130.25971@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Seeing various mode changes on cygwin
+Date: Sat, 08 Oct 2005 11:51:55 -0700
+Message-ID: <7vfyrbrgdw.fsf@assigned-by-dhcp.cox.net>
+References: <20051008180023.GC28875@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Chuck Lever <cel@citi.umich.edu>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Christopher Faylor <me@cgf.cx>,
-	"H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sat Oct 08 20:51:23 2005
+X-From: git-owner@vger.kernel.org Sat Oct 08 20:52:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOJlQ-0002LC-NE
-	for gcvg-git@gmane.org; Sat, 08 Oct 2005 20:49:45 +0200
+	id 1EOJni-0002tW-Mr
+	for gcvg-git@gmane.org; Sat, 08 Oct 2005 20:52:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751025AbVJHStm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Oct 2005 14:49:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751027AbVJHStm
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 14:49:42 -0400
-Received: from devrace.com ([198.63.210.113]:64012 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1750964AbVJHStl (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Oct 2005 14:49:41 -0400
-Received: from tigra.home (p54A0E160.dip.t-dialin.net [84.160.225.96])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id j98J1vXa092305;
-	Sat, 8 Oct 2005 14:01:58 -0500 (CDT)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1EOJl8-0005HJ-00; Sat, 08 Oct 2005 20:49:26 +0200
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1EOJl7-0001fI-LM; Sat, 08 Oct 2005 20:49:25 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0510082023130.25971@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=0.6 required=4.5 tests=AWL,BAYES_20,
-	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S1751027AbVJHSwE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Oct 2005 14:52:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751049AbVJHSwD
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 14:52:03 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:36555 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751027AbVJHSwB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Oct 2005 14:52:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051008185150.OKFX16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 8 Oct 2005 14:51:50 -0400
+To: git@vger.kernel.org
+In-Reply-To: <20051008180023.GC28875@diku.dk> (Jonas Fonseca's message of
+	"Sat, 8 Oct 2005 20:00:23 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9851>
 
-Johannes Schindelin, Sat, Oct 08, 2005 20:27:06 +0200:
-> > I really think that you should just get rid of the mmap.
-> > 
-> > As it is, you're just slowing the code down on sane architectures. That's 
-> > not good.
-> > 
-> > So I'd suggest something like this instead.
-> > 
-> > Totally untested, of course.
-> 
-> Am I missing something? I don't see where the changes are written back to 
-> the fd. After all, mmap() is called with PROT_WRITE...
+Jonas Fonseca <fonseca@diku.dk> writes:
 
-It's just becase the file is open for reading only.
-Also, it is not an mmap/unmap implementation. Just reading cache in.
+> ... It seems that cygwin overrides the previous
+> modes and sets the executable bit. git-reset doesn't fix it. Can this even be
+> fixed then?
+>
+> A few examples below ...
+>
+> jonas@cygwin /usr/local/dev/git/git
+> $ git reset
+> Documentation/sort_glossary.pl: needs update
+> t/lib-read-tree-m-3way.sh: needs update
+
+I do not have an access to Cygwin environment so cannot be of
+help on this directly, but 'git reset' without flags defaults
+"--mixed" and leaves the modified files intact.  Maybe hard
+reset would help here, but the real solution is to figure out
+why these files acquired the extra executable bits in the first
+place.
