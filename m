@@ -1,74 +1,101 @@
-From: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [RFC] embedded TAB and LF in pathnames
-Date: Sat, 8 Oct 2005 08:45:55 +0200
-Message-ID: <20051008064555.GA3831@steel.home>
-References: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net> <20051007232909.GB8893@steel.home> <7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Date: Sat, 08 Oct 2005 02:10:37 -0700
+Message-ID: <7vachks7aq.fsf@assigned-by-dhcp.cox.net>
+References: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net>
+	<20051007232909.GB8893@steel.home>
+	<7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net>
+	<20051008064555.GA3831@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Kai Ruemmler <kai.ruemmler@gmx.net>
-X-From: git-owner@vger.kernel.org Sat Oct 08 08:47:26 2005
+X-From: git-owner@vger.kernel.org Sat Oct 08 11:12:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EO8TX-0006lj-IL
-	for gcvg-git@gmane.org; Sat, 08 Oct 2005 08:46:31 +0200
+	id 1EOAjr-0006X7-1x
+	for gcvg-git@gmane.org; Sat, 08 Oct 2005 11:11:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbVJHGqI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Oct 2005 02:46:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750822AbVJHGqI
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 02:46:08 -0400
-Received: from devrace.com ([198.63.210.113]:38928 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1750783AbVJHGqH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Oct 2005 02:46:07 -0400
-Received: from tigra.home (p54A0E160.dip.t-dialin.net [84.160.225.96])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id j986wPQb083674;
-	Sat, 8 Oct 2005 01:58:26 -0500 (CDT)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1EO8Sz-0000nR-00; Sat, 08 Oct 2005 08:45:57 +0200
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1EO8Sy-0001KB-GB; Sat, 08 Oct 2005 08:45:56 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.5 required=4.5 tests=AWL,BAYES_50,
-	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S1750817AbVJHJKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Oct 2005 05:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750815AbVJHJKk
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 05:10:40 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:48597 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1750817AbVJHJKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Oct 2005 05:10:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051008091027.NOIQ29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 8 Oct 2005 05:10:27 -0400
+To: Alex Riesen <raa.lkml@gmail.com>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9836>
 
-Junio C Hamano, Sat, Oct 08, 2005 01:44:48 +0200:
-> > Junio C Hamano, Fri, Oct 07, 2005 21:35:19 +0200:
-> >> I have not made up my mind on the exact choice of the quoting
-> >> convention.  We could say '///' instead of '//', for example, or
-> >> even '//{LF}//' instead of '//0A' proposed above.  One thing I
-> >> am trying to avoid is "foo\nbar", which I suspect would be
-> >> unfriendly to the Cygwin folks.
-> >
-> > Being unhappy one of them, I think I'd better manage (even if by
-> > postprocessing the output).
-> >
-> > Please, don't make the common case ugly just because of that platform
-> > (insanely broken anyway).
-> 
-> You really have to realize that having LF and TAB in filenames
-> are *NOT* the common case, no matter which platform you are
-> talking about.
-> 
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-Yes, but "//" in a path is quite common. Even "///" is not uncommon.
-
-How about copy ls' approach were possible?
-
-   -b, --escape, --quoting-style=escape
           Quote  nongraphic  characters in file names using alphabetic and
           octal backslash sequences like those used in C. This  option  is
           the  same as -Q except that filenames are not surrounded by dou-
           ble-quotes.
+
+If you have a file whose name is 'foo' + LF + 'bar', and if you
+use backslash convention, your diff would start like this:
+
+    diff --git a/foo\nbar b/foo\nbar
+    @@ 1,2 3,4 @@
+     context
+    -deleted
+    ...
+
+which looks quite natural.
+
+I would, however, prefer this kind of funny pathnames to *stand*
+*out* more than usual, to make it really obvious that there is
+something really funky going on.  In that sense, the above is a
+bit too innocuous-looking to my taste.
+
+But this "embedded LF and TAB" is a corner case.  I would not be
+using such paths that would trigger the quoting myself anyway,
+and I do not particularly care as long as the tools do the right
+thing -- any quoting rule would do, as long as the generating
+side (git-diff) is consistent with accepting side (git-apply),
+and as long as there is no new ambiguity introduced.
+
+The backslash proposal is introducing a small ambiguity.  You
+cannot tell if the file had an embedded LF between 'foo' and
+'bar' (and generated with your git-diff) or had an embedded
+backslash between 'foo' and 'nbar' (and generated with existing
+git-diff).  Since we never had a version of git-diff that
+outputs double-slashes '//' in paths, there is no ambiguity if
+we use it as a quoting mechanism.
+
+Just as a concrete demonstration, here is how the git-status
+output and git-diff output would look like for a file 'pqr' in a
+directory whose name is 'def' + LF + 'ghi' that uses the version
+of git-diff from the proposed updates branch:
+
+        # Changed but not updated:
+        #   (use git-update-index to mark for commit)
+        #
+        #	modified: def//{LF}//ghi/pqr
+
+        diff --git a/def//{LF}//ghi/pqr b/def//{LF}//ghi/pqr
+        index 9ee055c..47dbc3f 100644
+        --- a/def//{LF}//ghi/pqr
+        +++ b/def//{LF}//ghi/pqr
+        @@ -1 +1,2 @@
+         Fri Oct  7 23:19:04 PDT 2005
+        +foo
+
+I am not married to this quoting syntax -- I think it *is* ugly,
+but as I said before, I'd prefer to have something ugly here.
+
+I would easily be persuaded otherwise, though.  A working patch
+would probably be the most effective way of persuasion, but a
+mock output without the code to produce and/or parse it would
+also be fine as a starting point for discussion.
