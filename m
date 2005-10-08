@@ -1,66 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: First cut at git port to Cygwin
-Date: Sat, 08 Oct 2005 14:10:02 -0700
-Message-ID: <7vk6gnpvf9.fsf@assigned-by-dhcp.cox.net>
-References: <20051005155457.GA30303@trixie.casa.cgf.cx>
-	<20051005191741.GA25493@steel.home>
-	<20051005202947.GA6184@trixie.casa.cgf.cx>
-	<81b0412b0510060205v4cd510c9wb4b06a3ed9242c8@mail.gmail.com>
-	<81b0412b0510060307q431b64edt4196553bce28346c@mail.gmail.com>
-	<81b0412b0510070544v3e7cf0b4n521db8ff7e4e335a@mail.gmail.com>
-	<Pine.LNX.4.64.0510070828270.31407@g5.osdl.org>
-	<20051007205450.GA14827@steel.home> <20051007212250.GA1423@steel.home>
-	<4346E8AC.5030503@citi.umich.edu> <20051007213952.GA8821@steel.home>
-	<Pine.LNX.4.64.0510080900510.31407@g5.osdl.org>
-	<Pine.LNX.4.63.0510082023130.25971@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vr7avrgr2.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0510082100020.26626@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Seeing various mode changes on cygwin
+Date: Sat, 8 Oct 2005 23:36:12 +0200
+Message-ID: <20051008213612.GA5794@steel.home>
+References: <20051008180023.GC28875@diku.dk> <7vfyrbrgdw.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat Oct 08 23:11:55 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 08 23:36:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOLxp-0003ay-BN
-	for gcvg-git@gmane.org; Sat, 08 Oct 2005 23:10:41 +0200
+	id 1EOMMl-0007xV-Bg
+	for gcvg-git@gmane.org; Sat, 08 Oct 2005 23:36:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751094AbVJHVKa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Oct 2005 17:10:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751135AbVJHVKa
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 17:10:30 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:40951 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751094AbVJHVK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Oct 2005 17:10:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051008210949.SCP776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 8 Oct 2005 17:09:49 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0510082100020.26626@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 8 Oct 2005 21:04:44 +0200
-	(CEST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932139AbVJHVgY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Oct 2005 17:36:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932172AbVJHVgY
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 17:36:24 -0400
+Received: from devrace.com ([198.63.210.113]:47364 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S932139AbVJHVgY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Oct 2005 17:36:24 -0400
+Received: from tigra.home (p54A0E160.dip.t-dialin.net [84.160.225.96])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id j98Lmhn6093239;
+	Sat, 8 Oct 2005 16:48:44 -0500 (CDT)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1EOMMW-0006Jb-00; Sat, 08 Oct 2005 23:36:12 +0200
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1EOMMW-0001jI-2G; Sat, 08 Oct 2005 23:36:12 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vfyrbrgdw.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=1.3 required=4.5 tests=AWL,BAYES_05,
+	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9855>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano, Sat, Oct 08, 2005 20:51:55 +0200:
+> > ... It seems that cygwin overrides the previous modes and sets the
+> > executable bit. git-reset doesn't fix it. Can this even be fixed
+> > then?
+> >
+> > A few examples below ...
+> >
+> > jonas@cygwin /usr/local/dev/git/git
+> > $ git reset
+> > Documentation/sort_glossary.pl: needs update
+> > t/lib-read-tree-m-3way.sh: needs update
+> 
+> I do not have an access to Cygwin environment so cannot be of
+> help on this directly, but 'git reset' without flags defaults
+> "--mixed" and leaves the modified files intact.  Maybe hard
+> reset would help here, but the real solution is to figure out
+> why these files acquired the extra executable bits in the first
+> place.
 
->> PROT_WRITE is true, but we do MAP_PRIVATE, and if I recall
->> correctly we do not write file via mmap -- at least we do not
->> intend to.
->
-> Ahh! Reading the man page helps!
->
->> Yes.  It might have been overkill that you supported writing
->> changes back, though.
->
-> Sure. Something like this?
-
-Not, really.  What I meant was to rip out the writing out
-altogether, and perhaps making sure that the caller never calls
-us without MAP_PRIVATE.
+These are not real attributes, cygwin emulates them from the names,
+like .exe will always be 0755, for example.
