@@ -1,101 +1,63 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: Problems cloning
-Date: Sun, 9 Oct 2005 16:15:47 +0200
-Message-ID: <20051009141547.GA8609@schottelius.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ibTvN161/egqYuK8"
-X-From: git-owner@vger.kernel.org Sun Oct 09 16:16:55 2005
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+Subject: [PATCH 2/2] git-verify-tag: detect wrong syntax
+Date: Sun, 09 Oct 2005 20:12:56 +0200
+Message-ID: <20051009181256.17885.6626.stgit@zion.home.lan>
+References: <20051009181246.17885.81654.stgit@zion.home.lan>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 09 20:54:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOby7-00034Y-NM
-	for gcvg-git@gmane.org; Sun, 09 Oct 2005 16:16:04 +0200
+	id 1EOgIS-0007p6-JO
+	for gcvg-git@gmane.org; Sun, 09 Oct 2005 20:53:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750700AbVJIOPu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Oct 2005 10:15:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750778AbVJIOPu
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Oct 2005 10:15:50 -0400
-Received: from wg.technophil.ch ([213.189.149.230]:61924 "HELO
-	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
-	id S1750700AbVJIOPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Oct 2005 10:15:49 -0400
-Received: (qmail 9279 invoked by uid 1000); 9 Oct 2005 14:15:47 -0000
-To: Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Linux-Info: http://linux.schottelius.org/
-X-Operating-System: Linux 2.6.13.1
+	id S932217AbVJISxH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Oct 2005 14:53:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932256AbVJISxH
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Oct 2005 14:53:07 -0400
+Received: from ppp-62-11-74-46.dialup.tiscali.it ([62.11.74.46]:34534 "EHLO
+	zion.home.lan") by vger.kernel.org with ESMTP id S932217AbVJISxG
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 9 Oct 2005 14:53:06 -0400
+Received: from zion.home.lan (localhost [127.0.0.1])
+	by zion.home.lan (Postfix) with ESMTP id 94787229AA1;
+	Sun,  9 Oct 2005 20:12:56 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <20051009181246.17885.81654.stgit@zion.home.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9866>
 
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
 
---ibTvN161/egqYuK8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Print proper error messages when failing, and handle -h/--help to avoid, if
+possible, to print double error message (from git-cat-file and from
+git-verify-tag).
 
-Cloning gitweb from kernel.org fails:
+Signed-off-by: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+---
 
-----------------------------------------------------------------------
-[16:10] hydrogenium:build% cg-clone http://www.kernel.org/pub/scm/git/gitwe=
-b.git=20
-defaulting to local storage area
-16:10:35 URL:http://www.kernel.org/pub/scm/git/gitweb.git/HEAD [41/41] -> "=
-refs/heads/.origin-fetching" [1]
-progress: 84 objects, 295012 bytes
-Getting pack list
-Getting alternates list
-error: Unable to find d263a6bd453df849c9f9211f1966c830c3cf913a under http:/=
-/www.kernel.org/pub/scm/git/gitweb.git/
+ git-verify-tag.sh |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
-Cannot obtain needed commit d263a6bd453df849c9f9211f1966c830c3cf913a
-while processing commit f5dfb3f6a6655d4d60fdd0aaeef7b5b14226147f.
-cg-fetch: objects fetch failed
-cg-clone: fetch failed
-----------------------------------------------------------------------
-
-Info:
-
-----------------------------------------------------------------------
-[16:01] hydrogenium:cinit% cg --version
-cogito-0.15.1 (cfeac5893d97b830ac31b9d41951c30f80967410)
-
-[16:13] hydrogenium:cinit% git --version
-git version 0.99.7d
-----------------------------------------------------------------------
-
-Greetings,
-
-Nico
-
---=20
-Latest project: cconfig (http://nico.schotteli.us/papers/linux/cconfig/)
-Open Source nutures open minds and free, creative developers.
-
---ibTvN161/egqYuK8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iQIVAwUBQ0kmE7OTBMvCUbrlAQIWbw//WbDK0sTI0w+vHj0l6NvTRZsbL/TK5WnG
-zrxlbCOoGYEQtcsy3J5UNdP3BYShmT2iLvlNNxjGxKzAkoGKIi+i+ed35zee2ANx
-eZDx4bxVBpJutxlRfVlk0SUSX/aSBE+7ss0Anbva9HmdueiUiCezD7KSysNgHQbY
-+xCvz3iSA/yS/l0ff/bVHidAvAeFmeq2E8QfHgMPLXk37Zl5rP0GOGOrjvgIYFBF
-R6UItWq0oAeE7TwljGKphSPFplzG1uQAyEt1YrohISeWoz4gsgTHytGjuU9y8+43
-fonKUUaFrhvIgiuDuiM+jd8cl2SFoMSQWGQx18sxSbOsmlurIiqlrNjulGAd8XhZ
-fukZLx8/Prcq/gW30+ynNrW2lqmxw+ERvXogz+PB3PBCgj90Q3j1378bnyCAqnke
-ymnPQyVSUFUOzC+OlCWbKKNXoWiBvx7zB3fMHOhT9wMtDbd07fHf8v+INGfN8SLC
-XkFLVKcAFqc/dF3QArzp4ZOY4RRyp3OlMuSMw0x4zkhVE0VlcVqChJKn0na1iEgk
-T4AT66H8gwYNtFSl3KTF4Z9FYIHfYojC2ZEeENRJXfQbIqCcmEp2mzKLrkiaMjt8
-sJQ1EM52y9+3aZpFaXpAJO6tWoU1awCCLTpy79/mqnOQAtn2JByZhM0QQ7TrBW9c
-3j+/UdUiQHc=
-=ZvTz
------END PGP SIGNATURE-----
-
---ibTvN161/egqYuK8--
+diff --git a/git-verify-tag.sh b/git-verify-tag.sh
+--- a/git-verify-tag.sh
++++ b/git-verify-tag.sh
+@@ -1,9 +1,16 @@
+ #!/bin/sh
+ . git-sh-setup || die "Not a git archive"
+ 
++usage() {
++	die "usage: git-verify-tag <tag>"
++}
++
++[ $# = 1 ] || usage
++[ "$1" = "-h" -o "$1" = "--help" ] && usage
++
+ tag=$(git-rev-parse $1) || exit 1
+ 
+-type=$(git-cat-file -t $tag) || exit 1
++type=$(git-cat-file -t $tag) || usage
+ [ "$type" = "commit" ] && die "Light tag - verification impossible"
+ [ "$type" = "tag" ] || die "Bad tag - SHA1 doesn't refer to a tag object nor to a commit one."
+ 
