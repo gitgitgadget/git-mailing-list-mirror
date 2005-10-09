@@ -1,58 +1,59 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Seeing various mode changes on cygwin
-Date: Sat, 08 Oct 2005 20:43:22 -0700
-Message-ID: <434891DA.7070905@zytor.com>
-References: <20051008180023.GC28875@diku.dk>	<7vfyrbrgdw.fsf@assigned-by-dhcp.cox.net>	<20051008213612.GA5794@steel.home> <7vzmpjoa32.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 08 Oct 2005 23:46:49 -0700
+Message-ID: <7vmzljkx0m.fsf@assigned-by-dhcp.cox.net>
+References: <20051008180023.GC28875@diku.dk>
+	<7vfyrbrgdw.fsf@assigned-by-dhcp.cox.net>
+	<20051008213612.GA5794@steel.home>
+	<7vzmpjoa32.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0510081909250.31407@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 09 05:44:47 2005
+X-From: git-owner@vger.kernel.org Sun Oct 09 08:47:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOS6Q-0006Hb-Hk
-	for gcvg-git@gmane.org; Sun, 09 Oct 2005 05:43:58 +0200
+	id 1EOUxt-0008QL-MP
+	for gcvg-git@gmane.org; Sun, 09 Oct 2005 08:47:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932210AbVJIDne (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Oct 2005 23:43:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932211AbVJIDne
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Oct 2005 23:43:34 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:37357 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932210AbVJIDnd
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 8 Oct 2005 23:43:33 -0400
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j993hLLC024907
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 8 Oct 2005 20:43:22 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmpjoa32.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,RCVD_IN_SORBS_DUL 
-	autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S932227AbVJIGqx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Oct 2005 02:46:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbVJIGqx
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Oct 2005 02:46:53 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:62145 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932227AbVJIGqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Oct 2005 02:46:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051009064635.BBQE11356.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 9 Oct 2005 02:46:35 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510081909250.31407@g5.osdl.org> (Linus Torvalds's
+	message of "Sat, 8 Oct 2005 19:19:35 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9860>
 
-Junio C Hamano wrote:
-> Alex Riesen <raa.lkml@gmail.com> writes:
-> 
->>These are not real attributes, cygwin emulates them from the names,
->>like .exe will always be 0755, for example.
-> 
-> Ouch.  Is this true in general, or only on FAT-derived
-> filesystems?
-> 
-> We may need to worry about this on the core side after all.
-> Some people need to mount FAT even on Linux systems, 
-> 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-At least on Cygwin/NTFS, you can do chmod just fine.
+> The more interesting issue is how to set the _flag_ that we should do 
+> this. We may have to add a config file, and it should be per-repository 
+> (ie something like ".git/config" or ".git/info/config"). Or do we just do 
+> yet another environment variable?
 
-	-hpa
+Per-repository configuration file like .git/info/config sounds
+like the way to go.  Long time ago, the core never read any
+per-repository nor per-odb configuration file, but after grafts
+and then now alternates, we started doing it, and there is no
+reason to shy away from having an official configuration file
+mechanism.  Maybe recent HTTP related environment variables
+could also be folded into it.
+
+While we are at it, we may want to move things around to
+consolidate per-repository configuration into a single placek.
+Specifically, I have moving .git/remotes/ in mind.
