@@ -1,56 +1,61 @@
-From: Jonas Fonseca <fonseca@diku.dk>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Fix cygwin install issues
-Date: Mon, 10 Oct 2005 11:03:42 +0200
-Message-ID: <20051010090342.GB18009@diku.dk>
+Date: Mon, 10 Oct 2005 02:09:22 -0700
+Message-ID: <7vmzlh7n7h.fsf@assigned-by-dhcp.cox.net>
 References: <20051010085259.GA18009@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 10 11:05:47 2005
+X-From: git-owner@vger.kernel.org Mon Oct 10 11:11:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOtZZ-0006tj-BI
-	for gcvg-git@gmane.org; Mon, 10 Oct 2005 11:03:53 +0200
+	id 1EOtex-0000YH-HM
+	for gcvg-git@gmane.org; Mon, 10 Oct 2005 11:09:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750784AbVJJJDu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Oct 2005 05:03:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750779AbVJJJDt
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 05:03:49 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:756 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S1750706AbVJJJDq (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Oct 2005 05:03:46 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id CEC296E1000; Mon, 10 Oct 2005 11:03:31 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 7BA6A6E0A5D; Mon, 10 Oct 2005 11:03:29 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 2684360FBE; Mon, 10 Oct 2005 11:03:43 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20051010085259.GA18009@diku.dk>
-User-Agent: Mutt/1.5.6i
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Level: 
+	id S1750708AbVJJJJY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Oct 2005 05:09:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750710AbVJJJJY
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 05:09:24 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:24480 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1750708AbVJJJJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2005 05:09:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051010090916.GXTM16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 10 Oct 2005 05:09:16 -0400
+To: Jonas Fonseca <fonseca@diku.dk>
+In-Reply-To: <20051010085259.GA18009@diku.dk> (Jonas Fonseca's message of
+	"Mon, 10 Oct 2005 10:52:59 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9880>
 
-Jonas Fonseca <fonseca@diku.dk> wrote Mon, Oct 10, 2005:
+Jonas Fonseca <fonseca@diku.dk> writes:
+
 > Support installing to paths including spaces.
 > Remove any old .exe files so ln will succeed.
+>
 
-I see that there are problems in the git porcelain commands that needs
-to also be fixed so please ignore this for now.
+This is not a complaint but I am just wondering if:
 
-Instead, is this something that should be supported? (It is quite
-absurd, although it is required for 'make install' to work out of the
-box on some systems).
+> -	$(INSTALL) -d -m755 $(DESTDIR)$(bindir)
+> +	$(INSTALL) -d -m755 "$(DESTDIR)$(bindir)"
 
--- 
-Jonas Fonseca
+this is the right way to quote things.  I suspect it might be
+the responsibility of the user to quote them if she chooses to
+set bindir or DESTDIR to a funky value, like this:
+
+    $ make bindir="'My Documents\Programs'"
+
+Because depending on how funky the values of bindir and DESTDIR
+are, we cannot say double-quote you are giving them is even the
+right quoting (think double-quote itself as part of the name).
+
+The other "$X" change to cmd-renames is a good change (I thought
+I heard HPA talking about that; maybe he sent one to me and I
+dropped it on the floor by mistake, I dunno).  Thanks.
