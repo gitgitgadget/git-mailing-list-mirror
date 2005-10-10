@@ -1,82 +1,56 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] git.sh: quote all paths
-Date: Mon, 10 Oct 2005 11:32:54 +0200
-Message-ID: <20051010093254.GD18009@diku.dk>
-References: <20051010085259.GA18009@diku.dk> <7vmzlh7n7h.fsf@assigned-by-dhcp.cox.net> <20051010092638.GC18009@diku.dk>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: SVN import
+Date: Mon, 10 Oct 2005 11:45:05 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.10.10.09.45.00.468989@smurf.noris.de>
+References: <pan.2005.08.19.10.00.49.401829@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 10 11:34:00 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Mon Oct 10 11:53:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOu1j-0000Jm-F2
-	for gcvg-git@gmane.org; Mon, 10 Oct 2005 11:32:59 +0200
+	id 1EOuIg-0007gz-3V
+	for gcvg-git@gmane.org; Mon, 10 Oct 2005 11:50:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750704AbVJJJc4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Oct 2005 05:32:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750706AbVJJJc4
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 05:32:56 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:63736 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S1750704AbVJJJc4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Oct 2005 05:32:56 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 9D2DA6E1C2B; Mon, 10 Oct 2005 11:32:41 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 656246E1C0F; Mon, 10 Oct 2005 11:32:41 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 155EB60FBE; Mon, 10 Oct 2005 11:32:55 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20051010092638.GC18009@diku.dk>
-User-Agent: Mutt/1.5.6i
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Level: 
+	id S1750724AbVJJJt6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Oct 2005 05:49:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750725AbVJJJt6
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 05:49:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:47768 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750724AbVJJJt5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Oct 2005 05:49:57 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EOuEm-0005yT-NL
+	for git@vger.kernel.org; Mon, 10 Oct 2005 11:46:28 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 10 Oct 2005 11:46:28 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 10 Oct 2005 11:46:28 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9883>
 
-This makes it handle spaces in paths.
+Hi, Matthias Urlichs wrote:
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+> Quick note: I'm working on importing from SVN.
 
----
+The first version seems to be finished.
 
-Sorry I am so sloppy: s/.exe/@@X@@/ ...
+http:/netz/smurf.noris.de/git/git.git, branch "svn".
 
-diff --git a/git.sh b/git.sh
-index 7400c16..b424055 100755
---- a/git.sh
-+++ b/git.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- cmd=
--path=$(dirname $0)
-+path=$(dirname "$0")
- case "$#" in
- 0)	;;
- *)	cmd="$1"
-@@ -12,13 +12,13 @@ case "$#" in
- 		exit 0 ;;
- 	esac
- 	
--	test -x $path/git-$cmd && exec $path/git-$cmd "$@"
-+	test -x "$path/git-$cmd" && exec "$path/git-$cmd" "$@"
- 	
- 	case '@@X@@' in
- 	    '')
- 		;;
- 	    *)
--		test -x $path/git-$cmd@@X@@ && exec $path/git-$cmd@@X@@ "$@"
-+		test -x "$path/git-$cmd.exe" && exec "$path/git-$cmd@@X@@" "$@"
- 		;;
- 	esac
- 	;;
+Should be ready for merging, though I wouldn't say no to a few testers
+before that happens.  ;-)
+
 -- 
-Jonas Fonseca
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
