@@ -1,70 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] t5400-send-pack relies on a working cpio
-Date: Mon, 10 Oct 2005 17:37:08 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510101735530.6277@wbgn013.biozentrum.uni-wuerzburg.de>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: openbsd version?
+Date: 10 Oct 2005 09:12:34 -0700
+Message-ID: <8664s5gxl9.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 10 17:42:47 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Oct 10 18:16:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOziS-0004KN-03
-	for gcvg-git@gmane.org; Mon, 10 Oct 2005 17:37:28 +0200
+	id 1EP0Gl-0004hI-6K
+	for gcvg-git@gmane.org; Mon, 10 Oct 2005 18:12:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750870AbVJJPhP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Oct 2005 11:37:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750874AbVJJPhP
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 11:37:15 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:59336 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750870AbVJJPhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2005 11:37:13 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 7664A13F0EA; Mon, 10 Oct 2005 17:37:08 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5AC9CB4BA6; Mon, 10 Oct 2005 17:37:08 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 40895B4B98; Mon, 10 Oct 2005 17:37:08 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 1E0E913F0EA; Mon, 10 Oct 2005 17:37:08 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1750856AbVJJQMs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Oct 2005 12:12:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750881AbVJJQMs
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 12:12:48 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:3181 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1750847AbVJJQMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2005 12:12:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 5BB758F69C
+	for <git@vger.kernel.org>; Mon, 10 Oct 2005 09:12:35 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 00779-01-2 for <git@vger.kernel.org>;
+ Mon, 10 Oct 2005 09:12:34 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id DE0958F6A0; Mon, 10 Oct 2005 09:12:34 -0700 (PDT)
+To: git@vger.kernel.org
+x-mayan-date: Long count = 12.19.12.12.11; tzolkin = 1 Chuen; haab = 9 Yax
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9894>
 
-Since cygwin does not install cpio by default, t5400 results in a very
-cryptic failure. So, test for cpio explicitely.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+I noticed "openbsd" in the operating systems detected in Makefile,
+but when I tried this on my openbsd system, I get an abort here:
 
----
+    gcc -g -O2 -Wall -I/usr/local/include -L/usr/local/lib '-DSHA1_HEADER=<openssl/sha.h>' -o git-mailinfo mailinfo.o libgit.a  -liconv
+    mailinfo.o(.text+0x22d): In function `slurp_attr':
+    /opt/git/src/git-snapshot-20051010/mailinfo.c:130: undefined reference to `strcasestr'
+    mailinfo.o(.text+0x2a9): In function `handle_subcontent_type':
+    /opt/git/src/git-snapshot-20051010/mailinfo.c:155: undefined reference to `strcasestr'
+    mailinfo.o(.text+0x39d): In function `handle_content_transfer_encoding':
+    /opt/git/src/git-snapshot-20051010/mailinfo.c:181: undefined reference to `strcasestr'
+    mailinfo.o(.text+0x3c6):/opt/git/src/git-snapshot-20051010/mailinfo.c:183: undefined reference to `strcasestr'
+    collect2: ld returned 1 exit status
+    gmake: *** [git-mailinfo] Error 1
 
- t/t5400-send-pack.sh |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+What am I doing wrong?
 
-applies-to: c1b731620114e8b58054b944865e3bf361f941f5
-d3bafb81a99406258cfb318344a176264c269427
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index 1a4d2f2..7fc3bd7 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -8,6 +8,9 @@ test_description='See why rewinding head
- '
- . ./test-lib.sh
- 
-+touch cpio-test
-+test_expect_success 'working cpio' 'echo cpio-test | cpio -o > /dev/null'
-+
- cnt='1'
- test_expect_success setup '
- 	tree=$(git-write-tree) &&
----
-0.99.8.GIT
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
