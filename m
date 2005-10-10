@@ -1,79 +1,152 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: openbsd version?
-Date: Mon, 10 Oct 2005 17:31:57 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0510101703380.23242@iabervon.org>
-References: <8664s5gxl9.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0510100939320.14597@g5.osdl.org>
- <7vvf0542fs.fsf@assigned-by-dhcp.cox.net> <864q7pdvcn.fsf@blue.stonehenge.com>
- <7vll113yjs.fsf@assigned-by-dhcp.cox.net> <86ek6tcdou.fsf@blue.stonehenge.com>
- <Pine.LNX.4.63.0510102248570.10402@wbgn013.biozentrum.uni-wuerzburg.de>
- <86y851aydl.fsf@blue.stonehenge.com>
+From: Christian Meder <chris@absolutegiganten.org>
+Subject: [PATCH] The synopsis of the manpages should use the hyphenated
+	version
+Date: Mon, 10 Oct 2005 23:27:59 +0200
+Message-ID: <1128979679.7097.41.camel@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 10 23:28:52 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Oct 10 23:31:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EP5Aq-0007xe-OD
-	for gcvg-git@gmane.org; Mon, 10 Oct 2005 23:27:09 +0200
+	id 1EP5Cy-00009a-Ul
+	for gcvg-git@gmane.org; Mon, 10 Oct 2005 23:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751189AbVJJV1F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Oct 2005 17:27:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751256AbVJJV1F
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 17:27:05 -0400
-Received: from iabervon.org ([66.92.72.58]:34065 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751189AbVJJV1E (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Oct 2005 17:27:04 -0400
-Received: (qmail 32257 invoked by uid 1000); 10 Oct 2005 17:31:57 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Oct 2005 17:31:57 -0400
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-In-Reply-To: <86y851aydl.fsf@blue.stonehenge.com>
+	id S1751259AbVJJV3A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Oct 2005 17:29:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbVJJV3A
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 17:29:00 -0400
+Received: from a15181680.alturo-server.de ([217.160.108.75]:8659 "EHLO
+	a15181680.alturo-server.de") by vger.kernel.org with ESMTP
+	id S1751259AbVJJV27 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2005 17:28:59 -0400
+Received: from p54a21cce.dip0.t-ipconnect.de ([84.162.28.206] helo=localhost)
+	by a15181680.alturo-server.de with esmtpsa (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.52)
+	id 1EP5Cc-00066t-Ss
+	for git@vger.kernel.org; Mon, 10 Oct 2005 23:28:59 +0200
+Received: from chris by localhost with local (Exim 4.52)
+	id 1EP5Bg-00028U-0j
+	for git@vger.kernel.org; Mon, 10 Oct 2005 23:28:00 +0200
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.2.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9942>
 
-On Mon, 10 Oct 2005, Randal L. Schwartz wrote:
+The synopsis of the manpages should use the hyphenated version of the git
+commands. Adapt the remaining offenders.
 
-> >>>>> "Johannes" == Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> <sarcasm>Undocumented secret switches.  Nice.</sarcasm>  No wonder
-> >> I couldn't find it.
-> 
-> Johannes> <optimism>Maybe he who found the documentation lacking is going to fix 
-> Johannes> it?</optimism>
-> 
-> I'd be happy to do that.  But as a tech writer, I know that it's
-> insane to not work at least from an implementor's rough draft, to at
-> least understand the intent of a mechanism, if not the precise design.
-> There's no implementor's rough draft here, so I can't help.
+Signed-off-by: Christian Meder <chris@absolutegiganten.org>
 
-The mailing list thread on the subject is at:
+---
 
- http://www.gelato.unsw.edu.au/archives/git/0509/8902.html
+ Documentation/git-clone.txt       |    2 +-
+ Documentation/git-commit.txt      |    2 +-
+ Documentation/git-log.txt         |    2 +-
+ Documentation/git-resolve.txt     |    2 +-
+ Documentation/git-shortlog.txt    |    2 +-
+ Documentation/git-show-branch.txt |    2 +-
+ Documentation/git-status.txt      |    2 +-
+ Documentation/git-whatchanged.txt |    2 +-
+ 8 files changed, 8 insertions(+), 8 deletions(-)
 
-(That's the middle of the thread, when the patch was actually written. 
-There's discussion before and after if you need more info.)
-
-You can actually get a pretty good explanation of features, once you know 
-they exist at all, by looking for the discussion on the list. This tends 
-to at least give you the person who did the patch explaining how to use it 
-to the person who wanted the feature. And it'll also tell you who the 
-implementor was, so you can bug the right person directly. :)
-
-What does get written about a feature generall ends up in the commit 
-message for the commit that adds it, so that's another good place to look. 
-(In this case, it's missing a "not" and description of an option, so it's 
-quite rough as a draft.)
-
-In this case:
-
- "git branch -d <name>" deletes a branch with that name; but it checks 
-that you're not on that branch, and it checks that that branch doesn't 
-have any commits which aren't merged into the current branch.
- "git branch -D <name>" deletes a branch, and skips the second check.
-
-	-Daniel
-*This .sig left intentionally blank*
+77acd127869d3d2dbab69b85c6cf2e501af8d13f
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -8,7 +8,7 @@ git-clone - Clones a repository.
+ 
+ SYNOPSIS
+ --------
+-'git clone' [-l [-s]] [-q] [-n] [-u <upload-pack>] <repository> <directory>
++'git-clone' [-l [-s]] [-q] [-n] [-u <upload-pack>] <repository> <directory>
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -7,7 +7,7 @@ git-commit - Record your changes
+ 
+ SYNOPSIS
+ --------
+-'git commit' [-a] [-s] [-v] [(-c | -C) <commit> | -F <file> | -m <msg>] [-e] <file>...
++'git-commit' [-a] [-s] [-v] [(-c | -C) <commit> | -F <file> | -m <msg>] [-e] <file>...
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -8,7 +8,7 @@ git-log - Show commit logs
+ 
+ SYNOPSIS
+ --------
+-'git log' <option>...
++'git-log' <option>...
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-resolve.txt b/Documentation/git-resolve.txt
+--- a/Documentation/git-resolve.txt
++++ b/Documentation/git-resolve.txt
+@@ -8,7 +8,7 @@ git-resolve - Merge two commits
+ 
+ SYNOPSIS
+ --------
+-'git resolve' <current> <merged> <message>
++'git-resolve' <current> <merged> <message>
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
+--- a/Documentation/git-shortlog.txt
++++ b/Documentation/git-shortlog.txt
+@@ -8,7 +8,7 @@ git-shortlog - Summarize 'git log' outpu
+ 
+ SYNOPSIS
+ --------
+-'git log --pretty=short | git shortlog'
++'git-log --pretty=short | git shortlog'
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
+--- a/Documentation/git-show-branch.txt
++++ b/Documentation/git-show-branch.txt
+@@ -7,7 +7,7 @@ git-show-branch - Show branches and thei
+ 
+ SYNOPSIS
+ --------
+-'git show-branch [--all] [--heads] [--tags] [--more=<n> | --list | --independent | --merge-base] <reference>...'
++'git-show-branch [--all] [--heads] [--tags] [--more=<n> | --list | --independent | --merge-base] <reference>...'
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -8,7 +8,7 @@ git-status - Show working tree status.
+ 
+ SYNOPSIS
+ --------
+-'git status'
++'git-status'
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-whatchanged.txt b/Documentation/git-whatchanged.txt
+--- a/Documentation/git-whatchanged.txt
++++ b/Documentation/git-whatchanged.txt
+@@ -8,7 +8,7 @@ git-whatchanged - Show logs with differe
+ 
+ SYNOPSIS
+ --------
+-'git whatchanged' <option>...
++'git-whatchanged' <option>...
+ 
+ DESCRIPTION
+ -----------
