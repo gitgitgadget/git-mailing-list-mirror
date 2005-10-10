@@ -1,152 +1,90 @@
-From: Christian Meder <chris@absolutegiganten.org>
-Subject: [PATCH] The synopsis of the manpages should use the hyphenated
-	version
-Date: Mon, 10 Oct 2005 23:27:59 +0200
-Message-ID: <1128979679.7097.41.camel@localhost>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: openbsd version?
+Date: Mon, 10 Oct 2005 14:31:08 -0700
+Message-ID: <7v4q7p2h5v.fsf@assigned-by-dhcp.cox.net>
+References: <8664s5gxl9.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0510100939320.14597@g5.osdl.org>
+	<7vvf0542fs.fsf@assigned-by-dhcp.cox.net>
+	<864q7pdvcn.fsf@blue.stonehenge.com>
+	<7vll113yjs.fsf@assigned-by-dhcp.cox.net>
+	<86ek6tcdou.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Oct 10 23:31:00 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 10 23:33:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EP5Cy-00009a-Ul
-	for gcvg-git@gmane.org; Mon, 10 Oct 2005 23:29:21 +0200
+	id 1EP5F2-0000ja-Hq
+	for gcvg-git@gmane.org; Mon, 10 Oct 2005 23:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751259AbVJJV3A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Oct 2005 17:29:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbVJJV3A
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 17:29:00 -0400
-Received: from a15181680.alturo-server.de ([217.160.108.75]:8659 "EHLO
-	a15181680.alturo-server.de") by vger.kernel.org with ESMTP
-	id S1751259AbVJJV27 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2005 17:28:59 -0400
-Received: from p54a21cce.dip0.t-ipconnect.de ([84.162.28.206] helo=localhost)
-	by a15181680.alturo-server.de with esmtpsa (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.52)
-	id 1EP5Cc-00066t-Ss
-	for git@vger.kernel.org; Mon, 10 Oct 2005 23:28:59 +0200
-Received: from chris by localhost with local (Exim 4.52)
-	id 1EP5Bg-00028U-0j
-	for git@vger.kernel.org; Mon, 10 Oct 2005 23:28:00 +0200
-To: git@vger.kernel.org
-X-Mailer: Evolution 2.2.3 
+	id S1751262AbVJJVbL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Oct 2005 17:31:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751261AbVJJVbK
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 17:31:10 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:54479 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751262AbVJJVbJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2005 17:31:09 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051010213048.MUNH24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 10 Oct 2005 17:30:48 -0400
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+In-Reply-To: <86ek6tcdou.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "10 Oct 2005 13:36:01 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9943>
 
-The synopsis of the manpages should use the hyphenated version of the git
-commands. Adapt the remaining offenders.
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-Signed-off-by: Christian Meder <chris@absolutegiganten.org>
+> <sarcasm>Undocumented secret switches.  Nice.</sarcasm>  No wonder
+> I couldn't find it.
 
----
+Sorry.  This is taken from the log message from the commit that
+introduced the switch.
 
- Documentation/git-clone.txt       |    2 +-
- Documentation/git-commit.txt      |    2 +-
- Documentation/git-log.txt         |    2 +-
- Documentation/git-resolve.txt     |    2 +-
- Documentation/git-shortlog.txt    |    2 +-
- Documentation/git-show-branch.txt |    2 +-
- Documentation/git-status.txt      |    2 +-
- Documentation/git-whatchanged.txt |    2 +-
- 8 files changed, 8 insertions(+), 8 deletions(-)
+    git-branch -d <branch>: delete unused branch.
+    
+    The new flag '-d' lets you delete a branch.  For safety, it does not
+    lets you delete the branch you are currently on, nor a branch that
+    has been fully merged into your current branch.
+    
+    The credit for the safety check idea goes to Daniel Barkalow.
+    
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-77acd127869d3d2dbab69b85c6cf2e501af8d13f
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -8,7 +8,7 @@ git-clone - Clones a repository.
- 
- SYNOPSIS
- --------
--'git clone' [-l [-s]] [-q] [-n] [-u <upload-pack>] <repository> <directory>
-+'git-clone' [-l [-s]] [-q] [-n] [-u <upload-pack>] <repository> <directory>
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -7,7 +7,7 @@ git-commit - Record your changes
- 
- SYNOPSIS
- --------
--'git commit' [-a] [-s] [-v] [(-c | -C) <commit> | -F <file> | -m <msg>] [-e] <file>...
-+'git-commit' [-a] [-s] [-v] [(-c | -C) <commit> | -F <file> | -m <msg>] [-e] <file>...
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -8,7 +8,7 @@ git-log - Show commit logs
- 
- SYNOPSIS
- --------
--'git log' <option>...
-+'git-log' <option>...
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-resolve.txt b/Documentation/git-resolve.txt
---- a/Documentation/git-resolve.txt
-+++ b/Documentation/git-resolve.txt
-@@ -8,7 +8,7 @@ git-resolve - Merge two commits
- 
- SYNOPSIS
- --------
--'git resolve' <current> <merged> <message>
-+'git-resolve' <current> <merged> <message>
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
---- a/Documentation/git-shortlog.txt
-+++ b/Documentation/git-shortlog.txt
-@@ -8,7 +8,7 @@ git-shortlog - Summarize 'git log' outpu
- 
- SYNOPSIS
- --------
--'git log --pretty=short | git shortlog'
-+'git-log --pretty=short | git shortlog'
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -7,7 +7,7 @@ git-show-branch - Show branches and thei
- 
- SYNOPSIS
- --------
--'git show-branch [--all] [--heads] [--tags] [--more=<n> | --list | --independent | --merge-base] <reference>...'
-+'git-show-branch [--all] [--heads] [--tags] [--more=<n> | --list | --independent | --merge-base] <reference>...'
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -8,7 +8,7 @@ git-status - Show working tree status.
- 
- SYNOPSIS
- --------
--'git status'
-+'git-status'
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-whatchanged.txt b/Documentation/git-whatchanged.txt
---- a/Documentation/git-whatchanged.txt
-+++ b/Documentation/git-whatchanged.txt
-@@ -8,7 +8,7 @@ git-whatchanged - Show logs with differe
- 
- SYNOPSIS
- --------
--'git whatchanged' <option>...
-+'git-whatchanged' <option>...
- 
- DESCRIPTION
- -----------
+There should be a document in Documentation/howto/ to describe
+how to find the commit that introduced a particular feature.
+What I did to find the above is this:
+
+   1. Look at git-branch.sh and notice that there is this line:
+
+    echo >&2 "usage: $(basename $0)"' [-d <branch>] | [<branch> [start-point]]
+
+   Make an educated guess that this line, especially the
+   "[-d <branch>]" part, must have changed when the feature was
+   added (that is, pre-modification file would not have had "[-d
+   <branch>]" in it, but post-modification file would).
+
+   2. Find such a change with pickaxe (-S):
+
+    $ git whatchanged -S'[-d <branch>]' git-branch.sh
+
+By mentioning this, I do not mean to say that you could have
+figuired this out yourself -- the above sequence is useful for
+somebody who knows the code already to do archaeology; IOW you
+still need to know what to look for, so the above procedure
+would not have helped at all even if you knew about pickaxe.
+
+> Do these also flush any related object files?  Or do I need git-fsck still?
+
+The latter.  I think there should be a general description in
+the tutorial to advice the user to run git-fsck-objects every
+once in a while, while mentioning that there is no need to do it
+too often -- disk space is cheap and the time you spend waiting
+for fsck-objects to finish tends to be more expensive.
