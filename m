@@ -1,64 +1,84 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Seeing various mode changes on cygwin
-Date: Mon, 10 Oct 2005 13:59:40 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0510101354520.23242@iabervon.org>
-References: <20051008180023.GC28875@diku.dk> <7vfyrbrgdw.fsf@assigned-by-dhcp.cox.net>
- <20051008213612.GA5794@steel.home> <7vzmpjoa32.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0510081909250.31407@g5.osdl.org> <Pine.LNX.4.63.0510100220330.23242@iabervon.org>
- <7vu0fpbz43.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: SVN import
+Date: Mon, 10 Oct 2005 20:13:29 +0200
+Message-ID: <20051010181329.GQ567@kiste.smurf.noris.de>
+References: <pan.2005.08.19.10.00.49.401829@smurf.noris.de> <pan.2005.10.10.09.45.00.468989@smurf.noris.de> <8764s51cvp.wl@mail2.atmark-techno.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="VLAOICcq5m4DWEYr"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 10 19:56:55 2005
+X-From: git-owner@vger.kernel.org Mon Oct 10 20:15:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EP1rP-0000uG-6s
-	for gcvg-git@gmane.org; Mon, 10 Oct 2005 19:54:51 +0200
+	id 1EP2AY-0001d3-OI
+	for gcvg-git@gmane.org; Mon, 10 Oct 2005 20:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751097AbVJJRys (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Oct 2005 13:54:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbVJJRys
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 13:54:48 -0400
-Received: from iabervon.org ([66.92.72.58]:40454 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751097AbVJJRys (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Oct 2005 13:54:48 -0400
-Received: (qmail 30984 invoked by uid 1000); 10 Oct 2005 13:59:40 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Oct 2005 13:59:40 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vu0fpbz43.fsf@assigned-by-dhcp.cox.net>
+	id S1751095AbVJJSOf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Oct 2005 14:14:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbVJJSOf
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 14:14:35 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:40853 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S1751095AbVJJSOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2005 14:14:34 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1EP29T-000582-4W; Mon, 10 Oct 2005 20:13:41 +0200
+Received: (nullmailer pid 3538 invoked by uid 501);
+	Mon, 10 Oct 2005 18:13:29 -0000
+To: Yasushi SHOJI <yashi@atmark-techno.com>
+Content-Disposition: inline
+In-Reply-To: <8764s51cvp.wl@mail2.atmark-techno.com>
+User-Agent: Mutt/1.5.9i
+X-Smurf-Spam-Score: -2.6 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9902>
 
-On Mon, 10 Oct 2005, Junio C Hamano wrote:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > Perhaps have a bit in the index mode for the file to say that the mode in 
-> > the filesystem is unreliable, which gets set if a stat of the 
-> > newly-written file doesn't match the mode it was supposed to have, or if 
-> > git chmod is used to change it; then, if the bit is set, ignore the mode 
-> > in the filesystem and just use the mode in the index.
-> 
-> In effect, you are making the "per-repo configuration" Linus
-> mentioned a non configuration but a property recorded in the
-> index file.  I think this is a clever solution which is very
-> helpful to the end user.  I have to think about this a bit, but
-> my gut feeling tells me that it is the right direction if it
-> works.
-> 
-> I do not think you have to necessarily record it in the "index
-> mode" -- which implies this is per path -- nor even in the index
-> file itself.  We might even be able to get away with doing this
-> check at git-init-db time just once, and record it in a file,
-> say ".git/fs-mode-unreliable".
+--VLAOICcq5m4DWEYr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Actually, you're right; it is information about the behavior of the 
-working tree, and is also needed if you want to compare the working tree 
-against a tree object, in which case you aren't using the index at all.
+Hi,
 
-	-Daniel
-*This .sig left intentionally blank*
+Yasushi SHOJI:
+> just tried on my svn repo, which had flat directory but moved to trunk
+> dir after.  on that repo, the-current-just-pulled git-svnimport says:
+>=20
+>     1: Unrecognized path: /main.c
+>=20
+True. I could add an option which behaves as if everything that's not
+recognized is seen as being on the trunk, but ...
+
+>     git-svnimport.perl -C /tmp/test.git -i -v file:///tmp/repo/
+>=20
+Fixed in the last upload -- you get an -s2 option which skips the broken
+first check-in, and as a special bonus it manages not to skip the *last*
+version either. ;-)
+
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Be like a duck -- keep calm and unruffled on the surface but paddle like the
+devil under water.
+
+--VLAOICcq5m4DWEYr
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFDSq9J8+hUANcKr/kRAuLUAJ9/LISQQ0L03saFLLVPx9F1RqYhRQCfW6VH
+nQPrKym7Oox0Q59SQZiLDpc=
+=i8xG
+-----END PGP SIGNATURE-----
+
+--VLAOICcq5m4DWEYr--
