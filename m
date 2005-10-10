@@ -1,120 +1,75 @@
-From: Elfyn McBratney <beu@gentoo.org>
-Subject: [RFC] Cleaning up die() error messages
-Date: Mon, 10 Oct 2005 11:50:08 +0100
-Message-ID: <20051010105008.GB30202@gentoo.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: SVN import
+Date: Mon, 10 Oct 2005 13:04:06 +0200
+Message-ID: <20051010110405.GK567@kiste.smurf.noris.de>
+References: <pan.2005.08.19.10.00.49.401829@smurf.noris.de> <pan.2005.10.10.09.45.00.468989@smurf.noris.de> <20051010102651.GA30202@gentoo.org>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jho1yZJdad60DJr+"
-X-From: git-owner@vger.kernel.org Mon Oct 10 12:52:26 2005
+	protocol="application/pgp-signature"; boundary="l06SQqiZYCi8rTKz"
+X-From: git-owner@vger.kernel.org Mon Oct 10 13:07:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOvEX-0008UN-KY
-	for gcvg-git@gmane.org; Mon, 10 Oct 2005 12:50:18 +0200
+	id 1EOvUh-0007pA-G7
+	for gcvg-git@gmane.org; Mon, 10 Oct 2005 13:06:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750742AbVJJKuN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Oct 2005 06:50:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbVJJKuN
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 06:50:13 -0400
-Received: from anchor-post-30.mail.demon.net ([194.217.242.88]:19726 "EHLO
-	anchor-post-30.mail.demon.net") by vger.kernel.org with ESMTP
-	id S1750742AbVJJKuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2005 06:50:12 -0400
-Received: from beu1.demon.co.uk ([83.105.51.149] helo=zippy.emcb.local)
-	by anchor-post-30.mail.demon.net with esmtp (Exim 4.42)
-	id 1EOvEQ-0001Ni-19
-	for git@vger.kernel.org; Mon, 10 Oct 2005 10:50:10 +0000
-Received: by zippy.emcb.local (Postfix, from userid 1001)
-	id 9D343148042; Mon, 10 Oct 2005 11:50:09 +0100 (BST)
-To: git mailing list <git@vger.kernel.org>
-Mail-Followup-To: Elfyn McBratney <beu@gentoo.org>,
-	git mailing list <git@vger.kernel.org>
+	id S1750745AbVJJLGc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Oct 2005 07:06:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbVJJLGc
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 07:06:32 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:54221 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S1750745AbVJJLGb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2005 07:06:31 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1EOvTU-0003zX-Th; Mon, 10 Oct 2005 13:06:03 +0200
+Received: (nullmailer pid 10886 invoked by uid 501);
+	Mon, 10 Oct 2005 11:04:06 -0000
+To: Elfyn McBratney <beu@gentoo.org>, git@vger.kernel.org
 Content-Disposition: inline
-Organisation: Gentoo Foundation, Inc.
-User-Agent: mutt-ng/devel (Linux)
+In-Reply-To: <20051010102651.GA30202@gentoo.org>
+User-Agent: Mutt/1.5.9i
+X-Smurf-Spam-Score: -2.6 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9886>
 
 
---jho1yZJdad60DJr+
-Content-Type: text/plain; charset=iso-8859-1
+--l06SQqiZYCi8rTKz
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello git list,
+Hi,
 
-I've started working on cleaning up the various die() error messages
-found throughout git, and had a few thoughts along the way.
-
-Currently, I've been adding missing program name prefixes, and quoting path
-names (e.g., "%s" -> "'%s'"), but before I go any further, I'm wondering
-if this is a) desired, or perhaps b) superfluous?  This may be best
-discussed with along-side the patch - which'll follow shortly. ;)
-
-Also, I got to thinking whether it might be an idea to use the following
-idiom in the code:
-
-	[shell scripts]
-	prog=3D"`basename $0`"
-	..
-	foo || die "${prog}: foo failed"
-
-	[C sources]
-	static char *prog;
-	..
-	static inline void set_prog_name (char *argv0)
-	{
-		prog =3D strrchr(argv0, '/');
-		if (prog)
-			prog++;
-		else
-			prog =3D argv0;
-	}
-	..
-	int main (int argc, char **argv)
-	{
-		set_prog_name(argv[0]);
-		..
-		if (!do_bar())
-			die("%s: do_bar() failed", prog);
-		..
-	}
-
-The idea behind this being that, if any of the git programs get renamed
-(again :) there won't be a need for s/git-foo/git-bar/g just to fix-up
-die() error messages, and it'll also shave a *bit* off of the size of the
-compiled binaries. ;)
-
-(Of course, the C parts (`prog' and `set_prog_name()') would go into a
-header, and not in every single C source file. ;)
-
-So, any thoughts/comments/flames? :)
-
-Best,
-Elfyn
+Elfyn McBratney:
+> Ah cool, was going to work on an SVN counterpart to git-{arch,cvs}import,
+> but now won't have to. ;)  Will test and report back. :)
+>=20
+Please do. I've just pushed a few fixes.
 
 --=20
-Elfyn McBratney
-Gentoo Developer/Perl Team Lead
-beu/irc.freenode.net                            http://dev.gentoo.org/~beu/
-+------------O.o--------------------- http://dev.gentoo.org/~beu/pubkey.asc
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+When competing for a section of road or a parking space, remember
+that the vehicle in need of the most body work has the right-of-way.
+		-- Massachusetts Driver Education Manual
 
-PGP Key ID: 0x69DF17AD
-PGP Key Fingerprint:
-  DBD3 B756 ED58 B1B4 47B9  B3BD 8D41 E597 69DF 17AD
-
---jho1yZJdad60DJr+
-Content-Type: application/pgp-signature
+--l06SQqiZYCi8rTKz
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-iD8DBQFDSkdgjUHll2nfF60RAqP4AKCjCOhsHgxPdVaTiZHE1PFc7Ey6bACggqWI
-5gzBPwyFrtnJN/t7K6pAX9I=
-=yV1v
+iD8DBQFDSkqX8+hUANcKr/kRAiUJAKCBNEqvVItqHco6fVQFo2BbPsGTcwCeMvSE
+uz3AARlM0pSp5ufhkG2133o=
+=comp
 -----END PGP SIGNATURE-----
 
---jho1yZJdad60DJr+--
+--l06SQqiZYCi8rTKz--
