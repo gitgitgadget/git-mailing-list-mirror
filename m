@@ -1,72 +1,81 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Strangely broken git repo
-Date: Mon, 10 Oct 2005 07:54:31 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510100742070.14597@g5.osdl.org>
-References: <46a038f90510062014l7f5740e0l77fc53b50f822e8f@mail.gmail.com>
- <46a038f90510082014i6b296f2bvbac56e25344cbdf2@mail.gmail.com>
- <4349ED5D.6020703@catalyst.net.nz> <7v4q7p927d.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] Fix cygwin install issues
+Date: Mon, 10 Oct 2005 08:02:56 -0700
+Message-ID: <434A82A0.7060608@zytor.com>
+References: <20051010085259.GA18009@diku.dk> <7vmzlh7n7h.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>,
-	Nick Hengeveld <nickh@reactrix.com>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 10 17:00:14 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 10 17:07:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOz47-0000lo-C5
-	for gcvg-git@gmane.org; Mon, 10 Oct 2005 16:55:47 +0200
+	id 1EOzBP-0004pm-9t
+	for gcvg-git@gmane.org; Mon, 10 Oct 2005 17:03:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750831AbVJJOyw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Oct 2005 10:54:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750828AbVJJOyw
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 10:54:52 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:38099 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750831AbVJJOyv (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Oct 2005 10:54:51 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9AEsX4s017707
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 10 Oct 2005 07:54:34 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9AEsVMS017542;
-	Mon, 10 Oct 2005 07:54:32 -0700
+	id S1750843AbVJJPDQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Oct 2005 11:03:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750840AbVJJPDQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 11:03:16 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:65508 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750839AbVJJPDP
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2005 11:03:15 -0400
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9AF2u2Z019697
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 10 Oct 2005 08:02:57 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4q7p927d.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.51__
-X-MIMEDefang-Filter: osdl$Revision: 1.122 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <7vmzlh7n7h.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9891>
 
-
-
-On Mon, 10 Oct 2005, Junio C Hamano wrote:
+Junio C Hamano wrote:
+> Jonas Fonseca <fonseca@diku.dk> writes:
 > 
-> Hmph.  Interesting.  I just tried.
 > 
-> $ curl 'http://locke.catalyst.net.nz/git/moodle.git/refs/tags/MOODLE_15_MERGED **INVALID**'
+>>Support installing to paths including spaces.
+>>Remove any old .exe files so ln will succeed.
+>>
 > 
-> gives an error page "404 Not Found", while
+> This is not a complaint but I am just wondering if:
 > 
-> $ wget -O - -o /dev/null 'http://locke.catalyst.net.nz/git/moodle.git/refs/tags/MOODLE_15_MERGED **INVALID**'
 > 
-> works fine and gives 2ddfec0dfd0cffd4892af9aaf48ee29c40c7ada3
-> back.  So we do need to fix things up somewhat in our scripts as
-> well.
+>>-	$(INSTALL) -d -m755 $(DESTDIR)$(bindir)
+>>+	$(INSTALL) -d -m755 "$(DESTDIR)$(bindir)"
+> 
+> this is the right way to quote things.  I suspect it might be
+> the responsibility of the user to quote them if she chooses to
+> set bindir or DESTDIR to a funky value, like this:
+> 
+>     $ make bindir="'My Documents\Programs'"
 
-It seems to be the space. Doing
+I don't think that's the right approach.
 
-  $ curl 'http://locke.catalyst.net.nz/git/moodle.git/refs/tags/MOODLE_15_MERGED%20**INVALID**'
+	$(INSTALL) -d -m755 '$(DESTDIR)$(bindir)'
 
-works ok (ie %20 instead of ' ').
+... at least handles everything except embedded single quotes.  Note 
+that the single quote is not a special character for make.
 
-As far as I can tell, we should probably _also_ quote any curl-specific 
-stuff. As far as I can tell from the manual, if the tag were to have 
-special characters like '[' and '{', curl might confuse them with being 
-range specifiers.
+> Because depending on how funky the values of bindir and DESTDIR
+> are, we cannot say double-quote you are giving them is even the
+> right quoting (think double-quote itself as part of the name).
+> 
+> The other "$X" change to cmd-renames is a good change (I thought
+> I heard HPA talking about that; maybe he sent one to me and I
+> dropped it on the floor by mistake, I dunno).  Thanks.
 
-		Linus
+If I dropped it on the floor, it was mentally :-/
+
+	-hpa
