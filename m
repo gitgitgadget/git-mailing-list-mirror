@@ -1,91 +1,76 @@
-From: Elfyn McBratney <beu@gentoo.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
 Subject: Re: SVN import
-Date: Mon, 10 Oct 2005 12:14:28 +0100
-Message-ID: <20051010111428.GC30202@gentoo.org>
-References: <pan.2005.08.19.10.00.49.401829@smurf.noris.de> <pan.2005.10.10.09.45.00.468989@smurf.noris.de> <20051010102651.GA30202@gentoo.org>
+Date: Mon, 10 Oct 2005 13:39:33 +0200
+Message-ID: <20051010113933.GL567@kiste.smurf.noris.de>
+References: <pan.2005.08.19.10.00.49.401829@smurf.noris.de> <pan.2005.10.10.09.45.00.468989@smurf.noris.de> <20051010102651.GA30202@gentoo.org> <20051010111428.GC30202@gentoo.org>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="bAmEntskrkuBymla"
-X-From: git-owner@vger.kernel.org Mon Oct 10 13:15:32 2005
+	protocol="application/pgp-signature"; boundary="vs0rQTeTompTJjtd"
+X-From: git-owner@vger.kernel.org Mon Oct 10 13:43:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EOvc4-0003d7-AX
-	for gcvg-git@gmane.org; Mon, 10 Oct 2005 13:14:36 +0200
+	id 1EOw1D-0006md-NW
+	for gcvg-git@gmane.org; Mon, 10 Oct 2005 13:40:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750746AbVJJLOd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Oct 2005 07:14:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750750AbVJJLOd
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 07:14:33 -0400
-Received: from anchor-post-33.mail.demon.net ([194.217.242.91]:57103 "EHLO
-	anchor-post-33.mail.demon.net") by vger.kernel.org with ESMTP
-	id S1750746AbVJJLOd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2005 07:14:33 -0400
-Received: from beu1.demon.co.uk ([83.105.51.149] helo=zippy.emcb.local)
-	by anchor-post-33.mail.demon.net with esmtp (Exim 4.42)
-	id 1EOvbx-000PQa-BU; Mon, 10 Oct 2005 11:14:31 +0000
-Received: by zippy.emcb.local (Postfix, from userid 1001)
-	id 442FD148042; Mon, 10 Oct 2005 12:14:29 +0100 (BST)
-To: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-Mail-Followup-To: Elfyn McBratney <beu@gentoo.org>,
-	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+	id S1750753AbVJJLk2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Oct 2005 07:40:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750754AbVJJLk2
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 07:40:28 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:39351 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S1750753AbVJJLk2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2005 07:40:28 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1EOw0E-0001B0-Mi; Mon, 10 Oct 2005 13:39:54 +0200
+Received: (nullmailer pid 30669 invoked by uid 501);
+	Mon, 10 Oct 2005 11:39:33 -0000
+To: Elfyn McBratney <beu@gentoo.org>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20051010102651.GA30202@gentoo.org>
-Organisation: Gentoo Foundation, Inc.
-User-Agent: mutt-ng/devel (Linux)
+In-Reply-To: <20051010111428.GC30202@gentoo.org>
+User-Agent: Mutt/1.5.9i
+X-Smurf-Spam-Score: -2.6 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9888>
 
 
---bAmEntskrkuBymla
-Content-Type: text/plain; charset=iso-8859-1
+--vs0rQTeTompTJjtd
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 10, 2005 at 11:26:51AM +0100, Elfyn McBratney wrote:
- > On Mon, Oct 10, 2005 at 11:45:05 +0200, Matthias Urlichs wrote:
- >  > Hi, Matthias Urlichs wrote:
- >  >=20
- >  > > Quick note: I'm working on importing from SVN.
- >  >=20
- >  > The first version seems to be finished.
- >  >=20
- >  > http:/netz/smurf.noris.de/git/git.git, branch "svn".
- >  >=20
- >  > Should be ready for merging, though I wouldn't say no to a few testers
- >  > before that happens.  ;-)
- >=20
- > Ah cool, was going to work on an SVN counterpart to git-{arch,cvs}import,
- > but now won't have to. ;)  Will test and report back. :)
+Hi,
 
-Worth noting that the URL is actually:
-http://netz.smurf.noris.de/git/git.git ;)
+Elfyn McBratney:
+> Worth noting that the URL is actually:
+> http://netz.smurf.noris.de/git/git.git ;)
+>=20
+*Grumble*
 
-Best,
-Elfyn
+NB: Worth noting: the importer actually *requires* a current Perl SVN
+module (i.e., 1.2.1). Debian Sarge's version 1.1.4 doesn't work.
 
 --=20
-Elfyn McBratney
-Gentoo Developer/Perl Team Lead
-beu/irc.freenode.net                            http://dev.gentoo.org/~beu/
-+------------O.o--------------------- http://dev.gentoo.org/~beu/pubkey.asc
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+The best way to get rid of worries is to let them die of neglect.
 
-PGP Key ID: 0x69DF17AD
-PGP Key Fingerprint:
-  DBD3 B756 ED58 B1B4 47B9  B3BD 8D41 E597 69DF 17AD
-
---bAmEntskrkuBymla
-Content-Type: application/pgp-signature
+--vs0rQTeTompTJjtd
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-iD8DBQFDSk0UjUHll2nfF60RAm5VAJsEtOz9gdlMyIcJB9PFFF2xLT7/NwCeOD29
-aCdql8OXyt8L+PqHtILKhJw=
-=fMWi
+iD8DBQFDSlL18+hUANcKr/kRAq6NAJ98SPx/BvVyA0lz28uPZRs+DJzQHACghBcX
+nKb6wQh/FRdYT2oxrA8jy2E=
+=/AJ8
 -----END PGP SIGNATURE-----
 
---bAmEntskrkuBymla--
+--vs0rQTeTompTJjtd--
