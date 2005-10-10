@@ -1,60 +1,83 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: First cut at git port to Cygwin
-Date: Mon, 10 Oct 2005 11:43:47 -0700
-Message-ID: <434AB663.8050205@zytor.com>
-References: <20051005155457.GA30303@trixie.casa.cgf.cx>	<20051005191741.GA25493@steel.home>	<20051005202947.GA6184@trixie.casa.cgf.cx>	<81b0412b0510060205v4cd510c9wb4b06a3ed9242c8@mail.gmail.com>	<81b0412b0510060307q431b64edt4196553bce28346c@mail.gmail.com>	<81b0412b0510070544v3e7cf0b4n521db8ff7e4e335a@mail.gmail.com>	<Pine.LNX.4.64.0510070828270.31407@g5.osdl.org>	<20051007205450.GA14827@steel.home> <20051007212250.GA1423@steel.home>	<4346E8AC.5030503@citi.umich.edu> <20051007213952.GA8821@steel.home>	<Pine.LNX.4.64.0510080900510.31407@g5.osdl.org>	<Pine.LNX.4.63.0510082023130.25971@wbgn013.biozentrum.uni-wuerzburg.de> <7vr7avrgr2.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: SVN import
+Date: Mon, 10 Oct 2005 20:57:30 +0200
+Message-ID: <20051010185729.GR567@kiste.smurf.noris.de>
+References: <pan.2005.08.19.10.00.49.401829@smurf.noris.de> <pan.2005.10.10.09.45.00.468989@smurf.noris.de> <8764s51cvp.wl@mail2.atmark-techno.com> <20051010181329.GQ567@kiste.smurf.noris.de> <874q7p1axz.wl@mail2.atmark-techno.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Mon Oct 10 20:46:40 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="NJSRbAqOy4NeGDns"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 10 21:00:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EP2de-00063I-2t
-	for gcvg-git@gmane.org; Mon, 10 Oct 2005 20:44:42 +0200
+	id 1EP2r6-0003wT-K9
+	for gcvg-git@gmane.org; Mon, 10 Oct 2005 20:58:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751173AbVJJSoi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Oct 2005 14:44:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751176AbVJJSoi
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 14:44:38 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:11407 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751173AbVJJSoh
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2005 14:44:37 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9AIhprm001742
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 10 Oct 2005 11:43:52 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr7avrgr2.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1751050AbVJJS6d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Oct 2005 14:58:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbVJJS6d
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 14:58:33 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:26000 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S1751050AbVJJS6d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2005 14:58:33 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1EP2q3-0006Ws-ID; Mon, 10 Oct 2005 20:57:46 +0200
+Received: (nullmailer pid 9817 invoked by uid 501);
+	Mon, 10 Oct 2005 18:57:30 -0000
+To: Yasushi SHOJI <yashi@atmark-techno.com>
+Content-Disposition: inline
+In-Reply-To: <874q7p1axz.wl@mail2.atmark-techno.com>
+User-Agent: Mutt/1.5.9i
+X-Smurf-Spam-Score: -2.6 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9910>
 
-Junio C Hamano wrote:
-> 
-> PROT_WRITE is true, but we do MAP_PRIVATE, and if I recall
-> correctly we do not write file via mmap -- at least we do not
-> intend to.
-> 
 
-Then PROT_READ probably makes more sense?
+--NJSRbAqOy4NeGDns
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> Yes.  It might have been overkill that you supported writing
-> changes back, though.
+Hi,
 
-Not just overkill; if we do MAP_PRIVATE it's actively WRONG.
+Yasushi SHOJI:
+> > True. I could add an option which behaves as if everything that's not
+> > recognized is seen as being on the trunk, but ...
+>=20
+> hmmm. can libsvn see those file had moved in to the trunk?  don't know
+> how 'svn mv' is treated in svn.
+>=20
+see "svn log". The script sees the file, and where it comes from (but
+ignores that).
 
-	-hpa
+> # I guess I need to wait for mirroring script to catch up?
+
+? it was uptodate when I wrote that mail; see
+http://netz.smurf.noris.de/cgi/gitweb?p=3Dgit.git;a=3Dshortlog;h=3Dsvn
+
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+All intelligent species own cats.
+
+--NJSRbAqOy4NeGDns
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFDSrmZ8+hUANcKr/kRApsqAKCAAx5WjqZkLdzXc2IQ7w8ikUuTwQCfbUj7
+KcCSF/GerT+RlKLrD5Wy9Y0=
+=sgN1
+-----END PGP SIGNATURE-----
+
+--NJSRbAqOy4NeGDns--
