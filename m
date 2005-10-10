@@ -1,76 +1,71 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: First cut at git port to Cygwin
-Date: Mon, 10 Oct 2005 12:26:16 -0700
-Message-ID: <434AC058.60803@zytor.com>
-References: <20051005155457.GA30303@trixie.casa.cgf.cx> <20051005191741.GA25493@steel.home> <20051005202947.GA6184@trixie.casa.cgf.cx> <81b0412b0510060205v4cd510c9wb4b06a3ed9242c8@mail.gmail.com> <81b0412b0510060307q431b64edt4196553bce28346c@mail.gmail.com> <81b0412b0510070544v3e7cf0b4n521db8ff7e4e335a@mail.gmail.com> <Pine.LNX.4.64.0510070828270.31407@g5.osdl.org> <20051007205450.GA14827@steel.home> <20051007212250.GA1423@steel.home> <4346E8AC.5030503@citi.umich.edu> <20051007213952.GA8821@steel.home> <Pine.LNX.4.64.0510080900510.31407@g5.osdl.org> <Pine.LNX.4.63.0510082023130.25971@wbgn013.biozentrum.uni-wuerzburg.de> <7vr7avrgr2.fsf@assigned-by-dhcp.cox.net> <434AB663.8050205@zytor.com> <Pine.LNX.4.63.0510102100010.7688@wbgn013.biozentrum.uni-wuerzburg.de>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: openbsd version?
+Date: 10 Oct 2005 12:29:12 -0700
+Message-ID: <864q7pdvcn.fsf@blue.stonehenge.com>
+References: <8664s5gxl9.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0510100939320.14597@g5.osdl.org>
+	<7vvf0542fs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Mon Oct 10 21:27:20 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 10 21:29:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EP3IO-0004r9-Kw
-	for gcvg-git@gmane.org; Mon, 10 Oct 2005 21:26:49 +0200
+	id 1EP3Kv-0005ig-EA
+	for gcvg-git@gmane.org; Mon, 10 Oct 2005 21:29:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751109AbVJJT0g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Oct 2005 15:26:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbVJJT0f
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 15:26:35 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:40383 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751109AbVJJT0f
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Oct 2005 15:26:35 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9AJQIB0004003
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 10 Oct 2005 12:26:18 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0510102100010.7688@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1751123AbVJJT3W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Oct 2005 15:29:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751124AbVJJT3W
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Oct 2005 15:29:22 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:29584 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1751123AbVJJT3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Oct 2005 15:29:22 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id BC5428F3A2;
+	Mon, 10 Oct 2005 12:29:13 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 15207-01-18; Mon, 10 Oct 2005 12:29:12 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id E937D8F3A6; Mon, 10 Oct 2005 12:29:12 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+x-mayan-date: Long count = 12.19.12.12.11; tzolkin = 1 Chuen; haab = 9 Yax
+In-Reply-To: <7vvf0542fs.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9915>
 
-Johannes Schindelin wrote:
-> 
->>Junio C Hamano wrote:
->>
->>>PROT_WRITE is true, but we do MAP_PRIVATE, and if I recall
->>>correctly we do not write file via mmap -- at least we do not
->>>intend to.
->>>
->>
->>Then PROT_READ probably makes more sense?
-> 
-> Not necessarily. Sometimes you need to annotate the data from the index, 
-> and this does not need to be written back to the index file.
-> 
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
-In the above sentence, emphasis on "at least we do not intend to."  If 
-writes are done legitimately then that's fine, but we shouldn't have 
-"accidental writes" -- those would be program bugs!
+Junio> Linus Torvalds <torvalds@osdl.org> writes:
+>> Either do
+>> 
+>> make NO_STRCASESTR=1 ..
+>> 
+>> or add that explicitly to the makefile in the OpenBSD rules and send Junio 
+>> a tested patch ;)
 
-> 
->>>Yes.  It might have been overkill that you supported writing
->>>changes back, though.
->>
->>Not just overkill; if we do MAP_PRIVATE it's actively WRONG.
-> 
-> See above.
-> 
+Junio> Thanks; this has been resolved underwater.
 
-Eh?  If we MAP_PRIVATE, *and* we (intentionally) write to it, we 
-*BETTER* not write anything back.
+And yes, I made my first patch with git today!  But I cut-n-pasted
+it and blew the leading tabs.
 
-	-hpa
+Related question.  I created "mybranch" to do the patch, but how
+can I have my repository now forget that mybranch was ever made?
+Is it sufficient to remove the branch link, and then type some "fsck"
+operation?
+
+That's also a question in general... how can I remove a commit,
+knowing that I'd never refer to it again?  Or is disk space so cheap
+that it wouldn't make any difference anyway?
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
