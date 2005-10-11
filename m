@@ -1,66 +1,75 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] cg-tag - add support for longer commit messages
-Date: Wed, 12 Oct 2005 01:39:40 +0200
-Message-ID: <20051011233940.GJ30889@pasky.or.cz>
-References: <11289987493327-git-send-email-martin@catalyst.net.nz>
+From: Chris Wright <chrisw@osdl.org>
+Subject: [PATCH] cogito: Use %{?dist} in RPM release number
+Date: Tue, 11 Oct 2005 16:50:23 -0700
+Message-ID: <20051011235023.GS8041@shell0.pdx.osdl.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 12 01:41:18 2005
+X-From: git-owner@vger.kernel.org Wed Oct 12 01:51:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPTiq-0002tD-1F
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 01:39:52 +0200
+	id 1EPTtc-00050p-Ns
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 01:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932363AbVJKXjt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Oct 2005 19:39:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932364AbVJKXjt
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 19:39:49 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:2025 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932363AbVJKXjs (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2005 19:39:48 -0400
-Received: (qmail 16878 invoked by uid 2001); 12 Oct 2005 01:39:40 +0200
-To: Martin Langhoff <martin@catalyst.net.nz>
+	id S932366AbVJKXuf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Oct 2005 19:50:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932365AbVJKXuf
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 19:50:35 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:8582 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932366AbVJKXue (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2005 19:50:34 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9BNoN4s010335
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 11 Oct 2005 16:50:24 -0700
+Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9BNoNwu004027;
+	Tue, 11 Oct 2005 16:50:23 -0700
+Received: (from chrisw@localhost)
+	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j9BNoNsQ004026;
+	Tue, 11 Oct 2005 16:50:23 -0700
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-In-Reply-To: <11289987493327-git-send-email-martin@catalyst.net.nz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.52__
+X-MIMEDefang-Filter: osdl$Revision: 1.124 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9992>
 
-Dear diary, on Tue, Oct 11, 2005 at 04:45:49AM CEST, I got a letter
-where Martin Langhoff <martin@catalyst.net.nz> told me that...
-> Added an -m switch that points to a filename which contains a (potentially
-> long) tag message.
-> 
-> Bugs: Could alternatively be implemented via STDIN.
+Useful when tracking multiple distro branches.  Somehow I never sent
+you this small bit.
 
-Hmm. Well, the '-d' option is silly and that's really what should read
-as '-m', to keep it the same as cg-commit. Actually, I'd like to have it
-as similar as possible, so it would be ideal to have cg-tag do something
-like
+Signed-off-by: Chris Wright <chris@osdl.org>
 
-	if got_argument '-e'; then
-		if tty -s; then
-			throw_together_some_CG:_stuff
-			$EDITOR
-			parse_the_CG:_stuff
-		else
-			cat >>logmsg
-		fi
-	fi
+---
 
-to keep it symmetric to cg-commit (except that it won't require the
-message if you don't bother to pass it anything). Well, I guess the CG:
-stuff parsing is lower priority (and would require some factoring out of
-the common code from cg-commit), so I'll do the simple part soon
-(today or on Thursday) if noone does it first. *hint* *hint* ;-)
+ cogito.spec.in |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+8711e755f38f7458abf5e040e079da534820dd85
+diff --git a/cogito.spec.in b/cogito.spec.in
+--- a/cogito.spec.in
++++ b/cogito.spec.in
+@@ -1,6 +1,6 @@
+ Name: 		cogito
+ Version: 	@@VERSION@@
+-Release: 	1
++Release: 	1%{?dist}
+ Summary:  	The Cogito Version Control System
+ License: 	GPL
+ Group: 		Development/Tools
+@@ -38,6 +38,9 @@ rm -rf $RPM_BUILD_ROOT
+ %doc README COPYING Documentation/*
+ 
+ %changelog
++* Tue Oct 11 2005 Chris Wright <chrisw@osdl.org> 0.15.1-1
++- use %dist
++
+ * Fri Sep 16 2005 Chris Wright <chrisw@osdl.org> 0.14.1-2
+ - fix _libdir breakage on 64-bit, the irony...
+ 
