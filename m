@@ -1,50 +1,89 @@
-From: Ben Lau <benlau@ust.hk>
-Subject: How to restore the original head after `git-reset --hard master^`
-Date: Tue, 11 Oct 2005 23:12:26 +0800
-Message-ID: <434BD65A.9000108@ust.hk>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Try URI quoting for embedded TAB and LF in pathnames
+Date: Tue, 11 Oct 2005 08:17:25 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510110802470.14597@g5.osdl.org>
+References: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net> <20051007232909.GB8893@steel.home>
+ <7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net> <20051008064555.GA3831@steel.home>
+ <7vachks7aq.fsf@assigned-by-dhcp.cox.net> <20051008133032.GA32079@localhost>
+ <7v64s7svya.fsf@assigned-by-dhcp.cox.net> <7vu0frpxs1.fsf@assigned-by-dhcp.cox.net>
+ <87mzlgh8xa.fsf@penguin.cs.ucla.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Oct 11 17:18:44 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Robert Fitzsimons <robfitz@273k.net>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Kai Ruemmler <kai.ruemmler@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Oct 11 17:21:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPLrh-0008UB-AM
-	for gcvg-git@gmane.org; Tue, 11 Oct 2005 17:16:29 +0200
+	id 1EPLw7-0001kd-Pw
+	for gcvg-git@gmane.org; Tue, 11 Oct 2005 17:21:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932160AbVJKPOy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Oct 2005 11:14:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932126AbVJKPNG
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 11:13:06 -0400
-Received: from mx3.ust.hk ([143.89.13.11]:46605 "EHLO mx3.ust.hk")
-	by vger.kernel.org with ESMTP id S1751330AbVJKPMl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2005 11:12:41 -0400
-Received: from [221.125.13.158] ([221.125.13.158])
-	(authenticated bits=0)
-	by mx3.ust.hk (8.12.11/8.12.11) with ESMTP id j9BFCQ2b063529
-	for <git@vger.kernel.org>; Tue, 11 Oct 2005 23:12:29 +0800 (HKT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.7) Gecko/20050420 Debian/1.7.7-2
-X-Accept-Language: en, zh-tw, zh-cn
-To: git@vger.kernel.org
+	id S1751176AbVJKPVA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Oct 2005 11:21:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbVJKPU7
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 11:20:59 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:4803 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751176AbVJKPU7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2005 11:20:59 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9BFHR4s017682
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 11 Oct 2005 08:17:28 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9BFHPAw011371;
+	Tue, 11 Oct 2005 08:17:26 -0700
+To: Paul Eggert <eggert@CS.UCLA.EDU>
+In-Reply-To: <87mzlgh8xa.fsf@penguin.cs.ucla.edu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.52__
+X-MIMEDefang-Filter: osdl$Revision: 1.123 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9971>
 
-Hi all,
 
-   After involves the command `git-reset --hard master^` in a 
-repository, the working
-tree , current head and index are restored to the parent of master. That 
-includes
-the content of '.git/refs/head/master'. Although the original commit 
-object is still existed
-, I couldn't find it back.
 
-  Is there anyway to recover the original master branch ? or I have to 
-restore the branch
-manually by finding out all the child of current head? If that is the 
-solution , what command
-could provide this information?
+On Mon, 10 Oct 2005, Paul Eggert wrote:
+> 
+> An issue I hadn't really had time to think about is the character
+> encoding of file names.
 
-Thanks
+Please don't. Use filenames as if they are just binary blobs of data, 
+that's the only thing that has a high chance of success. Yes, it too can 
+break in the presense of something _else_ doing character translation 
+and/or people moving a patch from one encoding to another , buthat's 
+just true of anything.
+
+Eventually everybody will hopefully use UTF-8, and nothing else really 
+matters, but the thing is, if you see filenames as just blobs of data, 
+that works with UTF-8 too, so it's not "wrong" even in the long run. And 
+until everybody has one single encoding, you simply won't be able to tell, 
+and the likelihood that you'd screw up is pretty high.
+
+The happy part of the "binary blob" approach is that users _understand_ 
+it. People who actively use different encoding formats are (painfully) 
+aware of conversions, and they may curse you for not doing the random 
+encoding format of the day, but they will be able to handle it.
+
+In contrast, if you start doing conversions, I guarantee you that people 
+will _not_ be able to handle it when you do something strange - you've 
+changed the data.
+
+Personally, I'd like the normal C quoting the best. Leave space as-is, and 
+quote TAB/NL as \t and \n respectively. It's pretty universally understood 
+in programming circles even outside of C, and it's not like a very 
+uncommon patch format like that really needs to be well-understood outside 
+of those circles.
+
+It also has a very obvious and ASCII-safe format for other characters (ie 
+just the normal octal escapes: \377 etc..
+
+That said, I personally don't think it's necessarily even worth it. If 
+somebody wants to use names with tabs and newlines, is he really going to 
+work with diffs? Or is it just a driver error?
+
+			Linus
