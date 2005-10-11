@@ -1,70 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Support custom build options in config.mak
-Date: Tue, 11 Oct 2005 01:07:28 -0700
-Message-ID: <7vr7astr27.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 11 Oct 2005 13:08:22 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510111307410.20527@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <Pine.LNX.4.63.0510110948170.19774@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vr7astr27.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 11 10:08:33 2005
+X-From: git-owner@vger.kernel.org Tue Oct 11 13:09:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPFAk-0005mR-4u
-	for gcvg-git@gmane.org; Tue, 11 Oct 2005 10:07:42 +0200
+	id 1EPHzf-0000im-FZ
+	for gcvg-git@gmane.org; Tue, 11 Oct 2005 13:08:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751415AbVJKIHc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Oct 2005 04:07:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbVJKIHc
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 04:07:32 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:34761 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751415AbVJKIHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2005 04:07:30 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051011080720.LXBO4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 11 Oct 2005 04:07:20 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0510110948170.19774@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Tue, 11 Oct 2005 09:49:42 +0200
-	(CEST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751449AbVJKLIY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Oct 2005 07:08:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbVJKLIY
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 07:08:24 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:4764 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751449AbVJKLIX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2005 07:08:23 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C332213EB9D; Tue, 11 Oct 2005 13:08:22 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A6E4E9E4A9; Tue, 11 Oct 2005 13:08:22 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 9394F9E48F; Tue, 11 Oct 2005 13:08:22 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 6FD4913EB48; Tue, 11 Oct 2005 13:08:22 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vr7astr27.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9962>
 
-With this patch, you can store the configuration options like
-NO_CURL=YesPlease or NO_OPENSSL=YesPlease into a file named
-Make, and I typically do this:
+Hi,
 
-    $ ./Make CFLAGS='-O1 -Wal -g' clean test install
+On Tue, 11 Oct 2005, Junio C Hamano wrote:
 
-My "Make" file looks like this:
+> With this patch, you can store the configuration options like
+> NO_CURL=YesPlease or NO_OPENSSL=YesPlease into a file named
+> Make, and I typically do this:
+> 
+> [...]
 
-    $ cat Make
-    #!/bin/sh
-
-    PATH=/usr/bin:/bin
-    LANG=C
-    LC_CTYPE=C
-    export PATH LANG LC_CTYPE
-
-    make bindir=$HOME/bin/Linux \
-         PYTHON_PATH=/usr/bin/python2.4 \
-         CFLAGS="${CFLAGS-'-O1 -Wall -g'}" \
-         WITH_SEND_EMAIL=YesPlease "$@"
-
-Nothing-to-sign-off-by: Junio C Hamano <junkio@cox.net>
----
-  0 files changed.
-
-    Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-    > With this patch, it is possible to store configuration options like
-    > NO_CURL=YesPlease or NO_OPENSSL=YesPlease into a file named
-    > config.mak, which will be included in the Makefile.
-
-    IOW, I'll have to think about its merit ;-)
+:-)
