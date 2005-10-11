@@ -1,104 +1,109 @@
-From: Paul Eggert <eggert@CS.UCLA.EDU>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] Try URI quoting for embedded TAB and LF in pathnames
-Date: Tue, 11 Oct 2005 11:03:59 -0700
-Message-ID: <87ek6s0w34.fsf@penguin.cs.ucla.edu>
-References: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net>
-	<20051007232909.GB8893@steel.home>
-	<7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net>
-	<20051008064555.GA3831@steel.home>
-	<7vachks7aq.fsf@assigned-by-dhcp.cox.net>
-	<20051008133032.GA32079@localhost>
-	<7v64s7svya.fsf@assigned-by-dhcp.cox.net>
-	<7vu0frpxs1.fsf@assigned-by-dhcp.cox.net>
-	<87mzlgh8xa.fsf@penguin.cs.ucla.edu>
-	<Pine.LNX.4.64.0510110802470.14597@g5.osdl.org>
+Date: Tue, 11 Oct 2005 11:37:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510111121030.14597@g5.osdl.org>
+References: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net> <20051007232909.GB8893@steel.home>
+ <7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net> <20051008064555.GA3831@steel.home>
+ <7vachks7aq.fsf@assigned-by-dhcp.cox.net> <20051008133032.GA32079@localhost>
+ <7v64s7svya.fsf@assigned-by-dhcp.cox.net> <7vu0frpxs1.fsf@assigned-by-dhcp.cox.net>
+ <87mzlgh8xa.fsf@penguin.cs.ucla.edu> <Pine.LNX.4.64.0510110802470.14597@g5.osdl.org>
+ <87ek6s0w34.fsf@penguin.cs.ucla.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: MULTIPART/MIXED; BOUNDARY="21872808-149975580-1129055866=:14597"
 Cc: Junio C Hamano <junkio@cox.net>,
 	Robert Fitzsimons <robfitz@273k.net>,
 	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
 	Kai Ruemmler <kai.ruemmler@gmx.net>
-X-From: git-owner@vger.kernel.org Tue Oct 11 20:06:43 2005
+X-From: git-owner@vger.kernel.org Tue Oct 11 20:39:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPOUA-0000mM-Ev
-	for gcvg-git@gmane.org; Tue, 11 Oct 2005 20:04:22 +0200
+	id 1EPP0q-0003Cv-4m
+	for gcvg-git@gmane.org; Tue, 11 Oct 2005 20:38:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932247AbVJKSET (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Oct 2005 14:04:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932259AbVJKSET
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 14:04:19 -0400
-Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:27613 "EHLO kiwi.cs.ucla.edu")
-	by vger.kernel.org with ESMTP id S932247AbVJKSET (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2005 14:04:19 -0400
-Received: from penguin.cs.ucla.edu (Penguin.CS.UCLA.EDU [131.179.64.200])
-	by kiwi.cs.ucla.edu (8.11.7p1+Sun/8.11.7/UCLACS-5.2) with ESMTP id j9BI3v404213;
-	Tue, 11 Oct 2005 11:03:57 -0700 (PDT)
-Received: from eggert by penguin.cs.ucla.edu with local (Exim 4.50)
-	id 1EPOTn-000151-Ly; Tue, 11 Oct 2005 11:03:59 -0700
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0510110802470.14597@g5.osdl.org> (Linus
- Torvalds's message of "Tue, 11 Oct 2005 08:17:25 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S932278AbVJKSiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Oct 2005 14:38:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932294AbVJKSiE
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 14:38:04 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:3475 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932278AbVJKSiB (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2005 14:38:01 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9BIbm4s027718
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 11 Oct 2005 11:37:49 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9BIbkiV020863;
+	Tue, 11 Oct 2005 11:37:47 -0700
+To: Paul Eggert <eggert@CS.UCLA.EDU>
+In-Reply-To: <87ek6s0w34.fsf@penguin.cs.ucla.edu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.52__
+X-MIMEDefang-Filter: osdl$Revision: 1.123 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9978>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Personally, I'd like the normal C quoting the best.
-
-That would be fine with me too.  How about if we use the equivalent of
---quoting-style="c" for file names that contain funny bytes, and no
-quoting for other file names?  So, for example, something like this:
-
-    diff --git "space tab\tnewline\nquote\"backslash\\" b/dee/pqr
-    similarity index 72%
-    rename from "space tab\tnewline\nquote\"backslash\\"
-    rename to dee/pqr
-    index 9ee055c..243fbbc 100644
-    --- "space tab\tnewline\nquote\"backslash\\"
-    +++ b/dee/pqr
-    @@ -1 +1,3 @@
-     Fri Oct  7 23:19:04 PDT 2005
-    +foo
-    +foo
-
-The surrounding double-quotes are an extra indication to the human
-reader that there is something weird about the quoted file name.
-
-> Use filenames as if they are just binary blobs of data, 
-> that's the only thing that has a high chance of success.
-
-Thanks for thinking those things through.  I agree mostly, but there's
-still a technical problem, in that we have to decide what a "funny
-byte" is if we are using C-style quoting.  For example, the simplest
-approach is to say a byte is funny if it is space, backslash, quote,
-an ASCII control character, or is non-ASCII.  But this will cause
-perfectly-reasonable UTF-8 file names to be presented in git format
-using unreadable strings like "a\293\203\257b" or whatever.
-
-Perhaps it would be better to say that a byte is "funny" if it is
-space, backslash, quote, an ASCII control character, or a byte that is
-not part of a valid UTF-8 encoding.  This will let UTF-8 file names
-through unscathed, while still warning the reader when funny business
-is going on.  File names with other encodings (e.g., Shift-JIS) will
-contain lots of backslashes, but that's OK: we don't mind making
-nonstandard encodings hard-to-read, so long as we preserve the bytes
-correctly.
-
-We could implement in other GNU applications by having a new quoting
-style that supports this quoting behavior.  I can arrange for that.
+--21872808-149975580-1129055866=:14597
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
 
-> If somebody wants to use names with tabs and newlines, is he really
-> going to work with diffs? Or is it just a driver error?
 
-The current-supported scheme with 'diff' and 'patch' should work for
-everything but newlines.  I like the idea of getting it to work even
-with newlines, and I am willing to sacrifice old patches with file
-names starting with '"' (extremely rare, if any) to get newlines to
-work.  Among other things I worry about people submitting
-purposely-malformed patches in non-git environments.
+On Tue, 11 Oct 2005, Paul Eggert wrote:
+>
+> For example, the simplest approach is to say a byte is funny if it is 
+> space, backslash, quote, an ASCII control character, or is non-ASCII.  
+> But this will cause perfectly-reasonable UTF-8 file names to be 
+> presented in git format using unreadable strings like "a\293\203\257b" 
+> or whatever.
+
+I think the simplest question to ask is "what are we protecting against?"
+
+There's only two characters that are _really_ special diff itself: \n and 
+\t. The former is obvious, the latter just because the regular gnu diff 
+format puts a tab between the name and the date (and if you _knew_ the 
+date was always there you could just work backwards, but since not all 
+diffs even put a date, \t ends up being special in practice).
+
+So what else would you want to protect against? I hope not 8-bit 
+cleanness: if some stupid protocol still isn't 8-bit clean, it should be 
+fixed.
+
+And \0 is already impossible, at least on sane systems.
+
+So arguably you don't need to quote anything else than \n and \t (and that 
+obviously means you have to quote \ itself). That means that any filename 
+always shows "sanely" in its own byte locale, and everything is readable, 
+regardless of whether it's UTF-8 or just plain byte-encoded Latin1, or 
+anything else.
+
+So I don't think you should quote invalid UTF-8: it's invalid UTF-8 
+whether ítis quoted or not.
+
+		Linus
+
+PS. There _is_ something you may want to quote, namely the standard CSI 
+terminal escapes. Not because they wouldn't pass through, but because some 
+people might just "cat" a patch. This is debatable. Now, they are in all 
+in the range 0x00-0x1f and 0x80-0x9f, and since UTF-8 encoding is supposed 
+to happen before it (but you don't know how many get that right), if you 
+want to quote those characters, you need to do so _both_ for the "raw" 
+format and for the UTF-8 format.
+
+Now, the UTF-8 format for that high range is actually the same character, 
+except preceded by a 0xc2 (I think), so the simplest thing is to do 
+quoting _purely_ on a byte-stream level (ignore any UTF-8 stuff), and 
+screw the fact that you end up with a non-UTF-8 sequence (character 0x0080 
+is UTF-8 sequence 0xC2 0x80, and would be quoted as 0xC2 + "\200", which 
+is no longer valid in UTF-8).
+
+It gets quite nasty. For any UTF-8 quoting scheme you come up with, I'll 
+point out something that it does wrong or looks horrible for a Latin1 
+filename ;)
+--21872808-149975580-1129055866=:14597--
