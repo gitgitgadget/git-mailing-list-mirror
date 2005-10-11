@@ -1,66 +1,61 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: How to restore the original head after `git-reset --hard master^`
-Date: Tue, 11 Oct 2005 08:59:05 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510110856520.14597@g5.osdl.org>
-References: <434BD65A.9000108@ust.hk>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [RFC] Cleaning up die() error messages
+Date: Tue, 11 Oct 2005 09:11:11 -0700
+Message-ID: <434BE41F.4060909@zytor.com>
+References: <20051010105008.GB30202@gentoo.org> <81b0412b0510110802lbcdebe0m17bce7ca81ea76d2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 11 17:59:58 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Elfyn McBratney <beu@gentoo.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 11 18:14:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPMXY-0006P3-35
-	for gcvg-git@gmane.org; Tue, 11 Oct 2005 17:59:44 +0200
+	id 1EPMjA-0002ql-Hi
+	for gcvg-git@gmane.org; Tue, 11 Oct 2005 18:11:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750825AbVJKP7S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Oct 2005 11:59:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbVJKP7S
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 11:59:18 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:39375 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750825AbVJKP7R (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2005 11:59:17 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9BFx64s019981
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 11 Oct 2005 08:59:07 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9BFx5Ln013347;
-	Tue, 11 Oct 2005 08:59:05 -0700
-To: Ben Lau <benlau@ust.hk>
-In-Reply-To: <434BD65A.9000108@ust.hk>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.52__
-X-MIMEDefang-Filter: osdl$Revision: 1.123 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932153AbVJKQLi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Oct 2005 12:11:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932164AbVJKQLi
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 12:11:38 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:20676 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932153AbVJKQLh
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2005 12:11:37 -0400
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9BGBBj6009556
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 11 Oct 2005 09:11:12 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0510110802lbcdebe0m17bce7ca81ea76d2@mail.gmail.com>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9973>
 
-
-
-On Tue, 11 Oct 2005, Ben Lau wrote:
+Alex Riesen wrote:
+> On 10/10/05, Elfyn McBratney <beu@gentoo.org> wrote:
 > 
->   After involves the command `git-reset --hard master^` in a repository, 
-> the working tree , current head and index are restored to the parent of 
-> master. That includes the content of '.git/refs/head/master'. Although 
-> the original commit object is still existed , I couldn't find it back.
+>>        int main (int argc, char **argv)
+>>        {
+>>                set_prog_name(argv[0]);
 > 
->  Is there anyway to recover the original master branch ?
+> 
+> I'd also use readlink on /proc/self/exe by default (if set_prog_name
+> _not_ called).
+> It simplifies the code at least on linux, and makes possible very slow
+> transition for other platforms. So you don't have to update each and
+> every .c file containing "main[[:space:]]*(" ;)
 
-Just run "git-fsck-objects" and look at any dangling commits. The commit 
-and related objects are still there (unless you've run "git prune"), so 
-once you find the name of it, you're all done.
+It's really better just to put the stuff at the beginning of each main. 
+  If that's too annoying, librarize main and rename your mains "git_main".
 
-First check that you  have the right one by doing
-
-	git log <name-you-found>
-
-and if that looks right, you can just do
-
-	git reset --hard <name-you-found>
-
-and you should be back in business.
-
-		Linus
+	-hpa
