@@ -1,56 +1,55 @@
-From: "Tim O Callaghan" <timo@dspsrv.com>
-Subject: Re: [PATCH] First cut of a Cygwin package creation target.
-Date: Tue, 11 Oct 2005 15:39:05 +0100 (IST)
-Message-ID: <36024.145.36.10.111.1129041545.squirrel@www.dspsrv.com>
-References: <23711.145.36.10.111.1129040793.squirrel@www.dspsrv.com>
-Reply-To: timo@dspsrv.com
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] cg-tag - add support for longer commit messages
+Date: Tue, 11 Oct 2005 07:57:16 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510110754110.14597@g5.osdl.org>
+References: <11289987493327-git-send-email-martin@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Oct 11 16:46:44 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 11 17:00:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPLIt-0002xV-CF
-	for gcvg-git@gmane.org; Tue, 11 Oct 2005 16:40:31 +0200
+	id 1EPLZN-0001Pb-RG
+	for gcvg-git@gmane.org; Tue, 11 Oct 2005 16:57:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932103AbVJKOji (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Oct 2005 10:39:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932102AbVJKOji
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 10:39:38 -0400
-Received: from vir.dspsrv.com ([193.120.211.34]:9696 "EHLO dspsrv.com")
-	by vger.kernel.org with ESMTP id S932097AbVJKOjh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2005 10:39:37 -0400
-Received: from www-data by dspsrv.com with local (Exim 3.36 #1)
-	id 1EPLHV-0001uh-00
-	for git@vger.kernel.org; Tue, 11 Oct 2005 15:39:05 +0100
-Received: from 145.36.10.111
-        (SquirrelMail authenticated user timo)
-        by www.dspsrv.com with HTTP;
-        Tue, 11 Oct 2005 15:39:05 +0100 (IST)
-In-Reply-To: <23711.145.36.10.111.1129040793.squirrel@www.dspsrv.com>
-To: git@vger.kernel.org
-User-Agent: SquirrelMail/1.4.5
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S932113AbVJKO5b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Oct 2005 10:57:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932120AbVJKO5a
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 10:57:30 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:46779 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932117AbVJKO53 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2005 10:57:29 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9BEvH4s016130
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 11 Oct 2005 07:57:17 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9BEvG9w010278;
+	Tue, 11 Oct 2005 07:57:16 -0700
+To: Martin Langhoff <martin@catalyst.net.nz>
+In-Reply-To: <11289987493327-git-send-email-martin@catalyst.net.nz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.52__
+X-MIMEDefang-Filter: osdl$Revision: 1.123 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9968>
 
-I should also mention that in my (probably misguided) enthusiasm for
-the Cygwin port, i proposed myself as the package maintainer on the
-cygwin-app list. If people don't think i'm gittish enough to handle
-it, i am more than happy let them take over. Otherwise i will attempt
-to go through the procedures needed to get it into the Cygwin distro.
 
-For those interested, a copy of the generated Cygwin packages can be found
-at:
-http://www.dspsrv.com/~timo/
 
-If there are no objections, i'll send them onto the Cygwin people sometime
-tomorrow.
+On Tue, 11 Oct 2005, Martin Langhoff wrote:
+>
+> Added an -m switch that points to a filename which contains a (potentially
+> long) tag message.
 
-Tim.
-"Money can't buy friends, but it can get you a better class of enemy."
-- Spike Milligan
+At least core git has "-m 'message'" and "-F 'file'" (with long versions 
+being "--message" and "--file" respectively) for this kind of thing in 
+"git commit". Maybe it would be good to make that the standard interface.
+
+When scripting, using a separate file is often inconvenient, and giving 
+the message as an argument much nicer. So you do often want both.
+
+		Linus
