@@ -1,63 +1,58 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: [PATCH] gitk: Add "Refs" menu
-Date: Wed, 12 Oct 2005 04:55:59 -0700 (PDT)
-Message-ID: <20051012115559.6546.qmail@web26305.mail.ukl.yahoo.com>
-References: <1129080380.2427.21.camel@dv>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: cg-mv
+Date: Wed, 12 Oct 2005 15:14:22 +0200
+Message-ID: <200510121514.22276.Josef.Weidendorfer@gmx.de>
+References: <20051007143333.GA18843@tumblerings.org> <20051012100757.GM30889@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 12 13:56:36 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Oct 12 15:17:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPfDJ-0004bC-S0
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 13:56:06 +0200
+	id 1EPgRe-0005Ak-5L
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 15:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964777AbVJLL4B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Oct 2005 07:56:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964778AbVJLL4B
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 07:56:01 -0400
-Received: from web26305.mail.ukl.yahoo.com ([217.146.176.16]:59008 "HELO
-	web26305.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S964777AbVJLL4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2005 07:56:00 -0400
-Received: (qmail 6548 invoked by uid 60001); 12 Oct 2005 11:55:59 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=3FRT5tUyN9JThoFVhB/4S6qHRozvh7/EUiT2ZsHZiK/2iHds6UA7M1E+CAXitiUEs1u9rcUJP0LpSWAD9n8U0Xb06kDzgLmSPpPEYXDBhWJ1CnYEhsm5GPjYx+/uQJYXYaWNEE7ax0kNc515i8ASO/rQCf3+lmVhMT2cQVaPiNI=  ;
-Received: from [195.103.152.66] by web26305.mail.ukl.yahoo.com via HTTP; Wed, 12 Oct 2005 04:55:59 PDT
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1129080380.2427.21.camel@dv>
+	id S1751449AbVJLNOz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Oct 2005 09:14:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbVJLNOz
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 09:14:55 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:47834 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1751449AbVJLNOy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2005 09:14:54 -0400
+Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
+	by mail.in.tum.de (Postfix) with ESMTP id D5E952350
+	for <git@vger.kernel.org>; Wed, 12 Oct 2005 15:14:50 +0200 (MEST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+In-Reply-To: <20051012100757.GM30889@pasky.or.cz>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10022>
 
- 
-> And making gitk cooperate with stgit would be a killer application not
-> just for gitk and stgit, but for git itself (i.e. it could be the reason
-> why git is chosen for development over e.g. Mercurial for new projects).
-> 
+On Wednesday 12 October 2005 12:07, Petr Baudis wrote:
+> so it should keep the file under the original name as well, but
+> untraced? That's weird. What about
+>
+> 	#!/usr/bin/env bash
+>
+> 	if [ -e $2 ]; then
+> 		! got_parameter -f && die "dest exists"
+> 		[ -e $1 ] || die "no source nor destination"
+> 	fi
+> 	( [ -e $1 ] && mv $1 $2 ) && cg-add $2 && cg-rm $1
+>
+> plus quoting and stuff?
 
-Not to advertise, but qgit (http://digilander.libero.it/mcostalba/) already offers 
-stgit integration, among other things.
+Wishlist...
+Please make it similar to mv:
+* Rename directories, too
+* If last argument is an existing directory
+  move given files/directories into that directory
 
-I plan to release a new version implementing various suggestion from the list this week, there are
-also important stgit fixes and upgrades. 
-
-To have a look at new features check the git arcihve: cg-clone
-http://digilander.libero.it/mcostalba/qgit.git
-
-
-  Marco
-
-
-
-
-		
-__________________________________ 
-Yahoo! Music Unlimited 
-Access over 1 million songs. Try it free.
-http://music.yahoo.com/unlimited/
+Josef
