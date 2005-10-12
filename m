@@ -1,72 +1,63 @@
-From: Kay Sievers <kay.sievers@suse.de>
-Subject: Re: Problems cloning
-Date: Wed, 12 Oct 2005 13:40:03 +0200
-Message-ID: <20051012114003.GB29589@vrfy.org>
-References: <20051009141547.GA8609@schottelius.org> <20051012081908.GK30889@pasky.or.cz>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: [PATCH] gitk: Add "Refs" menu
+Date: Wed, 12 Oct 2005 04:55:59 -0700 (PDT)
+Message-ID: <20051012115559.6546.qmail@web26305.mail.ukl.yahoo.com>
+References: <1129080380.2427.21.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 12 13:41:44 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 12 13:56:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPexu-000812-64
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 13:40:10 +0200
+	id 1EPfDJ-0004bC-S0
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 13:56:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964773AbVJLLkG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Oct 2005 07:40:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932428AbVJLLkG
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 07:40:06 -0400
-Received: from soundwarez.org ([217.160.171.123]:19642 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S932427AbVJLLkF (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2005 07:40:05 -0400
-Received: by soundwarez.org (Postfix, from userid 2702)
-	id 050EA630FA; Wed, 12 Oct 2005 13:40:03 +0200 (CEST)
-To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <20051012081908.GK30889@pasky.or.cz>
-User-Agent: Mutt/1.5.9i
+	id S964777AbVJLL4B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Oct 2005 07:56:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964778AbVJLL4B
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 07:56:01 -0400
+Received: from web26305.mail.ukl.yahoo.com ([217.146.176.16]:59008 "HELO
+	web26305.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S964777AbVJLL4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2005 07:56:00 -0400
+Received: (qmail 6548 invoked by uid 60001); 12 Oct 2005 11:55:59 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=3FRT5tUyN9JThoFVhB/4S6qHRozvh7/EUiT2ZsHZiK/2iHds6UA7M1E+CAXitiUEs1u9rcUJP0LpSWAD9n8U0Xb06kDzgLmSPpPEYXDBhWJ1CnYEhsm5GPjYx+/uQJYXYaWNEE7ax0kNc515i8ASO/rQCf3+lmVhMT2cQVaPiNI=  ;
+Received: from [195.103.152.66] by web26305.mail.ukl.yahoo.com via HTTP; Wed, 12 Oct 2005 04:55:59 PDT
+To: Pavel Roskin <proski@gnu.org>
+In-Reply-To: <1129080380.2427.21.camel@dv>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10021>
 
-On Wed, Oct 12, 2005 at 10:19:08AM +0200, Petr Baudis wrote:
-> Dear diary, on Sun, Oct 09, 2005 at 04:15:47PM CEST, I got a letter
-> where Nico -telmich- Schottelius <nico-linux-git@schottelius.org> told me that...
-> > Cloning gitweb from kernel.org fails:
-> > 
-> > ----------------------------------------------------------------------
-> > [16:10] hydrogenium:build% cg-clone http://www.kernel.org/pub/scm/git/gitweb.git 
-> > defaulting to local storage area
-> > 16:10:35 URL:http://www.kernel.org/pub/scm/git/gitweb.git/HEAD [41/41] -> "refs/heads/.origin-fetching" [1]
-> > progress: 84 objects, 295012 bytes
-> > Getting pack list
-> > Getting alternates list
-> > error: Unable to find d263a6bd453df849c9f9211f1966c830c3cf913a under http://www.kernel.org/pub/scm/git/gitweb.git/
-> > 
-> > Cannot obtain needed commit d263a6bd453df849c9f9211f1966c830c3cf913a
-> > while processing commit f5dfb3f6a6655d4d60fdd0aaeef7b5b14226147f.
-> > cg-fetch: objects fetch failed
-> > cg-clone: fetch failed
-> > ----------------------------------------------------------------------
-> > 
-> > Info:
-> > 
-> > ----------------------------------------------------------------------
-> > [16:01] hydrogenium:cinit% cg --version
-> > cogito-0.15.1 (cfeac5893d97b830ac31b9d41951c30f80967410)
-> > 
-> > [16:13] hydrogenium:cinit% git --version
-> > git version 0.99.7d
-> > ----------------------------------------------------------------------
+ 
+> And making gitk cooperate with stgit would be a killer application not
+> just for gitk and stgit, but for git itself (i.e. it could be the reason
+> why git is chosen for development over e.g. Mercurial for new projects).
 > 
-> It seems that the gitweb repository is broken wrt. fetching over HTTP,
-> since it does not have the "dumb server info" containing the list of
-> packs. Someone needs to run git-update-server-info over there.
 
-Sure, I use plain rsync.
-Never tried any of the tools that maintain this info. :)
+Not to advertise, but qgit (http://digilander.libero.it/mcostalba/) already offers 
+stgit integration, among other things.
 
-Kay
+I plan to release a new version implementing various suggestion from the list this week, there are
+also important stgit fixes and upgrades. 
+
+To have a look at new features check the git arcihve: cg-clone
+http://digilander.libero.it/mcostalba/qgit.git
+
+
+  Marco
+
+
+
+
+		
+__________________________________ 
+Yahoo! Music Unlimited 
+Access over 1 million songs. Try it free.
+http://music.yahoo.com/unlimited/
