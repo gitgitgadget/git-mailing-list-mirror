@@ -1,59 +1,61 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH] Add git-index-pack utility
-Date: Wed, 12 Oct 2005 19:01:56 +0400
-Message-ID: <20051012150156.GB2539@master.mivlgu.local>
-References: <20051012173426.56fd5c1c.vsu@altlinux.ru> <20051012135405.CDE55E005E3@center4.mivlgu.local> <Pine.LNX.4.63.0510121632040.6307@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add '--create-index' to git-unpack-objects
+Date: Wed, 12 Oct 2005 17:08:47 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510121707510.6666@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0510121301340.30679@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20051012173426.56fd5c1c.vsu@altlinux.ru>
+ <Pine.LNX.4.63.0510121612340.6307@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20051012145548.GA2539@master.mivlgu.local>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Yylu36WmvOXNoKYn"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 12 17:04:22 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Oct 12 17:12:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPi7G-00083F-H5
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 17:02:02 +0200
+	id 1EPiDs-0002Fx-Oy
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 17:08:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964805AbVJLPB6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Oct 2005 11:01:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964806AbVJLPB6
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 11:01:58 -0400
-Received: from mivlgu.ru ([81.18.140.87]:60289 "EHLO master.mivlgu.local")
-	by vger.kernel.org with ESMTP id S964805AbVJLPB6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2005 11:01:58 -0400
-Received: by master.mivlgu.local (Postfix, from userid 1000)
-	id 2D5C218010F; Wed, 12 Oct 2005 19:01:56 +0400 (MSD)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0510121632040.6307@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S964810AbVJLPIt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Oct 2005 11:08:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964811AbVJLPIt
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 11:08:49 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:1482 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964810AbVJLPIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2005 11:08:48 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C182513EBD7; Wed, 12 Oct 2005 17:08:47 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A67109ECB5; Wed, 12 Oct 2005 17:08:47 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8D264929A2; Wed, 12 Oct 2005 17:08:47 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 6D3A813EBD7; Wed, 12 Oct 2005 17:08:47 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Sergey Vlasov <vsu@altlinux.ru>
+In-Reply-To: <20051012145548.GA2539@master.mivlgu.local>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10035>
 
+Hi,
 
---Yylu36WmvOXNoKYn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, 12 Oct 2005, Sergey Vlasov wrote:
 
-On Wed, Oct 12, 2005 at 04:33:17PM +0200, Johannes Schindelin wrote:
-> you cheated! You use mmap(), not lseek()! Note that mmap() is more=20
-> efficient only if the platform provides mmap()...
+> Hmm, pack-objects.c:write_one() does exactly the opposite - it writes
+> the base object _after_ writing out the delta (but it does not ensure
+> that ordering completely, so references to base objects can be
+> pointing in both directions).  Why?
 
-Yes, I need to steal some code for handling the deflated streams from
-unpack-objects.c...
+Okay, I did not read that far. However, having quite a few packs out there 
+in this format, there is no option to change the format now.
 
---Yylu36WmvOXNoKYn
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
-
-iD8DBQFDTSVkW82GfkQfsqIRAvm/AJ9yNmcuJMgNGlxRwiBWE9H1UnPzpwCgg3c0
-wuJs9nqXZYhQMswIJdB1XP8=
-=U3Et
------END PGP SIGNATURE-----
-
---Yylu36WmvOXNoKYn--
+Ciao,
+Dscho
