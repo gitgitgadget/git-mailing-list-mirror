@@ -1,75 +1,65 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] gitk: Add "Refs" menu
-Date: Tue, 11 Oct 2005 21:26:20 -0400
-Message-ID: <1129080380.2427.21.camel@dv>
-References: <1128559088.32103.8.camel@dv>
-	 <17227.44393.412591.267878@cargo.ozlabs.ibm.com>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH] Adapt tutorial to cygwin and add test case
+Date: Wed, 12 Oct 2005 03:27:26 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.10.12.01.27.25.688169@smurf.noris.de>
+References: <Pine.LNX.4.63.0510111333160.27109@wbgn013.biozentrum.uni-wuerzburg.de> <7vu0fnsu6f.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 12 03:27:52 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed Oct 12 03:29:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPVO3-0000Be-Lk
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 03:26:32 +0200
+	id 1EPVPU-0000Sn-A4
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 03:28:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751229AbVJLB02 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Oct 2005 21:26:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751142AbVJLB02
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 21:26:28 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:27549 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751128AbVJLB01
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2005 21:26:27 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EPVNw-0003Ef-1R
-	for git@vger.kernel.org; Tue, 11 Oct 2005 21:26:24 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1EPVNs-0002iA-UD; Tue, 11 Oct 2005 21:26:20 -0400
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17227.44393.412591.267878@cargo.ozlabs.ibm.com>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	id S1750746AbVJLB15 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Oct 2005 21:27:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbVJLB15
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 21:27:57 -0400
+Received: from main.gmane.org ([80.91.229.2]:226 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750746AbVJLB15 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Oct 2005 21:27:57 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EPVP7-0000Ir-RP
+	for git@vger.kernel.org; Wed, 12 Oct 2005 03:27:37 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 12 Oct 2005 03:27:37 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 12 Oct 2005 03:27:37 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9998>
 
-Hi, Paul!
+Hi, Junio C Hamano wrote:
 
-On Tue, 2005-10-11 at 22:17 +1000, Paul Mackerras wrote:
-> Pavel Roskin writes:
+> The Kosher way would be
 > 
-> > This patch adds "Refs" menu to gitk.  It makes all branches, tags and
-> > other ref objects appear as menu items.  Selecting one of the items
-> > selects the corresponding line in the view.
+>     tree=$(git-write-tree)
+>     commit=$(echo 'Initial commit' | git-commit-tree $tree)
+>     git-update-ref HEAD $(commit)
 > 
-> Sorry I haven't responded before - I have got way behind with my email
-> due to a vacation and to concentrating on the merge of the ppc32 and
-> ppc64 kernel sources.  It will probably be a bit longer before I can
-> get to look at this.
+> but looks quite intimidating as a tutorial material.
 
-No problem.  Thank you for letting me know.
+... which is probably why there's a "git commit" command these days.
 
-I'm not a GUI designer and I'm not experienced in Tcl/Tk, so I'll
-appreciate critical look at the patches.
-
-I think that gitk should move away from being just a frontend to
-git-rev-list.  There is more information in the repository, such as
-tags, branches, stgit patches etc.  All this information needs to be
-represented in some way, and using the menu was just the first approach.
-
-Browsing trees and opening files for a given commit would be great and
-helpful from developers migrating from CVS.
-
-And making gitk cooperate with stgit would be a killer application not
-just for gitk and stgit, but for git itself (i.e. it could be the reason
-why git is chosen for development over e.g. Mercurial for new projects).
-
-I don't want to distract you from PPC work, but your return to gitk
-development would be very welcome :-)
+Those three commands may be The Works, but they also expose exactly what
+git does behind the scenes, and thus explains reasonably well what you'd
+need to think about if you want to do something that's not just a simple
+commit.
 
 -- 
-Regards,
-Pavel Roskin
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+The Killer Ducks are coming!!!
