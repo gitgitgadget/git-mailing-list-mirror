@@ -1,65 +1,78 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] gitk: Add "Refs" menu
-Date: Wed, 12 Oct 2005 10:34:52 -0400
-Message-ID: <1129127692.31997.10.camel@dv>
-References: <1128559088.32103.8.camel@dv>
-	 <17227.44393.412591.267878@cargo.ozlabs.ibm.com>
-	 <1129080380.2427.21.camel@dv>
-	 <20051012073139.GV8383MdfPADPa@greensroom.kotnet.org>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: [PATCH] Add '--create-index' to git-unpack-objects
+Date: Wed, 12 Oct 2005 18:55:48 +0400
+Message-ID: <20051012145548.GA2539@master.mivlgu.local>
+References: <Pine.LNX.4.63.0510121301340.30679@wbgn013.biozentrum.uni-wuerzburg.de> <20051012173426.56fd5c1c.vsu@altlinux.ru> <Pine.LNX.4.63.0510121612340.6307@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 12 16:36:38 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Dxnq1zWXvFF0Q93v"
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Oct 12 16:58:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPhhP-0006oF-8P
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 16:35:19 +0200
+	id 1EPi1q-0005zS-DQ
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 16:56:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964795AbVJLOfA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Oct 2005 10:35:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964797AbVJLOfA
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 10:35:00 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:7367 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S964795AbVJLOe7
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2005 10:34:59 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EPhh4-0004uj-LL
-	for git@vger.kernel.org; Wed, 12 Oct 2005 10:34:58 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1EPhgy-0008Q8-BK; Wed, 12 Oct 2005 10:34:52 -0400
-To: skimo@liacs.nl
-In-Reply-To: <20051012073139.GV8383MdfPADPa@greensroom.kotnet.org>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	id S964799AbVJLOzu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Oct 2005 10:55:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964803AbVJLOzu
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 10:55:50 -0400
+Received: from mivlgu.ru ([81.18.140.87]:58753 "EHLO master.mivlgu.local")
+	by vger.kernel.org with ESMTP id S964799AbVJLOzu (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2005 10:55:50 -0400
+Received: by master.mivlgu.local (Postfix, from userid 1000)
+	id 581B918010F; Wed, 12 Oct 2005 18:55:48 +0400 (MSD)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0510121612340.6307@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10032>
 
-On Wed, 2005-10-12 at 09:31 +0200, Sven Verdoolaege wrote:
-> On Tue, Oct 11, 2005 at 09:26:20PM -0400, Pavel Roskin wrote:
-> > Browsing trees and opening files for a given commit would be great and
-> > helpful from developers migrating from CVS.
-> 
-> Something like this ?
-> 
->     From: Ingo Bormuth <ibormuth@efil.de>
->     To: git@vger.kernel.org
->     Cc: paulus@samba.org
->     Subject: [PATCH] Gitk tree view (correction)
->     Message-ID: <20050824223550.GA23693@kruemel>
 
-That's pretty good, thank you.  Although I think "Tree" and "Commit"
-should be links on top of the view pane rather than a button.  "Commit"
-button is especially confusing - one could think that it would commit
-something.
+--Dxnq1zWXvFF0Q93v
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Also, it would be really great to put line numbers in a separate widget
-so that they are never selected with the text.  When done correctly,
-most users will never want to turn the line numbers off.
+On Wed, Oct 12, 2005 at 04:25:22PM +0200, Johannes Schindelin wrote:
+> On Wed, 12 Oct 2005, Sergey Vlasov wrote:
+> > Saving unpacked objects in memory would obviously be unacceptable.
+>=20
+> Actually, this is what git-unpack-objects does. All unresolved deltas are=
+=20
+> stored in a linked list, and handled later.
 
--- 
-Regards,
-Pavel Roskin
+Yes, this may be a problem if the pack is large and contains many
+deltas.  But these stored deltas are thrown away immediately when the
+base object is found; if you want to implement a streaming reindex,
+you will need to store them until you reach the end of pack (or write
+those objects to some temporary files).
+
+> Of course, it would be nicer to use a seekable file if you have one. But=
+=20
+> then, I am not at all sure that base objects should be allowed to come=20
+> later in the file: since the delta chains must not be cyclic, the objects
+> can be sorted. Thus, it could be guaranteed that the base objects are=20
+> already unpacked when unpacking the derived object.
+
+Hmm, pack-objects.c:write_one() does exactly the opposite - it writes
+the base object _after_ writing out the delta (but it does not ensure
+that ordering completely, so references to base objects can be
+pointing in both directions).  Why?
+
+--Dxnq1zWXvFF0Q93v
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
+
+iD8DBQFDTSP0W82GfkQfsqIRAms5AJ91GSQoGHY3IpF5EhEESwGlvM9KhgCbBjwf
+uf8p5vOTUarJWh76awZ0610=
+=9OeS
+-----END PGP SIGNATURE-----
+
+--Dxnq1zWXvFF0Q93v--
