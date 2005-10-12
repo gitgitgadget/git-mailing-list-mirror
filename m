@@ -1,49 +1,58 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: [PATCH] Typo fix
-Date: Thu, 13 Oct 2005 02:13:04 +0100
-Message-ID: <20051013011304.GA31527@linux-mips.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Oct 13 14:09:23 2005
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: cg-mv
+Date: Wed, 12 Oct 2005 19:32:14 -0300
+Message-ID: <200510122232.j9CMWEhN003974@laptop11.inf.utfsm.cl>
+References: <pasky@suse.cz>
+Cc: Zack Brown <zbrown@tumblerings.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 13 15:13:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQ1rg-0005bJ-0s
-	for gcvg-git@gmane.org; Thu, 13 Oct 2005 14:07:16 +0200
+	id 1EQ2ri-0006TZ-KC
+	for gcvg-git@gmane.org; Thu, 13 Oct 2005 15:11:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750767AbVJMMGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Oct 2005 08:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750987AbVJMMGr
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 08:06:47 -0400
-Received: from extgw-uk.mips.com ([62.254.210.129]:5385 "EHLO
-	bacchus.net.dhis.org") by vger.kernel.org with ESMTP
-	id S1750767AbVJMMGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2005 08:06:46 -0400
-Received: from dea.linux-mips.net (localhost.localdomain [127.0.0.1])
-	by bacchus.net.dhis.org (8.13.4/8.13.1) with ESMTP id j9DC6iKg005452
-	for <git@vger.kernel.org>; Thu, 13 Oct 2005 13:06:45 +0100
-Received: (from ralf@localhost)
-	by dea.linux-mips.net (8.13.4/8.13.4/Submit) id j9D1D69I001044
-	for git@vger.kernel.org; Thu, 13 Oct 2005 02:13:06 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
+	id S1751055AbVJMNLO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Oct 2005 09:11:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbVJMNLN
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 09:11:13 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:20953 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S1750771AbVJMNLN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2005 09:11:13 -0400
+Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j9DDAT3C004667
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 13 Oct 2005 10:10:31 -0300
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j9CMWEhN003974;
+	Wed, 12 Oct 2005 19:32:14 -0300
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: Message from Petr Baudis <pasky@suse.cz> 
+   of "Wed, 12 Oct 2005 12:07:57 +0200." <20051012100757.GM30889@pasky.or.cz> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Thu, 13 Oct 2005 10:10:31 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10070>
 
-Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+Petr Baudis <pasky@suse.cz> wrote:
+> Dear diary, on Fri, Oct 07, 2005 at 04:33:33PM CEST, I got a letter
+> where Zack Brown <zbrown@tumblerings.org> told me that...
 
-diff --git a/rsh.c b/rsh.c
---- a/rsh.c
-+++ b/rsh.c
-@@ -68,7 +68,7 @@ int setup_connection(int *fd_in, int *fd
- 	if (!path) {
- 		return error("Bad URL: %s", url);
- 	}
--	/* $GIT_RSH <host> "env GIR_DIR=<path> <remote_prog> <args...>" */
-+	/* $GIT_RSH <host> "env GIT_DIR=<path> <remote_prog> <args...>" */
- 	sizen = COMMAND_SIZE;
- 	posn = command;
- 	of = 0;
+> > IIRC, file renaming is something we only care about at read time, we
+> > don't actually need to track it while making the change, because git
+> > allows us to track data from file to file without having to tell it
+> > that the data is moving.
+
+> > So, just to keep certain people happy, why not have the cg-mv command
+> > defined to something like this:
+
+What about git-rename(1)? For completeness, just wrap it into cg-mv.
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
