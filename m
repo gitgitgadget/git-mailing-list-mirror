@@ -1,145 +1,56 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] Add git-findtags
-Date: Wed, 12 Oct 2005 16:19:29 +1300
-Message-ID: <1129087169926-git-send-email-martin@catalyst.net.nz>
-Reply-To: Martin Langhoff <martin@catalyst.net.nz>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [RFC] Cleaning up die() error messages
+Date: Tue, 11 Oct 2005 20:18:45 -0700
+Message-ID: <434C8095.4080201@zytor.com>
+References: <20051010105008.GB30202@gentoo.org> <7vzmph42j2.fsf@assigned-by-dhcp.cox.net> <pan.2005.10.11.19.48.04.675482@smurf.noris.de> <434C2590.3040107@zytor.com> <pan.2005.10.12.01.20.17.917829@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Wed Oct 12 05:20:28 2005
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 12 05:20:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPX9t-0004ZI-EC
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 05:20:01 +0200
+	id 1EPX9u-0004ZI-0X
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 05:20:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932386AbVJLDTZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Oct 2005 23:19:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932387AbVJLDTZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 23:19:25 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:56744 "EHLO
-	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S932386AbVJLDTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Oct 2005 23:19:24 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=aporo.wgtn.cat-it.co.nz)
-	by mail1.catalyst.net.nz with smtp (Exim 4.50)
-	id 1EPX9H-0006Bu-9H; Wed, 12 Oct 2005 16:19:23 +1300
-To: git@vger.kernel.org
-X-Mailer: git-send-email
-In-Reply-To: 
+	id S932387AbVJLDT1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Oct 2005 23:19:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932392AbVJLDT1
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 23:19:27 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:45253 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932387AbVJLDT0
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Oct 2005 23:19:26 -0400
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9C3IjtK009088
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 11 Oct 2005 20:18:46 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Matthias Urlichs <smurf@smurf.noris.de>
+In-Reply-To: <pan.2005.10.12.01.20.17.917829@smurf.noris.de>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10001>
 
-A short perl script that will walk the tag refs, tag objects, and even commit
-objects in its quest to figure out whether the given SHA1 (for a commit or
-tree) was ever tagged.
+Matthias Urlichs wrote:
+> 
+> I thought about doing something like that, but ...
+>>However, a much bigger problem is cleanup.
+> 
+> ... exactly.
+> 
 
-Usage: git-findtags.perl [ -t ] <commit-or-tree-sha1>
+I thought about this, and probably the sanest way is to wrap malloc() 
+with something that creates a linked list of allocations.  If we abort, 
+we can unwind the linked list and free all allocations.
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
-
-
----
-
- Makefile          |    3 ++
- git-findtags.perl |   70 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 72 insertions(+), 1 deletions(-)
- create mode 100755 git-findtags.perl
-
-applies-to: ef9b5c2cb61cf509adf2f5ef37fa1db517291f48
-58597ae99b77a690a788d2f096cecc1b7ae809fd
-diff --git a/Makefile b/Makefile
-index 8697d52..a5d9cd4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -93,7 +93,8 @@ SCRIPT_SH = \
- 
- SCRIPT_PERL = \
- 	git-archimport.perl git-cvsimport.perl git-relink.perl \
--	git-rename.perl git-shortlog.perl git-fmt-merge-msg.perl
-+	git-rename.perl git-shortlog.perl git-fmt-merge-msg.perl \
-+	git-findtags.perl
- 
- SCRIPT_PYTHON = \
- 	git-merge-recursive.py
-diff --git a/git-findtags.perl b/git-findtags.perl
-new file mode 100755
-index 0000000..40eb284
---- /dev/null
-+++ b/git-findtags.perl
-@@ -0,0 +1,70 @@
-+#!/usr/bin/perl -w
-+#
-+# Copyright (c) 2005 Martin Langhoff
-+#
-+# Walk the tags and find if they match a commit
-+# expects a SHA1 of a commit. Option -t enables 
-+# searching trees too.
-+#
-+
-+use strict;
-+use File::Basename;
-+use Getopt::Std;
-+
-+my $git_dir = $ENV{GIT_DIR} || '.git';
-+
-+# options
-+our $opt_t;
-+getopts("t") || usage();
-+
-+my @tagfiles   = `find $git_dir/refs/tags -follow -type f`; # haystack
-+my $target = shift @ARGV;                     # needle
-+
-+unless ($target) { 
-+    usage();
-+}
-+
-+
-+foreach my $tagfile (@tagfiles) {
-+    chomp $tagfile;
-+    my $tagid = quickread($tagfile);
-+    chomp $tagid;
-+
-+    # grab the first 2 lines (the whole tag could be large)
-+    my $tagobj = `git-cat-file tag $tagid | head -n2 `;
-+    if ($tagobj =~  m/^type commit$/m) { # only deal with commits
-+
-+	if ($tagobj =~ m/^object $target$/m) { # match on the commit
-+	    print basename($tagfile) . "\n";
-+
-+	} elsif ( $opt_t &&                      # follow the commit
-+		 $tagobj =~ m/^object (\S+)$/m) { # and try to match trees
-+	    my $commitid = $1;
-+	    my $commitobj = `git-cat-file commit $commitid | head -n1`;
-+	    chomp $commitobj;
-+	    $commitobj =~ m/^tree (\S+)$/;
-+	    my $treeid = $1;
-+	    if ($target eq $treeid) {
-+		print  basename($tagfile) . "\n";
-+	    }
-+	}
-+    }
-+}
-+
-+sub quickread {
-+    my $file = shift;
-+    local $/; undef $/; # slurp mode
-+    open FILE, "<$file"
-+	or die "Cannot open $file : $!";
-+    my $content = <FILE>;
-+    close FILE;
-+    return $content;
-+}
-+
-+sub usage {
-+	print STDERR <<END;
-+Usage: ${\basename $0}     # find tags for a commit or tree
-+       [ -t ] <commit-or-tree-sha1>
-+END
-+	exit(1);
-+}
----
-0.99.8.GIT
+	-hpa
