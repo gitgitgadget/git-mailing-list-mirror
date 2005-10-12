@@ -1,68 +1,51 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Problems cloning
-Date: Wed, 12 Oct 2005 10:19:08 +0200
-Message-ID: <20051012081908.GK30889@pasky.or.cz>
-References: <20051009141547.GA8609@schottelius.org>
+Subject: Re: [PATCH] git-fetch --tags: deal with tags with spaces in them.
+Date: Wed, 12 Oct 2005 10:26:32 +0200
+Message-ID: <20051012082632.GL30889@pasky.or.cz>
+References: <46a038f90510062014l7f5740e0l77fc53b50f822e8f@mail.gmail.com> <46a038f90510082014i6b296f2bvbac56e25344cbdf2@mail.gmail.com> <4349ED5D.6020703@catalyst.net.nz> <7v4q7p927d.fsf@assigned-by-dhcp.cox.net> <7vzmpgznfj.fsf_-_@assigned-by-dhcp.cox.net> <7virw4zlod.fsf_-_@assigned-by-dhcp.cox.net> <7vzmpgy4g4.fsf@assigned-by-dhcp.cox.net> <7vk6gjl2uu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: kay.sievers@suse.de, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 12 10:20:33 2005
+Cc: git@vger.kernel.org,
+	"Martin Langhoff \(CatalystIT\)" <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Wed Oct 12 10:27:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPbpg-0007BT-M3
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 10:19:29 +0200
+	id 1EPbwr-0000wL-Bp
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 10:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751350AbVJLITM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Oct 2005 04:19:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751354AbVJLITM
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 04:19:12 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:43181 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751350AbVJLITL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2005 04:19:11 -0400
-Received: (qmail 14904 invoked by uid 2001); 12 Oct 2005 10:19:08 +0200
-To: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+	id S1751358AbVJLI0f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Oct 2005 04:26:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbVJLI0f
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 04:26:35 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:18907 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751358AbVJLI0f (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2005 04:26:35 -0400
+Received: (qmail 15447 invoked by uid 2001); 12 Oct 2005 10:26:32 +0200
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <20051009141547.GA8609@schottelius.org>
+In-Reply-To: <7vk6gjl2uu.fsf@assigned-by-dhcp.cox.net>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10015>
 
-Dear diary, on Sun, Oct 09, 2005 at 04:15:47PM CEST, I got a letter
-where Nico -telmich- Schottelius <nico-linux-git@schottelius.org> told me that...
-> Cloning gitweb from kernel.org fails:
-> 
-> ----------------------------------------------------------------------
-> [16:10] hydrogenium:build% cg-clone http://www.kernel.org/pub/scm/git/gitweb.git 
-> defaulting to local storage area
-> 16:10:35 URL:http://www.kernel.org/pub/scm/git/gitweb.git/HEAD [41/41] -> "refs/heads/.origin-fetching" [1]
-> progress: 84 objects, 295012 bytes
-> Getting pack list
-> Getting alternates list
-> error: Unable to find d263a6bd453df849c9f9211f1966c830c3cf913a under http://www.kernel.org/pub/scm/git/gitweb.git/
-> 
-> Cannot obtain needed commit d263a6bd453df849c9f9211f1966c830c3cf913a
-> while processing commit f5dfb3f6a6655d4d60fdd0aaeef7b5b14226147f.
-> cg-fetch: objects fetch failed
-> cg-clone: fetch failed
-> ----------------------------------------------------------------------
-> 
-> Info:
-> 
-> ----------------------------------------------------------------------
-> [16:01] hydrogenium:cinit% cg --version
-> cogito-0.15.1 (cfeac5893d97b830ac31b9d41951c30f80967410)
-> 
-> [16:13] hydrogenium:cinit% git --version
-> git version 0.99.7d
-> ----------------------------------------------------------------------
+Dear diary, on Wed, Oct 12, 2005 at 07:29:45AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> I do not personally think it is too much of a restriction if we
+> said we only allow tags using letters from [-a-zA-Z0-9.] (yes I
+> am trying to be controversial by not allowing even latin-1
+> names).
 
-It seems that the gitweb repository is broken wrt. fetching over HTTP,
-since it does not have the "dumb server info" containing the list of
-packs. Someone needs to run git-update-server-info over there.
+I think this is perfectly reasonable, as long as you also throw _ to the
+set. ;-) Actually, cg-tag now already does at least
+
+(echo $name | egrep -qv '[^a-zA-Z0-9_.@!:-]') || \
+        die "name contains invalid characters"
+
+but I'm in no way emotionally attached to the @!: characters.
 
 -- 
 				Petr "Pasky" Baudis
