@@ -1,163 +1,90 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH]: Use ARGS, not positional arguments
-Date: Wed, 12 Oct 2005 01:57:28 -0400
-Message-ID: <1129096648.2427.47.camel@dv>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [RFC] Cleaning up die() error messages
+Date: Wed, 12 Oct 2005 08:04:36 +0200
+Message-ID: <20051012060436.GA567@kiste.smurf.noris.de>
+References: <20051010105008.GB30202@gentoo.org> <7vzmph42j2.fsf@assigned-by-dhcp.cox.net> <pan.2005.10.11.19.48.04.675482@smurf.noris.de> <434C2590.3040107@zytor.com> <pan.2005.10.12.01.20.17.917829@smurf.noris.de> <434C8095.4080201@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Oct 12 07:58:40 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="9AazSAFPVKSPmRXK"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 12 08:06:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPZcb-0006h0-1K
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 07:57:49 +0200
+	id 1EPZki-0008Rn-Mt
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 08:06:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932468AbVJLF5e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Oct 2005 01:57:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932471AbVJLF5d
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 01:57:33 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:61608 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932468AbVJLF5d
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2005 01:57:33 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EPZcJ-00080W-Kj
-	for git@vger.kernel.org; Wed, 12 Oct 2005 01:57:31 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1EPZcG-00088X-DT; Wed, 12 Oct 2005 01:57:28 -0400
-To: Petr Baudis <pasky@suse.cz>, git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	id S932451AbVJLGGE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Oct 2005 02:06:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932467AbVJLGGE
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 02:06:04 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:49114 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S932451AbVJLGGD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2005 02:06:03 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1EPZjA-0001rG-MX; Wed, 12 Oct 2005 08:05:25 +0200
+Received: (nullmailer pid 10566 invoked by uid 501);
+	Wed, 12 Oct 2005 06:04:36 -0000
+To: "H\. Peter Anvin" <hpa@zytor.com>
+Content-Disposition: inline
+In-Reply-To: <434C8095.4080201@zytor.com>
+User-Agent: Mutt/1.5.9i
+X-Smurf-Spam-Score: -2.6 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10009>
-
-Some scripts need to be fixed to use ARGS properly.
-
-Positional arguments are no longer preserved in cg-Xlib, so they may not
-be used.  cg-export uses standard option parsing now.
-
-Signed-off-by: Pavel Roskin <proski@gnu.org>
-
-diff --git a/cg-admin-lsobj b/cg-admin-lsobj
-index 8899037..bf3413f 100755
---- a/cg-admin-lsobj
-+++ b/cg-admin-lsobj
-@@ -39,7 +39,7 @@ USAGE="cg-admin-lsobj [OBJECT_TYPE]"
- 
- . ${COGITO_LIB}cg-Xlib || exit 1
- 
--target=$1
-+target=${ARGS[0]}
- 
- 
- subdir=$_git_objects
-diff --git a/cg-branch-add b/cg-branch-add
-index eb20598..c5462cf 100755
---- a/cg-branch-add
-+++ b/cg-branch-add
-@@ -63,8 +63,8 @@ USAGE="cg-branch-add BRANCH_NAME LOCATIO
- 
- . ${COGITO_LIB}cg-Xlib || exit 1
- 
--name=$1
--location=$2
-+name=${ARGS[0]}
-+location=${ARGS[1]}
- 
- ([ "$name" ] && [ "$location" ]) || usage
- (echo $name | egrep -qv '[^a-zA-Z0-9_.@!:-]') || \
-diff --git a/cg-branch-chg b/cg-branch-chg
-index 6ac8d15..9c98f6b 100755
---- a/cg-branch-chg
-+++ b/cg-branch-chg
-@@ -9,8 +9,8 @@ USAGE="cg-branch-chg BRANCH_NAME NEW_LOC
- 
- . ${COGITO_LIB}cg-Xlib || exit 1
- 
--name=$1
--location=$2
-+name=${ARGS[0]}
-+location=${ARGS[1]}
- ([ "$name" ] && [ "$location" ]) || usage
- 
- [ -s "$_git/branches/$name" ] || die "branch does not exist"
-diff --git a/cg-export b/cg-export
-index 594e225..ef9e7cc 100755
---- a/cg-export
-+++ b/cg-export
-@@ -15,17 +15,22 @@ _git_requires_root=1
- 
- . ${COGITO_LIB}cg-Xlib || exit 1
- 
--if [ "$1" = "-r" ]; then
--	shift
--	# We do not resolve to tree id since git-tar-tree can utilize some commit
--	# information.
--	id="$(cg-object-id -c "$1" 2>/dev/null)" || id="$1"
--	shift
--else
-+id=
-+while optparse; do
-+	if optparse -r=; then
-+		# We do not resolve to tree id since git-tar-tree can
-+		# utilize some commit information.
-+		id="$(cg-object-id -c "$OPTARG" 2>/dev/null)" || id="$OPTARG"
-+	else
-+		optfail
-+	fi
-+done
-+
-+if [ -z "$id" ]; then
- 	id="$(cg-object-id -c)"
- fi
- 
--dest=$1
-+dest=${ARGS[0]}
- 
- ([ "$dest" ] && [ "$id" ]) || usage
- 
-diff --git a/cg-patch b/cg-patch
-index 2aecd1a..153376e 100755
---- a/cg-patch
-+++ b/cg-patch
-@@ -70,7 +70,7 @@ redzone_border()
- 
- 
- reverse=
--if [ "$1" = "-R" ]; then
-+if [ "${ARGS[0]}" = "-R" ]; then
- 	reverse=1
- 	shift
- fi
-diff --git a/cg-reset b/cg-reset
-index dbd69c6..38b7361 100755
---- a/cg-reset
-+++ b/cg-reset
-@@ -20,7 +20,7 @@ _git_requires_root=1
- . ${COGITO_LIB}cg-Xlib || exit 1
- deprecated_alias cg-reset cg-cancel
- 
--[ "$1" ] && die "this command takes no parameters; use cg-restore to restore individual files"
-+[ "${ARGS[0]}" ] && die "this command takes no parameters; use cg-restore to restore individual files"
- 
- if ! [ -s $_git/HEAD ]; then
- 	rm -f $_git/HEAD
-diff --git a/cg-seek b/cg-seek
-index f07b90c..d2aeb0a 100755
---- a/cg-seek
-+++ b/cg-seek
-@@ -24,7 +24,7 @@ _git_requires_root=1
- 
- . ${COGITO_LIB}cg-Xlib || exit 1
- 
--dstcommit=$1
-+dstcommit=${ARGS[0]}
- 
- 
- [ -s $_git/blocked ] && grep -vq '^seeked from ' $_git/blocked && die "action blocked: $(cat $_git/blocked)"
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10010>
 
 
--- 
-Regards,
-Pavel Roskin
+--9AazSAFPVKSPmRXK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+H. Peter Anvin:
+> >I thought about doing something like that, but ...
+> >>However, a much bigger problem is cleanup.
+> >
+> >... exactly.
+>=20
+> I thought about this, and probably the sanest way is to wrap malloc()=20
+> with something that creates a linked list of allocations.  If we abort,=
+=20
+> we can unwind the linked list and free all allocations.
+>=20
+There already is a malloc library that does this, plus it can call
+cleanup for you -- there's more to cleaning up than freeing memory. :-/
+
+Let's see if I can actually find it again.
+
+On the other hand, I wonder if the overhead when managing data
+structures like that really offsets the additional work we'd need to do
+otherwise, which is simply checking a few more return values.
+
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+BOFH excuse #381:
+
+Robotic tape changer mistook operator's tie for a backup tape.
+
+--9AazSAFPVKSPmRXK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFDTKd08+hUANcKr/kRArNqAJ9qGQy5bQtV7ERnikSkwvcLtWnyawCgicUa
+Ouy5+IjgOjO3L+CTs/CISMg=
+=DTcE
+-----END PGP SIGNATURE-----
+
+--9AazSAFPVKSPmRXK--
