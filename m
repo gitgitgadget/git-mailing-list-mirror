@@ -1,90 +1,98 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [RFC] Cleaning up die() error messages
-Date: Wed, 12 Oct 2005 08:04:36 +0200
-Message-ID: <20051012060436.GA567@kiste.smurf.noris.de>
-References: <20051010105008.GB30202@gentoo.org> <7vzmph42j2.fsf@assigned-by-dhcp.cox.net> <pan.2005.10.11.19.48.04.675482@smurf.noris.de> <434C2590.3040107@zytor.com> <pan.2005.10.12.01.20.17.917829@smurf.noris.de> <434C8095.4080201@zytor.com>
+From: Paul Eggert <eggert@CS.UCLA.EDU>
+Subject: Re: [PATCH] Try URI quoting for embedded TAB and LF in pathnames
+Date: Tue, 11 Oct 2005 23:51:41 -0700
+Message-ID: <877jcjmdmq.fsf@penguin.cs.ucla.edu>
+References: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net>
+	<20051007232909.GB8893@steel.home>
+	<7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net>
+	<20051008064555.GA3831@steel.home>
+	<7vachks7aq.fsf@assigned-by-dhcp.cox.net>
+	<20051008133032.GA32079@localhost>
+	<7v64s7svya.fsf@assigned-by-dhcp.cox.net>
+	<7vu0frpxs1.fsf@assigned-by-dhcp.cox.net>
+	<87mzlgh8xa.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510110802470.14597@g5.osdl.org>
+	<87ek6s0w34.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510111121030.14597@g5.osdl.org>
+	<87slv7zvqj.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510111346220.14597@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="9AazSAFPVKSPmRXK"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 12 08:06:54 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Robert Fitzsimons <robfitz@273k.net>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Kai Ruemmler <kai.ruemmler@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Oct 12 08:53:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPZki-0008Rn-Mt
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 08:06:13 +0200
+	id 1EPaTr-0002ai-VO
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 08:52:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932451AbVJLGGE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Oct 2005 02:06:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932467AbVJLGGE
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 02:06:04 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:49114 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S932451AbVJLGGD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2005 02:06:03 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1EPZjA-0001rG-MX; Wed, 12 Oct 2005 08:05:25 +0200
-Received: (nullmailer pid 10566 invoked by uid 501);
-	Wed, 12 Oct 2005 06:04:36 -0000
-To: "H\. Peter Anvin" <hpa@zytor.com>
-Content-Disposition: inline
-In-Reply-To: <434C8095.4080201@zytor.com>
-User-Agent: Mutt/1.5.9i
-X-Smurf-Spam-Score: -2.6 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S932368AbVJLGwt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Oct 2005 02:52:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932394AbVJLGwt
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 02:52:49 -0400
+Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:59309 "EHLO kiwi.cs.ucla.edu")
+	by vger.kernel.org with ESMTP id S932368AbVJLGws (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2005 02:52:48 -0400
+Received: from penguin.cs.ucla.edu (Penguin.CS.UCLA.EDU [131.179.64.200])
+	by kiwi.cs.ucla.edu (8.11.7p1+Sun/8.11.7/UCLACS-5.2) with ESMTP id j9C6pf406118;
+	Tue, 11 Oct 2005 23:51:42 -0700 (PDT)
+Received: from eggert by penguin.cs.ucla.edu with local (Exim 4.50)
+	id 1EPaSj-0002LE-7w; Tue, 11 Oct 2005 23:51:41 -0700
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510111346220.14597@g5.osdl.org> (Linus
+ Torvalds's message of "Tue, 11 Oct 2005 13:56:12 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10011>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
---9AazSAFPVKSPmRXK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> you can read it as a UTF-8 stream, but then quote things at a byte
+> level (ie if you quote one "character", you quote _all_ bytes in
+> that character).
 
-Hi,
+Yes, that's what I had in mind.
 
-H. Peter Anvin:
-> >I thought about doing something like that, but ...
-> >>However, a much bigger problem is cleanup.
-> >
-> >... exactly.
->=20
-> I thought about this, and probably the sanest way is to wrap malloc()=20
-> with something that creates a linked list of allocations.  If we abort,=
-=20
-> we can unwind the linked list and free all allocations.
->=20
-There already is a malloc library that does this, plus it can call
-cleanup for you -- there's more to cleaning up than freeing memory. :-/
+> And you quote if:
+>
+>  - the UTF-8 _character_ is in the 0x80-0x9f control range
 
-Let's see if I can actually find it again.
+Yes.  Or more generally, if it's any UTF-8 control character.
 
-On the other hand, I wonder if the overhead when managing data
-structures like that really offsets the additional work we'd need to do
-otherwise, which is simply checking a few more return values.
+>  - any _raw_byte_ is in the 0x80-0x9f range (it might not be UTF-8)
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-BOFH excuse #381:
+Why quote the raw bytes?  Is this for terminal escapes on older xterm
+(or xterm-like) implementations that don't understand UTF-8?  If so,
+I'm not sure I'd bother, as it would introduce a lot of annoying
+quoting with perfectly reasonable UTF-8, and (if we assume the world
+is moving to UTF-8) it addresses a problem that is going away.
 
-Robotic tape changer mistook operator's tie for a backup tape.
+>  - any _raw_byte_ is 0xfe-0xff (illegal UTF-8 character)
+>  - misformed UTF-8 (non-shortest sequence, or just generally invalid 
+>    sequences with missing or wrong high bits)
 
---9AazSAFPVKSPmRXK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+Yes, that makes sense.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+> quite frankly, that's a pretty painful thing to write.
 
-iD8DBQFDTKd08+hUANcKr/kRArNqAJ9qGQy5bQtV7ERnikSkwvcLtWnyawCgicUa
-Ouy5+IjgOjO3L+CTs/CISMg=
-=DTcE
------END PGP SIGNATURE-----
+It's not trivially short, yes.  But it shouldn't be that hard.
 
---9AazSAFPVKSPmRXK--
+Also, I guess we don't have to write it, at least not at first.  As
+long as we specify something like the C quoted-string format mentioned
+earlier, we can encode into that format using a naive algorithm (e.g.,
+quote any non-ASCII byte or ASCII control character), and beautify the
+encoding method later.
+
+> The upside is that it's easy to decode: you can _unquote_ it just as
+> a byte stream.
+
+Yes, that's the idea.
+
+Also, the interchange format is the most important thing.  We have to
+decode anything that is in the format, and we must encode into the
+format.  Encoding prettily is nice, but not necessary.
