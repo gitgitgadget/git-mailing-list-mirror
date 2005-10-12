@@ -1,58 +1,88 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: cg-mv
-Date: Wed, 12 Oct 2005 15:14:22 +0200
-Message-ID: <200510121514.22276.Josef.Weidendorfer@gmx.de>
-References: <20051007143333.GA18843@tumblerings.org> <20051012100757.GM30889@pasky.or.cz>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: [PATCH] Add '--create-index' to git-unpack-objects
+Date: Wed, 12 Oct 2005 17:34:26 +0400
+Message-ID: <20051012173426.56fd5c1c.vsu@altlinux.ru>
+References: <Pine.LNX.4.63.0510121301340.30679@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Oct 12 15:17:09 2005
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="pgp-sha1";
+ boundary="Signature=_Wed__12_Oct_2005_17_34_26_+0400_LKlTuAno6_8oC/HA"
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Oct 12 15:36:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPgRe-0005Ak-5L
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 15:14:58 +0200
+	id 1EPgku-0003Gt-KW
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 15:34:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751449AbVJLNOz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Oct 2005 09:14:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbVJLNOz
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 09:14:55 -0400
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:47834 "EHLO
-	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S1751449AbVJLNOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2005 09:14:54 -0400
-Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
-	by mail.in.tum.de (Postfix) with ESMTP id D5E952350
-	for <git@vger.kernel.org>; Wed, 12 Oct 2005 15:14:50 +0200 (MEST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-In-Reply-To: <20051012100757.GM30889@pasky.or.cz>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+	id S964775AbVJLNeg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Oct 2005 09:34:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964779AbVJLNeg
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 09:34:36 -0400
+Received: from mivlgu.ru ([81.18.140.87]:9184 "EHLO mail.mivlgu.ru")
+	by vger.kernel.org with ESMTP id S964775AbVJLNeg (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2005 09:34:36 -0400
+Received: from master.mivlgu.local (master.mivlgu.local [192.168.1.230])
+	by mail.mivlgu.ru (Postfix) with SMTP
+	id BFF9E801B; Wed, 12 Oct 2005 17:42:25 +0400 (MSD)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0510121301340.30679@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Sylpheed version 1.0.0beta4 (GTK+ 1.2.10; i586-alt-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10023>
 
-On Wednesday 12 October 2005 12:07, Petr Baudis wrote:
-> so it should keep the file under the original name as well, but
-> untraced? That's weird. What about
->
-> 	#!/usr/bin/env bash
->
-> 	if [ -e $2 ]; then
-> 		! got_parameter -f && die "dest exists"
-> 		[ -e $1 ] || die "no source nor destination"
-> 	fi
-> 	( [ -e $1 ] && mv $1 $2 ) && cg-add $2 && cg-rm $1
->
-> plus quoting and stuff?
+--Signature=_Wed__12_Oct_2005_17_34_26_+0400_LKlTuAno6_8oC/HA
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Wishlist...
-Please make it similar to mv:
-* Rename directories, too
-* If last argument is an existing directory
-  move given files/directories into that directory
+On Wed, 12 Oct 2005 13:02:36 +0200 (CEST) Johannes Schindelin wrote:
 
-Josef
+> Add the option '--create-index' to git-unpack-objects, which makes it 
+> create an index file instead of expanding its contents. While at it, 
+> document the dry-run option '-n', and optionally take a pack file instead 
+> of stdin.
+
+
+> @@ -104,7 +119,15 @@ static void added_object(unsigned char *
+>  static void write_object(void *buf, unsigned long size, const char *type)
+>  {
+>  	unsigned char sha1[20];
+> -	if (write_sha1_file(buf, size, type, sha1) < 0)
+> +	if (create_index) {
+> +		char header[100];
+> +		SHA_CTX c;
+> +
+> +		SHA1_Init(&c);
+> +		SHA1_Update(&c, header, 1+sprintf(header, "%s %lu", type, size));
+> +		SHA1_Update(&c, buf, size);
+> +		SHA1_Final(current_sha1, &c);
+> +	} else if (write_sha1_file(buf, size, type, sha1) < 0)
+>  		die("failed to write object");
+
+Sorry, but this cannot work.  git-unpack-objects does a streaming
+unpack, and it needs to be able to read back the objects it has written
+out previously (in case a delta later in the stream references some
+older object).  Saving unpacked objects in memory would obviously be
+unacceptable.
+
+However, if you need to create a pack index, you obviously have a pack
+file with random access ability, and in this case it is possible to
+build the index efficiently (in two passes over the pack file) without
+storing unpacked objects in the filesystem.  I made a separate utility
+to do this; will send a patch in some minutes.
+
+--Signature=_Wed__12_Oct_2005_17_34_26_+0400_LKlTuAno6_8oC/HA
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
+
+iD8DBQFDTRDkW82GfkQfsqIRAmSvAJ9RhXxAQg+Oh9ohun6MGejZnDsmXwCcDSSe
+owaiTGqYp/s5RpL/9NIeqOQ=
+=8WSq
+-----END PGP SIGNATURE-----
+
+--Signature=_Wed__12_Oct_2005_17_34_26_+0400_LKlTuAno6_8oC/HA--
