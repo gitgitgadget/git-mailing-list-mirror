@@ -1,93 +1,52 @@
-From: Zack Brown <zbrown@tumblerings.org>
-Subject: Re: cg-mv]
-Date: Wed, 12 Oct 2005 07:28:09 -0700
-Message-ID: <20051012142809.GA17037@tumblerings.org>
-References: <20051007143333.GA18843@tumblerings.org> <20051012100757.GM30889@pasky.or.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add git-index-pack utility
+Date: Wed, 12 Oct 2005 16:33:17 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510121632040.6307@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051012173426.56fd5c1c.vsu@altlinux.ru>
+ <20051012135405.CDE55E005E3@center4.mivlgu.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 12 16:30:46 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 12 16:33:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPhap-0004QJ-4c
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 16:28:31 +0200
+	id 1EPhfc-00062b-T5
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 16:33:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964792AbVJLO22 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Oct 2005 10:28:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964793AbVJLO22
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 10:28:28 -0400
-Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:52192 "EHLO
-	tumblerings.org") by vger.kernel.org with ESMTP id S964792AbVJLO22
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Oct 2005 10:28:28 -0400
-Received: from zbrown by tumblerings.org with local (Exim 4.52)
-	id 1EPhaT-0006Ha-MU; Wed, 12 Oct 2005 07:28:09 -0700
-To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <20051012100757.GM30889@pasky.or.cz>
-User-Agent: Mutt/1.5.9i
+	id S964793AbVJLOdS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Oct 2005 10:33:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964794AbVJLOdS
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 10:33:18 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:21440 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964793AbVJLOdS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Oct 2005 10:33:18 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 5869313EE76; Wed, 12 Oct 2005 16:33:17 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 3F6F49ECB6; Wed, 12 Oct 2005 16:33:17 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 29E7A9ECB2; Wed, 12 Oct 2005 16:33:17 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 0F69C13EE76; Wed, 12 Oct 2005 16:33:17 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Sergey Vlasov <vsu@altlinux.ru>
+In-Reply-To: <20051012135405.CDE55E005E3@center4.mivlgu.local>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10030>
 
-On Wed, Oct 12, 2005 at 12:07:57PM +0200, Petr Baudis wrote:
-> Dear diary, on Fri, Oct 07, 2005 at 04:33:33PM CEST, I got a letter
-> where Zack Brown <zbrown@tumblerings.org> told me that...
-> > Hi,
-> 
-> Hello,
-> 
-> > IIRC, file renaming is something we only care about at read time, we don't
-> > actually need to track it while making the change, because git allows us to
-> > track data from file to file without having to tell it that the data is moving.
-> > 
-> > So, just to keep certain people happy, why not have the cg-mv command defined to
-> > something like this:
-> > 
-> > #!/bin/bash
-> > cp $1 $2
-> > cg-rm $1
-> > cg-add $2
-> 
-> so it should keep the file under the original name as well, but
-> untraced? That's weird.
+Hi,
 
-Yes, I mistyped. cp is wrong.
+you cheated! You use mmap(), not lseek()! Note that mmap() is more 
+efficient only if the platform provides mmap()...
 
-> What about
-> 
-> 	#!/usr/bin/env bash
-> 
-> 	if [ -e $2 ]; then
-> 		! got_parameter -f && die "dest exists"
-> 		[ -e $1 ] || die "no source nor destination"
-> 	fi
-> 	( [ -e $1 ] && mv $1 $2 ) && cg-add $2 && cg-rm $1
-> 
-> plus quoting and stuff?
-
-Yes, that's nicer. Maybe the last line should be:
-
-( [ -e $1 ] && mv $1 $2 ) && cg-add $2 && cg-rm $1 || die "unable to rename file"
-
-But you've already done "-e $1" earlier, right? So maybe you don't need it at
-the end. Just have:
-
-mv $1 $2 && cg-add $2 && cg-rm $1 || die "unable to rename file"
-
-No?
-
-Be well,
-Zack
-
-> 
-> -- 
-> 				Petr "Pasky" Baudis
-> Stuff: http://pasky.or.cz/
-> VI has two modes: the one in which it beeps and the one in which
-> it doesn't.
-
--- 
-Zack Brown
+Ciao,
+Dscho
