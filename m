@@ -1,78 +1,103 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH] Add '--create-index' to git-unpack-objects
-Date: Wed, 12 Oct 2005 18:55:48 +0400
-Message-ID: <20051012145548.GA2539@master.mivlgu.local>
-References: <Pine.LNX.4.63.0510121301340.30679@wbgn013.biozentrum.uni-wuerzburg.de> <20051012173426.56fd5c1c.vsu@altlinux.ru> <Pine.LNX.4.63.0510121612340.6307@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Try URI quoting for embedded TAB and LF in pathnames
+Date: Wed, 12 Oct 2005 07:59:55 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510120749230.14597@g5.osdl.org>
+References: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net> <20051007232909.GB8893@steel.home>
+ <7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net> <20051008064555.GA3831@steel.home>
+ <7vachks7aq.fsf@assigned-by-dhcp.cox.net> <20051008133032.GA32079@localhost>
+ <7v64s7svya.fsf@assigned-by-dhcp.cox.net> <7vu0frpxs1.fsf@assigned-by-dhcp.cox.net>
+ <87mzlgh8xa.fsf@penguin.cs.ucla.edu> <Pine.LNX.4.64.0510110802470.14597@g5.osdl.org>
+ <87ek6s0w34.fsf@penguin.cs.ucla.edu> <Pine.LNX.4.64.0510111121030.14597@g5.osdl.org>
+ <87slv7zvqj.fsf@penguin.cs.ucla.edu> <Pine.LNX.4.64.0510111346220.14597@g5.osdl.org>
+ <877jcjmdmq.fsf@penguin.cs.ucla.edu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Dxnq1zWXvFF0Q93v"
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Oct 12 16:58:28 2005
+Content-Type: MULTIPART/MIXED; BOUNDARY="21872808-1215390309-1129129195=:14597"
+Cc: Junio C Hamano <junkio@cox.net>,
+	Robert Fitzsimons <robfitz@273k.net>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Kai Ruemmler <kai.ruemmler@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Oct 12 17:01:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPi1q-0005zS-DQ
-	for gcvg-git@gmane.org; Wed, 12 Oct 2005 16:56:26 +0200
+	id 1EPi5r-0007Us-UV
+	for gcvg-git@gmane.org; Wed, 12 Oct 2005 17:00:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964799AbVJLOzu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Oct 2005 10:55:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964803AbVJLOzu
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 10:55:50 -0400
-Received: from mivlgu.ru ([81.18.140.87]:58753 "EHLO master.mivlgu.local")
-	by vger.kernel.org with ESMTP id S964799AbVJLOzu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2005 10:55:50 -0400
-Received: by master.mivlgu.local (Postfix, from userid 1000)
-	id 581B918010F; Wed, 12 Oct 2005 18:55:48 +0400 (MSD)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0510121612340.6307@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S964803AbVJLPAa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Oct 2005 11:00:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964805AbVJLPAa
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Oct 2005 11:00:30 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:15840 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964803AbVJLPA3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Oct 2005 11:00:29 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9CF014s010313
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 12 Oct 2005 08:00:02 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9CExtIB031694;
+	Wed, 12 Oct 2005 07:59:57 -0700
+To: Paul Eggert <eggert@CS.UCLA.EDU>
+In-Reply-To: <877jcjmdmq.fsf@penguin.cs.ucla.edu>
+X-Spam-Status: No, hits=2 required=5 tests=OSDL_HIGH_ASCII_6
+X-Spam-Level: **
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.52__
+X-MIMEDefang-Filter: osdl$Revision: 1.124 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10033>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--21872808-1215390309-1129129195=:14597
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
 
---Dxnq1zWXvFF0Q93v
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 12, 2005 at 04:25:22PM +0200, Johannes Schindelin wrote:
-> On Wed, 12 Oct 2005, Sergey Vlasov wrote:
-> > Saving unpacked objects in memory would obviously be unacceptable.
->=20
-> Actually, this is what git-unpack-objects does. All unresolved deltas are=
-=20
-> stored in a linked list, and handled later.
+On Tue, 11 Oct 2005, Paul Eggert wrote:
+> 
+> >  - any _raw_byte_ is in the 0x80-0x9f range (it might not be UTF-8)
+> 
+> Why quote the raw bytes?  Is this for terminal escapes on older xterm
+> (or xterm-like) implementations that don't understand UTF-8?
 
-Yes, this may be a problem if the pack is large and contains many
-deltas.  But these stored deltas are thrown away immediately when the
-base object is found; if you want to implement a streaming reindex,
-you will need to store them until you reach the end of pack (or write
-those objects to some temporary files).
+It's not about "understanding" UTF-8.
 
-> Of course, it would be nicer to use a seekable file if you have one. But=
-=20
-> then, I am not at all sure that base objects should be allowed to come=20
-> later in the file: since the delta chains must not be cyclic, the objects
-> can be sorted. Thus, it could be guaranteed that the base objects are=20
-> already unpacked when unpacking the derived object.
+Even a perfectly modern xterm may simply not be in UTF-8 mode: if it 
+wasn't in an UTF-8 locale, then it won't do UTF-8 decoding.
 
-Hmm, pack-objects.c:write_one() does exactly the opposite - it writes
-the base object _after_ writing out the delta (but it does not ensure
-that ordering completely, so references to base objects can be
-pointing in both directions).  Why?
+> If so, I'm not sure I'd bother, as it would introduce a lot of annoying
+> quoting with perfectly reasonable UTF-8, and (if we assume the world
+> is moving to UTF-8) it addresses a problem that is going away.
 
---Dxnq1zWXvFF0Q93v
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+UTF-8 is only _now_ getting really widespread, and I think it's because 
+RedHat bit the bullet and made UTF-8 the default locale a few years ago.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
+These things take _decades_.
 
-iD8DBQFDTSP0W82GfkQfsqIRAms5AJ91GSQoGHY3IpF5EhEESwGlvM9KhgCbBjwf
-uf8p5vOTUarJWh76awZ0610=
-=9OeS
------END PGP SIGNATURE-----
+I don't know if you realize it, but it's only within the last couple of 
+years that the old 7-bit "finnish ASCII" went away. Finnish and Swedish 
+have three extra characters: åäö (latin1) and Ã¥Ã¤Ã¶ (utf-8). But only
+within the last few years has the really _old_ ASCII representation really 
+gone away so much that I don't see it at all (the characters '{' '}' and 
+'|' were taken over, so that if you had a Finnish ASCII font, programming 
+in C was really funky - but it was common enough that I could do it 
+without thinking much about it ;)
 
---Dxnq1zWXvFF0Q93v--
+So lots of people still use the byte-wide encodings. Whether really old 
+ASCII only or some special locale-dependent one (of which latin1 and the 
+"win-latin1" thing are obviously the most common by far). And in that 
+locale, it's not the UTF-8 control characters that matter, it's the _byte_ 
+control characters that do.
+
+So if you want to support any other locale than UTF-8, you need to escape 
+them. Assuming you want to escape control characters at all, of course (I 
+still think it's perfectly fine to just let the raw mess through and 
+depend on escaping at higher levels)
+
+			Linus
+--21872808-1215390309-1129129195=:14597--
