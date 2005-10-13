@@ -1,104 +1,97 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: [PATCH 3/3] Add "-l" flag for repacking only local packs
-Date: Thu, 13 Oct 2005 14:30:29 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510131427030.23590@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Regression: Multi-head syntax
+Date: Thu, 13 Oct 2005 15:36:48 -0700
+Message-ID: <7v4q7l11tr.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0510132225120.1028@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Oct 13 23:33:49 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 14 00:38:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQAes-0006Zd-Nl
-	for gcvg-git@gmane.org; Thu, 13 Oct 2005 23:30:39 +0200
+	id 1EQBh0-0008NE-F3
+	for gcvg-git@gmane.org; Fri, 14 Oct 2005 00:36:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964864AbVJMVag (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Oct 2005 17:30:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964867AbVJMVag
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 17:30:36 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:63939 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964864AbVJMVaf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2005 17:30:35 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9DLUU4s024181
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 13 Oct 2005 14:30:30 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9DLUTWB003247;
-	Thu, 13 Oct 2005 14:30:30 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.52__
-X-MIMEDefang-Filter: osdl$Revision: 1.124 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751116AbVJMWgv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Oct 2005 18:36:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbVJMWgv
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 18:36:51 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:58035 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751116AbVJMWgu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2005 18:36:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051013223630.YTSW29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 13 Oct 2005 18:36:30 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0510132225120.1028@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Thu, 13 Oct 2005 22:28:50 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10093>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This uses the new "--local" flag to git-pack-objects.  It currently only
-makes a difference together with "-a", since a normal incremental repack
-won't pack any packed objects at all (whether local or remote). 
+> with 221e743c.. [git-fetch --tags: deal with tags with spaces in them.] my 
+> usual git-fetch no longer works. My .git/remotes/junio used to look like 
+> this:
+>
+> -- snip --
+> URL: rsync://rsync.kernel.org/pub/scm/git/git.git
+> Pull: master:junio todo:todo +pu:pu
+> -- snap --
+>
+> but this makes a new head "junio todo:todo +pu:pu". Now I have to write 
+> the remote like this to work correctly:
+>
+> -- snip --
+> URL: rsync://rsync.kernel.org/pub/scm/git/git.git
+> Pull: master:junio
+> Pull: todo:todo
+> Pull: +pu:pu
+> -- snap --
+>
+> Is this intended?
 
-Eventually, it might end up skipping any objects that aren't local to
-the current object directory, but for now it only knows to skip packed
-objects. 
+Unintended regression whose solution is not quite decided.  My
+current thinking is to disallow refnames that:
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
+     * have a path component that begins with a ".", or
+     * have two consecutive dots "..", or
+     * have ASCII control character, "~", "^", ":" or SP, anywhere, or
+     * end with a "/".
 
-Ok, that was the last of it. I tested it out by doing a
+and there are series of commits to enforce the above (except two
+dots) in the proposed updates branch.
 
-	git clone -l -s git newgit
-	cd newgit
-	.. do a dummy commit ..
-	git repack -a -d -l
+The first one does not have much technical reason for it, but is
+just easier on eye, and we do not have to worry about /./ or
+/../ if we have that rule.  The second one is so that
+"ref1..ref2" notation that means "^ref1 ref2" in some tools
+would be unambiguous.
 
-and then
+SP and TAB are because of the shell splicing tokens at IFS, LF
+is because of remote/ file format, and forbidding the rest of
+the control characters are "not strictly necessariy but why not
+while we are at it?"  "~" and "^" are "follow-the-parent"
+postfix operators, and ":" separates a src:dst pair in a
+refspec.
 
-	cd ../git
-	git repack -a -d
+There is a thread on this:
 
-	cd ../newgit
-	git repack -a -d -l
+	http://marc.theaimsgroup.com/?l=git&m=112901070817153&w=2
 
-and verified that the repacks in "newgit" all seemed to do the right thing 
-(ie they only repacked objects that weren't packed in the original git, 
-and repacking the original git archive caused the repack in the new one to 
-shrink considerably).
+It appears to me that the list does not have many objections to
+the above restriction, so that change can goes in now after
+double-dot fixes, and perhaps after fixing cvs/arch import to
+munge the tag/branch names appropriately, we can revert the
+IFS="$LF" change in git-fetch that is giving you this trouble,
 
-This means that my suggested automatic repacking should work fine with 
-alternate object directories too, except my second script (the periodic 
-full repack) would needs to be updated to use the new "-l" flag.
-
-diff --git a/git-repack.sh b/git-repack.sh
-index b395d0e..49547a7 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -5,13 +5,14 @@
- 
- . git-sh-setup || die "Not a git archive"
- 	
--no_update_info= all_into_one= remove_redundant=
-+no_update_info= all_into_one= remove_redundant= local=
- while case "$#" in 0) break ;; esac
- do
- 	case "$1" in
- 	-n)	no_update_info=t ;;
- 	-a)	all_into_one=t ;;
- 	-d)	remove_redandant=t ;;
-+	-l)	local=t ;;
- 	*)	break ;;
- 	esac
- 	shift
-@@ -37,6 +38,9 @@ case ",$all_into_one," in
- 	    find . -type f \( -name '*.pack' -o -name '*.idx' \) -print`
- 	;;
- esac
-+if [ "$local" ]; then
-+	pack_objects="$pack_objects --local"
-+fi
- name=$(git-rev-list --objects $rev_list $(git-rev-parse $rev_parse) |
- 	git-pack-objects --non-empty $pack_objects .tmp-pack) ||
- 	exit 1
+This is slightly offtopic, but could you switch to http
+transport?  Rsync has been deprecated for quite some time.
