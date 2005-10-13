@@ -1,58 +1,59 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: cg-mv
-Date: Wed, 12 Oct 2005 19:32:14 -0300
-Message-ID: <200510122232.j9CMWEhN003974@laptop11.inf.utfsm.cl>
-References: <pasky@suse.cz>
-Cc: Zack Brown <zbrown@tumblerings.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 13 15:13:53 2005
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Usage of isspace and friends
+Date: Thu, 13 Oct 2005 06:27:07 -0700
+Message-ID: <434E60AB.8030607@zytor.com>
+References: <118833cc0510111840k715e1190l54ad65f821c77848@mail.gmail.com> <7vachd6hdx.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Morten Welinder <mwelinder@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 13 15:28:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQ2ri-0006TZ-KC
-	for gcvg-git@gmane.org; Thu, 13 Oct 2005 15:11:23 +0200
+	id 1EQ37D-0006S1-Uh
+	for gcvg-git@gmane.org; Thu, 13 Oct 2005 15:27:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751055AbVJMNLO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Oct 2005 09:11:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbVJMNLN
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 09:11:13 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:20953 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1750771AbVJMNLN (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2005 09:11:13 -0400
-Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j9DDAT3C004667
+	id S1751549AbVJMN1U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Oct 2005 09:27:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751525AbVJMN1U
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 09:27:20 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:51078 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751531AbVJMN1U
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2005 09:27:20 -0400
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9DDR6mA017075
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 13 Oct 2005 10:10:31 -0300
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j9CMWEhN003974;
-	Wed, 12 Oct 2005 19:32:14 -0300
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: Message from Petr Baudis <pasky@suse.cz> 
-   of "Wed, 12 Oct 2005 12:07:57 +0200." <20051012100757.GM30889@pasky.or.cz> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Thu, 13 Oct 2005 10:10:31 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+	Thu, 13 Oct 2005 06:27:08 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vachd6hdx.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
 X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10071>
 
-Petr Baudis <pasky@suse.cz> wrote:
-> Dear diary, on Fri, Oct 07, 2005 at 04:33:33PM CEST, I got a letter
-> where Zack Brown <zbrown@tumblerings.org> told me that...
+Junio C Hamano wrote:
+> 
+> Huh?  isspace is "int isspace(int)".  Presumably standard
+> integral promotion rules applies here whether char is signed or
+> unsigned, doesn't it?
+> 
+> The snippet you quoted is from apply.c, and I would say what is
+> more problematic is that we do not force C locale while parsing
+> the diff (see another thread -- we would want to process diffs
+> as byte streams).
+> 
 
-> > IIRC, file renaming is something we only care about at read time, we
-> > don't actually need to track it while making the change, because git
-> > allows us to track data from file to file without having to tell it
-> > that the data is moving.
+The problem is that isspace() is defined to operate on an integer which 
+can be an unsigned char value promoted to int or EOF (-1).
 
-> > So, just to keep certain people happy, why not have the cg-mv command
-> > defined to something like this:
-
-What about git-rename(1)? For completeness, just wrap it into cg-mv.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+	-hpa
