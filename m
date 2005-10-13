@@ -1,176 +1,61 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: [PATCH] git-http-fetch: Remove size limit for objects/info/{packs,alternates}
-Date: Thu, 13 Oct 2005 20:01:48 +0400
-Message-ID: <20051013160148.GB12092@master.mivlgu.local>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Usage of isspace and friends
+Date: Thu, 13 Oct 2005 09:07:44 -0700
+Message-ID: <434E8650.7060604@zytor.com>
+References: <118833cc0510111840k715e1190l54ad65f821c77848@mail.gmail.com> <7vachd6hdx.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0510130756550.15297@g5.osdl.org> <434E8117.3090102@zytor.com> <Pine.LNX.4.64.0510130847190.15297@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 13 18:08:45 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Morten Welinder <mwelinder@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 13 18:15:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQ5Wx-0000E4-80
-	for gcvg-git@gmane.org; Thu, 13 Oct 2005 18:02:07 +0200
+	id 1EQ5dI-0003PB-NR
+	for gcvg-git@gmane.org; Thu, 13 Oct 2005 18:08:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592AbVJMQCD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Oct 2005 12:02:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751594AbVJMQCD
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 12:02:03 -0400
-Received: from mivlgu.ru ([81.18.140.87]:29316 "EHLO master.mivlgu.local")
-	by vger.kernel.org with ESMTP id S1751592AbVJMQCD (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2005 12:02:03 -0400
-Received: by master.mivlgu.local (Postfix, from userid 1000)
-	id CF3DD18010F; Thu, 13 Oct 2005 20:01:48 +0400 (MSD)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
+	id S932085AbVJMQIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Oct 2005 12:08:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932088AbVJMQIG
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 12:08:06 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:48858 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932085AbVJMQIE
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2005 12:08:04 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9DG7l9u022435
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 13 Oct 2005 09:07:47 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510130847190.15297@g5.osdl.org>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10081>
 
-git-http-fetch received objects/info/packs into a fixed-size buffer
-and started to fail when this file became larger than the buffer.
-Change it to grow the buffer dynamically, and do the same thing for
-objects/info/alternates.  Also add missing free() calls for these
-buffers.
+Linus Torvalds wrote:
+> 
+> Yeah, and I agree, that was a mistake. It could have been fixed by making 
+> EOF be MIN_INT (or any other value outside the range of either "unsigned 
+> char" or "signed char" - preferably still negative), but there are 
+> probably programs that depend on it being -1. 
+> 
+> The stupid thing I just posted doesn't care. It happens to return 0 for 
+> EOF for all cases, but that's a side effect of (a) not doing locales (so 
+> 255 is never printable or alpha) and (b) not even implementing iscntrl().
+> 
 
-Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
+Given that for isprint() et al are useless for non-ASCII UTF-8 anyway, 
+might as well (they are not defined to be able to take wide character 
+values.)
 
-
----
-
- The problem currently happens with the linux-2.4 repository:
-
- http://www.kernel.org/pub/scm/linux/kernel/git/marcelo/linux-2.4.git/
-
- For some reason, objects/info/packs in that repository has grown to 662K.
-
-
- http-fetch.c |   43 ++++++++++++++++++++++++++++++++++++-------
- 1 files changed, 36 insertions(+), 7 deletions(-)
-
-applies-to: 1970e5869a42fd4095917d861654dc84d60f02b7
-341e03b5a2f197b1e60c3d38c0803d552dc6cd4d
-diff --git a/http-fetch.c b/http-fetch.c
-index 0aba891..c6daf6a 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -110,6 +110,22 @@ static size_t fwrite_buffer(void *ptr, s
-         return size;
- }
- 
-+static size_t fwrite_buffer_dynamic(const void *ptr, size_t eltsize,
-+				    size_t nmemb, struct buffer *buffer)
-+{
-+	size_t size = eltsize * nmemb;
-+	if (size > buffer->size - buffer->posn) {
-+		buffer->size = buffer->size * 3 / 2;
-+		if (buffer->size < buffer->posn + size)
-+			buffer->size = buffer->posn + size;
-+		buffer->buffer = xrealloc(buffer->buffer, buffer->size);
-+	}
-+	memcpy(buffer->buffer + buffer->posn, ptr, size);
-+	buffer->posn += size;
-+	data_received++;
-+	return size;
-+}
-+
- static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
- 			       void *data)
- {
-@@ -618,11 +634,12 @@ static int fetch_alternates(char *base)
- 	int i = 0;
- 	int http_specific = 1;
- 	struct alt_base *tail = alt;
-+	static const char null_byte = '\0';
- 
- 	struct active_request_slot *slot;
- 
- 	data = xmalloc(4096);
--	buffer.size = 4095;
-+	buffer.size = 4096;
- 	buffer.posn = 0;
- 	buffer.buffer = data;
- 
-@@ -634,7 +651,8 @@ static int fetch_alternates(char *base)
- 
- 	slot = get_active_slot();
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
-+			 fwrite_buffer_dynamic);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
-@@ -646,20 +664,24 @@ static int fetch_alternates(char *base)
- 			slot = get_active_slot();
- 			curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
- 			curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
--					 fwrite_buffer);
-+					 fwrite_buffer_dynamic);
- 			curl_easy_setopt(slot->curl, CURLOPT_URL, url);
- 			if (start_active_slot(slot)) {
- 				run_active_slot(slot);
- 				if (slot->curl_result != CURLE_OK) {
-+					free(buffer.buffer);
- 					return 0;
- 				}
- 			}
- 		}
- 	} else {
-+		free(buffer.buffer);
- 		return 0;
- 	}
- 
--	data[buffer.posn] = '\0';
-+	fwrite_buffer_dynamic(&null_byte, 1, 1, &buffer);
-+	buffer.posn--;
-+	data = buffer.buffer;
- 
- 	while (i < buffer.posn) {
- 		int posn = i;
-@@ -718,7 +740,8 @@ static int fetch_alternates(char *base)
- 		}
- 		i = posn + 1;
- 	}
--	
-+
-+	free(buffer.buffer);
- 	return ret;
- }
- 
-@@ -748,17 +771,22 @@ static int fetch_indices(struct alt_base
- 
- 	slot = get_active_slot();
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
-+			 fwrite_buffer_dynamic);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
--		if (slot->curl_result != CURLE_OK)
-+		if (slot->curl_result != CURLE_OK) {
-+			free(buffer.buffer);
- 			return error("%s", curl_errorstr);
-+		}
- 	} else {
-+		free(buffer.buffer);
- 		return error("Unable to start request");
- 	}
- 
-+	data = buffer.buffer;
- 	while (i < buffer.posn) {
- 		switch (data[i]) {
- 		case 'P':
-@@ -778,6 +806,7 @@ static int fetch_indices(struct alt_base
- 		i++;
- 	}
- 
-+	free(buffer.buffer);
- 	repo->got_indices = 1;
- 	return 0;
- }
----
-0.99.8.GIT
+	-hpa
