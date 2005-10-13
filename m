@@ -1,96 +1,50 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Revert "Also use 'track_object_refs = 0' in update-server-info."
-Date: Thu, 13 Oct 2005 10:20:34 -0700
-Message-ID: <7v1x2p49lp.fsf@assigned-by-dhcp.cox.net>
-References: <20051013161010.GC12092@master.mivlgu.local>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Cogito RFE: cg-commit -q
+Date: Thu, 13 Oct 2005 10:45:52 -0700
+Message-ID: <434E9D50.2040807@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sergey Vlasov <vsu@altlinux.ru>
-X-From: git-owner@vger.kernel.org Thu Oct 13 19:25:06 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Oct 13 19:47:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQ6lB-0007qk-GG
-	for gcvg-git@gmane.org; Thu, 13 Oct 2005 19:20:53 +0200
+	id 1EQ79e-00047G-8U
+	for gcvg-git@gmane.org; Thu, 13 Oct 2005 19:46:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932112AbVJMRUh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Oct 2005 13:20:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932124AbVJMRUh
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 13:20:37 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:33956 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932112AbVJMRUg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2005 13:20:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051013172024.QNBQ9394.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 13 Oct 2005 13:20:24 -0400
-To: git@vger.kernel.org
-In-Reply-To: <20051013161010.GC12092@master.mivlgu.local> (Sergey Vlasov's
-	message of "Thu, 13 Oct 2005 20:10:10 +0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932140AbVJMRqH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Oct 2005 13:46:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932141AbVJMRqH
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 13:46:07 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:40131 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932140AbVJMRqG
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2005 13:46:06 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9DHjwZP031339
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 13 Oct 2005 10:45:58 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10083>
 
-Sergey spotted a grave bug, already in "master", which shows my
-lack of testing.  I just pushed out his fix, which is to revert
-d119e3de13ea1493107bd57381d0ce9c9dd90976.  It should propagate
-to the mirrors soon.
+I would find it very useful if cg-commit had a "-q" option, meaning 
+"silently skip this commit if there is nothing to commit."  There are 
+some automatic release scripts that I have which enforces consistency 
+before release, but if the repository is already correctly set up for 
+release, there is nothing to do.
 
-If you used git-update-server-info with the bug on your
-repository, you will find a huge objects/info/packs file.
-Usually it should list just a handful edge tags and commits, but
-with the bug it practically lists everything.
+This is the opposite of -f, which would create a commit object pointing 
+to the same tree.
 
-After rebuilding the fixed git-update-server-info, please run
-'git-update-server-info -f' there to fix this problem.
-
-Sorry for the stupid bug, and many thanks to Sergey.
-
- ------------
-
-This reverts d119e3de13ea1493107bd57381d0ce9c9dd90976 commit.
-
-Object references are used in server-info.c:find_pack_info_one() to
-find out which objects in the pack are heads, therefore tracking of
-references cannot be disabled.
-
-Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- Looks like this bug has caused objects/info/packs in the linux-2.4
- repository to grow huge and hit the limit, which I then needed to remove
- in the previous patch.
-
-
- update-server-info.c |    3 ---
- 1 files changed, 0 insertions(+), 3 deletions(-)
-
-applies-to: 1970e5869a42fd4095917d861654dc84d60f02b7
-985738719bfb5284911871f15180a2aee6512d53
-diff --git a/update-server-info.c b/update-server-info.c
-index b708563..e824f62 100644
---- a/update-server-info.c
-+++ b/update-server-info.c
-@@ -1,5 +1,4 @@
- #include "cache.h"
--#include "object.h"
- 
- static const char update_server_info_usage[] =
- "git-update-server-info [--force]";
-@@ -8,8 +7,6 @@ int main(int ac, char **av)
- {
- 	int i;
- 	int force = 0;
--	track_object_refs = 0;
--
- 	for (i = 1; i < ac; i++) {
- 		if (av[i][0] == '-') {
- 			if (!strcmp("--force", av[i]) ||
----
-0.99.8.GIT
+	-hpa
