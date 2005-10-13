@@ -1,63 +1,60 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: diff_tree_stdin
-Date: Thu, 13 Oct 2005 00:11:07 -0700
-Message-ID: <7vu0fl51tg.fsf@assigned-by-dhcp.cox.net>
-References: <118833cc0510111846q42c5d7e5j162bdacd49dfebbc@mail.gmail.com>
+Subject: Re: openbsd version?
+Date: Thu, 13 Oct 2005 00:47:26 -0700
+Message-ID: <7vpsq9504x.fsf@assigned-by-dhcp.cox.net>
+References: <8664s5gxl9.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0510100939320.14597@g5.osdl.org>
+	<7vvf0542fs.fsf@assigned-by-dhcp.cox.net>
+	<864q7pdvcn.fsf@blue.stonehenge.com>
+	<7vll113yjs.fsf@assigned-by-dhcp.cox.net>
+	<20051010210007.GJ8383MdfPADPa@greensroom.kotnet.org>
+	<7vzmph1225.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 13 09:13:21 2005
+Cc: git@vger.kernel.org, "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Thu Oct 13 09:50:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPxFH-0007gu-EI
-	for gcvg-git@gmane.org; Thu, 13 Oct 2005 09:11:19 +0200
+	id 1EPxof-0006nh-Gb
+	for gcvg-git@gmane.org; Thu, 13 Oct 2005 09:47:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751490AbVJMHLK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Oct 2005 03:11:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbVJMHLK
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 03:11:10 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:33170 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751490AbVJMHLJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2005 03:11:09 -0400
+	id S1750763AbVJMHr3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Oct 2005 03:47:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750786AbVJMHr3
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 03:47:29 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:13509 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1750763AbVJMHr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2005 03:47:28 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051013071108.JRTS9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 13 Oct 2005 03:11:08 -0400
-To: Morten Welinder <mwelinder@gmail.com>
-In-Reply-To: <118833cc0510111846q42c5d7e5j162bdacd49dfebbc@mail.gmail.com>
-	(Morten Welinder's message of "Tue, 11 Oct 2005 21:46:38 -0400")
+          id <20051013074711.TQBP29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 13 Oct 2005 03:47:11 -0400
+To: Sven Verdoolaege <skimo@kotnet.org>
+In-Reply-To: <7vzmph1225.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Mon, 10 Oct 2005 14:42:42 -0700")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10065>
 
-Morten Welinder <mwelinder@gmail.com> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> It looks like diff_tree_stdin can overrun the this_header buffer.  Since the
-> line length is already calculated, a check would be cheap.
+> Sven Verdoolaege <skimo@kotnet.org> writes:
+>
+>> I think you mean 
+>>
+>> $ git-update-ref refs/heads/mybranch mybranch^
+>
+> Of course you are right.  Thanks.
 
-I presume you are talking about "line", not this_header[], since
-you are talking about something whose length is already
-calculated.
+And I am an idiot.  I did that myself again, and ended up
+wasting 30 minutes or so, scratching my head.
 
-The output buffer this_header[] only ever gets two 40-byte SHA1
-and a handful more, so probably 128 bytes would be big enough --
-the current 1000 is overkill.
-
-The input line[] is first NUL terminated before getting scanned,
-and scanning with get_sha1_hex() stops immediately when we see
-NUL, and premature NUL makes it fail, so the first
-get_sha1_hex() would not overrun.  If the first SHA1 is followed
-by garbage then the second get_sha1_hex() would not succeed
-without overrunning either.  If line[40] is NUL then we do not
-even do the second get_sha1_hex() --- in any case I do not see
-overrun.
-
-I am getting tired (it _was_ my GIT day, but unfortunately I had
-to be worried about another day-job project during the day X-<),
-and I might probably be overlooking something fairly obvious to
-you.  Care to explain?
+Maybe there should be a safety measure built into git-update-ref
+that says single-level name (i.e. not starting with refs/) gets
+warning unless all uppercase or something silly like that to
+protect idiots like myself.  Hmmm.
