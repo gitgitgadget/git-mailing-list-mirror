@@ -1,57 +1,172 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: openbsd version?
-Date: Thu, 13 Oct 2005 10:29:28 +0200
-Message-ID: <20051013082928.GE8383MdfPADPa@greensroom.kotnet.org>
-References: <8664s5gxl9.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0510100939320.14597@g5.osdl.org>
- <7vvf0542fs.fsf@assigned-by-dhcp.cox.net> <864q7pdvcn.fsf@blue.stonehenge.com>
- <7vll113yjs.fsf@assigned-by-dhcp.cox.net>
- <20051010210007.GJ8383MdfPADPa@greensroom.kotnet.org>
- <7vzmph1225.fsf@assigned-by-dhcp.cox.net>
- <7vpsq9504x.fsf@assigned-by-dhcp.cox.net>
-Reply-To: skimo@liacs.nl
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] Add findtags - reworked
+Date: Thu, 13 Oct 2005 21:56:50 +1300
+Message-ID: <11291938104157-git-send-email-martin@catalyst.net.nz>
+Reply-To: Martin Langhoff <martin@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Thu Oct 13 10:31:44 2005
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Thu Oct 13 10:57:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EPyTA-0007q0-Ty
-	for gcvg-git@gmane.org; Thu, 13 Oct 2005 10:29:45 +0200
+	id 1EPytV-0003GM-Ow
+	for gcvg-git@gmane.org; Thu, 13 Oct 2005 10:56:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751557AbVJMI3c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Oct 2005 04:29:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751553AbVJMI3c
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 04:29:32 -0400
-Received: from smtp18.wxs.nl ([195.121.6.14]:54781 "EHLO smtp18.wxs.nl")
-	by vger.kernel.org with ESMTP id S1751511AbVJMI3c (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2005 04:29:32 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp18.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0IOA002I9I94YM@smtp18.wxs.nl> for git@vger.kernel.org; Thu,
- 13 Oct 2005 10:29:28 +0200 (CEST)
-Received: (qmail 9183 invoked by uid 500); Thu, 13 Oct 2005 08:29:28 +0000
-In-reply-to: <7vpsq9504x.fsf@assigned-by-dhcp.cox.net>
-To: Junio C Hamano <junkio@cox.net>
-Mail-followup-to: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
- "Randal L. Schwartz" <merlyn@stonehenge.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S932483AbVJMI4y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Oct 2005 04:56:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932491AbVJMI4y
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 04:56:54 -0400
+Received: from 202-0-36-112.cable.paradise.net.nz ([202.0.36.112]:43237 "HELO
+	mx.nzl.com.ar") by vger.kernel.org with SMTP id S932483AbVJMI4y
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Oct 2005 04:56:54 -0400
+Received: (qmail 15101 invoked from network); 13 Oct 2005 08:56:41 -0000
+Received: from unknown (HELO aporo.local) (192.168.0.35)
+  by 202-0-36-112.cable.paradise.net.nz with SMTP; 13 Oct 2005 08:56:41 -0000
+X-Mailer: git-send-email
+In-Reply-To: 
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10068>
 
-On Thu, Oct 13, 2005 at 12:47:26AM -0700, Junio C Hamano wrote:
-> Maybe there should be a safety measure built into git-update-ref
-> that says single-level name (i.e. not starting with refs/) gets
-> warning unless all uppercase or something silly like that to
-> protect idiots like myself.  Hmmm.
+A short perl script that will walk the tag refs, tag objects, and even commit
+objects in its quest to figure out whether the given SHA1 (for a commit or
+tree) was ever tagged.
 
-How about checking whether the name also exists with a certain
-prefix instead ?
-Otherwise you'll also disallow updating ORIG_HEAD and stuff.
+This version is reworked incorporating sanity, feature and style fixes from
+Junio.
 
-skimo
+Usage: git-findtags.perl [ -t ] <commit-or-tree-sha1>
+
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+
+
+---
+
+ Makefile          |    3 +-
+ git-findtags.perl |   94 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 96 insertions(+), 1 deletions(-)
+ create mode 100755 git-findtags.perl
+
+applies-to: ef9b5c2cb61cf509adf2f5ef37fa1db517291f48
+342d4cd1c66d8e58e1ba2221366c9237f9197b03
+diff --git a/Makefile b/Makefile
+index 8697d52..a5d9cd4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -93,7 +93,8 @@ SCRIPT_SH = \
+ 
+ SCRIPT_PERL = \
+ 	git-archimport.perl git-cvsimport.perl git-relink.perl \
+-	git-rename.perl git-shortlog.perl git-fmt-merge-msg.perl
++	git-rename.perl git-shortlog.perl git-fmt-merge-msg.perl \
++	git-findtags.perl
+ 
+ SCRIPT_PYTHON = \
+ 	git-merge-recursive.py
+diff --git a/git-findtags.perl b/git-findtags.perl
+new file mode 100755
+index 0000000..745affe
+--- /dev/null
++++ b/git-findtags.perl
+@@ -0,0 +1,94 @@
++#!/usr/bin/perl -w
++#
++# Copyright (c) 2005 Martin Langhoff
++#
++# Walk the tags and find if they match a commit
++# expects a SHA1 of a commit. Option -t enables 
++# searching trees too.
++#
++
++use strict;
++use File::Basename;
++use File::Find;
++use Getopt::Std;
++
++my $git_dir = $ENV{GIT_DIR} || '.git';
++$git_dir =~ s|/$||; # chomp trailing slash
++
++# options
++our $opt_t;
++getopts("t") || usage();
++
++my @tagfiles   = `find $git_dir/refs/tags -follow -type f`; # haystack
++my $target = shift @ARGV;                     # needle
++unless ($target) {
++    usage();
++}
++
++# drive the processing from the find hook
++# slower, safer (?) than the find utility
++find( { wanted   => \&process,
++	no_chdir => 1,
++	follow   => 1,
++      }, "$git_dir/refs/tags");
++
++
++sub process {
++    my ($dev,$ino,$mode,$nlink,$uid,$gid);
++
++    # process only regular files
++    unless ((($dev,$ino,$mode,$nlink,$uid,$gid) = lstat($_)) && -f _) {
++	return 1; # ignored anyway
++    }
++
++    my $tagfile = $_;
++    chomp $tagfile;
++    my $tagname = substr($tagfile, length($git_dir.'/refs/tags/'));
++
++    my $tagid = quickread($tagfile);
++    chomp $tagid;
++
++    # is it just a soft tag?
++    if ($tagid eq $target) {
++	print "$tagname\n";
++	return 1; # done with this tag
++    }
++
++    # grab the first 2 lines (the whole tag could be large)
++    my $tagobj = `git-cat-file tag $tagid | head -n2 `;
++    if ($tagobj =~  m/^type commit$/m) { # only deal with commits
++
++	if ($tagobj =~ m/^object $target$/m) { # match on the commit
++	    print "$tagname\n";
++
++	} elsif ( $opt_t &&                      # follow the commit
++		 $tagobj =~ m/^object (\S+)$/m) { # and try to match trees
++	    my $commitid = $1;
++	    my $commitobj = `git-cat-file commit $commitid | head -n1`;
++	    chomp $commitobj;
++	    $commitobj =~ m/^tree (\S+)$/;
++	    my $treeid = $1;
++	    if ($target eq $treeid) {
++		print "$tagname\n";
++	    }
++	}
++    }
++}
++
++sub quickread {
++    my $file = shift;
++    local $/; # undef: slurp mode
++    open FILE, "<$file"
++	or die "Cannot open $file : $!";
++    my $content = <FILE>;
++    close FILE;
++    return $content;
++}
++
++sub usage {
++	print STDERR <<END;
++Usage: ${\basename $0}     # find tags for a commit or tree
++       [ -t ] <commit-or-tree-sha1>
++END
++	exit(1);
++}
+---
+0.99.8.GIT
