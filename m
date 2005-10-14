@@ -1,165 +1,191 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: [ANNOUNCE qgit-0.96]
-Date: Fri, 14 Oct 2005 13:28:40 -0700 (PDT)
-Message-ID: <20051014202841.76521.qmail@web26306.mail.ukl.yahoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Some curl versions lack curl_easy_duphandle()
+Date: Sat, 15 Oct 2005 00:39:17 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510150038550.2807@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Fri Oct 14 22:31:19 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sat Oct 15 00:40:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQWAy-0005Kn-GL
-	for gcvg-git@gmane.org; Fri, 14 Oct 2005 22:29:13 +0200
+	id 1EQYDC-0001nE-8M
+	for gcvg-git@gmane.org; Sat, 15 Oct 2005 00:39:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750706AbVJNU2s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Oct 2005 16:28:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750742AbVJNU2s
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 16:28:48 -0400
-Received: from web26306.mail.ukl.yahoo.com ([217.146.176.17]:9908 "HELO
-	web26306.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1750706AbVJNU2r (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2005 16:28:47 -0400
-Received: (qmail 76523 invoked by uid 60001); 14 Oct 2005 20:28:41 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=Ia2oCm0HHJjOu8Csa/Z9Mxod4trJpj6/Avu2qlUmqW84eYYJRwMSD23D+kb/Jux23d9kROlMJcTG5phc7XnS8gLTvYR6mdYffNQ/qEsuI9ND4wjv5JHZ7+UBcIHKfUVCaNzu1Vo9AjkFag6+yW9BmVJdcnnM+LMbKydK4dJJYeM=  ;
-Received: from [151.38.110.92] by web26306.mail.ukl.yahoo.com via HTTP; Fri, 14 Oct 2005 13:28:40 PDT
-To: git@vger.kernel.org
+	id S1750969AbVJNWjW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Oct 2005 18:39:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750991AbVJNWjW
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 18:39:22 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:37841 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750969AbVJNWjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2005 18:39:21 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 7A91413ECC1; Sat, 15 Oct 2005 00:39:17 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 61D579ED76; Sat, 15 Oct 2005 00:39:17 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 45AEF9BD04; Sat, 15 Oct 2005 00:39:17 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 207EF13ECC1; Sat, 15 Oct 2005 00:39:17 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10124>
 
-Hi all,
+This patch looks bigger than it really is: The code to get the default handle
+was refactored into a function, and is called instead of curl_easy_duphandle()
+if that does not exist.
 
+Tested once.
 
-What is this?
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-qgit, a git GUI viewer.
+---
 
-With qgit you will be able to browse revisions history, view patch content and changed files, 
-graphically following different development branches. Main features are:
+ http-fetch.c |   73 +++++++++++++++++++++++++++++++++++++++-------------------
+ 1 files changed, 49 insertions(+), 24 deletions(-)
 
- - View revisions, diffs, files history, files annotation.
-
- - Commit changes visually cherry picking modified files.
-
- - Apply or format patch series from selected commits, drag and
-   drop commits between two instances of qgit.
-
- - qgit implements a GUI for the most common StGIT commands like push/pop
-   and apply/format patches. You can also create new patches or refresh 
-   current top one using the same semantics of git commit, i.e. cherry picking
-   single modified files.
-
-
-
-New in this release
-
-qgit-0.96 implements various suggestions from the list regarding better UI.
-
-Main change is diff viewer implemented as a (bottom) dockable window, so now you can see
-revision's description and patch in one view. It is always possible to maximize diff viewer to
-browse the path at full screen.
-
-Others updates are speed-up of file names on demand loading and annotation and a better StGIT
-integration.
-
-Also fixed some issues about qgit color scheme: qgit colors are now _all_ inerithed by platform,
-no more hardcoded ones, so colors are full customizable with proper platform tools.
-
-Anyhow, this is how qgit is meant to be seen, at least by me ;-)
-    http://digilander.libero.it/mcostalba/qgit_colors.png
-
-
-A NOTE: Pasky said:
-
->* Could you make the grey background for odd commits span to the whole
->line, including the commit graph?
-
-I've done it, but I am not sure about final result, so I've stripped the code from release
-version, in any case this is the patch:
-
-
---- a/src/mainimpl.cpp
-+++ b/src/mainimpl.cpp
-@@ -68,7 +68,7 @@
- #define DEF_AUTH_COL_WIDTH	200
- #define DEF_TIME_COL_WIDTH	100
+applies-to: 63f8082177fa17ae2aadd5ab417758f3d53456d8
+1d9c990c46e306b6310fda8ff94bca2feccfbd99
+diff --git a/http-fetch.c b/http-fetch.c
+index 0aba891..5f1f7f9 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -18,6 +18,10 @@
+ #define curl_global_init(a) do { /* nothing */ } while(0)
+ #endif
  
--#define IS_INFO_COL(x)  (x == TIME_COL || x == LOG_COL || x == AUTH_COL)
-+#define IS_INFO_COL(x)  (x == TIME_COL || x == LOG_COL || x == AUTH_COL || x == GRAPH_COL)
++#if LIBCURL_VERSION_NUM < 0x070c04
++#define NO_CURL_EASY_DUPHANDLE
++#endif
++
+ #define PREV_BUF_SIZE 4096
+ #define RANGE_HEADER_SIZE 30
  
- QColor ODD_LINE_COL;
- QColor EVEN_LINE_COL;
-
-
-
-Installation
-
-Download from: http://prdownloads.sourceforge.net/qgit/qgit-0.96.tar.bz2?download
-GIT archive: cg-clone http://digilander.libero.it/mcostalba/qgit.git
-
-You need scons and qt-mt developer libs, version 3.3.4 or better, already installed.
-qgit is NOT compatible with Qt4.
-On some platforms (Debian) you should set QTDIR before to compile.
-
-- unpack tar file
-- make
-- make install
-
-qgit will be installed in $HOME/bin
-
-
-Changelog
-
-- color scheme is no more hardcoded but inerithed from platform
-
-- rewritten diff viewer as a bottom dockable window: geometry is persistant.
-
-- StGIT add to top (refresh): it is now possible to change patch message
-
-- StGIT commit: restore original files in working dir if commit fails
-
-- added tag list in pop-up menu (right click on main view)
-
-- use CTRL + right click to select a revision to diff against instead of just 
-  right click to be compatible with pop-up menu while diff window is open
-
-- updated startup dialog to include some check box for common settings
-
-- make qgit work with time-based arguments
-
-- speed-up of file names on demand loading. Load file names in background is
-  still the suggested policy.
-
-- speed-up of annotation, also make annotation work with no loaded file names.
-  To have maximum performance, load file names in background is still the suggested policy.
-
-- added status bar on annotation viewer with information on what's going on in
-  background.
-
-- time column moved to the right and now display commit author date by default,
-  relative time is still available through settings.
-
-- fix broken jump to childs/parent function
-
-- finally fixed QSettings compile warning
-
-- added some more tooltips and menu entries to help first time user
-
-- various small fixes and GUI tweaks.
-
-
-
-      Marco
-
-
-
-		
-__________________________________ 
-Yahoo! Music Unlimited 
-Access over 1 million songs. Try it free.
-http://music.yahoo.com/unlimited/
+@@ -28,7 +32,9 @@ static int data_received;
+ static int max_requests = DEFAULT_MAX_REQUESTS;
+ static CURLM *curlm;
+ #endif
++#ifndef NO_CURL_EASY_DUPHANDLE
+ static CURL *curl_default;
++#endif
+ static struct curl_slist *pragma_header;
+ static struct curl_slist *no_pragma_header;
+ static struct curl_slist *no_range_header;
+@@ -87,8 +93,12 @@ static struct active_request_slot *activ
+ 
+ static int curl_ssl_verify;
+ static char *ssl_cert;
++#if LIBCURL_VERSION_NUM >= 0x070902
+ static char *ssl_key;
++#endif
++#if LIBCURL_VERSION_NUM >= 0x070908
+ static char *ssl_capath;
++#endif
+ static char *ssl_cainfo;
+ 
+ struct buffer
+@@ -143,6 +153,37 @@ void process_curl_messages();
+ void process_request_queue();
+ #endif
+ 
++CURL* get_curl_handle()
++{
++	CURL* result = curl_easy_init();
++
++	curl_ssl_verify = getenv("GIT_SSL_NO_VERIFY") ? 0 : 1;
++	curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, curl_ssl_verify);
++#if LIBCURL_VERSION_NUM >= 0x070907
++	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
++#endif
++
++	if ((ssl_cert = getenv("GIT_SSL_CERT")) != NULL) {
++		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
++	}
++#if LIBCURL_VERSION_NUM >= 0x070902
++	if ((ssl_key = getenv("GIT_SSL_KEY")) != NULL) {
++		curl_easy_setopt(result, CURLOPT_SSLKEY, ssl_key);
++	}
++#endif
++#if LIBCURL_VERSION_NUM >= 0x070908
++	if ((ssl_capath = getenv("GIT_SSL_CAPATH")) != NULL) {
++		curl_easy_setopt(result, CURLOPT_CAPATH, ssl_capath);
++	}
++#endif
++	if ((ssl_cainfo = getenv("GIT_SSL_CAINFO")) != NULL) {
++		curl_easy_setopt(result, CURLOPT_CAINFO, ssl_cainfo);
++	}
++	curl_easy_setopt(result, CURLOPT_FAILONERROR, 1);
++
++	return result;
++}
++
+ struct active_request_slot *get_active_slot()
+ {
+ 	struct active_request_slot *slot = active_queue_head;
+@@ -165,7 +206,11 @@ struct active_request_slot *get_active_s
+ 	}
+ 	if (slot == NULL) {
+ 		newslot = xmalloc(sizeof(*newslot));
++#ifdef NO_CURL_EASY_DUPHANDLE
++		newslot->curl = get_curl_handle();
++#else
+ 		newslot->curl = curl_easy_duphandle(curl_default);
++#endif
+ 		newslot->in_use = 0;
+ 		newslot->next = NULL;
+ 
+@@ -1098,32 +1143,10 @@ int main(int argc, char **argv)
+ 	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
+ 	no_range_header = curl_slist_append(no_range_header, "Range:");
+ 
+-	curl_default = curl_easy_init();
+-
+-	curl_ssl_verify = getenv("GIT_SSL_NO_VERIFY") ? 0 : 1;
+-	curl_easy_setopt(curl_default, CURLOPT_SSL_VERIFYPEER, curl_ssl_verify);
+-#if LIBCURL_VERSION_NUM >= 0x070907
+-	curl_easy_setopt(curl_default, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
++#ifndef NO_CURL_EASY_DUPHANDLE
++	curl_default = get_curl_handle();
+ #endif
+ 
+-	if ((ssl_cert = getenv("GIT_SSL_CERT")) != NULL) {
+-		curl_easy_setopt(curl_default, CURLOPT_SSLCERT, ssl_cert);
+-	}
+-#if LIBCURL_VERSION_NUM >= 0x070902
+-	if ((ssl_key = getenv("GIT_SSL_KEY")) != NULL) {
+-		curl_easy_setopt(curl_default, CURLOPT_SSLKEY, ssl_key);
+-	}
+-#endif
+-#if LIBCURL_VERSION_NUM >= 0x070908
+-	if ((ssl_capath = getenv("GIT_SSL_CAPATH")) != NULL) {
+-		curl_easy_setopt(curl_default, CURLOPT_CAPATH, ssl_capath);
+-	}
+-#endif
+-	if ((ssl_cainfo = getenv("GIT_SSL_CAINFO")) != NULL) {
+-		curl_easy_setopt(curl_default, CURLOPT_CAINFO, ssl_cainfo);
+-	}
+-	curl_easy_setopt(curl_default, CURLOPT_FAILONERROR, 1);
+-
+ 	alt = xmalloc(sizeof(*alt));
+ 	alt->base = url;
+ 	alt->got_indices = 0;
+@@ -1137,7 +1160,9 @@ int main(int argc, char **argv)
+ 	curl_slist_free_all(pragma_header);
+ 	curl_slist_free_all(no_pragma_header);
+ 	curl_slist_free_all(no_range_header);
++#ifndef NO_CURL_EASY_DUPHANDLE
+ 	curl_easy_cleanup(curl_default);
++#endif
+ 	slot = active_queue_head;
+ 	while (slot != NULL) {
+ 		curl_easy_cleanup(slot->curl);
+---
+0.99.8.GIT
