@@ -1,89 +1,87 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Peeling the onion
-Date: Thu, 13 Oct 2005 23:03:13 -0700
-Message-ID: <7voe5sws7y.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7virwna2oi.fsf@assigned-by-dhcp.cox.net>
-	<7v3bnra20z.fsf@assigned-by-dhcp.cox.net> <43348086.2040006@zytor.com>
-	<20050924011833.GJ10255@pasky.or.cz>
-	<20050926212536.GF26340@pasky.or.cz>
-	<7virwna2oi.fsf@assigned-by-dhcp.cox.net>
-	<20050926222944.GG26340@pasky.or.cz>
-	<7vr7bb5d8w.fsf@assigned-by-dhcp.cox.net>
-	<8764snyufn.fsf@ualberta.net>
-	<7v4q875bbj.fsf@assigned-by-dhcp.cox.net>
-	<20050927094029.GA30889@pasky.or.cz>
-	<7v64sm30dh.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509271020530.3308@g5.osdl.org>
-	<7v64sm1hp3.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509271414000.3308@g5.osdl.org>
-	<7virwlumyo.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Try URI quoting for embedded TAB and LF in pathnames
+Date: Thu, 13 Oct 2005 23:59:09 -0700
+Message-ID: <7vll0wvb2a.fsf@assigned-by-dhcp.cox.net>
+References: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net>
+	<20051007232909.GB8893@steel.home>
+	<7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net>
+	<20051008064555.GA3831@steel.home>
+	<7vachks7aq.fsf@assigned-by-dhcp.cox.net>
+	<20051008133032.GA32079@localhost>
+	<7v64s7svya.fsf@assigned-by-dhcp.cox.net>
+	<7vu0frpxs1.fsf@assigned-by-dhcp.cox.net>
+	<87mzlgh8xa.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510110802470.14597@g5.osdl.org>
+	<87ek6s0w34.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510111121030.14597@g5.osdl.org>
+	<87slv7zvqj.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510111346220.14597@g5.osdl.org>
+	<877jcjmdmq.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510120749230.14597@g5.osdl.org>
+	<87vf02qy79.fsf@penguin.cs.ucla.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>,
-	Martin Langhoff <martin@catalyst.net.nz>,
-	Tom Prince <tom.prince@ualberta.net>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Fri Oct 14 08:04:48 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 14 09:00:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQIfN-0003Mv-Ju
-	for gcvg-git@gmane.org; Fri, 14 Oct 2005 08:03:42 +0200
+	id 1EQJXK-0008Gl-D5
+	for gcvg-git@gmane.org; Fri, 14 Oct 2005 08:59:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932187AbVJNGDP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Oct 2005 02:03:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932207AbVJNGDP
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 02:03:15 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:59899 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932187AbVJNGDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2005 02:03:15 -0400
+	id S1750847AbVJNG7M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Oct 2005 02:59:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750863AbVJNG7M
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 02:59:12 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:10156 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1750847AbVJNG7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2005 02:59:11 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao06.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051014060249.PUPS2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 14 Oct 2005 02:02:49 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7virwlumyo.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 28 Sep 2005 10:22:07 -0700")
+          id <20051014065845.FEPL24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 14 Oct 2005 02:58:45 -0400
+To: Paul Eggert <eggert@CS.UCLA.EDU>
+In-Reply-To: <87vf02qy79.fsf@penguin.cs.ucla.edu> (Paul Eggert's message of
+	"Wed, 12 Oct 2005 13:26:02 -0700")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10103>
 
-Junio C Hamano <junkio@cox.net> writes:
+Paul Eggert <eggert@CS.UCLA.EDU> writes:
 
-> Linus Torvalds <torvalds@osdl.org> writes:
+> Here is the proposed format.  Each file name is a string of bytes, in
+> one of the following two formats:
 >
->>> we could send phony entries like this:
->>> 
->>> b92c9c07fe2d0d89c4f692573583c4753b5355d2	deref/tags/junio-gpg-pub
->>> a3eb250f996bf5e12376ec88622c4ccaabf20ea8	deref/tags/v0.99
->>> 78d9d414123ad6f4f522ffecbcd9e4a7562948fd	deref/tags/v0.99.1
->>
->> Yes, it would work,..
->> in general, it's just a really ugly special case, I think.
+> A.  A nonempty sequence of ASCII graphic characters (i.e., bytes in
+>     the range '!' == '\041' through '~' == '\177').  The first byte
+>     cannot be '!' == '\041' or '"' == '\042'.  Leading '"' is used for
+>     (B) below, and leading '!' is reserved for future extensions.
 >
-> I think we could do this instead, to make it less ugly.
+> B.  A nonempty C-language character string literal, with the following
+>     restrictions and modifications:
 >
-> ...
+>     B1.  No multibyte character processing is done.  Members of the
+>          string literal are treated as bytes, not characters.  Null
+>          bytes are not allowed, and '"' == '\042', '\\' == '\134' and
+>          '\n' == '\012' are allowed only if properly escaped as shown
+>          below; but all other bytes are allowed.
 >
-> The alternative would be what Pasky outlined in his message --
-> bypassing git transport layer to fetch single object by hand,
-> repeatedly dereferencing it until he gets a non-tag.  I think
-> that is unnecessary misery for him.
+>     B2.  No trigraph processing is done (e.g., ??/ stands for three
+>          bytes, not one).
+>
+>     B3.  No line-splicing is done (i.e., backslash-newline is not allowed).
+>
+>     B4.  Only the following escape sequences are allowed.
+>
+>            \" \\ \a \b \f \n \r \t \v
+>            \XYZ  (where X, Y, and Z are octal digits, X <= 3, and
+>                   at least one of the digits is nonzero)
 
-I did not hear much from the people involved since this message,
-but I have a bit less ugly solution along the lines outlined
-above, in the proposed updates branch.  Incidentally this would
-also simplify Martin's git-findtags, especially if we do not
-worry about its '-t' option.
-
-I'll be sending 3-patch series; the first two are preparatory
-but what may be useful for Pasky and Martin is in the third
-one.
-
-    [PATCH] Ignore funny refname sent from remote.
-    [PATCH] Introduce notation "ref^{type}".
-    [PATCH] Show peeled onion from upload-pack and server-info.
+Just to let you know, I am slowly converting apply.c to accept
+this format, and also diff.c to produce this.  I did not
+personally like the missing double quotes around what I did
+anyway, although it was easier to code.
