@@ -1,73 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Peeling the onion
-Date: Fri, 14 Oct 2005 01:40:42 -0700
-Message-ID: <7vpsq8trsl.fsf@assigned-by-dhcp.cox.net>
-References: <7v3bnra20z.fsf@assigned-by-dhcp.cox.net>
-	<8764snyufn.fsf@ualberta.net>
-	<7v4q875bbj.fsf@assigned-by-dhcp.cox.net>
-	<20050927094029.GA30889@pasky.or.cz>
-	<7v64sm30dh.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509271020530.3308@g5.osdl.org>
-	<7v64sm1hp3.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0509271414000.3308@g5.osdl.org>
-	<7virwlumyo.fsf@assigned-by-dhcp.cox.net>
-	<7voe5sws7y.fsf_-_@assigned-by-dhcp.cox.net>
-	<46a038f90510140048r30c7ec36n35f77a1ac52c4691@mail.gmail.com>
+From: Aneesh Kumar <aneesh.kumar@gmail.com>
+Subject: Fwd: debian packaging
+Date: Fri, 14 Oct 2005 14:54:53 +0530
+Message-ID: <cc723f590510140224r77a0dbcfwcc2301ae2cda2de0@mail.gmail.com>
+References: <cc723f590510140218s76c9fca2me4ec39b03c77245f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 14 10:43:01 2005
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_17825_1193095.1129281893951"
+X-From: git-owner@vger.kernel.org Fri Oct 14 11:26:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQL7f-0004hX-AN
-	for gcvg-git@gmane.org; Fri, 14 Oct 2005 10:41:03 +0200
+	id 1EQLo9-0000YP-UC
+	for gcvg-git@gmane.org; Fri, 14 Oct 2005 11:24:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750899AbVJNIkp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Oct 2005 04:40:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750898AbVJNIkp
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 04:40:45 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:60559 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750743AbVJNIko (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2005 04:40:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051014084034.LPFT19461.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 14 Oct 2005 04:40:34 -0400
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90510140048r30c7ec36n35f77a1ac52c4691@mail.gmail.com>
-	(Martin Langhoff's message of "Fri, 14 Oct 2005 20:48:39 +1300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751055AbVJNJYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Oct 2005 05:24:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbVJNJYz
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 05:24:55 -0400
+Received: from xproxy.gmail.com ([66.249.82.200]:5366 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750710AbVJNJYy (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Oct 2005 05:24:54 -0400
+Received: by xproxy.gmail.com with SMTP id i30so360720wxd
+        for <git@vger.kernel.org>; Fri, 14 Oct 2005 02:24:54 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:references;
+        b=XC1eXhCioM+F9xaP0cAaqVsD6e4/bFqQgrxgwyYrkPkAkLeju8XD5FlmHw9U/y8u0ViY4+nO6YJW1oEzvzmwEfOtY/Gl2aDDdekIU1Zsb6a84FxqT/KQjlCJ1lY6qkki7rbe7wTOcbt17J/Eed1HV1/XiEgWm6ROn/pAioRe/8w=
+Received: by 10.70.75.15 with SMTP id x15mr1117107wxa;
+        Fri, 14 Oct 2005 02:24:53 -0700 (PDT)
+Received: by 10.70.27.2 with HTTP; Fri, 14 Oct 2005 02:24:53 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <cc723f590510140218s76c9fca2me4ec39b03c77245f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10105>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+------=_Part_17825_1193095.1129281893951
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> I personally don't care much for the -t option, at the moment. I do
-> think that tree identity is in some contexts more important than
-> commit identity, so there will be instances where you really want to
-> have a canonical way to "drill down" to the tree.
+---------- Forwarded message ----------
+From: Aneesh Kumar <aneesh.kumar@gmail.com>
+Date: Oct 14, 2005 2:48 PM
+Subject: debian packaging
+To: junkio@cox.net
 
-I do not know how useful it would be, but the onion peeler can
-be told to dereference commit to tree.
 
-$ ./git-cat-file -s 'v0.99.8^{tree}' 
-6875
-$ ./git-cat-file -s 'v0.99.8^{commit}' 
-435
-$ ./git-cat-file -t 'v0.99.8^{tree}' 
-tree
-$ ./git-cat-file -t 'v0.99.8^{commit}' 
-commit
-$ ./git-rev-parse v0.99.8 \
-  v0.99.8^0 v0.99.8^{commit} \
-  v0.99.8^{commit}^{tree} v0.99.8^{tree}
-b041895af323bdef10cc9a718bda468ba3622bc0
-91dd674e30ba0298e89c9be2657024805170c2ac
-91dd674e30ba0298e89c9be2657024805170c2ac
-bfd844a69bfd582d107622c27b89e9b959e89fd8
-bfd844a69bfd582d107622c27b89e9b959e89fd8
+Make it build with stable testing and unstable.
+
+-aneesh
+
+------=_Part_17825_1193095.1129281893951
+Content-Type: text/plain; name=git.diff; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="git.diff"
+
+diff --git a/debian/control b/debian/control
+index 5d75c32..2ae4ee9 100644
+--- a/debian/control
++++ b/debian/control
+@@ -2,7 +2,7 @@ Source: git-core
+ Section: devel
+ Priority: optional
+ Maintainer: Junio C Hamano <junkio@cox.net>
+-Build-Depends-Indep: libz-dev, libssl-dev, libcurl3-dev, asciidoc (>= 6.0.3), xmlto, debhelper (>= 4.0.0), bc
++Build-Depends-Indep: libz-dev, libssl-dev, libcurl3-dev|libcurl3-gnutls-dev|libcurl3-openssl-dev, asciidoc (>= 6.0.3), xmlto, debhelper (>= 4.0.0), bc
+ Standards-Version: 3.6.1
+ 
+ Package: git-core
+
+
+------=_Part_17825_1193095.1129281893951--
