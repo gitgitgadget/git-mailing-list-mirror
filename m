@@ -1,48 +1,56 @@
-From: David Ho <davidkwho@gmail.com>
-Subject: Re: git-whatchanged does not show merge result?
-Date: Fri, 14 Oct 2005 13:39:40 -0400
-Message-ID: <4dd15d180510141039l12748f98x5506df855f488ce2@mail.gmail.com>
-References: <4dd15d180510140929x2c69f61ag19a1409cfd993e7b@mail.gmail.com>
-	 <4dd15d180510140933j7a730c49hb9cdaa98ea0a5b07@mail.gmail.com>
-	 <7vd5m8rozb.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: cygwin: t3200-branch.sh fails with "List form of pipe open not
+ implemented at -e line 22."
+Date: Fri, 14 Oct 2005 10:57:29 -0700
+Message-ID: <434FF189.3080806@zytor.com>
+References: <81b0412b0510140546ya10bc8fg3dd5eaab429eba6f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 14 19:40:50 2005
+X-From: git-owner@vger.kernel.org Fri Oct 14 19:59:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQTXF-0005Wy-1n
-	for gcvg-git@gmane.org; Fri, 14 Oct 2005 19:40:01 +0200
+	id 1EQToc-0002Re-SF
+	for gcvg-git@gmane.org; Fri, 14 Oct 2005 19:57:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750812AbVJNRjm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Oct 2005 13:39:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbVJNRjm
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 13:39:42 -0400
-Received: from qproxy.gmail.com ([72.14.204.193]:43723 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750812AbVJNRjm convert rfc822-to-8bit
+	id S1750789AbVJNR5z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Oct 2005 13:57:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750801AbVJNR5z
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 13:57:55 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:7832 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750789AbVJNR5y
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2005 13:39:42 -0400
-Received: by qproxy.gmail.com with SMTP id o12so334025qba
-        for <git@vger.kernel.org>; Fri, 14 Oct 2005 10:39:41 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WOmKnYh3oDhilejbr7zrj8fnRLrJlC/iOULbLDaZpNbR9KuDvGDLyR7OjozI7H+5Wc+XLaMTE+u9eRlHrG3+1VLQ/fVboylyMBJcgp1wm38XEWWggQyvm4Yh7d+LIEO/OWKFYIcSzZ2yhnwgPKW0Dhg1DtzxUPGN05meges5tbo=
-Received: by 10.64.204.3 with SMTP id b3mr2211766qbg;
-        Fri, 14 Oct 2005 10:39:40 -0700 (PDT)
-Received: by 10.65.35.5 with HTTP; Fri, 14 Oct 2005 10:39:40 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5m8rozb.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	Fri, 14 Oct 2005 13:57:54 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9EHvYYp008482
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 14 Oct 2005 10:57:34 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0510140546ya10bc8fg3dd5eaab429eba6f@mail.gmail.com>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10119>
 
-Sorry, I'm still reading the man pages on
-http://www.kernel.org/pub/software/scm/git/docs/.
-Thanks for pointing that out.
+Alex Riesen wrote:
+> Now, how broken is that:
+> 
+> The message comes from one of the hooks, which are executed even
+> though they never meant to, because cygwin apparently uses file
+> content or name to detect executability (on FAT).
+> 
+> I just remove the hooks from repositories atm.
 
-David
+I think the bottom line is "don't use FAT".
+
+	-hpa
