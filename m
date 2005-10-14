@@ -1,67 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
+From: David Ho <davidkwho@gmail.com>
 Subject: Re: git-whatchanged does not show merge result?
-Date: Fri, 14 Oct 2005 10:24:24 -0700
-Message-ID: <7vd5m8rozb.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 14 Oct 2005 13:31:23 -0400
+Message-ID: <4dd15d180510141031n531b9e0enc8e7d668b1e61b83@mail.gmail.com>
 References: <4dd15d180510140929x2c69f61ag19a1409cfd993e7b@mail.gmail.com>
-	<4dd15d180510140933j7a730c49hb9cdaa98ea0a5b07@mail.gmail.com>
+	 <4dd15d180510140933j7a730c49hb9cdaa98ea0a5b07@mail.gmail.com>
+	 <Pine.LNX.4.64.0510141007290.23590@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 14 19:27:45 2005
+X-From: git-owner@vger.kernel.org Fri Oct 14 19:34:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQTID-0000Bg-HA
-	for gcvg-git@gmane.org; Fri, 14 Oct 2005 19:24:29 +0200
+	id 1EQTP2-0002m6-Hp
+	for gcvg-git@gmane.org; Fri, 14 Oct 2005 19:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750809AbVJNRY0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Oct 2005 13:24:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbVJNRY0
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 13:24:26 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:23219 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750809AbVJNRY0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2005 13:24:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051014172405.XWCH776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 14 Oct 2005 13:24:05 -0400
-To: David Ho <davidkwho@gmail.com>
-In-Reply-To: <4dd15d180510140933j7a730c49hb9cdaa98ea0a5b07@mail.gmail.com>
-	(David Ho's message of "Fri, 14 Oct 2005 12:33:51 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750811AbVJNRbZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Oct 2005 13:31:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750812AbVJNRbZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 13:31:25 -0400
+Received: from qproxy.gmail.com ([72.14.204.206]:17551 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750811AbVJNRbZ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2005 13:31:25 -0400
+Received: by qproxy.gmail.com with SMTP id z1so376838qbc
+        for <git@vger.kernel.org>; Fri, 14 Oct 2005 10:31:23 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WbvOFEGo6/IzstRjzcTGMALbmdFGbQWUeLMW2GWmBMGV1w1KBkQG7baMnVSRpaUjLt3Nf/wgDhOxf1DHh1aM0X958mFGtjUKmi/1NefQHDwG90NPmuHmUUMQWjcL5ePfTfeI1s2D4TtVoEgeBBcflY9DiB6prqkuk6Iq9Txa/js=
+Received: by 10.64.181.15 with SMTP id d15mr965460qbf;
+        Fri, 14 Oct 2005 10:31:23 -0700 (PDT)
+Received: by 10.65.35.5 with HTTP; Fri, 14 Oct 2005 10:31:23 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510141007290.23590@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10117>
 
-David Ho <davidkwho@gmail.com> writes:
+I was a little worried when I did git-whatchanged on a file and there
+was a hole in the history where the merge is.  This reassured me that
+all changes to the file is accessible (I'm sure they are all stored
+safely in the repo =).
 
-> When I merged back the changes from mybranch, git-whatchanged -p did
-> not should the diff of the merge.
+Thanks, David
 
-You probably mean "git-whatchanged -p -m".
-
-I've seen this question asked at least twice in the past.
-
-    SYNOPSIS
-    --------
-    'git-whatchanged' <option>...
-
-    DESCRIPTION
-    -----------
-    Shows commit logs and diff output each commit introduces.  The
-    command internally invokes 'git-rev-list' piped to
-    'git-diff-tree', and takes command line options for both of
-    these commands.
-
-    This manual page describes only the most frequently used options.
-
-Perhaps the frequently used options should include '-m' as well.
-This part is from git-diff-tree.txt:
-
-    -m::
-            By default, "git-diff-tree --stdin" does not show
-            differences for merge commits.  With this flag, it shows
-            differences to that commit from all of its parents.
+On 10/14/05, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+>
+> On Fri, 14 Oct 2005, David Ho wrote:
+> >
+> > Maybe someone can clear up a confusion I have with git-whatchanged.
+> > I created a new repo with just one file hello, split out a new branch "mybranch.
+> > When I merged back the changes from mybranch, git-whatchanged -p did
+> > not should the diff of the merge.
+>
+> You can use the "-m" flag to show merges. HOWEVER, it's not very useful
+> in general, although it _is_ useful on a file-by-file basis.
+>
+> What "-m" does is that it will show diffs against each parent, which is
+> _sometimes_ what you want. Try it.
+>
+>                 Linus
+>
