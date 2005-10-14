@@ -1,97 +1,127 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Regression: Multi-head syntax
-Date: Thu, 13 Oct 2005 15:36:48 -0700
-Message-ID: <7v4q7l11tr.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0510132225120.1028@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Paul Eggert <eggert@CS.UCLA.EDU>
+Subject: Re: [PATCH] Try URI quoting for embedded TAB and LF in pathnames
+Date: Thu, 13 Oct 2005 17:16:57 -0700
+Message-ID: <87irw1q7eu.fsf@penguin.cs.ucla.edu>
+References: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net>
+	<20051007232909.GB8893@steel.home>
+	<7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net>
+	<20051008064555.GA3831@steel.home>
+	<7vachks7aq.fsf@assigned-by-dhcp.cox.net>
+	<20051008133032.GA32079@localhost>
+	<7v64s7svya.fsf@assigned-by-dhcp.cox.net>
+	<7vu0frpxs1.fsf@assigned-by-dhcp.cox.net>
+	<87mzlgh8xa.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510110802470.14597@g5.osdl.org>
+	<87ek6s0w34.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510111121030.14597@g5.osdl.org>
+	<87slv7zvqj.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510111346220.14597@g5.osdl.org>
+	<877jcjmdmq.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510120749230.14597@g5.osdl.org>
+	<87vf02qy79.fsf@penguin.cs.ucla.edu>
+	<Pine.LNX.4.64.0510121411550.15297@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 14 00:38:43 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Robert Fitzsimons <robfitz@273k.net>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Kai Ruemmler <kai.ruemmler@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Oct 14 02:19:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQBh0-0008NE-F3
-	for gcvg-git@gmane.org; Fri, 14 Oct 2005 00:36:55 +0200
+	id 1EQDGz-0007CV-TH
+	for gcvg-git@gmane.org; Fri, 14 Oct 2005 02:18:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751116AbVJMWgv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Oct 2005 18:36:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbVJMWgv
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 18:36:51 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:58035 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751116AbVJMWgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Oct 2005 18:36:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051013223630.YTSW29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 13 Oct 2005 18:36:30 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0510132225120.1028@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 13 Oct 2005 22:28:50 +0200
-	(CEST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932569AbVJNARv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Oct 2005 20:17:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932571AbVJNARv
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Oct 2005 20:17:51 -0400
+Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:2973 "EHLO kiwi.cs.ucla.edu")
+	by vger.kernel.org with ESMTP id S932569AbVJNARu (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Oct 2005 20:17:50 -0400
+Received: from penguin.cs.ucla.edu (Penguin.CS.UCLA.EDU [131.179.64.200])
+	by kiwi.cs.ucla.edu (8.11.7p1+Sun/8.11.7/UCLACS-5.2) with ESMTP id j9E0Gv423711;
+	Thu, 13 Oct 2005 17:16:57 -0700 (PDT)
+Received: from eggert by penguin.cs.ucla.edu with local (Exim 4.50)
+	id 1EQDFp-00087k-7i; Thu, 13 Oct 2005 17:16:57 -0700
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510121411550.15297@g5.osdl.org> (Linus
+ Torvalds's message of "Wed, 12 Oct 2005 14:24:31 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10094>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> with 221e743c.. [git-fetch --tags: deal with tags with spaces in them.] my 
-> usual git-fetch no longer works. My .git/remotes/junio used to look like 
-> this:
->
-> -- snip --
-> URL: rsync://rsync.kernel.org/pub/scm/git/git.git
-> Pull: master:junio todo:todo +pu:pu
-> -- snap --
->
-> but this makes a new head "junio todo:todo +pu:pu". Now I have to write 
-> the remote like this to work correctly:
->
-> -- snip --
-> URL: rsync://rsync.kernel.org/pub/scm/git/git.git
-> Pull: master:junio
-> Pull: todo:todo
-> Pull: +pu:pu
-> -- snap --
->
-> Is this intended?
+> So I repeat: 
+>  - escape as little as possible
+>  - make the _viewer_ decide how to view it.
 
-Unintended regression whose solution is not quite decided.  My
-current thinking is to disallow refnames that:
+Under my most recent proposal, the only bytes one must escape are ",
+\, and LF.  Doesn't that satisfy these two main criteria?
 
-     * have a path component that begins with a ".", or
-     * have two consecutive dots "..", or
-     * have ASCII control character, "~", "^", ":" or SP, anywhere, or
-     * end with a "/".
 
-and there are series of commits to enforce the above (except two
-dots) in the proposed updates branch.
+> If GNU emacs does locale translations rather than just do a binary
+> transfer of the data, then that's a sign that GNU emacs is being
+> really stupid.
 
-The first one does not have much technical reason for it, but is
-just easier on eye, and we do not have to worry about /./ or
-/../ if we have that rule.  The second one is so that
-"ref1..ref2" notation that means "^ref1 ref2" in some tools
-would be unambiguous.
+Perhaps so, but it has a lot of company.  I have even worse problems
+with Mozilla Thunderbird.  And as we observed, Pine also has problems
+sending properly-formatted email containing arbitrary binary data.
 
-SP and TAB are because of the shell splicing tokens at IFS, LF
-is because of remote/ file format, and forbidding the rest of
-the control characters are "not strictly necessariy but why not
-while we are at it?"  "~" and "^" are "follow-the-parent"
-postfix operators, and ":" separates a src:dst pair in a
-refspec.
+I suspect the vast majority of email clients will screw up in
+relatively common cases involving unusual characters in file names.
+Using attachments avoids many of the problems, but lots of patches are
+emailed inline and I'd rather not force people to use attachments to
+send diffs.
 
-There is a thread on this:
 
-	http://marc.theaimsgroup.com/?l=git&m=112901070817153&w=2
+> I find that email is very robust - it's basically 8-bit clean. No 
+> character encoding, no crap. Just a byte stream. It really _is_ the most 
+> reliable format.
 
-It appears to me that the list does not have many objections to
-the above restriction, so that change can goes in now after
-double-dot fixes, and perhaps after fixing cvs/arch import to
-munge the tag/branch names appropriately, we can revert the
-IFS="$LF" change in git-fetch that is giving you this trouble,
+Hmm.  To test that theory, I just now sent plain-text email to myself,
+containing a carriage-return (CR) byte in the middle of a line.
 
-This is slightly offtopic, but could you switch to http
-transport?  Rsync has been deprecated for quite some time.
+The CR byte was transliterated into a LF.  Ooops.
+
+This was the very first (and only) test I tried, which isn't a good
+sign for reliability.  If you're curious, I tracked the problem down
+to Exim, a popular mail transfer agent that is running on my personal
+Debian GNU/Linux (stable) box.  As to why Exim munges email, please see
+<http://www.exim.org/exim-html-4.40/doc/html/spec_44.html#SECT44.1>.
+(And I didn't know about the Exim glitch before trying my test.
+I'm normally a Sendmail man myself.)
+
+More generally, I suspect inline patches with weird bytes will suffer
+greatly from encoding and recoding by mail agents.
+
+
+> What matters is not what it looks like, but what it _saves_ as. If
+> you save the email message, it should come out as the same reliable
+> 8-bit byte stream
+
+Unfortunately this isn't true for Emacs, and I suspect other mailers
+will have similar problems.  For example, with Emacs I can easily save
+either the exact byte-for-byte message body that my mail transfer
+agent gave me; or I can have Emacs decode the message into its
+constituent characters, reencode the result as UTF-8, and put that
+into a file.  In neither case, though, am I saving the original byte
+stream that you presented to your mail user agent.  Even if I save the
+byte-for-byte message body, it is often in quoted-printable format so
+I'll have to decode strings like "=EF" to recover the original bytes.
+This is doable, yes, but it's inconvenient in practice, at least with
+the mail user agents I'm familiar with.  And even if I do it, I don't
+necessarily have the same byte stream you gave your mail user agent; I
+merely have the byte stream that your MUA gave to your MTA, and these
+may not be the same thing (they certainly aren't always the same thing
+with Emacs).
+
+
+The simplest fix for git may be to say "Don't use inline patches; use
+attachments if you must email anything with strange characters in it."
+That's fine.  But I prefer a format that also allows GNU diff, if it
+chooses, to generate output that resists common inline-email botches.
