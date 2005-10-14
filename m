@@ -1,87 +1,73 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Try URI quoting for embedded TAB and LF in pathnames
-Date: Thu, 13 Oct 2005 23:59:09 -0700
-Message-ID: <7vll0wvb2a.fsf@assigned-by-dhcp.cox.net>
-References: <7vu0ftyvbc.fsf@assigned-by-dhcp.cox.net>
-	<20051007232909.GB8893@steel.home>
-	<7vpsqgyjrj.fsf@assigned-by-dhcp.cox.net>
-	<20051008064555.GA3831@steel.home>
-	<7vachks7aq.fsf@assigned-by-dhcp.cox.net>
-	<20051008133032.GA32079@localhost>
-	<7v64s7svya.fsf@assigned-by-dhcp.cox.net>
-	<7vu0frpxs1.fsf@assigned-by-dhcp.cox.net>
-	<87mzlgh8xa.fsf@penguin.cs.ucla.edu>
-	<Pine.LNX.4.64.0510110802470.14597@g5.osdl.org>
-	<87ek6s0w34.fsf@penguin.cs.ucla.edu>
-	<Pine.LNX.4.64.0510111121030.14597@g5.osdl.org>
-	<87slv7zvqj.fsf@penguin.cs.ucla.edu>
-	<Pine.LNX.4.64.0510111346220.14597@g5.osdl.org>
-	<877jcjmdmq.fsf@penguin.cs.ucla.edu>
-	<Pine.LNX.4.64.0510120749230.14597@g5.osdl.org>
-	<87vf02qy79.fsf@penguin.cs.ucla.edu>
+Subject: Re: Peeling the onion
+Date: Fri, 14 Oct 2005 01:40:42 -0700
+Message-ID: <7vpsq8trsl.fsf@assigned-by-dhcp.cox.net>
+References: <7v3bnra20z.fsf@assigned-by-dhcp.cox.net>
+	<8764snyufn.fsf@ualberta.net>
+	<7v4q875bbj.fsf@assigned-by-dhcp.cox.net>
+	<20050927094029.GA30889@pasky.or.cz>
+	<7v64sm30dh.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509271020530.3308@g5.osdl.org>
+	<7v64sm1hp3.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0509271414000.3308@g5.osdl.org>
+	<7virwlumyo.fsf@assigned-by-dhcp.cox.net>
+	<7voe5sws7y.fsf_-_@assigned-by-dhcp.cox.net>
+	<46a038f90510140048r30c7ec36n35f77a1ac52c4691@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 14 09:00:45 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 14 10:43:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQJXK-0008Gl-D5
-	for gcvg-git@gmane.org; Fri, 14 Oct 2005 08:59:27 +0200
+	id 1EQL7f-0004hX-AN
+	for gcvg-git@gmane.org; Fri, 14 Oct 2005 10:41:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750847AbVJNG7M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Oct 2005 02:59:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750863AbVJNG7M
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 02:59:12 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:10156 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1750847AbVJNG7L (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Oct 2005 02:59:11 -0400
+	id S1750899AbVJNIkp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Oct 2005 04:40:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750898AbVJNIkp
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Oct 2005 04:40:45 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:60559 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1750743AbVJNIko (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Oct 2005 04:40:44 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051014065845.FEPL24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 14 Oct 2005 02:58:45 -0400
-To: Paul Eggert <eggert@CS.UCLA.EDU>
-In-Reply-To: <87vf02qy79.fsf@penguin.cs.ucla.edu> (Paul Eggert's message of
-	"Wed, 12 Oct 2005 13:26:02 -0700")
+          id <20051014084034.LPFT19461.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 14 Oct 2005 04:40:34 -0400
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90510140048r30c7ec36n35f77a1ac52c4691@mail.gmail.com>
+	(Martin Langhoff's message of "Fri, 14 Oct 2005 20:48:39 +1300")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10104>
 
-Paul Eggert <eggert@CS.UCLA.EDU> writes:
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-> Here is the proposed format.  Each file name is a string of bytes, in
-> one of the following two formats:
->
-> A.  A nonempty sequence of ASCII graphic characters (i.e., bytes in
->     the range '!' == '\041' through '~' == '\177').  The first byte
->     cannot be '!' == '\041' or '"' == '\042'.  Leading '"' is used for
->     (B) below, and leading '!' is reserved for future extensions.
->
-> B.  A nonempty C-language character string literal, with the following
->     restrictions and modifications:
->
->     B1.  No multibyte character processing is done.  Members of the
->          string literal are treated as bytes, not characters.  Null
->          bytes are not allowed, and '"' == '\042', '\\' == '\134' and
->          '\n' == '\012' are allowed only if properly escaped as shown
->          below; but all other bytes are allowed.
->
->     B2.  No trigraph processing is done (e.g., ??/ stands for three
->          bytes, not one).
->
->     B3.  No line-splicing is done (i.e., backslash-newline is not allowed).
->
->     B4.  Only the following escape sequences are allowed.
->
->            \" \\ \a \b \f \n \r \t \v
->            \XYZ  (where X, Y, and Z are octal digits, X <= 3, and
->                   at least one of the digits is nonzero)
+> I personally don't care much for the -t option, at the moment. I do
+> think that tree identity is in some contexts more important than
+> commit identity, so there will be instances where you really want to
+> have a canonical way to "drill down" to the tree.
 
-Just to let you know, I am slowly converting apply.c to accept
-this format, and also diff.c to produce this.  I did not
-personally like the missing double quotes around what I did
-anyway, although it was easier to code.
+I do not know how useful it would be, but the onion peeler can
+be told to dereference commit to tree.
+
+$ ./git-cat-file -s 'v0.99.8^{tree}' 
+6875
+$ ./git-cat-file -s 'v0.99.8^{commit}' 
+435
+$ ./git-cat-file -t 'v0.99.8^{tree}' 
+tree
+$ ./git-cat-file -t 'v0.99.8^{commit}' 
+commit
+$ ./git-rev-parse v0.99.8 \
+  v0.99.8^0 v0.99.8^{commit} \
+  v0.99.8^{commit}^{tree} v0.99.8^{tree}
+b041895af323bdef10cc9a718bda468ba3622bc0
+91dd674e30ba0298e89c9be2657024805170c2ac
+91dd674e30ba0298e89c9be2657024805170c2ac
+bfd844a69bfd582d107622c27b89e9b959e89fd8
+bfd844a69bfd582d107622c27b89e9b959e89fd8
