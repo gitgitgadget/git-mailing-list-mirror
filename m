@@ -1,87 +1,90 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: gitweb
-Date: Sat, 15 Oct 2005 21:31:46 +0200
-Message-ID: <20051015193146.GK12774@schottelius.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: maybe breakage with latest git-pull and http protocol
+Date: Sat, 15 Oct 2005 15:41:35 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0510151502290.23242@iabervon.org>
+References: <867jciz18w.fsf@blue.stonehenge.com> <864q7kqsa4.fsf@blue.stonehenge.com>
+ <7vhdbkt8ad.fsf@assigned-by-dhcp.cox.net> <86achcoyvz.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.63.0510141543030.23242@iabervon.org> <863bn3lypn.fsf@blue.stonehenge.com>
+ <7vd5m6py11.fsf@assigned-by-dhcp.cox.net> <7v1x2mpx6m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="VJJoKLVEFXdmHQwR"
-X-From: git-owner@vger.kernel.org Sat Oct 15 21:33:27 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nick Hengeveld <nickh@reactrix.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 15 21:38:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQrlE-0002hV-7y
-	for gcvg-git@gmane.org; Sat, 15 Oct 2005 21:32:04 +0200
+	id 1EQrpd-0003ud-Sh
+	for gcvg-git@gmane.org; Sat, 15 Oct 2005 21:36:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751206AbVJOTcA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Oct 2005 15:32:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbVJOTcA
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Oct 2005 15:32:00 -0400
-Received: from wg.technophil.ch ([213.189.149.230]:17063 "HELO
-	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
-	id S1751206AbVJOTb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Oct 2005 15:31:59 -0400
-Received: (qmail 16146 invoked by uid 1000); 15 Oct 2005 19:31:46 -0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Linux-Info: http://linux.schottelius.org/
-X-Operating-System: Linux 2.6.13.1
+	id S1751209AbVJOTgf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Oct 2005 15:36:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbVJOTgf
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Oct 2005 15:36:35 -0400
+Received: from iabervon.org ([66.92.72.58]:787 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751209AbVJOTge (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Oct 2005 15:36:34 -0400
+Received: (qmail 6562 invoked by uid 1000); 15 Oct 2005 15:41:35 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 15 Oct 2005 15:41:35 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1x2mpx6m.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10141>
 
+On Sat, 15 Oct 2005, Junio C Hamano wrote:
 
---VJJoKLVEFXdmHQwR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+> > merlyn@stonehenge.com (Randal L. Schwartz) writes:
+> >
+> >> OK, it happened this morning.  While syncing to update from
+> >> yesterday's version, I got:
+> >
+> > Thanks.
+> >
+> >>     localhost:~/MIRROR/git-GIT % git-pull
+> >>     Fetching refs/heads/master from http://www.kernel.org/pub/scm/git/git.git using http
+> >>     Getting alternates list
+> >>     got 4546738b58a0134eef154231b07d60fc174d56e3
+> >>     walk 4546738b58a0134eef154231b07d60fc174d56e3
+> >>     got d402d5566fdf226697a386dfb9858e5d954e9b91
+> >>     got 873d8e5652c06c3891278f33546c437efc209c2d
+> >>     walk d402d5566fdf226697a386dfb9858e5d954e9b91
+> >>     error: 
+> >>     Getting pack list
+> >>     got 0207ab18a3876249a928e7539d8f594a4f6921f1
+> 
+> More interesting is this "error:" without error message.
+> "Getting pack list" is a signal that we fell back to
+> fetch_pack(), so this is coming from fetch_object().
+> 
+> I see this line could emit an empty error message, if errorstr
+> is empty.
+> 
+> 	if (request->curl_result != CURLE_OK && request->http_code != 416) {
+> 		ret = error("%s", request->errorstr);
+> 		release_request(request);
+> 		return ret;
+> 	}
+> 
+> So if that is the case maybe my previous speculation that we
+> sometimes forget to issue a necessary request was wrong.  We
+> asked for that object and got an error from cURL library...
 
-1. problems getting gitweb
+It looks like we didn't get an error from the cURL library, actually, or 
+it would have printed something. My guess is that it is getting to the 
+point about while the request is still in progress, but I'm not seeing how 
+that could happen.
 
-[21:26] creme:build% cg-clone http://www.kernel.org/pub/scm/git/gitweb.cgi
-defaulting to local storage area
-http://www.kernel.org/pub/scm/git/gitweb.cgi/HEAD:
-21:27:01 FEHLER 404: Not Found.
-cg-fetch: unable to get the HEAD branch
-cg-clone: fetch failed
+> BTW, I do not think this is related to git.git repository
+> problem, but I wonder why we do not do fetch_object() against
+> each altbase in http-fetch.c::fetch(); nobody said you cannot
+> borrow unpacked object from your neighbour.
 
-2. mysterious commit
+I believe the code is doing that, but elsewhere.
 
-http://www.kernel.org/git/?p=3Dgit/gitweb.git;a=3Dcommitdiff;h=3D0c3eb45fa4=
-14326564cb1a9692c7a22319939fc0;hp=3Dd8f1c5c2f37433ef9ce56847d81314ea2798ac3c
-
-Not many changes for a new release imho ;-)
-
-[well, perhaps the release change was for the head<->branches change before]
-
-Nico
-
---=20
-Latest project: cconfig (http://nico.schotteli.us/papers/linux/cconfig/)
-Open Source nutures open minds and free, creative developers.
-
---VJJoKLVEFXdmHQwR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iQIVAwUBQ1FZIbOTBMvCUbrlAQJZqw//bvp8NTAegZ4mkIYmTPldHOWDQ84eZz06
-rZNJyT1VfmmPm61BaDGXKO5VnXjo9hk1cggzrJq3o2/cYZm3VZKj95JcDggNvw2s
-oiCpqwZUIJAugRvhV6diyDQ5WNmXuPZejs8r+UEmHZmHNgnpzDv1YsHN5y7Yk3du
-HVcP3N3/X9AY96YNjKni9vrDu6seGVp570CXQhLyfIY980NW8VPIl9g1ceEZQe5i
-dXQ8m2KSmPkMe+cZW9Xd+Y89ztPsKSk+j9k2g+Go3PqjDFuX20CYIvOMAyV4ReOr
-ud0FAoX4IAqHr8OSi5nnHBtKu3lD+jVYX6imELZRl9SJJWEAAmMzCLXtpemaZMiz
-T4fTybtXgbq7Rfd5fq0ToATj/mruDPGWXZcFeTQcZ5557YeT3zLQabfs9bhWCW/A
-wcWvdrO/ipU7dOlC2I9E/PlueE7d8+jk6j0UHYzopEchfBwnIofV/uWzHUQZ9bwV
-RbNvPMt3uRsGJuAPIKZVpPbp4pGOwiCNWOkI0L2ktdChUlka8iqWGHX/NMKR+p4t
-oWXqZ96AeKclP2CuIFe2AWSZxRpOYKGMJjYAWXerIMKJ27b8odrFK4pR5bMg1GXT
-ZTeuS+gdBWc4oYK1P01Epgn62ltbwhFKOGc+wcW/DEfvoZvLfal6VpOKc76iiYHC
-0ej8ndb9t2c=
-=n7/8
------END PGP SIGNATURE-----
-
---VJJoKLVEFXdmHQwR--
+	-Daniel
+*This .sig left intentionally blank*
