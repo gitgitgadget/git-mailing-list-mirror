@@ -1,118 +1,87 @@
-From: Zack Brown <zbrown@tumblerings.org>
-Subject: Re: getting rid of extra directories
-Date: Sat, 15 Oct 2005 12:27:20 -0700
-Message-ID: <20051015192720.GA11364@tumblerings.org>
-References: <20051015174103.GA2609@tumblerings.org> <7vu0fimzhn.fsf@assigned-by-dhcp.cox.net>
+From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+Subject: gitweb
+Date: Sat, 15 Oct 2005 21:31:46 +0200
+Message-ID: <20051015193146.GK12774@schottelius.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 15 21:29:11 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="VJJoKLVEFXdmHQwR"
+X-From: git-owner@vger.kernel.org Sat Oct 15 21:33:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQrh4-0001oh-57
-	for gcvg-git@gmane.org; Sat, 15 Oct 2005 21:27:46 +0200
+	id 1EQrlE-0002hV-7y
+	for gcvg-git@gmane.org; Sat, 15 Oct 2005 21:32:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751204AbVJOT1Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Oct 2005 15:27:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbVJOT1Y
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Oct 2005 15:27:24 -0400
-Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:40098 "EHLO
-	tumblerings.org") by vger.kernel.org with ESMTP id S1751204AbVJOT1X
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Oct 2005 15:27:23 -0400
-Received: from zbrown by tumblerings.org with local (Exim 4.52)
-	id 1EQrge-000409-UU; Sat, 15 Oct 2005 12:27:20 -0700
-To: Junio C Hamano <junkio@cox.net>
+	id S1751206AbVJOTcA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Oct 2005 15:32:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbVJOTcA
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Oct 2005 15:32:00 -0400
+Received: from wg.technophil.ch ([213.189.149.230]:17063 "HELO
+	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
+	id S1751206AbVJOTb7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Oct 2005 15:31:59 -0400
+Received: (qmail 16146 invoked by uid 1000); 15 Oct 2005 19:31:46 -0000
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vu0fimzhn.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
+User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
+X-Linux-Info: http://linux.schottelius.org/
+X-Operating-System: Linux 2.6.13.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10139>
-
-On Sat, Oct 15, 2005 at 11:00:52AM -0700, Junio C Hamano wrote:
-> Zack Brown <zbrown@tumblerings.org> writes:
-> 
-> > I've been using the latest Cogito. When I seek back and forth in a git repo,
-> > directories I've created tend to persist backward in time, cluttering up
-> > earlier versions.
-> >
-> > By the discussions on this list, I'm pretty sure there's a way to stop this,
-> > but I don't know clearly what it is, and I'm worried about trying things
-> > that might corrupt my repository. Could someone spell it out for me please?
-> 
-> I do not know exactly what Cogito "seek back and forth" does,
-
-It means to "cg-seek" back to an earlier state of the repo, and forward to a
-more recent state of the repo. "seeking back and forth" means doing a lot of
-"cg-seek" commands. Sorry that wasn't clear.
-
-> but updating to git-core "master" branch may help.
-
-I already use that branch.
-
-Here's some commands that reproduce the problem:
-
-$ mkdir tmpproj
-$ cd tmpproj
-$ cg-init
-
-give the initial commit message and save
-
-$ ls > a
-$ cg-add a
-$ cg-commit
-
-give the commit message and save
-
-$ cg-tag nodirs
-$ mkdir d
-$ mv a d/a
-$ cg-rm a
-$ cg-add d/a
-$ cg-commit
-
-give the commit message and save
-
-$ cg-seek nodirs
-
-now I would expect to see the original directory, with no 'd' subdirectory, and
-just the 'a' file sitting there.
-
-$ ls -F
-a  d/
-$
-
-See the problem? The 'd' directory did not exist in this version of the
-repository, but it's there anyway.
-
-Be well,
-Zack
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10140>
 
 
+--VJJoKLVEFXdmHQwR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> Specifically, this commit intends to remove empty directory from
-> the working tree, where previously checked out tree object had
-> files/directories inside while newly checked out tree does not.
-> 
->     commit 340e4f88c083b0692e6554b1c2c27fd43c7cc8d3
->     Author: Junio C Hamano <junkio@cox.net>
->     Date:   Mon Oct 10 17:34:08 2005 -0700
-> 
->         Remove empty directories after read-tree -u.
-> 
->         This fixes everybody's favorite gripe that switching branch
->         with 'git checkout' leaves empty directories.
-> 
->         Signed-off-by: Junio C Hamano <junkio@cox.net>
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+1. problems getting gitweb
 
--- 
-Zack Brown
+[21:26] creme:build% cg-clone http://www.kernel.org/pub/scm/git/gitweb.cgi
+defaulting to local storage area
+http://www.kernel.org/pub/scm/git/gitweb.cgi/HEAD:
+21:27:01 FEHLER 404: Not Found.
+cg-fetch: unable to get the HEAD branch
+cg-clone: fetch failed
+
+2. mysterious commit
+
+http://www.kernel.org/git/?p=3Dgit/gitweb.git;a=3Dcommitdiff;h=3D0c3eb45fa4=
+14326564cb1a9692c7a22319939fc0;hp=3Dd8f1c5c2f37433ef9ce56847d81314ea2798ac3c
+
+Not many changes for a new release imho ;-)
+
+[well, perhaps the release change was for the head<->branches change before]
+
+Nico
+
+--=20
+Latest project: cconfig (http://nico.schotteli.us/papers/linux/cconfig/)
+Open Source nutures open minds and free, creative developers.
+
+--VJJoKLVEFXdmHQwR
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iQIVAwUBQ1FZIbOTBMvCUbrlAQJZqw//bvp8NTAegZ4mkIYmTPldHOWDQ84eZz06
+rZNJyT1VfmmPm61BaDGXKO5VnXjo9hk1cggzrJq3o2/cYZm3VZKj95JcDggNvw2s
+oiCpqwZUIJAugRvhV6diyDQ5WNmXuPZejs8r+UEmHZmHNgnpzDv1YsHN5y7Yk3du
+HVcP3N3/X9AY96YNjKni9vrDu6seGVp570CXQhLyfIY980NW8VPIl9g1ceEZQe5i
+dXQ8m2KSmPkMe+cZW9Xd+Y89ztPsKSk+j9k2g+Go3PqjDFuX20CYIvOMAyV4ReOr
+ud0FAoX4IAqHr8OSi5nnHBtKu3lD+jVYX6imELZRl9SJJWEAAmMzCLXtpemaZMiz
+T4fTybtXgbq7Rfd5fq0ToATj/mruDPGWXZcFeTQcZ5557YeT3zLQabfs9bhWCW/A
+wcWvdrO/ipU7dOlC2I9E/PlueE7d8+jk6j0UHYzopEchfBwnIofV/uWzHUQZ9bwV
+RbNvPMt3uRsGJuAPIKZVpPbp4pGOwiCNWOkI0L2ktdChUlka8iqWGHX/NMKR+p4t
+oWXqZ96AeKclP2CuIFe2AWSZxRpOYKGMJjYAWXerIMKJ27b8odrFK4pR5bMg1GXT
+ZTeuS+gdBWc4oYK1P01Epgn62ltbwhFKOGc+wcW/DEfvoZvLfal6VpOKc76iiYHC
+0ej8ndb9t2c=
+=n7/8
+-----END PGP SIGNATURE-----
+
+--VJJoKLVEFXdmHQwR--
