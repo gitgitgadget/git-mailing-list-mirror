@@ -1,64 +1,83 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: maybe breakage with latest git-pull and http protocol
-Date: 15 Oct 2005 15:04:23 -0700
-Message-ID: <86irvyigig.fsf@blue.stonehenge.com>
-References: <867jciz18w.fsf@blue.stonehenge.com>
-	<864q7kqsa4.fsf@blue.stonehenge.com>
-	<7vhdbkt8ad.fsf@assigned-by-dhcp.cox.net>
-	<86achcoyvz.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.63.0510141543030.23242@iabervon.org>
-	<863bn3lypn.fsf@blue.stonehenge.com>
-	<20051015215754.GD5509@reactrix.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: getting rid of extra directories
+Date: Sat, 15 Oct 2005 15:34:29 -0700
+Message-ID: <7v8xwummtm.fsf@assigned-by-dhcp.cox.net>
+References: <20051015174103.GA2609@tumblerings.org>
+	<7vu0fimzhn.fsf@assigned-by-dhcp.cox.net>
+	<20051015192720.GA11364@tumblerings.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 16 00:04:55 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 16 00:34:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQu8q-0002LX-6U
-	for gcvg-git@gmane.org; Sun, 16 Oct 2005 00:04:36 +0200
+	id 1EQuc1-0000Pi-JJ
+	for gcvg-git@gmane.org; Sun, 16 Oct 2005 00:34:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751244AbVJOWEd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Oct 2005 18:04:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbVJOWEd
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Oct 2005 18:04:33 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:9499 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751244AbVJOWEc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Oct 2005 18:04:32 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id E00E48F778;
-	Sat, 15 Oct 2005 15:04:23 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 09946-01-3; Sat, 15 Oct 2005 15:04:23 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 7A60B8F7CB; Sat, 15 Oct 2005 15:04:23 -0700 (PDT)
-To: Nick Hengeveld <nickh@reactrix.com>
-x-mayan-date: Long count = 12.19.12.12.16; tzolkin = 6 Cib; haab = 14 Yax
-In-Reply-To: <20051015215754.GD5509@reactrix.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1751248AbVJOWeb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Oct 2005 18:34:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbVJOWeb
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Oct 2005 18:34:31 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:56048 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751248AbVJOWeb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Oct 2005 18:34:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051015223422.CPLB16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 15 Oct 2005 18:34:22 -0400
+To: Zack Brown <zbrown@tumblerings.org>
+In-Reply-To: <20051015192720.GA11364@tumblerings.org> (Zack Brown's message of
+	"Sat, 15 Oct 2005 12:27:20 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10150>
 
->>>>> "Nick" == Nick Hengeveld <nickh@reactrix.com> writes:
+Zack Brown <zbrown@tumblerings.org> writes:
 
-Nick> On Sat, Oct 15, 2005 at 06:03:00AM -0700, Randal L. Schwartz wrote:
->> OK, it happened this morning.  While syncing to update from
->> yesterday's version, I got:
->> ...
->> Definitely broken.  But I can "rsync" just fine.
+>> I do not know exactly what Cogito "seek back and forth" does,
+>
+> It means to "cg-seek" back to an earlier state of the repo, and forward to a
+> more recent state of the repo. "seeking back and forth" means doing a lot of
+> "cg-seek" commands. Sorry that wasn't clear.
+>
+>> but updating to git-core "master" branch may help.
+>
+> I already use that branch.
 
-Nick> Which version of curl did you build with?
+I usually do not use Cogito, so I updated to the latest and
+tried it myself.  No wonder.
 
-curl 7.13.1 (powerpc-apple-darwin8.0) libcurl/7.13.1 OpenSSL/0.9.7g zlib/1.2.3
+cg-seek does not use "git-read-tree -m -u $old $new", which was
+updated by that commit I mentioned to remove the empty
+directories. It does "git-read-tree -m $new" and does the
+removal part manually by reading from diff-tree $old $new.  I
+suspect the code was there before the two-tree read-tree was
+invented.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+A similar sequence as you did, in pure git, would remove empty
+directory d/ when switching branches between.
+
+    $ mkdir junkproj
+    $ cd junkproj
+    $ git-init-db
+    $ ls >a
+    $ git-add a
+    $ git-commit -a -m 'Add a'
+    $ git-checkout -b adddir
+    $ mkdir d
+    $ mv a d/a
+    $ git-add d
+    $ git-commit -a -m 'Move a to d/a'
+
+    $ git-checkout master
+
+I suspect cg-Xlib::tree_timewarp, which currently does
+"git-read-tree -m $branch" followed by diff-tree piped to xargs,
+can be taught to use "git-read-tree -m -u $base $branch" (and
+lose the git-checkout-index -f -a immediately after that while
+we are at it), but I do not do Porcelain, so...
