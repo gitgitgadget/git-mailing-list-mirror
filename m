@@ -1,50 +1,56 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: What's in git.git repository
-Date: Sat, 15 Oct 2005 12:03:09 +0200
-Message-ID: <20051015100309.GR8383MdfPADPa@greensroom.kotnet.org>
-References: <7vwtkfpbyk.fsf@assigned-by-dhcp.cox.net>
-Reply-To: skimo@liacs.nl
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [ANNOUNCE] Stacked GIT 0.7.1
+Date: Sat, 15 Oct 2005 11:59:51 +0100
+Message-ID: <1129373992.7719.4.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 15 12:04:36 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Oct 15 13:01:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQisn-0008Iz-Aa
-	for gcvg-git@gmane.org; Sat, 15 Oct 2005 12:03:17 +0200
+	id 1EQjnH-0001tz-Ia
+	for gcvg-git@gmane.org; Sat, 15 Oct 2005 13:01:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbVJOKDN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Oct 2005 06:03:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751090AbVJOKDN
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Oct 2005 06:03:13 -0400
-Received: from smtp19.wxs.nl ([195.121.6.15]:7659 "EHLO smtp19.wxs.nl")
-	by vger.kernel.org with ESMTP id S1751072AbVJOKDN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Oct 2005 06:03:13 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp19.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0IOE00B4GBXADL@smtp19.wxs.nl> for git@vger.kernel.org; Sat,
- 15 Oct 2005 12:03:10 +0200 (CEST)
-Received: (qmail 14124 invoked by uid 500); Sat, 15 Oct 2005 10:03:09 +0000
-In-reply-to: <7vwtkfpbyk.fsf@assigned-by-dhcp.cox.net>
-To: Junio C Hamano <junkio@cox.net>
-Mail-followup-to: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1751105AbVJOK77 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Oct 2005 06:59:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbVJOK77
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Oct 2005 06:59:59 -0400
+Received: from mta08-winn.ispmail.ntl.com ([81.103.221.48]:18830 "EHLO
+	mta08-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S1751105AbVJOK77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Oct 2005 06:59:59 -0400
+Received: from aamta12-winn.ispmail.ntl.com ([81.103.221.35])
+          by mta08-winn.ispmail.ntl.com with ESMTP
+          id <20051015105957.VWWO10357.mta08-winn.ispmail.ntl.com@aamta12-winn.ispmail.ntl.com>;
+          Sat, 15 Oct 2005 11:59:57 +0100
+Received: from cpc3-cmbg5-3-0-cust13.cmbg.cable.ntl.com ([81.104.194.13])
+          by aamta12-winn.ispmail.ntl.com with ESMTP
+          id <20051015105957.UDZB10626.aamta12-winn.ispmail.ntl.com@cpc3-cmbg5-3-0-cust13.cmbg.cable.ntl.com>;
+          Sat, 15 Oct 2005 11:59:57 +0100
+To: GIT <git@vger.kernel.org>
+X-Mailer: Evolution 2.4.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10130>
 
-On Fri, Oct 14, 2005 at 10:48:35PM -0700, Junio C Hamano wrote:
-> I'd have this graduate to the "master" branch after some more
-> testing, only if people are interested in it; otherwise I'm
-> thinking about dropping this (I am not particularly interested
-> in this enhancement myself).
+Stacked GIT 0.7.1 release is available from http://www.procode.org/stgit/
 
-Dereferencing of tags to trees could be interesting for tools
-such as dirdiff.  Of course, you can always do the dereferencing
-yourself and I'm planning on rewriting it in C anyway.
+This is a bug-fix/optimisation release, no new features were added.
 
-skimo
+StGIT is a Python application providing similar functionality to Quilt
+(i.e. pushing/popping patches to/from a stack) on top of GIT. These
+operations are performed using GIT commands and the patches are stored
+as GIT commit objects, allowing easy merging of the StGIT patches into
+other repositories using standard GIT functionality.
+
+What's new in this release (the full ChangeLog is in the archive):
+
+      * 'push' command optimisation - git-apply will be tried first,
+        falling back to a three-way merge if it does not succeed
+      * escape punctuation in the parsed e-mail addresses to avoid
+        problems when passing the environment to the GIT commands
+
+-- 
+Catalin
