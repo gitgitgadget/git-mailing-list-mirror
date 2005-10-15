@@ -1,184 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Some curl versions lack curl_easy_duphandle()
-Date: Sat, 15 Oct 2005 13:50:16 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510151348080.12307@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0510150038550.2807@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vmzlbpbwu.fsf@assigned-by-dhcp.cox.net>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: maybe breakage with latest git-pull and http protocol
+Date: 15 Oct 2005 06:03:00 -0700
+Message-ID: <863bn3lypn.fsf@blue.stonehenge.com>
+References: <867jciz18w.fsf@blue.stonehenge.com>
+	<864q7kqsa4.fsf@blue.stonehenge.com>
+	<7vhdbkt8ad.fsf@assigned-by-dhcp.cox.net>
+	<86achcoyvz.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.63.0510141543030.23242@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nick Hengeveld <nickh@reactrix.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 15 13:51:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 15 15:04:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EQkYq-0001hE-5N
-	for gcvg-git@gmane.org; Sat, 15 Oct 2005 13:50:48 +0200
+	id 1EQlh9-0007AG-5e
+	for gcvg-git@gmane.org; Sat, 15 Oct 2005 15:03:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751082AbVJOLuU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Oct 2005 07:50:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbVJOLuT
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Oct 2005 07:50:19 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:47497 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751082AbVJOLuS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Oct 2005 07:50:18 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 46D3013EE46; Sat, 15 Oct 2005 13:50:17 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 149BBB4D44; Sat, 15 Oct 2005 13:50:17 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id DC2F4B08A3; Sat, 15 Oct 2005 13:50:16 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 58E9013EE46; Sat, 15 Oct 2005 13:50:16 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzlbpbwu.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751150AbVJONDQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Oct 2005 09:03:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbVJONDP
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Oct 2005 09:03:15 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:18101 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1751150AbVJONDP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Oct 2005 09:03:15 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 080738F6CE;
+	Sat, 15 Oct 2005 06:03:02 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 11504-01-4; Sat, 15 Oct 2005 06:03:01 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 92EFA8F765; Sat, 15 Oct 2005 06:03:01 -0700 (PDT)
+To: Daniel Barkalow <barkalow@iabervon.org>
+x-mayan-date: Long count = 12.19.12.12.16; tzolkin = 6 Cib; haab = 14 Yax
+In-Reply-To: <Pine.LNX.4.63.0510141543030.23242@iabervon.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10132>
 
-Hi,
+>>>>> "Daniel" == Daniel Barkalow <barkalow@iabervon.org> writes:
 
-On Fri, 14 Oct 2005, Junio C Hamano wrote:
+Daniel> Can you give a general description of what happens? I've
+Daniel> noticed that I sometimes get spurious error messages that
+Daniel> don't actually affect the download, which I haven't tracked
+Daniel> down yet.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > This patch looks bigger than it really is: The code to get the
-> > default handle was refactored into a function, and is called
-> > instead of curl_easy_duphandle() if that does not exist.
-> 
-> I'd like to take Nick's config file patch first, which
-> unfortunately interferes with your patch.  I'd hate to ask you
-> this, but could you rebase it on top of Nick's patch, [...]
+OK, it happened this morning.  While syncing to update from
+yesterday's version, I got:
 
-No need to hate it. Here comes the rebased patch, and this time, I 
-actually tested it a bit.
+    localhost:~/MIRROR/git-GIT % git-pull
+    Fetching refs/heads/master from http://www.kernel.org/pub/scm/git/git.git using http
+    Getting alternates list
+    got 4546738b58a0134eef154231b07d60fc174d56e3
+    walk 4546738b58a0134eef154231b07d60fc174d56e3
+    got d402d5566fdf226697a386dfb9858e5d954e9b91
+    got 873d8e5652c06c3891278f33546c437efc209c2d
+    walk d402d5566fdf226697a386dfb9858e5d954e9b91
+    error: 
+    Getting pack list
+    got 0207ab18a3876249a928e7539d8f594a4f6921f1
+    got 9f7534accdf34b980a2de670cb1009dd84ee56c4
+    error: Unable to find 5ad4a2766d34569f3a1278544ab64978fab14cc8 under http://www.kernel.org/pub/scm/git/git.git/
 
----
+    Cannot obtain needed blob 5ad4a2766d34569f3a1278544ab64978fab14cc8
+    while processing commit d402d5566fdf226697a386dfb9858e5d954e9b91.
 
-diff --git a/http-fetch.c b/http-fetch.c
-index 784aedf..40bd0b4 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -18,6 +18,10 @@
- #define curl_global_init(a) do { /* nothing */ } while(0)
- #endif
- 
-+#if LIBCURL_VERSION_NUM < 0x070c04
-+#define NO_CURL_EASY_DUPHANDLE
-+#endif
-+
- #define PREV_BUF_SIZE 4096
- #define RANGE_HEADER_SIZE 30
- 
-@@ -28,7 +32,9 @@ static int data_received;
- static int max_requests = -1;
- static CURLM *curlm;
- #endif
-+#ifndef NO_CURL_EASY_DUPHANDLE
- static CURL *curl_default;
-+#endif
- static struct curl_slist *pragma_header;
- static struct curl_slist *no_pragma_header;
- static struct curl_slist *no_range_header;
-@@ -87,8 +93,12 @@ static struct active_request_slot *activ
- 
- static int curl_ssl_verify = -1;
- static char *ssl_cert = NULL;
-+#if LIBCURL_VERSION_NUM >= 0x070902
- static char *ssl_key = NULL;
-+#endif
-+#if LIBCURL_VERSION_NUM >= 0x070908
- static char *ssl_capath = NULL;
-+#endif
- static char *ssl_cainfo = NULL;
- 
- struct buffer
-@@ -213,6 +223,32 @@ void process_curl_messages();
- void process_request_queue();
- #endif
- 
-+static CURL* get_curl_handle()
-+{
-+	CURL* result = curl_easy_init();
-+
-+	curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, curl_ssl_verify);
-+#if LIBCURL_VERSION_NUM >= 0x070907
-+	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
-+#endif
-+
-+	if (ssl_cert != NULL)
-+		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
-+#if LIBCURL_VERSION_NUM >= 0x070902
-+	if (ssl_key != NULL)
-+		curl_easy_setopt(result, CURLOPT_SSLKEY, ssl_key);
-+#endif
-+#if LIBCURL_VERSION_NUM >= 0x070908
-+	if (ssl_capath != NULL)
-+		curl_easy_setopt(result, CURLOPT_CAPATH, ssl_capath);
-+#endif
-+	if (ssl_cainfo != NULL)
-+		curl_easy_setopt(result, CURLOPT_CAINFO, ssl_cainfo);
-+	curl_easy_setopt(result, CURLOPT_FAILONERROR, 1);
-+
-+	return result;
-+}
-+
- struct active_request_slot *get_active_slot()
- {
- 	struct active_request_slot *slot = active_queue_head;
-@@ -235,7 +271,11 @@ struct active_request_slot *get_active_s
- 	}
- 	if (slot == NULL) {
- 		newslot = xmalloc(sizeof(*newslot));
-+#ifdef NO_CURL_EASY_DUPHANDLE
-+		newslot->curl = get_curl_handle();
-+#else
- 		newslot->curl = curl_easy_duphandle(curl_default);
-+#endif
- 		newslot->in_use = 0;
- 		newslot->next = NULL;
- 
-@@ -1202,24 +1242,10 @@ int main(int argc, char **argv)
- 	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
- 	no_range_header = curl_slist_append(no_range_header, "Range:");
- 
--	curl_default = curl_easy_init();
--
--	curl_easy_setopt(curl_default, CURLOPT_SSL_VERIFYPEER, curl_ssl_verify);
--#if LIBCURL_VERSION_NUM >= 0x070907
--	curl_easy_setopt(curl_default, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
-+#ifndef NO_CURL_EASY_DUPHANDLE
-+	curl_default = get_curl_handle();
- #endif
- 
--	if (ssl_cert != NULL)
--		curl_easy_setopt(curl_default, CURLOPT_SSLCERT, ssl_cert);
--	if (ssl_key != NULL)
--		curl_easy_setopt(curl_default, CURLOPT_SSLKEY, ssl_key);
--	if (ssl_capath != NULL)
--		curl_easy_setopt(curl_default, CURLOPT_CAPATH, ssl_capath);
--	if (ssl_cainfo != NULL)
--		curl_easy_setopt(curl_default, CURLOPT_CAINFO, ssl_cainfo);
--
--	curl_easy_setopt(curl_default, CURLOPT_FAILONERROR, 1);
--
- 	alt = xmalloc(sizeof(*alt));
- 	alt->base = url;
- 	alt->got_indices = 0;
-@@ -1233,7 +1259,9 @@ int main(int argc, char **argv)
- 	curl_slist_free_all(pragma_header);
- 	curl_slist_free_all(no_pragma_header);
- 	curl_slist_free_all(no_range_header);
-+#ifndef NO_CURL_EASY_DUPHANDLE
- 	curl_easy_cleanup(curl_default);
-+#endif
- 	slot = active_queue_head;
- 	while (slot != NULL) {
- 		curl_easy_cleanup(slot->curl);
+Definitely broken.  But I can "rsync" just fine.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
