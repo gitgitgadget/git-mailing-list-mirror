@@ -1,120 +1,71 @@
-From: Ed Tomlinson <tomlins@cam.org>
-Subject: Re: GIT 0.99.8d
-Date: Sun, 16 Oct 2005 10:24:37 -0400
-Organization: me
-Message-ID: <200510161024.37873.tomlins@cam.org>
-References: <7vachadnmy.fsf@assigned-by-dhcp.cox.net>
+From: Dirk Behme <dirk.behme@de.bosch.com>
+Subject: Re: [kernel.org users] Re: auto-packing on kernel.org? please?
+Date: Sun, 16 Oct 2005 16:33:21 +0200
+Message-ID: <435264B1.2010204@de.bosch.com>
+References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org> <434EABFD.5070604@zytor.com> <434EC07C.30505@pobox.com> <Pine.LNX.4.64.0510131422161.23590@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751319AbVJPOYo@vger.kernel.org Sun Oct 16 16:26:45 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751319AbVJPOYo@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 16 16:33:59 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ER9Rw-0000Fz-EA
-	for glk-linux-kernel-3@gmane.org; Sun, 16 Oct 2005 16:25:21 +0200
+	id 1ER9Z1-0003MZ-3S
+	for gcvg-git@gmane.org; Sun, 16 Oct 2005 16:32:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751319AbVJPOYo (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 16 Oct 2005 10:24:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbVJPOYo
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sun, 16 Oct 2005 10:24:44 -0400
-Received: from mail.aei.ca ([206.123.6.14]:52450 "EHLO aeimail.aei.ca")
-	by vger.kernel.org with ESMTP id S1751308AbVJPOYn (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 16 Oct 2005 10:24:43 -0400
-Received: from grover (dsl-155-76.aei.ca [66.36.155.76])
-	by aeimail.aei.ca (8.12.10/8.12.10) with ESMTP id j9GEOVhZ016045;
-	Sun, 16 Oct 2005 10:24:32 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.8.2
-In-Reply-To: <7vachadnmy.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751309AbVJPOcd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Oct 2005 10:32:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbVJPOcd
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Oct 2005 10:32:33 -0400
+Received: from smtp-v.fe.bosch.de ([139.15.237.2]:14030 "EHLO
+	smtp-v.fe.bosch.de") by vger.kernel.org with ESMTP id S1751309AbVJPOcd
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Oct 2005 10:32:33 -0400
+Received: from mta4.fe.internet.bosch.com (unknown [10.4.98.30])
+	by imta8.fe.bosch.de (Postfix) with ESMTP id 2CFBD3C00E
+	for <git@vger.kernel.org>; Sun, 16 Oct 2005 16:32:32 +0200 (CEST)
+Received: from si-imc02.de.bosch.com (virusscan6.fe.internet.bosch.com [10.4.98.11])
+	by mta4.fe.internet.bosch.com (Postfix) with ESMTP id AC33B44004
+	for <git@vger.kernel.org>; Sun, 16 Oct 2005 16:32:29 +0200 (CEST)
+Received: from hi-mail02.de.bosch.com ([10.34.16.71]) by si-imc02.de.bosch.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Sun, 16 Oct 2005 16:32:31 +0200
+Received: from [10.4.106.24] ([10.4.106.24]) by hi-mail02.de.bosch.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Sun, 16 Oct 2005 16:32:30 +0200
+User-Agent: Mozilla Thunderbird 1.0.6 (X11/20050716)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.64.0510131422161.23590@g5.osdl.org>
+X-OriginalArrivalTime: 16 Oct 2005 14:32:31.0231 (UTC) FILETIME=[70DE68F0:01C5D25E]
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10157>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10158>
 
-Hi,
 
-Debian users beware.  This version introduces a dependency - package: 
-libcurl3-gnutls-dev
-is now needed to build git.
+> On Thu, 13 Oct 2005, Jeff Garzik wrote:
+>
+>>I have real users of my git repos who can't just download a 100MB pack file in
+>>an hour, it takes them many hours.
 
-Thanks
-Ed Tomlinson
+Seems that I'm one of these users (but using an other repo).
 
-On Sunday 16 October 2005 01:41, Junio C Hamano wrote:
-> GIT 0.99.8d is available as usual at:
-> 
->     RPMs and tarball: www.kernel.org:/pub/software/scm/git/
->     Debs and tarball: www.kernel.org:/pub/software/scm/git/debian/
-> 
-> In addition to accumulated bugfixes, there is one important
-> futureproofing changes.
-> 
-> The "master" branch has changes to git-upload-pack (which would
-> affect what git-fetch-pack/git-clone-pack see) and
-> git-update-server-info (which would affect what fetch and clone
-> over http:// transport see) to send extra information about the
-> available references, so that the clients can find out what
-> objects are referenced by remote tags before downloading them.
-> They take the form of "tagname^{}".  "git ls-remote $repository"
-> command would show something like this:
-> 
->     7a3ca7d2b5ec31b2cfa594b961d77e68075e33c7        refs/heads/master
->     5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c        refs/tags/v2.6.11-tree
->     c39ae07f393806ccf406ef966e9a15afc43cc36a        refs/tags/v2.6.11-tree^{}
->     ...
->     c2bbf523f1d454649897b3e4bcd71778e4fa5913        refs/tags/v2.6.14-rc2
->     676d55ae30ea3b688f0386f70553489f25f24d55        refs/tags/v2.6.14-rc2^{}
->     f92737b18abac90af30ac26a050fda879c9b238b        refs/tags/v2.6.14-rc3
->     1c9426e8a59461688bb451e006456987b198e4c0        refs/tags/v2.6.14-rc3^{}
-> 
-> when the server side updates to the version in the "master"
-> branch.  These "^{}" entries describe the SHA1 of the object the
-> tag object points at (so v2.6.11-tree tag, whose object name is
-> 5dc01c... points at a tree object whose object name is
-> c39ae0...).
-> 
-> The downloading clients (git-clone and git-fetch) in the
-> "master" branch have been taught to recognize these entries;
-> after all, these are not real refs and you cannot give them to
-> git-http-fetch to fetch from.  GIT 0.99.8d clients have the same
-> change, so that people staying with the maintenance branch can
-> download from the server that already runs the "master" version
-> and sends these fake references without getting confused.
-> 
-> upload-pack and update-server-info in GIT 0.99.8d would not show
-> these extra "fake refs" when used on the server side.  In other
-> words, 0.99.8d is to keep the maintenance branch working with
-> newer servers.
-> 
-> There will be GIT 0.99.8e at around the time "master" branch
-> will get the updated "git-diff-*", for similar purposes.  The
-> updated "git-diff-*" commands deal with pathnames with funny
-> characters (most importantly tabs and newlines) in a way
-> compatible with the proposed change to GNU patch, which was
-> outlined in:
-> 
->     http://marc.theaimsgroup.com/?l=git&m=112927316408690&w=2
-> 
-> The change to "git-diff-*", and corresponding change to
-> "git-apply" are cooking in the proposed updates branch right
-> now.  When people start generating diffs with them, patches that
-> touch paths that have double-quotes '"' or spaces ' ' in them
-> need to be applied with the updated git-apply that knows how new
-> "git-diff-*" encodes these funny pathnames.  GIT 0.99.8e is
-> planned to backport the necessary git-apply changes, in case we
-> do not bump the major release number by then.
-> 
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-kernel" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> Please read the FAQ at  http://www.tux.org/lkml/
-> 
-> 
+Pack files are very nice saving bandwith and disk space. But what I 
+dislike is that I often have to download same information twice: Remote 
+.git/objects/* repo grows and I update my local repo daily against this. 
+Then once a month/release/whatever .git/objects/* are packed into one 
+file. This new pack file then is downloaded as well, but most/all of the 
+information in this file is already in my local repo and downloaded 
+again. Something like
+
+- detect that there is new pack file in remote repo
+- check what is in this remote pack file
+- if in local repo no or only few .git/objects/* are missing, download 
+the missing ones and create an identical copy of remote pack file using 
+local .git/objects/*. Don't download remote pack file.
+- remove all local .git/objects/* now in pack file
+
+would be nice.
+
+Or is this already possible? Or do I misunderstand anything?
+
+Dirk
