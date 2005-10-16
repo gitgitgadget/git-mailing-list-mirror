@@ -1,61 +1,86 @@
-From: Brian Gerst <bgerst@didntduck.org>
-Subject: Re: [kernel.org users] Re: auto-packing on kernel.org? please?
-Date: Sun, 16 Oct 2005 13:15:45 -0400
-Message-ID: <43528AC1.2060904@didntduck.org>
-References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org> <434EABFD.5070604@zytor.com> <434EC07C.30505@pobox.com> <Pine.LNX.4.64.0510131422161.23590@g5.osdl.org> <435264B1.2010204@de.bosch.com> <Pine.LNX.4.63.0510161122570.23242@iabervon.org> <20051016161244.GE5509@reactrix.com> <43527E86.8000907@didntduck.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: SVN import
+Date: Sun, 16 Oct 2005 19:42:10 +0200
+Message-ID: <20051016174210.GA8297@kiste.smurf.noris.de>
+References: <pan.2005.08.19.10.00.49.401829@smurf.noris.de> <pan.2005.10.10.09.45.00.468989@smurf.noris.de> <878xwuldvx.fsf@litku.valo.iki.fi> <7vy84tdhqv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 16 19:15:42 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="tThc/1wpZn/ma/RB"
+Cc: git@vger.kernel.org, Kalle Valo <Kalle.Valo@iki.fi>
+X-From: git-owner@vger.kernel.org Sun Oct 16 19:47:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERC5Q-0006oX-1K
-	for gcvg-git@gmane.org; Sun, 16 Oct 2005 19:14:16 +0200
+	id 1ERCZU-0000lm-DU
+	for gcvg-git@gmane.org; Sun, 16 Oct 2005 19:45:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751334AbVJPRON (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Oct 2005 13:14:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbVJPRON
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Oct 2005 13:14:13 -0400
-Received: from quark.didntduck.org ([69.55.226.66]:9928 "EHLO
-	quark.didntduck.org") by vger.kernel.org with ESMTP
-	id S1751334AbVJPROM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Oct 2005 13:14:12 -0400
-Received: from [172.21.26.77] (ip-2.provia.com [208.224.1.2])
-	(authenticated)
-	by quark.didntduck.org (8.11.6/8.11.6) with ESMTP id j9GHE8I02471;
-	Sun, 16 Oct 2005 13:14:08 -0400
-User-Agent: Mozilla Thunderbird 1.0.6 (Windows/20050716)
-X-Accept-Language: en-us, en
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <43527E86.8000907@didntduck.org>
+	id S1751341AbVJPRnN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Oct 2005 13:43:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751342AbVJPRnN
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Oct 2005 13:43:13 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:53687 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S1751341AbVJPRnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Oct 2005 13:43:11 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1ERCWR-00089d-4K; Sun, 16 Oct 2005 19:42:50 +0200
+Received: (nullmailer pid 21787 invoked by uid 501);
+	Sun, 16 Oct 2005 17:42:10 -0000
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vy84tdhqv.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
+X-Smurf-Spam-Score: -2.6 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10165>
 
-Brian Gerst wrote:
-> Nick Hengeveld wrote:
-> 
->> On Sun, Oct 16, 2005 at 11:44:46AM -0400, Daniel Barkalow wrote:
->>
->>> This is the problem: it's impossible to download only a few objects 
->>> from a pack file from an HTTP server, because those don't exist on 
->>> the server as separate files.
->>
->>
->> Is it possible to determine the object locations inside the remote pack
->> file?  If so, it would be possible to use Range: headers to download
->> selected objects from a pack.
->>
-> 
-> Not possible because the entire pack is compressed.
 
-I should have looked at the source more closely before stating that. 
-Each object gets compressed individually, so this would be possible.
+--tThc/1wpZn/ma/RB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
---
-					Brian Gerst
+Hi,
+
+Junio C Hamano:
+> Matthias, how ready do you feel the code is?  Whenever you are
+> ready, please just holler.
+>=20
+Hollering now.
+
+There's one small omission, which is that the merge RX for SVN should
+optionally recognize the SVN commit number it's merging from and use
+the corresponsing git commit as the merge parent, but maybe somebody
+else feels motivated to add that (hint, hint) .
+
+> You seem to have a small cvsimport updates in the branch.  Mind
+> feeding it to me independently?
+>=20
+Why? It already is a separate commit (89764f5d..., the one before
+I added the svn script).
+
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+The Public is merely a multiplied "me."
+		-- Mark Twain
+
+--tThc/1wpZn/ma/RB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFDUpDy8+hUANcKr/kRAuJ6AJ9NXjDwcYRen/sDMPeXDxqlRVsabQCdEOcx
+6/T3MVZfi5hZAWfWCq7EP4s=
+=EYNy
+-----END PGP SIGNATURE-----
+
+--tThc/1wpZn/ma/RB--
