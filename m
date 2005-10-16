@@ -1,73 +1,47 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: SVN import
-Date: Sun, 16 Oct 2005 19:58:12 +0200
-Message-ID: <20051016175809.GB8297@kiste.smurf.noris.de>
-References: <pan.2005.08.19.10.00.49.401829@smurf.noris.de> <pan.2005.10.10.09.45.00.468989@smurf.noris.de> <878xwuldvx.fsf@litku.valo.iki.fi>
+Date: Sun, 16 Oct 2005 11:09:42 -0700
+Message-ID: <7vpsq5xrix.fsf@assigned-by-dhcp.cox.net>
+References: <pan.2005.08.19.10.00.49.401829@smurf.noris.de>
+	<pan.2005.10.10.09.45.00.468989@smurf.noris.de>
+	<878xwuldvx.fsf@litku.valo.iki.fi>
+	<7vy84tdhqv.fsf@assigned-by-dhcp.cox.net>
+	<20051016174210.GA8297@kiste.smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="CUfgB8w4ZwR/yMy5"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 16 20:01:54 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Oct 16 20:10:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERCnc-0006Ep-6s
-	for gcvg-git@gmane.org; Sun, 16 Oct 2005 19:59:56 +0200
+	id 1ERCx9-0001v4-0i
+	for gcvg-git@gmane.org; Sun, 16 Oct 2005 20:09:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbVJPR7P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Oct 2005 13:59:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbVJPR7P
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Oct 2005 13:59:15 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:16785 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S1751345AbVJPR7P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Oct 2005 13:59:15 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1ERClx-00005l-90; Sun, 16 Oct 2005 19:58:48 +0200
-Received: (nullmailer pid 2211 invoked by uid 501);
-	Sun, 16 Oct 2005 17:58:12 -0000
-To: Kalle Valo <Kalle.Valo@iki.fi>
-Content-Disposition: inline
-In-Reply-To: <878xwuldvx.fsf@litku.valo.iki.fi>
-User-Agent: Mutt/1.5.9i
-X-Smurf-Spam-Score: -2.6 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S1751348AbVJPSJo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Oct 2005 14:09:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751349AbVJPSJo
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Oct 2005 14:09:44 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:38589 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751348AbVJPSJn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Oct 2005 14:09:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051016180932.ILKH4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 16 Oct 2005 14:09:32 -0400
+To: git@vger.kernel.org
+In-Reply-To: <20051016174210.GA8297@kiste.smurf.noris.de> (Matthias Urlichs's
+	message of "Sun, 16 Oct 2005 19:42:10 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10167>
 
+Matthias Urlichs <smurf@smurf.noris.de> writes:
 
---CUfgB8w4ZwR/yMy5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Why? It already is a separate commit (89764f5d..., the one before
+> I added the svn script).
 
-Hi,
-
-> Maybe something like this would be more informative:
->=20
-Thanks; reworded.
-
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Never put off till run-time what you can do at compile-time.
-		-- D. Gries
-
---CUfgB8w4ZwR/yMy5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFDUpSw8+hUANcKr/kRAlSdAKCW6T/8IqgOHPiZvLiQVJMM7yh43wCfbsSR
-PnB0U9G/S5VWNffwhx7HQeQ=
-=DpGC
------END PGP SIGNATURE-----
-
---CUfgB8w4ZwR/yMy5--
+That was a "just in case you need a bit more time for the full
+merge of your SVN work" question.  Pulling the whole thing now.
