@@ -1,78 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-checkout-index, flag ordering and --prefix kludgy handling
-Date: Mon, 17 Oct 2005 15:58:27 -0700
-Message-ID: <7voe5nycmk.fsf@assigned-by-dhcp.cox.net>
-References: <200510162114.27429.blaisorblade@yahoo.it>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [kernel.org users] Re: auto-packing on kernel.org? please?
+Date: Mon, 17 Oct 2005 16:19:52 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510171617460.3369@g5.osdl.org>
+References: <Pine.LNX.4.64.0510131422161.23590@g5.osdl.org>
+ <435264B1.2010204@de.bosch.com> <Pine.LNX.4.63.0510161122570.23242@iabervon.org>
+ <20051016161244.GE5509@reactrix.com> <43527E86.8000907@didntduck.org>
+ <7vzmp9xuwe.fsf@assigned-by-dhcp.cox.net> <20051016213341.GF5509@reactrix.com>
+ <7vwtkd6rik.fsf@assigned-by-dhcp.cox.net> <20051017060659.GH5509@reactrix.com>
+ <7voe5o366d.fsf@assigned-by-dhcp.cox.net> <20051017174123.GI5509@reactrix.com>
+ <7v3bmzzz30.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0510171830030.23242@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 18 00:59:13 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Nick Hengeveld <nickh@reactrix.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 18 01:21:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERdwM-0007YR-CP
-	for gcvg-git@gmane.org; Tue, 18 Oct 2005 00:58:46 +0200
+	id 1EReH4-0003am-K1
+	for gcvg-git@gmane.org; Tue, 18 Oct 2005 01:20:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932362AbVJQW6a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Oct 2005 18:58:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932365AbVJQW6a
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 18:58:30 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:15499 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932362AbVJQW63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Oct 2005 18:58:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051017225814.MQN4169.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 17 Oct 2005 18:58:14 -0400
-To: Blaisorblade <blaisorblade@yahoo.it>
-In-Reply-To: <200510162114.27429.blaisorblade@yahoo.it>
-	(blaisorblade@yahoo.it's message of "Sun, 16 Oct 2005 21:14:26 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932327AbVJQXUF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Oct 2005 19:20:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932370AbVJQXUF
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 19:20:05 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:29588 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932327AbVJQXUC (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2005 19:20:02 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9HNJrFC024127
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 17 Oct 2005 16:19:54 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9HNJquP016933;
+	Mon, 17 Oct 2005 16:19:53 -0700
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.63.0510171830030.23242@iabervon.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10197>
-
-Blaisorblade <blaisorblade@yahoo.it> writes:
-
-> I already knew that git-checkout-cache -a -f is wrong. But I
-> didn't know that
->
-> git-checkout-index -a --prefix=/home/paolo/Uml/space.mnt/paolo/Linux-2.6.git/
->
-> is.
-
-> At least, this should be documented in the man page;...
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10198>
 
 
-How about a bit further clarification on top of what is there,
-like this?
 
- ------------
-[PATCH] clarify that '-a' is really special in checkout-index.
+On Mon, 17 Oct 2005, Daniel Barkalow wrote:
+> 
+> Wouldn't "git fetch http://.../foo.git/ master^{tree}" do the right thing?
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-diff --git a/Documentation/git-checkout-index.txt b/Documentation/git-checkout-index.txt
-index 1ba6fb2..838059f 100644
---- a/Documentation/git-checkout-index.txt
-+++ b/Documentation/git-checkout-index.txt
-@@ -44,13 +44,15 @@ OPTIONS
- --::
- 	Do not interpret any more arguments as options.
- 
--Note that the order of the flags matters:
-+Note that the order of the flags matters for `-a` flag:
- 
-      git-checkout-index -a -f file.c
- 
- will first check out all files listed in the cache (but not overwrite
- any old ones), and then force-checkout `file.c` a second time (ie that
- one *will* overwrite any old contents with the same filename).
-+In other words, `-a` means "operate as if names of all files were
-+given here, with the flags given up to this point."
- 
- Also, just doing "git-checkout-index" does nothing. You probably meant
- "git-checkout-index -a". And if you want to force it, you want
+The pack pullers have trouble with anything that isn't commit-based, 
+because they do all the "figure out what we have in common" logic based on 
+the commit history.
+
+So if you fetch a tree, it by definition doesn't _have_ any history, and 
+the pack pullers will always pack the whole tree. I think.
+
+		Linus
