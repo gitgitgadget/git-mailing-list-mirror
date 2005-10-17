@@ -1,74 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Some curl versions lack curl_easy_duphandle()
-Date: Mon, 17 Oct 2005 20:54:08 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510172049330.14782@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0510150038550.2807@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vmzlbpbwu.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0510151348080.12307@wbgn013.biozentrum.uni-wuerzburg.de>
- <20051016215018.GG5509@reactrix.com> <20051017180130.GJ5509@reactrix.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 17 20:56:05 2005
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Strange differences in cogito on SPARC and i386
+Date: Mon, 17 Oct 2005 16:06:10 -0300
+Message-ID: <200510171906.j9HJ6AQr015777@laptop11.inf.utfsm.cl>
+X-From: git-owner@vger.kernel.org Mon Oct 17 21:08:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERa7m-0000DW-4p
-	for gcvg-git@gmane.org; Mon, 17 Oct 2005 20:54:18 +0200
+	id 1ERaJo-0003fo-F9
+	for gcvg-git@gmane.org; Mon, 17 Oct 2005 21:06:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932256AbVJQSyP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Oct 2005 14:54:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932252AbVJQSyO
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 14:54:14 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:54218 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932261AbVJQSyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Oct 2005 14:54:12 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id C7CCE13E5C3; Mon, 17 Oct 2005 20:54:09 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id AD4F39EDE2; Mon, 17 Oct 2005 20:54:09 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 993BE99CC3; Mon, 17 Oct 2005 20:54:09 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BBB6913F09D; Mon, 17 Oct 2005 20:54:08 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20051017180130.GJ5509@reactrix.com>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932263AbVJQTGP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Oct 2005 15:06:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932277AbVJQTGO
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 15:06:14 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:51106 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S932267AbVJQTGN (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2005 15:06:13 -0400
+Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j9HJ6BK0000536
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 17 Oct 2005 16:06:11 -0300
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j9HJ6AQr015777
+	for <git@vger.kernel.org>; Mon, 17 Oct 2005 16:06:11 -0300
+To: git@vger.kernel.org
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Mon, 17 Oct 2005 16:06:11 -0300 (CLST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Mon, 17 Oct 2005 15:20:38 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10189>
 
-Hi,
+git, cogito up to date everywhere.
 
-On Mon, 17 Oct 2005, Nick Hengeveld wrote:
+I updated my linux-2.6.git trees on SPARC and i386 yesterday at almost the
+same time, and I then noted that on the SPARC I'd get interrupted fetches
+and stuff like:
 
-> On Sun, Oct 16, 2005 at 02:50:18PM -0700, Nick Hengeveld wrote:
-> 
-> > Is that the correct version number?  I've been using 7.10.6 and 
-> > curl_easy_duphandle() has been working fine.
-> 
-> Apart from the version number question, this patch looks good.
+  
+   [vonbrand@pincoya linux-2.6.git]$ cg-update
+   Recovering from a previously interrupted fetch...
+   15:04:56 URL:http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/HEAD [41/41] -> "refs/heads/.origin-fetching" [1]
+   Getting alternates list
+   progress: 10 objects, 24166 bytes
+   error: Empty reply from server (curl_result = 52, http_code = 0, sha1 = 0801ec7bf4953784f0f3279c1a80258ad29094d6)
+   Getting pack list
+   progress: 11 objects, 24873 bytes
+   error: Unable to find 0801ec7bf4953784f0f3279c1a80258ad29094d6 under http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
 
-Aaargh! Of course I was looking at the annotate output, which said Nov 9, 
-2004. But this is just the last change to the signature of the function!
+Just started again each time, seems to work fine. On i386 the download goes
+smoothly, no hickups. And there are /no/ updates while SPARC is working its
+head off getting updates...
 
-So, AFAIK Sep 13, 2001, is the correct date, and 0x070900 is the version.
+Then again, today on the SPARC it is getting several thousand objects (!),
+while on i386 it was only a few dozen.
 
->  Although I'm now wondering whether it makes sense to bother trying to 
-> use curl_easy_duphandle() at all and always use get_curl_handle() 
-> instead.
+Some stupid pilot error? Got different mirrors between machines? Sounds
+unlikely, as repeating the command (and presumably rotating between DNS
+entries) makes no difference.
 
-There might well be a substantial overhead involved. I haven't measured 
-it, but it seems reasonable to assume that duplicating a handle is 
-implemented using a shorter code path than creating a handle all over 
-again.
+Just finished SPARCwise. Almost 10K objects for changes to 4 files?! Yes,
+the files changed are the same on both machines.
 
-Ciao,
-Dscho
+Mistified...
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+
+--j9HIKc4x028468.1129573238/inti.inf.utfsm.cl--
