@@ -1,67 +1,53 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: cygwin: t3200-branch.sh fails with "List form of pipe open not implemented at -e line 22."
-Date: Mon, 17 Oct 2005 10:40:30 +0200
-Message-ID: <81b0412b0510170140r6d5c5f23g87d01ff6cbd0d02e@mail.gmail.com>
-References: <81b0412b0510140546ya10bc8fg3dd5eaab429eba6f@mail.gmail.com>
-	 <434FF189.3080806@zytor.com> <20051015211808.GA3497@steel.home>
-	 <7vbr1peweu.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: cg-merge should use git-merge
+Date: Mon, 17 Oct 2005 02:26:06 -0700
+Message-ID: <7vach81olt.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90510161644l35119401rdc05c081506ae715@mail.gmail.com>
+	<46a038f90510161744m7e95303eu8a9942363ffc58a6@mail.gmail.com>
+	<7vzmp81r4n.fsf@assigned-by-dhcp.cox.net>
+	<46a038f90510170203ndee2b2bi913b62014614f68e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 17 10:42:37 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@ucw.cz>, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 17 11:27:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERQYK-0003cf-P1
-	for gcvg-git@gmane.org; Mon, 17 Oct 2005 10:41:05 +0200
+	id 1ERRGH-0007t6-E9
+	for gcvg-git@gmane.org; Mon, 17 Oct 2005 11:26:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932213AbVJQIkc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Oct 2005 04:40:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932215AbVJQIkc
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 04:40:32 -0400
-Received: from nproxy.gmail.com ([64.233.182.197]:55875 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932213AbVJQIkc convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Oct 2005 04:40:32 -0400
-Received: by nproxy.gmail.com with SMTP id n15so391747nfc
-        for <git@vger.kernel.org>; Mon, 17 Oct 2005 01:40:30 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Snnkc3EnsWPgUS+P/+/xe7CsKSmr/VuhBf94tnM9c49d2vIprcnBaJ42ejnO+NmIB5fOjz4LY05WbS7e1PLqbNBpFYAsE0v7jOPlYr7iVNrXMklbdKp8WPJ7/Y1Emi5szw8AWFrjf1kOtS6V5k/jfLQVBHejBTHdcHjXM2wPnks=
-Received: by 10.49.2.8 with SMTP id e8mr76569nfi;
-        Mon, 17 Oct 2005 01:40:30 -0700 (PDT)
-Received: by 10.48.247.10 with HTTP; Mon, 17 Oct 2005 01:40:30 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr1peweu.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932218AbVJQJ0K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Oct 2005 05:26:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932221AbVJQJ0J
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 05:26:09 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:17036 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932218AbVJQJ0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Oct 2005 05:26:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051017092557.FQNQ19461.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 17 Oct 2005 05:25:57 -0400
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90510170203ndee2b2bi913b62014614f68e@mail.gmail.com>
+	(Martin Langhoff's message of "Mon, 17 Oct 2005 22:03:02 +1300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10183>
 
-On 10/16/05, Junio C Hamano <junkio@cox.net> wrote:
-> Alex Riesen <raa.lkml@gmail.com> writes:
->
-> >> >The message comes from one of the hooks, which are executed even
-> >> >though they never meant to, because cygwin apparently uses file
-> >> >content or name to detect executability (on FAT).
->
-> Is this one of the hooks we ship as examples?  If so, that
-> means worse brokenness than just test failing.  It means that
-> the hook is not usable in your environment.
->
-> I presume it is this line in pre-commit sample hook:
->
->     open $fh, "-|", qw(git-diff-index -p -M --cached HEAD);
->
-> Is Perl on Cygwin incapable of handle this in general, or is it
-> just what is on your machine being behind?
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-ActiveState's Windows port of Perl 5.8.6.
+> Something like a manual merge that I could force to happen on command
+>
+>    git-doarbitrarymergeontree -r fromtree:totree  [ victimtree ]
+>
 
-$ perl -e 'open $fh, "-|", qw(git-diff-index -p -M --cached HEAD)'
-List form of pipe open not implemented at -e line 1.
+That essentially is a simple one-liner:
 
-I think it is not implemented because of Win32 lacking fork(2).
+     git-read-tree -m -u fromtree HEAD totree
+
+which is more or less what git-cherry-pick and git-revert do,
+except fromtree always is totree^ in git-cherry-pick.
