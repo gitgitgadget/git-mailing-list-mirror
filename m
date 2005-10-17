@@ -1,86 +1,62 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: GIT 0.99.8d
-Date: Sun, 16 Oct 2005 22:29:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.62.0510162228070.28691@qynat.qvtvafvgr.pbz>
-References: <7vachadnmy.fsf@assigned-by-dhcp.cox.net><200510161024.37873.tomlins@cam.org> <7vll0txqwu.fsf@assigned-by-dhcp.cox.net>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: [kernel.org users] Re: auto-packing on kernel.org? please?
+Date: Sun, 16 Oct 2005 23:06:59 -0700
+Message-ID: <20051017060659.GH5509@reactrix.com>
+References: <434EABFD.5070604@zytor.com> <434EC07C.30505@pobox.com> <Pine.LNX.4.64.0510131422161.23590@g5.osdl.org> <435264B1.2010204@de.bosch.com> <Pine.LNX.4.63.0510161122570.23242@iabervon.org> <20051016161244.GE5509@reactrix.com> <43527E86.8000907@didntduck.org> <7vzmp9xuwe.fsf@assigned-by-dhcp.cox.net> <20051016213341.GF5509@reactrix.com> <7vwtkd6rik.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Ed Tomlinson <tomlins@cam.org>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 17 07:31:43 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 17 08:07:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERNZx-0008SW-KX
-	for gcvg-git@gmane.org; Mon, 17 Oct 2005 07:30:33 +0200
+	id 1ERO9S-0006vi-Ls
+	for gcvg-git@gmane.org; Mon, 17 Oct 2005 08:07:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932201AbVJQF3t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Oct 2005 01:29:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932204AbVJQF3t
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 01:29:49 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:29124 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP id S932201AbVJQF3s
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Oct 2005 01:29:48 -0400
-Received: from no.name.available by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Sun, 16 Oct 2005 22:29:45 -0700
-Received: from wlvexc02.digitalinsight.com ([10.201.10.15]) by wlvims02.corp.ad.diginsite.com with InterScan Messaging Security Suite; Sun, 16 Oct 2005 22:29:24 -0700
-Received: by wlvexc02.diginsite.com with Internet Mail Service (5.5.2657.72)
-	id <VAKDLFT3>; Sun, 16 Oct 2005 22:28:15 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
-	id VAKHLD3H; Sun, 16 Oct 2005 22:25:11 -0700
+	id S1751340AbVJQGHJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Oct 2005 02:07:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbVJQGHJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 02:07:09 -0400
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:38432 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1751340AbVJQGHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Oct 2005 02:07:07 -0400
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id j9H66xn8024814;
+	Sun, 16 Oct 2005 23:06:59 -0700
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id j9H66xRS024812;
+	Sun, 16 Oct 2005 23:06:59 -0700
 To: Junio C Hamano <junkio@cox.net>
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <7vll0txqwu.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <7vll0txqwu.fsf@assigned-by-dhcp.cox.net>
-References: <7vachadnmy.fsf@assigned-by-dhcp.cox.net><200510161024.37873.tomlins@cam.org>
- <7vll0txqwu.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vwtkd6rik.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10179>
 
-when I recently installed git 0.99.8c on my gentoo system it died during 
-the install without curl installed, but worked once curl was installed. (I 
-haven't gotten around to reporting th packaging bug to gentoo yet)
+On Sun, Oct 16, 2005 at 03:12:03PM -0700, Junio C Hamano wrote:
 
-David Lang
+>  - Among the set of packs that contain the object we are
+>    currently interested in, try to find the "best" pack.  The
+>    definition of "best" would be a balancing act of finding the
+>    one that contains the least number of objects we already
+>    have, and the one that contains the most number of objects we
+>    do not have yet.
 
-  On Sun, 
-16 Oct 2005, Junio C Hamano wrote:
+To get a complete list of objects we do not have yet, fetch will need
+to walk all the trees first and then make another pass to process
+all the missing objects.  Is it worth considering a case where the
+missing objects are packed along with objects that don't need to be
+transferred?  From the use cases you described, it's not clear that
+situation would ever really happen.
 
-> Date: Sun, 16 Oct 2005 11:22:57 -0700
-> From: Junio C Hamano <junkio@cox.net>
-> To: Ed Tomlinson <tomlins@cam.org>
-> Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-> Subject: Re: GIT 0.99.8d
-> 
-> Ed Tomlinson <tomlins@cam.org> writes:
->
-> (Obligatory "do not top post" request omitted)
->
->> Debian users beware.  This version introduces a dependency - package:
->> libcurl3-gnutls-dev
->> is now needed to build git.
->
-> Is this really true?  The one I uploaded was built on this
-> machine:
->
-> : siamese; dpkg -l libcurl\* | sed -ne 's/^ii  //p'
-> libcurl3          7.14.0-2       Multi-protocol file transfer library, now wi
-> libcurl3-dev      7.14.0-2       Development files and documentation for libc
->
-> Having said that, a tested patch to debian/control to adjust
-> Build-Depends is much appreciated.
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+If the blobs have been packed, it seems likely that the tree objects will
+also be packed, so fetching them during the first pass will either involve
+fetching a pack without being able to determine which is best or fetching
+the appropriate ranges from packs to get the tree objects.
 
 -- 
-There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
-  -- C.A.R. Hoare
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
