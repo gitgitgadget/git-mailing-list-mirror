@@ -1,82 +1,202 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [kernel.org users] Re: auto-packing on kernel.org? please?
-Date: Mon, 17 Oct 2005 18:56:38 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0510171830030.23242@iabervon.org>
-References: <Pine.LNX.4.64.0510131422161.23590@g5.osdl.org>
- <435264B1.2010204@de.bosch.com> <Pine.LNX.4.63.0510161122570.23242@iabervon.org>
- <20051016161244.GE5509@reactrix.com> <43527E86.8000907@didntduck.org>
- <7vzmp9xuwe.fsf@assigned-by-dhcp.cox.net> <20051016213341.GF5509@reactrix.com>
- <7vwtkd6rik.fsf@assigned-by-dhcp.cox.net> <20051017060659.GH5509@reactrix.com>
- <7voe5o366d.fsf@assigned-by-dhcp.cox.net> <20051017174123.GI5509@reactrix.com>
- <7v3bmzzz30.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-checkout-index, flag ordering and --prefix kludgy handling
+Date: Mon, 17 Oct 2005 15:58:38 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510171546580.3369@g5.osdl.org>
+References: <200510162114.27429.blaisorblade@yahoo.it>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nick Hengeveld <nickh@reactrix.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 18 00:53:50 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 18 00:58:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERdpX-0005tn-Hq
-	for gcvg-git@gmane.org; Tue, 18 Oct 2005 00:51:43 +0200
+	id 1ERdwL-0007YR-Q6
+	for gcvg-git@gmane.org; Tue, 18 Oct 2005 00:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932359AbVJQWve (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Oct 2005 18:51:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932362AbVJQWve
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 18:51:34 -0400
-Received: from iabervon.org ([66.92.72.58]:15890 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932359AbVJQWve (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2005 18:51:34 -0400
-Received: (qmail 18152 invoked by uid 1000); 17 Oct 2005 18:56:38 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Oct 2005 18:56:38 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3bmzzz30.fsf@assigned-by-dhcp.cox.net>
+	id S932365AbVJQW6m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Oct 2005 18:58:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932368AbVJQW6m
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 18:58:42 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:49039 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932365AbVJQW6l (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2005 18:58:41 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9HMwdFC023341
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 17 Oct 2005 15:58:40 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9HMwdbh015922;
+	Mon, 17 Oct 2005 15:58:39 -0700
+To: Blaisorblade <blaisorblade@yahoo.it>
+In-Reply-To: <200510162114.27429.blaisorblade@yahoo.it>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10196>
 
-On Mon, 17 Oct 2005, Junio C Hamano wrote:
 
-> Nick Hengeveld <nickh@reactrix.com> writes:
+
+On Sun, 16 Oct 2005, Blaisorblade wrote:
+>
+> I already knew that git-checkout-cache -a -f is wrong. But I didn't know that 
 > 
-> > Gotcha - I'm still thinking in terms of content distribution, where
-> > you only need a specific version of a tree to be available locally
-> > and explicitly don't want to transfer history.
+> git-checkout-index -a --prefix=/home/paolo/Uml/space.mnt/paolo/Linux-2.6.git/
 > 
-> In other words, you'd want to also support CVS-like "working
-> tree has the specific version, and history is not kept here, but
-> available on demand, possibly over the network" mode of
-> operation.  I'd say why not.  We could aim to have "working tree
-> has the specific version and partial history of recent versions,
-> and the ancient history is available on demand, possibly over
-> the network" mode of operation.
-> 
-> It is somewhat different from the primary focus of what we have
-> been doing, but I think it is a natural extension.  The
-> invariant is that once you have a ref pointing at a specific
-> commit, everything reachable from it ought to be available to
-> you.
+> is. It checks out the files in the cwd, then parses --prefix and does nothing 
+> there, as no name is specified.
 
-Wouldn't "git fetch http://.../foo.git/ master^{tree}" do the right thing?
+Yeah, somebody should really fix the command line parsing. 
 
-You get only the current tree, and write a ref to the tree instead of the 
-commit, maintaining the invariant. Of course, fetch.c needs a bit of work 
-so that it can fetch objects in the process of figuring out what the 
-refspec that it's really trying to fetch, but that should be simple 
-enough.
+I think it's only git-checkout-index that _really_ needs fixing, since it 
+has such a fragile thing right now.
 
-Of course, this really isolates you from the history, since you don't even 
-remember what the commit was that you've got the tree from, but that may 
-not be an issue in a pure content distribution setup. Also, a pack file of 
-a single tree isn't going to be terribly efficient, because pack files 
-mostly exploit the high similarity between different versions of the same 
-file.
+Here's a totally untested patch. Do you want to test it?
 
-My other idea is to have a file of things that you expect to be missing, 
-even though they are referenced, and where to expect to find them if 
-necessary. Then you could download the latest commit, mark its parents 
-(unless you have them) as known-missing, and write the ref.
+It also makes it illegal to mix "-a" and explicit filenames, since the 
+semantics of that has now changed (before, the order of the filename and 
+the "-a" mattered. Now it no longer does. Better disallow it, than let 
+people maybe think they get something else that they do).
 
-	-Daniel
-*This .sig left intentionally blank*
+Danger, Will Robinson! Untested!
+
+		Linus
+
+---
+diff --git a/checkout-index.c b/checkout-index.c
+index 9784532..dab3778 100644
+--- a/checkout-index.c
++++ b/checkout-index.c
+@@ -87,8 +87,9 @@ static struct cache_file cache_file;
+ 
+ int main(int argc, char **argv)
+ {
+-	int i, force_filename = 0;
++	int i;
+ 	int newfd = -1;
++	int all = 0;
+ 
+ 	if (read_cache() < 0) {
+ 		die("invalid cache");
+@@ -96,58 +97,70 @@ int main(int argc, char **argv)
+ 
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+-		if (!force_filename) {
+-			if (!strcmp(arg, "-a")) {
+-				checkout_all();
+-				continue;
+-			}
+-			if (!strcmp(arg, "--")) {
+-				force_filename = 1;
+-				continue;
+-			}
+-			if (!strcmp(arg, "-f")) {
+-				state.force = 1;
+-				continue;
+-			}
+-			if (!strcmp(arg, "-q")) {
+-				state.quiet = 1;
+-				continue;
+-			}
+-			if (!strcmp(arg, "-n")) {
+-				state.not_new = 1;
+-				continue;
+-			}
+-			if (!strcmp(arg, "-u")) {
+-				state.refresh_cache = 1;
+-				if (newfd < 0)
+-					newfd = hold_index_file_for_update
+-						(&cache_file,
+-						 get_index_file());
+-				if (newfd < 0)
+-					die("cannot open index.lock file.");
+-				continue;
+-			}
+-			if (!memcmp(arg, "--prefix=", 9)) {
+-				state.base_dir = arg+9;
+-				state.base_dir_len = strlen(state.base_dir);
+-				continue;
+-			}
+-			if (arg[0] == '-')
+-				usage(checkout_cache_usage);
+-		}
+-		if (state.base_dir_len) {
+-			/* when --prefix is specified we do not
+-			 * want to update cache.
+-			 */
+-			if (state.refresh_cache) {
+-				close(newfd); newfd = -1;
+-				rollback_index_file(&cache_file);
+-			}
+-			state.refresh_cache = 0;
++
++		if (!strcmp(arg, "--")) {
++			i++;
++			break;
++		}
++		if (!strcmp(arg, "-a") || !strcmp(arg, "--all")) {
++			all = 1;
++			continue;
++		}
++		if (!strcmp(arg, "-f") || !strcmp(arg, "--force")) {
++			state.force = 1;
++			continue;
++		}
++		if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet")) {
++			state.quiet = 1;
++			continue;
+ 		}
++		if (!strcmp(arg, "-n") || !strcmp(arg, "--no-create")) {
++			state.not_new = 1;
++			continue;
++		}
++		if (!strcmp(arg, "-u") || !strcmp(arg, "--index")) {
++			state.refresh_cache = 1;
++			if (newfd < 0)
++				newfd = hold_index_file_for_update
++					(&cache_file,
++					 get_index_file());
++			if (newfd < 0)
++				die("cannot open index.lock file.");
++			continue;
++		}
++		if (!memcmp(arg, "--prefix=", 9)) {
++			state.base_dir = arg+9;
++			state.base_dir_len = strlen(state.base_dir);
++			continue;
++		}
++		if (arg[0] == '-')
++			usage(checkout_cache_usage);
++		break;
++	}
++
++	if (state.base_dir_len) {
++		/* when --prefix is specified we do not
++		 * want to update cache.
++		 */
++		if (state.refresh_cache) {
++			close(newfd); newfd = -1;
++			rollback_index_file(&cache_file);
++		}
++		state.refresh_cache = 0;
++	}
++
++	/* Check out named files first */
++	for ( ; i < argc; i++) {
++		const char *arg = argv[i];
++
++		if (all)
++			die("git-checkout-index: don't mix '--all' and explicit filenames");
+ 		checkout_file(arg);
+ 	}
+ 
++	if (all)
++		checkout_all();
++
+ 	if (0 <= newfd &&
+ 	    (write_cache(newfd, active_cache, active_nr) ||
+ 	     commit_index_file(&cache_file)))
