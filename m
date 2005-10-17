@@ -1,76 +1,76 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Strange differences in cogito on SPARC and i386
-Date: Mon, 17 Oct 2005 16:06:10 -0300
-Message-ID: <200510171906.j9HJ6AQr015777@laptop11.inf.utfsm.cl>
-X-From: git-owner@vger.kernel.org Mon Oct 17 21:08:20 2005
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [kernel.org users] Re: auto-packing on kernel.org? please?
+Date: Mon, 17 Oct 2005 15:13:21 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0510171348370.23242@iabervon.org>
+References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org> <434EABFD.5070604@zytor.com>
+ <434EC07C.30505@pobox.com> <Pine.LNX.4.64.0510131422161.23590@g5.osdl.org>
+ <435264B1.2010204@de.bosch.com> <Pine.LNX.4.63.0510161122570.23242@iabervon.org>
+ <20051016161244.GE5509@reactrix.com> <43527E86.8000907@didntduck.org>
+ <7vzmp9xuwe.fsf@assigned-by-dhcp.cox.net> <20051016213341.GF5509@reactrix.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 17 21:10:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERaJo-0003fo-F9
-	for gcvg-git@gmane.org; Mon, 17 Oct 2005 21:06:44 +0200
+	id 1ERaLN-00046c-OD
+	for gcvg-git@gmane.org; Mon, 17 Oct 2005 21:08:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932263AbVJQTGP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Oct 2005 15:06:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932277AbVJQTGO
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 15:06:14 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:51106 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S932267AbVJQTGN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2005 15:06:13 -0400
-Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j9HJ6BK0000536
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Mon, 17 Oct 2005 16:06:11 -0300
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j9HJ6AQr015777
-	for <git@vger.kernel.org>; Mon, 17 Oct 2005 16:06:11 -0300
-To: git@vger.kernel.org
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Mon, 17 Oct 2005 16:06:11 -0300 (CLST)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Mon, 17 Oct 2005 15:20:38 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
-X-Virus-Status: Clean
+	id S932267AbVJQTIS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Oct 2005 15:08:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932277AbVJQTIR
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 15:08:17 -0400
+Received: from iabervon.org ([66.92.72.58]:6666 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932267AbVJQTIR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2005 15:08:17 -0400
+Received: (qmail 17013 invoked by uid 1000); 17 Oct 2005 15:13:21 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 17 Oct 2005 15:13:21 -0400
+To: Nick Hengeveld <nickh@reactrix.com>
+In-Reply-To: <20051016213341.GF5509@reactrix.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10190>
 
-git, cogito up to date everywhere.
+On Sun, 16 Oct 2005, Nick Hengeveld wrote:
 
-I updated my linux-2.6.git trees on SPARC and i386 yesterday at almost the
-same time, and I then noted that on the SPARC I'd get interrupted fetches
-and stuff like:
+> On Sun, Oct 16, 2005 at 09:56:49AM -0700, Junio C Hamano wrote:
+> 
+> > That's what the .idx file is for, except that after you fetch
+> > the range, you may find you would need something else that the
+> > object is delta against.
+> 
+> Would it make sense to load the pack indexes for each base up front,
+> and then fetch individual objects from a pack if they exist in one of
+> a base's pack indexes?  In such a case, it may not even make sense to
+> try fetching the object directly first.
 
-  
-   [vonbrand@pincoya linux-2.6.git]$ cg-update
-   Recovering from a previously interrupted fetch...
-   15:04:56 URL:http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/HEAD [41/41] -> "refs/heads/.origin-fetching" [1]
-   Getting alternates list
-   progress: 10 objects, 24166 bytes
-   error: Empty reply from server (curl_result = 52, http_code = 0, sha1 = 0801ec7bf4953784f0f3279c1a80258ad29094d6)
-   Getting pack list
-   progress: 11 objects, 24873 bytes
-   error: Unable to find 0801ec7bf4953784f0f3279c1a80258ad29094d6 under http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+At the start, you have the option of either fetching the list of packs or 
+the object. There are three cases:
 
-Just started again each time, seems to work fine. On i386 the download goes
-smoothly, no hickups. And there are /no/ updates while SPARC is working its
-head off getting updates...
+ 1) the object isn't available separately; we need to fetch the list of 
+    packs to find it in a pack.
+ 2) there aren't any new packs; we need to fetch the object individually.
+ 3) the object is present both individually and in a pack.
 
-Then again, today on the SPARC it is getting several thousand objects (!),
-while on i386 it was only a few dozen.
+(2) is more common than (1), because we don't repack every update. (3) 
+doesn't happen at all, currently, because we prune after packing. So it 
+makes most sense to try the object at once.
 
-Some stupid pilot error? Got different mirrors between machines? Sounds
-unlikely, as repeating the command (and presumably rotating between DNS
-entries) makes no difference.
+On the other hand, the parallel code should probably do both at the same 
+time, since it can, and it only causes notable latency, not bandwidth. We 
+probably also ought to speculatively get any new index files in parallel 
+with whatever else we're doing, since it is likely that we'll need some 
+pack at some point, and then we'll need all the index files to decide what 
+pack to get.
 
-Just finished SPARCwise. Almost 10K objects for changes to 4 files?! Yes,
-the files changed are the same on both machines.
+> What are the circumstances under which it makes more sense to fetch the
+> whole pack rather than fetching individual objects from it?
 
-Mistified...
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+I'm not sure there's a good way of deciding without a plan for what 
+conditions cause there to be a choice.
 
---j9HIKc4x028468.1129573238/inti.inf.utfsm.cl--
+	-Daniel
+*This .sig left intentionally blank*
