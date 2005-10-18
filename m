@@ -1,67 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Fix cvsimport warning when called without --no-cvs-direct
-Date: Tue, 18 Oct 2005 16:30:27 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510181630040.31297@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: 4aaa702794447d9b281dd22fe532fd61e02434e1
+Date: Tue, 18 Oct 2005 11:04:18 -0400
+Message-ID: <118833cc0510180804n633abe42t3d9248ed5145bf14@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue Oct 18 16:32:41 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Oct 18 17:05:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERsU4-0000D1-7i
-	for gcvg-git@gmane.org; Tue, 18 Oct 2005 16:30:32 +0200
+	id 1ERt1D-00032M-48
+	for gcvg-git@gmane.org; Tue, 18 Oct 2005 17:04:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750765AbVJROa3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Oct 2005 10:30:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750767AbVJROa3
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 10:30:29 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:48094 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750765AbVJROa3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2005 10:30:29 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3E83E13EFEC; Tue, 18 Oct 2005 16:30:28 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 2265AB4DC5; Tue, 18 Oct 2005 16:30:28 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id F2F86B12DA; Tue, 18 Oct 2005 16:30:27 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id CF00C13EFEC; Tue, 18 Oct 2005 16:30:27 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1750771AbVJRPET (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Oct 2005 11:04:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750784AbVJRPET
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 11:04:19 -0400
+Received: from qproxy.gmail.com ([72.14.204.196]:58937 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750771AbVJRPET convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2005 11:04:19 -0400
+Received: by qproxy.gmail.com with SMTP id v28so1163228qbe
+        for <git@vger.kernel.org>; Tue, 18 Oct 2005 08:04:18 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Z3mWBjQZXwLJKG5Q+07ZxL1J+kDqIlJW/z9XF/BApx0tj+byz7vgTgK/KLT41Huy/6p5Py+CNXTo4TqqADfs0da2PHXRgX8FYtus2/TxuOmfD+DeJeugC7v2QqW71KbhNMcEzzHS1YE60JF2QGsRHYJUy24eVIdgHKUuZiz8Y0I=
+Received: by 10.65.156.16 with SMTP id i16mr60813qbo;
+        Tue, 18 Oct 2005 08:04:18 -0700 (PDT)
+Received: by 10.65.107.8 with HTTP; Tue, 18 Oct 2005 08:04:18 -0700 (PDT)
+To: GIT Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10215>
 
-Perl was warning that $opt_p was undefined in that case.
+My "git pull" has turned unhappy within the past few days.  Ideas?
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Morten
 
----
 
- git-cvsimport.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+$ git pull
+Fetching refs/heads/master from
+http://www.kernel.org/pub/scm/git/git.git/ using http
+Getting alternates list
+error: The requested URL returned error: 404 (curl_result = 22,
+http_code = 404, sha1 = 4aaa702794447d9b281dd22fe532fd61e02434e1)
+Getting pack list
+error: Unable to find 4aaa702794447d9b281dd22fe532fd61e02434e1 under
+http://www.kernel.org/pub/scm/git/git.git//
 
-applies-to: ba55da41e2670b8728cf911ac7424bc1afeb6ce4
-8d4a03322860fcc79cd20b76cb91b2f549cf14fd
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 0621dc3..bbb83fb 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -487,7 +487,7 @@ unless($pid) {
- 	my @opt;
- 	@opt = split(/,/,$opt_p) if defined $opt_p;
- 	unshift @opt, '-z', $opt_z if defined $opt_z;
--	unless ($opt_p =~ m/--no-cvs-direct/) {
-+	unless (defined($opt_p) && $opt_p =~ m/--no-cvs-direct/) {
- 		push @opt, '--cvs-direct';
- 	}
- 	exec("cvsps",@opt,"-u","-A",'--root',$opt_d,$cvs_tree);
----
-0.99.8.GIT
+Cannot obtain needed object 4aaa702794447d9b281dd22fe532fd61e02434e1
+while processing commit 0000000000000000000000000000000000000000.
