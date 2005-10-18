@@ -1,53 +1,87 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: git-daemon enabled on kernel.org
-Date: Tue, 18 Oct 2005 12:30:23 -0700
-Message-ID: <43554D4F.7040403@zytor.com>
+From: David Ho <davidkwho@gmail.com>
+Subject: git-diff-tree rename detection for single file
+Date: Tue, 18 Oct 2005 15:56:06 -0400
+Message-ID: <4dd15d180510181256i1c5a82d9ld62acaedb493cf71@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Oct 18 21:32:25 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Oct 18 21:58:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERxAe-0000zu-Lw
-	for gcvg-git@gmane.org; Tue, 18 Oct 2005 21:30:49 +0200
+	id 1ERxZF-0008Fg-Gc
+	for gcvg-git@gmane.org; Tue, 18 Oct 2005 21:56:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359AbVJRTal (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Oct 2005 15:30:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751473AbVJRTal
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 15:30:41 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:16343 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751359AbVJRTak
+	id S1751487AbVJRT4J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Oct 2005 15:56:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbVJRT4I
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 15:56:08 -0400
+Received: from qproxy.gmail.com ([72.14.204.197]:10691 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751487AbVJRT4H convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2005 15:30:40 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9IJUSoU005669
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 18 Oct 2005 12:30:29 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	Tue, 18 Oct 2005 15:56:07 -0400
+Received: by qproxy.gmail.com with SMTP id o12so91848qba
+        for <git@vger.kernel.org>; Tue, 18 Oct 2005 12:56:06 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=dCrb0yl2kkWsXdWn8ueCFHGuF64KagzpdFBVyivXxmwup37hPNWh/1kQ6OibuGdFRVkhxEJTzh6fKShiHUnFPeSnrCCISTN2rzzXDrBTLPGwg4cvIfq8DvSiW3oGBvXA5U6yh6sPjgXVB+4Ib5d0hBNaVP6dGXixljGsZp0i6kc=
+Received: by 10.64.209.15 with SMTP id h15mr888749qbg;
+        Tue, 18 Oct 2005 12:56:06 -0700 (PDT)
+Received: by 10.65.22.3 with HTTP; Tue, 18 Oct 2005 12:56:06 -0700 (PDT)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10225>
 
-After getting gitweb behind mod_cache, the load on kernel.org has gotten 
-down into the tolerable range, so I have enabled git-daemon in an 
-attempt to fix that :)
+Hi,
 
-The URL, obviously, is git://git.kernel.org/pub/scm/...
+I have a small suggestion to make the diff of a renamed file a bit
+more meaningful.  I have a file that is renamed-edited and commited. 
+git-diff-tree -M -p <commit> shows one result and git-diff-tree -M -p
+<commit> <filename> shows another.  If they both show a rename
+occurred then I think the single file git-diff-tree will be more
+useful.
 
-(or, to specify a specific server, git1.kernel.org or git2.kernel.org.)
+Any strange idea I have is to make git-diff-tree traverse the list of
+commits (assuming the list is returned from git-rev-list) to trace
+renames of the file to its origin.  Of course I don't know how useful
+this is to most.
 
-I consider this experimental so far, and if it imposes an unacceptable 
-load I'll have to disable it.  It currently runs with an inetd-imposed 
-limits of 10 instances per server.
+David
 
-	-hpa
+[davidho@penguin git-tutorial]$ git-diff-tree -r -M -p \
+8c77fe87790276b4e0b2650d7c5799eb893ac3ed
+8c77fe87790276b4e0b2650d7c5799eb893ac3ed
+diff --git a/goodbye b/ciao
+similarity index 83%
+rename from goodbye
+rename to ciao
+index 0561cce..d8259f5 100644
+--- a/goodbye
++++ b/ciao
+@@ -4,3 +4,4 @@ Play, play, play
+ Work, work, work
+ Eat, eat, eat
+ Drink, drink, drink
++Chew, chew, chew
+
+
+[davidho@penguin git-tutorial]$ git-diff-tree -r -M -p \
+8c77fe87790276b4e0b2650d7c5799eb893ac3ed ciao
+8c77fe87790276b4e0b2650d7c5799eb893ac3ed
+diff --git a/ciao b/ciao
+new file mode 100644
+index 0000000..d8259f5
+--- /dev/null
++++ b/ciao
+@@ -0,0 +1,7 @@
++Hello World
++It's a new day for git
++Play, play, play
++Work, work, work
++Eat, eat, eat
++Drink, drink, drink
++Chew, chew, chew
