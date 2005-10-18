@@ -1,184 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-checkout-index, flag ordering and --prefix kludgy handling
-Date: Mon, 17 Oct 2005 19:27:50 -0700
-Message-ID: <7vmzl7tv89.fsf@assigned-by-dhcp.cox.net>
-References: <200510162114.27429.blaisorblade@yahoo.it>
-	<Pine.LNX.4.64.0510171546580.3369@g5.osdl.org>
-	<7v8xwry88u.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0510171814430.3369@g5.osdl.org>
+From: David Whistler <dwhistler@gmail.com>
+Subject: Re: Scribblings for a cogito/git tutorial
+Date: Tue, 18 Oct 2005 02:28:19 +0000 (UTC)
+Message-ID: <loom.20051018T042052-760@post.gmane.org>
+References: <200510171504.j9HF4stb006164@laptop11.inf.utfsm.cl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 18 04:28:23 2005
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Oct 18 04:42:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERhD4-0007ij-It
-	for gcvg-git@gmane.org; Tue, 18 Oct 2005 04:28:14 +0200
+	id 1ERhQB-0001qV-4l
+	for gcvg-git@gmane.org; Tue, 18 Oct 2005 04:41:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932382AbVJRC1x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Oct 2005 22:27:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932383AbVJRC1x
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 22:27:53 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:61675 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932382AbVJRC1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Oct 2005 22:27:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051018022721.SPFW24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 17 Oct 2005 22:27:21 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932300AbVJRCl2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Oct 2005 22:41:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932390AbVJRCl2
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Oct 2005 22:41:28 -0400
+Received: from main.gmane.org ([80.91.229.2]:41143 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932300AbVJRCl1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Oct 2005 22:41:27 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1ERhOk-0001dw-T3
+	for git@vger.kernel.org; Tue, 18 Oct 2005 04:40:19 +0200
+Received: from pool-71-111-157-99.ptldor.dsl-w.verizon.net ([71.111.157.99])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 18 Oct 2005 04:40:18 +0200
+Received: from dwhistler by pool-71-111-157-99.ptldor.dsl-w.verizon.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 18 Oct 2005 04:40:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 71.111.157.99 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4 SUSE/1.0.4-1.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10203>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Horst von Brand <vonbrand <at> inf.utfsm.cl> writes:
 
-> Btw, I'd really like a "git checkout" that can do the per-file thing, 
-> instead of always using the equivalent of git-checkout-index with "-a".
->
-> It's actually one of the few places where I still use the raw git 
-> commands, doing things like
->
-> 	git-checkout-index -u -f filename
->
-> and I suspect that a lot of people would prefer that
->
-> 	git checkout filename
->
-> would just do that. Instead, we error out ("no such branch"). Which 
-> isn't even what I want, and almost certainly not what most CVS users want 
-> (they're used to checking out individual files).
+> 
+> Comments, suggestions, patches are welcome! 
+> 
+> Repository of the script and supporting files is at
+> <http://pincoya.inf.utfsm.cl/Script.git>
 
-Yes, it has been on the TODO list for quite some time.
 
-One reason I have not done nor said much about this was because
-I've been thinking about making the branch/refname more explicit
-on our command line.
+I can't read it.  Seems to be a recursive trick.
 
-Currently, we tell 'git-rev-parse' to tell refnames and other
-non-flag parameters apart, which in practice does not result in
-much confusion, but I think it is not quite right.
+Or did you mean to do that?
 
-I used to have a local branch, only to fetch updates from
-paulus, and naturally the branch was called 'gitk'.  But we have
-a file called gitk sitting at the top level of the tree, and
-'git diff gitk gitk' was not really working as well as I would
-have liked ('git diff heads/gitk gitk' should have worked, but I
-do not think it did).  Since then this forced me to rename the
-branch to 'paulus' X-<.
-
-On the other hand, if there is no ambiguity, I do not think
-forcing people to always spell out '-r' like CVS or SVN do
-is not necessary:
-
-        $ git diff -r master^^ -r master ;# two commits
-        $ git diff -r v0.99.8		 ;# changes since that tag
-	$ git checkout -r master
-        $ git checkout -r master $filename
-
-This checkout optionally taking filename is introducing one more
-ambiguity, and I was reluctant to do so before deciding what to
-do about other commands.
-
-Another thing I was thinking was that this might be better
-implemented as a separate command that can revert the working
-tree file to an artibtrary tree-ish as well.  So:
-
-	$ git xxxxxx --index file1 file2...
-
-would do your 'git-checkout-index -f -u file1 file2...', while
-
-	$ git xxxxxx file1 file2...
-
-would do an equivalent of:
-
-	git ls-tree HEAD file1 file2... |
-        sed -e 's/^\([0-7]*\) [^ ]* /\1 /' |
-        git-update-index --index-info
-        git-checkout-index -f -u file1 file2...
-
-or even:
-
-	$ git xxxxxx HEAD^^ file1 file2...
-
-would give you back file1 and file2 from two revs back.  Of
-course, to avoid ambiguities, the last one will be spelled as 
-
-	$ git xxxxxx -r HEAD^^ file1 file2...
-
-if people find that a separate command is cleaner.
-
-Anyway, in the meantime...
-
- ------------
-[PATCH] checking out individual files from index.
-
-'git checkout filename1 filename2...' can be used to revert the
-changes you made to files in the working tree to the version
-recorded in the index file.
-
-Signed-off-by: Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 2c053a3..6af71a2 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -6,6 +6,7 @@ new=
- force=
- branch=
- newbranch=
-+
- while [ "$#" != "0" ]; do
-     arg="$1"
-     shift
-@@ -24,19 +25,28 @@ while [ "$#" != "0" ]; do
- 		force=1
- 		;;
- 	*)
--		rev=$(git-rev-parse --verify "$arg^0" 2>/dev/null) ||
--			die "I don't know any '$arg'."
--		if [ -z "$rev" ]; then
--			echo "unknown flag $arg"
--			exit 1
--		fi
--		if [ "$new" ]; then
--			echo "Multiple revisions?"
--			exit 1
--		fi
--		new="$rev"
--		if [ -f "$GIT_DIR/refs/heads/$arg" ]; then
--			branch="$arg"
-+		if rev=$(git-rev-parse --verify "$arg^0" 2>/dev/null)
-+		then
-+			if [ -z "$rev" ]; then
-+				echo "unknown flag $arg"
-+				exit 1
-+			fi
-+			if [ "$new" ]; then
-+				echo "Multiple revisions?"
-+				exit 1
-+			fi
-+			new="$rev"
-+			if [ -f "$GIT_DIR/refs/heads/$arg" ]; then
-+				branch="$arg"
-+			fi
-+		else
-+			# check out individual files from index
-+			if test "$new" || test "$newbranch"
-+			then
-+				die "checkout and switch tree?"
-+			fi
-+			git-checkout-index -f -u "$arg" "$@"
-+			exit $?
- 		fi
- 		;;
-     esac
-
-Compilation finished at Mon Oct 17 19:08:29
+-d
