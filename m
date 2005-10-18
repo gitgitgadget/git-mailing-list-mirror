@@ -1,105 +1,66 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: [PATCH] git-daemon extra paranoia
-Date: Tue, 18 Oct 2005 13:54:15 -0700
-Message-ID: <435560F7.4080006@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-daemon extra paranoia
+Date: Tue, 18 Oct 2005 14:19:41 -0700
+Message-ID: <7vll0qploy.fsf@assigned-by-dhcp.cox.net>
+References: <435560F7.4080006@zytor.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------090608030500080202070100"
-X-From: git-owner@vger.kernel.org Tue Oct 18 22:56:00 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 18 23:21:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERyTz-0008CD-52
-	for gcvg-git@gmane.org; Tue, 18 Oct 2005 22:54:51 +0200
+	id 1ERysD-0007P3-CI
+	for gcvg-git@gmane.org; Tue, 18 Oct 2005 23:19:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751498AbVJRUye (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Oct 2005 16:54:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbVJRUyd
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 16:54:33 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:24718 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751498AbVJRUy2
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2005 16:54:28 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9IKsK47007529
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 18 Oct 2005 13:54:21 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1751499AbVJRVTo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Oct 2005 17:19:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbVJRVTo
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 17:19:44 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:16263 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751499AbVJRVTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2005 17:19:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051018211931.CVSG1668.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 18 Oct 2005 17:19:31 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <435560F7.4080006@zytor.com> (H. Peter Anvin's message of "Tue,
+	18 Oct 2005 13:54:15 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10234>
 
-This is a multi-part message in MIME format.
---------------090608030500080202070100
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-This patch adds some extra paranoia to the git-daemon filename test.  In 
-particular, it now rejects pathnames containing // or ending with /; it 
-also adds a redundant test for pathname absoluteness (belts and suspenders.)
+> This patch adds some extra paranoia to the git-daemon filename test.  In 
+> particular, it now rejects pathnames containing // or ending with /; it 
+> also adds a redundant test for pathname absoluteness (belts and suspenders.)
+>
+> Signed-off-by: H. Peter Anvin <hpa@zytor.com>
+> Extra paranoia about non-canonical pathnames
 
-Signed-off-by: H. Peter Anvin <hpa@zytor.com>
+I would understand rejecting /../, and perhaps /./, but why
+reject // in between or / at the end?
 
---------------090608030500080202070100
-Content-Type: text/plain;
- name="patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="patch"
+Especially, I think this part in daemon.c::upload():
 
-Extra paranoia about non-canonical pathnames
+	if (!path_ok(dir)) {
+		logerror("Forbidden directory: %s\n", dir);
+		return -1;
+	}
 
----
-commit a22f643931e48a319a70af7e91f809648160ecbf
-tree 9d6934089c2628253d0690efde3fa7f36a1a8861
-parent 4aaa702794447d9b281dd22fe532fd61e02434e1
-author Peter Anvin <hpa@tazenda.sc.orionmulti.com> Tue, 18 Oct 2005 13:51:45 -0700
-committer Peter Anvin <hpa@tazenda.sc.orionmulti.com> Tue, 18 Oct 2005 13:51:45 -0700
+	if (chdir(dir) < 0) {
+		logerror("Cannot chdir('%s'): %s", dir, strerror(errno));
+		return -1;
+	}
 
- daemon.c |   16 ++++++++++++----
- 1 files changed, 12 insertions(+), 4 deletions(-)
+	chdir(".git");
 
-diff --git a/daemon.c b/daemon.c
---- a/daemon.c
-+++ b/daemon.c
-@@ -80,17 +80,25 @@ static int path_ok(const char *dir)
- {
- 	const char *p = dir;
- 	char **pp;
--	int sl = 1, ndot = 0;
-+	int sl, ndot;
-+
-+	/* The pathname here should be an absolute path. */
-+	if ( *p++ != '/' )
-+		return 0;
-+
-+	sl = 1;  ndot = 0;
- 
- 	for (;;) {
- 		if ( *p == '.' ) {
- 			ndot++;
- 		} else if ( *p == '/' || *p == '\0' ) {
--			if ( sl && ndot > 0 && ndot < 3 )
--				return 0; /* . or .. in path */
-+			if ( sl && ndot < 3 )	/* Refuse "", "." or ".." */
-+				return 0;
- 			sl = 1;
-+
-+			/* If this was end of string, we passed all tests */
- 			if ( *p == '\0' )
--				break; /* End of string and all is good */
-+				break;
- 		} else {
- 			sl = ndot = 0;
- 		}
-
---------------090608030500080202070100--
+relies on the fact that you can say "/home/junio/git/" for me to
+publish "/home/junio/git/.git/" repository, so I would suspect
+that it is necessary to allow "ending with /" at least.
