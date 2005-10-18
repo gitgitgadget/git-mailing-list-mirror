@@ -1,55 +1,58 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: 4aaa702794447d9b281dd22fe532fd61e02434e1
-Date: Tue, 18 Oct 2005 11:04:18 -0400
-Message-ID: <118833cc0510180804n633abe42t3d9248ed5145bf14@mail.gmail.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: gitweb.cgi
+Date: Tue, 18 Oct 2005 09:52:13 -0700
+Message-ID: <4355283D.2000908@zytor.com>
+References: <43546492.3020401@zytor.com> <20051018110725.GB6929@vrfy.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Oct 18 17:05:19 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 18 18:53:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ERt1D-00032M-48
-	for gcvg-git@gmane.org; Tue, 18 Oct 2005 17:04:47 +0200
+	id 1ERuhI-0001vt-B1
+	for gcvg-git@gmane.org; Tue, 18 Oct 2005 18:52:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750771AbVJRPET (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Oct 2005 11:04:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750784AbVJRPET
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 11:04:19 -0400
-Received: from qproxy.gmail.com ([72.14.204.196]:58937 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750771AbVJRPET convert rfc822-to-8bit
+	id S1751045AbVJRQwR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Oct 2005 12:52:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbVJRQwR
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 12:52:17 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:30681 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751037AbVJRQwQ
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2005 11:04:19 -0400
-Received: by qproxy.gmail.com with SMTP id v28so1163228qbe
-        for <git@vger.kernel.org>; Tue, 18 Oct 2005 08:04:18 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Z3mWBjQZXwLJKG5Q+07ZxL1J+kDqIlJW/z9XF/BApx0tj+byz7vgTgK/KLT41Huy/6p5Py+CNXTo4TqqADfs0da2PHXRgX8FYtus2/TxuOmfD+DeJeugC7v2QqW71KbhNMcEzzHS1YE60JF2QGsRHYJUy24eVIdgHKUuZiz8Y0I=
-Received: by 10.65.156.16 with SMTP id i16mr60813qbo;
-        Tue, 18 Oct 2005 08:04:18 -0700 (PDT)
-Received: by 10.65.107.8 with HTTP; Tue, 18 Oct 2005 08:04:18 -0700 (PDT)
-To: GIT Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
+	Tue, 18 Oct 2005 12:52:16 -0400
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9IGqDD8025062
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 18 Oct 2005 09:52:14 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Kay Sievers <kay.sievers@vrfy.org>
+In-Reply-To: <20051018110725.GB6929@vrfy.org>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10216>
 
-My "git pull" has turned unhappy within the past few days.  Ideas?
+Kay Sievers wrote:
+> 
+>>This has become particularly painful during the current one-server outage.
+>>
+>>Kay, gitweb really needs to be able to do caching, or be run behind a 
+>>caching proxy.  Otherwise I will have to turn it off until we can come 
+>>up with a dedicated piece of server hardware for it.
+> 
+> How about Apache's mod_cache? Worked nicely for me several times in other
+> setups.
+> 
 
-Morten
+I will look at it and see if I can make it work properly.
 
-
-$ git pull
-Fetching refs/heads/master from
-http://www.kernel.org/pub/scm/git/git.git/ using http
-Getting alternates list
-error: The requested URL returned error: 404 (curl_result = 22,
-http_code = 404, sha1 = 4aaa702794447d9b281dd22fe532fd61e02434e1)
-Getting pack list
-error: Unable to find 4aaa702794447d9b281dd22fe532fd61e02434e1 under
-http://www.kernel.org/pub/scm/git/git.git//
-
-Cannot obtain needed object 4aaa702794447d9b281dd22fe532fd61e02434e1
-while processing commit 0000000000000000000000000000000000000000.
+	-hpa
