@@ -1,116 +1,167 @@
-From: John Ellson <ellson@research.att.com>
-Subject: [PATCH] cg-history FILE [NTH_PARENT]      - was: Re: Wanted - a file
- browser interface to git
-Date: Tue, 18 Oct 2005 23:15:15 -0400
-Message-ID: <4355BA43.5030509@research.att.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] cg-history FILE [NTH_PARENT]
+Date: Tue, 18 Oct 2005 21:01:00 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510182029240.3369@g5.osdl.org>
 References: <dj45np$e88$1@sea.gmane.org> <Pine.LNX.4.64.0510181806250.3369@g5.osdl.org>
+ <4355BA43.5030509@research.att.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 19 05:17:42 2005
+X-From: git-owner@vger.kernel.org Wed Oct 19 06:01:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES4RC-0000gN-3z
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 05:16:23 +0200
+	id 1ES58W-00046Y-Px
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 06:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750861AbVJSDPW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Oct 2005 23:15:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbVJSDPW
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 23:15:22 -0400
-Received: from mail-dark.research.att.com ([192.20.225.112]:28819 "EHLO
-	mail-yellow.research.att.com") by vger.kernel.org with ESMTP
-	id S1750861AbVJSDPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2005 23:15:21 -0400
-Received: from [135.207.24.103] (ellson.research.att.com [135.207.24.103])
-	by bigmail.research.att.com (8.13.3+Sun/8.11.6) with ESMTP id j9J3I0fF014997;
-	Tue, 18 Oct 2005 23:18:01 -0400 (EDT)
-User-Agent: Mail/News 1.4.1 (X11/20051008)
-Newsgroups: gmane.comp.version-control.git
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0510181806250.3369@g5.osdl.org>
+	id S932458AbVJSEBE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 00:01:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932459AbVJSEBE
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 00:01:04 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:22491 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932458AbVJSEBD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Oct 2005 00:01:03 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9J410FC027527
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 18 Oct 2005 21:01:01 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9J4108C015771;
+	Tue, 18 Oct 2005 21:01:00 -0700
+To: John Ellson <ellson@research.att.com>
+In-Reply-To: <4355BA43.5030509@research.att.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10263>
 
-Linus Torvalds wrote:
+
+[ Ok, time for some serious power-git usage ]
+
+On Tue, 18 Oct 2005, John Ellson wrote:
 > 
-> On Tue, 18 Oct 2005, John Ellson wrote:
->> An example is:  "I know that file xxx contained algorithm yyy at some point in
->> the past and now I'd like to browse back through the history of xxx to find
->> the exact details."
-> 
-> You are aware of "git whatchanged -p xxx", right?
-> 
-> Yeah, it's not graphical, and I agree that it might be very cool to have a 
-> graphical version of it. But I thought I'd mention it even so. A 
-> surprising number of people seem to have never realized, and at least for 
-> me personally, it's one of the most common things I do.
-> 
-> 		Linus
+> produce the history of a file, or its state at its nth_parent
+>
+> +       git-whatchanged -p "${ARGS[0]}" |
 
+Actually, you're much better of _not_ using "-p" to generate a patch.
 
-OK.  Here is a not-very-smart cogito command to display the history of a file, 
-or the state of the nth parent of the file in its history.
+In fact, you don't even want the pretty format that "git-whatchanged" 
+does, you really want the raw output.
 
-Feedback and or complete rewrites are requested ;-)
+Try this instead:
 
-John
+	git-rev-list HEAD | git-diff-tree --stdin -s -r "$ARG"
 
+which will give _just_ a list of the commits that change the file "$ARG".
 
-produce the history of a file, or its state at its nth_parent
+Here, the "--stdin" to git-diff-tree means that it should take its 
+revision input from stdin (ie obvously the list of commits generated by 
+git-rev-list), and the "-s" stands for "silent", ie git-diff-tree won't 
+actually output the diff itself.
 
----
-commit 8478ad1164e37e9cca039a3f9552d2a98f7bead6
-tree 40b39d5f9af573a7815f073cada03c7903bfc6fa
-parent 5d74e4859afc81a4658133d5a83809ac814dbf34
-author John Ellson <ellson@ontap.ellson.com> Tue, 18 Oct 2005 23:13:44 -0400
-committer John Ellson <ellson@ontap.ellson.com> Tue, 18 Oct 2005 23:13:44 -0400
+And the "-r" means that it should check the trees "recursively", which is 
+needed since we want the diff-tree to traverse down the tree rather than 
+just look at the top-level ("-p" to generate patches enables recursive by 
+default since patches don't make sense on raw trees, but without the -p 
+you need to do it explicitly).
 
-  cg-history |   36 ++++++++++++++++++++++++++++++++++++
-  1 files changed, 36 insertions(+), 0 deletions(-)
+And since we didn't ask for the header, the only thing you get is the list 
+of commits that changed the file describled by the argument.
 
-diff --git a/cg-history b/cg-history
-new file mode 100755
-index 0000000..ba86f71
---- /dev/null
-+++ b/cg-history
-@@ -0,0 +1,36 @@
-+#!/usr/bin/env bash
-+#
-+# Display the change history of a file.
-+# Copyright (c) John Ellson, 2005
-+#
-+# The change history of a file is displayed on stdout, or
-+# if an integer is provided for NTH_PARENT, then the complete
-+# state of the file at that step in its history is sent to stdout.
-+#
-+
-+USAGE="cg-history FILE [NTH_PARENT]"
-+
-+. ${COGITO_LIB}cg-Xlib || exit 1
-+
-+[ "$ARGS" ] || usage
-+
-+if [ "${ARGS[1]}" = "" ]; then
-+       git-whatchanged -p "${ARGS[0]}"
-+else
-+       i=0
-+       git-whatchanged -p "${ARGS[0]}" |
-+       while read -r cmd sha rest
-+       do
-+               case "$cmd" in
-+               diff-tree)
-+                       i=`expr $i + 1`
-+                       if [ $i = ${ARGS[1]} ] ; then
-+                               cg-admin-cat -r "$sha" "${ARGS[0]}"
-+                               exit 0
-+                       fi
-+                       ;;
-+               *)
-+                       ;;
-+               esac
-+       done
-+fi
+So now, you can just pick the n'th such commit, and do something like this
+
+	#
+	# Get the "${ARGS[1]}"th commit that changes  file "${ARGS[0]}"
+	#
+	rev=$(git-rev-list HEAD |
+		git-diff-tree --stdin -s -r "${ARGS[0]}" |
+		head -n "${ARGS[1]}" |
+		tail -1)
+
+	#
+	# Pick up the file from that tree
+	#
+	filerev=$(git-ls-tree -r "$rev" "${ARGS[0]}" |
+		cut -f1 |
+		cut -d' ' -f3)
+
+	#
+	# And show it
+	#
+	git-cat-file blob $filerev
+
+and you're done (untested, but you should get the idea).
+
+Now, the interesting part about is that you can feed the output from 
+git-diff-tree _back_ to git-diff-tree, so you can do some really fancy 
+footwork like:
+
+	git-rev-list rev1..rev2 |
+		git-diff-tree --stdin -s -r "$ARG" |
+		git-diff-tree --stdin -M --pretty -p
+
+and what this will do is:
+
+ - generate a list of all commits between rev1 and rev2
+
+ - filter out just the commits that change the file "$ARG", and pass those 
+   on.
+
+ - for those commits, show the _whole_ diff, with rename detection and 
+   with pretty-printed commit comment headers
+
+In other words, you can basically look at all the full commits that 
+changed one file (or a set of files). Efficiently.
+
+This is kind of like "git-whatchanged", but it shows the full context of 
+what changed. Of course, the second git-diff-tree can be used to limit the 
+context to something else, ie you could do a variation of the above, 
+something like
+
+	git-rev-list v2.6.12.. |
+		git-diff-tree --stdin -s -r drivers/usb/ |
+		git-diff-tree --stdin -M --pretty -p drivers/ include/
+
+which will show any commit that changed the drivers/usb/ directory after 
+v2.6.12, but then limit the output of those commits to the drivers/ and 
+include/ subdirectories (so anything that was changed in that same commit 
+in a filesystem would _not_ be shown, for example, but if there were 
+changes to drivers/scsi/ at the same time, they _would_ show).
+
+Or, if you want to go really wild, do something like this on the kernel 
+git tree:
+
+	git-rev-list v2.6.12.. |
+		git-diff-tree --stdin -s -r drivers/usb/ |
+		git-diff-tree --stdin -s -r drivers/scsi/ |
+		git-diff-tree --stdin -M --pretty -p drivers/scsi/ drivers/usb/ |
+		less -S
+
+which says to print out only those commits that change something _both_ in 
+drivers/usb/ _and_ in drivers/scsi/ at the same time, and then show only 
+those parts of the changes. 
+
+Try it out. It really does work, and is extremely powerful. It's even 
+pretty efficient (make sure your tree is packed first, though ;). I can do 
+the above in about three seconds for the current kernel history on my 
+machine. That's 3 _seconds_ to go through what right now is 8005 commits:
+
+	git-rev-list v2.6.12.. | wc -l
+
+and the reason is exactly that the filename-based parsing is very good at 
+efficiently pruning out all the tree information that isn't needed.
+
+Very cool.
+
+However, the "normal" situation is just the standard "git-whatchanged", 
+which is much easier to use than something more complex like the above.
+
+The core git commands are really designed to be scriptable, but "real 
+life" seldom wants the complexity of quite that much flexibility.
+
+		Linus
