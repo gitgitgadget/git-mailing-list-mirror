@@ -1,71 +1,54 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git-send-pack segfaulting on DebianPPC (was: Re: cg-clone, tag objects and cg-push/git-push don't play nice)
-Date: Thu, 20 Oct 2005 00:37:43 +0200
-Message-ID: <20051019223743.GQ30889@pasky.or.cz>
-References: <46a038f90510190202n60101c5cgf27bd714dce00513@mail.gmail.com> <Pine.LNX.4.64.0510190724000.3369@g5.osdl.org> <46a038f90510191356w56b78413p6b9fe5b67fc9ee74@mail.gmail.com>
+From: Tony Luck <tony.luck@gmail.com>
+Subject: Re: The git protocol and DoS
+Date: Wed, 19 Oct 2005 15:39:55 -0700
+Message-ID: <12c511ca0510191539w3dd76f89ra5fe48e1d84750d6@mail.gmail.com>
+References: <4356A5C5.5080905@zytor.com> <20051019222044.GP30889@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 20 00:39:21 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 20 00:40:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESMZf-0007AT-Tn
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 00:38:20 +0200
+	id 1ESMbI-0007mw-Fm
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 00:40:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751613AbVJSWhv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 18:37:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbVJSWhv
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 18:37:51 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:29326 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751608AbVJSWhu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Oct 2005 18:37:50 -0400
-Received: (qmail 9980 invoked by uid 2001); 20 Oct 2005 00:37:43 +0200
-To: Martin Langhoff <martin.langhoff@gmail.com>
+	id S1751587AbVJSWj5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 18:39:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbVJSWj4
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 18:39:56 -0400
+Received: from qproxy.gmail.com ([72.14.204.197]:61033 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751586AbVJSWj4 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 18:39:56 -0400
+Received: by qproxy.gmail.com with SMTP id v40so204316qbe
+        for <git@vger.kernel.org>; Wed, 19 Oct 2005 15:39:55 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VY/gdgmR9MHB//B2ZUVIPATb4IbiI9ckgrKaUEPGEaO3dnBmwv6YU55GnjqNMBplF0qiYvtMPvdkP7RryYU5nSTZC+122HDL2DIR/fOEMuNeNUimWnX4YJUFjSgznhDtM4xB8TsTKA3UR5dY9pVxudVg+dv8R+UyawcX9TuPBG0=
+Received: by 10.64.156.18 with SMTP id d18mr950085qbe;
+        Wed, 19 Oct 2005 15:39:55 -0700 (PDT)
+Received: by 10.64.243.14 with HTTP; Wed, 19 Oct 2005 15:39:55 -0700 (PDT)
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051019222044.GP30889@pasky.or.cz>
 Content-Disposition: inline
-In-Reply-To: <46a038f90510191356w56b78413p6b9fe5b67fc9ee74@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10322>
 
-Dear diary, on Wed, Oct 19, 2005 at 10:56:35PM CEST, I got a letter
-where Martin Langhoff <martin.langhoff@gmail.com> told me that...
-> To recap: repo is slightly broken because cg-fetch has fetched tag
-> objects, but hasn't followed them through to the commit objects they
-> refer to.
+On 10/19/05, Petr Baudis <pasky@suse.cz> wrote:
+> [client]        git-upload-pack <path>
+> [server]        challenge somethingnonsensical
+> [client]        challenge-response <username>:sha1(somethingnonsensical<password>)
+> [server]        All right, the pack goes like this...
 
-That must be leftover of some old fetch, before cg-fetch got fixed wrt.
-this issue.
+I think this requires that the server store the cleartext version of
+the password so
+that it can validate sha1(somethingnonsensical<password>) ... which is generally
+thought to be a bad idea.
 
-> Internally cg-fetch is actually using git-ssh-fetch (I misreported it
-> using git-fetch-pack), which is working correctly. However, cg-fetch
-> attempts to optimize the fetch process, by not calling git-ssh-fetch
-> if it has the tagobj that the ref points to. How those tag objects get
-> there without commits in the first place I don't know. So I've removed
-> the optimization and life is much better.
-
-The "optimization" or something alike needs to be there at least for the
-user interface, so that we can actually say what tags are we
-downloading; besides, there can be a *lot* of tags. But I'm not sure how
-moot will this all be after Cogito moves to the remote peeking (Real
-Soon Now, promise ;-).
-
-> There is a second bug during the tag fetch. Some of the references
-> (created by git-cvsimport) are multiline, and break cg-fetch. It's
-> probably a bug in git-cvsimport, but I'm fixing cg-fetch to use head
-> -n1 instead of cat. I'll deal with git-cvsimport later.
-
-Eek. Did I miss something and are multiline refs meaningful now? If not,
-they are pretty bad and I'd imagine other parts of Cogito would be
-pretty confused about that. I'd call this a corrupted repository,
-tough. Perhaps a check should be added to fsck.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+-Tony
