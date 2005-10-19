@@ -1,64 +1,48 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: git-send-pack segfaulting on DebianPPC (was: Re: cg-clone, tag objects and cg-push/git-push don't play nice)
-Date: Wed, 19 Oct 2005 22:02:14 +1300
-Message-ID: <46a038f90510190202n60101c5cgf27bd714dce00513@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-daemon enabled on kernel.org
+Date: Wed, 19 Oct 2005 02:02:30 -0700
+Message-ID: <7v7jc9dgm1.fsf@assigned-by-dhcp.cox.net>
+References: <43554D4F.7040403@zytor.com>
+	<20051019083542.GA31526@harddisk-recovery.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 19 11:03:26 2005
+X-From: git-owner@vger.kernel.org Wed Oct 19 11:05:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES9q7-0005o3-SU
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 11:02:28 +0200
+	id 1ES9qR-00060o-Rb
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 11:02:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932478AbVJSJCP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 05:02:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932464AbVJSJCP
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 05:02:15 -0400
-Received: from qproxy.gmail.com ([72.14.204.204]:2000 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932478AbVJSJCP convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 05:02:15 -0400
-Received: by qproxy.gmail.com with SMTP id v40so37289qbe
-        for <git@vger.kernel.org>; Wed, 19 Oct 2005 02:02:14 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=dTkfgYkwy3AxoG+0bIb0kCGecsEQoOPH0946lYJ6yx1REgyiisF8VUJ2WTR9aIvL9JE4wwm0m7w1zGvW2V/oVjPZkeG1kM1v8A23XIIFk7+InXd/r0Q70w2E8AKMYJbc4FVgKMwwrEBhLF/DrJ4P0DrZmOUi2HbaTNrtm1W7tG4=
-Received: by 10.65.192.13 with SMTP id u13mr323975qbp;
-        Wed, 19 Oct 2005 02:02:14 -0700 (PDT)
-Received: by 10.64.232.18 with HTTP; Wed, 19 Oct 2005 02:02:14 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
+	id S932484AbVJSJCf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 05:02:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932487AbVJSJCe
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 05:02:34 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:54726 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932484AbVJSJCe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 05:02:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051019090203.VLNQ11356.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 19 Oct 2005 05:02:03 -0400
+To: Erik Mouw <erik@harddisk-recovery.com>
+In-Reply-To: <20051019083542.GA31526@harddisk-recovery.com> (Erik Mouw's
+	message of "Wed, 19 Oct 2005 10:35:42 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10279>
 
-On 10/19/05, Junio C Hamano <junkio@cox.net> wrote:
-> Although I do not follow Cogito development closely, I seem to
-> recall that it fetched tags without making them complete at some
-> point in the past; I hope it is now fixed but I am not sure.
+Erik Mouw <erik@harddisk-recovery.com> writes:
 
-Ok -- I can now shed some light on this. This was happening on a
-DebianPPC machine, but I didn't have clear evidence of that being a
-factor (specially when Linus is widely known to use a PPC, and I
-hadn't seen problems in other ppc boxen around). Now I do.
+> How do I tell git to change the default repository to pull from?
 
-For all my finger-pointing, cg-fetch was trying to fetch the refernces
-properly. However, git-fetch-pack is segfaulting on this Debian PPC
-(etch). This is true of the current git "master" and 0.99.8.c. I
-don'thave strace on the box until tomorrow, so I can't tell you more
-about it.
-
-On Debian i386 and Ubuntu i386, the exact same versions work correctly.
-
-I'll post more info as soon as I can get my hands on strace,
-
-cheers,
-
-
-
-martin
+Depends on how you are currently telling git what your "default
+repository to pull from" is.  If you are using git-core
+(i.e. git-pull and git-fetch) for downloading, either
+.git/remotes/origin or .git/branches/origin file are used in
+this order; if you are using Cogito for downloading, it uses
+.git/branches/origin IIRC.
