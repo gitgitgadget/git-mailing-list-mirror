@@ -1,62 +1,56 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] git-clone: don't unpack objects
-Date: Wed, 19 Oct 2005 13:31:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510191327560.3369@g5.osdl.org>
-References: <20051019154341.2aed6998.tihirvon@gmail.com>
- <7v4q7d5kwo.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: The git protocol and DoS
+Date: Wed, 19 Oct 2005 13:50:40 -0700
+Message-ID: <7vmzl544f3.fsf@assigned-by-dhcp.cox.net>
+References: <4356A5C5.5080905@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Timo Hirvonen <tihirvon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 19 22:33:46 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 19 22:53:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESKbZ-0002U7-AL
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 22:32:09 +0200
+	id 1ESKte-0008Sk-3D
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 22:50:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751309AbVJSUcF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 16:32:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751311AbVJSUcF
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 16:32:05 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:54192 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751309AbVJSUcE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Oct 2005 16:32:04 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9JKVsFC003340
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 19 Oct 2005 13:31:55 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9JKVreR018486;
-	Wed, 19 Oct 2005 13:31:54 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4q7d5kwo.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.125 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751329AbVJSUum (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 16:50:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbVJSUum
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 16:50:42 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:20902 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1751305AbVJSUul (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 16:50:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051019205042.WUGO9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 19 Oct 2005 16:50:42 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <4356A5C5.5080905@zytor.com> (H. Peter Anvin's message of "Wed,
+	19 Oct 2005 13:00:05 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10305>
 
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
+> It would, however, require a protocol change; I would like to hear what 
+> people think about this at this stac=ge.
 
-On Wed, 19 Oct 2005, Junio C Hamano wrote:
-> 
-> Are there cases where you would do 'git clone' over git native
-> transport and want the resulting pack expanded?
+Well, it is full two days since a majorly visible git protocol
+enabled server has been announced, and you probably know what
+kind of hits you are getting (and please let us know if you have
+numbers, I am curious).  If we do a protocol change, earlier the
+better.  You already said that the kernel.org git is
+experimental.  Does anybody run git daemons and rely on the
+current protocol?
 
-No, I think the unconditional --keep is fine for clone.
-
-What to do about incremental pulls is not as clear, but I think the clone 
-case is pretty much obvious these days.
-
-The main reason for unpacking was that packs used to be "strange". These 
-days, packs are arguably the _common_ thing.
-
-Now, having tons and tons of small packs is probably worse than having 
-tons and tons of individual files, but if people get used to doing 
-occasional full repacks, that doesn't matter.
-
-		Linus
+I suspect it would not make *any* sense to have a backward
+compatible server that optionally allows this cookie exchange --
+attackers can just say "I am an older client".  OTOH, it
+probably makes sense to have an option on the client side to
+skip the cookie exchange stage.  I do not think autodetecting
+new/old server on the client side in connect.c is possible.
