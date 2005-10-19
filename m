@@ -1,47 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: GIT 0.99.8f
-Date: Wed, 19 Oct 2005 03:04:06 -0700
-Message-ID: <7v4q7dakmh.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: git-send-pack segfaulting on DebianPPC
+Date: Wed, 19 Oct 2005 23:07:02 +1300
+Message-ID: <46a038f90510190307u232dd3e1u8644061e4eecb308@mail.gmail.com>
+References: <46a038f90510190202n60101c5cgf27bd714dce00513@mail.gmail.com>
+	 <7v7jc9c15w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S964780AbVJSKEJ@vger.kernel.org Wed Oct 19 12:05:06 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S964780AbVJSKEJ@vger.kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 19 12:08:17 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESAo9-0007q9-Ts
-	for glk-linux-kernel-3@gmane.org; Wed, 19 Oct 2005 12:04:30 +0200
+	id 1ESAqi-0000Zk-Hp
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 12:07:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964780AbVJSKEJ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 19 Oct 2005 06:04:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964777AbVJSKEJ
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Wed, 19 Oct 2005 06:04:09 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:47050 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S964776AbVJSKEI (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 19 Oct 2005 06:04:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051019100344.WSGB29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 19 Oct 2005 06:03:44 -0400
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S964778AbVJSKHE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 06:07:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964779AbVJSKHE
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 06:07:04 -0400
+Received: from qproxy.gmail.com ([72.14.204.202]:21418 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964778AbVJSKHC convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 06:07:02 -0400
+Received: by qproxy.gmail.com with SMTP id v40so47285qbe
+        for <git@vger.kernel.org>; Wed, 19 Oct 2005 03:07:02 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XvT1xcRX+ZmsfXiqPOO0HH+DXV3s5XKHPzr6GCWlbacvJLpAMTwwqhMdvThMpTt7eAclFF/xtqXZZhgHroZj0J6su3QJgEk7gk7Ae0ZH9pP9QrUfE2gh9DXTXb0ckhZLGWagIy6k9MRVZuCqUvHl/nQxPjybrZdxdTGMw7uYQQk=
+Received: by 10.64.242.2 with SMTP id p2mr369111qbh;
+        Wed, 19 Oct 2005 03:07:02 -0700 (PDT)
+Received: by 10.64.232.18 with HTTP; Wed, 19 Oct 2005 03:07:02 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7jc9c15w.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10282>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10283>
 
-GIT 0.99.8f is available as usual at:
+On 10/19/05, Junio C Hamano <junkio@cox.net> wrote:
+> Martin Langhoff <martin.langhoff@gmail.com> writes:
+>
+> > ... However, git-fetch-pack is segfaulting on this Debian PPC
+> > (etch). This is true of the current git "master" and 0.99.8.c. I
+> > don'thave strace on the box until tomorrow, so I can't tell you more
+> > about it.
+>
+> Thanks, that is good to know.  As I said in another message, I
+> looked at cg-fetch's current tag completion code while working
+> on the ref^{tree} thing, and saw it used commit walker with '-a'
+> option (IOW, not producing an incomplete tag) to download
+> everything.
 
-    RPMs and tarball: www.kernel.org:/pub/software/scm/git/
-    Debs and tarball: www.kernel.org:/pub/software/scm/git/debian/
+Ok -- I'm at home now so I can't test it any further, but reading
+cg-fetch, it would actually be running git-ssh-fetch which was failing
+(but cogito hides STDERR). When I tried it by hand, I used
+git-fetch-pack, which segfaulted on Debian PPC and worked on i386.
 
-Sorry, I said 0.99.8e was going to be the last 0.99.8
-maintenance release, but it turns out that there was a flurry of
-updates to git-daemon and rev-list (which matters to gitweb)
-yesterday.  So here it is.
+> Even after fetch-pack segfaulted, since it does not update any
+> refs itself (it only writes them to stdout for the wrapper to
+> process), it should not have resulted in the repository that has
+> refs pointing at objects it does not have. In fact, it writes
+> its "SHA1 - name" list only after seeing unpack-objects exit
+> successfully, that should not have resulted in a corrupt
+> repository that records incomplete refs.  I suspect there is
+> something else going on here.
 
-Now, this _is_ going to be the last 0.99.8 maintenance release,
-I promise ;-).
+Hmmm. You're right, it only spits out a list of things to retrieve...
+
+> In cg-fetch, fetch-pack is used only in one location, and it
+> does not have anything to do with the tag completion code.
+> Presumably that explains why removing tags did not have any
+> effect, although it does not explain why removing some objects
+> did -- maybe those object files you needed to remove were
+> corrupt?
+
+Well, I'll strace the execution tomorrow and let you know. The tag
+objects, however, are there. I can reliably git-cat-file tag <sha1>
+them and they look pretty normal. The commit objects they refer to are
+missing, though.
+
+cheers,
+
+
+martin
