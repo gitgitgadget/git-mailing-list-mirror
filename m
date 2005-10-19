@@ -1,93 +1,65 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: cg-clone, tag objects and cg-push/git-push don't play nice
-Date: Wed, 19 Oct 2005 22:06:52 +1300
-Message-ID: <46a038f90510190206j722faefbl4fe60ed0052b7104@mail.gmail.com>
-References: <46a038f90510182338k6d3d52fbyc2057e9b775d5b14@mail.gmail.com>
-	 <7vzmp6dlii.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f90510190110g53c90c5t419ad6065292269e@mail.gmail.com>
-	 <7vbr1ldh30.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-send-pack segfaulting on DebianPPC
+Date: Wed, 19 Oct 2005 02:21:31 -0700
+Message-ID: <7v7jc9c15w.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90510190202n60101c5cgf27bd714dce00513@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 19 11:08:54 2005
+X-From: git-owner@vger.kernel.org Wed Oct 19 11:24:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES9uT-0007zI-Rm
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 11:06:58 +0200
+	id 1ESA8e-0007n0-PT
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 11:21:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932481AbVJSJGy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 05:06:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932468AbVJSJGy
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 05:06:54 -0400
-Received: from qproxy.gmail.com ([72.14.204.195]:23278 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932464AbVJSJGx convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 05:06:53 -0400
-Received: by qproxy.gmail.com with SMTP id v40so38032qbe
-        for <git@vger.kernel.org>; Wed, 19 Oct 2005 02:06:53 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hUKowSnLABBUuyaVphWYDXqFytQnkGXd5frBxSyJMaIeGarI48KdI27+blCfnAS6pmdQ7k+t9ixDN1qVX/Vf1CL17PVrXykgxmb/LqbCJkypgfaEzfa7kVmuUPVDK03ZJc+VOIT/eYbmC5pa8ZDXdOB2xGbEAF0YEMm/1YV09dY=
-Received: by 10.65.188.4 with SMTP id q4mr322582qbp;
-        Wed, 19 Oct 2005 02:06:52 -0700 (PDT)
-Received: by 10.64.232.18 with HTTP; Wed, 19 Oct 2005 02:06:52 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr1ldh30.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932468AbVJSJVd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 05:21:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932488AbVJSJVd
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 05:21:33 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:49098 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932468AbVJSJVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 05:21:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051019092121.PHWC1668.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 19 Oct 2005 05:21:21 -0400
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90510190202n60101c5cgf27bd714dce00513@mail.gmail.com>
+	(Martin Langhoff's message of "Wed, 19 Oct 2005 22:02:14 +1300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10281>
 
-On 10/19/05, Junio C Hamano <junkio@cox.net> wrote:
-> Yeah.  But the problem is that the repository on the other end
-> claims that it has everything reachable from those incomplete
-> tags.
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-It definitely does.
+> ... However, git-fetch-pack is segfaulting on this Debian PPC
+> (etch). This is true of the current git "master" and 0.99.8.c. I
+> don'thave strace on the box until tomorrow, so I can't tell you more
+> about it.
 
-> Hearing that, git-push (the real name of it is send-pack)
-> decides not to send things that are already reachable from the
-> refs the other end claims to have.  So if an incomplete tag
-> refers to a commit that contains a blob that the remote actually
-> does not have, and if that blob is part of the head you are
-> pushing, send-pack would not (and should not) send that blob to
-> the remote.
+Thanks, that is good to know.  As I said in another message, I
+looked at cg-fetch's current tag completion code while working
+on the ref^{tree} thing, and saw it used commit walker with '-a'
+option (IOW, not producing an incomplete tag) to download
+everything.
 
-*shrug* it's a bit over my head, but I've figured out taht
-git-fetch-pack is segfaulting. Perhaps that helps?
+Even after fetch-pack segfaulted, since it does not update any
+refs itself (it only writes them to stdout for the wrapper to
+process), it should not have resulted in the repository that has
+refs pointing at objects it does not have. In fact, it writes
+its "SHA1 - name" list only after seeing unpack-objects exit
+successfully, that should not have resulted in a corrupt
+repository that records incomplete refs.  I suspect there is
+something else going on here.
 
-> Hmph.  It worries me even more.
->
-> This error message:
->
->       error: unpack should have generated
->     482d4b88aa482dfea7f7549470902049a050020a, but I can't find it!
->
-> comes from receive-pack that runs on the other repo (i.e. the
-> one with incomplete tags you just removed), so it means
-> send-pack decided it does not need to send that object --
-> meaning the other end claimed it already has it.  What to send
-> and what need not to be sent is determined solely based on what
-> send-pack hears from receive-pack in the initial handshake,
-> which is in receive-pack.c::write_head_info().  It scans
-> everything under ".git/refs" directory (not just .git/refs/heads
-> or .git/refs/tags; if you had ".git/refs/FOOBAR", it will cause
-> the remote end to claim it has everything reachable from it --
-> the only exceptions are things that starts with a dot '.', which
-> is probably why cg-fetch places a temporary heads in
-> refs/*/.$name-fetching) and sends them -- it does not look at
-> the object directory and magically claim it has something that
-> is not recorded in its .git/refs/ directory.
-
-*Very* strange. The remote repo is packed, but is working well for
-everyone else. I think we should follow the segfault and see where it
-leads...
-
-cheers,
-
-
-m
+In cg-fetch, fetch-pack is used only in one location, and it
+does not have anything to do with the tag completion code.
+Presumably that explains why removing tags did not have any
+effect, although it does not explain why removing some objects
+did -- maybe those object files you needed to remove were
+corrupt?
