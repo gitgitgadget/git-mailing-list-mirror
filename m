@@ -1,53 +1,75 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: [RFC] Timeouts on HTTP requests
-Date: Tue, 18 Oct 2005 16:51:04 -0700
-Message-ID: <20051018235104.GO5509@reactrix.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] git-daemon extra paranoia
+Date: Tue, 18 Oct 2005 17:21:55 -0700
+Message-ID: <435591A3.7030708@zytor.com>
+References: <435560F7.4080006@zytor.com> <Pine.LNX.4.64.0510181517280.3369@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Oct 19 01:51:40 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 19 02:22:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES1Ef-0002yq-7d
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 01:51:13 +0200
+	id 1ES1ij-0001CD-1X
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 02:22:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbVJRXvJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Oct 2005 19:51:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbVJRXvJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 19:51:09 -0400
-Received: from 195.37.26.69.virtela.com ([69.26.37.195]:33311 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1751510AbVJRXvI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2005 19:51:08 -0400
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id j9INp4ko020432
-	for <git@vger.kernel.org>; Tue, 18 Oct 2005 16:51:04 -0700
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id j9INp4KV020430
-	for git@vger.kernel.org; Tue, 18 Oct 2005 16:51:04 -0700
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
+	id S932203AbVJSAWN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Oct 2005 20:22:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932219AbVJSAWN
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 20:22:13 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:42428 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932203AbVJSAWM
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2005 20:22:12 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9J0M09J011832
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 18 Oct 2005 17:22:02 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510181517280.3369@g5.osdl.org>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10242>
 
-Our QA department today checked what would happen if the network connection
-went away completely in the middle of an HTTP transfer.  It looks as though
-the answer is that git-http-fetch sits there forever waiting for CURL to
-return something.
+Linus Torvalds wrote:
+> 
+> Hmm. The "not ending in /" is a bad test. 
+> 
+> Especially in light of the fact that the git-pack protocol quite by design 
+> tends to add a ".git" to the end as a fallback, so that a user that wants 
+> to specify a particular directory _without_ that fallback needs to have 
+> the slash at the end.
+> 
+> Now, git-daemon hasn't implemented that, but I think that was just a 
+> mistake that grew out of it not getting a lot of testing, since it wasn't 
+> used much. I personally use the "without the final .git" version quite 
+> often, because it just looks so much nicer for the user.
+> 
+> In fact, here's a patch that makes git-daemon allow it, and thus match the 
+> behaviour of the ssh transport.
+> 
+> The logic is simple: if the original "chdir()" fails, try another one with 
+> ".git" appended. This is in _addition_ to doing the 'chdir(".git")' later, 
+> so that if you have a checked-out git repository in /home/linux-2.6.git, 
+> then doing a
+> 
 
-I'm thinking of taking advantage of CURL's capability of aborting a request
-if the transfer rate drops below a threshold for a specified length of time
-using a new pair of environment variables and/or config file settings:
+This is also exactly the kind of DWIM that tends to result in the kind 
+of security holes I described earlier.
 
-GIT_HTTP_LOW_SPEED_LIMIT/http.lowspeedlimit
-GIT_HTTP_LOW_SPEED_TIME/http.lowspeedtime
+The DWIM aspect is fine, of course, but it has to be done up front: 
+instead of doing just chdir(), each path should be validated through 
+path_ok() before even being considered for chdir().  Perhaps the right 
+thing to do is to combine the two functions.
 
-Does this make sense, and if so should there be defaults if nothing is
-specified?
-
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+	-hpa
