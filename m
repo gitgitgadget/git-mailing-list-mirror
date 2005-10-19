@@ -1,107 +1,125 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: Problem getting older version
-Date: Wed, 19 Oct 2005 10:00:46 +0200
-Message-ID: <20051019080046.GI22986@schottelius.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: cg-clone, tag objects and cg-push/git-push don't play nice
+Date: Wed, 19 Oct 2005 21:10:26 +1300
+Message-ID: <46a038f90510190110g53c90c5t419ad6065292269e@mail.gmail.com>
+References: <46a038f90510182338k6d3d52fbyc2057e9b775d5b14@mail.gmail.com>
+	 <7vzmp6dlii.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Q59ABw34pTSIagmi"
-X-From: git-owner@vger.kernel.org Wed Oct 19 10:02:59 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 19 10:11:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES8sr-0006my-LY
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 10:01:14 +0200
+	id 1ES91s-0002AK-89
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 10:10:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932344AbVJSIBK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 04:01:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932403AbVJSIBK
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 04:01:10 -0400
-Received: from wg.technophil.ch ([213.189.149.230]:60321 "HELO
-	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
-	id S932344AbVJSIBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 04:01:09 -0400
-Received: (qmail 23664 invoked by uid 1000); 19 Oct 2005 08:00:46 -0000
-To: git@vger.kernel.org
+	id S932194AbVJSIK2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 04:10:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932462AbVJSIK2
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 04:10:28 -0400
+Received: from qproxy.gmail.com ([72.14.204.198]:27010 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932194AbVJSIK1 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 04:10:27 -0400
+Received: by qproxy.gmail.com with SMTP id v40so29413qbe
+        for <git@vger.kernel.org>; Wed, 19 Oct 2005 01:10:26 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=km2lIE4tMkwjeE9zjqepCEuOUk6Zxnna7b9w1j4FZvnk30Xaxl+UZww3ErJpMyviTw6EGahZfe5i2I9VanU1XXTB0kPDP9yM630GvQtMpOqdtDbBkAvGof5IQdeNvsbT0xGRfG7TJxSXkJjRC5RWlJVEfVVf0hKiPi2IMMvCf9M=
+Received: by 10.65.22.20 with SMTP id z20mr302396qbi;
+        Wed, 19 Oct 2005 01:10:26 -0700 (PDT)
+Received: by 10.64.232.18 with HTTP; Wed, 19 Oct 2005 01:10:26 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmp6dlii.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Linux-Info: http://linux.schottelius.org/
-X-Operating-System: Linux 2.6.13.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10270>
+
+On 10/19/05, Junio C Hamano <junkio@cox.net> wrote:
+> Martin Langhoff <martin.langhoff@gmail.com> writes:
+>
+> >  + git-push is trying to walk all the refs it knows about when it does
+> > the "what do I have that the repo doesn't" part, and it breaks on
+> > those incomplete tag fetches.
+>
+> That is expected.
+
+Hmmm. I was under the impression that if I call git-push naming a
+particular head, it could restrict itself to the stuff needed for that
+head only. Just to clarify, I'm running
+
+  git-push locke.catalyst.net.nz:/var/git/moodle-test.git master:mdl-topnz-prod
+
+> Although I do not follow Cogito development closely, I seem to
+> recall that it fetched tags without making them complete at some
+> point in the past; I hope it is now fixed but I am not sure.
+
+It isn't fixed, but I'm trying to address that one :-p
+
+> I do not understand why removing .git/refs/tags/* did not help,
+> and that is the biggest thing that disturbs me in this whole
+> problem report
+
+I can't understand that either, but I manually removed all the
+refs/tags, and the only heads I have are origin and master. git-push
+won't let me do it until the exact point where I have removed the
+object from the repo. And that's only possible on unpacked repos.
+
+> Maybe there are some other files
+> under .git/refs/ directory that had copies of them?
+
+No. I run a test again, to make sure. Removing .git/refs/tags is not
+enough, and the only refs available are origin and master.
+
+I've come up with this awful script to resolve it, while I try to fix cg-fetch:
+
+#usr/bin/perl -w
+
+use strict;
+
+my @refs = `ls .git/refs/tags`;
+
+foreach my $ref (@refs) {
+  chomp $ref;
+  print "testing for a commit linked from $ref\n";
+  my $commit = `git-rev-parse --verify "$ref"^{commit} 2>/dev/null`;
+  if ($?) {
+    # this one didn't even have a tag ref pointing to a commit!
+    #unlink ".git/refs/tags/$ref"
+    #  or die "cannot remove .git/refs/tags/$ref";
+    #next;
+  }
+
+  # thest that we actually have the commit object...
+  chomp $commit;
+  my $file = `git-cat-file commit $commit  2>/dev/null`;
+  if ($?) {
+    # could not find the commit object, we better get rid of the
+    # tagref and tagobj
+    my $tagsha = `git-rev-parse --verify "$ref"  2>/dev/null`;
+
+    chomp $tagsha;
+    if ($tagsha) {
+      # doublecheck it is a tag
+      my $type = `git-cat-file -t $tagsha  2>/dev/null`;
+      chomp $type;
+      if ($type eq 'tag') {
+        my $fileobj = ".git/objects/" . substr($tagsha,0,2) . '/' .
+substr($tagsha,2);
+        print " removing $fileobj for ref $ref tagsha $tagsha \n";
+        `rm -f $fileobj`;
+        unlink  ".git/refs/tags/$ref";
+      }
+    }
+  }
+}
+
+cheers,
 
 
---Q59ABw34pTSIagmi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hello!
-
-The following situation:
-
-- The last commit was a merge, mhich broke some files
-- We want three files from the commit before
-
-Now I was told to do the following:
-
-1. get the sha1hash from the commit before (cg-log did that)
-2. get the sha1hash from the file in that tree:
-[9:27] srsyg01:walderlift% git-ls-tree 35ff687efc1b19b4db918e5af859894a9dc9=
-16e4 Code/lw1/Client/MainForm.xfm=20
-100644 blob 605958b1435f6bdbd5cc502ae3a4c1a281d01f0a    Code/lw1/Client/Mai=
-nForm.xfm
-
-3. cat the file with git-cat-file
-[9:36] srsyg01:walderlift% git-cat-file blob 605958b1435f6bdbd5cc502ae3a4c1=
-a281d01f0a | less
-
-4. Now overwrite it
-[9:38] srsyg01:walderlift% git-cat-file blob 605958b1435f6bdbd5cc502ae3a4c1=
-a281d01f0a > Code/lw1/Client/MainForm.xfm=20
-
-5. Goto 2 and repeat two times
-
-Is this really the standard way to recover a file? As a developer / end use=
-r I would expect that:
-
-cg-recover <filename> <commit id> and -f for overwriting the file if it exi=
-sts
-
-Did I overlook something or is it currently really this complicated? And it=
- is
-very error prone, if I have to overwrite the files using '>'-redirection (p=
-erhaps I mistype the
-filename).
-
-Nico
-
---=20
-Latest project: cconfig (http://nico.schotteli.us/papers/linux/cconfig/)
-Open Source nutures open minds and free, creative developers.
-
---Q59ABw34pTSIagmi
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iQIVAwUBQ1X9LbOTBMvCUbrlAQLH+A//Zhjl5zzZ/LaQHfx7HBEoJiiiZ9jZl7Yr
-bSURA5qBCQi8JFHb0j6ecFNXfVHD2Y0jv+6ey8Dt923bRqdfJLkeMPk5MkSLbNj4
-5abbDeiMGuf95K9P88RnngqDXSK6w6wyvu7Z1GZe3vy3nqjsdKdLyzXGYy+2+xmA
-9/q23HUx9djlv3r8ZPZgsburwhcc35LIWcmZgwdtjNZnBWpe7Os+eMhhVxlETSyM
-xDGUg0xFCo4VWkuZuYFly1T6zVcROXNAbJ6rGyj0mxKrxn5z3AaJoXDjzZYzvOOF
-eLMad/wlIzD1Tx/4ZkyvfJbSEMPZctobK2WsvQfFafLffYO9k+zLN6NjNDuygxBL
-dHdu7e8x9BxXW1L7nYbNxYQlZv1F5TrSx54N1LrOeLukx9qnUL1UHUQfti69zLfh
-Yq47apq0scolXXcxKxDkC7n+A4MJ2S1AU1u3xTrXcrMZvKsPRiuaF2rxKC6PwAmc
-APlHyITZ+YT6mGirFgeiHuXohb+GWdsCeJmtkWIMJjJg+Bctjmyq5xTZGGETP7EL
-XkQ5+KFkTdenJzmPoC+pGhrP39qTiaYXbuPZnBiKY0EVCWEECkOn83QwXkPr0M7D
-5fTtDTZyRuLj8qZ489jthQ7rM7NxINoS8+srM5qYFRdk18MYVB4AjFZwXGLDzJVI
-1F+LONl65IM=
-=0yks
------END PGP SIGNATURE-----
-
---Q59ABw34pTSIagmi--
+m
