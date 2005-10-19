@@ -1,88 +1,88 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: Re: git-daemon enabled on kernel.org
-Date: Wed, 19 Oct 2005 10:40:56 +0200
-Message-ID: <20051019084056.GL22986@schottelius.org>
-References: <43554D4F.7040403@zytor.com> <20051019083542.GA31526@harddisk-recovery.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: cg-clone, tag objects and cg-push/git-push don't play nice
+Date: Wed, 19 Oct 2005 01:52:19 -0700
+Message-ID: <7vbr1ldh30.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90510182338k6d3d52fbyc2057e9b775d5b14@mail.gmail.com>
+	<7vzmp6dlii.fsf@assigned-by-dhcp.cox.net>
+	<46a038f90510190110g53c90c5t419ad6065292269e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="HLsZ5Z1opAQvdr2J"
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 19 10:43:14 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 19 10:54:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES9Vh-0005fm-8f
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 10:41:21 +0200
+	id 1ES9gw-0001ww-GK
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 10:52:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932471AbVJSIlS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 04:41:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932474AbVJSIlR
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 04:41:17 -0400
-Received: from wg.technophil.ch ([213.189.149.230]:24254 "HELO
-	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
-	id S932471AbVJSIlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 04:41:17 -0400
-Received: (qmail 24134 invoked by uid 1000); 19 Oct 2005 08:40:56 -0000
-To: Erik Mouw <erik@harddisk-recovery.com>
-Content-Disposition: inline
-In-Reply-To: <20051019083542.GA31526@harddisk-recovery.com>
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Linux-Info: http://linux.schottelius.org/
-X-Operating-System: Linux 2.6.13.1
+	id S932477AbVJSIwV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 04:52:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932474AbVJSIwV
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 04:52:21 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:6386 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932477AbVJSIwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 04:52:21 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051019085149.HBOR2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 19 Oct 2005 04:51:49 -0400
+To: Martin Langhoff <martin.langhoff@gmail.com>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10276>
 
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
---HLsZ5Z1opAQvdr2J
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> That is expected.
+>
+> Hmmm. I was under the impression that if I call git-push naming a
+> particular head, it could restrict itself to the stuff needed for that
+> head only. Just to clarify, I'm running
+>
+>   git-push locke.catalyst.net.nz:/var/git/moodle-test.git master:mdl-topnz-prod
 
-Erik Mouw [Wed, Oct 19, 2005 at 10:35:42AM +0200]:
-> On Tue, Oct 18, 2005 at 12:30:23PM -0700, H. Peter Anvin wrote:
-> > After getting gitweb behind mod_cache, the load on kernel.org has gotte=
-n=20
-> > down into the tolerable range, so I have enabled git-daemon in an=20
-> > attempt to fix that :)
-> >=20
-> > The URL, obviously, is git://git.kernel.org/pub/scm/...
-> >=20
-> > (or, to specify a specific server, git1.kernel.org or git2.kernel.org.)
->=20
-> How do I tell git to change the default repository to pull from?
+Yeah.  But the problem is that the repository on the other end
+claims that it has everything reachable from those incomplete
+tags.  Hearing that, git-push (the real name of it is send-pack)
+decides not to send things that are already reachable from the
+refs the other end claims to have.  So if an incomplete tag
+refers to a commit that contains a blob that the remote actually
+does not have, and if that blob is part of the head you are
+pushing, send-pack would not (and should not) send that blob to
+the remote.
 
-Do you mean cg-branch-add perhaps? Afaik there is no real 'default' reposit=
-ory, but
-the branches you specified. So adding a new branch will fix what you want.
+>> I do not understand why removing .git/refs/tags/* did not help,
+>> and that is the biggest thing that disturbs me in this whole
+>> problem report
+>
+> I can't understand that either, but I manually removed all the
+> refs/tags, and the only heads I have are origin and master. git-push
+> won't let me do it until the exact point where I have removed the
+> object from the repo. And that's only possible on unpacked repos.
 
-Nico
---=20
-Latest project: cconfig (http://nico.schotteli.us/papers/linux/cconfig/)
-Open Source nutures open minds and free, creative developers.
+Hmph.  It worries me even more.
 
---HLsZ5Z1opAQvdr2J
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+This error message:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
+      error: unpack should have generated
+    482d4b88aa482dfea7f7549470902049a050020a, but I can't find it!
 
-iQIVAwUBQ1YGl7OTBMvCUbrlAQJj9xAAk/g9uEGWcW0Qb/5GBxFdjHwi+IhXD8V9
-nHiypXFzhgId9A8K+rvzbJKeI9XYcpSAiKga/IHA4uluf5od20g3rYDdsvuP1bg+
-ExbvkGwtL8xSahYZmPc3E0PVkHSdsAHfj3sWzYRzbxTruIX/YAYzEWcLQPX78aL8
-esymM0gd2hiDrIk0oQl1bByoVAct6fJuUo5BQaFCv+PZe9JXbRnM/HfIgM4FPM4h
-790+q++8R8cVfFfEXAIr41sW+Auy5Gz3Ayiqh6O29AtnCW1siI7ECj9qxlas/20c
-cieR8W/v8xeZLxAkWu8z/xRyP4MXTwaifSyFy62Zbyn/P+5x6RnYT/CgFqArwCKx
-8yXc/NXDmaVtmrwDn25co/Om3h0mUVDZshsLinC1CIZ7V7zevf3mUmZACpLwIy73
-LLy+A84tC98l1wXx7PX9C5Wrf05KUQKclvJrv45cuYCWDEEt4A4tBb4iKpmeHBg2
-FntG6zJYGps7MNhCwYfc21swzFxu6TER9qt1m96Sk27XA5vPq3zphLb6tOH7XVy6
-2SA8V763OG4VDrXxJtgGdradn7lXLbzXKymRs1pMge5m3dtonhE0nMOkqGGPYIvV
-dIwLUn1ewMZiLyFhBqPnbeRiCLjEE65rE9+0MNYV5b0rZYmtp6gG1N4OWea+JItI
-AzeyZvarQ68=
-=TJlj
------END PGP SIGNATURE-----
-
---HLsZ5Z1opAQvdr2J--
+comes from receive-pack that runs on the other repo (i.e. the
+one with incomplete tags you just removed), so it means
+send-pack decided it does not need to send that object --
+meaning the other end claimed it already has it.  What to send
+and what need not to be sent is determined solely based on what
+send-pack hears from receive-pack in the initial handshake,
+which is in receive-pack.c::write_head_info().  It scans
+everything under ".git/refs" directory (not just .git/refs/heads
+or .git/refs/tags; if you had ".git/refs/FOOBAR", it will cause
+the remote end to claim it has everything reachable from it --
+the only exceptions are things that starts with a dot '.', which
+is probably why cg-fetch places a temporary heads in
+refs/*/.$name-fetching) and sends them -- it does not look at
+the object directory and magically claim it has something that
+is not recorded in its .git/refs/ directory.
