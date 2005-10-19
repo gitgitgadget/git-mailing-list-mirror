@@ -1,73 +1,82 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: The git protocol and DoS
-Date: Wed, 19 Oct 2005 13:55:35 -0700
-Message-ID: <4356B2C7.601@zytor.com>
-References: <4356A5C5.5080905@zytor.com> <7vmzl544f3.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: git-send-pack segfaulting on DebianPPC (was: Re: cg-clone, tag objects and cg-push/git-push don't play nice)
+Date: Thu, 20 Oct 2005 09:56:35 +1300
+Message-ID: <46a038f90510191356w56b78413p6b9fe5b67fc9ee74@mail.gmail.com>
+References: <46a038f90510190202n60101c5cgf27bd714dce00513@mail.gmail.com>
+	 <Pine.LNX.4.64.0510190724000.3369@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 19 22:57:10 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed Oct 19 22:58:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESKyb-0002kr-Rh
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 22:55:59 +0200
+	id 1ESKzH-0003AL-Td
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 22:56:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751327AbVJSUzz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 16:55:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbVJSUzz
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 16:55:55 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:62092 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751327AbVJSUzy
+	id S1751319AbVJSU4h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 16:56:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbVJSU4h
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 16:56:37 -0400
+Received: from qproxy.gmail.com ([72.14.204.194]:7533 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751319AbVJSU4g convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 16:55:54 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9JKte3U007438
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 19 Oct 2005 13:55:40 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzl544f3.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	Wed, 19 Oct 2005 16:56:36 -0400
+Received: by qproxy.gmail.com with SMTP id v40so185602qbe
+        for <git@vger.kernel.org>; Wed, 19 Oct 2005 13:56:35 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bYBWWbiUmwZaZtimSCFWJKIK9G7nVcOanjg/yOD0388HqWpb27+kBBtEQBYdM260tH5WyNixjZvlXsOvZVYYPFn1wHzsN4PBVnD51ccKU5Ez9x1pf+1FoE63JCAOEg9k3xmWzzvZ2mDHsdriU51uuG+xuSiDPIk5RNVhn9v4VvI=
+Received: by 10.65.188.4 with SMTP id q4mr887116qbp;
+        Wed, 19 Oct 2005 13:56:35 -0700 (PDT)
+Received: by 10.64.232.18 with HTTP; Wed, 19 Oct 2005 13:56:35 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510190724000.3369@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10307>
 
-Junio C Hamano wrote:
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
->>It would, however, require a protocol change; I would like to hear what 
->>people think about this at this stac=ge.
-> 
-> Well, it is full two days since a majorly visible git protocol
-> enabled server has been announced, and you probably know what
-> kind of hits you are getting (and please let us know if you have
-> numbers, I am curious).
+On 10/20/05, Linus Torvalds <torvalds@osdl.org> wrote:
+> Interesting.
+>
+> As you say, I'm obviously testing on ppc all the time, and if
+> git-fetch-pack has problems on ppc, I haven't seen them. And I fetch a
+> lot.
+>
+> It might be just the repo you're using. I can't test, since I obviously
+> cannot ssh into the repo you pointed at (I tried to see if you had a
+> git-daemon running, but no such luck).
 
-About 350 hits so far, total.  Utter peanuts.
+Ok -- I seem to be wrong in blaming PPC, so it's back to cg-fetch, and
+I think I have a patch that does the right thing.
 
-> If we do a protocol change, earlier the
-> better.  You already said that the kernel.org git is
-> experimental.  Does anybody run git daemons and rely on the
-> current protocol? 
- >
-> I suspect it would not make *any* sense to have a backward
-> compatible server that optionally allows this cookie exchange --
-> attackers can just say "I am an older client".  OTOH, it
-> probably makes sense to have an option on the client side to
-> skip the cookie exchange stage.  I do not think autodetecting
-> new/old server on the client side in connect.c is possible.
-> 
+To recap: repo is slightly broken because cg-fetch has fetched tag
+objects, but hasn't followed them through to the commit objects they
+refer to.
 
-You mean an option on the *server* to skip the cookie exchange?  If so, 
-how would you expect the client to handle it?
+Internally cg-fetch is actually using git-ssh-fetch (I misreported it
+using git-fetch-pack), which is working correctly. However, cg-fetch
+attempts to optimize the fetch process, by not calling git-ssh-fetch
+if it has the tagobj that the ref points to. How those tag objects get
+there without commits in the first place I don't know. So I've removed
+the optimization and life is much better.
 
-	-hpa
+There is a second bug during the tag fetch. Some of the references
+(created by git-cvsimport) are multiline, and break cg-fetch. It's
+probably a bug in git-cvsimport, but I'm fixing cg-fetch to use head
+-n1 instead of cat. I'll deal with git-cvsimport later.
+
+On this broken-ish repo, git-fetch-pack segfaults as I've reported.
+Running it under strace shows that it dies walking the local repo,
+trying to find a missing commit. Unlikely that this is PPC only ;-)
+
+cheers,
+
+
+
+martin
