@@ -1,71 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-send-pack segfaulting on DebianPPC
-Date: Wed, 19 Oct 2005 14:15:48 -0700
-Message-ID: <7vzmp52oor.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f90510190202n60101c5cgf27bd714dce00513@mail.gmail.com>
-	<Pine.LNX.4.64.0510190724000.3369@g5.osdl.org>
-	<46a038f90510191356w56b78413p6b9fe5b67fc9ee74@mail.gmail.com>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: Errors from http-fetch
+Date: Wed, 19 Oct 2005 14:26:44 -0700
+Message-ID: <20051019212644.GB6160@reactrix.com>
+References: <Pine.LNX.4.64.0510191536350.25300@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed Oct 19 23:18:29 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 19 23:29:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESLHt-00046a-Kf
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 23:15:53 +0200
+	id 1ESLT3-0000B2-1O
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 23:27:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751351AbVJSVPv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 17:15:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751356AbVJSVPv
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 17:15:51 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:45236 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751351AbVJSVPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 17:15:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051019211517.QVVU2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 19 Oct 2005 17:15:17 -0400
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90510191356w56b78413p6b9fe5b67fc9ee74@mail.gmail.com>
-	(Martin Langhoff's message of "Thu, 20 Oct 2005 09:56:35 +1300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750889AbVJSV0w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 17:26:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbVJSV0w
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 17:26:52 -0400
+Received: from 193.37.26.69.virtela.com ([69.26.37.193]:36843 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1750889AbVJSV0v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 17:26:51 -0400
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id j9JLQieF014416;
+	Wed, 19 Oct 2005 14:26:44 -0700
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id j9JLQiEu014414;
+	Wed, 19 Oct 2005 14:26:44 -0700
+To: Daniel Barkalow <barkalow@iabervon.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0510191536350.25300@iabervon.org>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10312>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+On Wed, Oct 19, 2005 at 03:46:10PM -0400, Daniel Barkalow wrote:
 
-> There is a second bug during the tag fetch. Some of the references
-> (created by git-cvsimport) are multiline, and break cg-fetch. It's
-> probably a bug in git-cvsimport, but I'm fixing cg-fetch to use head
-> -n1 instead of cat. I'll deal with git-cvsimport later.
+> I've now started getting errors from http-fetch; my guess for the output 
+> is that it has problems if an object is not available loose, and is only 
+> available in a pack file which is already being downloaded for a different 
+> object, possibly only if the first request to be made for the loose 
+> object is not the first one to fail.
 
-When you update git-cvsimport, please make the tags it generates
-git-check-ref-format happy.  The rules are:
+Are you getting a curl return code of 52/CURLE_GOT_NOTHING?  Any chance
+you have access to the associated server logs?
 
- - No pathname component starting with a dot '.' (cg-fetch uses
-   refs/heads/.$name-fetching to store the SHA1 it has not fully
-   completed; for_each_ref() deliberately ignores path component
-   that start with a dot to ignore them, probably to work this
-   around).
+In the situation you describe, fetch() won't be called for the second
+object until fetch() for the first object is finished - at which point
+the pack will have been fully downloaded for the first object (or
+failed, causing fetch() for the first object to fail as well.)
 
- - No double-dots anywhere (ref1..ref2 notation is used on the
-   command line and ref with embedded double-dots introduces
-   ambiguities in parsing).
-
- - No byte with value lower than \040 (SP) nor \177 (DEL).
-
- - No tilde '~', caret '^' or colon ':' (the first two are used
-   in extended SHA1 expressions; colon is used as src:dst
-   notation in push and pull).
-
- - Not ending with a slash '/'.
-
-> On this broken-ish repo, git-fetch-pack segfaults as I've reported.
-> Running it under strace shows that it dies walking the local repo,
-> trying to find a missing commit. Unlikely that this is PPC only ;-)
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
