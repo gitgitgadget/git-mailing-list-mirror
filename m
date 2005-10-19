@@ -1,56 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-daemon extra paranoia
-Date: Tue, 18 Oct 2005 18:18:42 -0700
-Message-ID: <7v3bmyl2x9.fsf@assigned-by-dhcp.cox.net>
-References: <435560F7.4080006@zytor.com>
-	<Pine.LNX.4.64.0510181517280.3369@g5.osdl.org>
-	<435591A3.7030708@zytor.com>
-	<Pine.LNX.4.64.0510181728490.3369@g5.osdl.org>
-	<435596CB.6070401@zytor.com>
+From: John Ellson <ellson@research.att.com>
+Subject: Re: Wanted - a file browser interface to git
+Date: Tue, 18 Oct 2005 21:23:23 -0400
+Message-ID: <4355A00B.4000806@research.att.com>
+References: <dj45np$e88$1@sea.gmane.org> <Pine.LNX.4.64.0510181806250.3369@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Oct 19 03:19:46 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 19 03:23:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES2bP-0005Lw-Lr
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 03:18:48 +0200
+	id 1ES2gF-0006Ul-GC
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 03:23:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932425AbVJSBSp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Oct 2005 21:18:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932412AbVJSBSp
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 21:18:45 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:44459 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932425AbVJSBSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2005 21:18:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051019011820.WKZX29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 18 Oct 2005 21:18:20 -0400
-To: git@vger.kernel.org
-In-Reply-To: <435596CB.6070401@zytor.com> (H. Peter Anvin's message of "Tue,
-	18 Oct 2005 17:43:55 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932428AbVJSBXa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Oct 2005 21:23:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932412AbVJSBXa
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 21:23:30 -0400
+Received: from mail-dark.research.att.com ([192.20.225.112]:63875 "EHLO
+	mail-yellow.research.att.com") by vger.kernel.org with ESMTP
+	id S932430AbVJSBX3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2005 21:23:29 -0400
+Received: from [135.207.24.103] (ellson.research.att.com [135.207.24.103])
+	by bigmail.research.att.com (8.13.3+Sun/8.11.6) with ESMTP id j9J1Q5MT005693;
+	Tue, 18 Oct 2005 21:26:07 -0400 (EDT)
+User-Agent: Mail/News 1.4.1 (X11/20051008)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510181806250.3369@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10256>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
-
-> Consider the whitelist/blacklist scenario I described in the previous 
-> email.  You have:
+Linus Torvalds wrote:
+> On Tue, 18 Oct 2005, John Ellson wrote:
+>   
+>> An example is:  "I know that file xxx contained algorithm yyy at some point in
+>> the past and now I'd like to browse back through the history of xxx to find
+>> the exact details."
+>>     
 >
-> whitelist:	/pub/scm
-> blacklist:	/pub/scm/foo/bar.git
+> You are aware of "git whatchanged -p xxx", right?
 >
-> If you can bypass the blacklist by using the pathname /pub/scm/foo/bar, 
-> that's bad.
+> Yeah, it's not graphical, and I agree that it might be very cool to have a 
+> graphical version of it. But I thought I'd mention it even so. A 
+> surprising number of people seem to have never realized, and at least for 
+> me personally, it's one of the most common things I do.
+>
+> 		Linus
+>   
+Linus,
 
-I like the simplicity of the check Linus suggested.  Given
-/pub/scm/fora/../foo/bar/, you would end up chdir() to
-/pub/scm/foo/bar.git and getcwd() would hit the blacklist
-entry.  Which almost means that you do not even need path_ok()
-;-).
+I wasn't aware of it, no.  Looks very useful.  Thanks.
+
+I see that you can take the tree id from the diff-tree lines and
+then produce the state of the file at that time with "cg-admin-cat -r 
+<id> xxx"
+Is that how you would do it?
+
+Are there any plans for cogito to support it?
+
+John
