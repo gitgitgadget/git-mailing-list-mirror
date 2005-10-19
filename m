@@ -1,64 +1,71 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: Pushing a single tag (ref + object)?
-Date: Wed, 19 Oct 2005 09:39:05 -0300
-Message-ID: <200510191239.j9JCd5nQ018754@laptop11.inf.utfsm.cl>
-References: <martin.langhoff@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 19 14:39:30 2005
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: [PATCH] git-clone: don't unpack objects
+Date: Wed, 19 Oct 2005 15:43:41 +0300
+Message-ID: <20051019154341.2aed6998.tihirvon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Oct 19 14:45:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESDE1-0002BF-Bw
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 14:39:21 +0200
+	id 1ESDIN-0004hb-MP
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 14:43:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750886AbVJSMjN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 08:39:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbVJSMjN
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 08:39:13 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:59619 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1750886AbVJSMjL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Oct 2005 08:39:11 -0400
-Received: from laptop11.inf.utfsm.cl (ip-90.inf.utfsm.cl [200.1.19.90] (may be forged))
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j9JCd6Mb002747
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 19 Oct 2005 09:39:06 -0300
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j9JCd5nQ018754;
-	Wed, 19 Oct 2005 09:39:06 -0300
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: Message from Martin Langhoff <martin.langhoff@gmail.com> 
-   of "Wed, 19 Oct 2005 19:05:32 +1300." <46a038f90510182305j1fa2c4bh6d2b36c2fdd058ce@mail.gmail.com> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Wed, 19 Oct 2005 09:39:06 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
-X-Virus-Status: Clean
+	id S1750901AbVJSMns (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 08:43:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbVJSMns
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 08:43:48 -0400
+Received: from magister.suomi.net ([212.50.131.141]:62207 "EHLO
+	magister.suomi.net") by vger.kernel.org with ESMTP id S1750894AbVJSMns
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 08:43:48 -0400
+Received: from spam2.suomi.net (spam2.suomi.net [212.50.131.166])
+ by magister.suomi.net
+ (Sun Java System Messaging Server 6.2 (built Dec  2 2004))
+ with ESMTP id <0IOL00LHYXUCZY80@magister.suomi.net> for git@vger.kernel.org;
+ Wed, 19 Oct 2005 15:39:48 +0300 (EEST)
+Received: from garlic.home.net (addr-82-128-203-69.suomi.net [82.128.203.69])
+	by spam2.suomi.net (Postfix) with SMTP id 11DF2118970; Wed,
+ 19 Oct 2005 15:43:40 +0300 (EEST)
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-Mailer: Sylpheed version 2.0.2 (GTK+ 2.8.6; i686-pc-linux-gnu)
+X-OPOY-MailScanner-Information: Please contact the OPOY for more information
+X-OPOY-MailScanner: Not virus scanned: please contact OPOY for details
+X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (score=-4.19,	required 5,
+ autolearn=not spam, AWL 0.71, BAYES_00 -4.90)
+X-MailScanner-From: tihirvon@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10288>
 
-Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> While we are using a repo which holds all our branches
-> (dev/test/prod), locally we have a group of developers that checkout
-> one repo-per-branch, working on it with a
-> cg-clone/cg-update/cg-commit/cg-push workcycle. So far it's working
-> great.
-> 
-> Now, I am at a loss on how to push a _tag_ object+ref to the repo,
-> without doing a git-push --all, which I naturally don't want to do. I
-> managed to push the object itself, doing
-> 
->     git-push repository tagrefname
-> 
-> But that ddn't create the ref on the repo. So I had to do
-> 
->     scp .git/refs/tags/refname repostory/refs/tags/
+Pass --keep flag to git-clone-pack.
 
-I've done:
+Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
 
-     git push repository refs/tags/refname
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+---
+
+ git-clone.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+applies-to: 984b42b74993da2be26cd2b50ac1d3e74b0c4cd5
+63a266005116dd914c85b4c5f97d0e628f0b37ec
+diff --git a/git-clone.sh b/git-clone.sh
+index 18e692a..152ba15 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -184,8 +184,8 @@ yes,yes)
+ 		;;
+ 	*)
+ 		cd "$D" && case "$upload_pack" in
+-		'') git-clone-pack $quiet "$repo" ;;
+-		*) git-clone-pack $quiet "$upload_pack" "$repo" ;;
++		'') git-clone-pack $quiet --keep "$repo" ;;
++		*) git-clone-pack $quiet --keep "$upload_pack" "$repo" ;;
+ 		esac
+ 		;;
+ 	esac
+---
+0.99.8.GIT
