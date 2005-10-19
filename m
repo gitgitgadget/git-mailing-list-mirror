@@ -1,82 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: gitweb.cgi
-Date: Tue, 18 Oct 2005 17:27:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510181645200.3369@g5.osdl.org>
-References: <43546492.3020401@zytor.com> <20051018110725.GB6929@vrfy.org>
- <43552FC2.3000000@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [CORRECTED PATCH] git-fetch-pack: avoid unnecessary zero packing
+Date: Tue, 18 Oct 2005 17:27:53 -0700
+Message-ID: <7v7jcal59y.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0510181049050.17201@g5.osdl.org>
+	<7vmzl6r78e.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0510181333380.3369@g5.osdl.org>
+	<Pine.LNX.4.64.0510181339220.3369@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kay Sievers <kay.sievers@vrfy.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 19 02:28:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 19 02:28:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES1oG-0002MB-EU
+	id 1ES1oF-0002MB-TL
 	for gcvg-git@gmane.org; Wed, 19 Oct 2005 02:28:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932333AbVJSA15 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Oct 2005 20:27:57 -0400
+	id S932314AbVJSA14 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Oct 2005 20:27:56 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932334AbVJSA14
 	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 20:27:56 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:5527 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932333AbVJSA1z (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Oct 2005 20:27:55 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9J0RsFC019054
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 18 Oct 2005 17:27:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9J0RrXu007833;
-	Tue, 18 Oct 2005 17:27:53 -0700
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <43552FC2.3000000@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.125 $
-X-Scanned-By: MIMEDefang 2.36
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:48895 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932314AbVJSA1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Oct 2005 20:27:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051019002731.VIGV29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 18 Oct 2005 20:27:31 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510181339220.3369@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 18 Oct 2005 13:42:36 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10244>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> I see you already did. Looks fine. I'd suggest limiting the commits by 
+> number in mark_recent_commit_complete(), because
+>
+>  (a) somebody might have their clock set wrong and you don't want to walk 
+>      a huge tree just because of something like that.
+>  (b) you might just have imported a huge history (badly) from somewhere 
+>      else
+>  (c) a _lot_ can happen in five days with automated things.
+>
+> but yes, the approach looks very sane otherwise.
 
-On Tue, 18 Oct 2005, H. Peter Anvin wrote:
-> 
-> I set up mod_cache (which I didn't know about, silly me) and so far it seems
-> to work and has produced a tremendous decrease in load and improvement in
-> response time.
+When you have several dozen commits on top of a head you fetched
+from the remote last time you polled them, and the remote has
+not updated that head since then, it may be worthwhile to have
+the client dig deeper to avoid asking the server.
 
-It really doesn't work very well with the "front page" though..
+What I am thinking is:
 
-Doing a "Save page as.." shows that it's not a huge page: it's roughly 700 
-lines long and 57kB in size, but pressing the reload button (or just going 
-somewhere else and coming back immediately) takes 45 seconds to reload for 
-me.
+    - For objects our refs directly refer to, mark them COMPLETE
+      as the patch I sent out.
 
-Trying again shows that it _is_ cached if you press the reload button 
-immediately again, but I haven't quite figured out how long the cache 
-timeout is. It seems to be around one minute (from some very preliminary 
-tests it's more than 25 seconds, but less than a minute and a half).
+    - See if we have any objects the remote refs refer to
+      already; find the timestamp of the latest one if we have
+      commits among them, and use its time as the cutoff time.
 
-Considering that apparently the load is enough that it takes 45 seconds to 
-generate (scary in itself), is should clearly be cached for more than one 
-minute. More like ten minutes or half an hour, especially since mirroring 
-any content changes takes longer than that anyway.
+      It is likely that we have synched with them after that
+      timestamp (either upload or download).  walk the commits
+      from our ref, and mark *everything* that are newer than
+      that timestamp.  This can turn out to be a huge walking
+      but that happens on the client side.
 
-Now, I suspect all the content on kernel.org could easily be cached for 
-ten minutes.
+This way I can get rid of the arbitrary 5-day window, and I do
+not have to invent another arbitrary number to limit the commits
+we walk.
 
-As far as I can tell, mod_cache without any expiry information uses
-
-	CacheDefaultExpire 
-
-which should default to one hour according to the docs. Have you changed 
-that to one minute? Maybe making it 10 minutes would be better?
-
-That said, I tried to figure out how the front page is generated, but 
-haven't quite. Can somebody (Kay?) please say what it does most, and I can 
-try to make sure git does that efficiently.. 
-
-			Linus
+In other words, let's put the burden on the client if its effort
+possibly can help the server.
