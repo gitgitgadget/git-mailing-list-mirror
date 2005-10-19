@@ -1,88 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cg-clone, tag objects and cg-push/git-push don't play nice
-Date: Wed, 19 Oct 2005 01:52:19 -0700
-Message-ID: <7vbr1ldh30.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f90510182338k6d3d52fbyc2057e9b775d5b14@mail.gmail.com>
-	<7vzmp6dlii.fsf@assigned-by-dhcp.cox.net>
-	<46a038f90510190110g53c90c5t419ad6065292269e@mail.gmail.com>
+From: Anton Altaparmakov <aia21@cam.ac.uk>
+Subject: Re: git-daemon enabled on kernel.org
+Date: Wed, 19 Oct 2005 09:56:55 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0510190955260.31324@hermes-1.csi.cam.ac.uk>
+References: <43554D4F.7040403@zytor.com> <20051019083542.GA31526@harddisk-recovery.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 19 10:54:31 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 19 10:58:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES9gw-0001ww-GK
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 10:52:58 +0200
+	id 1ES9lG-0003hG-VM
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 10:57:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932477AbVJSIwV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 04:52:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932474AbVJSIwV
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 04:52:21 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:6386 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932477AbVJSIwV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 04:52:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051019085149.HBOR2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 19 Oct 2005 04:51:49 -0400
-To: Martin Langhoff <martin.langhoff@gmail.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932474AbVJSI5U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 04:57:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932478AbVJSI5U
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 04:57:20 -0400
+Received: from ppsw-0.csi.cam.ac.uk ([131.111.8.130]:27800 "EHLO
+	ppsw-0.csi.cam.ac.uk") by vger.kernel.org with ESMTP
+	id S932474AbVJSI5T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 04:57:19 -0400
+X-Cam-SpamDetails: Not scanned
+X-Cam-AntiVirus: No virus found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:47014)
+	by ppsw-0.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.150]:25)
+	with esmtpa (EXTERNAL:aia21) id 1ES9kl-0006yO-0z (Exim 4.53)
+	(return-path <aia21@hermes.cam.ac.uk>); Wed, 19 Oct 2005 09:56:55 +0100
+Received: from aia21 (helo=localhost) by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1ES9kl-0004Im-9C (Exim 4.53)
+	(return-path <aia21@hermes.cam.ac.uk>); Wed, 19 Oct 2005 09:56:55 +0100
+To: Erik Mouw <erik@harddisk-recovery.com>
+In-Reply-To: <20051019083542.GA31526@harddisk-recovery.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10277>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+On Wed, 19 Oct 2005, Erik Mouw wrote:
+> On Tue, Oct 18, 2005 at 12:30:23PM -0700, H. Peter Anvin wrote:
+> > After getting gitweb behind mod_cache, the load on kernel.org has gotten 
+> > down into the tolerable range, so I have enabled git-daemon in an 
+> > attempt to fix that :)
+> > 
+> > The URL, obviously, is git://git.kernel.org/pub/scm/...
+> > 
+> > (or, to specify a specific server, git1.kernel.org or git2.kernel.org.)
+> 
+> How do I tell git to change the default repository to pull from?
 
->> That is expected.
->
-> Hmmm. I was under the impression that if I call git-push naming a
-> particular head, it could restrict itself to the stuff needed for that
-> head only. Just to clarify, I'm running
->
->   git-push locke.catalyst.net.nz:/var/git/moodle-test.git master:mdl-topnz-prod
+Easy, depending on how old your repository either edit 
+.git/branches/origin or .git/remotes/origin.  They contain the current 
+default, just change it to the new one.  E.g. my .git/remotes/origin for 
+Linux-2.6 repository is:
 
-Yeah.  But the problem is that the repository on the other end
-claims that it has everything reachable from those incomplete
-tags.  Hearing that, git-push (the real name of it is send-pack)
-decides not to send things that are already reachable from the
-refs the other end claims to have.  So if an incomplete tag
-refers to a commit that contains a blob that the remote actually
-does not have, and if that blob is part of the head you are
-pushing, send-pack would not (and should not) send that blob to
-the remote.
+URL: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+Pull: master:origin
 
->> I do not understand why removing .git/refs/tags/* did not help,
->> and that is the biggest thing that disturbs me in this whole
->> problem report
->
-> I can't understand that either, but I manually removed all the
-> refs/tags, and the only heads I have are origin and master. git-push
-> won't let me do it until the exact point where I have removed the
-> object from the repo. And that's only possible on unpacked repos.
+Best regards,
 
-Hmph.  It worries me even more.
-
-This error message:
-
-      error: unpack should have generated
-    482d4b88aa482dfea7f7549470902049a050020a, but I can't find it!
-
-comes from receive-pack that runs on the other repo (i.e. the
-one with incomplete tags you just removed), so it means
-send-pack decided it does not need to send that object --
-meaning the other end claimed it already has it.  What to send
-and what need not to be sent is determined solely based on what
-send-pack hears from receive-pack in the initial handshake,
-which is in receive-pack.c::write_head_info().  It scans
-everything under ".git/refs" directory (not just .git/refs/heads
-or .git/refs/tags; if you had ".git/refs/FOOBAR", it will cause
-the remote end to claim it has everything reachable from it --
-the only exceptions are things that starts with a dot '.', which
-is probably why cg-fetch places a temporary heads in
-refs/*/.$name-fetching) and sends them -- it does not look at
-the object directory and magically claim it has something that
-is not recorded in its .git/refs/ directory.
+	Anton
+-- 
+Anton Altaparmakov <aia21 at cam.ac.uk> (replace at with @)
+Unix Support, Computing Service, University of Cambridge, CB2 3QH, UK
+Linux NTFS maintainer / IRC: #ntfs on irc.freenode.net
+WWW: http://linux-ntfs.sf.net/ & http://www-stu.christs.cam.ac.uk/~aia21/
