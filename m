@@ -1,69 +1,64 @@
-From: Anton Altaparmakov <aia21@cam.ac.uk>
-Subject: Re: git-daemon enabled on kernel.org
-Date: Wed, 19 Oct 2005 09:56:55 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0510190955260.31324@hermes-1.csi.cam.ac.uk>
-References: <43554D4F.7040403@zytor.com> <20051019083542.GA31526@harddisk-recovery.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: git-send-pack segfaulting on DebianPPC (was: Re: cg-clone, tag objects and cg-push/git-push don't play nice)
+Date: Wed, 19 Oct 2005 22:02:14 +1300
+Message-ID: <46a038f90510190202n60101c5cgf27bd714dce00513@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 19 10:58:52 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 19 11:03:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES9lG-0003hG-VM
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 10:57:27 +0200
+	id 1ES9q7-0005o3-SU
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 11:02:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932474AbVJSI5U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 04:57:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932478AbVJSI5U
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 04:57:20 -0400
-Received: from ppsw-0.csi.cam.ac.uk ([131.111.8.130]:27800 "EHLO
-	ppsw-0.csi.cam.ac.uk") by vger.kernel.org with ESMTP
-	id S932474AbVJSI5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 04:57:19 -0400
-X-Cam-SpamDetails: Not scanned
-X-Cam-AntiVirus: No virus found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:47014)
-	by ppsw-0.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.150]:25)
-	with esmtpa (EXTERNAL:aia21) id 1ES9kl-0006yO-0z (Exim 4.53)
-	(return-path <aia21@hermes.cam.ac.uk>); Wed, 19 Oct 2005 09:56:55 +0100
-Received: from aia21 (helo=localhost) by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local-esmtp id 1ES9kl-0004Im-9C (Exim 4.53)
-	(return-path <aia21@hermes.cam.ac.uk>); Wed, 19 Oct 2005 09:56:55 +0100
-To: Erik Mouw <erik@harddisk-recovery.com>
-In-Reply-To: <20051019083542.GA31526@harddisk-recovery.com>
+	id S932478AbVJSJCP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 05:02:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932464AbVJSJCP
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 05:02:15 -0400
+Received: from qproxy.gmail.com ([72.14.204.204]:2000 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932478AbVJSJCP convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 05:02:15 -0400
+Received: by qproxy.gmail.com with SMTP id v40so37289qbe
+        for <git@vger.kernel.org>; Wed, 19 Oct 2005 02:02:14 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=dTkfgYkwy3AxoG+0bIb0kCGecsEQoOPH0946lYJ6yx1REgyiisF8VUJ2WTR9aIvL9JE4wwm0m7w1zGvW2V/oVjPZkeG1kM1v8A23XIIFk7+InXd/r0Q70w2E8AKMYJbc4FVgKMwwrEBhLF/DrJ4P0DrZmOUi2HbaTNrtm1W7tG4=
+Received: by 10.65.192.13 with SMTP id u13mr323975qbp;
+        Wed, 19 Oct 2005 02:02:14 -0700 (PDT)
+Received: by 10.64.232.18 with HTTP; Wed, 19 Oct 2005 02:02:14 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10278>
 
-On Wed, 19 Oct 2005, Erik Mouw wrote:
-> On Tue, Oct 18, 2005 at 12:30:23PM -0700, H. Peter Anvin wrote:
-> > After getting gitweb behind mod_cache, the load on kernel.org has gotten 
-> > down into the tolerable range, so I have enabled git-daemon in an 
-> > attempt to fix that :)
-> > 
-> > The URL, obviously, is git://git.kernel.org/pub/scm/...
-> > 
-> > (or, to specify a specific server, git1.kernel.org or git2.kernel.org.)
-> 
-> How do I tell git to change the default repository to pull from?
+On 10/19/05, Junio C Hamano <junkio@cox.net> wrote:
+> Although I do not follow Cogito development closely, I seem to
+> recall that it fetched tags without making them complete at some
+> point in the past; I hope it is now fixed but I am not sure.
 
-Easy, depending on how old your repository either edit 
-.git/branches/origin or .git/remotes/origin.  They contain the current 
-default, just change it to the new one.  E.g. my .git/remotes/origin for 
-Linux-2.6 repository is:
+Ok -- I can now shed some light on this. This was happening on a
+DebianPPC machine, but I didn't have clear evidence of that being a
+factor (specially when Linus is widely known to use a PPC, and I
+hadn't seen problems in other ppc boxen around). Now I do.
 
-URL: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-Pull: master:origin
+For all my finger-pointing, cg-fetch was trying to fetch the refernces
+properly. However, git-fetch-pack is segfaulting on this Debian PPC
+(etch). This is true of the current git "master" and 0.99.8.c. I
+don'thave strace on the box until tomorrow, so I can't tell you more
+about it.
 
-Best regards,
+On Debian i386 and Ubuntu i386, the exact same versions work correctly.
 
-	Anton
--- 
-Anton Altaparmakov <aia21 at cam.ac.uk> (replace at with @)
-Unix Support, Computing Service, University of Cambridge, CB2 3QH, UK
-Linux NTFS maintainer / IRC: #ntfs on irc.freenode.net
-WWW: http://linux-ntfs.sf.net/ & http://www-stu.christs.cam.ac.uk/~aia21/
+I'll post more info as soon as I can get my hands on strace,
+
+cheers,
+
+
+
+martin
