@@ -1,89 +1,111 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] git-daemon extra paranoia
-Date: Tue, 18 Oct 2005 17:43:55 -0700
-Message-ID: <435596CB.6070401@zytor.com>
-References: <435560F7.4080006@zytor.com> <Pine.LNX.4.64.0510181517280.3369@g5.osdl.org> <435591A3.7030708@zytor.com> <Pine.LNX.4.64.0510181728490.3369@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Optimize common case of git-rev-list (was Re: gitweb.cgi)
+Date: Tue, 18 Oct 2005 17:53:11 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510181742070.3369@g5.osdl.org>
+References: <43546492.3020401@zytor.com> <20051018110725.GB6929@vrfy.org>
+ <43552FC2.3000000@zytor.com> <Pine.LNX.4.64.0510181645200.3369@g5.osdl.org>
+ <43559399.2030903@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 19 02:44:38 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Kay Sievers <kay.sievers@vrfy.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 19 02:54:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES23y-0007Ho-Qh
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 02:44:15 +0200
+	id 1ES2Co-0000U1-A8
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 02:53:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932334AbVJSAoL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Oct 2005 20:44:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932382AbVJSAoL
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 20:44:11 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:51099 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932334AbVJSAoJ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2005 20:44:09 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9J0i0V7012449
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 18 Oct 2005 17:44:01 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0510181728490.3369@g5.osdl.org>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S932389AbVJSAxT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Oct 2005 20:53:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932392AbVJSAxT
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 20:53:19 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:48799 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932389AbVJSAxS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Oct 2005 20:53:18 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9J0rCFC020194
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 18 Oct 2005 17:53:13 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9J0rB1j008856;
+	Tue, 18 Oct 2005 17:53:12 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>, Junio C Hamano <junkio@cox.net>
+In-Reply-To: <43559399.2030903@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10249>
 
-Linus Torvalds wrote:
-> And just appending ".git" is _not_ badly designed/specified. I did think 
-> about the boundary cases, and it's entirely safe:
-> 
->  - it can't result in "surprises": if the original pathname doesn't exist, 
->    then even if there is a race and it got created in between the two 
->    chdir's as a directory and the name had a slash at the end, adding 
->    ".git" is actually safe even if it succeeds: it won't take us anywhere 
->    surprising. At worst it will take us to the ".git" directory of a newly 
->    added git archive, but that's what we wanted anyway, so..
-> 
->  - you can't create ".." with it - even if the passed-in filename ended 
->    with "xyz/.", you'll end up with a perfectly safe "xyz/..git", so any 
->    safety checks that were done on the original pathname are still valid 
->    when appending ".git" to it.
-> 
->  - and exactly because we don't append slashes or anything like that, the 
->    end result won't even have anything ambiguous like "//" in it.
-> 
-> So it really doesn't have any downsides that I can see.
-> 
 
-Consider the whitelist/blacklist scenario I described in the previous 
-email.  You have:
 
-whitelist:	/pub/scm
-blacklist:	/pub/scm/foo/bar.git
-
-If you can bypass the blacklist by using the pathname /pub/scm/foo/bar, 
-that's bad.
-
+On Tue, 18 Oct 2005, H. Peter Anvin wrote:
 > 
->>The DWIM aspect is fine, of course, but it has to be done up front: instead of
->>doing just chdir(), each path should be validated through path_ok() before
->>even being considered for chdir().  Perhaps the right thing to do is to
->>combine the two functions.
+> > Considering that apparently the load is enough that it takes 45 seconds to
+> > generate (scary in itself), is should clearly be cached for more than one
+> > minute. More like ten minutes or half an hour, especially since mirroring
+> > any content changes takes longer than that anyway.
 > 
-> Sure, you could do that, and just replace path_ok + chdir with a 
-> "safe_chdir()". I don't really see the point, unless you want to walk the 
-> path one component at a time, though (which is really quite expensive).
-> 
+> The latency for an I/O operation on the kernel.org servers is positively
+> scary.
 
-The only reason to do that is to make it less likely that a future 
-programmer would screw it up.
+I took a look at webgit, and it looks like at least for the "projects" 
+page, the most common operation ends up being basically
 
-	-hpa
+	git-rev-list --header --parents --max-count=1 HEAD
+
+Now, the thing is, the way "git-rev-list" works, it always keeps on 
+popping the parents and parsing them in order to build the list of 
+parents, and it turns out that even though we just want a single commit, 
+git-rev-list will invariably look up _three_ generations of commits.
+
+It will parse:
+ - the commit we want (it obviously needs this)
+ - it's parent(s) as part of the "pop_most_recent_commit()" logic
+ - it will then pop one of the parents before it notices that it doesn't 
+   need any more
+ - and as part of popping the parent, it will parse the grandparent (again 
+   due to "pop_most_recent_commit()".
+
+Now, I've strace'd it, and it really is pretty efficient on the whole, but 
+if things aren't nicely cached, and with long-latency IO, doing those two 
+extra objects (at a minimum - if the parent is a merge it will be more) is 
+just wasted time, and potentially a lot of it.
+
+So here's a quick special-case for the trivial case of "just one commit, 
+and no date-limits or other special rules".
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+
+I've actually tried to test it (but hey, "exhaustive" is hard with all the 
+different options), and I tried to be very careful to only do the 
+special-case when really nothing can go wrong, and this all looks obvious.
+
+But buyer beware.
+
+Btw, doing an "strace" on git-rev-list shows that most of the system calls 
+by far are the dynamic loader. Now, those accesses _should_ all be cached, 
+so they should be fast and low-latency, but it's entirely possible that 
+for a server configuration you might want to actually link things 
+statically. Or not. Just a thought.
+
+diff --git a/rev-list.c b/rev-list.c
+index c60aa72..d4da1bd 100644
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -624,6 +624,10 @@ int main(int argc, char **argv)
+ 
+ 	if (!merge_order) {		
+ 		sort_by_date(&list);
++		if (list && !limited && max_count == 1) {
++			show_commit(list->item);
++			return 0;
++		}
+ 	        if (limited)
+ 			list = limit_list(list);
+ 		if (topo_order)
