@@ -1,68 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Timeouts on HTTP requests
-Date: Tue, 18 Oct 2005 23:02:14 -0700
-Message-ID: <7voe5mgi3d.fsf@assigned-by-dhcp.cox.net>
-References: <20051018235104.GO5509@reactrix.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Pushing a single tag (ref + object)?
+Date: Wed, 19 Oct 2005 19:05:32 +1300
+Message-ID: <46a038f90510182305j1fa2c4bh6d2b36c2fdd058ce@mail.gmail.com>
+References: <46a038f90510131929m3dac4cc5y6071550e9e9c71ad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 19 08:04:35 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Oct 19 08:06:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES73F-0007oQ-5v
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 08:03:49 +0200
+	id 1ES75Q-0000DK-Ll
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 08:06:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751535AbVJSGCQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 02:02:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbVJSGCQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 02:02:16 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:62126 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751534AbVJSGCP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 02:02:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051019060204.GAYS16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 19 Oct 2005 02:02:04 -0400
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20051018235104.GO5509@reactrix.com> (Nick Hengeveld's message of
-	"Tue, 18 Oct 2005 16:51:04 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751540AbVJSGFf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 02:05:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbVJSGFf
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 02:05:35 -0400
+Received: from qproxy.gmail.com ([72.14.204.197]:65346 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751541AbVJSGFe convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 02:05:34 -0400
+Received: by qproxy.gmail.com with SMTP id v40so15079qbe
+        for <git@vger.kernel.org>; Tue, 18 Oct 2005 23:05:32 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oQN0jiyFe+uAkOLVRMVZ7i0LJ5SRXLfKtp9r61rY+RBnsaIlSiZh6TyO2VwqUWk74WOTovvD40ybdiRyj4jduwQB2gdvvaJBnZN+CguhGdHLfD7d3ohg1jeyV82PfnBesSWa1+iibd/aW9lJOEs3T9chRGwVUL+ywU7JxrS4KO4=
+Received: by 10.65.38.14 with SMTP id q14mr197410qbj;
+        Tue, 18 Oct 2005 23:05:32 -0700 (PDT)
+Received: by 10.64.232.18 with HTTP; Tue, 18 Oct 2005 23:05:32 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <46a038f90510131929m3dac4cc5y6071550e9e9c71ad@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10266>
 
-Nick Hengeveld <nickh@reactrix.com> writes:
+While we are using a repo which holds all our branches
+(dev/test/prod), locally we have a group of developers that checkout
+one repo-per-branch, working on it with a
+cg-clone/cg-update/cg-commit/cg-push workcycle. So far it's working
+great.
 
-> Our QA department today checked what would happen if the network connection
-> went away completely in the middle of an HTTP transfer.  It looks as though
-> the answer is that git-http-fetch sits there forever waiting for CURL to
-> return something.
+Now, I am at a loss on how to push a _tag_ object+ref to the repo,
+without doing a git-push --all, which I naturally don't want to do. I
+managed to push the object itself, doing
 
-Ouch.
+    git-push repository tagrefname
 
-> I'm thinking of taking advantage of CURL's capability of aborting a request
-> if the transfer rate drops below a threshold for a specified length of time
-> using a new pair of environment variables and/or config file settings:
->
-> GIT_HTTP_LOW_SPEED_LIMIT/http.lowspeedlimit
-> GIT_HTTP_LOW_SPEED_TIME/http.lowspeedtime
->
-> Does this make sense, and if so should there be defaults if nothing is
-> specified?
+But that ddn't create the ref on the repo. So I had to do
 
-I suspect these would be quite different between DSL and
-localnet, so I doubt if there is a reasonable default value to
-quick give-up.
+    scp .git/refs/tags/refname repostory/refs/tags/
 
-On the other hand, having _no_ activity for say 30 seconds would
-indicate a dead link on either modem or localnet.
+I'm feeling a tad lost here. Surely there's a way? Or should I be
+crafting a patch against git-push-script? Problem is, git-push script
+doesn't do any parsing of the params. Grmbl.
 
-BTW, I've been thinking about giving defaults by shipping
-templates/config (i.e. no compile-time defaults).  One trick I
-found cute is to have "clone.keeppack = 1" in the templates to
-be applied for any newly built repository, especially now
-kernel.org has git-daemon enabled.
+
+martin
