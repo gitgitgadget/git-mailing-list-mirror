@@ -1,167 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] cg-history FILE [NTH_PARENT]
-Date: Tue, 18 Oct 2005 21:01:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510182029240.3369@g5.osdl.org>
-References: <dj45np$e88$1@sea.gmane.org> <Pine.LNX.4.64.0510181806250.3369@g5.osdl.org>
- <4355BA43.5030509@research.att.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-diff-tree rename detection for single file
+Date: Tue, 18 Oct 2005 22:20:21 -0700
+Message-ID: <7virvuhylm.fsf@assigned-by-dhcp.cox.net>
+References: <4dd15d180510181256i1c5a82d9ld62acaedb493cf71@mail.gmail.com>
+	<7vu0fepn0x.fsf@assigned-by-dhcp.cox.net>
+	<7virvujkcw.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0510182004100.3369@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 19 06:01:29 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: David Ho <davidkwho@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 19 07:21:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES58W-00046Y-Px
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 06:01:09 +0200
+	id 1ES6NG-0005q6-Hi
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 07:20:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932458AbVJSEBE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 00:01:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932459AbVJSEBE
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 00:01:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:22491 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932458AbVJSEBD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Oct 2005 00:01:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9J410FC027527
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 18 Oct 2005 21:01:01 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9J4108C015771;
-	Tue, 18 Oct 2005 21:01:00 -0700
-To: John Ellson <ellson@research.att.com>
-In-Reply-To: <4355BA43.5030509@research.att.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.125 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751523AbVJSFUX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 01:20:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751524AbVJSFUX
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 01:20:23 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:60328 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751522AbVJSFUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 01:20:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051019051950.DTSA2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 19 Oct 2005 01:19:50 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510182004100.3369@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 18 Oct 2005 20:12:43 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10264>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-[ Ok, time for some serious power-git usage ]
+> See what I'm saying?
+> ...
+> The performance impact of pruning the pathnames _before_ diffing them was 
+> absolutely staggering. You couldn't reasonably do a "git-whatchanged -p" 
 
-On Tue, 18 Oct 2005, John Ellson wrote:
-> 
-> produce the history of a file, or its state at its nth_parent
->
-> +       git-whatchanged -p "${ARGS[0]}" |
+Yes, I understood and agreed to that logic on May 27th.  That's
+why the message you are responding said we could add a new flag,
+to give the choice to the user to accept full-tree scan.
 
-Actually, you're much better of _not_ using "-p" to generate a patch.
+The "diff-tree --stdin that follows rename history" example
+might want to have some change in either the core side of diff,
+or in the rev-list.  It may help to have both.  I still haven't
+thought through the issues.
 
-In fact, you don't even want the pretty format that "git-whatchanged" 
-does, you really want the raw output.
-
-Try this instead:
-
-	git-rev-list HEAD | git-diff-tree --stdin -s -r "$ARG"
-
-which will give _just_ a list of the commits that change the file "$ARG".
-
-Here, the "--stdin" to git-diff-tree means that it should take its 
-revision input from stdin (ie obvously the list of commits generated by 
-git-rev-list), and the "-s" stands for "silent", ie git-diff-tree won't 
-actually output the diff itself.
-
-And the "-r" means that it should check the trees "recursively", which is 
-needed since we want the diff-tree to traverse down the tree rather than 
-just look at the top-level ("-p" to generate patches enables recursive by 
-default since patches don't make sense on raw trees, but without the -p 
-you need to do it explicitly).
-
-And since we didn't ask for the header, the only thing you get is the list 
-of commits that changed the file describled by the argument.
-
-So now, you can just pick the n'th such commit, and do something like this
-
-	#
-	# Get the "${ARGS[1]}"th commit that changes  file "${ARGS[0]}"
-	#
-	rev=$(git-rev-list HEAD |
-		git-diff-tree --stdin -s -r "${ARGS[0]}" |
-		head -n "${ARGS[1]}" |
-		tail -1)
-
-	#
-	# Pick up the file from that tree
-	#
-	filerev=$(git-ls-tree -r "$rev" "${ARGS[0]}" |
-		cut -f1 |
-		cut -d' ' -f3)
-
-	#
-	# And show it
-	#
-	git-cat-file blob $filerev
-
-and you're done (untested, but you should get the idea).
-
-Now, the interesting part about is that you can feed the output from 
-git-diff-tree _back_ to git-diff-tree, so you can do some really fancy 
-footwork like:
-
-	git-rev-list rev1..rev2 |
-		git-diff-tree --stdin -s -r "$ARG" |
-		git-diff-tree --stdin -M --pretty -p
-
-and what this will do is:
-
- - generate a list of all commits between rev1 and rev2
-
- - filter out just the commits that change the file "$ARG", and pass those 
-   on.
-
- - for those commits, show the _whole_ diff, with rename detection and 
-   with pretty-printed commit comment headers
-
-In other words, you can basically look at all the full commits that 
-changed one file (or a set of files). Efficiently.
-
-This is kind of like "git-whatchanged", but it shows the full context of 
-what changed. Of course, the second git-diff-tree can be used to limit the 
-context to something else, ie you could do a variation of the above, 
-something like
-
-	git-rev-list v2.6.12.. |
-		git-diff-tree --stdin -s -r drivers/usb/ |
-		git-diff-tree --stdin -M --pretty -p drivers/ include/
-
-which will show any commit that changed the drivers/usb/ directory after 
-v2.6.12, but then limit the output of those commits to the drivers/ and 
-include/ subdirectories (so anything that was changed in that same commit 
-in a filesystem would _not_ be shown, for example, but if there were 
-changes to drivers/scsi/ at the same time, they _would_ show).
-
-Or, if you want to go really wild, do something like this on the kernel 
-git tree:
-
-	git-rev-list v2.6.12.. |
-		git-diff-tree --stdin -s -r drivers/usb/ |
-		git-diff-tree --stdin -s -r drivers/scsi/ |
-		git-diff-tree --stdin -M --pretty -p drivers/scsi/ drivers/usb/ |
-		less -S
-
-which says to print out only those commits that change something _both_ in 
-drivers/usb/ _and_ in drivers/scsi/ at the same time, and then show only 
-those parts of the changes. 
-
-Try it out. It really does work, and is extremely powerful. It's even 
-pretty efficient (make sure your tree is packed first, though ;). I can do 
-the above in about three seconds for the current kernel history on my 
-machine. That's 3 _seconds_ to go through what right now is 8005 commits:
-
-	git-rev-list v2.6.12.. | wc -l
-
-and the reason is exactly that the filename-based parsing is very good at 
-efficiently pruning out all the tree information that isn't needed.
-
-Very cool.
-
-However, the "normal" situation is just the standard "git-whatchanged", 
-which is much easier to use than something more complex like the above.
-
-The core git commands are really designed to be scriptable, but "real 
-life" seldom wants the complexity of quite that much flexibility.
-
-		Linus
+BTW, I really liked your example that piped multiple diff-trees
+together.  That is a neat trick.
