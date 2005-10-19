@@ -1,64 +1,73 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: The git protocol and DoS
-Date: Thu, 20 Oct 2005 00:20:44 +0200
-Message-ID: <20051019222044.GP30889@pasky.or.cz>
-References: <4356A5C5.5080905@zytor.com>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: Errors from http-fetch
+Date: Wed, 19 Oct 2005 15:37:08 -0700
+Message-ID: <20051019223708.GC6160@reactrix.com>
+References: <Pine.LNX.4.64.0510191536350.25300@iabervon.org> <20051019212644.GB6160@reactrix.com> <Pine.LNX.4.64.0510191755280.25300@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 20 00:23:05 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 20 00:39:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESMIm-0001H5-Dh
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 00:20:52 +0200
+	id 1ESMYp-0006wN-Sf
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 00:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751605AbVJSWUs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 18:20:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751606AbVJSWUs
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 18:20:48 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:64747 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751603AbVJSWUr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Oct 2005 18:20:47 -0400
-Received: (qmail 8280 invoked by uid 2001); 20 Oct 2005 00:20:44 +0200
-To: "H. Peter Anvin" <hpa@zytor.com>
+	id S1751601AbVJSWhQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 18:37:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751613AbVJSWhQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 18:37:16 -0400
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:59143 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1751582AbVJSWhO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 18:37:14 -0400
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id j9JMb8l8015604;
+	Wed, 19 Oct 2005 15:37:08 -0700
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id j9JMb8Fo015602;
+	Wed, 19 Oct 2005 15:37:08 -0700
+To: Daniel Barkalow <barkalow@iabervon.org>
 Content-Disposition: inline
-In-Reply-To: <4356A5C5.5080905@zytor.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+In-Reply-To: <Pine.LNX.4.64.0510191755280.25300@iabervon.org>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10320>
 
-Dear diary, on Wed, Oct 19, 2005 at 10:00:05PM CEST, I got a letter
-where "H. Peter Anvin" <hpa@zytor.com> told me that...
-> One way to do this would be to start the transaction by having the 
-> server transmit a cookie to the client, and to require the client to 
-> send a SHA1 of the (cookie + request) together with the request.  This 
-> would be done with a fairly short timeout.
+On Wed, Oct 19, 2005 at 06:10:52PM -0400, Daniel Barkalow wrote:
 
-  If (well, it sounds like a good idea, so rather "when") you do this,
-it would be a good idea to do in a way that makes it easy to later add
-support for some kind of authentication (really, not everyone wants to
-give away ssh accounts). Let's say it works like:
+> I'm getting 404 for the object, which it reports. This was pulling from 
+> kernel.org.
 
-[client]	git-upload-pack <path>
-[server]	challenge somethingnonsensical
-[client]	challenge-response <username>:sha1(somethingnonsensical<password>)
-[server]	All right, the pack goes like this...
+Something similar was reported yesterday, and when I investigated I
+found that one of the kernel.org servers was returning a 404 for the
+object in question and the other wasn't.  Vger bounced my reply because
+it contained Content-type: headers...
 
-  Suddenly you have support for hopefully secure authentication, and at
-the same time you have the cookie implemented in backwards-compatible
-fashion (in the sense that new client will be able to talk to old
-server) - just assume the username and password empty. This might be
-even hardcoded for now, just leave a room for its addition (in an
-elegant and compatible way) in the protocol, please.
+> That is, it was a later object that prompted getting the pack, because 
+> either the server decided to send that error message sooner, some packet 
+> got dropped and retransmitted, the connection got a lower-numbered file 
+> descriptor and they were ready at the same time, or something like that.
 
-  Thanks,
+I could see that happen if the pack appeared on the repo after #1 404ed
+and subsequently decided there were no packs, and before #2 404ed.  Or,
+as was the case I saw yesterday, servers with the same DNS name aren't
+in sync.  However, the pack download for #2 should never start in that
+case because fetch() for #1 would fail and exit.
+
+> Another thing I noticed was that it was in the middle of downloading the 
+> pack when it suddenly exitted due to not being able to find the object; it 
+> would probably be worth having a call to finish up the active transfers 
+> after giving up on completing the whole thing, since we probably do 
+> actually want to finish downloading a big pack if we've started.
+
+I'm not sure how that could happen - once a pack download request
+starts, it has to finish before any fetch() calls can fail.  However,
+there could certainly be other object requests in process when one
+fails, and it would be polite to let them finish.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
