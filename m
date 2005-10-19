@@ -1,81 +1,106 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-diff-tree rename detection for single file
-Date: Tue, 18 Oct 2005 19:45:03 -0700
-Message-ID: <7virvujkcw.fsf@assigned-by-dhcp.cox.net>
-References: <4dd15d180510181256i1c5a82d9ld62acaedb493cf71@mail.gmail.com>
-	<7vu0fepn0x.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Wanted - a file browser interface to git
+Date: Tue, 18 Oct 2005 20:03:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510181952350.3369@g5.osdl.org>
+References: <dj45np$e88$1@sea.gmane.org> <Pine.LNX.4.64.0510181806250.3369@g5.osdl.org>
+ <4355A00B.4000806@research.att.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Oct 19 04:47:13 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 19 05:04:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ES3x8-0002QB-Vv
-	for gcvg-git@gmane.org; Wed, 19 Oct 2005 04:45:19 +0200
+	id 1ES4Ee-0006bl-HI
+	for gcvg-git@gmane.org; Wed, 19 Oct 2005 05:03:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932165AbVJSCpH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Oct 2005 22:45:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932191AbVJSCpH
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 22:45:07 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:38910 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932165AbVJSCpF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Oct 2005 22:45:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051019024441.QSOY29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 18 Oct 2005 22:44:41 -0400
-To: David Ho <davidkwho@gmail.com>
-In-Reply-To: <7vu0fepn0x.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 18 Oct 2005 13:50:54 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932430AbVJSDDV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Oct 2005 23:03:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932442AbVJSDDV
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Oct 2005 23:03:21 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:4043 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932430AbVJSDDU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Oct 2005 23:03:20 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9J33IFC025350
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 18 Oct 2005 20:03:18 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9J33HwR013738;
+	Tue, 18 Oct 2005 20:03:18 -0700
+To: John Ellson <ellson@research.att.com>
+In-Reply-To: <4355A00B.4000806@research.att.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10260>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> David Ho <davidkwho@gmail.com> writes:
->
->> I have a small suggestion to make the diff of a renamed file a bit
->> more meaningful.  I have a file that is renamed-edited and commited. 
->> git-diff-tree -M -p <commit> shows one result and git-diff-tree -M -p
->> <commit> <filename> shows another.  If they both show a rename
->> occurred then I think the single file git-diff-tree will be more
->> useful.
->
-> Sorry, this was vetoed by Linus long time ago.  The <filename>
-> restricts the paths being passed to the diff machinery upfront,
-> so once you say <filename>, the rename detection will see only
-> that path and nothing else to compare and guess which other file
-> that file in question is a copy of.
 
-Having said that, I think we *could* introduce a new flag to
-git-diff-* brothers, --late-pathspec, that makes them apply the
-paths restriction on the output side instead.  For obvious
-reasons, using this flag would not make any sense unless you are
-using one of -M, -C, or --pickaxe-all.
+On Tue, 18 Oct 2005, John Ellson wrote:
+> Linus Torvalds wrote:
+> > 
+> > You are aware of "git whatchanged -p xxx", right?
+> 
+> I wasn't aware of it, no.  Looks very useful.  Thanks.
+> 
+> I see that you can take the tree id from the diff-tree lines and
+> then produce the state of the file at that time with "cg-admin-cat -r <id>
+> xxx"
+> Is that how you would do it?
 
-A related thing I have long longed for is a rename following
-"git-diff-tree --stdin".
+Well, I'd do it with the git commands: once you see the diff, you should 
+know the SHA1's of the source and destination, and then you can just do
 
-    git-rev-list HEAD | git-diff-tree --stdin -M git-commit.sh
+	git-cat-file blob [sha1]
 
-This command line, as everybody hopefully knows, is how "git
-whatchanged" is implemented internally.  If git-diff-tree were
-taught to follow the rename history, when it hits the boundary
-that git-commit-script was renamed to git-commit.sh, it could
-start acting as if the pathspec given were git-commit-script
-from that point.  To see that rename it needs --late-pathspec;
-the current pathspec filters the input so the above command line
-would not even care what git-commit-script looked like when the
-rename happend.  It would just tell git-commit.sh appeared from
-nowhere.
+to get the before (or after) state.
 
-If implemented naively, this rename-following would have funny
-interactions when it hits a merge commit, so it may probably be
-harder than it sounds, but this would be a good way to do
-annotate as well.
+The way I'd get the SHA1 is either (now with the extended diff format) in 
+the short form from the diff itself (the "index" line), or by just 
+separately doing a
+
+	git-diff-tree -r [sha-of-commit]
+
+to see the "raw" diff format.
+
+All the diff things can take a pathname limiter, the same way 
+"git-whatchanged" does, so if you are only interested in one file, just 
+name the file:
+
+	git-diff-tree -r [sha-of-commit] [filename]
+
+And just to make clear how powerful this is: "filename" doesn't have to be 
+a single file. It can be a set of files and/or directories, so if you want 
+to track multiple things at the same time, just do multiple filenames.
+
+What I do a lot is to check what has changed in some particular subsystem, 
+ie somebody says that something broke in SCSI, and then I do
+
+	git-whatchanged -p drivers/scsi/ include/scsi/
+
+and it will show any changes to anything under either of those 
+directories.
+
+"git-whatchanged" really is very powerful. The silly thing is that it 
+really boils down to just a single line script (well, with various 
+argument handling etc it's actually five lines, but the "core" is really 
+just a single pipeline of "git-rev-list | git-diff-tree --stdin".
+
+> Are there any plans for cogito to support it?
+
+Well, cogito could certainly just do a "cg-whatchanged", but it's really 
+the same thing. Since cogito depends on git anyway, cogito users could 
+just use the git-whatchanged functionality.
+
+Or to make it more seamless, just do
+
+	alias cg-whatchanged=git-whatchanged
+
+or something like that ;^)
+
+			Linus
