@@ -1,107 +1,78 @@
-From: David Ho <davidkwho@gmail.com>
-Subject: Re: git-filehistory (3rd try at detecting renames)
-Date: Thu, 20 Oct 2005 17:23:09 -0400
-Message-ID: <4dd15d180510201423y5e200b68xec32bffec0f0cf84@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: rsync update appears broken now
+Date: Thu, 20 Oct 2005 14:32:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510201432260.10477@g5.osdl.org>
+References: <86vezs9wy9.fsf@blue.stonehenge.com>
+ <81b0412b0510200608l61c00ed0yd4dbc00c313665fe@mail.gmail.com>
+ <Pine.LNX.4.64.0510201038320.3369@g5.osdl.org> <loom.20051020T220751-355@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Oct 20 23:25:37 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 20 23:34:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EShsi-0004De-HW
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 23:23:24 +0200
+	id 1ESi1z-0006z2-U6
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 23:33:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932481AbVJTVXO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 17:23:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932542AbVJTVXO
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 17:23:14 -0400
-Received: from qproxy.gmail.com ([72.14.204.206]:56805 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932481AbVJTVXO convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2005 17:23:14 -0400
-Received: by qproxy.gmail.com with SMTP id v40so410746qbe
-        for <git@vger.kernel.org>; Thu, 20 Oct 2005 14:23:09 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=E6hRuAx7WIjSjaHKZRXFu550FjVPOjf7PZfx6pETtz42//WFRB05akHo1QXs1Q8v+X7wlG7mMhKJ5mCNo+okTyeKaj6KJqhpA3SAYcw7CJkSys+n0KBHyGGYn/GkczKcRsCXILE/worrPp83fG7pJOxV/k7JZKVglkXtRt7li+Y=
-Received: by 10.65.189.6 with SMTP id r6mr1832044qbp;
-        Thu, 20 Oct 2005 14:23:09 -0700 (PDT)
-Received: by 10.65.22.3 with HTTP; Thu, 20 Oct 2005 14:23:09 -0700 (PDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S932094AbVJTVcy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 17:32:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932204AbVJTVcy
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 17:32:54 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:5789 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932094AbVJTVcy (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 17:32:54 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9KLWkFC029390
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 20 Oct 2005 14:32:46 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9KLWiVx008702;
+	Thu, 20 Oct 2005 14:32:45 -0700
+To: Junio C Hamano <junkio@twinsun.com>
+In-Reply-To: <loom.20051020T220751-355@post.gmane.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10382>
 
-Sorry, once again, this calls git-diff-tree once per commit.
 
-[davidho@penguin git-tutorial]$ cat git-filehistory.perl
-#!/usr/bin/perl
 
-use warnings;
-use strict;
+On Thu, 20 Oct 2005, Junio C Hamano wrote:
+> 
+> Having said that, all is not lost.  Your message made it sound like the
+> new head was completely re-rooted and there is no common commit (which
+> almost gave me a heart attack), but I do not think it is that bad.  It is
+> more like pulling from two places.
 
-sub usage($);
+No. 
 
-# Sanity checks:
-my $GIT_DIR = $ENV{'GIT_DIR'} || ".git";
+What you _must_ do to fix things up is that _you_ merge your current head 
+with your old head, and then you push out the result.
 
-unless ( -d $GIT_DIR && -d $GIT_DIR . "/objects" &&
-        -d $GIT_DIR . "/objects/" && -d $GIT_DIR . "/refs") {
-        usage("Git repository not found.");
-}
+At that point:
 
-usage("") if scalar @ARGV != 1;
+>                -----(A) head merlyn and everybody
+>              /          pulled from kernel.org previously
+>   --- common ------------------------------------(B) head rebased and pushed
+>                                                      out by mistake
 
-my ($file) = @ARGV;
+You should have a (C) that is the merge of both A and B (or a later 
+commit, if you have other commits merged).
 
-unless (-f $file) {
-        usage("git filehistory: '$file' does not exist");
-}
+Now you can push out that merge, and everybody will be happy again: 
+they'll see somethign that is a proper superset of whichever HEAD they 
+happened to pull.
 
-open(F,"-|","git-rev-parse",,"--default","HEAD","--revs-only",$file);
-my $git_rev_args = <F>;
-chomp ($git_rev_args);
-close (F);
+Don't make everybody else try to fix up your mistakes for you. It's easy 
+enough for you to just fix it up, and everybody else can just pull.
 
-open(F,"-|","git-rev-list", $git_rev_args);
-my @commits = <F>;
-close (F);
+Of course, anybody who did a pull and then did the merge by hand will 
+always have their own private merge, and they should probably just undo 
+that. But undoing _private_ stuff is ok.
 
-my $nextname = $file;
-my (@renamecommit, @renamecomment, @renameentry);
-for (my $i=0; $i < scalar @commits; $i++)
-{
-        my $commit = $commits[$i];
-        chomp ($commit);
-        open (F, "-|","git-diff-tree","-r","-M","--pretty=medium",$commit);
-        @renamecommit = <F>;
-        close(F);
-        @renamecomment = grep /^[^:]/, @renamecommit;
-        @renameentry = grep /$nextname/, @renamecommit;
-        push @renamecomment, @renameentry;
-        if (scalar @renameentry) {
-                if ($renameentry[0] =~ /\t$nextname$/) {
-                        foreach (@renamecomment) {
-                                print;
-                        }
-                }
-                if ($renameentry[0] =~ /R\d{3}\t(.+)\t(.+)/) {
-                        #The file is renamed
-                        $nextname = $1;
-                }
-        }
-}
-
-sub usage($) {
-        my $s = shift;
-        print $s, "\n" if (length $s != 0);
-        print <<EOT;
-$0 <file>
-This script traces renames to find the origin of the file
-EOT
-        exit(1);
-}
+		Linus
