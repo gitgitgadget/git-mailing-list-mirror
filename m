@@ -1,67 +1,67 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: [PATCH] git-daemon: fix poll timeout
-Date: Thu, 20 Oct 2005 11:33:43 +0300
-Message-ID: <20051020113343.692c991d.tihirvon@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: How do I clear the directory cache
+Date: Thu, 20 Oct 2005 10:59:31 +0200
+Message-ID: <20051020085931.GW30889@pasky.or.cz>
+References: <2b05065b0510170720n5333f03l1941e84c1288fc5d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Oct 20 10:34:16 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 20 11:01:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESVsC-00044A-2B
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 10:34:04 +0200
+	id 1ESWH5-00048U-Af
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 10:59:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751788AbVJTIdt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 04:33:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751789AbVJTIdt
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 04:33:49 -0400
-Received: from magister.suomi.net ([212.50.131.141]:63687 "EHLO
-	magister.suomi.net") by vger.kernel.org with ESMTP id S1751788AbVJTIdt
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2005 04:33:49 -0400
-Received: from spam1.suomi.net (spam1.suomi.net [212.50.131.165])
- by magister.suomi.net
- (Sun Java System Messaging Server 6.2 (built Dec  2 2004))
- with ESMTP id <0ION001PBGXN4170@magister.suomi.net> for git@vger.kernel.org;
- Thu, 20 Oct 2005 11:29:47 +0300 (EEST)
-Received: from garlic.home.net (addr-82-128-203-69.suomi.net [82.128.203.69])
-	by spam1.suomi.net (Postfix) with SMTP id 600D31A1F02; Thu,
- 20 Oct 2005 11:33:40 +0300 (EEST)
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-Mailer: Sylpheed version 2.0.2 (GTK+ 2.8.6; i686-pc-linux-gnu)
-X-OPOY-MailScanner-Information: Please contact the OPOY for more information
-X-OPOY-MailScanner: Not virus scanned: please contact OPOY for details
-X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (score=-0.422,	required 5,
- autolearn=not spam, AWL 1.10, BAYES_01 -1.52)
-X-MailScanner-From: tihirvon@gmail.com
+	id S1750760AbVJTI7f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 04:59:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750763AbVJTI7f
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 04:59:35 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:49885 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750760AbVJTI7e (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 04:59:34 -0400
+Received: (qmail 14644 invoked by uid 2001); 20 Oct 2005 10:59:31 +0200
+To: eschvoca <eschvoca@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <2b05065b0510170720n5333f03l1941e84c1288fc5d@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10355>
 
-Timeout must be negative (infinite), not 0.
+  Hello,
 
----
+Dear diary, on Mon, Oct 17, 2005 at 04:20:42PM CEST, I got a letter
+where eschvoca <eschvoca@gmail.com> told me that...
+> If I do a:
+> 
+> cg-commit
+> modifiy some files
+> cg-rm <modified files>
+> cg-add <a new file>
+> cg-rm <a unmodified file>
+> 
+> Then how do I get back and undo all of the cg-adds and cg-rms?  I want
+> cg-status to show the the changes from my commit and my current
+> working tree.
 
- daemon.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+  why can't you just do the following?
 
-applies-to: 50f9bed9a78e1f51178ebf6be3cd9c20b2ffcb0b
-a6603be778e535b12f7aa42174889981af42b10c
-diff --git a/daemon.c b/daemon.c
-index c3381b3..b3bcd7a 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -533,7 +533,7 @@ static int service_loop(int socknum, int
- 	for (;;) {
- 		int i;
- 
--		if (poll(pfd, socknum, 0) < 0) {
-+		if (poll(pfd, socknum, -1) < 0) {
- 			if (errno != EINTR) {
- 				error("poll failed, resuming: %s",
- 				      strerror(errno));
----
-0.99.8.GIT
+	cg-add <an unmodified file>
+	cg-rm <a new file>
+	cg-add <modified files>
+
+  Hmm. Would it be non-marginally useful to offer something like
+
+	cg-reset --adds-removals
+
+to just reset the index? (It's not --index because Cogito users aren't
+supposed to have to know what an "index" is.)
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
