@@ -1,64 +1,104 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] cg-fetch will now retrieve commits related to tags if missing.
-Date: Thu, 20 Oct 2005 13:55:45 +1300
-Message-ID: <1129769745158-git-send-email-martin@catalyst.net.nz>
-Reply-To: Martin Langhoff <martin@catalyst.net.nz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Do not send "want" lines for complete objects
+Date: Wed, 19 Oct 2005 18:16:11 -0700
+Message-ID: <7vwtk9vvhg.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0510200004290.7689@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vzmp5xfwu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Thu Oct 20 02:53:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 20 03:16:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESOgC-0003y5-RL
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 02:53:13 +0200
+	id 1ESP2W-0005Dh-5O
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 03:16:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671AbVJTAxH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 20:53:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751673AbVJTAxH
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 20:53:07 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:46025 "EHLO
-	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S1751671AbVJTAxF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 20:53:05 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1ESOfw-0005b6-Ck; Thu, 20 Oct 2005 13:52:56 +1300
-Received: from mltest ([127.0.0.1])
-	by mltest with smtp (Exim 3.36 #1 (Debian))
-	id 1ESOif-0001rN-00; Thu, 20 Oct 2005 13:55:45 +1300
-In-Reply-To: 
-X-Mailer: git-send-email
-To: git@vger.kernel.org
+	id S1751681AbVJTBQN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 21:16:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751684AbVJTBQN
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 21:16:13 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:46221 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1751678AbVJTBQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 21:16:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051020011613.BRCX9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 19 Oct 2005 21:16:13 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <7vzmp5xfwu.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 19 Oct 2005 16:09:37 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10332>
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+Junio C Hamano <junkio@cox.net> writes:
 
+> Let's draw a single strand of pearl case to illustrate.  You
+> have a commit chain A->B->C->D, and the other end says she has
+> C.  At this point, telling her that you have C is enough, and by
+> not telling her about A and B, you would save her from depreting
+> MAX_HAVE slots.  Of course, if the other end has D as another
+> head, then the above logic would give "^D^" to rev-list as well,
+> telling it not to tell her about C, but that is what we want --
+> because she already knows you have C too when you tell her that
+> you have D.  I think I like this optimization.
+
+This was subtly wrong.  ^D^ would barf if D is a tag that points
+at a non commit (refs/tags/v2.6.11-tree).  Also it would do a
+suboptimal thing for a merge commit, since it will not cull the
+second and later parents.
+
+Maybe something like this on top of your patch?  This is turning
+out to be quite ugly.
 
 ---
 
- cg-fetch |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-applies-to: 38ed7981343a8e2bb734d64e019186a8a482dbef
-48cb643964910a058881307513cb63aeee28a1de
-diff --git a/cg-fetch b/cg-fetch
-index 7694584..d4650e5 100755
---- a/cg-fetch
-+++ b/cg-fetch
-@@ -417,7 +417,8 @@ $get -i -s -u -d "$uri/refs/tags" "$_git
- 	for tag in *; do
- 		[ "$tag" = "*" ] && break
- 		tagid=$(cat $tag)
--		GIT_DIR=../.. git-cat-file -t "$tagid" >/dev/null 2>&1 && continue
-+		GIT_DIR=../.. [ "`git-cat-file -t $tagid 2>/dev/null`" = "commit" ] && continue
-+		GIT_DIR=../.. git-cat-file commit `git-rev-parse $tag^{commit}  2>/dev/null` 2>&1 >> /dev/null && continue
- 		echo -n "Missing object of tag $tag... "
- 		if [ "$fetch" != "fetch_rsync" ] && GIT_DIR=../.. $fetch "$tagid" "$uri" 2>/dev/null >&2; then
- 			echo "retrieved"
----
-0.99.8.GIT
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 9dfd072..5cc3766 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -28,20 +28,29 @@ static int find_common(int fd[2], unsign
+ 	fetching = 0;
+ 	for ( ; refs ; refs = refs->next) {
+ 		unsigned char *remote = refs->old_sha1;
+-
++		struct object *o;
++		struct commit *commit;
+ 		/*
+-		   If that object is complete (i.e. it is a descendant of a
+-		   local ref), we don't want it, nor its descendants.
+-		*/
+-		if (has_sha1_file(remote)
+-				&& parse_object(remote)->flags & COMPLETE) {
+-			if (rev_command_len + 44 < sizeof(rev_command)) {
++		 * If that object is complete (i.e. it is an ancestor of a
++		 * local ref), we tell them we have it but do not have to
++		 * tell them about its ancestors, which they already know
++		 * about.
++		 */
++		if (has_sha1_file(remote) &&
++		    ((o = parse_object(remote)) != NULL) &&
++		    (o->flags & COMPLETE) &&
++		    ((commit = (struct commit *) deref_tag(o)) != NULL) &&
++		    (commit->object.type = commit_type)) {
++			struct commit_list *p = commit->parents;
++			while (p && rev_command_len + 44 < sizeof(rev_command)) {
+ 				snprintf(rev_command + rev_command_len, 44,
+-					" ^%s^", sha1_to_hex(remote));
++					 " ^%s",
++					 sha1_to_hex(p->item->object.sha1));
+ 				rev_command_len += 43;
++				p = p->next;
+ 			}
+-
+-			continue;
++			if (!p)
++				continue;
+ 		}
+ 
+ 		packet_write(fd[1], "want %s\n", sha1_to_hex(remote));
