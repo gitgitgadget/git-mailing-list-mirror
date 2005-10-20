@@ -1,57 +1,44 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Morten Welinder <mwelinder@gmail.com>
 Subject: Re: rsync update appears broken now
-Date: 20 Oct 2005 07:12:53 -0700
-Message-ID: <86ek6g9t0a.fsf@blue.stonehenge.com>
+Date: Thu, 20 Oct 2005 10:15:58 -0400
+Message-ID: <118833cc0510200715x2a17dcbfs53c824435b7381e3@mail.gmail.com>
 References: <86vezs9wy9.fsf@blue.stonehenge.com>
-	<81b0412b0510200608l61c00ed0yd4dbc00c313665fe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 20 16:19:04 2005
+X-From: git-owner@vger.kernel.org Thu Oct 20 16:25:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESbAQ-0003SV-9M
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 16:13:14 +0200
+	id 1ESbDA-0004lv-0F
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 16:16:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932161AbVJTONL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 10:13:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932173AbVJTONK
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 10:13:10 -0400
-Received: from [209.223.236.162] ([209.223.236.162]:7492 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932161AbVJTONJ
+	id S932152AbVJTOQA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 10:16:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932169AbVJTOQA
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 10:16:00 -0400
+Received: from qproxy.gmail.com ([72.14.204.194]:6931 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932152AbVJTOQA convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2005 10:13:09 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 05D8F8F40F;
-	Thu, 20 Oct 2005 07:12:54 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 00596-02-25; Thu, 20 Oct 2005 07:12:53 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 9B76B8F41A; Thu, 20 Oct 2005 07:12:53 -0700 (PDT)
-To: Alex Riesen <raa.lkml@gmail.com>
-x-mayan-date: Long count = 12.19.12.13.1; tzolkin = 11 Imix; haab = 19 Yax
-In-Reply-To: <81b0412b0510200608l61c00ed0yd4dbc00c313665fe@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	Thu, 20 Oct 2005 10:16:00 -0400
+Received: by qproxy.gmail.com with SMTP id e12so324239qbe
+        for <git@vger.kernel.org>; Thu, 20 Oct 2005 07:15:59 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ovYmKaTNZVRdImNV05jx2JJJutretLKERqwFgCSBcsMxJ55VC/jjeB6bYapCW6rDU26LOiFZ9hwaWPHibhX+YwN2XN9dD3cZy6Uh//3oB8YY6iaLTL4Kje8Kk7wwuREXShzoU19Sh2KjvC6iSpQdz7vT7jQwSmDgw+c5bGiQF78=
+Received: by 10.65.155.13 with SMTP id h13mr1525863qbo;
+        Thu, 20 Oct 2005 07:15:59 -0700 (PDT)
+Received: by 10.65.107.8 with HTTP; Thu, 20 Oct 2005 07:15:58 -0700 (PDT)
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+In-Reply-To: <86vezs9wy9.fsf@blue.stonehenge.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10361>
 
->>>>> "Alex" == Alex Riesen <raa.lkml@gmail.com> writes:
+I see the very same with an http pull.
 
-Alex> Absolutely normal pull into a changed repository. Just fix the
-Alex> conflict (in fetch-pack.c, look for >>>), git-update-index the file
-Alex> and commit. Doesn't look like a problem at all.
-
-What do you mean "changed repository"?  This is my git image, and I'm
-not working on git.  I made no changes.
-
-Thus, something broken?
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Morten
