@@ -1,64 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] cg-fetch will now retrieve commits related to tags if missing.
-Date: Wed, 19 Oct 2005 18:25:37 -0700
-Message-ID: <7voe5lvv1q.fsf@assigned-by-dhcp.cox.net>
-References: <1129769745158-git-send-email-martin@catalyst.net.nz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Problem getting older version
+Date: Thu, 20 Oct 2005 03:42:30 +0200
+Message-ID: <20051020014230.GV30889@pasky.or.cz>
+References: <20051019080046.GI22986@schottelius.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 20 03:26:50 2005
+X-From: git-owner@vger.kernel.org Thu Oct 20 03:43:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESPBy-0001ZD-P3
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 03:26:03 +0200
+	id 1ESPRz-0000mJ-Oj
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 03:42:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbVJTBZk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 21:25:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751675AbVJTBZj
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 21:25:39 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:14308 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751265AbVJTBZj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 21:25:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051020012514.LCOX29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 19 Oct 2005 21:25:14 -0400
-To: Martin Langhoff <martin@catalyst.net.nz>
-In-Reply-To: <1129769745158-git-send-email-martin@catalyst.net.nz> (Martin
-	Langhoff's message of "Thu, 20 Oct 2005 13:55:45 +1300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751693AbVJTBmd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 21:42:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751694AbVJTBmd
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 21:42:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:16345 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751692AbVJTBmc (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Oct 2005 21:42:32 -0400
+Received: (qmail 24126 invoked by uid 2001); 20 Oct 2005 03:42:30 +0200
+To: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+Content-Disposition: inline
+In-Reply-To: <20051019080046.GI22986@schottelius.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10336>
 
-Martin Langhoff <martin@catalyst.net.nz> writes:
+  Hello,
 
-> diff --git a/cg-fetch b/cg-fetch
-> index 7694584..d4650e5 100755
-> --- a/cg-fetch
-> +++ b/cg-fetch
-> @@ -417,7 +417,8 @@ $get -i -s -u -d "$uri/refs/tags" "$_git
->  	for tag in *; do
->  		[ "$tag" = "*" ] && break
->  		tagid=$(cat $tag)
+Dear diary, on Wed, Oct 19, 2005 at 10:00:46AM CEST, I got a letter
+where Nico -telmich- Schottelius <nico-linux-git@schottelius.org> told me that...
+> The following situation:
+> 
+> - The last commit was a merge, mhich broke some files
+> - We want three files from the commit before
+..snip..
+> Is this really the standard way to recover a file? As a developer / end user I would expect that:
+> 
+> cg-recover <filename> <commit id> and -f for overwriting the file if it exists
 
-You just reported this $tag needs quoting ;-).
+  thanks for the suggestion. I've revamped cg-restore to support this
+kind of syntax, so now if you do
 
-> +		GIT_DIR=../.. [ "`git-cat-file -t $tagid 2>/dev/null`" = "commit" ] && continue
-> +		GIT_DIR=../.. git-cat-file commit `git-rev-parse $tag^{commit}  2>/dev/null` 2>&1 >> /dev/null && continue
+	cg-restore -r ID [-f] FILENAME
 
-You are saying:
-	if "$tagid" is already commit then continue;
-        if "$tagid" dereferences to a commit and if you have it
-	then continue
+it should do what you want.
 
-If that is the case, then this might be more efficient.
-
-	GIT_DIR=../.. git-rev-parse --verify "$tagid^0" >/dev/null 2>&1 && continue
-
-You can say ^{commit} instead of ^0 if you like that newer
-style, of course.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
