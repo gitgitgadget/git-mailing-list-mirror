@@ -1,65 +1,76 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: cg-merge should use git-merge
-Date: Thu, 20 Oct 2005 20:04:52 +1300
-Message-ID: <46a038f90510200004l67e2d19kf8e9a4c6190f44f@mail.gmail.com>
-References: <46a038f90510161644l35119401rdc05c081506ae715@mail.gmail.com>
-	 <46a038f90510190421l50b2c12k495db23b62015782@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: The git protocol and DoS
+Date: Thu, 20 Oct 2005 10:16:45 +0200
+Message-ID: <4357526D.2000807@op5.se>
+References: <4356A5C5.5080905@zytor.com> <20051019222044.GP30889@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Oct 20 09:05:13 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Oct 20 10:17:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESUTw-0007Ys-HA
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 09:04:56 +0200
+	id 1ESVbd-0008AN-A8
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 10:16:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751777AbVJTHEy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 03:04:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbVJTHEy
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 03:04:54 -0400
-Received: from qproxy.gmail.com ([72.14.204.192]:12870 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751777AbVJTHEx convert rfc822-to-8bit
+	id S1751707AbVJTIQr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 04:16:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbVJTIQr
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 04:16:47 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:36536 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751707AbVJTIQq
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2005 03:04:53 -0400
-Received: by qproxy.gmail.com with SMTP id v40so267129qbe
-        for <git@vger.kernel.org>; Thu, 20 Oct 2005 00:04:52 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JFLUPIDSSCXczF04CoSoMJJ9QKqKcTLtT8UHAG1s61juXKaeVySgxcEzEA2kHRp1QfT7CjNqLIAd34Z+f8fYZ7ElndeT8xV6fT+y+yA5/ViNiZoPPhQ+OqJTakWNBmwYVVjLOsInNp64dQ204FD+njK3qExmVUFxnCMmu2hwb3A=
-Received: by 10.64.232.15 with SMTP id e15mr1175562qbh;
-        Thu, 20 Oct 2005 00:04:52 -0700 (PDT)
-Received: by 10.64.232.18 with HTTP; Thu, 20 Oct 2005 00:04:52 -0700 (PDT)
-To: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>,
-	Junio C Hamano <junkio@cox.net>
-In-Reply-To: <46a038f90510190421l50b2c12k495db23b62015782@mail.gmail.com>
-Content-Disposition: inline
+	Thu, 20 Oct 2005 04:16:46 -0400
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id AE0516BCFE
+	for <git@vger.kernel.org>; Thu, 20 Oct 2005 10:16:45 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <20051019222044.GP30889@pasky.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10353>
 
-On 10/20/05, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> After using git-merge a few times by hand to test-drive the new merge
-> drivers, I'm sold on the idea, and I 'd like to have cg-merge use
-> git-merge directly.
+Petr Baudis wrote:
+> Dear diary, on Wed, Oct 19, 2005 at 10:00:05PM CEST, I got a letter
+> where "H. Peter Anvin" <hpa@zytor.com> told me that...
+> 
+>>One way to do this would be to start the transaction by having the 
+>>server transmit a cookie to the client, and to require the client to 
+>>send a SHA1 of the (cookie + request) together with the request.  This 
+>>would be done with a fairly short timeout.
+> 
+> 
+>   If (well, it sounds like a good idea, so rather "when") you do this,
+> it would be a good idea to do in a way that makes it easy to later add
+> support for some kind of authentication (really, not everyone wants to
+> give away ssh accounts). Let's say it works like:
+> 
+> [client]	git-upload-pack <path>
+> [server]	challenge somethingnonsensical
+> [client]	challenge-response <username>:sha1(somethingnonsensical<password>)
+> [server]	All right, the pack goes like this...
+> 
+>   Suddenly you have support for hopefully secure authentication, and at
+> the same time you have the cookie implemented in backwards-compatible
+> fashion (in the sense that new client will be able to talk to old
+> server) - just assume the username and password empty. This might be
+> even hardcoded for now, just leave a room for its addition (in an
+> elegant and compatible way) in the protocol, please.
+> 
 
-I started drafting a 5-minute proof-of-concept, and then it struck me:
-cg users aren't aware of the index. This is really important when you
-are merging and have to resolve a conflict over a dirty tree. git
-users know that the "clean" part of the merge is in the index, and
-they have to resolve a couple of files in their checkout, and update
-the index for those only before calling git-write-tree &
-git-commit-tree.
+I think git-daemon would be better off without this, since
+* A project rarely grants write access to the central repo (or whatever 
+git has, I'm still fairly new to it) without being willing to give out 
+ssh access, often limited by the ssh command whitelist.
+* It's hard to do right.
+* Passwords are never as secure or as convenient as public key 
+authentication and there's no point in spending a lot of time 
+re-inventing ssh.
 
-Cogito users don't know about this magic at all, which is a bit of a
-problem. I can refuse to run cg-merge on a dirty tree to make things
-simpler, but that's cheating ;-)
-
-tagging "for later"...
-
-cheers,
-
-
-martin
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
