@@ -1,143 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Revamping the git protocol
-Date: Wed, 19 Oct 2005 23:11:17 -0700
-Message-ID: <7vwtk8pvju.fsf@assigned-by-dhcp.cox.net>
-References: <43571DA1.6030907@zytor.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: cg-merge should use git-merge
+Date: Thu, 20 Oct 2005 20:04:52 +1300
+Message-ID: <46a038f90510200004l67e2d19kf8e9a4c6190f44f@mail.gmail.com>
+References: <46a038f90510161644l35119401rdc05c081506ae715@mail.gmail.com>
+	 <46a038f90510190421l50b2c12k495db23b62015782@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 20 08:12:31 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Oct 20 09:05:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESTe6-0004a3-6p
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 08:11:22 +0200
+	id 1ESUTw-0007Ys-HA
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 09:04:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751765AbVJTGLT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 02:11:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751766AbVJTGLT
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 02:11:19 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:50936 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751765AbVJTGLS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2005 02:11:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051020061119.GISK9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 20 Oct 2005 02:11:19 -0400
-To: "H. Peter Anvin" <hpa@zytor.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751777AbVJTHEy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 03:04:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbVJTHEy
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 03:04:54 -0400
+Received: from qproxy.gmail.com ([72.14.204.192]:12870 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751777AbVJTHEx convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2005 03:04:53 -0400
+Received: by qproxy.gmail.com with SMTP id v40so267129qbe
+        for <git@vger.kernel.org>; Thu, 20 Oct 2005 00:04:52 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JFLUPIDSSCXczF04CoSoMJJ9QKqKcTLtT8UHAG1s61juXKaeVySgxcEzEA2kHRp1QfT7CjNqLIAd34Z+f8fYZ7ElndeT8xV6fT+y+yA5/ViNiZoPPhQ+OqJTakWNBmwYVVjLOsInNp64dQ204FD+njK3qExmVUFxnCMmu2hwb3A=
+Received: by 10.64.232.15 with SMTP id e15mr1175562qbh;
+        Thu, 20 Oct 2005 00:04:52 -0700 (PDT)
+Received: by 10.64.232.18 with HTTP; Thu, 20 Oct 2005 00:04:52 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>,
+	Junio C Hamano <junkio@cox.net>
+In-Reply-To: <46a038f90510190421l50b2c12k495db23b62015782@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10352>
 
-Wow.
+On 10/20/05, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> After using git-merge a few times by hand to test-drive the new merge
+> drivers, I'm sold on the idea, and I 'd like to have cg-merge use
+> git-merge directly.
 
+I started drafting a 5-minute proof-of-concept, and then it struck me:
+cg users aren't aware of the index. This is really important when you
+are merging and have to resolve a conflict over a dirty tree. git
+users know that the "clean" part of the merge is in the index, and
+they have to resolve a couple of files in their checkout, and update
+the index for those only before calling git-write-tree &
+git-commit-tree.
 
+Cogito users don't know about this magic at all, which is a bit of a
+problem. I can refuse to run cg-merge on a dirty tree to make things
+simpler, but that's cheating ;-)
 
+tagging "for later"...
 
-
-
-
-
-
-
-
-That's elaborate.  And all this is to replace the beginning of
-execute() part of daemon.c?  What I am assuming is that after
-exchanging command-response initially, you still plan to
-eventually have the protocol driver such as upload-pack to take
-things over, once "send-pack <path>" is issued, but is my
-assumption correct?  Or are you also thinking about redoing
-upload-pack as well (otherwise you cannot issue 5.4 errors)?
-
-I am wondering if we can just get away with a simpler scheme
-Linus outlined instead.  One drawback of that approach is it
-does not easily allow things like challenge-response uniformly
-across different commands (admittedly we only have "upload-pack"
-command right now, but we could add list of supported commands
-easily in execute()), but you could do something along this, I
-presume?
-
-When daemon is started with --require-challenge-response,
-the client needs to issue "challenge-me" command and complete
-challenge_response successfully before being able to issue any
-other commands.
-
-NOTE: this is just an outline, not a compilable patch.  You need to
-fill in the details of challenge response, definition of
-"require_challenge_response" variable of type bool, and a
-command line parsing to set that variable.
+cheers,
 
 
----
-
-git diff
-diff --git a/daemon.c b/daemon.c
-index c3381b3..8a8746a 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -204,20 +204,55 @@ static int upload(char *dir)
- 	return -1;
- }
- 
--static int execute(void)
-+static int challenge_response(const char *me)
- {
--	static char line[1000];
--	int len;
-+	char line[1000];
- 
--	alarm(init_timeout ? init_timeout : timeout);
-+	packet_write(1, "here comes your challenge");
-+
-+	alarm(timeout);
- 	len = packet_read_line(0, line, sizeof(line));
- 	alarm(0);
- 
- 	if (len && line[len-1] == '\n')
- 		line[--len] = 0;
- 
--	if (!strncmp("git-upload-pack /", line, 17))
--		return upload(line+16);
-+	if ("validate response we obtained in line here")
-+		return 1;
-+	return 0;
-+}
-+
-+static int execute(void)
-+{
-+	static char line[1000];
-+	int len;
-+	int client_ok = !require_challenge_response;
-+	unsigned int time_out = init_timeout;
-+
-+	while (1) {
-+
-+		alarm(time_out);
-+		time_out = timeout;
-+		len = packet_read_line(0, line, sizeof(line));
-+		alarm(0);
-+		if (len && line[len-1] == '\n')
-+			line[--len] = 0;
-+
-+		if (!strncmp("challenge-me ", line, 13)) {
-+			client_ok = challenge_response(line+13);
-+			continue;
-+		}
-+
-+		if (!client_ok)
-+			break;
-+
-+		if (!strncmp("git-upload-pack /", line, 17))
-+			return upload(line+16);
-+
-+		/* more commands here later */
-+
-+		break;
-+	}
- 
- 	logerror("Protocol error: '%s'", line);
- 	return -1;
+martin
