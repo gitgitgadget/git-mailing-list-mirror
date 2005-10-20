@@ -1,54 +1,131 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Errors from http-fetch
-Date: Thu, 20 Oct 2005 16:02:23 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0510201558231.25300@iabervon.org>
-References: <Pine.LNX.4.64.0510191536350.25300@iabervon.org>
- <20051019212644.GB6160@reactrix.com> <Pine.LNX.4.64.0510191755280.25300@iabervon.org>
- <20051019223708.GC6160@reactrix.com>
+From: David Ho <davidkwho@gmail.com>
+Subject: Re: git-filehistory (first cut at detecting renames)
+Date: Thu, 20 Oct 2005 16:19:15 -0400
+Message-ID: <4dd15d180510201319k6beeb1f3j89eae34322d12c90@mail.gmail.com>
+References: <4dd15d180510201251p57bea756s18b2e77d4be4ec35@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 20 22:05:04 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Oct 20 22:21:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESgd5-0005Gl-VR
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 22:03:12 +0200
+	id 1ESgsj-0002Gn-Fj
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 22:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932518AbVJTUDI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 16:03:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932519AbVJTUDI
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 16:03:08 -0400
-Received: from iabervon.org ([66.92.72.58]:49936 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932518AbVJTUDH (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 16:03:07 -0400
-Received: (qmail 14798 invoked by uid 1000); 20 Oct 2005 16:02:23 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 20 Oct 2005 16:02:23 -0400
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20051019223708.GC6160@reactrix.com>
+	id S932522AbVJTUTS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 16:19:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932523AbVJTUTS
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 16:19:18 -0400
+Received: from qproxy.gmail.com ([72.14.204.193]:31402 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932522AbVJTUTR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2005 16:19:17 -0400
+Received: by qproxy.gmail.com with SMTP id v40so402046qbe
+        for <git@vger.kernel.org>; Thu, 20 Oct 2005 13:19:15 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RVOD92ACwbsdamuoaYyFBJyvZhqgBeGmvKBlm60ltkqRfO9VvFZ4vCM1Jg3H+PQNfjsOHzPatOOuwkh5NiVCufUGsz+OkH6lbjWJLWIJ5yfyIpzvTBgeJmCAzDAiW/sSsm0eijFF+ffrx5eWhIWEgmHZE14ypwF5aDfL4KQsdRs=
+Received: by 10.65.192.13 with SMTP id u13mr1841847qbp;
+        Thu, 20 Oct 2005 13:19:15 -0700 (PDT)
+Received: by 10.65.22.3 with HTTP; Thu, 20 Oct 2005 13:19:15 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <4dd15d180510201251p57bea756s18b2e77d4be4ec35@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10377>
 
-On Wed, 19 Oct 2005, Nick Hengeveld wrote:
+Actually, just tried it on the git repository.  It is very slow. 
+Maybe because I'm doing a complete diff-tree on each commit.  Mmm...
+maybe there is a better way to detect renames  when walking up the
+file history.
 
-> > Another thing I noticed was that it was in the middle of downloading the 
-> > pack when it suddenly exitted due to not being able to find the object; it 
-> > would probably be worth having a call to finish up the active transfers 
-> > after giving up on completing the whole thing, since we probably do 
-> > actually want to finish downloading a big pack if we've started.
-> 
-> I'm not sure how that could happen - once a pack download request
-> starts, it has to finish before any fetch() calls can fail.  However,
-> there could certainly be other object requests in process when one
-> fails, and it would be polite to let them finish.
+David
 
-Hmm; it definitely cut off a pack download in progress. When I ran it 
-again, it resumed that download, which contained the missing object. Last 
-night, I didn't see any problems, though. I'd certainly believe that 
-server disagreement could be a factor, though.
-
-	-Daniel
-*This .sig left intentionally blank*
+On 10/20/05, David Ho <davidkwho@gmail.com> wrote:
+> Hi all,
+>
+> This is my stupid perl script to detect renames all the way to it's
+> origin.  This is my first attempt at writing a perl script so it looks
+> a bit awful.  It's not perfect, if a file is renamed, the entire
+> commit is dumped out.  Maybe if git-diff-tree -M <pathname> does post
+> processing to output changes relevant to <pathname> then it will work
+> quite well.
+>
+> David
+>
+> [davidho@penguin git-tutorial]$ cat git-filehistory.perl
+> #!/usr/bin/perl
+>
+> use warnings;
+> use strict;
+>
+> sub usage($);
+>
+> # Sanity checks:
+> my $GIT_DIR = $ENV{'GIT_DIR'} || ".git";
+>
+> unless ( -d $GIT_DIR && -d $GIT_DIR . "/objects" &&
+>         -d $GIT_DIR . "/objects/" && -d $GIT_DIR . "/refs") {
+>         usage("Git repository not found.");
+> }
+>
+> usage("") if scalar @ARGV != 1;
+>
+> my ($file) = @ARGV;
+>
+> unless (-f $file) {
+>         usage("git filehistory: '$file' does not exist");
+> }
+>
+> open(F,"-|","git-rev-parse",,"--default","HEAD","--revs-only",$file);
+> my $git_rev_args = <F>;
+> chomp ($git_rev_args);
+> close (F);
+>
+> open(F,"-|","git-rev-list", $git_rev_args);
+> my @commits = <F>;
+> close (F);
+>
+> my $nextname = $file;
+> for (my $i=0; $i < scalar @commits; $i++)
+> {
+>         my $commit = $commits[$i];
+>         chomp ($commit);
+>
+>         open(F,"-|","git-diff-tree","-r","-M", $commit)
+>                 or die "Failed to open pipe from git-diff-tree: " . $!;
+>         my @lines = grep /R\d{3}.+$nextname/, <F>;
+>         close(F);
+>         if (scalar @lines >=1) {
+>                 #The file is renamed!
+>                 my $rc = system
+> ("git-diff-tree","-r","-M","-p","--pretty=medium",$commit);
+>                 die "git-diff-tree failed" if $rc;
+>                 print "\n";
+>                 if ($lines[0] =~ /R\d{3}\t(.+)\t(.+)/) {
+>                         $nextname = $1;
+>                 }
+>         }
+>         else {
+>                 #Not renamed
+>                 my $rc = system
+> ("git-diff-tree","-r","-m","-p","--pretty=medium",$commit, $nextname);
+>                 die "git-diff-tree failed" if $rc;
+>                 print "\n";
+>         }
+> }
+>
+> sub usage($) {
+>         my $s = shift;
+>         print $s, "\n" if (length $s != 0);
+>         print <<EOT;
+> $0 <file>
+> This script traces renames to find the origin of the file
+> EOT
+>         exit(1);
+> }
+>
