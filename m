@@ -1,96 +1,92 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: dave morgan <morgad@eclipse.co.uk>
 Subject: Re: rsync update appears broken now
-Date: Thu, 20 Oct 2005 10:48:46 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510201038320.3369@g5.osdl.org>
-References: <86vezs9wy9.fsf@blue.stonehenge.com>
- <81b0412b0510200608l61c00ed0yd4dbc00c313665fe@mail.gmail.com>
+Date: Thu, 20 Oct 2005 19:03:51 +0100
+Organization: the great unwashed
+Message-ID: <aomfl115b28jajpuspik2es90qhlr9dtdg@4ax.com>
+References: <86vezs9wy9.fsf@blue.stonehenge.com> <118833cc0510200715x2a17dcbfs53c824435b7381e3@mail.gmail.com>
+Reply-To: david morgan <morgad@eclipse.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 20 19:58:26 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+X-From: git-owner@vger.kernel.org Thu Oct 20 20:07:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESedU-00070n-6T
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 19:55:28 +0200
+	id 1ESeln-00020J-Oc
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 20:04:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932510AbVJTRzZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 13:55:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932069AbVJTRzZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 13:55:25 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:35280 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932510AbVJTRzY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 13:55:24 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9KHmmFC020565
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 20 Oct 2005 10:48:48 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9KHmkwm032597;
-	Thu, 20 Oct 2005 10:48:47 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <81b0412b0510200608l61c00ed0yd4dbc00c313665fe@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.125 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932513AbVJTSEA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 14:04:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932515AbVJTSEA
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 14:04:00 -0400
+Received: from mra03.ch.as12513.net ([82.153.252.25]:47045 "EHLO
+	mra03.ch.as12513.net") by vger.kernel.org with ESMTP
+	id S932513AbVJTSD7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 14:03:59 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mra03.ch.as12513.net (Postfix) with ESMTP id 0F952D44A6
+	for <git@vger.kernel.org>; Thu, 20 Oct 2005 19:03:53 +0100 (BST)
+Received: from mra03.ch.as12513.net ([127.0.0.1])
+ by localhost (mra03.ch.as12513.net [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 28006-01-15 for <git@vger.kernel.org>;
+ Thu, 20 Oct 2005 19:03:52 +0100 (BST)
+Received: from unknown (unknown [82.152.150.47])
+	by mra03.ch.as12513.net (Postfix) with SMTP id 556A5D4351
+	for <git@vger.kernel.org>; Thu, 20 Oct 2005 19:03:51 +0100 (BST)
+To: git@vger.kernel.org
+In-Reply-To: <118833cc0510200715x2a17dcbfs53c824435b7381e3@mail.gmail.com>
+X-Mailer: Forte Agent 3.1/32.783
+X-Virus-Scanned: by Eclipse VIRUSshield at eclipse.net.uk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10374>
 
+On Thu, 20 Oct 2005 10:15:58 -0400, Morten Welinder
+<mwelinder@gmail.com> wrote:
 
+>I see the very same with an http pull.
+>
+>Morten
+>-
+>To unsubscribe from this list: send the line "unsubscribe git" in
+>the body of a message to majordomo@vger.kernel.org
+>More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-On Thu, 20 Oct 2005, Alex Riesen wrote:
-> 
-> Absolutely normal pull into a changed repository. Just fix the
-> conflict (in fetch-pack.c, look for >>>), git-update-index the file
-> and commit. Doesn't look like a problem at all.
+I got the same with a git:// update
 
-No, that's wrong.
+origin  git://git.kernel.org/pub/scm/git/git.git	
 
-The fact is, Junio has screwed up his repository, and if you merge, you'll 
-never have something that matches _his_ repository.
+david@tower2:~/git$ cg-update
+Up to date.
 
-To fix this, _Junio_ needs to fix his repository.
+Applying changes...
+Merging f8765797a41a39f4dfc7030098c38283e6461a83 ->
+6e1c6c103c522d01829f3a63992a023ff031e851
+        to ea5a65a59916503d2a14369c46b1023384d51645...
+... Auto-merging fetch-pack.c
+merge: warning: conflicts during merge
 
-For those of us who have a separate branch to track the original (I call 
-mine "parent), this tells the story:
+        Conflicts during merge. Do cg-commit after resolving them.
 
-	* refs/heads/parent: does not fast forward to branch 'master' of master.kernel.org:/pub/scm/git/git;
-	  not updating.
+here is status after pull
+david@tower2:~/git$ cg-status
+Heads:
+   >master      ea5a65a59916503d2a14369c46b1023384d51645
+  R origin      6e1c6c103c522d01829f3a63992a023ff031e851
 
-IOW, it looks like Junio has screwed up his "master" branch on kernel.org 
-and it no longer contains what it used to contain (and this is not a 
-mirroring problem - I'm using "master.kernel.org" with no mirrors in 
-between).
+? git-build-rev-cache
+? git-checkout-cache
+? git-convert-cache
+? git-diff-cache
+? git-diff-helper
+? git-export
+? git-fsck-cache
+? git-http-pull
+? git-local-pull
+? git-merge-cache
+? git-rev-tree
+? git-show-rev-cache
+? git-update-cache
 
-Doing a
-
-	git fetch parent master:new-junio
-
-followed by a
-
-	gitk parent new-junio
-
-shows that Junio seems to have re-based his "master" branch by removing 
-his old top-most entry, and restarted the "master" branch, which is wrong, 
-wrong, wrong.
-
-Junio, please don't do that. It really screws people up. Now people can't 
-fetch your head any more, and can't track you, because your branch isn't 
-stable any more. I know you're very used to doing so in your "pu" branch, 
-but it's _wrong_. It's wrong in "pu" too, but at least there you have an 
-excuse.
-
-Reparenting things is ok in _private_ branches, but it's not ok in public 
-ones, since _others_ will have worked or at least downloaded the previous 
-state.
-
-The fact is, "distributed" fundamentally means "mistakes cannot be 
-undone". Mistakes have to be _fixed_, not removed. Because the mistakes 
-have already percolated to others.
-
-			Linus
+Dave
