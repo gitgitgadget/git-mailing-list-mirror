@@ -1,92 +1,120 @@
-From: dave morgan <morgad@eclipse.co.uk>
-Subject: Re: rsync update appears broken now
-Date: Thu, 20 Oct 2005 19:03:51 +0100
-Organization: the great unwashed
-Message-ID: <aomfl115b28jajpuspik2es90qhlr9dtdg@4ax.com>
-References: <86vezs9wy9.fsf@blue.stonehenge.com> <118833cc0510200715x2a17dcbfs53c824435b7381e3@mail.gmail.com>
-Reply-To: david morgan <morgad@eclipse.co.uk>
+From: David Ho <davidkwho@gmail.com>
+Subject: git-filehistory (first cut at detecting renames)
+Date: Thu, 20 Oct 2005 15:51:58 -0400
+Message-ID: <4dd15d180510201251p57bea756s18b2e77d4be4ec35@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-X-From: git-owner@vger.kernel.org Thu Oct 20 20:07:15 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Oct 20 21:54:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESeln-00020J-Oc
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 20:04:04 +0200
+	id 1ESgSp-000273-2Y
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 21:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932513AbVJTSEA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 14:04:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932515AbVJTSEA
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 14:04:00 -0400
-Received: from mra03.ch.as12513.net ([82.153.252.25]:47045 "EHLO
-	mra03.ch.as12513.net") by vger.kernel.org with ESMTP
-	id S932513AbVJTSD7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 14:03:59 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mra03.ch.as12513.net (Postfix) with ESMTP id 0F952D44A6
-	for <git@vger.kernel.org>; Thu, 20 Oct 2005 19:03:53 +0100 (BST)
-Received: from mra03.ch.as12513.net ([127.0.0.1])
- by localhost (mra03.ch.as12513.net [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 28006-01-15 for <git@vger.kernel.org>;
- Thu, 20 Oct 2005 19:03:52 +0100 (BST)
-Received: from unknown (unknown [82.152.150.47])
-	by mra03.ch.as12513.net (Postfix) with SMTP id 556A5D4351
-	for <git@vger.kernel.org>; Thu, 20 Oct 2005 19:03:51 +0100 (BST)
+	id S932515AbVJTTwA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 15:52:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932516AbVJTTwA
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 15:52:00 -0400
+Received: from qproxy.gmail.com ([72.14.204.200]:44576 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932515AbVJTTv7 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2005 15:51:59 -0400
+Received: by qproxy.gmail.com with SMTP id v40so397815qbe
+        for <git@vger.kernel.org>; Thu, 20 Oct 2005 12:51:58 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=SX2+JzaTdtao63zDc2ZNRnmB8q6teuyar55svC+mf+ZldVx2dZIGlI0fddcT0COop/pdcFmtAA24KTYS6+oYCiGCVeSlEyWs0LNPRhoRjUMAtuOjL4iWB6cynrO1/hJjsLGkABIEcntMeBYlxYf5zaODybA3l13bEH2+USQ3ifs=
+Received: by 10.64.183.2 with SMTP id g2mr1834345qbf;
+        Thu, 20 Oct 2005 12:51:58 -0700 (PDT)
+Received: by 10.65.22.3 with HTTP; Thu, 20 Oct 2005 12:51:58 -0700 (PDT)
 To: git@vger.kernel.org
-In-Reply-To: <118833cc0510200715x2a17dcbfs53c824435b7381e3@mail.gmail.com>
-X-Mailer: Forte Agent 3.1/32.783
-X-Virus-Scanned: by Eclipse VIRUSshield at eclipse.net.uk
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10375>
 
-On Thu, 20 Oct 2005 10:15:58 -0400, Morten Welinder
-<mwelinder@gmail.com> wrote:
+Hi all,
 
->I see the very same with an http pull.
->
->Morten
->-
->To unsubscribe from this list: send the line "unsubscribe git" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
+This is my stupid perl script to detect renames all the way to it's
+origin.  This is my first attempt at writing a perl script so it looks
+a bit awful.  It's not perfect, if a file is renamed, the entire
+commit is dumped out.  Maybe if git-diff-tree -M <pathname> does post
+processing to output changes relevant to <pathname> then it will work
+quite well.
 
-I got the same with a git:// update
+David
 
-origin  git://git.kernel.org/pub/scm/git/git.git	
+[davidho@penguin git-tutorial]$ cat git-filehistory.perl
+#!/usr/bin/perl
 
-david@tower2:~/git$ cg-update
-Up to date.
+use warnings;
+use strict;
 
-Applying changes...
-Merging f8765797a41a39f4dfc7030098c38283e6461a83 ->
-6e1c6c103c522d01829f3a63992a023ff031e851
-        to ea5a65a59916503d2a14369c46b1023384d51645...
-... Auto-merging fetch-pack.c
-merge: warning: conflicts during merge
+sub usage($);
 
-        Conflicts during merge. Do cg-commit after resolving them.
+# Sanity checks:
+my $GIT_DIR = $ENV{'GIT_DIR'} || ".git";
 
-here is status after pull
-david@tower2:~/git$ cg-status
-Heads:
-   >master      ea5a65a59916503d2a14369c46b1023384d51645
-  R origin      6e1c6c103c522d01829f3a63992a023ff031e851
+unless ( -d $GIT_DIR && -d $GIT_DIR . "/objects" &&
+        -d $GIT_DIR . "/objects/" && -d $GIT_DIR . "/refs") {
+        usage("Git repository not found.");
+}
 
-? git-build-rev-cache
-? git-checkout-cache
-? git-convert-cache
-? git-diff-cache
-? git-diff-helper
-? git-export
-? git-fsck-cache
-? git-http-pull
-? git-local-pull
-? git-merge-cache
-? git-rev-tree
-? git-show-rev-cache
-? git-update-cache
+usage("") if scalar @ARGV != 1;
 
-Dave
+my ($file) = @ARGV;
+
+unless (-f $file) {
+        usage("git filehistory: '$file' does not exist");
+}
+
+open(F,"-|","git-rev-parse",,"--default","HEAD","--revs-only",$file);
+my $git_rev_args = <F>;
+chomp ($git_rev_args);
+close (F);
+
+open(F,"-|","git-rev-list", $git_rev_args);
+my @commits = <F>;
+close (F);
+
+my $nextname = $file;
+for (my $i=0; $i < scalar @commits; $i++)
+{
+        my $commit = $commits[$i];
+        chomp ($commit);
+
+        open(F,"-|","git-diff-tree","-r","-M", $commit)
+                or die "Failed to open pipe from git-diff-tree: " . $!;
+        my @lines = grep /R\d{3}.+$nextname/, <F>;
+        close(F);
+        if (scalar @lines >=1) {
+                #The file is renamed!
+                my $rc = system
+("git-diff-tree","-r","-M","-p","--pretty=medium",$commit);
+                die "git-diff-tree failed" if $rc;
+                print "\n";
+                if ($lines[0] =~ /R\d{3}\t(.+)\t(.+)/) {
+                        $nextname = $1;
+                }
+        }
+        else {
+                #Not renamed
+                my $rc = system
+("git-diff-tree","-r","-m","-p","--pretty=medium",$commit, $nextname);
+                die "git-diff-tree failed" if $rc;
+                print "\n";
+        }
+}
+
+sub usage($) {
+        my $s = shift;
+        print $s, "\n" if (length $s != 0);
+        print <<EOT;
+$0 <file>
+This script traces renames to find the origin of the file
+EOT
+        exit(1);
+}
