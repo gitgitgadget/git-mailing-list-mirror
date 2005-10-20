@@ -1,66 +1,74 @@
-From: David Brown <git@davidb.org>
-Subject: Re: The git protocol and DoS
-Date: Wed, 19 Oct 2005 17:20:41 -0700
-Message-ID: <20051020002040.GA30232@old.davidb.org>
-References: <4356A5C5.5080905@zytor.com> <20051019222044.GP30889@pasky.or.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] git-daemon: timeout, eliminate double DWIM
+Date: Thu, 20 Oct 2005 02:28:45 +0200
+Message-ID: <20051020002845.GT30889@pasky.or.cz>
+References: <4356966A.8010401@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 20 02:21:54 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 20 02:30:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESOB8-0008KB-EY
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 02:21:06 +0200
+	id 1ESOIe-0002OU-0R
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 02:28:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750879AbVJTAUr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 20:20:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751659AbVJTAUr
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 20:20:47 -0400
-Received: from adsl-64-172-240-129.dsl.sndg02.pacbell.net ([64.172.240.129]:15250
-	"EHLO mail.davidb.org") by vger.kernel.org with ESMTP
-	id S1750879AbVJTAUq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 20:20:46 -0400
-Received: from davidb by mail.davidb.org with local (Exim 4.50 #1 (Debian))
-	id 1ESOAj-0007wx-5Y; Wed, 19 Oct 2005 17:20:41 -0700
-To: Petr Baudis <pasky@suse.cz>
+	id S1751662AbVJTA2s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 20:28:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751663AbVJTA2s
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 20:28:48 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:59026 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751661AbVJTA2r (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Oct 2005 20:28:47 -0400
+Received: (qmail 22622 invoked by uid 2001); 20 Oct 2005 02:28:45 +0200
+To: "H. Peter Anvin" <hpa@zytor.com>
 Content-Disposition: inline
-In-Reply-To: <20051019222044.GP30889@pasky.or.cz>
-User-Agent: Mutt/1.5.8i
+In-Reply-To: <4356966A.8010401@zytor.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10329>
 
-On Thu, Oct 20, 2005 at 12:20:44AM +0200, Petr Baudis wrote:
+Dear diary, on Wed, Oct 19, 2005 at 08:54:34PM CEST, I got a letter
+where "H. Peter Anvin" <hpa@zytor.com> told me that...
+> diff --git a/daemon.c b/daemon.c
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -13,7 +13,9 @@
+>  static int log_syslog;
+>  static int verbose;
+>  
+> -static const char daemon_usage[] = "git-daemon [--verbose] [--syslog] [--inetd | --port=n] [--export-all] [directory...]";
+> +static const char daemon_usage[] =
+> +"git-daemon [--verbose] [--syslog] [--inetd | --port=n] [--export-all]\n"
+> +"           [--timeout=n] [--init-timeout=n] [directory...]";
+>  
+>  /* List of acceptable pathname prefixes */
+>  static char **ok_paths = NULL;
 
->   If (well, it sounds like a good idea, so rather "when") you do this,
-> it would be a good idea to do in a way that makes it easy to later add
-> support for some kind of authentication (really, not everyone wants to
-> give away ssh accounts). Let's say it works like:
-> 
-> [client]	git-upload-pack <path>
-> [server]	challenge somethingnonsensical
-> [client]	challenge-response <username>:sha1(somethingnonsensical<password>)
-> [server]	All right, the pack goes like this...
-> 
->   Suddenly you have support for hopefully secure authentication, and at
-> the same time you have the cookie implemented in backwards-compatible
-> fashion (in the sense that new client will be able to talk to old
-> server) - just assume the username and password empty. This might be
-> even hardcoded for now, just leave a room for its addition (in an
-> elegant and compatible way) in the protocol, please.
+You didn't update Documentation/git-daemon.txt.
 
-This kind of password authentication has several problems that make it
-fairly unpractical.  It is prone to easy dictionary attacks for one thing.
-It also for a spoofed server to do replays, and the likes.  It also
-requires the server to store plaintext passwords.
+> diff --git a/upload-pack.c b/upload-pack.c
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -4,13 +4,19 @@
+>  #include "tag.h"
+>  #include "object.h"
+>  
+> -static const char upload_pack_usage[] = "git-upload-pack <dir>";
+> +static const char upload_pack_usage[] = "git-upload-pack [--strict] [--timeout=nn] <dir>";
 
-There are other, much better, authentication algorithms, but short of doing
-signatures, none are really much more secure.  The closest you'll get to
-secure remote passwords is SRP <http://srp.stanford.edu/>, which is quite
-good, and doesn't even require plaintext passwords to be stored.  It might
-just be easier at that point to use signatures, though.
+Ditto.
 
-Dave
+
+After being confronted with incomplete documentation again just minutes
+ago (will send patch soon), I think I'm going to start to be annoying
+and watch patches for this issue specifically. ;-)
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
