@@ -1,71 +1,64 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git-send-pack segfaulting on DebianPPC (was: Re: cg-clone, tag objects and cg-push/git-push don't play nice)
-Date: Thu, 20 Oct 2005 13:43:48 +1300
-Message-ID: <46a038f90510191743r22205cf5ia6e5fd624c2d4949@mail.gmail.com>
-References: <46a038f90510190202n60101c5cgf27bd714dce00513@mail.gmail.com>
-	 <Pine.LNX.4.64.0510190724000.3369@g5.osdl.org>
-	 <46a038f90510191356w56b78413p6b9fe5b67fc9ee74@mail.gmail.com>
-	 <20051019223743.GQ30889@pasky.or.cz>
-	 <46a038f90510191623k4f1a7267m50d3bbbd6665a2a3@mail.gmail.com>
-	 <20051019235208.GR30889@pasky.or.cz>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] cg-fetch will now retrieve commits related to tags if missing.
+Date: Thu, 20 Oct 2005 13:55:45 +1300
+Message-ID: <1129769745158-git-send-email-martin@catalyst.net.nz>
+Reply-To: Martin Langhoff <martin@catalyst.net.nz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 20 02:45:46 2005
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Thu Oct 20 02:53:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESOXn-0000Ua-4p
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 02:44:31 +0200
+	id 1ESOgC-0003y5-RL
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 02:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006AbVJTAnu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Oct 2005 20:43:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbVJTAnu
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 20:43:50 -0400
-Received: from qproxy.gmail.com ([72.14.204.200]:47004 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751006AbVJTAnt convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Oct 2005 20:43:49 -0400
-Received: by qproxy.gmail.com with SMTP id v40so221896qbe
-        for <git@vger.kernel.org>; Wed, 19 Oct 2005 17:43:48 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PUI8LYyUmLuMCz441Ud6Bbhuwpycvcr736YJsyQxmCLHZEgnuUSfZmu/Oug+kbodETXqVdUtCirGj+j4xZwLWqYEA1yLvTyaMG3KYXi+noNhonW9FwkpmVsRmTYaEdF8xLoS6sbZwmI0B4MQL7wwFny1O7SfsLs/hP5/OXTMrh4=
-Received: by 10.65.242.2 with SMTP id u2mr1048270qbr;
-        Wed, 19 Oct 2005 17:43:48 -0700 (PDT)
-Received: by 10.64.232.18 with HTTP; Wed, 19 Oct 2005 17:43:48 -0700 (PDT)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051019235208.GR30889@pasky.or.cz>
-Content-Disposition: inline
+	id S1751671AbVJTAxH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Oct 2005 20:53:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751673AbVJTAxH
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Oct 2005 20:53:07 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:46025 "EHLO
+	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
+	id S1751671AbVJTAxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Oct 2005 20:53:05 -0400
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
+	id 1ESOfw-0005b6-Ck; Thu, 20 Oct 2005 13:52:56 +1300
+Received: from mltest ([127.0.0.1])
+	by mltest with smtp (Exim 3.36 #1 (Debian))
+	id 1ESOif-0001rN-00; Thu, 20 Oct 2005 13:55:45 +1300
+In-Reply-To: 
+X-Mailer: git-send-email
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10331>
 
-On 10/20/05, Petr Baudis <pasky@suse.cz> wrote:
-> Dear diary, on Thu, Oct 20, 2005 at 01:23:11AM CEST, I got a letter
-> where Martin Langhoff <martin.langhoff@gmail.com> told me that...
-> > Actually, all the tagsrefs have only one line, but something is going
-> > weird around tagid=$(cat $tag) as $tag ends up containing many
-> > filenames. So I undid my initial change to "head -n1", and I'm trying
-> > to fix the loop.
->
-> Hmm, what bash version are you using? It's enclosed in
->
->         for tag in *
->
-> and perhaps your bash misunderstood.
-
-After a bit of head-scratching, I found out what was causing this one:
-legacy tagnames from git-cvsimport that contain '*' in the tagname. So
-
-   tagid=$(cat SOME_TAG **INVALID**)
-
-gives us some really nasty surprises.
-
-cheers,
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
 
 
-martin
+---
+
+ cg-fetch |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+applies-to: 38ed7981343a8e2bb734d64e019186a8a482dbef
+48cb643964910a058881307513cb63aeee28a1de
+diff --git a/cg-fetch b/cg-fetch
+index 7694584..d4650e5 100755
+--- a/cg-fetch
++++ b/cg-fetch
+@@ -417,7 +417,8 @@ $get -i -s -u -d "$uri/refs/tags" "$_git
+ 	for tag in *; do
+ 		[ "$tag" = "*" ] && break
+ 		tagid=$(cat $tag)
+-		GIT_DIR=../.. git-cat-file -t "$tagid" >/dev/null 2>&1 && continue
++		GIT_DIR=../.. [ "`git-cat-file -t $tagid 2>/dev/null`" = "commit" ] && continue
++		GIT_DIR=../.. git-cat-file commit `git-rev-parse $tag^{commit}  2>/dev/null` 2>&1 >> /dev/null && continue
+ 		echo -n "Missing object of tag $tag... "
+ 		if [ "$fetch" != "fetch_rsync" ] && GIT_DIR=../.. $fetch "$tagid" "$uri" 2>/dev/null >&2; then
+ 			echo "retrieved"
+---
+0.99.8.GIT
