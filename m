@@ -1,74 +1,67 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Revamping the git protocol
-Date: Thu, 20 Oct 2005 08:50:20 -0700
-Message-ID: <4357BCBC.1020706@zytor.com>
-References: <43571DA1.6030907@zytor.com> <7vwtk8pvju.fsf@assigned-by-dhcp.cox.net> <20051020091245.GY30889@pasky.or.cz>
+Date: Thu, 20 Oct 2005 09:20:09 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510200910160.3369@g5.osdl.org>
+References: <43571DA1.6030907@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 20 17:51:04 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 20 18:22:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESch2-0007dp-SI
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 17:51:01 +0200
+	id 1ESd9O-0001Th-Lg
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 18:20:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932204AbVJTPu6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 11:50:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932273AbVJTPu6
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 11:50:58 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:45471 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932204AbVJTPu5
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2005 11:50:57 -0400
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9KFoKqD003259
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 20 Oct 2005 08:50:23 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051020091245.GY30889@pasky.or.cz>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S932412AbVJTQUP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 12:20:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932425AbVJTQUO
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 12:20:14 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:50097 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932412AbVJTQUN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 12:20:13 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9KGKBFC016193
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 20 Oct 2005 09:20:12 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9KGK9Ru028775;
+	Thu, 20 Oct 2005 09:20:10 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <43571DA1.6030907@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10367>
 
-Petr Baudis wrote:
-> Dear diary, on Thu, Oct 20, 2005 at 08:11:17AM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> told me that...
-> 
->>I am wondering if we can just get away with a simpler scheme
->>Linus outlined instead.  One drawback of that approach is it
->>does not easily allow things like challenge-response uniformly
->>across different commands (admittedly we only have "upload-pack"
->>command right now, but we could add list of supported commands
->>easily in execute()), but you could do something along this, I
->>presume?
-> 
-> What's wrong with my scheme? That is, _reply_ with challenge to the
-> upload-pack command. This should be equally powerful to the Linus'
-> scheme and the crucial advantage is that you do not need to tell at
-> the client side whether you are talking to a new server or an old one.
-> 
-> I was convinced that the authentication part of the challenge-resposne
-> isn't such a good idea after all, though. ;-)
-> 
 
-Anyone noticed that either of those schemes aren't actually 
-backward-compatible in any way (old client talking to new server will be 
-disconnected), and that unfortunately is the best thing one can do with 
-the current setup, exactly because there is no option negotiation phase?
 
-Another issue is that currently there is no error information propagated 
-back to the client; the server logs an error in its own logs, but the 
-client is simply disconnected.
+On Wed, 19 Oct 2005, H. Peter Anvin wrote:
+> 
+> 1. "Strings" are sequences of bytes prefixed with a length.  The length is
+> encoded as four lower-case hexadecimal digits.  [Why not as 2 or 4 bytes of
+> network byte order binary?]  When represented in this text as "foo", this
+> means the sequence of bytes on the wire is <0003foo>.
 
-	-hpa
+As a reason for your "why" - imagine debugging a protocol using telnet..
+
+ASCII really is very nice for things like that.
+
+And no, "foo" is not represented as <0003foo>. It's represented as 
+<0007foo>, because the length includes the length of the prefix.
+
+The special sequence <0000> is a flush sequence, and it's designed so that 
+it's supposed to be distinguishable from an empty string <0004>. A <0001> 
+to <0003> will be rejected as an error. Maximum string length is thus 
+65531.
+
+(Actually, right now flush it is _not_ distinguishable from an empty 
+string because we return 0 for both cases from packet_read_line(), but the 
+point being that the packet protocol _supports_ it being distinguishable 
+if we ever need it to).
+
+			Linus
