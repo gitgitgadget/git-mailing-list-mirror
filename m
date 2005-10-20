@@ -1,56 +1,64 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Revamping the git protocol
-Date: Thu, 20 Oct 2005 11:12:45 +0200
-Message-ID: <20051020091245.GY30889@pasky.or.cz>
-References: <43571DA1.6030907@zytor.com> <7vwtk8pvju.fsf@assigned-by-dhcp.cox.net>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: rsync update appears broken now
+Date: 20 Oct 2005 05:47:42 -0700
+Message-ID: <86vezs9wy9.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 20 11:14:52 2005
+X-From: git-owner@vger.kernel.org Thu Oct 20 14:49:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESWTl-0001NY-Q5
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 11:12:54 +0200
+	id 1ESZpw-0007Ly-D9
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 14:48:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750862AbVJTJMr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 05:12:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbVJTJMr
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 05:12:47 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:4324 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750793AbVJTJMr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 05:12:47 -0400
-Received: (qmail 15943 invoked by uid 2001); 20 Oct 2005 11:12:45 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vwtk8pvju.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S932096AbVJTMr5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 08:47:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932113AbVJTMr5
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 08:47:57 -0400
+Received: from [209.223.236.162] ([209.223.236.162]:12716 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932096AbVJTMr5
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2005 08:47:57 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 60BC38F9C6
+	for <git@vger.kernel.org>; Thu, 20 Oct 2005 05:47:43 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 11147-02-24 for <git@vger.kernel.org>;
+ Thu, 20 Oct 2005 05:47:42 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id E91768FA39; Thu, 20 Oct 2005 05:47:42 -0700 (PDT)
+To: git@vger.kernel.org
+x-mayan-date: Long count = 12.19.12.13.1; tzolkin = 11 Imix; haab = 19 Yax
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10358>
 
-Dear diary, on Thu, Oct 20, 2005 at 08:11:17AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> I am wondering if we can just get away with a simpler scheme
-> Linus outlined instead.  One drawback of that approach is it
-> does not easily allow things like challenge-response uniformly
-> across different commands (admittedly we only have "upload-pack"
-> command right now, but we could add list of supported commands
-> easily in execute()), but you could do something along this, I
-> presume?
 
-What's wrong with my scheme? That is, _reply_ with challenge to the
-upload-pack command. This should be equally powerful to the Linus'
-scheme and the crucial advantage is that you do not need to tell at
-the client side whether you are talking to a new server or an old one.
+Doing my daily git-pull now broke in this way (using yesterday's git version):
 
-I was convinced that the authentication part of the challenge-resposne
-isn't such a good idea after all, though. ;-)
+sent 1196 bytes  received 155984 bytes  4555.94 bytes/sec
+total size is 4511741  speedup is 28.70
+* committish: 6e1c6c103c522d01829f3a63992a023ff031e851
+  branch 'master' of rsync://rsync.kernel.org/pub/scm/git/git
+* refs/heads/origin: does not fast forward to branch 'master' of rsync://rsync.kernel.org/pub/scm/git/git;
+  not updating.
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+Trying simple merge.
+Simple merge failed, trying Automatic merge.
+Auto-merging fetch-pack.c.
+merge: warning: conflicts during merge
+ERROR: Merge conflict in fetch-pack.c.
+fatal: merge program failed
+Automatic merge failed; fix up by hand
+
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
