@@ -1,52 +1,70 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] cg-fetch: handle tags with funny chars, retrieve missing commits
-Date: Thu, 20 Oct 2005 18:05:58 +1300
-Message-ID: <46a038f90510192205jd4f3a12j60799f043ee31f85@mail.gmail.com>
-References: <11297835242417-git-send-email-martin@catalyst.net.nz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] cg-fetch will now retrieve commits related to tags if missing.
+Date: Wed, 19 Oct 2005 22:23:30 -0700
+Message-ID: <7v3bmwu5gt.fsf@assigned-by-dhcp.cox.net>
+References: <1129769745158-git-send-email-martin@catalyst.net.nz>
+	<7voe5lvv1q.fsf@assigned-by-dhcp.cox.net>
+	<46a038f90510192118s31c52fe7m73d88a9779653f4c@mail.gmail.com>
+	<7virvsu79c.fsf@assigned-by-dhcp.cox.net>
+	<46a038f90510192159h25aad025kf377e3e33b5d30d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Oct 20 07:07:18 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin@catalyst.net.nz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 20 07:24:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESScu-0000LP-0N
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 07:06:04 +0200
+	id 1ESSuA-0005xB-MY
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 07:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751AbVJTFGA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 01:06:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751753AbVJTFGA
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 01:06:00 -0400
-Received: from qproxy.gmail.com ([72.14.204.195]:14421 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751751AbVJTFF7 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2005 01:05:59 -0400
-Received: by qproxy.gmail.com with SMTP id v40so254325qbe
-        for <git@vger.kernel.org>; Wed, 19 Oct 2005 22:05:58 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fd+0wwNLfijBFj0n0XOVXqqvjFlQq6yffKpm5oLnF9yuL0Z6+4gxLBB5VGnVp5OgixeeMB2Gqc1u6tVR8IPnJVQbm0xX6rNonus7Tiq/kem9lS6AXjHRhPLWU1eWZFNAWjy/tZSyZNT9uJGyRuk4Tq4peK01reQKa05uzCwB03k=
-Received: by 10.64.242.2 with SMTP id p2mr1204406qbh;
-        Wed, 19 Oct 2005 22:05:58 -0700 (PDT)
-Received: by 10.64.232.18 with HTTP; Wed, 19 Oct 2005 22:05:58 -0700 (PDT)
-To: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <11297835242417-git-send-email-martin@catalyst.net.nz>
-Content-Disposition: inline
+	id S1751750AbVJTFXd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 01:23:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751757AbVJTFXd
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 01:23:33 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:47778 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751750AbVJTFXd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2005 01:23:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051020052319.XYQP4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 20 Oct 2005 01:23:19 -0400
+To: Martin Langhoff <martin.langhoff@gmail.com>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10350>
 
-Pulled, superceded by new version.
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-On 10/20/05, Martin Langhoff <martin@catalyst.net.nz> wrote:
->  + handles tags with funny chars a bit better
->  + will check tagrefs, trying to ensure it actually has the relevant
->    commits. If the commits are missing, it'll go out and fetch them.
->
-> This isn't a complete solution for cg-fetch -- git-fetch is actually
-> much smarter now, and cg-fetch should perhaps be a thin wrapper
-> around it, dropping all the duplicate code.
->
-> Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+> Ok -- I was using ^{commit} which _is_ lazy, but you are
+> right, ^0 isn't lazy.
+
+Ah, my mistake.  We would need something like this.
+
+---
+
+diff --git a/sha1_name.c b/sha1_name.c
+index 75c688e..cc320d3 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -323,6 +323,8 @@ static int peel_onion(const char *name, 
+ 		return -1;
+ 	if (!type_string) {
+ 		o = deref_tag(o);
++		if (!o || (!o->parsed && !parse_object(o->sha1)))
++			return -1;
+ 		memcpy(sha1, o->sha1, 20);
+ 	}
+ 	else {
+@@ -332,7 +334,7 @@ static int peel_onion(const char *name, 
+ 		 */
+ 
+ 		while (1) {
+-			if (!o)
++			if (!o || (!o->parsed && !parse_object(o->sha1)))
+ 				return -1;
+ 			if (o->type == type_string) {
+ 				memcpy(sha1, o->sha1, 20);
