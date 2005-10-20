@@ -1,72 +1,78 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] cg-fetch will now retrieve commits related to tags if missing.
-Date: Thu, 20 Oct 2005 17:59:50 +1300
-Message-ID: <46a038f90510192159h25aad025kf377e3e33b5d30d@mail.gmail.com>
-References: <1129769745158-git-send-email-martin@catalyst.net.nz>
-	 <7voe5lvv1q.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f90510192118s31c52fe7m73d88a9779653f4c@mail.gmail.com>
-	 <7virvsu79c.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] cg-fetch: handle tags with funny chars, retrieve missing commits
+Date: Thu, 20 Oct 2005 18:07:46 +1300
+Message-ID: <1129784866457-git-send-email-martin@catalyst.net.nz>
+Reply-To: Martin Langhoff <martin@catalyst.net.nz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Martin Langhoff <martin@catalyst.net.nz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 20 07:01:19 2005
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Thu Oct 20 07:05:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESSX7-0006TA-Pc
-	for gcvg-git@gmane.org; Thu, 20 Oct 2005 07:00:06 +0200
+	id 1ESSbu-0008HG-1c
+	for gcvg-git@gmane.org; Thu, 20 Oct 2005 07:05:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751746AbVJTE7w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 00:59:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751748AbVJTE7w
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 00:59:52 -0400
-Received: from qproxy.gmail.com ([72.14.204.193]:11830 "EHLO qproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751745AbVJTE7w convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2005 00:59:52 -0400
-Received: by qproxy.gmail.com with SMTP id v40so253747qbe
-        for <git@vger.kernel.org>; Wed, 19 Oct 2005 21:59:51 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SZVouEf98aS7tHpSiFvvF55OYb4T6dOi6Ko5jeNdvzy56dAXcxVICdkyvl5V7UTnThkG8kJrnCl5Xa0oG8GnCmQ2B9SQKFxg4fHuHXYHkCtWXFT6dzb0dPn99zH9f6yrpArPMwjh016rMzOzxCH+iiw4kUeMzFtZrAVUJJe1Dwk=
-Received: by 10.64.210.13 with SMTP id i13mr1195907qbg;
-        Wed, 19 Oct 2005 21:59:50 -0700 (PDT)
-Received: by 10.64.232.18 with HTTP; Wed, 19 Oct 2005 21:59:50 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7virvsu79c.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751749AbVJTFE5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 01:04:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751750AbVJTFE5
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 01:04:57 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:55689 "EHLO
+	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
+	id S1751748AbVJTFE5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2005 01:04:57 -0400
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
+	id 1ESSbn-0007uy-HJ; Thu, 20 Oct 2005 18:04:55 +1300
+Received: from mltest ([127.0.0.1])
+	by mltest with smtp (Exim 3.36 #1 (Debian))
+	id 1ESSeY-0008VM-00; Thu, 20 Oct 2005 18:07:46 +1300
+In-Reply-To: 
+X-Mailer: git-send-email
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10348>
 
-On 10/20/05, Junio C Hamano <junkio@cox.net> wrote:
-> Martin Langhoff <martin.langhoff@gmail.com> writes:
->
-> >>         GIT_DIR=../.. git-rev-parse --verify "$tagid^0" >/dev/null 2>&1 && continue
-> >
-> > Note however that git-rev-parse is lazy and won't check that the
-> > commit is there. I have to call git-cat-file and check whether it
-> > succeeds to know if we have the object.
->
-> Are you sure?
->
-> What "rev^0" does is:
+ + handles tags with funny chars a bit better
+ + will check tagrefs, trying to ensure it actually has the relevant
+   commits. If the commits are missing, it'll go out and fetch them.
+ + if the tagref points to a blob and we have it, it'll skip it
 
-Ok -- I was using ^{commit} which _is_ lazy, but you are right, ^0 isn't lazy.
+This isn't a complete solution for cg-fetch -- git-fetch is actually
+much smarter now, and cg-fetch should perhaps be a thin wrapper
+around it, dropping all the duplicate code.
 
-> BTW, I just got a SEGV while pulling Cogito repository over
-> git-fetch-pack after interrupting rsync transfer (I wanted to
-> switch to git transfer).  I am running with Johaness patch from
-> today so the cause may be different from yours, but now I have
-> something to look at, which is better than before.
->
-> Fetching with rsync (and interrupting in the middle) is a good
-> way to simulate a broken repository ;-).
+This version uses ^0 instead of ^{commit} which does a more thorough check,
+so we don't need to call git-cat-file.
 
-Cool. That's something for you to play with I guess, to tell you the
-truth, I'm not useful with gdb ;)
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
 
-martin
+
+---
+
+ cg-fetch |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+applies-to: 38ed7981343a8e2bb734d64e019186a8a482dbef
+6adda5a9a938adbc313c6ed40156257d62707757
+diff --git a/cg-fetch b/cg-fetch
+index 7694584..ec9fff3 100755
+--- a/cg-fetch
++++ b/cg-fetch
+@@ -416,8 +416,9 @@ $get -i -s -u -d "$uri/refs/tags" "$_git
+ 	cd $_git/refs/tags
+ 	for tag in *; do
+ 		[ "$tag" = "*" ] && break
+-		tagid=$(cat $tag)
+-		GIT_DIR=../.. git-cat-file -t "$tagid" >/dev/null 2>&1 && continue
++		tagid=$(cat "$tag")
++		GIT_DIR=../.. git-rev-parse --verify "$tag"^0 2>/dev/null >> /dev/null && continue
++		GIT_DIR=../.. git-cat-file blob `git-rev-parse --verify "$tag"^{blob} 2>/dev/null` 2>/dev/null >> /dev/null && continue
+ 		echo -n "Missing object of tag $tag... "
+ 		if [ "$fetch" != "fetch_rsync" ] && GIT_DIR=../.. $fetch "$tagid" "$uri" 2>/dev/null >&2; then
+ 			echo "retrieved"
+---
+0.99.8.GIT
