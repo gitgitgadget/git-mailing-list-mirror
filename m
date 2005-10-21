@@ -1,93 +1,83 @@
-From: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>
-Subject: Re: LCA2006 Git/Cogito tutorial
-Date: Fri, 21 Oct 2005 16:02:28 +1300
-Message-ID: <43585A44.3050205@catalyst.net.nz>
-References: <4352F4C9.1040703@catalyst.net.nz> <20051021005145.GB30889@pasky.or.cz>
+From: eschvoca <eschvoca@gmail.com>
+Subject: Re: How do I clear the directory cache
+Date: Thu, 20 Oct 2005 23:23:28 -0400
+Message-ID: <2b05065b0510202023i62ab7c03uea1381d76535dcc7@mail.gmail.com>
+References: <2b05065b0510170720n5333f03l1941e84c1288fc5d@mail.gmail.com>
+	 <20051020085931.GW30889@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 21 05:02:26 2005
+X-From: git-owner@vger.kernel.org Fri Oct 21 05:25:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESnAm-0006is-AQ
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 05:02:24 +0200
+	id 1ESnWA-0002bd-Ct
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 05:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964848AbVJUDCW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 23:02:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964849AbVJUDCV
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 23:02:21 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:38065 "EHLO
-	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S964848AbVJUDCV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2005 23:02:21 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[192.168.2.69])
-	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1ESnAi-0007Yw-5U; Fri, 21 Oct 2005 16:02:20 +1300
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.7.12) Gecko/20050915
-X-Accept-Language: en-us, en
+	id S964852AbVJUDXa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 23:23:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964853AbVJUDXa
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 23:23:30 -0400
+Received: from qproxy.gmail.com ([72.14.204.201]:52891 "EHLO qproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964852AbVJUDX3 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Oct 2005 23:23:29 -0400
+Received: by qproxy.gmail.com with SMTP id z1so253193qbc
+        for <git@vger.kernel.org>; Thu, 20 Oct 2005 20:23:29 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ju5AesyhXDOZNxW8DZeznAIA8ofOqymhlWMY1ZjtjKJhzFW/BonWjU441e6T78RFSyoyP3Wmr7Zs9WOIU6bJHzwXJMnBNos90KVJePOjtqBJnFlfJyDVTtbYCS3K6Rv+mVP3BagBjvGTdlRf+KZ5VvIotOVkGFmc901KXH8Ut7w=
+Received: by 10.64.204.6 with SMTP id b6mr733447qbg;
+        Thu, 20 Oct 2005 20:23:28 -0700 (PDT)
+Received: by 10.65.44.2 with HTTP; Thu, 20 Oct 2005 20:23:28 -0700 (PDT)
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051021005145.GB30889@pasky.or.cz>
+In-Reply-To: <20051020085931.GW30889@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10411>
 
-Petr Baudis wrote:
+Yes, "cg-reset --adds-removals" is what I want (how do I do this with
+pure git?).
 
-> Dear diary, on Mon, Oct 17, 2005 at 02:48:09AM CEST, I got a letter
-> where "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz> told me that...
-> 
->>Petr Baudis hinted earlier that he might be coming, as did Linus (but
->>he was hoping for a sponsor, I'm not sure whether he'll be there or
->>not). Speak up if you'll be there!
-> 
-> 
-> I'm sorry but I will not be there - it is too far away from my little
-> country. :-(
+I would like to clear/reset the index because I've screwed it all up. 
+I don't think I can do as you suggested because of the way I got into
+this mess.
 
-Sad to hear that. I'll be soon in Europe, though, but not in CZ, 
-unfortunately!
+I'm using git/cogito to version control my hard drive and I've been
+gradually adding more entries into the .gitignore file because some
+files change too frequently or I don't want them backed up.  The OS
+modified a bunch of files, I cg-rm'd 1/4 of them, then I changed my
+mind and added them back, also did some genuine cg-adds, etc. and now
+I'm all confused (it's a whole hard drive).  If other people are
+interested in doing this I can pass on the lessons I learned.
 
-> (i) You might want to say "cg-export" instead of "git-tar-tree" (*shrug*)
+What I found it git is amazingly fast!  cg-status only takes a few
+seconds.  I think there are some problems if you try to do:
 
-You're right! I hadn't seen that.
+cd /
+cg-add -r usr
+cg-commit -m "take a long break"
 
-> (ii) You say:
-> 
-> 	- Very fast stupid merge
-> 	    ... and very smart, slow merges when stupid won't do
-> 
->   What are you explicitly referring to? I don't think any kind of merge
-> in GIT (unless something totally missed me) can be called "very smart".
-> If it's a three-way merge, it's never "very smart".
+It seems that cg-add-ing and cg-commit-ing smaller chunks is faster
+than one big chunk.
 
-See latest developments on git-merge.sh -- we should really revamp 
-cg-merge ;)
+I think commands for the following should be added to cogito:
 
-> 	vim .gitignore
+cg-status -<status_flag>  # list files with given status flag (without
+status flag in column 1)
+  git-ls-files [--others|--deleted|etc] --exclude-per-directory=/.gitignore
 
-Then it'd be a bug, not a feature ;)
+cg-add [-r] -<status_flag> # add files with a given status flag
+  git-ls-files [--others|--deleted|etc]
+--exclude-per-directory=/.gitignore | while read i; do cg-add "$i;
+done
 
->>ps: lately, about 30% of my emails to git@vger from gmail have been 
->>dropped on the floor. This is starting to get annoying, is anyone seeing 
->>similar issues?
-> 
-> 
-> Not me. Perhaps I'm in some VIP class. :^)
+cg-rm [-r] -<status_flag> # you get the idea.
 
-Oh, I figured that out! Gmail's "utf-8" mode encodes everything in 
-base64. Awful sh*t. Reverted to ascii and life is good.
+cg-addremove  # recursively add new files, remove deleted files
 
-
-
-martin
--- 
------------------------------------------------------------------------
-Martin @ Catalyst .Net .NZ  Ltd, PO Box 11-053, Manners St,  Wellington
-WEB: http://catalyst.net.nz/           PHYS: Level 2, 150-154 Willis St
-OFFICE: +64(4)916-7224                              MOB: +64(21)364-017
-       Make things as simple as possible, but no simpler - Einstein
------------------------------------------------------------------------
+I use "while read i" so it will work with spaces in filenames.
