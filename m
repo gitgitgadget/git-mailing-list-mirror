@@ -1,60 +1,107 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Silence confusing and false-positive curl error message
-Date: Fri, 21 Oct 2005 18:18:46 +0200
-Message-ID: <20051021161846.18478.50202.stgit@machine.or.cz>
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 21 18:23:25 2005
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Do not call git-rev-list from git-fetch-pack
+Date: Fri, 21 Oct 2005 10:11:00 -0700
+Message-ID: <7vwtk6vlqz.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0510210413210.26388@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7virvrw8w1.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0510211111440.4950@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 21 19:13:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESzbY-00078i-JN
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 18:18:53 +0200
+	id 1ET0Q6-0004gw-UC
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 19:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965015AbVJUQSt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Oct 2005 12:18:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965016AbVJUQSt
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 12:18:49 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:28642 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S965015AbVJUQSs (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 12:18:48 -0400
-Received: (qmail 18490 invoked from network); 21 Oct 2005 18:18:46 +0200
-Received: from localhost (HELO machine.or.cz) (127.0.0.1)
-  by localhost with SMTP; 21 Oct 2005 18:18:46 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S965036AbVJURLD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Oct 2005 13:11:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965038AbVJURLD
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 13:11:03 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:37555 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S965036AbVJURLC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Oct 2005 13:11:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051021171033.LTMA776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 21 Oct 2005 13:10:33 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0510211111440.4950@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 21 Oct 2005 11:35:21 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10439>
 
-git-http-fetch spits out curl 404 error message when unable to fetch an object,
-but that's confusing since no error really happenned and the object is usually
-found in a pack it tries right after that. And if the object still cannot be
-retrieved, it will say another error message anyway. OTOH other HTTP errors
-(403 etc) are likely fatal and the user should be still informed about them.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
+> Note that the best thing would probably be to add a binary search to that, 
+> and *not* stop at the first ack'ed rev, but rather count them, and stop at 
+> MAX_HAS.
+
+Another alternative.
+
+We send "haves" in order, without 2^n skipping nor binary search
+backtrack.  Instead, add a logic in upload-pack to see if a
+newly arrived "have" is a direct child of anything that we have
+already heard about, and mark to ignore them.  We need to add
+that MAX_HAS counting to fetch-pack side for this to work.
+
+This is not even compile tested, but just to outline the idea.
+
+(... now off to day-job ...)
+
 ---
 
- http-fetch.c |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/http-fetch.c b/http-fetch.c
-index a7dc2cc..2d76ee1 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -1069,9 +1069,12 @@ static int fetch_object(struct alt_base 
- 	}
+diff --git a/upload-pack.c b/upload-pack.c
+index 8a41caf..d98a28e 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -3,9 +3,11 @@
+ #include "pkt-line.h"
+ #include "tag.h"
+ #include "object.h"
++#include "commit.h"
  
- 	if (request->curl_result != CURLE_OK && request->http_code != 416) {
--		ret = error("%s (curl_result = %d, http_code = %ld, sha1 = %s)",
--			    request->errorstr, request->curl_result,
--			    request->http_code, hex);
-+		if (request->http_code == 404)
-+			ret = -1; /* Be silent, it is probably in a pack. */
-+		else
-+			ret = error("%s (curl_result = %d, http_code = %ld, sha1 = %s)",
-+				    request->errorstr, request->curl_result,
-+				    request->http_code, hex);
- 		release_request(request);
- 		return ret;
+ static const char upload_pack_usage[] = "git-upload-pack [--strict] [--timeout=nn] <dir>";
+ 
++#define THEY_HAVE (1U << 0)
+ #define MAX_HAS (16)
+ #define MAX_NEEDS (256)
+ static int nr_has = 0, nr_needs = 0;
+@@ -92,6 +94,20 @@ static int got_sha1(char *hex, unsigned 
+ 		return 0;
+ 	nr = nr_has;
+ 	if (nr < MAX_HAS) {
++		struct object *o = lookup_object(sha1);
++		if (!o || (o->parsed || !parse_object(sha1)))
++			die("oops");
++		if (o->type == commit_type) {
++			struct commit_list *parents;
++			if (o->flags & THEY_HAVE)
++				return 0;
++			o->flags |= THEY_HAVE;
++			for (parents = ((struct commit*)o)->parents;
++			     parents;
++			     parents = parents->next) {
++				parents->item->object.flags |= THEY_HAVE;
++			}
++		}
+ 		memcpy(has_sha1[nr], sha1, 20);
+ 		nr_has = nr+1;
  	}
+@@ -104,6 +120,9 @@ static int get_common_commits(void)
+ 	unsigned char sha1[20];
+ 	int len;
+ 
++	track_object_refs = 0;
++	save_commit_buffer = 0;
++
+ 	for(;;) {
+ 		len = packet_read_line(0, line, sizeof(line));
+ 		reset_timeout();
