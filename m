@@ -1,91 +1,53 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 2/2] Update git-daemon's documentation wrt. new options
-Date: Fri, 21 Oct 2005 02:28:45 +0200
-Message-ID: <20051021002845.26819.46168.stgit@machine.or.cz>
-References: <20051021002842.26819.56707.stgit@machine.or.cz>
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 21 02:29:46 2005
+From: Junio C Hamano <junkio@twinsun.com>
+Subject: Re: rsync update appears broken now
+Date: Fri, 21 Oct 2005 00:26:52 +0000 (UTC)
+Message-ID: <loom.20051021T022509-63@post.gmane.org>
+References: <86vezs9wy9.fsf@blue.stonehenge.com> <81b0412b0510200608l61c00ed0yd4dbc00c313665fe@mail.gmail.com> <Pine.LNX.4.64.0510201038320.3369@g5.osdl.org> <loom.20051020T220751-355@post.gmane.org> <Pine.LNX.4.64.0510201432260.10477@g5.osdl.org> <7vek6f220h.fsf@arte.twinsun.com> <Pine.LNX.4.64.0510201645450.10477@g5.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Oct 21 02:31:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESkmE-0003bV-4K
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 02:28:54 +0200
+	id 1ESkmu-0003lu-33
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 02:29:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964817AbVJUA2s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 20:28:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964818AbVJUA2s
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 20:28:48 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:59273 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964817AbVJUA2r (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 20:28:47 -0400
-Received: (qmail 26859 invoked from network); 21 Oct 2005 02:28:45 +0200
-Received: from localhost (HELO machine.or.cz) (127.0.0.1)
-  by localhost with SMTP; 21 Oct 2005 02:28:45 +0200
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <20051021002842.26819.56707.stgit@machine.or.cz>
+	id S964818AbVJUA3e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 20:29:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964819AbVJUA3d
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 20:29:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:12254 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964818AbVJUA3d (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 20:29:33 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ESklW-0003Tr-DH
+	for git@vger.kernel.org; Fri, 21 Oct 2005 02:28:10 +0200
+Received: from ip-66-80-53-59.lax.megapath.net ([66.80.53.59])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 21 Oct 2005 02:28:10 +0200
+Received: from junkio by ip-66-80-53-59.lax.megapath.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 21 Oct 2005 02:28:10 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 66.80.53.59 (Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.12) Gecko/20050915 Firefox/1.0.7)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10396>
 
-New options --timeout, --init-timeout, --export-all and whitelist support
-were added to git-daemon, but noone bothered to also add the proper
-documentation. This patch aims to fix that.
+Linus Torvalds <torvalds <at> osdl.org> writes:
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+> The latest one I have is ea5a65a59916503d2a14369c46b1023384d51645, but if 
+> you had more pushed out at some point that I just didn't happen to pick 
+> up, that may not be the top-most (A).
 
- Documentation/git-daemon.txt |   22 ++++++++++++++++++++--
- 1 files changed, 20 insertions(+), 2 deletions(-)
+I am reasonably sure that the screw-up was only rewinding one commit too much.
+I've done the merge so things should look better once mirrors catch up.
 
-diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-index a013a58..67c5f22 100644
---- a/Documentation/git-daemon.txt
-+++ b/Documentation/git-daemon.txt
-@@ -7,7 +7,8 @@ git-daemon - A really simple server for 
- 
- SYNOPSIS
- --------
--'git-daemon' [--verbose] [--syslog] [--inetd | --port=n]
-+'git-daemon' [--verbose] [--syslog] [--inetd | --port=n] [--export-all]
-+             [--timeout=n] [--init-timeout=n] [directory...]
- 
- DESCRIPTION
- -----------
-@@ -20,18 +21,35 @@ what directory to upload, and it verifie
- 
- It verifies that the directory has the magic file "git-daemon-export-ok", and
- it will refuse to export any git directory that hasn't explicitly been marked
--for export this way.
-+for export this way (unless the '--export-all' parameter is specified). If you
-+pass some directory paths as 'git-daemon' arguments, you can further restrict
-+the offers to a whitelist comprising of those.
- 
- This is ideally suited for read-only updates, ie pulling from git repositories.
- 
- OPTIONS
- -------
-+--export-all::
-+	Allow pulling from all directories that look like GIT repositories
-+	(have the 'objects' subdirectory and a 'HEAD' file), even if they
-+	do not have the 'git-daemon-export-ok' file.
-+
- --inetd::
- 	Have the server run as an inetd service.
- 
- --port::
- 	Listen on an alternative port.
- 
-+--init-timeout::
-+	Timeout between the moment the connection is established and the
-+	client request is received (typically a rather low value, since
-+	that should be basically immediate).
-+
-+--timeout::
-+	Timeout for specific client sub-requests. This includes the time
-+	it takes for the server to process the sub-request and time spent
-+	waiting for next client's request.
-+
- --syslog::
- 	Log to syslog instead of stderr. Note that this option does not imply
- 	--verbose, thus by default only error conditions will be logged.
+Thanks for your help.
