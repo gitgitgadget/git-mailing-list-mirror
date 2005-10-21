@@ -1,62 +1,56 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: git-rev-parse: one more fix for "--"
-Date: Thu, 20 Oct 2005 21:17:40 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510202115180.423@g5.osdl.org>
+From: Ben Lau <benlau@ust.hk>
+Subject: Re: How to create a new branch based on a tag?
+Date: Sat, 22 Oct 2005 00:23:55 +0800
+Message-ID: <4359161B.5000808@ust.hk>
+References: <435901F7.9020509@ust.hk> <7vsluv5y0p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Oct 21 06:20:42 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 21 06:25:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESoLk-0000Bs-IY
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 06:17:49 +0200
+	id 1ESoRV-0002Mh-VP
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 06:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964863AbVJUERq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Oct 2005 00:17:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964864AbVJUERq
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 00:17:46 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:11144 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964863AbVJUERp (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 00:17:45 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9L4HfFC011254
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 20 Oct 2005 21:17:41 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9L4HeI0022975;
-	Thu, 20 Oct 2005 21:17:41 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.125 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964862AbVJUEX2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Oct 2005 00:23:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964865AbVJUEX2
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 00:23:28 -0400
+Received: from mx3.ust.hk ([143.89.13.11]:47631 "EHLO mx3.ust.hk")
+	by vger.kernel.org with ESMTP id S964862AbVJUEX2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 00:23:28 -0400
+Received: from [143.89.135.159] (atz113.rd.ust.hk [143.89.135.159])
+	by mx3.ust.hk (8.12.11/8.12.11) with ESMTP id j9L4NJrS097160;
+	Fri, 21 Oct 2005 12:23:20 +0800 (HKT)
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vsluv5y0p.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10418>
 
+Junio C Hamano wrote:
 
-My previous "--" fixup case missed one case: it would print any default 
-revision after the "--" rather than before.
-
-Trivially fixed.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-
-Gaah. If you haven't applied the previous patch yet, just combine the two 
-diffs into one.
-
-diff --git a/rev-parse.c b/rev-parse.c
-index 9ae2512..243f89f 100644
---- a/rev-parse.c
-+++ b/rev-parse.c
-@@ -174,6 +174,7 @@ int main(int argc, char **argv)
- 		if (*arg == '-') {
- 			if (!strcmp(arg, "--")) {
- 				as_is = 1;
-+				show_default();
- 				/* Pass on the "--" if we show anything but files.. */
- 				if (filter & (DO_FLAGS | DO_REVS))
- 					show_file(arg);
+>Ben Lau <benlau@ust.hk> writes:
+>
+>  
+>
+>>As v2.6.11 is a tree object(tag), git-checkout and git-branch could 
+>>not process it. The
+>>only way I know is using git-read-tree to fetch v2.6.11 content into 
+>>current index and start
+>>a branch based on it. Is there any simpler method?
+>>    
+>>
+>
+>The way you know is as good as it gets.  v2.6.11-tree case is
+>really an unfortunate special case.
+>
+>  
+>
+What is wrong with the v2.6.11-tree? I just thought it is a duplicate tag
+of v2.6.11.
