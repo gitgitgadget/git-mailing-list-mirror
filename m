@@ -1,55 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Do not call git-rev-list from git-fetch-pack
-Date: Fri, 21 Oct 2005 14:32:00 -0700
-Message-ID: <7vbr1iv9nz.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0510210413210.26388@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7virvrw8w1.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0510211111440.4950@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vwtk6vlqz.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0510212134570.5542@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: How do I clear the directory cache
+Date: Fri, 21 Oct 2005 23:43:26 +0200
+Message-ID: <20051021214326.GJ30889@pasky.or.cz>
+References: <2b05065b0510170720n5333f03l1941e84c1288fc5d@mail.gmail.com> <20051020085931.GW30889@pasky.or.cz> <2b05065b0510202023i62ab7c03uea1381d76535dcc7@mail.gmail.com> <20051021105235.GF30889@pasky.or.cz> <2b05065b0510211340y9551767i53fe53c0dc14460a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 21 23:32:21 2005
+X-From: git-owner@vger.kernel.org Fri Oct 21 23:43:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ET4Uh-0002SW-5w
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 23:32:07 +0200
+	id 1ET4fk-0008DI-6F
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 23:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751150AbVJUVcD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Oct 2005 17:32:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbVJUVcD
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 17:32:03 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:59785 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751150AbVJUVcB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Oct 2005 17:32:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051021213132.QARR776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 21 Oct 2005 17:31:32 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0510212134570.5542@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Fri, 21 Oct 2005 21:44:12 +0200
-	(CEST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751232AbVJUVn3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Oct 2005 17:43:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbVJUVn3
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 17:43:29 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:23201 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751232AbVJUVn2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 17:43:28 -0400
+Received: (qmail 14677 invoked by uid 2001); 21 Oct 2005 23:43:26 +0200
+To: eschvoca <eschvoca@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <2b05065b0510211340y9551767i53fe53c0dc14460a@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10451>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Dear diary, on Fri, Oct 21, 2005 at 10:40:07PM CEST, I got a letter
+where eschvoca <eschvoca@gmail.com> told me that...
+> On 10/21/05, Petr Baudis <pasky@suse.cz> wrote:
+> > Dear diary, on Fri, Oct 21, 2005 at 05:23:28AM CEST, I got a letter
+> > where eschvoca <eschvoca@gmail.com> told me that...
+> > > cg-status -<status_flag>  # list files with given status flag (without
+> > > status flag in column 1)
+> > >   git-ls-files [--others|--deleted|etc] --exclude-per-directory=/.gitignore
+> >
+> > All right, this might be useful. Implemented as cg-status -s '?' and such,
+> > thanks for the idea.
+> 
+> This is great but it would be easier to work with if there was another
+> switch to turn off printing
+> out the status flag.  Otherwise you have to 'sed' or 'awk' out the
+> status flag which is a pain, especially when files have spaces in
+> them.
 
-> Yes. This makes it more simple, and is very efficient in the common case. 
-> How about increasing MAX_HAS to 64?
+Not such a huge pain, but if we already have -s... I added -n which does
+what you want.
 
-The other day I saw HPA tried to sneak in a change to increase
-it to 64, mingled with other changes.  I think increasing it
-makes sense.
+> Also, the "cg-add -r" exits when a file is bad.  It would have saved
+> me a few hours if it would keep not exit on a failure (and add the bad
+> files to .gitignore ... but that is probably asking for too much).
 
-Now the question is, if we count MAX_HAS on the fetch-pack side,
-how would we coordinate that value with the real limit the other
-end uses.  I guess that would not matter too much.  It would not
-affect the correctness anyway.
+I don't like the idea of adding the files automagically to .gitignore,
+but it won't abort the whole operation because of them anymore.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
