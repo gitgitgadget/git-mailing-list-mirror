@@ -1,68 +1,71 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Quote COGITO_LIB in scripts
-Date: Fri, 21 Oct 2005 15:16:44 +0200
-Message-ID: <20051021131643.GB25662@diku.dk>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: rsync update appears broken now
+Date: 21 Oct 2005 06:49:48 -0700
+Message-ID: <861x2fdloj.fsf@blue.stonehenge.com>
+References: <86vezs9wy9.fsf@blue.stonehenge.com>
+	<81b0412b0510200608l61c00ed0yd4dbc00c313665fe@mail.gmail.com>
+	<Pine.LNX.4.64.0510201038320.3369@g5.osdl.org>
+	<loom.20051020T220751-355@post.gmane.org>
+	<Pine.LNX.4.64.0510201432260.10477@g5.osdl.org>
+	<7vek6f220h.fsf@arte.twinsun.com>
+	<Pine.LNX.4.64.0510201645450.10477@g5.osdl.org>
+	<loom.20051021T022509-63@post.gmane.org>
+	<Pine.LNX.4.64.0510201752050.10477@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 21 15:19:22 2005
+Cc: Junio C Hamano <junkio@twinsun.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 21 15:51:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESwlM-0003nO-Fr
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 15:16:48 +0200
+	id 1ESxH1-0002RI-Hz
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 15:49:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964941AbVJUNQp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Oct 2005 09:16:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964942AbVJUNQp
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 09:16:45 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:58831 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S964941AbVJUNQp (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 09:16:45 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 11FC96DFC1C; Fri, 21 Oct 2005 15:16:44 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id DB7C66DF845; Fri, 21 Oct 2005 15:16:43 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 191E6610D9; Fri, 21 Oct 2005 15:16:44 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00,UPPERCASE_25_50 
-	autolearn=no version=2.60
+	id S964951AbVJUNt3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Oct 2005 09:49:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964952AbVJUNt3
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 09:49:29 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:19858 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S964951AbVJUNt2
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Oct 2005 09:49:28 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 352978F5E3;
+	Fri, 21 Oct 2005 06:49:49 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 12414-02-9; Fri, 21 Oct 2005 06:49:48 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id C6B628FAD8; Fri, 21 Oct 2005 06:49:48 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+x-mayan-date: Long count = 12.19.12.13.2; tzolkin = 12 Ik; haab = 0 Zac
+In-Reply-To: <Pine.LNX.4.64.0510201752050.10477@g5.osdl.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10433>
 
-... so they work when prefix contains spaces.
+>>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+Linus> On Fri, 21 Oct 2005, Junio C Hamano wrote:
+>> 
+>> I am reasonably sure that the screw-up was only rewinding one commit too much.
+>> I've done the merge so things should look better once mirrors catch up.
 
----
-diff --git a/Makefile b/Makefile
-index fd52992..1b61953 100644
---- a/Makefile
-+++ b/Makefile
-@@ -92,12 +92,12 @@ install-cogito: $(SCRIPT) $(LIB_SCRIPT) 
- 	$(INSTALL) $(LIB_SCRIPT) $(DESTDIR)$(libdir)
- 	cd $(DESTDIR)$(bindir); \
- 	for file in $(SCRIPT); do \
--		sed -e 's/\$${COGITO_LIB}/\$${COGITO_LIB:-$(sedlibdir)\/}/g' $$file > $$file.new; \
-+		sed -e 's/\$${COGITO_LIB}/"\$${COGITO_LIB:-$(sedlibdir)\/}"/g' $$file > $$file.new; \
- 		cat $$file.new > $$file; rm $$file.new; \
- 	done
- 	cd $(DESTDIR)$(libdir); \
- 	for file in $(LIB_SCRIPT); do \
--		sed -e 's/\$${COGITO_LIB}/\$${COGITO_LIB:-$(sedlibdir)\/}/g' $$file > $$file.new; \
-+		sed -e 's/\$${COGITO_LIB}/"\$${COGITO_LIB:-$(sedlibdir)\/}"/g' $$file > $$file.new; \
- 		cat $$file.new > $$file; rm $$file.new; \
- 	done
- 
+Linus> Yup, works at least for me. Thx,
+
+Doesn't yet work for me.  What do I need to do now?
+
+    * committish: 4ae22d96fe9248dac4f26b1fc91154ba5e879799
+      branch 'master' of rsync://rsync.kernel.org/pub/scm/git/git
+    * refs/heads/origin: same as branch 'master' of rsync://rsync.kernel.org/pub/scm/git/git
+    Updating from ea5a65a59916503d2a14369c46b1023384d51645 to 4ae22d96fe9248dac4f26b1fc91154ba5e879799.
+    fetch-pack.c: needs update
+    fatal: Entry 'daemon.c' would be overwritten by merge. Cannot merge.
 
 -- 
-Jonas Fonseca
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
