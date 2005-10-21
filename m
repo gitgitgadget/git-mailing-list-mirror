@@ -1,55 +1,87 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Cogito README: add a block describing team workflow with git+ssh
-Date: Fri, 21 Oct 2005 17:14:51 +0200
-Message-ID: <20051021151451.GH30889@pasky.or.cz>
-References: <11298728883894-git-send-email-martin@catalyst.net.nz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Split up tree diff functions into tree-diff.c library
+Date: Fri, 21 Oct 2005 08:19:30 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510210814310.10477@g5.osdl.org>
+References: <Pine.LNX.4.64.0510202058030.10477@g5.osdl.org>
+ <7v64rr2y4q.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 21 17:17:59 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 21 17:21:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESybh-0003B5-Jn
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 17:14:58 +0200
+	id 1ESygI-0004nz-9V
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 17:19:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964974AbVJUPOy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Oct 2005 11:14:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964975AbVJUPOy
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 11:14:54 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:39824 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964974AbVJUPOx (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 11:14:53 -0400
-Received: (qmail 12600 invoked by uid 2001); 21 Oct 2005 17:14:51 +0200
-To: Martin Langhoff <martin@catalyst.net.nz>
-Content-Disposition: inline
-In-Reply-To: <11298728883894-git-send-email-martin@catalyst.net.nz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S964980AbVJUPTh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Oct 2005 11:19:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964979AbVJUPTh
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 11:19:37 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:65451 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964980AbVJUPTg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 11:19:36 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9LFJVFC002850
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 21 Oct 2005 08:19:31 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9LFJU5q007780;
+	Fri, 21 Oct 2005 08:19:30 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64rr2y4q.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0.224 required=5 tests=REMOVE_REMOVAL_NEAR
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10435>
 
-Dear diary, on Fri, Oct 21, 2005 at 07:34:48AM CEST, I got a letter
-where Martin Langhoff <martin@catalyst.net.nz> told me that...
-> This is a resend, with a silly typo (chgroup/chgrp) fixed.
 
-It was missing the signoff, but I worked that around by taking your
-original patch from the end of September. ;-)
 
-> The README doesn't talk about teams with "peer" access to a shared repo.
-> It took me a while to figure our the /right/ way to do it. Document for
-> future generations and general happiness.
+On Thu, 20 Oct 2005, Junio C Hamano wrote:
+>
+> I have not closely studied the user of this change, rev-list,
+> but I have a hunch that you might be better off, if you define a
+> new diff "format", DIFF_FORMAT_CALLBACK, and hook into
+> diff_flush(), instead of hooking into diff_addremove() and
+> diff_change().
 
-Thanks. The long sequence of permissions setup inspired me to adding
-cg-admin-setuprepo which automates that. I also changed the git-push
-to cg-push. Please review the final result.
+No, I did that on purpose.
 
-Thanks,
+I did _not_ want the library interface users to have to use the flushing 
+and all the associated memory management and complexity issues.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+The thing is, the only thing rev-list wants to know is whether there was a 
+diff at all, and I want to eventually make "opt->change()" and 
+"opt->add_remove()" return a possible error code so that the whole diff 
+library can just stop on the first change, since once we've seen _any_ 
+change, we don't care any more.
+
+Also, by taking it over at this lieve, you don't need to do any of the 
+diff setup at all to use the core routines.
+
+Now, if somebody _wants_ to hook into flushing, you can still do so: you 
+just do
+
+	opt->add_remove = diff_addremove;
+	opt->change = diff_change;
+
+and then you can hook into the higher-level functions if you want to. But 
+for a lot of uses, I bet we do _not_ want to. And those higher-level 
+routines have had some _serious_ memory use problems etc: by hooking into 
+the lower level, we can bypass all of that.
+
+(A memory leak in diff in git-rev-parse would be deadly on big archives).
+
+> Right now, you are only making the parallel tree traversing and
+> comparing part from diff-tree available in the library form
+> (which is fine), but that way leaves the door open for it to
+> also use the rest of the diffcore machinery.
+
+The point is, we don't _want_ to use the rest of the diffcore machinery. 
+It's too expensive and fragile.
+
+		Linus
