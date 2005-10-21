@@ -1,80 +1,65 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Strange differences in cogito on SPARC and i386
-Date: Fri, 21 Oct 2005 02:44:11 +0200
-Message-ID: <20051021004411.GA30889@pasky.or.cz>
-References: <200510171906.j9HJ6AQr015777@laptop11.inf.utfsm.cl>
+From: Junio C Hamano <junkio@twinsun.com>
+Subject: Re: [PATCH] Do not send "want" lines for complete objects
+Date: Fri, 21 Oct 2005 00:43:04 +0000 (UTC)
+Message-ID: <loom.20051021T024100-352@post.gmane.org>
+References: <Pine.LNX.4.63.0510200004290.7689@wbgn013.biozentrum.uni-wuerzburg.de> <7vzmp5xfwu.fsf@assigned-by-dhcp.cox.net> <7vwtk9vvhg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0510200351260.26594@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0510200559540.3394@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0510201630000.25300@iabervon.org> <Pine.LNX.4.63.0510210114370.10503@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 21 02:45:21 2005
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Oct 21 02:46:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESl17-0000eB-2k
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 02:44:17 +0200
+	id 1ESl1z-0000tF-Jb
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 02:45:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964826AbVJUAoO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 20:44:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964828AbVJUAoO
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 20:44:14 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48017 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964826AbVJUAoN (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 20:44:13 -0400
-Received: (qmail 28512 invoked by uid 2001); 21 Oct 2005 02:44:11 +0200
-To: Horst von Brand <vonbrand@inf.utfsm.cl>
-Content-Disposition: inline
-In-Reply-To: <200510171906.j9HJ6AQr015777@laptop11.inf.utfsm.cl>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S964828AbVJUApI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 20:45:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964832AbVJUApI
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 20:45:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:53989 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964828AbVJUApH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 20:45:07 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ESl0T-0000Td-7Q
+	for git@vger.kernel.org; Fri, 21 Oct 2005 02:43:37 +0200
+Received: from ip-66-80-53-59.lax.megapath.net ([66.80.53.59])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 21 Oct 2005 02:43:37 +0200
+Received: from junkio by ip-66-80-53-59.lax.megapath.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 21 Oct 2005 02:43:37 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 66.80.53.59 (Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.12) Gecko/20050915 Firefox/1.0.7)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10399>
 
-Dear diary, on Mon, Oct 17, 2005 at 09:06:10PM CEST, I got a letter
-where Horst von Brand <vonbrand@inf.utfsm.cl> told me that...
-> git, cogito up to date everywhere.
+Johannes Schindelin <Johannes.Schindelin <at> gmx.de> writes:
 
-Does that mean the latest development trees or the latest release
-vesions? If the latter, could you try the former, please?
-
->    [vonbrand@pincoya linux-2.6.git]$ cg-update
->    Recovering from a previously interrupted fetch...
->    15:04:56 URL:http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/HEAD [41/41] -> "refs/heads/.origin-fetching" [1]
->    Getting alternates list
->    progress: 10 objects, 24166 bytes
->    error: Empty reply from server (curl_result = 52, http_code = 0, sha1 = 0801ec7bf4953784f0f3279c1a80258ad29094d6)
->    Getting pack list
->    progress: 11 objects, 24873 bytes
->    error: Unable to find 0801ec7bf4953784f0f3279c1a80258ad29094d6 under http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+> ... I did not use it originally, because lines 
+> 24-25 of commit.h say
 > 
-> Just started again each time, seems to work fine. On i386 the download goes
-> smoothly, no hickups. And there are /no/ updates while SPARC is working its
-> head off getting updates...
+> 	/** Internal only **/
+> 	struct object *lookup_object(const unsigned char *sha1);
 > 
-> Then again, today on the SPARC it is getting several thousand objects (!),
-> while on i386 it was only a few dozen.
-> 
-> Some stupid pilot error? Got different mirrors between machines? Sounds
-> unlikely, as repeating the command (and presumably rotating between DNS
-> entries) makes no difference.
+> Is this obsolete?
 
-Well, can you repeat the bug using git pull? (Try just "git pull".) If
-so, and if you will slightly modify the subject in your reply, you
-should hopefully get some interested debuggers who know this stuff
-better. ;-) But I've seen those reports before, and it seems something
-is rotten in the realm of fetching...
+For this particular application, it should be OK, because:
 
-> Just finished SPARCwise. Almost 10K objects for changes to 4 files?! Yes,
-> the files changed are the same on both machines.
+ - it checks if we already have that object, and returns a pointer to it;
+ - if we haven't seen that object, we get a NULL back;
 
-This might be because of the interrupted merge - if it says the
-"recovering" message, it will try to make sure you really have all the
-objects, and depending on your exact git version, I can imagine it might
-re-fetch some of them for some reason.
+and
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+ - what we care about is to see if we have checked and verified if it is
+   reachable from our refs.  We do not want the check to actively go read
+   and parse that object.
+
+-jc
