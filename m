@@ -1,71 +1,55 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: rsync update appears broken now
-Date: 21 Oct 2005 06:49:48 -0700
-Message-ID: <861x2fdloj.fsf@blue.stonehenge.com>
-References: <86vezs9wy9.fsf@blue.stonehenge.com>
-	<81b0412b0510200608l61c00ed0yd4dbc00c313665fe@mail.gmail.com>
-	<Pine.LNX.4.64.0510201038320.3369@g5.osdl.org>
-	<loom.20051020T220751-355@post.gmane.org>
-	<Pine.LNX.4.64.0510201432260.10477@g5.osdl.org>
-	<7vek6f220h.fsf@arte.twinsun.com>
-	<Pine.LNX.4.64.0510201645450.10477@g5.osdl.org>
-	<loom.20051021T022509-63@post.gmane.org>
-	<Pine.LNX.4.64.0510201752050.10477@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Cogito README: add a block describing team workflow with git+ssh
+Date: Fri, 21 Oct 2005 17:14:51 +0200
+Message-ID: <20051021151451.GH30889@pasky.or.cz>
+References: <11298728883894-git-send-email-martin@catalyst.net.nz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@twinsun.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 21 15:51:31 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 21 17:17:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESxH1-0002RI-Hz
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 15:49:31 +0200
+	id 1ESybh-0003B5-Jn
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 17:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964951AbVJUNt3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Oct 2005 09:49:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964952AbVJUNt3
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 09:49:29 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:19858 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S964951AbVJUNt2
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Oct 2005 09:49:28 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 352978F5E3;
-	Fri, 21 Oct 2005 06:49:49 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 12414-02-9; Fri, 21 Oct 2005 06:49:48 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id C6B628FAD8; Fri, 21 Oct 2005 06:49:48 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-x-mayan-date: Long count = 12.19.12.13.2; tzolkin = 12 Ik; haab = 0 Zac
-In-Reply-To: <Pine.LNX.4.64.0510201752050.10477@g5.osdl.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S964974AbVJUPOy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Oct 2005 11:14:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964975AbVJUPOy
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 11:14:54 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:39824 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964974AbVJUPOx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 11:14:53 -0400
+Received: (qmail 12600 invoked by uid 2001); 21 Oct 2005 17:14:51 +0200
+To: Martin Langhoff <martin@catalyst.net.nz>
+Content-Disposition: inline
+In-Reply-To: <11298728883894-git-send-email-martin@catalyst.net.nz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10434>
 
->>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
+Dear diary, on Fri, Oct 21, 2005 at 07:34:48AM CEST, I got a letter
+where Martin Langhoff <martin@catalyst.net.nz> told me that...
+> This is a resend, with a silly typo (chgroup/chgrp) fixed.
 
-Linus> On Fri, 21 Oct 2005, Junio C Hamano wrote:
->> 
->> I am reasonably sure that the screw-up was only rewinding one commit too much.
->> I've done the merge so things should look better once mirrors catch up.
+It was missing the signoff, but I worked that around by taking your
+original patch from the end of September. ;-)
 
-Linus> Yup, works at least for me. Thx,
+> The README doesn't talk about teams with "peer" access to a shared repo.
+> It took me a while to figure our the /right/ way to do it. Document for
+> future generations and general happiness.
 
-Doesn't yet work for me.  What do I need to do now?
+Thanks. The long sequence of permissions setup inspired me to adding
+cg-admin-setuprepo which automates that. I also changed the git-push
+to cg-push. Please review the final result.
 
-    * committish: 4ae22d96fe9248dac4f26b1fc91154ba5e879799
-      branch 'master' of rsync://rsync.kernel.org/pub/scm/git/git
-    * refs/heads/origin: same as branch 'master' of rsync://rsync.kernel.org/pub/scm/git/git
-    Updating from ea5a65a59916503d2a14369c46b1023384d51645 to 4ae22d96fe9248dac4f26b1fc91154ba5e879799.
-    fetch-pack.c: needs update
-    fatal: Entry 'daemon.c' would be overwritten by merge. Cannot merge.
+Thanks,
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
