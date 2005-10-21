@@ -1,104 +1,119 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Do not call git-rev-list from git-fetch-pack
-Date: Fri, 21 Oct 2005 11:35:21 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510211111440.4950@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0510210413210.26388@wbgn013.biozentrum.uni-wuerzburg.de>
- <7virvrw8w1.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: How do I clear the directory cache
+Date: Fri, 21 Oct 2005 12:52:35 +0200
+Message-ID: <20051021105235.GF30889@pasky.or.cz>
+References: <2b05065b0510170720n5333f03l1941e84c1288fc5d@mail.gmail.com> <20051020085931.GW30889@pasky.or.cz> <2b05065b0510202023i62ab7c03uea1381d76535dcc7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 21 11:37:16 2005
+X-From: git-owner@vger.kernel.org Fri Oct 21 12:55:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EStJB-0007y6-H2
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 11:35:29 +0200
+	id 1ESuWB-0002sa-Vx
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 12:53:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964906AbVJUJfY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Oct 2005 05:35:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964907AbVJUJfY
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 05:35:24 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:17382 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S964906AbVJUJfX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Oct 2005 05:35:23 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 6260C13F187; Fri, 21 Oct 2005 11:35:22 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 43ACFB4E48; Fri, 21 Oct 2005 11:35:22 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 238CEB4E43; Fri, 21 Oct 2005 11:35:22 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id F221E13F187; Fri, 21 Oct 2005 11:35:21 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7virvrw8w1.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S964799AbVJUKwj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Oct 2005 06:52:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964828AbVJUKwj
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 06:52:39 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:10723 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964799AbVJUKwj (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 06:52:39 -0400
+Received: (qmail 17491 invoked by uid 2001); 21 Oct 2005 12:52:35 +0200
+To: eschvoca <eschvoca@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <2b05065b0510202023i62ab7c03uea1381d76535dcc7@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10430>
 
-Hi,
+Dear diary, on Fri, Oct 21, 2005 at 05:23:28AM CEST, I got a letter
+where eschvoca <eschvoca@gmail.com> told me that...
+> Yes, "cg-reset --adds-removals" is what I want (how do I do this with
+> pure git?).
 
-On Fri, 21 Oct 2005, Junio C Hamano wrote:
+	git-read-tree HEAD
+	git-update-cache --refresh
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> I would like to clear/reset the index because I've screwed it all up. 
+> I don't think I can do as you suggested because of the way I got into
+> this mess.
 > 
-> > +	   Branch1 has 40 commits since it last merged with branch2,
-> > +	   and branch2 has 2 more commits since then.
-> > +
-> > +	   On the other end, branch1 is up-to-date, but branch2 is not.
-> > +	   When fetching branch1, the 40 commits get sent, the first
-> > +	   is acknowledged as common, and the local head of branch2
-> > +	   never gets sent.
-> > +
-> > +	   As a consequence, the whole history of branch2
-> > +	   (git-rev-list branch2 ^branch1) gets packed and transmitted.
+> I'm using git/cogito to version control my hard drive and I've been
+> gradually adding more entries into the .gitignore file because some
+> files change too frequently or I don't want them backed up.  The OS
+> modified a bunch of files, I cg-rm'd 1/4 of them, then I changed my
+> mind and added them back, also did some genuine cg-adds, etc. and now
+> I'm all confused (it's a whole hard drive).
+
+Well, cg-status should show you what you effectively did, and then you
+could just do something like:
+
+	cg-status -w | grep ^D | tr '\n' '\0' | xargs -0 cg-add
+	cg-status -w | grep ^A | tr '\n' '\0' | xargs -0 cg-rm
+
+> If other people are interested in doing this I can pass on the lessons
+> I learned.
 > 
-> Arrrgggggggh.  The description above captures the essense of the
-> problem very well, but faking dates and still popping by recency
-> looks like a really ugly hack to me.
+> What I found it git is amazingly fast!  cg-status only takes a few
+> seconds.  I think there are some problems if you try to do:
+> 
+> cd /
+> cg-add -r usr
+> cg-commit -m "take a long break"
+> 
+> It seems that cg-add-ing and cg-commit-ing smaller chunks is faster
+> than one big chunk.
 
-It is ugly. But it is a good heuristic. And the code is simple, because I 
-could use the existing functions for inserting into a commit_list.
+Interesting. I cannot spot anything which would bog it down in Cogito.
+Is both cg-add and cg-commit significantly slower? (That is, if it takes
+longer than sum of the smaller chunks.) Perhaps it's a cache issue, not
+everything from the chunk fits into your cache during cg-add, so
+cg-commit has to reread it from the disk.
 
-> Wouldn't it be cleaner if you traversed commits starting from
-> local refs, and assign distance from the tip of the branch to
-> each object (use generic object->util field for it), and
-> maintain an object_list that is sorted by depth, similar to
-> commit_list sorted by commit date?  Then you can pop from the
-> list by depth, closer to tip first, and tell the other end that
-> you have branch1, branch2, branch1^, branch2^, branch1~2,
-> branch2~1,...  which is the order the above situation benefits
-> from.
+> I think commands for the following should be added to cogito:
 
-I have an example from the real world why this is bad as well: I have a 
-repository imported from CVS, which has this silly CVS initial import 
-marked as it's own branch. This was long, long, long ago, but 
-git-cvsimport faithfully creates the branch "initial" for it anyway.
+I'd prefer:
 
-Imagine now the case that I added 40 revisions locally between the last 
-fetch and now. What would happen is this:
+> cg-status -<status_flag>  # list files with given status flag (without
+> status flag in column 1)
+>   git-ls-files [--others|--deleted|etc] --exclude-per-directory=/.gitignore
 
-In both cases, your git-fetch-pack and mine, the tips would get sent, the 
-(very old one) "initial" acknowledged. A few of those 40 revisions would 
-get sent, too, (and in your case, the root rev), but not at all the 
-optimal merge base. In essence, almost all would get sent again.
+All right, this might be useful. Implemented as cg-status -s '?' and such,
+thanks for the idea.
 
-How about this on top of your idea:
+> cg-add [-r] -<status_flag> # add files with a given status flag
+>   git-ls-files [--others|--deleted|etc]
+> --exclude-per-directory=/.gitignore | while read i; do cg-add "$i;
+> done
+> 
+> cg-rm [-r] -<status_flag> # you get the idea.
+> 
+> cg-addremove  # recursively add new files, remove deleted files
 
-Send only those branch{i}^n where n is a power of 2. This is a tradeoff 
-between the speed we find sensible common revs, and the accurateness of 
-the best pick.
+I implemented the cg-reset --adds-removes option, but I don't feel
+comfortable with the cg-add change - just -r would be enough to add new
+files, and if you are in mess big enough, you can just cg-reset. It
+would be useful to make cg-rm symmetric to cg-add, though. Then you
+could do just
 
-Note that the best thing would probably be to add a binary search to that, 
-and *not* stop at the first ack'ed rev, but rather count them, and stop at 
-MAX_HAS.
+	cg-add -r . && cg-rm -r .
 
-Ciao,
-Dscho
+and it would be equivalent to cg-addremove.
+
+> I use "while read i" so it will work with spaces in filenames.
+
+And break with leading spaces unless you modified $IFS properly. Note
+that those people having filenames starting by spaces are either
+seriously sick or script kiddies who just rooted you (or warez kiddies
+on your FTP server with anonymously-writable incoming).
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
