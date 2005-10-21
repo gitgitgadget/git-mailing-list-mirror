@@ -1,50 +1,50 @@
-From: Dmitry Torokhov <dtor_core@ameritech.net>
-Subject: Re: LCA2006 Git/Cogito tutorial
-Date: Thu, 20 Oct 2005 21:37:21 -0500
-Message-ID: <200510202137.22311.dtor_core@ameritech.net>
-References: <4352F4C9.1040703@catalyst.net.nz> <20051021005145.GB30889@pasky.or.cz>
+From: Ben Lau <benlau@ust.hk>
+Subject: How to create a new branch based on a tag?
+Date: Fri, 21 Oct 2005 22:57:59 +0800
+Message-ID: <435901F7.9020509@ust.hk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>,
-	"Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Fri Oct 21 04:38:54 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Oct 21 04:59:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESmmz-0001fe-He
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 04:37:49 +0200
+	id 1ESn76-0005nJ-4o
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 04:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964844AbVJUCh3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 20 Oct 2005 22:37:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964845AbVJUCh3
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 22:37:29 -0400
-Received: from smtp110.sbc.mail.re2.yahoo.com ([68.142.229.95]:14685 "HELO
-	smtp110.sbc.mail.re2.yahoo.com") by vger.kernel.org with SMTP
-	id S964844AbVJUCh3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 22:37:29 -0400
-Received: (qmail 56900 invoked from network); 21 Oct 2005 02:37:28 -0000
-Received: from unknown (HELO mail.corenet.homeip.net) (dtor?core@ameritech.net@70.236.40.196 with login)
-  by smtp110.sbc.mail.re2.yahoo.com with SMTP; 21 Oct 2005 02:37:27 -0000
+	id S964847AbVJUC51 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 22:57:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964845AbVJUC51
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 22:57:27 -0400
+Received: from mx3.ust.hk ([143.89.13.11]:35087 "EHLO mx3.ust.hk")
+	by vger.kernel.org with ESMTP id S964847AbVJUC50 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 22:57:26 -0400
+Received: from [143.89.135.159] (atz113.rd.ust.hk [143.89.135.159])
+	by mx3.ust.hk (8.12.11/8.12.11) with ESMTP id j9L2vMIN087857
+	for <git@vger.kernel.org>; Fri, 21 Oct 2005 10:57:23 +0800 (HKT)
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
+X-Accept-Language: en-us, en
 To: git@vger.kernel.org
-User-Agent: KMail/1.8.3
-In-Reply-To: <20051021005145.GB30889@pasky.or.cz>
-Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10408>
 
-On Thursday 20 October 2005 19:51, Petr Baudis wrote:
-> (ii) You say:
->=20
-> =A0=A0=A0=A0=A0=A0=A0=A0- Very fast stupid merge
-> =A0=A0=A0=A0=A0=A0=A0=A0 =A0 =A0... and very smart, slow merges when =
-stupid won't do
->=20
+Hi,
 
-He might be referring to manual merge which is indeed as smart as it ge=
-ts :)
+   I would like to create a branch of my own work based on a specific 
+kernel version(i.e
+v2.6.11). I tried with:
 
---=20
-Dmitry
+ > git-branch my2.6.11 v2.6.11
+error: Object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is a tree, not a 
+commit
+fatal: Needed a single revision
+
+  As v2.6.11 is a tree object(tag), git-checkout and git-branch could 
+not process it. The
+only way I know is using git-read-tree to fetch v2.6.11 content into 
+current index and start
+a branch based on it. Is there any simpler method?
+
+Thanks!
