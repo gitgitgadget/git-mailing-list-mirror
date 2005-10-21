@@ -1,54 +1,77 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: rsync update appears broken now
-Date: Fri, 21 Oct 2005 02:34:49 +0200
-Message-ID: <20051021003449.GZ30889@pasky.or.cz>
-References: <86vezs9wy9.fsf@blue.stonehenge.com> <81b0412b0510200608l61c00ed0yd4dbc00c313665fe@mail.gmail.com> <Pine.LNX.4.64.0510201038320.3369@g5.osdl.org> <loom.20051020T220751-355@post.gmane.org> <Pine.LNX.4.64.0510201432260.10477@g5.osdl.org> <7vek6f220h.fsf@arte.twinsun.com> <Pine.LNX.4.63.0510210140400.12723@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0510201647490.10477@g5.osdl.org> <Pine.LNX.4.63.0510210157070.14563@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0510201717100.10477@g5.osdl.org>
+Subject: Re: Strange differences in cogito on SPARC and i386
+Date: Fri, 21 Oct 2005 02:44:11 +0200
+Message-ID: <20051021004411.GA30889@pasky.or.cz>
+References: <200510171906.j9HJ6AQr015777@laptop11.inf.utfsm.cl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio Hamano <junio@twinsun.com>, junkio@cox.net,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 21 02:36:06 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 21 02:45:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESks3-0005o9-9A
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 02:34:55 +0200
+	id 1ESl17-0000eB-2k
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 02:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964823AbVJUAew (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 20:34:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964824AbVJUAew
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 20:34:52 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:19073 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964823AbVJUAew (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 20:34:52 -0400
-Received: (qmail 27475 invoked by uid 2001); 21 Oct 2005 02:34:49 +0200
-To: Linus Torvalds <torvalds@osdl.org>
+	id S964826AbVJUAoO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 20:44:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964828AbVJUAoO
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 20:44:14 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:48017 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964826AbVJUAoN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 20:44:13 -0400
+Received: (qmail 28512 invoked by uid 2001); 21 Oct 2005 02:44:11 +0200
+To: Horst von Brand <vonbrand@inf.utfsm.cl>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0510201717100.10477@g5.osdl.org>
+In-Reply-To: <200510171906.j9HJ6AQr015777@laptop11.inf.utfsm.cl>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10398>
 
-Dear diary, on Fri, Oct 21, 2005 at 02:19:42AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
-> On Fri, 21 Oct 2005, Johannes Schindelin wrote:
-> > It does not have to be a fast-forward. After all, what is another merge? 
-> > Since that merge does not have Junio as committer, close inspection of 
-> > the commit will reveal that.
-> 
-> It _does_ have to be a fast-forward, if you expect the tree to have the 
-> same content as Junio's.
-> 
-> Even if it merges everything automatically, if the history is different, 
-> it could in theory at least merge _differently_ than what Junio had. Plus 
-> you'll have a really ugly version history for no good reason.
+Dear diary, on Mon, Oct 17, 2005 at 09:06:10PM CEST, I got a letter
+where Horst von Brand <vonbrand@inf.utfsm.cl> told me that...
+> git, cogito up to date everywhere.
 
-And if Junio will want to merge with many of those people, you will
-better have to get a dualhead for your gitk.
+Does that mean the latest development trees or the latest release
+vesions? If the latter, could you try the former, please?
+
+>    [vonbrand@pincoya linux-2.6.git]$ cg-update
+>    Recovering from a previously interrupted fetch...
+>    15:04:56 URL:http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/HEAD [41/41] -> "refs/heads/.origin-fetching" [1]
+>    Getting alternates list
+>    progress: 10 objects, 24166 bytes
+>    error: Empty reply from server (curl_result = 52, http_code = 0, sha1 = 0801ec7bf4953784f0f3279c1a80258ad29094d6)
+>    Getting pack list
+>    progress: 11 objects, 24873 bytes
+>    error: Unable to find 0801ec7bf4953784f0f3279c1a80258ad29094d6 under http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+> 
+> Just started again each time, seems to work fine. On i386 the download goes
+> smoothly, no hickups. And there are /no/ updates while SPARC is working its
+> head off getting updates...
+> 
+> Then again, today on the SPARC it is getting several thousand objects (!),
+> while on i386 it was only a few dozen.
+> 
+> Some stupid pilot error? Got different mirrors between machines? Sounds
+> unlikely, as repeating the command (and presumably rotating between DNS
+> entries) makes no difference.
+
+Well, can you repeat the bug using git pull? (Try just "git pull".) If
+so, and if you will slightly modify the subject in your reply, you
+should hopefully get some interested debuggers who know this stuff
+better. ;-) But I've seen those reports before, and it seems something
+is rotten in the realm of fetching...
+
+> Just finished SPARCwise. Almost 10K objects for changes to 4 files?! Yes,
+> the files changed are the same on both machines.
+
+This might be because of the interrupted merge - if it says the
+"recovering" message, it will try to make sure you really have all the
+objects, and depending on your exact git version, I can imagine it might
+re-fetch some of them for some reason.
 
 -- 
 				Petr "Pasky" Baudis
