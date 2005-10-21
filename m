@@ -1,64 +1,72 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: [PATCH] Fix git-daemon argument-parsing bug
-Date: Thu, 20 Oct 2005 18:34:58 -0700
-Message-ID: <435845C2.3010504@zytor.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030601090600040900030405"
-X-From: git-owner@vger.kernel.org Fri Oct 21 03:36:46 2005
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Use sensible domain name (the DNS one) when guessing ident information
+Date: Fri, 21 Oct 2005 03:57:39 +0200
+Message-ID: <20051021015739.16471.21112.stgit@machine.or.cz>
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 21 03:59:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ESlp9-0004XI-D0
-	for gcvg-git@gmane.org; Fri, 21 Oct 2005 03:35:59 +0200
+	id 1ESmAF-0001UI-Fy
+	for gcvg-git@gmane.org; Fri, 21 Oct 2005 03:57:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964838AbVJUBfV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Oct 2005 21:35:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964839AbVJUBfV
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 21:35:21 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:9432 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S964838AbVJUBfU
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Oct 2005 21:35:20 -0400
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9L1YxgJ005325
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 20 Oct 2005 18:35:02 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S964841AbVJUB5o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Oct 2005 21:57:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964842AbVJUB5n
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Oct 2005 21:57:43 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:6300 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964841AbVJUB5n (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Oct 2005 21:57:43 -0400
+Received: (qmail 16484 invoked from network); 21 Oct 2005 03:57:40 +0200
+Received: from localhost (HELO machine.or.cz) (127.0.0.1)
+  by localhost with SMTP; 21 Oct 2005 03:57:40 +0200
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10405>
 
-This is a multi-part message in MIME format.
---------------030601090600040900030405
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Currently, the code would use getdomainname() call, which however returns
+something usually unset and not necessarily related at all to the DNS
+domain name (it seems to be mostly some scary NIS/YP thing).
 
-Fix stupid bug in parsing the --init-timeout option.
+This patch changes the code to actually use the DNS domain name, which is
+also what tends to be used in emails, and we aim at emails with our ident
+code.
 
-Signed-off-by: H. Peter Anvin <hpa@zytor.com>
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
---------------030601090600040900030405
-Content-Type: text/plain;
- name="diff"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="diff"
+ ident.c |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
 
-ZGlmZiAtLWdpdCBhL2RhZW1vbi5jIGIvZGFlbW9uLmMKLS0tIGEvZGFlbW9uLmMKKysrIGIv
-ZGFlbW9uLmMKQEAgLTYxMiw3ICs2MTIsNyBAQCBpbnQgbWFpbihpbnQgYXJnYywgY2hhciAq
-KmFyZ3YpCiAJCWlmICghc3RybmNtcChhcmcsICItLXRpbWVvdXQ9IiwgMTApKSB7CiAJCQl0
-aW1lb3V0ID0gYXRvaShhcmcrMTApOwogCQl9Ci0JCWlmICghc3RybmNtcChhcmcsICItLWlu
-aXQtdGltZW91dD0iLCAxMCkpIHsKKwkJaWYgKCFzdHJuY21wKGFyZywgIi0taW5pdC10aW1l
-b3V0PSIsIDE1KSkgewogCQkJaW5pdF90aW1lb3V0ID0gYXRvaShhcmcrMTUpOwogCQl9CiAJ
-CWlmICghc3RyY21wKGFyZywgIi0tIikpIHsK
---------------030601090600040900030405--
+diff --git a/ident.c b/ident.c
+index 06d0e6c..bc89e1d 100644
+--- a/ident.c
++++ b/ident.c
+@@ -8,6 +8,7 @@
+ #include "cache.h"
+ 
+ #include <pwd.h>
++#include <netdb.h>
+ 
+ static char git_default_date[50];
+ 
+@@ -64,9 +65,16 @@ int setup_ident(void)
+ 	git_default_email[len++] = '@';
+ 	gethostname(git_default_email + len, sizeof(git_default_email) - len);
+ 	if (!strchr(git_default_email+len, '.')) {
++		struct hostent *he = gethostbyname(git_default_email + len);
++		char *domainname;
++
+ 		len = strlen(git_default_email);
+ 		git_default_email[len++] = '.';
+-		getdomainname(git_default_email+len, sizeof(git_default_email)-len);
++		if (he && (domainname = strchr(he->h_name, '.')))
++			strncpy(git_default_email + len, domainname + 1, sizeof(git_default_email) - len);
++		else
++			strncpy(git_default_email + len, "(none)", sizeof(git_default_email) - len);
++		git_default_email[sizeof(git_default_email) - 1] = 0;
+ 	}
+ 	/* And set the default date */
+ 	datestamp(git_default_date, sizeof(git_default_date));
