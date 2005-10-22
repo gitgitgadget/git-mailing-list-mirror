@@ -1,50 +1,55 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: git-core rpm requires
-Date: Sat, 22 Oct 2005 19:22:58 +0200
-Message-ID: <435A7572.70202@op5.se>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: 0.99.9 on Saturday next week.
+Date: Sat, 22 Oct 2005 10:54:50 -0700
+Message-ID: <435A7CEA.9090201@zytor.com>
+References: <7vvezpetpv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Oct 22 19:24:41 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 22 19:57:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ETN5D-0003Rd-Jq
-	for gcvg-git@gmane.org; Sat, 22 Oct 2005 19:23:03 +0200
+	id 1ETNad-0002wl-3l
+	for gcvg-git@gmane.org; Sat, 22 Oct 2005 19:55:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750780AbVJVRXA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Oct 2005 13:23:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750796AbVJVRXA
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Oct 2005 13:23:00 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:7114 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S1750780AbVJVRW7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Oct 2005 13:22:59 -0400
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id B74CE6BCFE
-	for <git@vger.kernel.org>; Sat, 22 Oct 2005 19:22:58 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+	id S1750997AbVJVRzT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Oct 2005 13:55:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751059AbVJVRzS
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Oct 2005 13:55:18 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:23764 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750997AbVJVRzR
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Oct 2005 13:55:17 -0400
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9MHsopq032445
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 22 Oct 2005 10:54:51 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
 X-Accept-Language: en-us, en
-To: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvezpetpv.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10472>
 
-I tried git on one of our not too updated servers and noticed that 
-git-update-index requires zlib >= 1.2, which introduced the *Bound 
-functions.
+Junio C Hamano wrote:
+> 
+> Although we had a good proposal for protocol rewrite from HPA
+> and discussions that followed, it appeared to me that the change
+> might be a bit too backward incompatible while the advantage was
+> not obvious enough -- I do not think we have a consensus on it.
+> 0.99.9 will not wait for this discussion to conclude.
+> 
 
-It took a while to track down due to lazy symbol resolution and the fact 
-that the problem was hidden by stderr redirection in the first git 
-version I tried (some months ago).
+Not the least since it would be quite a bit of work to make it happen.
 
-Here's a cut'n paste solution if you have sed >= 4.0.9 installed and 
-have some sort of aversion to manual editors. Feels a bit silly to send 
-a patch for a one-liner.
-
-sed -i 's/^Requires:./&zlib >= 1.2, /' git-core.spec.in
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+	-hpa
