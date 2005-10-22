@@ -1,72 +1,64 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git-rev-list: add "--dense" flag
-Date: Sat, 22 Oct 2005 04:56:38 +0200
-Message-ID: <20051022025638.GQ30889@pasky.or.cz>
-References: <Pine.LNX.4.64.0510211631400.10477@g5.osdl.org> <20051022003733.GA8351@pasky.or.cz> <Pine.LNX.4.64.0510211814050.10477@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Handling renames.
+Date: Fri, 21 Oct 2005 20:23:36 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510212022100.10477@g5.osdl.org>
+References: <Pine.LNX.4.64.0510211631400.10477@g5.osdl.org>
+ <20051022003733.GA8351@pasky.or.cz> <20051022004743.GN30889@pasky.or.cz>
+ <Pine.LNX.4.64.0510211826350.10477@g5.osdl.org> <20051022015109.GO30889@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 22 04:57:34 2005
+X-From: git-owner@vger.kernel.org Sat Oct 22 05:24:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ET9Yo-0003US-UW
-	for gcvg-git@gmane.org; Sat, 22 Oct 2005 04:56:43 +0200
+	id 1ET9z4-0001r9-Dc
+	for gcvg-git@gmane.org; Sat, 22 Oct 2005 05:23:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932572AbVJVC4l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Oct 2005 22:56:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932573AbVJVC4l
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 22:56:41 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:5536 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932572AbVJVC4k (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 22:56:40 -0400
-Received: (qmail 19529 invoked by uid 2001); 22 Oct 2005 04:56:38 +0200
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0510211814050.10477@g5.osdl.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S932577AbVJVDXr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Oct 2005 23:23:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbVJVDXr
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 23:23:47 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:5078 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932577AbVJVDXq (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 23:23:46 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9M3NcFC029903
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 21 Oct 2005 20:23:39 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9M3NaDB001354;
+	Fri, 21 Oct 2005 20:23:37 -0700
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051022015109.GO30889@pasky.or.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10465>
 
-Dear diary, on Sat, Oct 22, 2005 at 03:26:27AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
-> On Sat, 22 Oct 2005, Petr Baudis wrote:
-> > There is no documentation for the --dense flag and it is even missing
-> > from the usage string.
+
+
+On Sat, 22 Oct 2005, Petr Baudis wrote:
 > 
-> I'm not much for docs ;)
+> > You can follow renames _afterwards_. 
 > 
-> The whole path argument also isn't even there (and without paths, --dense 
-> doesn't matter)
+> I can - crudely, but what's the point, if the user is dying to give me
+> the information.
 
-Then it should be added to the docs as well. ;-)
+No the user is NOT.
 
-Oh well, I guess I can always send a patch when yours will get applied. :-)
+The fact is, users have not a frigging clue when a rename happens. 
 
-> > But my main concern is - will it be possible to do the rename detection
-> > here as well?
-> 
-> Yes. Note that git-rev-list doesn't actually _do_ the diff, it only checks 
-> whether the tree is changed. You still just get a list of commits out of 
-> it, and it is up to you to decide what to do with it.
+I told you before, I'll tell you again: if you depend on users telling you 
+about renames, you'll get it wrong. You'll get it wrong quite often, in 
+fact.
 
-Ok, fair enough.
+This is not something I'm going to discuss again. Go back to all the same 
+arguments from 6 months ago. I was right then, I'm right now.
 
-> If you're just going to feed them to diff-tree _anyway_, then you might as 
-> well not even do the dense thing, because quite frankly, you're just doing 
-> extra work.
-
-fork() is awfully expensive for me. fork()ing something (supposedly)
-trivial (it was stat) slowed my (non-trivial) loop about 4 times. So I
-think it will still pay off hugely if I will be able do the diff-tree
-only on the interesting commits.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+		Linus
