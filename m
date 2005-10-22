@@ -1,82 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: git-rev-list: add "--dense" flag
-Date: Fri, 21 Oct 2005 20:30:38 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510212025260.10477@g5.osdl.org>
+Date: Fri, 21 Oct 2005 20:55:09 -0700
+Message-ID: <7voe5iqk82.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0510211631400.10477@g5.osdl.org>
- <20051022003733.GA8351@pasky.or.cz> <Pine.LNX.4.64.0510211814050.10477@g5.osdl.org>
- <20051022025638.GQ30889@pasky.or.cz>
+	<20051022003733.GA8351@pasky.or.cz>
+	<Pine.LNX.4.64.0510211814050.10477@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 22 05:31:30 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Oct 22 05:56:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ETA5w-00051a-63
-	for gcvg-git@gmane.org; Sat, 22 Oct 2005 05:30:56 +0200
+	id 1ETAU3-00051Z-PD
+	for gcvg-git@gmane.org; Sat, 22 Oct 2005 05:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932578AbVJVDaq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Oct 2005 23:30:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932579AbVJVDaq
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 23:30:46 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:48854 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932578AbVJVDap (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Oct 2005 23:30:45 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9M3UdFC030102
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 21 Oct 2005 20:30:39 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9M3UcFc001548;
-	Fri, 21 Oct 2005 20:30:38 -0700
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051022025638.GQ30889@pasky.or.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.125 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932583AbVJVDzP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Oct 2005 23:55:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932584AbVJVDzP
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Oct 2005 23:55:15 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:32984 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932583AbVJVDzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Oct 2005 23:55:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051022035443.ZYTF29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 21 Oct 2005 23:54:43 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10467>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> Yes. Note that git-rev-list doesn't actually _do_ the diff, it only checks 
+> whether the tree is changed. You still just get a list of commits out of 
+> it, and it is up to you to decide what to do with it.
+>
+> If you're just going to feed them to diff-tree _anyway_, then you might as 
+> well not even do the dense thing, because quite frankly, you're just doing 
+> extra work.
+>
+> But let's say that you want to follow a certain filename, what you can do 
+> is basically (fake shell syntax with "goto restart")
+>...
+> or something similar. 
 
-On Sat, 22 Oct 2005, Petr Baudis wrote:
-> 
-> > If you're just going to feed them to diff-tree _anyway_, then you might as 
-> > well not even do the dense thing, because quite frankly, you're just doing 
-> > extra work.
-> 
-> fork() is awfully expensive for me. fork()ing something (supposedly)
-> trivial (it was stat) slowed my (non-trivial) loop about 4 times.
+Isn't that only true because you are not doing more than "have
+these paths change" in the new rev-list that already has part of
+diff-tree?
 
-Not fork. More like
-
-	git-rev-list .. | git-diff-tree --stdin
-
-If you do it that way (which is quite common - git-whatchanged, git-log 
-etc), there's no reason to ask for a dense output, because git-diff-tree 
-can handle the non-dense one as fast as git-rev-list can.
-
-But the --dense option is wonderful for "gitk", and for "slow stuff". 
-Where "slow" can indeed be a fork, or just an interpreter loop like a 
-shell/perl script, which would fork/exec git-diff-tree for each commit.
-
->From a commit-list standpoint
-
-	git-rev-list --dense ... -- paths
-
-is the same as
-
-	git-rev-list -- paths | git-diff-tree -s -r --stdin -- paths
-
-but it's somewhat more efficient, and more importantly, it rewrites the 
-parents. So quite often, you'd want to use "--dense" together with 
-"--parent" so that you get the "rewritten" history. That's how come gitk 
-didn't need any changes, and it "just worked". It's also how my example 
-script did the rename detection without having to traverse unnecessary 
-commits.
-
-		Linus
+If rev-list can optionally be told to detect renames internally
+(it has necessary bits after all), it could adjust the set of
+paths to follow when it sees something got renamed, either by
+replacing the original path given from the command line with its
+previous name, or adding its previous name to the set of path
+limitters (to cover the copy case as well).
