@@ -1,105 +1,184 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: User-relative paths
-Date: Sun, 23 Oct 2005 12:56:11 -0700
-Message-ID: <7v1x2cyplw.fsf@assigned-by-dhcp.cox.net>
-References: <435ABB99.5020908@op5.se>
-	<7vll0l6pn7.fsf@assigned-by-dhcp.cox.net> <435B5AE0.1060400@op5.se>
+Date: Sun, 23 Oct 2005 14:30:45 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510231427230.10477@g5.osdl.org>
+References: <435ABB99.5020908@op5.se> <7vll0l6pn7.fsf@assigned-by-dhcp.cox.net>
+ <435B5AE0.1060400@op5.se> <7v1x2cyplw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 23 21:57:24 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 23 23:32:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ETlx2-0006v4-IJ
-	for gcvg-git@gmane.org; Sun, 23 Oct 2005 21:56:16 +0200
+	id 1ETnQm-0004DX-Cs
+	for gcvg-git@gmane.org; Sun, 23 Oct 2005 23:31:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750727AbVJWT4O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Oct 2005 15:56:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbVJWT4O
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Oct 2005 15:56:14 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:59272 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1750727AbVJWT4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Oct 2005 15:56:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051023195544.VADC29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 23 Oct 2005 15:55:44 -0400
-To: Andreas Ericsson <ae@op5.se>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750812AbVJWVa5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Oct 2005 17:30:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750818AbVJWVa5
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Oct 2005 17:30:57 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:60069 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750812AbVJWVa4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Oct 2005 17:30:56 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9NLUlFC022514
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 23 Oct 2005 14:30:47 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9NLUku4031112;
+	Sun, 23 Oct 2005 14:30:46 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1x2cyplw.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10505>
 
-Andreas Ericsson <ae@op5.se> writes:
 
-> Junio C Hamano wrote:
->> Andreas Ericsson <ae@op5.se> writes:
->> ...
->> At one point, Linus posted an outline of "restricted login shell
->> for use with git over ssh".  I think you could start from there,
->> perhaps extend it so that it checks the binaries *and* pathnames
->> the user can specify (e.g. only under your own $HOME is allowed,
->> and no /../ in them, or something silly like that).
->>
->
-> I found this in the archives:
-> http://article.gmane.org/gmane.comp.version-control.git/5784/match=restricted+login
->
-> Is that what you're referring to?
 
-No, it is this one:
+On Sun, 23 Oct 2005, Junio C Hamano wrote:
+> 
+> No, it is this one:
+> 
+>     http://marc.theaimsgroup.com/?l=git&m=112681457828137&w=2
+> 
+> But it is orthogonal to what you are doing in this patch.
 
-    http://marc.theaimsgroup.com/?l=git&m=112681457828137&w=2
+Well, not necessarily.
 
-But it is orthogonal to what you are doing in this patch.
+It's quite arguable that sanity testing might be per-user and could be 
+done by the shell. I'm not at all sure that srvside_chdir() should do any 
+extra testing: if you have real ssh access, the user has the right to do 
+anything he damn well pleases.
 
-> Let me know if you want things done differently.
+So it's quite possible that you should do testing in the thing that 
+receives the request, ie in a restricted shell (or, as we already do, in 
+git-daemon).
 
-I think srvside_chdir() should not do the userdir expansion
-under --strict (otherwise you would need a matching change in
-daemon.c as well, but I would rather not).
+I tried to find my original unquote example and stupid shell, but 
+couldn't.  So I wrote something untested as usual.
 
-The --strict flag in upload-pack is to make sure git-daemon can
-see what is being accessed and make its policy decision even
-before it calls upload-pack.  In a pathological case, somebody
-can create a directory "/~foo/bar/.git", where the "/~foo"
-directory is different from "/home/foo", and have git-daemon
-check that the former is OK and call your upload-pack.  Your
-upload-pack uses srvside_chdir() and exposes /home/foo/bar/.git;
-this circumvents git-daemon's policy decision, doesn't it?
+It's incomplete and almost certainly buggy and generally broken, but 
+here's somethign that you _could_ install as "git-shell", and then put 
+that as somebodys shell in /etc/passwd, and it's a start. A very rough 
+start.
 
-I also agree with everything Pasky already said.
+Somebody else gets to test it out ;)
 
- * In a URL, a colon after hostname means "port number
-   follows".  So it was a good intention to make these
-   consistent:
+		Linus
 
-        git fetch ssh://kernel.org:git
-        git fetch kernel.org:git
-
-   it should not be done.  IOW, if I wanted to use the former
-   form (which I do not think I'd use myself), I should say either one
-   of:
-
-        git fetch ssh://kernel.org:~/git
-        git fetch ssh://kernel.org:~junio/git
-
-   Oh, I just noticed you do not handle the former, because you
-   did not have to, but now you need to.
-
- * Use of "extern const char *__progname" is questionable.  I
-   could be easily talked into:
-
-    - have "extern const char *git_program_name" in cache.h or
-      somewhere;
-
-    - convert programs (gradually) to set that at the beginning
-      of main();
-
-    - update die() and error() to use that variable when
-      reporting (both callers and implementation) -- this is
-      optional.
+---
+2906a25bbd1dedbd6bab9ed984a503340229b020
+diff --git a/Makefile b/Makefile
+index 7eacf61..34bbdb6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -102,7 +102,7 @@ SCRIPT_PYTHON = \
+ # The ones that do not have to link with lcrypto nor lz.
+ SIMPLE_PROGRAMS = \
+ 	git-get-tar-commit-id$X git-mailinfo$X git-mailsplit$X \
+-	git-stripspace$X git-var$X git-daemon$X
++	git-stripspace$X git-var$X git-daemon$X git-shell$X
+ 
+ # ... and all the rest
+ PROGRAMS = \
+diff --git a/shell.c b/shell.c
+new file mode 100644
+index 0000000..676d398
+--- /dev/null
++++ b/shell.c
+@@ -0,0 +1,89 @@
++#include "cache.h"
++
++static char *dequote(char *arg)
++{
++	char *dst = arg;
++	char *src = arg;
++	char c;
++
++	if (*src != '\'')
++		return NULL;
++	for (;;) {
++		c = *++src;
++		if (!c)
++			return NULL;
++		if (c != '\'') {
++			*dst++ = c;
++			continue;
++		}
++		switch (*++src) {
++		case '\0':
++			*dst = 0;
++			return arg;
++		case '\\':
++			if (*++src == '\'' &&
++			    *++src == '\'') {
++				*dst = '\'';
++				continue;
++			}
++		/* Fallthrough */
++		default:
++			return NULL;
++		}
++	}
++}
++
++static int do_receive_pack(char *arg)
++{
++	char cwd[1000];
++	char *my_argv[4];
++
++	arg = dequote(arg);
++	if (!arg)	
++		die("bad argument");
++
++	my_argv[0] = "git-receive-pack";
++	my_argv[1] = arg;
++	my_argv[2] = NULL;
++	return execvp("git-receive-pack", my_argv);
++}
++
++static struct commands {
++	const char *name;
++	int (*exec)(char *arg);
++} cmd_list[] = {
++	{ "git-receive-pack", do_receive_pack },
++	{ NULL },
++};
++
++int main(int argc, char **argv)
++{
++	char *prog;
++	struct commands *cmd;
++
++	/* We want to see "-c cmd args", and nothing else */
++	if (argc != 3 || strcmp(argv[1], "-c"))
++		die("What do you think I am? A shell?");
++	prog = argv[2];
++	argv += 2;
++	argc -= 2;
++	for (cmd = cmd_list ; cmd->name ; cmd++) {
++		int len = strlen(cmd->name);
++		char *arg;
++		if (strncmp(cmd->name, prog, len))
++			continue;
++		arg = NULL;
++		switch (prog[len]) {
++		case '\0':
++			arg = NULL;
++			break;
++		case ' ':
++			arg = prog + len + 1;
++			break;
++		default:
++			continue;
++		}
++		exit(cmd->exec(arg));
++	}
++	die("unrecognized command '%s'", prog);
++}
