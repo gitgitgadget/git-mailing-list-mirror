@@ -1,254 +1,173 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 3/4] git-fetch-pack: Do not use git-rev-list
-Date: Sun, 23 Oct 2005 03:39:08 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510230337460.21239@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [PATCH 4/4] git-fetch-pack: Implement client part of the multi_ack
+ extension
+Date: Sun, 23 Oct 2005 03:40:13 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510230339090.21239@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun Oct 23 03:39:30 2005
+X-From: git-owner@vger.kernel.org Sun Oct 23 03:40:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ETUpN-0007ng-VJ
-	for gcvg-git@gmane.org; Sun, 23 Oct 2005 03:39:14 +0200
+	id 1ETUqR-00081f-R3
+	for gcvg-git@gmane.org; Sun, 23 Oct 2005 03:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751373AbVJWBjK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Oct 2005 21:39:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbVJWBjK
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Oct 2005 21:39:10 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:2451 "EHLO
+	id S1751378AbVJWBkQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Oct 2005 21:40:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbVJWBkQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Oct 2005 21:40:16 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:5011 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751373AbVJWBjJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Oct 2005 21:39:09 -0400
+	id S1751378AbVJWBkP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Oct 2005 21:40:15 -0400
 Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 496A213F0B6; Sun, 23 Oct 2005 03:39:08 +0200 (CEST)
+	id D259B13F0B6; Sun, 23 Oct 2005 03:40:13 +0200 (CEST)
 Received: from virusscan (localhost [127.0.0.1])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 2FD689EF6E; Sun, 23 Oct 2005 03:39:08 +0200 (CEST)
+	id B98B99EF7D; Sun, 23 Oct 2005 03:40:13 +0200 (CEST)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 0665D90236; Sun, 23 Oct 2005 03:39:08 +0200 (CEST)
+	id 9D2FC90236; Sun, 23 Oct 2005 03:40:13 +0200 (CEST)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id EC1E713F0B6; Sun, 23 Oct 2005 03:39:07 +0200 (CEST)
+	id 8988213F0B6; Sun, 23 Oct 2005 03:40:13 +0200 (CEST)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: git@vger.kernel.org, junkio@cox.net
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10485>
 
-The code used to call git-rev-list to enumerate the local revisions. A 
-disadvantage of that method was that git-rev-list, lacking a control apart 
-from the command line, would happily enumerate ancestors of acknowledged 
-common commits, which was just taking unnecessary bandwidth.
-
-Therefore, do not use git-rev-list on the fetching side, but rather 
-construct the list on the go. Send the revisions starting from the local 
-heads, ignoring the revisions known to be common.
+This patch concludes the series, which makes 
+git-fetch-pack/git-upload-pack negotiate a potentially better set of 
+common revs. It should make a difference when fetching from a repository 
+with a few branches.
 
 Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
 ---
 
- fetch-pack.c |  151 ++++++++++++++++++++++++++++++++++++++++++++++------------
- 1 files changed, 119 insertions(+), 32 deletions(-)
+ connect.c    |    5 ++++-
+ fetch-pack.c |   50 +++++++++++++++++++++++++++++++++++++-------------
+ 2 files changed, 41 insertions(+), 14 deletions(-)
 
-applies-to: da61ef5f5dbbe9d0f926f47ae0bd594cdff80d64
-8078a74c5b771352d9a7d3979c8dd7e7858ccbaa
+applies-to: 6b4b7d9acf60aa99d961b599f37d0c824be79e27
+9adb6b3971e7daa79221d7dbe05b66327b266b86
+diff --git a/connect.c b/connect.c
+index b171c5d..57e25a3 100644
+--- a/connect.c
++++ b/connect.c
+@@ -59,8 +59,11 @@ int get_ack(int fd, unsigned char *resul
+ 	if (!strcmp(line, "NAK"))
+ 		return 0;
+ 	if (!strncmp(line, "ACK ", 3)) {
+-		if (!get_sha1_hex(line+4, result_sha1))
++		if (!get_sha1_hex(line+4, result_sha1)) {
++			if (strstr(line+45, "continue"))
++				return 2;
+ 			return 1;
++		}
+ 	}
+ 	die("git-fetch_pack: expected ACK/NAK, got '%s'", line);
+ }
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 8566ab1..3a903c4 100644
+index 3a903c4..57602b9 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -13,18 +13,123 @@ static const char fetch_pack_usage[] =
- static const char *exec = "git-upload-pack";
- 
- #define COMPLETE	(1U << 0)
-+#define COMMON		(1U << 1)
-+#define COMMON_REF	(1U << 2 | COMMON)
-+#define SEEN		(1U << 3)
-+#define POPPED		(1U << 4)
-+
-+static struct commit_list *rev_list = NULL;
-+static struct commit_list *rev_list_end = NULL;
-+static unsigned long non_common_revs = 0;
-+
-+static void rev_list_append(struct commit *commit, int mark)
-+{
-+	if (!(commit->object.flags & mark)) {
-+		commit->object.flags |= mark;
-+
-+		if (rev_list == NULL) {
-+			commit_list_insert(commit, &rev_list);
-+			rev_list_end = rev_list;
-+		} else {
-+			commit_list_insert(commit, &(rev_list_end->next));
-+			rev_list_end = rev_list_end->next;
-+		}
-+
-+		if (!(commit->object.flags & COMMON))
-+			non_common_revs++;
-+	}
-+}
-+
-+static int rev_list_append_sha1(const char *path, const unsigned char *sha1)
-+{
-+	struct object *o = deref_tag(parse_object(sha1));
-+
-+	if (o->type == commit_type)
-+		rev_list_append((struct commit *)o, SEEN);
-+
-+	return 0;
-+}
-+
-+static void mark_common(struct commit *commit)
-+{
-+	if (commit != NULL && !(commit->object.flags & COMMON)) {
-+		struct object *o = (struct object *)commit;
-+		o->flags |= COMMON;
-+		if (!(o->flags & SEEN))
-+			rev_list_append(commit, SEEN);
-+		else {
-+			struct commit_list *parents;
-+
-+			if (!(o->flags & POPPED))
-+				non_common_revs--;
-+			if (!o->parsed)
-+				parse_commit(commit);
-+			for (parents = commit->parents;
-+					parents;
-+					parents = parents->next)
-+				mark_common(parents->item);
-+		}
-+	}
-+}
-+
-+/*
-+  Get the next rev to send, ignoring the common.
-+*/
-+
-+static const unsigned char* get_rev()
-+{
-+	struct commit *commit = NULL;
-+
-+	while (commit == NULL) {
-+		unsigned int mark;
-+		struct commit_list* parents;
-+
-+		if (rev_list == NULL || non_common_revs == 0)
-+			return NULL;
-+
-+		commit = rev_list->item;
-+		if (!(commit->object.parsed))
-+			parse_commit(commit);
-+		commit->object.flags |= POPPED;
-+		if (!(commit->object.flags & COMMON))
-+			non_common_revs--;
-+	
-+		parents = commit->parents;
-+
-+		if (commit->object.flags & COMMON) {
-+			/* do not send "have", and ignore ancestors */
-+			commit = NULL;
-+			mark = COMMON | SEEN;
-+		} else if (commit->object.flags & COMMON_REF)
-+			/* send "have", and ignore ancestors */
-+			mark = COMMON | SEEN;
-+		else
-+			/* send "have", also for its ancestors */
-+			mark = SEEN;
-+
-+		while (parents) {
-+			if (mark & COMMON)
-+				mark_common(parents->item);
-+			else
-+				rev_list_append(parents->item, mark);
-+			parents = parents->next;
-+		}
-+
-+		rev_list = rev_list->next;
-+	}
-+
-+	return commit->object.sha1;
-+}
- 
- static int find_common(int fd[2], unsigned char *result_sha1,
+@@ -125,7 +125,7 @@ static int find_common(int fd[2], unsign
  		       struct ref *refs)
  {
  	int fetching;
--	static char line[1000];
--	static char rev_command[1024];
--	int count = 0, flushes = 0, retval, rev_command_len;
--	FILE *revs;
-+	int count = 0, flushes = 0, retval;
-+	const unsigned char *sha1;
-+
-+	for_each_ref(rev_list_append_sha1);
+-	int count = 0, flushes = 0, retval;
++	int count = 0, flushes = 0, multi_ack = 0, retval;
+ 	const unsigned char *sha1;
  
--	strcpy(rev_command, "git-rev-list $(git-rev-parse --all)");
--	rev_command_len = strlen(rev_command);
- 	fetching = 0;
- 	for ( ; refs ; refs = refs->next) {
- 		unsigned char *remote = refs->old_sha1;
-@@ -42,25 +147,15 @@ static int find_common(int fd[2], unsign
- 		 */
- 		if (((o = lookup_object(remote)) != NULL) &&
- 		    (o->flags & COMPLETE)) {
--			struct commit_list *p;
--			struct commit *commit =
--				(struct commit *) (o = deref_tag(o));
--			if (!o)
--				goto repair;
--			if (o->type != commit_type)
--				continue;
--			p = commit->parents;
--			while (p &&
--			       rev_command_len + 44 < sizeof(rev_command)) {
--				snprintf(rev_command + rev_command_len, 44,
--					 " ^%s",
--					 sha1_to_hex(p->item->object.sha1));
--				rev_command_len += 43;
--				p = p->next;
--			}
-+			o = deref_tag(o);
-+
-+			if (o->type == commit_type)
-+				rev_list_append((struct commit *)o,
-+						COMMON_REF | SEEN);
-+
+ 	for_each_ref(rev_list_append_sha1);
+@@ -156,20 +156,22 @@ static int find_common(int fd[2], unsign
  			continue;
  		}
--	repair:
-+
- 		packet_write(fd[1], "want %s\n", sha1_to_hex(remote));
+ 
+-		packet_write(fd[1], "want %s\n", sha1_to_hex(remote));
++		packet_write(fd[1], "want %s multi_ack\n", sha1_to_hex(remote));
  		fetching++;
  	}
-@@ -68,16 +163,9 @@ static int find_common(int fd[2], unsign
+ 	packet_flush(fd[1]);
  	if (!fetching)
  		return 1;
  
--	revs = popen(rev_command, "r");
--	if (!revs)
--		die("unable to run 'git-rev-list'");
--
- 	flushes = 1;
+-	flushes = 1;
++	flushes = 0;
  	retval = -1;
--	while (fgets(line, sizeof(line), revs) != NULL) {
--		unsigned char sha1[20];
--		if (get_sha1_hex(line, sha1))
--			die("git-fetch-pack: expected object name, got crud");
-+	while ((sha1 = get_rev())) {
+ 	while ((sha1 = get_rev())) {
  		packet_write(fd[1], "have %s\n", sha1_to_hex(sha1));
  		if (verbose)
  			fprintf(stderr, "have %s\n", sha1_to_hex(sha1));
-@@ -101,7 +189,6 @@ static int find_common(int fd[2], unsign
+ 		if (!(31 & ++count)) {
++			int ack;
++
+ 			packet_flush(fd[1]);
+ 			flushes++;
+ 
+@@ -179,26 +181,48 @@ static int find_common(int fd[2], unsign
+ 			 */
+ 			if (count == 32)
+ 				continue;
+-			if (get_ack(fd[0], result_sha1)) {
+-				flushes = 0;
+-				retval = 0;
+-				if (verbose)
+-					fprintf(stderr, "got ack\n");
+-				break;
+-			}
++
++			do {
++				ack = get_ack(fd[0], result_sha1);
++				if (verbose && ack)
++					fprintf(stderr, "got ack %d %s\n", ack,
++							sha1_to_hex(result_sha1));
++				if (ack == 1) {
++					if (!multi_ack)
++						flushes = 0;
++					retval = 0;
++					goto done;
++				} else if (ack == 2) {
++					multi_ack = 1;
++					mark_common((struct commit *)
++							lookup_object(result_sha1));
++					retval = 0;
++				}
++			} while(ack);
  			flushes--;
  		}
  	}
--	pclose(revs);
++done:
++	if (multi_ack) {
++		packet_flush(fd[1]);
++		flushes++;
++	}
  	packet_write(fd[1], "done\n");
  	if (verbose)
  		fprintf(stderr, "done\n");
++	if (retval != 0)
++		flushes++;
+ 	while (flushes) {
+-		flushes--;
+ 		if (get_ack(fd[0], result_sha1)) {
+ 			if (verbose)
+-				fprintf(stderr, "got ack\n");
+-			return 0;
++				fprintf(stderr, "got ack %s\n",
++					sha1_to_hex(result_sha1));
++			if (!multi_ack)
++				return 0;
++			retval = 0;
++			continue;
+ 		}
++		flushes--;
+ 	}
+ 	return retval;
+ }
 ---
 0.99.8.GIT
