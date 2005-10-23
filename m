@@ -1,85 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Server side programs
-Date: Sat, 22 Oct 2005 17:30:36 -0700
-Message-ID: <7vll0l6pn7.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 22 Oct 2005 17:42:10 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510221737300.10477@g5.osdl.org>
 References: <435ABB99.5020908@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 23 02:31:32 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 23 02:42:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ETTl3-0001Fa-9v
-	for gcvg-git@gmane.org; Sun, 23 Oct 2005 02:30:41 +0200
+	id 1ETTwT-0005ka-KU
+	for gcvg-git@gmane.org; Sun, 23 Oct 2005 02:42:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbVJWAai (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Oct 2005 20:30:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbVJWAai
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Oct 2005 20:30:38 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:16061 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751321AbVJWAah (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Oct 2005 20:30:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051023003020.CGYU9394.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 22 Oct 2005 20:30:20 -0400
+	id S1751286AbVJWAmP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Oct 2005 20:42:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbVJWAmP
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Oct 2005 20:42:15 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:2486 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751286AbVJWAmO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Oct 2005 20:42:14 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9N0gBFC003093
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 22 Oct 2005 17:42:11 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9N0gA2e000813;
+	Sat, 22 Oct 2005 17:42:10 -0700
 To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <435ABB99.5020908@op5.se> (Andreas Ericsson's message of "Sun, 23
-	Oct 2005 00:22:17 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+In-Reply-To: <435ABB99.5020908@op5.se>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10480>
 
-Andreas Ericsson <ae@op5.se> writes:
 
-> Are git-receive-pack and git-upload-pack the only two binaries that get 
-> called directly over a SSH-tunnel?
 
-There are git-ssh-fetch and git-ssh-upload which call each other
-(and the older name pairs git-ssh-push and git-sh-pull do so as
-well).  However, you do not have to use these commit walkers
-over ssh; fetch-pack/upload-pack pair work quite well.
+On Sun, 23 Oct 2005, Andreas Ericsson wrote:
+>
+> Are git-receive-pack and git-upload-pack the only two binaries that get called
+> directly over a SSH-tunnel?
 
-I think your question is "what is the absolute minimum set of
-binaries you need to allow", so I think the two listed are
-enough.  If you want to let your users coming over SSH *create*
-a new repository on your machine, you would need a bit more,
-though (namely, shell access to run mkdir and git-init-db).
+With the normal pack thing, yes.
 
-> The reason I'm asking is that I'm adding support for userrelative paths 
-> (git pull ssh://host:~user/somedir) and removing the possibilities to 
-> use a compromised but limited account for finding out what other 
-> useraccounts are available.
+They will exec other programs (mainly git-rev-list and 
+git-[un]pack-objects), and a client can ask for other programs 
+(git-send-pack takes an "--exec=" argument, for example), but those two 
+should be sufficient if you have a server-side special "restricted shell" 
+that you want to run instead of a real one.
 
-Sorry, it is not clear to me what you are adding.  I do this
-regularly:
+One more issue: you can't create a new archive or delete an old one (or do 
+administration like repacking, fsck etc) with those interfaces, so if you 
+want these limited users to be able to do that, then you'd need to add a 
+few administration commands too.
 
-	$ git push kernel.org:git/
-	$ git fetch kernel.org:git/
-
-to push into and fetch from $HOME/git/ repository on the other
-end.
-
-Also I can do this already (assuming the other end hangs all
-users under the same directory, presumably /home/$user):
-
-	$ git fetch kernel.org:../torvalds/git/
-
-Are you in addition trying to let me do this:
-
-	$ git fetch kernel.org:~torvalds/git/
-
-which would work even when ~torvalds == /home/torvalds and
-~junio == /home2/junio, without having to tell people where
-the user home directories are?
-
-At one point, Linus posted an outline of "restricted login shell
-for use with git over ssh".  I think you could start from there,
-perhaps extend it so that it checks the binaries *and* pathnames
-the user can specify (e.g. only under your own $HOME is allowed,
-and no /../ in them, or something silly like that).
+		Linus
