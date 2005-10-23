@@ -1,58 +1,65 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: git and gitweb inconsistencies
-Date: Sun, 23 Oct 2005 13:59:39 +0200
-Message-ID: <20051023115939.GG8383MdfPADPa@greensroom.kotnet.org>
-References: <20051023001412.GA22679@pe.Belkin>
-Reply-To: skimo@liacs.nl
+From: Brad Roberts <braddr@puremagic.com>
+Subject: [gitweb PATCH] add a 'diff to parent' option in the file history
+ display
+Date: Sun, 23 Oct 2005 08:25:05 -0700 (PDT)
+Message-ID: <Pine.LNX.4.44.0510230815570.2284-100000@bellevue.puremagic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 23 14:00:58 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sun Oct 23 17:26:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ETeW9-0004bY-8L
-	for gcvg-git@gmane.org; Sun, 23 Oct 2005 14:00:01 +0200
+	id 1EThj4-0004j8-N4
+	for gcvg-git@gmane.org; Sun, 23 Oct 2005 17:25:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750700AbVJWL7n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Oct 2005 07:59:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750711AbVJWL7n
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Oct 2005 07:59:43 -0400
-Received: from smtp18.wxs.nl ([195.121.6.14]:46722 "EHLO smtp18.wxs.nl")
-	by vger.kernel.org with ESMTP id S1750700AbVJWL7m (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Oct 2005 07:59:42 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp18.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0IOT002JYANFEQ@smtp18.wxs.nl> for git@vger.kernel.org; Sun,
- 23 Oct 2005 13:59:39 +0200 (CEST)
-Received: (qmail 17468 invoked by uid 500); Sun, 23 Oct 2005 11:59:39 +0000
-In-reply-to: <20051023001412.GA22679@pe.Belkin>
-To: Chris Shoemaker <c.shoemaker@cox.net>
-Mail-followup-to: Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1750745AbVJWPZJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Oct 2005 11:25:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbVJWPZJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Oct 2005 11:25:09 -0400
+Received: from bellevue.puremagic.com ([209.189.198.108]:49066 "EHLO
+	bellevue.puremagic.com") by vger.kernel.org with ESMTP
+	id S1750745AbVJWPZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Oct 2005 11:25:07 -0400
+Received: from bellevue.puremagic.com (localhost [127.0.0.1])
+	by bellevue.puremagic.com (8.13.4/8.13.4/Debian-3) with ESMTP id j9NFP6FS004011
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Sun, 23 Oct 2005 08:25:07 -0700
+Received: from localhost (braddr@localhost)
+	by bellevue.puremagic.com (8.13.4/8.13.4/Submit) with ESMTP id j9NFP6rX003999
+	for <git@vger.kernel.org>; Sun, 23 Oct 2005 08:25:06 -0700
+X-Authentication-Warning: bellevue.puremagic.com: braddr owned process doing -bs
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10491>
 
-On Sat, Oct 22, 2005 at 08:14:12PM -0400, Chris Shoemaker wrote:
-> A few days later, I ran git-cvsimport again, with -i.  This imported
-> just the recent changes, but the view from gitweb didn't change.  :(
+I'm not sure how well this plays with multiple parent merges or anything
+complicated.  It seems to work well on a converted cvs archive.
 
-Are you sure you didn't just create a new import *inside* the old import ?
-Do you have, say, both an 'objects' and a '.git/objects' directory ?
+Pullable from:  git://cvs.puremagic.com/git/gitweb.git
 
-> $ echo `git-rev-list tip --max-count=1` > refs/heads/mytest
-> $ git-cat-file -t `cat refs/heads/mytest`
+---------------------
+add a 'diff to parent' option in the file history display
 
-That should be
+Signed-off-by: Brad Roberts <braddr@puremagic.com>
+---
 
-git-update-ref refs/heads/mytest tip
-(the new head will appear in .git/refs/heads/mytest, 
-unless you've set GIT_DIR)
-git-cat-file -t mytest
+ gitweb.cgi |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-
-skimo
+2539b424d62cc2ab060c5d2fa9525a6b6f8df7e5
+diff --git a/gitweb.cgi b/gitweb.cgi
+--- a/gitweb.cgi
++++ b/gitweb.cgi
+@@ -2054,6 +2054,9 @@ sub git_history {
+ 				print " | " .
+ 				$cgi->a({-href => "$my_uri?p=$project;a=blobdiff;h=$blob;hp=$blob_parent;hb=$commit;f=$file_name"},
+ 				"diff to current");
++				print " | "
++				$cgi->a({-href => "$my_uri?p=$project;a=blobdiff;h=$blob_parent;hp=$3;hb=$commit;f=$file_name"},
++				"diff to parent");
+ 			}
+ 			print "</td>\n" .
+ 			      "</tr>\n";
