@@ -1,65 +1,62 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: git-rev-list: add "--dense" flag
-Date: Sun, 23 Oct 2005 12:30:27 -0700 (PDT)
-Message-ID: <20051023193027.2437.qmail@web26303.mail.ukl.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: User-relative paths
+Date: Sun, 23 Oct 2005 12:50:25 -0700
+Message-ID: <7voe5gypvi.fsf@assigned-by-dhcp.cox.net>
+References: <435ABB99.5020908@op5.se>
+	<7vll0l6pn7.fsf@assigned-by-dhcp.cox.net> <435B5AE0.1060400@op5.se>
+	<20051023183757.GS30889@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 23 21:31:28 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 23 21:52:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ETlYG-0005nx-OD
-	for gcvg-git@gmane.org; Sun, 23 Oct 2005 21:30:41 +0200
+	id 1ETls3-0005Uq-Qy
+	for gcvg-git@gmane.org; Sun, 23 Oct 2005 21:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750716AbVJWTaf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Oct 2005 15:30:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750751AbVJWTae
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Oct 2005 15:30:34 -0400
-Received: from web26303.mail.ukl.yahoo.com ([217.146.176.14]:52845 "HELO
-	web26303.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1750716AbVJWTae (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Oct 2005 15:30:34 -0400
-Received: (qmail 2439 invoked by uid 60001); 23 Oct 2005 19:30:27 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=eCnuqMVDhv0HQ3rsBpLTYZO0sR3flV3loQckzDlKOlO9rRuYOEVLQ7Q1c9yYqeoOjoG13q4qEIewgoUqz/G1fponRfp8IKrtVnUo7lqUxtg9wvP2LjdsPpDXQ/EIzEipEMruE4HZBkhYEPtxeUOXnPm3Qh2Ynit6954MD9p14BI=  ;
-Received: from [151.42.224.10] by web26303.mail.ukl.yahoo.com via HTTP; Sun, 23 Oct 2005 12:30:27 PDT
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1750706AbVJWTu2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Oct 2005 15:50:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750713AbVJWTu2
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Oct 2005 15:50:28 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:3031 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1750706AbVJWTu1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Oct 2005 15:50:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051023195007.VASF4169.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 23 Oct 2005 15:50:07 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051023183757.GS30889@pasky.or.cz> (Petr Baudis's message of
+	"Sun, 23 Oct 2005 20:37:57 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10503>
 
-Linus Torvalds wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
+>> diff --git a/Makefile b/Makefile
+>> index 903c57c..87188ea 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -359,6 +362,9 @@ git-cherry-pick: git-revert
+>>  %.o: %.S
+>>  	$(CC) -o $*.o -c $(ALL_CFLAGS) $<
+>>  
+>> +$(SERVERSIDE_PROGRAMS) : git-%$X : %.o srvside-ssh.o $(LIB_FILE)
+>> +	$(CC) $(ALL_CFLAGS) -o $@ $(filter %o,$^) $(LIBS)
+>> +
+>>  git-%$X: %.o $(LIB_FILE)
+>>  	$(CC) $(ALL_CFLAGS) -o $@ $(filter %.o,$^) $(LIBS)
+>>  
 >
->And it scales pretty well too. On the historical linux archive, which is 
->three years of history, the same thing takes me just over 12 seconds and 
->52MB, and that's for the _whole_ history. And it's not just following one 
->file: it's following that subdirectory.
->
->So it really is pretty damn cool. 
->
+> Why are you adding own compilation command, and why is it inconsistent
+> with the git-%$X's one?
 
-Yes, it is. Very powerful and useful tool indeed. IMHO kudos!
-
->Of course, I might have a bug somewhere, but it all _seems_ to work very 
->well indeed.
->
-
-The only bug I found is in qgit ;-) that failed to correctly handle --dense option.
-
-It is now fixed in my GIT archive: http://digilander.libero.it/mcostalba/qgit.git
-
-
-    Marco
-
-
-
-		
-__________________________________ 
-Yahoo! FareChase: Search multiple travel sites in one click.
-http://farechase.yahoo.com
+Although I'd prefer the simplicity of putting srvside-ssh.o in
+LIB_OBJS, this is arguably defensible; it avoids relinking of
+everything else merely because srvside-ssh.c is changed.
