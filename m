@@ -1,113 +1,59 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/4] git-upload-pack: More efficient usage of the has_sha1
- array
-Date: Sun, 23 Oct 2005 03:36:06 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510230335280.21239@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [PATCH 0/4] Spend more effort in git-fetch-pack finding common
+ revisions
+Date: Sun, 23 Oct 2005 03:35:26 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510230334410.21239@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun Oct 23 03:37:05 2005
+X-From: git-owner@vger.kernel.org Sun Oct 23 03:37:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ETUmd-0007G2-Du
-	for gcvg-git@gmane.org; Sun, 23 Oct 2005 03:36:23 +0200
+	id 1ETUmF-0007C7-Gh
+	for gcvg-git@gmane.org; Sun, 23 Oct 2005 03:35:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751275AbVJWBgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Oct 2005 21:36:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbVJWBgI
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Oct 2005 21:36:08 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:64146 "EHLO
+	id S1751233AbVJWBfa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Oct 2005 21:35:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbVJWBfa
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Oct 2005 21:35:30 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:62610 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751275AbVJWBgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Oct 2005 21:36:07 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	id S1751275AbVJWBfa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Oct 2005 21:35:30 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id DDCB313F0B6; Sun, 23 Oct 2005 03:36:06 +0200 (CEST)
+	id 1B1AC13F0B6; Sun, 23 Oct 2005 03:35:27 +0200 (CEST)
 Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BF8FBB4E59; Sun, 23 Oct 2005 03:36:06 +0200 (CEST)
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 00FF79EF7D; Sun, 23 Oct 2005 03:35:27 +0200 (CEST)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 72B0E59505; Sun, 23 Oct 2005 03:36:06 +0200 (CEST)
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id DC39190236; Sun, 23 Oct 2005 03:35:26 +0200 (CEST)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 62DA713F0B6; Sun, 23 Oct 2005 03:36:06 +0200 (CEST)
+	id 92CE613F0B6; Sun, 23 Oct 2005 03:35:26 +0200 (CEST)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: git@vger.kernel.org, junkio@cox.net
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10482>
 
-This patch is based on Junio's proposal. It marks parents of common revs 
-so that they do not clutter up the has_sha1 array.
+This series of 4 patches extends the fetch-pack/upload-pack protocol such
+that more than just one common revision is used to find out which objects
+are needed by the client.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+This means that the client spends more time on enumerating candidates, and
+the server just acknowledges those it knows about. That is done until the
+client runs out of candidates, or the server got HAS_MAX common revisions.
 
----
+While it does not make much of a difference when you are tracking one linear
+branch on one repository, this change should make it more efficient (and
+also ease the burden on the server) to work with several repositories having
+several branches, and intertwined development.
 
- upload-pack.c |   25 ++++++++++++++++++++-----
- 1 files changed, 20 insertions(+), 5 deletions(-)
+Next thing I'll do is write some nasty test cases.
 
-applies-to: ccef5ac580c68a9714f37dcd8ee433e9691b640a
-69e13cda85a74200b25ed48ed81909d848a7b9cb
-diff --git a/upload-pack.c b/upload-pack.c
-index accdba6..ab1981c 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -3,9 +3,11 @@
- #include "pkt-line.h"
- #include "tag.h"
- #include "object.h"
-+#include "commit.h"
- 
- static const char upload_pack_usage[] = "git-upload-pack [--strict] [--timeout=nn] <dir>";
- 
-+#define THEY_HAVE (1U << 0)
- #define MAX_HAS 256
- #define MAX_NEEDS 256
- static int nr_has = 0, nr_needs = 0;
-@@ -85,15 +87,25 @@ static void create_pack_file(void)
- 
- static int got_sha1(char *hex, unsigned char *sha1)
- {
--	int nr;
- 	if (get_sha1_hex(hex, sha1))
- 		die("git-upload-pack: expected SHA1 object, got '%s'", hex);
- 	if (!has_sha1_file(sha1))
- 		return 0;
--	nr = nr_has;
--	if (nr < MAX_HAS) {
--		memcpy(has_sha1[nr], sha1, 20);
--		nr_has = nr+1;
-+	if (nr_has < MAX_HAS) {
-+		struct object *o = lookup_object(sha1);
-+		if (!o || (!o->parsed && !parse_object(sha1)))
-+			die("oops (%s)", sha1_to_hex(sha1));
-+		if (o->type == commit_type) {
-+			struct commit_list *parents;
-+			if (o->flags & THEY_HAVE)
-+				return 0;
-+			o->flags |= THEY_HAVE;
-+			for (parents = ((struct commit*)o)->parents;
-+			     parents;
-+			     parents = parents->next)
-+				parents->item->object.flags |= THEY_HAVE;
-+		}
-+		memcpy(has_sha1[nr_has++], sha1, 20);
- 	}
- 	return 1;
- }
-@@ -104,6 +116,9 @@ static int get_common_commits(void)
- 	unsigned char sha1[20];
- 	int len;
- 
-+	track_object_refs = 0;
-+	save_commit_buffer = 0;
-+
- 	for(;;) {
- 		len = packet_read_line(0, line, sizeof(line));
- 		reset_timeout();
----
-0.99.8.GIT
+Flame on,
+Dscho
