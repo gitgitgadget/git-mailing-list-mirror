@@ -1,61 +1,113 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Server side programs
-Date: Sat, 22 Oct 2005 17:42:10 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510221737300.10477@g5.osdl.org>
-References: <435ABB99.5020908@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 1/4] git-upload-pack: More efficient usage of the has_sha1
+ array
+Date: Sun, 23 Oct 2005 03:36:06 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510230335280.21239@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 23 02:42:52 2005
+X-From: git-owner@vger.kernel.org Sun Oct 23 03:37:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ETTwT-0005ka-KU
-	for gcvg-git@gmane.org; Sun, 23 Oct 2005 02:42:30 +0200
+	id 1ETUmd-0007G2-Du
+	for gcvg-git@gmane.org; Sun, 23 Oct 2005 03:36:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751286AbVJWAmP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Oct 2005 20:42:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbVJWAmP
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Oct 2005 20:42:15 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:2486 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751286AbVJWAmO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Oct 2005 20:42:14 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9N0gBFC003093
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 22 Oct 2005 17:42:11 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9N0gA2e000813;
-	Sat, 22 Oct 2005 17:42:10 -0700
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <435ABB99.5020908@op5.se>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.125 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751275AbVJWBgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Oct 2005 21:36:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbVJWBgI
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Oct 2005 21:36:08 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:64146 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751275AbVJWBgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Oct 2005 21:36:07 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id DDCB313F0B6; Sun, 23 Oct 2005 03:36:06 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id BF8FBB4E59; Sun, 23 Oct 2005 03:36:06 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 72B0E59505; Sun, 23 Oct 2005 03:36:06 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 62DA713F0B6; Sun, 23 Oct 2005 03:36:06 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10481>
 
+This patch is based on Junio's proposal. It marks parents of common revs 
+so that they do not clutter up the has_sha1 array.
 
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-On Sun, 23 Oct 2005, Andreas Ericsson wrote:
->
-> Are git-receive-pack and git-upload-pack the only two binaries that get called
-> directly over a SSH-tunnel?
+---
 
-With the normal pack thing, yes.
+ upload-pack.c |   25 ++++++++++++++++++++-----
+ 1 files changed, 20 insertions(+), 5 deletions(-)
 
-They will exec other programs (mainly git-rev-list and 
-git-[un]pack-objects), and a client can ask for other programs 
-(git-send-pack takes an "--exec=" argument, for example), but those two 
-should be sufficient if you have a server-side special "restricted shell" 
-that you want to run instead of a real one.
-
-One more issue: you can't create a new archive or delete an old one (or do 
-administration like repacking, fsck etc) with those interfaces, so if you 
-want these limited users to be able to do that, then you'd need to add a 
-few administration commands too.
-
-		Linus
+applies-to: ccef5ac580c68a9714f37dcd8ee433e9691b640a
+69e13cda85a74200b25ed48ed81909d848a7b9cb
+diff --git a/upload-pack.c b/upload-pack.c
+index accdba6..ab1981c 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -3,9 +3,11 @@
+ #include "pkt-line.h"
+ #include "tag.h"
+ #include "object.h"
++#include "commit.h"
+ 
+ static const char upload_pack_usage[] = "git-upload-pack [--strict] [--timeout=nn] <dir>";
+ 
++#define THEY_HAVE (1U << 0)
+ #define MAX_HAS 256
+ #define MAX_NEEDS 256
+ static int nr_has = 0, nr_needs = 0;
+@@ -85,15 +87,25 @@ static void create_pack_file(void)
+ 
+ static int got_sha1(char *hex, unsigned char *sha1)
+ {
+-	int nr;
+ 	if (get_sha1_hex(hex, sha1))
+ 		die("git-upload-pack: expected SHA1 object, got '%s'", hex);
+ 	if (!has_sha1_file(sha1))
+ 		return 0;
+-	nr = nr_has;
+-	if (nr < MAX_HAS) {
+-		memcpy(has_sha1[nr], sha1, 20);
+-		nr_has = nr+1;
++	if (nr_has < MAX_HAS) {
++		struct object *o = lookup_object(sha1);
++		if (!o || (!o->parsed && !parse_object(sha1)))
++			die("oops (%s)", sha1_to_hex(sha1));
++		if (o->type == commit_type) {
++			struct commit_list *parents;
++			if (o->flags & THEY_HAVE)
++				return 0;
++			o->flags |= THEY_HAVE;
++			for (parents = ((struct commit*)o)->parents;
++			     parents;
++			     parents = parents->next)
++				parents->item->object.flags |= THEY_HAVE;
++		}
++		memcpy(has_sha1[nr_has++], sha1, 20);
+ 	}
+ 	return 1;
+ }
+@@ -104,6 +116,9 @@ static int get_common_commits(void)
+ 	unsigned char sha1[20];
+ 	int len;
+ 
++	track_object_refs = 0;
++	save_commit_buffer = 0;
++
+ 	for(;;) {
+ 		len = packet_read_line(0, line, sizeof(line));
+ 		reset_timeout();
+---
+0.99.8.GIT
