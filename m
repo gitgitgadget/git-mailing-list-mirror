@@ -1,55 +1,73 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: daemon.c broken on OpenBSD
-Date: Mon, 24 Oct 2005 10:04:02 -0700
-Message-ID: <435D1402.4050601@zytor.com>
-References: <867jc336f4.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0510240901020.10477@g5.osdl.org> <86irvmzyq9.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0510240936450.10477@g5.osdl.org>
+Date: Mon, 24 Oct 2005 10:14:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510241002180.10477@g5.osdl.org>
+References: <867jc336f4.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0510240901020.10477@g5.osdl.org>
+ <86irvmzyq9.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0510240936450.10477@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 24 19:08:02 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 24 19:17:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EU5kG-00042p-3D
-	for gcvg-git@gmane.org; Mon, 24 Oct 2005 19:04:24 +0200
+	id 1EU5uP-0007gw-QP
+	for gcvg-git@gmane.org; Mon, 24 Oct 2005 19:14:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751170AbVJXREV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Oct 2005 13:04:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbVJXREV
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 13:04:21 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:44416 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751170AbVJXREU
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Oct 2005 13:04:20 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9OH48L4009726
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 24 Oct 2005 10:04:08 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751161AbVJXROu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Oct 2005 13:14:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751177AbVJXROu
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 13:14:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:8147 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751161AbVJXROu (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Oct 2005 13:14:50 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9OHEmFC002845
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 24 Oct 2005 10:14:48 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9OHEktB032353;
+	Mon, 24 Oct 2005 10:14:47 -0700
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
 In-Reply-To: <Pine.LNX.4.64.0510240936450.10477@g5.osdl.org>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00,RISK_FREE 
-	autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10549>
 
-Linus Torvalds wrote:
+
+
+On Mon, 24 Oct 2005, Linus Torvalds wrote:
 > 
-> I think Junio's patch (that renames things) is possibly the "cleaner" 
-> alternative, but on the other hand there's a lot of advantages to just 
-> using the standard names. No chance of somebody using the wrong version by 
-> mistake.
-> 
+> So yes, it's ugly, but it definitely is safe in practice, as long as the 
+> local headers are included before the system ones.
 
-But there is also no risk of other unexpected dependencies.  I would 
-vote for using git-specific names.
+Side note: "safe in practice" isn't necessarily the same as "safe in 
+theory".
 
-	-hpa
+I think that strictly speaking, if you include <ctype.h>, the "isxxxx()" 
+format is always reserved (where "x" is lowercase letters), and in theory 
+you could have a compiler that recognizes them even before the 
+pre-processor as being something built-in.
+
+In _practice_, such a compiler would be incredibly broken (it would have 
+to do the recognition after preprocessing too), and I doubt you'd ever see 
+such a thing, but from a pure language-lawyer standpoint it might 
+technically be possible.
+
+However, I'm surprised that you see <ctype.h> at all. The OpenBSD headers 
+seem to be including <ctype.h> from <sys/poll.h>, which doesn't make any 
+sense. It may not be strictly against POSIX, but it's definitely strange 
+and bad form to do unnecessary name pollution that the user didn't ask 
+for.
+
+So git actually tries to be pretty good about things. Not only does it try 
+to handle any existing system <ctype.h> by doing the #undef, it actually 
+doesn't include the system ctype.h at _all_ when it includes "cache.h". 
+And OpenBSD is being a bit strange.
+
+		Linus
