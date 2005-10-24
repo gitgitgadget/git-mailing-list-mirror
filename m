@@ -1,61 +1,166 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: LCA2006 Git/Cogito tutorial
-Date: Mon, 24 Oct 2005 10:32:16 +0200
-Message-ID: <20051024083216.GA4397@c165.ib.student.liu.se>
-References: <4352F4C9.1040703@catalyst.net.nz> <20051021005145.GB30889@pasky.or.cz> <200510202137.22311.dtor_core@ameritech.net> <4358597A.6000306@catalyst.net.nz> <20051021091551.GE30889@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [RFC] GIT paths
+Date: Mon, 24 Oct 2005 01:50:48 -0700
+Message-ID: <7vhdb7qown.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>,
-	Dmitry Torokhov <dtor_core@ameritech.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 24 10:34:01 2005
+X-From: git-owner@vger.kernel.org Mon Oct 24 10:54:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ETxl7-0007s8-1Z
-	for gcvg-git@gmane.org; Mon, 24 Oct 2005 10:32:45 +0200
+	id 1ETy3y-0007It-4j
+	for gcvg-git@gmane.org; Mon, 24 Oct 2005 10:52:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750759AbVJXIcZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Oct 2005 04:32:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750775AbVJXIcZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 04:32:25 -0400
-Received: from [85.8.31.11] ([85.8.31.11]:13278 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S1750759AbVJXIcY (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Oct 2005 04:32:24 -0400
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id A7B724114; Mon, 24 Oct 2005 10:39:45 +0200 (CEST)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1ETxke-00019A-00; Mon, 24 Oct 2005 10:32:16 +0200
-To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <20051021091551.GE30889@pasky.or.cz>
-User-Agent: Mutt/1.5.6+20040907i
+	id S1750801AbVJXIux (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Oct 2005 04:50:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750771AbVJXIux
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 04:50:53 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:44203 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1750801AbVJXIuw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Oct 2005 04:50:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051024085009.YMVH24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 24 Oct 2005 04:50:09 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10536>
 
-On Fri, Oct 21, 2005 at 11:15:51AM +0200, Petr Baudis wrote:
-> Dear diary, on Fri, Oct 21, 2005 at 04:59:06AM CEST, I got a letter
-> where "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz> told me that...
-> > Almost. No, truly, I'm very impressed with git-merge.sh, which first 
-> > does the simple git-read-tree -m, and it can then try several merger 
-> > scripts to resolve the index. The "smartest" merge resolver we have 
-> > follows renames, but we could have language-specific and 
-> > project-specific resolvers, for instance.
-> 
-> Yes, following renames is nice. But as long as it is three-way, it
-> suffers of inherent and rather nasty problems. Well, I'm watching the
-> weave merge effort and plan to give it a try to port it to GIT when I
-> have some time.
-> 
+Our networking commands can take either URL or non URL to
+specify remote repository.  This note first attempts to clarify
+what <path> means in the current implementation, and then
+discusses two possible enhancements.
 
-Which "inherent and rather nasty problems" are you referring to?
+A non URL always refers to the pack protocol going over an SSH
+connection:
 
-I do not know of any merge case which is either cleanly merged to the
-wrong result by git-merge -s recursive, or cleanly merged when it
-should be a conflict. (At least not if there aren't any directory
-renames going on) If you know about such an example I would be very
-interested in taking a look at it.
+	<host> ':' <path>
 
-- Fredrik
+	. path that starts with a slash '/' is absolute path on
+	  the remote site.
+
+	. path that does not start with a slash '/' is relative
+	  to the home directory of the incoming user.
+
+However, note that the administrator could futz with the login
+shell of the user to give restricted access (chroot to change
+the former).  The latter can be made different from the home
+directory, if git-shell is changed to chdir() to somewhere else
+first.  I am not suggesting this as a best practice -- just
+mentioning the possibility for completeness.
+
+A URL form is:
+
+	<proto> ':' <host> ( ':' <port> ) '/' <rest-of-path> 
+
+and <proto> is either 'git', or 'ssh' (also spelled as 'ssh+git'
+or 'git+ssh').  In addition, you can use 'http' or 'rsync', but
+these transports are not discussed further here.  They already
+have established semantics for <path> = '/' + <rest-of-path>.
+
+For connections over plain TCP talking with git-daemon, or over
+SSH in this form, path is always relative to the root directory
+on the remote site, because '/' that terminate either <host> or
+<port> starts the <path> = '/' + <rest-of-path>.
+
+There are two things I would like to discuss here.
+
+ - It might make sense to have SERVER_ROOT (similar to
+   DOCUMENT_ROOT in Apache) for git-daemon, so <path> does not
+   have to be relative to the true filesystem root.  Note that
+   this is not a security measure, but meant for administration
+   convenience [*1*].
+
+ - Over a git-daemon connection, supporting ~user expansion
+   makes sense.  E.g git://host.xz/~junio/ refers to my home
+   directory on that machine.  It would make it impossible to
+   have a directory literally named '~junio' directly underneath
+   the root directory, but that is a good limitation anyway.
+
+The above enhancements, especially SERVER_ROOT, however make
+paths inconsistent between non URL form and URL form.  This
+probably is OK -- people are used to using different paths when
+uploading to HTTP server and testing a download from it.  That
+leaves one issue.  Do we want to support ~user expansion, and if
+so how, on non git-daemon connections?
+
+I would propose that
+
+	git fetch host.xz:~junio/repo
+	git fetch ssh://host.xz/~junio/repo
+
+mean the same thing (i.e. both understand ~user expansion).
+Also these are equivalent (i.e. no ~user expansion; both mean
+absolute filesystem path without SERVER_ROOT prefixing):
+
+	git fetch host.xz:/frotz/repo
+	git fetch ssh://host.xz/frotz/repo
+
+While these two might not mean the same thing (the former is
+prefixed with SERVER_ROOT, but not the latter):
+
+	git fetch git://host.xz/frotz/repo
+	git fetch ssh://host.xz/frotz/repo
+
+There are small technical issues.
+
+ - connect.c should not be affected at all, since it does not
+   know how the remote site arranges SERVER_ROOT (if we support
+   it) or user home directories.
+
+ - ssh://host.xz/path and host.xz:path connections spawn
+   upload-pack or receive-pack directly, without being mediated
+   by git-daemon.  This means that ~user expansion, if we want
+   to support it, needs to be done by these programs themselves.
+
+ - git-daemon needs to validate the incoming requested path and
+   in order to avoid aliasing issues, we should resolve ~user
+   expansion and SERVER_ROOT prefixing first, then validate the
+   resulting path against white/black list, before calling
+   upload-pack or receive-pack.  However, after git-daemon
+   decides to run these programs, they could find out some
+   problems with the specified repository and may need to report
+   them.  Arguably, this reporting should not reveal the real
+   path used to address the repository [*2*].
+
+Although we _could_ forget about the "error reporting exposing
+real path" issue for now, I think we should at least have a plan
+to make things consistent and well defined.  Here is a strawman:
+
+ - Have a common library code that takes user supplied path and
+   does SERVER_ROOT prefixing and ~user expansion.
+
+ - Have git-daemon use it to canonicalize the requested path
+   before validating.  Make it invoke the programs with the path
+   received from the other end (before SERVER_ROOT prefixing, or
+   ~user expansion).
+
+ - Give --server-root=/path/to/root flag to programs that can be
+   called by git-daemon, and have git-daemon run them with this
+   flag.  Have them use the same library to canonicalize the
+   requested path to the real path.  When these programs are run
+   via direct SSH connection (i.e. ssh://host/path and
+   host:path), this flag is not given so they see filesystem
+   path as-is, but make the ~user expansion still available.
+
+
+[Footnote]
+
+*1* You do not want to advertise your repo is at /mnt/disk1/repo
+and find out that you need to move the disks around next day.
+Of course you could plan ahead and have a symlink hanging below
+the root directory (e.g. '/pub -> /mnt/disk1/git'), but it is so
+much more convenient if you can just tell git-daemon that the
+root level used to be /mnt/disk1/git but it is now somewhere
+else.
+
+*2* This is theoretical right now, since packed transfer
+protocols cannot report errors back, but Andreas' patch
+addresses this issue by dying carefully in srvside_chdir().  It
+falls into security-by-obscurity category, so we may choose not
+to worry about it, though.
