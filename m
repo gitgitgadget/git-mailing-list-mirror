@@ -1,83 +1,66 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: gitweb: charset problem
-Date: Mon, 24 Oct 2005 14:34:57 +0200
-Message-ID: <20051024123457.GA30550@vrfy.org>
-References: <20051024071839.GB4608@schottelius.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Christian Gierke <ch@gierke.de>,
-	Peter Portmann <peter.portmann@sygroup.ch>
-X-From: git-owner@vger.kernel.org Mon Oct 24 14:36:06 2005
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: LCA2006 Git/Cogito tutorial
+Date: Sun, 23 Oct 2005 21:22:05 -0300
+Message-ID: <200510240022.j9O0M5B0028531@laptop11.inf.utfsm.cl>
+References: <pasky@suse.cz>
+Cc: Horst von Brand <vonbrand@inf.utfsm.cl>,
+	"Martin Langhoff \(CatalystIT\)" <martin@catalyst.net.nz>,
+	Dmitry Torokhov <dtor_core@ameritech.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 24 15:26:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EU1Xi-0005YI-66
-	for gcvg-git@gmane.org; Mon, 24 Oct 2005 14:35:10 +0200
+	id 1EU2JV-0000Dc-SG
+	for gcvg-git@gmane.org; Mon, 24 Oct 2005 15:24:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750757AbVJXMfE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 24 Oct 2005 08:35:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750770AbVJXMfD
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 08:35:03 -0400
-Received: from soundwarez.org ([217.160.171.123]:15571 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S1750757AbVJXMfC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Oct 2005 08:35:02 -0400
-Received: by soundwarez.org (Postfix, from userid 2702)
-	id 50BED66D76; Mon, 24 Oct 2005 14:34:57 +0200 (CEST)
-To: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Content-Disposition: inline
-In-Reply-To: <20051024071839.GB4608@schottelius.org>
-User-Agent: Mutt/1.5.9i
+	id S1751015AbVJXNYb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Oct 2005 09:24:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbVJXNYb
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 09:24:31 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:63930 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S1750988AbVJXNYa (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Oct 2005 09:24:30 -0400
+Received: from laptop11.inf.utfsm.cl (laptop11.inf.utfsm.cl [200.1.19.198])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j9ODNZiB012475
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 24 Oct 2005 10:23:37 -0300
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j9O0M5B0028531;
+	Sun, 23 Oct 2005 21:22:05 -0300
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: Message from Petr Baudis <pasky@suse.cz> 
+   of "Mon, 24 Oct 2005 00:40:22 +0200." <20051023224022.GX30889@pasky.or.cz> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Mon, 24 Oct 2005 10:23:37 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10540>
 
-On Mon, Oct 24, 2005 at 09:18:39AM +0200, Nico -telmich- Schottelius wr=
-ote:
-> gitweb (my $version =3D           "247";) seems to send utf-8 as meta=
- tag encoding
-> (<meta http-equiv=3D"content-type" content=3D"text/html; charset=3Dut=
-f-8"/>).
+Petr Baudis <pasky@suse.cz> wrote:
+> Dear diary, on Sun, Oct 23, 2005 at 05:33:43PM CEST, I got a letter
+> where Horst von Brand <vonbrand@inf.utfsm.cl> told me that...
+> > Martin Langhoff (CatalystIT) <martin@catalyst.net.nz> wrote:
+> > [...]
+> > >     MERGE ERROR: : Not handling case  ->  ->
 
-Yes, that's is intentional, also the http header is overwritten, if the
-webserver's default is not utf8.
+> > It happens when a new file with the same name appears in both parents. For
+> > example, we both see the need for a README file, and then I pull from you
+> > and try to merge into my version.
 
-> The problem is that the name of the user "HansjOErg" (OE is the germa=
-n umlaut)
-> is in iso8859-1 in /etc/passwd.
+> It certainly shouldn't happen with precisely that error message - there
+> should be at least something written between the arrows.
 
-Huh, not sure if it's a good idea to put that into a username,
-never tried or ever seen that.
+It does now.
 
-> This is guessed, but it does not look like utf-8, as it's a one byte =
-encoding:
->=20
-> 00007b0: 3031 323a 3130 303a 4861 6e73 6af6 7267  012:100:Hansj.rg
+>                                                          And yes, there
+> are unhandled cases like that, as I wrote in one of my other mails.
 
-Sure, 0xf6 is the single letter '=C3=B6' (oe) in iso-8859.
-
-> What would be the correct way to fix that? Change the username to utf=
--8?
-> (Is this possible without causing problems in other programs?)
-> Or tell gitweb that it should convert non-UTF-8 to UTF-8?
-
-Don't know. At best get rid of the non-ascii chars in /etc/passwd
-if you don't want to get in trouble... :)
-
-All other programs sure, should definitely use utf8.
-
-> But we also have another problem: Sometimes we have umlauts in the co=
-mmit messages.
-> Those are also displayed incorrectly. When I switch to iso-8859-1 enc=
-oding in mozilla,
-> the characters in the username and in the commit message are ok.
-
-utf8 is the one and only sane encoding if you need more than ascii char=
-s.
-Just convert everything to utf8 from your locale to your webserver and
-all that pain will go away immediately. :)
-
-Best,
-Kay
+Yep, thanks!
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
