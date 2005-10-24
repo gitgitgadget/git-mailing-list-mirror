@@ -1,77 +1,57 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
 Subject: Re: daemon.c broken on OpenBSD
-Date: Mon, 24 Oct 2005 09:02:04 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510240901020.10477@g5.osdl.org>
+Date: 24 Oct 2005 09:06:06 -0700
+Message-ID: <86irvmzyq9.fsf@blue.stonehenge.com>
 References: <867jc336f4.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0510240901020.10477@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 24 18:02:22 2005
+X-From: git-owner@vger.kernel.org Mon Oct 24 18:08:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EU4m8-0005ER-Ho
-	for gcvg-git@gmane.org; Mon, 24 Oct 2005 18:02:16 +0200
+	id 1EU4q0-0006yl-Td
+	for gcvg-git@gmane.org; Mon, 24 Oct 2005 18:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751129AbVJXQCM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Oct 2005 12:02:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751130AbVJXQCL
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 12:02:11 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:39100 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751129AbVJXQCK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Oct 2005 12:02:10 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9OG25FC031139
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 24 Oct 2005 09:02:06 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9OG24YF029061;
-	Mon, 24 Oct 2005 09:02:05 -0700
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-In-Reply-To: <867jc336f4.fsf@blue.stonehenge.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.125 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751110AbVJXQGO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Oct 2005 12:06:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751130AbVJXQGO
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 12:06:14 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:65154 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1751110AbVJXQGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Oct 2005 12:06:13 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id DE5458F80A;
+	Mon, 24 Oct 2005 09:06:06 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 23978-01-45; Mon, 24 Oct 2005 09:06:06 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 7FA728F8A4; Mon, 24 Oct 2005 09:06:06 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+x-mayan-date: Long count = 12.19.12.13.5; tzolkin = 2 Chicchan; haab = 3 Zac
+In-Reply-To: <Pine.LNX.4.64.0510240901020.10477@g5.osdl.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10545>
 
+>>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
 
+Linus> We're doing our own ctype.h.
 
-On Sun, 23 Oct 2005, Randal L. Schwartz wrote:
-> 
-> If that rings a bell, help me out here.  I'm guessing "isalnum" is getting
-> defined (wrongly).  Yeah, looks like in cache.h.  Why is this getting
-> defined?
+Linus> The fix is to make sure that "cache.h" is included _after_ system 
+Linus> includes.
 
-We're doing our own ctype.h.
+That probably won't work, because on OpenBSD, it's not a #define, but
+rather a real function call.  You can't just #undef that (unless my C
+is even more rusty).
 
-The fix is to make sure that "cache.h" is included _after_ system 
-includes.
-
-iow, this should fix it, methinks.
-
-		Linus
----
-diff --git a/daemon.c b/daemon.c
-index 0c6182f..6e5de11 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1,5 +1,3 @@
--#include "cache.h"
--#include "pkt-line.h"
- #include <signal.h>
- #include <sys/wait.h>
- #include <sys/socket.h>
-@@ -10,6 +8,9 @@
- #include <arpa/inet.h>
- #include <syslog.h>
- 
-+#include "cache.h"
-+#include "pkt-line.h"
-+
- static int log_syslog;
- static int verbose;
- 
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
