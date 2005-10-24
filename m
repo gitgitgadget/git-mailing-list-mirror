@@ -1,57 +1,91 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: daemon.c broken on OpenBSD
-Date: 24 Oct 2005 09:06:06 -0700
-Message-ID: <86irvmzyq9.fsf@blue.stonehenge.com>
-References: <867jc336f4.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0510240901020.10477@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: "Racy" GIT
+Date: Mon, 24 Oct 2005 09:34:14 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510240905340.10477@g5.osdl.org>
+References: <20051024092952.GZ30889@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 24 18:08:14 2005
+X-From: git-owner@vger.kernel.org Mon Oct 24 18:38:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EU4q0-0006yl-Td
-	for gcvg-git@gmane.org; Mon, 24 Oct 2005 18:06:17 +0200
+	id 1EU5HH-0000mE-MX
+	for gcvg-git@gmane.org; Mon, 24 Oct 2005 18:34:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751110AbVJXQGO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Oct 2005 12:06:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751130AbVJXQGO
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 12:06:14 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:65154 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751110AbVJXQGN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Oct 2005 12:06:13 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id DE5458F80A;
-	Mon, 24 Oct 2005 09:06:06 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 23978-01-45; Mon, 24 Oct 2005 09:06:06 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 7FA728F8A4; Mon, 24 Oct 2005 09:06:06 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-x-mayan-date: Long count = 12.19.12.13.5; tzolkin = 2 Chicchan; haab = 3 Zac
-In-Reply-To: <Pine.LNX.4.64.0510240901020.10477@g5.osdl.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1751145AbVJXQeY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Oct 2005 12:34:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751146AbVJXQeX
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 12:34:23 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:19398 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751145AbVJXQeX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Oct 2005 12:34:23 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9OGYGFC032648
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 24 Oct 2005 09:34:16 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9OGYFRh030426;
+	Mon, 24 Oct 2005 09:34:15 -0700
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051024092952.GZ30889@pasky.or.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.125 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10546>
 
->>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
 
-Linus> We're doing our own ctype.h.
 
-Linus> The fix is to make sure that "cache.h" is included _after_ system 
-Linus> includes.
+On Mon, 24 Oct 2005, Petr Baudis wrote:
+> 
+>   Guess what - the second cg-commit didn't commit the new version of the
+> file. git-diff-index didn't show anything. GIT just didn't care about
+> the change.
 
-That probably won't work, because on OpenBSD, it's not a #define, but
-rather a real function call.  You can't just #undef that (unless my C
-is even more rusty).
+Yeah. This is why I wanted to use the "tv_nsec" field originally.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+As it is, if you change a file within a second so that the length is the 
+same (and inode stays the same), the stat cache can't help you.
+
+Now, this will only trigger if you do a git-update-index (either directly 
+or like in your example, indirectly though doing a commit that does it) 
+and then change it again immediately, so in practice it shouldn't matter. 
+Except for scripts.
+
+In scripts, you can avoid this certain ways:
+
+ - add a "sleep 1" (gaah, just joking, but it works)
+
+ - use "git-apply --index" (which updates the index on its own on any 
+   files it changes) to apply any patches.
+
+ - use an explicit "git-update-index -- filename"
+
+ - if you actually change the inode number, it should be ok, ie
+
+	sed script < a > b && mv b a
+
+   will change the inode number, and that should trigger the index tests 
+   too. NOTE!! This isn't guaranteed, especially if you do it twice (it 
+   might re-use the original one)
+
+Note that "git-update-index --refresh" will _not_ work, since it looks if 
+it changed. But an explicit filename will force an update if you know it 
+changed.
+
+And yes, I guess we should document this in big letters.
+
+(There _are_ actually tricks you can do to make this usually less of an 
+issue:
+
+ - if the git-update-cache --refresh finds file where the mtime matches 
+   the current date. It sets a flag. At the end, it waits for the next 
+   second to roll around before returning.
+
+might work well enough)
+
+		Linus
