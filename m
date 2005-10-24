@@ -1,69 +1,56 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: LCA2006 Git/Cogito tutorial
-Date: Sun, 23 Oct 2005 18:48:03 -0700
-Message-ID: <7vy84jsn1o.fsf@assigned-by-dhcp.cox.net>
-References: <4352F4C9.1040703@catalyst.net.nz>
-	<20051021005145.GB30889@pasky.or.cz>
-	<200510202137.22311.dtor_core@ameritech.net>
-	<4358597A.6000306@catalyst.net.nz>
-	<7vu0f7u3xc.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0510231804430.10477@g5.osdl.org>
+Subject: Re: User-relative paths
+Date: Sun, 23 Oct 2005 18:56:39 -0700
+Message-ID: <7vslursmnc.fsf@assigned-by-dhcp.cox.net>
+References: <435ABB99.5020908@op5.se>
+	<7vll0l6pn7.fsf@assigned-by-dhcp.cox.net> <435B5AE0.1060400@op5.se>
+	<7v1x2cyplw.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0510231427230.10477@g5.osdl.org>
+	<7v8xwjx2f9.fsf@assigned-by-dhcp.cox.net> <435C3427.30803@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>,
+Cc: Linus Torvalds <torvalds@osdl.org>, Andreas Ericsson <ae@op5.se>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 24 03:49:58 2005
+X-From: git-owner@vger.kernel.org Mon Oct 24 03:58:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ETrRc-0005Ab-FA
-	for gcvg-git@gmane.org; Mon, 24 Oct 2005 03:48:12 +0200
+	id 1ETrZt-0000sv-1A
+	for gcvg-git@gmane.org; Mon, 24 Oct 2005 03:56:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750895AbVJXBsI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Oct 2005 21:48:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbVJXBsI
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Oct 2005 21:48:08 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:35013 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1750895AbVJXBsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Oct 2005 21:48:05 -0400
+	id S1750913AbVJXB4m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Oct 2005 21:56:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750914AbVJXB4m
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Oct 2005 21:56:42 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:34755 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750911AbVJXB4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Oct 2005 21:56:41 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051024014752.EUKG16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 23 Oct 2005 21:47:52 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0510231804430.10477@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 23 Oct 2005 18:35:43 -0700 (PDT)")
+          id <20051024015605.SLKF11356.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 23 Oct 2005 21:56:05 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <435C3427.30803@zytor.com> (H. Peter Anvin's message of "Sun, 23
+	Oct 2005 18:08:55 -0700")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10524>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-> On Sun, 23 Oct 2005, Junio C Hamano wrote:
->> 
->> Even if we did that, we are still doing 3-way merge; git-merge
->> framework may not mesh very well when we want to use something
->> like codeville merge which is not based on 3-way.
->
-> Oh, the git merge is about a million times better than any silly weave 
-> merge with extra BonusPoints and MagicCapitalizedNames.
->
-> Why? Because if you want to be slow and careful, you can always just 
-> create the weave after-the-fact and do a weave merge.
+> If this is meant to dequote shell-quoted paths, it really should be modal.
 
-Yes, I know that as the one who did the convention between
-git-merge and merge strategy backends.  The convention feeds two
-(or more) heads and the common ancestors git-merge already
-figured out to the strategy backends.
+You are right, but this is not meant to dequote arbitrary shell
+quoted paths.  It specifically is for unwrapping what sq_quote()
+produced, and refuses to proceed if you feed some shell-valid
+but not sq_quote() produced string.  The reason is because it is
+part of the git-shell "login shell" -- the input validation is
+enforced there.
 
-The current callers only feed commits for "$heads" parameters,
-so the merge strategy backends are free to figure out the common
-ancestor or even generate weave on the fly, but an unwritten
-rule was that strategy backends are expected to do something
-sensible even when the "common ancestors" and "heads" fed to
-them are tree objects, which was my comment about 3-way was
-about.
+And the reason it lives next to quote.c::sq_quote() is that you
+would hopefully notice sq_dequote() needs matching changes when
+you ever update sq_quote.
