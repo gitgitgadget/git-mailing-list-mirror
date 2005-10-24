@@ -1,64 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: daemon.c broken on OpenBSD
-Date: Mon, 24 Oct 2005 09:43:51 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510240936450.10477@g5.osdl.org>
-References: <867jc336f4.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0510240901020.10477@g5.osdl.org>
- <86irvmzyq9.fsf@blue.stonehenge.com>
+Date: Mon, 24 Oct 2005 10:04:02 -0700
+Message-ID: <435D1402.4050601@zytor.com>
+References: <867jc336f4.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0510240901020.10477@g5.osdl.org> <86irvmzyq9.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0510240936450.10477@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 24 18:47:38 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 24 19:08:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EU5QT-0004Xw-RZ
-	for gcvg-git@gmane.org; Mon, 24 Oct 2005 18:44:02 +0200
+	id 1EU5kG-00042p-3D
+	for gcvg-git@gmane.org; Mon, 24 Oct 2005 19:04:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751148AbVJXQnz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Oct 2005 12:43:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751150AbVJXQnz
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 12:43:55 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:52680 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751148AbVJXQny (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Oct 2005 12:43:54 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9OGhqFC000726
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 24 Oct 2005 09:43:53 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9OGhpEX030781;
-	Mon, 24 Oct 2005 09:43:52 -0700
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-In-Reply-To: <86irvmzyq9.fsf@blue.stonehenge.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.125 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751170AbVJXREV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Oct 2005 13:04:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbVJXREV
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Oct 2005 13:04:21 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:44416 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751170AbVJXREU
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Oct 2005 13:04:20 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9OH48L4009726
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 24 Oct 2005 10:04:08 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510240936450.10477@g5.osdl.org>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00,RISK_FREE 
+	autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10548>
 
-
-
-On Mon, 24 Oct 2005, Randal L. Schwartz wrote:
+Linus Torvalds wrote:
 > 
-> That probably won't work, because on OpenBSD, it's not a #define, but
-> rather a real function call.  You can't just #undef that (unless my C
-> is even more rusty).
+> I think Junio's patch (that renames things) is possibly the "cleaner" 
+> alternative, but on the other hand there's a lot of advantages to just 
+> using the standard names. No chance of somebody using the wrong version by 
+> mistake.
+> 
 
-Sure you can. 
+But there is also no risk of other unexpected dependencies.  I would 
+vote for using git-specific names.
 
-The #undef won't necessarily _do_ anything, but it protects against 
-systems where it is a #define. Then, the #define makes sure that if it's 
-anything else, the #define will take precedence.
-
-So yes, it's ugly, but it definitely is safe in practice, as long as the 
-local headers are included before the system ones.
-
-I think Junio's patch (that renames things) is possibly the "cleaner" 
-alternative, but on the other hand there's a lot of advantages to just 
-using the standard names. No chance of somebody using the wrong version by 
-mistake.
-
-			Linus
+	-hpa
