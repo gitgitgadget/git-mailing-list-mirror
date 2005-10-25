@@ -1,113 +1,153 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] git_progname (was: Re: User-relative paths)
-Date: Tue, 25 Oct 2005 11:31:50 +0200
-Message-ID: <20051025093150.GB30889@pasky.or.cz>
-References: <435ABB99.5020908@op5.se> <7vll0l6pn7.fsf@assigned-by-dhcp.cox.net> <435B5AE0.1060400@op5.se> <7v1x2cyplw.fsf@assigned-by-dhcp.cox.net> <435DF6DA.6010205@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make fetch-pack play nicer with servers which do not
+ speak multi_ack
+Date: Tue, 25 Oct 2005 11:51:05 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510251104470.24174@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0510250854240.22398@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vy84igfrl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-600504738-1130233865=:24174"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 25 11:33:44 2005
+X-From: git-owner@vger.kernel.org Tue Oct 25 11:52:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EULAA-0000RX-IW
-	for gcvg-git@gmane.org; Tue, 25 Oct 2005 11:32:10 +0200
+	id 1EULSl-0000Ge-5Y
+	for gcvg-git@gmane.org; Tue, 25 Oct 2005 11:51:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932108AbVJYJbw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Oct 2005 05:31:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932110AbVJYJbw
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 05:31:52 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:2749 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932108AbVJYJbw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2005 05:31:52 -0400
-Received: (qmail 16996 invoked by uid 2001); 25 Oct 2005 11:31:50 +0200
-To: Andreas Ericsson <ae@op5.se>
-Content-Disposition: inline
-In-Reply-To: <435DF6DA.6010205@op5.se>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S932117AbVJYJvI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Oct 2005 05:51:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932119AbVJYJvI
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 05:51:08 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:62640 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932117AbVJYJvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2005 05:51:06 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 9E78913F1A1; Tue, 25 Oct 2005 11:51:05 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 80083B0D34; Tue, 25 Oct 2005 11:51:05 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 4F373B0D30; Tue, 25 Oct 2005 11:51:05 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 338A513F254; Tue, 25 Oct 2005 11:51:05 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy84igfrl.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10579>
 
-Could you please also trim the mails you are replying to a bit?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Dear diary, on Tue, Oct 25, 2005 at 11:11:54AM CEST, I got a letter
-where Andreas Ericsson <ae@op5.se> told me that...
-> See the attached patch, which adds git_progname as a global variable to 
-> daemon.c with a minimum of fuzz. The one-liner below will add it to the 
-> rest of the programs. GNU sed >= 4.0.9 required.
-> 
-> grep -l "int main" *.c | xargs -- sed -i '/^#include/i#include "main.h"'
+---1148973799-600504738-1130233865=:24174
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-Urgh. Now this is ugly. What about making it a bit more intrusive while
-quite more saner?
+Hi,
 
-> diff --git a/cache.h b/cache.h
-> index d776016..db5d667 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -45,6 +45,13 @@
->  #endif
->  #endif
->  
-> +#if defined(__GLIBC__)
-> +extern const char *__progname;
-> +#define git_progname __progname
-> +#else
-> +extern const char *git_progname;
-> +#endif
-> +
->  /*
->   * Intensive research over the course of many years has shown that
->   * port 9418 is totally unused by anything else. Or
+On Tue, 25 Oct 2005, Junio C Hamano wrote:
 
-Also, when you already solve this for non-__GLIBC__ systems, I doubt
-that there is any win in keeping the __GLIBC__-specific hack, except
-that most developers won't see any bugs in the generic solution since
-they are using glibc.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>=20
+> > +		if (insert)
+> > +			insert_by_date(commit, &rev_list);
+> > +		else
+> >  			commit_list_insert(commit, &rev_list);
+>=20
+> Hmph.  I do not think insert_by_date and commit_list_insert on
+> the same commit_list would play well together, since the former
+> assumes that the list is already sorted by age (i.e. younger ones
+> near the head, older ones close to the tail).
 
-> diff --git a/main.h b/main.h
-> new file mode 100644
-> index 0000000..472f134
-> --- /dev/null
-> +++ b/main.h
-> @@ -0,0 +1,22 @@
-> +/* unistd.h must be available and the glibc version includes features.h
-> + * from it which #defines __GLIBC__ and friends */
-> +#include <unistd.h>
-> +#ifndef __GLIBC__
-> +const char *git_progname;
-> +static int git_main(int, char **);
-> +
-> +int main(int argc, char **argv)
-> +{
-> +	char *p;
-> +	git_progname = p = *argv;
-> +
-> +	/* don't use any library functions. We won't have the headers */
-> +	while(*p)
-> +		if(*p++ == '/')
-> +			git_progname = p;
-> +
-> +	return git_main(argc, argv);
-> +}
-> +
-> +#define main(argc, argv) git_main(argc, argv)
-> +#endif /* __GLIBC__ */
+I=B4m sorry. The 2nd time, it should be &(rev_list_end->next), not=20
+&rev_list. (See my reply to myself). In effect, rev_list would be filled=20
+first by insert_by_date() with the refs we have and the known-to-be-commo=
+n=20
+refs from the other side. From then on, only commit_list_insert would=20
+effectively *append* the ancestors. So it does play nicely. If there=B4s =
+not=20
+yet another bug.
 
-Someone said that converting main()s to git_main()s would help the
-libification effort, but I suspect that you actually want to set the
-progname to whatever you call when you call its git_main().
+> But you are right.  If you made 20 commits on top of my "master"
+> branch head, we should send those 20 (and the commit you based
+> on your changes, which the other end has), way before sending
+> the ancient v0.99 tag.  Probably, we should never be sending
+> v0.99 tag as "have" if we are going to send your "master" branch
+> head, since the commit that tag refers to is reachable by your
+> "master" branch head but there are a lot more commit between
+> them, some of which will give us better "common" selected, and
+> that v0.99 tag is what the other end said they have so is known
+> to be ACKed if sent.
 
-We can make it go into the init section, but that won't be too portable
-either.
+You=B4re right. Complete common refs are sent even if they are ancestors =
+of=20
+other complete common refs. I=B4ll think about that.
 
-So I'd say just add setup_progname("foo") at the start of your main().
+> Although we are doing a traversal on the fetch side to figure
+> out the commit ancestry chain, I think we are not fully
+> utilizing the information we receive from the other end.
+> Typically we pull specific heads only, so get_remote_heads()
+> culls the information about remote refs and you would not have a
+> chance to know that v0.99 tag you have in your .git/refs/tags is
+> something the remote also has, unless you asked for that
+> particular tag.  I wonder if we can take advantage of that
+> information without discarding it.  For example,
+> get_remote_heads() itself knows the object name of v0.99.8 tag
+> and the object name of the commit the tag refers to, and you
+> have those objects locally already.  If you have many local
+> branches, and v0.99.8 commit is reachable from the heads of all
+> of your local branches, then you should be able to tell that you
+> do not have to (and you do not want to) send "have" for v0.99.7
+> and older tags even though they are also in your .git/refs/,
+> since you know they are all reachable from v0.99.8 commit and
+> likely to be worse common than v0.99.8.  The best common is
+> somewhere between v0.99.8 and the tips of your local branches.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+IOW v0.99.7 is an ancestor of v0.99.8, which is complete. Therefore, the=20
+former should not be sent. Remember that we do not have to send the=20
+optimal edges:
+
+If v0.99.7 were the optimal common rev for some_branch, but we send=20
+v0.99.8, the server side will do a "git-rev-list some_branch ^v0.99.8",=20
+which has the same effect as if passing "^v0.99.7" instead.
+
+So let=B4s change the definition of COMMON_REF to not include COMMON. The=
+n,=20
+do not mark the COMMON_REFs in find_common, but before that. And mark=20
+their ancestors (as far as they were already parsed in everything_local()=
+)=20
+as COMMON.
+
+Oh, and pass nr_match=3D0 to get_remote_heads() and do the culling after=20
+using the information.
+
+> This is a minor nit but I think you no longer need to have the
+> rev_list_end in this version.  It is only used to maintain
+> itself and not for any other purpose as far as I can see.
+
+My mistake: the revs should be appended, not unshifted into rev_list.
+
+If they got unshifted, that would mean that we first send all the=20
+ancestors of the youngest refs until we get a common rev, then all the=20
+ancestors of the 2nd youngest, etc.
+
+When the revs are appended instead, first all the refs get sent (sorted b=
+y=20
+date), then the parents of them (sorted by the date of the refs), then=20
+their grand parents, etc.
+
+While writing this, I cannot remember why I decided not to=20
+insert_by_date() all the time.
+
+Ciao,
+Dscho
+
+---1148973799-600504738-1130233865=:24174--
