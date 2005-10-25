@@ -1,70 +1,72 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: gitweb: charset problem
-Date: Tue, 25 Oct 2005 12:01:15 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0510251138290.25300@iabervon.org>
-References: <200510241356.j9ODuAHn005060@laptop11.inf.utfsm.cl>
- <Pine.LNX.4.64.0510241743280.25300@iabervon.org> <7vwtk2k08z.fsf@assigned-by-dhcp.cox.net>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: latest stg/git commandline completions code
+Date: Tue, 25 Oct 2005 17:24:28 +0100
+Message-ID: <b0943d9e0510250924g3f5d9281r@mail.gmail.com>
+References: <Pine.LNX.4.60.0510251222510.8565@mundungus.clifford.ac>
+	 <200510251642.46169.blaisorblade@yahoo.it> <tnxwtk1lj58.fsf@arm.com>
+	 <200510251753.20164.blaisorblade@yahoo.it>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 25 18:10:10 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Ben Clifford <benc@hawaga.org.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 25 18:27:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EURGJ-0006Xl-F3
-	for gcvg-git@gmane.org; Tue, 25 Oct 2005 18:02:55 +0200
+	id 1EURbV-0006uW-3h
+	for gcvg-git@gmane.org; Tue, 25 Oct 2005 18:24:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932190AbVJYQBs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Oct 2005 12:01:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932191AbVJYQBs
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 12:01:48 -0400
-Received: from iabervon.org ([66.92.72.58]:30738 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932190AbVJYQBr (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2005 12:01:47 -0400
-Received: (qmail 6057 invoked by uid 1000); 25 Oct 2005 12:01:15 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Oct 2005 12:01:15 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vwtk2k08z.fsf@assigned-by-dhcp.cox.net>
+	id S932199AbVJYQY3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Oct 2005 12:24:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932200AbVJYQY3
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 12:24:29 -0400
+Received: from xproxy.gmail.com ([66.249.82.197]:6822 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932199AbVJYQY3 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2005 12:24:29 -0400
+Received: by xproxy.gmail.com with SMTP id t11so288240wxc
+        for <git@vger.kernel.org>; Tue, 25 Oct 2005 09:24:28 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=koRBh8MiOaDFOspv2V8YrMkMKq7E54hvTBmYt87pd8n94oIxG22C/ML50Wnmer7+ZmO59X4nr7OTi6ukrfBSC//VuPipVbL4FkEImx2ww2LkcroOjAMu28u9KzzLQsCfbgfL5XWHTscsm6hTrvKFN9CkzJjX5bFW0KQPe0PRdtM=
+Received: by 10.70.28.8 with SMTP id b8mr4308996wxb;
+        Tue, 25 Oct 2005 09:24:28 -0700 (PDT)
+Received: by 10.70.31.3 with HTTP; Tue, 25 Oct 2005 09:24:28 -0700 (PDT)
+To: Blaisorblade <blaisorblade@yahoo.it>
+In-Reply-To: <200510251753.20164.blaisorblade@yahoo.it>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10595>
 
-On Mon, 24 Oct 2005, Junio C Hamano wrote:
+On 25/10/05, Blaisorblade <blaisorblade@yahoo.it> wrote:
+> The best idea seems to write a Python script sourcing the Stgit source
+> (stgit/main.py to get commands, and then loading each class and iterating
+> over the "options" module member).
 
-> > IIRC, we actually define that to be UTF-8, unlike most of the
-> > other stuff, for which we don't actually insist on a policy.
-> 
-> No, we do not define nor insist on a particluar policy as far as
-> I know.  We suggest the use of UTF-8 merely from common sense to
-> help interoperability, and make UTF-8 slightly easier to use
-> than other encodings by giving specific support for it in some
-> tools, namely -u flag in git-mailinfo.
+I can add a function in stgit/main.py which would list the options.
+The tla-completion generates a file listing a command with its option
+on every line:
 
-I thought we'd decided on uninterpreted byte values for blobs, filenames, 
-and trees (and everything in the working tree), but using UTF-8 for tag 
-and commit objects.
+  push -a -all -n --number -t --to --reverse --undo -h --help
+  ...
 
-Consider if you started a project in EUC-JP, and then decided to switch to 
-UTF-8 later (when your environment handled it cleanly, perhaps). You could 
-convert all the file contents and move files to re-encoded names, but 
-you'd then want to commit these changes and have the log before and after 
-simultaneously intelligable.
+Since I don't know much about the bash completion, let me know of the
+format you'd prefer.
 
-> [Footnote]
-> 
-> *1* For example, I've never made GNU emacs to work well with
-> Japanese in UTF-8 , so if people in my company internal project
-> wanted to use Japanese in commit logs, I would probably
-> standardize on EUC-JP for such a project.  Luckily so far I have
-> not been forced to make that decision.
+> Btw, what do you think about speeding up completions by reimplementing things
+> like "stg applied" or "stg unapplied" via cat (as noted in the comments at
+> the beginning of the script)? Tab completions can easily livelock a shell on
+> a busy system, so it's worthy speeding the thing up.
 
-It wouldn't be hard to convert at some point between the editor and the 
-commit object, and you don't re-edit the commit objects like you do 
-tracked files. It probably wouldn't even be hard for commit-tree to 
-convert its input based on locale. (And stuff which prints commit contents 
-for user consumption probably ought to re-encode it if necessary, too)
+In general, it is better to use the stg commands but the repository
+structure won't probably change for a long time and it's OK to
+optimise (if the speed improvement is visible). Anyway, these
+particular commands are pretty fast (they behave like cat) but there
+are others which are slower (usually the commands involving calls to
+the GIT tool).
 
-	-Daniel
-*This .sig left intentionally blank*
+--
+Catalin
