@@ -1,59 +1,104 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make fetch-pack play nicer with servers which do not speak multi_ack
-Date: Tue, 25 Oct 2005 11:56:01 -0700
-Message-ID: <7vll0he88u.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0510250854240.22398@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vy84igfrl.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0510251104470.24174@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Make "gitk" work better with dense revlists
+Date: Tue, 25 Oct 2005 13:01:42 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510251253110.10477@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp-2
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 25 20:57:07 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue Oct 25 22:05:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUTxv-0000eR-Dg
-	for gcvg-git@gmane.org; Tue, 25 Oct 2005 20:56:07 +0200
+	id 1EUUzt-0003M4-Hu
+	for gcvg-git@gmane.org; Tue, 25 Oct 2005 22:02:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932301AbVJYS4E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Oct 2005 14:56:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932302AbVJYS4E
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 14:56:04 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:42458 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932301AbVJYS4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2005 14:56:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051025185520.CEXY24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 25 Oct 2005 14:55:20 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932311AbVJYUBw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Oct 2005 16:01:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932315AbVJYUBw
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 16:01:52 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:29841 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932311AbVJYUBw (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2005 16:01:52 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9PK1iFC016322
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 25 Oct 2005 13:01:45 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9PK1g8l026680;
+	Tue, 25 Oct 2005 13:01:43 -0700
+To: Paul Mackerras <paulus@samba.org>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10612>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> But you are right.  If you made 20 commits on top of my "master"
->> branch head, we should send those 20 (and the commit you based
->> on your changes, which the other end has), way before sending
->> the ancient v0.99 tag.  Probably, we should never be sending
->> v0.99 tag as "have" if we are going to send your "master" branch
->> head, since the commit that tag refers to is reachable by your
->> "master" branch head but there are a lot more commit between
->> them, some of which will give us better "common" selected, and
->> that v0.99 tag is what the other end said they have so is known
->> to be ACKed if sent.
->
-> You.AN4re right. Complete common refs are sent even if they are ancestors of 
-> other complete common refs. I.AN4ll think about that.
+To generate the diff for a commit, gitk used to do
 
-I just realized that I have two refs you would rather send the
-last while fetching from me most of the time: junio-gpg-pub tag
-and todo head.  If you manage to get acked either by non multi
-aware remote before saying "have" on anything on the main
-branch, I think you would get *everything* back --- which is
-quite bad.
+	git-diff-tree -p -C $p $id
+
+(and same thing to generate filenames, except using just "-r" there) which 
+does actually generate the diff from the parent to the $id, exactly like 
+it meant to do.
+
+However, that really sucks with --dense, where the "parent" information 
+has all been rewritten to point to the previous commit. The diff actually 
+works exactly right, but now it's the diff of the _whole_ sequence of 
+commits all the way to the previous commit that last changed the file(s) 
+that we are looking at.
+
+And that's really not what we want 99.9% of the time, even if it may be 
+perfectly sensible. Not only will the diff not actually match the commit 
+message, but it will usually be _huge_, and all of it will be totally 
+uninteresting to us, since we were only interested in a particular set of 
+files.
+
+It also doesn't match what we do when we write the patch to a file.
+
+So this makes gitk just show the diff of _that_ commit.
+
+We might even want to have some way to limit the diff to only the 
+filenames we're interested in, but it's often nice to see what else 
+changed at the same time, so that's secondary.
+
+The merge diff handling is left alone, although I think that should also 
+be changed to only look at what that _particular_ merge did, not what it 
+did when compared to the faked-out parents.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+
+Hmm?
+
+Also, having now tested the previous "handle root commit in the 
+TREECHANGED" logic a bit more, I think it's (a) stable and (b) the right 
+thing to do. Sign me off on that one too.
+
+		Linus
+
+diff --git a/gitk b/gitk
+index f1ea4e1..a9d37d9 100755
+--- a/gitk
++++ b/gitk
+@@ -2806,7 +2806,7 @@ proc gettreediffs {ids} {
+     set treediff {}
+     set id [lindex $ids 0]
+     set p [lindex $ids 1]
+-    if [catch {set gdtf [open "|git-diff-tree -r $p $id" r]}] return
++    if [catch {set gdtf [open "|git-diff-tree -r $id" r]}] return
+     fconfigure $gdtf -blocking 0
+     fileevent $gdtf readable [list gettreediffline $gdtf $ids]
+ }
+@@ -2842,7 +2842,7 @@ proc getblobdiffs {ids} {
+     set id [lindex $ids 0]
+     set p [lindex $ids 1]
+     set env(GIT_DIFF_OPTS) $diffopts
+-    set cmd [list | git-diff-tree -r -p -C $p $id]
++    set cmd [list | git-diff-tree -r -p -C $id]
+     if {[catch {set bdf [open $cmd r]} err]} {
+ 	puts "error getting diffs: $err"
+ 	return
