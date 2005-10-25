@@ -1,72 +1,59 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: latest stg/git commandline completions code
-Date: Tue, 25 Oct 2005 17:24:28 +0100
-Message-ID: <b0943d9e0510250924g3f5d9281r@mail.gmail.com>
-References: <Pine.LNX.4.60.0510251222510.8565@mundungus.clifford.ac>
-	 <200510251642.46169.blaisorblade@yahoo.it> <tnxwtk1lj58.fsf@arm.com>
-	 <200510251753.20164.blaisorblade@yahoo.it>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: The MIT error
+Date: Tue, 25 Oct 2005 09:50:03 -0700
+Message-ID: <435E623B.20303@zytor.com>
+References: <200510251340.j9PDeGGt006248@laptop11.inf.utfsm.cl> <435E3892.4020002@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Ben Clifford <benc@hawaga.org.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 25 18:27:57 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 25 18:54:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EURbV-0006uW-3h
-	for gcvg-git@gmane.org; Tue, 25 Oct 2005 18:24:49 +0200
+	id 1EUS0P-0000Ru-Uk
+	for gcvg-git@gmane.org; Tue, 25 Oct 2005 18:50:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932199AbVJYQY3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Oct 2005 12:24:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932200AbVJYQY3
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 12:24:29 -0400
-Received: from xproxy.gmail.com ([66.249.82.197]:6822 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932199AbVJYQY3 convert rfc822-to-8bit
+	id S932205AbVJYQuQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Oct 2005 12:50:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932206AbVJYQuQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 12:50:16 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:53738 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932205AbVJYQuP
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2005 12:24:29 -0400
-Received: by xproxy.gmail.com with SMTP id t11so288240wxc
-        for <git@vger.kernel.org>; Tue, 25 Oct 2005 09:24:28 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=koRBh8MiOaDFOspv2V8YrMkMKq7E54hvTBmYt87pd8n94oIxG22C/ML50Wnmer7+ZmO59X4nr7OTi6ukrfBSC//VuPipVbL4FkEImx2ww2LkcroOjAMu28u9KzzLQsCfbgfL5XWHTscsm6hTrvKFN9CkzJjX5bFW0KQPe0PRdtM=
-Received: by 10.70.28.8 with SMTP id b8mr4308996wxb;
-        Tue, 25 Oct 2005 09:24:28 -0700 (PDT)
-Received: by 10.70.31.3 with HTTP; Tue, 25 Oct 2005 09:24:28 -0700 (PDT)
-To: Blaisorblade <blaisorblade@yahoo.it>
-In-Reply-To: <200510251753.20164.blaisorblade@yahoo.it>
-Content-Disposition: inline
+	Tue, 25 Oct 2005 12:50:15 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9PGo8N3009604
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 25 Oct 2005 09:50:09 -0700
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <435E3892.4020002@op5.se>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10596>
 
-On 25/10/05, Blaisorblade <blaisorblade@yahoo.it> wrote:
-> The best idea seems to write a Python script sourcing the Stgit source
-> (stgit/main.py to get commands, and then loading each class and iterating
-> over the "options" module member).
+Andreas Ericsson wrote:
+> 
+> No they don't. "begin with either is or to and a lowercase letter", 
+> meaning (is|to)[a-z].*, just as Morten wrote. is_.* doesn't fall into 
+> this category. The underscore exemption is so that users can write their 
+> own is_file(), is_whatever() str_replace() and such. Some thought has 
+> gone into the standard.
+> 
 
-I can add a function in stgit/main.py which would list the options.
-The tla-completion generates a file listing a command with its option
-on every line:
+Also, note that we don't include <ctype.h>, and the reasons to stay out 
+of its namespace are:
 
-  push -a -all -n --number -t --to --reverse --undo -h --help
-  ...
+a. potential for confusion (different semantics), and
+b. broken system headers.
 
-Since I don't know much about the bash completion, let me know of the
-format you'd prefer.
-
-> Btw, what do you think about speeding up completions by reimplementing things
-> like "stg applied" or "stg unapplied" via cat (as noted in the comments at
-> the beginning of the script)? Tab completions can easily livelock a shell on
-> a busy system, so it's worthy speeding the thing up.
-
-In general, it is better to use the stg commands but the repository
-structure won't probably change for a long time and it's OK to
-optimise (if the speed improvement is visible). Anyway, these
-particular commands are pretty fast (they behave like cat) but there
-are others which are slower (usually the commands involving calls to
-the GIT tool).
-
---
-Catalin
+	-hpa
