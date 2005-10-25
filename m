@@ -1,87 +1,62 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: daemon.c broken on OpenBSD
-Date: 25 Oct 2005 16:32:19 -0700
-Message-ID: <86r7a9jhq4.fsf@blue.stonehenge.com>
-References: <867jc336f4.fsf@blue.stonehenge.com>
-	<7v64rnsd83.fsf@assigned-by-dhcp.cox.net>
-	<86vezljhve.fsf@blue.stonehenge.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make fetch-pack play nicer with servers which do not speak multi_ack
+Date: Tue, 25 Oct 2005 16:32:48 -0700
+Message-ID: <7vll0hcgv3.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0510250854240.22398@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vy84igfrl.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0510251104470.24174@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-2022-jp-2
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 26 01:32:49 2005
+X-From: git-owner@vger.kernel.org Wed Oct 26 01:35:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUYHJ-0000l6-1u
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 01:32:25 +0200
+	id 1EUYHm-000131-5c
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 01:32:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932477AbVJYXcV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Oct 2005 19:32:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932478AbVJYXcV
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 19:32:21 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:45653 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932477AbVJYXcU
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2005 19:32:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 28CB48F91C;
-	Tue, 25 Oct 2005 16:32:20 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 29000-01-83; Tue, 25 Oct 2005 16:32:19 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id B8EC58F974; Tue, 25 Oct 2005 16:32:19 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-x-mayan-date: Long count = 12.19.12.13.6; tzolkin = 3 Cimi; haab = 4 Zac
-In-Reply-To: <86vezljhve.fsf@blue.stonehenge.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S932479AbVJYXcv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Oct 2005 19:32:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932480AbVJYXcv
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 19:32:51 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:17804 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932479AbVJYXcu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2005 19:32:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051025233236.QGLK16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 25 Oct 2005 19:32:36 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10632>
 
->>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Randal> I can confirm that the following patch lets the current origin
-Randal> compile on OpenBSD.  If you could apply this until you sort out the
-Randal> rest of the namespace issue, I would be happy.  Thanks.
+> On Tue, 25 Oct 2005, Junio C Hamano wrote:
+>
+>> But you are right.  If you made 20 commits on top of my "master"
+>> branch head, we should send those 20 (and the commit you based
+>> on your changes, which the other end has), way before sending
+>> the ancient v0.99 tag.  Probably, we should never be sending
+>> v0.99 tag as "have" if we are going to send your "master" branch
+>> head, since the commit that tag refers to is reachable by your
+>> "master" branch head but there are a lot more commit between
+>> them, some of which will give us better "common" selected, and
+>> that v0.99 tag is what the other end said they have so is known
+>> to be ACKed if sent.
+>
+> You.AN4re right. Complete common refs are sent even if they are ancestors of 
+> other complete common refs. I.AN4ll think about that.
 
-Actually, you probably want this instead:
-
-Subject: [PATCH] openbsd patch
-
----
-
- daemon.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-applies-to: 6234aa4f7095054a137e030030f914dc6633f809
-7666c6f2cf2fcf41fce1d0665b79e5cc2f7b73b5
-diff --git a/daemon.c b/daemon.c
-index 0c6182f..c3f8641 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1,5 +1,3 @@
--#include "cache.h"
--#include "pkt-line.h"
- #include <signal.h>
- #include <sys/wait.h>
- #include <sys/socket.h>
-@@ -9,6 +7,8 @@
- #include <netinet/in.h>
- #include <arpa/inet.h>
- #include <syslog.h>
-+#include "pkt-line.h"
-+#include "cache.h"
- 
- static int log_syslog;
- static int verbose;
----
-0.99.8.GIT
-
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+I think you should be able to do something similar to what
+git-show-branch --independent does, except that the current
+show-branch implementation sucks.  It wastes one-bit per ref
+head, which is not too bad if we deal only with branches (who
+would sanely keep more than 29 branches in a repo except Jeff
+;-) but is useless for a repository with any reasonable history
+and a lot of tags.
