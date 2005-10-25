@@ -1,54 +1,71 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: gitweb: charset problem
-Date: Tue, 25 Oct 2005 10:44:47 -0700
-Message-ID: <7v64rlfq40.fsf@assigned-by-dhcp.cox.net>
-References: <200510241356.j9ODuAHn005060@laptop11.inf.utfsm.cl>
-	<Pine.LNX.4.64.0510241743280.25300@iabervon.org>
-	<7vwtk2k08z.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0510251138290.25300@iabervon.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: git-rev-list: add "--dense" flag
+Date: Tue, 25 Oct 2005 20:07:07 +0200
+Message-ID: <20051025180707.GA7463@diku.dk>
+References: <Pine.LNX.4.64.0510211631400.10477@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 25 19:45:36 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 25 20:10:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUSqy-00041N-0f
-	for gcvg-git@gmane.org; Tue, 25 Oct 2005 19:44:52 +0200
+	id 1EUTCg-00048b-GI
+	for gcvg-git@gmane.org; Tue, 25 Oct 2005 20:07:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932225AbVJYRot (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Oct 2005 13:44:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932248AbVJYRot
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 13:44:49 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:62964 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932225AbVJYRot (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Oct 2005 13:44:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051025174408.PCQX2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 25 Oct 2005 13:44:08 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0510251138290.25300@iabervon.org> (Daniel
-	Barkalow's message of "Tue, 25 Oct 2005 12:01:15 -0400 (EDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932276AbVJYSHK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Oct 2005 14:07:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932279AbVJYSHK
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 14:07:10 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:50163 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S932276AbVJYSHJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2005 14:07:09 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 937C56DFFBF; Tue, 25 Oct 2005 20:07:02 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 58D976DFF9E; Tue, 25 Oct 2005 20:07:02 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id A208E61140; Tue, 25 Oct 2005 20:07:07 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0510211631400.10477@g5.osdl.org>
+User-Agent: Mutt/1.5.6i
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10605>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Linus Torvalds <torvalds@osdl.org> wrote Fri, Oct 21, 2005:
+> To see this in action, try something like
+> 
+> 	gitk --dense -- gitk
+> 
+> to see just the history that affects gitk.
 
-> It wouldn't be hard to convert at some point between the editor and the 
-> commit object, and you don't re-edit the commit objects like you do 
-> tracked files. It probably wouldn't even be hard for commit-tree to 
-> convert its input based on locale. (And stuff which prints commit contents 
-> for user consumption probably ought to re-encode it if necessary, too)
+Is the initial commit supposed to be listed when the file has been added
+later? I would expect it to only list until (and including) the commit
+where the file was introduced.
 
-Don't get me wrong.  I am not opposed to giving preferential
-treatment to UTF-8 by supporting it better.  I think it may be a
-good idea to have an *option* in commit-tree and mktag to
-convert from LC_CTYPE to utf-8, just like mailinfo does.
+	prompt > git-rev-list --dense HEAD -- compat/mmap.c
+	f48000fcbe1009c18f1cc46e56cde2cb632071fa
+	730d48a2ef88a7fb7aa4409d40b1e6964a93267f
+	e83c5163316f89bfbde7d9ab23ca2e25604af290
+	prompt > git-cat-file commit e83c
+	tree 2b5bfdf7798569e0b59b16eb9602d5fa572d6038
+	author Linus Torvalds <torvalds@ppc970.osdl.org> 1112911993 -0700
+	committer Linus Torvalds <torvalds@ppc970.osdl.org> 1112911993 -0700
 
-I am just opposing to make UTF-8 mandatory.
+	Initial revision of "git", the information manager from hell
+
+Interestingly, for the special gitk, the correct commit is the last rev
+listed.
+
+-- 
+Jonas Fonseca
