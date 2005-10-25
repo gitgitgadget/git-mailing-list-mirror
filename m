@@ -1,72 +1,121 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Convention for help in git commands?
-Date: Tue, 25 Oct 2005 23:35:47 +0200
-Message-ID: <200510252335.47917.Josef.Weidendorfer@gmx.de>
-References: <200510251508.43552.Josef.Weidendorfer@gmx.de> <7vfyqpe87x.fsf@assigned-by-dhcp.cox.net> <46a038f90510251324s50911b88pb5eabb304644bcad@mail.gmail.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH] Documentation for git-shell
+Date: Tue, 25 Oct 2005 23:43:30 +0200
+Message-ID: <20051025214330.GI22079@pasky.or.cz>
+References: <20051025090937.15206.50609.stgit@machine.or.cz> <7vsluph6vx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Oct 25 23:38:12 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: gti@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 25 23:45:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUWSU-0002v7-Lq
-	for gcvg-git@gmane.org; Tue, 25 Oct 2005 23:35:51 +0200
+	id 1EUWaf-0007ur-QX
+	for gcvg-git@gmane.org; Tue, 25 Oct 2005 23:44:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932396AbVJYVfr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Oct 2005 17:35:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932399AbVJYVfr
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 17:35:47 -0400
-Received: from pop.gmx.de ([213.165.64.20]:54202 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932396AbVJYVfr (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2005 17:35:47 -0400
-Received: (qmail invoked by alias); 25 Oct 2005 21:35:45 -0000
-Received: from p5496A126.dip0.t-ipconnect.de (EHLO [192.168.178.21]) [84.150.161.38]
-  by mail.gmx.net (mp012) with SMTP; 25 Oct 2005 23:35:45 +0200
-X-Authenticated: #352111
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-In-Reply-To: <46a038f90510251324s50911b88pb5eabb304644bcad@mail.gmail.com>
+	id S932414AbVJYVoF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Oct 2005 17:44:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932415AbVJYVoF
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 17:44:05 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:53157 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932414AbVJYVoD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2005 17:44:03 -0400
+Received: (qmail 8896 invoked by uid 2001); 25 Oct 2005 23:44:01 +0200
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+In-Reply-To: <7vsluph6vx.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10622>
 
-On Tuesday 25 October 2005 22:24, you wrote:
-> On 10/26/05, Junio C Hamano <junkio@cox.net> wrote:
-> > > * For commands which need at least one argument, the usage
-> > > is also printed, if the command is run without argument
-> >
-> > This is slightly debatable.  I'd rather see it error out for one
-> > thing, and we might want to do a sane default given no arguments
-> > later.
+Dear diary, on Tue, Oct 25, 2005 at 06:57:06PM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> Thanks.  I'd leave the door open for possibility of future
+> command additions by saying what *kind* of things it is meant to
+> allow spawning first and then listing what commands we
+> *currently* allow next.
 > 
-> This could lead to subtle bugs when git is used by porcelains. If
-> there are going to be changes in default behaviours, let's have them
-> soon-ish ;-)
+> Also we need a link to this in either Ancillary (in which
+> subsection I am not sure of, though) or Synching repository
+> section of git.txt.
 
-What is the difference for a porcelain between error out,
-presumable with an error message, and printing the usage alone?
+Done.
 
-Is there any dependency of porcelains to the fact the e.g.
-"git-rev-list" currently does nothing if not called with a
-commit-id? Somehow I think "git-rev-list" should give an error,
-as the usage string (with lots of options on a line of its own ?!)
-requires a commit-id as argument.
+---
 
-BTW, the error message of "mv" is:
-===
-mv: missing file operand
-Try `mv --help' for more information.
-===
-What about something similar to this? Mentioning the command
-which triggered the error is probably a good idea.
+[PATCH] Documentation for git-shell
 
-And I would add as another convention:
-* "git-cmd -h" always should give the usage, and not error out
-with "fatal: Not a git repository" before.
+This adds some simple documentation for git-shell.
 
-Josef
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
+
+ Documentation/git-shell.txt |   35 +++++++++++++++++++++++++++++++++++
+ Documentation/git.txt       |    3 +++
+ 2 files changed, 38 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-shell.txt b/Documentation/git-shell.txt
+new file mode 100644
+index 0000000..3f4d804
+--- /dev/null
++++ b/Documentation/git-shell.txt
+@@ -0,0 +1,35 @@
++git-shell(1)
++============
++
++NAME
++----
++git-shell - Restricted login shell for GIT over SSH only
++
++
++SYNOPSIS
++--------
++'git-shell -c <command> <argument>'
++
++DESCRIPTION
++-----------
++This is meant to be used as a login shell for SSH accounts you want
++to restrict to GIT pull/push access only. It permits execution only
++of server-side GIT commands implementing the pull/push functionality.
++The commands can be executed only by the '-c' option; the shell is not
++interactive.
++
++Currently, only the `git-receive-pack` and `git-upload-pack` commands
++are permitted to be called, with a single required argument.
++
++Author
++------
++Written by Linus Torvalds <torvalds@osdl.org>
++
++Documentation
++--------------
++Documentation by Petr Baudis and the git-list <git@vger.kernel.org>.
++
++GIT
++---
++Part of the gitlink:git[7] suite
++
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 796c4f6..769054b 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -182,6 +182,9 @@ gitlink:git-receive-pack[1]::
+ gitlink:git-send-pack[1]::
+ 	Pushes to a remote repository, intelligently.
+ 
++gitlink:git-shell[1]::
++	Restricted shell for GIT-only SSH access.
++
+ gitlink:git-ssh-fetch[1]::
+ 	Pulls from a remote repository over ssh connection
+ 	Previously this command was known as git-ssh-pull.
+
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
