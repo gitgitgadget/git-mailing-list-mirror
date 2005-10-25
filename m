@@ -1,63 +1,68 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: The MIT error
-Date: Tue, 25 Oct 2005 10:40:16 -0300
-Message-ID: <200510251340.j9PDeGGt006248@laptop11.inf.utfsm.cl>
-References: <mwelinder@gmail.com>
-Cc: GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 25 15:45:28 2005
+Date: Tue, 25 Oct 2005 15:52:18 +0200
+Message-ID: <435E3892.4020002@op5.se>
+References: <200510251340.j9PDeGGt006248@laptop11.inf.utfsm.cl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Oct 25 15:56:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUP2R-0001Du-1P
-	for gcvg-git@gmane.org; Tue, 25 Oct 2005 15:40:27 +0200
+	id 1EUPED-0008Un-Dx
+	for gcvg-git@gmane.org; Tue, 25 Oct 2005 15:52:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140AbVJYNkY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Oct 2005 09:40:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932141AbVJYNkY
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 09:40:24 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:3465 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S932140AbVJYNkX (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2005 09:40:23 -0400
-Received: from laptop11.inf.utfsm.cl (laptop11.inf.utfsm.cl [200.1.19.198])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j9PDeGwk021244
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 25 Oct 2005 10:40:16 -0300
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j9PDeGGt006248;
-	Tue, 25 Oct 2005 10:40:16 -0300
-To: Morten Welinder <mwelinder@gmail.com>
-In-Reply-To: Message from Morten Welinder <mwelinder@gmail.com> 
-   of "Mon, 24 Oct 2005 14:57:15 EDT." <118833cc0510241157j39d5ff2cib2ccea50d15210d4@mail.gmail.com> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Tue, 25 Oct 2005 10:40:16 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
+	id S932146AbVJYNwW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Oct 2005 09:52:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932147AbVJYNwW
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 09:52:22 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:39400 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932146AbVJYNwV
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2005 09:52:21 -0400
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 878D86BD00
+	for <git@vger.kernel.org>; Tue, 25 Oct 2005 15:52:19 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: GIT Mailing List <git@vger.kernel.org>
+In-Reply-To: <200510251340.j9PDeGGt006248@laptop11.inf.utfsm.cl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10588>
 
-Morten Welinder <mwelinder@gmail.com> wrote:
-> After the isspace/BSD conflict I looked into what reserved symbols are
-> being used by git.  Quite a few, it turns out.
-
-[...]
-
-> Just as isspace is reserved by the C implementation...
+Horst von Brand wrote:
+> Morten Welinder <mwelinder@gmail.com> wrote:
 > 
->        7.26.2  Character handling <ctype.h>
+>>After the isspace/BSD conflict I looked into what reserved symbols are
+>>being used by git.  Quite a few, it turns out.
 > 
->        [#1]  Function  names that begin with either is or to, and a
->        lowercase letter (possibly followed by  any  combination  of
->        digits,  letters,  and  underscore)  may  be  added  to  the
->        declarations in the <ctype.h> header.
+> 
+> [...]
+> 
+> 
+>>Just as isspace is reserved by the C implementation...
+>>
+>>       7.26.2  Character handling <ctype.h>
+>>
+>>       [#1]  Function  names that begin with either is or to, and a
+>>       lowercase letter (possibly followed by  any  combination  of
+>>       digits,  letters,  and  underscore)  may  be  added  to  the
+>>       declarations in the <ctype.h> header.
+> 
+> 
+> There go is_space(), etc as suggested by the relevant patches...
 
-There go is_space(), etc as suggested by the relevant patches... in any
-case, if you /don't/ #include <ctype.h>, you are safe (standardwise),
-aren't you? [Yes, idiots who #include that in system headers are way
-broken, but...]
+
+No they don't. "begin with either is or to and a lowercase letter", 
+meaning (is|to)[a-z].*, just as Morten wrote. is_.* doesn't fall into 
+this category. The underscore exemption is so that users can write their 
+own is_file(), is_whatever() str_replace() and such. Some thought has 
+gone into the standard.
+
 -- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
