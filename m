@@ -1,58 +1,60 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] git_progname
-Date: Tue, 25 Oct 2005 14:53:14 +0200
-Message-ID: <435E2ABA.8030907@op5.se>
-References: <435ABB99.5020908@op5.se> <7vll0l6pn7.fsf@assigned-by-dhcp.cox.net> <435B5AE0.1060400@op5.se> <7v1x2cyplw.fsf@assigned-by-dhcp.cox.net> <435DF6DA.6010205@op5.se> <20051025093150.GB30889@pasky.or.cz> <435E1307.3090209@op5.se>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Convention for help in git commands?
+Date: Tue, 25 Oct 2005 15:08:43 +0200
+Message-ID: <200510251508.43552.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Oct 25 14:58:01 2005
+X-From: git-owner@vger.kernel.org Tue Oct 25 15:10:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUOJ5-0001OF-17
-	for gcvg-git@gmane.org; Tue, 25 Oct 2005 14:53:35 +0200
+	id 1EUOYE-00017e-6b
+	for gcvg-git@gmane.org; Tue, 25 Oct 2005 15:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750988AbVJYMxQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Oct 2005 08:53:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751161AbVJYMxQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 08:53:16 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:9703 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S1750988AbVJYMxP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2005 08:53:15 -0400
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id BCBD86BD00
-	for <git@vger.kernel.org>; Tue, 25 Oct 2005 14:53:14 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
+	id S1751238AbVJYNIn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Oct 2005 09:08:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbVJYNIn
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 09:08:43 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:15862 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1751188AbVJYNIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2005 09:08:43 -0400
+Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
+	by mail.in.tum.de (Postfix) with ESMTP id C258B2350
+	for <git@vger.kernel.org>; Tue, 25 Oct 2005 15:08:39 +0200 (MEST)
 To: git@vger.kernel.org
-In-Reply-To: <435E1307.3090209@op5.se>
+User-Agent: KMail/1.8.2
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10585>
 
-Andreas Ericsson wrote:
-> Petr Baudis wrote:
-> 
->>> grep -l "int main" *.c | xargs -- sed -i '/^#include/i#include "main.h"'
->>
->>
->> Urgh. Now this is ugly. What about making it a bit more intrusive while
->> quite more saner?
->>
-> 
-> I'm not sure what you're referring to. The one-liner is a one-liner. 
-> It's sort of supposed to be ugly.
-> 
+Hi,
 
-Oh. I saw what you meant now. Lots of main.h included. :)
+is there a commonly accepted way how to handle help messages
+in git commands? In git-mv/git-rename, there is a full help
+message with description of options when "-h" is given.
+This seems to be the Cogito way; git commands seem to be used
+to output an one-liner usage only, and rely on the man
+page otherwise.
 
-Silly me. Sorry about that.
+This should be more consistent. Proposal:
+* All git commands should react on command line option "-h"
+for help, dumping a few lines to stderr, prefixed by "usage:", giving
+the command usage without further descriptions. For the usage
+output, use the base name of the command, and not the absolute
+path to the binary.
+* For commands which need at least one argument, the usage
+is also printed, if the command is run without argument
+* On a error condition, prefix the message with "error:", and
+do not print out anything else (like the usage line, or things
+produced by the PERL "die", which appends "at scriptname line nn").
 
-I guess some manual editing could be done.
+Perhaps these things should be done only for commands of the
+git lightwight porcelain?
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Josef
