@@ -1,132 +1,70 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: [PATCH] Add some missing commands to the git.txt commands list
-Date: Wed, 26 Oct 2005 00:03:21 +0200
-Message-ID: <20051025220321.GJ22079@pasky.or.cz>
-References: <20051025090937.15206.50609.stgit@machine.or.cz> <7vsluph6vx.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Convention for help in git commands?
+Date: Wed, 26 Oct 2005 11:07:08 +1300
+Message-ID: <46a038f90510251507oe62ce42i86e6d4cf8200f20@mail.gmail.com>
+References: <200510251508.43552.Josef.Weidendorfer@gmx.de>
+	 <7vfyqpe87x.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f90510251324s50911b88pb5eabb304644bcad@mail.gmail.com>
+	 <200510252335.47917.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 26 00:05:17 2005
+X-From: git-owner@vger.kernel.org Wed Oct 26 00:09:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUWtD-0006sk-8V
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 00:03:27 +0200
+	id 1EUWx1-00089z-P8
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 00:07:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932416AbVJYWDY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Oct 2005 18:03:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932417AbVJYWDY
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 18:03:24 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:22435 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932416AbVJYWDX (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2005 18:03:23 -0400
-Received: (qmail 11230 invoked by uid 2001); 26 Oct 2005 00:03:21 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S932438AbVJYWHO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Oct 2005 18:07:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932451AbVJYWHO
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 18:07:14 -0400
+Received: from xproxy.gmail.com ([66.249.82.201]:54539 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932453AbVJYWHI convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2005 18:07:08 -0400
+Received: by xproxy.gmail.com with SMTP id i30so37002wxd
+        for <git@vger.kernel.org>; Tue, 25 Oct 2005 15:07:08 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OIfgJT76UQPhOrwtzNzyMMxfb++kt9kPswslfG0Y3yxwl4/nk6pua+eYcVrBV842xAyDV20w5d2MespxusjFZ7Kjc/gKbViW45kzcH3zfz3RlqThRF7WP8b90S/YCWmv6+UUIj+JVskbvV7Zcp00sCQQKdPmA1KGr/IX604hXh4=
+Received: by 10.65.23.10 with SMTP id a10mr177695qbj;
+        Tue, 25 Oct 2005 15:07:08 -0700 (PDT)
+Received: by 10.64.232.18 with HTTP; Tue, 25 Oct 2005 15:07:08 -0700 (PDT)
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+In-Reply-To: <200510252335.47917.Josef.Weidendorfer@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <7vsluph6vx.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10625>
 
-Dear diary, on Tue, Oct 25, 2005 at 06:57:06PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Also we need a link to this in either Ancillary (in which
-> subsection I am not sure of, though) or Synching repository
-> section of git.txt.  I think we already lack links to a couple
-> of recent commands there, so somebody needs to do another sweep
-> of git.txt to make sure everything is listed.
+On 10/26/05, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> On Tuesday 25 October 2005 22:24, you wrote:
+> > On 10/26/05, Junio C Hamano <junkio@cox.net> wrote:
+> > > > * For commands which need at least one argument, the usage
+> > > > is also printed, if the command is run without argument
+> > >
+> > > This is slightly debatable.  I'd rather see it error out for one
+> > > thing, and we might want to do a sane default given no arguments
+> > > later.
+> >
+> > This could lead to subtle bugs when git is used by porcelains. If
+> > there are going to be changes in default behaviours, let's have them
+> > soon-ish ;-)
+>
+> What is the difference for a porcelain between error out,
+> presumable with an error message, and printing the usage alone?
 
-for i in `l Documentation/*.txt | cut -d / -f 2 | cut -d . -f 1`; do
-grep -q $i Documentation/git.txt || echo $i; done
+Sorry! My comment was aimed at the "do a sane default given no
+arguments later" part of Junio's post. Error vs help messages don't
+affect porcelains if you check your tty and avoid spitting out a help
+message when invoked from a script ;-)
 
-But really, the more you have autogenerated, the better and more
-consistent things are. In Cogito, I have all the documentation (usage
-strings, synopsis, description, ...) at a _single_ place and everything
-else (from command lists to various views of the docs) is autogenerated,
-and it's a great help at making things complete and consistent. Also,
-since it's inside of the code, people actually tend to remember to
-update (and write in the first place) the documentation.
+cheers,
 
 
-BTW, as of now, it appears that only the commands git-findtags and
-git-fmt-merge-msg are undocumented.
-
----
-
-[PATCH] Add some missing commands to the git.txt commands list
-
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
-
- Documentation/git.txt |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 769054b..054f091 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -209,6 +209,9 @@ gitlink:git-add[1]::
- 	Add paths to the index file.
- 	Previously this command was known as git-add-script.
- 
-+gitlink:git-am[1]::
-+	Apply patches from a mailbox, but cooler.
-+
- gitlink:git-applymbox[1]::
- 	Apply patches from a mailbox.
- 
-@@ -262,6 +265,9 @@ gitlink:git-ls-remote[1]::
- gitlink:git-merge[1]::
- 	Grand unified merge driver.
- 
-+gitlink:git-mv[1]::
-+	Move or rename a file, a directory, or a symlink.
-+
- gitlink:git-octopus[1]::
- 	Merge more than two commits.
- 	Previously this command was known as git-octopus-script.
-@@ -347,6 +353,9 @@ gitlink:git-relink[1]::
- 	Hardlink common objects in local repositories.
- 	Previously this command was known as git-relink-script.
- 
-+gitlink:git-svnimport[1]::
-+	Import a SVN repository into git.
-+
- gitlink:git-sh-setup[1]::
- 	Common git shell script setup code.
- 	Previously this command was known as git-sh-setup-script.
-@@ -355,9 +364,15 @@ gitlink:git-tag[1]::
- 	An example script to create a tag object signed with GPG
- 	Previously this command was known as git-tag-script.
- 
-+gitlink:git-update-ref[1]::
-+	Update the object name stored in a ref safely.
-+
- 
- Interrogators:
- 
-+gitlink:git-check-ref-format[1]::
-+	Make sure ref name is well formed.
-+
- gitlink:git-cherry[1]::
- 	Find commits not merged upstream.
- 
-@@ -395,6 +410,9 @@ gitlink:git-send-email[1]::
- 	Send patch e-mails out of "format-patch --mbox" output.
- 	Previously this command was known as git-send-email-script.
- 
-+gitlink:git-symbolic-refs[1]::
-+	Read and modify symbolic refs.
-+
- gitlink:git-stripspace[1]::
- 	Filter out empty lines.
- 
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+martin
