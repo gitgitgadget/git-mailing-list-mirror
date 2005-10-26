@@ -1,61 +1,53 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Towards CVS code-exchange and gateways
-Date: Wed, 26 Oct 2005 22:51:30 +0200
-Message-ID: <20051026205130.GA20563@pasky.or.cz>
-References: <46a038f90510251357l23886747s8024a4326ad4e392@mail.gmail.com> <46a038f90510252035yb4167e1w2ee54d82896e5906@mail.gmail.com> <20051026085302.GF30889@pasky.or.cz> <46a038f90510260211i47c8a4e1oca8be8d0833f4b68@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/4] git-init-db should error out with a message
+Date: Wed, 26 Oct 2005 16:18:32 -0700
+Message-ID: <7vhdb3c1fb.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0510260139000.30576@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20051026194520.GC8030@steel.home>
+	<7v3bmoc9d7.fsf@assigned-by-dhcp.cox.net>
+	<20051026204727.GA19846@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 26 22:53:21 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 27 01:19:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUsFE-00011U-Hd
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 22:51:36 +0200
+	id 1EUuXX-0005QN-On
+	for gcvg-git@gmane.org; Thu, 27 Oct 2005 01:18:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964923AbVJZUve (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Oct 2005 16:51:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964916AbVJZUve
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 16:51:34 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:11460 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964913AbVJZUvd (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Oct 2005 16:51:33 -0400
-Received: (qmail 5799 invoked by uid 2001); 26 Oct 2005 22:51:30 +0200
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f90510260211i47c8a4e1oca8be8d0833f4b68@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S1751509AbVJZXSe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Oct 2005 19:18:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbVJZXSe
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 19:18:34 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:55737 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751509AbVJZXSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Oct 2005 19:18:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051026231757.UYTL776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 26 Oct 2005 19:17:57 -0400
+To: Alex Riesen <fork0@users.sourceforge.net>
+In-Reply-To: <20051026204727.GA19846@steel.home> (Alex Riesen's message of
+	"Wed, 26 Oct 2005 22:47:27 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10695>
 
-Dear diary, on Wed, Oct 26, 2005 at 11:11:49AM CEST, I got a letter
-where Martin Langhoff <martin.langhoff@gmail.com> told me that...
-> The goal for this script that I'm drafting is to be able to push
-> commits back into cvs in a format that maximises the chance of
-> git-cherry identifying them when they are echoed back (and thus
-> avoiding bogus conflicts).
+Alex Riesen <fork0@users.sourceforge.net> writes:
 
-Aha, so you are not aiming for proper two-way incremental i/e, and one
-will have to cherrypick to import after an export... well, I guess that
-can be good enough for many cases. But to use Linus' words, the really
-interesting problem is to have the proper revision tree in the CVS heads
-as well, so that you could do normal merges. And it shouldn't be _that_
-hard either...
+> I think the file ref version uses rename of HEAD.lock into HEAD, doesn't it?
+> Rename(2) should just remove the symlink, right?
 
-> > If someone really desperately needs this, BTW, you might be able to
-> > merge two Monotone branches (.git and .cvssync) to get two-way
-> > incremental GIT and CVS interface, and then do that through Monotone.
-> > ;-))
-> 
-> I'm really scared by the concept ;-)
+If everybody used symlink or if everybody used regular file
+symref, we would catch this race and the second one will be
+stopped.  My point was that by falling back we are introducing
+this unnecessary race, which might be unimportant but still it
+is a new race.
 
-I *think* someone actually really did something like that. ;-)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+To avoid that, I think symlink version needs to honor the
+HEAD.lock convention, which would slow down normal cases.
