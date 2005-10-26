@@ -1,69 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-rev-list: make --dense the default (and introduce "--sparse")
-Date: Wed, 26 Oct 2005 02:17:22 -0700
-Message-ID: <7vwtk08wnx.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0510251459070.10477@g5.osdl.org>
-	<Pine.LNX.4.64.0510251525540.10477@g5.osdl.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Avoid using dc in git-count-objects
+Date: Wed, 26 Oct 2005 11:23:17 +0200
+Message-ID: <435F4B05.4010702@op5.se>
+References: <Pine.LNX.4.63.0510260120260.28994@wbgn013.biozentrum.uni-wuerzburg.de> <7vd5ltcf05.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 26 11:19:49 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Oct 26 11:23:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUhPp-0000xg-L9
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 11:17:50 +0200
+	id 1EUhVB-0003NX-UX
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 11:23:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932600AbVJZJRZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Oct 2005 05:17:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932605AbVJZJRZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 05:17:25 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:15327 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932600AbVJZJRY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2005 05:17:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051026091646.MAJQ11356.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 26 Oct 2005 05:16:46 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0510251525540.10477@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 25 Oct 2005 15:29:42 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932605AbVJZJXS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Oct 2005 05:23:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932606AbVJZJXS
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 05:23:18 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:54148 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932605AbVJZJXS
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Oct 2005 05:23:18 -0400
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 6A6A46BD01
+	for <git@vger.kernel.org>; Wed, 26 Oct 2005 11:23:17 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <7vd5ltcf05.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10661>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> 
+>>Using dc is not really necessary, since expr understands summing 32 bit 
+>>signed integers. Which means that git-count-objects will now fail when 2 
+>>GB of unpacked objects have accumulated.
+> 
+> 
+> Sorry, but I am not very happy about this patch.  "local"
+> bashism aside, doesn't this spawn expr for every unpacked
+> object?
+> 
 
-> On Tue, 25 Oct 2005, Linus Torvalds wrote:
->> 
->> This actually does three things:
->> 
->>  - make "--dense" the default for git-rev-list...
+I'd be more worried about the fact that the kilobytes count is way off 
+as it is. du (at least from coreutils-5.2.1) rounds up to nearest 
+kilobyte *for each file* when printing kb-count.
 
-Heads up.
+Try these:
+    du -skc .git/objects/?? | grep total
+    du -skc .git/objects/??/* | grep total
+    du -sbc .git/objects/?? | grep total
+    du -sbc .git/objects/??/* | grep total
 
-I have not looked closely into what exactly, but the fourth
-thing this does might be to break git-send-pack.
+which will all yield different values.
 
-I usually use the tip of "pu" myself, but for tonight, I am
-excluding the fetch-pack/upload-pack changes from Johannes when
-building git for my own use, and using somewhere in the middle
-of "pu" branch.  With this "--dense default" patch,
-git-send-pack seems to send too few objects.  With this patch
-reverted, git-send-pack seems to work again.
+I have no idea which of those values people expect to get back, so it 
+might be correct right now, although I doubt it.
 
- +  [build] Revert "git-rev-list: make --dense the default (and introduce "--sparse")"
- ++ [pu^] Merge branch 'js-fat'
- ++ [pu^^2] Test in git-init-db if the filemode can be trusted
- ++ [pu~2] Merge branches 'cache-pack', 'lazy-subdir' and 'lt-dense'
- ++ [pu~2^4] git-rev-list: make --dense the default (and introduce "--sparse")
- ++ [pu~2^3] Create object subdirectories on demand (phase II)
- ++ [pu~2^2] Allow caching of generated pack for full cloning.
-+++ [master] upload-pack: tighten request validation.
-
-I'll take a look at the issue in the morning unless somebody
-else beats me to it.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
