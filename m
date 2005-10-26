@@ -1,56 +1,69 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 4/4] git-fetch-pack: Implement client part of the multi_ack extension
-Date: Wed, 26 Oct 2005 11:16:15 +0200
-Message-ID: <81b0412b0510260216s7571dba6w97163927a335818d@mail.gmail.com>
-References: <Pine.LNX.4.63.0510230339090.21239@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <20051025204754.GA8030@steel.home>
-	 <Pine.LNX.4.63.0510252300290.15756@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <81b0412b0510252346t3806892dx71f9c0dc1efe4073@mail.gmail.com>
-	 <Pine.LNX.4.63.0510261041100.7424@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-rev-list: make --dense the default (and introduce "--sparse")
+Date: Wed, 26 Oct 2005 02:17:22 -0700
+Message-ID: <7vwtk08wnx.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0510251459070.10477@g5.osdl.org>
+	<Pine.LNX.4.64.0510251525540.10477@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Oct 26 11:17:55 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 26 11:19:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUhOr-0000fm-GS
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 11:16:49 +0200
+	id 1EUhPp-0000xg-L9
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 11:17:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932570AbVJZJQT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Oct 2005 05:16:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932600AbVJZJQT
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 05:16:19 -0400
-Received: from nproxy.gmail.com ([64.233.182.193]:15841 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932570AbVJZJQS convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2005 05:16:18 -0400
-Received: by nproxy.gmail.com with SMTP id q29so20451nfc
-        for <git@vger.kernel.org>; Wed, 26 Oct 2005 02:16:15 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uhBAmgVqPul2YedgvgDam5jwSR67BAqHO4bttLusFyb3Tz7mATQwBwNP0kR5oi0LyN5ROFMTyNvyqFSKv6ROlauQ91aL2110UzKM3RZGHpJS27PTCXxkoiCigsAM/9isnLhGeOC3rsz5DaIo/fUlbgoIYdo+8IDAVBZ4QwMV5Ug=
-Received: by 10.49.5.14 with SMTP id h14mr162625nfi;
-        Wed, 26 Oct 2005 02:16:15 -0700 (PDT)
-Received: by 10.48.49.13 with HTTP; Wed, 26 Oct 2005 02:16:15 -0700 (PDT)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0510261041100.7424@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S932600AbVJZJRZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Oct 2005 05:17:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932605AbVJZJRZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 05:17:25 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:15327 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932600AbVJZJRY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Oct 2005 05:17:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051026091646.MAJQ11356.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 26 Oct 2005 05:16:46 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510251525540.10477@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 25 Oct 2005 15:29:42 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10660>
 
-On 10/26/05, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > Could you please try the patch I sent with the subject "[PATCH]
-> > > fetch/upload: Fix corner case with few revs"? Your output looks exactly
-> > > like what I fixed with that patch.
-> >
-> > I couldn't at the moment. Do you still need a test?
->
-> If you have time and can test it, yes, please.
->
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Will try. Which patch is it?
+> On Tue, 25 Oct 2005, Linus Torvalds wrote:
+>> 
+>> This actually does three things:
+>> 
+>>  - make "--dense" the default for git-rev-list...
+
+Heads up.
+
+I have not looked closely into what exactly, but the fourth
+thing this does might be to break git-send-pack.
+
+I usually use the tip of "pu" myself, but for tonight, I am
+excluding the fetch-pack/upload-pack changes from Johannes when
+building git for my own use, and using somewhere in the middle
+of "pu" branch.  With this "--dense default" patch,
+git-send-pack seems to send too few objects.  With this patch
+reverted, git-send-pack seems to work again.
+
+ +  [build] Revert "git-rev-list: make --dense the default (and introduce "--sparse")"
+ ++ [pu^] Merge branch 'js-fat'
+ ++ [pu^^2] Test in git-init-db if the filemode can be trusted
+ ++ [pu~2] Merge branches 'cache-pack', 'lazy-subdir' and 'lt-dense'
+ ++ [pu~2^4] git-rev-list: make --dense the default (and introduce "--sparse")
+ ++ [pu~2^3] Create object subdirectories on demand (phase II)
+ ++ [pu~2^2] Allow caching of generated pack for full cloning.
++++ [master] upload-pack: tighten request validation.
+
+I'll take a look at the issue in the morning unless somebody
+else beats me to it.
