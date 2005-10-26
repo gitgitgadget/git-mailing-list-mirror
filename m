@@ -1,65 +1,61 @@
-From: Alex Riesen <fork0@users.sourceforge.net>
-Subject: Re: [PATCH 1/4] git-init-db should error out with a message
-Date: Wed, 26 Oct 2005 22:47:27 +0200
-Message-ID: <20051026204727.GA19846@steel.home>
-References: <Pine.LNX.4.63.0510260139000.30576@wbgn013.biozentrum.uni-wuerzburg.de> <20051026194520.GC8030@steel.home> <7v3bmoc9d7.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <fork0@users.sourceforge.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Towards CVS code-exchange and gateways
+Date: Wed, 26 Oct 2005 22:51:30 +0200
+Message-ID: <20051026205130.GA20563@pasky.or.cz>
+References: <46a038f90510251357l23886747s8024a4326ad4e392@mail.gmail.com> <46a038f90510252035yb4167e1w2ee54d82896e5906@mail.gmail.com> <20051026085302.GF30889@pasky.or.cz> <46a038f90510260211i47c8a4e1oca8be8d0833f4b68@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 26 22:50:05 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 26 22:53:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUsBs-0008Qv-UV
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 22:48:09 +0200
+	id 1EUsFE-00011U-Hd
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 22:51:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964922AbVJZUrh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Oct 2005 16:47:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964916AbVJZUrh
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 16:47:37 -0400
-Received: from devrace.com ([198.63.210.113]:58386 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S964913AbVJZUrg (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Oct 2005 16:47:36 -0400
-Received: from tigra.home (p54A0C833.dip.t-dialin.net [84.160.200.51])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id j9QKlU6B092772;
-	Wed, 26 Oct 2005 15:47:31 -0500 (CDT)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1EUsBD-0008RI-00; Wed, 26 Oct 2005 22:47:27 +0200
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1EUsBD-0005As-Kp; Wed, 26 Oct 2005 22:47:27 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S964923AbVJZUve (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Oct 2005 16:51:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964916AbVJZUve
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 16:51:34 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:11460 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964913AbVJZUvd (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Oct 2005 16:51:33 -0400
+Received: (qmail 5799 invoked by uid 2001); 26 Oct 2005 22:51:30 +0200
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7v3bmoc9d7.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=0.8 required=4.5 tests=AWL,BAYES_50,
-	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+In-Reply-To: <46a038f90510260211i47c8a4e1oca8be8d0833f4b68@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10694>
 
-Junio C Hamano, Wed, Oct 26, 2005 22:27:00 +0200:
-> > Not just that. It would be interesting to give the user an option to
-> > use the file references ("ref: refs/heads/master").
+Dear diary, on Wed, Oct 26, 2005 at 11:11:49AM CEST, I got a letter
+where Martin Langhoff <martin.langhoff@gmail.com> told me that...
+> The goal for this script that I'm drafting is to be able to push
+> commits back into cvs in a format that maximises the chance of
+> git-cherry identifying them when they are echoed back (and thus
+> avoiding bogus conflicts).
+
+Aha, so you are not aiming for proper two-way incremental i/e, and one
+will have to cherrypick to import after an export... well, I guess that
+can be good enough for many cases. But to use Linus' words, the really
+interesting problem is to have the proper revision tree in the CVS heads
+as well, so that you could do normal merges. And it shouldn't be _that_
+hard either...
+
+> > If someone really desperately needs this, BTW, you might be able to
+> > merge two Monotone branches (.git and .cvssync) to get two-way
+> > incremental GIT and CVS interface, and then do that through Monotone.
+> > ;-))
 > 
-> Actually, the users should not have to care how HEAD reference
-> is implemented.  It might make sense to use regular file symref
-> regardless of platforms (i.e. never define USE_SYMLINK_HEAD on
-> any platform).
+> I'm really scared by the concept ;-)
 
-This my idea too. All the time I was doing that patch :)
+I *think* someone actually really did something like that. ;-)
 
-> HOWEVER, I think "falling back" (both in Johannes' patch which
-> is in the "master" branch, and your version) has a funny failure
-> mode.  What happens when two processes try redirecting .git/HEAD
-> simultaneously, possibly to different branch heads?  Both of
-> them unlink(), one successfully does symlink(), and the other
-> gets EEXIST and falls back to create regular file symref.
-
-I think the file ref version uses rename of HEAD.lock into HEAD, doesn't it?
-Rename(2) should just remove the symlink, right?
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
