@@ -1,45 +1,62 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Avoid using dc in git-count-objects
-Date: Wed, 26 Oct 2005 10:36:58 +0200
-Message-ID: <20051026083658.GE30889@pasky.or.cz>
-References: <Pine.LNX.4.63.0510260120260.28994@wbgn013.biozentrum.uni-wuerzburg.de> <7vd5ltcf05.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0510261031400.7424@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] git-fetch-pack: Implement client part of the multi_ack
+ extension
+Date: Wed, 26 Oct 2005 10:41:47 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510261041100.7424@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0510230339090.21239@wbgn013.biozentrum.uni-wuerzburg.de>
+  <20051025204754.GA8030@steel.home>  <Pine.LNX.4.63.0510252300290.15756@wbgn013.biozentrum.uni-wuerzburg.de>
+ <81b0412b0510252346t3806892dx71f9c0dc1efe4073@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 26 10:39:54 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Oct 26 10:42:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUgmo-0000OK-LU
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 10:37:31 +0200
+	id 1EUgr5-0002fn-MY
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 10:41:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932597AbVJZIhD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Oct 2005 04:37:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932600AbVJZIhC
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 04:37:02 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:3811 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932598AbVJZIhA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Oct 2005 04:37:00 -0400
-Received: (qmail 18796 invoked by uid 2001); 26 Oct 2005 10:36:58 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0510261031400.7424@wbgn013.biozentrum.uni-wuerzburg.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+	id S932599AbVJZIlv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Oct 2005 04:41:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932598AbVJZIlv
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 04:41:51 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:21979 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932595AbVJZIlu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Oct 2005 04:41:50 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C9DE713F2ED; Wed, 26 Oct 2005 10:41:49 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A9F179ABB3; Wed, 26 Oct 2005 10:41:49 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id EAE8F9ABC1; Wed, 26 Oct 2005 10:41:48 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C399613EBAE; Wed, 26 Oct 2005 10:41:48 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0510252346t3806892dx71f9c0dc1efe4073@mail.gmail.com>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10654>
 
-Dear diary, on Wed, Oct 26, 2005 at 10:33:33AM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> told me that...
-> Aargh! I had the impression "expr" was a builtin... Just forget about the 
-> patch, okay?
+Hi,
 
-I think that builtin or not, $() will always spawn a subshell. ...?
+On Wed, 26 Oct 2005, Alex Riesen wrote:
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+> > Could you please try the patch I sent with the subject "[PATCH]
+> > fetch/upload: Fix corner case with few revs"? Your output looks exactly
+> > like what I fixed with that patch.
+> >
+> 
+> I couldn't at the moment. Do you still need a test?
+
+If you have time and can test it, yes, please.
+
+Ciao,
+Dscho
