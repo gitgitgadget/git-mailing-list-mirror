@@ -1,95 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Fix cloning (memory corruption)
-Date: Wed, 26 Oct 2005 16:18:56 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510261616550.21073@wbgn013.biozentrum.uni-wuerzburg.de>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: git 565ebbf79f61873042c22a7126d002c104e056f4 broken on OpenBSD
+Date: 26 Oct 2005 07:24:22 -0700
+Message-ID: <86u0f4fjah.fsf@blue.stonehenge.com>
+References: <86y84gfjv4.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed Oct 26 16:21:07 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Oct 26 16:29:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUm7U-00035K-EV
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 16:19:12 +0200
+	id 1EUmDH-0006wI-NX
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 16:25:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932610AbVJZOS7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Oct 2005 10:18:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751495AbVJZOS7
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 10:18:59 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:5859 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751494AbVJZOS6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2005 10:18:58 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 8CB5313F39A; Wed, 26 Oct 2005 16:18:57 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 722E89ABBB; Wed, 26 Oct 2005 16:18:57 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5DFB99AB53; Wed, 26 Oct 2005 16:18:57 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3F97313F39A; Wed, 26 Oct 2005 16:18:57 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932611AbVJZOY2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Oct 2005 10:24:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751497AbVJZOY2
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 10:24:28 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:43387 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1751495AbVJZOY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Oct 2005 10:24:27 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id C602B8F74B
+	for <git@vger.kernel.org>; Wed, 26 Oct 2005 07:24:22 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 03585-01-53 for <git@vger.kernel.org>;
+ Wed, 26 Oct 2005 07:24:22 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 5F90C8F798; Wed, 26 Oct 2005 07:24:22 -0700 (PDT)
+To: git@vger.kernel.org
+x-mayan-date: Long count = 12.19.12.13.7; tzolkin = 4 Manik; haab = 5 Zac
+In-Reply-To: <86y84gfjv4.fsf@blue.stonehenge.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10667>
 
-upload-pack would set create_full_pack=1 if nr_has==0, but would ask later
-if nr_needs<MAX_NEEDS. If that proves true, it would ignore create_full_pack,
-and arguments would be written into unreserved memory.
+>>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Randal> gcc -o sha1_file.o -c -g -O2 -Wall -I/usr/local/include -L/usr/local/lib -Dstrcasestr=gitstrcasestr -DNO_STRCASESTR=1 -DSHA1_HEADER='<openssl/sha.h>' sha1_file.c
+Randal> sha1_file.c: In function `move_temp_to_file':
+Randal> sha1_file.c:1247: error: `ENOTSUP' undeclared (first use in this function)
+Randal> sha1_file.c:1247: error: (Each undeclared identifier is reported only once
+Randal> sha1_file.c:1247: error: for each function it appears in.)
+Randal> gmake: *** [sha1_file.o] Error 1
+
+got it... a bit messy, but here it is:
+
+Subject: [PATCH] fix for openbsd
 
 ---
 
-	This patch fixes what can be seen in all beauty when executing
+ sha1_file.c |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
-		git-clone . some_dir
-
-	in a repository with lots of branches/tags.
-
- upload-pack.c |   15 ++++++++-------
- 1 files changed, 8 insertions(+), 7 deletions(-)
-
-applies-to: 764f8a201d063a7b49b07daa3a6e48b0af267162
-d05392d3ddfa647552190b73505a738330e492b4
-diff --git a/upload-pack.c b/upload-pack.c
-index 07c1505..878254d 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -60,7 +60,7 @@ static void create_pack_file(void)
- 		close(fd[1]);
- 		*p++ = "git-rev-list";
- 		*p++ = "--objects";
--		if (MAX_NEEDS <= nr_needs)
-+		if (create_full_pack || MAX_NEEDS <= nr_needs)
- 			*p++ = "--all";
- 		else {
- 			for (i = 0; i < nr_needs; i++) {
-@@ -69,12 +69,13 @@ static void create_pack_file(void)
- 				buf += 41;
- 			}
- 		}
--		for (i = 0; i < nr_has; i++) {
--			*p++ = buf;
--			*buf++ = '^';
--			memcpy(buf, sha1_to_hex(has_sha1[i]), 41);
--			buf += 41;
--		}
-+		if (!create_full_pack)
-+			for (i = 0; i < nr_has; i++) {
-+				*p++ = buf;
-+				*buf++ = '^';
-+				memcpy(buf, sha1_to_hex(has_sha1[i]), 41);
-+				buf += 41;
-+			}
- 		*p++ = NULL;
- 		execvp("git-rev-list", argv);
- 		die("git-upload-pack: unable to exec git-rev-list");
+applies-to: b16bae041dfd1c1081873f2e88a5f82858fb2051
+28dcc3eaf13856585a81a24f1b4393032f825053
+diff --git a/sha1_file.c b/sha1_file.c
+index 7fdc469..1079ca5 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1244,7 +1244,11 @@ int move_temp_to_file(const char *tmpfil
+ 		 * When this succeeds, we just return 0. We have nothing
+ 		 * left to unlink.
+ 		 */
+-		if ((ret == EXDEV || ret == ENOTSUP) && !rename(tmpfile, filename))
++		if ((ret == EXDEV
++#ifdef ENOTSUP
++                     || ret == ENOTSUP
++#endif
++		     ) && !rename(tmpfile, filename))
+ 			return 0;
+ 		ret = errno;
+ 	}
 ---
 0.99.8.GIT
+
+
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
