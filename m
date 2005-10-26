@@ -1,60 +1,51 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] fetch-pack: avoid packing reachable objects.
-Date: Tue, 25 Oct 2005 22:07:11 -0700
-Message-ID: <7v7jc0c1ds.fsf@assigned-by-dhcp.cox.net>
-References: <20051026042632.GA3059@delft.aura.cs.cmu.edu>
+Subject: Re: [PATCH] git_progname
+Date: Tue, 25 Oct 2005 23:07:13 -0700
+Message-ID: <7v1x28bylq.fsf@assigned-by-dhcp.cox.net>
+References: <435ABB99.5020908@op5.se>
+	<7vll0l6pn7.fsf@assigned-by-dhcp.cox.net> <435B5AE0.1060400@op5.se>
+	<7v1x2cyplw.fsf@assigned-by-dhcp.cox.net> <435DF6DA.6010205@op5.se>
+	<20051025093150.GB30889@pasky.or.cz> <435E1307.3090209@op5.se>
+	<435E2ABA.8030907@op5.se> <20051025133208.GC30889@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Oct 26 07:16:21 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 26 08:08:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUdVh-0005l1-3A
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 07:07:37 +0200
+	id 1EUeRa-0000uC-13
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 08:07:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932541AbVJZFHQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Oct 2005 01:07:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932547AbVJZFHQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 01:07:16 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:50361 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S932541AbVJZFHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2005 01:07:14 -0400
+	id S932551AbVJZGHQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Oct 2005 02:07:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932552AbVJZGHQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 02:07:16 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:45717 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932551AbVJZGHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Oct 2005 02:07:14 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051026050659.WQFD16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 26 Oct 2005 01:06:59 -0400
-To: Jan Harkes <jaharkes@cs.cmu.edu>
-cc: git@vger.kernel.org
-In-Reply-To: <20051026042632.GA3059@delft.aura.cs.cmu.edu> (Jan Harkes's
-	message of "Wed, 26 Oct 2005 00:26:32 -0400")
+          id <20051026060652.QAOM4169.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 26 Oct 2005 02:06:52 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051025133208.GC30889@pasky.or.cz> (Petr Baudis's message of
+	"Tue, 25 Oct 2005 15:32:08 +0200")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10647>
 
-Jan Harkes <jaharkes@cs.cmu.edu> writes:
+Petr Baudis <pasky@suse.cz> writes:
 
-> Mark remote commits that were found in the alternate repository as
-> COMPLETE and avoid unnecessary packing of already available objects.
+> No, I didn't mean the oneliner at all, actually - just the notion that
+> you stealthily hijack main(). We'll see what Junio thinks about it. ;)
 
-Sorry, this is wrong (we made this mistake twice already).  The
-mere existence of that object in the local repository does not
-necessarily mean we have everything that is reachable from it.
+May I just say "yuck"?
 
-The rule is that we only trust local refs.  Anything that are
-reachable from them are known to be complete.  And after a
-successful fetch, we update local refs.  The existence of an
-object is a strong _hint_ that it _might_ be complete, but
-nothing more.
+I think what you suggested makes the most sense.
 
-Think of a case where you tried to fetch via commit walker and
-got things reachable from the then-current ref, and the 
-object you are marking as COMPLETE (maybe in pack) is a remnant
-of that failed fetch, which was killed before completing.  You
-might have complete history starting from the then-current
-commit back to that commit, but there is no guarantee that you
-can further tangle the history back and find everything needed.
+>> So I'd say just add setup_progname("foo") at the start of your main().
