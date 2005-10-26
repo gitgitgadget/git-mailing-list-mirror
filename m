@@ -1,88 +1,106 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git 565ebbf79f61873042c22a7126d002c104e056f4 broken on OpenBSD
-Date: Wed, 26 Oct 2005 14:22:21 -0300
-Message-ID: <200510261722.j9QHMLGY006576@laptop11.inf.utfsm.cl>
-References: <86u0f4fjah.fsf@blue.stonehenge.com>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 26 19:27:16 2005
+Date: Wed, 26 Oct 2005 10:27:36 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510261025440.10477@g5.osdl.org>
+References: <86y84gfjv4.fsf@blue.stonehenge.com> <86u0f4fjah.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.63.0510261708280.2803@wbgn013.biozentrum.uni-wuerzburg.de>
+ <86mzkwfh54.fsf@blue.stonehenge.com> <Pine.LNX.4.63.0510261725150.8507@wbgn013.biozentrum.uni-wuerzburg.de>
+ <86irvkfg80.fsf@blue.stonehenge.com> <20051026161552.GA11483@delft.aura.cs.cmu.edu>
+ <20051026165515.GA16616@delft.aura.cs.cmu.edu>
+ <Pine.LNX.4.63.0510261901140.9686@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jan Harkes <jaharkes@cs.cmu.edu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 26 19:34:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUoyw-0000Sx-In
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 19:22:35 +0200
+	id 1EUp3z-0003UI-Jv
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 19:27:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964836AbVJZRWc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Oct 2005 13:22:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964837AbVJZRWc
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 13:22:32 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:42427 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S964836AbVJZRWa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Oct 2005 13:22:30 -0400
-Received: from laptop11.inf.utfsm.cl (laptop11.inf.utfsm.cl [200.1.19.198])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j9QHMNsQ026383
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 26 Oct 2005 14:22:23 -0300
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j9QHMLGY006576;
-	Wed, 26 Oct 2005 14:22:23 -0300
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-In-Reply-To: Message from merlyn@stonehenge.com (Randal L. Schwartz) 
-   of "26 Oct 2005 07:24:22 PDT." <86u0f4fjah.fsf@blue.stonehenge.com> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.19.1]); Wed, 26 Oct 2005 14:22:23 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
+	id S964840AbVJZR1p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Oct 2005 13:27:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964842AbVJZR1p
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 13:27:45 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:20965 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964840AbVJZR1o (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Oct 2005 13:27:44 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9QHRcFC004489
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 26 Oct 2005 10:27:39 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9QHRats005632;
+	Wed, 26 Oct 2005 10:27:37 -0700
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0510261901140.9686@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10683>
 
-Randal L. Schwartz <merlyn@stonehenge.com> wrote:
-> >>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
-> 
-> Randal> gcc -o sha1_file.o -c -g -O2 -Wall -I/usr/local/include -L/usr/local/lib -Dstrcasestr=gitstrcasestr -DNO_STRCASESTR=1 -DSHA1_HEADER='<openssl/sha.h>' sha1_file.c
-> Randal> sha1_file.c: In function `move_temp_to_file':
-> Randal> sha1_file.c:1247: error: `ENOTSUP' undeclared (first use in this function)
-> Randal> sha1_file.c:1247: error: (Each undeclared identifier is reported only once
-> Randal> sha1_file.c:1247: error: for each function it appears in.)
-> Randal> gmake: *** [sha1_file.o] Error 1
-> 
-> got it... a bit messy, but here it is:
-> 
-> Subject: [PATCH] fix for openbsd
-> 
-> ---
-> 
->  sha1_file.c |    6 +++++-
->  1 files changed, 5 insertions(+), 1 deletions(-)
-> 
-> applies-to: b16bae041dfd1c1081873f2e88a5f82858fb2051
-> 28dcc3eaf13856585a81a24f1b4393032f825053
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 7fdc469..1079ca5 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -1244,7 +1244,11 @@ int move_temp_to_file(const char *tmpfil
->  		 * When this succeeds, we just return 0. We have nothing
->  		 * left to unlink.
->  		 */
-> -		if ((ret == EXDEV || ret == ENOTSUP) && !rename(tmpfile, filename))
-> +		if ((ret == EXDEV
-> +#ifdef ENOTSUP
-> +                     || ret == ENOTSUP
-> +#endif
-> +		     ) && !rename(tmpfile, filename))
 
-This is EVIL.... why not just:
 
-  #ifndef ENOTSUP
-  #define ENOTSUP EXDEV
-  #endif
+On Wed, 26 Oct 2005, Johannes Schindelin wrote:
+> 
+> On Wed, 26 Oct 2005, Jan Harkes wrote:
+> 
+> > -		if (ret == EXDEV && !rename(tmpfile, filename))
+> > +		if (ret && ret != EEXIST && !rename(tmpfile, filename))
+> 
+> We don't need to test for ret, as we're already in a "if (ret)" block.  
+> What would happen if ret==EEXIST, and we try to rename() nevertheless? It 
+> should fail, too, right?
 
-someplace where it doesn't hurt the eyes? (The EXDEV makes the ENOTSUPP
-fold away, I presume; not that it should really matter).
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+No, the rename will succeed and overwrite the existing file.
+
+Which is strictly correct, but it's the wrong thing if we ever want to do 
+collission detection.
+
+So I'd actually prefer something like this patch instead.
+
+		Linus
+
+---
+diff --git a/sha1_file.c b/sha1_file.c
+index 7fdc469..642f00d 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1232,19 +1232,20 @@ static int link_temp_to_file(const char 
+ int move_temp_to_file(const char *tmpfile, char *filename)
+ {
+ 	int ret = link_temp_to_file(tmpfile, filename);
+-	if (ret) {
+-		/*
+-		 * Coda hack - coda doesn't like cross-directory links,
+-		 * so we fall back to a rename, which will mean that it
+-		 * won't be able to check collisions, but that's not a
+-		 * big deal.
+-		 *
+-		 * The same holds for FAT formatted media.
+-		 *
+-		 * When this succeeds, we just return 0. We have nothing
+-		 * left to unlink.
+-		 */
+-		if ((ret == EXDEV || ret == ENOTSUP) && !rename(tmpfile, filename))
++
++	/*
++	 * Coda hack - coda doesn't like cross-directory links,
++	 * so we fall back to a rename, which will mean that it
++	 * won't be able to check collisions, but that's not a
++	 * big deal.
++	 *
++	 * The same holds for FAT formatted media.
++	 *
++	 * When this succeeds, we just return 0. We have nothing
++	 * left to unlink.
++	 */
++	if (ret && ret != EEXIST) {
++		if (!rename(tmpfile, filename))
+ 			return 0;
+ 		ret = errno;
+ 	}
