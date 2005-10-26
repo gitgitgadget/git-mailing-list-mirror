@@ -1,72 +1,79 @@
-From: Blaisorblade <blaisorblade@yahoo.it>
-Subject: Re: latest stg/git commandline completions code
-Date: Wed, 26 Oct 2005 18:14:04 +0200
-Message-ID: <200510261814.04568.blaisorblade@yahoo.it>
-References: <Pine.LNX.4.60.0510251222510.8565@mundungus.clifford.ac> <200510251905.27768.blaisorblade@yahoo.it> <b0943d9e0510260434y61dc5e50v@mail.gmail.com>
+From: Jan Harkes <jaharkes@cs.cmu.edu>
+Subject: Re: git 565ebbf79f61873042c22a7126d002c104e056f4 broken on OpenBSD
+Date: Wed, 26 Oct 2005 12:15:52 -0400
+Message-ID: <20051026161552.GA11483@delft.aura.cs.cmu.edu>
+References: <86y84gfjv4.fsf@blue.stonehenge.com> <86u0f4fjah.fsf@blue.stonehenge.com> <Pine.LNX.4.63.0510261708280.2803@wbgn013.biozentrum.uni-wuerzburg.de> <86mzkwfh54.fsf@blue.stonehenge.com> <Pine.LNX.4.63.0510261725150.8507@wbgn013.biozentrum.uni-wuerzburg.de> <86irvkfg80.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Ben Clifford <benc@hawaga.org.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 26 18:10:04 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Oct 26 18:19:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUnqe-0008Jo-KN
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 18:09:56 +0200
+	id 1EUnwT-0002Rr-2W
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 18:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964799AbVJZQJx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Oct 2005 12:09:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964802AbVJZQJx
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 12:09:53 -0400
-Received: from smtp006.mail.ukl.yahoo.com ([217.12.11.95]:65374 "HELO
-	smtp006.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S964799AbVJZQJx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2005 12:09:53 -0400
-Received: (qmail 93302 invoked from network); 26 Oct 2005 16:09:51 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Received:From:To:Subject:Date:User-Agent:Cc:References:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-Disposition:Message-Id;
-  b=Toe1OGp5xJAffYsBj9Kbx5VGAD1TDjZA7v5OwtrHEyuc8CBDRfqyQctMJZV59umhYg/WApQ1RngBpmvp+9AVXJDCVORbHxtbN6UXYgoq+awxMW7B9InWApbHesqAYd64EaqTMKOr8GqqIsCWUB21avipwzRgeF/cKClG56OgQUI=  ;
-Received: from unknown (HELO ?151.97.230.22?) (blaisorblade@151.97.230.22 with login)
-  by smtp006.mail.ukl.yahoo.com with SMTP; 26 Oct 2005 16:09:51 -0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
-User-Agent: KMail/1.8.3
-In-Reply-To: <b0943d9e0510260434y61dc5e50v@mail.gmail.com>
+	id S964805AbVJZQPy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Oct 2005 12:15:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964806AbVJZQPx
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 12:15:53 -0400
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:20381 "EHLO
+	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
+	id S964805AbVJZQPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Oct 2005 12:15:53 -0400
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
+	id 1EUnwP-0003zx-00
+	for <git@vger.kernel.org>; Wed, 26 Oct 2005 12:15:53 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <86irvkfg80.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10676>
 
-On Wednesday 26 October 2005 13:34, Catalin Marinas wrote:
-> On 25/10/05, Blaisorblade <blaisorblade@yahoo.it> wrote:
-> > They _would_ behave like cat, except that Python is slow enough. Half a
-> > second on a (almost) idle system means seconds and seconds on a busy
-> > system, and it's pretty frequent that when I don't wait enough for an op.
-> > to complete I get a traceback from the import statements, which haven't
-> > been completed.
+On Wed, Oct 26, 2005 at 08:30:39AM -0700, Randal L. Schwartz wrote:
+> >> >>>>> "Johannes" == Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Johannes> What does your man page for link() say? If it is not 
+> Johannes> supported, what value will be in errno?
+> >> 
+> >> EOPNOTSUPP
+> 
+> Interesting... google for "ENOTSUPP EOPNOTSUPP".  Apparently
+> hits like this:
+> 
+> <http://sources.redhat.com/ml/bug-glibc/2002-08/msg00013.html>
+> 
+> shows that on some platforms, they may have both.  This is not as
+> easy as it looks.  Maybe define an extra || condition to handle either
+> or both?
 
-> That's a thing I should fix in StGIT - trapping the exception
-> generated by SIGTERM and exiting silently.
-Yep.
+It looks like glibc assumes that the kernel doesn't have ENOTSUP and
+defines it as EOPNOTSUPP in <bits/errno.h>. So even if the kernel does
+return different values, any glibc linked application probably wouldn't
+be able to test for the ENOTSUP error.
 
-> > And let's leave Gentoo's emerge alone - I'd say imports can take up to a
-With imports I mean Python import statement, in the case of the Gentoo 
-"emerge" command (which is written in Python).
+Checking the SuSv2 manpage for link(2), it doesn't mention either of
+these error codes. But does mention EPERM as a valid error when the
+filesystem doesn't support hardlinks.
+    http://www.opengroup.org/onlinepubs/007908799/xsh/link.html
 
-Not the import command (and checking the state of the tree can take tens of 
-minutes, here - with a non-idle machine, though).
-> > minute.
--- 
-Inform me of my mistakes, so I can keep imitating Homer Simpson's "Doh!".
-Paolo Giarrusso, aka Blaisorblade (Skype ID "PaoloGiarrusso", ICQ 215621894)
-http://www.user-mode-linux.org/~blaisorblade
+My local manual page for link(2) agrees with that definition,
 
-	
+	EPERM  oldpath is a directory.
 
-	
-		
-___________________________________ 
-Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
-http://mail.yahoo.it
+	EPERM  The  filesystem  containing oldpath and newpath does not support
+	       the creation of hard links.
+
+I also took a look at the Linux 2.4/2.6 kernel sources, and msdos, fat
+and vfat all do not set a function for 'dir->i_op->link'. In that case,
+vfs_link() will return EPERM.
+
+So I don't know where ENOTSUP/EOPNOTSUPP would be coming from. From the
+few places I looked, I don't think the original patch can be right. Not
+sure yet if I want to change Coda's return value to EPERM as well, the
+thing is that we do support hardlinks, just not between different
+directories, but I guess EXDEV isn't really accurate either.
+
+Jan
