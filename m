@@ -1,67 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Alex Riesen <fork0@users.sourceforge.net>
 Subject: Re: [PATCH 1/4] git-init-db should error out with a message
-Date: Wed, 26 Oct 2005 13:27:00 -0700
-Message-ID: <7v3bmoc9d7.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0510260139000.30576@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20051026194520.GC8030@steel.home>
+Date: Wed, 26 Oct 2005 22:47:27 +0200
+Message-ID: <20051026204727.GA19846@steel.home>
+References: <Pine.LNX.4.63.0510260139000.30576@wbgn013.biozentrum.uni-wuerzburg.de> <20051026194520.GC8030@steel.home> <7v3bmoc9d7.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <fork0@users.sourceforge.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 26 22:27:19 2005
+X-From: git-owner@vger.kernel.org Wed Oct 26 22:50:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUrrX-00018G-Dr
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 22:27:07 +0200
+	id 1EUsBs-0008Qv-UV
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 22:48:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964901AbVJZU1D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Oct 2005 16:27:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964904AbVJZU1D
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 16:27:03 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:27123 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S964901AbVJZU1B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2005 16:27:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051026202641.NRXA9394.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 26 Oct 2005 16:26:41 -0400
-To: Alex Riesen <fork0@users.sourceforge.net>
-In-Reply-To: <20051026194520.GC8030@steel.home> (Alex Riesen's message of
-	"Wed, 26 Oct 2005 21:45:20 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964922AbVJZUrh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Oct 2005 16:47:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964916AbVJZUrh
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 16:47:37 -0400
+Received: from devrace.com ([198.63.210.113]:58386 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S964913AbVJZUrg (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Oct 2005 16:47:36 -0400
+Received: from tigra.home (p54A0C833.dip.t-dialin.net [84.160.200.51])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id j9QKlU6B092772;
+	Wed, 26 Oct 2005 15:47:31 -0500 (CDT)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1EUsBD-0008RI-00; Wed, 26 Oct 2005 22:47:27 +0200
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1EUsBD-0005As-Kp; Wed, 26 Oct 2005 22:47:27 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v3bmoc9d7.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=0.8 required=4.5 tests=AWL,BAYES_50,
+	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10693>
 
-Alex Riesen <fork0@users.sourceforge.net> writes:
+Junio C Hamano, Wed, Oct 26, 2005 22:27:00 +0200:
+> > Not just that. It would be interesting to give the user an option to
+> > use the file references ("ref: refs/heads/master").
+> 
+> Actually, the users should not have to care how HEAD reference
+> is implemented.  It might make sense to use regular file symref
+> regardless of platforms (i.e. never define USE_SYMLINK_HEAD on
+> any platform).
 
-> Not just that. It would be interesting to give the user an option to
-> use the file references ("ref: refs/heads/master").
+This my idea too. All the time I was doing that patch :)
 
-Actually, the users should not have to care how HEAD reference
-is implemented.  It might make sense to use regular file symref
-regardless of platforms (i.e. never define USE_SYMLINK_HEAD on
-any platform).
+> HOWEVER, I think "falling back" (both in Johannes' patch which
+> is in the "master" branch, and your version) has a funny failure
+> mode.  What happens when two processes try redirecting .git/HEAD
+> simultaneously, possibly to different branch heads?  Both of
+> them unlink(), one successfully does symlink(), and the other
+> gets EEXIST and falls back to create regular file symref.
 
-We support reading from either kind of symref, so if we did
-that, the only case that *could* matter form compatibility point
-of view is that repositories touched by the updated git is
-unusable for an ancient git that does not understand regular
-file symref.  From performance and simplicity point of view,
-however, using symlink when possible is better, and that is what
-Johannes' patch does.
-
-HOWEVER, I think "falling back" (both in Johannes' patch which
-is in the "master" branch, and your version) has a funny failure
-mode.  What happens when two processes try redirecting .git/HEAD
-simultaneously, possibly to different branch heads?  Both of
-them unlink(), one successfully does symlink(), and the other
-gets EEXIST and falls back to create regular file symref.
-
-Which is probably not so wrong; if this race matters, then you
-have bigger problem -- the user is doing 'git checkout' of
-different branches at the same time, or something silly like
-that.  But it does not feel quite right, either.
+I think the file ref version uses rename of HEAD.lock into HEAD, doesn't it?
+Rename(2) should just remove the symlink, right?
