@@ -1,137 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git status and commit from subdirectory?
-Date: Tue, 25 Oct 2005 17:16:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510251644090.10477@g5.osdl.org>
-References: <Pine.LNX.4.64.0510251735500.25300@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Towards CVS code-exchange and gateways
+Date: Tue, 25 Oct 2005 17:25:00 -0700
+Message-ID: <7vr7a9azvn.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90510251357l23886747s8024a4326ad4e392@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 26 02:17:45 2005
+X-From: git-owner@vger.kernel.org Wed Oct 26 02:26:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUYyd-0002Qh-51
-	for gcvg-git@gmane.org; Wed, 26 Oct 2005 02:17:11 +0200
+	id 1EUZ6K-00060A-48
+	for gcvg-git@gmane.org; Wed, 26 Oct 2005 02:25:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932493AbVJZARH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Oct 2005 20:17:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932496AbVJZARH
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 20:17:07 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:55760 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932493AbVJZARG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Oct 2005 20:17:06 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9Q0H1FC028457
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 25 Oct 2005 17:17:02 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9Q0GvKI006395;
-	Tue, 25 Oct 2005 17:16:59 -0700
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0510251735500.25300@iabervon.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932508AbVJZAZE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Oct 2005 20:25:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932507AbVJZAZE
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Oct 2005 20:25:04 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:35579 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932505AbVJZAZC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Oct 2005 20:25:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051026002439.KCQL4169.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 25 Oct 2005 20:24:39 -0400
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90510251357l23886747s8024a4326ad4e392@mail.gmail.com>
+	(Martin Langhoff's message of "Wed, 26 Oct 2005 09:57:14 +1300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10642>
 
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
+> Is there anyone working on a git -> cvs gateway or similar scripts?
 
-On Tue, 25 Oct 2005, Daniel Barkalow wrote:
->
-> It seems like everything that "git status" does can now be done from a 
-> subdirectory (giving, of course, the status of the contents of the 
-> subdirectory). I think the same might be true of "git commit", but I 
-> haven't checked on everything. Is there anything that has to be done to 
-> enable this properly other than removing the "|| die" part of the first 
-> line?
+Working on, no, but I was thinking about something like that at
+work (today is my non-git day but I use git on top of CVS to
+track my private changes in my CVS work tree which is my git
+repo there).
 
-This patch _may_ work. I've not tested it a lot. Surprise surprise.
+I maintain at 'cvs' and 'master' branch (and other git branches)
+there, and always 'git-checkout cvs' before doing 'cvs update',
+and do 'git-commit' to slurp in the changes to the cvs side.
+Then 'git checkout master ; git pull . cvs' to sync the master
+side, work on a bit, commit.  Showing what I've done to the CVS
+side, currently I do something like this:
 
-NOTE! This has some seriously far-reaching implications. One of them is 
-that a few programs will automagically start working inside some random 
-directories.
+      $ git-checkout cvs
+      $ git pull . master
+      $ git log ORIG_HEAD.. >L
+      $ cvs commit -F L
 
-And probably others won't. Instead of saying "Not a git archive", they 
-might run and do strange things.
-
-The patch is definitely a big step in the right direction: it makes the 
-shell scripts that include "git-sh-setup" act a lot more like the programs 
-that automatically find the git directory. But everybody that includes 
-git-sh-setup should be verified.
-
-This fixes gitk to also work the same way, btw.
-
-Testing needed. Lots of it.
-
-		Linus
-
----
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index dbb9884..044b0b4 100755
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -3,7 +3,7 @@
- # Set up GIT_DIR and GIT_OBJECT_DIRECTORY
- # and return true if everything looks ok
- #
--: ${GIT_DIR=.git}
-+: ${GIT_DIR=$(git-rev-parse --git-dir)} || exit
- : ${GIT_OBJECT_DIRECTORY="$GIT_DIR/objects"}
- 
- # Having this variable in your environment would break scripts because
-diff --git a/gitk b/gitk
-index a9d37d9..a934255 100755
---- a/gitk
-+++ b/gitk
-@@ -12,7 +12,7 @@ proc gitdir {} {
-     if {[info exists env(GIT_DIR)]} {
- 	return $env(GIT_DIR)
-     } else {
--	return ".git"
-+	return [exec git-rev-parse --git-dir]
-     }
- }
- 
-diff --git a/setup.c b/setup.c
-index c487d7e..96085dd 100644
---- a/setup.c
-+++ b/setup.c
-@@ -53,11 +53,10 @@ const char **get_pathspec(const char *pr
- 	const char **p;
- 	int prefixlen;
- 
--	if (!prefix && !entry)
--		return NULL;
--
- 	if (!entry) {
- 		static const char *spec[2];
-+		if (!prefix || !*prefix)
-+			return NULL;
- 		spec[0] = prefix;
- 		spec[1] = NULL;
- 		return spec;
-@@ -120,9 +119,19 @@ const char *setup_git_directory(void)
- 
- 	if (offset == len)
- 		return NULL;
--
- 	/* Make "offset" point to past the '/', and add a '/' at the end */
- 	offset++;
-+
-+	/*
-+	 * If we're inside the ".git" directory, we have an empty prefix
-+	 */
-+	if (!strncmp(cwd + offset, ".git", 4)) {
-+		switch (cwd[offset+4]) {
-+		case '\0': case '/':
-+			return "";
-+		}
-+	}
-+
- 	cwd[len++] = '/';
- 	cwd[len] = 0;
- 	return cwd + offset;
+This isn't that bad because I do not care much about how the
+development history on the CVS side looks like.  But propagating
+each git commit separately to CVS side would be much better, and
+what you outlined should work nicely.
