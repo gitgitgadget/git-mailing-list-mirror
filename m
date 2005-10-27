@@ -1,78 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [RFC] multi_ack protocol v2
-Date: Thu, 27 Oct 2005 02:16:45 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510270149590.12163@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: git-cvsimport: $cvs->file() fails silently
+Date: Thu, 27 Oct 2005 17:23:19 +1300
+Message-ID: <46a038f90510262123y4f56cf7v5494b391394ac648@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Oct 27 02:16:56 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Oct 27 06:24:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EUvRp-0008Iz-U8
-	for gcvg-git@gmane.org; Thu, 27 Oct 2005 02:16:50 +0200
+	id 1EUzIo-0004n0-Bg
+	for gcvg-git@gmane.org; Thu, 27 Oct 2005 06:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519AbVJ0AQr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Oct 2005 20:16:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751520AbVJ0AQr
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Oct 2005 20:16:47 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:8157 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751516AbVJ0AQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Oct 2005 20:16:46 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id CF78313F4DE
-	for <git@vger.kernel.org>; Thu, 27 Oct 2005 02:16:45 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id BA2239CCE0
-	for <git@vger.kernel.org>; Thu, 27 Oct 2005 02:16:45 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id A64808E9A2
-	for <git@vger.kernel.org>; Thu, 27 Oct 2005 02:16:45 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 7D88F13F4DE
-	for <git@vger.kernel.org>; Thu, 27 Oct 2005 02:16:45 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S964964AbVJ0EXV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Oct 2005 00:23:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964965AbVJ0EXV
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 00:23:21 -0400
+Received: from xproxy.gmail.com ([66.249.82.197]:42044 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964964AbVJ0EXU convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Oct 2005 00:23:20 -0400
+Received: by xproxy.gmail.com with SMTP id i30so585665wxd
+        for <git@vger.kernel.org>; Wed, 26 Oct 2005 21:23:19 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=IPGveEpm7Zd/pzzckTkBOJa1Hpw1NeL4/BCltAehbyC0/jZYqwS/4zgvqFeelMytz9drdopXN0SedYQ8ew2Pqgoo2dwVU0+02bOTGm5ziW0o3sXSp+l1fLoX1g6igdOC7O5qSLAzl7EvZrEXBI4wMNyaEjwHmkhJythFWDG4qVw=
+Received: by 10.65.61.17 with SMTP id o17mr1330190qbk;
+        Wed, 26 Oct 2005 21:23:19 -0700 (PDT)
+Received: by 10.64.232.18 with HTTP; Wed, 26 Oct 2005 21:23:19 -0700 (PDT)
+To: Matthias Urlichs <smurf@smurf.noris.de>,
+	Sven Verdoolaege <skimo@kotnet.org>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10697>
 
-Hi,
+We have seen a few instances of files extracted from a remote CVS repo
+by $cvs->file() being empty, and still git-cvsimport did not die or
+complain. If I rewind the affected head and re-run git-cvsimport, the
+file is imported correctly, which makes me suspect that the server
+went away or there was some other networking glitch, and that the
+file() and _file() methods didn't handle it gracefully.
 
-the fetch-pack/upload-pack protocol as of now goes like this:
+I've been through the file(), _file() and _line() methods, and they
+seem pretty conservative -- they die or return undef in all the right
+places. There _must_ be one place that we're missing but I just can't
+see it.
 
-- server sends the refs it has, then an empty packet
-- client sends what it wants, then an empty packet
-- client sends a rev-list via "have" lines in the hope to find a common
-  rev. Interspersed, it sends empty packets.
-- server answers to those empty packets with a NAK message, until it
-  receives a "have" line for a commit it has (and which is therefore a
-  common commit). This is answered by an ACK message, and no NAK or ACK is 
-  sent after that
-- client sends "done"
-- server only responds if no common commit was found, with a NAK
-- server sends pack
+Any ideas?
 
-after thinking about my earlier approach, I think there's a better, less 
-intrusive, and all in all just simpler approach:
 
-- client asks for multi_ack protocol by sending " multi_ack" at the end
-  of at least one "want" line
-- server appends " continue" to the ACK message, but continues sending
-  ACK (but not NAK) messages
-- after receiving "done", server repeats last ACK message without 
-  " continue" appended
 
-After much fun with non-working, fragile code which had to be retracted 
-from master, I hope that this approach is less prone to errors.
-
-Note that this is incompatible to the multi_ack protocol I described 
-earlier, but given that my patches were buggy anyway, I'd say it does not 
-matter at all.
-
-Thoughts, comments, objections?
-
-Ciao,
-Dscho
+martin
