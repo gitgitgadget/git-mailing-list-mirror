@@ -1,88 +1,75 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: gitk shows an empty line between "Comments" and changed files
-Date: Thu, 27 Oct 2005 13:30:30 -0400
-Message-ID: <1130434230.19641.21.camel@dv>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [TENTATIVE PATCH] Complain loudly, dying, when a ref is invalid
+Date: Thu, 27 Oct 2005 19:40:12 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510271936520.7518@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Oct 27 19:32:20 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Oct 27 19:43:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVBaQ-00031j-95
-	for gcvg-git@gmane.org; Thu, 27 Oct 2005 19:30:48 +0200
+	id 1EVBkL-0006It-5B
+	for gcvg-git@gmane.org; Thu, 27 Oct 2005 19:41:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751309AbVJ0Ran (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Oct 2005 13:30:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751316AbVJ0Ran
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 13:30:43 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:28862 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751309AbVJ0Ram
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Oct 2005 13:30:42 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EVBaC-000098-Mk
-	for git@vger.kernel.org; Thu, 27 Oct 2005 13:30:38 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1EVBaA-0002SC-Ar
-	for git@vger.kernel.org; Thu, 27 Oct 2005 13:30:30 -0400
-To: git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	id S1751320AbVJ0RkQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Oct 2005 13:40:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751325AbVJ0RkQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 13:40:16 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:12434 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751320AbVJ0RkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Oct 2005 13:40:14 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 1B33713F273
+	for <git@vger.kernel.org>; Thu, 27 Oct 2005 19:40:14 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 031369EFC2
+	for <git@vger.kernel.org>; Thu, 27 Oct 2005 19:40:14 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id E5A6C9EF9B
+	for <git@vger.kernel.org>; Thu, 27 Oct 2005 19:40:13 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id BB7FF13F273
+	for <git@vger.kernel.org>; Thu, 27 Oct 2005 19:40:13 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10718>
 
-Hello!
+for_each_ref() used to ignore refs which point nowhere. Making git-fsck-objects
+be happy about them.
 
-gitk is now showing an empty line between "Comments" and changes files.
-This change was caused by 8b7e5d76e836396a097bb6f61cf930ea872a7bd3 (Make
-"gitk" work better with dense revlists).
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-git-diff-tree outputs some SHA1 as the first line if only one tree-ish
-argument is provided.  I don't see any way to suppress that output (see
-diff-tree.c, line 114).
+---
 
-One solution would be to add an option to git-diff-tree to suppress all
-headers (let's call it --no-headers).
+	Of course, it may be by design. But then, it does not feel 
+	right to me. If this is intended behaviour, please don't let me 
+	die dumb.
 
-Or maybe the SHA1 header should never be printed at all?  It looks like
-it's not documented anywhere.  It doesn't break the tests.
+ refs.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-While debugging the patch, I have found that the p variable is unused in
-both functions that stopped passing it to git-diff-tree.
-
-Also, gettreediffs function in gitk could use --names-only for
-git-diff-tree, because it only needs names.
-
-Maybe --names-only and --name-status should suppress the SHA1 header to
-match their descriptions?  Unfortunately, they don't suppress the patch
-is -p is specified, so "matching the descriptions" would have to take
-care of it.
-
-P.S. I consider printing the SHA1 header in git-diff-tree an
-undocumented feature (in other words, a bug).
-
-Proposed patch:
-
-Don't print the SHA1 when only one tree-ish is given to git-diff-tree.
-
-Signed-off-by: Pavel Roskin <proski@gnu.org>
-
-diff --git a/diff-tree.c b/diff-tree.c
-index 382011a..ac53f48 100644
---- a/diff-tree.c
-+++ b/diff-tree.c
-@@ -111,7 +111,6 @@ static int diff_tree_commit(const unsign
- 		unsigned char parent[20];
- 		if (get_sha1_hex(buf + offset + 7, parent))
- 			return -1;
--		header = generate_header(name, sha1_to_hex(parent), buf, size);
- 		diff_tree_sha1_top(parent, commit, "");
- 		if (!header && verbose_header) {
- 			header_prefix = "\ndiff-tree ";
-
-
--- 
-Regards,
-Pavel Roskin
+applies-to: d29f6558d14b1da55642659c9874d4f52dac18bf
+047627834b0ecb7ec0e0a98066b4b28688c374bc
+diff --git a/refs.c b/refs.c
+index a52b038..d74ede9 100644
+--- a/refs.c
++++ b/refs.c
+@@ -194,9 +194,9 @@ static int do_for_each_ref(const char *b
+ 				continue;
+ 			}
+ 			if (read_ref(git_path("%s", path), sha1) < 0)
+-				continue;
++				die("%s points nowhere!", path);
+ 			if (!has_sha1_file(sha1))
+-				continue;
++				die("%s does not point to a valid commit object!", path);
+ 			retval = fn(path, sha1);
+ 			if (retval)
+ 				break;
+---
+0.99.8.GIT
