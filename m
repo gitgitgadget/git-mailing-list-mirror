@@ -1,67 +1,59 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: gitk shows an empty line between "Comments" and changed files
-Date: Thu, 27 Oct 2005 21:36:29 -0400
-Message-ID: <1130463389.2186.14.camel@dv>
-References: <1130434230.19641.21.camel@dv>
-	 <7vslum3l2w.fsf@assigned-by-dhcp.cox.net>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: [PATCH gitweb] Visually indicating patch size with horizontal bars
+Date: Fri, 28 Oct 2005 03:56:42 +0200
+Message-ID: <20051028015642.GA31822@vrfy.org>
+References: <20051027203945.GC1622@pe.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 28 03:37:45 2005
+X-From: git-owner@vger.kernel.org Fri Oct 28 03:58:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVJAb-0008QN-Mp
-	for gcvg-git@gmane.org; Fri, 28 Oct 2005 03:36:38 +0200
+	id 1EVJUW-0006Dk-1P
+	for gcvg-git@gmane.org; Fri, 28 Oct 2005 03:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965042AbVJ1Bge (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Oct 2005 21:36:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965044AbVJ1Bge
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 21:36:34 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:62689 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S965042AbVJ1Bgd
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Oct 2005 21:36:33 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EVJAW-00076e-Ee
-	for git@vger.kernel.org; Thu, 27 Oct 2005 21:36:32 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1EVJAT-0004om-No; Thu, 27 Oct 2005 21:36:29 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslum3l2w.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.4.1 (2.4.1-5) 
+	id S965051AbVJ1B4t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Oct 2005 21:56:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965052AbVJ1B4t
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 21:56:49 -0400
+Received: from soundwarez.org ([217.160.171.123]:60382 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S965051AbVJ1B4s (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Oct 2005 21:56:48 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id 2D59A6746A; Fri, 28 Oct 2005 03:56:42 +0200 (CEST)
+To: Chris Shoemaker <c.shoemaker@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20051027203945.GC1622@pe.Belkin>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10737>
 
-Hi, Junio!
-
-On Thu, 2005-10-27 at 10:51 -0700, Junio C Hamano wrote:
-> Pavel Roskin <proski@gnu.org> writes:
+On Thu, Oct 27, 2005 at 04:39:45PM -0400, Chris Shoemaker wrote:
 > 
-> > Or maybe the SHA1 header should never be printed at all?  It looks like
-> > it's not documented anywhere.  It doesn't break the tests.
+> I really like gitweb (thanks Kay!), but I thought it would be nice to
+> have a visual indication of patch size.  I found this helpful when
+> scanning though the shortlogs.
+
+This looks nice, but if the patch size tells you something important,
+your commit subjects are probably too short or wrong. :)
+
+> To see what it looks like with the gitweb for gitweb (meta-gitweb?)
+> goto:
 > 
-> AFAIK, its only user (except humans) is patch-id.
+> http://www.codesifter.com/cgi-bin/gitweb.cgi?p=gitweb.git;a=shortlog
+> 
+> I rather like the look of what I've hacked up (the enclosed patch),
+> but it should be considered as just a prototype: it only affects the
+> shortlog, it's horribly inefficient, and I don't really do perl.  :)
+> 
+> If anyone thinks this is a good feature, then please tell me an
+> efficient way to get some heuristic of the patch size.
 
-Thank you for reply!  git-patch-id is badly documented, and its output
-is not documented at all.  It outputs two SHA1 hashes, and the second
-one is taken from the line produced by git-diff-tree.  If there is no
-such line, the second ID is 0.
+You may try to use CSS instead of an embedded picture to draw the bar,
+just like the RSS logo in the footer, which is simple CSS rendered in the
+browser.
 
-git-patch-id is only used by git-cherry.  git-cherry writes the second
-SHA1 to some files in a temporary directory, but it never reads those
-files, it only checks that they exist.
-
-I'm pretty confident now that the patch I posted in the last message was
-correct.
-
-Of course, more cleanup will be needed to remove the second ID from
-git-patch-id, to adjust git-cherry accordingly and to remove "p"
-assignments in gitk.
-
--- 
-Regards,
-Pavel Roskin
+Kay
