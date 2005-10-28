@@ -1,199 +1,191 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 3/8] Implement a test for git-fetch-pack/git-upload-pack
-Date: Fri, 28 Oct 2005 04:47:38 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510280447190.20516@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [PATCH 2/8] Make maximal use of the remote refs
+Date: Fri, 28 Oct 2005 04:47:07 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510280446410.20516@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Oct 28 04:48:28 2005
+X-From: git-owner@vger.kernel.org Fri Oct 28 04:48:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVKHP-0000h8-3U
-	for gcvg-git@gmane.org; Fri, 28 Oct 2005 04:47:43 +0200
+	id 1EVKGu-0000ba-FC
+	for gcvg-git@gmane.org; Fri, 28 Oct 2005 04:47:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965065AbVJ1Crk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Oct 2005 22:47:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965066AbVJ1Crk
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 22:47:40 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:39887 "EHLO
+	id S965064AbVJ1CrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Oct 2005 22:47:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965065AbVJ1CrJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 22:47:09 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:37071 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S965065AbVJ1Crk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Oct 2005 22:47:40 -0400
+	id S965064AbVJ1CrI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Oct 2005 22:47:08 -0400
 Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 2E64113F2ED; Fri, 28 Oct 2005 04:47:39 +0200 (CEST)
+	id 82E6913F2ED; Fri, 28 Oct 2005 04:47:07 +0200 (CEST)
 Received: from virusscan (localhost [127.0.0.1])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 086A29EFD1; Fri, 28 Oct 2005 04:47:39 +0200 (CEST)
+	id 5A9849EFCF; Fri, 28 Oct 2005 04:47:07 +0200 (CEST)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BD5C49EFCE; Fri, 28 Oct 2005 04:47:38 +0200 (CEST)
+	id 3BF039EFC9; Fri, 28 Oct 2005 04:47:07 +0200 (CEST)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id B86D813F2ED; Fri, 28 Oct 2005 04:47:38 +0200 (CEST)
+	id 34FAF13F2ED; Fri, 28 Oct 2005 04:47:07 +0200 (CEST)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: git@vger.kernel.org, junkio@cox.net
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10745>
 
 
-This test provides a minimal example of what went wrong with the old
-git-fetch-pack (and now works beautifully).
+When git-fetch-pack gets the remote refs, it does not need to filter them
+right away, but it can see which refs are common (taking advantage of the
+patch which makes git-fetch-pack not use git-rev-list).
+
+This means that we ask get_remote_heads() to return all remote refs,
+including the funny refs, and filtering them with a separate function later.
 
 Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
 ---
 
- t/t5500-fetch-pack.sh |  136 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 136 insertions(+), 0 deletions(-)
- create mode 100644 t/t5500-fetch-pack.sh
+ fetch-pack.c |   72 ++++++++++++++++++++++++++++++++++++++++++----------------
+ 1 files changed, 52 insertions(+), 20 deletions(-)
 
-applies-to: 641053c478870febdf3b6c525821f1bfdc43a2a5
-1dfccc68d5700ea5c0f062aaf77fdf76a9c06a5e
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-new file mode 100644
-index 0000000..0781bd2
---- /dev/null
-+++ b/t/t5500-fetch-pack.sh
-@@ -0,0 +1,136 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2005 Johannes Schindelin
-+#
+applies-to: 828f6fc88faefd10f2b09b11a2758afde21049c7
+c3c4f518f0174292917d01734f58a57b6eb9871e
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 3be77c3..b584264 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -153,16 +153,7 @@ static int find_common(int fd[2], unsign
+ 		 * reachable and we have already scanned it.
+ 		 */
+ 		if (((o = lookup_object(remote)) != NULL) &&
+-		    (o->flags & COMPLETE)) {
+-			o = deref_tag(o);
+-
+-			if (o->type == commit_type) {
+-				struct commit *commit = (struct commit *)o;
+-
+-				rev_list_push(commit, COMMON_REF | SEEN);
+-
+-				mark_common(commit, 1, 1);
+-			}
++				(o->flags & COMPLETE)) {
+ 			continue;
+ 		}
+ 
+@@ -247,7 +238,29 @@ static void mark_recent_complete_commits
+ 	}
+ }
+ 
+-static int everything_local(struct ref *refs)
++static void filter_refs(struct ref **refs, int nr_match, char **match)
++{
++	struct ref *prev, *current, *next;
 +
-+test_description='Testing multi_ack pack fetching
++	if (!nr_match)
++		return;
 +
-+'
-+. ./test-lib.sh
-+
-+# Test fetch-pack/upload-pack pair.
-+
-+# Some convenience functions
-+
-+function show_count () {
-+	commit_count=$(($commit_count+1))
-+	printf "      %d\r" $commit_count
++	for (prev = NULL, current = *refs; current; current = next) {
++		next = current->next;
++		if ((!memcmp(current->name, "refs/", 5) &&
++					check_ref_format(current->name + 5)) ||
++				!path_match(current->name, nr_match, match)) {
++			if (prev == NULL)
++				*refs = next;
++			else
++				prev->next = next;
++			free(current);
++		} else
++			prev = current;
++	}
 +}
 +
-+function add () {
-+	local name=$1
-+	local text="$@"
-+	local branch=${name:0:1}
-+	local parents=""
++static int everything_local(struct ref **refs, int nr_match, char **match)
+ {
+ 	struct ref *ref;
+ 	int retval;
+@@ -256,7 +269,7 @@ static int everything_local(struct ref *
+ 	track_object_refs = 0;
+ 	save_commit_buffer = 0;
+ 
+-	for (ref = refs; ref; ref = ref->next) {
++	for (ref = *refs; ref; ref = ref->next) {
+ 		struct object *o;
+ 
+ 		o = parse_object(ref->old_sha1);
+@@ -278,28 +291,47 @@ static int everything_local(struct ref *
+ 	if (cutoff)
+ 		mark_recent_complete_commits(cutoff);
+ 
+-	for (retval = 1; refs ; refs = refs->next) {
+-		const unsigned char *remote = refs->old_sha1;
++	/*
++	 * Mark all complete remote refs as common refs.
++	 * Don't mark them common yet; the server has to be told so first.
++	 */
++	for (ref = *refs; ref; ref = ref->next) {
++		struct object *o = deref_tag(lookup_object(ref->old_sha1));
 +
-+	shift
-+	while test $1; do
-+		parents="$parents -p $1"
-+		shift
-+	done
++		if (!o || o->type != commit_type || !(o->flags & COMPLETE))
++			continue;
 +
-+	echo "$text" > test.txt
-+	git-update-index --add test.txt
-+	tree=$(git-write-tree)
-+	# make sure timestamps are in correct order
-+	sec=$(($sec+1))
-+	commit=$(echo "$text" | GIT_AUTHOR_DATE=$sec \
-+		git-commit-tree $tree $parents 2>>log2.txt)
-+	export $name=$commit
-+	echo $commit > .git/refs/heads/$branch
-+	eval ${branch}TIP=$commit
-+}
++		if (!(o->flags & SEEN)) {
++			rev_list_push((struct commit *)o, COMMON_REF | SEEN);
 +
-+function count_objects () {
-+	ls .git/objects/??/* 2>>log2.txt | wc -l | tr -d " "
-+}
++			mark_common((struct commit *)o, 1, 1);
++		}
++	}
 +
-+function test_expect_object_count () {
-+	local message=$1
-+	local count=$2
++	filter_refs(refs, nr_match, match);
 +
-+	output="$(count_objects)"
-+	test_expect_success \
-+		"new object count $message" \
-+		"test $count = $output"
-+}
-+
-+function test_repack () {
-+	local rep=$1
-+
-+	test_expect_success "repack && prune-packed in $rep" \
-+		'(git-repack && git-prune-packed)2>>log.txt'
-+}
-+
-+function pull_to_client () {
-+	local number=$1
-+	local heads=$2
-+	local count=$3
-+	local no_strict_count_check=$4
-+
-+	cd client
-+	test_expect_success "$number pull" \
-+		"git-fetch-pack -v .. $heads > log.txt 2>&1"
-+	case "$heads" in *A*) echo $ATIP > .git/refs/heads/A;; esac
-+	case "$heads" in *B*) echo $BTIP > .git/refs/heads/B;; esac
-+	git-symbolic-ref HEAD refs/heads/${heads:0:1}
-+	test_expect_success "fsck" 'git-fsck-objects --full > fsck.txt 2>&1'
-+	test_expect_object_count "after $number pull" $count
-+	pack_count=$(grep Packing log.txt|tr -dc "0-9")
-+	test -z "$pack_count" && pack_count=0
-+	if [ -z "$no_strict_count_check" ]; then
-+		test_expect_success "minimal count" "test $count = $pack_count"
-+	else
-+		test $count != $pack_count && \
-+			echo "WARNING: $pack_count objects transmitted, only $count of which were needed"
-+	fi
-+	cd ..
-+}
-+
-+# Here begins the actual testing
-+
-+# A1 - ... - A20 - A21
-+#    \
-+#      B1  -   B2 - .. - B70
-+
-+# client pulls A20, B1. Then tracks only B. Then pulls A.
-+
-+(
-+	mkdir client &&
-+	cd client &&
-+	git-init-db 2>> log2.txt
-+)
-+
-+add A1
-+
-+prev=1; cur=2; while [ $cur -le 10 ]; do
-+	add A$cur $(eval echo \$A$prev)
-+	prev=$cur
-+	cur=$(($cur+1))
-+done
-+
-+add B1 $A1
-+
-+echo $ATIP > .git/refs/heads/A
-+echo $BTIP > .git/refs/heads/B
-+git-symbolic-ref HEAD refs/heads/B
-+
-+pull_to_client 1st "B A" $((11*3))
-+
-+(cd client; test_repack client)
-+
-+add A11 $A10
-+
-+prev=1; cur=2; while [ $cur -le 65 ]; do
-+	add B$cur $(eval echo \$B$prev)
-+	prev=$cur
-+	cur=$(($cur+1))
-+done
-+
-+pull_to_client 2nd "B" $((64*3))
-+
-+(cd client; test_repack client)
-+
-+pull_to_client 3rd "A" $((1*3)) # old fails
-+
-+test_done
++	for (retval = 1, ref = *refs; ref ; ref = ref->next) {
++		const unsigned char *remote = ref->old_sha1;
+ 		unsigned char local[20];
+ 		struct object *o;
+ 
+-		o = parse_object(remote);
++		o = lookup_object(remote);
+ 		if (!o || !(o->flags & COMPLETE)) {
+ 			retval = 0;
+ 			if (!verbose)
+ 				continue;
+ 			fprintf(stderr,
+ 				"want %s (%s)\n", sha1_to_hex(remote),
+-				refs->name);
++				ref->name);
+ 			continue;
+ 		}
+ 
+-		memcpy(refs->new_sha1, local, 20);
++		memcpy(ref->new_sha1, local, 20);
+ 		if (!verbose)
+ 			continue;
+ 		fprintf(stderr,
+ 			"already have %s (%s)\n", sha1_to_hex(remote),
+-			refs->name);
++			ref->name);
+ 	}
+ 	return retval;
+ }
+@@ -311,12 +343,12 @@ static int fetch_pack(int fd[2], int nr_
+ 	int status;
+ 	pid_t pid;
+ 
+-	get_remote_heads(fd[0], &ref, nr_match, match, 1);
++	get_remote_heads(fd[0], &ref, 0, NULL, 0);
+ 	if (!ref) {
+ 		packet_flush(fd[1]);
+ 		die("no matching remote head");
+ 	}
+-	if (everything_local(ref)) {
++	if (everything_local(&ref, nr_match, match)) {
+ 		packet_flush(fd[1]);
+ 		goto all_done;
+ 	}
 ---
 0.99.8.GIT
