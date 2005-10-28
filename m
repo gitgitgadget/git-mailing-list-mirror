@@ -1,191 +1,171 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2/8] Make maximal use of the remote refs
-Date: Fri, 28 Oct 2005 04:47:07 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0510280446410.20516@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [PATCH 7/8] git-upload-pack: Support the multi_ack protocol
+Date: Fri, 28 Oct 2005 04:49:16 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0510280448560.20516@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Oct 28 04:48:31 2005
+X-From: git-owner@vger.kernel.org Fri Oct 28 04:49:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVKGu-0000ba-FC
-	for gcvg-git@gmane.org; Fri, 28 Oct 2005 04:47:13 +0200
+	id 1EVKIy-0000yz-Lq
+	for gcvg-git@gmane.org; Fri, 28 Oct 2005 04:49:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965064AbVJ1CrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Oct 2005 22:47:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965065AbVJ1CrJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 22:47:09 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:37071 "EHLO
+	id S965069AbVJ1CtS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Oct 2005 22:49:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965070AbVJ1CtS
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 22:49:18 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:47311 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S965064AbVJ1CrI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Oct 2005 22:47:08 -0400
+	id S965069AbVJ1CtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Oct 2005 22:49:17 -0400
 Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 82E6913F2ED; Fri, 28 Oct 2005 04:47:07 +0200 (CEST)
+	id A38F713EFF3; Fri, 28 Oct 2005 04:49:16 +0200 (CEST)
 Received: from virusscan (localhost [127.0.0.1])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5A9849EFCF; Fri, 28 Oct 2005 04:47:07 +0200 (CEST)
+	id 7E0759EFCF; Fri, 28 Oct 2005 04:49:16 +0200 (CEST)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3BF039EFC9; Fri, 28 Oct 2005 04:47:07 +0200 (CEST)
+	id 4CA1E9EFC3; Fri, 28 Oct 2005 04:49:16 +0200 (CEST)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 34FAF13F2ED; Fri, 28 Oct 2005 04:47:07 +0200 (CEST)
+	id 441AE13EFF3; Fri, 28 Oct 2005 04:49:16 +0200 (CEST)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: git@vger.kernel.org, junkio@cox.net
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10746>
 
 
-When git-fetch-pack gets the remote refs, it does not need to filter them
-right away, but it can see which refs are common (taking advantage of the
-patch which makes git-fetch-pack not use git-rev-list).
+This implements three things (trying very hard to be backwards
+compatible):
 
-This means that we ask get_remote_heads() to return all remote refs,
-including the funny refs, and filtering them with a separate function later.
+It sends the "multi_ack" capability via the mechanism proposed by
+Sergey Vlasov.
+
+When the client sends "multi_ack" with at least one "want", multi_ack
+is enabled.
+
+When multi_ack is enabled, "continue" is appended to each "ACK" until
+either the server can not store more refs, or "done" is received.
+
+In contrast to the original protocol, as long as "continue" is sent,
+flushes are answered by a "NAK" (not just until an "ACK" was sent),
+and if "continue" was sent at least once, the last message is an
+"ACK" without "continue".
 
 Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
 ---
 
- fetch-pack.c |   72 ++++++++++++++++++++++++++++++++++++++++++----------------
- 1 files changed, 52 insertions(+), 20 deletions(-)
+ upload-pack.c |   47 ++++++++++++++++++++++++-----------------------
+ 1 files changed, 24 insertions(+), 23 deletions(-)
 
-applies-to: 828f6fc88faefd10f2b09b11a2758afde21049c7
-c3c4f518f0174292917d01734f58a57b6eb9871e
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 3be77c3..b584264 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -153,16 +153,7 @@ static int find_common(int fd[2], unsign
- 		 * reachable and we have already scanned it.
- 		 */
- 		if (((o = lookup_object(remote)) != NULL) &&
--		    (o->flags & COMPLETE)) {
--			o = deref_tag(o);
--
--			if (o->type == commit_type) {
--				struct commit *commit = (struct commit *)o;
--
--				rev_list_push(commit, COMMON_REF | SEEN);
--
--				mark_common(commit, 1, 1);
--			}
-+				(o->flags & COMPLETE)) {
- 			continue;
- 		}
- 
-@@ -247,7 +238,29 @@ static void mark_recent_complete_commits
- 	}
- }
- 
--static int everything_local(struct ref *refs)
-+static void filter_refs(struct ref **refs, int nr_match, char **match)
-+{
-+	struct ref *prev, *current, *next;
-+
-+	if (!nr_match)
-+		return;
-+
-+	for (prev = NULL, current = *refs; current; current = next) {
-+		next = current->next;
-+		if ((!memcmp(current->name, "refs/", 5) &&
-+					check_ref_format(current->name + 5)) ||
-+				!path_match(current->name, nr_match, match)) {
-+			if (prev == NULL)
-+				*refs = next;
-+			else
-+				prev->next = next;
-+			free(current);
-+		} else
-+			prev = current;
-+	}
-+}
-+
-+static int everything_local(struct ref **refs, int nr_match, char **match)
+applies-to: 4a808fae0b12e633b13bc0e76ec31ee19eecb21b
+42affc8d8fa1ed7e7d95fd7385d118cc57a0c420
+diff --git a/upload-pack.c b/upload-pack.c
+index 660d7c4..686445e 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -12,7 +12,7 @@ static const char upload_pack_usage[] = 
+ #define WANTED (1U << 2)
+ #define MAX_HAS 256
+ #define MAX_NEEDS 256
+-static int nr_has = 0, nr_needs = 0, nr_our_refs = 0;
++static int nr_has = 0, nr_needs = 0, multi_ack = 0, nr_our_refs = 0;
+ static unsigned char has_sha1[MAX_HAS][20];
+ static unsigned char needs_sha1[MAX_NEEDS][20];
+ static unsigned int timeout = 0;
+@@ -119,7 +119,7 @@ static int got_sha1(char *hex, unsigned 
+ static int get_common_commits(void)
  {
- 	struct ref *ref;
- 	int retval;
-@@ -256,7 +269,7 @@ static int everything_local(struct ref *
+ 	static char line[1000];
+-	unsigned char sha1[20];
++	unsigned char sha1[20], last_sha1[20];
+ 	int len;
+ 
  	track_object_refs = 0;
- 	save_commit_buffer = 0;
+@@ -130,39 +130,36 @@ static int get_common_commits(void)
+ 		reset_timeout();
  
--	for (ref = refs; ref; ref = ref->next) {
-+	for (ref = *refs; ref; ref = ref->next) {
- 		struct object *o;
- 
- 		o = parse_object(ref->old_sha1);
-@@ -278,28 +291,47 @@ static int everything_local(struct ref *
- 	if (cutoff)
- 		mark_recent_complete_commits(cutoff);
- 
--	for (retval = 1; refs ; refs = refs->next) {
--		const unsigned char *remote = refs->old_sha1;
-+	/*
-+	 * Mark all complete remote refs as common refs.
-+	 * Don't mark them common yet; the server has to be told so first.
-+	 */
-+	for (ref = *refs; ref; ref = ref->next) {
-+		struct object *o = deref_tag(lookup_object(ref->old_sha1));
-+
-+		if (!o || o->type != commit_type || !(o->flags & COMPLETE))
-+			continue;
-+
-+		if (!(o->flags & SEEN)) {
-+			rev_list_push((struct commit *)o, COMMON_REF | SEEN);
-+
-+			mark_common((struct commit *)o, 1, 1);
-+		}
-+	}
-+
-+	filter_refs(refs, nr_match, match);
-+
-+	for (retval = 1, ref = *refs; ref ; ref = ref->next) {
-+		const unsigned char *remote = ref->old_sha1;
- 		unsigned char local[20];
- 		struct object *o;
- 
--		o = parse_object(remote);
-+		o = lookup_object(remote);
- 		if (!o || !(o->flags & COMPLETE)) {
- 			retval = 0;
- 			if (!verbose)
- 				continue;
- 			fprintf(stderr,
- 				"want %s (%s)\n", sha1_to_hex(remote),
--				refs->name);
-+				ref->name);
+ 		if (!len) {
+-			packet_write(1, "NAK\n");
++			if (nr_has == 0 || multi_ack)
++				packet_write(1, "NAK\n");
  			continue;
  		}
- 
--		memcpy(refs->new_sha1, local, 20);
-+		memcpy(ref->new_sha1, local, 20);
- 		if (!verbose)
+ 		len = strip(line, len);
+ 		if (!strncmp(line, "have ", 5)) {
+-			if (got_sha1(line+5, sha1)) {
+-				packet_write(1, "ACK %s\n", sha1_to_hex(sha1));
+-				break;
++			if (got_sha1(line+5, sha1) &&
++					(multi_ack || nr_has == 1)) {
++				if (nr_has >= MAX_HAS)
++					multi_ack = 0;
++				packet_write(1, "ACK %s%s\n",
++					sha1_to_hex(sha1),
++					multi_ack ?  " continue" : "");
++				if (multi_ack)
++					memcpy(last_sha1, sha1, 20);
+ 			}
  			continue;
- 		fprintf(stderr,
- 			"already have %s (%s)\n", sha1_to_hex(remote),
--			refs->name);
-+			ref->name);
+ 		}
+ 		if (!strcmp(line, "done")) {
++			if (nr_has > 0) {
++				if (multi_ack)
++					packet_write(1, "ACK %s\n",
++							sha1_to_hex(last_sha1));
++				return 0;
++			}
+ 			packet_write(1, "NAK\n");
+ 			return -1;
+ 		}
+ 		die("git-upload-pack: expected SHA1 list, got '%s'", line);
  	}
- 	return retval;
+-
+-	for (;;) {
+-		len = packet_read_line(0, line, sizeof(line));
+-		reset_timeout();
+-		if (!len)
+-			continue;
+-		len = strip(line, len);
+-		if (!strncmp(line, "have ", 5)) {
+-			got_sha1(line+5, sha1);
+-			continue;
+-		}
+-		if (!strcmp(line, "done"))
+-			break;
+-		die("git-upload-pack: expected SHA1 list, got '%s'", line);
+-	}
+-	return 0;
  }
-@@ -311,12 +343,12 @@ static int fetch_pack(int fd[2], int nr_
- 	int status;
- 	pid_t pid;
  
--	get_remote_heads(fd[0], &ref, nr_match, match, 1);
-+	get_remote_heads(fd[0], &ref, 0, NULL, 0);
- 	if (!ref) {
- 		packet_flush(fd[1]);
- 		die("no matching remote head");
- 	}
--	if (everything_local(ref)) {
-+	if (everything_local(&ref, nr_match, match)) {
- 		packet_flush(fd[1]);
- 		goto all_done;
- 	}
+ static int receive_needs(void)
+@@ -192,6 +189,8 @@ static int receive_needs(void)
+ 		if (strncmp("want ", line, 5) || get_sha1_hex(line+5, sha1_buf))
+ 			die("git-upload-pack: protocol error, "
+ 			    "expected to get sha, not '%s'", line);
++		if (strstr(line+45, "multi_ack"))
++			multi_ack = 1;
+ 
+ 		/* We have sent all our refs already, and the other end
+ 		 * should have chosen out of them; otherwise they are
+@@ -213,9 +212,11 @@ static int receive_needs(void)
+ 
+ static int send_ref(const char *refname, const unsigned char *sha1)
+ {
++	static char *capabilities = "\0multi_ack";
+ 	struct object *o = parse_object(sha1);
+ 
+-	packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname);
++	packet_write(1, "%s %s%s\n", sha1_to_hex(sha1), refname, capabilities);
++	capabilities = "";
+ 	if (!(o->flags & OUR_REF)) {
+ 		o->flags |= OUR_REF;
+ 		nr_our_refs++;
 ---
 0.99.8.GIT
