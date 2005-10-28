@@ -1,73 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH gitweb] Visually indicating patch size with horizontal
- bars
-Date: Thu, 27 Oct 2005 19:38:21 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510271933140.4664@g5.osdl.org>
-References: <20051027203945.GC1622@pe.Belkin>  <7vfyqm1uvx.fsf@assigned-by-dhcp.cox.net>
- <46a038f90510271816i26389d5cqe136f515007ca057@mail.gmail.com>
+From: Chris Shoemaker <c.shoemaker@cox.net>
+Subject: Re: [PATCH gitweb] Visually indicating patch size with horizontal bars
+Date: Thu, 27 Oct 2005 22:38:33 -0400
+Message-ID: <20051028023833.GA19939@pe.Belkin>
+References: <20051027203945.GC1622@pe.Belkin> <20051028015642.GA31822@vrfy.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 28 04:39:34 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 28 04:39:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVK8i-00073C-TO
-	for gcvg-git@gmane.org; Fri, 28 Oct 2005 04:38:45 +0200
+	id 1EVK8c-000728-QO
+	for gcvg-git@gmane.org; Fri, 28 Oct 2005 04:38:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965059AbVJ1Cik (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Oct 2005 22:38:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965060AbVJ1Cik
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 22:38:40 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:58601 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965059AbVJ1Cij (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Oct 2005 22:38:39 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9S2cUFC017605
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 27 Oct 2005 19:38:30 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9S2cM6H011275;
-	Thu, 27 Oct 2005 19:38:26 -0700
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90510271816i26389d5cqe136f515007ca057@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965058AbVJ1Cif (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Oct 2005 22:38:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965059AbVJ1Cif
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 22:38:35 -0400
+Received: from eastrmmtao06.cox.net ([68.230.240.33]:7613 "EHLO
+	eastrmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S965058AbVJ1Cif (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Oct 2005 22:38:35 -0400
+Received: from localhost ([24.250.31.7]) by eastrmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051028023748.XIGR21663.eastrmmtao06.cox.net@localhost>;
+          Thu, 27 Oct 2005 22:37:48 -0400
+Received: from chris by localhost with local (Exim 4.43)
+	id 1EVK8Y-0005Lg-0J; Thu, 27 Oct 2005 22:38:34 -0400
+To: Kay Sievers <kay.sievers@vrfy.org>
+Content-Disposition: inline
+In-Reply-To: <20051028015642.GA31822@vrfy.org>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10739>
 
-
-
-On Fri, 28 Oct 2005, Martin Langhoff wrote:
->
-> On 10/28/05, Junio C Hamano <junkio@cox.net> wrote:
-> > > which is pretty slow.  Any suggestions?
-> >
-> > * do we really want to know the number of lines?
+On Fri, Oct 28, 2005 at 03:56:42AM +0200, Kay Sievers wrote:
+> On Thu, Oct 27, 2005 at 04:39:45PM -0400, Chris Shoemaker wrote:
+> > 
+> > I really like gitweb (thanks Kay!), but I thought it would be nice to
+> > have a visual indication of patch size.  I found this helpful when
+> > scanning though the shortlogs.
 > 
-> What about both? And sugar (rename detection) on top! ;-)
+> This looks nice, but if the patch size tells you something important,
+> your commit subjects are probably too short or wrong. :)
 
-Well, if you do full copy detection (and break detection), then 
-git-diff-tree will actually have effectively calculated the size of the 
-diff of each file. It just doesn't print them (well, it does a percentage 
-for the renames/copies).
+Yeah, some people write lousy commit subjects.  But me?  Nooo,
+/never/.  :)
 
-So you could make git-diff-tree tell you how big the patch was, without 
-actually generating a patch at all. It will be quite a bit more expensive 
-than just a plain "git-diff-tree -r --name-only", but if you cache the 
-result is might be quite acceptable.
+> You may try to use CSS instead of an embedded picture to draw the bar,
+> just like the RSS logo in the footer, which is simple CSS rendered in the
+> browser.
 
-Caching the result might be as simple as just telling the caching 
-web-server that the result is static and never changes - no need to 
-cache things inside of gitweb itself. Just set expiration to "never".
+I'll look into that, but the cost wasn't in the image; it was in the
+width calculation.
 
-Anybody wants to add a new output format to git-diff-tree that outputs how 
-big the changes are in absolute terms (rather than the "similarity index", 
-which is obviously relative to the original size of the file in question)?
+Here's a side-by-side comparison.  Open two browser tabs and flip between them:
 
-		Linus
+http://www.codesifter.com/cgi-bin/gitweb-difftreeP.cgi?p=git.git;a=shortlog
+http://www.codesifter.com/cgi-bin/gitweb-difftreeNames.cgi?p=git.git;a=shortlog
+
+I've used a project you all are familar with, and that has more than
+two files.  The first page uses 'git-diff-tree -p $hash|wc -l'.  The
+second page uses 'git-diff-tree -r --name-only|wc -l'.  (Oh and I have
+a merge indicator now.)
+
+How do they compare for showing damage-potential?  I think they both
+do a reasonable job.  I think the full patch diff is a bit better, but
+it does cost.
+
+-chris
