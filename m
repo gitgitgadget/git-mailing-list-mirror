@@ -1,118 +1,68 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: [PATCH] Documentation changes to recursive option for git-diff-tree
-Date: Fri, 28 Oct 2005 13:04:49 -0400
-Message-ID: <20051028170449.GA1446@pe.Belkin>
+From: Wayne Scott <wsc9tt@gmail.com>
+Subject: [PATCH] Change git-cvsimport to handle slashes in CVS tags
+Date: Fri, 28 Oct 2005 13:46:45 -0500
+Message-ID: <59a6e5830510281146s7b25da76l8bf97287522b89f2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Oct 28 19:06:03 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Fri Oct 28 20:48:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVXew-0002dA-4m
-	for gcvg-git@gmane.org; Fri, 28 Oct 2005 19:04:54 +0200
+	id 1EVZFZ-00088Y-F6
+	for gcvg-git@gmane.org; Fri, 28 Oct 2005 20:46:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030256AbVJ1REv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Oct 2005 13:04:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030257AbVJ1REv
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Oct 2005 13:04:51 -0400
-Received: from eastrmmtao01.cox.net ([68.230.240.38]:7876 "EHLO
-	eastrmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1030256AbVJ1REv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Oct 2005 13:04:51 -0400
-Received: from localhost ([24.250.31.7]) by eastrmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051028170419.IFPT13165.eastrmmtao01.cox.net@localhost>;
-          Fri, 28 Oct 2005 13:04:19 -0400
-Received: from chris by localhost with local (Exim 4.43)
-	id 1EVXer-0000NW-Rh; Fri, 28 Oct 2005 13:04:49 -0400
+	id S1030619AbVJ1Sqq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Oct 2005 14:46:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030630AbVJ1Sqq
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Oct 2005 14:46:46 -0400
+Received: from xproxy.gmail.com ([66.249.82.202]:56051 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1030619AbVJ1Sqq convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Oct 2005 14:46:46 -0400
+Received: by xproxy.gmail.com with SMTP id s14so303282wxc
+        for <git@vger.kernel.org>; Fri, 28 Oct 2005 11:46:45 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=YPg/DW3ScfmfvN+PqonHzs2HNRWdalADlXV1ipS5KAmq/ui+fwF+DjFeo19mSDXsI0AOhDk0SSmezh30hf17bEraUVfMKTmey+g8woI7xYk5t6Ds7/ouVOoYQCbjPvR+cjltCi4iLEtPrM8Lc9km8RGiMuuGYiy/MD11dXHwJ7k=
+Received: by 10.70.37.7 with SMTP id k7mr386976wxk;
+        Fri, 28 Oct 2005 11:46:45 -0700 (PDT)
+Received: by 10.70.7.3 with HTTP; Fri, 28 Oct 2005 11:46:45 -0700 (PDT)
 To: git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10770>
 
-Subject: [PATCH] Documentation changes to recursive option for git-diff-tree
+The Tcl/Tk CVS tree contains some tags like this one:
+  dev-stubs-merge-8-1-3/9/99
 
-    Update docs and usages regarding '-r' recursive option for git-diff-tree.
-    Remove '-r' from common diff options, mention it only for git-diff-tree.
-    Remove one extraneous use of '-r' with git-diff-files in get-merge.sh.
-    Sync the synopsis and usage string for git-diff-tree.
+CVS doesn't mind that tag, but git can't handle the slash
+characters in the tag.  Just change those to underscore
+so imports can complete.
 
-Signed-off-by: Chris Shoemaker <c.shoemaker at cox.net>
-
+Signed-off-by: Wayne Scott <wsc9tt@gmail.com>
 ---
-My first real patch with git.  Did I do it right?
 
--chris 
+ git-cvsimport.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
- Documentation/git-diff-tree.txt |    5 ++++-
- diff-tree.c                     |    6 ++++--
- diff.h                          |    1 -
- git-merge.sh                    |    2 +-
- 4 files changed, 9 insertions(+), 5 deletions(-)
+applies-to: cf6439199f61d87dbb70fd7b43144e41462a359d
+225c95454711467fc889c15cb3f7ca3230fce58d
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index bbb83fb..d71c30c 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -636,6 +636,7 @@ my $commit = sub {
+                my($xtag) = $tag;
+                $xtag =~ s/\s+\*\*.*$//; # Remove stuff like ** INVALID ** and *
+* FUNKY **
+                $xtag =~ tr/_/\./ if ( $opt_u );
++               $xtag =~ tr/\//_/;
 
-4b20f7c39762c54c414eb92d17180064c7ccbde9
-diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
---- a/Documentation/git-diff-tree.txt
-+++ b/Documentation/git-diff-tree.txt
-@@ -8,7 +8,7 @@ git-diff-tree - Compares the content and
- 
- SYNOPSIS
- --------
--'git-diff-tree' [--stdin] [-m] [-s] [-v] [--pretty] [-t] [<common diff options>] <tree-ish> [<tree-ish>] [<path>...]
-+'git-diff-tree' [--stdin] [-m] [-s] [-v] [--pretty] [-t] [-r] [--root] [<common diff options>] <tree-ish> [<tree-ish>] [<path>...]
- 
- DESCRIPTION
- -----------
-@@ -33,6 +33,9 @@ include::diff-options.txt[]
- 	Note that this parameter does not provide any wildcard or regexp
- 	features.
- 
-+-r::
-+        recurse into sub-trees
-+
- -t::
- 	show tree entry itself as well as subtrees.  Implies -r.
- 
-diff --git a/diff-tree.c b/diff-tree.c
---- a/diff-tree.c
-+++ b/diff-tree.c
-@@ -149,8 +149,10 @@ static int diff_tree_stdin(char *line)
- }
- 
- static const char diff_tree_usage[] =
--"git-diff-tree [--stdin] [-m] [-s] [-v] [--pretty] [-t] "
--"[<common diff options>] <tree-ish> <tree-ish>"
-+"git-diff-tree [--stdin] [-m] [-s] [-v] [--pretty] [-t] [-r] [--root] "
-+"[<common diff options>] <tree-ish> [<tree-ish>] [<path>...]\n"
-+"  -r            diff recursively\n"
-+"  --root        include the initial commit as diff against /dev/null\n"
- COMMON_DIFF_OPTIONS_HELP;
- 
- int main(int argc, const char **argv)
-diff --git a/diff.h b/diff.h
---- a/diff.h
-+++ b/diff.h
-@@ -91,7 +91,6 @@ extern void diffcore_std_no_resolve(stru
- 
- #define COMMON_DIFF_OPTIONS_HELP \
- "\ncommon diff options:\n" \
--"  -r            diff recursively (only meaningful in diff-tree)\n" \
- "  -z            output diff-raw with lines terminated with NUL.\n" \
- "  -p            output patch format.\n" \
- "  -u            synonym for -p.\n" \
-diff --git a/git-merge.sh b/git-merge.sh
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -25,7 +25,7 @@ dropsave() {
- 
- savestate() {
- 	# Stash away any local modifications.
--	git-diff-index -r -z --name-only $head |
-+	git-diff-index -z --name-only $head |
- 	cpio -0 -o >"$GIT_DIR/MERGE_SAVE"
- }
- 
+                my $pid = open2($in, $out, 'git-mktag');
+                print $out "object $cid\n".
+---
+0.99.8.GIT
