@@ -1,55 +1,56 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH gitweb] Visually indicating patch size with horizontal
- bars
-Date: Thu, 27 Oct 2005 18:13:43 -0700
-Message-ID: <43617B47.3070008@zytor.com>
-References: <20051027203945.GC1622@pe.Belkin> <7vfyqm1uvx.fsf@assigned-by-dhcp.cox.net> <20051027234813.GA512@pe.Belkin> <Pine.LNX.4.64.0510271709120.4664@g5.osdl.org> <20051028005029.GA2654@pe.Belkin>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH gitweb] Visually indicating patch size with horizontal bars
+Date: Fri, 28 Oct 2005 14:16:09 +1300
+Message-ID: <46a038f90510271816i26389d5cqe136f515007ca057@mail.gmail.com>
+References: <20051027203945.GC1622@pe.Belkin>
+	 <7vfyqm1uvx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 28 03:15:28 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 28 03:16:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVIpD-0003Do-Kx
-	for gcvg-git@gmane.org; Fri, 28 Oct 2005 03:14:32 +0200
+	id 1EVIqv-0003hN-6W
+	for gcvg-git@gmane.org; Fri, 28 Oct 2005 03:16:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965038AbVJ1BOR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Oct 2005 21:14:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965042AbVJ1BOR
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 21:14:17 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:64149 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S965038AbVJ1BOQ
+	id S965041AbVJ1BQL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Oct 2005 21:16:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965042AbVJ1BQL
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Oct 2005 21:16:11 -0400
+Received: from xproxy.gmail.com ([66.249.82.194]:61785 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S965041AbVJ1BQK convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Oct 2005 21:14:16 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id j9S1DsTB011934
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 27 Oct 2005 18:13:55 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Chris Shoemaker <c.shoemaker@cox.net>
-In-Reply-To: <20051028005029.GA2654@pe.Belkin>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	Thu, 27 Oct 2005 21:16:10 -0400
+Received: by xproxy.gmail.com with SMTP id h30so100194wxd
+        for <git@vger.kernel.org>; Thu, 27 Oct 2005 18:16:09 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=m5Kzp4OGCd2dUP39rDUc73vMZYzFsKSubCQnMbIIVM9uXbj1oKa9jzSzsRsNUNJEiE6OeHjTWI/ZcPNmRlF8s8nhtzbt9X4sbp0TF7VUk2fQLuJveTpCjnC09V/sLjAfLFkng9lNM7T5lM2ZgQh8IFucDp5Uj7UTESGuWIJTCnM=
+Received: by 10.65.189.10 with SMTP id r10mr2065940qbp;
+        Thu, 27 Oct 2005 18:16:09 -0700 (PDT)
+Received: by 10.64.232.18 with HTTP; Thu, 27 Oct 2005 18:16:09 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfyqm1uvx.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10735>
 
-Chris Shoemaker wrote:
-> 
-> Ok, but that cache would live inside GIT_DIR an be shared with gitk,
-> right?
-> 
+On 10/28/05, Junio C Hamano <junkio@cox.net> wrote:
+> > which is pretty slow.  Any suggestions?
+>
+> * do we really want to know the number of lines?
 
-That would be bad.  Don't assume that the person running gitweb (or 
-gitk, for that matter) has write permission.
+What about both? And sugar (rename detection) on top! ;-)
 
-	-hpa
+If you try an find the largest commit (by line count) in the gitweb
+revision history, you bump into the gitweb.pl -> gitweb.cgi rename.
+
+cheers,
+
+
+martin
