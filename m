@@ -1,61 +1,54 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: gitk shows an empty line between "Comments" and changed files
-Date: Sat, 29 Oct 2005 00:54:00 -0400
-Message-ID: <20051029005400.s1ge8c4ok0wo4s4s@webmail.spamcop.net>
-References: <1130434230.19641.21.camel@dv>
-	<7vslum3l2w.fsf@assigned-by-dhcp.cox.net> <1130463389.2186.14.camel@dv>
-	<7v4q72xavz.fsf@assigned-by-dhcp.cox.net> <1130539503.10531.43.camel@dv>
-	<7vslul2g29.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0510282003360.3348@g5.osdl.org>
-	<20051029002357.iq88cg8gcsogk4kc@webmail.spamcop.net>
-	<Pine.LNX.4.64.0510282132120.3348@g5.osdl.org>
+From: Chris Shoemaker <c.shoemaker@cox.net>
+Subject: Re: [PATCH] git-push.sh: Retain cuteness, add helpfulness.
+Date: Sat, 29 Oct 2005 01:03:26 -0400
+Message-ID: <20051029050326.GA14060@pe.Belkin>
+References: <E1EVi9d-0002U0-0k@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 29 06:55:46 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Oct 29 07:06:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVijG-0000XH-C7
-	for gcvg-git@gmane.org; Sat, 29 Oct 2005 06:54:07 +0200
+	id 1EVisi-0001fQ-PL
+	for gcvg-git@gmane.org; Sat, 29 Oct 2005 07:03:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751144AbVJ2EyD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 29 Oct 2005 00:54:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751145AbVJ2EyC
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Oct 2005 00:54:02 -0400
-Received: from c62.cesmail.net ([216.154.195.54]:57764 "EHLO c62.cesmail.net")
-	by vger.kernel.org with ESMTP id S1751144AbVJ2EyA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Oct 2005 00:54:00 -0400
-Received: from unknown (HELO gamma.cesmail.net) ([192.168.1.20])
-  by c62.cesmail.net with SMTP; 29 Oct 2005 00:54:00 -0400
-Received: (qmail 10183 invoked by uid 99); 29 Oct 2005 04:54:00 -0000
-Received: from static-68-161-241-229.ny325.east.verizon.net
-	(static-68-161-241-229.ny325.east.verizon.net [68.161.241.229]) by
-	webmail.spamcop.net (Horde) with HTTP for <proski@spamcop.net@cesmail.net>;
-	Sat, 29 Oct 2005 00:54:00 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0510282132120.3348@g5.osdl.org>
+	id S1751206AbVJ2FD3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 29 Oct 2005 01:03:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751194AbVJ2FD3
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Oct 2005 01:03:29 -0400
+Received: from eastrmmtao06.cox.net ([68.230.240.33]:61884 "EHLO
+	eastrmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751202AbVJ2FD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Oct 2005 01:03:27 -0400
+Received: from localhost ([24.250.31.7]) by eastrmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051029050238.PLOT21663.eastrmmtao06.cox.net@localhost>
+          for <git@vger.kernel.org>; Sat, 29 Oct 2005 01:02:38 -0400
+Received: from chris by localhost with local (Exim 4.43)
+	id 1EVisI-0003f5-RK
+	for git@vger.kernel.org; Sat, 29 Oct 2005 01:03:26 -0400
+To: git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.0-cvs
+In-Reply-To: <E1EVi9d-0002U0-0k@localhost>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10794>
 
-Quoting Linus Torvalds <torvalds@osdl.org>:
+I'm sorry that the patch-set I just sent didn't contain an ordering.
+The order is:
 
-> On Sat, 29 Oct 2005, Pavel Roskin wrote:
-> >
-> > I understand the default behavior of git-diff-tree won't change, so I'll
-> simply
-> > strip the first line.
->
-> Be careful, though. The merge case uses git-diff-tree differently, so I
-> think there is no extra line for a merge.
+0002-Minor-clarifications-in-diffcore-documentation.txt
+0003-Remove-r-from-common-diff-options-documentation-in-one-more-place.txt
+0004-update-usage-string-for-git-commit.sh.txt
+0005-Add-usage-statement-for-git-reset.sh.txt
+0006-Add-usage-statement-to-git-push.sh.txt
+0007-Actually-git-reset-arguments-are-mutually-exclusive.txt
+0008-git-push.sh-Factor-out-usage-statement-to-function-explain-why-rsync-can-t-push.txt
+0009-git-push.sh-Retain-cuteness-add-helpfulness.txt
 
-Sure.  Thanks.
+I tried and failed to get git-send-email to work, so I tried to roll
+my own and it didn't work that well.  I'll try harder.
 
---
-Regards,
-Pavel Roskin
+-chris
