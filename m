@@ -1,91 +1,97 @@
-From: Ryan Anderson <ryan@michonline.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Question on GIT usage.
-Date: Fri, 28 Oct 2005 21:43:23 -0400
-Message-ID: <4362D3BB.3050601@michonline.com>
+Date: Fri, 28 Oct 2005 19:06:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0510281847220.3348@g5.osdl.org>
 References: <4362C700.6020901@candelatech.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig55AA9E8C16649041C627A97A"
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 29 03:44:42 2005
+X-From: git-owner@vger.kernel.org Sat Oct 29 04:07:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVfkx-00079e-Sm
-	for gcvg-git@gmane.org; Sat, 29 Oct 2005 03:43:41 +0200
+	id 1EVg7F-0004Lv-Sv
+	for gcvg-git@gmane.org; Sat, 29 Oct 2005 04:06:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750862AbVJ2Bng (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Oct 2005 21:43:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbVJ2Bng
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Oct 2005 21:43:36 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:24263 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S1750862AbVJ2Bnf (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2005 21:43:35 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1EVfkn-00055x-O3; Fri, 28 Oct 2005 21:43:29 -0400
-Received: from [10.254.251.12] (helo=mythryan)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1EVfkl-0001VD-00; Fri, 28 Oct 2005 21:43:27 -0400
-Received: from localhost ([127.0.0.1])
-	by mythryan with esmtp (Exim 4.54)
-	id 1EVfkl-0003F5-Dz; Fri, 28 Oct 2005 21:43:27 -0400
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
-X-Accept-Language: en-us, en
+	id S1751088AbVJ2CG3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Oct 2005 22:06:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbVJ2CG3
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Oct 2005 22:06:29 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:35816 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751088AbVJ2CG2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2005 22:06:28 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9T26PFC015118
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 28 Oct 2005 19:06:27 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9T26MuZ032507;
+	Fri, 28 Oct 2005 19:06:23 -0700
 To: Ben Greear <greearb@candelatech.com>
 In-Reply-To: <4362C700.6020901@candelatech.com>
-X-Enigmail-Version: 0.93.0.0
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10780>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig55AA9E8C16649041C627A97A
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
 
-Ben Greear wrote:
+
+On Fri, 28 Oct 2005, Ben Greear wrote:
 > 
 > I have a kernel GIT tree to hold my developing patches...
 > 
-> I need to build this kernel for 4-5 different processors (c3, p2, p4,
-> p4-smp, etc).
-> 
+> I need to build this kernel for 4-5 different processors (c3, p2, p4, p4-smp,
+> etc).
+
+Sounds like you just want to use a separate build directory for the 
+kernel, which you can do quite independently of git (of course, not too 
+many people use it, so the separate-object-directory Kbuild infrastructure 
+has bugs every once in a while..)
+
+The way it _should_ work is that you can do something like this:
+
+	.. have a clean source-tree in ~/src/linux ..
+
+	# set up the build tree
+	cd
+	mkdir build-tree
+	cd ~/src/linux
+	make O=~/build-tree oldconfig
+
+	# go there and build it
+	cd ~/build-tree
+	make
+
+and now you can have a build-tree for each of your different 
+architectures.
+
+Now, you _can_ certainly do the very same thing with just multiple git 
+repositories, and pull between them. That has its own set of advantages 
+too: you can have slight differences between the trees. Of course, if you 
+know you don't want any differences between the trees, that's not an 
+advantage, that's a disadvantage.
+
+You can also have just one single real git repository, and then have that 
+one checked out multiple times. Use GIT_OBJECT_DIRECTORY to share the core 
+objects, and then you can have ten different git trees without duplicating 
+all your objects and pack-files.
+
 > Is there any clever way to have this one git repository keep these
 > other source trees in sync so that I can do incremental builds?
-> 
-> Should I perhaps have a unique git repo for each different build and
-> just pull changes in from my master repo before building?
-> 
-> If there's a simple command to set up slave repositories like this,
-> please point me to it.
 
-There isn't, not really - but in the kernel's case, you don't need one,
-either.
+If you really want them 100%, the separate build trees is the best option.
 
-Build with:
-	make O=/path/to/c3/tree
+That said, a lot of _other_ projects don't do separate build trees that 
+well (and as mentioned, sometimes it breaks for the kernel too), and git 
+certainly could be set up to be a "poor mans separate build tree".
 
-Put your .config in /path/to/c3/tree/
+Right now the easiest way to do that is to just have separate repositories 
+(and share at least _some_ objects by just using "git clone -l -s" to 
+clone them), but it could be hacked to be more geared explicitly towards 
+that..
 
-All your compiled stuff will drop into that tree, and your source tree
-will stay untouched, so you can have a single GIT tree and source files.
-
-
---------------enig55AA9E8C16649041C627A97A
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
-
-iD8DBQFDYtO+fhVDhkBuUKURAsgMAJ0QkaNJ2ocDtaADc8uhhvYl6a8sEACeJrm/
-V7d5QgM9KADuFgSrXUPVZgk=
-=lcWs
------END PGP SIGNATURE-----
-
---------------enig55AA9E8C16649041C627A97A--
+		Linus
