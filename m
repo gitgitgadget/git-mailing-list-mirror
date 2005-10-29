@@ -1,98 +1,123 @@
 From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: [PATCH] Add to usage and docs for git-add.sh
+Subject: [PATCH] Add to documentation of git-update-index arguments and usage.
 Date: Sat, 29 Oct 2005 17:46:41 -0400
-Message-ID: <11306224011312-git-send-email-c.shoemaker@cox.net>
-References: <11306224012707-git-send-email-c.shoemaker@cox.net>
+Message-ID: <11306224012707-git-send-email-c.shoemaker@cox.net>
+References: <11306224011899-git-send-email-c.shoemaker@cox.net>
 Reply-To: Chris Shoemaker <c.shoemaker@cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: Chris Shoemaker <c.shoemaker@cox.net>
-X-From: git-owner@vger.kernel.org Sat Oct 29 23:47:21 2005
+X-From: git-owner@vger.kernel.org Sat Oct 29 23:47:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVyXR-0008II-Hy
-	for gcvg-git@gmane.org; Sat, 29 Oct 2005 23:46:57 +0200
+	id 1EVyXS-0008II-4H
+	for gcvg-git@gmane.org; Sat, 29 Oct 2005 23:46:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932251AbVJ2Vqp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 29 Oct 2005 17:46:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932250AbVJ2Vqp
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Oct 2005 17:46:45 -0400
-Received: from eastrmmtao01.cox.net ([68.230.240.38]:7833 "EHLO
-	eastrmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932239AbVJ2Vqn (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932210AbVJ2Vqn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
 	Sat, 29 Oct 2005 17:46:43 -0400
-Received: from localhost ([24.250.31.7]) by eastrmmtao01.cox.net
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbVJ2Vqn
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Oct 2005 17:46:43 -0400
+Received: from eastrmmtao05.cox.net ([68.230.240.34]:36579 "EHLO
+	eastrmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932210AbVJ2Vqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Oct 2005 17:46:42 -0400
+Received: from localhost ([24.250.31.7]) by eastrmmtao05.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051029214610.CXS13165.eastrmmtao01.cox.net@localhost>;
-          Sat, 29 Oct 2005 17:46:10 -0400
+          id <20051029214638.BWVA28234.eastrmmtao05.cox.net@localhost>;
+          Sat, 29 Oct 2005 17:46:38 -0400
 Received: from [127.0.0.1] (helo=pe)
 	by localhost with smtp (Exim 4.43)
-	id 1EVyXB-0006Wc-Ev; Sat, 29 Oct 2005 17:46:41 -0400
-In-Reply-To: <11306224012707-git-send-email-c.shoemaker@cox.net>
+	id 1EVyXB-0006WY-CZ; Sat, 29 Oct 2005 17:46:41 -0400
+In-Reply-To: <11306224011899-git-send-email-c.shoemaker@cox.net>
 X-Mailer: git-send-email
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10810>
+
+Removed unknown [--version] option.
 
 Signed-off-by: Chris Shoemaker <c.shoemaker@cox.net>
 
 ---
 
- Documentation/git-add.txt |    9 ++++++++-
- git-add.sh                |    7 +++++++
- 2 files changed, 15 insertions(+), 1 deletions(-)
+ Documentation/git-update-index.txt |   28 ++++++++++++++++++++++++----
+ update-index.c                     |    2 +-
+ 2 files changed, 25 insertions(+), 5 deletions(-)
 
-2bc166e3e8241432b88ff793ec69a979a7056b3e
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -7,7 +7,7 @@ git-add - Add files to the cache.
- 
+f51a2698073b75c6e0e0f96c0f1f6432167ed85b
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -9,12 +9,13 @@ git-update-index - Modifies the index or
  SYNOPSIS
  --------
--'git-add' <file>...
-+'git-add' [-n] [-v] <file>...
+ 'git-update-index'
+-	     [--add] [--remove] [--refresh] [--replace]
+-	     [--ignore-missing]
+-	     [--force-remove]
++	     [--add] [--remove | --force-remove] [--replace] 
++             [--refresh [-q] [--unmerged] [--ignore-missing]]
+ 	     [--cacheinfo <mode> <object> <file>]\*
+-	     [--info-only]
++             [--chmod=(+|-)x]
++	     [--info-only] [--index-info]
+ 	     [-z] [--stdin]
++             [--verbose]
+ 	     [--] [<file>]\*
  
  DESCRIPTION
- -----------
-@@ -19,6 +19,13 @@ OPTIONS
- <file>...::
- 	Files to add to the cache.
+@@ -42,12 +43,28 @@ OPTIONS
+ 	Looks at the current cache and checks to see if merges or
+ 	updates are needed by checking stat() information.
  
-+-n::
-+        Don't actually add the file(s), just show if they exist.
++-q::
++        Quiet.  If --refresh finds that the cache needs an update, the
++        default behavior is to error out.  This option makes
++        git-update-index continue anyway.
 +
-+-v::
-+        Be verbose.
++--unmerged::
++        If --refresh finds unmerged changes in the cache, the default 
++        behavior is to error out.  This option makes git-update-index 
++        continue anyway.
 +
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
-diff --git a/git-add.sh b/git-add.sh
---- a/git-add.sh
-+++ b/git-add.sh
-@@ -1,5 +1,9 @@
- #!/bin/sh
+ --ignore-missing::
+ 	Ignores missing files during a --refresh
  
-+usage() {
-+    die "usage: git add [-n] [-v] <file>..."
-+}
+ --cacheinfo <mode> <object> <path>::
+ 	Directly insert the specified info into the cache.
+ 	
++--index-info::
++        Read index info from stdin.
 +
- show_only=
- verbose=
- while : ; do
-@@ -10,6 +14,9 @@ while : ; do
-     -v)
- 	verbose=--verbose
- 	;;
-+    -*)
-+	usage
-+	;;
-     *)
- 	break
- 	;;
++--chmod=(+|-)x::
++        Set the execute permissions on the updated files.        
++
+ --info-only::
+ 	Do not create objects in the object database for all
+ 	<file> arguments that follow this flag; just insert
+@@ -70,6 +87,9 @@ OPTIONS
+ 	read list of paths from the standard input.  Paths are
+ 	separated by LF (i.e. one path per line) by default.
+ 
++--verbose::
++        Report what is being added and removed from index.
++
+ -z::
+ 	Only meaningful with `--stdin`; paths are separated with
+ 	NUL character instead of LF.
+diff --git a/update-index.c b/update-index.c
+--- a/update-index.c
++++ b/update-index.c
+@@ -393,7 +393,7 @@ static void read_index_info(int line_ter
+ }
+ 
+ static const char update_index_usage[] =
+-"git-update-index [-q] [--add] [--replace] [--remove] [--unmerged] [--refresh] [--cacheinfo] [--chmod=(+|-)x] [--info-only] [--force-remove] [--stdin] [--index-info] [--ignore-missing] [-z] [--version] [--] <file>...";
++"git-update-index [-q] [--add] [--replace] [--remove] [--unmerged] [--refresh] [--cacheinfo] [--chmod=(+|-)x] [--info-only] [--force-remove] [--stdin] [--index-info] [--ignore-missing] [-z] [--verbose] [--] <file>...";
+ 
+ int main(int argc, const char **argv)
+ {
