@@ -1,70 +1,54 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: gitk shows an empty line between "Comments" and changed files
-Date: Fri, 28 Oct 2005 16:00:41 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510281557580.3348@g5.osdl.org>
-References: <1130434230.19641.21.camel@dv>  <7vslum3l2w.fsf@assigned-by-dhcp.cox.net>
- <1130463389.2186.14.camel@dv>  <7v4q72xavz.fsf@assigned-by-dhcp.cox.net>
- <1130539503.10531.43.camel@dv>
+From: Ben Greear <greearb@candelatech.com>
+Subject: Question on GIT usage.
+Date: Fri, 28 Oct 2005 17:49:04 -0700
+Organization: Candela Technologies
+Message-ID: <4362C700.6020901@candelatech.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 29 01:01:08 2005
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Oct 29 02:49:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVdDX-0004Da-VF
-	for gcvg-git@gmane.org; Sat, 29 Oct 2005 01:01:00 +0200
+	id 1EVeuE-00060v-Gh
+	for gcvg-git@gmane.org; Sat, 29 Oct 2005 02:49:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751894AbVJ1XAy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Oct 2005 19:00:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751896AbVJ1XAx
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Oct 2005 19:00:53 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:47560 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751894AbVJ1XAu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2005 19:00:50 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9SN0gFC007335
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 28 Oct 2005 16:00:42 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9SN0fND025668;
-	Fri, 28 Oct 2005 16:00:41 -0700
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1130539503.10531.43.camel@dv>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750959AbVJ2AtH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Oct 2005 20:49:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbVJ2AtH
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Oct 2005 20:49:07 -0400
+Received: from ns2.lanforge.com ([66.165.47.211]:982 "EHLO ns2.lanforge.com")
+	by vger.kernel.org with ESMTP id S1750959AbVJ2AtG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2005 20:49:06 -0400
+Received: from [71.113.100.100] (pool-71-113-100-100.sttlwa.dsl-w.verizon.net [71.113.100.100])
+	(authenticated bits=0)
+	by ns2.lanforge.com (8.13.4/8.13.4) with ESMTP id j9T0n47S015847
+	for <git@vger.kernel.org>; Fri, 28 Oct 2005 17:49:05 -0700
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.7.12) Gecko/20050922 Fedora/1.7.12-1.3.1
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10778>
 
 
+I have a kernel GIT tree to hold my developing patches...
 
-On Fri, 28 Oct 2005, Pavel Roskin wrote:
-> > 
-> > I do not oppose dropping the commit-id line from the default
-> > output, but having it optionally available would be useful in
-> > one application.  Somebody _could_ write a tool that does
-> > something like:
-> > 
-> >     git-rev-list ^$old_head $new_head |
-> >     git-diff-tree -p -m --stdin --with-commit-ids |
-> >     git-patch-id
-> 
-> Sounds good.  Perhaps the commit IDs should have a prefix identifying
-> them.
+I need to build this kernel for 4-5 different processors (c3, p2, p4, p4-smp, etc).
 
-Guys, why do you want to drop it? We've always had it, and it doesn't 
-really hurt.
+Is there any clever way to have this one git repository keep these
+other source trees in sync so that I can do incremental builds?
 
-Yes, gitk got a new empty line because I didn't realize that the output of 
-"git-diff-tree $commit" is slightly different from "git-diff-tree $t2 
-$t2", but hey, that was due to a gitk change, and I think it should be 
-trivial for gitk to just react to it.
+Should I perhaps have a unique git repo for each different build and
+just pull changes in from my master repo before building?
 
-So if we add a new flag, please make it go the other way: one that makes 
-the output really quiet, but keeps the standard output the same.
+If there's a simple command to set up slave repositories like this,
+please point me to it.
 
-		Linus
+Thanks!
+Ben
+
+-- 
+Ben Greear <greearb@candelatech.com>
+Candela Technologies Inc  http://www.candelatech.com
