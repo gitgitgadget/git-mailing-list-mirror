@@ -1,69 +1,53 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: gitk shows an empty line between "Comments" and changed files
-Date: Fri, 28 Oct 2005 20:07:26 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510282003360.3348@g5.osdl.org>
-References: <1130434230.19641.21.camel@dv> <7vslum3l2w.fsf@assigned-by-dhcp.cox.net>
- <1130463389.2186.14.camel@dv> <7v4q72xavz.fsf@assigned-by-dhcp.cox.net>
- <1130539503.10531.43.camel@dv> <7vslul2g29.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 29 05:09:03 2005
+From: c.shoemaker@cox.net
+Subject: [PATCH] git-push.sh: Retain cuteness, add helpfulness.
+Date: Sat, 29 Oct 2005 00:17:17 -0400
+Message-ID: <E1EVi9d-0002U0-0k@localhost>
+X-From: git-owner@vger.kernel.org Sat Oct 29 06:19:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVh4h-000135-4p
-	for gcvg-git@gmane.org; Sat, 29 Oct 2005 05:08:07 +0200
+	id 1EVi9y-0003wp-5I
+	for gcvg-git@gmane.org; Sat, 29 Oct 2005 06:17:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751110AbVJ2DHh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Oct 2005 23:07:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbVJ2DHg
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Oct 2005 23:07:36 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:41859 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751110AbVJ2DHg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Oct 2005 23:07:36 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9T37RFC016918
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 28 Oct 2005 20:07:27 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9T37QFS001549;
-	Fri, 28 Oct 2005 20:07:26 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslul2g29.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751093AbVJ2ERS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 29 Oct 2005 00:17:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbVJ2ERS
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Oct 2005 00:17:18 -0400
+Received: from eastrmmtao05.cox.net ([68.230.240.34]:15049 "EHLO
+	eastrmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751093AbVJ2ERS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Oct 2005 00:17:18 -0400
+Received: from localhost ([24.250.31.7]) by eastrmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051029041715.THST28234.eastrmmtao05.cox.net@localhost>
+          for <git@vger.kernel.org>; Sat, 29 Oct 2005 00:17:15 -0400
+Received: from chris by localhost with local (Exim 4.43)
+	id 1EVi9d-0002U0-0k
+	for git@vger.kernel.org; Sat, 29 Oct 2005 00:17:17 -0400
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10783>
 
+Signed-off-by: Chris Shoemaker <c.shoemaker at cox.net>
 
+---
 
-On Fri, 28 Oct 2005, Junio C Hamano wrote:
-> 
-> Sorry you lost me.  I am not sure what you mean by "without
-> actually doing anything" part.  The input to patch-id command in
-> the above pipe is (commit-object-name patch)*.  The command
-> reads such a stream, and transforms it to a (patch-id
-> commit-object-name)* stream.  In other words, the input
-> identifies each patch with a commit-object-name, and the command
-> condenses each patch to a patch-id, and spits them out, labelled
-> with commit-object-name.
+ git-push.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-Note that git-patch-id will happily take a patch without the commit ID at 
-the head, it just won't have a commit ID to match it up with. For such 
-patches it will just spit it out with an all-zero commit-object-name.
-
-And that's very much by design. The point is that you can match up your 
-(perhaps non-git) patches with what has been accepted. Which is why 
-git-patch-id should always take non-git patches too, and then you can 
-match them up by sorting by patch ID and doing "join -1" to match up 
-duplicates.
-
-So git-patch-id will work with or without the commit ID, but the commit ID 
-is then later needed to figure out _which_ commit you matched up.
-
-		Linus
+a20e79837771edccdfae495983a9538a76c6ada8
+diff --git a/git-push.sh b/git-push.sh
+--- a/git-push.sh
++++ b/git-push.sh
+@@ -33,7 +33,8 @@ do
+ done
+ case "$#" in
+ 0)
+-	die "Where would you want to push today?" ;;
++	echo "Where would you want to push today?"
++        usage ;;
+ esac
+ 
+ . git-parse-remote
