@@ -1,56 +1,57 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: Re: [PATCH] Documentation changes to recursive option for git-diff-tree
-Date: Sat, 29 Oct 2005 12:53:55 -0400
-Message-ID: <20051029165355.GB20990@pe.Belkin>
-References: <20051028170449.GA1446@pe.Belkin> <7vy84c291u.fsf@assigned-by-dhcp.cox.net>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: Problem with cg-clone
+Date: Sat, 29 Oct 2005 19:08:46 +0200
+Message-ID: <1130605726.5396.39.camel@blade>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 29 18:54:53 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Oct 29 19:09:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVtxv-0001gD-HD
-	for gcvg-git@gmane.org; Sat, 29 Oct 2005 18:53:59 +0200
+	id 1EVuCF-0004qI-4A
+	for gcvg-git@gmane.org; Sat, 29 Oct 2005 19:08:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750843AbVJ2Qx4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 29 Oct 2005 12:53:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750844AbVJ2Qx4
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Oct 2005 12:53:56 -0400
-Received: from eastrmmtao06.cox.net ([68.230.240.33]:27059 "EHLO
-	eastrmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1750842AbVJ2Qx4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Oct 2005 12:53:56 -0400
-Received: from localhost ([24.250.31.7]) by eastrmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051029165307.UNDM21663.eastrmmtao06.cox.net@localhost>;
-          Sat, 29 Oct 2005 12:53:07 -0400
-Received: from chris by localhost with local (Exim 4.43)
-	id 1EVtxr-0005Sp-65; Sat, 29 Oct 2005 12:53:55 -0400
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vy84c291u.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.1i
+	id S1751063AbVJ2RIo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 29 Oct 2005 13:08:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751148AbVJ2RIo
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Oct 2005 13:08:44 -0400
+Received: from coyote.holtmann.net ([217.160.111.169]:2441 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S1751063AbVJ2RIn
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Oct 2005 13:08:43 -0400
+Received: from blade (p5487F34C.dip.t-dialin.net [84.135.243.76])
+	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j9TH8qGB029997
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO)
+	for <git@vger.kernel.org>; Sat, 29 Oct 2005 19:08:53 +0200
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.4.1 
+X-Virus-Scanned: ClamAV 0.85.1/1149/Thu Oct 27 22:20:09 2005 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10802>
 
-On Fri, Oct 28, 2005 at 10:20:45PM -0700, Junio C Hamano wrote:
-> I already took some patches from you, but I just noticed this...
-> 
-> Chris Shoemaker <c.shoemaker@cox.net> writes:
-> 
-> > Signed-off-by: Chris Shoemaker <c.shoemaker at cox.net>
-> 
-> I do not particularly like this spelling out "at".
+Hi guys,
 
-That resulted from GIT_AUTHOR_IDENT="c.shoemaker<at>cox.net".  I think
-I copied that format from somewhere, but I see now that the logs
-contain regular addresses.  I've changed it to just
-"c.shoemaker@cox.net".
+I installed the latest git and cogito from their repositories and now
+the local clone command is failing:
 
--chris
+# cg-clone linux-2.6 test-2.6
+defaulting to local storage area
+Using hard links
+`/data/kernel/linux-2.6/.git/HEAD' -> `.git/refs/heads/.origin-fetching'
+error: Couldn't find 8a212ab6b8a4ccc6f3c3d1beba5f92655c576404: not separate or in any pack
+Cannot obtain needed object 8a212ab6b8a4ccc6f3c3d1beba5f92655c576404
+while processing commit 0000000000000000000000000000000000000000.
+cg-fetch: objects fetch failed
+cg-clone: fetch failed
 
-> 
-> 
+Previously this was working fine and since cogito hasn't changed the
+last few days, I suspect that git is at fault here or changed something.
+Any ideas?
+
+Regards
+
+Marcel
