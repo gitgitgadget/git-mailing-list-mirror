@@ -1,123 +1,140 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: [PATCH] Add to documentation of git-update-index arguments and usage.
-Date: Sat, 29 Oct 2005 17:46:41 -0400
-Message-ID: <11306224012707-git-send-email-c.shoemaker@cox.net>
-References: <11306224011899-git-send-email-c.shoemaker@cox.net>
-Reply-To: Chris Shoemaker <c.shoemaker@cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: GIT 0.99.9
+Date: Sat, 29 Oct 2005 18:29:12 -0700
+Message-ID: <7vd5lnztav.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Chris Shoemaker <c.shoemaker@cox.net>
-X-From: git-owner@vger.kernel.org Sat Oct 29 23:47:13 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 30 02:30:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EVyXS-0008II-4H
-	for gcvg-git@gmane.org; Sat, 29 Oct 2005 23:46:58 +0200
+	id 1EW20i-0005zj-Uy
+	for gcvg-git@gmane.org; Sun, 30 Oct 2005 02:29:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932210AbVJ2Vqn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 29 Oct 2005 17:46:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbVJ2Vqn
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Oct 2005 17:46:43 -0400
-Received: from eastrmmtao05.cox.net ([68.230.240.34]:36579 "EHLO
-	eastrmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932210AbVJ2Vqm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Oct 2005 17:46:42 -0400
-Received: from localhost ([24.250.31.7]) by eastrmmtao05.cox.net
+	id S932770AbVJ3B3O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 29 Oct 2005 21:29:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932773AbVJ3B3O
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Oct 2005 21:29:14 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:41858 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932770AbVJ3B3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Oct 2005 21:29:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051029214638.BWVA28234.eastrmmtao05.cox.net@localhost>;
-          Sat, 29 Oct 2005 17:46:38 -0400
-Received: from [127.0.0.1] (helo=pe)
-	by localhost with smtp (Exim 4.43)
-	id 1EVyXB-0006WY-CZ; Sat, 29 Oct 2005 17:46:41 -0400
-In-Reply-To: <11306224011899-git-send-email-c.shoemaker@cox.net>
-X-Mailer: git-send-email
+          id <20051030012823.HEES24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 29 Oct 2005 21:28:23 -0400
 To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10811>
 
-Removed unknown [--version] option.
+GIT 0.99.9 is found at usual places.
 
-Signed-off-by: Chris Shoemaker <c.shoemaker@cox.net>
+As I said in the 0.99.8 announcement, git already does
+everything I want it to do, and from here on I'd like to see us
+concentrate on fixes (both correctness and performance) until we
+hit 1.0 which should happen shortly.
 
----
+Many thanks to everybody who contributed the comments, extra set
+of eyeballs, and code.
 
- Documentation/git-update-index.txt |   28 ++++++++++++++++++++++++----
- update-index.c                     |    2 +-
- 2 files changed, 25 insertions(+), 5 deletions(-)
 
-f51a2698073b75c6e0e0f96c0f1f6432167ed85b
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -9,12 +9,13 @@ git-update-index - Modifies the index or
- SYNOPSIS
- --------
- 'git-update-index'
--	     [--add] [--remove] [--refresh] [--replace]
--	     [--ignore-missing]
--	     [--force-remove]
-+	     [--add] [--remove | --force-remove] [--replace] 
-+             [--refresh [-q] [--unmerged] [--ignore-missing]]
- 	     [--cacheinfo <mode> <object> <file>]\*
--	     [--info-only]
-+             [--chmod=(+|-)x]
-+	     [--info-only] [--index-info]
- 	     [-z] [--stdin]
-+             [--verbose]
- 	     [--] [<file>]\*
- 
- DESCRIPTION
-@@ -42,12 +43,28 @@ OPTIONS
- 	Looks at the current cache and checks to see if merges or
- 	updates are needed by checking stat() information.
- 
-+-q::
-+        Quiet.  If --refresh finds that the cache needs an update, the
-+        default behavior is to error out.  This option makes
-+        git-update-index continue anyway.
-+
-+--unmerged::
-+        If --refresh finds unmerged changes in the cache, the default 
-+        behavior is to error out.  This option makes git-update-index 
-+        continue anyway.
-+
- --ignore-missing::
- 	Ignores missing files during a --refresh
- 
- --cacheinfo <mode> <object> <path>::
- 	Directly insert the specified info into the cache.
- 	
-+--index-info::
-+        Read index info from stdin.
-+
-+--chmod=(+|-)x::
-+        Set the execute permissions on the updated files.        
-+
- --info-only::
- 	Do not create objects in the object database for all
- 	<file> arguments that follow this flag; just insert
-@@ -70,6 +87,9 @@ OPTIONS
- 	read list of paths from the standard input.  Paths are
- 	separated by LF (i.e. one path per line) by default.
- 
-+--verbose::
-+        Report what is being added and removed from index.
-+
- -z::
- 	Only meaningful with `--stdin`; paths are separated with
- 	NUL character instead of LF.
-diff --git a/update-index.c b/update-index.c
---- a/update-index.c
-+++ b/update-index.c
-@@ -393,7 +393,7 @@ static void read_index_info(int line_ter
- }
- 
- static const char update_index_usage[] =
--"git-update-index [-q] [--add] [--replace] [--remove] [--unmerged] [--refresh] [--cacheinfo] [--chmod=(+|-)x] [--info-only] [--force-remove] [--stdin] [--index-info] [--ignore-missing] [-z] [--version] [--] <file>...";
-+"git-update-index [-q] [--add] [--replace] [--remove] [--unmerged] [--refresh] [--cacheinfo] [--chmod=(+|-)x] [--info-only] [--force-remove] [--stdin] [--index-info] [--ignore-missing] [-z] [--verbose] [--] <file>...";
- 
- int main(int argc, const char **argv)
- {
+Done in 0.99.9
+==============
+
+Ports
+~~~~~
+
+* Cygwin port [HPA].
+
+* OpenBSD build [Merlyn and others].
+
+
+Fixes
+~~~~~
+
+* clone request over git native protocol from a repository with
+  too many refs did not work; this has been fixed.
+
+* git-daemon got safer for kernel.org use [HPA].
+
+* Extended SHA1 parser was not enforcing uniqueness for
+  abbreviated SHA1; this has been fixed.
+
+* http transport does not barf on funny characters in URL.
+
+* The ref naming restrictions have been formalized and the
+  coreish refuses to create funny refs; we still need to audit
+  importers.  See git-check-ref-format(1).
+
+
+New Features and Commands
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* .git/config file as a per-repository configuration mechanism,
+  and some commands understand it [Linus].  See
+  git(7).
+
+* The core.filemode configuration item can be used to make us a
+  bit more FAT friendly.  See git(7).
+
+* The extended SHA1 notation acquired Peel-the-onion operator
+  ^{type} and ^{}.  See git-rev-parse(1).
+
+* SVN importer [Matthias].  See git-svnimport(1).
+
+* .git/objects/[0-9a-f]{2} directories are created on demand,
+  and removed when becomes empty after prune-packed [Linus].
+
+* Filenames output from various commands without -z option are
+  quoted when they embed funny characters (TAB and LF) using
+  C-style quoting within double-quotes, to match the proposed
+  GNU diff/patch notation [me, but many people contributed in
+  the discussion].
+
+* git-mv is expected to be a better replacement for git-rename.
+  While the latter has two parameter restriction, it acts more
+  like the regular 'mv' that can move multiple things to one
+  destinatino directory [Josef Weidendorfer].
+
+* git-checkout can take filenames to revert the changes to
+  them.  See git-checkout(1)
+
+* The new program git-am is a replacement for git-applymbox that
+  has saner command line options and a bit easier to use when a
+  patch does not apply cleanly.
+
+* git-ls-remote can show unwrapped onions using ^{} notation, to
+  help Cogito to track tags.
+
+* git-merge-recursive backend can merge unrelated projects.
+
+* git-clone over native transport leaves the result packed.
+
+* git-http-fetch issues multiple requests in parallel when
+  underlying cURL library supports it [Nick and Daniel].
+
+* git-fetch-pack and git-upload-pack try harder to figure out
+  better common commits [Johannes].
+
+* git-read-tree -u removes a directory when it makes it empty.
+
+* git-diff-* records abbreviated SHA1 names of original and
+  resulting blob; this sometimes helps to apply otherwise an
+  unapplicable patch by falling back to 3-way merge.
+
+* git-format-patch now takes series of from..to rev ranges and
+  with '-m --stdout', writes them out to the standard output.
+  This can be piped to 'git-am' to implement cheaper
+  cherry-picking.
+
+* git-tag takes '-u' to specify the tag signer identity [Linus].
+
+* git-rev-list can take optional pathspecs to skip commits that
+  do not touch them (--dense) [Linus].
+
+* Comes with new and improved gitk [Paulus and Linus].
