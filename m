@@ -1,50 +1,54 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: GIT 0.99.9
-Date: Sat, 29 Oct 2005 22:05:46 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0510292204520.3348@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: rev-list --sparse?
+Date: Sun, 30 Oct 2005 01:37:30 -0700
+Message-ID: <7v64rfxuwl.fsf_-_@assigned-by-dhcp.cox.net>
 References: <7vd5lnztav.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0510292204520.3348@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 30 06:06:43 2005
+X-From: git-owner@vger.kernel.org Sun Oct 30 09:38:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EW5OH-0000Gx-4P
-	for gcvg-git@gmane.org; Sun, 30 Oct 2005 06:05:57 +0100
+	id 1EW8hd-0004Xy-7W
+	for gcvg-git@gmane.org; Sun, 30 Oct 2005 09:38:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932710AbVJ3FFx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Oct 2005 01:05:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932721AbVJ3FFx
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 01:05:53 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:62097 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932710AbVJ3FFw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Oct 2005 01:05:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9U55lFC004223
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 29 Oct 2005 22:05:48 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9U55kwx013002;
-	Sat, 29 Oct 2005 22:05:47 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5lnztav.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932089AbVJ3Ihf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Oct 2005 03:37:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932842AbVJ3Ihf
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 03:37:35 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:8689 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932089AbVJ3Ihe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Oct 2005 03:37:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051030083716.OBNM16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 30 Oct 2005 03:37:16 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510292204520.3348@g5.osdl.org> (Linus Torvalds's
+	message of "Sat, 29 Oct 2005 22:05:46 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10816>
 
+I was reviewing the rev-list documentation and it struck me that
+dense/sparse command line flag do not make much sense.
 
+Since dense is by default in effect, --dense is a no-op.  One
+possible use of it would be to hardcode --dense on a rev-list
+command line in a script, like:
 
-On Sat, 29 Oct 2005, Junio C Hamano wrote:
->
-> GIT 0.99.9 is found at usual places.
+	git-rev-list $some_opts --dense $some_paths
 
-Congrats. I personally think this is very much worthy of a 1.0 after just 
-giving it some time to shake out any possible last-minute bugs.
+to defeat user-supplied --sparse that can be in $some_opts, but
+for this to work the script needs to have parsed out user input
+into some_opts and some_paths in the first place anyway, so it
+can just detect and remove --sparse just as easily.
 
-		Linus
+The --sparse flag does not seem to have much use either; not
+giving pathspec has the same effect.
