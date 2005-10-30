@@ -1,65 +1,67 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: What are the correct arguments to git-svnimport?
-Date: Sun, 30 Oct 2005 16:48:41 -0500
-Message-ID: <20051030214841.GA8366@pe.Belkin>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: rev-list --sparse?
+Date: Sun, 30 Oct 2005 13:42:43 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0510301337500.27915@g5.osdl.org>
+References: <7vd5lnztav.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0510292204520.3348@g5.osdl.org> <7v64rfxuwl.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Oct 30 22:50:38 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 30 22:53:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWL2k-0000lr-BD
-	for gcvg-git@gmane.org; Sun, 30 Oct 2005 22:48:46 +0100
+	id 1EWL6Y-0001gd-2v
+	for gcvg-git@gmane.org; Sun, 30 Oct 2005 22:52:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932355AbVJ3Vsn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Oct 2005 16:48:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932357AbVJ3Vsn
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 16:48:43 -0500
-Received: from eastrmmtao05.cox.net ([68.230.240.34]:3045 "EHLO
-	eastrmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932355AbVJ3Vsm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Oct 2005 16:48:42 -0500
-Received: from localhost ([24.250.31.7]) by eastrmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051030214837.MSFU28234.eastrmmtao05.cox.net@localhost>
-          for <git@vger.kernel.org>; Sun, 30 Oct 2005 16:48:37 -0500
-Received: from chris by localhost with local (Exim 4.43)
-	id 1EWL2f-0002Xt-B3
-	for git@vger.kernel.org; Sun, 30 Oct 2005 16:48:41 -0500
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
+	id S932362AbVJ3Vwk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Oct 2005 16:52:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932359AbVJ3Vwj
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 16:52:39 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:41144 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751145AbVJ3Vwj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Oct 2005 16:52:39 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9ULsPFR006467
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 30 Oct 2005 13:54:26 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9ULghEl005867;
+	Sun, 30 Oct 2005 13:42:44 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64rfxuwl.fsf_-_@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10834>
 
-I was trying to test the git-svnimport script but I've been unable to
-get it to run. The docs really aren't very clear about the correct
-values of <SVN_repository_URL> and <path>, so maybe I've gotten them
-wrong.  Or maybe it just doesn't work.
 
-I get tons of 'Unrecognized path: /project/trunk/...'
 
-and I've tried various combinations of SVN_repository_URL and path:
+On Sun, 30 Oct 2005, Junio C Hamano wrote:
+> 
+> The --sparse flag does not seem to have much use either; not
+> giving pathspec has the same effect.
 
-SVN_repository_URL:
-    http://svn.myhost.com/repo
-    http://svn.myhost.com/repo/
-    http://svn.myhost.com/repo/project
-    http://svn.myhost.com/repo/project/
-    http://svn.myhost.com/repo/project/trunk
-    http://svn.myhost.com/repo/project/branches/mybranch
+No.
 
-and <path>:
-    *nothing*
-    project
-    project/trunk
-    project/branches/mybranch
-    http://svn.myhost.com/repo/project
-    ...etc...
+--sparse _does_ have effect, but it's subtler.
 
-Can someone who actually uses svn-import send me the command-line they
-use? Thanks.
+Try "--sparse" together with a pathspec. It will only do the merge 
+follow optimization.
 
--chris
+Now, how useful is that? It's potentially useful as a way to "linearize 
+the history". For example, let's say that you wanted to simplify the 
+commit history for a project, and you only cared about the history of 
+certain files - but you do want all the other files to _exist_ in that 
+history.
+
+So then you could do "git-rev-list --sparse HEAD -- filelist" and you'd 
+get the minimal history that is still relevant in those files. Any merges 
+that touch anything else than those files will becomes just regular diffs: 
+they'll have been linearized away.
+
+Useful? Quite possibly not. But I felt that simplifying merges was 
+conceptually a very different operation from then compressing a linear 
+history.
+
+		Linus
