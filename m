@@ -1,62 +1,61 @@
-From: "Peter Eriksen" <s022018@student.dtu.dk>
-Subject: Tracking few files among many
-Date: Sun, 30 Oct 2005 14:00:02 +0100
-Message-ID: <20051030130001.GA26652@ebar091.ebar.dtu.dk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GIT 0.99.9
+Date: Sun, 30 Oct 2005 14:21:02 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0510301418110.25610@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vd5lnztav.fsf@assigned-by-dhcp.cox.net> <43643AF8.9090001@gmail.com>
+ <7vslujy8or.fsf@assigned-by-dhcp.cox.net> <43644608.90608@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Oct 30 14:19:11 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 30 14:21:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWD4E-0007Fr-3h
-	for gcvg-git@gmane.org; Sun, 30 Oct 2005 14:17:46 +0100
+	id 1EWD7Z-0007zz-QG
+	for gcvg-git@gmane.org; Sun, 30 Oct 2005 14:21:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751258AbVJ3NQc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Oct 2005 08:16:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751268AbVJ3NQc
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 08:16:32 -0500
-Received: from ebar091.ebar.dtu.dk ([192.38.93.106]:8609 "HELO
-	ebar091.ebar.dtu.dk") by vger.kernel.org with SMTP id S1751258AbVJ3NQb
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Oct 2005 08:16:31 -0500
-Received: (qmail 26859 invoked by uid 5842); 30 Oct 2005 13:00:02 -0000
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
+	id S1750845AbVJ3NVK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Oct 2005 08:21:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbVJ3NVK
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 08:21:10 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:60545 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750845AbVJ3NVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Oct 2005 08:21:08 -0500
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A62A413F02A; Sun, 30 Oct 2005 14:21:05 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 854FDB4F10; Sun, 30 Oct 2005 14:21:05 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 67256B1463; Sun, 30 Oct 2005 14:21:05 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 05DF513F02A; Sun, 30 Oct 2005 14:21:03 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: A Large Angry SCM <gitzilla@gmail.com>
+In-Reply-To: <43644608.90608@gmail.com>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10819>
 
-Hello,
+Hi,
 
-There's something I can't figure out.  I'm tracking a few
-configuration files in $HOME, but some operations are really
-slow.  Let's take git-status as example: 
+On Sat, 29 Oct 2005, A Large Angry SCM wrote:
 
-~ > git-status >laaangsom.txt
-~ > wc -l laaangsom.txt
-25875 laaangsom.txt
-~ > cat laaangsom.txt
-#
-# Changed but not updated:
-#   (use git-update-index to mark for commit)
-#
-#       modified: .gaim/blist.xml
-#       modified: .gaim/prefs.xml
-#       modified: .mozilla/firefox/s4q22693.default/prefs.js
-#
-#
-# Untracked files:
-#   (use "git add" to add to commit)
-#
-#   [ A lot of untracked files. See the line count above. ]
+> Junio, I think you're doing an great job with Git.
 
-What is going on?  This really doesn't seem like the wanted
-behavior.  Have I missed something?  I'm using
-46774a81f9d6ca4d230d33757afe9dd07bfe398b  (GIT 0.99.9).
+Concur!
 
-Regards,
+> Particularly, since I'm thinking that it may be mature enough to replace 
+> another SCM with a very large code base that I deal with.
 
-Peter
+Add to that the fact that most, if not all, changes are made backwards 
+compatible, i.e. git has stable for a *long* time now.
+
+Ciao,
+Dscho
