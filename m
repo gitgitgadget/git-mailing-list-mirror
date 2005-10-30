@@ -1,51 +1,83 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: git-pull (or cg-fetch?) with exit status
-Date: 30 Oct 2005 05:24:54 -0800
-Message-ID: <86fyqjt9w9.fsf@blue.stonehenge.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Tracking few files among many
+Date: Sun, 30 Oct 2005 16:29:27 +0100
+Message-ID: <4364E6D7.9010707@op5.se>
+References: <20051030130001.GA26652@ebar091.ebar.dtu.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Oct 30 14:26:08 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Oct 30 16:30:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWDBC-0000t9-Hp
-	for gcvg-git@gmane.org; Sun, 30 Oct 2005 14:24:58 +0100
+	id 1EWF7j-0001DS-SW
+	for gcvg-git@gmane.org; Sun, 30 Oct 2005 16:29:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750710AbVJ3NYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Oct 2005 08:24:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750711AbVJ3NYz
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 08:24:55 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:63578 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1750710AbVJ3NYz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Oct 2005 08:24:55 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id A7D598FAF2
-	for <git@vger.kernel.org>; Sun, 30 Oct 2005 05:24:54 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 31983-01-7 for <git@vger.kernel.org>;
- Sun, 30 Oct 2005 05:24:54 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 4C2378FAF7; Sun, 30 Oct 2005 05:24:54 -0800 (PST)
+	id S1750953AbVJ3P33 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Oct 2005 10:29:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750955AbVJ3P33
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 10:29:29 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:53452 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750952AbVJ3P32
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Oct 2005 10:29:28 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 676086BCBE
+	for <git@vger.kernel.org>; Sun, 30 Oct 2005 16:29:27 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
 To: git@vger.kernel.org
-x-mayan-date: Long count = 12.19.12.13.11; tzolkin = 8 Chuen; haab = 9 Zac
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+In-Reply-To: <20051030130001.GA26652@ebar091.ebar.dtu.dk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10821>
 
+Peter Eriksen wrote:
+> Hello,
+> 
+> There's something I can't figure out.  I'm tracking a few
+> configuration files in $HOME, but some operations are really
+> slow.  Let's take git-status as example: 
+> 
+> ~ > git-status >laaangsom.txt
+> ~ > wc -l laaangsom.txt
+> 25875 laaangsom.txt
+> ~ > cat laaangsom.txt
+> #
+> # Changed but not updated:
+> #   (use git-update-index to mark for commit)
+> #
+> #       modified: .gaim/blist.xml
+> #       modified: .gaim/prefs.xml
+> #       modified: .mozilla/firefox/s4q22693.default/prefs.js
+> #
+> #
+> # Untracked files:
+> #   (use "git add" to add to commit)
+> #
+> #   [ A lot of untracked files. See the line count above. ]
+> 
+> What is going on?  This really doesn't seem like the wanted
+> behavior.  Have I missed something?
 
-Other than grep the output of the "pull" commands, I'd like to have a
-flag added that will also set an exit status to "successful" if new
-things were pulled.  That way, I can automate a "make install"
-resulting from a successful new pull, ala:
+Apart from the fact that git tracks objects using sha1-hashes, no.
 
-        git-pull --silent && make install
+However, hashing +25000 files takes quite some time even on a fairly 
+quick computer. I also imagine that some of those files are quite large, 
+so that doesn't really help.
+
+If you really (really, really) want to use git to track configuration 
+file changes in your homedir, I'd suggest creating a separate directory 
+to keep the real files in and then symlink to those from their usual 
+locations.
+
+OTOH, since you *know* git-status (precisely because it looks for files 
+not added to the index) to be slow, you should use git-diff* instead. I 
+imagine you know what files you're tracking anyways since it's just a 
+subset of 25000-something.
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
