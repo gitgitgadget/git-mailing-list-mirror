@@ -1,66 +1,55 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: GIT 0.99.9
-Date: Sat, 29 Oct 2005 20:16:08 -0700
-Message-ID: <43643AF8.9090001@gmail.com>
+Date: Sat, 29 Oct 2005 20:39:48 -0700
+Message-ID: <7vslujy8or.fsf@assigned-by-dhcp.cox.net>
 References: <7vd5lnztav.fsf@assigned-by-dhcp.cox.net>
-Reply-To: gitzilla@gmail.com
+	<43643AF8.9090001@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 30 04:17:14 2005
+X-From: git-owner@vger.kernel.org Sun Oct 30 04:41:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EW3gB-0003wo-2h
-	for gcvg-git@gmane.org; Sun, 30 Oct 2005 04:16:19 +0100
+	id 1EW43C-00082t-HR
+	for gcvg-git@gmane.org; Sun, 30 Oct 2005 04:40:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932808AbVJ3DQQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 29 Oct 2005 23:16:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932809AbVJ3DQQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Oct 2005 23:16:16 -0400
-Received: from zproxy.gmail.com ([64.233.162.207]:30843 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932808AbVJ3DQP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Oct 2005 23:16:15 -0400
-Received: by zproxy.gmail.com with SMTP id i11so762238nzi
-        for <git@vger.kernel.org>; Sat, 29 Oct 2005 20:16:14 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=R+ce0v9GLS//EOU4WRjxTkgyJb7H+FeIqye4Vsc9jPcN1AiXSRZlyQIVzakJzwqVx/ZI8NZxoKYC6aiN3hluMuPOeTeDfu4rhRqe2tmi3+Cuiiz0GFEp75u5Ycuz79ssUEwzjTtj1z9d6lthelTsMIyXwChXAMbnwKoP+rT9J7g=
-Received: by 10.36.39.6 with SMTP id m6mr2127156nzm;
-        Sat, 29 Oct 2005 20:16:14 -0700 (PDT)
-Received: from ?10.0.0.6? ( [69.166.98.151])
-        by mx.gmail.com with ESMTP id m1sm1374221nzf.2005.10.29.20.16.14;
-        Sat, 29 Oct 2005 20:16:14 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5lnztav.fsf@assigned-by-dhcp.cox.net>
+	id S932809AbVJ3Dju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 29 Oct 2005 23:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932810AbVJ3Dju
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Oct 2005 23:39:50 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:16053 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932809AbVJ3Djt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Oct 2005 23:39:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051030033859.IIAB24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 29 Oct 2005 23:38:59 -0400
+To: gitzilla@gmail.com
+In-Reply-To: <43643AF8.9090001@gmail.com> (A. Large Angry's message of "Sat,
+	29 Oct 2005 20:16:08 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10813>
 
-Junio C Hamano wrote:
-> GIT 0.99.9 is found at usual places.
-> 
-> As I said in the 0.99.8 announcement, git already does
-> everything I want it to do, and from here on I'd like to see us
-> concentrate on fixes (both correctness and performance) until we
-> hit 1.0 which should happen shortly.
-> 
-> Many thanks to everybody who contributed the comments, extra set
-> of eyeballs, and code.
-> 
-> 
-> Done in 0.99.9
-> ==============
-[Lots of text deleted]
+A Large Angry SCM <gitzilla@gmail.com> writes:
 
-It's nice to see the TODO list get shorter for a change! Especially 
-since the removed TODO items are not on the HAVEDONE list.
+> It's nice to see the TODO list get shorter for a change! Especially 
+> since the removed TODO items are not on the HAVEDONE list.
 
-So, with 0.99.9 being the (non) "scary" release of Git, are you 
-targeting the Git 1.0 to be the (non) "turkey" release or the "fruit 
-cake" release? ;-)
+Huh?  What are you talking about?
+
+Most of the items that were on the TODO list and marked [DONE]
+are on the HAVEDONE list, although I rephrased many of them to
+be more appropriate for the release notes.  The only thing that
+I did not list on HAVEDONE list was 'whatchanged -m'
+documentation.  There are many documentation contributions from
+the list I do not mention in HAVEDONE.
+
+I dropped from the TODO list was the "Perhaps show ^{commit},
+^{tree} instead of ^{} from ls-remote", whose benefit was
+dubious.
