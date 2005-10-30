@@ -1,69 +1,50 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: Re: git 0.99.9: Subversion importer breaks RPM generation (rpmbuild bug)
-Date: Sun, 30 Oct 2005 21:40:34 +0100
-Message-ID: <20051030204034.849C5353E3E@atlas.denx.de>
-References: <43652934.8000308@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: GIT 0.99.9
+Date: Sun, 30 Oct 2005 12:46:31 -0800
+Message-ID: <7v7jbuohqw.fsf@assigned-by-dhcp.cox.net>
+References: <20051030202322.A65D2353CD1@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 30 21:42:24 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 30 21:47:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWJz6-0007Vi-34
-	for gcvg-git@gmane.org; Sun, 30 Oct 2005 21:40:56 +0100
+	id 1EWK4a-0000Zi-5S
+	for gcvg-git@gmane.org; Sun, 30 Oct 2005 21:46:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751054AbVJ3Ukx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Oct 2005 15:40:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751093AbVJ3Ukx
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 15:40:53 -0500
-Received: from mailout05.sul.t-online.com ([194.25.134.82]:29094 "EHLO
-	mailout05.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1751054AbVJ3Ukx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Oct 2005 15:40:53 -0500
-Received: from fwd28.aul.t-online.de 
-	by mailout05.sul.t-online.com with smtp 
-	id 1EWJyy-0006jS-01; Sun, 30 Oct 2005 21:40:48 +0100
-Received: from denx.de (JbFtNoZXoetJQuLMRPSJ+e4dnZAXNJ7tdiiB0acFFitOMdhlKuNi4H@[84.150.71.90]) by fwd28.sul.t-online.de
-	with esmtp id 1EWJym-1L2lk00; Sun, 30 Oct 2005 21:40:36 +0100
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by denx.de (Postfix) with ESMTP
-	id D220542970; Sun, 30 Oct 2005 21:40:34 +0100 (MET)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id 849C5353E3E;
-	Sun, 30 Oct 2005 21:40:34 +0100 (MET)
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-reply-to: Your message of "Sun, 30 Oct 2005 12:12:36 PST."
-             <43652934.8000308@zytor.com> 
-X-ID: JbFtNoZXoetJQuLMRPSJ+e4dnZAXNJ7tdiiB0acFFitOMdhlKuNi4H@t-dialin.net
-X-TOI-MSGID: 1ea2f75b-c823-41a1-87c9-b706776f06f5
+	id S1751104AbVJ3Uqd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Oct 2005 15:46:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbVJ3Uqd
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 15:46:33 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:19176 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751104AbVJ3Uqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Oct 2005 15:46:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051030204543.PAZE24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 30 Oct 2005 15:45:43 -0500
+To: Wolfgang Denk <wd@denx.de>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10831>
 
-In message <43652934.8000308@zytor.com> you wrote:
-> The Subversion importer Perl script breaks RPM generation.  First of 
+Wolfgang Denk <wd@denx.de> writes:
 
-Confirmed. Well, actually the RPM *build* works fine.
+> In message <7vvezesyhi.fsf@assigned-by-dhcp.cox.net> you wrote:
+>> 
+>> I hate it when somebody tells me "it works for me", but I cannot
+>> help you here, sorry.  I'm no rpm expert and the "make rpm" rule
+>> seems to work for me.
+>
+> Which environment (Linux distribution) did you test this on? I  tried
+> Fedora  Core  2  and  4,  both  with  the same result. I get the same
+> problem when building from the git source  tree  or  when  using  the
+> source RPM.
 
-> ... which RPM thinks means that you need a Perl module called v5.8.0 
-> which doesn't, of course, exist.  This is arguably an rpmbuild bug, but 
-> it nevertheless breaks at the moment.
-
-It's when trying to install the RPM that we get:
-
-error: Failed dependencies:
-        perl(v5.8.0) is needed by git-core-0.99.9-1.i386
-
-
-Best regards,
-
-Wolfgang Denk
-
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-"There are things that are so serious that you can  only  joke  about
-them"                                                    - Heisenberg
+Whatever is running on kernel.org.  I think I was once told they
+run RH-EL but I do not have that e-mail now.
