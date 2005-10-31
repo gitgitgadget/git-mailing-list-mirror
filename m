@@ -1,52 +1,55 @@
-From: Marcel Holtmann <marcel@holtmann.org>
-Subject: Re: Another problem with not existing directories
-Date: Mon, 31 Oct 2005 18:46:12 +0100
-Message-ID: <1130780772.5848.32.camel@blade>
-References: <1130779234.5848.15.camel@blade>
-	 <Pine.LNX.4.64.0510310929361.27915@g5.osdl.org>
+From: wa1ter@myrealbox.com
+Subject: Re: git versus CVS (versus bk)
+Date: Mon, 31 Oct 2005 10:18:03 -0800
+Organization: none
+Message-ID: <Pine.LNX.4.64.0510311013200.11219@x2.ybpnyarg>
+References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg>
+ <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org>
+ <Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 31 18:49:10 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Oct 31 19:23:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWdjw-0005wI-9v
-	for gcvg-git@gmane.org; Mon, 31 Oct 2005 18:46:36 +0100
+	id 1EWeHn-0007ty-Vh
+	for gcvg-git@gmane.org; Mon, 31 Oct 2005 19:21:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932515AbVJaRqd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Oct 2005 12:46:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932516AbVJaRqd
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 12:46:33 -0500
-Received: from coyote.holtmann.net ([217.160.111.169]:12427 "EHLO
-	mail.holtmann.net") by vger.kernel.org with ESMTP id S932515AbVJaRqc
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2005 12:46:32 -0500
-Received: from blade (p5487CE7F.dip.t-dialin.net [84.135.206.127])
-	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j9VHkDGB025480
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
-	Mon, 31 Oct 2005 18:46:14 +0100
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0510310929361.27915@g5.osdl.org>
-X-Mailer: Evolution 2.4.1 
-X-Virus-Scanned: ClamAV 0.85.1/1150/Sun Oct 30 12:20:38 2005 on coyote.holtmann.net
-X-Virus-Status: Clean
+	id S932321AbVJaSVd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Oct 2005 13:21:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932337AbVJaSVd
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 13:21:33 -0500
+Received: from main.gmane.org ([80.91.229.2]:33954 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932321AbVJaSVc (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2005 13:21:32 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EWeG5-0007Rg-8z
+	for git@vger.kernel.org; Mon, 31 Oct 2005 19:19:49 +0100
+Received: from adsl-69-234-237-25.dsl.irvnca.pacbell.net ([69.234.237.25])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Oct 2005 19:19:49 +0100
+Received: from wa1ter by adsl-69-234-237-25.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Oct 2005 19:19:49 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-237-25.dsl.irvnca.pacbell.net
+In-Reply-To: <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10869>
 
-Hi Linus,
 
-> > I think there exists another problem with git-unpack-objects if the
-> > sub-directory in "objects" doesn't exists.
-> 
-> Are you sure you just don't have an old version of git on the other end?
 
-this might be possible, but then it is an old git on kernel.org. I never
-installed any git by myself on it.
+On Mon, 31 Oct 2005, Linus Torvalds wrote:
 
-Regards
+> ...CVS inevitably leads to "politics" - having a
+> central place means that you have people who fight for control over it,
+> even when they'd otherwise _want_ to cooperate...
 
-Marcel
+Ahh -- the lightbulb just lit up.  Using CVS is just like being married.
+No wonder you hate it...
