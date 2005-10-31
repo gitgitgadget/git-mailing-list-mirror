@@ -1,62 +1,57 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: Re: git versus CVS (versus bk)
-Date: Mon, 31 Oct 2005 15:41:59 -0800
-Organization: none
-Message-ID: <dk6a46$dqv$1@sea.gmane.org>
-References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg>	<Pine.LNX.4.64.0510301811390.27915@g5.osdl.org>	<Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0510310804400.27915@g5.osdl.org>	<Pine.LNX.4.64.0510311013200.11219@x2.ybpnyarg> <867jbtii85.fsf@blue.stonehenge.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Date-based limits (Was Re: GIT 0.99.9)
+Date: Mon, 31 Oct 2005 18:47:03 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0510311820060.25300@iabervon.org>
+References: <7vd5lnztav.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0510301838110.27915@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Nov 01 00:45:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 01 00:48:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWjJr-0001Dt-Ms
-	for gcvg-git@gmane.org; Tue, 01 Nov 2005 00:44:04 +0100
+	id 1EWjNU-0001gl-MW
+	for gcvg-git@gmane.org; Tue, 01 Nov 2005 00:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964889AbVJaXoA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Oct 2005 18:44:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964890AbVJaXoA
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 18:44:00 -0500
-Received: from main.gmane.org ([80.91.229.2]:10135 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964889AbVJaXn7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2005 18:43:59 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EWjIa-00012F-KV
-	for git@vger.kernel.org; Tue, 01 Nov 2005 00:42:44 +0100
-Received: from adsl-69-234-179-137.dsl.irvnca.pacbell.net ([69.234.179.137])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 01 Nov 2005 00:42:44 +0100
-Received: from wa1ter by adsl-69-234-179-137.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 01 Nov 2005 00:42:44 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-179-137.dsl.irvnca.pacbell.net
-User-Agent: Mail/News 1.6a1 (X11/20051031)
-In-Reply-To: <867jbtii85.fsf@blue.stonehenge.com>
+	id S964891AbVJaXrZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Oct 2005 18:47:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964894AbVJaXrZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 18:47:25 -0500
+Received: from iabervon.org ([66.92.72.58]:6672 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S964891AbVJaXrY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2005 18:47:24 -0500
+Received: (qmail 23482 invoked by uid 1000); 31 Oct 2005 18:47:03 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 31 Oct 2005 18:47:03 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0510301838110.27915@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10902>
 
-Randal L. Schwartz wrote:
-> ...I doubt that Linus
-> would compare his marriage...with CVS. :)
+On Sun, 30 Oct 2005, Linus Torvalds wrote:
 
-I dunno why not.  If my wife knew CVS she would probably agree
-with me (for a change).
+> (The danger with date-based things is that something may be 4 months old, 
+> but it only got _merged_ yesterday, so it may be new to _you_. And the 
+> --since="2 weeks ago" will not show it, which can be surprising to people 
+> who expect things that are new to _them_ to be shown).
 
-I've learned a great deal from reading this thread -- as I hope
-others have.  I did learn one important thing while reading about
-old Al Einstein:  you can get some astonishing insights by asking
-really dumb questions of really smart people.
+At some point, we might want to have a series of refs tracking changes to 
+the user's heads over time. Then the right set of arguments could actually 
+handle "what would I have seen on Thursday, when I hadn't pulled since 
+Tuesday, and upstream got some changes on Wednesday that I got on Friday, 
+and it's Saturday now." (That is, Wednesday's commits hadn't hit the local 
+repository yet; the commit that we got to is dated Friday for local 
+purposes, and the latest as of Thursday is dated Tuesday, which is the 
+last time the ref file was modified.)
 
-I've had many such astonishing insights from reading Linus's posts
-over the years (and I look forward to many more).  I've been amazed
-by Linus's understanding of both machines and people -- this combo
-is rare indeed!
+And we probably don't want to fetch or clone this stuff; I doubt most 
+people want to know the history from somebody else's point of view. At 
+least, I can't think of a use for it that wouldn't be better served by 
+asking whoever for the hash out of their history.
 
-Linus, have you considered a career in marriage counseling?
+	-Daniel
+*This .sig left intentionally blank*
