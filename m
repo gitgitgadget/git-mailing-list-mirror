@@ -1,60 +1,52 @@
-From: wa1ter@myrealbox.com
-Subject: Re: git versus CVS (versus bk)
-Date: Mon, 31 Oct 2005 05:00:40 -0800
-Organization: none
-Message-ID: <Pine.LNX.4.64.0510310450230.10881@x2.ybpnyarg>
-References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg>
- <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org>
+From: Lexington Luthor <Lexington.Luthor@gmail.com>
+Subject: git objects directory
+Date: Mon, 31 Oct 2005 15:33:44 +0000
+Message-ID: <dk5dgq$isv$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Oct 31 14:04:30 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Oct 31 16:57:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWZJV-0003g7-5l
-	for gcvg-git@gmane.org; Mon, 31 Oct 2005 14:03:01 +0100
+	id 1EWbzJ-0007kf-Ow
+	for gcvg-git@gmane.org; Mon, 31 Oct 2005 16:54:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964774AbVJaNCy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Oct 2005 08:02:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964775AbVJaNCy
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 08:02:54 -0500
-Received: from main.gmane.org ([80.91.229.2]:3310 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964774AbVJaNCy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2005 08:02:54 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EWZI3-0003Hs-TA
-	for git@vger.kernel.org; Mon, 31 Oct 2005 14:01:31 +0100
-Received: from adsl-69-234-176-52.dsl.irvnca.pacbell.net ([69.234.176.52])
+	id S932326AbVJaPyK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Oct 2005 10:54:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932289AbVJaPyK
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 10:54:10 -0500
+Received: from main.gmane.org ([80.91.229.2]:27793 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932326AbVJaPyI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2005 10:54:08 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1EWbw3-0006aS-TZ
+	for git@vger.kernel.org; Mon, 31 Oct 2005 16:51:00 +0100
+Received: from bb-82-108-13-253.ukonline.co.uk ([82.108.13.253])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Oct 2005 14:01:31 +0100
-Received: from wa1ter by adsl-69-234-176-52.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Mon, 31 Oct 2005 16:50:59 +0100
+Received: from Lexington.Luthor by bb-82-108-13-253.ukonline.co.uk with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Oct 2005 14:01:31 +0100
+        for <git@vger.kernel.org>; Mon, 31 Oct 2005 16:50:59 +0100
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-176-52.dsl.irvnca.pacbell.net
-In-Reply-To: <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org>
+X-Gmane-NNTP-Posting-Host: bb-82-108-13-253.ukonline.co.uk
+User-Agent: Thunderbird 1.6a1 (Windows/20051030)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10859>
 
+Hi,
 
+Can someone please explain why git puts its objects in 256 
+sub-directories of objects instead of directly in the objects directory 
+itself? I am trying to learn git (actually cogito), but I still don't 
+understand  why this structure is used.
 
-On Sun, 30 Oct 2005, Linus Torvalds wrote:
+What is the point of having the first byte of the hash as the directory 
+name?
 
-> On Sun, 30 Oct 2005, walt wrote:
-
-> > Could someone explain to me the shortcomings of CVS which prompted
-> > the development of bk (and then git) -- in a way that a non-developer
-> > like me can understand?
-
-> It's really not very easy to explain...
-
-<explanation snipped>
-
-But you explained very well, thank you!  And thanks to the others who
-responded -- all very helpful.  I'm off to read the link that Martin
-supplied -- looks gossipy enough to keep me awake :o)
+-- LL
