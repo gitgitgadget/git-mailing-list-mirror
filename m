@@ -1,74 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git 0.99.9: Subversion importer breaks RPM generation (rpmbuild bug)
-Date: Mon, 31 Oct 2005 13:27:26 -0800
-Message-ID: <7vpsplcr7l.fsf@assigned-by-dhcp.cox.net>
-References: <43652934.8000308@zytor.com>
-	<7vy84ajl4c.fsf@assigned-by-dhcp.cox.net>
-	<20051031064105.GV8041@shell0.pdx.osdl.net>
-	<43663EEA.5050102@zytor.com> <7v4q6xfpqg.fsf@assigned-by-dhcp.cox.net>
-	<46a038f90510311213n565010d6g5586a7484b25da7e@mail.gmail.com>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: git versus CVS (versus bk)
+Date: Mon, 31 Oct 2005 13:30:03 -0800
+Message-ID: <20051031213003.GN11488@ca-server1.us.oracle.com>
+References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg> <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org> <Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org> <20051031195010.GM11488@ca-server1.us.oracle.com> <46a038f90510311228v50743158q80d79e963bd503ce@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
-	Sebastian Kuzminsky <seb@highlab.com>
-X-From: git-owner@vger.kernel.org Mon Oct 31 22:29:22 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	walt <wa1ter@myrealbox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 31 22:31:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWhBk-0004mF-Ca
-	for gcvg-git@gmane.org; Mon, 31 Oct 2005 22:27:32 +0100
+	id 1EWhEX-0005Vk-RA
+	for gcvg-git@gmane.org; Mon, 31 Oct 2005 22:30:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932083AbVJaV13 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Oct 2005 16:27:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932533AbVJaV13
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 16:27:29 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:42404 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932083AbVJaV12 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2005 16:27:28 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051031212642.BKSX11356.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 31 Oct 2005 16:26:42 -0500
+	id S932535AbVJaVaX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Oct 2005 16:30:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932540AbVJaVaX
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 16:30:23 -0500
+Received: from agminet03.oracle.com ([141.146.126.230]:62497 "EHLO
+	agminet03.oracle.com") by vger.kernel.org with ESMTP
+	id S932535AbVJaVaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2005 16:30:22 -0500
+Received: from rgmsgw02.us.oracle.com (rgmsgw02.us.oracle.com [138.1.186.52])
+	by agminet03.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id j9VLU5vm022009;
+	Mon, 31 Oct 2005 15:30:05 -0600
+Received: from rgmsgw02.us.oracle.com (localhost.localdomain [127.0.0.1])
+	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id j9VLU4w1014590;
+	Mon, 31 Oct 2005 14:30:04 -0700
+Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
+	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id j9VLU40F014562
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 31 Oct 2005 14:30:04 -0700
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.53)
+	id 1EWhEB-0005zb-SV; Mon, 31 Oct 2005 13:30:03 -0800
 To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90510311213n565010d6g5586a7484b25da7e@mail.gmail.com>
-	(Martin Langhoff's message of "Tue, 1 Nov 2005 09:13:41 +1300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <46a038f90510311228v50743158q80d79e963bd503ce@mail.gmail.com>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
+User-Agent: Mutt/1.5.10i
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10889>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+On Tue, Nov 01, 2005 at 09:28:30AM +1300, Martin Langhoff wrote:
+> You can do a diff that spans all the commits and apply it with a new
+> commit msg. With cogito:
+> 
+>    cg-diff -r from:to | patch -p1
 
-> Perhaps git-tla-glue, git-cvs-glue, git-svn-glue, where glue stands
-> for importers, exporters, tools, etc?
+	I'm well aware of this, my question was rather one of
+applicability.  First, do we want it to work this way, losing the
+history.  Second, you'd like the process to be all encompasing if you go
+this route.
 
-That sounds sensible.  Also I think not having to install xlib
-on the repository server is an advantage as you said in your
-reply to Linus.
+    ((cd old-repo && cg-diff -r from) | patch -p1) && cg-commit
 
-So here is a revised strawman, just to keep things in one place:
+or any equivalent.  Why should I have to muck with patch and diff, when
+I can have a 'pull-as-one' operation.  Sure, it's a wrapper, but if its
+the intended mode of development, let's make it a first-class citizen.
 
-git::
-	Depends on all of the below (may not be necessary).
+Joel
 
-git-*-glue::
-	Tools to interoperate with foreign SCM systems,
-	including importing (i.e. obtaining changes from them)
-	and exporting (i.e. injecting our changes into them).
+-- 
 
-git-doc::
-	Generated documentation from Documentation hierarchy.
+Life's Little Instruction Book #157 
 
-git-scm::
-	Depends on git-gitk and git-core -- people who want just
-	a self contained SCM can install this and perhaps
-	git-doc.
+	"Take time to smell the roses."
 
-git-gitk::
-	The gitk history browser.
-
-git-core::
-	The rest.  Meant for repository server installation.
+Joel Becker
+Principal Software Developer
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
