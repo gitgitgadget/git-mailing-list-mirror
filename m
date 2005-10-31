@@ -1,56 +1,80 @@
-From: Marcel Holtmann <marcel@holtmann.org>
-Subject: Re: Another problem with not existing directories
-Date: Mon, 31 Oct 2005 22:38:30 +0100
-Message-ID: <1130794710.31561.3.camel@blade>
-References: <1130779234.5848.15.camel@blade>
-	 <Pine.LNX.4.64.0510310929361.27915@g5.osdl.org>
-	 <1130780772.5848.32.camel@blade>  <7vk6ftil38.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git versus CVS (versus bk)
+Date: Mon, 31 Oct 2005 13:53:21 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0510311346110.27915@g5.osdl.org>
+References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg>
+ <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org>
+ <Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org> <20051031195010.GM11488@ca-server1.us.oracle.com>
+ <7vr7a1e719.fsf@assigned-by-dhcp.cox.net> <20051031213616.GO11488@ca-server1.us.oracle.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 31 22:40:14 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 31 22:56:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWhMX-0007ig-4V
-	for gcvg-git@gmane.org; Mon, 31 Oct 2005 22:38:41 +0100
+	id 1EWhay-0003MK-2x
+	for gcvg-git@gmane.org; Mon, 31 Oct 2005 22:53:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964850AbVJaVih (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Oct 2005 16:38:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964854AbVJaVih
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 16:38:37 -0500
-Received: from coyote.holtmann.net ([217.160.111.169]:21131 "EHLO
-	mail.holtmann.net") by vger.kernel.org with ESMTP id S964850AbVJaVig
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2005 16:38:36 -0500
-Received: from blade (p5487CE7F.dip.t-dialin.net [84.135.206.127])
-	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j9VLcVGB029294
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
-	Mon, 31 Oct 2005 22:38:32 +0100
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk6ftil38.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.5.1 
-X-Virus-Scanned: ClamAV 0.85.1/1150/Sun Oct 30 12:20:38 2005 on coyote.holtmann.net
-X-Virus-Status: Clean
+	id S964851AbVJaVxd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Oct 2005 16:53:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbVJaVxd
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 16:53:33 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:42449 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964851AbVJaVxc (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2005 16:53:32 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9VLrPpi017993
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 31 Oct 2005 13:53:26 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9VLrLVl030153;
+	Mon, 31 Oct 2005 13:53:23 -0800
+To: Joel Becker <Joel.Becker@oracle.com>
+In-Reply-To: <20051031213616.GO11488@ca-server1.us.oracle.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10894>
 
-Hi Junio,
 
-> >> Are you sure you just don't have an old version of git on the other end?
-> >
-> > this might be possible, but then it is an old git on kernel.org. I never
-> > installed any git by myself on it.
+
+On Mon, 31 Oct 2005, Joel Becker wrote:
 > 
-> I just tried this myself; master.kernel.org seems to have
-> 0.99.8f in /usr/bin/, which explains this symptom.
+> 	I could care less about preserving my public image.  I'm an
+> idiot, I screw up all the time.  I only care that the tip of my tree is
+> respectable.
 
-so as soon as kernel.org switches to 0.99.9 everything should be fine
-again. That's great.
+I definitely care about more than just the tip.
 
-Regards
+A broken history is a _problem_. Automatic tools like "git bisect" can't 
+help you if you have lots of commits in between that are fundamentally 
+broken. And even ignoring that, it just makes it harder for everybody to 
+understand what the code does when "git-whatchanged" shows total crap that 
+was undone.
 
-Marcel
+History is important. It's important enough that you should keep it 
+meaningful. And "meaningful" does not mean "show all your mistakes". 
+
+Some people will say that the mistakes are as important as the fixes. I 
+call bull on that. Mistakes are mistakes. Dead ends aren't useful, even as 
+historical examples. 
+
+At the same time, I'm not a rabid "history must be perfect" freak. 
+Mistakes happen. Just fix then and move on.
+
+When you have guests over, I sure hope that you don't walk around in your 
+bathrobe, with pieces of your anatomy sticking out that shouldn't stick 
+out. Sure, it may be the "real you", but there's a difference between 
+being honest, and just being disgusting.
+
+The same is true of SCM history. There's "honesty", and there's "digusting 
+mess". At least when it comes to the kernel, I want the "honest" kind of 
+history, not the "disgusting" kind.
+
+			Linus
