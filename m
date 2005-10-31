@@ -1,58 +1,57 @@
-From: Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: git objects directory
-Date: Mon, 31 Oct 2005 17:08:03 +0100
-Message-ID: <20051031160803.GB15802@puritan.petwork>
+Date: Mon, 31 Oct 2005 17:08:18 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0510311707001.5839@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <dk5dgq$isv$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Oct 31 17:11:30 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 31 17:11:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWcCk-0004ZW-T0
-	for gcvg-git@gmane.org; Mon, 31 Oct 2005 17:08:15 +0100
+	id 1EWcCx-0004eY-2y
+	for gcvg-git@gmane.org; Mon, 31 Oct 2005 17:08:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932282AbVJaQII (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Oct 2005 11:08:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932333AbVJaQII
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 11:08:08 -0500
-Received: from mxfep02.bredband.com ([195.54.107.73]:43411 "EHLO
-	mxfep02.bredband.com") by vger.kernel.org with ESMTP
-	id S932282AbVJaQIH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2005 11:08:07 -0500
-Received: from puritan.petwork ([213.112.43.250] [213.112.43.250])
-          by mxfep02.bredband.com with ESMTP
-          id <20051031160801.HPCM16437.mxfep02.bredband.com@puritan.petwork>
-          for <git@vger.kernel.org>; Mon, 31 Oct 2005 17:08:01 +0100
-Received: by puritan.petwork (Postfix, from userid 1000)
-	id AAD38ADFE2; Mon, 31 Oct 2005 17:08:03 +0100 (CET)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S932385AbVJaQIX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Oct 2005 11:08:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932392AbVJaQIX
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 11:08:23 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:39912 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932385AbVJaQIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2005 11:08:22 -0500
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 5162613EBA5; Mon, 31 Oct 2005 17:08:19 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 3393AB4F24; Mon, 31 Oct 2005 17:08:19 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 1839DB4F22; Mon, 31 Oct 2005 17:08:19 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id BAF2313EBC2; Mon, 31 Oct 2005 17:08:18 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Lexington Luthor <Lexington.Luthor@gmail.com>
 In-Reply-To: <dk5dgq$isv$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10862>
 
-Lexington Luthor wrote:
+Hi,
+
+On Mon, 31 Oct 2005, Lexington Luthor wrote:
 
 > Can someone please explain why git puts its objects in 256 
 > sub-directories of objects instead of directly in the objects directory 
-> itself? I am trying to learn git (actually cogito), but I still don't 
-> understand  why this structure is used.
+> itself?
 
-Because otherwise there would be a lot of objects (files) in the
-objects subdirectory, which would cause a lot of problems with many
-filesystems.
+Some filesystems have problems with huge directories. And originally the 
+plan was to have all objects as files (now the older ones live in packs).
 
-Anyway, you best leave that directory be, but I understand your desire
-to understand :-).
-
-        nikolai
-
--- 
-Nikolai Weibull: now available free of charge at http://bitwi.se/!
-Born in Chicago, IL USA; currently residing in Gothenburg, Sweden.
-main(){printf(&linux["\021%six\012\0"],(linux)["have"]+"fun"-97);}
+Hth,
+Dscho
