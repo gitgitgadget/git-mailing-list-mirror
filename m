@@ -1,74 +1,65 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git versus CVS (versus bk)
-Date: Tue, 1 Nov 2005 09:28:30 +1300
-Message-ID: <46a038f90510311228v50743158q80d79e963bd503ce@mail.gmail.com>
-References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg>
-	 <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org>
-	 <Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org>
-	 <20051031195010.GM11488@ca-server1.us.oracle.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git 0.99.9: Subversion importer breaks RPM generation (rpmbuild
+ bug)
+Date: Mon, 31 Oct 2005 12:32:21 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0510311230290.27915@g5.osdl.org>
+References: <43652934.8000308@zytor.com>  <7vy84ajl4c.fsf@assigned-by-dhcp.cox.net>
+  <20051031064105.GV8041@shell0.pdx.osdl.net>  <43663EEA.5050102@zytor.com>
+ <7v4q6xfpqg.fsf@assigned-by-dhcp.cox.net> <46a038f90510311213n565010d6g5586a7484b25da7e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	walt <wa1ter@myrealbox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 31 21:29:41 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, "H. Peter Anvin" <hpa@zytor.com>,
+	git@vger.kernel.org, Sebastian Kuzminsky <seb@highlab.com>
+X-From: git-owner@vger.kernel.org Mon Oct 31 21:32:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWgGg-0003yW-Op
-	for gcvg-git@gmane.org; Mon, 31 Oct 2005 21:28:35 +0100
+	id 1EWgKe-0004wX-3z
+	for gcvg-git@gmane.org; Mon, 31 Oct 2005 21:32:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932179AbVJaU2c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Oct 2005 15:28:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932493AbVJaU2c
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 15:28:32 -0500
-Received: from xproxy.gmail.com ([66.249.82.202]:43513 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932179AbVJaU2b convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2005 15:28:31 -0500
-Received: by xproxy.gmail.com with SMTP id i30so1071202wxd
-        for <git@vger.kernel.org>; Mon, 31 Oct 2005 12:28:30 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lbHUUTbr8xpn4vAJrEnR4B19H3Y85iJ5p4D4o4jZfU0KPA0g2WARA4pKx0yaCdyt4Q9MiWB756+fYaVmoIlTerp4YT32GB1w9mXR/hpC5CRJ4qrE/ltwwyL5NhSUV9YoTmxTU4tC42YO04IPjvk8iOE/6mvmnXXbf9vGHyV3jOw=
-Received: by 10.65.180.18 with SMTP id h18mr488710qbp;
-        Mon, 31 Oct 2005 12:28:30 -0800 (PST)
-Received: by 10.64.232.18 with HTTP; Mon, 31 Oct 2005 12:28:30 -0800 (PST)
-To: Joel Becker <Joel.Becker@oracle.com>
-In-Reply-To: <20051031195010.GM11488@ca-server1.us.oracle.com>
-Content-Disposition: inline
+	id S932493AbVJaUch (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Oct 2005 15:32:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964806AbVJaUch
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 15:32:37 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:33720 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932493AbVJaUch (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2005 15:32:37 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9VKWRsC008739
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 31 Oct 2005 12:32:27 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9VKWMDb025419;
+	Mon, 31 Oct 2005 12:32:25 -0800
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90510311213n565010d6g5586a7484b25da7e@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10881>
-
-On 11/1/05, Joel Becker <Joel.Becker@oracle.com> wrote:
->         Where do you stand on this?  Would you rather see the full
-> history pulled?  Do you prefer the one-clean-patch approach?  If so, is
-> there any way to get a cogito/git command for it (git-pull-as-one?)?
-
-You can do a diff that spans all the commits and apply it with a new
-commit msg. With cogito:
-
-   cg-diff -r from:to | patch -p1
-
-With git you can also do it directly within the repo/index with
-
-   git-read-tree -m from HEAD to
-
-In practice, a new developer will often roll up commits to avoid
-sending a string of shameful patches and corrections on top -- I often
-do that ;-) . Developers with more "mana" will have published repos
-where Junio pulls directly from -- and they get merged with full
-history. Of course -- they don't have brown-paper-bag commits like I
-do...
-
-Sounds like a reasonable, organic/dynamic way of doing it.
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10882>
 
 
-martin
+
+On Tue, 1 Nov 2005, Martin Langhoff wrote:
+> >
+> > git-core::
+> >         All the rest, plus man pages.  We could separate out
+> >         commit walkers if we wanted to, but I do not think that
+> >         is necessary.
+> 
+> git-gitk ;-)
+
+I really really prefer gitk in the core, even if it means that there's 
+that strange tcl/tk dependency.
+
+It's very small, and having something that visualizes what git does for 
+people who don't understand git is _invaluable_. 
+
+It wouldn't have to be gitk, but that's the least pain right now. qgit 
+needs QT, which is much more contentious than tcl/tk. 
+
+		Linus
