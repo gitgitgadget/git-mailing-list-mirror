@@ -1,61 +1,56 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: git versus CVS (versus bk)
-Date: Sun, 30 Oct 2005 17:50:49 -0800
-Organization: DFly
-Message-ID: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: git versus CVS (versus bk)
+Date: Mon, 31 Oct 2005 14:59:41 +1300
+Message-ID: <46a038f90510301759p26fa4b0wd67025f069c2373a@mail.gmail.com>
+References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Oct 31 02:54:25 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 31 03:00:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWOrK-0004q7-9a
-	for gcvg-git@gmane.org; Mon, 31 Oct 2005 02:53:16 +0100
+	id 1EWOxm-0006hK-Ss
+	for gcvg-git@gmane.org; Mon, 31 Oct 2005 02:59:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750791AbVJaBxJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Oct 2005 20:53:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbVJaBxJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 20:53:09 -0500
-Received: from main.gmane.org ([80.91.229.2]:65430 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750791AbVJaBxG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Oct 2005 20:53:06 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EWOq1-0004LZ-Qn
-	for git@vger.kernel.org; Mon, 31 Oct 2005 02:51:53 +0100
-Received: from adsl-69-234-205-76.dsl.irvnca.pacbell.net ([69.234.205.76])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Oct 2005 02:51:53 +0100
-Received: from wa1ter by adsl-69-234-205-76.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Oct 2005 02:51:53 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-205-76.dsl.irvnca.pacbell.net
+	id S1751153AbVJaB7o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Oct 2005 20:59:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbVJaB7o
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Oct 2005 20:59:44 -0500
+Received: from wproxy.gmail.com ([64.233.184.199]:26766 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751153AbVJaB7o convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Oct 2005 20:59:44 -0500
+Received: by wproxy.gmail.com with SMTP id i28so421703wra
+        for <git@vger.kernel.org>; Sun, 30 Oct 2005 17:59:41 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=O9nMXKVSYuqr7ZWnagMfMcrxa2HRwZpx4dS4vQ1/M4gTm53cRW+Vxr6g7JirMzcxVzCIc9nKntpaB8tXSKD/CU5j0q942GclSnwM1pv5x0UOn0gOSdGYfpcerEDB4bVXLzfBp++ZEpOtGxit1fW6l3To92e0NMIQJKvXKoqIUhA=
+Received: by 10.64.143.6 with SMTP id q6mr1149279qbd;
+        Sun, 30 Oct 2005 17:59:41 -0800 (PST)
+Received: by 10.64.232.18 with HTTP; Sun, 30 Oct 2005 17:59:41 -0800 (PST)
+To: walt <wa1ter@myrealbox.com>
+In-Reply-To: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10845>
 
-My memory is playing tricks on me.  I seem to remember running linux
-in the 1980's, but the earliest kernel I can find on kernel.org is
-dated 1994.  Maybe I'm remembering xenix...dunno.
+On 10/31/05, walt <wa1ter@myrealbox.com> wrote:
+> Could someone explain to me the shortcomings of CVS which prompted
+> the development of bk (and then git) -- in a way that a non-developer
+> like me can understand?
 
-Anyway, I've been tracking Linus's kernel for many years -- long
-before bitkeeper or git.
+You need to understand the SCM "problem space" at least a little bit.
+Can't cheat on that unfortunately.
 
-I know just enough to compile and run a kernel, but not enough to
-be a software developer.  And that is where my question comes from:
+The writeup at http://www.dwheeler.com/essays/scm.html is not perfect,
+but should give you a bit of background. It barely covers git -- we
+need to prod the author to update it ;)
 
-Could someone explain to me the shortcomings of CVS which prompted
-the development of bk (and then git) -- in a way that a non-developer
-like me can understand?  Pretend that you are Albert Einstein, trying
-to explain your theories to a ten-year-old -- this is always a useful
-exercise for those of you who are drowning in micro-details!
 
-I've already done some googling on this subject, but everything I've
-found is drenched in those micro-details which make the subject
-opaque to me.
 
-Thanks for any pointers!
+martin
