@@ -1,108 +1,78 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: git versus CVS (versus bk)
-Date: Mon, 31 Oct 2005 11:50:10 -0800
-Message-ID: <20051031195010.GM11488@ca-server1.us.oracle.com>
-References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg> <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org> <Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org>
+From: "Luck, Tony" <tony.luck@intel.com>
+Subject: Re: git push sends more objects than it needs to
+Date: Mon, 31 Oct 2005 11:50:48 -0800
+Message-ID: <20051031195048.GA9231@agluck-lia64.sc.intel.com>
+References: <20051031182355.GA7368@agluck-lia64.sc.intel.com> <Pine.LNX.4.64.0510311035310.27915@g5.osdl.org> <Pine.LNX.4.64.0510311119170.27915@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	walt <wa1ter@myrealbox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 31 20:51:16 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 31 20:53:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWffn-0000yv-Ph
-	for gcvg-git@gmane.org; Mon, 31 Oct 2005 20:50:28 +0100
+	id 1EWfgY-00019B-1U
+	for gcvg-git@gmane.org; Mon, 31 Oct 2005 20:51:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964813AbVJaTuY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Oct 2005 14:50:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964814AbVJaTuY
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 14:50:24 -0500
-Received: from rgminet04.oracle.com ([148.87.122.33]:58833 "EHLO
-	rgminet04.oracle.com") by vger.kernel.org with ESMTP
-	id S964813AbVJaTuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2005 14:50:23 -0500
-Received: from rgmsgw01.us.oracle.com (rgmsgw01.us.oracle.com [138.1.186.51])
-	by rgminet04.oracle.com (Switch-3.1.6/Switch-3.1.6) with ESMTP id j9VJoBta029110;
-	Mon, 31 Oct 2005 12:50:11 -0700
-Received: from rgmsgw01.us.oracle.com (localhost.localdomain [127.0.0.1])
-	by rgmsgw01.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id j9VJoB3Z010613;
-	Mon, 31 Oct 2005 12:50:11 -0700
-Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
-	by rgmsgw01.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id j9VJoABL010602
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 31 Oct 2005 12:50:10 -0700
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.53)
-	id 1EWffW-0004tB-Cb; Mon, 31 Oct 2005 11:50:10 -0800
+	id S964816AbVJaTu5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Oct 2005 14:50:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964815AbVJaTu5
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 14:50:57 -0500
+Received: from fmr21.intel.com ([143.183.121.13]:46546 "EHLO
+	scsfmr001.sc.intel.com") by vger.kernel.org with ESMTP
+	id S964814AbVJaTu4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2005 14:50:56 -0500
+Received: from scsfmr101.sc.intel.com (scsfmr101.sc.intel.com [10.3.253.10])
+	by scsfmr001.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j9VJonbj013261;
+	Mon, 31 Oct 2005 19:50:49 GMT
+Received: from intel.com (agluck-lia64.sc.intel.com [143.183.251.239])
+	by scsfmr101.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id j9VJn5w3023644;
+	Mon, 31 Oct 2005 19:49:05 GMT
+Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [127.0.0.1])
+	by intel.com (Postfix) with ESMTP id 1578419F00;
+	Mon, 31 Oct 2005 11:50:49 -0800 (PST)
+Received: (from aegl@localhost)
+	by agluck-lia64.sc.intel.com (8.13.1/8.13.1/Submit) id j9VJomn7009257;
+	Mon, 31 Oct 2005 11:50:48 -0800
 To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
-User-Agent: Mutt/1.5.10i
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
+In-Reply-To: <Pine.LNX.4.64.0510311119170.27915@g5.osdl.org>
+User-Agent: Mutt/1.4.1i
+X-Scanned-By: MIMEDefang 2.52 on 10.3.253.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10879>
 
-On Mon, Oct 31, 2005 at 08:18:49AM -0800, Linus Torvalds wrote:
-> With git (or with BK, or any truly decentralized model), you just make 
-> your own repo, do your development there, and you never need to ask for 
-> permissions from the central repo people. If the development works out, 
-> you just ask people to merge back. And if it doesn't, you don't even have 
-> to tell people what a total failure you were.
+On Mon, Oct 31, 2005 at 11:36:09AM -0800, Linus Torvalds wrote:
+>  a) The "don't do that then" approach:
+> 
+>     Don't go behind git's back and add objects on your own, and expect git 
+>     to realize what you did. ;^p
 
-	Actually, Linus, this provokes a question I've always wanted the
-answer to.  I'm well aware of the centralized/distributed stuff you are
-discussing, but there is policy regarding the distributed merges I've
-never been quite clear on.
-	When one does a feature branch, one creates a "throw-away"
-repository.  They work on the feature, and when they are done, they
-pull/push back to the main repository.  This pattern is pretty much
-identical in both centralized in distributed environments, even if the
-nuts-and-bolts are different.
-	In the CVS/Subversion world, this merge becomes a single commit
-on the "main" line of development ("trunk", or whatever you call it).
-The merge has no concept of the steps taken to create the change, just
-the actual patch.  This has the disadvantage that you have to work hard
-in the branch namespace to find the actual steps taken (the working
-repository for the feature), but the advantage that a quick look does
-not have to wade through fits and starts as the feature takes shape.
-	In the distributed world, a pull of the "feature" repository
-pulls in all changes - the full history of the work.  This includes
-aborted tries, rewritten pieces, bug fixes, etc.  Here, the main
-repository has the detritus of the development process, but that also
-contains the full context of the work.  It goes against your claim that:
+To be a responsible kernel.org git user I need to use packfiles.  The
+cheapest and easiest way to do that is to steal them from you.
 
-> So with the distributed model, you don't have to publicly humiliate 
-> yourself when you do something stupid. Similarly, you don't have to 
+>  b) The "live with it" approach:
+> 
+>     You copied the pack by hand, and that will keep git-unpack-objects 
+>     from duplicating the objects, but you'll still waste time and network 
+>     when trying pushing the objects (just once, though).
+> 
+>     Ie this is what happened this time: nothing really lost, and the end 
+>     result is fine. Now you know why it happened, and you're fine.
 
-because that history will contain all your something stupids, plus your
-fixes for them.
-	But that's not how the kernel and git appear to work.  Many
-developers have popularized dropping that context.  They take their
-working repository, diff it against your mainline repository, and then
-create a new repository that is merely your mainline plus one commit,
-the patch of their changes.
-	This violently breaks the model of "work in a new repository,
-then have it pulled into the 'main' repository."  It has no real support
-in the git/cogito command space (that I know of).  It does, however,
-leave all the intermediate commits out of your tree, with only a feature
-commit remaining.
-	Where do you stand on this?  Would you rather see the full
-history pulled?  Do you prefer the one-clean-patch approach?  If so, is
-there any way to get a cogito/git command for it (git-pull-as-one?)?
+I like this one best.  There's a pretty fat pipe between here and
+kernel.org ... more of the time wasted appeared to be on the
+unpacking part than on the transfer.
 
-Joel
+>  d) Just let git do it for you.
+> 
+>     Copy the pack-files, or add my object directory as an "alternates" for 
+>     your object directory, do the "git prune-objects", and then _locally_ 
+>     on master.kernel.org just do something like
 
--- 
+Longer term (when everyone is pulling using the "git" protocol)
+adding your object directory to my info/alternates looks to be
+the best thing.
 
-"Drake!  We're LEAVING!"
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+-Tony
