@@ -1,64 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Question on GIT usage.
-Date: Mon, 31 Oct 2005 15:42:33 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0510311540300.27915@g5.osdl.org>
-References: <4362C700.6020901@candelatech.com> <Pine.LNX.4.64.0510311749080.25300@iabervon.org>
- <Pine.LNX.4.64.0510311520190.27915@g5.osdl.org> <Pine.LNX.4.64.0510311821410.25300@iabervon.org>
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: git versus CVS (versus bk)
+Date: Mon, 31 Oct 2005 15:41:59 -0800
+Organization: none
+Message-ID: <dk6a46$dqv$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg>	<Pine.LNX.4.64.0510301811390.27915@g5.osdl.org>	<Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0510310804400.27915@g5.osdl.org>	<Pine.LNX.4.64.0510311013200.11219@x2.ybpnyarg> <867jbtii85.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ben Greear <greearb@candelatech.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 01 00:43:59 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Nov 01 00:45:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWjIY-0000zt-Vl
-	for gcvg-git@gmane.org; Tue, 01 Nov 2005 00:42:43 +0100
+	id 1EWjJr-0001Dt-Ms
+	for gcvg-git@gmane.org; Tue, 01 Nov 2005 00:44:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964854AbVJaXmi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Oct 2005 18:42:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964871AbVJaXmi
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 18:42:38 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:30957 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964854AbVJaXmh (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2005 18:42:37 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9VNgZW6024643
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 31 Oct 2005 15:42:35 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9VNgY34003800;
-	Mon, 31 Oct 2005 15:42:34 -0800
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0510311821410.25300@iabervon.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964889AbVJaXoA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Oct 2005 18:44:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964890AbVJaXoA
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 18:44:00 -0500
+Received: from main.gmane.org ([80.91.229.2]:10135 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964889AbVJaXn7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2005 18:43:59 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EWjIa-00012F-KV
+	for git@vger.kernel.org; Tue, 01 Nov 2005 00:42:44 +0100
+Received: from adsl-69-234-179-137.dsl.irvnca.pacbell.net ([69.234.179.137])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 01 Nov 2005 00:42:44 +0100
+Received: from wa1ter by adsl-69-234-179-137.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 01 Nov 2005 00:42:44 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-179-137.dsl.irvnca.pacbell.net
+User-Agent: Mail/News 1.6a1 (X11/20051031)
+In-Reply-To: <867jbtii85.fsf@blue.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10901>
 
+Randal L. Schwartz wrote:
+> ...I doubt that Linus
+> would compare his marriage...with CVS. :)
 
+I dunno why not.  If my wife knew CVS she would probably agree
+with me (for a change).
 
-On Mon, 31 Oct 2005, Daniel Barkalow wrote:
-> 
-> Oh, that reminds me: is there a simple way to merge a branch with another 
-> local branch or remote branch that's already up-to-date? E.g., I've 
-> already fetched the latest git from kernel.org, built it, and installed 
-> it. Now I want to merge my development branch with that. Last time I was 
-> looking, I had to write the message for the merge myself, unlike "pull", 
-> which takes care of that.
+I've learned a great deal from reading this thread -- as I hope
+others have.  I did learn one important thing while reading about
+old Al Einstein:  you can get some astonishing insights by asking
+really dumb questions of really smart people.
 
-Umm.. Why don't you just use "pull"?
+I've had many such astonishing insights from reading Linus's posts
+over the years (and I look forward to many more).  I've been amazed
+by Linus's understanding of both machines and people -- this combo
+is rare indeed!
 
-I _think_ you should be able to just do
-
-	git pull <repodir> <branchname>
-
-where <repodir> can even be just "." for the very same repository.
-
-I've not tested it, but dammit, it should work. If it doesn't, it's a bug.
-
-		Linus
+Linus, have you considered a career in marriage counseling?
