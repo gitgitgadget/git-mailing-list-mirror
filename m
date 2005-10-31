@@ -1,65 +1,86 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git 0.99.9: Subversion importer breaks RPM generation (rpmbuild
- bug)
-Date: Mon, 31 Oct 2005 12:32:21 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0510311230290.27915@g5.osdl.org>
-References: <43652934.8000308@zytor.com>  <7vy84ajl4c.fsf@assigned-by-dhcp.cox.net>
-  <20051031064105.GV8041@shell0.pdx.osdl.net>  <43663EEA.5050102@zytor.com>
- <7v4q6xfpqg.fsf@assigned-by-dhcp.cox.net> <46a038f90510311213n565010d6g5586a7484b25da7e@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: Sebastian Kuzminsky <seb@highlab.com>
+Subject: Re: git 0.99.9: Subversion importer breaks RPM generation (rpmbuild bug)
+Date: Mon, 31 Oct 2005 13:39:52 -0700
+Message-ID: <E1EWgRc-0003ME-Rg@highlab.com>
+References: <43652934.8000308@zytor.com> <7vy84ajl4c.fsf@assigned-by-dhcp.cox.net> <20051031064105.GV8041@shell0.pdx.osdl.net> <43663EEA.5050102@zytor.com> <7v4q6xfpqg.fsf@assigned-by-dhcp.cox.net> <46a038f90510311213n565010d6g5586a7484b25da7e@mail.gmail.com>
 Cc: Junio C Hamano <junkio@cox.net>, "H. Peter Anvin" <hpa@zytor.com>,
-	git@vger.kernel.org, Sebastian Kuzminsky <seb@highlab.com>
-X-From: git-owner@vger.kernel.org Mon Oct 31 21:32:49 2005
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 31 21:37:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWgKe-0004wX-3z
-	for gcvg-git@gmane.org; Mon, 31 Oct 2005 21:32:40 +0100
+	id 1EWgNK-0005lE-Qf
+	for gcvg-git@gmane.org; Mon, 31 Oct 2005 21:35:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932493AbVJaUch (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Oct 2005 15:32:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964806AbVJaUch
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 15:32:37 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:33720 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932493AbVJaUch (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Oct 2005 15:32:37 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j9VKWRsC008739
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 31 Oct 2005 12:32:27 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j9VKWMDb025419;
-	Mon, 31 Oct 2005 12:32:25 -0800
+	id S1751014AbVJaUfV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Oct 2005 15:35:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751108AbVJaUfV
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 15:35:21 -0500
+Received: from rwcrmhc11.comcast.net ([204.127.198.35]:51362 "EHLO
+	rwcrmhc11.comcast.net") by vger.kernel.org with ESMTP
+	id S1751014AbVJaUfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2005 15:35:20 -0500
+Received: from highlab.com ([67.173.252.245])
+          by comcast.net (rwcrmhc11) with ESMTP
+          id <2005103120351201300eftnre>; Mon, 31 Oct 2005 20:35:13 +0000
+Received: from seb (helo=highlab.com)
+	by highlab.com with local-esmtp (Exim 4.50)
+	id 1EWgRc-0003ME-Rg; Mon, 31 Oct 2005 13:39:52 -0700
 To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90510311213n565010d6g5586a7484b25da7e@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+In-reply-to: <46a038f90510311213n565010d6g5586a7484b25da7e@mail.gmail.com> 
+Comments: In-reply-to Martin Langhoff <martin.langhoff@gmail.com>
+   message dated "Tue, 01 Nov 2005 09:13:41 +1300."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10883>
 
-
-
-On Tue, 1 Nov 2005, Martin Langhoff wrote:
-> >
-> > git-core::
-> >         All the rest, plus man pages.  We could separate out
-> >         commit walkers if we wanted to, but I do not think that
-> >         is necessary.
+Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> On 11/1/05, Junio C Hamano <junkio@cox.net> wrote:
+> > I am currently generating i386 RPMs and i386 debs myself but I
+> > am not particularly proud of the current setup.  I do not have
+> > an RPM based machine that I can install the result myself to
+> > test (which is what started this thread).  Since I am not a
+> > Debian developer (and I do not particularly wish to become one
+> > myself), the debs I generate will not be official anyway.
+> > Personally I'd be happier if I can just lose rpm and deb targets
+> > from the "upstream" Makefile (git-core.spec file and debian/
+> > subdirectory as well while we are at it), ask "packaging
+> > maintainers" to pull from kernel.org/ tree and do RPMs and Debs
+> > outside.
 > 
-> git-gitk ;-)
+> I'd say you can probably keep the current setup, and as distro
+> (format?) specific maintainers show up and start maintaining bits and
+> pieces, merge from them. git should make that easy ;-)
+> 
+> I'm not a DD -- but I'm on the 'NM queue' which means I'm in the
+> process of turning into one (delayed at the moment, but hapenning
+> soonish). Have a package in the archive, and a few sponsors who are
+> generally happy to upload my work. Would be happy to give it a go if
+> noone else steps up.
+> 
+> (Sebastian _did_ indicate interest, and fought a long, hard battle in
+> debian-devel about the naming of the git and cg utilities. I haven't
+> seen him around lately (last post:
+> http://marc.theaimsgroup.com/?l=3Dgit&m=3D112747921603277&w=3D2 ). May be
+> on holiday? CC'd)
 
-I really really prefer gitk in the core, even if it means that there's 
-that strange tcl/tk dependency.
+I'm here :-)
 
-It's very small, and having something that visualizes what git does for 
-people who don't understand git is _invaluable_. 
+The GNU Interactive Tools people are changing their name (to "gitfm"),
+but they want a script called "git" to remind people that the name
+has changed...  So I still have to rename our git to "gt" or something,
+until they remove their git script.
 
-It wouldn't have to be gitk, but that's the least pain right now. qgit 
-needs QT, which is much more contentious than tcl/tk. 
+We're going to use update-alternatives so people who dont care about
+GNU Interactive Tools can call their git "git".  This is in violation
+of Debian Policy, but I'm hoping my sponsor will forgive me, as it is
+just a temporary violation.
 
-		Linus
+
+I hope to get this work done sometime this week, and if I have anything
+useful I'll send the patches to the list.
+
+
+-- 
+Sebastian Kuzminsky
