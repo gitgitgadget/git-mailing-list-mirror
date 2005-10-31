@@ -1,52 +1,51 @@
 From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: git versus CVS (versus bk)
-Date: Tue, 01 Nov 2005 20:56:25 -0300
-Message-ID: <200511012356.jA1NuPBd004502@inti.inf.utfsm.cl>
-References: <martin.langhoff@gmail.com>
-Cc: Joel Becker <Joel.Becker@oracle.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	walt <wa1ter@myrealbox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 02 03:13:30 2005
+Subject: Archaeology [Was: Re: GIT 0.99.9]
+Date: Mon, 31 Oct 2005 18:40:48 -0300
+Message-ID: <200510312141.j9VLemi9003820@inti.inf.utfsm.cl>
+References: <junkio@cox.net>
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 02 03:14:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX86o-0003fs-Gl
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 03:12:14 +0100
+	id 1EX87p-0003wU-G2
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 03:13:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932203AbVKBCMM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 21:12:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932202AbVKBCMM
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 21:12:12 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:17108 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S932211AbVKBCML (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 21:12:11 -0500
+	id S932214AbVKBCNP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 21:13:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932216AbVKBCNO
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 21:13:14 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:25044 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S932214AbVKBCNO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 21:13:14 -0500
 Received: from inti.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by inti.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id jA1NuPBd004502;
-	Tue, 1 Nov 2005 20:56:26 -0300
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: Message from Martin Langhoff <martin.langhoff@gmail.com> 
-   of "Tue, 01 Nov 2005 09:28:30 +1300." <46a038f90510311228v50743158q80d79e963bd503ce@mail.gmail.com> 
+	by inti.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j9VLemi9003820;
+	Mon, 31 Oct 2005 18:41:10 -0300
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Sun, 30 Oct 2005 19:08:48 -0800." <7v4q6yl6wv.fsf@assigned-by-dhcp.cox.net> 
 X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10995>
 
-Martin Langhoff <martin.langhoff@gmail.com> wrote:
+Junio C Hamano <junkio@cox.net> wrote:
 
 [...]
 
-> In practice, a new developer will often roll up commits to avoid
-> sending a string of shameful patches and corrections on top -- I often
-> do that ;-) . Developers with more "mana" will have published repos
-> where Junio pulls directly from -- and they get merged with full
-> history. Of course -- they don't have brown-paper-bag commits like I
-> do...
+> One good thing to have would be to add a section to Tutorial.
+> Currently we cover building a small project from scratch and
+> have the readers graduate when they learn basic commit swapping,
+> but we do not talk much about archaeology tools.
 
-I bet they have a scratchpad on their laptop (full of brown-paper-bag
-commits and backtracking) from which they push into a cleaned up repository
-for public consumption.
+One of the problems with that is to have a sufficiently rich repository at
+hand. People who futz around with git could be directed to get the latest
+git from git for a guided tour.
+
+Or create a script like the one in the cogito tutorial to build up someting
+interesting and then direct people to look it over.
 -- 
 Dr. Horst H. von Brand                   User #22616 counter.li.org
 Departamento de Informatica                     Fono: +56 32 654431
