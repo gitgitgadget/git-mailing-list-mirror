@@ -1,67 +1,49 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: [PATCH] Strip any trailing slash on destination argument
-Date: Tue, 1 Nov 2005 23:46:27 +0100
-Message-ID: <200511012346.27393.Josef.Weidendorfer@gmx.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: [PATCH 0/4] User-relative paths, take two.
+Date: Tue, 01 Nov 2005 23:44:53 +0100
+Message-ID: <4367EFE5.8070009@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Nov 01 23:08:01 2005
+X-From: git-owner@vger.kernel.org Tue Nov 01 23:45:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX4GO-0003XU-Lh
-	for gcvg-git@gmane.org; Tue, 01 Nov 2005 23:05:53 +0100
+	id 1EX4sE-00073X-1P
+	for gcvg-git@gmane.org; Tue, 01 Nov 2005 23:44:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335AbVKAWFu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 17:05:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbVKAWFu
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 17:05:50 -0500
-Received: from pop.gmx.net ([213.165.64.20]:28121 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751335AbVKAWFt (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 17:05:49 -0500
-Received: (qmail invoked by alias); 01 Nov 2005 22:05:48 -0000
-Received: from p54969405.dip0.t-ipconnect.de (EHLO [192.168.178.21]) [84.150.148.5]
-  by mail.gmx.net (mp022) with SMTP; 01 Nov 2005 23:05:48 +0100
-X-Authenticated: #352111
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S1751371AbVKAWoz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 17:44:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbVKAWoz
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 17:44:55 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:45292 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751371AbVKAWoy
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 17:44:54 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id CA15A6BD00
+	for <git@vger.kernel.org>; Tue,  1 Nov 2005 23:44:53 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10961>
 
-Needed because generating a target paths will add another slash.
-This fixes e.g. "git-mv file dir/", which removed "file" from
-version control by renaming it to "dir//file", as
-git-update-index does not accept such paths.
+I've reworked the user-relative paths according to the discussion "[RFC] 
+GIT paths" started by Junio. In addition I've added a '--strict-paths' 
+option to git-daemon.
 
-Thanks goes to Ben Lau for noting this bug.
+I think I got everything right. At least it builds nicely and works as 
+expected.
 
-Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Comments welcome. Upstream inclusion even more so. :)
 
----
+Btw. I'll have some more patches for git-daemon soon (--server-root and 
+--userdir) which will rely on these patches making it in. Should I hold 
+off on that for now?
 
- git-mv.perl |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-applies-to: e39c96179f2cc5064a0255057b8e8a8863594536
-e91e743bdf6d246b279fc7f8f5f7ab733690249b
-diff --git a/git-mv.perl b/git-mv.perl
-index 17e35b0..a21d87e 100755
---- a/git-mv.perl
-+++ b/git-mv.perl
-@@ -54,6 +54,8 @@ my ($src, $dst, $base, $dstDir);
- my $argCount = scalar @ARGV;
- if (-d $ARGV[$argCount-1]) {
- 	$dstDir = $ARGV[$argCount-1];
-+	# remove any trailing slash
-+	$dstDir =~ s/\/$//;
- 	@srcArgs = @ARGV[0..$argCount-2];
- 	
- 	foreach $src (@srcArgs) {
----
-0.99.9
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
