@@ -1,91 +1,73 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: git versus CVS (versus bk)
-Date: Tue, 1 Nov 2005 08:17:30 -0800
-Message-ID: <20051101161730.GV11488@ca-server1.us.oracle.com>
-References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg> <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org> <Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org> <20051031195010.GM11488@ca-server1.us.oracle.com> <46a038f90510311228v50743158q80d79e963bd503ce@mail.gmail.com> <20051031213003.GN11488@ca-server1.us.oracle.com> <20051101091533.GB11618@pasky.or.cz>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: hgmq vs. StGIT
+Date: Tue, 1 Nov 2005 17:13:26 +0000
+Message-ID: <b0943d9e0511010913p2914ae85k@mail.gmail.com>
+References: <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org>
+	 <20051031195010.GM11488@ca-server1.us.oracle.com>
+	 <7vr7a1e719.fsf@assigned-by-dhcp.cox.net>
+	 <20051031213616.GO11488@ca-server1.us.oracle.com>
+	 <7vk6ftcp0d.fsf@assigned-by-dhcp.cox.net>
+	 <20051031224246.GP11488@ca-server1.us.oracle.com>
+	 <20051101002554.GA7634@thunk.org> <20051101090804.GA11618@pasky.or.cz>
+	 <20051101141149.GA26847@watt.suse.com>
+	 <Pine.LNX.4.64.0511010757040.27915@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	walt <wa1ter@myrealbox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 01 17:21:16 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Chris Mason <mason@suse.com>, Petr Baudis <pasky@suse.cz>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Joel Becker <Joel.Becker@oracle.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 01 18:16:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWyq4-0003jI-CT
-	for gcvg-git@gmane.org; Tue, 01 Nov 2005 17:18:20 +0100
+	id 1EWzhZ-0006g6-DZ
+	for gcvg-git@gmane.org; Tue, 01 Nov 2005 18:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750902AbVKAQSB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 11:18:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbVKAQSB
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 11:18:01 -0500
-Received: from rgminet03.oracle.com ([148.87.122.32]:25475 "EHLO
-	rgminet03.oracle.com") by vger.kernel.org with ESMTP
-	id S1750840AbVKAQSA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Nov 2005 11:18:00 -0500
-Received: from rgmsgw02.us.oracle.com (rgmsgw02.us.oracle.com [138.1.186.52])
-	by rgminet03.oracle.com (Switch-3.1.6/Switch-3.1.7) with ESMTP id jA1GHV7w008849;
-	Tue, 1 Nov 2005 09:17:31 -0700
-Received: from rgmsgw02.us.oracle.com (localhost.localdomain [127.0.0.1])
-	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id jA1GHUF9010226;
-	Tue, 1 Nov 2005 09:17:30 -0700
-Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
-	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id jA1GHU51010218
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 1 Nov 2005 09:17:30 -0700
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.53)
-	id 1EWypG-0004Pi-57; Tue, 01 Nov 2005 08:17:30 -0800
-To: Petr Baudis <pasky@suse.cz>
+	id S1750970AbVKARN2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 12:13:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750974AbVKARN2
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 12:13:28 -0500
+Received: from xproxy.gmail.com ([66.249.82.201]:19722 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750966AbVKARN1 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 12:13:27 -0500
+Received: by xproxy.gmail.com with SMTP id i30so1363276wxd
+        for <git@vger.kernel.org>; Tue, 01 Nov 2005 09:13:26 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RzPLd29vaGbPmjHxWi1dzof5dkOruLKjwGi4vXK50H1cIZllc32DKZ72/99zhPIaJYSkbSwxGAMFnuNFCIB8L/YugAN1jNzGJcBSJF0inepD1arQwvmuyaGXplRdNLDzKpvfR3AiHyQMLrRxIefdVPTZ/DqsF/dfaqvQX4y0H1c=
+Received: by 10.70.118.9 with SMTP id q9mr2642734wxc;
+        Tue, 01 Nov 2005 09:13:26 -0800 (PST)
+Received: by 10.70.31.3 with HTTP; Tue, 1 Nov 2005 09:13:26 -0800 (PST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511010757040.27915@g5.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <20051101091533.GB11618@pasky.or.cz>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
-User-Agent: Mutt/1.5.10i
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10940>
 
-On Tue, Nov 01, 2005 at 10:15:33AM +0100, Petr Baudis wrote:
-> Personally, from my POV it is the intended mode of development only if
-> you keep strictly topical branches (a single logical change and fixes of
-> it on top of that). Otherwise, this is horrid because it loses the
-> _precious_ history and bundles us different changes to a single commit,
-> which is one of the thing that are wrong on CVS/SVN merging.
+On 01/11/05, Linus Torvalds <torvalds@osdl.org> wrote:
+> On Tue, 1 Nov 2005, Chris Mason wrote:
+> > StGIT has the ability to rebase patches via three-way merge.  This is
+> > still on my todo list for mq.
+>
+> So I'm _neither_ a StGIT not mq user, but I can definitely say that
+> rebasing with a three-way merge instead of just trying to apply the patch
+> (whether in reverse like in a merge, or just re-apply it straigt) is
+> really really nice.
 
-	Here we have the "precious" history vs the "throwaway" history
-argument again.  You are correct, this does look like CVS/Subversion
-merging.  But I'm quite capable of keeping my patches single-topic.
-Anything that requires multiple patches in a logical separation still
-needs that extra love.
+StGIT first tries a "git-diff-tree | git-apply" since it is faster but
+when this fails it falls back to a three-way merge. A 'stg status'
+command would show the conflicted files and they should be marked as
+resolved before refreshing the patch.
 
-> That said, with a big warning, I would be willing to do something like
-> cg-merge -s and cg-update -s (s as squash), with a big warning that this
+One of the good parts of the three-way merge is that it detects when a
+patch you sent was fully merged upstream, the local patch becoming
+empty after the merge. If not, you either get a conflict or the merge
+leaves the patch with only the unmerged parts.
 
-	Wouldn't it be cg-pull?  I guess I'm not conversant enough of
-all ways to merge branches in cogito.
-
-> is suitable only for topical branches. And I think it'd be still much
-> better to spend the work making StGIT able to track history of changes
-> to a particular patch.
-
-	I like quilt for certain work, and what I read from you and
-Caitlin makes me interested in StGIT for those large changes that
-require split-out patches.  But for simple tasks, I just want to use the
-SCM, you know?
-
-Joel
-
--- 
-
-"The cynics are right nine times out of ten."  
-        - H. L. Mencken
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+--
+Catalin
