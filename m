@@ -1,62 +1,79 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: hgmq vs. StGIT
-Date: Tue, 1 Nov 2005 10:36:50 -0500
-Message-ID: <20051101153650.GB26847@watt.suse.com>
-References: <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org> <20051031195010.GM11488@ca-server1.us.oracle.com> <7vr7a1e719.fsf@assigned-by-dhcp.cox.net> <20051031213616.GO11488@ca-server1.us.oracle.com> <7vk6ftcp0d.fsf@assigned-by-dhcp.cox.net> <20051031224246.GP11488@ca-server1.us.oracle.com> <20051101002554.GA7634@thunk.org> <20051101090804.GA11618@pasky.or.cz> <b0943d9e0511010123i1f9eb679w@mail.gmail.com> <436787BD.9080705@citi.umich.edu>
+From: Duncan Mac Leod <duncan@excelsior-online.org>
+Subject: git-pull - strange (copy/rename) messages ?!
+Date: Tue, 01 Nov 2005 16:40:35 +0100
+Organization: EXCELSIOR developers Team
+Message-ID: <43678C73.1080601@excelsior-online.org>
+Reply-To: duncan@excelsior-online.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Petr Baudis <pasky@suse.cz>, Theodore Ts'o <tytso@mit.edu>,
-	Joel Becker <Joel.Becker@oracle.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 01 16:37:00 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Nov 01 16:43:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWyC3-00068s-1f
-	for gcvg-git@gmane.org; Tue, 01 Nov 2005 16:36:59 +0100
+	id 1EWyFD-0007Lx-AT
+	for gcvg-git@gmane.org; Tue, 01 Nov 2005 16:40:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750900AbVKAPg4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 10:36:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750902AbVKAPg4
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 10:36:56 -0500
-Received: from ns.suse.de ([195.135.220.2]:28397 "EHLO mx1.suse.de")
-	by vger.kernel.org with ESMTP id S1750897AbVKAPgy (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 10:36:54 -0500
-Received: from Relay2.suse.de (mail2.suse.de [195.135.221.8])
+	id S1750905AbVKAPkL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 10:40:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750906AbVKAPkL
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 10:40:11 -0500
+Received: from rocksdale.excelsior-online.org ([213.202.239.5]:57094 "EHLO
+	rocksdale.excelsior-online.org") by vger.kernel.org with ESMTP
+	id S1750905AbVKAPkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Nov 2005 10:40:10 -0500
+Received: from [192.168.2.2] (p5494D958.dip.t-dialin.net [84.148.217.88])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id BF9A6E339;
-	Tue,  1 Nov 2005 16:36:53 +0100 (CET)
-To: Chuck Lever <cel@citi.umich.edu>
-Content-Disposition: inline
-In-Reply-To: <436787BD.9080705@citi.umich.edu>
-User-Agent: Mutt/1.5.9i
+	by rocksdale.excelsior-online.org (Postfix) with ESMTP id 061384DAF5
+	for <git@vger.kernel.org>; Tue,  1 Nov 2005 16:49:06 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051101)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10936>
 
-On Tue, Nov 01, 2005 at 10:20:29AM -0500, Chuck Lever wrote:
-[ ... ]
-> would show pretty-printed commit information for change 45.
-> 
->    stg revisions --revert=45
-> 
-> would revert the patch back to the way it was in change 45.  notably, 
-> you don't throw away changes 46 through 90 when you do this.  a new 
-> change is added which changes the state of the patch to the way it was 
-> in change 45.  (well, that's how it's supposed to work, anyway).
-> 
-> i'm interested to hear what folks on the list think of the idea.
+One Team-Member of our dev.-team has deleted one file called 
+Graphics/PaletteGroups.cs in our shared git repository.
 
-I'm probably not familiar enough with stgit, but it
-looks to me as though you're tracking individual patch history only.
+As I updated my working dir with git-pull I noticed some strange messages...
 
-In trees I work with, patches rarely stand alone.  There are typically
-collections of patches implementing a given feature, or a change to one
-patch requires rebasing a number of (perhaps unrelated) others.
+What do these many copy and rename messages below the summary '14 files 
+changed, 933 insertions(+), 263 deletions(-)' mean ????
 
-I think the command set you describe above will lose that grouping.
+Updating from f0df62e7b60c468852d4617505876515f9b305d7 to 
+8c18245869a9447329dedb4a4cd59d103ee6dbfe.
+Fast forward
+  AssemblyInfo.cs                             |    2
+  BaseObjects/Modules.cs                      |  235 ++++++++
+  Graphics/PaletteCategories.cs               |   12
+  Plot/Dialogs/Dialog.cs                      |   12
+  Plot/Dialogs/DialogEntry.cs                 |   12
+  Plot/Dialogs/DialogSection.cs               |   14
+  Plot/Journals/Journal.cs                    |   12
+  Plot/Journals/JournalEntry.cs               |   12
+  Plot/Journals/JournalSection.cs             |   14
+  Runtime/CompilerServices/eScriptCompiler.cs |   12
+  Runtime/Scripting/Script.cs                 |   12
+  Runtime/Scripting/ScriptLibrary.cs          |   14
+  doc/excelsior_corelib.xml                   |  784 
+++++++++++++++++++++-------
+  excelsior_corelib.csproj                    |   49 ++
+  14 files changed, 933 insertions(+), 263 deletions(-)
+  copy Graphics/{PaletteGroups.cs => PaletteCategories.cs} (80%)
+  copy Graphics/PaletteGroups.cs => Plot/Dialogs/Dialog.cs (75%)
+  copy Graphics/PaletteGroups.cs => Plot/Dialogs/DialogEntry.cs (74%)
+  copy Graphics/PaletteGroups.cs => Plot/Dialogs/DialogSection.cs (64%)
+  copy Graphics/PaletteGroups.cs => Plot/Journals/Journal.cs (75%)
+  copy Graphics/PaletteGroups.cs => Plot/Journals/JournalEntry.cs (73%)
+  copy Graphics/PaletteGroups.cs => Plot/Journals/JournalSection.cs (64%)
+  copy Graphics/PaletteGroups.cs => 
+Runtime/CompilerServices/eScriptCompiler.cs (74%)
+  copy Graphics/PaletteGroups.cs => Runtime/Scripting/Script.cs (75%)
+  rename Graphics/PaletteGroups.cs => Runtime/Scripting/ScriptLibrary.cs 
+(64%)
 
--chris
+thx in advance,
+duncan
