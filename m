@@ -1,56 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-pull - strange (copy/rename) messages ?!
-Date: Tue, 01 Nov 2005 09:43:51 -0800
-Message-ID: <7vbr149sbs.fsf@assigned-by-dhcp.cox.net>
-References: <43678C73.1080601@excelsior-online.org>
-	<Pine.LNX.4.64.0511010801370.27915@g5.osdl.org>
+From: Chris Mason <mason@suse.com>
+Subject: Re: hgmq vs. StGIT
+Date: Tue, 1 Nov 2005 12:59:05 -0500
+Message-ID: <20051101175905.GC26847@watt.suse.com>
+References: <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org> <20051031195010.GM11488@ca-server1.us.oracle.com> <7vr7a1e719.fsf@assigned-by-dhcp.cox.net> <20051031213616.GO11488@ca-server1.us.oracle.com> <7vk6ftcp0d.fsf@assigned-by-dhcp.cox.net> <20051031224246.GP11488@ca-server1.us.oracle.com> <20051101002554.GA7634@thunk.org> <20051101090804.GA11618@pasky.or.cz> <20051101141149.GA26847@watt.suse.com> <b0943d9e0511010929u22b33e4el@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 01 18:45:52 2005
+Cc: Petr Baudis <pasky@suse.cz>, Theodore Ts'o <tytso@mit.edu>,
+	Joel Becker <Joel.Becker@oracle.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 01 19:00:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX0Au-0000QO-Fq
-	for gcvg-git@gmane.org; Tue, 01 Nov 2005 18:43:56 +0100
+	id 1EX0Pi-0005cj-GM
+	for gcvg-git@gmane.org; Tue, 01 Nov 2005 18:59:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751047AbVKARnx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 12:43:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751052AbVKARnx
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 12:43:53 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:13970 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751043AbVKARnw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Nov 2005 12:43:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051101174353.JMGQ9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 1 Nov 2005 12:43:53 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751062AbVKAR7L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 12:59:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751067AbVKAR7L
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 12:59:11 -0500
+Received: from cantor2.suse.de ([195.135.220.15]:230 "EHLO mx2.suse.de")
+	by vger.kernel.org with ESMTP id S1751062AbVKAR7K (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 12:59:10 -0500
+Received: from Relay2.suse.de (mail2.suse.de [195.135.221.8])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id 2646C7FC;
+	Tue,  1 Nov 2005 18:59:09 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0511010929u22b33e4el@mail.gmail.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10946>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Tue, Nov 01, 2005 at 05:29:19PM +0000, Catalin Marinas wrote:
+> On 01/11/05, Chris Mason <mason@suse.com> wrote:
+> > mq is closer to quilt.  The patches are stored as patches, and hg qpush
+> > is very similar to importing a patch.  This means metadata must be
+> > stored at the top of the patch in some form the import code can
+> > understand (it tries to be smart about this).
+> 
+> The problem with this is allowing people to modify the patch directly
+> (with vi). This would make it difficult to do a three-way merge
+> without either losing the direct changes or simply failing to apply a
+> modified patch to its old base (I thought about using patches as an
+> optimisation but after some benchmarking found that "git-diff-tree |
+> git-apply" is fast enough and most of the time when pushing is
+> calculating the sha1 hash of the resulting index file).
 
-> Btw, Junio, I thought "git pull" was only supposed to do rename 
-> detection, not copy detection.
+The three way merge is still possible even if someone hand edits the
+patch.  For a three way merge, you just need to know the parent revision
+of the change you want to merge.  parent can mean the revision in the
+repository that precedes this patch (mq stores this information, just
+not in the patch), or it can mean any revision where the patch applies
+cleanly.
 
-Sorry, but what do you mean by "only rename detection but not
-copy detection" in this case?
+Both approaches (mq vs stgit) have advantages...you can get roughly the same
+functionality either way.
 
-When you have "ce A B; ce A C; ce A D;... ; mv A Z", (ce is like
-cp but "copy+edit") where B-Z are all new files and A disappears
-from the result, trying to detect renames would end up detecting
-copies without extra processing; B through Z are rename
-destination candidates, and A is a rename source candidate
-(there may be others), and it turns out that B-Z all look like
-A.
-
-Would it be easier to read if we say A was renamed to B, and A
-was renamed to C, and A was renamed to D, ...?  I think the
-current output is easier to understand than that.  B-Y gets
-labelled as copy of A and Z gets labelled as rename.
+-chris
