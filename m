@@ -1,57 +1,57 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: [PATCH] Point git-clone man-page to git-pull and friends for remote repo syntax.
-Date: Wed,  2 Nov 2005 00:25:08 +0100 (CET)
-Message-ID: <20051101232508.097715BF70@nox.op5.se>
-X-From: git-owner@vger.kernel.org Wed Nov 02 00:26:02 2005
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH gitweb] Visually indicating patch size with horizontal bars
+Date: Wed, 2 Nov 2005 00:30:35 +0100
+Message-ID: <20051101233035.GB1431@pasky.or.cz>
+References: <20051027203945.GC1622@pe.Belkin> <20051028015642.GA31822@vrfy.org> <20051028023833.GA19939@pe.Belkin>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 02 00:32:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX5VP-0002uG-3i
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 00:25:27 +0100
+	id 1EX5aX-0004Op-4j
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 00:30:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751432AbVKAXZK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 18:25:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751433AbVKAXZK
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 18:25:10 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:52204 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751432AbVKAXZJ
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 18:25:09 -0500
-Received: from nox.op5.se (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 2E36A6BD00
-	for <git@vger.kernel.org>; Wed,  2 Nov 2005 00:25:08 +0100 (CET)
-Received: by nox.op5.se (Postfix, from userid 500)
-	id 097715BF70; Wed,  2 Nov 2005 00:25:08 +0100 (CET)
-To: undisclosed-recipients:;
+	id S1751436AbVKAXam (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 18:30:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbVKAXam
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 18:30:42 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:19657 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751436AbVKAXal (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 18:30:41 -0500
+Received: (qmail 31395 invoked by uid 2001); 2 Nov 2005 00:30:35 +0100
+To: Chris Shoemaker <c.shoemaker@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20051028023833.GA19939@pe.Belkin>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10970>
 
-Signed-off-by: Andreas Ericsson <ae@op5.se>
+Dear diary, on Fri, Oct 28, 2005 at 04:38:33AM CEST, I got a letter
+where Chris Shoemaker <c.shoemaker@cox.net> told me that...
+> Here's a side-by-side comparison.  Open two browser tabs and flip between them:
+> 
+> http://www.codesifter.com/cgi-bin/gitweb-difftreeP.cgi?p=git.git;a=shortlog
+> http://www.codesifter.com/cgi-bin/gitweb-difftreeNames.cgi?p=git.git;a=shortlog
+> 
+> I've used a project you all are familar with, and that has more than
+> two files.  The first page uses 'git-diff-tree -p $hash|wc -l'.  The
+> second page uses 'git-diff-tree -r --name-only|wc -l'.  (Oh and I have
+> a merge indicator now.)
+> 
+> How do they compare for showing damage-potential?  I think they both
+> do a reasonable job.  I think the full patch diff is a bit better, but
+> it does cost.
 
----
+What about having the color indicate the number of affected files (let's
+say on a blue..red scale) and the width the size of patch?
 
- Documentation/git-clone.txt |    6 ++----
- 1 files changed, 2 insertions(+), 4 deletions(-)
-
-applies-to: 10d2c80712a3ff324ddd1c0f37b2b0e8bfda554c
-189416bb09953a7268d13ea38cbef6bd61485863
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index dd92cde..1d23be5 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -48,10 +48,8 @@ OPTIONS
- 	run on the other end.
- 
- <repository>::
--	The (possibly remote) repository to clone from.  It can
--	be an "rsync://host/dir" URL, an "http://host/dir" URL,
--	or [<host>:]/dir notation that is used by 'git-clone-pack'.
--	Currently http transport is not supported.
-+	The repository to clone from.  See the man-page for
-+	git-pull, git-fetch or git-push for syntax explanation.
- 
- <directory>::
- 	The name of a new directory to be cloned into.  It is an
----
-0.99.9.GIT
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
