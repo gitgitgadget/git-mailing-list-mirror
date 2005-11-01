@@ -1,64 +1,99 @@
-From: Peter Baumann <peter.baumann@gmail.com>
-Subject: [BUG] t4102-apply-rename.sh isn't umask aware
-Date: Tue, 1 Nov 2005 12:03:10 +0100
-Message-ID: <802d21790511010303l1a91071ci@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: git versus CVS (versus bk)
+Date: Tue, 01 Nov 2005 13:25:39 +0000
+Message-ID: <tnxd5lkwld8.fsf@arm.com>
+References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg>
+	<Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0510310804400.27915@g5.osdl.org>
+	<20051031195010.GM11488@ca-server1.us.oracle.com>
+	<7vr7a1e719.fsf@assigned-by-dhcp.cox.net>
+	<20051031213616.GO11488@ca-server1.us.oracle.com>
+	<7vk6ftcp0d.fsf@assigned-by-dhcp.cox.net>
+	<20051031224246.GP11488@ca-server1.us.oracle.com>
+	<7vbr15b4m4.fsf@assigned-by-dhcp.cox.net>
+	<20051101004255.GQ11488@ca-server1.us.oracle.com>
+	<46a038f90510311702wfb43281rf4464a02e8e3be2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Nov 01 12:04:51 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Joel Becker <Joel.Becker@oracle.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Nov 01 14:27:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWtv8-0006SA-B7
-	for gcvg-git@gmane.org; Tue, 01 Nov 2005 12:03:14 +0100
+	id 1EWw9v-000161-PC
+	for gcvg-git@gmane.org; Tue, 01 Nov 2005 14:26:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750716AbVKALDM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 06:03:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750741AbVKALDL
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 06:03:11 -0500
-Received: from xproxy.gmail.com ([66.249.82.199]:41879 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750716AbVKALDL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 06:03:11 -0500
-Received: by xproxy.gmail.com with SMTP id i30so1256771wxd
-        for <git@vger.kernel.org>; Tue, 01 Nov 2005 03:03:10 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=dE9FzKdGLbDoMj7e9ruF8GynJ512s6SQR+QKQy4/zh8waLbHqmdgMgFdFKclgrl6RT3T2Kldm8WRMhfKC1kuZQgLH7o+t0AGaV3h+NIt318emMVHZDziRsQBLoo2iFUr1pFf7gpyPMquK5dSNpskI02gNXm/UFEINxgo+cZT7M8=
-Received: by 10.65.22.10 with SMTP id z10mr977054qbi;
-        Tue, 01 Nov 2005 03:03:10 -0800 (PST)
-Received: by 10.64.21.6 with HTTP; Tue, 1 Nov 2005 03:03:10 -0800 (PST)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1750745AbVKAN0f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 08:26:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbVKAN0e
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 08:26:34 -0500
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:5799 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S1750745AbVKAN0e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Nov 2005 08:26:34 -0500
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id jA1DPbSV001566;
+	Tue, 1 Nov 2005 13:25:37 GMT
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id NAA05165;
+	Tue, 1 Nov 2005 13:25:50 GMT
+Received: from localhost.localdomain ([10.1.69.3]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Tue, 1 Nov 2005 13:25:41 +0000
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90510311702wfb43281rf4464a02e8e3be2@mail.gmail.com> (Martin
+ Langhoff's message of "Tue, 1 Nov 2005 14:02:43 +1300")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 01 Nov 2005 13:25:41.0112 (UTC) FILETIME=[C142CF80:01C5DEE7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10932>
 
-xp:~/src/git/t rm -fR trash
-xp:~/src/git/t umask
-0027
-xp:~/src/git/t ./t4102-apply-rename.sh
-mv: cannot stat `.git/hooks': No such file or directory
-*   ok 1: setup
-*   ok 2: apply
-* FAIL 3: validate
-        test -f bar && ls -l bar | grep "^-..x..x..x"
-* failed 1 among 3 test(s)
+Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> On 11/1/05, Joel Becker <Joel.Becker@oracle.com> wrote:
+>> > is possible) offhand.  Sometimes, when you want truly logical
+>> > steps, you would end up needing intermediate steps that never
+>> > existed in your true history (i.e. "in the hindsight, my
+>> > development should have progressed in these steps.")
+>>
+>>         Yes, I always do.  But I'm not talking about that sort of large
+>> feature add or whatever.  I'm talking about merely doing something on a
+>> small scale, but in a temporary repository.
+>
+> I'm really surprised that Calalin hasn't chimed in.
 
+Well, it was night here when this discussion took off :-).
 
-Setting umask to 0022  fixed the problem.
+> If you are into rewriting/merging/splitting your patches, StGIT is
+> your friend. Check out: http://www.procode.org/stgit/
 
-xp:~/src/git/t rm -fR trash
-xp:~/src/git/t umask
-0022
-xp:~/src/git/t ./t4102-apply-rename.sh
-mv: cannot stat `.git/hooks': No such file or directory
-*   ok 1: setup
-*   ok 2: apply
-*   ok 3: validate
-* passed all 3 test(s)
+StGIT mainly resembles Quilt workflow but there are no patches, only
+commit objects which are indefinitely replaceable (push/pop/refresh).
 
-Regards
+What I usually do is create smaller commits for different features and
+just stack them together. That's usually for features which are
+dependent on each-other and you can control them with a finer grain
+than having separate branches. One can push/pop patches (commits) to
+bring the patch to be modified at the top. After modification, a
+refresh command would save it as a commit. All the patches (commits)
+in the stack are accessible via HEAD and are seen as GIT commits.
 
-  Peter
+It may happen to just have a bigger patch which needs splitting. What
+I usually do in this case is import the patch as an StGIT patch
+(i.e. GIT commit object), pop it from the stack so that it is no
+longer applied, split the physical patch (diff file) into smaller, logical
+changes and apply them one by one with StGIT. When you think al the
+big patch was completely applied, pushing it should result in an empty
+patch, otherwise you might have missed something that needs applying.
+
+With StGIT you can also pick a commit object from a different branch
+as a StGIT patch or you could merge two patches into one.
+
+Once you are OK with the patches in the stack, just ask the gatekeeper
+to pull the changes from your tree using plain GIT or mail them
+automatically with StGIT.
+
+-- 
+Catalin
