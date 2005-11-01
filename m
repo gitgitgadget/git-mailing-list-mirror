@@ -1,50 +1,53 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH gitweb] Visually indicating patch size with horizontal bars
-Date: Wed, 2 Nov 2005 12:33:38 +1300
-Message-ID: <46a038f90511011533q177328fdrf4b0dd68f188282e@mail.gmail.com>
-References: <20051027203945.GC1622@pe.Belkin> <20051028015642.GA31822@vrfy.org>
-	 <20051028023833.GA19939@pe.Belkin> <20051101233035.GB1431@pasky.or.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git-pull - strange (copy/rename) messages ?!
+Date: Wed, 2 Nov 2005 00:36:47 +0100
+Message-ID: <20051101233647.GC1431@pasky.or.cz>
+References: <43678C73.1080601@excelsior-online.org> <Pine.LNX.4.64.0511010801370.27915@g5.osdl.org> <7vbr149sbs.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511011646070.25300@iabervon.org> <7vu0ew6jf3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Chris Shoemaker <c.shoemaker@cox.net>,
-	Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 02 00:35:28 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 02 00:37:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX5dP-0005Fi-6p
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 00:33:43 +0100
+	id 1EX5gY-0006CV-5Z
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 00:36:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439AbVKAXdk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 18:33:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbVKAXdj
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 18:33:39 -0500
-Received: from xproxy.gmail.com ([66.249.82.202]:25978 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751439AbVKAXdj convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 18:33:39 -0500
-Received: by xproxy.gmail.com with SMTP id t5so3307wxc
-        for <git@vger.kernel.org>; Tue, 01 Nov 2005 15:33:38 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=noeByzoij1pTHVNdEmBlQh86QratLFCktXGqHh3MAYLqBuXRz8clwH283Xkh4YDV+LxHHzZnFxJGZOg8yk9SRYgsPv5ziVSGjpdue8MmMRAHXOF+UPLnOUqwgbqIqaZAn9QTf+IFIIXqcug6IfI2IjLzZfve+ksbU4yrX/rpYz0=
-Received: by 10.65.22.10 with SMTP id z10mr1486391qbi;
-        Tue, 01 Nov 2005 15:33:38 -0800 (PST)
-Received: by 10.64.232.18 with HTTP; Tue, 1 Nov 2005 15:33:38 -0800 (PST)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051101233035.GB1431@pasky.or.cz>
+	id S1751443AbVKAXgu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 18:36:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751444AbVKAXgu
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 18:36:50 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:33468 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751443AbVKAXgt (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 18:36:49 -0500
+Received: (qmail 31972 invoked by uid 2001); 2 Nov 2005 00:36:47 +0100
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7vu0ew6jf3.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10972>
 
-On 11/2/05, Petr Baudis <pasky@suse.cz> wrote:
-> What about having the color indicate the number of affected files (let's
-> say on a blue..red scale) and the width the size of patch?
+Dear diary, on Wed, Nov 02, 2005 at 12:24:32AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > I think it's more confusing for the system to report Z differently from 
+> > other things, because there's nothing special about what it found, except 
+> > that Z happens to be last.
+> 
+> What would we get for a simple "mv A B and nothing else" case if
+> we follow your proposal and Pasky's?  What about "cp A B and
+> nothing else" case?
 
-I'm a /little bit/ colour blind on the red scale -- so I vote for 2
-bars, each half the heigth of the current bar.  ;-)
+In case of my proposal, you get the mv and cp as usual, since there are
+no multiple rename candidates for A.
 
-martin
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
