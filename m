@@ -1,57 +1,63 @@
-From: Penny Leach <penny@catalyst.net.nz>
-Subject: Re: [PATCH] Gitweb: Per-head rss feeds and per-project opml.
-Date: Wed, 02 Nov 2005 15:03:23 +1300
-Message-ID: <43681E6B.6030608@catalyst.net.nz>
-References: <11308969914190-git-send-email-penny@catalyst.net.nz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Nov 02 03:09:15 2005
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: git 0.99.9: Subversion importer breaks RPM generation (rpmbuild bug)
+Date: Tue, 01 Nov 2005 20:11:16 -0300
+Message-ID: <200511012311.jA1NBGii003792@inti.inf.utfsm.cl>
+References: <torvalds@osdl.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>, Chris Wright <chrisw@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 02 03:13:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX83E-0002kB-DD
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 03:08:32 +0100
+	id 1EX87b-0003sB-Uk
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 03:13:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932199AbVKBCIZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 21:08:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932201AbVKBCIZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 21:08:25 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:65257 "EHLO
-	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S932199AbVKBCIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Nov 2005 21:08:24 -0500
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[192.168.2.34])
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1EX835-000314-DD
-	for git@vger.kernel.org; Wed, 02 Nov 2005 15:08:23 +1300
-User-Agent: Mozilla/5.0 (X11; U; Linux ppc; en-US; rv:1.7.12) Gecko/20051009 Debian/1.7.12-1
-X-Accept-Language: en
-To: git@vger.kernel.org
-In-Reply-To: <11308969914190-git-send-email-penny@catalyst.net.nz>
-X-Enigmail-Version: 0.93.0.0
+	id S932211AbVKBCNA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 21:13:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932214AbVKBCNA
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 21:13:00 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:22996 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S932211AbVKBCM7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 21:12:59 -0500
+Received: from inti.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by inti.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id jA1NBGii003792;
+	Tue, 1 Nov 2005 20:11:16 -0300
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: Message from Linus Torvalds <torvalds@osdl.org> 
+   of "Mon, 31 Oct 2005 08:25:21 -0800." <Pine.LNX.4.64.0510310819290.27915@g5.osdl.org> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10992>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Linus Torvalds <torvalds@osdl.org> wrote:
+> On Mon, 31 Oct 2005, H. Peter Anvin wrote:
+> > The git-core RPM definitiely needs to be split.  Doubly ironic that it's
+> > called "core".
 
-Sorry, I should have said that this can be seen here:
+> I don't think it's necessarily ironic. It's actually a good thing.
+> 
+> I think that what we want to have is one _project_ (called "git"), which 
+> can generate multiple RPM's ("git-core", "git-svnimport", "git-docs", 
+> whatever).
 
-http://locke.catalyst.net.nz/gitweb
+Better cut along outside requirements: git-svn, git-cvs, git-scm-du-jour,
+git-gtk. Please _don't_ split out documentation.
 
+> So I think it was good that we called the RPM "git-core". We've just not 
+> yet done the obvious thing to create a few _other_ RPM's.
 
-Penny Leach wrote:
-> Signed-off-by: Penny Leach <penny@catalyst.net.nz>
+Right.
 
+> Now, I'm not certain how happy RPM would be with having one source RPM 
+> generate multiple binary RPM's,
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-Comment: Using GnuPG with Debian - http://enigmail.mozdev.org
-
-iD8DBQFDaB5rGHUSCqMOwisRAntNAJ9bt4VgMCcK6LVTSPt8Hr2KuRCq6ACgq26o
-DneB+AI6jlPLabIL0Bikm3o=
-=4rH6
------END PGP SIGNATURE-----
+Works fine. It is exactly what is used to build -devel packages. What
+doesn't work is doing multiple architectures, e.g. creating
+git-core-1.2.3.i386.rpm and git-gitk-1.2.3.noarch.rpm, in one go.
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
