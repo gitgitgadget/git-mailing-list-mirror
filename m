@@ -1,93 +1,91 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-pull - strange (copy/rename) messages ?!
-Date: Tue, 1 Nov 2005 08:10:53 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511010801370.27915@g5.osdl.org>
-References: <43678C73.1080601@excelsior-online.org>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: git versus CVS (versus bk)
+Date: Tue, 1 Nov 2005 08:17:30 -0800
+Message-ID: <20051101161730.GV11488@ca-server1.us.oracle.com>
+References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg> <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org> <Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org> <20051031195010.GM11488@ca-server1.us.oracle.com> <46a038f90510311228v50743158q80d79e963bd503ce@mail.gmail.com> <20051031213003.GN11488@ca-server1.us.oracle.com> <20051101091533.GB11618@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 01 17:15:23 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	walt <wa1ter@myrealbox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 01 17:21:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWyjy-0001NV-GZ
-	for gcvg-git@gmane.org; Tue, 01 Nov 2005 17:12:02 +0100
+	id 1EWyq4-0003jI-CT
+	for gcvg-git@gmane.org; Tue, 01 Nov 2005 17:18:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750832AbVKAQLG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 11:11:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750834AbVKAQLG
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 11:11:06 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:23959 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750832AbVKAQLF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 11:11:05 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA1GAvW6006347
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 1 Nov 2005 08:10:58 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA1GArGn003605;
-	Tue, 1 Nov 2005 08:10:55 -0800
-To: Duncan Mac Leod <duncan@excelsior-online.org>
-In-Reply-To: <43678C73.1080601@excelsior-online.org>
-X-Spam-Status: No, hits=0.014 required=5 tests=PLING_QUERY
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750902AbVKAQSB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 11:18:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbVKAQSB
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 11:18:01 -0500
+Received: from rgminet03.oracle.com ([148.87.122.32]:25475 "EHLO
+	rgminet03.oracle.com") by vger.kernel.org with ESMTP
+	id S1750840AbVKAQSA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Nov 2005 11:18:00 -0500
+Received: from rgmsgw02.us.oracle.com (rgmsgw02.us.oracle.com [138.1.186.52])
+	by rgminet03.oracle.com (Switch-3.1.6/Switch-3.1.7) with ESMTP id jA1GHV7w008849;
+	Tue, 1 Nov 2005 09:17:31 -0700
+Received: from rgmsgw02.us.oracle.com (localhost.localdomain [127.0.0.1])
+	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id jA1GHUF9010226;
+	Tue, 1 Nov 2005 09:17:30 -0700
+Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
+	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id jA1GHU51010218
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 1 Nov 2005 09:17:30 -0700
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.53)
+	id 1EWypG-0004Pi-57; Tue, 01 Nov 2005 08:17:30 -0800
+To: Petr Baudis <pasky@suse.cz>
+Content-Disposition: inline
+In-Reply-To: <20051101091533.GB11618@pasky.or.cz>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
+User-Agent: Mutt/1.5.10i
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10939>
 
+On Tue, Nov 01, 2005 at 10:15:33AM +0100, Petr Baudis wrote:
+> Personally, from my POV it is the intended mode of development only if
+> you keep strictly topical branches (a single logical change and fixes of
+> it on top of that). Otherwise, this is horrid because it loses the
+> _precious_ history and bundles us different changes to a single commit,
+> which is one of the thing that are wrong on CVS/SVN merging.
 
+	Here we have the "precious" history vs the "throwaway" history
+argument again.  You are correct, this does look like CVS/Subversion
+merging.  But I'm quite capable of keeping my patches single-topic.
+Anything that requires multiple patches in a logical separation still
+needs that extra love.
 
-On Tue, 1 Nov 2005, Duncan Mac Leod wrote:
->
-> One Team-Member of our dev.-team has deleted one file called
-> Graphics/PaletteGroups.cs in our shared git repository.
-> 
-> As I updated my working dir with git-pull I noticed some strange messages...
-> 
-> What do these many copy and rename messages below the summary '14 files
-> changed, 933 insertions(+), 263 deletions(-)' mean ????
+> That said, with a big warning, I would be willing to do something like
+> cg-merge -s and cg-update -s (s as squash), with a big warning that this
 
-First off, you should realize that whenever git says "copy" or "rename", 
-it never actually tracked the data at that level. git itself never did a 
-copy or rename operation at all, it just tracked your data contents.
+	Wouldn't it be cg-pull?  I guess I'm not conversant enough of
+all ways to merge branches in cogito.
 
-However, the normal "git pull" will show purely for your edification what 
-git thinks the other end did to get to that data content. And it does so 
-with copy and rename detection enabled, so in this case it says:
+> is suitable only for topical branches. And I think it'd be still much
+> better to spend the work making StGIT able to track history of changes
+> to a particular patch.
 
->  copy Graphics/{PaletteGroups.cs => PaletteCategories.cs} (80%)
->  copy Graphics/PaletteGroups.cs => Plot/Dialogs/Dialog.cs (75%)
->  copy Graphics/PaletteGroups.cs => Plot/Dialogs/DialogEntry.cs (74%)
->  copy Graphics/PaletteGroups.cs => Plot/Dialogs/DialogSection.cs (64%)
->  copy Graphics/PaletteGroups.cs => Plot/Journals/Journal.cs (75%)
->  copy Graphics/PaletteGroups.cs => Plot/Journals/JournalEntry.cs (73%)
->  copy Graphics/PaletteGroups.cs => Plot/Journals/JournalSection.cs (64%)
->  copy Graphics/PaletteGroups.cs => Runtime/CompilerServices/eScriptCompiler.cs (74%)
->  copy Graphics/PaletteGroups.cs => Runtime/Scripting/Script.cs (75%)
->  rename Graphics/PaletteGroups.cs => Runtime/Scripting/ScriptLibrary.cs (64%)
+	I like quilt for certain work, and what I read from you and
+Caitlin makes me interested in StGIT for those large changes that
+require split-out patches.  But for simple tasks, I just want to use the
+SCM, you know?
 
-Which means that git notices that there are a number of new files, and the 
-new files all bear a striking resemblance to one file that was deleted.
+Joel
 
-So it tells you that the new files are probably copies of the old one 
-(with one final "rename", since the old file doesn't actually exist any 
-more).
+-- 
 
-Which may or may not be true, of course. But even if it's not "true", it's 
-still interesting information - it is a totally objective "those new files 
-look like the old file" thing. In other words, it tells you something 
-true about the file contents.
+"The cynics are right nine times out of ten."  
+        - H. L. Mencken
 
-To some degree it would be much more interesting to have 
-"--find-copies-harder" enabled (which it isn't), which gives better copy 
-information for new files (it also looks at _unchanged_ old files). 
-However, that's prohibitively expensive for big projects, so it's not on 
-by default.
-
-Btw, Junio, I thought "git pull" was only supposed to do rename 
-detection, not copy detection.
-
-			Linus
+Joel Becker
+Principal Software Developer
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
