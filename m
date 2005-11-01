@@ -1,99 +1,89 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: hgmq vs. StGIT
-Date: Tue, 1 Nov 2005 17:29:19 +0000
-Message-ID: <b0943d9e0511010929u22b33e4el@mail.gmail.com>
-References: <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org>
-	 <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org>
-	 <20051031195010.GM11488@ca-server1.us.oracle.com>
-	 <7vr7a1e719.fsf@assigned-by-dhcp.cox.net>
-	 <20051031213616.GO11488@ca-server1.us.oracle.com>
-	 <7vk6ftcp0d.fsf@assigned-by-dhcp.cox.net>
-	 <20051031224246.GP11488@ca-server1.us.oracle.com>
-	 <20051101002554.GA7634@thunk.org> <20051101090804.GA11618@pasky.or.cz>
-	 <20051101141149.GA26847@watt.suse.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git versus CVS (versus bk)
+Date: Tue, 1 Nov 2005 18:35:02 +0100
+Message-ID: <20051101173502.GA16528@pasky.or.cz>
+References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg> <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org> <Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org> <20051031195010.GM11488@ca-server1.us.oracle.com> <46a038f90510311228v50743158q80d79e963bd503ce@mail.gmail.com> <20051031213003.GN11488@ca-server1.us.oracle.com> <20051101091533.GB11618@pasky.or.cz> <20051101161730.GV11488@ca-server1.us.oracle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Petr Baudis <pasky@suse.cz>, Theodore Ts'o <tytso@mit.edu>,
-	Joel Becker <Joel.Becker@oracle.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 01 18:33:09 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	walt <wa1ter@myrealbox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 01 18:35:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWzwq-0003TO-3M
-	for gcvg-git@gmane.org; Tue, 01 Nov 2005 18:29:24 +0100
+	id 1EX02R-0005Mu-63
+	for gcvg-git@gmane.org; Tue, 01 Nov 2005 18:35:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751011AbVKAR3V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 12:29:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751008AbVKAR3V
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 12:29:21 -0500
-Received: from xproxy.gmail.com ([66.249.82.194]:4246 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751009AbVKAR3U convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 12:29:20 -0500
-Received: by xproxy.gmail.com with SMTP id i30so1368932wxd
-        for <git@vger.kernel.org>; Tue, 01 Nov 2005 09:29:19 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Q8GXGRo9X1ZjuGRFpHrAcdV7scBeTuL3Av2uGrA8TYGLdJj1BIVtUYLRKdu579r9O7uckWRR6iN3ou9ifxybc//PAOSBk3eR+10yiriaQ7NOmnSSlLkcrLDsvfI9zU4uhMbycUtpKnRjjQoAoc/qCBafbcn/Jtagdczsfs/yrE8=
-Received: by 10.70.72.15 with SMTP id u15mr2655391wxa;
-        Tue, 01 Nov 2005 09:29:19 -0800 (PST)
-Received: by 10.70.31.3 with HTTP; Tue, 1 Nov 2005 09:29:19 -0800 (PST)
-To: Chris Mason <mason@suse.com>
-In-Reply-To: <20051101141149.GA26847@watt.suse.com>
+	id S1751028AbVKARfH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 12:35:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbVKARfG
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 12:35:06 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:3763 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751028AbVKARfF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 12:35:05 -0500
+Received: (qmail 28313 invoked by uid 2001); 1 Nov 2005 18:35:02 +0100
+To: Joel Becker <Joel.Becker@oracle.com>
 Content-Disposition: inline
+In-Reply-To: <20051101161730.GV11488@ca-server1.us.oracle.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10943>
 
-On 01/11/05, Chris Mason <mason@suse.com> wrote:
-> On Tue, Nov 01, 2005 at 10:08:04AM +0100, Petr Baudis wrote:
-> > Did anyone do any current detailed comparison between hg mq and StGIT?
->
-> I don't think so, but I'll give it a rough try.  I have not used stgit
-> extensively, so please correct any mistakes below.  Most of the
-> differences center around the ways we store patches.
+Dear diary, on Tue, Nov 01, 2005 at 05:17:30PM CET, I got a letter
+where Joel Becker <Joel.Becker@oracle.com> told me that...
+> On Tue, Nov 01, 2005 at 10:15:33AM +0100, Petr Baudis wrote:
+> > Personally, from my POV it is the intended mode of development only if
+> > you keep strictly topical branches (a single logical change and fixes of
+> > it on top of that). Otherwise, this is horrid because it loses the
+> > _precious_ history and bundles us different changes to a single commit,
+> > which is one of the thing that are wrong on CVS/SVN merging.
+> 
+> 	Here we have the "precious" history vs the "throwaway" history
+> argument again.  You are correct, this does look like CVS/Subversion
+> merging.  But I'm quite capable of keeping my patches single-topic.
+> Anything that requires multiple patches in a logical separation still
+> needs that extra love.
 
-Thanks for this comparison. It is correct.
+Well, ok, so I assume you are indeed using strictly topical branches.
+.
 
-> mq is closer to quilt.  The patches are stored as patches, and hg qpush
-> is very similar to importing a patch.  This means metadata must be
-> stored at the top of the patch in some form the import code can
-> understand (it tries to be smart about this).
+> > That said, with a big warning, I would be willing to do something like
+> > cg-merge -s and cg-update -s (s as squash), with a big warning that this
+> 
+> 	Wouldn't it be cg-pull?  I guess I'm not conversant enough of
+> all ways to merge branches in cogito.
 
-The problem with this is allowing people to modify the patch directly
-(with vi). This would make it difficult to do a three-way merge
-without either losing the direct changes or simply failing to apply a
-modified patch to its old base (I thought about using patches as an
-optimisation but after some benchmarking found that "git-diff-tree |
-git-apply" is fast enough and most of the time when pushing is
-calculating the sha1 hash of the resulting index file).
+cg-pull just fetches stuff, no merging done.
 
-> hg qrefresh will update the patch file, so the patch is always up to
-> date wrt to the hg repo.
+Ok, in theory you do not actually need to fetch the intermediate history
+in case you are going to squash (unless you are going to default the
+final commit message to concatenation of the intermediate ones), but
+arranging that would not be easy to arrange with the current git tools,
+I think. And neither feasible. But actually, I would like to do
+something like this later, support for CVS/SVN-like tracking by always
+having only the latest tree and no intermediate states, so that people
+who just want to run the latest and want to do no development are not
+forced to download anything useless for them.
 
-Chuck, I think, has a patch to automatically export the patch when
-pushing or refreshing. With the latest StGIT snapshot, the tool
-reports if the patch was modified during push and can only be exported
-in this case (the way it detects this is by assuming that if git-apply
-is successful, the patch is unmodified since no fuzzy applying is
-accepted; the fall back to three-way merge just reports the patch as
-modified).
+> > is suitable only for topical branches. And I think it'd be still much
+> > better to spend the work making StGIT able to track history of changes
+> > to a particular patch.
+> 
+> 	I like quilt for certain work, and what I read from you and
+> Caitlin makes me interested in StGIT for those large changes that
+> require split-out patches.  But for simple tasks, I just want to use the
+> SCM, you know?
 
-> You can import/export patches with hg commands, or by copying patches
-> into/from the .hg/patches directory.  This also means you can take a
-> quilt patch dir, copy it into .hg/patches and just start using mq.
+Well, if you are already going to deform the history, StGIT (able to
+track patch history) is just the best tool for that.
 
-As I said, you might have problems with implementing a three-way merge.
-
-> I'm not sure if stgit has some form of annotate, but it's a nice way to
-> find out which patch changed a given loc in hg/mq.
-
-There is git-whatchanged which also reports the StGIT patches applied
-onto the stack. But there is no command similar to 'quilt patches'
-yet.
-
---
-Catalin
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
