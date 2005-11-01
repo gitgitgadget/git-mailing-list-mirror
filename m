@@ -1,144 +1,146 @@
 From: Andreas Ericsson <ae@op5.se>
-Subject: [PATCH 3/4] Server-side support for user-relative paths.
+Subject: [PATCH 2/4] Library code for user-relative paths.
 Date: Tue,  1 Nov 2005 23:59:21 +0100 (CET)
-Message-ID: <20051101225921.3835C5BF73@nox.op5.se>
-X-From: git-owner@vger.kernel.org Wed Nov 02 00:00:38 2005
+Message-ID: <20051101225921.2C6035BA82@nox.op5.se>
+X-From: git-owner@vger.kernel.org Wed Nov 02 00:00:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX56F-0003RJ-Dm
+	id 1EX56E-0003RJ-Sl
 	for gcvg-git@gmane.org; Tue, 01 Nov 2005 23:59:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751395AbVKAW7X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S1751394AbVKAW7X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
 	Tue, 1 Nov 2005 17:59:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751398AbVKAW7X
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 17:59:23 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:48876 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751395AbVKAW7W
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751397AbVKAW7W
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 17:59:22 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:48620 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751394AbVKAW7W
 	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 17:59:22 -0500
 Received: from nox.op5.se (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 666736BD14
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 557E96BD04
 	for <git@vger.kernel.org>; Tue,  1 Nov 2005 23:59:21 +0100 (CET)
 Received: by nox.op5.se (Postfix, from userid 500)
-	id 3835C5BF73; Tue,  1 Nov 2005 23:59:21 +0100 (CET)
+	id 2C6035BA82; Tue,  1 Nov 2005 23:59:21 +0100 (CET)
 To: undisclosed-recipients:;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10965>
 
-Remove the redundant code from {receive,upload}-pack.c in favour of the
-library code in path.c (previous patch) with documentation of the changes
-to the affected programs.
+See this discussion, "[RFC] GIT paths", on the git-list:
+http://www.gelato.unsw.edu.au/archives/git/0510/10924.html
+
+This patch provides the work-horse of the user-relative paths, using Linus'
+idea of a blind chdir() and getcwd(), which makes it remarkably simple.
 
 Signed-off-by: Andreas Ericsson <ae@op5.se>
 
 ---
 
- Documentation/pull-fetch-param.txt |   35 +++++++++++++++++++++++++++--------
- receive-pack.c                     |   13 ++-----------
- upload-pack.c                      |   13 ++-----------
- 3 files changed, 31 insertions(+), 30 deletions(-)
+ cache.h |    1 +
+ path.c  |   72 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 73 insertions(+), 0 deletions(-)
 
-applies-to: 17cf0474b857a396561f2def13ac6ac6b01e1e33
-dd1ddd3d653b28bd57092f0e243efa545cd214d3
-diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-index e8db9d7..33ee02e 100644
---- a/Documentation/pull-fetch-param.txt
-+++ b/Documentation/pull-fetch-param.txt
-@@ -1,16 +1,35 @@
- <repository>::
--	The "remote" repository to pull from.  One of the
--	following notations can be used to name the repository
--	to pull from:
-+	The repository to pull/fetch from or push to.  The following
-+	notations can be used to name the repository:
- +
- ===============================================================
--- Rsync URL:		rsync://remote.machine/path/to/repo.git/
--- HTTP(s) URL:		http://remote.machine/path/to/repo.git/
--- git URL:		git://remote.machine/path/to/repo.git/
--			or remote.machine:/path/to/repo.git/
--- Local directory:	/path/to/repo.git/
-+- rsync://host.xz/path/to/repo.git/
-+- http://host.xz/path/to/repo.git/
-+- https://host.xz/path/to/repo.git/
-+- git://host.xz/path/to/repo.git/
-+- git://host.xz/~user/path/to/repo.git/
-+- ssh://host.xz/path/to/repo.git/
-+- ssh://host.xz/~user/path/to/repo.git/
- ===============================================================
- +
-+	SSH Is the default transport protocol and also supports an
-+	scp-like syntax.  Both syntaxes support username expansion,
-+	as does the git-protocol. The following two are	identical
-+	to the last two above:
-++
-+===============================================================
-+- host.xz:/path/to/repo.git/
-+- host.xz:~user/path/to/repo.git/
-+===============================================================
-++
-+	To sync with a local directory, use:
-++
-+===============================================================
-+- /path/to/repo.git/
-+===============================================================
-++
-+Note that you can't push via HTTP or HTTPS.
-++
- In addition to the above, as a short-hand, the name of a
- file in $GIT_DIR/remotes directory can be given; the
- named file should be in the following format:
-diff --git a/receive-pack.c b/receive-pack.c
-index 8f157bc..2c56018 100644
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -265,18 +265,9 @@ int main(int argc, char **argv)
- 	if (!dir)
- 		usage(receive_pack_usage);
+applies-to: bf640ae3d5bb5f5f283c62d4f5198a3c5e5086f0
+1c4e7bb2383e2b67f0e877a46ea1eba4ec7e45e7
+diff --git a/cache.h b/cache.h
+index 677c6ac..aea2097 100644
+--- a/cache.h
++++ b/cache.h
+@@ -190,6 +190,7 @@ extern int trust_executable_bit;
  
--	/* chdir to the directory. If that fails, try appending ".git" */
--	if (chdir(dir) < 0) {
--		if (chdir(mkpath("%s.git", dir)) < 0)
--			die("unable to cd to %s", dir);
--	}
--
--	/* If we have a ".git" directory, chdir to it */
--	chdir(".git");
--	putenv("GIT_DIR=.");
-+	if(!is_git_repo(dir, 0))
-+		die("'%s': unable to chdir or not a git archive", dir);
+ /* Return a statically allocated filename matching the sha1 signature */
+ extern char *mkpath(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
++extern const char *is_git_repo(const char *path, int strict);
+ extern char *git_path(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
+ extern char *sha1_file_name(const unsigned char *sha1);
+ extern char *sha1_pack_name(const unsigned char *sha1);
+diff --git a/path.c b/path.c
+index 495d17c..4f4018d 100644
+--- a/path.c
++++ b/path.c
+@@ -11,6 +11,7 @@
+  * which is what it's designed for.
+  */
+ #include "cache.h"
++#include <pwd.h>
  
--	if (access("objects", X_OK) < 0 || access("refs/heads", X_OK) < 0)
--		die("%s doesn't appear to be a git directory", dir);
- 	write_head_info();
+ static char pathname[PATH_MAX];
+ static char bad_path[] = "/bad-path/";
+@@ -89,3 +90,74 @@ char *safe_strncpy(char *dest, const cha
  
- 	/* EOF */
-diff --git a/upload-pack.c b/upload-pack.c
-index c5eff21..86e2a61 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -275,18 +275,9 @@ int main(int argc, char **argv)
- 		usage(upload_pack_usage);
- 	dir = argv[i];
- 
--	/* chdir to the directory. If that fails, try appending ".git" */
--	if (chdir(dir) < 0) {
--		if (strict || chdir(mkpath("%s.git", dir)) < 0)
--			die("git-upload-pack unable to chdir to %s", dir);
--	}
--	if (!strict)
--		chdir(".git");
-+	if(!is_git_repo(dir, strict))
-+		die("'%s': unable to chdir or not a git archive", dir);
- 
--	if (access("objects", X_OK) || access("refs", X_OK))
--		die("git-upload-pack: %s doesn't seem to be a git archive", dir);
--
--	putenv("GIT_DIR=.");
- 	upload_pack();
- 	return 0;
+ 	return dest;
  }
++
++static const char *current_dir()
++{
++	return getcwd(pathname, sizeof(pathname));
++}
++
++/* Take a raw path from is_git_repo() and canonicalize it using Linus'
++ * idea of a blind chdir() and getcwd(). */
++static const char *canonical_path(const char *path, int strict)
++{
++	const char *dir = path;
++
++	if(strict && *dir != '/')
++		return NULL;
++
++	if(*dir == '~') {		/* user-relative path */
++		struct passwd *pw;
++		char *slash = NULL;
++
++		dir++;
++		/* '~/' and '~' (no slash) means users own home-dir */
++		if(!*dir || *dir == '/')
++			pw = getpwuid(getuid());
++		else {
++			if((slash = strchr(dir, '/'))) {
++				*slash = '\0';
++				pw = getpwnam(dir);
++				*slash = '/';
++			}
++			else
++				pw = getpwnam(dir);
++		}
++
++		/* make sure we got something back that we can chdir() to */
++		if(!pw || chdir(pw->pw_dir) < 0)
++			return NULL;
++
++		if(slash && *slash + 1)
++			dir = slash + 1;
++		else
++			dir = current_dir();
++	}
++
++	/* ~foo/path/to/repo is now path/to/repo and we're in foo's homedir */
++	if(chdir(dir) < 0)
++		return NULL;
++
++	return current_dir();
++}
++
++const char *is_git_repo(const char *path, int strict)
++{
++	if(!path)
++		return NULL;
++
++	if(!canonical_path(path, strict)) {
++		if(strict || !canonical_path(mkpath("%s.git", path), strict))
++			return NULL;
++	}
++
++	/* This is perfectly safe, and people tend to think of the directory
++	 * where they ran git-init-db as their repository, so humour them. */
++	(void)chdir(".git");
++
++	if(access("objects", X_OK) == 0 && access("refs", X_OK) == 0) {
++		putenv("GIT_DIR=.");
++		return current_dir();
++	}
++
++	return NULL;
++}
 ---
 0.99.9.GIT
