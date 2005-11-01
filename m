@@ -1,98 +1,71 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git-cvsimport: $cvs->file() fails silently
-Date: Tue, 1 Nov 2005 14:22:37 +1300
-Message-ID: <46a038f90510311722y56eadd3bj1ae53db05c496c67@mail.gmail.com>
-References: <46a038f90510262123y4f56cf7v5494b391394ac648@mail.gmail.com>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: git versus CVS (versus bk)
+Date: Mon, 31 Oct 2005 17:29:15 -0800
+Message-ID: <20051101012915.GR11488@ca-server1.us.oracle.com>
+References: <Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org> <20051031195010.GM11488@ca-server1.us.oracle.com> <7vr7a1e719.fsf@assigned-by-dhcp.cox.net> <20051031213616.GO11488@ca-server1.us.oracle.com> <7vk6ftcp0d.fsf@assigned-by-dhcp.cox.net> <20051031224246.GP11488@ca-server1.us.oracle.com> <7vbr15b4m4.fsf@assigned-by-dhcp.cox.net> <20051101004255.GQ11488@ca-server1.us.oracle.com> <46a038f90510311702wfb43281rf4464a02e8e3be2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Nov 01 02:24:11 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Nov 01 02:33:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EWkrJ-00058g-5U
-	for gcvg-git@gmane.org; Tue, 01 Nov 2005 02:22:41 +0100
+	id 1EWl17-0006tK-GL
+	for gcvg-git@gmane.org; Tue, 01 Nov 2005 02:32:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964909AbVKABWi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Oct 2005 20:22:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964913AbVKABWi
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 20:22:38 -0500
-Received: from xproxy.gmail.com ([66.249.82.200]:34368 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964909AbVKABWh convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2005 20:22:37 -0500
-Received: by xproxy.gmail.com with SMTP id i30so1151455wxd
-        for <git@vger.kernel.org>; Mon, 31 Oct 2005 17:22:37 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qosjfZ4dYxlc9h52tac8fD7HzSEiztuMa8TrfyC9p9Ad2Soj577EDU9JMx6hI39RxMkBb90QYfejRohkQzeo88tsBrYj7q/Hwmlz2RLskynE08cL3DIlruzW2FHAuFdqIVGfwmHLe6EDzM92txyK38vccqsYJiEssVgvnSXzxw4=
-Received: by 10.64.10.9 with SMTP id 9mr702319qbj;
-        Mon, 31 Oct 2005 17:22:37 -0800 (PST)
-Received: by 10.64.232.18 with HTTP; Mon, 31 Oct 2005 17:22:37 -0800 (PST)
-To: Matthias Urlichs <smurf@smurf.noris.de>,
-	Sven Verdoolaege <skimo@kotnet.org>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <46a038f90510262123y4f56cf7v5494b391394ac648@mail.gmail.com>
+	id S932516AbVKABcq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Oct 2005 20:32:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932537AbVKABcq
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Oct 2005 20:32:46 -0500
+Received: from rgminet02.oracle.com ([148.87.122.31]:46952 "EHLO
+	rgminet02.oracle.com") by vger.kernel.org with ESMTP
+	id S932516AbVKABcq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Oct 2005 20:32:46 -0500
+Received: from rgmsgw01.us.oracle.com (rgmsgw01.us.oracle.com [138.1.186.51])
+	by rgminet02.oracle.com (Switch-3.1.6/Switch-3.1.7) with ESMTP id jA11TGuN018157;
+	Mon, 31 Oct 2005 18:29:16 -0700
+Received: from rgmsgw01.us.oracle.com (localhost.localdomain [127.0.0.1])
+	by rgmsgw01.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id jA11TGjI012476;
+	Mon, 31 Oct 2005 18:29:16 -0700
+Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
+	by rgmsgw01.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id jA11TFTw012466
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 31 Oct 2005 18:29:16 -0700
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.53)
+	id 1EWkxf-0007ky-PT; Mon, 31 Oct 2005 17:29:15 -0800
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <46a038f90510311702wfb43281rf4464a02e8e3be2@mail.gmail.com>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
+User-Agent: Mutt/1.5.10i
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10915>
 
-On 10/27/05, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> There _must_ be one place that we're missing but I just can't
-> see it.
+On Tue, Nov 01, 2005 at 02:02:43PM +1300, Martin Langhoff wrote:
+> I'm really surprised that Calalin hasn't chimed in. If you are into
+> rewriting/merging/splitting your patches, StGIT is your friend. Check
+> out:  http://www.procode.org/stgit/
 
-Got some more info on this. The output of cvsimport when this happens
-looks like this:
+	But I'm not.  I don't want patches in the first place.  I want
+cg-pull but with a flattened history.
 
-Read from remote host cvs.sourceforge.net: Connection reset by peer
-Read from remote host cvs.sourceforge.net: Connection reset by peer
-Update course/enrol.php:  bytes
-Use of uninitialized value in split at
-/home/martin/local/git/git-cvsimport line 362.
-Update lang/en/moodle.php: 66792 bytes
-Tree ID ef11ad5a0cf917e98bc477837de1b3f587e12027
-Parent ID e972b3a28e1c4802fc5af6a996164c93fb4f3e53
-Committed patch 20143 (MOODLE_15_STABLE 2005-10-31 20:31:57)
-Commit ID 95a748b0d9cd6dc74e65497561514fa5858c149c
-
-Around line 335  $res = $self->_line($fh); is returning '', which is
-defined but otherwise empty. I've patched cvsimport thus to try and
-catch this kind of error:
-
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index bbb83fb..f594df3 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -337,6 +337,10 @@ sub file {
-        }
-        close ($fh);
-
-+       if ($res eq '') {
-+           die "Looks like the server has gone away during the transaction!";
-+       }
-+
-        return ($name, $res);
- }
-
-@@ -764,6 +768,9 @@ while(<CVS>) {
-                my $rev = $3;
-                $fn =~ s#^/+##;
-                my ($tmpname, $size) = $cvs->file($fn,$rev);
-+               if ($size eq '') {
-+                       die "Should not happen! Something went wrong
-with the remote connection";
-+               }
-                if($size == -1) {
-                        push(@old,$fn);
-                        print "Drop $fn\n" if $opt_v;
-
-Now, I'm sure we can catch it in the "right" place, but I'm not sure
-where that is.
-
-cheers,
+Joel
 
 
-martin
+-- 
+
+"Any man who is under 30, and is not a liberal, has not heart;
+ and any man who is over 30, and is not a conservative, has no brains."
+         - Sir Winston Churchill 
+
+Joel Becker
+Principal Software Developer
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
