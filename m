@@ -1,181 +1,94 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Add --no-commit to git-merge/git-pull.
-Date: Tue, 01 Nov 2005 19:43:30 -0800
-Message-ID: <7vd5lj3eal.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] cogito rpm package to include manuals
+Date: Tue, 01 Nov 2005 23:30:50 -0500
+Message-ID: <1130905850.9704.12.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Nov 02 04:44:26 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Nov 02 05:31:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX9XD-0001Ho-9e
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 04:43:35 +0100
+	id 1EXAHF-0002nd-1N
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 05:31:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932258AbVKBDnc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 22:43:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932264AbVKBDnc
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 22:43:32 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:45207 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932258AbVKBDnc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Nov 2005 22:43:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051102034240.JFXE2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 1 Nov 2005 22:42:40 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751488AbVKBEa5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 23:30:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbVKBEa5
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 23:30:57 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:25287 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751488AbVKBEa4
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 23:30:56 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EXAGz-0007ts-40
+	for git@vger.kernel.org; Tue, 01 Nov 2005 23:30:53 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.54)
+	id 1EXAGw-00044l-LP; Tue, 01 Nov 2005 23:30:50 -0500
+To: git <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
+X-Mailer: Evolution 2.4.1 (2.4.1-5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10999>
 
-With --no-commit flag, git-pull will perform the merge but pretends as
-if the merge needed a hand resolve even if automerge cleanly resolves,
-to give the user a chance to add further changes and edit the commit
-message.
+The cogito rpm package created by "make rpm" lacks manual pages.  I can
+understand why manuals are not generated for local installations by
+default (asciidoc is slow, and the commands are self-documented), but
+rpm packages should be closer to perfection.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Since there is no way to install manuals without also installing the
+text documentation, so the later is deleted after installation.
 
----
+Nothing from the Documentation directory except tutorial-script should
+be included as documentation.
 
- This turns out to be useful while maintaining the maint branch
- for 0.99.9[a-z] lettered maintenance releases.  The plan is for
- the contents of that branch to match always the tip of the
- master branch during 0.99.9 timeframe, and every time a merge
- is done from master into maint, only GIT_VERSION in the
- Makefile is bumped up.  0.99.8 maintenance branch was done by
- pulling from a private branch "fixes", immediately followed by
- a separate commit to bump that definition up, but with this, I
- could instead do this:
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-        $ git checkout master
-        $ git am -3 -s ./++patches-from-the-list.mbox
-	... work work work in master ...
-        $ git checkout maint
-        $ git pull --no-commit . master
-        ... update the version in Makefile and debian/changelog ...
-        $ git commit -a -m 'GIT 0.99.9b'
-
- git-merge.sh |   28 ++++++++++++++++++----------
- git-pull.sh  |    6 ++++--
- 2 files changed, 22 insertions(+), 12 deletions(-)
-
-applies-to: 60d390a285756ba840953418954ac05dca40f75b
-c575e6d759f2305e5710dae7ac58274db5930de7
-diff --git a/git-merge.sh b/git-merge.sh
-index 6ad96eb..dd104db 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -9,7 +9,7 @@ LF='
- '
+diff --git a/cogito.spec.in b/cogito.spec.in
+index 080b988..1ed9305 100644
+--- a/cogito.spec.in
++++ b/cogito.spec.in
+@@ -8,6 +8,7 @@ URL: 		http://kernel.org/pub/software/sc
+ Source: 	http://kernel.org/pub/software/scm/cogito/%{name}-%{version}.tar.gz
+ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+ Requires: 	git-core >= 0.99.7
++BuildRequires: 	asciidoc
+ BuildArch:	noarch
  
- usage () {
--    die "git-merge [-n] [-s <strategy>]... <merge-message> <head> <remote>+"
-+    die "git-merge [-n] [--no-commit] [-s <strategy>]... <merge-message> <head> <remote>+"
- }
+ %description
+@@ -21,11 +22,13 @@ many other version control systems.
  
- # all_strategies='resolve recursive stupid octopus'
-@@ -63,6 +63,8 @@ do
- 	-n|--n|--no|--no-|--no-s|--no-su|--no-sum|--no-summ|\
- 		--no-summa|--no-summar|--no-summary)
- 		no_summary=t ;;
-+	--no-c|--no-co|--no-com|--no-comm|--no-commi|--no-commit)
-+		no_commit=t ;;
- 	-s=*|--s=*|--st=*|--str=*|--stra=*|--strat=*|--strate=*|\
- 		--strateg=*|--strategy=*|\
- 	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
-@@ -111,18 +113,18 @@ done
- common=$(git-show-branch --merge-base $head "$@")
- echo "$head" >"$GIT_DIR/ORIG_HEAD"
+ %build
  
--case "$#,$common" in
--*,'')
-+case "$#,$common,$no_commit" in
-+*,'',*)
- 	# No common ancestors found. We need a real merge.
- 	;;
--1,"$1")
-+1,"$1",*)
- 	# If head can reach all the merge then we are up to date.
- 	# but first the most common case of merging one remote
- 	echo "Already up-to-date."
- 	dropsave
- 	exit 0
- 	;;
--1,"$head")
-+1,"$head",*)
- 	# Again the most common case of merging one remote.
- 	echo "Updating from $head to $1."
- 	git-update-index --refresh 2>/dev/null
-@@ -132,11 +134,11 @@ case "$#,$common" in
- 	dropsave
- 	exit 0
- 	;;
--1,?*"$LF"?*)
-+1,?*"$LF"?*,*)
- 	# We are not doing octopus and not fast forward.  Need a
- 	# real merge.
- 	;;
--1,*)
-+1,*,)
- 	# We are not doing octopus, not fast forward, and have only
- 	# one common.  See if it is really trivial.
- 	echo "Trying really trivial in-index merge..."
-@@ -210,12 +212,18 @@ do
-     # Remember which strategy left the state in the working tree
-     wt_strategy=$strategy
+-make
++make all doc
  
--    git-merge-$strategy $common -- "$head_arg" "$@" || {
-+    git-merge-$strategy $common -- "$head_arg" "$@"
-+    exit=$?
-+    if test "$no_commit" = t && test "$exit" = 0
-+    then
-+	exit=1 ;# pretend it left conflicts.
-+    fi
+ %install
+ rm -rf $RPM_BUILD_ROOT
+-make DESTDIR=$RPM_BUILD_ROOT prefix=%{_prefix} libdir=%{_libdir}/cogito install
++make DESTDIR=$RPM_BUILD_ROOT prefix=%{_prefix} libdir=%{_libdir}/cogito mandir=%{_mandir} \
++	install install-doc
++rm -rf $RPM_BUILD_ROOT/%{_prefix}/share/doc/cogito/txt
+ 
+ %clean
+ rm -rf $RPM_BUILD_ROOT
+@@ -35,9 +38,13 @@ rm -rf $RPM_BUILD_ROOT
+ %{_bindir}/*
+ %dir %{_libdir}/cogito
+ %{_libdir}/cogito/*
+-%doc README COPYING Documentation/*
++%{_mandir}/man*/*
++%doc README COPYING Documentation/tutorial-script
+ 
+ %changelog
++* Tue Nov 1 2005 Pavel Roskin <proski@gnu.org> 0.15.1-1
++- generate and include manuals
 +
-+    test "$exit" = 0 || {
+ * Tue Oct 11 2005 Chris Wright <chrisw@osdl.org> 0.15.1-1
+ - use %dist
  
- 	# The backend exits with 1 when conflicts are left to be resolved,
- 	# with 2 when it does not handle the given merge at all.
- 
--	exit=$?
- 	if test "$exit" -eq 1
- 	then
- 	    cnt=`{
-@@ -272,4 +280,4 @@ do
- done >"$GIT_DIR/MERGE_HEAD"
- echo $merge_msg >"$GIT_DIR/MERGE_MSG"
- 
--die "Automatic merge failed; fix up by hand"
-+die "Automatic merge failed/prevented; fix up by hand"
-diff --git a/git-pull.sh b/git-pull.sh
-index d476518..9601627 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -10,13 +10,15 @@ usage () {
-     die "git pull [-n] [-s strategy]... <repo> <head>..."
- }
- 
--strategy_args= no_summary=
-+strategy_args= no_summary= no_commit=
- while case "$#,$1" in 0) break ;; *,-*) ;; *) break ;; esac
- do
- 	case "$1" in
- 	-n|--n|--no|--no-|--no-s|--no-su|--no-sum|--no-summ|\
- 		--no-summa|--no-summar|--no-summary)
- 		no_summary=-n ;;
-+	--no-c|--no-co|--no-com|--no-comm|--no-commi|--no-commit)
-+		no_commit=--no-commit ;;
- 	-s=*|--s=*|--st=*|--str=*|--stra=*|--strat=*|--strate=*|\
- 		--strateg=*|--strategy=*|\
- 	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
-@@ -81,4 +83,4 @@ case "$strategy_args" in
- esac
- 
- merge_name=$(git-fmt-merge-msg <"$GIT_DIR/FETCH_HEAD")
--git-merge $no_summary $strategy_args "$merge_name" HEAD $merge_head
-+git-merge $no_summary $no_commit $strategy_args "$merge_name" HEAD $merge_head
----
-0.99.9.GIT
+
+
+-- 
+Regards,
+Pavel Roskin
