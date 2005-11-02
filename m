@@ -1,47 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/4] Server-side support for user-relative paths.
-Date: Wed, 02 Nov 2005 01:47:13 -0800
-Message-ID: <7vll07tm8u.fsf@assigned-by-dhcp.cox.net>
-References: <20051101225921.3835C5BF73@nox.op5.se>
-	<7vek5z6h3f.fsf@assigned-by-dhcp.cox.net> <43687914.6080906@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add 'ours' merge strategy.
+Date: Wed, 2 Nov 2005 11:35:30 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511021134100.6501@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vll071ug5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 02 10:47:44 2005
+X-From: git-owner@vger.kernel.org Wed Nov 02 11:37:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXFDL-0000n5-9s
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 10:47:27 +0100
+	id 1EXFyD-0005iJ-Q0
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 11:35:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932696AbVKBJrQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Nov 2005 04:47:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932698AbVKBJrQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 04:47:16 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:48073 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932696AbVKBJrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2005 04:47:15 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051102094632.EOGY776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 2 Nov 2005 04:46:32 -0500
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <43687914.6080906@op5.se> (Andreas Ericsson's message of "Wed, 02
-	Nov 2005 09:30:12 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751545AbVKBKfc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Nov 2005 05:35:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751551AbVKBKfc
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 05:35:32 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:24194 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751544AbVKBKfc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2005 05:35:32 -0500
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 40A7A13EBD3; Wed,  2 Nov 2005 11:35:31 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 24F30B4FBE; Wed,  2 Nov 2005 11:35:31 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 00B15B1690; Wed,  2 Nov 2005 11:35:31 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id D3D3C13EBC0; Wed,  2 Nov 2005 11:35:30 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vll071ug5.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11020>
 
-Andreas Ericsson <ae@op5.se> writes:
+Hi,
 
-> I went with this implementation because...
-> Perhaps it should be enter_repo() or some such? Optionally with 
-> is_git_repo() as a separate function?
+On Tue, 1 Nov 2005, Junio C Hamano wrote:
 
-I agree with you that splitting this into three separate
-functions does not make much sense.  I was just unsure about
-that name; enter_repo() sounds more sensible.
+>  This can be used to terminate an old maintenance branch without
+>  leaving people's repositories behind.
+
+How about optionally do something similar when git-rebase'ing? Especially 
+"pu"?
+
+Ciao,
+Dscho
