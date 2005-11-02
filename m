@@ -1,75 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Warn when calling deref_tag() on broken tags
-Date: Wed, 02 Nov 2005 13:18:43 -0800
-Message-ID: <7vbr12px3g.fsf@assigned-by-dhcp.cox.net>
-References: <20051102200751.26904.5780.stgit@machine.or.cz>
-	<Pine.LNX.4.63.0511022115250.13746@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20051102204101.GE1431@pasky.or.cz>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: [PATCH][Cogito] Let cg-push default to git+ssh on a host:path syntax
+Date: Wed, 2 Nov 2005 22:27:26 +0100
+Message-ID: <200511022227.26323.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 02 22:21:03 2005
+X-From: git-owner@vger.kernel.org Wed Nov 02 22:22:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXQ0f-0004FL-0o
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 22:19:05 +0100
+	id 1EXQ3d-00055Z-BY
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 22:22:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965247AbVKBVSq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Nov 2005 16:18:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965251AbVKBVSp
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 16:18:45 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:3995 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S965247AbVKBVSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2005 16:18:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051102211752.YISE2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 2 Nov 2005 16:17:52 -0500
+	id S965249AbVKBVWG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Nov 2005 16:22:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965253AbVKBVWG
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 16:22:06 -0500
+Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:56513 "EHLO
+	tuminfo2.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S965249AbVKBVWF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2005 16:22:05 -0500
+Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
+	by mail.in.tum.de (Postfix) with ESMTP id 465F827BB;
+	Wed,  2 Nov 2005 22:22:04 +0100 (MET)
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051102204101.GE1431@pasky.or.cz> (Petr Baudis's message of
-	"Wed, 2 Nov 2005 21:41:01 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+User-Agent: KMail/1.8.2
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11044>
 
-Petr Baudis <pasky@suse.cz> writes:
+Let cg-push default to git+ssh on a host:path syntax
 
-> +struct object *deref_tag(struct object *o, const char *refname)
->  {
-> +	struct object *o2 = o;
->  	while (o && o->type == tag_type)
-> -		o = parse_object(((struct tag *)o)->tagged->sha1);
-> +		o = parse_object(((struct tag *)(o2 = o))->tagged->sha1);
-> +	if (!o)
-> +		fprintf(stderr, "warning: invalid tag %s\n",
-> +		        refname ? refname
-> +		        : (o2 ? sha1_to_hex(o2->sha1)
-> +		           : "<unknown> (this is probably internal GIT error)"));
->  	return o;
->  }
+cg-update/cg-fetch fall back to git+ssh protocol for host:path
+syntax. cg-push should do the same.
 
-I wonder if it would make more sense to keep the root of the
-traversal for this function (i.e. the original value of o) for
-error reporting purposes, like this:
+Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+---
 
-        struct object *deref_tag(struct object *o, const char *refname)
-        {
-                struct object *o2 = o;
-                while (o && o->type == tag_type)
-                        o = parse_object(((struct tag *)o)->tagged->sha1);
-                if (!o)
-                        fprintf(stderr, "warning: invalid tag %s\n",
-                                refname ? refname
-                                : (o2 ? sha1_to_hex(o2->sha1)
-                                   : "<unknown> (this is probably internal GIT error)"));
-                return o;
-        }
+ cg-push |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
-What do you think?
-
-Other than that, the patch is OK by me.  Thanks.
+applies-to: 9294c00b9e87de048c0d29f8ad99c0a6d2733b16
+1f6693e09a8aa4c02297472764b972a07d1c0d02
+diff --git a/cg-push b/cg-push
+index 4c29b33..d63fb65 100755
+--- a/cg-push
++++ b/cg-push
+@@ -51,8 +51,12 @@ if echo "$uri" | grep -q "^http://"; the
+ 	die "pushing over HTTP not supported yet"
+ elif echo "$uri" | grep -q "^git+ssh://"; then
+ 	git-send-pack "$(echo "$uri" | sed 's#^git+ssh://\([^/]*\)\(/.*\)$#\1:\2#')" $_git_head$sprembranch "${tags[@]}"
++elif echo "$uri" | grep -q "^rsync://"; then
++        die "pushing over rsync not supported"
+ elif echo "$uri" | grep -q ":"; then
+-	die "pushing over rsync not supported"
++	echo "WARNING: I guessed the host:path syntax was used and fell back to the git+ssh protocol."
++	echo "WARNING: The host:path syntax is evil because it is implicit. Please just use a URI."
++	git-send-pack "$uri" $_git_head$sprembranch "${tags[@]}"
+ else
+ 	remgit="$uri"; [ -d "$remgit/.git" ] && remgit="$remgit/.git"
+ 	if is_same_repo "$_git_objects" "$remgit/objects"; then
+---
+0.99.9
