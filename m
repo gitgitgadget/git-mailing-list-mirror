@@ -1,186 +1,78 @@
-From: jdl@freescale.com
-Subject: New ASCII Art
-Date: Wed, 02 Nov 2005 17:40:30 -0600
-Message-ID: <E1EXSDW-0005aC-RG@jdl.com>
-X-From: git-owner@vger.kernel.org Thu Nov 03 00:41:44 2005
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Warn when calling deref_tag() on broken tags
+Date: Thu, 3 Nov 2005 00:42:32 +0100
+Message-ID: <20051102234232.GG1431@pasky.or.cz>
+References: <20051102200751.26904.5780.stgit@machine.or.cz> <Pine.LNX.4.63.0511022115250.13746@wbgn013.biozentrum.uni-wuerzburg.de> <20051102204101.GE1431@pasky.or.cz> <7vhdauocv6.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 03 00:43:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXSDo-0002DY-Um
-	for gcvg-git@gmane.org; Thu, 03 Nov 2005 00:40:49 +0100
+	id 1EXSFb-0002dx-5i
+	for gcvg-git@gmane.org; Thu, 03 Nov 2005 00:42:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030206AbVKBXkq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Nov 2005 18:40:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030208AbVKBXkq
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 18:40:46 -0500
-Received: from colo.jdl.com ([66.118.10.122]:57764 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S1030206AbVKBXkp (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Nov 2005 18:40:45 -0500
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1EXSDW-0005aC-RG
-	for git@vger.kernel.org; Wed, 02 Nov 2005 17:40:31 -0600
-To: git@vger.kernel.org
-X-Spam-Score: -105.9 (---------------------------------------------------)
+	id S1030208AbVKBXmf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Nov 2005 18:42:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030209AbVKBXmf
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 18:42:35 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:21125 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1030208AbVKBXme (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Nov 2005 18:42:34 -0500
+Received: (qmail 10319 invoked by uid 2001); 3 Nov 2005 00:42:32 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vhdauocv6.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11059>
 
-Junio,
+Dear diary, on Thu, Nov 03, 2005 at 12:21:01AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> > Good idea. Not that I would be excited by the awing elegancy of the
+> > patch...
+> 
+> It turns out to be not so good idea.  Some places call deref_tag
+> just to see if we can unwrap it but not having the referenced
+> object but having the tag object does not necessarily mean a
+> corrupt repository.
 
-I see my name over on the TODO list:
+Aha, that didn't occur to me initially. Yes, what you did is fine by me
+(not that I would be overly proficient in this part of code).
 
-    31 Documentation
-    32 -------------
-    33
-    34 * Help Jon Loeliger to find place in the documentation to place
-    35 his drawing.
+> diff --git a/tag.c b/tag.c
+> index b1ab75f..e574c4b 100644
+> --- a/tag.c
+> +++ b/tag.c
+> @@ -3,10 +3,15 @@
+>  
+>  const char *tag_type = "tag";
+>  
+> -struct object *deref_tag(struct object *o)
+> +struct object *deref_tag(struct object *o, const char *warn, int warnlen)
+>  {
+>  	while (o && o->type == tag_type)
+>  		o = parse_object(((struct tag *)o)->tagged->sha1);
+> +	if (!o && warn) {
+> +		if (!warnlen)
+> +			warnlen = strlen(warn);
+> +		error("missing object referenced by '%.*s'", warnlen, warn);
+> +	}
+>  	return o;
+>  }
+>  
 
-So, I have updated drawings for consideration.
-See if you buy these.  And if so, let's ponder
-where they might go.  Then I'll patch 'em in...
+It should still be a warning, not an error, though. I'd also mention the
+"tag" keyword in the message.
 
-I now have four ASCII Art drawings:
-
-    - Fundamental git operations
-    - Git merge operations
-    - Git diff types
-    - Commit DAG Revision Naming
-
-jdl
-
-
-
-
-Fundamental Git Index Operations
-================================
-
-                     commit-tree
-                      commit obj
-                       +----+
-                       |    |
-                       |    |
-                       V    V
-                    +-----------+
-                    | Object DB |
-                    |  Backing  |
-                    |   Store   |
-                    +-----------+
-                       ^
-           write-tree  |     |
-             tree obj  |     |
-                       |     |  read-tree
-                       |     |  tree obj
-                             V
-                    +-----------+
-                    |   Index   |
-                    |  "cache"  |
-                    +-----------+
-         update-index  ^
-             blob obj  |     |
-                       |     |
-    checkout-index -u  |     |  checkout-index
-             stat      |     |  blob obj
-                             V
-                    +-----------+
-                    |  Working  |
-                    | Directory |
-                    +-----------+
-
-
-Git Merge Operations
-====================
-
-                    +-----------+
-                    | Object DB |
-                    |  Backing  |
-                    |   Store   | -------+
-                    +-----------+        |
-                                         |
-                           read-tree -m  |
-  +-----+                  tree obj      |
-  |patch|                                |
-  +-----+           +-----------+        |
-     |              |   Index   | <- - - +
-     +------------->|  "cache"  | - - - >+
- git-apply --index  +-----------+        |
-                                         |
-                                         |
-                         read-tree -m -u |
- +-----+                        tree obj |
- |patch|                                 |
- +-----+            +-----------+        |
-    |               |  Working  |<-------+
-    +-------------->| Directory |
-  git-apply         +-----------+
-
-
-
-Git Diff Types
-==============
-
-
-                      diff-tree
-                       +----+
-                       |    |
-                       |    |
-                       V    V
-                    +-----------+
-                    | Object DB |
-                    |  Backing  |
-                    |   Store   |
-                    +-----------+
-                      ^    ^
-                      |    |
-                      |    |  diff-index --cached
-                      |    |
-          diff-index  |    V
-                      |  +-----------+
-                      |  |   Index   |
-                      |  |  "cache"  |
-                      |  +-----------+
-                      |    ^
-                      |    |
-                      |    |  diff-files
-                      |    |
-                      V    V
-                    +-----------+
-                    |  Working  |
-                    | Directory |
-                    +-----------+
-
-
-Commit DAG Revision Naming
-==========================
-
-Both node B and C are a commit parents of commit node A.
-Parent commits are ordered left-to-right.
-
-    G   H   I   J
-     \ /     \ /
-      D   E   F
-       \  |  /
-        \ | /
-         \|/
-          B     C
-           \   /
-            \ /
-             A
-
-    A =      = A^0
-    B = A^   = A^1     = A~1
-    C = A^2  = A^2
-    D = A^^  = A^1^1   = A~2
-    E = B^2  = A^^2
-    F = B^3  = A^^3
-    G = A^^^ = A^1^1^1 = A~3
-    H = D^2  = B^^2    = A^^^2  = A~2^2
-    I = F^   = B^3^    = A^^3^
-    J = F^2  = B^3^2   = A^^3^2
-
-Fixed-point operations:
-
-    A^0 = A^{commit}
-    A^{tree}
-   
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
