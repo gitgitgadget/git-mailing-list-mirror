@@ -1,59 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: HTTP pushes
-Date: Tue, 01 Nov 2005 16:36:42 -0800
-Message-ID: <7v1x1z51id.fsf@assigned-by-dhcp.cox.net>
-References: <20051101020248.GA3928@reactrix.com>
-	<Pine.LNX.4.63.0511012008310.11979@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] cvsimport: catch error condition where cvs host disappears
+Date: Wed, 2 Nov 2005 13:48:22 +1300
+Message-ID: <11308925024013-git-send-email-martin@catalyst.net.nz>
+Reply-To: Martin Langhoff <martin@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 02 01:37:48 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Wed Nov 02 01:45:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX6cX-0004OC-JK
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 01:36:53 +0100
+	id 1EX6jk-00061Y-8c
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 01:44:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751484AbVKBAgp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 19:36:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751485AbVKBAgp
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 19:36:45 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:9202 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751484AbVKBAgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Nov 2005 19:36:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051102003624.YJDQ1668.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 1 Nov 2005 19:36:24 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932100AbVKBAoR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 19:44:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932098AbVKBAoQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 19:44:16 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:25558 "EHLO
+	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
+	id S932081AbVKBAoP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Nov 2005 19:44:15 -0500
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
+	id 1EX6jd-0007Kz-FR; Wed, 02 Nov 2005 13:44:13 +1300
+Received: from mltest ([127.0.0.1])
+	by mltest with smtp (Exim 3.36 #1 (Debian))
+	id 1EX6ne-0001ed-00; Wed, 02 Nov 2005 13:48:22 +1300
+In-Reply-To: 
+X-Mailer: git-send-email
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10983>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Add error handling for cases where the cvs server goes away unexpectedly.
+While I don't know why the cvs server is so erratic, we should definitely
+exit here before committing bogus files.
 
-> On Mon, 31 Oct 2005, Nick Hengeveld wrote:
->
->> HTTP is currently listed as a read-only/unsupported method for doing
->> pushes, is that due to inherent problems with HTTP or just because
->> it hasn't been written yet?
->> 
->> I've built a working prototype of an HTTP push implementation using DAV.
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
 
-I had an impression that DAV has its own notion of version
-control, so using git as a backend on the server side might be
-an interesting exercise.
 
-> I think this is useful. There are restrictive firewalls out there, which 
-> only allow ports 80 and 443 to be connected to. Your work would fit in 
-> right there.
+---
 
-Another solution for this would be to allow connect.c to use a
-HTTP connect passthru proxy. CVS does this with an ugly but easy
-to understand notation:
+ git-cvsimport.perl |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-    ':pserver;proxy=firewall;proxyport=3128:user@host:/path/to/repo
+applies-to: 5184f41aebc18fdd90c27b76b8fb230fda58fb84
+2f441d6598e78b59181a084f9db5be7993971602
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index bbb83fb..e3cad5a 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -337,6 +337,10 @@ sub file {
+ 	}
+ 	close ($fh);
+ 
++	if ($res eq '') {
++	    die "Looks like the server has gone away while fetching $fn $rev -- exiting!";
++	}
++
+ 	return ($name, $res);
+ }
+ 
+---
+0.99.8.GIT
