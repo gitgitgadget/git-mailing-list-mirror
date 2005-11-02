@@ -1,57 +1,59 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git versus CVS (versus bk)
-Date: Wed, 02 Nov 2005 01:26:59 -0800
-Message-ID: <7v8xw7v1r0.fsf@assigned-by-dhcp.cox.net>
-References: <200511012356.jA1NuPBd004502@inti.inf.utfsm.cl>
-	<43687EAF.4060505@op5.se>
+Subject: Re: [PATCH 4/4] git-daemon support for user-relative paths.
+Date: Wed, 02 Nov 2005 01:30:12 -0800
+Message-ID: <7v1x1zv1ln.fsf@assigned-by-dhcp.cox.net>
+References: <20051101225921.3E7455BF74@nox.op5.se>
+	<7vvezb6h4c.fsf@assigned-by-dhcp.cox.net> <4368760E.6030208@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 02 10:27:57 2005
+X-From: git-owner@vger.kernel.org Wed Nov 02 10:31:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXEte-0003eA-MA
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 10:27:07 +0100
+	id 1EXEwl-0004YB-Ht
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 10:30:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964780AbVKBJ1D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Nov 2005 04:27:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964785AbVKBJ1C
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 04:27:02 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:29409 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S964780AbVKBJ1B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2005 04:27:01 -0500
+	id S964888AbVKBJaP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Nov 2005 04:30:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964893AbVKBJaP
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 04:30:15 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:22521 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S964888AbVKBJaN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2005 04:30:13 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051102092609.NYOY2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 2 Nov 2005 04:26:09 -0500
+          id <20051102092933.DEDR29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 2 Nov 2005 04:29:33 -0500
 To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <43687EAF.4060505@op5.se> (Andreas Ericsson's message of "Wed, 02
-	Nov 2005 09:54:07 +0100")
+In-Reply-To: <4368760E.6030208@op5.se> (Andreas Ericsson's message of "Wed, 02
+	Nov 2005 09:17:18 +0100")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11017>
 
 Andreas Ericsson <ae@op5.se> writes:
 
-> Incidentally though, is there any way to make a commit completely go 
-> away without resetting the files?
+> Junio C Hamano wrote:
+>>> -static int log_syslog;
+>>>+static int log_syslog = 0;
+>> I'd drop this.
+>
+> No can do. It has to be set either here or down in main. It's nice to 
+> have the default in the declaration.
 
-I am not sure if this is what you are looking for, but after I
-make a commit and find a mistake (either in the checked-in files
-or commit log message), I do this:
+Isn't "static int log_syslog" in BSS to be initialized to zero anyway?
 
-	$ git reset --soft HEAD^
-        ... fix the checked-in files, maybe do git-add files that
-        ... I forgot to add when I made the last commit.
-        $ git commit -a -c ORIG_HEAD ;# edit commit log, too.
+>> I like the general direction this set is taking, but let's let
+>> it simmer for a while.
+>
+> Ok. I'll take that to mean "hold off on the --server-root and --userdir 
+> patch for a while" then.
 
-Soft reset leaves the working tree files intact and just rewinds
-the .git/HEAD to whatever commit you specify, and as a side
-effect stores the original .git/HEAD in .git/ORIG_HEAD.  The
-lowercase -c flag to git-commit is "bring the commit log editor,
-initialized with the commit log message from that commit".
+I do not mind keeping it in the proposed updates branch for
+people to see and experiment with, but not in the master branch,
+at least for now.
