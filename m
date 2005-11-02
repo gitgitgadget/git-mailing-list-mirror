@@ -1,66 +1,64 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: HTTP pushes
-Date: Tue, 1 Nov 2005 16:46:23 -0800 (PST)
-Message-ID: <Pine.LNX.4.62.0511011644500.1362@qynat.qvtvafvgr.pbz>
-References: <20051101020248.GA3928@reactrix.com><Pine.LNX.4.63.0511012008310.11979@wbgn013.biozentrum.uni-wuerzburg.de> <7v1x1z51id.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] cvsimport: cvsps should be quiet too
+Date: Wed, 2 Nov 2005 13:53:23 +1300
+Message-ID: <11308928033950-git-send-email-martin@catalyst.net.nz>
+Reply-To: Martin Langhoff <martin@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 02 01:48:02 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Wed Nov 02 01:50:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX6mD-0006eW-UW
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 01:46:54 +0100
+	id 1EX6oa-00074d-PS
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 01:49:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932098AbVKBAqu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 19:46:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932099AbVKBAqu
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 19:46:50 -0500
-Received: from warden2-p.diginsite.com ([209.195.52.120]:62953 "HELO
-	warden2.diginsite.com") by vger.kernel.org with SMTP
-	id S932098AbVKBAqu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Nov 2005 19:46:50 -0500
-Received: from atlims01.diginsite.com by warden2.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Tue, 1 Nov 2005 16:41:56 -0800
-Received: by atlexc02.diginsite.com with Internet Mail Service (5.5.2657.72)
-	id <V77Y7ZGL>; Tue, 1 Nov 2005 19:46:52 -0500
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
-	id V817MX9M; Tue, 1 Nov 2005 16:45:12 -0800
-To: Junio C Hamano <junkio@cox.net>
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <7v1x1z51id.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <7v1x1z51id.fsf@assigned-by-dhcp.cox.net>
-References: <20051101020248.GA3928@reactrix.com><Pine.LNX.4.63.0511012008310.11979@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v1x1z51id.fsf@assigned-by-dhcp.cox.net>
+	id S932099AbVKBAtS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 19:49:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932110AbVKBAtS
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 19:49:18 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:64214 "EHLO
+	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
+	id S932099AbVKBAtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Nov 2005 19:49:17 -0500
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
+	id 1EX6oU-0007Yd-VU; Wed, 02 Nov 2005 13:49:15 +1300
+Received: from mltest ([127.0.0.1])
+	by mltest with smtp (Exim 3.36 #1 (Debian))
+	id 1EX6sV-0001sC-00; Wed, 02 Nov 2005 13:53:24 +1300
+In-Reply-To: 
+X-Mailer: git-send-email
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10986>
 
-On Tue, 1 Nov 2005, Junio C Hamano wrote:
+Tell cvsps to be quite, unless we've been told to be verbose.
 
->> I think this is useful. There are restrictive firewalls out there, which
->> only allow ports 80 and 443 to be connected to. Your work would fit in
->> right there.
->
-> Another solution for this would be to allow connect.c to use a
-> HTTP connect passthru proxy. CVS does this with an ugly but easy
-> to understand notation:
->
->    ':pserver;proxy=firewall;proxyport=3128:user@host:/path/to/repo
->
-
-please note that there are firewalls out there that don't let you use port 
-443 (and the connect command) as a free pass to do anything you want. They 
-verify that you at least do a valid SSL handshake immediatly after or they 
-figure you are trying to bypass them and shut you down.
-
-David Lang
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
 
 
--- 
-There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
-  -- C.A.R. Hoare
+---
+
+ git-cvsimport.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+applies-to: 3b008080b6ab6077e6dd2178c01dee4efed8ef42
+720675e4ad1e4efcda6af41461cf264617194ffc
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 0144670..7bd9136 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -491,6 +491,7 @@ unless($pid) {
+ 	my @opt;
+ 	@opt = split(/,/,$opt_p) if defined $opt_p;
+ 	unshift @opt, '-z', $opt_z if defined $opt_z;
++	unshift @opt, '-q'         unless defined $opt_v;
+ 	unless (defined($opt_p) && $opt_p =~ m/--no-cvs-direct/) {
+ 		push @opt, '--cvs-direct';
+ 	}
+---
+0.99.8.GIT
