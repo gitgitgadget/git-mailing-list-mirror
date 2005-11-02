@@ -1,50 +1,54 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: GIT 0.99.9
-Date: Mon, 31 Oct 2005 00:21:30 -0300
-Message-ID: <200510310321.j9V3LUlc017194@inti.inf.utfsm.cl>
-References: <wd@denx.de>
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 02 03:14:57 2005
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git 0.99.9: Subversion importer breaks RPM generation (rpmbuild bug)
+Date: Tue, 01 Nov 2005 19:36:50 -0800
+Message-ID: <7vwtjr3elp.fsf@assigned-by-dhcp.cox.net>
+References: <junkio@cox.net> <200511012315.jA1NFHbH003838@inti.inf.utfsm.cl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 02 04:38:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX889-00041T-CB
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 03:13:37 +0100
+	id 1EX9Qq-0008K8-Q5
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 04:37:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932216AbVKBCNf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 21:13:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932217AbVKBCNf
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 21:13:35 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:28116 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S932216AbVKBCNe (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 21:13:34 -0500
-Received: from inti.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by inti.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id j9V3LUlc017194;
-	Mon, 31 Oct 2005 00:21:31 -0300
-To: Wolfgang Denk <wd@denx.de>
-In-Reply-To: Message from Wolfgang Denk <wd@denx.de> 
-   of "Sun, 30 Oct 2005 21:23:22 BST." <20051030202322.A65D2353CD1@atlas.denx.de> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+	id S932259AbVKBDgw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 22:36:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932264AbVKBDgw
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 22:36:52 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:6064 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932259AbVKBDgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Nov 2005 22:36:51 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051102033613.RBDL29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 1 Nov 2005 22:36:13 -0500
+To: Horst von Brand <vonbrand@inf.utfsm.cl>
+In-Reply-To: <200511012315.jA1NFHbH003838@inti.inf.utfsm.cl> (Horst von
+	Brand's message of "Tue, 01 Nov 2005 20:15:17 -0300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10997>
 
-Wolfgang Denk <wd@denx.de> wrote:
-> In message <7vvezesyhi.fsf@assigned-by-dhcp.cox.net> you wrote:
-> > I hate it when somebody tells me "it works for me", but I cannot
-> > help you here, sorry.  I'm no rpm expert and the "make rpm" rule
-> > seems to work for me.
+Horst von Brand <vonbrand@inf.utfsm.cl> writes:
 
-> Which environment (Linux distribution) did you test this on? I  tried
-> Fedora  Core  2  and  4,  both  with  the same result. I get the same
-> problem when building from the git source  tree  or  when  using  the
-> source RPM.
+> Junio C Hamano <junkio@cox.net> wrote:
+>
+>> One thing we could do without breaking much of the current
+>> arrangement is to have a team of people to help porting for
+>> major packaging formats (RPMs and Debs mostly but I know we have
+>> OpenBSD and Darwin people here too), and ask them to feed me the
+>> updates to rpm/deb/whatever target in the Makefile as needed.
+>> Especially before a major release I could ask them to test
+>> things out and generate binary packages, perhaps taken out of
+>> the tip of the master branch, or even another "for-porters"
+>> branch for this purpose.
+>
+> Good idea. Will build RPMs regularly then.
 
-In Fedora rawhide it works (I've got asciidoc installed, and git locally in
-my account).
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+Can I take that to mean you are volunteering?
