@@ -1,85 +1,50 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 4/4] git-daemon support for user-relative paths.
-Date: Tue, 01 Nov 2005 16:14:11 -0800
-Message-ID: <7vvezb6h4c.fsf@assigned-by-dhcp.cox.net>
-References: <20051101225921.3E7455BF74@nox.op5.se>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: [PATCH gitweb] Visually indicating patch size with horizontal bars
+Date: Wed, 2 Nov 2005 01:26:31 +0100
+Message-ID: <20051102002631.GA18529@vrfy.org>
+References: <20051027203945.GC1622@pe.Belkin> <20051028015642.GA31822@vrfy.org> <20051028023833.GA19939@pe.Belkin> <20051101233035.GB1431@pasky.or.cz> <46a038f90511011533q177328fdrf4b0dd68f188282e@mail.gmail.com> <20051102001206.GA21671@pe.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 02 01:15:33 2005
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 02 01:27:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EX6Gd-0007dI-KJ
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 01:14:15 +0100
+	id 1EX6Sf-0002En-FL
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 01:26:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751466AbVKBAON (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Nov 2005 19:14:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbVKBAON
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 19:14:13 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:22494 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751466AbVKBAOM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Nov 2005 19:14:12 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051102001352.XYMD1668.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 1 Nov 2005 19:13:52 -0500
-To: Andreas Ericsson <ae@op5.se>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751475AbVKBA0i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Nov 2005 19:26:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751476AbVKBA0i
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Nov 2005 19:26:38 -0500
+Received: from soundwarez.org ([217.160.171.123]:954 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S1751475AbVKBA0i (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Nov 2005 19:26:38 -0500
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id 3BBFB6BFEE; Wed,  2 Nov 2005 01:26:31 +0100 (CET)
+To: Chris Shoemaker <c.shoemaker@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20051102001206.GA21671@pe.Belkin>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10980>
 
-Andreas Ericsson <ae@op5.se> writes:
+On Tue, Nov 01, 2005 at 07:12:06PM -0500, Chris Shoemaker wrote:
+> On Wed, Nov 02, 2005 at 12:33:38PM +1300, Martin Langhoff wrote:
+> > On 11/2/05, Petr Baudis <pasky@suse.cz> wrote:
+> > > What about having the color indicate the number of affected files (let's
+> > > say on a blue..red scale) and the width the size of patch?
+> > 
+> > I'm a /little bit/ colour blind on the red scale -- so I vote for 2
+> > bars, each half the heigth of the current bar.  ;-)
+> 
+> I was going to use two bars for add vs. delete, but this could work,
+> too.  I'm intending on getting back to this ASAP, but for now my
+> cvsimport problems are higher priority (see other post).
 
-> +             [--timeout=n] [--init-timeout=n] [--strict-paths] [directory...]
+Guys, I'm not convinced, that we should make gitweb look like Konqueror. :)
 
-Why not just --strict?
-
-> @@ -10,16 +10,18 @@
->  #include "pkt-line.h"
->  #include "cache.h"
->  
-> -static int log_syslog;
-> +static int log_syslog = 0;
-
-I'd drop this.
-
->  /* If this is set, git-daemon-export-ok is not required */
->  static int export_all_trees = 0;
->  
-> @@ -81,69 +83,49 @@ static void loginfo(const char *err, ...
->  	va_end(params);
->  }
->  
-> -static int path_ok(const char *dir)
-> +static const char *path_ok(const char *dir)
->  {
-> +	const char *path = is_git_repo(dir, strict_paths);
-> +	/* No such directory or not a git archive */
-> +	if(!path) {
-> +		logerror("'%s': unable to chdir or not a git archive", dir);
-> +		return NULL;
->  	}
->  
->  	if ( ok_paths && *ok_paths ) {
-> +		char **pp = NULL;
-> +		int dirlen = strlen(path);
->  
->  		for ( pp = ok_paths ; *pp ; pp++ ) {
->  			int len = strlen(*pp);
-> +			if ( len <= dirlen && !strncmp(*pp, path, len) ) {
-> +				if( path[len] == '\0' || (!strict_paths && path[len] == '/') )
-> +					return path;
->  			}
->  		}
-
-Sorry, but I am a bit confused.  Does this mean that you need to
-list all directories under --strict-paths, instead of saying
-"/pub/scm and everything under it is OK"?
-
-I like the general direction this set is taking, but let's let
-it simmer for a while.
+Kay
