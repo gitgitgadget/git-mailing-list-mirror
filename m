@@ -1,47 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix segfaults caused by invalid tags
-Date: Wed, 02 Nov 2005 12:28:46 -0800
-Message-ID: <7vwtjqrdz5.fsf@assigned-by-dhcp.cox.net>
-References: <20051102200751.26904.5780.stgit@machine.or.cz>
-	<Pine.LNX.4.63.0511022115250.13746@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] gitk: fix for empty line after Comments
+Date: Wed, 02 Nov 2005 15:42:48 -0500
+Message-ID: <1130964168.23026.2.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 02 21:30:39 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Nov 02 21:42:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXPE3-000591-8A
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 21:28:51 +0100
+	id 1EXPRf-0001Cs-9w
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 21:42:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965208AbVKBU2t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Nov 2005 15:28:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965225AbVKBU2s
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 15:28:48 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:57241 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S965208AbVKBU2s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2005 15:28:48 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051102202823.NJGD9394.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 2 Nov 2005 15:28:23 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0511022115250.13746@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Wed, 2 Nov 2005 21:16:13 +0100
-	(CET)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965232AbVKBUmx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Nov 2005 15:42:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965233AbVKBUmw
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 15:42:52 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:52889 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S965232AbVKBUmw
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 2 Nov 2005 15:42:52 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EXPRb-0006cT-31
+	for git@vger.kernel.org; Wed, 02 Nov 2005 15:42:51 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.54)
+	id 1EXPRZ-000604-AQ
+	for git@vger.kernel.org; Wed, 02 Nov 2005 15:42:49 -0500
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.4.1 (2.4.1-5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11038>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+git-diff-tree called with one tree-ish shows the commit ID, which should
+be ignored by gitk.  getblobdiffs() and gettreediffline() recognize and
+ignore commit ID now.
 
-> Shouldn't a warning be issued in every of those cases? I don't know, but 
-> those tags pointing nowhere don't seem useful to me.
+Also, the p variable that was used as the other argument git-diff-tree
+is no longer used, so it's dropped in both places.
 
-Yes they should warn.
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-It is not just "don't seem useful"; it is a corrupt repository.
+diff --git a/gitk b/gitk
+index a9d37d9..e935484 100755
+--- a/gitk
++++ b/gitk
+@@ -2805,7 +2805,6 @@ proc gettreediffs {ids} {
+     set treepending $ids
+     set treediff {}
+     set id [lindex $ids 0]
+-    set p [lindex $ids 1]
+     if [catch {set gdtf [open "|git-diff-tree -r $id" r]}] return
+     fconfigure $gdtf -blocking 0
+     fileevent $gdtf readable [list gettreediffline $gdtf $ids]
+@@ -2830,6 +2829,8 @@ proc gettreediffline {gdtf ids} {
+ 	    }
+ 	}
+ 	return
++    } elseif {$n == 40} {
++	return
+     }
+     set file [lindex $line 5]
+     lappend treediff $file
+@@ -2840,7 +2841,6 @@ proc getblobdiffs {ids} {
+     global difffilestart nextupdate diffinhdr treediffs
+ 
+     set id [lindex $ids 0]
+-    set p [lindex $ids 1]
+     set env(GIT_DIFF_OPTS) $diffopts
+     set cmd [list | git-diff-tree -r -p -C $id]
+     if {[catch {set bdf [open $cmd r]} err]} {
+@@ -2934,7 +2934,7 @@ proc getblobdiffline {bdf ids} {
+ 	} elseif {$diffinhdr || $x == "\\"} {
+ 	    # e.g. "\ No newline at end of file"
+ 	    $ctext insert end "$line\n" filesep
+-	} else {
++	} elseif {![regexp {^[0-9a-f]{40}$} $line]} {
+ 	    # Something else we don't recognize
+ 	    if {$curdifftag != "Comments"} {
+ 		$ctext insert end "\n"
+
+
+-- 
+Regards,
+Pavel Roskin
