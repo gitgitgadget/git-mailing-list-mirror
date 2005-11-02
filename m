@@ -1,80 +1,75 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Clean up the SunOS Makefile rule
-Date: Wed, 02 Nov 2005 12:56:12 -0800
-Message-ID: <7voe52py4z.fsf@assigned-by-dhcp.cox.net>
-References: <20051102192730.GA17706@ebar091.ebar.dtu.dk>
+Subject: Re: [PATCH] Warn when calling deref_tag() on broken tags
+Date: Wed, 02 Nov 2005 13:18:43 -0800
+Message-ID: <7vbr12px3g.fsf@assigned-by-dhcp.cox.net>
+References: <20051102200751.26904.5780.stgit@machine.or.cz>
+	<Pine.LNX.4.63.0511022115250.13746@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20051102204101.GE1431@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Peter Eriksen" <s022018@student.dtu.dk>
-X-From: git-owner@vger.kernel.org Wed Nov 02 21:59:16 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 02 22:21:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXPef-0005Zd-HJ
-	for gcvg-git@gmane.org; Wed, 02 Nov 2005 21:56:22 +0100
+	id 1EXQ0f-0004FL-0o
+	for gcvg-git@gmane.org; Wed, 02 Nov 2005 22:19:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965238AbVKBU4T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Nov 2005 15:56:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965239AbVKBU4S
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 15:56:18 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:33162 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S965238AbVKBU4S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2005 15:56:18 -0500
+	id S965247AbVKBVSq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Nov 2005 16:18:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965251AbVKBVSp
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 16:18:45 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:3995 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S965247AbVKBVSo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Nov 2005 16:18:44 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051102205551.ZBDY4169.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 2 Nov 2005 15:55:51 -0500
-To: git@vger.kernel.org
-In-Reply-To: <20051102192730.GA17706@ebar091.ebar.dtu.dk> (Peter Eriksen's
-	message of "Wed, 2 Nov 2005 20:27:31 +0100")
+          id <20051102211752.YISE2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 2 Nov 2005 16:17:52 -0500
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051102204101.GE1431@pasky.or.cz> (Petr Baudis's message of
+	"Wed, 2 Nov 2005 21:41:01 +0100")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11043>
 
-"Peter Eriksen" <s022018@student.dtu.dk> writes:
+Petr Baudis <pasky@suse.cz> writes:
 
-> Don't set a non-standard CURLDIR as default, and fix an error
-> in Solaris 10 by setting NEEDS_LIBICONV.
+> +struct object *deref_tag(struct object *o, const char *refname)
+>  {
+> +	struct object *o2 = o;
+>  	while (o && o->type == tag_type)
+> -		o = parse_object(((struct tag *)o)->tagged->sha1);
+> +		o = parse_object(((struct tag *)(o2 = o))->tagged->sha1);
+> +	if (!o)
+> +		fprintf(stderr, "warning: invalid tag %s\n",
+> +		        refname ? refname
+> +		        : (o2 ? sha1_to_hex(o2->sha1)
+> +		           : "<unknown> (this is probably internal GIT error)"));
+>  	return o;
+>  }
 
-Just to make it clear to everybody, these platform defines are
-just to give default that is intended to help majority of the
-users.  You do not have to cover everybody on that platform.
-Giving *one* default CURLDIR, as long as it helps major portion
-of the user base, would be helpful.  In other words, it is OK as
-long as the user can say:
+I wonder if it would make more sense to keep the root of the
+traversal for this function (i.e. the original value of o) for
+error reporting purposes, like this:
 
-	solaris$ gmake CURLDIR=/I/have/my/curl/here
+        struct object *deref_tag(struct object *o, const char *refname)
+        {
+                struct object *o2 = o;
+                while (o && o->type == tag_type)
+                        o = parse_object(((struct tag *)o)->tagged->sha1);
+                if (!o)
+                        fprintf(stderr, "warning: invalid tag %s\n",
+                                refname ? refname
+                                : (o2 ? sha1_to_hex(o2->sha1)
+                                   : "<unknown> (this is probably internal GIT error)"));
+                return o;
+        }
 
-to override what you chose, and /opt/sfw/ is where *many* (if
-not most) of the Solaris installations have curl.  I do not have
-access to many different flavours of Solaris boxes, but one
-machine I have at work (5.9) seems to have it installed there.
+What do you think?
 
-Could Solaris users on the list help us out, as Peter asks?  How
-many of you have curl in /opt/sfw?  How many others have curl in
-somewhere else and think that somewhere else would be more
-appropriate default?  If this user poll results in either a
-default location better than /opt/sfw, or diverse locations with
-no clear majority, then it would make sense to remove the
-current default, but otherwise I would say we do not need to
-drop it.
-
-People who built curl library and installed at random places
-themselves do not count -- they know what they are doing and are
-perfectly capable of overriding whatever we say in our Makefile
-from the comand line.
-
-Although I think always requiring LIBICONV is OK there, and it
-probably is needed on *all* Solaris boxes, but in principle,
-NEEDS_LIBICONV is similar.  If the user cannot say:
-
-	solaris$ gmake NEEDS_LIBICONV= ;# No thanks, on my Solaris
-
-to disable -liconv, and if some Solaris installations do not
-want -liconv, then that is a problem.  But GNU make seems to do
-the right thing; ifdef NEEDS_LIBICONV seems to evaluate to false
-if your user overrides it to be empty from the command line.
+Other than that, the patch is OK by me.  Thanks.
