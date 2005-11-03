@@ -1,61 +1,67 @@
-From: "Peter Eriksen" <s022018@student.dtu.dk>
-Subject: Re: Now What?
-Date: Thu, 3 Nov 2005 18:30:13 +0100
-Message-ID: <20051103173012.GA21428@bohr.gbar.dtu.dk>
-References: <E1EXTw5-00063o-Gt@jdl.com> <20051103083840.GA28300@ebar091.ebar.dtu.dk> <7v4q6uhx0a.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511031151070.25300@iabervon.org>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: little conundrum
+Date: Thu, 3 Nov 2005 17:41:20 +0000
+Message-ID: <200511031741.20496.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Nov 03 18:31:24 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Nov 03 18:43:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXiuq-0002pD-H8
-	for gcvg-git@gmane.org; Thu, 03 Nov 2005 18:30:20 +0100
+	id 1EXj5Y-0007Ut-VA
+	for gcvg-git@gmane.org; Thu, 03 Nov 2005 18:41:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751313AbVKCRaR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Nov 2005 12:30:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbVKCRaR
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 12:30:17 -0500
-Received: from bohr.gbar.dtu.dk ([192.38.95.24]:47841 "HELO bohr.gbar.dtu.dk")
-	by vger.kernel.org with SMTP id S1751313AbVKCRaQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2005 12:30:16 -0500
-Received: (qmail 26160 invoked by uid 5842); 3 Nov 2005 18:30:13 +0100
+	id S1030367AbVKCRlW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Nov 2005 12:41:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030393AbVKCRlW
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 12:41:22 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:63688
+	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
+	id S1030367AbVKCRlV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Nov 2005 12:41:21 -0500
+Received: from kanger.home ([192.168.0.21])
+	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
+	id 1EXj5U-00066K-Ld
+	for git@vger.kernel.org; Thu, 03 Nov 2005 17:41:20 +0000
 To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0511031151070.25300@iabervon.org>
-User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11079>
 
-On Thu, Nov 03, 2005 at 12:05:42PM -0500, Daniel Barkalow wrote:
-> On Thu, 3 Nov 2005, Junio C Hamano wrote:
-> 
-> > "Peter Eriksen" <s022018@student.dtu.dk> writes:
-> > 
-> > > Here's one I've done too many times:
-> > >
-> > > ~/git/git-core]cat .git/remotes/origin
-> > > URL: git://git.kernel.org/pub/scm/git/git.git
-> > > Pull: master:origin
-> > >
-> > > ~/git/git-core]git-checkout maint
-> > > ~/git/git-core]git pull
-> > 
-> > You are merging my master into your "maint", probably a copy of
-> > my (previous) maint.
-> 
-> I think the situation is that he really wanted to update master, but 
-> forgot that he was on the maint branch. So now he's in a merge of things 
-> he didn't actually want to merge and wants to get back to not having junk 
-> all over the place (some files that need to be merged, some files that 
-> have been merged, new files, removed files, etc).
+I have a little problem I am trying to solve.  Tried a few things and got 
+nowhere, so I thought I would ask here.
 
-I really should have stated that from the beginning.  Yes, I forgot, I
-had checked out some other branch and thought (the first I times assumed)
-that it would merge into master.  So it's really just an accident,
-which I would think, is not that uncommon for newcommers.
+I have two directories one of which contains a tree of source code that was an 
+original software package that I downloaded.  The other contains the result 
+of some unfinished - but quite substancial changes that I had made to that 
+source code.  Since this was some time ago, I don't have any records, but it 
+is quite possible that I added and removed quite a few files.
 
-Peter
+I would like to make myself a git repository that contains at the start, an 
+initial commit of the original downloaded source code, and a second commit on 
+the top of that that contains the the current state of play after the changes 
+I have made.
+
+Since I don't actually have a list of the files, I thought I would establish 
+these automatically by going into each directory and doing a cg-init.  So I 
+now have two disjoint repositories each with their source tree in it.
+
+My next thought was to add a branch to one of them and then pull the resultant 
+code over and merge it using cg-branch-add followed by a cg-update.  But when 
+I do that it complains that there is no common base.  
+
+I tried creating an empty directory and separately merging the two versions 
+with it, so that I have a common parent, but whatever I do, I can't get one 
+of those nice little gitk diagrams that has any linkage between the two 
+versions of the source code.
+
+Is there an approach I could take to achieve what I want?
+-- 
+Alan Chandler
+http://www.chandlerfamily.org.uk
+Open Source. It's the difference between trust and antitrust.
