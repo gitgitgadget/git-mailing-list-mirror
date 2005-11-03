@@ -1,62 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] RFC: proxy-command support for git://
-Date: Thu, 03 Nov 2005 10:54:43 -0800
-Message-ID: <7v8xw5h898.fsf@assigned-by-dhcp.cox.net>
-References: <87fyqdbuab.fsf@briny.internal.ondioline.org>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: Re: little conundrum
+Date: Thu, 3 Nov 2005 20:16:52 +0100
+Message-ID: <20051103191652.GA28273@bohr.gbar.dtu.dk>
+References: <200511031741.20496.alan@chandlerfamily.org.uk> <20051103181002.GA26437@bohr.gbar.dtu.dk> <200511031848.58040.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 03 19:57:09 2005
+X-From: git-owner@vger.kernel.org Thu Nov 03 20:19:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXkF5-0001jE-3P
-	for gcvg-git@gmane.org; Thu, 03 Nov 2005 19:55:19 +0100
+	id 1EXka5-0002JS-Vd
+	for gcvg-git@gmane.org; Thu, 03 Nov 2005 20:17:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030439AbVKCSyq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Nov 2005 13:54:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030436AbVKCSyq
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 13:54:46 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:59317 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1030439AbVKCSyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Nov 2005 13:54:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051103185421.STRK4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 3 Nov 2005 13:54:21 -0500
-To: Paul Collins <paul@briny.ondioline.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030411AbVKCTQz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Nov 2005 14:16:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030437AbVKCTQz
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 14:16:55 -0500
+Received: from bohr.gbar.dtu.dk ([192.38.95.24]:55937 "HELO bohr.gbar.dtu.dk")
+	by vger.kernel.org with SMTP id S1030411AbVKCTQy (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2005 14:16:54 -0500
+Received: (qmail 2031 invoked by uid 5842); 3 Nov 2005 20:16:52 +0100
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <200511031848.58040.alan@chandlerfamily.org.uk>
+User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11085>
 
-Paul Collins <paul@briny.ondioline.org> writes:
+On Thu, Nov 03, 2005 at 06:48:57PM +0000, Alan Chandler wrote:
+> On Thursday 03 Nov 2005 18:10, Peter Eriksen wrote:
+[snip]
+> > ]cd original
+> > ]git-init-db
+> > ]git-add all-the-files
+> > ]git-commit -m "Initial import"
+> > ]cp -rf ../modified/* .
+> > ]git-status
+> > ...fix things up adding and deleting files
+> > ]git-commit -m "First big change
 
-> I spend some of my time using a network that only allows outgoing TCP
-> connections to certain ports, and the git-daemon port is not one of them.
-> This patch below implements an analogue to ssh's ProxyCommand feature
-> for git, as a less messy alternative to ssh port forwarding.
+Perhaps something like this is better (now I actually tried it out):
 
-Wonderful.
+]rm -rf linux-2.6/.git
+]cp -r linux-2.6 peter-2.6
+...Initialize a repo in linux-2.6 with cg-init or similar and commit.
+...Remove, add and change files in peter-2.6.
+]mv linux-2.6/.git peter-2.6/.git
+]cd peter-2.6/
+]git-status
 
-> Questions:
->
-> * Can git already do this and I just failed to notice?
+How does this work for you?
 
-Maybe I just failed to notice this too, but I do not think so.
-
-> * Where should git_use_proxy() look?  Some git configuration file?
->   An environment variable?  Both?  Somewhere else?
-
-My preference is put something in .git/config to describe which
-proxy command (maybe the same one with different argument) to
-use depending on where you are going.  When you have internal
-hosts and external hosts you would want this to apply only to
-external hosts.  Maybe you have two or more gateways and
-depending on which external host you are going you may want to
-use different proxied connection.  On top of the config file,
-making it overridable from an environment variable would be
-sensible.
+Peter
