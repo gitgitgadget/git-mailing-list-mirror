@@ -1,74 +1,98 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Three-way merge with the index as one way
-Date: Thu, 3 Nov 2005 21:21:25 +0100
-Message-ID: <20051103202125.GK1431@pasky.or.cz>
-References: <20051015174103.GA2609@tumblerings.org> <7vu0fimzhn.fsf@assigned-by-dhcp.cox.net> <20051015192720.GA11364@tumblerings.org> <7v8xwummtm.fsf@assigned-by-dhcp.cox.net> <20051103003423.GH1431@pasky.or.cz> <7vy846ma65.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: New ASCII Art
+Date: Thu, 03 Nov 2005 12:30:28 -0800
+Message-ID: <7vhdatfp97.fsf@assigned-by-dhcp.cox.net>
+References: <E1EXSDW-0005aC-RG@jdl.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Zack Brown <zbrown@tumblerings.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 03 21:23:46 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 03 21:32:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXlac-0007sf-EZ
-	for gcvg-git@gmane.org; Thu, 03 Nov 2005 21:21:38 +0100
+	id 1EXljJ-0003nM-Rn
+	for gcvg-git@gmane.org; Thu, 03 Nov 2005 21:30:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750852AbVKCUV2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Nov 2005 15:21:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030438AbVKCUV1
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 15:21:27 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:28865 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750852AbVKCUV1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2005 15:21:27 -0500
-Received: (qmail 10741 invoked by uid 2001); 3 Nov 2005 21:21:25 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vy846ma65.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1030467AbVKCUac (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Nov 2005 15:30:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030468AbVKCUac
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 15:30:32 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:59294 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1030467AbVKCUab (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Nov 2005 15:30:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051103202950.GQBQ29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 3 Nov 2005 15:29:50 -0500
+To: jdl@freescale.com
+In-Reply-To: <E1EXSDW-0005aC-RG@jdl.com> (jdl@freescale.com's message of "Wed,
+	02 Nov 2005 17:40:30 -0600")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11093>
 
-Dear diary, on Thu, Nov 03, 2005 at 09:02:10AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> git-am 3-way fallback logic constructs a sparse
-> temporary tree and uses it for running regular 3-way, and you
-> may be able to do something similar.
+jdl@freescale.com writes:
 
-I'm confused now - if the tree is sparse, how does git-read-tree -m know
-that the missing files from the other tree are not deletes?
+> So, I have updated drawings for consideration.  See if you buy
+> these.  And if so, let's ponder where they might go.  Then
+> I'll patch 'em in...
 
-> Right now git-am takes an
-> e-mail patch and when it runs all the way it creates a commit,
-> but the core logic that applies patch and falls back to 3-way
-> could be separated out for your application.  Then you could:
-> (1) 'git diff HEAD' before tree-warp to preserve the user
-> changes, (2) clean up the working tree to match HEAD,
+Thanks for doing this.  You have a sale.
 
-At this point I get nervous since there is a potential for data loss
-when something goes wrong at this point (e.g. system crash). I'm not
-saying there are no places like that in Cogito now, but I generally
-try to avoid them whenever possible.
+> Fundamental Git Index Operations
 
-> (3) warp to the other tree, and (4) fed the user change perserved
-> to git-am core logic.  That might give you something near optimum.
-> 
-> About "nonsensical" objects, I am not so sure how nonsensical
-> those objects you would record from the working tree
-> (intermediate state) are.  If you find two trees match on a path
-> that has changed in the working tree, there won't be any
-> conflict on that paths so it is like the user did an extra
-> git-update-index on that path when no merge or warp is involved,
-> from object database pollution POV; I do not personally think
-> that is such a bad thing.
+README (which is included as git(7) Discussion section) might be
+a good document to decorate with this.  Probably after "The
+Workflow; 5) Tying it all together".
 
-But if they don't match, you'll get superfluous blobs for the original
-index versions which are almost certain to go away.
+> Git Merge Operations
+> ====================
+>
+>                     +-----------+
+>                     | Object DB |
+>                     |  Backing  |
+>                     |   Store   | -------+
+>                     +-----------+        |
+>                                          |
+>                            read-tree -m  |
+>   +-----+                  tree obj      |
+>   |patch|                                |
+>   +-----+           +-----------+        |
+>      |              |   Index   | <- - - +
+>      +------------->|  "cache"  | - - - >+
+>  git-apply --index  +-----------+        |
+>                                          |
+>                                          |
+>                          read-tree -m -u |
+>  +-----+                        tree obj |
+>  |patch|                                 |
+>  +-----+            +-----------+        |
+>     |               |  Working  |<-------+
+>     +-------------->| Directory |
+>   git-apply         +-----------+
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Note that apply --index updates both index and working tree.
+Note that read-tree -m -u takes information from both odb and
+index, and updates both index and working tree.
+
+Logically this belongs to "Merging two branches" in the Tutorial
+document.  The Tutorial introduction claims the document intends
+to show how the core level operates to implement higher level
+scripts, but currently we lack the lower-level details in the
+text that would go well together with this illustration.  Please
+remind me that I should write something up at the very end of
+that section soonish ;-).
+
+> Git Diff Types
+
+Maybe as a side note to "Inspecing Changes" section in the
+Tutorial.
+
+> Commit DAG Revision Naming
+
+As an illustration to "SPECIFYING REVISIONS" section of
+git-rev-parse(1).
