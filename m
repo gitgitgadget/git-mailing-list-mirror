@@ -1,50 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] RFC: proxy-command support for git://
-Date: Thu, 03 Nov 2005 13:31:23 -0800
-Message-ID: <7vsludbeqc.fsf@assigned-by-dhcp.cox.net>
-References: <87fyqdbuab.fsf@briny.internal.ondioline.org>
-	<7v8xw5h898.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511031117290.27915@g5.osdl.org>
-	<20051103204137.GA1343@hpsvcnb.fc.hp.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: binary safe?
+Date: 03 Nov 2005 14:02:20 -0800
+Message-ID: <86br115r0z.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 03 22:31:31 2005
+X-From: git-owner@vger.kernel.org Thu Nov 03 23:03:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXmgD-0006y2-Nr
-	for gcvg-git@gmane.org; Thu, 03 Nov 2005 22:31:30 +0100
+	id 1EXnAE-00013P-Bj
+	for gcvg-git@gmane.org; Thu, 03 Nov 2005 23:02:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030494AbVKCVb0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Nov 2005 16:31:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030498AbVKCVbZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 16:31:25 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:21901 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1030494AbVKCVbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Nov 2005 16:31:25 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051103213124.DSSQ9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 3 Nov 2005 16:31:24 -0500
-To: Carl Baldwin <cnb@fc.hp.com>
-In-Reply-To: <20051103204137.GA1343@hpsvcnb.fc.hp.com> (Carl Baldwin's message
-	of "Thu, 3 Nov 2005 13:41:37 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750920AbVKCWC0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Nov 2005 17:02:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbVKCWC0
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 17:02:26 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:62357 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1750920AbVKCWCZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Nov 2005 17:02:25 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 12EA18F727
+	for <git@vger.kernel.org>; Thu,  3 Nov 2005 14:02:21 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 20763-01-68 for <git@vger.kernel.org>;
+ Thu,  3 Nov 2005 14:02:20 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id A6B428F761; Thu,  3 Nov 2005 14:02:20 -0800 (PST)
+To: git@vger.kernel.org
+x-mayan-date: Long count = 12.19.12.13.15; tzolkin = 12 Men; haab = 13 Zac
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11099>
 
-Carl Baldwin <cnb@fc.hp.com> writes:
 
-> Another way to do this would be using the ~/.ssh/config file.  It would
-> look something like this:
+I'm currently about to abandon CVS for my website management,
+replacing it with git.
 
-Maybe I am slow today, but wouldn't this require the other end
-(i.e. remote repo) to let you ssh in?
+What problems, if any, will I have using git to manage the binary
+files for my site, like the custom icons?  CVS is doing that just fine
+now.
 
-I think the point of the original patch was to give proxied
-connection to git:// transport, not git over ssh.
+I presume emailing diff-patches is out of the question, but if all I'm
+doing is git-push and git-pull (using the shared central repository
+model), and if I'm stupid enough to have a merge error it's OK to just
+blow up on a binary file, will everything else work fine?
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
