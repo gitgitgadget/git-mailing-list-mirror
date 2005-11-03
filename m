@@ -1,49 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
 Subject: Re: Now What?
-Date: Thu, 3 Nov 2005 09:27:05 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511030926020.27915@g5.osdl.org>
-References: <E1EXTw5-00063o-Gt@jdl.com> <20051103083840.GA28300@ebar091.ebar.dtu.dk>
- <7v4q6uhx0a.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511031151070.25300@iabervon.org>
+Date: Thu, 3 Nov 2005 18:30:13 +0100
+Message-ID: <20051103173012.GA21428@bohr.gbar.dtu.dk>
+References: <E1EXTw5-00063o-Gt@jdl.com> <20051103083840.GA28300@ebar091.ebar.dtu.dk> <7v4q6uhx0a.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511031151070.25300@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Peter Eriksen <s022018@student.dtu.dk>, git@vger.kernel.org,
-	Jon Loeliger <jdl@freescale.com>
-X-From: git-owner@vger.kernel.org Thu Nov 03 18:29:14 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Nov 03 18:31:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXis4-0001Rc-AI
-	for gcvg-git@gmane.org; Thu, 03 Nov 2005 18:27:28 +0100
+	id 1EXiuq-0002pD-H8
+	for gcvg-git@gmane.org; Thu, 03 Nov 2005 18:30:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751222AbVKCR1Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Nov 2005 12:27:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbVKCR1Z
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 12:27:25 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:9954 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751222AbVKCR1Z (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2005 12:27:25 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA3HR6W6003112
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 3 Nov 2005 09:27:06 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA3HR5k6018528;
-	Thu, 3 Nov 2005 09:27:05 -0800
-To: Daniel Barkalow <barkalow@iabervon.org>
+	id S1751313AbVKCRaR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Nov 2005 12:30:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbVKCRaR
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 12:30:17 -0500
+Received: from bohr.gbar.dtu.dk ([192.38.95.24]:47841 "HELO bohr.gbar.dtu.dk")
+	by vger.kernel.org with SMTP id S1751313AbVKCRaQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2005 12:30:16 -0500
+Received: (qmail 26160 invoked by uid 5842); 3 Nov 2005 18:30:13 +0100
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.64.0511031151070.25300@iabervon.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11078>
 
-
-
-On Thu, 3 Nov 2005, Daniel Barkalow wrote:
+On Thu, Nov 03, 2005 at 12:05:42PM -0500, Daniel Barkalow wrote:
+> On Thu, 3 Nov 2005, Junio C Hamano wrote:
+> 
+> > "Peter Eriksen" <s022018@student.dtu.dk> writes:
+> > 
+> > > Here's one I've done too many times:
+> > >
+> > > ~/git/git-core]cat .git/remotes/origin
+> > > URL: git://git.kernel.org/pub/scm/git/git.git
+> > > Pull: master:origin
+> > >
+> > > ~/git/git-core]git-checkout maint
+> > > ~/git/git-core]git pull
+> > 
+> > You are merging my master into your "maint", probably a copy of
+> > my (previous) maint.
 > 
 > I think the situation is that he really wanted to update master, but 
 > forgot that he was on the maint branch. So now he's in a merge of things 
@@ -51,8 +53,9 @@ On Thu, 3 Nov 2005, Daniel Barkalow wrote:
 > all over the place (some files that need to be merged, some files that 
 > have been merged, new files, removed files, etc).
 
-And that's exactly what "git reset --hard" is there for. It will reset to 
-the old head of the branch you are on (ie HEAD), and get rid of everything 
-that was done to the tree.
+I really should have stated that from the beginning.  Yes, I forgot, I
+had checked out some other branch and thought (the first I times assumed)
+that it would merge into master.  So it's really just an accident,
+which I would think, is not that uncommon for newcommers.
 
-		Linus
+Peter
