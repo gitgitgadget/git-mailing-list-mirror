@@ -1,71 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: binary safe?
-Date: Thu, 3 Nov 2005 14:50:21 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511031447020.27915@g5.osdl.org>
-References: <86br115r0z.fsf@blue.stonehenge.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Now What?
+Date: Thu, 03 Nov 2005 14:51:31 -0800
+Message-ID: <7vwtjp9wgc.fsf@assigned-by-dhcp.cox.net>
+References: <E1EXTw5-00063o-Gt@jdl.com>
+	<7vll05e9j3.fsf@assigned-by-dhcp.cox.net>
+	<200511032317.15393.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 03 23:52:48 2005
+X-From: git-owner@vger.kernel.org Thu Nov 03 23:52:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXnue-0006jc-3M
-	for gcvg-git@gmane.org; Thu, 03 Nov 2005 23:50:28 +0100
+	id 1EXnvk-0007B2-4R
+	for gcvg-git@gmane.org; Thu, 03 Nov 2005 23:51:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932610AbVKCWuZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Nov 2005 17:50:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932612AbVKCWuZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 17:50:25 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:52425 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932610AbVKCWuY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2005 17:50:24 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA3MoMnO018664
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 3 Nov 2005 14:50:22 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA3MoLWP006866;
-	Thu, 3 Nov 2005 14:50:21 -0800
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-In-Reply-To: <86br115r0z.fsf@blue.stonehenge.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932612AbVKCWvd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Nov 2005 17:51:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932632AbVKCWvd
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 17:51:33 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:29828 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932612AbVKCWvc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Nov 2005 17:51:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051103225109.XHPY4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 3 Nov 2005 17:51:09 -0500
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11107>
 
+Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 
+> On Thursday 03 November 2005 21:55, Junio C Hamano wrote:
+>> be better suited to Wiki.  I wonder if there is a Wiki whose
+>> document storage format is in asciidoc, and uses git as its
+>> revision control backend.
+>
+> I wonder if Git is the best SCM for a Wiki, as you want per-file
+> revisions in a Wiki: when reverting a page to a previous version,
+> this should not modify other pages.
 
-On Thu, 3 Nov 2005, Randal L. Schwartz wrote:
-> 
-> I'm currently about to abandon CVS for my website management,
-> replacing it with git.
-> 
-> What problems, if any, will I have using git to manage the binary
-> files for my site, like the custom icons?  CVS is doing that just fine
-> now.
+Sorry, I do not see why per-file revisioning is mandatory.
+Wouldn't revert or edit of a single page be just a new commit of
+the new whole tree with just a single path changed?
 
-Git doesn't have any textual representations anywhere.
+I understand that whole tree history may not be much useful in
+Wiki environment, but I do not see why it would hurt to have a
+whole tree history (except perhaps the commit log may not be
+very useful).
 
-So the _only_ problem should be "git diff" (and related patch-based tools 
-- git-apply etc). They'll simply not work. For similar reasons, a 
-three-way merge will obviously fail.
-
-> I presume emailing diff-patches is out of the question, but if all I'm
-> doing is git-push and git-pull (using the shared central repository
-> model), and if I'm stupid enough to have a merge error it's OK to just
-> blow up on a binary file, will everything else work fine?
-
-Yes. I don't think it's been heavily tested, but the very architecture of 
-git should mean that there just shouldn't be any issues with binary files 
-outside of the obvious ones.
-
-The only binary file the kernel ever uses is the logo.gif thing, so it's 
-been "tested" in the sense that binary files exist, but there's never been 
-any changes to that file, so..
-
-		Linus
+In fact, wouldn't svnwiki already does the same thing?
