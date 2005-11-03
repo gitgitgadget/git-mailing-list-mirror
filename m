@@ -1,59 +1,77 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: Re: Now What?
-Date: Wed, 2 Nov 2005 20:43:07 -0500
-Message-ID: <20051103014307.GA1988@pe.Belkin>
-References: <E1EXTw5-00063o-Gt@jdl.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] rev-list: make --max- and --min-age a bit more usable.
+Date: Wed, 2 Nov 2005 19:11:00 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511021908220.27915@g5.osdl.org>
+References: <7vd5lnztav.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0510301838110.27915@g5.osdl.org> <7vbr12swj3.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 03 02:44:52 2005
+X-From: git-owner@vger.kernel.org Thu Nov 03 04:12:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXU8P-0000Fm-6s
-	for gcvg-git@gmane.org; Thu, 03 Nov 2005 02:43:21 +0100
+	id 1EXVVc-0003Kb-5E
+	for gcvg-git@gmane.org; Thu, 03 Nov 2005 04:11:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030256AbVKCBnS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Nov 2005 20:43:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030260AbVKCBnS
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 20:43:18 -0500
-Received: from eastrmmtao03.cox.net ([68.230.240.36]:42403 "EHLO
-	eastrmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1030256AbVKCBnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Nov 2005 20:43:17 -0500
-Received: from localhost ([24.250.31.7]) by eastrmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051103014227.WIGQ2767.eastrmmtao03.cox.net@localhost>;
-          Wed, 2 Nov 2005 20:42:27 -0500
-Received: from chris by localhost with local (Exim 4.43)
-	id 1EXU8B-0000WW-RX; Wed, 02 Nov 2005 20:43:07 -0500
-To: Jon Loeliger <jdl@freescale.com>
-Content-Disposition: inline
-In-Reply-To: <E1EXTw5-00063o-Gt@jdl.com>
-User-Agent: Mutt/1.4.1i
+	id S1030306AbVKCDLI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Nov 2005 22:11:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030307AbVKCDLI
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 22:11:08 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:3718 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030306AbVKCDLH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Nov 2005 22:11:07 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA33B1W6002072
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 2 Nov 2005 19:11:03 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA33B0Uj023823;
+	Wed, 2 Nov 2005 19:11:01 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbr12swj3.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11064>
 
-On Wed, Nov 02, 2005 at 07:30:37PM -0600, Jon Loeliger wrote:
+
+
+On Wed, 2 Nov 2005, Junio C Hamano wrote:
 > 
-> The Other Day, I offered to help write up some parts of
-> a "Something weird just happened.  Now What?" document.
+> > 	git-whatchanged -p --pretty=short --since="2 weeks ago" v0.99.8..v0.99.9 Makefile
+> >
+> > is a valid query
 > 
-> So, I'm now soliciting suggestions and/or tips that can
-> be thrown together to form the basis of that document.
+> Well, it is not a valid query ;-) Nobody implemented --since
+> yet, but you could spell it --max-age.  It would not grok "2
+> weeks ago" though.
+
+Have you tried it? 
+
+"--since" _works_.
+
+All the magic is in "git-rev-parse". Try it.
+
+> With the attached patch, you could at least do:
 > 
-> I have a few ideas and a rough outline up my sleeve, but
-> I am curious to know what _you_ think needs to be covered.
+> 	git log --max-age='2005-10-25' v0.99.8..v0.99.9 Makefile
 
-"I cloned a remote repo. Then I pulled a branch from the remote repo
-and it started changing all the these files.  I paniced and hit
-ctrl-c.  Doh!  I should have checked out the branch locally before
-pulling.  Now what?  How can I recover without cloning the repo
-again?"
+No. Really. _try_ it. You can do
 
-In general, for each common operation, it'd be nice to explain how to
-"undo". 
+	git log --since="September 25"
 
--chris
+And ItJustWorks(tm).
+
+No patches needed. Anywhere. It's worked for quite a long time too. Since 
+commit c1babb1d65e034a058c14379eabec8eb374757ca, to be exact.
+
+    [PATCH] Teach "git-rev-parse" about date-based cut-offs
+
+Just use it.
+
+		Linus
