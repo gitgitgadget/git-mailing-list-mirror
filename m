@@ -1,98 +1,117 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: New ASCII Art
-Date: Thu, 03 Nov 2005 12:30:28 -0800
-Message-ID: <7vhdatfp97.fsf@assigned-by-dhcp.cox.net>
-References: <E1EXSDW-0005aC-RG@jdl.com>
+From: Carl Baldwin <cnb@fc.hp.com>
+Subject: Re: [PATCH] RFC: proxy-command support for git://
+Date: Thu, 3 Nov 2005 13:41:37 -0700
+Organization: Hewlett Packard
+Message-ID: <20051103204137.GA1343@hpsvcnb.fc.hp.com>
+References: <87fyqdbuab.fsf@briny.internal.ondioline.org> <7v8xw5h898.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511031117290.27915@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 03 21:32:39 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Paul Collins <paul@briny.ondioline.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 03 21:42:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXljJ-0003nM-Rn
-	for gcvg-git@gmane.org; Thu, 03 Nov 2005 21:30:38 +0100
+	id 1EXluM-00014x-9Q
+	for gcvg-git@gmane.org; Thu, 03 Nov 2005 21:42:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030467AbVKCUac (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Nov 2005 15:30:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030468AbVKCUac
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 15:30:32 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:59294 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1030467AbVKCUab (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Nov 2005 15:30:31 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051103202950.GQBQ29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 3 Nov 2005 15:29:50 -0500
-To: jdl@freescale.com
-In-Reply-To: <E1EXSDW-0005aC-RG@jdl.com> (jdl@freescale.com's message of "Wed,
-	02 Nov 2005 17:40:30 -0600")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030468AbVKCUlu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Nov 2005 15:41:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030470AbVKCUlu
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 15:41:50 -0500
+Received: from atlrel8.hp.com ([156.153.255.206]:4526 "EHLO atlrel8.hp.com")
+	by vger.kernel.org with ESMTP id S1030468AbVKCUlt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2005 15:41:49 -0500
+Received: from smtp2.fc.hp.com (smtp2b.fc.hp.com [15.15.136.253])
+	by atlrel8.hp.com (Postfix) with ESMTP id 81BAD4759;
+	Thu,  3 Nov 2005 15:41:48 -0500 (EST)
+Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
+	by smtp2.fc.hp.com (Postfix) with ESMTP
+	id CA3B041E5C5; Thu,  3 Nov 2005 20:41:37 +0000 (UTC)
+Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
+	id A408C431F1; Thu,  3 Nov 2005 13:41:37 -0700 (MST)
+To: Linus Torvalds <torvalds@osdl.org>
+Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Paul Collins <paul@briny.ondioline.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0511031117290.27915@g5.osdl.org>
+X-Origin: hpsvcnb.fc.hp.com
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11094>
 
-jdl@freescale.com writes:
+Another way to do this would be using the ~/.ssh/config file.  It would
+look something like this:
 
-> So, I have updated drawings for consideration.  See if you buy
-> these.  And if so, let's ponder where they might go.  Then
-> I'll patch 'em in...
+Host host
+  ProxyCommand ...
 
-Thanks for doing this.  You have a sale.
+Or, more generically...
 
-> Fundamental Git Index Operations
+Host *.*
+  ProxyCommand ...
 
-README (which is included as git(7) Discussion section) might be
-a good document to decorate with this.  Probably after "The
-Workflow; 5) Tying it all together".
+Host *.* assumes that if the machine name has a '.' in it then you are
+trying to get outside the firewall.  This might not be a good assumption
+but it works well where I am.
 
-> Git Merge Operations
-> ====================
->
->                     +-----------+
->                     | Object DB |
->                     |  Backing  |
->                     |   Store   | -------+
->                     +-----------+        |
->                                          |
->                            read-tree -m  |
->   +-----+                  tree obj      |
->   |patch|                                |
->   +-----+           +-----------+        |
->      |              |   Index   | <- - - +
->      +------------->|  "cache"  | - - - >+
->  git-apply --index  +-----------+        |
->                                          |
->                                          |
->                          read-tree -m -u |
->  +-----+                        tree obj |
->  |patch|                                 |
->  +-----+            +-----------+        |
->     |               |  Working  |<-------+
->     +-------------->| Directory |
->   git-apply         +-----------+
+Then use host:pathname or ssh://host/pathname or whatever.
 
-Note that apply --index updates both index and working tree.
-Note that read-tree -m -u takes information from both odb and
-index, and updates both index and working tree.
+The advantage of using this is that it works for anything that uses ssh
+to get outside the firewall.  Not just git.  So, setup is minimal.
 
-Logically this belongs to "Merging two branches" in the Tutorial
-document.  The Tutorial introduction claims the document intends
-to show how the core level operates to implement higher level
-scripts, but currently we lack the lower-level details in the
-text that would go well together with this illustration.  Please
-remind me that I should write something up at the very end of
-that section soonish ;-).
+Carl
 
-> Git Diff Types
+On Thu, Nov 03, 2005 at 11:22:35AM -0800, Linus Torvalds wrote:
+> 
+> 
+> On Thu, 3 Nov 2005, Junio C Hamano wrote:
+> 
+> > Paul Collins <paul@briny.ondioline.org> writes:
+> > 
+> > > I spend some of my time using a network that only allows outgoing TCP
+> > > connections to certain ports, and the git-daemon port is not one of them.
+> > > This patch below implements an analogue to ssh's ProxyCommand feature
+> > > for git, as a less messy alternative to ssh port forwarding.
+> > 
+> > Wonderful.
+> > 
+> > > Questions:
+> > >
+> > > * Can git already do this and I just failed to notice?
+> > 
+> > Maybe I just failed to notice this too, but I do not think so.
+> 
+> Actually, you could. TWO ways, in fact, afaik.
+> 
+> Just use the "ssh://host/pathname" format (or just "host:pathname") and 
+> the GIT_SSH environment variable.
+> 
+> You could also override the local command-name with
+> 
+> 	git-send-pack --exec=my-local-send-program /machine/repo/path
+> 
+> where the "my-local-send-program" will parse /machine/repo/path thing. At 
+> least that works with git-send-pack, but it's possible it doesn't work 
+> with some other logic (ie "git push" might decide that it's unhappy that 
+> /machine/repo/path doesn't exist locally because it thinks it's a local 
+> path).
+> 
+> 		Linus
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
-Maybe as a side note to "Inspecing Changes" section in the
-Tutorial.
-
-> Commit DAG Revision Naming
-
-As an illustration to "SPECIFYING REVISIONS" section of
-git-rev-parse(1).
+-- 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Carl Baldwin                        Systems VLSI Laboratory
+ Hewlett Packard Company
+ MS 88                               work: 970 898-1523
+ 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
+ Fort Collins, CO 80525              home: Carl@ecBaldwin.net
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
