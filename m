@@ -1,77 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] rev-list: make --max- and --min-age a bit more usable.
-Date: Wed, 2 Nov 2005 19:11:00 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511021908220.27915@g5.osdl.org>
-References: <7vd5lnztav.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0510301838110.27915@g5.osdl.org> <7vbr12swj3.fsf_-_@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: HTTP pushes
+Date: Wed, 02 Nov 2005 20:12:36 -0800
+Message-ID: <43698E34.1060805@zytor.com>
+References: <20051101020248.GA3928@reactrix.com> <Pine.LNX.4.64.0511011500580.25300@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 03 04:12:17 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Nick Hengeveld <nickh@reactrix.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 03 05:14:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXVVc-0003Kb-5E
-	for gcvg-git@gmane.org; Thu, 03 Nov 2005 04:11:24 +0100
+	id 1EXWTU-0001eM-MY
+	for gcvg-git@gmane.org; Thu, 03 Nov 2005 05:13:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030306AbVKCDLI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Nov 2005 22:11:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030307AbVKCDLI
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 22:11:08 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:3718 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030306AbVKCDLH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Nov 2005 22:11:07 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA33B1W6002072
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 2 Nov 2005 19:11:03 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA33B0Uj023823;
-	Wed, 2 Nov 2005 19:11:01 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr12swj3.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030204AbVKCEMt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Nov 2005 23:12:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030296AbVKCEMt
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Nov 2005 23:12:49 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:56034 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1030299AbVKCEMs
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 2 Nov 2005 23:12:48 -0500
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jA34CaWq024501
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 2 Nov 2005 20:12:44 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.64.0511011500580.25300@iabervon.org>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11065>
 
-
-
-On Wed, 2 Nov 2005, Junio C Hamano wrote:
+Daniel Barkalow wrote:
 > 
-> > 	git-whatchanged -p --pretty=short --since="2 weeks ago" v0.99.8..v0.99.9 Makefile
-> >
-> > is a valid query
-> 
-> Well, it is not a valid query ;-) Nobody implemented --since
-> yet, but you could spell it --max-age.  It would not grok "2
-> weeks ago" though.
+> You obviously need a bit more than HTTP...
+ >
 
-Have you tried it? 
-
-"--since" _works_.
-
-All the magic is in "git-rev-parse". Try it.
-
-> With the attached patch, you could at least do:
-> 
-> 	git log --max-age='2005-10-25' v0.99.8..v0.99.9 Makefile
-
-No. Really. _try_ it. You can do
-
-	git log --since="September 25"
-
-And ItJustWorks(tm).
-
-No patches needed. Anywhere. It's worked for quite a long time too. Since 
-commit c1babb1d65e034a058c14379eabec8eb374757ca, to be exact.
-
-    [PATCH] Teach "git-rev-parse" about date-based cut-offs
-
-Just use it.
-
-		Linus
+Not really, as long as you can GET and POST arbitrary files.  Arguably, 
+that's not how POST is typically used, though.
+	
+	-hpa
