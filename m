@@ -1,74 +1,68 @@
-From: "Peter Eriksen" <s022018@student.dtu.dk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: little conundrum
-Date: Thu, 3 Nov 2005 20:36:45 +0100
-Message-ID: <20051103193644.GB28273@bohr.gbar.dtu.dk>
-References: <200511031741.20496.alan@chandlerfamily.org.uk> <200511031848.58040.alan@chandlerfamily.org.uk> <20051103191652.GA28273@bohr.gbar.dtu.dk> <200511031930.28929.alan@chandlerfamily.org.uk>
+Date: Thu, 3 Nov 2005 18:47:56 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511031845410.3435@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200511031741.20496.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Nov 03 20:37:43 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 03 21:00:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXkth-0002ZZ-CF
-	for gcvg-git@gmane.org; Thu, 03 Nov 2005 20:37:17 +0100
+	id 1EXlDf-0003Vx-7Z
+	for gcvg-git@gmane.org; Thu, 03 Nov 2005 20:57:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030456AbVKCTgr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Nov 2005 14:36:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030458AbVKCTgr
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 14:36:47 -0500
-Received: from bohr.gbar.dtu.dk ([192.38.95.24]:48006 "HELO bohr.gbar.dtu.dk")
-	by vger.kernel.org with SMTP id S1030456AbVKCTgq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2005 14:36:46 -0500
-Received: (qmail 3467 invoked by uid 5842); 3 Nov 2005 20:36:45 +0100
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <200511031930.28929.alan@chandlerfamily.org.uk>
-User-Agent: Mutt/1.5.7i
+	id S1030462AbVKCT5v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Nov 2005 14:57:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932569AbVKCT5v
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 14:57:51 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:7606 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932565AbVKCT5u (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Nov 2005 14:57:50 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 1840113F289; Thu,  3 Nov 2005 20:57:45 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 2588D9F4AF; Thu,  3 Nov 2005 20:11:47 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E81B99F370; Thu,  3 Nov 2005 18:47:56 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 9920613E20E; Thu,  3 Nov 2005 18:47:56 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Alan Chandler <alan@chandlerfamily.org.uk>
+In-Reply-To: <200511031741.20496.alan@chandlerfamily.org.uk>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11089>
 
-On Thu, Nov 03, 2005 at 07:30:28PM +0000, Alan Chandler wrote:
-...
-> This is the same as before.  It lists the modified files, but it doesn't tell 
-> you about any added or deleted files.
+Hi,
 
-That's odd, because I get this (shortened) output with Git current:
+On Thu, 3 Nov 2005, Alan Chandler wrote:
 
-~/peter-2.6]git-status
-#
-# Changed but not updated:
-#   (use git-update-index to mark for commit)
-#
-#       deleted:  README
-#       deleted:  REPORTING-BUGS
-#       deleted:  arch/mips/mips-boards/atlas/Makefile
-#       deleted:  arch/mips/mips-boards/sead/sead_setup.c
-#       modified: fs/fs-writeback.c
-#       deleted:  init/Kconfig
-#       deleted:  init/Makefile
-#       deleted:  init/calibrate.c
-#
-#
-# Untracked files:
-#   (use "git add" to add to commit)
-#
-#       drivers/media/MAINTAINERS
-#       drivers/parport/mips-boards/atlas/Makefile
-#       drivers/parport/mips-boards/atlas/atlas_gdb.c
-#       drivers/parport/mips-boards/sead/sead_setup.c
-#       fs/fs-writeback.c~
-nothing to commit
+> I would like to make myself a git repository that contains at the start, 
+> an initial commit of the original downloaded source code, and a second 
+> commit on the top of that that contains the the current state of play 
+> after the changes I have made.
 
+How about this:
 
-> [I have done this manually now - originally I thought that there were quite a 
-> few files - but once I had stripped out things like "tags" and some spurious 
-> directories that were empty it ended up being only three files:-).  So its 
-> only an intellectual exercise now:-)]
+	cd orig/
+	git-init-db
+	git-add $(find * -type f)
+	git-commit -m "initial"
+	cd ../modified
+	mv ../orig/.git ./
+	git-add $(find * -type f)
+	git-commit -a -m "my modifications"
 
-Be careful to remember to add any links.  At least with Git when
-I last tried importing directories containing them.
+Of course -- in the great tradition of this list -- totally untested.
 
-Peter
+Hth,
+Dscho
