@@ -1,91 +1,90 @@
-From: Paul Collins <paul@briny.ondioline.org>
-Subject: Re: [PATCH] v2: proxy-command support for git://
-Date: Fri, 04 Nov 2005 22:04:10 +0000
-Message-ID: <87hdas9ijp.fsf@briny.internal.ondioline.org>
-References: <87fyqdbuab.fsf@briny.internal.ondioline.org>
-	<7v8xw5h898.fsf@assigned-by-dhcp.cox.net>
-	<871x1wbgvn.fsf_-_@briny.internal.ondioline.org>
-	<7v1x1wz7ae.fsf@assigned-by-dhcp.cox.net>
-	<7v7jbow8ae.fsf@assigned-by-dhcp.cox.net>
-	<87ll049l8a.fsf@briny.internal.ondioline.org>
-	<7v3bmct7i3.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Cogito: Support for implicit remote branches in cloned
+ repositories
+Date: Fri, 4 Nov 2005 14:07:48 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511041359050.28804@g5.osdl.org>
+References: <200511041701.48881.Josef.Weidendorfer@gmx.de>
+ <7vvez8wbpz.fsf@assigned-by-dhcp.cox.net> <20051104210820.GM1431@pasky.or.cz>
+ <7voe50rskh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 23:07:25 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 04 23:09:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EY9hY-0005te-KB
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 23:06:26 +0100
+	id 1EY9jM-0006d9-GU
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 23:08:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006AbVKDWGW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 17:06:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751007AbVKDWGW
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 17:06:22 -0500
-Received: from jenny.ondioline.org ([66.220.1.122]:41226 "EHLO
-	jenny.ondioline.org") by vger.kernel.org with ESMTP
-	id S1751003AbVKDWGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2005 17:06:21 -0500
-Received: by jenny.ondioline.org (Postfix, from userid 10)
-	id BD3B18CD5B; Fri,  4 Nov 2005 22:06:20 +0000 (GMT)
-Received: by briny.internal.ondioline.org (Postfix, from userid 1000)
-	id BF9B5F95F; Fri,  4 Nov 2005 22:04:10 +0000 (GMT)
+	id S1751008AbVKDWIJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 17:08:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751013AbVKDWIJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 17:08:09 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:20160 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751008AbVKDWIC (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2005 17:08:02 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA4M7onO012324
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 4 Nov 2005 14:07:50 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA4M7mF6024010;
+	Fri, 4 Nov 2005 14:07:49 -0800
 To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-In-Reply-To: <7v3bmct7i3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 04 Nov 2005 13:42:28 -0800")
+In-Reply-To: <7voe50rskh.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11165>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Paul Collins <paul@briny.ondioline.org> writes:
->
->> But perhaps I do not really understand your objection.
->
-> No, I think you are getting it right.
->
-> I just wanted to avoid using the proxy script for some hosts,
-> depending on where you are going.  Obviously you can teach the
-> proxy script to do passthru for some hosts like you did in your
-> message.  The only difference is where the configuration is
-> specified.  I wanted it to be in the git configuration file
-> (i.e. using different proxy script or no script, depending on
-> the host).  Your example has that configuration wired in the
-> single script that is always called regardless of the
-> destination, and the script itself switches how it proxies,
-> depending on where it is going, perhaps using its own
-> configuration file or hardcoding.
 
-I had some ideas along those lines, but I didn't like any of them.
+On Fri, 4 Nov 2005, Junio C Hamano wrote:
+> 
+> I agree with you violently.  I just do not know what is the
+> right convention to tell which is private and which is not.
 
- * Extend the proxy-command "protocol" with a third argument, an
-   action.  For example if 'query $host $port' returns successfully,
-   then git should run it with arguments 'connect $host $port',
-   otherwise use git_tcp_connect().
+I don't like the dot idea, but it certainly _would_ make sense to have a 
+local prefix.
 
- * Add a Proxy-Command field to the files in .git/remotes, e.g.:
+We could even make it a _totally_ different namespace:
 
-     URL: git://git.kernel.org/pub/scm/git/git.git/
-     Pull: master:origin
-     Proxy-command: my-git-proxy-command
+	.git/refs/local/heads
+	.git/refs/local/tags
 
- * If the git config syntax is extended to allow dots in section or
-   key names:
+which means that even if you call a local head the same thing as a global 
+one, both can still exist.
 
-     [proxy]
-     git.kernel.org = "ssh-to-bastion-proxy-command"
-     git.blargco.com = "blargco-proxy-command"
+Then, make "origin" always be a local head.
 
-   or perhaps
+That avoids the issue of the remote repo _also_ having an "origin" branch.
 
-     [git.kernel.org]
-     proxycommand = "ssh-to-bastion-proxy-command"
-     [git.blargco.com]
-     proxycommand = "blargco-proxy-command"
+Locally, the "local" heads would always take precedence, with this trivial 
+patch making sure of that.. 
 
--- 
-Dag vijandelijk luchtschip de huismeester is dood
+If you want to access a global tag or head, you can always do so by using 
+the full path ("refs/tags/tagname" is the global one, but "tags/tagname" 
+or "tagname" would be the local one if one exists).
+
+		Linus
+
+---
+diff --git a/sha1_name.c b/sha1_name.c
+index be1755a..5daaa11 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -231,6 +231,8 @@ static int get_sha1_basic(const char *st
+ 	static const char *prefix[] = {
+ 		"",
+ 		"refs",
++		"refs/local/tags",
++		"refs/local/heads",
+ 		"refs/tags",
+ 		"refs/heads",
+ 		NULL
