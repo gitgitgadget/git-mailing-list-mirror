@@ -1,56 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Tags not transferred with git pull?
-Date: Fri, 04 Nov 2005 11:26:20 -0800
-Message-ID: <7vll04tdsz.fsf@assigned-by-dhcp.cox.net>
-References: <20051104155314.GB23790@harddisk-recovery.nl>
-	<20051104155914.GA9567@ferdyx.org>
-	<20051104160503.GC23790@harddisk-recovery.com>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: RFC: GIT networked storage
+Date: Fri, 04 Nov 2005 15:40:18 -0500
+Message-ID: <436BC732.3090809@pobox.com>
+References: <7vwtjp2h59.fsf@assigned-by-dhcp.cox.net>	<436AE6A3.4040103@pobox.com> <7vd5lg22gm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 20:28:44 2005
+X-From: git-owner@vger.kernel.org Fri Nov 04 21:44:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EY7Cj-0003M0-R9
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 20:26:26 +0100
+	id 1EY8Md-0004jz-DI
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 21:40:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbVKDT0W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 14:26:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750841AbVKDT0W
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 14:26:22 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:41374 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1750783AbVKDT0W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2005 14:26:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051104192527.NGRD2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 4 Nov 2005 14:25:27 -0500
-To: Erik Mouw <erik@harddisk-recovery.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750833AbVKDUkW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 15:40:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbVKDUkW
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 15:40:22 -0500
+Received: from mail.dvmed.net ([216.237.124.58]:21947 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S1750833AbVKDUkV (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2005 15:40:21 -0500
+Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
+	id 1EY8MG-0002WU-V9; Fri, 04 Nov 2005 20:40:21 +0000
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vd5lg22gm.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11155>
 
-Erik Mouw <erik@harddisk-recovery.com> writes:
+Junio C Hamano wrote:
+> Jeff Garzik <jgarzik@pobox.com> writes:
+> 
+> 
+>>How easy is it to add a new storage backend to git?
+> 
+> 
+> Almost everything is contained within sha1_file.c.
+> 
+> Object creation side is simple -- everybody who creates an
+> object (e.g update-index registering blobs, write-tree writing
+> the toplevel and intermediate level trees, commit-tree building
+> a commit object, unpack-objects exploding a pack) goes through
+> write_sha1_file(), which checks if the object is already
+> available using has_sha1_file() and creates a new object in the
+> local .git/objects/?? directory.  I am assuming that you are not
+> planning to create objects in a remote peer from within the git
+> code path, and instead to have background process that replicate
+> them over the network to peer repositories, so you probably do
+> not have to touch this side.
+> 
+> Extending inspection and reading from existing objects for your
+> networked storage may be somewhat messy, but starting points
+> are:
+[...]
 
-> Ah, right. I got the impression that the latest git was supposed to do
-> that automatically with a git pull.
+Thanks.  It looks pretty straightforward to add a new storage backend, 
+grepping on the symbols you listed.
 
-Sorry for the confusion.  The barebone Porcelainish shipped with
-git-core does not fetch and store tags unconditionally under the
-same name as the remote has without being told; you need to
-explicitly tell it to 'git fetch --tags'.
-
-What was added recently was a low level support for Cogito to
-implement the automatic tracking.  This is supposed to (I do not
-offhand know if the Cogito side has been updated to do so
-already) work a bit differently.  Instead of grabbing all tags
-and all objects reachable from them, as you fetch commits from
-the remote, the automatic tracking fetches tags that point at
-them.  What this means is that the tags on the remote branch you
-are tracking would be fetched automatically but tags on a remote
-branch you are not interested in are not.
+	Jeff
