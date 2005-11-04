@@ -1,48 +1,47 @@
-From: Darrin Thompson <darrint@progeny.com>
-Subject: Fixing Commit And Author
-Date: Fri, 04 Nov 2005 11:38:45 -0500
-Message-ID: <1131122325.5446.14.camel@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] v2: proxy-command support for git://
+Date: Fri, 04 Nov 2005 08:50:33 -0800
+Message-ID: <7v1x1wz7ae.fsf@assigned-by-dhcp.cox.net>
+References: <87fyqdbuab.fsf@briny.internal.ondioline.org>
+	<7v8xw5h898.fsf@assigned-by-dhcp.cox.net>
+	<871x1wbgvn.fsf_-_@briny.internal.ondioline.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Nov 04 17:41:47 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 04 17:52:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EY4aY-00010B-OR
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 17:38:51 +0100
+	id 1EY4m5-0005vp-O5
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 17:50:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932171AbVKDQiq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 11:38:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932169AbVKDQiq
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 11:38:46 -0500
-Received: from zealot.progeny.com ([216.37.46.162]:31703 "EHLO
-	morimoto.progeny.com") by vger.kernel.org with ESMTP
-	id S932165AbVKDQip (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2005 11:38:45 -0500
-Received: from localhost.localdomain (morimoto.progeny.com [192.168.1.53])
-	by morimoto.progeny.com (Postfix) with ESMTP id 8A740636AF
-	for <git@vger.kernel.org>; Fri,  4 Nov 2005 11:38:44 -0500 (EST)
-To: git@vger.kernel.org
-X-Mailer: Evolution 2.2.3 
+	id S1750721AbVKDQug (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 11:50:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750718AbVKDQug
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 11:50:36 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:20201 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1750708AbVKDQuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Nov 2005 11:50:35 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051104165014.ZBEL1668.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 4 Nov 2005 11:50:14 -0500
+To: Paul Collins <paul@briny.ondioline.org>
+In-Reply-To: <871x1wbgvn.fsf_-_@briny.internal.ondioline.org> (Paul Collins's
+	message of "Fri, 04 Nov 2005 14:57:16 +0000")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11142>
 
-I've got a small project in git where I made a dumb error. All my
-commits have author/committer information like this:
+Paul Collins <paul@briny.ondioline.org> writes:
 
-Author: Darrin Thompson <darrint@dhcp-1-211.(none)>  2005-10-20 16:50:38
-Committer: Darrin Thompson <darrint@dhcp-1-211.(none)>  2005-10-20
-16:50:38
-Tags: svn-5099
+> Regarding internal vs. external hosts, the proxy command can simply
+> run netcat locally to internal hosts, so perhaps that is sufficient.
 
-I'd like to replace the commits (yes, I know that means all of them)
-with new ones with corrected email addresses and also manage to migrate
-my tags. A push in the right direction would be appreciated.
-
-Next I'd like to do the same with the kernel sources... :-)
-
---
-Darrin
+I was hoping this to become a bit more generalized mechanism
+than that; for example using outgoing plug over HTTP Connect or
+telnet proxy using tn-gw-nav.
