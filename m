@@ -1,99 +1,147 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: RFC: GIT networked storage
-Date: Fri, 04 Nov 2005 01:21:13 -0800
-Message-ID: <7vd5lg22gm.fsf@assigned-by-dhcp.cox.net>
-References: <7vwtjp2h59.fsf@assigned-by-dhcp.cox.net>
-	<436AE6A3.4040103@pobox.com>
+From: Wolfgang Denk <wd@denx.de>
+Subject: Re: Problem cloning the Linux history tree
+Date: Fri, 04 Nov 2005 10:21:46 +0100
+Message-ID: <20051104092146.E5E35353C33@atlas.denx.de>
+References: <7vmzkl3yl0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 10:21:41 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Marcel Holtmann <marcel@holtmann.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 04 10:23:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXxlM-0005Kk-Jm
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 10:21:32 +0100
+	id 1EXxm0-0005fL-PA
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 10:22:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932152AbVKDJVR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 04:21:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932697AbVKDJVR
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 04:21:17 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:48065 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932152AbVKDJVR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2005 04:21:17 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051104092019.FKXL2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 4 Nov 2005 04:20:19 -0500
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <436AE6A3.4040103@pobox.com> (Jeff Garzik's message of "Thu, 03
-	Nov 2005 23:42:11 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932719AbVKDJVz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 04:21:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932718AbVKDJVy
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 04:21:54 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:22708 "EHLO
+	mail-out.m-online.net") by vger.kernel.org with ESMTP
+	id S932719AbVKDJVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Nov 2005 04:21:53 -0500
+Received: from mail.m-online.net (svr20.m-online.net [192.168.3.148])
+	by mail-out.m-online.net (Postfix) with ESMTP id 4EB5A700C1;
+	Fri,  4 Nov 2005 10:20:26 +0100 (CET)
+X-Auth-Info: uL/qcze6xbbaT5aAckXio30WElhOgqNcmILw+T3nedI=
+X-Auth-Info: uL/qcze6xbbaT5aAckXio30WElhOgqNcmILw+T3nedI=
+X-Auth-Info: uL/qcze6xbbaT5aAckXio30WElhOgqNcmILw+T3nedI=
+Received: from mail.denx.de (p549660AA.dip.t-dialin.net [84.150.96.170])
+	by smtp-auth.mnet-online.de (Postfix) with ESMTP id 6B7B01271F0;
+	Fri,  4 Nov 2005 10:21:47 +0100 (CET)
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by mail.denx.de (Postfix) with ESMTP id 01F3A6D00AC;
+	Fri,  4 Nov 2005 10:21:47 +0100 (MET)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id E5E35353C33;
+	Fri,  4 Nov 2005 10:21:46 +0100 (MET)
+To: Junio C Hamano <junkio@cox.net>
+In-reply-to: Your message of "Thu, 03 Nov 2005 19:02:03 PST."
+             <7vmzkl3yl0.fsf@assigned-by-dhcp.cox.net> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11123>
 
-Jeff Garzik <jgarzik@pobox.com> writes:
+In message <7vmzkl3yl0.fsf@assigned-by-dhcp.cox.net> you wrote:
+> 
+> > # cg-clone http://www.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
+> > defaulting to local storage area
+> > 09:53:02 URL:http://www.kernel.org/pub/scm/linux/kernel/git/tglx/history.git/HEAD [41/41] -> "refs/heads/.origin-fetching" [1]
+...
+> That repository is packed but lacks objects/info/packs file.
+> Perhaps you need to ask tglx to run git-update-server-info in
+> the repository.
 
-> How easy is it to add a new storage backend to git?
+I have the same (or a very similar) problem with our Linux repo:
 
-Almost everything is contained within sha1_file.c.
+-> cg-clone http://www.denx.de/git/linux-2.6-denx.git foo
+...
+defaulting to local storage area
+09:54:53 URL:http://www.denx.de/git/linux-2.6-denx.git/HEAD [41/41] -> "refs/heads/.origin-fetching" [1]
+Getting alternates list
+Getting pack list
+Getting index for pack eceba3479417b338c2e156b1c6dfd69f3f0eaad1
+Getting index for pack b3c6fbdfa36a326815de6358885c7a570a986b1b
+Getting index for pack 6122f3ffa476a089122c0bffbbb7a7ce31304b56
+Getting index for pack 06949712bb970fc1dd2e13f50accdcd2bf992536
+Getting index for pack 459148e2ea863c15479d69ed4886a6f200c79a49
+Getting pack 459148e2ea863c15479d69ed4886a6f200c79a49
+which contains 010a4c0059a82b834b4d7f65d5cdd4a9717d8ea7
+progress: 3 objects, 0 bytes
+Getting pack 06949712bb970fc1dd2e13f50accdcd2bf992536
+which contains 5014bfa48ac169e0748e1e9651897788feb306dc
+progress: 12210 objects, 0 bytes
+09:58:42 ERROR 404: Not Found.
+09:58:42 URL:http://www.denx.de/git/linux-2.6-denx.git/refs/tags/DENX-2005-10-02-18:30 [41/41] -> "refs/tags/DENX-2005-10-02-18:30" [1]
+...
+09:58:43 URL:http://www.denx.de/git/linux-2.6-denx.git/refs/tags/v2.6.14-rc5 [41/41] -> "refs/tags/v2.6.14-rc5" [1]
+FINISHED --09:58:43--
+Downloaded: 19,240 bytes in 30 files
+Missing object of tag v2.6.14-rc3... unable to retrieve
+New branch: 010a4c0059a82b834b4d7f65d5cdd4a9717d8ea7
+Cloned to foo/ (origin http://www.denx.de/git/linux-2.6-denx.git available as branch "origin")
 
-Object creation side is simple -- everybody who creates an
-object (e.g update-index registering blobs, write-tree writing
-the toplevel and intermediate level trees, commit-tree building
-a commit object, unpack-objects exploding a pack) goes through
-write_sha1_file(), which checks if the object is already
-available using has_sha1_file() and creates a new object in the
-local .git/objects/?? directory.  I am assuming that you are not
-planning to create objects in a remote peer from within the git
-code path, and instead to have background process that replicate
-them over the network to peer repositories, so you probably do
-not have to touch this side.
+And I did run git-update-server-info, even with --force.
 
-Extending inspection and reading from existing objects for your
-networked storage may be somewhat messy, but starting points
-are:
 
-. has_sha1_file() takes the object name and returns true/false;
-  if the object is available to us in any form (be it in one of
-  the alternate object stores or the local repository, as
-  individual object in an objects/??/ file or stored in a pack).
-  Currently it looks at packs and then checks individual files
-  for performance reasons (to minimize seeks and to prevent
-  polluting dcache with many negative hits); you would be adding
-  another data source. 
+In the server log I see messages like these:
 
-. read_sha1_file() takes the object name, and returns the
-  uncompressed contents of the object in addition to the type
-  and the size.
+[Fri Nov 04 09:54:52 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/01
+[Fri Nov 04 09:54:52 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/info/http-alternates
+[Fri Nov 04 09:54:53 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/info/alternates
+[Fri Nov 04 09:55:12 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/5b
+[Fri Nov 04 09:55:12 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/ca
+[Fri Nov 04 09:55:12 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/50
+[Fri Nov 04 09:55:12 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/98
+[Fri Nov 04 09:55:12 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/79
+[Fri Nov 04 09:55:12 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/4e
+[Fri Nov 04 09:55:12 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/79
+[Fri Nov 04 09:55:12 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/c1
+[Fri Nov 04 09:55:12 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/f9
+[Fri Nov 04 09:55:12 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/e5
+[Fri Nov 04 09:55:13 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/e1
+[Fri Nov 04 09:55:13 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/67
+[Fri Nov 04 09:55:13 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/0c
+[Fri Nov 04 09:55:13 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/b6
+[Fri Nov 04 09:55:13 2005] [error] [client 84.150.96.170] File does not exist: /srv/git/linux-2.6-denx.git/objects/bc
 
-. sha1_object_info() takes the object name and returns the type
-  of the object and optionally returns the size of it, without
-  reading the contents.  Some programs call this before reading
-  the data using read_sha1_file(), so you might want to use this
-  as a cue to prefetch from a remote peer; also you _might_ want
-  to keep type and size cached if you plan to implement
-  forgetful storage that deliberately loses objects and expects
-  to refetch it from its peers.  Good test program once you are
-  done extending this part is git-cat-file with -t and -s flag.
+These directories really don't exist:
 
-The above three are the primary read interfaces, but there are
-some places that cheat by assuming that packs and individual
-objects are the only two kinds of sources for the object data,
-so you need to be careful.  For example, write_sha1_to_fd(),
-which is used only by ssh-upload, first tries to call
-map_sha1_file_internal(), which is only valid for individual
-objects, to grab the object data, and when it fails, calls
-read_packed_sha1(), which is only valid for objects in packs,
-without even checking if read_packed_sha1() succeeded.  This
-doesn't crash only because the caller of write_sha1_to_fd()
-checks if the object is available by calling has_sha1_file()
-itself before calling this function, but you would need to
-change it to fall back on your networked storage if you do not
-want to crash when used by ssh-upload.
+$ cd /srv/git/linux-2.6-denx.git/objects
+. ls -l
+total 8
+drwxrwxr-x  2 wd wd 4096 Nov  4 09:52 info
+drwxrwxr-x  2 wd wd 4096 Nov  3 15:15 pack
 
-HTH, and have fun.
+The question is : why are they requested?
+
+> Cloning over git native transport should work, though:
+> 
+>     $ git clone git://git.kernel.org/pub/scm/lin.../history.git history
+
+This does not work for me,  either.  It  runs  a  long  time  without
+obvious problems, but finally fails with:
+
+-> git clone http://www.denx.de/git/linux-2.6-denx.git bar
+...
+walk c264852726dde251a0c09ec22f61a9be8b0db68b
+walk 69903d6500c73af8329a5fba7153b0d50748981c
+walk b59a9504cb93db7fae31e60760725d48652a1fc3
+error: Could not interpret tags/DENX-2005-10-02-18:30 as something to pull
+
+
+
+I have to admit that I have absolutely no clue (1)  what  might  have
+caused this situation nor (2) how to fix it :-(
+
+Best regards,
+
+Wolfgang Denk
+
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+ The software required `Windows 95 or better', so I installed Linux.
