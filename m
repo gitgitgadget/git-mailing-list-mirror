@@ -1,47 +1,70 @@
-From: Chris Wedgwood <cw@f00f.org>
-Subject: Re: binary safe?
-Date: Thu, 3 Nov 2005 19:49:10 -0800
-Message-ID: <20051104034910.GB5179@taniwha.stupidest.org>
-References: <86br115r0z.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0511031447020.27915@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: GIT 0.99.9c
+Date: Thu, 03 Nov 2005 20:04:02 -0800
+Message-ID: <7vwtjp2h59.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 04:50:32 2005
+X-From: git-owner@vger.kernel.org Fri Nov 04 05:05:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXsb1-0002q1-VB
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 04:50:32 +0100
+	id 1EXsoZ-0005mN-Dc
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 05:04:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030564AbVKDDuF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Nov 2005 22:50:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030595AbVKDDuF
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 22:50:05 -0500
-Received: from [216.184.48.14] ([216.184.48.14]:35060 "HELO main.xsigo.com")
-	by vger.kernel.org with SMTP id S1030564AbVKDDuE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2005 22:50:04 -0500
-Received: from stupidest.org ([10.10.253.1]) by main.xsigo.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Thu, 3 Nov 2005 19:49:40 -0800
-Received: by taniwha.stupidest.org (Postfix, from userid 38689)
-	id 98572528F22; Thu,  3 Nov 2005 19:49:10 -0800 (PST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0511031447020.27915@g5.osdl.org>
-X-OriginalArrivalTime: 04 Nov 2005 03:49:40.0230 (UTC) FILETIME=[C89BFA60:01C5E0F2]
+	id S1030550AbVKDEEF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Nov 2005 23:04:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030596AbVKDEEF
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 23:04:05 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:57496 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1030550AbVKDEEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Nov 2005 23:04:04 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051104040341.DTYW4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 3 Nov 2005 23:03:41 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11120>
 
-On Thu, Nov 03, 2005 at 02:50:21PM -0800, Linus Torvalds wrote:
+GIT 0.99.9c is found at http://kernel.org/pub/software/scm/git/
+as usual.  It includes the following fixes and documentation
+updates since 0.99.9b:
 
-> So the _only_ problem should be "git diff" (and related patch-based
-> tools - git-apply etc). They'll simply not work. For similar
-> reasons, a three-way merge will obviously fail.
+	Alex Riesen:
+	      remove CR/LF from .gitignore
 
-I always thought it would be nice for binary files if SCMs could
-export a summary of what ranges of bytes changes or even xdelta'ish
-details.
+	Jon Loeliger
+	      Illustration: "Fundamental Git Index Operations"
+	      Illustration: "Git Diff Types"
+	      Illustration: "Commit DAG Revision Naming"
 
-Given that people do stick large multi-MB binary blobs in SCMs and
-sometimes these update only a few bytes at a time it has some value.
+	Junio C Hamano:
+	      Do not put automatic merge message after signed-off-by line.
+	      git-clone: do not forget to create origin branch.
+	      Make test-date buildable again.
+	      Do not fail on hierarchical branch names.
+	      Ignore '\r' at the end of line in $GIT_DIR/config
+	      Be careful when dereferencing tags (credits Pasky).
+	      Document --since and --until options to rev-parse.
+	      Add --no-commit to git-merge/git-pull.
+	      Add 'ours' merge strategy.
+	      git-merge-ours: make sure our index matches HEAD
+	      GIT 0.99.9c
+
+	Peter Eriksen:
+	      Clean up the SunOS Makefile rule
+
+The slow and steady march toward 1.0 continues.  
+
+I plan to do another full sweep in the documentation directory
+on my next GIT day.
+
+On the proposed updates front, I am hoping to include Nick's
+http-push using DAV in the "master" branch soon.  And I would
+appreciate somebody who actually uses svnimport to Ack on
+Yaacov's svnimport fix.
