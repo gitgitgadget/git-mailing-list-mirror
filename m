@@ -1,66 +1,131 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: RFC: GIT networked storage
-Date: Fri, 04 Nov 2005 15:40:18 -0500
-Message-ID: <436BC732.3090809@pobox.com>
-References: <7vwtjp2h59.fsf@assigned-by-dhcp.cox.net>	<436AE6A3.4040103@pobox.com> <7vd5lg22gm.fsf@assigned-by-dhcp.cox.net>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: [ANNOUNCE qgit-0.97]
+Date: Fri, 4 Nov 2005 12:42:34 -0800 (PST)
+Message-ID: <20051104204234.84044.qmail@web26307.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 21:44:30 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Fri Nov 04 21:45:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EY8Md-0004jz-DI
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 21:40:43 +0100
+	id 1EY8Oa-0005xS-3h
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 21:42:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750833AbVKDUkW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 15:40:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbVKDUkW
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 15:40:22 -0500
-Received: from mail.dvmed.net ([216.237.124.58]:21947 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1750833AbVKDUkV (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2005 15:40:21 -0500
-Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1EY8MG-0002WU-V9; Fri, 04 Nov 2005 20:40:21 +0000
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5lg22gm.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Score: 0.0 (/)
+	id S1750852AbVKDUml (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 15:42:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750853AbVKDUml
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 15:42:41 -0500
+Received: from web26307.mail.ukl.yahoo.com ([217.146.176.18]:41879 "HELO
+	web26307.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1750851AbVKDUml (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Nov 2005 15:42:41 -0500
+Received: (qmail 84046 invoked by uid 60001); 4 Nov 2005 20:42:34 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=hAJj5Ym4g569Eyl+pOw559coEKQXH2aP36eQ9f0H5f5gTwWkmgcrESm/Vlptcr1pBDpWGa+lppe6xKV6SAtY9jw3JEJKniGYufKK+wIiCjMDAWEfLp0rI3dptD/jwiOqeKRjRjrb/x8OQ7YVA/TRQ4h78FR2xg9Rh9gGwxSvHzc=  ;
+Received: from [151.56.10.179] by web26307.mail.ukl.yahoo.com via HTTP; Fri, 04 Nov 2005 12:42:34 PST
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11156>
 
-Junio C Hamano wrote:
-> Jeff Garzik <jgarzik@pobox.com> writes:
-> 
-> 
->>How easy is it to add a new storage backend to git?
-> 
-> 
-> Almost everything is contained within sha1_file.c.
-> 
-> Object creation side is simple -- everybody who creates an
-> object (e.g update-index registering blobs, write-tree writing
-> the toplevel and intermediate level trees, commit-tree building
-> a commit object, unpack-objects exploding a pack) goes through
-> write_sha1_file(), which checks if the object is already
-> available using has_sha1_file() and creates a new object in the
-> local .git/objects/?? directory.  I am assuming that you are not
-> planning to create objects in a remote peer from within the git
-> code path, and instead to have background process that replicate
-> them over the network to peer repositories, so you probably do
-> not have to touch this side.
-> 
-> Extending inspection and reading from existing objects for your
-> networked storage may be somewhat messy, but starting points
-> are:
-[...]
+qgit, a git GUI viewer.
 
-Thanks.  It looks pretty straightforward to add a new storage backend, 
-grepping on the symbols you listed.
+With qgit you will be able to browse revisions history, view patch content and changed 
+files, graphically following different development branches.
 
-	Jeff
+
+FEATURES
+
+ - View revisions, diffs, files history, files annotation, archive tree.
+
+ - Commit changes visually cherry picking modified files.
+
+ - Apply or format patch series from selected commits, drag and
+   drop commits between two instances of qgit.
+
+ - qgit implements a GUI for the most common StGIT commands like push/pop
+   and apply/format patches. You can also create new patches or refresh 
+   current top one using the same semantics of git commit, i.e. cherry picking
+   single modified files.
+
+
+NEW IN THIS RELEASE
+
+This release is build around the wonderful new "--dense" option of git-rev-list,
+i.e. git-rev-list can now filter revs according to a file list.
+
+Because of this, makes now sense to show the archive tree and let the user to select 
+files and/or directory (treeview supports multi-selection) to filter on the main view 
+on the fly (by a new toolbar toggle button).
+
+Also file history retrieving is now based on --dense option, so to let annotations be
+more consistent with "legacy" file history. Because of this, annotation window gains a
+graph column on file history, independent from main view, and updatable trough tree 
+browsing.
+
+Under the hood improvements to event handling and external process launching complete 
+the picture.
+
+
+DOWNLOAD
+
+Download from sourceforge project page:
+http://prdownloads.sourceforge.net/qgit/qgit-0.97.tar.bz2?download
+
+There is also a git archive with the latest stuff
+
+ QGit repository (GIT): http://digilander.libero.it/mcostalba/qgit.git
+
+You can use 'cg-clone http://digilander.libero.it/mcostalba/qgit.git' 
+to create and populate a local qgit directory.
+
+Finally, there is a version built against Qt 3.3:
+http://digilander.libero.it/mcostalba/qgit
+
+
+INSTALLATION
+
+You need scons and qt-mt developer libs, version 3.3.4 or better, already installed.
+
+qgit is NOT compatible with Qt4.
+
+On some platforms (Debian) you should set QTDIR before to compile.
+
+- unpack tar file
+- make
+- make install
+
+qgit will be installed in $HOME/bin
+
+
+CHANGELOG
+
+- added tree view on archive files/directories, double clicking on a file opens
+  file annotation window.
+
+- took advantage of git-rev-list "--dense" option to retrieve file history.
+
+- added a file history graph in annotation viewer.
+
+- took advantage of --dense option to compress revision list to show only selected
+  files/directories in tree view. Tree view supports multi-selection.
+
+- rewritten external processes launching to be more stable and fast.
+
+- rewritten event handling to be much more clean and easy to follow. This also
+  fixes some subtle bugs.
+
+
+
+     Marco
+
+
+	
+		
+__________________________________ 
+Yahoo! Mail - PC Magazine Editors' Choice 2005 
+http://mail.yahoo.com
