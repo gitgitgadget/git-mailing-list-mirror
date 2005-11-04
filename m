@@ -1,131 +1,68 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: [ANNOUNCE qgit-0.97]
-Date: Fri, 4 Nov 2005 12:42:34 -0800 (PST)
-Message-ID: <20051104204234.84044.qmail@web26307.mail.ukl.yahoo.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Cogito: Support for implicit remote branches in cloned repositories
+Date: Fri, 4 Nov 2005 22:08:20 +0100
+Message-ID: <20051104210820.GM1431@pasky.or.cz>
+References: <200511041701.48881.Josef.Weidendorfer@gmx.de> <7vvez8wbpz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Fri Nov 04 21:45:05 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 04 22:11:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EY8Oa-0005xS-3h
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 21:42:44 +0100
+	id 1EY8nY-00007Y-Ku
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 22:08:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750852AbVKDUml (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 15:42:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750853AbVKDUml
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 15:42:41 -0500
-Received: from web26307.mail.ukl.yahoo.com ([217.146.176.18]:41879 "HELO
-	web26307.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1750851AbVKDUml (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2005 15:42:41 -0500
-Received: (qmail 84046 invoked by uid 60001); 4 Nov 2005 20:42:34 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=hAJj5Ym4g569Eyl+pOw559coEKQXH2aP36eQ9f0H5f5gTwWkmgcrESm/Vlptcr1pBDpWGa+lppe6xKV6SAtY9jw3JEJKniGYufKK+wIiCjMDAWEfLp0rI3dptD/jwiOqeKRjRjrb/x8OQ7YVA/TRQ4h78FR2xg9Rh9gGwxSvHzc=  ;
-Received: from [151.56.10.179] by web26307.mail.ukl.yahoo.com via HTTP; Fri, 04 Nov 2005 12:42:34 PST
-To: git@vger.kernel.org
+	id S1750891AbVKDVIa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 16:08:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750890AbVKDVIa
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 16:08:30 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:5293 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750727AbVKDVI3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2005 16:08:29 -0500
+Received: (qmail 32301 invoked by uid 2001); 4 Nov 2005 22:08:20 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vvez8wbpz.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11157>
 
-qgit, a git GUI viewer.
+Dear diary, on Fri, Nov 04, 2005 at 06:43:04PM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+>   I once considered to give an option to clone to map the origin
+>   heads to .git/refs/heads/origin/{master,maint,pu,...}.  In
+>   hindsight that might have been cleaner.  Instead I just followed
+>   what Cogito already established, and mapped remote "master" to
+>   "origin".
 
-With qgit you will be able to browse revisions history, view patch content and changed 
-files, graphically following different development branches.
+Well, that obviously works only when you resign on the workflow where
+pull means fetch + merge, since your local master would conflict with
+the remote master, therefore having nowhere to store the remote master.
 
+> . The namespace under refs/tags theoretically also has the same
+>   issue, but I suspect it would not matter too much in practice.
+>   The tags people fetches from remote tend to be release-point
+>   tags (e.g. v2.6.14) whose names implicitly follow an obvious
+>   (to humans) naming convention; when you name your temporary
+>   anchor points using lightweight tags, you can easily avoid
+>   name clashes with those "for other people" tags [*2*].
 
-FEATURES
+I still believe we need the notion of private tags which shouldn't be
+cloned.
 
- - View revisions, diffs, files history, files annotation, archive tree.
+Hmm. Wait.
 
- - Commit changes visually cherry picking modified files.
+All right. git-update-server-info ignores hidden refs, but referencing a
+hidden ref works all right (unsurprisingly). So let's just codify that
+private tags which shan't be fetched (unless requested explicitly) start
+with a dot (/^\./) and we are all set...?
 
- - Apply or format patch series from selected commits, drag and
-   drop commits between two instances of qgit.
-
- - qgit implements a GUI for the most common StGIT commands like push/pop
-   and apply/format patches. You can also create new patches or refresh 
-   current top one using the same semantics of git commit, i.e. cherry picking
-   single modified files.
-
-
-NEW IN THIS RELEASE
-
-This release is build around the wonderful new "--dense" option of git-rev-list,
-i.e. git-rev-list can now filter revs according to a file list.
-
-Because of this, makes now sense to show the archive tree and let the user to select 
-files and/or directory (treeview supports multi-selection) to filter on the main view 
-on the fly (by a new toolbar toggle button).
-
-Also file history retrieving is now based on --dense option, so to let annotations be
-more consistent with "legacy" file history. Because of this, annotation window gains a
-graph column on file history, independent from main view, and updatable trough tree 
-browsing.
-
-Under the hood improvements to event handling and external process launching complete 
-the picture.
-
-
-DOWNLOAD
-
-Download from sourceforge project page:
-http://prdownloads.sourceforge.net/qgit/qgit-0.97.tar.bz2?download
-
-There is also a git archive with the latest stuff
-
- QGit repository (GIT): http://digilander.libero.it/mcostalba/qgit.git
-
-You can use 'cg-clone http://digilander.libero.it/mcostalba/qgit.git' 
-to create and populate a local qgit directory.
-
-Finally, there is a version built against Qt 3.3:
-http://digilander.libero.it/mcostalba/qgit
-
-
-INSTALLATION
-
-You need scons and qt-mt developer libs, version 3.3.4 or better, already installed.
-
-qgit is NOT compatible with Qt4.
-
-On some platforms (Debian) you should set QTDIR before to compile.
-
-- unpack tar file
-- make
-- make install
-
-qgit will be installed in $HOME/bin
-
-
-CHANGELOG
-
-- added tree view on archive files/directories, double clicking on a file opens
-  file annotation window.
-
-- took advantage of git-rev-list "--dense" option to retrieve file history.
-
-- added a file history graph in annotation viewer.
-
-- took advantage of --dense option to compress revision list to show only selected
-  files/directories in tree view. Tree view supports multi-selection.
-
-- rewritten external processes launching to be more stable and fast.
-
-- rewritten event handling to be much more clean and easy to follow. This also
-  fixes some subtle bugs.
-
-
-
-     Marco
-
-
-	
-		
-__________________________________ 
-Yahoo! Mail - PC Magazine Editors' Choice 2005 
-http://mail.yahoo.com
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
