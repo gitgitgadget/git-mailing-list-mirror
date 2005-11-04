@@ -1,90 +1,87 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Fixing Commit And Author
-Date: Fri, 4 Nov 2005 09:30:50 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511040924400.27915@g5.osdl.org>
-References: <1131122325.5446.14.camel@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Cogito: Support for implicit remote branches in cloned repositories
+Date: Fri, 04 Nov 2005 09:43:04 -0800
+Message-ID: <7vvez8wbpz.fsf@assigned-by-dhcp.cox.net>
+References: <200511041701.48881.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 18:34:01 2005
+X-From: git-owner@vger.kernel.org Fri Nov 04 18:44:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EY5Oz-00070c-W6
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 18:30:58 +0100
+	id 1EY5as-0004E4-6x
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 18:43:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750751AbVKDRa4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 12:30:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750754AbVKDRa4
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 12:30:56 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:46052 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750751AbVKDRa4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2005 12:30:56 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA4HUqnO032329
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 4 Nov 2005 09:30:53 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA4HUoZc012579;
-	Fri, 4 Nov 2005 09:30:51 -0800
-To: Darrin Thompson <darrint@progeny.com>
-In-Reply-To: <1131122325.5446.14.camel@localhost.localdomain>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750761AbVKDRnI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 12:43:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750758AbVKDRnH
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 12:43:07 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:29134 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750762AbVKDRnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Nov 2005 12:43:06 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051104174215.LKIX11356.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 4 Nov 2005 12:42:15 -0500
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+In-Reply-To: <200511041701.48881.Josef.Weidendorfer@gmx.de> (Josef
+	Weidendorfer's message of "Fri, 4 Nov 2005 17:01:48 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11147>
 
+Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 
+> ... One difference of cloning with GIT vs. with
+> Cogito is that Git always clones all remote branches. This can
+> be limiting if you want to work with multiple repositories,
+> but allows you to immediatly work with all the branches.
 
-On Fri, 4 Nov 2005, Darrin Thompson wrote:
+Three points, and two footnotes.
 
-> I've got a small project in git where I made a dumb error. All my
-> commits have author/committer information like this:
-> 
-> Author: Darrin Thompson <darrint@dhcp-1-211.(none)>  2005-10-20 16:50:38
-> Committer: Darrin Thompson <darrint@dhcp-1-211.(none)>  2005-10-20
-> 16:50:38
-> Tags: svn-5099
-> 
-> I'd like to replace the commits (yes, I know that means all of them)
-> with new ones with corrected email addresses and also manage to migrate
-> my tags. A push in the right direction would be appreciated.
+. After a git clone, you can still fetch from non-origin
+  repository; you can also set up .git/remotes/somewhere-else if
+  you pull from the non-origin repository regularly, so it is
+  not really "limiting".  It is just being slightly less
+  convenient, in that setting up for the origin is done for you
+  by clone [*1*] while you have to arrange for non-origin
+  repository yourself afterwards.
 
-There's a program in the git sources called "git-convert-objects.c".
+. The namespace under refs/heads is and always will be an issue.
+  It is a local matter and how remote branches are named should
+  not dictate what local branch names you can use in your
+  repository, but that essentially is what happens after
+  git-clone to users who do not rename those branches from the
+  initial cloning.
 
-It basically knows how to walk the git object chains, and rewrite each 
-object according to a few rules.
+  I once considered to give an option to clone to map the origin
+  heads to .git/refs/heads/origin/{master,maint,pu,...}.  In
+  hindsight that might have been cleaner.  Instead I just followed
+  what Cogito already established, and mapped remote "master" to
+  "origin".
 
-The rules currently do _not_ include changing the author/committer info, 
-but it does know how to parse the really old-style dates, for example, 
-which are on those same lines, so adding some code there to also re-write 
-the author/committer name and email wouldn't be impossible.
+. The namespace under refs/tags theoretically also has the same
+  issue, but I suspect it would not matter too much in practice.
+  The tags people fetches from remote tend to be release-point
+  tags (e.g. v2.6.14) whose names implicitly follow an obvious
+  (to humans) naming convention; when you name your temporary
+  anchor points using lightweight tags, you can easily avoid
+  name clashes with those "for other people" tags [*2*].
 
-The code isn't necessarily all that easy to understand, and usage-wise you 
-also have to convert each head separately (you tell it which branch head 
-you want to convert, it trawls every reachable object from that head, and 
-will create the new objects and return the new head value).
+[Footnotes]
 
-What I'm trying to say is that it might not be _pleasant_, but it's 
-certainly something you can automate and do in a timely manner (ie a small 
-project will take just a few seconds - or minutes - to convert).
+*1* Actually, even the setting up for the origin is done only
+halfway -- it only arranges 'git fetch/pull' to fetch from the
+master branch, and other branches are not tracked unless you
+explicitly arrange them to be.  This is somewhat deliberate; the
+refs/ namespace management is a local matter and you do not
+necessarily want to keep tracking all the branches from origin.
 
-> Next I'd like to do the same with the kernel sources... :-)
-
-The same program will work, but it will take some time.
-
-Actually, as long as you only rewrite commits, it should even be 
-reasonably efficient. It's when you start rewriting every single object 
-(like I did when I switched the compression scheme around) that it gets 
-_really_ expensive, and a project like the kernel would take a long long 
-time.
-
-Hint to the wise: don't do the conversion on the only copy of the 
-repository you have. It's always worked for me, but hey, maybe I'm just 
-lucky and never write buggy conversion software.
-
-			Linus
+*2* This becomes somewhat problematic when the tool
+automatically follows/fetches tags, and that is why git-core
+barebone Porcelainish requires an explicit 'git fetch --tags'.
