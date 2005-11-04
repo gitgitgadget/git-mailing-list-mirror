@@ -1,134 +1,49 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: [PATCH] Cogito: Support for implicit remote branches in cloned repositories
-Date: Fri, 4 Nov 2005 17:01:48 +0100
-Message-ID: <200511041701.48881.Josef.Weidendorfer@gmx.de>
+From: Erik Mouw <erik@harddisk-recovery.com>
+Subject: Re: Tags not transferred with git pull?
+Date: Fri, 4 Nov 2005 17:05:03 +0100
+Organization: Harddisk-recovery.com
+Message-ID: <20051104160503.GC23790@harddisk-recovery.com>
+References: <20051104155314.GB23790@harddisk-recovery.nl> <20051104155914.GA9567@ferdyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 17:03:16 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Nov 04 17:08:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EY415-0001YF-46
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 17:02:11 +0100
+	id 1EY44F-0002xZ-73
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 17:05:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161155AbVKDQBy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 11:01:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161157AbVKDQBx
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 11:01:53 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:27362 "EHLO
-	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S1161155AbVKDQBv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2005 11:01:51 -0500
-Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
-	by mail.in.tum.de (Postfix) with ESMTP id 90EB8233E;
-	Fri,  4 Nov 2005 17:01:50 +0100 (MET)
-To: Petr Baudis <pasky@suse.cz>
-User-Agent: KMail/1.8.2
+	id S1161160AbVKDQFH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 11:05:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161161AbVKDQFH
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 11:05:07 -0500
+Received: from dtp.xs4all.nl ([80.126.206.180]:57394 "HELO abra2.bitwizard.nl")
+	by vger.kernel.org with SMTP id S1161160AbVKDQFF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2005 11:05:05 -0500
+Received: (qmail 3790 invoked by uid 501); 4 Nov 2005 17:05:03 +0100
+To: git@vger.kernel.org
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
+In-Reply-To: <20051104155914.GA9567@ferdyx.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11140>
 
-This allows to specify remote branch names from the
-repository this one was cloned from (= remote repository of
-"origin" branch), without explicitly adding a branch for them.
-Therefore, these remote branches are called implicit.
+On Fri, Nov 04, 2005 at 04:59:14PM +0100, Fernando J. Pereda wrote:
+> On Fri, Nov 04, 2005 at 04:53:14PM +0100, Erik Mouw wrote:
+> | Is it OK that the latest git (0.99.9c) doesn't get the tags
+> | (refs/tags/*) when doing a git pull? It's getting a bit of a nuisance
+> | to do a separate rsync to get them right.
+> 
+> As Linus explained in a message earlier, a git fetch --tags will do it.
 
-Use them together with cg-fetch or cg-update.
-Example: Your current repository was cloned with
+Ah, right. I got the impression that the latest git was supposed to do
+that automatically with a git pull.
 
-  cg-clone git+ssh://remotehost:/path myrep
 
-If this remote repository contains a branch "foo",
-you can say inside of myrep:
+Erik
 
-  cg-fetch foo
-
-This fetches "git+ssh://remotehost:/path#foo" into
-a local branch "foo" (created if not existing).
-Similarily, a "cg-update foo" will fetch the remote
-branch and merge it into your current local branch.
-
-After fetching from an implicit remote branch, cg-status
-will show the corresponding local branch, but still without
-an "R", because that is only shown for explicit branches.
-The implicit remote branch in the example above can be
-made explicit with
-
-  cg-branch-add foo git+ssh://remotehost:/path#foo
-
-Note that cg-update now always tries to fetch from a
-remote repository, as every non-explicit branch
-name is supposed to be an implicit remote branch.
-
-Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-
----
-
-This patch is RFC. IMHO, it simplifies the usage of Cogito
-quite a lot. One difference of cloning with GIT vs. with
-Cogito is that Git always clones all remote branches. This can
-be limiting if you want to work with multiple repositories,
-but allows you to immediatly work with all the branches.
-
-Cogito instead clones only one remote branch, and requires
-you to explicitly add further branches with "cg-branch-add".
-This is not necessary with implicit remote branches, and
-they should cover the standard use case which works with
-branches from the repository you clone from.
-
-The nice thing here is that the patch is really small for
-the added functionality. If you accept it, I will provide
-updates for the documentation and tutorial.
-
-Josef
-
- cg-fetch  |   10 +++++++++-
- cg-update |    6 +-----
- 2 files changed, 10 insertions(+), 6 deletions(-)
-
-applies-to: 22948869bcf0ec216ed9aa14e1c5ecc22114d66b
-769aa2148fc2b583b071354e8eef3dae74e09c14
-diff --git a/cg-fetch b/cg-fetch
-index 759488a..5a5aeb1 100755
---- a/cg-fetch
-+++ b/cg-fetch
-@@ -262,7 +262,15 @@ name=${ARGS[0]}
- 
- [ "$name" ] || { [ -s "$_git/branches/origin" ] && name=origin; }
- [ "$name" ] || die "where to fetch from?"
--uri=$(cat "$_git/branches/$name" 2>/dev/null) || die "unknown branch: $name"
-+uri=$(cat "$_git/branches/$name" 2>/dev/null) || \
-+    { if [ -s "$_git/branches/origin" ]; then
-+	uri=$(cat "$_git/branches/origin" 2>/dev/null)
-+	uri="$(echo "$uri" | cut -d '#' -f 1)#$name"
-+	echo Fetching implicit remote branch "$uri".
-+      else
-+        die "unknown branch: $name"
-+      fi
-+    }
- 
- rembranch=
- if echo "$uri" | grep -q '#'; then
-diff --git a/cg-update b/cg-update
-index 96035c5..534bf4a 100755
---- a/cg-update
-+++ b/cg-update
-@@ -39,11 +39,7 @@ name=${ARGS[0]}
- [ "$name" ] || { [ -s $_git/branches/origin ] && name=origin; }
- [ "$name" ] || die "where to update from?"
- 
--if [ -s "$_git/branches/$name" ]; then
--	cg-fetch $force $name || exit 1
--else
--	echo "Updating from a local branch."
--fi
-+cg-fetch $force $name || exit 1
- echo
- echo "Applying changes..."
- cg-merge $name
+-- 
++-- Erik Mouw -- www.harddisk-recovery.com -- +31 70 370 12 90 --
+| Lab address: Delftechpark 26, 2628 XH, Delft, The Netherlands
