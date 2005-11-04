@@ -1,66 +1,91 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Cogito: Support for implicit remote branches in cloned repositories
-Date: Fri, 04 Nov 2005 13:50:22 -0800
-Message-ID: <7voe50rskh.fsf@assigned-by-dhcp.cox.net>
-References: <200511041701.48881.Josef.Weidendorfer@gmx.de>
-	<7vvez8wbpz.fsf@assigned-by-dhcp.cox.net>
-	<20051104210820.GM1431@pasky.or.cz>
+From: Paul Collins <paul@briny.ondioline.org>
+Subject: Re: [PATCH] v2: proxy-command support for git://
+Date: Fri, 04 Nov 2005 22:04:10 +0000
+Message-ID: <87hdas9ijp.fsf@briny.internal.ondioline.org>
+References: <87fyqdbuab.fsf@briny.internal.ondioline.org>
+	<7v8xw5h898.fsf@assigned-by-dhcp.cox.net>
+	<871x1wbgvn.fsf_-_@briny.internal.ondioline.org>
+	<7v1x1wz7ae.fsf@assigned-by-dhcp.cox.net>
+	<7v7jbow8ae.fsf@assigned-by-dhcp.cox.net>
+	<87ll049l8a.fsf@briny.internal.ondioline.org>
+	<7v3bmct7i3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 22:51:03 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 04 23:07:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EY9S7-0000wg-Fy
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 22:50:32 +0100
+	id 1EY9hY-0005te-KB
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 23:06:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750949AbVKDVuZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 16:50:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750952AbVKDVuY
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 16:50:24 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:23689 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750949AbVKDVuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2005 16:50:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051104214938.BQYW776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 4 Nov 2005 16:49:38 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051104210820.GM1431@pasky.or.cz> (Petr Baudis's message of
-	"Fri, 4 Nov 2005 22:08:20 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751006AbVKDWGW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 17:06:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751007AbVKDWGW
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 17:06:22 -0500
+Received: from jenny.ondioline.org ([66.220.1.122]:41226 "EHLO
+	jenny.ondioline.org") by vger.kernel.org with ESMTP
+	id S1751003AbVKDWGV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Nov 2005 17:06:21 -0500
+Received: by jenny.ondioline.org (Postfix, from userid 10)
+	id BD3B18CD5B; Fri,  4 Nov 2005 22:06:20 +0000 (GMT)
+Received: by briny.internal.ondioline.org (Postfix, from userid 1000)
+	id BF9B5F95F; Fri,  4 Nov 2005 22:04:10 +0000 (GMT)
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+In-Reply-To: <7v3bmct7i3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 04 Nov 2005 13:42:28 -0800")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11164>
 
-Petr Baudis <pasky@suse.cz> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> I still believe we need the notion of private tags which shouldn't be
-> cloned.
+> Paul Collins <paul@briny.ondioline.org> writes:
+>
+>> But perhaps I do not really understand your objection.
+>
+> No, I think you are getting it right.
+>
+> I just wanted to avoid using the proxy script for some hosts,
+> depending on where you are going.  Obviously you can teach the
+> proxy script to do passthru for some hosts like you did in your
+> message.  The only difference is where the configuration is
+> specified.  I wanted it to be in the git configuration file
+> (i.e. using different proxy script or no script, depending on
+> the host).  Your example has that configuration wired in the
+> single script that is always called regardless of the
+> destination, and the script itself switches how it proxies,
+> depending on where it is going, perhaps using its own
+> configuration file or hardcoding.
 
-I agree with you violently.  I just do not know what is the
-right convention to tell which is private and which is not.
+I had some ideas along those lines, but I didn't like any of them.
 
-Fetching used to be a different matter, because we did not do
-'git-fetch --tags' for a reason: you do not have any business
-with my tags unless I tell you about them.  But now we tell
-others about what tags we have, so...
+ * Extend the proxy-command "protocol" with a third argument, an
+   action.  For example if 'query $host $port' returns successfully,
+   then git should run it with arguments 'connect $host $port',
+   otherwise use git_tcp_connect().
 
-> All right. git-update-server-info ignores hidden refs, but referencing a
-> hidden ref works all right (unsurprisingly). So let's just codify that
-> private tags which shan't be fetched (unless requested explicitly) start
-> with a dot (/^\./) and we are all set...?
+ * Add a Proxy-Command field to the files in .git/remotes, e.g.:
 
-Except that I suspect refs.c::check_ref_format() will barf on it
-instead of ignoring it, and obviously you would want it to do
-two different things depending on what kind of operation you are
-doing.  You for example would want to change git-branch or
-git-tag not to refuse creating such "private" tag.  You would
-still want git-upload-pack to show it to the other end, for
-better common commit computation purposes, especially if the tag
-is of lightweight kind, but would want git-clone to ignore
-them.  It should be doable but we first need a plan.
+     URL: git://git.kernel.org/pub/scm/git/git.git/
+     Pull: master:origin
+     Proxy-command: my-git-proxy-command
+
+ * If the git config syntax is extended to allow dots in section or
+   key names:
+
+     [proxy]
+     git.kernel.org = "ssh-to-bastion-proxy-command"
+     git.blargco.com = "blargco-proxy-command"
+
+   or perhaps
+
+     [git.kernel.org]
+     proxycommand = "ssh-to-bastion-proxy-command"
+     [git.blargco.com]
+     proxycommand = "blargco-proxy-command"
+
+-- 
+Dag vijandelijk luchtschip de huismeester is dood
