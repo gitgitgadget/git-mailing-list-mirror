@@ -1,39 +1,38 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Cogito: Support for implicit remote branches in cloned
- repositories
-Date: Fri, 4 Nov 2005 14:07:48 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511041359050.28804@g5.osdl.org>
-References: <200511041701.48881.Josef.Weidendorfer@gmx.de>
- <7vvez8wbpz.fsf@assigned-by-dhcp.cox.net> <20051104210820.GM1431@pasky.or.cz>
- <7voe50rskh.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] v2: proxy-command support for git://
+Date: Fri, 4 Nov 2005 14:15:58 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511041409180.28804@g5.osdl.org>
+References: <87fyqdbuab.fsf@briny.internal.ondioline.org>
+ <7v8xw5h898.fsf@assigned-by-dhcp.cox.net> <871x1wbgvn.fsf_-_@briny.internal.ondioline.org>
+ <7v1x1wz7ae.fsf@assigned-by-dhcp.cox.net> <7v7jbow8ae.fsf@assigned-by-dhcp.cox.net>
+ <87ll049l8a.fsf@briny.internal.ondioline.org> <7v3bmct7i3.fsf@assigned-by-dhcp.cox.net>
+ <87hdas9ijp.fsf@briny.internal.ondioline.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 23:09:58 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 04 23:18:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EY9jM-0006d9-GU
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 23:08:16 +0100
+	id 1EY9rF-0001Uz-Ae
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 23:16:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751008AbVKDWIJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 17:08:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751013AbVKDWIJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 17:08:09 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:20160 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751008AbVKDWIC (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2005 17:08:02 -0500
+	id S1751046AbVKDWQI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 17:16:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbVKDWQI
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 17:16:08 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:194 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751046AbVKDWQG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2005 17:16:06 -0500
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA4M7onO012324
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA4MFxnO012869
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 4 Nov 2005 14:07:50 -0800
+	Fri, 4 Nov 2005 14:16:00 -0800
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA4M7mF6024010;
-	Fri, 4 Nov 2005 14:07:49 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe50rskh.fsf@assigned-by-dhcp.cox.net>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA4MFwtf024473;
+	Fri, 4 Nov 2005 14:15:59 -0800
+To: Paul Collins <paul@briny.ondioline.org>
+In-Reply-To: <87hdas9ijp.fsf@briny.internal.ondioline.org>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
 X-MIMEDefang-Filter: osdl$Revision: 1.127 $
@@ -41,50 +40,52 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11166>
 
 
 
-On Fri, 4 Nov 2005, Junio C Hamano wrote:
+On Fri, 4 Nov 2005, Paul Collins wrote:
 > 
-> I agree with you violently.  I just do not know what is the
-> right convention to tell which is private and which is not.
+>  * If the git config syntax is extended to allow dots in section or
+>    key names:
+> 
+>      [proxy]
+>      git.kernel.org = "ssh-to-bastion-proxy-command"
+>      git.blargco.com = "blargco-proxy-command"
 
-I don't like the dot idea, but it certainly _would_ make sense to have a 
-local prefix.
+I would suggest
 
-We could even make it a _totally_ different namespace:
+	[proxy]
+		command = "ssh-to-bastion-proxy-command" for git.kernel.org
 
-	.git/refs/local/heads
-	.git/refs/local/tags
+and then it's easy enough to just parse the value "proxy.command" with 
+code like
 
-which means that even if you call a local head the same thing as a global 
-one, both can still exist.
+	host = value;
+	cmd = strstr(value, " for ");
+	if (!cmd)
+		return -1;
+	*cmd = 0;
+	cmd += 5;
 
-Then, make "origin" always be a local head.
+which would do the right thing..
 
-That avoids the issue of the remote repo _also_ having an "origin" branch.
+The thing is, it's not just ".". I could well imagine that you'd have
 
-Locally, the "local" heads would always take precedence, with this trivial 
-patch making sure of that.. 
+	[proxy]
+		command="ssh" for "ssh://kernel.org/"
+		command="proxy-command" for kernel.org
+		command="myprotocol-command" for "my://"
 
-If you want to access a global tag or head, you can always do so by using 
-the full path ("refs/tags/tagname" is the global one, but "tags/tagname" 
-or "tagname" would be the local one if one exists).
+which would actually allow you to literally add your own protocol names 
+(it would see that the target starts with "my://", and decide that it 
+shoul drun the "myprotocol-command" for the proxy).
+
+I'd rather allow free-form strings for the values than for the key names. 
+If we allow free-form key-names, then random text files suddenly often 
+become valid (but strange) config files.
+
+Right now the non-free-form key names are the strongest syntax checker of 
+the whole protocol.
 
 		Linus
-
----
-diff --git a/sha1_name.c b/sha1_name.c
-index be1755a..5daaa11 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -231,6 +231,8 @@ static int get_sha1_basic(const char *st
- 	static const char *prefix[] = {
- 		"",
- 		"refs",
-+		"refs/local/tags",
-+		"refs/local/heads",
- 		"refs/tags",
- 		"refs/heads",
- 		NULL
