@@ -1,57 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: little conundrum
-Date: Fri, 4 Nov 2005 01:41:56 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511040141100.6044@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200511031741.20496.alan@chandlerfamily.org.uk>
- <Pine.LNX.4.63.0511031845410.3435@wbgn013.biozentrum.uni-wuerzburg.de>
- <200511032202.18900.alan@chandlerfamily.org.uk>
+From: walt <wa1ter@myrealbox.com>
+Subject: Empty temp files in the .git/objects subdirectories
+Date: Thu, 03 Nov 2005 16:56:58 -0800
+Organization: none
+Message-ID: <dkebkq$ova$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 01:43:58 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Nov 04 02:01:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EXpeu-0005ps-EI
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 01:42:20 +0100
+	id 1EXpwF-000412-DI
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 02:00:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161008AbVKDAl6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Nov 2005 19:41:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161002AbVKDAl6
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 19:41:58 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:43744 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1161008AbVKDAl5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Nov 2005 19:41:57 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 87FDD13F169; Fri,  4 Nov 2005 01:41:56 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 6AFA4B4FF0; Fri,  4 Nov 2005 01:41:56 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 4A48759CA8; Fri,  4 Nov 2005 01:41:56 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 1CB9E13F169; Fri,  4 Nov 2005 01:41:56 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Alan Chandler <alan@chandlerfamily.org.uk>
-In-Reply-To: <200511032202.18900.alan@chandlerfamily.org.uk>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1161010AbVKDBAH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Nov 2005 20:00:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161049AbVKDBAC
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Nov 2005 20:00:02 -0500
+Received: from main.gmane.org ([80.91.229.2]:52876 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1161051AbVKDA74 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Nov 2005 19:59:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EXpuL-0002xP-KV
+	for git@vger.kernel.org; Fri, 04 Nov 2005 01:58:17 +0100
+Received: from adsl-69-234-197-53.dsl.irvnca.pacbell.net ([69.234.197.53])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 04 Nov 2005 01:58:17 +0100
+Received: from wa1ter by adsl-69-234-197-53.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 04 Nov 2005 01:58:17 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-197-53.dsl.irvnca.pacbell.net
+User-Agent: Mail/News 1.6a1 (X11/20051103)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11113>
 
-Hi,
+I've noticed (sometimes) after using cg-update to
+pull from Linus's kernel tree, that I have multiple
+empty files named *.temp in the various subdirectories
+of .git/objects/.
 
-On Thu, 3 Nov 2005, Alan Chandler wrote:
+These *.temp files don't exist in Linus's repository
+on kernel.org, so I am assuming they must be created
+locally at my end by either cogito or git (dunno which).
 
-> Also untested, but what about removing the files from the index that 
-> aren't in the working directory?
+They cause no problems except for annoying warning
+messages, for example, while doing a git-fsck-*.
 
-IIRC "git-commit -a" includes "git-update-index --remove".
+I'm using git and cogito(HEAD), both updated by using
+cg-update from their git repositories on kernel.org,
+so I'm current up to the very last minute :o)
 
-Hth,
-Dscho
+Any suggestions how I can discover who is leaving
+behind all these spurious empty *.temp files?
