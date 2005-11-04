@@ -1,84 +1,123 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: Re: Problem cloning the Linux history tree
-Date: Fri, 04 Nov 2005 14:17:33 +0100
-Message-ID: <20051104131733.7012A353C33@atlas.denx.de>
-References: <7vacgkzqau.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 04 14:19:41 2005
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: Trying to Update All Heads of a Repository
+Date: Fri, 04 Nov 2005 08:49:40 -0600
+Message-ID: <E1EY2su-0006LW-IN@jdl.com>
+X-From: git-owner@vger.kernel.org Fri Nov 04 15:51:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EY1Ru-0007eK-HB
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 14:17:42 +0100
+	id 1EY2tA-0001QM-K7
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 15:49:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751415AbVKDNRj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 08:17:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbVKDNRj
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 08:17:39 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:29079 "EHLO
-	mail-out.m-online.net") by vger.kernel.org with ESMTP
-	id S1751415AbVKDNRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2005 08:17:39 -0500
-Received: from mail.m-online.net (svr20.m-online.net [192.168.3.148])
-	by mail-out.m-online.net (Postfix) with ESMTP id 62FF2702FF;
-	Fri,  4 Nov 2005 14:16:12 +0100 (CET)
-X-Auth-Info: hj67ix1Ivww8kKYOtmHEZUG8DQykGJKcgyGdjGt1NyQ=
-X-Auth-Info: hj67ix1Ivww8kKYOtmHEZUG8DQykGJKcgyGdjGt1NyQ=
-Received: from mail.denx.de (p549660AA.dip.t-dialin.net [84.150.96.170])
-	by smtp-auth.mnet-online.de (Postfix) with ESMTP id DA3F5123AB5;
-	Fri,  4 Nov 2005 14:17:33 +0100 (CET)
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by mail.denx.de (Postfix) with ESMTP id 810A86D00AC;
-	Fri,  4 Nov 2005 14:17:33 +0100 (MET)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id 7012A353C33;
-	Fri,  4 Nov 2005 14:17:33 +0100 (MET)
-To: Junio C Hamano <junkio@cox.net>
-In-reply-to: Your message of "Fri, 04 Nov 2005 01:59:53 PST."
-             <7vacgkzqau.fsf@assigned-by-dhcp.cox.net> 
+	id S1750720AbVKDOtr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 09:49:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbVKDOtq
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 09:49:46 -0500
+Received: from www.jdl.com ([66.118.10.122]:44976 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S1750720AbVKDOtp (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Nov 2005 09:49:45 -0500
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1EY2su-0006LW-IN
+	for git@vger.kernel.org; Fri, 04 Nov 2005 08:49:41 -0600
+To: git@vger.kernel.org
+In-Reply-To: 7vy8453zhu.fsf@assigned-by-dhcp.cox.net
+X-Spam-Score: -105.9 (---------------------------------------------------)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11130>
 
-In message <7vacgkzqau.fsf@assigned-by-dhcp.cox.net> you wrote:
->
-> > Missing object of tag v2.6.14-rc3... unable to retrieve
+
+Junio says:
+    My "pu" is somewhat special; it is rewound and rebased all the time,
+    so merging with its older self would conflict with it.  That's why
+    my example remotes/origin file has '+' in front of it.  It tells
+    git-fetch that the other side _might_ rebase and fetch would not
+    result in a fast-forward merge when that happens.
+
+So, from the git-pull man page:
+
+    For "git push", the local ref that matches <src> is used to fast
+    forward the remote ref that matches <dst>. If the optional plus + is
+    used, the remote ref is updated even if it does not result in a fast
+    forward update.
+
+Ah-ha!  Wait.  But here's the conceptual missing piece: When might I
+_know_ I have the situation where a fast-forward update might not
+happen?  And as a remote puller, that would be "never" -- unless I know
+something about the nature of the remote end.  That is, like you said,
+"pu" is subject to wild fluctuation and non-linear behavior.  But any
+random puller can't know that a priori.  So far, that is out-of-band
+information about a branch that needs to be "available".
+
+I think my previous "Ah ha!" paragraph should be massaged and added to
+the git-pull man page as part of the above (man page) quoted material.
+That's one.
+
+
+Junio explained:
+>  Alternatively, with your original remotes/origin
+> file, you should be able to do:
 > 
-> I do not have a clue on this one; I am assuming that it is
-> coming from cg-fetch.
-> 
+>	$ git checkout master
+>	$ git fetch origin master:origin +pu:pu maint:maint
+>       $ git pull . origin
+
+What an excellent example for the git-pull man page!  That's two.
 
 
-> Quick question.  Is the source repository fully packed (i.e. git
-> repack followed by git prune)?  If that is the case there is
 
-Yes, it is. I decided to run repack + update-server-info hoping  that
-would help to cleanup the state.
+Junio also exampled:
 
-> nothing to worry about.  The latest git prunes empty
-> $GIT_OBJECT_DIRECTORY/??/ directories and recreates them on
-> demand.
+    My "guinea pig" repository has this in $GIT_DIR/remotes/origin:
 
-I see. Thanks.
+	    URL: git://git.kernel.org/pub/scm/git/git.git
+	    Pull: master:origin
+	    Pull: +pu:pu
+	    Pull: maint:maint
 
-> > error: Could not interpret tags/DENX-2005-10-02-18:30 as something to pull
-> 
-> This one I can answer.  It is the colon in your tag name.
-> Please rename it to make git-check-ref-format(1) happy, run
-> git-update-server-info(1) and try again.
+    This means that my "master" is copied to the "origin" branch of
+    the guinea pig repository and "pu" and "maint" are copies of my
+    "pu" and "maint" branches.  You never do your own development on
+    branches that appear on the right hand side of colon on "Pull"
+    lines (i.e. origin, pu and maint) in this repository.  They are
+    to be updated by git-fetch.
 
-Understood. Thanks.
+The notion that multiple pull lines can be placed in the .git/remotes
+file should be added to the git-pull man page.  That's three.
 
-Best regards,
+Furthermore, there is one very important guideline you just
+stated in that paragraph:
 
-Wolfgang Denk
+    You never do your own development on branches that appear on the
+    right hand side of colon on "Pull" lines in a repository.  They are
+    to be updated by git-fetch.
 
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-No one can guarantee the actions of another.
-	-- Spock, "Day of the Dove", stardate unknown
+And it might bear stating the corollary:
+
+    The reason for a "Pull: master:origin" line is to side-step
+    the above maxim and provide a unique place where the local
+    developer can do her own work.
+
+I'll consider that concept item four for the git-pull man page . :-)
+
+
+> Sorry, my "pu" does not fast forward.  The branch is to showcase what
+> I've received or picked up from the list, and what changes are under
+> consideration for inclusion.
+
+Heh.  I understand it now! :-)  No problem.
+
+
+And finally:
+
+> The "hold/draw" topic branch (thanks for your ASCII art) is fully
+> merged into my "master"; in fact it's head is the master branch head.
+
+That's five-ish.  I'm on deck for some git-pull man page and
+drawing documentation patches.  Coming up Real Soon Now.
+
+Thanks for the explanations!
+
+jdl
