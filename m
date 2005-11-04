@@ -1,86 +1,134 @@
-From: "Fernando J. Pereda" <ferdy@ferdyx.org>
-Subject: Re: Tags not transferred with git pull?
-Date: Fri, 4 Nov 2005 16:59:14 +0100
-Message-ID: <20051104155914.GA9567@ferdyx.org>
-References: <20051104155314.GB23790@harddisk-recovery.nl>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: [PATCH] Cogito: Support for implicit remote branches in cloned repositories
+Date: Fri, 4 Nov 2005 17:01:48 +0100
+Message-ID: <200511041701.48881.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="8t9RHnE3ZwKMSgU+"
-X-From: git-owner@vger.kernel.org Fri Nov 04 17:02:50 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 04 17:03:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EY3yP-0000Kb-Ax
-	for gcvg-git@gmane.org; Fri, 04 Nov 2005 16:59:25 +0100
+	id 1EY415-0001YF-46
+	for gcvg-git@gmane.org; Fri, 04 Nov 2005 17:02:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161151AbVKDP7W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Nov 2005 10:59:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161152AbVKDP7W
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 10:59:22 -0500
-Received: from 170.Red-213-96-222.staticIP.rima-tde.net ([213.96.222.170]:30608
-	"EHLO smtp.ferdyx.org") by vger.kernel.org with ESMTP
-	id S1161151AbVKDP7V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Nov 2005 10:59:21 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.ferdyx.org (Postfix) with ESMTP id CB4C58D314
-	for <git@vger.kernel.org>; Fri,  4 Nov 2005 16:59:16 +0100 (CET)
-Received: from smtp.ferdyx.org ([127.0.0.1])
-	by localhost (tungsteno [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 06430-06 for <git@vger.kernel.org>;
-	Fri, 4 Nov 2005 16:59:13 +0100 (CET)
-Received: from posidon.ferdyx.org (posidon.ferdyx.org [192.168.0.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.ferdyx.org (Postfix) with ESMTP id A26F08D30B
-	for <git@vger.kernel.org>; Fri,  4 Nov 2005 16:59:12 +0100 (CET)
-Received: by posidon.ferdyx.org (nbSMTP-1.01-cvs) for uid 1000
-	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	ferdy@ferdyx.org; Fri,  4 Nov 2005 16:59:15 +0100 (CET)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
+	id S1161155AbVKDQBy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Nov 2005 11:01:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161157AbVKDQBx
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Nov 2005 11:01:53 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:27362 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1161155AbVKDQBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Nov 2005 11:01:51 -0500
+Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
+	by mail.in.tum.de (Postfix) with ESMTP id 90EB8233E;
+	Fri,  4 Nov 2005 17:01:50 +0100 (MET)
+To: Petr Baudis <pasky@suse.cz>
+User-Agent: KMail/1.8.2
 Content-Disposition: inline
-In-Reply-To: <20051104155314.GB23790@harddisk-recovery.nl>
-User-Agent: Mutt/1.5.11
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at ferdyx.org
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11139>
 
+This allows to specify remote branch names from the
+repository this one was cloned from (= remote repository of
+"origin" branch), without explicitly adding a branch for them.
+Therefore, these remote branches are called implicit.
 
---8t9RHnE3ZwKMSgU+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Use them together with cg-fetch or cg-update.
+Example: Your current repository was cloned with
 
-On Fri, Nov 04, 2005 at 04:53:14PM +0100, Erik Mouw wrote:
-| Hi,
-|=20
-| Is it OK that the latest git (0.99.9c) doesn't get the tags
-| (refs/tags/*) when doing a git pull? It's getting a bit of a nuisance
-| to do a separate rsync to get them right.
-|=20
+  cg-clone git+ssh://remotehost:/path myrep
 
-As Linus explained in a message earlier, a git fetch --tags will do it.
+If this remote repository contains a branch "foo",
+you can say inside of myrep:
 
-Cheers,
-Ferdy
+  cg-fetch foo
 
---=20
-Fernando J. Pereda Garcimart=EF=BF=BDn
-Gentoo Developer (Alpha,net-mail,mutt,git)
-20BB BDC3 761A 4781 E6ED  ED0B 0A48 5B0C 60BD 28D4
+This fetches "git+ssh://remotehost:/path#foo" into
+a local branch "foo" (created if not existing).
+Similarily, a "cg-update foo" will fetch the remote
+branch and merge it into your current local branch.
 
---8t9RHnE3ZwKMSgU+
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+After fetching from an implicit remote branch, cg-status
+will show the corresponding local branch, but still without
+an "R", because that is only shown for explicit branches.
+The implicit remote branch in the example above can be
+made explicit with
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
+  cg-branch-add foo git+ssh://remotehost:/path#foo
 
-iD8DBQFDa4VSCkhbDGC9KNQRApKKAJ9UJ4aCwNfkcYCRk705IcW532vBDACfZi7I
-3MNQMQTnYAMONiWRnnk6pj0=
-=fwV7
------END PGP SIGNATURE-----
+Note that cg-update now always tries to fetch from a
+remote repository, as every non-explicit branch
+name is supposed to be an implicit remote branch.
 
---8t9RHnE3ZwKMSgU+--
+Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+
+---
+
+This patch is RFC. IMHO, it simplifies the usage of Cogito
+quite a lot. One difference of cloning with GIT vs. with
+Cogito is that Git always clones all remote branches. This can
+be limiting if you want to work with multiple repositories,
+but allows you to immediatly work with all the branches.
+
+Cogito instead clones only one remote branch, and requires
+you to explicitly add further branches with "cg-branch-add".
+This is not necessary with implicit remote branches, and
+they should cover the standard use case which works with
+branches from the repository you clone from.
+
+The nice thing here is that the patch is really small for
+the added functionality. If you accept it, I will provide
+updates for the documentation and tutorial.
+
+Josef
+
+ cg-fetch  |   10 +++++++++-
+ cg-update |    6 +-----
+ 2 files changed, 10 insertions(+), 6 deletions(-)
+
+applies-to: 22948869bcf0ec216ed9aa14e1c5ecc22114d66b
+769aa2148fc2b583b071354e8eef3dae74e09c14
+diff --git a/cg-fetch b/cg-fetch
+index 759488a..5a5aeb1 100755
+--- a/cg-fetch
++++ b/cg-fetch
+@@ -262,7 +262,15 @@ name=${ARGS[0]}
+ 
+ [ "$name" ] || { [ -s "$_git/branches/origin" ] && name=origin; }
+ [ "$name" ] || die "where to fetch from?"
+-uri=$(cat "$_git/branches/$name" 2>/dev/null) || die "unknown branch: $name"
++uri=$(cat "$_git/branches/$name" 2>/dev/null) || \
++    { if [ -s "$_git/branches/origin" ]; then
++	uri=$(cat "$_git/branches/origin" 2>/dev/null)
++	uri="$(echo "$uri" | cut -d '#' -f 1)#$name"
++	echo Fetching implicit remote branch "$uri".
++      else
++        die "unknown branch: $name"
++      fi
++    }
+ 
+ rembranch=
+ if echo "$uri" | grep -q '#'; then
+diff --git a/cg-update b/cg-update
+index 96035c5..534bf4a 100755
+--- a/cg-update
++++ b/cg-update
+@@ -39,11 +39,7 @@ name=${ARGS[0]}
+ [ "$name" ] || { [ -s $_git/branches/origin ] && name=origin; }
+ [ "$name" ] || die "where to update from?"
+ 
+-if [ -s "$_git/branches/$name" ]; then
+-	cg-fetch $force $name || exit 1
+-else
+-	echo "Updating from a local branch."
+-fi
++cg-fetch $force $name || exit 1
+ echo
+ echo "Applying changes..."
+ cg-merge $name
