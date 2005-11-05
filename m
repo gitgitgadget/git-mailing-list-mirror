@@ -1,208 +1,119 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Simplify CFLAGS/DEFINES in Makefile
-Date: Fri, 04 Nov 2005 23:57:00 -0800
-Message-ID: <7vvez7r0hf.fsf_-_@assigned-by-dhcp.cox.net>
-References: <118833cc0511040721w7f3990fbw631feaa6a4bda936@mail.gmail.com>
-	<7voe50wblp.fsf@assigned-by-dhcp.cox.net>
-	<20051104182342.GA27711@old.davidb.org>
-	<7vek5ww8q5.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Added a few examples to git-pull man page.
+Date: Sat, 05 Nov 2005 01:27:07 -0800
+Message-ID: <7vk6fno36c.fsf@assigned-by-dhcp.cox.net>
+References: <E1EYDua-00017o-9d@jdl.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Brown <git@davidb.org>, Morten Welinder <mwelinder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 05 08:58:38 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 05 10:27:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYIvZ-0004j5-GI
-	for gcvg-git@gmane.org; Sat, 05 Nov 2005 08:57:30 +0100
+	id 1EYKKV-0000gG-FF
+	for gcvg-git@gmane.org; Sat, 05 Nov 2005 10:27:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751215AbVKEH5K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Nov 2005 02:57:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbVKEH5K
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Nov 2005 02:57:10 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:49375 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751221AbVKEH5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Nov 2005 02:57:07 -0500
+	id S1751324AbVKEJ1M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Nov 2005 04:27:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbVKEJ1M
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Nov 2005 04:27:12 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:46583 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751324AbVKEJ1L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Nov 2005 04:27:11 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051105075620.IYIR776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 5 Nov 2005 02:56:20 -0500
-To: git@vger.kernel.org
-In-Reply-To: <7vek5ww8q5.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 04 Nov 2005 10:47:46 -0800")
+          id <20051105092650.INY16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 5 Nov 2005 04:26:50 -0500
+To: Jon Loeliger <jdl@freescale.com>
+In-Reply-To: <E1EYDua-00017o-9d@jdl.com> (Jon Loeliger's message of "Fri, 04
+	Nov 2005 20:36:08 -0600")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11176>
 
-Junio C Hamano <junkio@cox.net> writes:
+Thanks for the documentation updates.  I have one
+trouble about this part:
 
-> David Brown <git@davidb.org> writes:
->
->> And the additional CFLAGS will only apply to the compilation of foo.
->> Since the ALL_CFLAGS is expanded lazily, it gets expanded for each target,
->> and the rule above causes CFLAGS to have extra values only on that target.
->
-> Lazy expansion is true, but the reason we did ALL_CFLAGS was to
-> make CFLAGS overridable from the command line.
->
-> I suspect that this would currently fail to add -I/some/where/include
-> on the compilation command line:
->
-> 	make CFLAGS='-Os -g' CURLDIR=/some/where
->
-> while CURL_LIBCURL is set correctly on the linkage command line.
+    You never do your own development on branches that appear
+    on the right hand side of a <refspec> colon on `Pull:` lines;
+    they are to be updated by `git-fetch`.  The corollary is that
+    a local branch should be introduced and named on a <refspec>
+    right-hand-side if you intend to do development derived from
+    that branch.
+    This leads to the common `Pull: master:origin` mapping of a
+    remote `master` branch to a local `origin` branch, which
+    is then merged to a local development branch, again typically
+    named `master`.
 
-So here is a proposed fix.  Likes, dislikes, "you are a idiot
-and you do not understand make"s?
+I am a bit confused by the "corollary".  What happens if you
+have the following:
 
--jc
+	Pull: master:origin
+        Pull: +pu:pu
+        Pull: maint:maint
 
--- >8 -- cut here -- >8 --
-I think the original intention was to make CFLAGS overridable
-from the make command line, but somehow we ended up accumulating
-conditional makefile sections that wrongly appends values to
-CFLAGs.  These assignments do not work when the user actually
-override them from the make command line!
+and you say:
 
-DEFINES are handled the same way; it was seemingly overridable,
-but the makefile sections had assignments, which meant
-overriding it from the command line broke things.
+	git-pull remote
 
-This simplifies things by limiting the internal futzing to
-ALL_CFLAGS, and by removing DEFINES altogether.  Overriding
-CFLAGS from the command line should start working with this
-change.
+when you are on your master branch is:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+1. master, pu and maint from remote are copied to origin, pu,
+   and maint in the local repository (you already know this);
 
----
+2. the updated origin is merged into the local master (you
+   alerady know this too).
 
- Makefile |   32 ++++++++++++++------------------
- 1 files changed, 14 insertions(+), 18 deletions(-)
+If somebody intends to do development derived from say 'maint',
+one way to do so would be something like this:
 
-applies-to: ef3876e50bb5e91a6fb40d4e59df2178c6f40237
-3502cee71d7c0d1a0c9d792f9d185886e91d5d26
-diff --git a/Makefile b/Makefile
-index 6c01dc2..6064672 100644
---- a/Makefile
-+++ b/Makefile
-@@ -37,25 +37,21 @@
- # 1461501637330902918203684832716283019655932542976 hashes do not give you
- # sufficient guarantee that no collisions between objects will ever happen.
- 
--# DEFINES += -DCOLLISION_CHECK
--
- # Define USE_NSEC below if you want git to care about sub-second file mtimes
- # and ctimes. Note that you need recent glibc (at least 2.2.4) for this, and
- # it will BREAK YOUR LOCAL DIFFS! show-diff and anything using it will likely
- # randomly break unless your underlying filesystem supports those sub-second
- # times (my ext3 doesn't).
- 
--# DEFINES += -DUSE_NSEC
--
- # Define USE_STDEV below if you want git to care about the underlying device
- # change being considered an inode change from the update-cache perspective.
- 
--# DEFINES += -DUSE_STDEV
--
- GIT_VERSION = 0.99.9.GIT
- 
-+# CFLAGS is for the users to override from the command line.
-+
- CFLAGS = -g -O2 -Wall
--ALL_CFLAGS = $(CFLAGS) $(PLATFORM_DEFINES) $(DEFINES)
-+ALL_CFLAGS = $(CFLAGS)
- 
- prefix = $(HOME)
- bindir = $(prefix)/bin
-@@ -194,19 +190,19 @@ ifeq ($(uname_S),SunOS)
- 	NO_STRCASESTR = YesPlease
- 	INSTALL = ginstall
- 	TAR = gtar
--	PLATFORM_DEFINES += -D__EXTENSIONS__
-+	ALL_CFLAGS += -D__EXTENSIONS__
- endif
- ifeq ($(uname_O),Cygwin)
- 	NO_STRCASESTR = YesPlease
- 	NEEDS_LIBICONV = YesPlease
- 	NO_IPV6 = YesPlease
- 	X = .exe
--	PLATFORM_DEFINES += -DUSE_SYMLINK_HEAD=0
-+	ALL_CFLAGS += -DUSE_SYMLINK_HEAD=0
- endif
- ifeq ($(uname_S),OpenBSD)
- 	NO_STRCASESTR = YesPlease
- 	NEEDS_LIBICONV = YesPlease
--	PLATFORM_DEFINES += -I/usr/local/include -L/usr/local/lib
-+	ALL_CFLAGS += -I/usr/local/include -L/usr/local/lib
- endif
- ifneq (,$(findstring arm,$(uname_M)))
- 	ARM_SHA1 = YesPlease
-@@ -217,7 +213,7 @@ endif
- ifndef NO_CURL
- 	ifdef CURLDIR
- 		# This is still problematic -- gcc does not want -R.
--		CFLAGS += -I$(CURLDIR)/include
-+		ALL_CFLAGS += -I$(CURLDIR)/include
- 		CURL_LIBCURL = -L$(CURLDIR)/lib -R$(CURLDIR)/lib -lcurl
- 	else
- 		CURL_LIBCURL = -lcurl
-@@ -240,13 +236,13 @@ ifndef NO_OPENSSL
- 	OPENSSL_LIBSSL = -lssl
- 	ifdef OPENSSLDIR
- 		# Again this may be problematic -- gcc does not always want -R.
--		CFLAGS += -I$(OPENSSLDIR)/include
-+		ALL_CFLAGS += -I$(OPENSSLDIR)/include
- 		OPENSSL_LINK = -L$(OPENSSLDIR)/lib -R$(OPENSSLDIR)/lib
- 	else
- 		OPENSSL_LINK =
- 	endif
- else
--	DEFINES += -DNO_OPENSSL
-+	ALL_CFLAGS += -DNO_OPENSSL
- 	MOZILLA_SHA1 = 1
- 	OPENSSL_LIBSSL =
- endif
-@@ -258,7 +254,7 @@ endif
- ifdef NEEDS_LIBICONV
- 	ifdef ICONVDIR
- 		# Again this may be problematic -- gcc does not always want -R.
--		CFLAGS += -I$(ICONVDIR)/include
-+		ALL_CFLAGS += -I$(ICONVDIR)/include
- 		ICONV_LINK = -L$(ICONVDIR)/lib -R$(ICONVDIR)/lib
- 	else
- 		ICONV_LINK =
-@@ -276,15 +272,15 @@ ifdef NEEDS_NSL
- 	SIMPLE_LIB += -lnsl
- endif
- ifdef NO_STRCASESTR
--	DEFINES += -Dstrcasestr=gitstrcasestr -DNO_STRCASESTR=1
-+	ALL_CFLAGS += -Dstrcasestr=gitstrcasestr -DNO_STRCASESTR=1
- 	LIB_OBJS += compat/strcasestr.o
- endif
- ifdef NO_MMAP
--	DEFINES += -Dmmap=gitfakemmap -Dmunmap=gitfakemunmap -DNO_MMAP
-+	ALL_CFLAGS += -Dmmap=gitfakemmap -Dmunmap=gitfakemunmap -DNO_MMAP
- 	LIB_OBJS += compat/mmap.o
- endif
- ifdef NO_IPV6
--	DEFINES += -DNO_IPV6 -Dsockaddr_storage=sockaddr_in
-+	ALL_CFLAGS += -DNO_IPV6 -Dsockaddr_storage=sockaddr_in
- endif
- 
- ifdef PPC_SHA1
-@@ -305,7 +301,7 @@ endif
- endif
- endif
- 
--DEFINES += -DSHA1_HEADER=$(call shellquote,$(SHA1_HEADER))
-+ALL_CFLAGS += -DSHA1_HEADER=$(call shellquote,$(SHA1_HEADER))
- 
- SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
- 	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
----
-0.99.9.GIT
+	git checkout -b my-maint maint
+	.. work work work, commit commit commit
+        .. "git-format-patch maint..my-maint" to send patches
+	.. off, or send a pull request to upstream.
+        git fetch remote ;# to update origin, pu, and maint.
+        git pull . maint ;# merge maint changes into my-maint.
+
+That is, my-maint branch is used for your own development, and
+from time to time you fetch remote heads (using remotes/remote
+shorthands, the fetch would update origin, pu and maint) to keep
+track of the progress of the upstream.  And you merge upstream
+'maint' into your development line 'my-maint', when you find
+that the upstream have something new in 'maint'.
+
+And because of the rule "you never do your own development on RHS
+branch":
+
+	git checkout maint
+        .. work work work, commit commit commit
+        git pull remote ;# oops
+
+this is discouraged.  'git pull remote' would try to overwrite
+the local 'maint' with the remote 'maint', and it would find
+that the head would not fast-forward (obviously, since we did
+our own work that the remote side does not know about).  But
+when I read the "corollary" the first time, it appeared to me
+that we are suggesting the above.
+
+Maybe something like this (I know my wording is quite bad and I
+would appreciate rephrasing it better very much) would be more
+explicit and appropriate?
+
+    If you intend to do development derived from a remote
+    branch B, have a `Pull:` line to track it, like this:
+
+        Pull: B:remote-B
+
+    and have a separate branch my-B to do your development
+    on top of it.  The latter is created by 'git branch my-B
+    remote-B' (or its equivalent, 'git checkout -b my-B
+    remote-B'), and that is the branch you make your own
+    commits.  Run 'git fetch' to keep track of the progress
+    of the remote side, and when you see the tracked remote
+    branch has something new, merge it into your development
+    branch with 'git pull . remote-B', while you are on my-B
+    branch.
