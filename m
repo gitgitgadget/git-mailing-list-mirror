@@ -1,81 +1,93 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: git binary directory?
-Date: Sat, 5 Nov 2005 13:02:23 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511051247330.3316@g5.osdl.org>
+From: Yaacov Akiba Slama <ya@slamail.org>
+Subject: Re: git binary directory?
+Date: Sat, 05 Nov 2005 23:43:11 +0200
+Message-ID: <436D276F.7010302@slamail.org>
+References: <436D2269.6090605@slamail.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat Nov 05 22:04:54 2005
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Nov 05 22:44:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYVBs-0005q4-4o
-	for gcvg-git@gmane.org; Sat, 05 Nov 2005 22:03:08 +0100
+	id 1EYVoq-0005ZT-U7
+	for gcvg-git@gmane.org; Sat, 05 Nov 2005 22:43:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751046AbVKEVCc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Nov 2005 16:02:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932208AbVKEVCb
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Nov 2005 16:02:31 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:48824 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751006AbVKEVCa (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Nov 2005 16:02:30 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA5L2PnO029861
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 5 Nov 2005 13:02:26 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA5L2N0a031726;
-	Sat, 5 Nov 2005 13:02:24 -0800
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932204AbVKEVnW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Nov 2005 16:43:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932207AbVKEVnW
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Nov 2005 16:43:22 -0500
+Received: from [195.140.142.33] ([195.140.142.33]:38574 "EHLO
+	c1-033.cyaris.net") by vger.kernel.org with ESMTP id S932204AbVKEVnV
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 5 Nov 2005 16:43:21 -0500
+Received: from localhost ([127.0.33.1] helo=localhost.localdomain)
+	by c1-033.cyaris.net with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1EYVoh-0001iB-T0
+	for git@vger.kernel.org; Sat, 05 Nov 2005 22:43:20 +0100
+Received: from [127.0.0.1] (helo=[127.0.0.1])
+	by localhost.localdomain with esmtp (Exim 4.54)
+	id 1EYVod-0002Ii-K8
+	for git@vger.kernel.org; Sat, 05 Nov 2005 23:43:11 +0200
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <436D2269.6090605@slamail.org>
+X-Spam-Score: -2.8 (--)
+X-Spam-Report: Spam detection software, running on the system "c1-033.cyaris.net", has
+	identified this incoming email as possible spam.  The original message
+	has been attached to this so you can view it (if it isn't spam) or label
+	similar future email.  If you have any questions, see
+	the administrator of that system for details.
+	Content preview:  Linus Torvalds wrote: > So I'd really suggest that
+	while the "git-<tab><tab>" thing is perhaps > useful, we'd actually be
+	better off with an /usr/lib/git directory > where we put the git
+	executables by default. And just put "git" into > /usr/bin. > > That
+	way, people who _want_ to use "git-<tab><tab>" can just add the > git
+	binary directory to their path and directly access all of them. > And
+	others can just use the plain "git" interface. > > That would mean that
+	I'd have to learn to use "git whatchanged" and > "git diff-tree"
+	instead of "git-whatchanged" and "git-diff-tree", but > hey, it's why
+	we have that "git" script in the first place. > > What do people think?
+	[...] 
+	Content analysis details:   (-2.8 points, 5.0 required)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	-2.8 ALL_TRUSTED            Did not pass through any untrusted hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11185>
+
+Linus Torvalds wrote:
+
+> So I'd really suggest that while the "git-<tab><tab>" thing is perhaps 
+> useful, we'd actually be better off with an /usr/lib/git directory 
+> where we put the git executables by default. And just put "git" into 
+> /usr/bin.
+>
+> That way, people who _want_ to use "git-<tab><tab>" can just add the 
+> git binary directory to their path and directly access all of them. 
+> And others can just use the plain "git" interface.
+>
+> That would mean that I'd have to learn to use "git whatchanged" and 
+> "git diff-tree" instead of "git-whatchanged" and "git-diff-tree", but 
+> hey, it's why we have that "git" script in the first place.
+>
+> What do people think?
+
+I agree with you. I have 3268 entries in /usr/bin and git commands 
+account for 3.3% of this number which is a lot.
+
+In addition custom tab completion can be quite easily added to bash and zsh.
+
+If you indeed put only git in /usr/bin, a good idea would be perhaps to 
+implement (svn does that for instance) : "git help" to have a simple 
+list of command (this is almost already there),  and "git help  
+<command>" which can give the same result as "man git-<command>" because 
+it's not clear from "man git" that one needs to see the man pages of the 
+commands listed in "Porcelain-ish command".
 
 
-Just for fun, I did "git-<tab><tab>" a moment ago, and it asked me
 
-	Display all 171 possibilities? (y or n)
-
-which was a bit scary. Now, part of that was because I hadn't cleaned up 
-the old git names, so I removed everything, and did a clean "make install" 
-with the current git tree. At which point the question became
-
-	Display all 105 possibilities? (y or n)
-
-and pressing "y" shows a really nice list of programs.
-
-Now, this is actually very convenient, and since I tend to install things 
-in my own ~/bin directory, it's all good. What's a hundred files more or 
-less?
-
-However, doing a "ls /usr/bin/ | wc" shows that on my laptop /usr/bin is 
-already 2583 files, and git is actually part of the problem there (hey, 
-it's got the git RPM installed - it's not my main machine)..
-
-Now, I happen to think that 2500+ files in /usr/bin is a bit much (ever 
-try to use the horrid gnome executable finder on it when you want to 
-convince firefox to use xpdf instead of that broken crap called "evince"? 
-Takes absolutely ages and is horrible).
-
-And git made it about 4% worse all on its own.
-
-So I'd really suggest that while the "git-<tab><tab>" thing is perhaps 
-useful, we'd actually be better off with an /usr/lib/git directory where 
-we put the git executables by default. And just put "git" into /usr/bin.
-
-That way, people who _want_ to use "git-<tab><tab>" can just add the git 
-binary directory to their path and directly access all of them. And others 
-can just use the plain "git" interface.
-
-That would mean that I'd have to learn to use "git whatchanged" and "git 
-diff-tree" instead of "git-whatchanged" and "git-diff-tree", but hey, it's 
-why we have that "git" script in the first place.
-
-What do people think?
-
-			Linus
+--yas
