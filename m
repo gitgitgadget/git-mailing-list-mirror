@@ -1,89 +1,81 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: hgmq vs. StGIT
-Date: Sat, 5 Nov 2005 20:23:33 +0000
-Message-ID: <b0943d9e0511051223g74c2be43h@mail.gmail.com>
-References: <7vk6ftcp0d.fsf@assigned-by-dhcp.cox.net>
-	 <20051101002554.GA7634@thunk.org> <20051101090804.GA11618@pasky.or.cz>
-	 <b0943d9e0511010123i1f9eb679w@mail.gmail.com>
-	 <436787BD.9080705@citi.umich.edu>
-	 <20051101153650.GB26847@watt.suse.com>
-	 <b0943d9e0511010918ob2dbcfcv@mail.gmail.com>
-	 <20051101181352.GD26847@watt.suse.com>
-	 <b0943d9e0511011330v7045c568u@mail.gmail.com>
-	 <20051102154108.GM26847@watt.suse.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: git binary directory?
+Date: Sat, 5 Nov 2005 13:02:23 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511051247330.3316@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Chuck Lever <cel@citi.umich.edu>, Petr Baudis <pasky@suse.cz>,
-	Theodore Ts'o <tytso@mit.edu>,
-	Joel Becker <Joel.Becker@oracle.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 05 21:24:11 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sat Nov 05 22:04:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYUZd-0006jn-Mm
-	for gcvg-git@gmane.org; Sat, 05 Nov 2005 21:23:38 +0100
+	id 1EYVBs-0005q4-4o
+	for gcvg-git@gmane.org; Sat, 05 Nov 2005 22:03:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932316AbVKEUXf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Nov 2005 15:23:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932320AbVKEUXf
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Nov 2005 15:23:35 -0500
-Received: from xproxy.gmail.com ([66.249.82.196]:59991 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932316AbVKEUXe convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 5 Nov 2005 15:23:34 -0500
-Received: by xproxy.gmail.com with SMTP id i30so130020wxd
-        for <git@vger.kernel.org>; Sat, 05 Nov 2005 12:23:33 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gaysjL5Fd/bbevllfzZVtE++y3eyHOvGjm1pzregtlBuSyvprJpri62kgFgkzLa85CpBUn4blref7hI3B3NBmgXgxZx6JwJo9p1jnU7h6ZlZKAPqnV5rtEk14Nj+EChf+VzYSewduagc9UIuWq5yu0opRrOHrSEuQ/ttzCHQ7D8=
-Received: by 10.70.31.10 with SMTP id e10mr550686wxe;
-        Sat, 05 Nov 2005 12:23:33 -0800 (PST)
-Received: by 10.70.31.3 with HTTP; Sat, 5 Nov 2005 12:23:33 -0800 (PST)
-To: Chris Mason <mason@suse.com>
-In-Reply-To: <20051102154108.GM26847@watt.suse.com>
-Content-Disposition: inline
+	id S1751046AbVKEVCc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Nov 2005 16:02:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932208AbVKEVCb
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Nov 2005 16:02:31 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:48824 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751006AbVKEVCa (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Nov 2005 16:02:30 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA5L2PnO029861
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 5 Nov 2005 13:02:26 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA5L2N0a031726;
+	Sat, 5 Nov 2005 13:02:24 -0800
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11184>
 
-Sorry for the delay in replying.
 
-On 02/11/05, Chris Mason <mason@suse.com> wrote:
-> I think we're talking past each other a little, partially because
-> I'm not sure exactly what features you want from revision control on the
-> patches.
+Just for fun, I did "git-<tab><tab>" a moment ago, and it asked me
 
-That's unclear for me too :-). I would like to have a way of checking
-the changes to individual patches, just to be able to go back if some
-changes broke it. It's also useful to have some kind of revision
-control for the whole stack, but this can be achieved with tags at the
-moment. What I usually do is export the series when I'm happy with it
-and keep that directory safe. I could add revision control for the
-directory containing the exported series but this would be somehow
-outside StGIT.
+	Display all 171 possibilities? (y or n)
 
-> But, my suggestion is to remember that once you add some sort of
-> revision control, people are going to want all of the features they are
-> used to with git/hg/their favorite SCM.  You'll probably get better
-> results if you patch git to your needs then if you try to reimplement
-> things all over again.
+which was a bit scary. Now, part of that was because I hadn't cleaned up 
+the old git names, so I removed everything, and did a clean "make install" 
+with the current git tree. At which point the question became
 
-That's true. I think that people who want a full revision control of
-the patches should rather use separate branches instead of stacked
-patches. It's indeed more convenient to be able to add or remove
-features with push/pop but providing yet another SCM layer on top of
-these would make the tool hard to understand (and maybe make Quilt
-fans run away from it).
+	Display all 105 possibilities? (y or n)
 
-The current StGIT features are enough for my needs but I'll
-accept/implement new features based on others' requirements.
+and pressing "y" shows a really nice list of programs.
 
-BTW, the latest StGIT snapshot has support for a 'patches' command
-which shows the patches modifying a file or set of files (that's
-because I needed this feature recently).
+Now, this is actually very convenient, and since I tend to install things 
+in my own ~/bin directory, it's all good. What's a hundred files more or 
+less?
 
---
-Catalin
+However, doing a "ls /usr/bin/ | wc" shows that on my laptop /usr/bin is 
+already 2583 files, and git is actually part of the problem there (hey, 
+it's got the git RPM installed - it's not my main machine)..
+
+Now, I happen to think that 2500+ files in /usr/bin is a bit much (ever 
+try to use the horrid gnome executable finder on it when you want to 
+convince firefox to use xpdf instead of that broken crap called "evince"? 
+Takes absolutely ages and is horrible).
+
+And git made it about 4% worse all on its own.
+
+So I'd really suggest that while the "git-<tab><tab>" thing is perhaps 
+useful, we'd actually be better off with an /usr/lib/git directory where 
+we put the git executables by default. And just put "git" into /usr/bin.
+
+That way, people who _want_ to use "git-<tab><tab>" can just add the git 
+binary directory to their path and directly access all of them. And others 
+can just use the plain "git" interface.
+
+That would mean that I'd have to learn to use "git whatchanged" and "git 
+diff-tree" instead of "git-whatchanged" and "git-diff-tree", but hey, it's 
+why we have that "git" script in the first place.
+
+What do people think?
+
+			Linus
