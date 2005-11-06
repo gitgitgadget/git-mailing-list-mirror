@@ -1,77 +1,54 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Errors cloning over http -- git-clone and cg-clone fail to fetch a reachable object...
-Date: Mon, 7 Nov 2005 10:54:14 +1300
-Message-ID: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com>
+From: Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
+Subject: Re: Documentation Directions
+Date: Sun, 6 Nov 2005 23:03:48 +0100
+Message-ID: <20051106220348.GA9036@puritan.petwork>
+References: <E1EYoQE-0002QX-VM@jdl.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sun Nov 06 22:55:22 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Nov 06 23:05:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYsTE-0005gD-QL
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 22:54:37 +0100
+	id 1EYscC-0008BP-7o
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 23:03:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932256AbVKFVyQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 16:54:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932258AbVKFVyQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 16:54:16 -0500
-Received: from zproxy.gmail.com ([64.233.162.192]:5027 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932256AbVKFVyP convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 16:54:15 -0500
-Received: by zproxy.gmail.com with SMTP id 13so299885nzn
-        for <git@vger.kernel.org>; Sun, 06 Nov 2005 13:54:14 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=lk0j1jz4TU/v9VcZBL1yV87FXM3lO1rRK4xBpctXy405q5w57lroPSmdixCfD9bLp7DWCRKRRc1drgNwdjIzLIJ6JNFEfYyqXGUWILCdwz+lonRnDy0WpSnnfZ/7eUgS3IeixOh3qWilYHK9SFnDNR3joZNHroQONzrZFwBiwqM=
-Received: by 10.64.185.7 with SMTP id i7mr4643785qbf;
-        Sun, 06 Nov 2005 13:54:14 -0800 (PST)
-Received: by 10.64.232.18 with HTTP; Sun, 6 Nov 2005 13:54:14 -0800 (PST)
-To: Git Mailing List <git@vger.kernel.org>
+	id S932267AbVKFWDt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 17:03:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932270AbVKFWDt
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 17:03:49 -0500
+Received: from mxfep02.bredband.com ([195.54.107.73]:53499 "EHLO
+	mxfep02.bredband.com") by vger.kernel.org with ESMTP
+	id S932267AbVKFWDs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2005 17:03:48 -0500
+Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82])
+          by mxfep02.bredband.com with ESMTP
+          id <20051106220347.IXTR16437.mxfep02.bredband.com@ironport.bredband.com>
+          for <git@vger.kernel.org>; Sun, 6 Nov 2005 23:03:47 +0100
+Received: from c-fa2b70d5.018-10-67626713.cust.bredbandsbolaget.se (HELO puritan.petwork) ([213.112.43.250])
+  by ironport.bredband.com with ESMTP; 06 Nov 2005 23:03:17 +0100
+X-IronPort-AV: i="3.97,298,1125871200"; 
+   d="scan'208"; a="8132755:sNHT30689334"
+Received: by puritan.petwork (Postfix, from userid 1000)
+	id F417DADFE2; Sun,  6 Nov 2005 23:03:48 +0100 (CET)
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <E1EYoQE-0002QX-VM@jdl.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11230>
 
-Strange!
+Jon Loeliger wrote:
 
-I'm getting errors when cloning over http
+> - Is the plan to update all docs to use $GIT_DIR instead of .git?
 
-git-clone http://locke.catalyst.net.nz/git/moodle.git mdlfoo
-(...)
-error:  (curl_result = 3601440, http_code = 200, sha1 =
-f04241b142edfbf28fff2babb426cbab5b44e26b)
-Getting pack list
-error:
-Getting alternates list
-error: Unable to find f04241b142edfbf28fff2babb426cbab5b44e26b under
-http://locke.catalyst.net.nz/git/moodle.git/
+Well, shouldn't we go all the way and use ${GIT_DIR:-.git} then?  :-)
 
-Cannot obtain needed commit f04241b142edfbf28fff2babb426cbab5b44e26b
-while processing commit 0965f28d4d75f324b86c8f7490830fea471c65c5.
+        nikolai
 
-This commit object is easily reachable at
-http://mirrors.catalyst.net.nz/git/moodle.git/objects/f0/4241b142edfbf28fff2babb426cbab5b44e26b
-
-If I use cg-clone, I get a similar error
-
-cg-clone http://locke.catalyst.net.nz/git/moodle.git#mdl-artena-tairawhiti
-mdlfooo
-(...)
-Cannot obtain needed object 214e6374d49e6d014f0ba6f159d585a3fe468909
-while processing commit 0000000000000000000000000000000000000000.
-cg-fetch: objects fetch failed
-cg-clone: fetch failed
-
-This commit object seems to be in a pack:
-http://mirrors.catalyst.net.nz/git/moodle.git/objects/pack/pack-094560c0177ad659a6e172739c4be53da749e5f0.pack
-
-git-cat-file on the server works correctly, and cloning/working over
-git+ssh works too.
-
-cheers,
-
-
-martin
+-- 
+Nikolai Weibull: now available free of charge at http://bitwi.se/!
+Born in Chicago, IL USA; currently residing in Gothenburg, Sweden.
+main(){printf(&linux["\021%six\012\0"],(linux)["have"]+"fun"-97);}
