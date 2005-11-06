@@ -1,71 +1,57 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Marco Roeland <marco.roeland@xs4all.nl>
 Subject: Re: What's in git.git tonight
-Date: 06 Nov 2005 04:08:35 -0800
-Message-ID: <868xw2t1vg.fsf@blue.stonehenge.com>
-References: <7v3bmayu2r.fsf@assigned-by-dhcp.cox.net>
-	<86acgiujuk.fsf@blue.stonehenge.com>
-	<87y8427zvn.fsf@briny.internal.ondioline.org>
+Date: Sun, 6 Nov 2005 13:11:49 +0100
+Message-ID: <20051106121149.GB30718@fiberbit.xs4all.nl>
+References: <7v3bmayu2r.fsf@assigned-by-dhcp.cox.net> <86acgiujuk.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 06 13:09:54 2005
+X-From: git-owner@vger.kernel.org Sun Nov 06 13:12:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYjKC-0008Sl-6M
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 13:08:40 +0100
+	id 1EYjNP-0000Zh-OR
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 13:12:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750798AbVKFMIh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 07:08:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750809AbVKFMIh
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 07:08:37 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:24728 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1750798AbVKFMIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Nov 2005 07:08:36 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 073718F9D4;
-	Sun,  6 Nov 2005 04:08:36 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 07269-04-12; Sun,  6 Nov 2005 04:08:35 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 93DEC8F9E6; Sun,  6 Nov 2005 04:08:35 -0800 (PST)
-To: Paul Collins <paul@briny.ondioline.org>
-x-mayan-date: Long count = 12.19.12.13.18; tzolkin = 2 Etznab; haab = 16 Zac
-In-Reply-To: <87y8427zvn.fsf@briny.internal.ondioline.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1750809AbVKFML5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 07:11:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750829AbVKFML5
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 07:11:57 -0500
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:49300 "EHLO
+	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1750809AbVKFML4
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 07:11:56 -0500
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.54)
+	id 1EYjNF-00080z-IK; Sun, 06 Nov 2005 13:11:49 +0100
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+Content-Disposition: inline
+In-Reply-To: <86acgiujuk.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11208>
 
->>>>> "Paul" == Paul Collins <paul@briny.ondioline.org> writes:
+On Sunday November 6th 2005 at 02:54 uur Randal L. Schwartz wrote:
 
-Paul> It seems to require libexpat now.  I got the same error here on Debian.
-Paul> With libexpat-dev installed it builds.
+> 
+> http-push.c no longer compiles on OSX:
+> 
+> gcc -o http-push.o -c -g -O2 -Wall -DSHA1_HEADER='<openssl/sha.h>' http-push.c
+> http-push.c:10:19: error: expat.h: No such file or directory
 
-Well, there's no standard libexpat for OSX, so if you install it
-after-market, it can end up in various directories.
+You need to have the expat (XML parsing library) header files installed
+from something like the "expat development kit".
 
-For example, on my machine, I've installed it with fink, so I need
-"-I/sw/include -L/sw/lib" added to CFLAGS.
+If you do already have 'expat.h' installed under say /usr/include does
+changing "#include "expat.h" to "#include <expat.h>" perhaps help?
+Searching for include files specified with #include "..." is somewhat
+platform dependant.
 
-If you install it with darwinports, it will end up under
-"/opt/local/{lib,include}" instead.
+Alternatively, if you don't need 'git-http-push' you can define
+'NO_EXPAT' and the Makefile will take care that it doesn't get built.
 
-I suppose you could add those four things to CFLAGS for OSX and it
-won't mess too many things up, but you'll also need to add a note that
-says "git requires expat, which can be obtained through fink or
-darwinports.  If you install expat manually, you may have to adjust
-CFLAGS in the Makefile".
-
-As a separate problem, why make git depend on expat if the only part
-of this is for DAV pushing?  Can http-push simply refuse DAV URLs if
-built without expat?
-
+Incidentally 'git whatchanged -p http-push.c' shows that this dependency
+on expat and its include header has been there since the first version
+on November 2nd. So 'no longer compiles' seems a bit odd!
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Marco Roeland
