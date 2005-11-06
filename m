@@ -1,45 +1,63 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: Documentation Directions
-Date: Sun, 06 Nov 2005 13:28:43 -0600
-Message-ID: <E1EYqC3-0002yv-NU@jdl.com>
-X-From: git-owner@vger.kernel.org Sun Nov 06 20:29:33 2005
+From: alxneit <ivo.alxneit@psi.ch>
+Subject: expat.h missing
+Date: Sun, 6 Nov 2005 21:39:04 +0100
+Message-ID: <200511062139.15622.ivo.alxneit@psi.ch>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart1828835.2dkGyjdeUF";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Nov 06 20:29:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYqCT-0000hB-2B
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 20:29:09 +0100
+	id 1EYqCT-0000hB-SL
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 20:29:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750821AbVKFT2s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 14:28:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751097AbVKFT2s
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 14:28:48 -0500
-Received: from colo.jdl.com ([66.118.10.122]:15293 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S1751062AbVKFT2s (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 14:28:48 -0500
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1EYqC3-0002yv-NU
-	for git@vger.kernel.org; Sun, 06 Nov 2005 13:28:44 -0600
-To: git@vger.kernel.org
-In-Reply-To: E1EYoQE-0002QX-VM@jdl.com
-X-Spam-Score: -105.9 (---------------------------------------------------)
+	id S1751095AbVKFT3B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 14:29:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751097AbVKFT3B
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 14:29:01 -0500
+Received: from mail12.bluewin.ch ([195.186.19.61]:48585 "EHLO
+	mail12.bluewin.ch") by vger.kernel.org with ESMTP id S1751095AbVKFT3A
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 14:29:00 -0500
+Received: from [192.168.1.33] (83.77.94.62) by mail12.bluewin.ch (Bluewin 7.2.068.1)
+        id 435F84AF002C64E9 for git@vger.kernel.org; Sun, 6 Nov 2005 19:28:59 +0000
+To: git <git@vger.kernel.org>
+User-Agent: KMail/1.7.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11224>
 
+--nextPart1828835.2dkGyjdeUF
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Also:
+Nick Hengevelds patch to add support for pushing to a remote repository usi=
+ng=20
+HTTP/DAV (58e60dd203362ecb9fdea765dcc2eb573892dbaf)
+introduces "#include expat.h" in http-push.c. this file seems to be missing.
 
-    - Do you want to standardize on using a '$' prompt
-      for all the example command executions samples?
-      Like so:
+=2D-=20
+Dr. Ivo Alxneit
+Laboratory for Solar Technology   phone: +41 56 310 4092
+Paul Scherrer Institute             fax: +41 56 310 2688
+CH-5232 Villigen                   http://solar.web.psi.ch
+Switzerland                   gnupg key: 0x515E30C7
 
-          Do do the thing, run the command:
+--nextPart1828835.2dkGyjdeUF
+Content-Type: application/pgp-signature
 
-                $ git-frobnicate --weirdly
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-Do you/we care?  Consistency uber alles?
+iD8DBQBDbmnzAd7CE1FeMMcRAkwaAJ4yaGozptPW04TCGQSZIiQGmI5s/wCfbmV1
+HyV1QKIH8v9Mtl0O71PBSnY=
+=0b0b
+-----END PGP SIGNATURE-----
 
-Thanks,
-jdl
+--nextPart1828835.2dkGyjdeUF--
