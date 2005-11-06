@@ -1,59 +1,191 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git binary directory?
-Date: Sun, 6 Nov 2005 23:19:52 +0100
-Message-ID: <20051106221952.GP1431@pasky.or.cz>
-References: <Pine.LNX.4.64.0511051247330.3316@g5.osdl.org> <7voe4y5w3v.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511052013550.3316@g5.osdl.org> <7vy84249re.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511060816390.3316@g5.osdl.org> <7v7jbly1lh.fsf@assigned-by-dhcp.cox.net>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: [RFC] Applying a graft to a tree and "rippling" the changes through
+ the history
+Date: Sun, 06 Nov 2005 17:38:18 -0500
+Message-ID: <436E85DA.1080904@michonline.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 06 23:21:37 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigBEBF0CA56200E1822B921AE8"
+X-From: git-owner@vger.kernel.org Sun Nov 06 23:39:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYsrl-0004JB-Lx
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 23:19:58 +0100
+	id 1EYt9q-0000eK-Ug
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 23:38:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932308AbVKFWTz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 17:19:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932360AbVKFWTz
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 17:19:55 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:56003 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932308AbVKFWTy (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 17:19:54 -0500
-Received: (qmail 13893 invoked by uid 2001); 6 Nov 2005 23:19:52 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v7jbly1lh.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751243AbVKFWi2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 17:38:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbVKFWi2
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 17:38:28 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:20164 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S1751243AbVKFWi2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 17:38:28 -0500
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1EYt9a-0000oY-9s
+	for git@vger.kernel.org; Sun, 06 Nov 2005 17:38:22 -0500
+Received: from [10.254.251.12] (helo=mythryan)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1EYt9Z-00046I-00
+	for <git@vger.kernel.org>; Sun, 06 Nov 2005 17:38:21 -0500
+Received: from localhost ([127.0.0.1])
+	by mythryan with esmtp (Exim 4.54)
+	id 1EYt9Z-0000lR-EI
+	for git@vger.kernel.org; Sun, 06 Nov 2005 17:38:21 -0500
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11233>
 
-Dear diary, on Sun, Nov 06, 2005 at 09:15:38PM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > Right now, for a 1.0 release, I suspect that the "put the git binaries 
-> > somewhere else" just isn't worth it. It will break existing scripts that 
-> > use the binaries directly (we've already broken the kernel.org snapshot 
-> > scripts about a million times with just _renaming_ the binaries ;)
-> 
-> Although I _really_ wanted a 1.0 soonish, I personally feel that
-> this change is better done now than later, if we are eventually
-> going to do it anyway.  "Never" _might_ be better than "now",
-> but I suspect "later" or "post 1.0" is worse.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigBEBF0CA56200E1822B921AE8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-You are also going to break the porcelains (w/o manual user
-intervention), so I'm not happy about it but if you are doing it, do it
-now, please. :-)
 
-BTW, can I easily get the patch from the 'git' tool, so that I can
-extend $PATH appropriately during Cogito initialization?
+I've written a tool that will take a single commit, add it as a parent
+of another commit, and recreate the history above that second commit in
+a fully compatible manner.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+This is mostly useful for creating a fully merged-up repository of the
+Linux Historical tree, and the current working tree.
+
+I run this with /graft-ripple.pl linux-history.tmp/ linus origin
+
+Where "origin" is the branch the historical repository is on, and
+"linus" is the branch the current repository is on.
+
+Note: This does not end up fixing up HEAD or any branches, it just pulls
+all the objects together and recreates the full history.
+
+GPLv2, but I'll redo with a proper patch, signed-off-by, command line
+options and help and docs if anyone else feels this is useful as a
+general tool.
+
+========= cut here =============
+
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Data::Dumper;
+use IPC::Open2;
+
+
+sub git_commit_tree {
+        my ($tree,$comments,@parents) = @_;
+
+        my @cparents;
+        foreach my $p (@parents) {
+                push @cparents,"-p",$p;
+        }
+
+        my $pid = open2(*Reader, *Writer,
+		"git-commit-tree",$tree,@cparents);
+        print Writer $comments;
+        close(Writer);
+        my $commit = <Reader>;
+
+        waitpid $pid, 0;
+        close(Reader);
+
+        chomp $commit;
+
+        return $commit;
+}
+
+chdir($ARGV[0]);
+open(GRL,"-|","git-rev-list","--parents",$ARGV[1])
+	or die "Failed to run git-rev-list: " . $!;
+
+my %csets;
+my @revs;
+while(<GRL>) {
+	chomp;
+	my ($commit,@parents) = split /\s+/;
+	$csets{$commit}{parents} = \@parents;
+	push @revs, $commit;
+
+	open(GCF,"-|","git-cat-file","commit",$commit)
+		or die "Failed to open git-cat-file: " . $!;
+
+	my $in_comments = 0;
+	while(<GCF>) {
+		chomp;
+		if ($in_comments) {
+			$csets{$commit}{comments} .= $_ . "\n";
+
+		} elsif (m/^tree (.+)$/) {
+			$csets{$commit}{tree} = $1;
+			#printf("tree = %s\n",$1);
+
+		} elsif (m/^parent (.+)$/) {
+			# Do nothing, we already got
+			# the parents from rev-list.
+
+		} elsif (m/^(author|committer) (.*) <(.*)> (.*)$/) {
+			#printf("%s = %s <%s> at %s\n",$1, $2,$3,$4);
+			@{$csets{$commit}{$1}}{qw(name email datetime)}
+				= ($2,$3,$4);
+
+		} elsif (length == 0) {
+			$in_comments = 1;
+			$csets{$commit}{comments} = "";
+			next;
+		}
+	}
+	close(GCF);
+
+}
+close(GRL);
+
+@revs = reverse @revs;
+push @{$csets{$revs[0]}{parents}},$ARGV[2];
+
+my %newcsets;
+foreach my $old (@revs) {
+	printf("Processing commit %s\n",$old);
+        $ENV{GIT_AUTHOR_EMAIL} = $csets{$old}{author}{email};
+        $ENV{GIT_AUTHOR_NAME} = $csets{$old}{author}{name};
+        $ENV{GIT_AUTHOR_DATE} = $csets{$old}{author}{datetime};
+        $ENV{GIT_COMMITTER_DATE} = $csets{$old}{committer}{datetime};
+        $ENV{GIT_COMMITTER_EMAIL} = $csets{$old}{committer}{email};
+        $ENV{GIT_COMMITTER_NAME} = $csets{$old}{committer}{name};
+
+	my @parents = @{$csets{$old}{parents}};
+	foreach my $p (@{$csets{$old}{parents}}) {
+		if (exists $newcsets{$p}) {
+			push @parents, $newcsets{$p}
+				if exists $newcsets{$p};
+			printf("Found new csetid %s for %s\n",
+				$newcsets{$p},$p);
+		}
+	}
+        my $commit = git_commit_tree($csets{$old}{tree},
+		$csets{$old}{comments},@parents);
+	$newcsets{$old} = $commit;
+        printf("Commit for version %s is %s\n",$old,$newcsets{$old});
+}
+
+
+--------------enigBEBF0CA56200E1822B921AE8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFDboXcfhVDhkBuUKURApEkAJ0agOg1mCsEyvT8fxfOseNKrgRlywCgn/d5
+bErtHpy7dvwcsyEO78NXp7w=
+=1djc
+-----END PGP SIGNATURE-----
+
+--------------enigBEBF0CA56200E1822B921AE8--
