@@ -1,191 +1,68 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: [RFC] Applying a graft to a tree and "rippling" the changes through
- the history
-Date: Sun, 06 Nov 2005 17:38:18 -0500
-Message-ID: <436E85DA.1080904@michonline.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigBEBF0CA56200E1822B921AE8"
-X-From: git-owner@vger.kernel.org Sun Nov 06 23:39:33 2005
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Fix empty line processing in git-shortlog.perl
+Date: Sun, 06 Nov 2005 23:42:18 +0100
+Message-ID: <20051106224218.22797.97260.stgit@machine.or.cz>
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Nov 06 23:42:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYt9q-0000eK-Ug
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 23:38:39 +0100
+	id 1EYtDY-0001eu-3g
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 23:42:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbVKFWi2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 17:38:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbVKFWi2
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 17:38:28 -0500
-Received: from mail.autoweb.net ([198.172.237.26]:20164 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S1751243AbVKFWi2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 17:38:28 -0500
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1EYt9a-0000oY-9s
-	for git@vger.kernel.org; Sun, 06 Nov 2005 17:38:22 -0500
-Received: from [10.254.251.12] (helo=mythryan)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1EYt9Z-00046I-00
-	for <git@vger.kernel.org>; Sun, 06 Nov 2005 17:38:21 -0500
-Received: from localhost ([127.0.0.1])
-	by mythryan with esmtp (Exim 4.54)
-	id 1EYt9Z-0000lR-EI
-	for git@vger.kernel.org; Sun, 06 Nov 2005 17:38:21 -0500
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-X-Enigmail-Version: 0.93.0.0
+	id S1751258AbVKFWmV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 17:42:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbVKFWmU
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 17:42:20 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:44233 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751258AbVKFWmU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 17:42:20 -0500
+Received: (qmail 22809 invoked from network); 6 Nov 2005 23:42:18 +0100
+Received: from localhost (HELO machine.or.cz) (127.0.0.1)
+  by localhost with SMTP; 6 Nov 2005 23:42:18 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11234>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigBEBF0CA56200E1822B921AE8
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Faced with a commit such as
 
+	commit f1b2646c7f2713c3ea4bce120e1d0d8091808be4
+	Author: Adrian Bunk <bunk@r063144.stusta.swh.mhn.de>
+	Date:   Sun Nov 6 20:30:38 2005 +0100
 
-I've written a tool that will take a single commit, add it as a parent
-of another commit, and recreate the history above that second commit in
-a fully compatible manner.
+	    From: Michal Wronski <wrona@mat.uni.torun.pl>
 
-This is mostly useful for creating a fully merged-up repository of the
-Linux Historical tree, and the current working tree.
+	    I've jchanged my email. Please apply this patch so as to everybody
+	    could send me a remarks about mqueuefs.
 
-I run this with /graft-ripple.pl linux-history.tmp/ linus origin
+	    Signed-off-by: Michal Wronski <Michal.Wronski@motorola.com>
+	    Signed-off-by: Adrian Bunk <bunk@stusta.de>
 
-Where "origin" is the branch the historical repository is on, and
-"linus" is the branch the current repository is on.
+git-shortlog.perl would produce a line with an empty commit title.
 
-Note: This does not end up fixing up HEAD or any branches, it just pulls
-all the objects together and recreates the full history.
+This patch fixes that. I believe that just changing the last * to + in the
+original regexp would work, but Adrian says it doesn't fix it for him, and
+I believe this regexp is way clearer anyway. This is also the original
+regexp used before a24e658649170c99fdcb4aaa41545679ad02f755.
 
-GPLv2, but I'll redo with a proper patch, signed-off-by, command line
-options and help and docs if anyone else feels this is useful as a
-general tool.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-========= cut here =============
+ git-shortlog.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-#!/usr/bin/perl
-
-use strict;
-use warnings;
-
-use Data::Dumper;
-use IPC::Open2;
-
-
-sub git_commit_tree {
-        my ($tree,$comments,@parents) = @_;
-
-        my @cparents;
-        foreach my $p (@parents) {
-                push @cparents,"-p",$p;
-        }
-
-        my $pid = open2(*Reader, *Writer,
-		"git-commit-tree",$tree,@cparents);
-        print Writer $comments;
-        close(Writer);
-        my $commit = <Reader>;
-
-        waitpid $pid, 0;
-        close(Reader);
-
-        chomp $commit;
-
-        return $commit;
-}
-
-chdir($ARGV[0]);
-open(GRL,"-|","git-rev-list","--parents",$ARGV[1])
-	or die "Failed to run git-rev-list: " . $!;
-
-my %csets;
-my @revs;
-while(<GRL>) {
-	chomp;
-	my ($commit,@parents) = split /\s+/;
-	$csets{$commit}{parents} = \@parents;
-	push @revs, $commit;
-
-	open(GCF,"-|","git-cat-file","commit",$commit)
-		or die "Failed to open git-cat-file: " . $!;
-
-	my $in_comments = 0;
-	while(<GCF>) {
-		chomp;
-		if ($in_comments) {
-			$csets{$commit}{comments} .= $_ . "\n";
-
-		} elsif (m/^tree (.+)$/) {
-			$csets{$commit}{tree} = $1;
-			#printf("tree = %s\n",$1);
-
-		} elsif (m/^parent (.+)$/) {
-			# Do nothing, we already got
-			# the parents from rev-list.
-
-		} elsif (m/^(author|committer) (.*) <(.*)> (.*)$/) {
-			#printf("%s = %s <%s> at %s\n",$1, $2,$3,$4);
-			@{$csets{$commit}{$1}}{qw(name email datetime)}
-				= ($2,$3,$4);
-
-		} elsif (length == 0) {
-			$in_comments = 1;
-			$csets{$commit}{comments} = "";
-			next;
-		}
-	}
-	close(GCF);
-
-}
-close(GRL);
-
-@revs = reverse @revs;
-push @{$csets{$revs[0]}{parents}},$ARGV[2];
-
-my %newcsets;
-foreach my $old (@revs) {
-	printf("Processing commit %s\n",$old);
-        $ENV{GIT_AUTHOR_EMAIL} = $csets{$old}{author}{email};
-        $ENV{GIT_AUTHOR_NAME} = $csets{$old}{author}{name};
-        $ENV{GIT_AUTHOR_DATE} = $csets{$old}{author}{datetime};
-        $ENV{GIT_COMMITTER_DATE} = $csets{$old}{committer}{datetime};
-        $ENV{GIT_COMMITTER_EMAIL} = $csets{$old}{committer}{email};
-        $ENV{GIT_COMMITTER_NAME} = $csets{$old}{committer}{name};
-
-	my @parents = @{$csets{$old}{parents}};
-	foreach my $p (@{$csets{$old}{parents}}) {
-		if (exists $newcsets{$p}) {
-			push @parents, $newcsets{$p}
-				if exists $newcsets{$p};
-			printf("Found new csetid %s for %s\n",
-				$newcsets{$p},$p);
-		}
-	}
-        my $commit = git_commit_tree($csets{$old}{tree},
-		$csets{$old}{comments},@parents);
-	$newcsets{$old} = $commit;
-        printf("Commit for version %s is %s\n",$old,$newcsets{$old});
-}
-
-
---------------enigBEBF0CA56200E1822B921AE8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
-
-iD8DBQFDboXcfhVDhkBuUKURApEkAJ0agOg1mCsEyvT8fxfOseNKrgRlywCgn/d5
-bErtHpy7dvwcsyEO78NXp7w=
-=1djc
------END PGP SIGNATURE-----
-
---------------enigBEBF0CA56200E1822B921AE8--
+diff --git a/git-shortlog.perl b/git-shortlog.perl
+index 0b14f83..7283159 100755
+--- a/git-shortlog.perl
++++ b/git-shortlog.perl
+@@ -94,7 +94,7 @@ sub changelog_input {
+ 
+ 		# skip to non-blank line
+ 		elsif ($pstate == 3) {
+-			next unless /^\s*?(.*)/;
++			next unless /^\s*?(\S.*)$/;
+ 
+ 			# skip lines that are obviously not
+ 			# a 1-line cset description
