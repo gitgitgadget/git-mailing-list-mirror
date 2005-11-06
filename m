@@ -1,63 +1,62 @@
-From: alxneit <ivo.alxneit@psi.ch>
-Subject: expat.h missing
-Date: Sun, 6 Nov 2005 21:39:04 +0100
-Message-ID: <200511062139.15622.ivo.alxneit@psi.ch>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Documentation Directions
+Date: Sun, 06 Nov 2005 12:11:13 -0800
+Message-ID: <7vek5ty1su.fsf@assigned-by-dhcp.cox.net>
+References: <E1EYoQE-0002QX-VM@jdl.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1828835.2dkGyjdeUF";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Nov 06 20:29:51 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 06 21:12:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYqCT-0000hB-SL
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 20:29:10 +0100
+	id 1EYqrc-0003KO-Ho
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 21:11:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751095AbVKFT3B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 14:29:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751097AbVKFT3B
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 14:29:01 -0500
-Received: from mail12.bluewin.ch ([195.186.19.61]:48585 "EHLO
-	mail12.bluewin.ch") by vger.kernel.org with ESMTP id S1751095AbVKFT3A
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 14:29:00 -0500
-Received: from [192.168.1.33] (83.77.94.62) by mail12.bluewin.ch (Bluewin 7.2.068.1)
-        id 435F84AF002C64E9 for git@vger.kernel.org; Sun, 6 Nov 2005 19:28:59 +0000
-To: git <git@vger.kernel.org>
-User-Agent: KMail/1.7.2
+	id S1750796AbVKFULQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 15:11:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbVKFULQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 15:11:16 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:28544 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1750796AbVKFULP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2005 15:11:15 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051106201049.ZQER9394.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 6 Nov 2005 15:10:49 -0500
+To: Jon Loeliger <jdl@freescale.com>
+In-Reply-To: <E1EYoQE-0002QX-VM@jdl.com> (Jon Loeliger's message of "Sun, 06
+	Nov 2005 11:35:14 -0600")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11225>
 
---nextPart1828835.2dkGyjdeUF
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Jon Loeliger <jdl@freescale.com> writes:
 
-Nick Hengevelds patch to add support for pushing to a remote repository usi=
-ng=20
-HTTP/DAV (58e60dd203362ecb9fdea765dcc2eb573892dbaf)
-introduces "#include expat.h" in http-push.c. this file seems to be missing.
+> Couple of questions regarding documentation direction:
+>
+> - Is the plan to update all docs to use $GIT_DIR instead of .git?
 
-=2D-=20
-Dr. Ivo Alxneit
-Laboratory for Solar Technology   phone: +41 56 310 4092
-Paul Scherrer Institute             fax: +41 56 310 2688
-CH-5232 Villigen                   http://solar.web.psi.ch
-Switzerland                   gnupg key: 0x515E30C7
+I personally feel we should use less (not more) $GIT_DIR in the
+documentation and casual mention of things under .git/ directory
+should say .git/ instead, with the understanding that the reader
+have already learned that there is a way to override it if the
+user chooses to do so.
 
---nextPart1828835.2dkGyjdeUF
-Content-Type: application/pgp-signature
+> - Do we intend on adding explicit support for '--help' on most,
+>   if not all, of the git commands?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+I think that would be very helpful.
 
-iD8DBQBDbmnzAd7CE1FeMMcRAkwaAJ4yaGozptPW04TCGQSZIiQGmI5s/wCfbmV1
-HyV1QKIH8v9Mtl0O71PBSnY=
-=0b0b
------END PGP SIGNATURE-----
+>     - Do you want to standardize on using a '$' prompt
+>       for all the example command executions samples?
 
---nextPart1828835.2dkGyjdeUF--
+Ah, I see you recently added a couple of Csh style '%' prompt.
+Also I suspect that some examples in earlier tutorial do not
+even have any prompt.
+
+You are right -- being consistent would be nice.
