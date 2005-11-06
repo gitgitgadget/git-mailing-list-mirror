@@ -1,177 +1,103 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: git binary directory?
-Date: Sat, 5 Nov 2005 16:27:11 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511051625110.3316@g5.osdl.org>
+Date: Sat, 05 Nov 2005 18:49:24 -0800
+Message-ID: <7voe4y5w3v.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0511051247330.3316@g5.osdl.org>
- <Pine.LNX.4.64.0511051535220.3316@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun Nov 06 01:28:38 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Nov 06 03:51:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYYNa-00062m-Tz
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 01:27:27 +0100
+	id 1EYacT-0002oh-Kf
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 03:51:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932238AbVKFA1T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Nov 2005 19:27:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932239AbVKFA1T
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Nov 2005 19:27:19 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:49108 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932238AbVKFA1T (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Nov 2005 19:27:19 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA60RCnO003755
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 5 Nov 2005 16:27:14 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA60RBE1004637;
-	Sat, 5 Nov 2005 16:27:12 -0800
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0511051535220.3316@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932211AbVKFCt1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Nov 2005 21:49:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932207AbVKFCt1
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Nov 2005 21:49:27 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:36522 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932211AbVKFCt0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Nov 2005 21:49:26 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051106024905.UJKJ1668.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 5 Nov 2005 21:49:05 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511051247330.3316@g5.osdl.org> (Linus Torvalds's
+	message of "Sat, 5 Nov 2005 13:02:23 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11188>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-
-On Sat, 5 Nov 2005, Linus Torvalds wrote:
-> 
-> This is a guaranteed BUGGY thing to make the git RPM do something like 
-> that.
+> Now, I happen to think that 2500+ files in /usr/bin is a bit much (ever 
+> try to use the horrid gnome executable finder on it when you want to 
+> convince firefox to use xpdf instead of that broken crap called "evince"? 
+> Takes absolutely ages and is horrible).
 >
-> [ ... ]
-> 
-> WARNING! I just realized that "gitk" also ends up in that /usr/lib/git.. 
-> directory, and this isn't visible. My bad. I'm a retard. 
+> And git made it about 4% worse all on its own.
 
-This fixes the gitk thing, by installing it (along with git) in the 
-regular $prefix/bin directory (ie default /usr/bin for the RPM).
+My pragmatic half agrees with what you said.  /usr/bin should
+not contain things that are never used by the end user -- things
+like git-sh-setup, git-fmt-merge-msg, and git-merge-recursive
+should not be there.  Not having things like git-show-branch and
+git-update-index in /usr/bin is a regression because it needs an
+extra fork to call them through 'git' wrapper, but I could live
+with that.
 
-I'm still a retard, and it's _probably_ still buggy, but at least it is no 
-longer GUARANTEED to be buggy.
+My purist half, however, says that it is a wrong solution to the
+problem.  If having many files in /usr/bin hurts performance,
+you should be using a filesystem that handles large directory
+better.  Modern shells already know how to hash command names
+found in $PATH.  It is just your gnome executable finder that is
+lacking the knowledge of which binaries are appropriate for what
+mimetype; perhaps your distribution could help by having a way
+for each package to register programs that handle particular
+mimetypes well with the system-wide database.
 
-		Linus
+And my lazy remainder (yes, I add up to more then one ;-))
+cheers on my purist side.
 
----
-diff --git a/Makefile b/Makefile
-index 6c01dc2..6ec9dd2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -59,6 +59,7 @@ ALL_CFLAGS = $(CFLAGS) $(PLATFORM_DEFINE
- 
- prefix = $(HOME)
- bindir = $(prefix)/bin
-+gitdir = $(bindir)
- template_dir = $(prefix)/share/git-core/templates/
- GIT_PYTHON_DIR = $(prefix)/share/git-core/python
- # DESTDIR=
-@@ -86,7 +87,7 @@ SCRIPT_SH = \
- 	git-prune.sh git-pull.sh git-push.sh git-rebase.sh \
- 	git-repack.sh git-request-pull.sh git-reset.sh \
- 	git-resolve.sh git-revert.sh git-sh-setup.sh git-status.sh \
--	git-tag.sh git-verify-tag.sh git-whatchanged.sh git.sh \
-+	git-tag.sh git-verify-tag.sh git-whatchanged.sh \
- 	git-applymbox.sh git-applypatch.sh git-am.sh \
- 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
- 	git-merge-resolve.sh git-merge-ours.sh git-grep.sh
-@@ -310,12 +311,12 @@ DEFINES += -DSHA1_HEADER=$(call shellquo
- SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
- 	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
- 	  $(patsubst %.py,%,$(SCRIPT_PYTHON)) \
--	  gitk git-cherry-pick
-+	  git-cherry-pick
- 
- export prefix TAR INSTALL DESTDIR SHELL_PATH template_dir
- ### Build rules
- 
--all: $(PROGRAMS) $(SCRIPTS)
-+all: git gitk $(PROGRAMS) $(SCRIPTS)
- 
- all:
- 	$(MAKE) -C templates
-@@ -323,6 +324,7 @@ all:
- git: git.sh Makefile
- 	rm -f $@+ $@
- 	sed -e '1s|#!.*/sh|#!$(call shq,$(SHELL_PATH))|' \
-+	    -e 's:@@GITDIR@@:$(gitdir):g' \
- 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 	    -e 's/@@X@@/$(X)/g' \
- 	    $(GIT_LIST_TWEAK) <$@.sh >$@+
-@@ -410,9 +412,11 @@ check:
- 
- ### Installation rules
- 
--install: $(PROGRAMS) $(SCRIPTS)
-+install: git gitk $(PROGRAMS) $(SCRIPTS)
- 	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(bindir))
--	$(INSTALL) $(PROGRAMS) $(SCRIPTS) $(call shellquote,$(DESTDIR)$(bindir))
-+	$(INSTALL) git gitk $(call shellquote,$(DESTDIR)$(bindir))
-+	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(gitdir))
-+	$(INSTALL) $(PROGRAMS) $(SCRIPTS) $(call shellquote,$(DESTDIR)$(gitdir))
- 	$(MAKE) -C templates install
- 	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(GIT_PYTHON_DIR))
- 	$(INSTALL) $(PYMODULES) $(call shellquote,$(DESTDIR)$(GIT_PYTHON_DIR))
-@@ -450,7 +454,7 @@ deb: dist
- 
- clean:
- 	rm -f *.o mozilla-sha1/*.o ppc/*.o compat/*.o $(PROGRAMS) $(LIB_FILE)
--	rm -f $(filter-out gitk,$(SCRIPTS))
-+	rm -f $(SCRIPTS)
- 	rm -f git-core.spec *.pyc *.pyo
- 	rm -rf $(GIT_TARNAME)
- 	rm -f $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
-diff --git a/git-core.spec.in b/git-core.spec.in
-index 5240dd2..0d0ddf3 100644
---- a/git-core.spec.in
-+++ b/git-core.spec.in
-@@ -19,17 +19,19 @@ distributed source code management syste
- rudimentary tools that can be used as a SCM, but you should look
- elsewhere for tools for ordinary humans layered on top of this.
- 
-+%define gitdir %{_libdir}/git-@@VERSION@@
-+
- %prep
- %setup -q
- 
- %build
- make %{_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" WITH_OWN_SUBPROCESS_PY=YesPlease \
--     prefix=%{_prefix} all %{!?_without_docs: doc}
-+     gitdir=%{gitdir} prefix=%{_prefix} all %{!?_without_docs: doc}
- 
- %install
- rm -rf $RPM_BUILD_ROOT
- make %{_smp_mflags} DESTDIR=$RPM_BUILD_ROOT WITH_OWN_SUBPROCESS_PY=YesPlease \
--     prefix=%{_prefix} mandir=%{_mandir} \
-+     gitdir=%{gitdir} prefix=%{_prefix} mandir=%{_mandir} \
-      install %{!?_without_docs: install-doc}
- 
- %clean
-@@ -38,6 +40,7 @@ rm -rf $RPM_BUILD_ROOT
- %files
- %defattr(-,root,root)
- %{_bindir}/*
-+%{gitdir}/*
- %{_datadir}/git-core/
- %doc README COPYING Documentation/*.txt
- %{!?_without_docs: %doc Documentation/*.html }
-diff --git a/git.sh b/git.sh
-index 94940ae..9ba1608 100755
---- a/git.sh
-+++ b/git.sh
-@@ -1,7 +1,8 @@
- #!/bin/sh
- 
- cmd=
--path=$(dirname "$0")
-+path="@@GITDIR@@"
-+export PATH="$path:$PATH"
- case "$#" in
- 0)	;;
- *)	cmd="$1"
+But common sense prevails at the end of the day.  I would not
+fight a battle I know I would not be able to win.  So what
+should we do about this problem?  And when?
+
+Since we do not have enough clout to have /usr/bin/git/ and ask
+the users to put that in their PATH like X11 does, we need to
+teach some of our commands that use other git commands to
+prepend /usr/lib/git/ (or /usr/libexec/git) on their PATH while
+they run.  Although many of the Porcelainish commands include
+git-sh-setup, git-sh-setup itself is a prime candidate to be
+kicked out of /usr/bin, which means essentially everything needs
+to have that PATH trick.
+
+This also is a bit inconvenient for our in-source-tree tests.
+We need to be testing what we just built and are about to
+install, not what is already installed, so every script needs to
+start with something like this:
+
+	#!/bin/sh
+	: ${GIT_BIN_DIR=@@GIT_BIN_DIR@@}
+        PATH="$GIT_BIN_DIR:$PATH"
+        git-sh-setup || die "not a git repository"
+	...
+
+and our test will run with GIT_BIN_DIR set to `pwd`/../../ (they
+run in t/trash and what we just built are found at the toplevel
+of the source).  Also we need to do the same for binaries if they
+fork/exec other git commands.
+
+Commands like upload-pack and receive-pack are directly executed
+from the ssh connection, and we need to arrange for them to be
+found on the PATH of users' non-login shells.  This does not
+necessarily mean these commands need to stay in /usr/bin, but if
+we move them outside standard PATH, we would need to teach
+.bash_profile vs .bashrc workaround to all users, which I think
+is the yuckiest part of all of the above.
