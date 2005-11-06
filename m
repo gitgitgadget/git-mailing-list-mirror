@@ -1,99 +1,72 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Support for passing path to custom map in git-shortlog.perl
-Date: Mon, 07 Nov 2005 00:07:57 +0100
-Message-ID: <20051106230757.24941.19267.stgit@machine.or.cz>
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 07 00:09:16 2005
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Allow GIT_DIR to be an absolute path
+Date: Mon, 7 Nov 2005 00:36:15 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511070034160.23992@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Nov 07 00:36:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYtcK-0007nL-BV
-	for gcvg-git@gmane.org; Mon, 07 Nov 2005 00:08:06 +0100
+	id 1EYu3j-0005R7-2Q
+	for gcvg-git@gmane.org; Mon, 07 Nov 2005 00:36:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751283AbVKFXIA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 18:08:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751284AbVKFXIA
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 18:08:00 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:23514 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751283AbVKFXH7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 18:07:59 -0500
-Received: (qmail 24957 invoked from network); 7 Nov 2005 00:07:57 +0100
-Received: from localhost (HELO machine.or.cz) (127.0.0.1)
-  by localhost with SMTP; 7 Nov 2005 00:07:57 +0100
-To: Junio C Hamano <junkio@cox.net>
+	id S932365AbVKFXgS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 18:36:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932366AbVKFXgS
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 18:36:18 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:32722 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932365AbVKFXgQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2005 18:36:16 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E5F6013EF4B; Mon,  7 Nov 2005 00:36:15 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id CB95E9F1B5; Mon,  7 Nov 2005 00:36:15 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id B7511913EA; Mon,  7 Nov 2005 00:36:15 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 7AEEA13EF4B; Mon,  7 Nov 2005 00:36:15 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11238>
 
-Aside of looking into .mailmap, add support for -m MAPFILE.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
+This fixes a problem in safe_create_leading_directories() when the
+argument starts with a '/' (i.e. the path is absolute).
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
 ---
 
- Documentation/git-shortlog.txt |   10 +++++++++-
- git-shortlog.perl              |   10 ++++++++++
- 2 files changed, 19 insertions(+), 1 deletions(-)
+	I did not thoroughly check if there are more places where a 
+	relative path is assumed. Could well be the only one.
 
-diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
-index 65ca77f..c8de78e 100644
---- a/Documentation/git-shortlog.txt
-+++ b/Documentation/git-shortlog.txt
-@@ -8,13 +8,21 @@ git-shortlog - Summarize 'git log' outpu
+ sha1_file.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+applies-to: 8a2743d0d424a3bc0ff120cdba66ee20b59f5a56
+e1f7e03e178889c53367745810130ef3e933d2aa
+diff --git a/sha1_file.c b/sha1_file.c
+index 642f00d..544db4e 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -50,7 +50,7 @@ int get_sha1_hex(const char *hex, unsign
  
- SYNOPSIS
- --------
--'git-log --pretty=short | git shortlog'
-+'git-log --pretty=short | git shortlog [-m MAILMAP_FILE]'
+ int safe_create_leading_directories(char *path)
+ {
+-	char *pos = path;
++	char *pos = path+1;
  
- DESCRIPTION
- -----------
- Summarizes 'git log' output in a format suitable for inclusion
- in release announcements.
- 
-+OPTIONS
-+-------
-+-m MAILMAP_FILE::
-+	File containing the email-to-realname mappings to be used
-+	in case of the realname missing in the "Author" field of
-+	the commit. In addition, the '.mailmap' file and few predefined
-+	mappings are also always searched.
-+
- 
- Author
- ------
-diff --git a/git-shortlog.perl b/git-shortlog.perl
-index 7283159..cd83dbe 100755
---- a/git-shortlog.perl
-+++ b/git-shortlog.perl
-@@ -1,6 +1,7 @@
- #!/usr/bin/perl -w
- 
- use strict;
-+use Getopt::Std;
- 
- my (%mailmap);
- my (%email);
-@@ -9,6 +10,9 @@ my $pstate = 1;
- my $n_records = 0;
- my $n_output = 0;
- 
-+my (%opts);
-+getopts('m:', \%opts);
-+
- sub shortlog_entry($$) {
- 	my ($name, $desc) = @_;
- 	my $key = $name;
-@@ -132,6 +136,12 @@ sub setup_mailmap {
- 		read_mailmap($fh, \%mailmap);
- 		close $fh;
- 	}
-+	if ($opts{'m'}) {
-+		my $fh = undef;
-+		open($fh, '<', $opts{'m'}) or die "Cannot open mailmap $opts{m}: $!";
-+		read_mailmap($fh, \%mailmap);
-+		close($fh);
-+	}
- }
- 
- sub finalize {
+ 	while (pos) {
+ 		pos = strchr(pos, '/');
+---
+0.99.9.GIT
