@@ -1,68 +1,57 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Fix empty line processing in git-shortlog.perl
-Date: Sun, 06 Nov 2005 23:42:18 +0100
-Message-ID: <20051106224218.22797.97260.stgit@machine.or.cz>
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Nov 06 23:42:35 2005
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [RFC] Applying a graft to a tree and "rippling" the changes  through  the history
+Date: 06 Nov 2005 14:43:17 -0800
+Message-ID: <867jblpfcq.fsf@blue.stonehenge.com>
+References: <436E85DA.1080904@michonline.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 06 23:44:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYtDY-0001eu-3g
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 23:42:28 +0100
+	id 1EYtER-0001wU-Ki
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 23:43:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751258AbVKFWmV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 17:42:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbVKFWmU
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 17:42:20 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:44233 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751258AbVKFWmU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 17:42:20 -0500
-Received: (qmail 22809 invoked from network); 6 Nov 2005 23:42:18 +0100
-Received: from localhost (HELO machine.or.cz) (127.0.0.1)
-  by localhost with SMTP; 6 Nov 2005 23:42:18 +0100
-To: Junio C Hamano <junkio@cox.net>
+	id S1751264AbVKFWnU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 17:43:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbVKFWnU
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 17:43:20 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:8864 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1751264AbVKFWnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2005 17:43:19 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id C16C28F9EE;
+	Sun,  6 Nov 2005 14:43:18 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 00558-01; Sun,  6 Nov 2005 14:43:18 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 0570F8FA12; Sun,  6 Nov 2005 14:43:18 -0800 (PST)
+To: Ryan Anderson <ryan@michonline.com>
+x-mayan-date: Long count = 12.19.12.13.18; tzolkin = 2 Etznab; haab = 16 Zac
+In-Reply-To: <436E85DA.1080904@michonline.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11235>
 
-Faced with a commit such as
+>>>>> "Ryan" == Ryan Anderson <ryan@michonline.com> writes:
 
-	commit f1b2646c7f2713c3ea4bce120e1d0d8091808be4
-	Author: Adrian Bunk <bunk@r063144.stusta.swh.mhn.de>
-	Date:   Sun Nov 6 20:30:38 2005 +0100
+Ryan> chdir($ARGV[0]);
 
-	    From: Michal Wronski <wrona@mat.uni.torun.pl>
+That's dangerous without an "or-die".  Being in the wrong directory
+before you do a lot of edits is a good way to bust your disk. :)
 
-	    I've jchanged my email. Please apply this patch so as to everybody
-	    could send me a remarks about mqueuefs.
+Ryan> 	my ($commit,@parents) = split /\s+/;
 
-	    Signed-off-by: Michal Wronski <Michal.Wronski@motorola.com>
-	    Signed-off-by: Adrian Bunk <bunk@stusta.de>
+split with no args splits $_ on whitespace, tossing leading whitespace,
+just in case they ever put whitespace indentation ahead.
 
-git-shortlog.perl would produce a line with an empty commit title.
-
-This patch fixes that. I believe that just changing the last * to + in the
-original regexp would work, but Adrian says it doesn't fix it for him, and
-I believe this regexp is way clearer anyway. This is also the original
-regexp used before a24e658649170c99fdcb4aaa41545679ad02f755.
-
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
-
- git-shortlog.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-shortlog.perl b/git-shortlog.perl
-index 0b14f83..7283159 100755
---- a/git-shortlog.perl
-+++ b/git-shortlog.perl
-@@ -94,7 +94,7 @@ sub changelog_input {
- 
- 		# skip to non-blank line
- 		elsif ($pstate == 3) {
--			next unless /^\s*?(.*)/;
-+			next unless /^\s*?(\S.*)$/;
- 
- 			# skip lines that are obviously not
- 			# a 1-line cset description
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
