@@ -1,52 +1,59 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git binary directory?
-Date: Sun, 06 Nov 2005 12:15:38 -0800
-Message-ID: <7v7jbly1lh.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0511051247330.3316@g5.osdl.org>
-	<7voe4y5w3v.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511052013550.3316@g5.osdl.org>
-	<7vy84249re.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511060816390.3316@g5.osdl.org>
+Subject: Re: Now What?
+Date: Sun, 06 Nov 2005 12:33:18 -0800
+Message-ID: <7vr79twm7l.fsf@assigned-by-dhcp.cox.net>
+References: <20051103014307.GA1988@pe.Belkin>
+	<1131043869.10979.17.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 06 21:15:59 2005
+X-From: git-owner@vger.kernel.org Sun Nov 06 21:35:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYqvZ-0004T6-Gi
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 21:15:45 +0100
+	id 1EYrCe-0000de-1f
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 21:33:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751203AbVKFUPm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 15:15:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751204AbVKFUPm
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 15:15:42 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:57289 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751203AbVKFUPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Nov 2005 15:15:42 -0500
+	id S1751199AbVKFUdU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 15:33:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751217AbVKFUdU
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 15:33:20 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:40364 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751199AbVKFUdT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2005 15:33:19 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051106201456.TSSV29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 6 Nov 2005 15:14:56 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511060816390.3316@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 6 Nov 2005 08:20:41 -0800 (PST)")
+          id <20051106203231.WRFL776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 6 Nov 2005 15:32:31 -0500
+To: Jon Loeliger <jdl@freescale.com>
+In-Reply-To: <1131043869.10979.17.camel@cashmere.sps.mot.com> (Jon Loeliger's
+	message of "Thu, 03 Nov 2005 12:51:10 -0600")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11227>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Jon Loeliger <jdl@freescale.com> writes:
 
-> Right now, for a 1.0 release, I suspect that the "put the git binaries 
-> somewhere else" just isn't worth it. It will break existing scripts that 
-> use the binaries directly (we've already broken the kernel.org snapshot 
-> scripts about a million times with just _renaming_ the binaries ;)
+> On Wed, 2005-11-02 at 19:43, Chris Shoemaker wrote:
+>
+> ....  Also,
+> I was annoyed that "git revert -n commit-name" created
+> conflicts and the reversal and merges didn't happen
+> for me cleanly even though they did for Junio.
+>
+> So either I don't get it, or it isn't working quite
+> right these days.  Not sure.  Advice sought.
 
-Although I _really_ wanted a 1.0 soonish, I personally feel that
-this change is better done now than later, if we are eventually
-going to do it anyway.  "Never" _might_ be better than "now",
-but I suspect "later" or "post 1.0" is worse.
+It's been a while since I used git-revert the last time.  I
+should find time to run the examples myself.
+
+> Reversing Commits
+> -----------------
+> While a goal of a revision control system is to record
+> ...
+
+The flow-chart based recipe is wonderful.
