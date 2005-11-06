@@ -1,99 +1,59 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Expected Behavior?
-Date: Sun, 06 Nov 2005 16:16:02 -0600
-Message-ID: <E1EYsny-0004hq-IW@jdl.com>
-X-From: git-owner@vger.kernel.org Sun Nov 06 23:16:19 2005
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git binary directory?
+Date: Sun, 6 Nov 2005 23:19:52 +0100
+Message-ID: <20051106221952.GP1431@pasky.or.cz>
+References: <Pine.LNX.4.64.0511051247330.3316@g5.osdl.org> <7voe4y5w3v.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511052013550.3316@g5.osdl.org> <7vy84249re.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511060816390.3316@g5.osdl.org> <7v7jbly1lh.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 06 23:21:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYso8-0003He-Lf
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 23:16:13 +0100
+	id 1EYsrl-0004JB-Lx
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 23:19:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932246AbVKFWQJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 17:16:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932307AbVKFWQJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 17:16:09 -0500
-Received: from www.jdl.com ([66.118.10.122]:57789 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S932246AbVKFWQH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 17:16:07 -0500
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1EYsny-0004hq-IW
-	for git@vger.kernel.org; Sun, 06 Nov 2005 16:16:03 -0600
-To: git@vger.kernel.org
-X-Spam-Score: -105.9 (---------------------------------------------------)
+	id S932308AbVKFWTz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 17:19:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932360AbVKFWTz
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 17:19:55 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:56003 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932308AbVKFWTy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 17:19:54 -0500
+Received: (qmail 13893 invoked by uid 2001); 6 Nov 2005 23:19:52 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v7jbly1lh.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11232>
 
+Dear diary, on Sun, Nov 06, 2005 at 09:15:38PM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > Right now, for a 1.0 release, I suspect that the "put the git binaries 
+> > somewhere else" just isn't worth it. It will break existing scripts that 
+> > use the binaries directly (we've already broken the kernel.org snapshot 
+> > scripts about a million times with just _renaming_ the binaries ;)
+> 
+> Although I _really_ wanted a 1.0 soonish, I personally feel that
+> this change is better done now than later, if we are eventually
+> going to do it anyway.  "Never" _might_ be better than "now",
+> but I suspect "later" or "post 1.0" is worse.
 
-I was working through some examples and found some
-rather curious behavior.  I'm wondering if it is
-expected or not.  This isn't quite minimal, but
-it is still small and shows the weirdness:
+You are also going to break the porcelains (w/o manual user
+intervention), so I'm not happy about it but if you are doing it, do it
+now, please. :-)
 
-    git-init-db
-    echo "Stuff for file1" > file1
-    echo "Stuff for file2" > file2
+BTW, can I easily get the patch from the 'git' tool, so that I can
+extend $PATH appropriately during Cogito initialization?
 
-    git add file1 file2
-    git commit -m "Initial file1 and file2"
-
-    git checkout -b dev
-
-    echo "More for file1" >> file1
-    rm -f file2
-    echo "Another file!" > file3
-
-    git update-index file1
-    git update-index --force-remove file2
-    git add file3
-
-    git commit -m "Updated some stuff."
-
-    git checkout master
-    echo "Stuff for a conflict." >> file3
-    git add file3
-    git commit -m "Master update of file3"
-
-    git merge "Grab dev stuff" master dev
-
-Then, the part that I think is odd is demonstrated by "git status":
-
-    $ git status
-    #
-    # Updated but not checked in:
-    #   (will commit)
-    #
-    #       modified: file1
-    #       deleted:  file2
-    #       unmerged: file3
-    #
-    #
-    # Changed but not updated:
-    #   (use git-update-index to mark for commit)
-    #
-    #       unmerged: file3
-    #
-    #
-    # Untracked files:
-    #   (use "git add" to add to commit)
-    #
-    #       file3
-
-Why is file3 considered untracked and needing to be added?
-It was present in both "dev" and "master" branches before
-the merge.  It doesn't end up with "<<< one === other >>>"
-style diffs either.
-
-My guess is that the file is small, one line, in each branch.
-When the diff happens, it sees the file as empty in the other
-branch and considers that "new" directly, rather than asking
-the index if it knows about it to determine "newness" status.
-
-Or perhaps it is that the file  became new in each branch
-independently and never really had a true common ancestor.
-
-Thanks,
-jdl
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
