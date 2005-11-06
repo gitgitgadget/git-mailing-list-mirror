@@ -1,58 +1,62 @@
 From: Petr Baudis <pasky@suse.cz>
 Subject: Re: git binary directory?
-Date: Sun, 6 Nov 2005 09:23:38 +0100
-Message-ID: <20051106082338.GN1431@pasky.or.cz>
-References: <7voe4y5w3v.fsf@assigned-by-dhcp.cox.net> <200511060312.jA63CUcv010887@inti.inf.utfsm.cl> <20051106050049.GA5910@vrfy.org> <7v4q6q5ock.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 6 Nov 2005 09:28:30 +0100
+Message-ID: <20051106082830.GO1431@pasky.or.cz>
+References: <7voe4y5w3v.fsf@assigned-by-dhcp.cox.net> <200511060312.jA63CUcv010887@inti.inf.utfsm.cl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kay Sievers <kay.sievers@vrfy.org>,
-	Horst von Brand <vonbrand@inf.utfsm.cl>,
+Cc: Junio C Hamano <junkio@cox.net>,
 	Linus Torvalds <torvalds@osdl.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Nov 06 09:24:10 2005
+X-From: git-owner@vger.kernel.org Sun Nov 06 09:29:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYfor-00078u-IG
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 09:24:05 +0100
+	id 1EYftE-00089E-HY
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 09:28:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932325AbVKFIXm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 03:23:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932326AbVKFIXl
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 03:23:41 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:65186 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932324AbVKFIXk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 03:23:40 -0500
-Received: (qmail 26851 invoked by uid 2001); 6 Nov 2005 09:23:38 +0100
-To: Junio C Hamano <junkio@cox.net>
+	id S932330AbVKFI2d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 03:28:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932332AbVKFI2d
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 03:28:33 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:39371 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932330AbVKFI2c (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 03:28:32 -0500
+Received: (qmail 27349 invoked by uid 2001); 6 Nov 2005 09:28:30 +0100
+To: Horst von Brand <vonbrand@inf.utfsm.cl>
 Content-Disposition: inline
-In-Reply-To: <7v4q6q5ock.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <200511060312.jA63CUcv010887@inti.inf.utfsm.cl>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11196>
 
-Dear diary, on Sun, Nov 06, 2005 at 06:36:59AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Kay Sievers <kay.sievers@vrfy.org> writes:
+Dear diary, on Sun, Nov 06, 2005 at 04:12:30AM CET, I got a letter
+where Horst von Brand <vonbrand@inf.utfsm.cl> told me that...
+> Junio C Hamano <junkio@cox.net> wrote:
+> >                                                    we need to
+> > teach some of our commands that use other git commands to
+> > prepend /usr/lib/git/ (or /usr/libexec/git)
 > 
-> > Note that "libexec" is not LSB conform - whatever that means, but it
-> > should probably not be used for new projects. It states: "Applications
-> > may use a single subdirectory under /usr/lib."
-> 
-> I had an impression that there are still UNIXy systems that are
-> not even Linux; do they follow LSB and drop libexec?
+> AFAIU, /usr/libexec/git (or /usr/libexec/git-<version>) would be better.
+> Including the version would make it possible to have the last stable and a
+> development version coexisting, like gcc does with -V. Or its -B option,
+> which tells it where to find the executables that do the real work.
 
-At least BSDs still seem to have libexec, but they are just as likely to
-have lib, I would say, while on Linux it is going away (not that I would
-be excited about it). So we could either make this per-system, or
-default to something that is going to be present everywhere (lib),
-I think.
+In Cogito, when including the lib programs, I'm doing
+
+	. ${COGITO_LIB}cg-Xlib || exit 1
+
+and then during installation I do:
+
+	sed -e 's/\$${COGITO_LIB}/"\$${COGITO_LIB:-$(libdir)\/}"/g'
+
+Then I can override it during execution by exporting $COGITO_LIB.
 
 -- 
-			Petr "Pasky libdir=$(prefix)/lib/cogito" Baudis
+				Petr "Pasky" Baudis
 Stuff: http://pasky.or.cz/
 VI has two modes: the one in which it beeps and the one in which
 it doesn't.
