@@ -1,71 +1,178 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git tonight
-Date: Sun, 06 Nov 2005 02:00:28 -0800
-Message-ID: <7v3bmayu2r.fsf@assigned-by-dhcp.cox.net>
+From: Yaacov Akiba Slama <ya@slamail.org>
+Subject: [PATCH] Add git help command.
+Date: Sun, 6 Nov 2005 12:31:08 +0200
+Message-ID: <11312730681275-git-send-email-ya@slamail.org>
+References: <436D276F.7010302@slamail.org>
+Reply-To: Yaacov Akiba Slama <ya@slamail.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Nov 06 11:01:20 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Yaacov Akiba Slama <ya@slamail.org>
+X-From: git-owner@vger.kernel.org Sun Nov 06 11:32:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYhKM-00022a-Ng
-	for gcvg-git@gmane.org; Sun, 06 Nov 2005 11:00:43 +0100
+	id 1EYhoL-0007rL-5s
+	for gcvg-git@gmane.org; Sun, 06 Nov 2005 11:31:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751236AbVKFKAc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 05:00:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbVKFKAc
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 05:00:32 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:58094 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751236AbVKFKAb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Nov 2005 05:00:31 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051106095942.TEKD776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 6 Nov 2005 04:59:42 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932349AbVKFKbV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 05:31:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932351AbVKFKbV
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 05:31:21 -0500
+Received: from [195.140.142.33] ([195.140.142.33]:21123 "EHLO
+	c1-033.cyaris.net") by vger.kernel.org with ESMTP id S932349AbVKFKbV
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 05:31:21 -0500
+Received: from localhost ([127.0.33.1] helo=localhost.localdomain)
+	by c1-033.cyaris.net with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1EYhnq-0006Pe-6Q; Sun, 06 Nov 2005 11:31:14 +0100
+Received: from [127.0.0.1] (helo=laptop2)
+	by localhost.localdomain with smtp (Exim 4.54)
+	id 1EYhno-0004AF-To; Sun, 06 Nov 2005 12:31:08 +0200
+In-Reply-To: <436D276F.7010302@slamail.org>
+X-Mailer: git-send-email
+To: Yaacov Akiba Slama <ya@slamail.org>
+X-Spam-Score: -2.8 (--)
+X-Spam-Report: Spam detection software, running on the system "c1-033.cyaris.net", has
+	identified this incoming email as possible spam.  The original message
+	has been attached to this so you can view it (if it isn't spam) or label
+	similar future email.  If you have any questions, see
+	the administrator of that system for details.
+	Content preview:  git help COMMAND will call "man COMMAND" if there is a
+	manpage. If there is no manpage for the command, a simple help will be
+	shown. Signed-off-by: Yaacov Akiba Slama <ya@slamail.org> --- [...] 
+	Content analysis details:   (-2.8 points, 5.0 required)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	-2.8 ALL_TRUSTED            Did not pass through any untrusted hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11203>
 
-Here are the things merged to "master" so far:
+git help COMMAND will call "man COMMAND" if there is a manpage.
+If there is no manpage for the command, a simple help will be shown.
 
- - The first part of the http-push over DAV; git-push frontend
-   is not aware of it yet; interested people please try it out
-   with git-http-push and send thanks-it-works messages to Nick.
+Signed-off-by: Yaacov Akiba Slama <ya@slamail.org>
 
- - Overriding CFLAGS from make command line did not quite work
-   if you were on a platform that needed to acquire platform
-   specific defines from the Makefile.  Hopefully this has been
-   fixed.
+---
 
- - My attempt to split the Debian binary package into multiple
-   ones.
+ .gitignore  |    1 +
+ Makefile    |    2 +-
+ git-help.sh |   13 +++++++++++++
+ git.sh      |   49 +------------------------------------------------
+ 4 files changed, 16 insertions(+), 49 deletions(-)
 
- - Some documentation fixes.
-
- - A fix to format-patch.
-
-In the proposed updates branch:
-
- - svnimport fixes from Yaacov; svnimport users please either
-   Ack or report regression.
-
- - 'git binary directory' changes, started by Linus.  I am
-   running with gitdir != bindir configuration on my machine and
-   it seems to work, but I'd want wider audience to test this.
-   Note that the Debian binary packages have not been adjusted
-   for this change yet.
-
- - A 'git clone' change to fully populate remotes/origin; this
-   is more or less an RFC item; likes?  dislikes?
-
- - A change to git-push to allow push-over-http-DAV.  I'd like
-   to push this part out after I hear success stories from
-   people on the first half.
-
-I plan to do a 0.99.9e Sunday night with the tip of "master"
-(wherever it will be by that time).
+applies-to: e11efdf766d582060e02722699736aa948f0b6b3
+76858f6ef294a11bc617b1944d425fe86f0878d3
+diff --git a/.gitignore b/.gitignore
+index 3edf6b4..a412a09 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -34,6 +34,7 @@ git-format-patch
+ git-fsck-objects
+ git-get-tar-commit-id
+ git-grep
++git-help
+ git-hash-object
+ git-http-fetch
+ git-index-pack
+diff --git a/Makefile b/Makefile
+index 6c01dc2..fc42049 100644
+--- a/Makefile
++++ b/Makefile
+@@ -81,7 +81,7 @@ SCRIPT_SH = \
+ 	git-add.sh git-bisect.sh git-branch.sh git-checkout.sh \
+ 	git-cherry.sh git-clone.sh git-commit.sh \
+ 	git-count-objects.sh git-diff.sh git-fetch.sh \
+-	git-format-patch.sh git-log.sh git-ls-remote.sh \
++	git-format-patch.sh git-help.sh git-log.sh git-ls-remote.sh \
+ 	git-merge-one-file.sh git-octopus.sh git-parse-remote.sh \
+ 	git-prune.sh git-pull.sh git-push.sh git-rebase.sh \
+ 	git-repack.sh git-request-pull.sh git-reset.sh \
+diff --git a/git-help.sh b/git-help.sh
+index a7ea23e..a415f0c 100755
+--- a/git-help.sh
++++ b/git-help.sh
+@@ -10,7 +10,20 @@ case "$#" in
+         man -w -W git-$cmd &> /dev/null && man git-$cmd && exit 0
+ esac
+ 
++case "$cmd" in
++	help)
++	cmd=""
++	;;
++esac
++
++if [ -n "$cmd" ]; then
++    echo "git command '$cmd' not found."
++    echo
++fi
++
+ echo "Usage: git COMMAND [OPTIONS] [TARGET]"
++echo "Type 'git help COMMAND' for help on a specific command."
++echo
+ 
+ echo "git commands are:"
+ 
+diff --git a/git.sh b/git.sh
+index 94940ae..995df00 100755
+--- a/git.sh
++++ b/git.sh
+@@ -25,52 +25,5 @@ case "$#" in
+ 	;;
+ esac
+ 
+-echo "Usage: git COMMAND [OPTIONS] [TARGET]"
+-if [ -n "$cmd" ]; then
+-    echo "git command '$cmd' not found."
+-fi
+-echo "git commands are:"
++exec "$path/git-help" "$cmd"
+ 
+-fmt <<\EOF | sed -e 's/^/    /'
+-add
+-apply
+-archimport
+-bisect
+-branch
+-checkout
+-cherry
+-clone
+-commit
+-count-objects
+-cvsimport
+-diff
+-fetch
+-format-patch
+-fsck-objects
+-get-tar-commit-id
+-init-db
+-log
+-ls-remote
+-octopus
+-pack-objects
+-parse-remote
+-patch-id
+-prune
+-pull
+-push
+-rebase
+-relink
+-rename
+-repack
+-request-pull
+-reset
+-resolve
+-revert
+-send-email
+-shortlog
+-show-branch
+-status
+-tag
+-verify-tag
+-whatchanged
+-EOF
+---
+0.99.9.GIT
