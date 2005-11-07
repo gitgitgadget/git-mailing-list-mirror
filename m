@@ -1,66 +1,82 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Errors cloning over http -- git-clone and cg-clone fail to fetch a reachable object...
-Date: Mon, 7 Nov 2005 15:52:41 +1300
-Message-ID: <46a038f90511061852h5cdf9539o34f69b4deb9f041a@mail.gmail.com>
-References: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fix empty line processing in git-shortlog.perl
+Date: Sun, 06 Nov 2005 18:56:07 -0800
+Message-ID: <7v3bm9upx4.fsf@assigned-by-dhcp.cox.net>
+References: <20051106224218.22797.97260.stgit@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Nov 07 03:54:38 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 07 03:58:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYx7z-0000OL-UB
-	for gcvg-git@gmane.org; Mon, 07 Nov 2005 03:53:01 +0100
+	id 1EYxBD-0001xE-On
+	for gcvg-git@gmane.org; Mon, 07 Nov 2005 03:56:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932360AbVKGCwm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 21:52:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932409AbVKGCwm
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 21:52:42 -0500
-Received: from xproxy.gmail.com ([66.249.82.202]:34338 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932360AbVKGCwl convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 21:52:41 -0500
-Received: by xproxy.gmail.com with SMTP id s15so287825wxc
-        for <git@vger.kernel.org>; Sun, 06 Nov 2005 18:52:41 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OchRPJVYDEKWmplrRFVu6f7F/ZgEIPTfnEueKgkcjGFLwm2TRQbYt6rNLZp/nKHMGeZwLPq/w2Yr1vyOcNAg2okZg3ttygOOnmC6u8DH8f0hHZhFasR6LEUGPSO7Jh8/ZYlMT3WmVpMCo89rr/z8ygXL1MJ6hLoFB5RNiPbgl3A=
-Received: by 10.64.201.14 with SMTP id y14mr4857237qbf;
-        Sun, 06 Nov 2005 18:52:41 -0800 (PST)
-Received: by 10.64.232.18 with HTTP; Sun, 6 Nov 2005 18:52:41 -0800 (PST)
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com>
-Content-Disposition: inline
+	id S932412AbVKGC4K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 21:56:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932413AbVKGC4K
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 21:56:10 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:7911 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932412AbVKGC4J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2005 21:56:09 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051107025543.RNKL4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 6 Nov 2005 21:55:43 -0500
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051106224218.22797.97260.stgit@machine.or.cz> (Petr Baudis's
+	message of "Sun, 06 Nov 2005 23:42:18 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11251>
 
-On 11/7/05, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> Strange!
+Petr Baudis <pasky@suse.cz> writes:
+
+> Faced with a commit such as
 >
-> I'm getting errors when cloning over http
+> 	commit f1b2646c7f2713c3ea4bce120e1d0d8091808be4
+> 	Author: Adrian Bunk <bunk@r063144.stusta.swh.mhn.de>
+> 	Date:   Sun Nov 6 20:30:38 2005 +0100
+>
+> 	    From: Michal Wronski <wrona@mat.uni.torun.pl>
+>
+> 	    I've jchanged my email. Please apply this patch so as to everybody
+> 	    could send me a remarks about mqueuefs.
+>
+> 	    Signed-off-by: Michal Wronski <Michal.Wronski@motorola.com>
+> 	    Signed-off-by: Adrian Bunk <bunk@stusta.de>
+>
+> git-shortlog.perl would produce a line with an empty commit title.
 
-More info on this.
+> This patch fixes that...
 
-git-fetch-pack (invoked by cg-fetch) bails out because it thinks it
-got a 404 fetching one of the packs:
+> -			next unless /^\s*?(.*)/;
+> +			next unless /^\s*?(\S.*)$/;
 
-Getting pack 9cbe4a5eb777d4ee535f08feb471e812208ed3a5
- which contains 7004cdf821ab5ddcded7819dea34015b0e84cd9a
-error: Unable to get pack file
-http://locke.catalyst.net.nz/git/moodle.git//objects/pack/pack-9cbe4a5eb777d4ee535f08feb471e812208ed3a5.pack
-The requested URL returned error: 404
+I suspect /(\S.*)$/ would do the same thing, but in any case
+I do not think it is the right fix.
 
-However, the url is reachable via http (tested with curl and wget) and
-Apache records the transaction as a 200 OK -- there's no 404 there!
-(There are 404s, of course, for objects that are in the pack but not
-for any pack). Trying to read http-fetch.c and http-pull.c to figure
-out where we could get the return status wrong, but my C is just
-nonexistant. Hints appreciated.
+I think the problem is deeper than that.  Shortlog summarizes to
+only one line per commit, so I suspect what you would be feeding
+it would say something like this for the above example:
 
-cheers,
+        commit f1b2646c7f2713c3ea4bce120e1d0d8091808be4
+        Author: Adrian Bunk <bunk@r063144.stusta.swh.mhn.de>
 
+            From: Michal Wronski <wrona@mat.uni.torun.pl>
 
-martin
+That is, the commit you quoted is done by 'git log --pretty',
+but a typical shortlog invocation would be:
+
+	git log --pretty=short rev1..rev2 | git shortlog
+
+With or without your fix, the command barfs.
+
+Of course, that "From: " line should have been used as the
+commit author by the tool that created the commit out of e-mail
+Adrian received, but that is a separate issue.
