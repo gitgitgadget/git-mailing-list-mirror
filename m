@@ -1,61 +1,64 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: GIT 0.99.9e
-Date: Mon, 07 Nov 2005 09:08:36 -0800
-Message-ID: <436F8A14.9070306@zytor.com>
-References: <7v64r5t3m0.fsf@assigned-by-dhcp.cox.net> <20051107154718.GJ3001@reactrix.com>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: Errors cloning over http -- git-clone and cg-clone fail to fetch a reachable object...
+Date: Mon, 7 Nov 2005 09:14:47 -0800
+Message-ID: <20051107171446.GA4070@reactrix.com>
+References: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com> <46a038f90511061852h5cdf9539o34f69b4deb9f041a@mail.gmail.com> <20051107043737.GI3001@reactrix.com> <46a038f90511062050geee7e73qddcd52e3a2ec86df@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 18:10:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 07 18:17:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZAUY-0003Oc-EU
-	for gcvg-git@gmane.org; Mon, 07 Nov 2005 18:09:10 +0100
+	id 1EZAaC-0005P7-P5
+	for gcvg-git@gmane.org; Mon, 07 Nov 2005 18:15:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932313AbVKGRIy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Nov 2005 12:08:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932308AbVKGRIy
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 12:08:54 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:45292 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932300AbVKGRIx
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 12:08:53 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jA7H8gHd021010
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 7 Nov 2005 09:08:42 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20051107154718.GJ3001@reactrix.com>
-X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S964876AbVKGRO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 12:14:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964878AbVKGRO4
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 12:14:56 -0500
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:3983 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S964876AbVKGROz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2005 12:14:55 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jA7HEmb8005285;
+	Mon, 7 Nov 2005 09:14:48 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jA7HElhJ005282;
+	Mon, 7 Nov 2005 09:14:47 -0800
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f90511062050geee7e73qddcd52e3a2ec86df@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11272>
 
-Nick Hengeveld wrote:
-> On Sun, Nov 06, 2005 at 09:43:19PM -0800, Junio C Hamano wrote:
-> 
-> 
->> - http-push seems to still have a bug or two but that is to be
->>   expected for any new code, and I am reasonably sure it can be
->>   ironed out; preferably before 1.0 but it is not a
->>   showstopper.
-> 
-> It seems like a minor point, but is this the appropriate name or should
-> it be dav-push?  Not that there's anything else in the works AFAIK but
-> it's certainly possible that something else could run over HTTP later
-> on.
-> 
+On Mon, Nov 07, 2005 at 05:50:02PM +1300, Martin Langhoff wrote:
 
-Push over HTTP POST would at least be theoretically possible.
+> > Does it always error out on the same pack file?
+> 
+> Yes.
 
-	-hpa
+You might try this to see exactly what request/response headers
+curl thinks are passing back and forth.
+
+
+diff --git a/http-fetch.c b/http-fetch.c
+index ea8af1b..11d4dca 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -325,6 +325,7 @@ static struct active_request_slot *get_a
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, pragma_header);
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_range_header);
+ 	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, curl_errorstr);
++	curl_easy_setopt(slot->curl, CURLOPT_VERBOSE, 1);
+ 
+ 	return slot;
+ }
+
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
