@@ -1,69 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git binary directory?
-Date: Mon, 7 Nov 2005 01:43:46 +0100
-Message-ID: <20051107004346.GR1431@pasky.or.cz>
-References: <Pine.LNX.4.64.0511051247330.3316@g5.osdl.org> <7voe4y5w3v.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511052013550.3316@g5.osdl.org> <7vy84249re.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511060816390.3316@g5.osdl.org> <7v7jbly1lh.fsf@assigned-by-dhcp.cox.net> <20051106221952.GP1431@pasky.or.cz> <7virv5wc86.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 6 Nov 2005 16:54:55 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511061653380.3316@g5.osdl.org>
+References: <Pine.LNX.4.64.0511051247330.3316@g5.osdl.org>
+ <7voe4y5w3v.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511052013550.3316@g5.osdl.org>
+ <7vy84249re.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511060816390.3316@g5.osdl.org>
+ <7v7jbly1lh.fsf@assigned-by-dhcp.cox.net> <20051106221952.GP1431@pasky.or.cz>
+ <7virv5wc86.fsf@assigned-by-dhcp.cox.net> <20051107004346.GR1431@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 01:44:23 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 07 01:56:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYv75-0002Uy-Hw
-	for gcvg-git@gmane.org; Mon, 07 Nov 2005 01:43:55 +0100
+	id 1EYvI3-0004zl-2Y
+	for gcvg-git@gmane.org; Mon, 07 Nov 2005 01:55:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932288AbVKGAnt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 19:43:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932376AbVKGAns
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 19:43:48 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:51404 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932288AbVKGAns (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 19:43:48 -0500
-Received: (qmail 18845 invoked by uid 2001); 7 Nov 2005 01:43:46 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7virv5wc86.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932384AbVKGAzJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 19:55:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932387AbVKGAzJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 19:55:09 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:52410 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932384AbVKGAzI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 19:55:08 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA70svnO028063
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 6 Nov 2005 16:54:57 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA70stea011109;
+	Sun, 6 Nov 2005 16:54:56 -0800
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051107004346.GR1431@pasky.or.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11243>
 
-Dear diary, on Mon, Nov 07, 2005 at 01:08:57AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Petr Baudis <pasky@suse.cz> writes:
+
+
+On Mon, 7 Nov 2005, Petr Baudis wrote:
 > 
-> > You are also going to break the porcelains (w/o manual user
-> > intervention), so I'm not happy about it but if you are doing it, do it
-> > now, please. :-)
-> 
-> I thought Porcelains and people's script can just say 'git foo'
-> everywhere where it currently says 'git-foo', and it should work
-> before and after the change, and that is what I did to my
-> private scripts.  But you are right, it is nicer if 'git-foo'
-> continued to work with a single patch to cg-Xlib or somewhere
-> central like that.
+> I want to avoid extra fork()s and exec()s. They seem to routinely matter
+> in orders of magnitude of speed in tight loops.
 
-I want to avoid extra fork()s and exec()s. They seem to routinely matter
-in orders of magnitude of speed in tight loops.
+Yes. The more I think about it, the less I like the separate binary 
+directory after all. The "git cmd" format is great for high-level 
+commands, but we've always done "git-diff-tree" and "git-rev-list" etc 
+without the "git cmd" indirection.
 
-Besides, I'm more used to the dash form. ;-)
+The downsides of a separate binary directory appear to be bigger than the 
+upside..
 
-> > BTW, can I easily get the patch from the 'git' tool, so that I can
-> > extend $PATH appropriately during Cogito initialization?
-> 
-> Do you mean 'git --show-git-libdir' or something like that?
-
-Yes. Well... you said you have the gitdir changes in your 'pu' branch,
-but http://www.kernel.org/git/?p=git/git.git;a=tree;h=pu;hb=pu doesn't
-appear to have the changes...?
-
-Is --show-git-libdir already implemented?
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+		Linus
