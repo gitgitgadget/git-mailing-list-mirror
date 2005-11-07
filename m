@@ -1,51 +1,70 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git versus CVS (versus bk)
-Date: Mon, 7 Nov 2005 23:56:52 +0100
-Message-ID: <20051107225652.GW1431@pasky.or.cz>
-References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg> <Pine.LNX.4.64.0510301811390.27915@g5.osdl.org> <Pine.LNX.4.63.0510311111340.2916@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0510310804400.27915@g5.osdl.org> <20051031195010.GM11488@ca-server1.us.oracle.com> <46a038f90510311228v50743158q80d79e963bd503ce@mail.gmail.com> <20051031213003.GN11488@ca-server1.us.oracle.com> <20051101091533.GB11618@pasky.or.cz>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: Comments on recursive merge..
+Date: Mon, 7 Nov 2005 23:58:07 +0100
+Message-ID: <20051107225807.GA10937@c165.ib.student.liu.se>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	walt <wa1ter@myrealbox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 23:58:19 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Fredrik Kuivinen <freku045@student.liu.se>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 08 00:00:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZFwI-0000nG-Tr
-	for gcvg-git@gmane.org; Mon, 07 Nov 2005 23:58:11 +0100
+	id 1EZFxC-00018s-57
+	for gcvg-git@gmane.org; Mon, 07 Nov 2005 23:59:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965345AbVKGW5V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Nov 2005 17:57:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965590AbVKGW5T
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 17:57:19 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:36738 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S965589AbVKGW44 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 17:56:56 -0500
-Received: (qmail 3842 invoked by uid 2001); 7 Nov 2005 23:56:52 +0100
-To: Joel Becker <Joel.Becker@oracle.com>
+	id S965009AbVKGW6S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 17:58:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965594AbVKGW6R
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 17:58:17 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:47501 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S965009AbVKGW6P (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 17:58:15 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id AC69140FD; Tue,  8 Nov 2005 00:06:27 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EZFwF-0002rA-00; Mon, 07 Nov 2005 23:58:07 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <20051101091533.GB11618@pasky.or.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+In-Reply-To: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11288>
 
-Dear diary, on Tue, Nov 01, 2005 at 10:15:33AM CET, I got a letter
-where Petr Baudis <pasky@suse.cz> told me that...
-> That said, with a big warning, I would be willing to do something like
-> cg-merge -s and cg-update -s (s as squash), with a big warning that this
-> is suitable only for topical branches. And I think it'd be still much
-> better to spend the work making StGIT able to track history of changes
-> to a particular patch.
+On Mon, Nov 07, 2005 at 08:48:06AM -0800, Linus Torvalds wrote:
+> 
+> Guys,
+> 
+>   I just hit my first real rename conflict, and very timidly tried the 
+> "recursive" strategy in the hopes that I wouldn't need to do things by 
+> hand.
+> 
+> It resolved things beautifully. Good job. 
 
-FWIW, cg-merge -s and cg-update -s is supported now.
+I'm glad that it worked.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+> My only worry is that I don't read python, so I don't really know how it 
+> does what it does, which makes me nervous. Can somebody (Fredrik?) add 
+> some documentation about the merge strategy and how it works.
+
+I will write something up.
+
+> Considering that the stupid resolve strategy really requires you to know 
+> how git works when rename conflicts happen (things left in unmerged state 
+> are really quite hard to handle by hand unless you know exactly what 
+> you're doing), I'd almost suggest making "recursive" the default. I'm a 
+> bit nervous about it, but knowing how it works would probably put most of 
+> that to rest.
+
+It would be great if the recursive strategy could get some more
+testing. I have tested it on a thousand commits or so in a few kernel
+repositories and haven't found any bugs, but it could be due to errors
+in the test setup, testing the wrong repositories or just being lucky. Some
+real-world testing would be great.
+
+- Fredrik
