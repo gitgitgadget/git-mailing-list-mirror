@@ -1,60 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GIT 0.99.9e
-Date: Mon, 7 Nov 2005 12:43:44 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511071242130.27907@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v64r5t3m0.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751341AbVKGLnr@vger.kernel.org Mon Nov 07 12:45:22 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751341AbVKGLnr@vger.kernel.org>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: [PATCH] Add --tags documentation, scraped from JC mail.
+Date: Mon, 07 Nov 2005 08:03:30 -0600
+Message-ID: <E1EZ7as-00063X-K8@jdl.com>
+X-From: git-owner@vger.kernel.org Mon Nov 07 15:05:19 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZ5Q7-0005Bd-LJ
-	for glk-linux-kernel-3@gmane.org; Mon, 07 Nov 2005 12:44:16 +0100
+	id 1EZ7b3-00069q-CC
+	for gcvg-git@gmane.org; Mon, 07 Nov 2005 15:03:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751341AbVKGLnr (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 7 Nov 2005 06:43:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751342AbVKGLnq
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Mon, 7 Nov 2005 06:43:46 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:47338 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751341AbVKGLnp (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 7 Nov 2005 06:43:45 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 808D513F3AD; Mon,  7 Nov 2005 12:43:44 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 609A0B50C3; Mon,  7 Nov 2005 12:43:44 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 36C8FB50C6; Mon,  7 Nov 2005 12:43:44 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 03EC513F348; Mon,  7 Nov 2005 12:43:44 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64r5t3m0.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S964821AbVKGODi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 09:03:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964823AbVKGODi
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 09:03:38 -0500
+Received: from colo.jdl.com ([66.118.10.122]:50882 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S964822AbVKGODi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 09:03:38 -0500
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1EZ7as-00063X-K8
+	for git@vger.kernel.org; Mon, 07 Nov 2005 08:03:31 -0600
+To: git@vger.kernel.org
+X-Spam-Score: -105.9 (---------------------------------------------------)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11261>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11262>
 
-Hi,
 
-On Sun, 6 Nov 2005, Junio C Hamano wrote:
+Signed-off-by: Jon Loeliger <jdl@freescale.com>
 
->  - http-push seems to still have a bug or two but that is to be
->    expected for any new code, and I am reasonably sure it can be
->    ironed out; preferably before 1.0 but it is not a
->    showstopper.
+---
 
-I am reasonably sure that a run with valgrind will show the way to a 
-stable http-push. It is just a little memory corruption: the rest works 
-wonderfully.
+Thin territory here for me.  Feel free to alter if not right! :-)
+Also notice the lonely --force option still...
 
-Ciao,
-Dscho
+
+ Documentation/fetch-options.txt |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+applies-to: e7ff595f1fb6068b11a3a2c7eb71110faea998b8
+839bbee0c81567d3f951b0cff3b2b855af6e1a99
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 12d12b2..0e502ae 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -6,6 +6,9 @@
+ -f, \--force::
+ 
+ -t, \--tags::
++	By default, the git core utilities will not fetch and store
++	tags under the same name as the remote repository;  ask it
++	to do so using `--tags`.
+ 
+ -u, \--update-head-ok::
+ 	By default `git-fetch` refuses to update the head which
+---
+0.99.9.GIT
