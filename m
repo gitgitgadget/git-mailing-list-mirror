@@ -1,61 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: HTTP push
-Date: Mon, 7 Nov 2005 03:35:33 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511070328230.25684@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Errors cloning over http -- git-clone and cg-clone fail to fetch a reachable object...
+Date: Mon, 7 Nov 2005 15:52:41 +1300
+Message-ID: <46a038f90511061852h5cdf9539o34f69b4deb9f041a@mail.gmail.com>
+References: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Nov 07 03:36:33 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Nov 07 03:54:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYwrB-0005Ea-RR
-	for gcvg-git@gmane.org; Mon, 07 Nov 2005 03:35:38 +0100
+	id 1EYx7z-0000OL-UB
+	for gcvg-git@gmane.org; Mon, 07 Nov 2005 03:53:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932373AbVKGCff (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 21:35:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932363AbVKGCff
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 21:35:35 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:11227 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932291AbVKGCfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Nov 2005 21:35:34 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id B465D13EE45
-	for <git@vger.kernel.org>; Mon,  7 Nov 2005 03:35:33 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 9BB059F1B7
-	for <git@vger.kernel.org>; Mon,  7 Nov 2005 03:35:33 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 8886492461
-	for <git@vger.kernel.org>; Mon,  7 Nov 2005 03:35:33 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 6C15B13EE45
-	for <git@vger.kernel.org>; Mon,  7 Nov 2005 03:35:33 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932360AbVKGCwm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 21:52:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932409AbVKGCwm
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 21:52:42 -0500
+Received: from xproxy.gmail.com ([66.249.82.202]:34338 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932360AbVKGCwl convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 21:52:41 -0500
+Received: by xproxy.gmail.com with SMTP id s15so287825wxc
+        for <git@vger.kernel.org>; Sun, 06 Nov 2005 18:52:41 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OchRPJVYDEKWmplrRFVu6f7F/ZgEIPTfnEueKgkcjGFLwm2TRQbYt6rNLZp/nKHMGeZwLPq/w2Yr1vyOcNAg2okZg3ttygOOnmC6u8DH8f0hHZhFasR6LEUGPSO7Jh8/ZYlMT3WmVpMCo89rr/z8ygXL1MJ6hLoFB5RNiPbgl3A=
+Received: by 10.64.201.14 with SMTP id y14mr4857237qbf;
+        Sun, 06 Nov 2005 18:52:41 -0800 (PST)
+Received: by 10.64.232.18 with HTTP; Sun, 6 Nov 2005 18:52:41 -0800 (PST)
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11250>
 
-Hi,
+On 11/7/05, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> Strange!
+>
+> I'm getting errors when cloning over http
 
-I played a little with git-http-push. There are some strange things going 
-on: whenever I commented out the calls to curl_multi_remove_handle() and 
-curl_multi_cleanup(), all was well. Whenever I did not, there was either a 
-segfault, or an endless loop.
+More info on this.
 
-Also, I had to update my curl, because http-push *absolutely* needs 
-CURLOPT_HTTPGET. I tried to fake it with any combination of 
-CURLOPT_{NOBODY,POST,PUT,UPLOAD}, but failed. (Yes, that means that you 
-won't have to deal any longer with my patches to support older curl 
-versions...)
+git-fetch-pack (invoked by cg-fetch) bails out because it thinks it
+got a 404 fetching one of the packs:
 
-Note: all my tests are from an iBook (client) to an Intel Linux (server).
+Getting pack 9cbe4a5eb777d4ee535f08feb471e812208ed3a5
+ which contains 7004cdf821ab5ddcded7819dea34015b0e84cd9a
+error: Unable to get pack file
+http://locke.catalyst.net.nz/git/moodle.git//objects/pack/pack-9cbe4a5eb777d4ee535f08feb471e812208ed3a5.pack
+The requested URL returned error: 404
 
-I will run some tests on another client with valgrind (that will wait 
-until tomorrow; it's 3.30am local time, so I head to bed).
+However, the url is reachable via http (tested with curl and wget) and
+Apache records the transaction as a 200 OK -- there's no 404 there!
+(There are 404s, of course, for objects that are in the pack but not
+for any pack). Trying to read http-fetch.c and http-pull.c to figure
+out where we could get the return status wrong, but my C is just
+nonexistant. Hints appreciated.
 
-Ciao,
-Dscho
+cheers,
+
+
+martin
