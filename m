@@ -1,57 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Support for passing path to custom map in git-shortlog.perl
-Date: Mon, 7 Nov 2005 22:54:12 +0100
-Message-ID: <20051107215412.GU1431@pasky.or.cz>
-References: <20051106230757.24941.19267.stgit@machine.or.cz> <7vek5twc3u.fsf@assigned-by-dhcp.cox.net>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: Re: Problem in update from the linux-2.6 repository
+Date: Mon, 07 Nov 2005 23:18:51 +0100
+Message-ID: <1131401931.5824.149.camel@blade>
+References: <1131380293.5824.139.camel@blade>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 22:58:40 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Nov 07 23:21:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZEwZ-0006mL-MK
-	for gcvg-git@gmane.org; Mon, 07 Nov 2005 22:54:26 +0100
+	id 1EZFKY-0006PU-Nv
+	for gcvg-git@gmane.org; Mon, 07 Nov 2005 23:19:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965036AbVKGVyV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Nov 2005 16:54:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965170AbVKGVyV
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 16:54:21 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:40429 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S965036AbVKGVyU (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 16:54:20 -0500
-Received: (qmail 23872 invoked by uid 2001); 7 Nov 2005 22:54:12 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vek5twc3u.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S965479AbVKGWSs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 17:18:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965484AbVKGWSs
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 17:18:48 -0500
+Received: from coyote.holtmann.net ([217.160.111.169]:54418 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S965482AbVKGWSr
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 17:18:47 -0500
+Received: from blade (p5487DB86.dip.t-dialin.net [84.135.219.134])
+	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id jA7MIuGB024792
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO)
+	for <git@vger.kernel.org>; Mon, 7 Nov 2005 23:18:57 +0100
+To: git@vger.kernel.org
+In-Reply-To: <1131380293.5824.139.camel@blade>
+X-Mailer: Evolution 2.5.1 
+X-Virus-Scanned: ClamAV 0.85.1/1165/Sun Nov  6 06:12:58 2005 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11282>
 
-Dear diary, on Mon, Nov 07, 2005 at 01:11:33AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Petr Baudis <pasky@suse.cz> writes:
+Hi,
+
+> I run into a weird problem when trying to update my clone of the
+> linux-2.6 repository from Linus:
 > 
-> > Aside of looking into .mailmap, add support for -m MAPFILE.
+> ---
+> # cg-update -f
+> 17:09:00 URL:http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/HEAD [41/41] -> "refs/heads/.origin-fetching" [1]
+> Getting alternates list
+> Getting pack list
+> error: Unable to find 2ed5e6d09e266bd2288d49aaaf240ed8c468c13c under http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
 > 
-> I thought about this when I did .mailmap because I felt 
-> the more flexibility the better, but wouldn't maintaining the
-> project-wide .mailmap as part of the project easier to manage?
+> Cannot obtain needed object 2ed5e6d09e266bd2288d49aaaf240ed8c468c13c
+> while processing commit 0000000000000000000000000000000000000000.
+> cg-fetch: objects fetch failed
+> ---
 
-Ok, I'm not a die-hard proponent of this change (the genesis is that it
-comes from the ages before .mailmap was supported and was originally
-coupled with -n which disabled the internal mappings - but then .mailmap
-got supported, I deemed -n useless but this still seemed worth something
-so I passed it along), but I think it can be useful - either when you
-want to work on readonly tree, or when you want to support custom
-mailmap in addition to the default project's one without interference...
-*shrug*
+forget about this thing. The reason for this problem was the kernel.org
+mirroring and the repository wasn't in a sane state. However it would be
+great if we can detect this somehow.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Regards
+
+Marcel
