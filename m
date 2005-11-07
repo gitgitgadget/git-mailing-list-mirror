@@ -1,70 +1,49 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: Comments on recursive merge..
-Date: Mon, 7 Nov 2005 23:58:07 +0100
-Message-ID: <20051107225807.GA10937@c165.ib.student.liu.se>
-References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git-daemon enabled on kernel.org
+Date: Tue, 8 Nov 2005 00:11:57 +0100
+Message-ID: <20051107231157.GX1431@pasky.or.cz>
+References: <43554D4F.7040403@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Fredrik Kuivinen <freku045@student.liu.se>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 08 00:00:55 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 08 00:12:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZFxC-00018s-57
-	for gcvg-git@gmane.org; Mon, 07 Nov 2005 23:59:06 +0100
+	id 1EZG9k-0004bJ-Kg
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 00:12:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965009AbVKGW6S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Nov 2005 17:58:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965594AbVKGW6R
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 17:58:17 -0500
-Received: from [85.8.31.11] ([85.8.31.11]:47501 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S965009AbVKGW6P (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 17:58:15 -0500
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id AC69140FD; Tue,  8 Nov 2005 00:06:27 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EZFwF-0002rA-00; Mon, 07 Nov 2005 23:58:07 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+	id S965283AbVKGXMA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 18:12:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964923AbVKGXMA
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 18:12:00 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:16291 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S965283AbVKGXL7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 18:11:59 -0500
+Received: (qmail 5347 invoked by uid 2001); 8 Nov 2005 00:11:57 +0100
+To: "H. Peter Anvin" <hpa@zytor.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <43554D4F.7040403@zytor.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11289>
 
-On Mon, Nov 07, 2005 at 08:48:06AM -0800, Linus Torvalds wrote:
-> 
-> Guys,
-> 
->   I just hit my first real rename conflict, and very timidly tried the 
-> "recursive" strategy in the hopes that I wouldn't need to do things by 
-> hand.
-> 
-> It resolved things beautifully. Good job. 
+Dear diary, on Tue, Oct 18, 2005 at 09:30:23PM CEST, I got a letter
+where "H. Peter Anvin" <hpa@zytor.com> told me that...
+> I consider this experimental so far, and if it imposes an unacceptable 
+> load I'll have to disable it.  It currently runs with an inetd-imposed 
+> limits of 10 instances per server.
 
-I'm glad that it worked.
+I'm curious - how well does it do wrt. the load so far? Do you have any
+statistics about the number of users and how CPU-intensive is it?
 
-> My only worry is that I don't read python, so I don't really know how it 
-> does what it does, which makes me nervous. Can somebody (Fredrik?) add 
-> some documentation about the merge strategy and how it works.
+Thanks,
 
-I will write something up.
-
-> Considering that the stupid resolve strategy really requires you to know 
-> how git works when rename conflicts happen (things left in unmerged state 
-> are really quite hard to handle by hand unless you know exactly what 
-> you're doing), I'd almost suggest making "recursive" the default. I'm a 
-> bit nervous about it, but knowing how it works would probably put most of 
-> that to rest.
-
-It would be great if the recursive strategy could get some more
-testing. I have tested it on a thousand commits or so in a few kernel
-repositories and haven't found any bugs, but it could be due to errors
-in the test setup, testing the wrong repositories or just being lucky. Some
-real-world testing would be great.
-
-- Fredrik
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
