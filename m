@@ -1,71 +1,61 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Comments on recursive merge..
-Date: Mon, 7 Nov 2005 08:56:07 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511070848440.3193@g5.osdl.org>
-References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: GIT 0.99.9e
+Date: Mon, 07 Nov 2005 09:08:36 -0800
+Message-ID: <436F8A14.9070306@zytor.com>
+References: <7v64r5t3m0.fsf@assigned-by-dhcp.cox.net> <20051107154718.GJ3001@reactrix.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 07 17:58:56 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 07 18:10:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZAIA-00076I-Jt
-	for gcvg-git@gmane.org; Mon, 07 Nov 2005 17:56:22 +0100
+	id 1EZAUY-0003Oc-EU
+	for gcvg-git@gmane.org; Mon, 07 Nov 2005 18:09:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932246AbVKGQ4U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Nov 2005 11:56:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932277AbVKGQ4U
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 11:56:20 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:64167 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932246AbVKGQ4T (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 11:56:19 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA7Gu9nO003076
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 7 Nov 2005 08:56:10 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA7Gu7Br009394;
-	Mon, 7 Nov 2005 08:56:08 -0800
-To: Junio C Hamano <junkio@cox.net>,
-	Fredrik Kuivinen <freku045@student.liu.se>
-In-Reply-To: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932313AbVKGRIy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 12:08:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932308AbVKGRIy
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 12:08:54 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:45292 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932300AbVKGRIx
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 12:08:53 -0500
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jA7H8gHd021010
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 7 Nov 2005 09:08:42 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Nick Hengeveld <nickh@reactrix.com>
+In-Reply-To: <20051107154718.GJ3001@reactrix.com>
+X-Virus-Scanned: ClamAV version 0.87, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11271>
 
-
-
-On Mon, 7 Nov 2005, Linus Torvalds wrote:
+Nick Hengeveld wrote:
+> On Sun, Nov 06, 2005 at 09:43:19PM -0800, Junio C Hamano wrote:
 > 
->   I just hit my first real rename conflict, and very timidly tried the 
-> "recursive" strategy in the hopes that I wouldn't need to do things by 
-> hand.
 > 
-> It resolved things beautifully. Good job. 
+>> - http-push seems to still have a bug or two but that is to be
+>>   expected for any new code, and I am reasonably sure it can be
+>>   ironed out; preferably before 1.0 but it is not a
+>>   showstopper.
+> 
+> It seems like a minor point, but is this the appropriate name or should
+> it be dav-push?  Not that there's anything else in the works AFAIK but
+> it's certainly possible that something else could run over HTTP later
+> on.
+> 
 
-Btw, one thing that it does is print out too much information.
+Push over HTTP POST would at least be theoretically possible.
 
-In particular, I had renames on both sides of the merge (in case anybody 
-wants to see which one I'm talking about: it's the current top-of-head 
-commit in the kernel archives: 333c47c847c90aaefde8b593054d9344106333b5).
-
-Now, renames that you've done yourself you really don't want to hear 
-about, at least if the other side didn't change anything in that file.
-
-Renames that the _other_ side has done (the one you're merging) you may or 
-may not want to know about, regardless of whether they happened to files 
-that are changed. But since "git pull" will do a "git-apply --stat" at the 
-end and show the renames there, I'd argue that the merge strategy itself 
-should be quiet about any renames that are trivial.
-
-So how about talking about renames only if you end up also doing a 
-file-level merge? As it is, doing the merge talked about renames that I 
-had merged earlier in my own branch, which is just confusing.
-
-		Linus
+	-hpa
