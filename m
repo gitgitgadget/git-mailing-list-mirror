@@ -1,60 +1,61 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git binary directory?
-Date: Sun, 6 Nov 2005 16:54:55 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511061653380.3316@g5.osdl.org>
-References: <Pine.LNX.4.64.0511051247330.3316@g5.osdl.org>
- <7voe4y5w3v.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511052013550.3316@g5.osdl.org>
- <7vy84249re.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511060816390.3316@g5.osdl.org>
- <7v7jbly1lh.fsf@assigned-by-dhcp.cox.net> <20051106221952.GP1431@pasky.or.cz>
- <7virv5wc86.fsf@assigned-by-dhcp.cox.net> <20051107004346.GR1431@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: git-status: do not mark unmerged paths as committable.
+Date: Sun, 06 Nov 2005 17:39:06 -0800
+Message-ID: <7vslu9uthh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 07 01:56:20 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Nov 07 02:40:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EYvI3-0004zl-2Y
-	for gcvg-git@gmane.org; Mon, 07 Nov 2005 01:55:15 +0100
+	id 1EYvye-0001q2-7s
+	for gcvg-git@gmane.org; Mon, 07 Nov 2005 02:39:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932384AbVKGAzJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Nov 2005 19:55:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932387AbVKGAzJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 19:55:09 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:52410 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932384AbVKGAzI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Nov 2005 19:55:08 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA70svnO028063
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 6 Nov 2005 16:54:57 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA70stea011109;
-	Sun, 6 Nov 2005 16:54:56 -0800
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051107004346.GR1431@pasky.or.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932400AbVKGBjK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Nov 2005 20:39:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932399AbVKGBjJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Nov 2005 20:39:09 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:12219 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932396AbVKGBjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Nov 2005 20:39:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051107013807.WVFF24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 6 Nov 2005 20:38:07 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11244>
 
+An unmerged path appears as both "Updated but not checked in" list,
+and "Changed but not updated" list.  We are not going to commit that
+path until it is resolved, so remove it from the former list.
 
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-On Mon, 7 Nov 2005, Petr Baudis wrote:
-> 
-> I want to avoid extra fork()s and exec()s. They seem to routinely matter
-> in orders of magnitude of speed in tight loops.
+---
 
-Yes. The more I think about it, the less I like the separate binary 
-directory after all. The "git cmd" format is great for high-level 
-commands, but we've always done "git-diff-tree" and "git-rev-list" etc 
-without the "git cmd" indirection.
+ git-status.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-The downsides of a separate binary directory appear to be bigger than the 
-upside..
-
-		Linus
+applies-to: 49ac95e5ebfd28b32ec1a23a0982900426f0c06c
+f1790448628262e46496861bb6da76be63a2a247
+diff --git a/git-status.sh b/git-status.sh
+index 62a24a9..837f334 100755
+--- a/git-status.sh
++++ b/git-status.sh
+@@ -41,7 +41,7 @@ git-update-index -q --unmerged --refresh
+ 
+ if GIT_DIR="$GIT_DIR" git-rev-parse --verify HEAD >/dev/null 2>&1
+ then
+-	git-diff-index -M --cached --name-status HEAD |
++	git-diff-index -M --cached --name-status --diff-filter=MDTCRA HEAD |
+ 	sed -e '
+ 		s/\\/\\\\/g
+ 		s/ /\\ /g
+---
+0.99.9.GIT
