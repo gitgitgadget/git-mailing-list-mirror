@@ -1,117 +1,88 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: [PATCH] Add bug isolation howto, scraped from Linus.
-Date: Mon, 07 Nov 2005 20:45:25 -0600
-Message-ID: <E1EZJUD-0001yw-Io@jdl.com>
-X-From: git-owner@vger.kernel.org Tue Nov 08 03:46:21 2005
+From: Dave Jones <davej@redhat.com>
+Subject: Re: git-rev-tree
+Date: Mon, 7 Nov 2005 21:57:55 -0500
+Message-ID: <20051108025755.GA22243@redhat.com>
+References: <20051108021232.GB10835@redhat.com> <Pine.LNX.4.64.0511071819510.3247@g5.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 08 03:59:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZJUT-0005dY-6e
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 03:45:42 +0100
+	id 1EZJgd-0000v9-1V
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 03:58:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965684AbVKHCpe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Nov 2005 21:45:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965686AbVKHCpd
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 21:45:33 -0500
-Received: from mail.jdl.com ([66.118.10.122]:48838 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S965684AbVKHCpc (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 21:45:32 -0500
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1EZJUD-0001yw-Io
-	for git@vger.kernel.org; Mon, 07 Nov 2005 20:45:26 -0600
-To: git@vger.kernel.org
-X-Spam-Score: -105.9 (---------------------------------------------------)
+	id S965686AbVKHC6M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 21:58:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965687AbVKHC6M
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 21:58:12 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:4552 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S965686AbVKHC6K (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 21:58:10 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id jA82w1Yt026957;
+	Mon, 7 Nov 2005 21:58:01 -0500
+Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id jA82vuV16643;
+	Mon, 7 Nov 2005 21:57:56 -0500
+Received: from nwo.kernelslacker.org (vpn83-122.boston.redhat.com [172.16.83.122])
+	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id jA82vuAx022360;
+	Mon, 7 Nov 2005 21:57:56 -0500
+Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
+	by nwo.kernelslacker.org (8.13.5/8.13.4) with ESMTP id jA82vtq9023995;
+	Mon, 7 Nov 2005 21:57:55 -0500
+Received: (from davej@localhost)
+	by nwo.kernelslacker.org (8.13.5/8.13.5/Submit) id jA82vtUr023994;
+	Mon, 7 Nov 2005 21:57:55 -0500
+X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0511071819510.3247@g5.osdl.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11306>
 
+On Mon, Nov 07, 2005 at 06:33:30PM -0800, Linus Torvalds wrote:
 
-Signed-off-by: Jon Loeliger <jdl@freescale.com>
+ > 	export KERNEL=master.kernel.org:/pub/scm/linux/kernel/git/
+ > 	git fetch $KERNEL/torvalds/linux-2.6 master:linus
+ > 
+ >    which will just fetch my "master" branch into the local "linus" branch.
+ > 
+ >  - then just do
+ > 
+ > 	git log linus..HEAD
+ > 
+ >    and you'll see exactly what you wanted: what exists in your HEAD but 
+ >    not in mine.
+ > 
+ > No complex script required.
 
----
+Ok, I must be doing something totally bone-headed.  Because this is what
+I tried to do before I headed down the path of making that script work.
 
-You know, eventually this will all be fully documented.
-The trick is to catch Words To The Wise as the flow past you.
+Doing the above yields ...
 
+(18:47:37:davej@hera:agp2)$ export KERNEL=master.kernel.org:/pub/scm/linux/kernel/git/
+(18:47:43:davej@hera:agp2)$ git fetch $KERNEL/torvalds/linux-2.6 master:linus
+davej@master.kernel.org's password:
+Packing 35335 objects
+Unpacking 35335 objects
+ 100% (35335/35335) done
+* committish: d27ba47e7e8c466c18983a1779d611f82d6a354f
+  branch 'master' of master.kernel.org:/pub/scm/linux/kernel/git//torvalds/linux-2.6
+* refs/heads/linus: storing branch 'master' of master.kernel.org:/pub/scm/linux/kernel/git//torvalds/linux-2.6
 
- Documentation/howto/isolate-bugs-with-bisect.txt |   65 ++++++++++++++++++++++
- 1 files changed, 65 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/howto/isolate-bugs-with-bisect.txt
+which looks ok, but then when I do the git log linus..HEAD, I get no output at all.
 
-applies-to: 71213f57daeac18b52439d6d8acd5baba9bf05c7
-4e0819ff782b33d149634a397fb539f4759ef1f4
-diff --git a/Documentation/howto/isolate-bugs-with-bisect.txt b/Documentation/howto/isolate-bugs-with-bisect.txt
-new file mode 100644
-index 0000000..4009495
---- /dev/null
-+++ b/Documentation/howto/isolate-bugs-with-bisect.txt
-@@ -0,0 +1,65 @@
-+From:	Linus Torvalds <torvalds () osdl ! org>
-+To:	git@vger.kernel.org
-+Date:	2005-11-08 1:31:34
-+Subject: Real-life kernel debugging scenario
-+Abstract: Short-n-sweet, Linus tells us how to leverage `git-bisect` to perform
-+	bug isolation on a repository where "good" and "bad" revisions are known
-+	in order to identify a suspect commit.
-+
-+
-+How To Use git-bisect To Isolate a Bogus Commit
-+===============================================
-+
-+The way to use "git bisect" couldn't be easier.
-+
-+Figure out what the oldest bad state you know about is (that's usually the 
-+head of "master", since that's what you just tried to boot and failed at). 
-+Also, figure out the most recent known-good commit (usually the _previous_ 
-+kernel you ran: and if you've only done a single "pull" in between, it 
-+will be ORIG_HEAD).
-+
-+Then do
-+
-+	git bisect start
-+	git bisect bad master		<- mark "master" as the bad state
-+	git bisect good ORIG_HEAD	<- mark ORIG_HEAD as good (or
-+					   whatever other known-good 
-+					   thing you booted laste)
-+
-+and at this point "git bisect" will churn for a while, and tell you what 
-+the mid-point between those two commits are, and check that state out as 
-+the head of the bew "bisect" branch.
-+
-+Compile and reboot.
-+
-+If it's good, just do
-+
-+	git bisect good		<- mark current head as good
-+
-+otherwise, reboot into a good kernel instead, and do (surprise surprise, 
-+git really is very intuitive):
-+
-+	git bisect bad		<- mark current head as bad
-+
-+and whatever you do, git will select a new half-way point. Do this for a 
-+while, until git tells you exactly which commit was the first bad commit. 
-+That's your culprit.
-+
-+It really works wonderfully well, except for the case where there was 
-+_another_ commit that broke something in between, like introduced some 
-+stupid compile error. In that case you should not mark that commit good or 
-+bad: you should try to find another commit close-by, and do a "git reset 
-+--hard <newcommit>" to try out _that_ commit instead, and then test that 
-+instead (and mark it good or bad).
-+
-+You can do "git bisect visualize" while you do all this to see what's 
-+going on by starting up gitk on the bisection range.
-+
-+Finally, once you've figured out exactly which commit was bad, you can 
-+then go back to the master branch, and try reverting just that commit:
-+
-+	git checkout master
-+	git revert <bad-commit-id>
-+
-+to verify that the top-of-kernel works with that single commit reverted.
-+
----
-0.99.9.GIT
+Whatever I'm doing wrong, I'm doing it consistently, as this happens
+in all my trees both locally, and on k.o
+
+*click*, ahh wait, I didn't have a 'linus' branch before I did that fetch.
+For the above to work, do I need there to be a 'linus' branch before
+I start making changes ?  Or am I barking up the wrong tree ?
+
+		Dave
