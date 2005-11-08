@@ -1,67 +1,70 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Comments on recursive merge..
-Date: Mon, 7 Nov 2005 16:33:56 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
-References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
- <20051107225807.GA10937@c165.ib.student.liu.se> <7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
+From: walt <wa1ter@myrealbox.com>
+Subject: Real-life kernel debugging scenario
+Date: Mon, 07 Nov 2005 16:51:50 -0800
+Organization: none
+Message-ID: <dkosr7$f4s$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Fredrik Kuivinen <freku045@student.liu.se>
-X-From: git-owner@vger.kernel.org Tue Nov 08 01:35:42 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Nov 08 01:55:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZHRF-0008Vq-Q8
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 01:34:14 +0100
+	id 1EZHkt-0004pY-US
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 01:54:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965637AbVKHAeJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Nov 2005 19:34:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965636AbVKHAeI
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 19:34:08 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:5331 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965637AbVKHAeH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 19:34:07 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA80XwnO032656
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 7 Nov 2005 16:33:58 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA80XuJU007491;
-	Mon, 7 Nov 2005 16:33:57 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030216AbVKHAy2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 19:54:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030218AbVKHAy2
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 19:54:28 -0500
+Received: from main.gmane.org ([80.91.229.2]:24707 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030216AbVKHAy1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 19:54:27 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EZHjT-0004Q1-Vv
+	for git@vger.kernel.org; Tue, 08 Nov 2005 01:53:04 +0100
+Received: from adsl-69-234-218-246.dsl.irvnca.pacbell.net ([69.234.218.246])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Nov 2005 01:53:03 +0100
+Received: from wa1ter by adsl-69-234-218-246.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Nov 2005 01:53:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-218-246.dsl.irvnca.pacbell.net
+User-Agent: Mail/News 1.6a1 (X11/20051106)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11297>
 
+This describes a real problem I've had twice in the last two
+years while tracking Linus's kernel tree:
 
+I update my local kernel sources every morning using cg-update
+(formerly bk-pull) and compile and install and reboot the new
+kernel.
 
-On Mon, 7 Nov 2005, Junio C Hamano wrote:
-> 
-> This is the first time I see you pleased by something in git
-> that was done without very close supervision from you.
+Okay.  On rare occasions I get a kernel panic on reboot.  So...
+I know that something Linus committed in the last 24 hours is
+responsible for the problem.
 
-That sounds like a backhanded way of saying that I'm micromanagering, 
-picky and difficult to work with ;)
+The last two times this happened I was able to guess which
+commit caused the problem and I emailed the developer off-
+list and got the problem fixed very quickly. (This is why
+I love open-source software!)
 
-> Another thing to consider is if it is fast enough for everyday
-> trivial merges.
+My worry:  what happens when I'm not smart enough to guess
+which developer to email?  My first instinct is to back out
+the most recent commits one-by-one until the bug goes away.
 
-Hmm. True. The _really_ trivial in-index case triggers for me pretty 
-often, but I haven't done any statistics. It might be only 50% of the 
-time.
+First:  is this an optimal tactic?
 
-Is the recursive thing noticeably slower for the "easy" cases (ie things 
-that the old regular resolve strategy does well)?
+Second:  how to back out individual commits using git or
+cogito?  I suppose this is already spelled out in the docs,
+but I invite everyone to point me to the relevant places
+in the docs that have escaped my attention so far.
 
-It's certainly an option to just do what I just did, namely use the 
-default one until it breaks, and then just do "git reset --hard" and re-do 
-the pull with "-s recursive". A bit sad, and it would be good to have 
-coverage on the recursive strategy..
-
-		Linus
+Thanks!
