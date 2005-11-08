@@ -1,58 +1,101 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: Errors cloning over http -- git-clone and cg-clone fail to fetch a reachable object...
-Date: Mon, 7 Nov 2005 22:31:36 -0800
-Message-ID: <20051108063136.GA3806@reactrix.com>
-References: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com> <46a038f90511061852h5cdf9539o34f69b4deb9f041a@mail.gmail.com> <20051107043737.GI3001@reactrix.com> <46a038f90511062050geee7e73qddcd52e3a2ec86df@mail.gmail.com> <20051107171446.GA4070@reactrix.com> <46a038f90511071837g474bdc44vf60dd0758511f24c@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: ls-files and read-tree need core.filemode
+Date: Tue, 8 Nov 2005 09:23:37 +0100
+Message-ID: <81b0412b0511080023k1384dc26j944e9a07987be436@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 08 07:33:50 2005
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_468_26793567.1131438217496"
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Nov 08 09:24:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZN1u-00071z-7x
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 07:32:26 +0100
+	id 1EZOla-0003x1-7e
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 09:23:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965328AbVKHGbr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Nov 2005 01:31:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965315AbVKHGbr
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 01:31:47 -0500
-Received: from 193.37.26.69.virtela.com ([69.26.37.193]:61357 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S965261AbVKHGbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2005 01:31:42 -0500
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jA86VanZ010081;
-	Mon, 7 Nov 2005 22:31:36 -0800
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jA86VaOZ010079;
-	Mon, 7 Nov 2005 22:31:36 -0800
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f90511071837g474bdc44vf60dd0758511f24c@mail.gmail.com>
-User-Agent: Mutt/1.4.1i
+	id S932377AbVKHIXj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Nov 2005 03:23:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932491AbVKHIXj
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 03:23:39 -0500
+Received: from nproxy.gmail.com ([64.233.182.205]:9788 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932377AbVKHIXi (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2005 03:23:38 -0500
+Received: by nproxy.gmail.com with SMTP id q29so143746nfc
+        for <git@vger.kernel.org>; Tue, 08 Nov 2005 00:23:37 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=FqKyyFWM7+oQCMIGE2iz63PvVIiQ+GCdJ1gvHnibU4Lvvx2a0Oy6oVvU9hsKYN7292beMdAXvQASawjBwGYN6Awi4/XLQ8lX5IluzlB+hgh9vhwE8IUNoMg7DfseeZUovfzwJMoAfmL9wzaqjgUInU6oeXsDrxku4wOvjUmbhJo=
+Received: by 10.48.226.12 with SMTP id y12mr1824357nfg;
+        Tue, 08 Nov 2005 00:23:37 -0800 (PST)
+Received: by 10.48.247.3 with HTTP; Tue, 8 Nov 2005 00:23:37 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11315>
 
-On Tue, Nov 08, 2005 at 03:37:29PM +1300, Martin Langhoff wrote:
+------=_Part_468_26793567.1131438217496
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> It definitely looks like it's doing a few requests in parallel and
-> getting them mixed up. BTW, this repo is public and sitting on a box
-> that doubles up as kernel mirror -- feel free to hit it ;-)
+Hi,
 
-Can you run git-http-fetch after the failure to attempt to pick up where
-it left off?  It should fail right away, and hopefully contain less
-confusing output from parallel requests.
+ls-files.c and read-tree.c miss the default configuration, in
+particular the filemode=3Dfalse part.
+The recent +x bit flip made me notice that, because git-merge refused
+to merge anything saying that git-pull.sh is not up to date.
 
-Was there a request header for pack-9cbe...d3a5.pack earlier in the
-output, and were there response headers for successful or failed
-requests?
+As usual, sorry for attachments.
 
-FWIW, I've tried cloning that repository a few times and haven't seen
-the problem yet.
+------=_Part_468_26793567.1131438217496
+Content-Type: application/xxxxx; name=ls-files-filemode.patch
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="ls-files-filemode.patch"
 
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+
+    ls-files needs default config to ignore filemode on cygwin
+
+diff --git a/ls-files.c b/ls-files.c
+--- a/ls-files.c
++++ b/ls-files.c
+@@ -569,10 +569,11 @@ int main(int argc, const char **argv)
+ 	argv0 = *argv;
+ 
+ 	prefix = setup_git_directory();
+ 	if (prefix)
+ 		prefix_offset = strlen(prefix);
++	git_config(git_default_config);
+ 
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
+ 		if (!strcmp(arg, "--")) {
+
+------=_Part_468_26793567.1131438217496
+Content-Type: application/xxxxx; name=read-tree-filemode.patch
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="read-tree-filemode.patch"
+
+
+    read-tree needs default config to ignore filemode on cygwin
+
+diff --git a/read-tree.c b/read-tree.c
+--- a/read-tree.c
++++ b/read-tree.c
+@@ -632,10 +632,12 @@ int main(int argc, char **argv)
+ 
+ 	newfd = hold_index_file_for_update(&cache_file, get_index_file());
+ 	if (newfd < 0)
+ 		die("unable to create new cachefile");
+ 
++	git_config(git_default_config);
++
+ 	merge = 0;
+ 	reset = 0;
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
+
+------=_Part_468_26793567.1131438217496--
