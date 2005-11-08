@@ -1,64 +1,49 @@
-From: David Lang <david.lang@digitalinsight.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Real-life kernel debugging scenario
-Date: Mon, 7 Nov 2005 16:59:58 -0800 (PST)
-Message-ID: <Pine.LNX.4.62.0511071657030.9339@qynat.qvtvafvgr.pbz>
+Date: Mon, 07 Nov 2005 17:30:18 -0800
+Message-ID: <7vwtjkncyd.fsf@assigned-by-dhcp.cox.net>
 References: <dkosr7$f4s$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 08 02:01:06 2005
+X-From: git-owner@vger.kernel.org Tue Nov 08 02:31:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZHqR-0006BK-Ai
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 02:00:15 +0100
+	id 1EZIJs-0004Yl-Ou
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 02:30:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964977AbVKHBAL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Nov 2005 20:00:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964987AbVKHBAK
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 20:00:10 -0500
-Received: from warden-p.diginsite.com ([208.29.163.248]:11986 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP id S964977AbVKHBAH
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 20:00:07 -0500
-Received: from no.name.available by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Mon, 7 Nov 2005 17:00:07 -0800
-Received: from wlvexc02.digitalinsight.com ([10.201.10.15]) by wlvims02.corp.ad.diginsite.com with InterScan Messaging Security Suite; Mon, 07 Nov 2005 17:00:02 -0800
-Received: by wlvexc02.diginsite.com with Internet Mail Service (5.5.2657.72)
-	id <WL40KY2A>; Mon, 7 Nov 2005 16:55:31 -0800
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
-	id WLVGS2NZ; Mon, 7 Nov 2005 16:58:44 -0800
+	id S965098AbVKHBaV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 20:30:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965100AbVKHBaV
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 20:30:21 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:13206 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S965098AbVKHBaU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Nov 2005 20:30:20 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051108012958.MMLP16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 7 Nov 2005 20:29:58 -0500
 To: walt <wa1ter@myrealbox.com>
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <dkosr7$f4s$1@sea.gmane.org>
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <dkosr7$f4s$1@sea.gmane.org>
-References: <dkosr7$f4s$1@sea.gmane.org>
+In-Reply-To: <dkosr7$f4s$1@sea.gmane.org> (wa1ter@myrealbox.com's message of
+	"Mon, 07 Nov 2005 16:51:50 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11300>
 
-On Mon, 7 Nov 2005, walt wrote:
+walt <wa1ter@myrealbox.com> writes:
 
-> My worry:  what happens when I'm not smart enough to guess
-> which developer to email?  My first instinct is to back out
-> the most recent commits one-by-one until the bug goes away.
->
 > First:  is this an optimal tactic?
 
-it will work, but it's not optimal. this is exactly what git bisect is 
-designed for.
+Not if you are a git user.
 
-you tell it that the prior night's version was good and the current 
-version is bad. It picks a version 'halfway' in between the two and you 
-test that. tell git if the test failed or not and it will then give 
-you the next one to try. repeat until you identify exactly which commit 
-triggers the problem.
+> Second:  how to back out individual commits using git or
+> cogito?  I suppose this is already spelled out in the docs,
+> but I invite everyone to point me to the relevant places
+> in the docs that have escaped my attention so far.
 
-unfortunantly I can't trivially point you at the right place in the docs.
-
-David Lang
-
--- 
-There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
-  -- C.A.R. Hoare
+git-bisect(1).
