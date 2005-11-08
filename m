@@ -1,67 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-daemon enabled on kernel.org
-Date: Tue, 8 Nov 2005 13:02:16 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511081259210.2649@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <43554D4F.7040403@zytor.com> <20051107231157.GX1431@pasky.or.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git versus CVS (versus bk)
+Date: Tue, 8 Nov 2005 13:04:26 +0100
+Message-ID: <20051108120426.GB1431@pasky.or.cz>
+References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg> <20051101091533.GB11618@pasky.or.cz> <20051107225652.GW1431@pasky.or.cz> <200511081150.10867.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 08 13:02:26 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 08 13:04:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZSBC-0006RB-JH
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 13:02:22 +0100
+	id 1EZSDK-0007H7-Hq
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 13:04:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964892AbVKHMCU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Nov 2005 07:02:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965092AbVKHMCT
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 07:02:19 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:44252 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S964892AbVKHMCS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2005 07:02:18 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 7DAF213F27C; Tue,  8 Nov 2005 13:02:17 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 61D939F1DD; Tue,  8 Nov 2005 13:02:17 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 4BC9D9F1D7; Tue,  8 Nov 2005 13:02:17 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id C3A5313F27C; Tue,  8 Nov 2005 13:02:16 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051107231157.GX1431@pasky.or.cz>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S965156AbVKHMEb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Nov 2005 07:04:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965160AbVKHMEa
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 07:04:30 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:32155 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S965156AbVKHMEa (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2005 07:04:30 -0500
+Received: (qmail 30005 invoked by uid 2001); 8 Nov 2005 13:04:26 +0100
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <200511081150.10867.Josef.Weidendorfer@gmx.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11330>
 
-Hi,
-
-On Tue, 8 Nov 2005, Petr Baudis wrote:
-
-> Dear diary, on Tue, Oct 18, 2005 at 09:30:23PM CEST, I got a letter
-> where "H. Peter Anvin" <hpa@zytor.com> told me that...
-> > I consider this experimental so far, and if it imposes an unacceptable 
-> > load I'll have to disable it.  It currently runs with an inetd-imposed 
-> > limits of 10 instances per server.
+Dear diary, on Tue, Nov 08, 2005 at 11:50:10AM CET, I got a letter
+where Josef Weidendorfer <Josef.Weidendorfer@gmx.de> told me that...
+> On Monday 07 November 2005 23:56, Petr Baudis wrote:
+> > Dear diary, on Tue, Nov 01, 2005 at 10:15:33AM CET, I got a letter
+> > where Petr Baudis <pasky@suse.cz> told me that...
+> > > That said, with a big warning, I would be willing to do something like
+> > > cg-merge -s and cg-update -s (s as squash)
+> > ...
+> > FWIW, cg-merge -s and cg-update -s is supported now.
 > 
-> I'm curious - how well does it do wrt. the load so far? Do you have any
-> statistics about the number of users and how CPU-intensive is it?
+> The -s option of git merge is about choosing a strategy.
+> How can I choose the "recursive" strategy with cg-merge?
+> Some consistency would be good here.
 
-I have a simple statistics to contribute out of my head. A while ago (when 
-people complained about gitweb.cgi taking too much load), a simple pull 
-where my local repo was up-to-date took about 4 seconds. Now it takes just 
-1 second.
+Good point. You can't now, but you should be able to in the future.
+I renamed this from -s to --squash.
 
-I choose to believe that this is a sign of not too much load.
+Thanks,
 
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
