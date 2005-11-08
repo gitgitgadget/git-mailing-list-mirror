@@ -1,57 +1,48 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git versus CVS (versus bk)
-Date: Tue, 8 Nov 2005 13:04:26 +0100
-Message-ID: <20051108120426.GB1431@pasky.or.cz>
-References: <Pine.LNX.4.64.0510301720390.14972@x2.ybpnyarg> <20051101091533.GB11618@pasky.or.cz> <20051107225652.GW1431@pasky.or.cz> <200511081150.10867.Josef.Weidendorfer@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 08 13:04:39 2005
+From: Jon Loeliger <jdl@freescale.com>
+Subject: git-pull.sh's bad mode
+Date: Tue, 08 Nov 2005 08:19:38 -0600
+Message-ID: <E1EZUK2-0005EG-56@jdl.com>
+X-From: git-owner@vger.kernel.org Tue Nov 08 15:22:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZSDK-0007H7-Hq
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 13:04:35 +0100
+	id 1EZUKb-0005qJ-22
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 15:20:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965156AbVKHMEb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Nov 2005 07:04:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965160AbVKHMEa
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 07:04:30 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:32155 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S965156AbVKHMEa (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2005 07:04:30 -0500
-Received: (qmail 30005 invoked by uid 2001); 8 Nov 2005 13:04:26 +0100
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <200511081150.10867.Josef.Weidendorfer@gmx.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S965211AbVKHOTn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Nov 2005 09:19:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965216AbVKHOTn
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 09:19:43 -0500
+Received: from www.jdl.com ([66.118.10.122]:53705 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S965214AbVKHOTm (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2005 09:19:42 -0500
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1EZUK2-0005EG-56
+	for git@vger.kernel.org; Tue, 08 Nov 2005 08:19:38 -0600
+To: git@vger.kernel.org
+In-Reply-To: 81b0412b0511080023k1384dc26j944e9a07987be436@mail.gmail.com
+X-Spam-Score: -105.9 (---------------------------------------------------)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11331>
 
-Dear diary, on Tue, Nov 08, 2005 at 11:50:10AM CET, I got a letter
-where Josef Weidendorfer <Josef.Weidendorfer@gmx.de> told me that...
-> On Monday 07 November 2005 23:56, Petr Baudis wrote:
-> > Dear diary, on Tue, Nov 01, 2005 at 10:15:33AM CET, I got a letter
-> > where Petr Baudis <pasky@suse.cz> told me that...
-> > > That said, with a big warning, I would be willing to do something like
-> > > cg-merge -s and cg-update -s (s as squash)
-> > ...
-> > FWIW, cg-merge -s and cg-update -s is supported now.
-> 
-> The -s option of git merge is about choosing a strategy.
-> How can I choose the "recursive" strategy with cg-merge?
-> Some consistency would be good here.
 
-Good point. You can't now, but you should be able to in the future.
-I renamed this from -s to --squash.
+Public apology and brown paper bag.  My patch
+accidentally twiddled the mode on git-pull.sh:
 
-Thanks,
+    Signed-off-by: Jon Loeliger <jdl@freescale.com>
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+    ---
+
+     Documentation/git-pull.txt        |   17 +++++++----------
+     Documentation/merge-options.txt   |   16 ++++++++++++++++
+     Documentation/merge-pull-opts.txt |   14 --------------
+     git-format-patch.sh               |    4 ++++
+     git-pull.sh                       |   12 +++++++++++-
+     9 files changed, 70 insertions(+), 48 deletions(-)
+     create mode 100644 Documentation/fetch-options.txt
+     create mode 100644 Documentation/merge-options.txt
+     delete mode 100644 Documentation/merge-pull-opts.txt
+     mode change 100755 => 100644 git-pull.sh
