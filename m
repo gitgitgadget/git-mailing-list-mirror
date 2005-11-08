@@ -1,69 +1,82 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-rev-tree
-Date: Mon, 7 Nov 2005 19:35:55 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511071934410.3247@g5.osdl.org>
-References: <20051108021232.GB10835@redhat.com> <Pine.LNX.4.64.0511071819510.3247@g5.osdl.org>
- <20051108025755.GA22243@redhat.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 08 04:36:58 2005
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: Expected Behavior?
+Date: Mon, 07 Nov 2005 21:43:15 -0600
+Message-ID: <E1EZKOB-0002j5-VY@jdl.com>
+X-From: git-owner@vger.kernel.org Tue Nov 08 04:44:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZKHW-0000da-5Z
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 04:36:22 +0100
+	id 1EZKOY-0002Kd-Ce
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 04:43:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932344AbVKHDgT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Nov 2005 22:36:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932403AbVKHDgT
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 22:36:19 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:51606 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932344AbVKHDgS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 22:36:18 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA83a0nO009813
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 7 Nov 2005 19:36:01 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA83Zu7p015967;
-	Mon, 7 Nov 2005 19:35:58 -0800
-To: Dave Jones <davej@redhat.com>
-In-Reply-To: <20051108025755.GA22243@redhat.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932246AbVKHDnR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 22:43:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932407AbVKHDnR
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 22:43:17 -0500
+Received: from jdl.com ([66.118.10.122]:63942 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S932246AbVKHDnQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 22:43:16 -0500
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1EZKOB-0002j5-VY
+	for git@vger.kernel.org; Mon, 07 Nov 2005 21:43:16 -0600
+To: git@vger.kernel.org
+In-Reply-To: 7vy841utif.fsf@assigned-by-dhcp.cox.net
+X-Spam-Score: -105.9 (---------------------------------------------------)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11309>
 
-
-
-On Mon, 7 Nov 2005, Dave Jones wrote:
+> Yup, it uses "git-ls-files --others", which considers that
+> unmerged paths do not "exist" in the index.  This is wrong.
 > 
-> (18:47:37:davej@hera:agp2)$ export KERNEL=master.kernel.org:/pub/scm/linux/kernel/git/
-> (18:47:43:davej@hera:agp2)$ git fetch $KERNEL/torvalds/linux-2.6 master:linus
-> davej@master.kernel.org's password:
-> Packing 35335 objects
-> Unpacking 35335 objects
->  100% (35335/35335) done
-> * committish: d27ba47e7e8c466c18983a1779d611f82d6a354f
->   branch 'master' of master.kernel.org:/pub/scm/linux/kernel/git//torvalds/linux-2.6
-> * refs/heads/linus: storing branch 'master' of master.kernel.org:/pub/scm/linux/kernel/git//torvalds/linux-2.6
+> The attached is a patch to fix ls-files.
 > 
-> which looks ok, but then when I do the git log linus..HEAD, I get no output at all.
+> I also think that file3 should not appear in "Updated but not
+> checked in (will commit)" list -- we are _not_ going to commit
+> unmerged paths until you tell git what you want to do with
+> them.  The patch in the next message fixes it.
 
-You've got the right "linus" commit.
+Patch looks good here!  Thanks!
 
-However, are you aware that I did pull from you? If you don't have 
-anything new, "no output at all" is the right thing.
+    % git status
+    #
+    # Updated but not checked in:
+    #   (will commit)
+    #
+    #       modified: file1
+    #       deleted:  file2
+    #
+    #
+    # Changed but not updated:
+    #   (use git-update-index to mark for commit)
+    #
+    #       unmerged: file3
+    #
 
-> *click*, ahh wait, I didn't have a 'linus' branch before I did that fetch.
-> For the above to work, do I need there to be a 'linus' branch before
-> I start making changes ?  Or am I barking up the wrong tree ?
+But I have a lingering question.  Same script as before.
 
-No, the above will have created the "linus" branch as needed.
+    % git diff file3
+    * Unmerged path file3
 
-		Linus
+    % cat file3
+    Stuff for a conflict.
+
+Why didn't file3 show something like:
+
+    % cat file3
+    <<<<<
+    Stuff for a conflict.
+    =====
+    Another file!
+    >>>>>
+
+That is, after the merge, file3 appears to have simply kept
+the contents of the current, master branch.  Why wasn't the
+dev branch represented here?
+
+I _almost_ think I get it, and then *poof*...
+
+Thanks,
+jdl
