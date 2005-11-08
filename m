@@ -1,55 +1,119 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: Notes on http-push
-Date: Tue, 8 Nov 2005 07:50:21 -0800
-Message-ID: <20051108155021.GB5830@reactrix.com>
-References: <Pine.LNX.4.63.0511071926240.14149@wbgn013.biozentrum.uni-wuerzburg.de> <20051108084620.GA5830@reactrix.com> <7vy83zjz0e.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [RFC/PATCH] Make git-recursive the default strategy for git-pull.
+Date: Tue, 08 Nov 2005 08:21:28 -0800
+Message-ID: <7vbr0vjek7.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+	<20051107225807.GA10937@c165.ib.student.liu.se>
+	<7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 08 16:55:01 2005
+X-From: git-owner@vger.kernel.org Tue Nov 08 17:27:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZVkG-0001WT-Bo
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 16:50:48 +0100
+	id 1EZWE0-0002Kg-VP
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 17:21:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030228AbVKHPui (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Nov 2005 10:50:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030226AbVKHPui
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 10:50:38 -0500
-Received: from 194.37.26.69.virtela.com ([69.26.37.194]:52180 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1030228AbVKHPuh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2005 10:50:37 -0500
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jA8FoLfP014381;
-	Tue, 8 Nov 2005 07:50:21 -0800
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jA8FoLZP014379;
-	Tue, 8 Nov 2005 07:50:21 -0800
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vy83zjz0e.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.1i
+	id S1030240AbVKHQVa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Nov 2005 11:21:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932407AbVKHQV3
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 11:21:29 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:34510 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932403AbVKHQV3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Nov 2005 11:21:29 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051108162025.DSGR24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 8 Nov 2005 11:20:25 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 7 Nov 2005 16:33:56 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11334>
 
-On Tue, Nov 08, 2005 at 12:59:45AM -0800, Junio C Hamano wrote:
+This does two things:
 
-> Pushing git commit history into SVN server --- this must be a
-> sick joke ;-).  Can you pull over http from there?
+ - It changes the hardcoded default merge strategy for two-head
+   git-pull from resolve to recursive.
 
-I rather felt like I'd violated some law of nature or something.  Pulls
-work fine from there - it's feasible to put an entire GIT repo behind a
-DAV server, assuming there's a way to run all the non-push/pull git
-commands.  If you're using mod_dav_fs, that could just mean having
-shell/filesystem access to the server.  If you're using mod_dav_svn, it
-could either mean using something like Davfs2 or putting intelligence
-into the git commands to handle GIT_DIR=http://dav.serv.er/path by using
-HTTP GET/PUT instead of read/write system calls.
+ - .git/config file acquires two configuration items.
+   pull.twohead names the strategy for two-head case, and
+   pull.octopus names the strategy for octopus merge.
 
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+IOW you are paranoid, you can have the following lines in your
+.git/config file and keep using git-merge-resolve when pulling
+one remote:
+
+	[pull]
+		twohead = resolve
+
+OTOH, you can say this:
+
+	[pull]
+		twohead = resolve
+		twohead = recursive
+
+to try quicker resolve first, and when it fails, fall back to
+recursive.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+---
+
+  Linus Torvalds <torvalds@osdl.org> writes:
+
+  > Hmm. True. The _really_ trivial in-index case triggers for me pretty 
+  > often, but I haven't done any statistics. It might be only 50% of the 
+  > time.
+  >...
+  > It's certainly an option to just do what I just did, namely use the 
+  > default one until it breaks, and then just do "git reset --hard" and re-do 
+  > the pull with "-s recursive". A bit sad, and it would be good to have 
+  > coverage on the recursive strategy..
+
+  Hopefully something like this would make people aware of
+  recursive and give it a wider coverage and chance to mature.
+
+ git-pull.sh |   16 ++++++++++++++--
+ 1 files changed, 14 insertions(+), 2 deletions(-)
+
+applies-to: 75922cf23cc070e2d5220d961a8f645f1bc8bb60
+3acc20beaf0df9ce11a1b7aabf8c9dc7507a9b44
+diff --git a/git-pull.sh b/git-pull.sh
+index 2358af6..3b875ad 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -79,10 +79,22 @@ case "$merge_head" in
+ 	exit 0
+ 	;;
+ ?*' '?*)
+-	strategy_default_args='-s octopus'
++	var=`git-var -l | sed -ne 's/^pull\.octopus=/-s /p'`
++	if test '' = "$var"
++	then
++		strategy_default_args='-s octopus'
++	else
++		strategy_default_args=$var
++	fi
+ 	;;
+ *)
+-	strategy_default_args='-s resolve'
++	var=`git-var -l | sed -ne 's/^pull\.twohead=/-s /p'`
++	if test '' = "$var"
++	then
++		strategy_default_args='-s recursive'
++	else
++		strategy_default_args=$var
++	fi
+ 	;;
+ esac
+ 
+---
+0.99.9.GIT
