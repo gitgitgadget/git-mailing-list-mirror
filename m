@@ -1,96 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Comments on recursive merge..
-Date: Tue, 8 Nov 2005 15:05:43 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511081450080.3247@g5.osdl.org>
+Date: Wed, 9 Nov 2005 00:18:56 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511090017370.28256@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
  <20051107225807.GA10937@c165.ib.student.liu.se> <7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
  <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
  <Pine.LNX.4.63.0511081254520.2649@wbgn013.biozentrum.uni-wuerzburg.de>
  <20051108210211.GA23265@c165.ib.student.liu.se> <Pine.LNX.4.64.0511081351020.3247@g5.osdl.org>
- <20051108223609.GA4805@c165.ib.student.liu.se>
+ <20051108223609.GA4805@c165.ib.student.liu.se> <Pine.LNX.4.64.0511081450080.3247@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: Fredrik Kuivinen <freku045@student.liu.se>,
 	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 09 00:08:00 2005
+X-From: git-owner@vger.kernel.org Wed Nov 09 00:21:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZcY3-0001WG-M9
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 00:06:40 +0100
+	id 1EZck8-0006Po-Rp
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 00:19:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030398AbVKHXGN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Nov 2005 18:06:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030400AbVKHXGN
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 18:06:13 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:7060 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030398AbVKHXGK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2005 18:06:10 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA8N60nO030982
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 8 Nov 2005 15:06:00 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA8N5hXj025628;
-	Tue, 8 Nov 2005 15:05:51 -0800
-To: Fredrik Kuivinen <freku045@student.liu.se>
-In-Reply-To: <20051108223609.GA4805@c165.ib.student.liu.se>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030188AbVKHXS7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Nov 2005 18:18:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030401AbVKHXS7
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 18:18:59 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:2464 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1030217AbVKHXS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Nov 2005 18:18:58 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 5C8CBE25DD; Wed,  9 Nov 2005 00:18:57 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 3B1909F1E0; Wed,  9 Nov 2005 00:18:57 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 266F18A825; Wed,  9 Nov 2005 00:18:57 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E709DE25DD; Wed,  9 Nov 2005 00:18:56 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511081450080.3247@g5.osdl.org>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11367>
 
+Hi,
 
+On Tue, 8 Nov 2005, Linus Torvalds wrote:
 
-On Tue, 8 Nov 2005, Fredrik Kuivinen wrote:
-> 
-> The problem is in the multiple-common-ancestors case. If we have three
-> common ancestors, A, B and C, we will start with merging A with B. The
-> result is a new 'virtual' commit object (not stored in the object
-> database), lets call it V. We are then going to merge V with C. To do
-> that we need to get the common ancestor(s) of V and C, and as V
-> doesn't exist in the database we can't use git-merge-base.
+> Junio, that points out that "git-merge-base" is another program that could 
+> just be removed, since it's really supreceded by git-show-branch. Or did I 
+> miss something?
 
-Hmm. That's really the same as the merge-base of "C _and_ (A _or_ B)", 
-isn't it?
+IIRC, git-show-branch has a limit on the number of refs it can take.
 
-So we should be able to do that even without ever seeing the virtual 
-merge. In fact, it really is pretty trivial from a technical standpoint: 
-the "A _or_ B" part is really just inserting both A and B with the same 
-"flags" value (see the "merge_base()" function in merge-base.c).
-
-So in general, "merge-base" could trivially be extended to have any number 
-of "OR commits" on either side, as long as there is just one "and".
-
-It could also be extended to have multiple "and" cases, but that has 
-actually already been done by "git-show-branch", I think. It's all the 
-same logic, except it uses more than just two bits.
-
-So _technically_ it should be easy to do, it would just need some sane 
-command line syntax to specify the grouping.
-
-> I haven't given it a lot of thought though, it might be possible to
-> use git-merge-base in some way and get the same results as we get now.
-> 
-> It would certainly be possible to use git-merge-base in the first
-> iteration and use the python code only when we actually have any
-> 'virtual' commit objects.
-
-Just handling the first case specially would be sufficient for 99% of all 
-uses.  And if the multi-parent cases are slightly slower, I don't think 
-anybody cares.
-
-In fact, we _always_ do the first git-merge-base in git-merge.sh anyway 
-(actually, not git-merge-base, but "git-show-branch --merge-base"). So 
-that's really done already for the "test if it's trivial" case..
-
-Junio, that points out that "git-merge-base" is another program that could 
-just be removed, since it's really supreceded by git-show-branch. Or did I 
-miss something?
-
-
-			Linus
+Ciao,
+Dscho
