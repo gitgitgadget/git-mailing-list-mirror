@@ -1,64 +1,62 @@
 From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: Comments on recursive merge..
-Date: Tue, 8 Nov 2005 23:36:09 +0100
-Message-ID: <20051108223609.GA4805@c165.ib.student.liu.se>
-References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org> <20051107225807.GA10937@c165.ib.student.liu.se> <7vll00ov2l.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org> <Pine.LNX.4.63.0511081254520.2649@wbgn013.biozentrum.uni-wuerzburg.de> <20051108210211.GA23265@c165.ib.student.liu.se> <Pine.LNX.4.64.0511081351020.3247@g5.osdl.org>
+Subject: Re: Expected Behavior?
+Date: Tue, 8 Nov 2005 23:53:20 +0100
+Message-ID: <20051108225320.GB4805@c165.ib.student.liu.se>
+References: <E1EZKOB-0002j5-VY@jdl.com> <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net> <20051108210332.GB23265@c165.ib.student.liu.se> <7v7jbig6m7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Fredrik Kuivinen <freku045@student.liu.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 08 23:37:53 2005
+	Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 08 23:58:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZc4h-00065Q-Kq
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 23:36:20 +0100
+	id 1EZcLF-0004lM-1K
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 23:53:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965242AbVKHWgR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Nov 2005 17:36:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965249AbVKHWgR
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 17:36:17 -0500
-Received: from [85.8.31.11] ([85.8.31.11]:52111 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S965242AbVKHWgQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2005 17:36:16 -0500
+	id S965278AbVKHWxW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Nov 2005 17:53:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965285AbVKHWxW
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 17:53:22 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:53903 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S965278AbVKHWxV (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2005 17:53:21 -0500
 Received: from c165 (unknown [85.8.2.189])
 	by mail6.wasadata.com (Postfix) with ESMTP
-	id 2A8AC4103; Tue,  8 Nov 2005 23:44:33 +0100 (CET)
+	id 272D640FF; Wed,  9 Nov 2005 00:01:44 +0100 (CET)
 Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EZc4X-0001Xv-00; Tue, 08 Nov 2005 23:36:09 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+	id 1EZcLA-0001Yo-00; Tue, 08 Nov 2005 23:53:20 +0100
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0511081351020.3247@g5.osdl.org>
+In-Reply-To: <7v7jbig6m7.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11364>
 
-On Tue, Nov 08, 2005 at 01:52:06PM -0800, Linus Torvalds wrote:
+On Tue, Nov 08, 2005 at 01:41:20PM -0800, Junio C Hamano wrote:
+> Fredrik Kuivinen <freku045@student.liu.se> writes:
 > 
-> 
-> On Tue, 8 Nov 2005, Fredrik Kuivinen wrote:
+> > Jon: You could try to this merge with the recursive merge strategy
+> > (git merge -s recursive 'merge message' master dev) If you do, you
+> > _should_ get something like:
 > >
-> > * The code for finding common ancestors is also written in Python and
-> >   is probably a bit slower than git-merge-base.
+> >     CONFLICT (add/add): File file3 added non-identically in both
+> >     branches. Adding as file3_master and file3_dev instead.
+> >
+> > You will then end up with file3_master and file3_dev in your working
+> > tree, which corresponds to file3 in the master branch and file3 in the
+> > dev branch, respectively.
 > 
-> Btw, what part of git-merge-bases is it that makes it not be practical?
+> Oops, I missed that part.  This is unsafe in theory, if you
+> could overwrite existing file3_master or file3_dev.  Does that
+> matter in practice?
 > 
 
-The problem is in the multiple-common-ancestors case. If we have three
-common ancestors, A, B and C, we will start with merging A with B. The
-result is a new 'virtual' commit object (not stored in the object
-database), lets call it V. We are then going to merge V with C. To do
-that we need to get the common ancestor(s) of V and C, and as V
-doesn't exist in the database we can't use git-merge-base.
-
-I haven't given it a lot of thought though, it might be possible to
-use git-merge-base in some way and get the same results as we get now.
-
-It would certainly be possible to use git-merge-base in the first
-iteration and use the python code only when we actually have any
-'virtual' commit objects.
+It wont overwrite any existing files. If there is a file named
+'file3_master' then the new file will be named 'file3_master_1' and if
+that file also exists the new file will be named 'file3_master_2', and
+so on.
 
 - Fredrik
