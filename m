@@ -1,112 +1,183 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Diff between the non-head git work dir and non-git kernel sources
-Date: Tue, 08 Nov 2005 14:18:56 -0800
-Message-ID: <7vacgeeqb3.fsf@assigned-by-dhcp.cox.net>
-References: <43711088.6070701@cc.jyu.fi>
+From: Peter Hagervall <hager@cs.umu.se>
+Subject: [PATCH] sparse fixes for http-{fetch,push}.c
+Date: Tue, 8 Nov 2005 23:18:31 +0100
+Message-ID: <20051108221830.GA14318@peppar.cs.umu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 08 23:20:24 2005
+X-From: git-owner@vger.kernel.org Tue Nov 08 23:20:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZbnx-0007XQ-9i
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 23:19:01 +0100
+	id 1EZbnb-0007NC-0A
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 23:18:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030332AbVKHWS6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Nov 2005 17:18:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030336AbVKHWS6
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 17:18:58 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:31402 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1030332AbVKHWS6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2005 17:18:58 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051108221837.FEBO16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 8 Nov 2005 17:18:37 -0500
-To: lamikr <lamikr@cc.jyu.fi>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030331AbVKHWSg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Nov 2005 17:18:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030332AbVKHWSg
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 17:18:36 -0500
+Received: from mail.cs.umu.se ([130.239.40.25]:29421 "EHLO mail.cs.umu.se")
+	by vger.kernel.org with ESMTP id S1030331AbVKHWSf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2005 17:18:35 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by amavisd-new (Postfix) with ESMTP id 5EFC92D91;
+	Tue,  8 Nov 2005 23:18:34 +0100 (MET)
+Received: from mail.cs.umu.se ([127.0.0.1])
+ by localhost (mimmi.cs.umu.se [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 27157-01-10; Tue,  8 Nov 2005 23:18:31 +0100 (MET)
+Received: from peppar.cs.umu.se (peppar.cs.umu.se [130.239.40.13])
+	by mail.cs.umu.se (Postfix) with ESMTP id 2B5E42D89;
+	Tue,  8 Nov 2005 23:18:31 +0100 (MET)
+Received: by peppar.cs.umu.se (Postfix, from userid 12006)
+	id 153A12EDA; Tue,  8 Nov 2005 23:18:31 +0100 (MET)
+To: junkio@cox.net
+Content-Disposition: inline
+User-Agent: Mutt/1.5.10i
+X-Virus-Scanned: amavisd-new at cs.umu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11362>
 
-lamikr <lamikr@cc.jyu.fi> writes:
+Make a bunch of needlessly global functions static, and replace two
+K&R-style declarations.
 
-Let me understand what trees are involved.  I am not sure from
-your description.
+Signed-off-by: Peter Hagervall <hager@cs.umu.se>
+---
 
- 1. You based your own development on some kernel snapshot.
-
- 2. The kernel snapshot you based 1. is "some version".
-
- 3. Mvista has d24aff0b commit that contains their changes to
-    a kernel snapshot (the same "some version" as 2).
-
- 4. Mvista now has different version, descendant of 3.  This is
-    the top of omap tree you cloned.
-
-         --------------------------->[2] yours
-        /
-     [1]------------->[3]----------->[4] omap tip
-
-Is this the commit history graph you have?
-
-> I would now like to revert the sources in git working dir to state that 
-> was after this d24aff0bd3e788d69a45a9d1b1eecda88d847a41 commit
-> and then make the diff between that kernel source version and my non-git 
-> source version.
-
-You lost me here.  Presumably the ultimate goal of what you are
-doing is either one of the following:
-
-(1) port your good changes between [1] and [2] on top of [4], or
-
-(2) port progresses in omap tree between [3] and [4] (or perhaps
-    [1] and [4], including changes betwen [1] and [3]) on top of
-    your tree [2].
-
-But I am not sure what you mean by the above paragraph.  You
-sound as if you want to find out the differences between [3]
-("revert it to d24aff") and [2] ("your non-git source").
-
-If that is what you want instead, assuming you have your kernel
-tree in linux-lamikr and omap tree in linux-omap:
-
-	$ cd linux-omap
-        $ git checkout -b snapshot-d24aff0b d24aff0b
-	$ cd ..
-	$ diff -ru -X linux-lamikr/Documentation/dontdiff \
-        	linux-omap linux-lamikr
-
-would give you the diff between [3] and [2]; if the difference
-between [1] and [3] is insignificant, then that diff can be
-applied to [4].  However, if you have much stuff going on
-between [1] and [2], applying "single diff containing
-everything" may turn out to be not so useful.
-
-> 2) Does git-diff support making the diff between git's working dir and 
-> "my non" git kernel source dir.
-> Or should I just just use normal diff and order that to ignore .git dir 
-> and .gitignore files?
-
-Another possibility would be to move your development to .git;
-if you know the commit id of [1], then you can branch from that
-commit and replay your development trail step by step up to [2].
-This obviously requires that you used some SCM to keep track
-your development trail between [1] and [2].
-
-Once you have done that (and assuming your branch is called
-lamikr), you could compare omap and your tip with:
-
-	$ git checkout lamikr
-	$ git diff lamikr origin
-
-Or even merge omap tip into your branch:
-
-	$ git checkout lamikr
-	$ git pull . origin
-
-all inside linux-omap/ directory.
+diff --git a/http-fetch.c b/http-fetch.c
+index ea8af1b..88b74b4 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -569,7 +569,7 @@ static void release_request(struct trans
+ }
+ 
+ #ifdef USE_CURL_MULTI
+-void process_curl_messages(void)
++static void process_curl_messages(void)
+ {
+ 	int num_messages;
+ 	struct active_request_slot *slot;
+@@ -625,7 +625,7 @@ void process_curl_messages(void)
+ 	}
+ }
+ 
+-void process_request_queue(void)
++static void process_request_queue(void)
+ {
+ 	struct transfer_request *request = request_queue_head;
+ 	struct active_request_slot *slot = active_queue_head;
+diff --git a/http-push.c b/http-push.c
+index 0b90fb9..8866189 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -595,7 +595,7 @@ static void start_move(struct transfer_r
+ 	}
+ }
+ 
+-int refresh_lock(struct active_lock *lock)
++static int refresh_lock(struct active_lock *lock)
+ {
+ 	struct active_request_slot *slot;
+ 	char *if_header;
+@@ -726,7 +726,7 @@ static void release_request(struct trans
+ }
+ 
+ #ifdef USE_CURL_MULTI
+-void process_curl_messages(void)
++static void process_curl_messages(void)
+ {
+ 	int num_messages;
+ 	struct active_request_slot *slot;
+@@ -766,7 +766,7 @@ void process_curl_messages(void)
+ 	}
+ }
+ 
+-void process_request_queue(void)
++static void process_request_queue(void)
+ {
+ 	struct transfer_request *request = request_queue_head;
+ 	struct active_request_slot *slot = active_queue_head;
+@@ -799,7 +799,7 @@ void process_request_queue(void)
+ }
+ #endif
+ 
+-void process_waiting_requests(void)
++static void process_waiting_requests(void)
+ {
+ 	struct active_request_slot *slot = active_queue_head;
+ 
+@@ -812,7 +812,7 @@ void process_waiting_requests(void)
+ 		}
+ }
+ 
+-void add_request(unsigned char *sha1, struct active_lock *lock)
++static void add_request(unsigned char *sha1, struct active_lock *lock)
+ {
+ 	struct transfer_request *request = request_queue_head;
+ 	struct packed_git *target;
+@@ -939,7 +939,7 @@ static int setup_index(unsigned char *sh
+ 	return 0;
+ }
+ 
+-static int fetch_indices()
++static int fetch_indices(void)
+ {
+ 	unsigned char sha1[20];
+ 	char *url;
+@@ -1189,7 +1189,7 @@ end_lockprop_element(void *userData, con
+ 	}
+ }
+ 
+-struct active_lock *lock_remote(char *file, long timeout)
++static struct active_lock *lock_remote(char *file, long timeout)
+ {
+ 	struct active_request_slot *slot;
+ 	struct buffer out_buffer;
+@@ -1318,7 +1318,7 @@ struct active_lock *lock_remote(char *fi
+ 	return new_lock;
+ }
+ 
+-int unlock_remote(struct active_lock *lock)
++static int unlock_remote(struct active_lock *lock)
+ {
+ 	struct active_request_slot *slot;
+ 	char *lock_token_header;
+@@ -1359,7 +1359,7 @@ int unlock_remote(struct active_lock *lo
+ 	return rc;
+ }
+ 
+-int check_locking()
++static int check_locking(void)
+ {
+ 	struct active_request_slot *slot;
+ 	struct buffer in_buffer;
+@@ -1425,7 +1425,7 @@ int check_locking()
+ 		return 1;
+ }
+ 
+-int is_ancestor(unsigned char *sha1, struct commit *commit)
++static int is_ancestor(unsigned char *sha1, struct commit *commit)
+ {
+ 	struct commit_list *parents;
+ 
+@@ -1446,8 +1446,8 @@ int is_ancestor(unsigned char *sha1, str
+ 	return 0;
+ }
+ 
+-void get_delta(unsigned char *sha1, struct object *obj,
+-	       struct active_lock *lock)
++static void get_delta(unsigned char *sha1, struct object *obj,
++		      struct active_lock *lock)
+ {
+ 	struct commit *commit;
+ 	struct commit_list *parents;
+@@ -1503,7 +1503,7 @@ void get_delta(unsigned char *sha1, stru
+ 	}
+ }
+ 
+-int update_remote(unsigned char *sha1, struct active_lock *lock)
++static int update_remote(unsigned char *sha1, struct active_lock *lock)
+ {
+ 	struct active_request_slot *slot;
+ 	char *out_data;
