@@ -1,71 +1,70 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Errors cloning over http -- git-clone and cg-clone fail to fetch
- a reachable object...
-Date: Tue, 8 Nov 2005 12:54:11 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511081252070.2649@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com> 
- <46a038f90511061852h5cdf9539o34f69b4deb9f041a@mail.gmail.com> 
- <20051107043737.GI3001@reactrix.com>  <46a038f90511062050geee7e73qddcd52e3a2ec86df@mail.gmail.com>
-  <20051107171446.GA4070@reactrix.com> <46a038f90511071837g474bdc44vf60dd0758511f24c@mail.gmail.com>
+Subject: Re: Comments on recursive merge..
+Date: Tue, 8 Nov 2005 12:58:50 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511081254520.2649@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+ <20051107225807.GA10937@c165.ib.student.liu.se> <7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nick Hengeveld <nickh@reactrix.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 08 12:55:25 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Fredrik Kuivinen <freku045@student.liu.se>
+X-From: git-owner@vger.kernel.org Tue Nov 08 13:00:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZS3N-0003Ky-Tc
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 12:54:18 +0100
+	id 1EZS7r-0005GB-GI
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 12:58:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965150AbVKHLyO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Nov 2005 06:54:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965153AbVKHLyO
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 06:54:14 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:1242 "EHLO
+	id S965153AbVKHL6w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Nov 2005 06:58:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965156AbVKHL6w
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 06:58:52 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:30171 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S965150AbVKHLyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2005 06:54:13 -0500
+	id S965153AbVKHL6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Nov 2005 06:58:52 -0500
 Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 6FAF613F003; Tue,  8 Nov 2005 12:54:12 +0100 (CET)
+	id 4C99D13F254; Tue,  8 Nov 2005 12:58:51 +0100 (CET)
 Received: from virusscan (localhost [127.0.0.1])
 	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 458D0B50F2; Tue,  8 Nov 2005 12:54:12 +0100 (CET)
+	id 20DAFB50EE; Tue,  8 Nov 2005 12:58:51 +0100 (CET)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
 	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id DA2B4B50EA; Tue,  8 Nov 2005 12:54:11 +0100 (CET)
+	id 04DD4B4FCA; Tue,  8 Nov 2005 12:58:51 +0100 (CET)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 824B513F213; Tue,  8 Nov 2005 12:54:11 +0100 (CET)
+	id 6E66813F26D; Tue,  8 Nov 2005 12:58:50 +0100 (CET)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90511071837g474bdc44vf60dd0758511f24c@mail.gmail.com>
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11328>
 
 Hi,
 
-On Tue, 8 Nov 2005, Martin Langhoff wrote:
+On Mon, 7 Nov 2005, Linus Torvalds wrote:
 
-> On 11/8/05, Nick Hengeveld <nickh@reactrix.com> wrote:
-> 
-> > You might try this to see exactly what request/response headers
-> > curl thinks are passing back and forth.
-> 
-> It definitely looks like it's doing a few requests in parallel and
-> getting them mixed up. BTW, this repo is public and sitting on a box
-> that doubles up as kernel mirror -- feel free to hit it ;-)
+> Is the recursive thing noticeably slower for the "easy" cases (ie things 
+> that the old regular resolve strategy does well)?
 
-It could be a similar problem to what I experienced in http-push: 
-Uninintialized memory due to the code path. Can you run
+IIRC recursive does nothing else than recursively merging the merge-bases 
+(granted, in a clever way). So if there is only one merge-base, the only 
+slow-down would be the startup of python (which is probably worth it, 
+anyway).
 
-	valgrind --leak-check=yes --show-reachable=yes git-http-fetch...
+> It's certainly an option to just do what I just did, namely use the 
+> default one until it breaks, and then just do "git reset --hard" and re-do 
+> the pull with "-s recursive". A bit sad, and it would be good to have 
+> coverage on the recursive strategy..
 
-and check for jump depending on uninitialized memory?
+We already have a fallback list: after really-trivial, try automatic, ...,
+try resolve. Why not just add recursive? So, if even resolve failed, just 
+try once more, with recursive.
 
-Hth,
+Ciao,
 Dscho
