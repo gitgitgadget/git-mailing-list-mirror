@@ -1,112 +1,94 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-rev-tree
-Date: Mon, 7 Nov 2005 18:33:30 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511071819510.3247@g5.osdl.org>
-References: <20051108021232.GB10835@redhat.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Errors cloning over http -- git-clone and cg-clone fail to fetch a reachable object...
+Date: Tue, 8 Nov 2005 15:37:29 +1300
+Message-ID: <46a038f90511071837g474bdc44vf60dd0758511f24c@mail.gmail.com>
+References: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com>
+	 <46a038f90511061852h5cdf9539o34f69b4deb9f041a@mail.gmail.com>
+	 <20051107043737.GI3001@reactrix.com>
+	 <46a038f90511062050geee7e73qddcd52e3a2ec86df@mail.gmail.com>
+	 <20051107171446.GA4070@reactrix.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 08 03:35:00 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 08 03:38:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZJJQ-0003KJ-Az
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 03:34:16 +0100
+	id 1EZJMc-0003uh-71
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 03:37:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965683AbVKHCeG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Nov 2005 21:34:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965678AbVKHCeB
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 21:34:01 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:57225 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965674AbVKHCd5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 21:33:57 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA82XcnO006518
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 7 Nov 2005 18:33:39 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA82XUhZ013068;
-	Mon, 7 Nov 2005 18:33:35 -0800
-To: Dave Jones <davej@redhat.com>
-In-Reply-To: <20051108021232.GB10835@redhat.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965668AbVKHChb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 21:37:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965675AbVKHChb
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 21:37:31 -0500
+Received: from zproxy.gmail.com ([64.233.162.194]:42588 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S965668AbVKHCh3 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 21:37:29 -0500
+Received: by zproxy.gmail.com with SMTP id z31so450618nzd
+        for <git@vger.kernel.org>; Mon, 07 Nov 2005 18:37:29 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DIW9RZ6qyJMtT6LxmxI8raPAKJF/n8rBiF1fedTng8c5bQ7sP3OHkaIfTabrS8Ium9LD7iQOHgAB7qmjsdb4c3I+ZwGYYyKC5vUatoVlLfwmKqfdFlX9CcLZtUsn7A1CFKWQyP6YpwyBAApoAhqjI1BPo85Z5fm6safgu2Qs0uw=
+Received: by 10.65.235.11 with SMTP id m11mr6093574qbr;
+        Mon, 07 Nov 2005 18:37:29 -0800 (PST)
+Received: by 10.64.232.18 with HTTP; Mon, 7 Nov 2005 18:37:29 -0800 (PST)
+To: Nick Hengeveld <nickh@reactrix.com>
+In-Reply-To: <20051107171446.GA4070@reactrix.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11304>
+
+On 11/8/05, Nick Hengeveld <nickh@reactrix.com> wrote:
+
+> You might try this to see exactly what request/response headers
+> curl thinks are passing back and forth.
+
+It definitely looks like it's doing a few requests in parallel and
+getting them mixed up. BTW, this repo is public and sitting on a box
+that doubles up as kernel mirror -- feel free to hit it ;-)
+
+> GET /git/moodle.git/objects/f0/6a06d24eee0b7819e2aaf48ad0e255301394e0 HTTP/1.1
+Host: locke.catalyst.net.nz
+Accept: */*
+
+* Connected to locke.catalyst.net.nz (202.78.240.39) port 80
+* Couldn't find host locke.catalyst.net.nz in the .netrc file, using defaults
+* About to connect() to locke.catalyst.net.nz port 80
+*   Trying 202.78.240.39... > GET
+/git/moodle.git/objects/d9/6d5ee03a225ab4e750fb864dbea35d42c51b8b
+HTTP/1.1
+Host: locke.catalyst.net.nz
+Accept: */*
+
+* Connected to locke.catalyst.net.nz (202.78.240.39) port 80
+* The requested URL returned error: 404
+* Closing connection #0
+* The requested URL returned error: 404
+* Closing connection #0
+> GET /git/moodle.git/objects/5e/0e0d41f781d53344fa67b5e5a0138b586e2946 HTTP/1.1
+Host: locke.catalyst.net.nz
+Accept: */*
+
+* The requested URL returned error: 404
+* Closing connection #0
+* The requested URL returned error: 404
+* Closing connection #0
+error: Unable to get pack file
+http://locke.catalyst.net.nz/git/moodle.git//objects/pack/pack-9cbe4a5eb777d4ee535f08feb471e812208ed3a5.pack
+The requested URL returned error: 404
+error: Unable to find 7004cdf821ab5ddcded7819dea34015b0e84cd9a under
+http://locke.catalyst.net.nz/git/moodle.git/
+
+Cannot obtain needed blob 7004cdf821ab5ddcded7819dea34015b0e84cd9a
+while processing commit b065a5cb7f757dd6e271249cb49e19e8c34b26ce.
+cg-fetch: objects fetch failed
+cg-clone: fetch failed
+
+cheers,
 
 
-
-On Mon, 7 Nov 2005, Dave Jones wrote:
->
-> Can someone remind me what the deprecated git-rev-tree command did,
-> or how this should be fixed up to use newer git commands?
-
-It was basically the same as "git-rev-list", except:
-
- - it output the date (as a raw number) in front, so pretty much everybody 
-   ended up using "cut" to remove it, sometimes after sorting the output 
-   numerically.
-
-   Sorting numerically is unnecessary with git-rev-list, since the output 
-   is already sorted (not necessarily exactly by date, but by "recency" 
-   and/or by other even stricter sorting rules)
-
- - it was limited to a certain number of heads maximum (I forget, but I 
-   think it was 16).
-
- - it parsed the whole tree before outputting anything.
-
-> I'm trying to get git-changes-script working, but all the
-> variants I've found on the web use this deprecated tool.
-
-The git-changes-script was pretty broken.
-
-You're _much_ better off doing it by:
-
- - fetch the "remote" branch into the local repository. The 
-   "git-changes-script" thing required that you fetch the remote branch 
-   into _another_ repository, but still local. These days, just use a 
-   local branch in the same repo.
-
-   So, for example, tracking my tree
-
-	export KERNEL=master.kernel.org:/pub/scm/linux/kernel/git/
-	git fetch $KERNEL/torvalds/linux-2.6 master:linus
-
-   which will just fetch my "master" branch into the local "linus" branch.
-
- - then just do
-
-	git log linus..HEAD
-
-   and you'll see exactly what you wanted: what exists in your HEAD but 
-   not in mine.
-
-No complex script required.
-
-Now, I've told some people that the diffstat is just the same (ie using a 
-simple "git diff linus..HEAD | git-apply --stat") but that was because 
-I've been muching some really awesomely bad 'shrooms. Clearly that doesn't 
-work well at all, since it will show all the stuff I have in my branch 
-reversed (since your head doesn't have it). 
-
-The way to get a diff is really to do a merge, and throw the merge away 
-after creating the diff. Ie something like this should work:
-
-	git checkout -b merge-branch
-	git merge "dummy merge" master linus &&
-		git-diff linus.. | git-apply --stat
-	git checkout -f master
-	git branch -D merge-branch
-
-which will also tell you if the merge failed (in which case you might not 
-want to send me a "please pull", but instead try the merge locally and fix 
-it up, and then try again)
-
-All of the above is obviously totally untested.
-
-		Linus
+martin
