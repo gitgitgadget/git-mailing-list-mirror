@@ -1,94 +1,117 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Errors cloning over http -- git-clone and cg-clone fail to fetch a reachable object...
-Date: Tue, 8 Nov 2005 15:37:29 +1300
-Message-ID: <46a038f90511071837g474bdc44vf60dd0758511f24c@mail.gmail.com>
-References: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com>
-	 <46a038f90511061852h5cdf9539o34f69b4deb9f041a@mail.gmail.com>
-	 <20051107043737.GI3001@reactrix.com>
-	 <46a038f90511062050geee7e73qddcd52e3a2ec86df@mail.gmail.com>
-	 <20051107171446.GA4070@reactrix.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 08 03:38:58 2005
+From: Jon Loeliger <jdl@freescale.com>
+Subject: [PATCH] Add bug isolation howto, scraped from Linus.
+Date: Mon, 07 Nov 2005 20:45:25 -0600
+Message-ID: <E1EZJUD-0001yw-Io@jdl.com>
+X-From: git-owner@vger.kernel.org Tue Nov 08 03:46:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZJMc-0003uh-71
-	for gcvg-git@gmane.org; Tue, 08 Nov 2005 03:37:34 +0100
+	id 1EZJUT-0005dY-6e
+	for gcvg-git@gmane.org; Tue, 08 Nov 2005 03:45:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965668AbVKHChb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Nov 2005 21:37:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965675AbVKHChb
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 21:37:31 -0500
-Received: from zproxy.gmail.com ([64.233.162.194]:42588 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965668AbVKHCh3 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 21:37:29 -0500
-Received: by zproxy.gmail.com with SMTP id z31so450618nzd
-        for <git@vger.kernel.org>; Mon, 07 Nov 2005 18:37:29 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DIW9RZ6qyJMtT6LxmxI8raPAKJF/n8rBiF1fedTng8c5bQ7sP3OHkaIfTabrS8Ium9LD7iQOHgAB7qmjsdb4c3I+ZwGYYyKC5vUatoVlLfwmKqfdFlX9CcLZtUsn7A1CFKWQyP6YpwyBAApoAhqjI1BPo85Z5fm6safgu2Qs0uw=
-Received: by 10.65.235.11 with SMTP id m11mr6093574qbr;
-        Mon, 07 Nov 2005 18:37:29 -0800 (PST)
-Received: by 10.64.232.18 with HTTP; Mon, 7 Nov 2005 18:37:29 -0800 (PST)
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20051107171446.GA4070@reactrix.com>
-Content-Disposition: inline
+	id S965684AbVKHCpe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Nov 2005 21:45:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965686AbVKHCpd
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Nov 2005 21:45:33 -0500
+Received: from mail.jdl.com ([66.118.10.122]:48838 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S965684AbVKHCpc (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Nov 2005 21:45:32 -0500
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1EZJUD-0001yw-Io
+	for git@vger.kernel.org; Mon, 07 Nov 2005 20:45:26 -0600
+To: git@vger.kernel.org
+X-Spam-Score: -105.9 (---------------------------------------------------)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11304>
-
-On 11/8/05, Nick Hengeveld <nickh@reactrix.com> wrote:
-
-> You might try this to see exactly what request/response headers
-> curl thinks are passing back and forth.
-
-It definitely looks like it's doing a few requests in parallel and
-getting them mixed up. BTW, this repo is public and sitting on a box
-that doubles up as kernel mirror -- feel free to hit it ;-)
-
-> GET /git/moodle.git/objects/f0/6a06d24eee0b7819e2aaf48ad0e255301394e0 HTTP/1.1
-Host: locke.catalyst.net.nz
-Accept: */*
-
-* Connected to locke.catalyst.net.nz (202.78.240.39) port 80
-* Couldn't find host locke.catalyst.net.nz in the .netrc file, using defaults
-* About to connect() to locke.catalyst.net.nz port 80
-*   Trying 202.78.240.39... > GET
-/git/moodle.git/objects/d9/6d5ee03a225ab4e750fb864dbea35d42c51b8b
-HTTP/1.1
-Host: locke.catalyst.net.nz
-Accept: */*
-
-* Connected to locke.catalyst.net.nz (202.78.240.39) port 80
-* The requested URL returned error: 404
-* Closing connection #0
-* The requested URL returned error: 404
-* Closing connection #0
-> GET /git/moodle.git/objects/5e/0e0d41f781d53344fa67b5e5a0138b586e2946 HTTP/1.1
-Host: locke.catalyst.net.nz
-Accept: */*
-
-* The requested URL returned error: 404
-* Closing connection #0
-* The requested URL returned error: 404
-* Closing connection #0
-error: Unable to get pack file
-http://locke.catalyst.net.nz/git/moodle.git//objects/pack/pack-9cbe4a5eb777d4ee535f08feb471e812208ed3a5.pack
-The requested URL returned error: 404
-error: Unable to find 7004cdf821ab5ddcded7819dea34015b0e84cd9a under
-http://locke.catalyst.net.nz/git/moodle.git/
-
-Cannot obtain needed blob 7004cdf821ab5ddcded7819dea34015b0e84cd9a
-while processing commit b065a5cb7f757dd6e271249cb49e19e8c34b26ce.
-cg-fetch: objects fetch failed
-cg-clone: fetch failed
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11305>
 
 
-martin
+Signed-off-by: Jon Loeliger <jdl@freescale.com>
+
+---
+
+You know, eventually this will all be fully documented.
+The trick is to catch Words To The Wise as the flow past you.
+
+
+ Documentation/howto/isolate-bugs-with-bisect.txt |   65 ++++++++++++++++++++++
+ 1 files changed, 65 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/howto/isolate-bugs-with-bisect.txt
+
+applies-to: 71213f57daeac18b52439d6d8acd5baba9bf05c7
+4e0819ff782b33d149634a397fb539f4759ef1f4
+diff --git a/Documentation/howto/isolate-bugs-with-bisect.txt b/Documentation/howto/isolate-bugs-with-bisect.txt
+new file mode 100644
+index 0000000..4009495
+--- /dev/null
++++ b/Documentation/howto/isolate-bugs-with-bisect.txt
+@@ -0,0 +1,65 @@
++From:	Linus Torvalds <torvalds () osdl ! org>
++To:	git@vger.kernel.org
++Date:	2005-11-08 1:31:34
++Subject: Real-life kernel debugging scenario
++Abstract: Short-n-sweet, Linus tells us how to leverage `git-bisect` to perform
++	bug isolation on a repository where "good" and "bad" revisions are known
++	in order to identify a suspect commit.
++
++
++How To Use git-bisect To Isolate a Bogus Commit
++===============================================
++
++The way to use "git bisect" couldn't be easier.
++
++Figure out what the oldest bad state you know about is (that's usually the 
++head of "master", since that's what you just tried to boot and failed at). 
++Also, figure out the most recent known-good commit (usually the _previous_ 
++kernel you ran: and if you've only done a single "pull" in between, it 
++will be ORIG_HEAD).
++
++Then do
++
++	git bisect start
++	git bisect bad master		<- mark "master" as the bad state
++	git bisect good ORIG_HEAD	<- mark ORIG_HEAD as good (or
++					   whatever other known-good 
++					   thing you booted laste)
++
++and at this point "git bisect" will churn for a while, and tell you what 
++the mid-point between those two commits are, and check that state out as 
++the head of the bew "bisect" branch.
++
++Compile and reboot.
++
++If it's good, just do
++
++	git bisect good		<- mark current head as good
++
++otherwise, reboot into a good kernel instead, and do (surprise surprise, 
++git really is very intuitive):
++
++	git bisect bad		<- mark current head as bad
++
++and whatever you do, git will select a new half-way point. Do this for a 
++while, until git tells you exactly which commit was the first bad commit. 
++That's your culprit.
++
++It really works wonderfully well, except for the case where there was 
++_another_ commit that broke something in between, like introduced some 
++stupid compile error. In that case you should not mark that commit good or 
++bad: you should try to find another commit close-by, and do a "git reset 
++--hard <newcommit>" to try out _that_ commit instead, and then test that 
++instead (and mark it good or bad).
++
++You can do "git bisect visualize" while you do all this to see what's 
++going on by starting up gitk on the bisection range.
++
++Finally, once you've figured out exactly which commit was bad, you can 
++then go back to the master branch, and try reverting just that commit:
++
++	git checkout master
++	git revert <bad-commit-id>
++
++to verify that the top-of-kernel works with that single commit reverted.
++
+---
+0.99.9.GIT
