@@ -1,91 +1,51 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH] merge-recursive: Fix support for branch names containing slashes
-Date: Wed, 9 Nov 2005 11:42:57 +0100
-Message-ID: <20051109104257.GC4960@c165.ib.student.liu.se>
-References: <E1EZKOB-0002j5-VY@jdl.com> <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net> <20051108210332.GB23265@c165.ib.student.liu.se> <7v7jbig6m7.fsf@assigned-by-dhcp.cox.net> <20051108225320.GB4805@c165.ib.student.liu.se> <7vmzkenzcx.fsf@assigned-by-dhcp.cox.net> <20051109081906.GA4960@c165.ib.student.liu.se>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH 0/4] Add git-pack-intersect
+Date: Wed, 9 Nov 2005 12:19:17 +0100
+Message-ID: <20051109111917.GB30496@pasky.or.cz>
+References: <43714EFB.5070705@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 09 11:45:03 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Nov 09 12:20:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZnPx-0003CA-5V
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 11:43:01 +0100
+	id 1EZnz9-0003ey-9S
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 12:19:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030277AbVKIKm6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Nov 2005 05:42:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030489AbVKIKm6
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 05:42:58 -0500
-Received: from [85.8.31.11] ([85.8.31.11]:22928 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S1030277AbVKIKm6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 05:42:58 -0500
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 220954102; Wed,  9 Nov 2005 11:51:22 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EZnPt-0000H2-00; Wed, 09 Nov 2005 11:42:57 +0100
-To: Fredrik Kuivinen <freku045@student.liu.se>
+	id S1030215AbVKILTU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 9 Nov 2005 06:19:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751371AbVKILTU
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 06:19:20 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:58754 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751373AbVKILTU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 06:19:20 -0500
+Received: (qmail 6111 invoked by uid 2001); 9 Nov 2005 12:19:17 +0100
+To: Lukas =?iso-8859-1?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>
 Content-Disposition: inline
-In-Reply-To: <20051109081906.GA4960@c165.ib.student.liu.se>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <43714EFB.5070705@etek.chalmers.se>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11394>
 
-On Wed, Nov 09, 2005 at 09:19:06AM +0100, Fredrik Kuivinen wrote:
-> On Tue, Nov 08, 2005 at 09:50:54PM -0800, Junio C Hamano wrote:
-> > Fredrik Kuivinen <freku045@student.liu.se> writes:
-> > 
-> > >> Oops, I missed that part.  This is unsafe in theory, if you
-> > >> could overwrite existing file3_master or file3_dev.  Does that
-> > >> matter in practice?
-> > >
-> > > It wont overwrite any existing files. If there is a file named
-> > > 'file3_master' then the new file will be named 'file3_master_1' and if
-> > > that file also exists the new file will be named 'file3_master_2', and
-> > > so on.
-> > 
-> > Another thing to watch out is that a branch name could have a
-> > slash in it.  It might make more sense to just name the heads file3~2
-> > or file3~3 (with as many ~s repeated to avoid name clashes) like
-> > Pasky does.
-> > 
-> 
-> Oups, I haven't thought about that. I kind of like the idea that you
-> can see the branch name in the file names though. How about replacing
-> any slashes in the branch names with underscores? So the branch
-> 'foo/bar' will give rise to files with suffixes like '_foo_bar' and
-> '_foo_bar_<number>'.
-> 
+Dear diary, on Wed, Nov 09, 2005 at 02:20:59AM CET, I got a letter
+where Lukas Sandstr=F6m <lukass@etek.chalmers.se> said that...
+> This patch series adds git-pack-intersect. It finds redundant packs
+> by calculating the union of all objects present in .git/objects/pack
+> and then computing the smallest set of packs which contain all the
+> objects in this union.
 
-And here is a patch to implement this. Should apply cleanly on top of
-'[PATCH] merge-recursive: Fix limited output of rename messages'.
+Sounds nice, except the name - it does something else than what the nam=
+e
+says, so perhaps something like 'git-pack-redundant' would be more
+appropriate.
 
----
-
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
-
-
----
-
- git-merge-recursive.py |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-applies-to: 1dd8c1800d7dd0425bc93f4c9441acfb207b1488
-795e2900e8804af53263821c177a270cd2d7c2c0
-diff --git a/git-merge-recursive.py b/git-merge-recursive.py
-index 3657875..90e889c 100755
---- a/git-merge-recursive.py
-+++ b/git-merge-recursive.py
-@@ -295,6 +295,7 @@ def uniquePath(path, branch):
-             else:
-                 raise
- 
-+    branch = branch.replace('/', '_')
-     newPath = path + '_' + branch
-     suffix = 0
-     while newPath in currentFileSet or \
----
-0.99.9.GIT
+--=20
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
