@@ -1,105 +1,66 @@
-From: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
-Subject: [PATCH 4/4] Make git-repack use git-pack-intersect
-Date: Wed, 09 Nov 2005 02:25:48 +0100
-Organization: Chalmers
-Message-ID: <4371501C.6000204@etek.chalmers.se>
-References: <43714EFB.5070705@etek.chalmers.se>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Comments on recursive merge..
+Date: Tue, 08 Nov 2005 17:42:26 -0800
+Message-ID: <7v8xvyd2bh.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+	<20051107225807.GA10937@c165.ib.student.liu.se>
+	<7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
+	<Pine.LNX.4.63.0511081254520.2649@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20051108210211.GA23265@c165.ib.student.liu.se>
+	<Pine.LNX.4.64.0511081351020.3247@g5.osdl.org>
+	<20051108223609.GA4805@c165.ib.student.liu.se>
+	<Pine.LNX.4.64.0511081450080.3247@g5.osdl.org>
+	<20051109003236.GA30496@pasky.or.cz>
+	<Pine.LNX.4.64.0511081646160.3247@g5.osdl.org>
+	<7vlkzyd4aq.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511081716450.3247@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>,
-	junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Nov 09 02:26:07 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 09 02:44:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZeiP-0000wf-SP
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 02:25:30 +0100
+	id 1EZf04-0000sT-24
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 02:43:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030497AbVKIBZ1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 Nov 2005 20:25:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030500AbVKIBZ1
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 20:25:27 -0500
-Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:53165 "EHLO
-	pne-smtpout2-sn1.fre.skanova.net") by vger.kernel.org with ESMTP
-	id S1030497AbVKIBZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2005 20:25:27 -0500
-Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout2-sn1.fre.skanova.net (7.2.060.1)
-        id 436FB1AD00061828; Wed, 9 Nov 2005 02:25:26 +0100
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <43714EFB.5070705@etek.chalmers.se>
+	id S932431AbVKIBm3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Nov 2005 20:42:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932444AbVKIBm2
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 20:42:28 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:39631 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932431AbVKIBm2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Nov 2005 20:42:28 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051109014136.OWCI776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 8 Nov 2005 20:41:36 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511081716450.3247@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 8 Nov 2005 17:22:15 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11383>
 
-Make git-repack use git-pack-intersect.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Signed-off-by: Lukas Sandstr=F6m <lukass@etek.chalmers.se>
+> It does:
+>
+> 	struct commit *commit = pop_one_commit(list_p);
+> 	int still_interesting = !!interesting(*list_p);
+>
+> in that order: it looks whether there are any interesting commits left 
+> _after_ it has popped the top-of-stack.
 
----
+Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh.  You are right.
 
- git-repack.sh |   30 ++++++++++++------------------
- 1 files changed, 12 insertions(+), 18 deletions(-)
+The problem is most of the time hidden, because we usually do
+one extra round (extra usually starts from 0 and we break out
+after we say "not interesting anymore" and extra < 0).
 
-applies-to: 73e05dab832dd7320a5128fbf97e693f23ffb949
-2cbd6ade19a768eca47f6f7313f6831226ee58b7
-diff --git a/git-repack.sh b/git-repack.sh
-index d341966..3f28300 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -32,10 +32,6 @@ case ",$all_into_one," in
- 	rev_list=3D
- 	rev_parse=3D'--all'
- 	pack_objects=3D
--	# This part is a stop-gap until we have proper pack redundancy
--	# checker.
--	existing=3D`cd "$PACKDIR" && \
--	    find . -type f \( -name '*.pack' -o -name '*.idx' \) -print`
- 	;;
- esac
- if [ "$local" ]; then
-@@ -46,6 +42,14 @@ name=3D$(git-rev-list --objects $rev_list=20
- 	exit 1
- if [ -z "$name" ]; then
- 	echo Nothing new to pack.
-+	if test "$remove_redandant" =3D t ; then
-+		echo "Removing redundant packs."
-+		sync
-+		redundant=3D$(git-pack-intersect -a)
-+		if test "$redundant" !=3D "" ; then
-+			echo $redundant | xargs rm
-+		fi
-+	fi
- 	exit 0
- fi
- echo "Pack pack-$name created."
-@@ -58,20 +62,10 @@ exit
-=20
- if test "$remove_redandant" =3D t
- then
--	# We know $existing are all redandant only when
--	# all-into-one is used.
--	if test "$all_into_one" !=3D '' && test "$existing" !=3D ''
--	then
--		sync
--		( cd "$PACKDIR" &&
--		  for e in $existing
--		  do
--			case "$e" in
--			./pack-$name.pack | ./pack-$name.idx) ;;
--			*)	rm -f $e ;;
--			esac
--		  done
--		)
-+	sync
-+	redundant=3D$(git-pack-intersect -a)
-+	if test "$redundant" !=3D "" ; then
-+		echo $redundant | xargs rm
- 	fi
- fi
-=20
----
-0.99.9.GIT
+Obviously, I was not thinking clearly.
