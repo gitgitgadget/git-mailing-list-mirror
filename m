@@ -1,80 +1,79 @@
-From: Blaisorblade <blaisorblade@yahoo.it>
-Subject: [cogito] cg-merge does not remove files removed upstream on fast-forward
-Date: Wed, 9 Nov 2005 01:08:33 +0100
-Message-ID: <200511090108.51776.blaisorblade@yahoo.it>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Comments on recursive merge..
+Date: Tue, 8 Nov 2005 16:18:53 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511081614140.3247@g5.osdl.org>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+ <20051107225807.GA10937@c165.ib.student.liu.se> <7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
+ <Pine.LNX.4.63.0511081254520.2649@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20051108210211.GA23265@c165.ib.student.liu.se> <Pine.LNX.4.64.0511081351020.3247@g5.osdl.org>
+ <20051108223609.GA4805@c165.ib.student.liu.se> <Pine.LNX.4.64.0511081450080.3247@g5.osdl.org>
+ <Pine.LNX.4.63.0511090017370.28256@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 09 01:03:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Fredrik Kuivinen <freku045@student.liu.se>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 09 01:20:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZdPz-0005Di-Eb
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 01:02:23 +0100
+	id 1EZdge-00048s-I2
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 01:19:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030433AbVKIACS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Nov 2005 19:02:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030434AbVKIACS
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 19:02:18 -0500
-Received: from smtp001.mail.ukl.yahoo.com ([217.12.11.32]:38804 "HELO
-	smtp001.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1030433AbVKIACR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Nov 2005 19:02:17 -0500
-Received: (qmail 54497 invoked from network); 9 Nov 2005 00:02:15 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Received:From:To:Subject:Date:User-Agent:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-Disposition:Message-Id;
-  b=gULuI71Pio/XlWqWtQrgrZ84cQ6K0vvpItotY6bnbxmIG6zw9GrQLYeKclmoOtBK45CSpFKstBh9qgrhVn7TYOQyVRRgDINduZTUYeEmxMBxvW++Ai/SCTaLLz8kt53r+39bv3Bi4OBhk575A1w1LiVfpS+Z9TqXsutVdXT8GRw=  ;
-Received: from unknown (HELO ?151.97.230.52?) (blaisorblade@151.97.230.52 with login)
-  by smtp001.mail.ukl.yahoo.com with SMTP; 9 Nov 2005 00:02:15 -0000
-To: Petr Baudis <pasky@suse.cz>
-User-Agent: KMail/1.8.3
-Content-Disposition: inline
+	id S1030460AbVKIATc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Nov 2005 19:19:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030459AbVKIATc
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 19:19:32 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:32167 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030461AbVKIATa (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2005 19:19:30 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA90JDnO002216
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 8 Nov 2005 16:19:14 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA90Iq8C029406;
+	Tue, 8 Nov 2005 16:19:02 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0511090017370.28256@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11371>
 
-Once again, (not the first time) when doing "cg-merge origin" (or cg-update I 
-guess, too) I find a tons of files which were removed upstream and cogito 
-didn't remove. It was a fast-forward merge on Linus' tree:
 
-$ cg merge origin
-Fast-forwarding d83c671fb7023f69a9582e622d01525054f23b66 -> 
-a52e8381c430896d3bd6065a34fda99cb5c74c82
-        on top of d83c671fb7023f69a9582e622d01525054f23b66...
 
-cg version
-cogito-0.15.1 (b07f98ba4cabdd9d208da28be932e547675e5cdf)
-(The base id is ab91bd11258f8987fc8d537871c733e04f8c8248, I've added a trivial 
-patch to add more options to cg-diff and cg-mkpatch, i.e. unrelated).
+On Wed, 9 Nov 2005, Johannes Schindelin wrote:
+> 
+> On Tue, 8 Nov 2005, Linus Torvalds wrote:
+> 
+> > Junio, that points out that "git-merge-base" is another program that could 
+> > just be removed, since it's really supreceded by git-show-branch. Or did I 
+> > miss something?
+> 
+> IIRC, git-show-branch has a limit on the number of refs it can take.
 
-Below there is the excerpt of code in tree_timewarp:
+Well, git-merge-base does too. git-merge-base only takes two refs ;)
 
-       # Kill gone files
-        git-diff-tree -z -r $base $branch | xargs -0 bash -c '
-                while [ "$1" ]; do
-                        header="$1"; shift
-                        file="$1"; shift
+In general, you need to keep track of one bit per ref, and since we have 
+a 32-bit "flags" word and need a couple of bits for other maintenance 
+info, pretty much anything that figures out common heads will be limited 
+some way. 
 
-                        # match ":100755 000000 14d43b1abf... 000000000... D"
-                        if echo "$header" | egrep "^:([^ ][^ ]* ){4}D" 
->/dev/null; then
-                                rm -- "$file"
-                        fi
-                done
-        ' padding
+This is only a limit for the "and" logic - the "or" logic (if we implement 
+it) will just share the same status bit for all the refs that are "ored 
+together" and thus has no limits. 
 
-I must say I also saw git-ls-files --deleted running with top (probably from 
-cg-patch), but it didn't seem to help.
--- 
-Inform me of my mistakes, so I can keep imitating Homer Simpson's "Doh!".
-Paolo Giarrusso, aka Blaisorblade (Skype ID "PaoloGiarrusso", ICQ 215621894)
-http://www.user-mode-linux.org/~blaisorblade
+Oh, and the "and" logic can be extended by running the program multiple 
+times, so it's not a "hard" limit, it's just an issue of convenience.
 
-		
-___________________________________ 
-Yahoo! Messenger: chiamate gratuite in tutto il mondo 
-http://it.messenger.yahoo.com
+That said, anybody who ever does an octopus of more than just a few heads 
+deserves to be shot, so I don't think the limit should matter. The 
+recursive strategy should only add the "or" kind of refs, and it 
+shouldn't be a problem (apart from just how to describe them).
+
+		Linus
