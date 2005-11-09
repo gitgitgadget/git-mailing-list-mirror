@@ -1,59 +1,84 @@
-From: wa1ter@myrealbox.com
+From: Jon Loeliger <jdl@freescale.com>
 Subject: Re: Real-life kernel debugging scenario
-Date: Wed, 9 Nov 2005 09:40:06 -0800
-Organization: none
-Message-ID: <Pine.LNX.4.64.0511090901370.6744@x2.ybpnyarg>
-References: <dkosr7$f4s$1@sea.gmane.org> <Pine.LNX.4.64.0511071721200.3247@g5.osdl.org>
+Date: Wed, 09 Nov 2005 12:17:13 -0600
+Message-ID: <1131560233.23046.26.camel@cashmere.sps.mot.com>
+References: A<Pine.LNX.4.64.0511090901370.6744@x2.ybpnyarg>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed Nov 09 19:12:00 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 09 19:24:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZuEb-0006RZ-0P
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 18:59:45 +0100
+	id 1EZuVb-0007ED-Ns
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 19:17:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932654AbVKIR7l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Nov 2005 12:59:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932675AbVKIR7l
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 12:59:41 -0500
-Received: from main.gmane.org ([80.91.229.2]:64145 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932654AbVKIR7k (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 12:59:40 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EZu6D-0001wc-Tx
-	for git@vger.kernel.org; Wed, 09 Nov 2005 18:51:08 +0100
-Received: from adsl-69-234-197-18.dsl.irvnca.pacbell.net ([69.234.197.18])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 Nov 2005 18:51:05 +0100
-Received: from wa1ter by adsl-69-234-197-18.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 Nov 2005 18:51:05 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-197-18.dsl.irvnca.pacbell.net
-In-Reply-To: <Pine.LNX.4.64.0511071721200.3247@g5.osdl.org>
+	id S1030653AbVKISRQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Nov 2005 13:17:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030654AbVKISRQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 13:17:16 -0500
+Received: from az33egw01.freescale.net ([192.88.158.102]:6536 "EHLO
+	az33egw01.freescale.net") by vger.kernel.org with ESMTP
+	id S1030653AbVKISRQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Nov 2005 13:17:16 -0500
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id jA9ITGCK024901;
+	Wed, 9 Nov 2005 11:29:16 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id jA9INN7E010396;
+	Wed, 9 Nov 2005 12:23:23 -0600 (CST)
+To: wa1ter@myrealbox.com
+In-Reply-To: A<Pine.LNX.4.64.0511090901370.6744@x2.ybpnyarg>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11406>
+
+On Wed, 2005-11-09 at 11:40, wa1ter@myrealbox.com wrote:
+> 
+> On Mon, 7 Nov 2005, Linus Torvalds wrote:
+> 
+> [...]
+> > The way to use "git bisect" couldn't be easier.
+> 
+> I see that Junio just added your entire response to
+> Documentation/howto/
+> isolate-bugs-with-bisect.txt where even I could manage to find it :o)
+
+Why, thank you. :-)
 
 
+> The built-in variable ORIG_HEAD isn't explained anywhere AFAICT, or at
+> least it wasn't until today.  Are there other such magic variables
+> which
+> might be useful for us to know about?
 
-On Mon, 7 Nov 2005, Linus Torvalds wrote:
+Hey Junio,
 
-[...]
-> The way to use "git bisect" couldn't be easier.
+I'm going to call "I told you so!" on this one! :-)
 
-I see that Junio just added your entire response to Documentation/howto/
-isolate-bugs-with-bisect.txt where even I could manage to find it :o)
+Ref:
+    Message-ID:  <E1EXTw5-00063o-Gt@jdl.com>
+    From: Jon Loeliger <jdl@freescale.com>
+    Subject: Now What?
+    Date: Wed, 2 Nov 2005 18:30:37 -0700
 
-> Also, figure out the most recent known-good commit (usually the _previous_
-> kernel you ran: and if you've only done a single "pull" in between, it
-> will be ORIG_HEAD).
+Where in I mumbled:
 
-The built-in variable ORIG_HEAD isn't explained anywhere AFAICT, or at
-least it wasn't until today.  Are there other such magic variables which
-might be useful for us to know about?
+    I feel that an explanation of all of the behind-the-scripts-
+    in-.git communication files is needed.  In particular these:
+
+        FETCH_HEAD
+        MERGE_HEAD
+        LAST_MERGE
+        MERGE_MSG
+
+    These need to be mentioned and explained because they
+    frequently form exactly the critical missing link or
+    starting point after a failed fetch or merge.
+
+You know.
+
+jdl
