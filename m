@@ -1,60 +1,88 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Errors cloning over http -- git-clone and cg-clone fail to fetch a reachable object...
-Date: Wed, 9 Nov 2005 12:20:30 +0100
-Message-ID: <20051109112030.GC30496@pasky.or.cz>
-References: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com> <1537CD60-21E4-4F5E-820F-216A4E8C06AC@hawaga.org.uk> <20051109010922.GC5830@reactrix.com> <5C8707EC-3A6F-46B6-8FB1-AAB0842DDDD1@hawaga.org.uk>
+Subject: Re: Expected Behavior?
+Date: Wed, 9 Nov 2005 12:24:52 +0100
+Message-ID: <20051109112452.GD30496@pasky.or.cz>
+References: <E1EZKOB-0002j5-VY@jdl.com> <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net> <20051108210332.GB23265@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nick Hengeveld <nickh@reactrix.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 09 12:22:10 2005
+Cc: Junio C Hamano <junkio@cox.net>, Jon Loeliger <jdl@freescale.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 09 12:26:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZo0K-0004C5-9R
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 12:20:36 +0100
+	id 1EZo4Y-0005xk-8M
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 12:24:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751368AbVKILUe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Nov 2005 06:20:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751371AbVKILUe
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 06:20:34 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:60546 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751368AbVKILUd (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 06:20:33 -0500
-Received: (qmail 6404 invoked by uid 2001); 9 Nov 2005 12:20:30 +0100
-To: Ben Clifford <benc@hawaga.org.uk>
+	id S1751373AbVKILYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Nov 2005 06:24:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbVKILYz
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 06:24:55 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:51361 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751373AbVKILYz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 06:24:55 -0500
+Received: (qmail 7241 invoked by uid 2001); 9 Nov 2005 12:24:52 +0100
+To: Fredrik Kuivinen <freku045@student.liu.se>
 Content-Disposition: inline
-In-Reply-To: <5C8707EC-3A6F-46B6-8FB1-AAB0842DDDD1@hawaga.org.uk>
+In-Reply-To: <20051108210332.GB23265@c165.ib.student.liu.se>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11396>
 
-Dear diary, on Wed, Nov 09, 2005 at 10:49:30AM CET, I got a letter
-where Ben Clifford <benc@hawaga.org.uk> said that...
+Dear diary, on Tue, Nov 08, 2005 at 10:03:32PM CET, I got a letter
+where Fredrik Kuivinen <freku045@student.liu.se> said that...
+> On Mon, Nov 07, 2005 at 10:00:11PM -0800, Junio C Hamano wrote:
+> > Jon Loeliger <jdl@freescale.com> writes:
+> > 
+> > > That is, after the merge, file3 appears to have simply kept
+> > > the contents of the current, master branch.  Why wasn't the
+> > > dev branch represented here?
+> > >
+> > > I _almost_ think I get it, and then *poof*...
+> > 
+> > Automerge completely punted for this path, and at this point, it
+> > is still unmerged:
+> > 
+> > ------------
+> > $ git ls-files --unmerged
+> > 100644 c4da0eb.... 2       file3
+> > 100644 fbc2aa4.... 3       file3
+> > ------------
+> > 
+> > Three-way "git-read-tree -m -u O A B" (O is for old, A is ours
+> > and B is hers) puts O in stage1, A in stage2 and B in stage3.
+> > This path did not exist in O so we only have them in stage2 and
+> > stage3.  You could compare the stages like this:
+> > 
 > 
-> On 9 Nov 2005, at 12:09, Nick Hengeveld wrote:
-> >
-> >Those curl result codes all look wrong, and sounds like a memory issue
-> >that Johannes Schindelin recently fixed in commit
-> >90279074ca5cc336a8bfffd47d19d089b291b432.  Does your git build have  
-> >that
-> >patch?
+> Jon: You could try to this merge with the recursive merge strategy
+> (git merge -s recursive 'merge message' master dev) If you do, you
+> _should_ get something like:
 > 
-> I did not - I've pulled and rebuilt from master, and have that commit  
-> now.
-> It works better (not perfectly (there's a tags 403) but I suspect  
-> that may be permissions config at my server end or absence of tags in  
-> my repo or something mumble). I can do this a bunch of times in a row  
-> with the same results and the resulting cloned repository looks sane.
+>     CONFLICT (add/add): File file3 added non-identically in both
+>     branches. Adding as file3_master and file3_dev instead.
+> 
+> You will then end up with file3_master and file3_dev in your working
+> tree, which corresponds to file3 in the master branch and file3 in the
+> dev branch, respectively.
 
-This likely means that you don't permit directory listing of the tags/
-subdir. Since Cogito is just about to cease using it, though, it's up to
-you whether you'll go through the trouble of enabling it or waiting for
-new Cogito version. ;-)
+The world would be so much better if there would be just a _single_
+per-file automerger instead of three right now...
+
+I'm planning to feed back the automerger stuff from Cogito to GIT like I
+already did once, but it's not a priority right now so it may take some
+time (unless someone else does it, which is something I certainly
+wouldn't oppose).
+
+But in the longer term even the recursive merge should use the same one,
+so either we should enhance the shell one to handle all the cases, or
+split out the python per-file automerger from recursive merge and make
+it possible to use this one separately. This is probably more viable
+option in the longer term, even though I personally don't grok python
+very well - whatever, at least I'll have to get better. ;-)
 
 -- 
 				Petr "Pasky" Baudis
