@@ -1,91 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Expected Behavior?
-Date: Wed, 9 Nov 2005 12:24:52 +0100
-Message-ID: <20051109112452.GD30496@pasky.or.cz>
-References: <E1EZKOB-0002j5-VY@jdl.com> <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net> <20051108210332.GB23265@c165.ib.student.liu.se>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 0/4] Add git-pack-intersect
+Date: Wed, 09 Nov 2005 12:58:42 +0100
+Message-ID: <4371E472.4030902@op5.se>
+References: <43714EFB.5070705@etek.chalmers.se> <20051109111917.GB30496@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Jon Loeliger <jdl@freescale.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 09 12:26:33 2005
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Nov 09 12:59:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZo4Y-0005xk-8M
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 12:24:58 +0100
+	id 1EZobK-00049l-6W
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 12:58:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751373AbVKILYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Nov 2005 06:24:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbVKILYz
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 06:24:55 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:51361 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751373AbVKILYz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 06:24:55 -0500
-Received: (qmail 7241 invoked by uid 2001); 9 Nov 2005 12:24:52 +0100
-To: Fredrik Kuivinen <freku045@student.liu.se>
-Content-Disposition: inline
-In-Reply-To: <20051108210332.GB23265@c165.ib.student.liu.se>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751398AbVKIL6p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 9 Nov 2005 06:58:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbVKIL6p
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 06:58:45 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:59780 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751395AbVKIL6o
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 06:58:44 -0500
+Received: from [82.182.116.45] (1-2-9-7b.gkp.gbg.bostream.se [82.182.116.45])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 0C6D56BCFF
+	for <git@vger.kernel.org>; Wed,  9 Nov 2005 12:58:43 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <20051109111917.GB30496@pasky.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11397>
 
-Dear diary, on Tue, Nov 08, 2005 at 10:03:32PM CET, I got a letter
-where Fredrik Kuivinen <freku045@student.liu.se> said that...
-> On Mon, Nov 07, 2005 at 10:00:11PM -0800, Junio C Hamano wrote:
-> > Jon Loeliger <jdl@freescale.com> writes:
-> > 
-> > > That is, after the merge, file3 appears to have simply kept
-> > > the contents of the current, master branch.  Why wasn't the
-> > > dev branch represented here?
-> > >
-> > > I _almost_ think I get it, and then *poof*...
-> > 
-> > Automerge completely punted for this path, and at this point, it
-> > is still unmerged:
-> > 
-> > ------------
-> > $ git ls-files --unmerged
-> > 100644 c4da0eb.... 2       file3
-> > 100644 fbc2aa4.... 3       file3
-> > ------------
-> > 
-> > Three-way "git-read-tree -m -u O A B" (O is for old, A is ours
-> > and B is hers) puts O in stage1, A in stage2 and B in stage3.
-> > This path did not exist in O so we only have them in stage2 and
-> > stage3.  You could compare the stages like this:
-> > 
-> 
-> Jon: You could try to this merge with the recursive merge strategy
-> (git merge -s recursive 'merge message' master dev) If you do, you
-> _should_ get something like:
-> 
->     CONFLICT (add/add): File file3 added non-identically in both
->     branches. Adding as file3_master and file3_dev instead.
-> 
-> You will then end up with file3_master and file3_dev in your working
-> tree, which corresponds to file3 in the master branch and file3 in the
-> dev branch, respectively.
+Petr Baudis wrote:
+> Dear diary, on Wed, Nov 09, 2005 at 02:20:59AM CET, I got a letter
+> where Lukas Sandstr=F6m <lukass@etek.chalmers.se> said that...
+>=20
+>>This patch series adds git-pack-intersect. It finds redundant packs
+>>by calculating the union of all objects present in .git/objects/pack
+>>and then computing the smallest set of packs which contain all the
+>>objects in this union.
+>=20
+>=20
+> Sounds nice, except the name - it does something else than what the n=
+ame
+> says, so perhaps something like 'git-pack-redundant' would be more
+> appropriate.
+>=20
 
-The world would be so much better if there would be just a _single_
-per-file automerger instead of three right now...
+It would be better if it was in git-prune or a default action for=20
+git-repack. I can't imagine a scenario where keeping redundant packfile=
+s=20
+is useful.
 
-I'm planning to feed back the automerger stuff from Cogito to GIT like I
-already did once, but it's not a priority right now so it may take some
-time (unless someone else does it, which is something I certainly
-wouldn't oppose).
-
-But in the longer term even the recursive merge should use the same one,
-so either we should enhance the shell one to handle all the cases, or
-split out the python per-file automerger from recursive merge and make
-it possible to use this one separately. This is probably more viable
-option in the longer term, even though I personally don't grok python
-very well - whatever, at least I'll have to get better. ;-)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
