@@ -1,54 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cogito: cg-clone doesn't like packed tag objects
-Date: Wed, 09 Nov 2005 15:14:21 -0800
-Message-ID: <7v3bm59zxu.fsf@assigned-by-dhcp.cox.net>
-References: <43348086.2040006@zytor.com> <20050924011833.GJ10255@pasky.or.cz>
-	<7vvf0r6x97.fsf@assigned-by-dhcp.cox.net>
-	<20050924125001.GB25069@pasky.or.cz>
-	<7virwqwd3z.fsf@assigned-by-dhcp.cox.net>
-	<20051109223303.GG30496@pasky.or.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Expected Behavior?
+Date: Thu, 10 Nov 2005 00:12:48 +0100
+Message-ID: <20051109231248.GL16061@pasky.or.cz>
+References: <E1EZKOB-0002j5-VY@jdl.com> <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net> <20051108210332.GB23265@c165.ib.student.liu.se> <20051109112452.GD30496@pasky.or.cz> <46a038f90511091504l7218df18k251bec75491891e9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 00:14:50 2005
+Cc: Fredrik Kuivinen <freku045@student.liu.se>,
+	Junio C Hamano <junkio@cox.net>,
+	Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 00:15:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZz98-0002pF-AB
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 00:14:26 +0100
+	id 1EZz7d-0002Dd-SC
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 00:12:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572AbVKIXOX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Nov 2005 18:14:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbVKIXOX
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 18:14:23 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:5561 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751570AbVKIXOX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Nov 2005 18:14:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051109231400.CSAQ16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 9 Nov 2005 18:14:00 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051109223303.GG30496@pasky.or.cz> (Petr Baudis's message of
-	"Wed, 9 Nov 2005 23:33:04 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751552AbVKIXMv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Nov 2005 18:12:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751553AbVKIXMv
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 18:12:51 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:59571 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751550AbVKIXMu (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 18:12:50 -0500
+Received: (qmail 9365 invoked by uid 2001); 10 Nov 2005 00:12:48 +0100
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f90511091504l7218df18k251bec75491891e9@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11435>
 
-Petr Baudis <pasky@suse.cz> writes:
+Dear diary, on Thu, Nov 10, 2005 at 12:04:11AM CET, I got a letter
+where Martin Langhoff <martin.langhoff@gmail.com> said that...
+> On 11/10/05, Petr Baudis <pasky@suse.cz> wrote:
+> > The world would be so much better if there would be just a _single_
+> > per-file automerger instead of three right now...
+> 
+> I don't quite agree with this. The multi-merger mechanism is something
+> (relatively) unique and powerful in GIT.
 
-> ...; is it safe to assume that the
-> default template post-update hook shipped with GIT will be
-> good-to-be-autoenabled on public repositories 
+I'm not talking about mechanism but about the recommended policy (if you
+have something better, fine, use it - just keep _one_ default one
+instead of three, since this doesn't have anything or much to do with
+the actual merge strategy). Besides,
 
-I do not think that is an unreasonable assumption.  After all,
-sample hooks are there to help people setting up common usage
-patterns, not to show off flashy but irrelevant-to-the-real-world-needs
-features ;-).
+> Having fast+stupid, with fallback to slow+smart is an excellent
+> strategy, and having the mechanism in place means that if someone is
+> crazy enough to write a smarter merge script for a language or a
+> particular project (say, to ease the transition to a new directory
+> layout) it is entirely possible.
 
-Please yell loudly when somebody posts a patch or brings up a
-proposal to break that assumption in the future.
+what mechanism are you talking about? All the scripts have it hardcoded
+what to use, it seems - cg-Xmergefile, git-merge-one-file or some
+subroutine...
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
