@@ -1,75 +1,130 @@
-From: Ben Clifford <benc@hawaga.org.uk>
-Subject: Re: Errors cloning over http -- git-clone and cg-clone fail to fetch a reachable object...
-Date: Wed, 9 Nov 2005 20:49:30 +1100
-Message-ID: <5C8707EC-3A6F-46B6-8FB1-AAB0842DDDD1@hawaga.org.uk>
-References: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com> <1537CD60-21E4-4F5E-820F-216A4E8C06AC@hawaga.org.uk> <20051109010922.GC5830@reactrix.com>
-Mime-Version: 1.0 (Apple Message framework v734)
-Content-Type: text/plain; charset=UTF-8;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 09 10:51:07 2005
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: [PATCH] merge-recursive: Only print relevant rename messages
+Date: Wed, 9 Nov 2005 11:36:55 +0100
+Message-ID: <20051109103655.GB4960@c165.ib.student.liu.se>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org> <Pine.LNX.4.64.0511070848440.3193@g5.osdl.org> <20051107231944.GA11327@c165.ib.student.liu.se> <7v64r4qai6.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Kuivinen <freku045@student.liu.se>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 09 11:39:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZmai-0000LO-AR
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 10:50:04 +0100
+	id 1EZnKH-0007Sc-6L
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 11:37:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965315AbVKIJt6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 9 Nov 2005 04:49:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751362AbVKIJt6
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 04:49:58 -0500
-Received: from mundungus.clifford.ac ([81.187.211.39]:57865 "EHLO
-	mundungus.clifford.ac") by vger.kernel.org with ESMTP
-	id S1751360AbVKIJt6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 04:49:58 -0500
-Received: from [IPv6:::1] (localhost [127.0.0.1])
-	by mundungus.clifford.ac (8.13.3/8.13.3) with ESMTP id jA99nQE8009132;
-	Wed, 9 Nov 2005 09:49:28 GMT
-In-Reply-To: <20051109010922.GC5830@reactrix.com>
-To: Nick Hengeveld <nickh@reactrix.com>
-X-Mailer: Apple Mail (2.734)
+	id S1030479AbVKIKhF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Nov 2005 05:37:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030497AbVKIKhF
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 05:37:05 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:21392 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1030479AbVKIKhC (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 05:37:02 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 208CA40FD; Wed,  9 Nov 2005 11:45:21 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EZnK3-0000GG-00; Wed, 09 Nov 2005 11:36:55 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v64r4qai6.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11392>
+
+On Mon, Nov 07, 2005 at 03:54:57PM -0800, Junio C Hamano wrote:
+> Fredrik Kuivinen <freku045@student.liu.se> writes:
+> 
+> > @@ -178,7 +181,7 @@ def mergeFile(oPath, oSha, oMode, aPath,
+> >              sha = bSha
+> >      else:
+> >          if aSha != oSha and bSha != oSha:
+> > -            merge = True
+> > +            merge = MERGE_TRIVIAL
+> 
+> The rest looks good to me, but are you sure about this part?  I
+> have a feeling that the above "and" should be "or", meaning, we
+> check to see if there is _any_ change, and default to TRIVIAL,
+> but later we would find that we need a real merge and then
+> promote it to MERGE_3WAY.
+> 
+
+You are right. The code actually do the right thing, but it does it by
+accident. Please apply the following patch.
+
+---
+
+merge-recursive: Fix limited output of rename messages
+
+The previous code did the right thing, but it did it by accident.
+
+Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
 
-On 9 Nov 2005, at 12:09, Nick Hengeveld wrote:
->
-> Those curl result codes all look wrong, and sounds like a memory issu=
-e
-> that Johannes Schindelin recently fixed in commit
-> 90279074ca5cc336a8bfffd47d19d089b291b432.  Does your git build have =20
-> that
-> patch?
+---
 
-I did not - I've pulled and rebuilt from master, and have that commit =20
-now.
-It works better (not perfectly (there's a tags 403) but I suspect =20
-that may be permissions config at my server end or absence of tags in =20
-my repo or something mumble). I can do this a bunch of times in a row =20
-with the same results and the resulting cloned repository looks sane.
+ git-merge-recursive.py |   12 ++++--------
+ 1 files changed, 4 insertions(+), 8 deletions(-)
 
-Ben
-
-!535 [0] benc@piva:~/tmp/xa4$ cg clone http://www.hawaga.org.uk/=20
-gitcompletion.git
-defaulting to local storage area
-20:46:16 URL:http://www.hawaga.org.uk/gitcompletion.git/HEAD [41/41] -=20
- > "refs/heads/.origin-fetching" [1]
-progress: 28 objects, 7901 bytes
-http://www.hawaga.org.uk/gitcompletion.git/refs/tags/:
-20:46:36 ERROR 403: Forbidden.
-
-=46INISHED --20:46:36--
-Downloaded: 0 bytes in 0 files
-New branch: a108bdc110dad770ec5c092759a8bc511790d21f
-Cloned to gitcompletion/ (origin http://www.hawaga.org.uk/=20
-gitcompletion.git available as branch "origin")
-
-
---=20
-Ben =E3=83=99=E3=83=B3 =D0=91=D1=8D=D0=BD
-http://www.hawaga.org.uk/ben/
+applies-to: bb7dd65e1d945edbe0137a761ebc388c7394067a
+f56613498cd7fb7013f532a04e63b580314ed957
+diff --git a/git-merge-recursive.py b/git-merge-recursive.py
+index 9983cd9..3657875 100755
+--- a/git-merge-recursive.py
++++ b/git-merge-recursive.py
+@@ -162,13 +162,10 @@ def mergeTrees(head, merge, common, bran
+ # Low level file merging, update and removal
+ # ------------------------------------------
+ 
+-MERGE_NONE = 0
+-MERGE_TRIVIAL = 1
+-MERGE_3WAY = 2
+ def mergeFile(oPath, oSha, oMode, aPath, aSha, aMode, bPath, bSha, bMode,
+               branch1Name, branch2Name):
+ 
+-    merge = MERGE_NONE
++    merge = False
+     clean = True
+ 
+     if stat.S_IFMT(aMode) != stat.S_IFMT(bMode):
+@@ -181,7 +178,7 @@ def mergeFile(oPath, oSha, oMode, aPath,
+             sha = bSha
+     else:
+         if aSha != oSha and bSha != oSha:
+-            merge = MERGE_TRIVIAL
++            merge = True
+ 
+         if aMode == oMode:
+             mode = bMode
+@@ -211,7 +208,6 @@ def mergeFile(oPath, oSha, oMode, aPath,
+             os.unlink(src1)
+             os.unlink(src2)
+ 
+-            merge = MERGE_3WAY
+             clean = (code == 0)
+         else:
+             assert(stat.S_ISLNK(aMode) and stat.S_ISLNK(bMode))
+@@ -590,7 +586,7 @@ def processRenames(renamesA, renamesB, b
+                 if merge or not clean:
+                     print 'Renaming', fmtRename(path, ren1.dstName)
+ 
+-                if merge == MERGE_3WAY:
++                if merge:
+                     print 'Auto-merging', ren1.dstName
+ 
+                 if not clean:
+@@ -668,7 +664,7 @@ def processRenames(renamesA, renamesB, b
+                 if merge or not clean:
+                     print 'Renaming', fmtRename(ren1.srcName, ren1.dstName)
+ 
+-                if merge == MERGE_3WAY:
++                if merge:
+                     print 'Auto-merging', ren1.dstName
+ 
+                 if not clean:
+---
+0.99.9.GIT
