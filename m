@@ -1,103 +1,56 @@
-From: Jon Loeliger <jdl@freescale.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Expected Behavior?
-Date: Tue, 08 Nov 2005 20:58:58 -0600
-Message-ID: <E1EZgAs-0008B4-QZ@jdl.com>
-X-From: git-owner@vger.kernel.org Wed Nov 09 04:02:02 2005
+Date: Tue, 08 Nov 2005 21:50:54 -0800
+Message-ID: <7vmzkenzcx.fsf@assigned-by-dhcp.cox.net>
+References: <E1EZKOB-0002j5-VY@jdl.com>
+	<7vwtjjllw4.fsf@assigned-by-dhcp.cox.net>
+	<20051108210332.GB23265@c165.ib.student.liu.se>
+	<7v7jbig6m7.fsf@assigned-by-dhcp.cox.net>
+	<20051108225320.GB4805@c165.ib.student.liu.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 09 06:52:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZgB5-0000pv-OU
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 03:59:12 +0100
+	id 1EZirL-0004nF-5a
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 06:51:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030277AbVKIC7H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Nov 2005 21:59:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030412AbVKIC7H
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 21:59:07 -0500
-Received: from mail.jdl.com ([66.118.10.122]:43725 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S1030277AbVKIC7G (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2005 21:59:06 -0500
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1EZgAs-0008B4-QZ
-	for git@vger.kernel.org; Tue, 08 Nov 2005 20:58:59 -0600
-To: git@vger.kernel.org
-In-Reply-To: 20051108210332.GB23265@c165.ib.student.liu.se
-X-Spam-Score: -105.9 (---------------------------------------------------)
+	id S932465AbVKIFu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Nov 2005 00:50:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932479AbVKIFu4
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 00:50:56 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:61667 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932465AbVKIFuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Nov 2005 00:50:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051109055029.MUBY4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 9 Nov 2005 00:50:29 -0500
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20051108225320.GB4805@c165.ib.student.liu.se> (Fredrik
+	Kuivinen's message of "Tue, 8 Nov 2005 23:53:20 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11385>
 
-<Young Frankenstein> Froe-derick wrote: </Young Frankenstein>
+Fredrik Kuivinen <freku045@student.liu.se> writes:
 
-> Jon: You could try to this merge with the recursive merge strategy
-> (git merge -s recursive 'merge message' master dev) If you do, you
-> _should_ get something like:
-> 
->     CONFLICT (add/add): File file3 added non-identically in both
->     branches. Adding as file3_master and file3_dev instead.
+>> Oops, I missed that part.  This is unsafe in theory, if you
+>> could overwrite existing file3_master or file3_dev.  Does that
+>> matter in practice?
+>
+> It wont overwrite any existing files. If there is a file named
+> 'file3_master' then the new file will be named 'file3_master_1' and if
+> that file also exists the new file will be named 'file3_master_2', and
+> so on.
 
-Hmmm. That didn't go too well. Concisely:
-
-    % git merge -s recursive "Grab dev stuff" master dev
-    Trying really trivial in-index merge...
-    fatal: Merge requires file-level merging
-    Nope.
-    Traceback (most recent call last):
-      File "/usr/bin/git-merge-recursive", line 8, in ?
-	from gitMergeCommon import *
-    ImportError: No module named gitMergeCommon
-    Automatic merge failed/prevented; fix up by hand
-
-Full details below.
-
-> You will then end up with file3_master and file3_dev in your working
-> tree, which corresponds to file3 in the master branch and file3 in the
-> dev branch, respectively.
-
-That'd be cool, because the first thing I tend to want to do
-after a failed file merge is look at clear versions of both files.
-Gives me a global sense of where the file needs to go...  You know.
-
-jdl
-
-
-
-
-
-[ tail end of the make install output ]
-
-install -d -m755 '/usr/share/git-core/templates/'
-(cd blt && tar cf - .) | \
-(cd '/usr/share/git-core/templates/' && tar xf -)
-make[1]: Leaving directory `/usr/src/git-core/templates'
-install -d -m755 '/usr/share/git-core/python'
-install gitMergeCommon.py '/usr/share/git-core/python'
-
-
-
-% git merge -s recursive "Grab dev stuff" master dev
-Trying really trivial in-index merge...
-fatal: Merge requires file-level merging
-Nope.
-Traceback (most recent call last):
-  File "/usr/bin/git-merge-recursive", line 8, in ?
-    from gitMergeCommon import *
-ImportError: No module named gitMergeCommon
-Automatic merge failed/prevented; fix up by hand
-
-% git -v
-git version 0.99.9.GIT
-% cat /usr/src/git-core/.git/HEAD
-f8d294f0a44c4305a9f3a1c70beb6a1c7583f287
-
-
-% ll /usr/share/git-core/python/
-total 16
-4 drwxr-xr-x  2 root root 4096 Nov  8 20:17 .
-4 drwxr-xr-x  4 root root 4096 Sep 14 19:47 ..
-8 -rwxr-xr-x  1 root root 6879 Nov  8 20:17 gitMergeCommon.py
-
-% python
-Python 2.3.5 (#2, May  4 2005, 08:51:39)
-[GCC 3.3.5 (Debian 1:3.3.5-12)] on linux2
+Another thing to watch out is that a branch name could have a
+slash in it.  It might make more sense to just name the heads file3~2
+or file3~3 (with as many ~s repeated to avoid name clashes) like
+Pasky does.
