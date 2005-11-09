@@ -1,75 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Comments on recursive merge..
-Date: Tue, 8 Nov 2005 16:51:11 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511081646160.3247@g5.osdl.org>
+Date: Tue, 08 Nov 2005 16:59:41 -0800
+Message-ID: <7vlkzyd4aq.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
- <20051107225807.GA10937@c165.ib.student.liu.se> <7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
- <Pine.LNX.4.63.0511081254520.2649@wbgn013.biozentrum.uni-wuerzburg.de>
- <20051108210211.GA23265@c165.ib.student.liu.se> <Pine.LNX.4.64.0511081351020.3247@g5.osdl.org>
- <20051108223609.GA4805@c165.ib.student.liu.se> <Pine.LNX.4.64.0511081450080.3247@g5.osdl.org>
- <20051109003236.GA30496@pasky.or.cz>
+	<20051107225807.GA10937@c165.ib.student.liu.se>
+	<7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
+	<Pine.LNX.4.63.0511081254520.2649@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20051108210211.GA23265@c165.ib.student.liu.se>
+	<Pine.LNX.4.64.0511081351020.3247@g5.osdl.org>
+	<20051108223609.GA4805@c165.ib.student.liu.se>
+	<Pine.LNX.4.64.0511081450080.3247@g5.osdl.org>
+	<20051109003236.GA30496@pasky.or.cz>
+	<Pine.LNX.4.64.0511081646160.3247@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Fredrik Kuivinen <freku045@student.liu.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 09 01:53:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 09 02:00:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZeBZ-0007AL-Gl
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 01:51:33 +0100
+	id 1EZeJe-0001ca-VK
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 01:59:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030477AbVKIAvb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Nov 2005 19:51:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932403AbVKIAvb
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 19:51:31 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:31925 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932391AbVKIAva (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Nov 2005 19:51:30 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jA90pCnO003726
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 8 Nov 2005 16:51:12 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jA90pAR1031049;
-	Tue, 8 Nov 2005 16:51:11 -0800
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051109003236.GA30496@pasky.or.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030487AbVKIA7o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Nov 2005 19:59:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030488AbVKIA7n
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Nov 2005 19:59:43 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:48299 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1030486AbVKIA7m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Nov 2005 19:59:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051109005920.UNHL1668.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 8 Nov 2005 19:59:20 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511081646160.3247@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 8 Nov 2005 16:51:11 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11375>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> Junio? You even wrote the comment about the case in git-merge-base, I'm 
+> wondering whether it's a bug that we use the fast-and-cheap algorithm in 
+> git-show-branch..
 
-On Wed, 9 Nov 2005, Petr Baudis wrote:
-> 
-> BTW, git-show-branch is also by orders of magnitude faster (not that
-> this would be any major timesaver). Median 0.006s vs. median 0.124s.
-
-Ouch. That makes me suspicious. One reason git-merge-base is slow is 
-because it's being pretty careful about some pathological examples of 
-dates being just the wrong way around, and it might just be that the 
-reason git-show-branch is faster is because it isn't doing that part 
-right.
-
-So yes, git-merge-base does extra work, but it does so because I think it 
-needs to.
-
-Junio? You even wrote the comment about the case in git-merge-base, I'm 
-wondering whether it's a bug that we use the fast-and-cheap algorithm in 
-git-show-branch..
-
-Of course, arguably you can first try the fast-and-cheap thing, and if 
-that gives a merge parent that is acceptable, why not? So maybe it's the 
-right thing for the "let's see if this is trivial" case, but I think it 
-might _think_ some cases are trivial that really shouldn't, because they 
-actually have two merge parents.
-
-		Linus
+I did show-branch soon after we worked on those pathlogical
+merge-base fix, so I would be a bit surprised if I did it
+without using all the knowledge from that exercise, but I do not
+remember offhand.  The core logic should be simple
+generalization of two-head merge-base to N heads.
