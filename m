@@ -1,63 +1,61 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: make tests ignorable with "make -i"
-Date: Wed, 9 Nov 2005 09:15:56 +0100
-Message-ID: <81b0412b0511090015w4ee0b26fg3e8fc7d192c53283@mail.gmail.com>
-References: <81b0412b0511080151v69bc4578we093eaa751ee4bac@mail.gmail.com>
-	 <7vmzkfey4o.fsf@assigned-by-dhcp.cox.net>
-	 <20051108211618.GA3224@steel.home>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: Expected Behavior?
+Date: Wed, 9 Nov 2005 09:19:06 +0100
+Message-ID: <20051109081906.GA4960@c165.ib.student.liu.se>
+References: <E1EZKOB-0002j5-VY@jdl.com> <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net> <20051108210332.GB23265@c165.ib.student.liu.se> <7v7jbig6m7.fsf@assigned-by-dhcp.cox.net> <20051108225320.GB4805@c165.ib.student.liu.se> <7vmzkenzcx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 09 09:16:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 09 09:20:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZl7g-0000VN-PL
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 09:16:01 +0100
+	id 1EZlAp-0001p9-KL
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 09:19:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965297AbVKIIP6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Nov 2005 03:15:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965302AbVKIIP5
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 03:15:57 -0500
-Received: from nproxy.gmail.com ([64.233.182.207]:65266 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965297AbVKIIP5 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 03:15:57 -0500
-Received: by nproxy.gmail.com with SMTP id c29so19043nfb
-        for <git@vger.kernel.org>; Wed, 09 Nov 2005 00:15:56 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GpIUbp3xlxHhDv2gh2SiTRvPWT5Ud3HHYQyiukPMaTBKlnK1Tp8tgggrPveX7SfnvyGPvVloDuR6GJgCCoxRN2Ge4sJqZpWrVICHIvjDvWJgcEBH6/Dnww5F+z3SwruhfIAh/l6Ta1kkGnMRphJU+uHYa+d2OIpigRVeOEHXZO8=
-Received: by 10.48.157.3 with SMTP id f3mr81545nfe;
-        Wed, 09 Nov 2005 00:15:56 -0800 (PST)
-Received: by 10.48.247.3 with HTTP; Wed, 9 Nov 2005 00:15:56 -0800 (PST)
+	id S965308AbVKIITN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Nov 2005 03:19:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965309AbVKIITN
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 03:19:13 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:7568 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S965308AbVKIITM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 03:19:12 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 3867D40FF; Wed,  9 Nov 2005 09:27:31 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EZlAg-0001LF-00; Wed, 09 Nov 2005 09:19:06 +0100
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <20051108211618.GA3224@steel.home>
 Content-Disposition: inline
+In-Reply-To: <7vmzkenzcx.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11390>
 
-On 11/8/05, Alex Riesen <raa.lkml@gmail.com> wrote:
-> Junio C Hamano, Tue, Nov 08, 2005 20:29:59 +0100:
-> > > ...  (Or to ignore plainly uninteresting situations because of the
-> > > testing being done on say...  cygwin ;)
+On Tue, Nov 08, 2005 at 09:50:54PM -0800, Junio C Hamano wrote:
+> Fredrik Kuivinen <freku045@student.liu.se> writes:
+> 
+> >> Oops, I missed that part.  This is unsafe in theory, if you
+> >> could overwrite existing file3_master or file3_dev.  Does that
+> >> matter in practice?
 > >
-> > Could you tell us which ones break on Cygwin?
-> >
+> > It wont overwrite any existing files. If there is a file named
+> > 'file3_master' then the new file will be named 'file3_master_1' and if
+> > that file also exists the new file will be named 'file3_master_2', and
+> > so on.
+> 
+> Another thing to watch out is that a branch name could have a
+> slash in it.  It might make more sense to just name the heads file3~2
+> or file3~3 (with as many ~s repeated to avoid name clashes) like
+> Pasky does.
+> 
 
-So far:
+Oups, I haven't thought about that. I kind of like the idea that you
+can see the branch name in the file names though. How about replacing
+any slashes in the branch names with underscores? So the branch
+'foo/bar' will give rise to files with suffixes like '_foo_bar' and
+'_foo_bar_<number>'.
 
-t4000-diff-format.sh
-* FAIL 3: validate git-diff-files -p output.
-        compare_diff_patch current expected
-
-t4006-diff-mode.sh
-* FAIL 3: verify
-        diff -u expected check
-
-t4102-apply-rename.sh
-* FAIL 3: validate
-        test -f bar && ls -l bar | grep "^-..x......"
+- Fredrik
