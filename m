@@ -1,69 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Expected Behavior?
-Date: Wed, 09 Nov 2005 12:38:29 -0800
-Message-ID: <7v1x1peeuy.fsf@assigned-by-dhcp.cox.net>
-References: <E1EZqAA-0002B0-Un@jdl.com>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Problem with template location
+Date: Wed, 9 Nov 2005 20:45:55 +0000
+Message-ID: <200511092045.55300.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 09 21:40:09 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Nov 09 21:46:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZwii-00085w-QH
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 21:39:01 +0100
+	id 1EZwpS-0002ck-QO
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 21:45:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030652AbVKIUir (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Nov 2005 15:38:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030649AbVKIUiq
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 15:38:46 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:40854 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1030774AbVKIUip (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Nov 2005 15:38:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051109203747.PAEP29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 9 Nov 2005 15:37:47 -0500
-To: Jon Loeliger <jdl@freescale.com>
-In-Reply-To: <E1EZqAA-0002B0-Un@jdl.com> (Jon Loeliger's message of "Wed, 09
-	Nov 2005 07:38:54 -0600")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750766AbVKIUp4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Nov 2005 15:45:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750779AbVKIUp4
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 15:45:56 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:23937
+	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
+	id S1750766AbVKIUpz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Nov 2005 15:45:55 -0500
+Received: from kanger.home ([192.168.0.21])
+	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
+	id 1EZwpO-0001rC-LK
+	for git@vger.kernel.org; Wed, 09 Nov 2005 20:45:54 +0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11412>
 
-Jon Loeliger <jdl@freescale.com> writes:
+I am trying to set up a public repository on my server to which I can push 
+stuff
 
->     Normally you can just do "make" followed by "make install", and that
->     will install the git programs in your own ~/bin/ directory.  If you want
->     to do a global install, you can do
->
-> 	    make prefix=/usr install
->
-> I ran "make" as myself, and then later
-> I ran "make prefix=/usr install" as root.
+I have just downloaded the git-core-0.99f-tar.bz2 file and untarred it as me 
+(alan) on account on the server.  My home directory is at /home/alan
 
-Would this be explicit enough?
+Went in as me into the git-core-0.99f directory and did a make
 
--- >8 -- cut here -- >8 --
+Then became ROOT and did 
 
-diff --git a/INSTALL b/INSTALL
-index bbb13f3..b2cdb31 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -7,8 +7,10 @@ to do a global install, you can do
- 
- 	make prefix=/usr install
- 
--(or prefix=/usr/local, of course).  Some day somebody may send me a RPM
--spec file or something, and you can do "make rpm" or whatever.
-+(or prefix=/usr/local, of course).  Just like any program suite
-+that uses $prefix, the built results have some paths encoded,
-+which are derived from $prefix, so "make all; make prefix=/usr
-+install" would not work.
- 
- Issues of note:
- 
+make prefix=/usr/local install
+
+(I also built the documentation but I don't think that is relevent)
+
+
+Separately AS ROOT I have gone into the directory where I am going to build my 
+repositories (/var/lib/git) and tried to build the repository as per the 
+tutorial.
+
+
+roo:/var/lib/git# mkdir famtree.git
+roo:/var/lib/git# GIT_DIR=famtree.git git-init-db
+warning: templates not found /home/alan/share/git-core/templates/
+roo:/var/lib/git#
+
+git-init-db seems to have got the wrong place for the templates - ie the 
+account where I originally built the code.
+
+(NOTE: the templates have actually been installed 
+in /usr/local/share/git-core/templates)
+
+I had to do a make clean, but following that I did
+
+make prefix=/usr/local 
+
+for the first part,  and then re-installed (also with the prefix) and it 
+solves the problem
+
+I don't know whether this is something that can be fixed at install time, or 
+whether the README should be changed to make it clear that you need the 
+prefix on the first stage of the process as well as the second.
+
+
+-- 
+Alan Chandler
+http://www.chandlerfamily.org.uk
+Open Source. It's the difference between trust and antitrust.
