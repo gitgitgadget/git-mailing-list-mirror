@@ -1,61 +1,75 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: Expected Behavior?
-Date: Wed, 9 Nov 2005 09:19:06 +0100
-Message-ID: <20051109081906.GA4960@c165.ib.student.liu.se>
-References: <E1EZKOB-0002j5-VY@jdl.com> <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net> <20051108210332.GB23265@c165.ib.student.liu.se> <7v7jbig6m7.fsf@assigned-by-dhcp.cox.net> <20051108225320.GB4805@c165.ib.student.liu.se> <7vmzkenzcx.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 09 09:20:15 2005
+From: Ben Clifford <benc@hawaga.org.uk>
+Subject: Re: Errors cloning over http -- git-clone and cg-clone fail to fetch a reachable object...
+Date: Wed, 9 Nov 2005 20:49:30 +1100
+Message-ID: <5C8707EC-3A6F-46B6-8FB1-AAB0842DDDD1@hawaga.org.uk>
+References: <46a038f90511061354k5378a92ckc427841f90ec8b4@mail.gmail.com> <1537CD60-21E4-4F5E-820F-216A4E8C06AC@hawaga.org.uk> <20051109010922.GC5830@reactrix.com>
+Mime-Version: 1.0 (Apple Message framework v734)
+Content-Type: text/plain; charset=UTF-8;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 09 10:51:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZlAp-0001p9-KL
-	for gcvg-git@gmane.org; Wed, 09 Nov 2005 09:19:16 +0100
+	id 1EZmai-0000LO-AR
+	for gcvg-git@gmane.org; Wed, 09 Nov 2005 10:50:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965308AbVKIITN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Nov 2005 03:19:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965309AbVKIITN
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 03:19:13 -0500
-Received: from [85.8.31.11] ([85.8.31.11]:7568 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S965308AbVKIITM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 03:19:12 -0500
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 3867D40FF; Wed,  9 Nov 2005 09:27:31 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EZlAg-0001LF-00; Wed, 09 Nov 2005 09:19:06 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vmzkenzcx.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
+	id S965315AbVKIJt6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 9 Nov 2005 04:49:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751362AbVKIJt6
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 04:49:58 -0500
+Received: from mundungus.clifford.ac ([81.187.211.39]:57865 "EHLO
+	mundungus.clifford.ac") by vger.kernel.org with ESMTP
+	id S1751360AbVKIJt6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 04:49:58 -0500
+Received: from [IPv6:::1] (localhost [127.0.0.1])
+	by mundungus.clifford.ac (8.13.3/8.13.3) with ESMTP id jA99nQE8009132;
+	Wed, 9 Nov 2005 09:49:28 GMT
+In-Reply-To: <20051109010922.GC5830@reactrix.com>
+To: Nick Hengeveld <nickh@reactrix.com>
+X-Mailer: Apple Mail (2.734)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11391>
 
-On Tue, Nov 08, 2005 at 09:50:54PM -0800, Junio C Hamano wrote:
-> Fredrik Kuivinen <freku045@student.liu.se> writes:
-> 
-> >> Oops, I missed that part.  This is unsafe in theory, if you
-> >> could overwrite existing file3_master or file3_dev.  Does that
-> >> matter in practice?
-> >
-> > It wont overwrite any existing files. If there is a file named
-> > 'file3_master' then the new file will be named 'file3_master_1' and if
-> > that file also exists the new file will be named 'file3_master_2', and
-> > so on.
-> 
-> Another thing to watch out is that a branch name could have a
-> slash in it.  It might make more sense to just name the heads file3~2
-> or file3~3 (with as many ~s repeated to avoid name clashes) like
-> Pasky does.
-> 
 
-Oups, I haven't thought about that. I kind of like the idea that you
-can see the branch name in the file names though. How about replacing
-any slashes in the branch names with underscores? So the branch
-'foo/bar' will give rise to files with suffixes like '_foo_bar' and
-'_foo_bar_<number>'.
+On 9 Nov 2005, at 12:09, Nick Hengeveld wrote:
+>
+> Those curl result codes all look wrong, and sounds like a memory issu=
+e
+> that Johannes Schindelin recently fixed in commit
+> 90279074ca5cc336a8bfffd47d19d089b291b432.  Does your git build have =20
+> that
+> patch?
 
-- Fredrik
+I did not - I've pulled and rebuilt from master, and have that commit =20
+now.
+It works better (not perfectly (there's a tags 403) but I suspect =20
+that may be permissions config at my server end or absence of tags in =20
+my repo or something mumble). I can do this a bunch of times in a row =20
+with the same results and the resulting cloned repository looks sane.
+
+Ben
+
+!535 [0] benc@piva:~/tmp/xa4$ cg clone http://www.hawaga.org.uk/=20
+gitcompletion.git
+defaulting to local storage area
+20:46:16 URL:http://www.hawaga.org.uk/gitcompletion.git/HEAD [41/41] -=20
+ > "refs/heads/.origin-fetching" [1]
+progress: 28 objects, 7901 bytes
+http://www.hawaga.org.uk/gitcompletion.git/refs/tags/:
+20:46:36 ERROR 403: Forbidden.
+
+=46INISHED --20:46:36--
+Downloaded: 0 bytes in 0 files
+New branch: a108bdc110dad770ec5c092759a8bc511790d21f
+Cloned to gitcompletion/ (origin http://www.hawaga.org.uk/=20
+gitcompletion.git available as branch "origin")
+
+
+--=20
+Ben =E3=83=99=E3=83=B3 =D0=91=D1=8D=D0=BD
+http://www.hawaga.org.uk/ben/
