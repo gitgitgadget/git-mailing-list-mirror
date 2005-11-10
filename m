@@ -1,64 +1,68 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] cg-pull to stop treating "master" specially, fix fetch_local for .git/HEAD
-Date: Thu, 10 Nov 2005 20:24:30 +0100
-Message-ID: <20051110192430.GS30496@pasky.or.cz>
-References: <1124832796.23795.9.camel@dv>
+Subject: Re: Do I misunderstand cg-merge --squash option
+Date: Thu, 10 Nov 2005 20:29:23 +0100
+Message-ID: <20051110192923.GT30496@pasky.or.cz>
+References: <200511100025.05993.alan@chandlerfamily.org.uk> <20051110101206.GP30496@pasky.or.cz> <200511101915.53736.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 10 20:26:40 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 20:31:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaI2H-0004L1-EP
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 20:24:37 +0100
+	id 1EaI70-00060q-6H
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 20:29:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751064AbVKJTYe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 14:24:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751067AbVKJTYe
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 14:24:34 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:20675 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751053AbVKJTYd (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 14:24:33 -0500
-Received: (qmail 20908 invoked by uid 2001); 10 Nov 2005 20:24:30 +0100
-To: Pavel Roskin <proski@gnu.org>
+	id S932108AbVKJT31 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 14:29:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbVKJT31
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 14:29:27 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:1950 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751219AbVKJT31 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 14:29:27 -0500
+Received: (qmail 21530 invoked by uid 2001); 10 Nov 2005 20:29:23 +0100
+To: Alan Chandler <alan@chandlerfamily.org.uk>
 Content-Disposition: inline
-In-Reply-To: <1124832796.23795.9.camel@dv>
+In-Reply-To: <200511101915.53736.alan@chandlerfamily.org.uk>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11508>
 
-  Hello,
-
-Dear diary, on Tue, Aug 23, 2005 at 11:33:16PM CEST, I got a letter
-where Pavel Roskin <proski@gnu.org> said that...
-> Local URL handling needs to be fixed to handle .git/HEAD properly, since
-> it's a symlink in the upstream directory.  A new flag "-b" for fetch_*
-> functions is introduced, meaning "dereference" (like in GNU cp).
+Dear diary, on Thu, Nov 10, 2005 at 08:15:53PM CET, I got a letter
+where Alan Chandler <alan@chandlerfamily.org.uk> said that...
+> On Thursday 10 Nov 2005 10:12, Petr Baudis wrote:
+> > Why do you want to do a squash merge?
 > 
-> @@ -205,6 +209,11 @@ fetch_local()
->  	[ "$1" = "-s" ] && shift
->  
->  	cp_flags_l="-vdpR"
-> +	if [ "$1" = "-b" ]; then
-> +		cp_flags_l="-vb" # Dereference symlinks
-> +		shift
-> +	fi
-> +
->  	if [ "$1" = "-u" ]; then
->  		cp_flags_l="$cp_flags_l -fu$can_hardlink"
->  		suggest_hardlink=
+> I used git experimentally as I built a web application from scratch, learning 
+> both what I wanted the application to look like and how to do it with the 
+> packages I was using.  There is several hundreds of commits that are totally 
+> irrelevant (both because they were all different directions I was trying and 
+> then backing out of and because I saved state just were I was when I gave up 
+> for the day).
+> 
+> So what I was experimenting with was whether I could somehow get rid of that 
+> history (at least in one branch) before making that history public.
 
-  can you still remember why did you introduce this? In GNU cp
-documentation, I can see just
+Aha. That sounds reasonable.
 
-       -b, --backup
-              Make backups of files that are about to be overwritten or removed.
+> > I told you in the documentation - "re-merging with that branch later
+> > will cause trouble". If you want to be able to re-merge the branch
+> > later, you shouldn't use squash merge. And you shouldn't use squash
+> > merge anyway, expect for few narrow use cases.
+> 
+> I know - I saw the warning - and I was only experimenting.  I just didn't 
+> understand what had happened.
 
-which doesn't make sense to me - -L dereferences symlinks.
+If you would be doing something like this again, it's best to merge, and
+then rather than continuing to develop what you merged, just throw that
+branch again and re-clone the merged repository.
+
+Right now, what about trying to manually select the merge base?
+
+	public$ cg-merge -b v1.0 master
 
 -- 
 				Petr "Pasky" Baudis
