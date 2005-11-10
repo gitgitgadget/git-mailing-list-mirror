@@ -1,79 +1,63 @@
-From: Pavel Machek <pavel@suse.cz>
-Subject: Re: hgmq vs. StGIT
-Date: Thu, 10 Nov 2005 01:08:04 +0100
-Message-ID: <20051110000804.GL12459@elf.ucw.cz>
-References: <20051101090804.GA11618@pasky.or.cz> <b0943d9e0511010123i1f9eb679w@mail.gmail.com> <436787BD.9080705@citi.umich.edu> <20051101153650.GB26847@watt.suse.com> <b0943d9e0511010918ob2dbcfcv@mail.gmail.com> <20051101181352.GD26847@watt.suse.com> <b0943d9e0511011330v7045c568u@mail.gmail.com> <20051102154108.GM26847@watt.suse.com> <b0943d9e0511051223g74c2be43h@mail.gmail.com> <20051109233255.GI30496@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/4] Add git-pack-intersect
+Date: Wed, 09 Nov 2005 16:15:17 -0800
+Message-ID: <7vy83x73ze.fsf@assigned-by-dhcp.cox.net>
+References: <43714EFB.5070705@etek.chalmers.se>
+	<20051109111917.GB30496@pasky.or.cz> <4371E472.4030902@op5.se>
+	<43728523.1040209@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Chris Mason <mason@suse.com>, Chuck Lever <cel@citi.umich.edu>,
-	Theodore Ts'o <tytso@mit.edu>,
-	Joel Becker <Joel.Becker@oracle.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 01:09:47 2005
+Content-Type: text/plain; charset=iso-2022-jp-2
+X-From: git-owner@vger.kernel.org Thu Nov 10 01:16:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ea00Q-0007g0-FL
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 01:09:30 +0100
+	id 1Ea066-0001C8-Vo
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 01:15:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750940AbVKJAJ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Nov 2005 19:09:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751083AbVKJAJ0
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 19:09:26 -0500
-Received: from gprs189-60.eurotel.cz ([160.218.189.60]:35512 "EHLO amd.ucw.cz")
-	by vger.kernel.org with ESMTP id S1750940AbVKJAJZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 19:09:25 -0500
-Received: by amd.ucw.cz (Postfix, from userid 8)
-	id 85E988AF42; Thu, 10 Nov 2005 01:08:04 +0100 (CET)
-To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <20051109233255.GI30496@pasky.or.cz>
-X-Warning: Reading this can be dangerous to your mental health.
-User-Agent: Mutt/1.5.9i
+	id S1751096AbVKJAPU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Nov 2005 19:15:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751098AbVKJAPU
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 19:15:20 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:42200 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751096AbVKJAPS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Nov 2005 19:15:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051110001413.OVXW24014.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 9 Nov 2005 19:14:13 -0500
+To: git@vger.kernel.org
+In-Reply-To: <43728523.1040209@etek.chalmers.se> (Lukas
+ =?iso-2022-jp-2?B?U2FuZHN0chsuQRtOdm0ncw==?= message
+	of "Thu, 10 Nov 2005 00:24:19 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11452>
 
-Hi!
+Lukas Sandstr.ANvm <lukass@etek.chalmers.se> writes:
 
-> Dear diary, on Sat, Nov 05, 2005 at 09:23:33PM CET, I got a letter
-> where Catalin Marinas <catalin.marinas@gmail.com> said that...
-...
-> A night city, the snow slowly falling. Approaching the roofs covered in
-> white and illuminated by the yellow street lighting, dark windows - but
-> one dimly glowing, a computer screen inside. Close-up on a hacker:
-> $EDITOR opened, lost deep in hack mode, fingers dancing over the
-> keyboard.  Dreamy-monumental music in the background.
-> 
-> StGIT user, only part of the patches in stack, and the rest depends on
-> the one currently edited, and I want to record my work on this one.
-> I can either:
+> Perhaps if git-daemon ever does caching of packfiles, removing the smaller
+> packfiles might not be optimal.
 
-Are you sure you are git hacker? Maybe you should have been fiction
-writer :-).
+Ah, that reminds me of something.
 
-> (i) Just keep per-patch history only.
-> 
-> (ii) Keep _both_ per-patch and per-stack history (since I don't want to
-> record the stack when I have to keep some patches out of it - the
-> history would look like randomly removing and adding tons of patches,
-> and jumping around would be difficult because of this too).
-> 
-> (iii) Keep per-patchlist history - do not actually record only our
-> current stack, but all the patches StGIT knows about. The patches
-> depending on the one currently being changed will not be in consistent
-> state, but that's tough. Actually, this seems to be the most viable
-> strategy. One question is whether to record if some patch is actually
-> applied right now or not (I'd say don't record it since you again have
-> the "bouncing problem" otherwise).
+I did not advertise it too much, but you can put a prepackaged
+packs in $GIT_DIR/pack-cache/ and it is used when upload-pack
+notices it is creating that exact pack.
 
-I do not know if ii or iii is better, but please *do* record what
-patches were applied at what moment. That is useful info. "I'd like to
-go back to know working configuration". If I do not know what patches
-were applied at what moment, going back to working config is hard to
-do.
-								Pavel
--- 
-Thanks, Sharp!
+This is useless for ordinary repository, but can be useful for
+historical repositories whose heads/tags never change (e.g. the
+Linux kernel repository resurrected from bkcvs).  There you
+could:
+
+	$ git repack -a -d
+	$ ln $GIT_DIR/objects/pack/pack-* $GIT_DIR/pack-cache/.
+
+and a clone request would feed the pack, without regenerating
+the pack data from scratch.  upload-pack still reads, sorts and
+computes SHA1 hash of the list of objects to find the pack name,
+but that is a fairly quick operation, compared to the rest of
+the pack generation process.
