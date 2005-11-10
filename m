@@ -1,65 +1,63 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [ANNOUNCE] GIT 0.99.9g
-Date: Thu, 10 Nov 2005 19:03:11 +0100
-Message-ID: <20051110180311.GR30496@pasky.or.cz>
-References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net> <43737EC7.6090109@zytor.com> <7v4q6k1jp0.fsf@assigned-by-dhcp.cox.net>
+From: Tony Luck <tony.luck@intel.com>
+Subject: Re: Where should I post questions on GIT usage ?
+Date: Thu, 10 Nov 2005 10:27:39 -0800
+Message-ID: <12c511ca0511101027q44c51ca8h88229fd7188717d5@mail.gmail.com>
+References: <cda58cb80511100017v12f8ec77v@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org, barkalow@iabervon.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 19:03:40 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 19:28:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaGla-0002uI-Au
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 19:03:18 +0100
+	id 1EaH9E-0001sK-P9
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 19:27:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190AbVKJSDO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 13:03:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbVKJSDO
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 13:03:14 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:12195 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751190AbVKJSDN (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 13:03:13 -0500
-Received: (qmail 13418 invoked by uid 2001); 10 Nov 2005 19:03:11 +0100
-To: Junio C Hamano <junkio@cox.net>
+	id S932131AbVKJS1m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 13:27:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932133AbVKJS1m
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 13:27:42 -0500
+Received: from xproxy.gmail.com ([66.249.82.201]:25761 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932131AbVKJS1l convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2005 13:27:41 -0500
+Received: by xproxy.gmail.com with SMTP id s14so672090wxc
+        for <git@vger.kernel.org>; Thu, 10 Nov 2005 10:27:41 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Rg87tmw4T7THPHGQFSHnGYLfufEOTMJViI2Rd6uC2YgQWLX5uM/G7rzOg1FVZMgYFk1cEymzDeRtoQ62wJsWgllSvz63mBoZEEIO+OQ6CEmkyZ5OiNtWxt+JsktIrzhsxExLR1+nW7Oz2CH5D1FXDpKMJS+mhThDTFJDs3bJbVU=
+Received: by 10.64.91.5 with SMTP id o5mr522005qbb;
+        Thu, 10 Nov 2005 10:27:40 -0800 (PST)
+Received: by 10.65.194.8 with HTTP; Thu, 10 Nov 2005 10:27:39 -0800 (PST)
+To: Franck <vagabon.xyz@gmail.com>
+In-Reply-To: <cda58cb80511100017v12f8ec77v@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7v4q6k1jp0.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11498>
 
-Dear diary, on Thu, Nov 10, 2005 at 06:44:43PM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
-> > May I *STRONGLY* urge you to name that something different. 
-> > "lost+found" is a name with special properties in Unix; for example, 
-> > many backup solutions will ignore a directory with that name.
-> 
-> Yeah, the original proposal (in TODO list) explicitly stated why
-> I chose lost-found instead of lost+found back then, and somebody
-> on the list (could have been Pasky but I may be mistaken) said
-> not to worry.
+> I'm starting using GIT, and I'm having a couple of basic questions to
+> ask. Is it the correct place to post them or is there any other
+> mailing list related to GIT usage ?
 
-It was the Large Angry SCM. I share your concern.
+Read Documentattion/tutorial.txt (and any relevent Documentation/howto/* files).
 
-> In any case, if we go the route Daniel suggests, we would not be
-> storing anything on the filesystem ourselves so this would be a
-> non-issue.
+Search the archives.
 
-I like Daniel's route as well, for the separate command. But it would be
-nice to also have a way to tell git-fsck-cache to save the lost+found
-refs as it goes, much like the filesystem fsck. So if it reports some
-unreachable refs, you will not need to tell it to do the same job
-_another_ time to find out the refs and pass them to gitk. Then again,
-if we do this, the utility of a separate command will be questionable.
+If you still have problems, then the best format for questions here seems
+to be:
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+1) I was trying to do ... insert high level description here.
+
+2) So I executed these git commands ...
+
+3) And what happened was ...
+
+Skipping step 1 can cause delays while people answer questions about
+the specific micro-problems you had with the commands in step 2, when
+the real answer is to use some totally different command.
+
+-Tony (far more frequently an asker-of-questions than an answerer)
