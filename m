@@ -1,96 +1,58 @@
-From: Kevin Geiss <kevin@desertsol.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: git-archimport
-Date: Thu, 10 Nov 2005 14:49:59 -0700
-Message-ID: <20051110214959.GO9131@raven.localdomain>
-References: <D92ED0A1-B83A-43C3-B39C-AA8A21934D7F@desertsol.com> <46a038f90511101332r3389734uc1aa1effd2898e15@mail.gmail.com>
+Date: Fri, 11 Nov 2005 11:21:12 +1300
+Message-ID: <46a038f90511101421o7988a1bfi89eb0e33bd34e4bb@mail.gmail.com>
+References: <D92ED0A1-B83A-43C3-B39C-AA8A21934D7F@desertsol.com>
+	 <46a038f90511101332r3389734uc1aa1effd2898e15@mail.gmail.com>
+	 <20051110214959.GO9131@raven.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 22:51:41 2005
+X-From: git-owner@vger.kernel.org Thu Nov 10 23:22:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaKJ5-0001iL-SS
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 22:50:08 +0100
+	id 1EaKnI-0003B3-JA
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 23:21:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932176AbVKJVuD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 16:50:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932177AbVKJVuD
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 16:50:03 -0500
-Received: from 12-219-167-192.client.mchsi.com ([12.219.167.192]:63390 "EHLO
-	desertsol.com") by vger.kernel.org with ESMTP id S932176AbVKJVuA
+	id S932207AbVKJWVR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 17:21:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932208AbVKJWVQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 17:21:16 -0500
+Received: from zproxy.gmail.com ([64.233.162.199]:3386 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932207AbVKJWVP convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2005 16:50:00 -0500
-Received: from kevin by desertsol.com with local (Exim 4.50)
-	id 1EaKIx-0006GF-Pj; Thu, 10 Nov 2005 14:49:59 -0700
-To: Martin Langhoff <martin.langhoff@gmail.com>
+	Thu, 10 Nov 2005 17:21:15 -0500
+Received: by zproxy.gmail.com with SMTP id k1so514832nzf
+        for <git@vger.kernel.org>; Thu, 10 Nov 2005 14:21:12 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ptL1uxSsfv8aHwJnPvsHFVK3/rruTgJI7xFaqFUVv07BWfn44gW2j+P+jbjiBPDIux8bUc1CkfPG24ZgFFOc4z70uNa5tCiHcFykwY7ZbrfrkTCP/LTmNYQbfsK8dV7QhFDQFaTuCNdMyeaYDviTyq5h9g8Jr5FAQG7/zXTiY1g=
+Received: by 10.65.180.11 with SMTP id h11mr1499138qbp;
+        Thu, 10 Nov 2005 14:21:12 -0800 (PST)
+Received: by 10.64.242.4 with HTTP; Thu, 10 Nov 2005 14:21:12 -0800 (PST)
+To: Kevin Geiss <kevin@desertsol.com>
+In-Reply-To: <20051110214959.GO9131@raven.localdomain>
 Content-Disposition: inline
-In-Reply-To: <46a038f90511101332r3389734uc1aa1effd2898e15@mail.gmail.com>
-X-PGP-Key: http://www.desertsol.com/~kevin/gpg.txt
-User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11530>
 
-ok. I tried this:
+On 11/11/05, Kevin Geiss <kevin@desertsol.com> wrote:
+> Cannot find patchset for 'kevin@desertsol.com--files/scripts--oco--0--patch-1' at /usr/bin/git-archimport line 784
 
-git-archimport kevin@desertsol.com--files/scripts--base kevin@desertsol.com--files/scripts--oco
+Hmmm. The script uses tla itself to get the patch. What happens if you do
 
-and it always complains:
+  tla get-changeset -A kevin@desertsol.com--files/scripts--oco--0--patch-1
 
-Cannot find patchset for 'kevin@desertsol.com--files/scripts--oco--0--patch-1' at /usr/bin/git-archimport line 784
+In short, you must have a recent tla configured and with the archive
+registered.
 
-I don't have any spaces or funny characters in filenames.
+cheers,
 
-On Fri, Nov 11, 2005 at 10:32:12AM +1300, Martin Langhoff wrote:
-> If the two branches are related, and you want the imported git
-> branches to be related, do
-> 
->    git-archimport arch-eduforge@catalyst.net.nz--2004/scripts
-> 
-> that will bring all the stuff under scripts. If there are other
-> branches or projects there that aren't related or you don't  want to
-> pull, do
-> 
->    git-archimport arch-eduforge@catalyst.net.nz--2004/scripts--base \
->         arch-eduforge@catalyst.net.nz--2004/scripts--oco
-> 
-> In any case, you shoud never pass the last token (base-0). Also, if
-> you have filenames with spaces or funny chars, you'll want a patch
-> that I'm about to post.
-> 
-> If you don't mind having this discussion on git@vger, could you
-> forward it there?
-> 
-> cheers,
-> 
-> 
-> martin
-> 
-> On 11/11/05, Kevin Geiss <kevin@desertsol.com> wrote:
-> > hello, I was trying out the git-archimport script, I have a question.
-> >
-> > say I have two branches in tla (in the same archive):
-> >
-> > scripts--base--0
-> > scripts--oco--0
-> >
-> > and scripts--oco--0--base-0 was tagged from scripts--base--0--patch-2.
-> >
-> > I first tried importing only the base branch, that worked fine. then
-> > I started a new directory, and tried this:
-> >
-> > git arch-import -v archive/scripts--base--0 archive/scripts--oco--0
-> >
-> > and it keeps complaning about not being able to find scripts--oco--0--
-> > patch-1.  patch-1 is just a regular commit in the tla archive.
-> > (patch-2 and patch-3 are merges from scripts--base)
-> >
-> > anyway, am I understanding the paradigm of the git-archimport script?
-> > that I should expect it to be able to create a git repository for me
-> > from these 2 branches?
-> >
-> > thanks for any info
-> >
-> 
+
+
+martin
