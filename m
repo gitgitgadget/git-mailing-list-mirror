@@ -1,58 +1,65 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Where should I post questions on GIT usage ?
-Date: Thu, 10 Nov 2005 23:06:40 +1300
-Message-ID: <46a038f90511100206v3fc8de88u9f613dbfb0c0c35a@mail.gmail.com>
-References: <cda58cb80511100017v12f8ec77v@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Do I misunderstand cg-merge --squash option
+Date: Thu, 10 Nov 2005 11:12:06 +0100
+Message-ID: <20051110101206.GP30496@pasky.or.cz>
+References: <200511100025.05993.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Nov 10 11:08:40 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 11:13:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ea9KP-0007Oz-6K
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 11:06:45 +0100
+	id 1Ea9Ps-0000b0-0C
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 11:12:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750748AbVKJKGm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 05:06:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750749AbVKJKGm
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 05:06:42 -0500
-Received: from zproxy.gmail.com ([64.233.162.192]:51300 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750748AbVKJKGl convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2005 05:06:41 -0500
-Received: by zproxy.gmail.com with SMTP id j2so374826nzf
-        for <git@vger.kernel.org>; Thu, 10 Nov 2005 02:06:41 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SvdPLN0DOQ1dBQHlBRH/+LfBNX30HEfAl8uivKRU08CQ9qw83JRD6QdCJVy8vTZ5ujxcWqBT8z6dgBKlHycqVIbczYPDxcjWMl6jPpd90MNey/Oda6BTKDL+7zAcoM8l23u7KJvMFGRnAqtJpsVfAFpKfhqVYrsgBMU+/gINa9A=
-Received: by 10.64.250.3 with SMTP id x3mr632348qbh;
-        Thu, 10 Nov 2005 02:06:40 -0800 (PST)
-Received: by 10.64.242.4 with HTTP; Thu, 10 Nov 2005 02:06:40 -0800 (PST)
-To: Franck <vagabon.xyz@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <cda58cb80511100017v12f8ec77v@mail.gmail.com>
+	id S1750708AbVKJKMJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 05:12:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750741AbVKJKMJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 05:12:09 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:3273 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750708AbVKJKMI (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 05:12:08 -0500
+Received: (qmail 14762 invoked by uid 2001); 10 Nov 2005 11:12:06 +0100
+To: Alan Chandler <alan@chandlerfamily.org.uk>
 Content-Disposition: inline
+In-Reply-To: <200511100025.05993.alan@chandlerfamily.org.uk>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11477>
 
-On 11/10/05, Franck <vagabon.xyz@gmail.com> wrote:
-> I'm starting using GIT, and I'm having a couple of basic questions to
-> ask. Is it the correct place to post them or is there any other
-> mailing list related to GIT usage ?
+Dear diary, on Thu, Nov 10, 2005 at 01:25:05AM CET, I got a letter
+where Alan Chandler <alan@chandlerfamily.org.uk> said that...
+> I am trying to take my current development repository which has several 
+> hundred commits in it as I was developing my application and make a 
+> simplified branch for pushing to my public repository.
+> 
+> I basically created a new branch (public) from the tag at the point where I 
+> started the repository.
+> 
+> git-checkout -b public initial_commit
+> 
+> I then did a merge
+> 
+> cg-merge --squash v1.0
 
-Hi Franck,
+Why do you want to do a squash merge?
 
-I think you'll be fine posting here ;-) Everyone's been patient with
-me so far. OTOH, the list has a good search facility at
-marc.theaimsgroup.com , and GIT already has reasonable documentation,
-including a tutorial and a few howtos, reachable at
-http://www.kernel.org/pub/software/scm/git/docs/
+> But I don't know how to move forward and merge in changes after my v1.0 tag.  
+> Any attempt to merge anything else into this "public" branch seems to throw 
+> up what appears to be merge conflict, but I can't see why - when I look at 
+> the results one side has extra lines, but there is no other overlap.
 
-regards,
+I told you in the documentation - "re-merging with that branch later
+will cause trouble". If you want to be able to re-merge the branch
+later, you shouldn't use squash merge. And you shouldn't use squash
+merge anyway, expect for few narrow use cases.
 
-
-martin
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
