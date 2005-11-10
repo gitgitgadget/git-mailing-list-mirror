@@ -1,89 +1,111 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Expected Behavior?
-Date: Fri, 11 Nov 2005 08:54:43 +1300
-Message-ID: <46a038f90511101154p4ef99cddv82d56272921a80ac@mail.gmail.com>
-References: <E1EZKOB-0002j5-VY@jdl.com>
-	 <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net>
-	 <20051108210332.GB23265@c165.ib.student.liu.se>
-	 <20051109112452.GD30496@pasky.or.cz>
-	 <46a038f90511091504l7218df18k251bec75491891e9@mail.gmail.com>
-	 <20051109231248.GL16061@pasky.or.cz>
-	 <46a038f90511091543h520f6a84k3e3b14c2e502989f@mail.gmail.com>
-	 <20051109234925.GL30496@pasky.or.cz>
-	 <46a038f90511091847t70567e50o2303f1dc7ada2464@mail.gmail.com>
-	 <20051110193430.GU30496@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [ANNOUNCE] GIT 0.99.9g
+Date: Thu, 10 Nov 2005 11:55:40 -0800
+Message-ID: <7voe4sxooz.fsf@assigned-by-dhcp.cox.net>
+References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net>
+	<437318CD.2050401@slamail.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Fredrik Kuivinen <freku045@student.liu.se>,
-	Junio C Hamano <junkio@cox.net>,
-	Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 20:57:06 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 20:57:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaIVT-0005hq-Ud
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 20:54:48 +0100
+	id 1EaIWP-00064K-IO
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 20:55:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750948AbVKJTyp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 14:54:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbVKJTyp
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 14:54:45 -0500
-Received: from xproxy.gmail.com ([66.249.82.202]:35171 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750948AbVKJTyo convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2005 14:54:44 -0500
-Received: by xproxy.gmail.com with SMTP id s6so793381wxc
-        for <git@vger.kernel.org>; Thu, 10 Nov 2005 11:54:43 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kdCsLMi9sfIuApHge7lOfkd/W1N6/RZh6S/jdZQERK/Tm/dD7yRpWNepjasZtsnIY4d3eMZIurXXUGWuVbI3tV0d29lkk7i99Ak1MLbSGC3EAMPU1k0bxILS2I+3RaJ/4+22eW0sGL1TpkycVjhjop1W6DC3tc4eakHfa9kHve0=
-Received: by 10.64.208.4 with SMTP id f4mr893312qbg;
-        Thu, 10 Nov 2005 11:54:43 -0800 (PST)
-Received: by 10.64.242.4 with HTTP; Thu, 10 Nov 2005 11:54:43 -0800 (PST)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051110193430.GU30496@pasky.or.cz>
-Content-Disposition: inline
+	id S1751209AbVKJTzn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 14:55:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751219AbVKJTzm
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 14:55:42 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:11677 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751209AbVKJTzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2005 14:55:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051110195453.KSHO29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 10 Nov 2005 14:54:53 -0500
+To: Yaacov Akiba Slama <ya@slamail.org>
+In-Reply-To: <437318CD.2050401@slamail.org> (Yaacov Akiba Slama's message of
+	"Thu, 10 Nov 2005 11:54:21 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11515>
 
-On 11/11/05, Petr Baudis <pasky@suse.cz> wrote:
-> Well, basically like right now ;-).
+Yaacov Akiba Slama <ya@slamail.org> writes:
 
-Exactly. Which isn't documented, and has several subtleties that I
-don't know of.
+> /trunk/path/to/file
+> /trunk/new/path/to/file (this is a copy of /branches/branch_1/path/to/file)
+> /branches/branch_1/path/to/file
+> /branches/branch_n/path/to/file
+> /tags/tag_1/path/to/file
+> /tags/tag_m/path/to/file
+>
+> Now the commit 109fc2b97b73090a4a0a6550cdf9b2446fd12389 creates a new 
+> commit with two parents:
+> 1) HEAD
+> 2) the git branch called "branch_1"
+>
+> From what I read about the definition of commit in git's documentation, 
+> that seems to be ok, but can this marking of  "branch_1" as a parent of 
+> this commit be dangerous for merges done later in pure git ?
 
-> Merging is a two-stage process, where the two stages are isolated and
-> the latter does not interfere with the former. The former one is doing
-> the actual content merge, and that's what cg-merge does. The latter one
-> is recording the merge in history, and that's what cg-commit does.
+I think it is reasonable to record both as parents, to make the
+development history in branch_1 accessible from the trunk branch
+after they are merged, and I do not think it is dangerous at
+all.  It is just a regular merge which, when viewed from trunk
+side of the history, creates a directory called 'new' at the top
+level, and adds bunch of files there, and if you are viewing it
+with rename/copy detection you may even notice that those
+changes are mostly copy edits.
 
-There are some semantics to exchange info between cg-merge and
-cg-commit and for handling the index while the user is resolving
-conflicts or reviewing the merge before committing. I'm not familiar
-with them, and I'm unsure what the design is...
+But the above example brings up an interesting question.
+Subversion lets you copy freely and does not require the
+developer to express machine-readably what that copy is about.
+Also it lets copy partial trees.  So it is entirely plausible to
+run your project like this:
 
- - how do cg-merge and cg-commit pass around the parents, commit msg,
-files being merged vs dirty files on tree, etc? (easy: those lowercase
-temp files in .git)
- - how do you run cg-status/cg-diff without messing up the index? does
-running cg-status or cg-diff stand any risk of accidentally marking
-for inclusion dirty files that are not part of the merge? hopefully
-not, and then what's the technique?
- - should cg-status show more about the status of the index ?
- - how does cg-commit know whether conflicts have been resolved at
-all? (perhaps it doesn't even try!)
- - how do you reset the 'we are merging' status?
+	1. Repo has /trunk/i386/blah.c; i.e. 'ls' at the
+           toplevel of the working tree shows 'i386' directory.
 
-Anyway, that's off the top of my head, and probably shows you that I'm
-not 200% familiar with all the tricks available for handling the
-index.
+               /trunk/i386/blah.h
 
-cheers,
+        2. Somebody wants to do x86-64 equivalent of existing
+           thing, and starts preparing it by copying existing
+           i386 thing, into his branch, and do development
+           there.
 
+		/trunk/i386/blah.c
+                /branches/wip-x86-64/blah.c (copy from /trunk/i386)
 
+        3. Later, that x86-64 equivalent matures, and gets
+           merged into trunk:
 
-martin
+		/trunk/i386/blah.c
+		/trunk/x86-64/blah.c (merge back from /branches/wip-x86-64)
+                /branches/wip-x86-64/blah.c (development ceased)
+
+But it is also plausible to do this instead:
+
+	2'. Instead of the above, you copy the whole thing
+
+		/trunk/i386/blah.c
+                /branches/wip/i386/blah.c (copy from /trunk)
+                /branches/wip/x86-64/blah.c (then copy from /branches/wip/i386)
+
+        3'. Instead of the above:
+
+		/trunk/i386/blah.c (merge back from /branches/wip)
+		/trunk/x86-64/blah.c (merge back from /branches/wip)
+                /branches/wip/i386/blah.c (development ceased)
+                /branches/wip/x86-64/blah.c (development ceased)
+
+Do you need to handle the history resulting from these cases
+differently when importing from subversion?  I have a feeling
+that the user needs to tell what really happend for you to
+handle this sensibly (tree root level is different), but I am
+not offhand sure what the issues are.
