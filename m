@@ -1,58 +1,81 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git-archimport
-Date: Fri, 11 Nov 2005 11:21:12 +1300
-Message-ID: <46a038f90511101421o7988a1bfi89eb0e33bd34e4bb@mail.gmail.com>
-References: <D92ED0A1-B83A-43C3-B39C-AA8A21934D7F@desertsol.com>
-	 <46a038f90511101332r3389734uc1aa1effd2898e15@mail.gmail.com>
-	 <20051110214959.GO9131@raven.localdomain>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] C implementation of the 'git' program.
+Date: Thu, 10 Nov 2005 23:50:16 +0100
+Message-ID: <4373CEA8.1020900@op5.se>
+References: <20051110182631.3C5615BF90@nox.op5.se> <Pine.LNX.4.64.0511101133550.4627@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 23:22:41 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Nov 10 23:51:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaKnI-0003B3-JA
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 23:21:21 +0100
+	id 1EaLFX-0004y4-L0
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 23:50:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932207AbVKJWVR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 17:21:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932208AbVKJWVQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 17:21:16 -0500
-Received: from zproxy.gmail.com ([64.233.162.199]:3386 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932207AbVKJWVP convert rfc822-to-8bit
+	id S932122AbVKJWuS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 17:50:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932216AbVKJWuS
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 17:50:18 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:59300 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932122AbVKJWuS
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2005 17:21:15 -0500
-Received: by zproxy.gmail.com with SMTP id k1so514832nzf
-        for <git@vger.kernel.org>; Thu, 10 Nov 2005 14:21:12 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ptL1uxSsfv8aHwJnPvsHFVK3/rruTgJI7xFaqFUVv07BWfn44gW2j+P+jbjiBPDIux8bUc1CkfPG24ZgFFOc4z70uNa5tCiHcFykwY7ZbrfrkTCP/LTmNYQbfsK8dV7QhFDQFaTuCNdMyeaYDviTyq5h9g8Jr5FAQG7/zXTiY1g=
-Received: by 10.65.180.11 with SMTP id h11mr1499138qbp;
-        Thu, 10 Nov 2005 14:21:12 -0800 (PST)
-Received: by 10.64.242.4 with HTTP; Thu, 10 Nov 2005 14:21:12 -0800 (PST)
-To: Kevin Geiss <kevin@desertsol.com>
-In-Reply-To: <20051110214959.GO9131@raven.localdomain>
-Content-Disposition: inline
+	Thu, 10 Nov 2005 17:50:18 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id A35866BCFF
+	for <git@vger.kernel.org>; Thu, 10 Nov 2005 23:50:16 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.64.0511101133550.4627@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11531>
 
-On 11/11/05, Kevin Geiss <kevin@desertsol.com> wrote:
-> Cannot find patchset for 'kevin@desertsol.com--files/scripts--oco--0--patch-1' at /usr/bin/git-archimport line 784
+Linus Torvalds wrote:
+> 
+> And the performance difference does seem to be quite noticeable too..
+> 
 
-Hmmm. The script uses tla itself to get the patch. What happens if you do
+Yes. I was quite astonished when I noticed first, thinking the shell 
+kept the parsed script in cache or some such. Apparently it doesn't.
 
-  tla get-changeset -A kevin@desertsol.com--files/scripts--oco--0--patch-1
+> 
+>>The location of the GIT_LIB can be obtained by running
+>>
+>>	git --lib
+> 
+> 
+> I think this might be a bit ambiguous. When I see "GIT_LIB", to me it 
+> implies traditional libraries (ie a "libgit.a" kind of thing), not the 
+> kind of "git executable plugin" directory.
+> 
+> So I'd suggest renaming "--lib" and "GIT_LIB" to be more of a "--libexec" 
+> kind of flavor, if only to avoid that confusion.
 
-In short, you must have a recent tla configured and with the archive
-registered.
 
-cheers,
+Someone said libexec was moving out (of Linux, at least), so I thought 
+I'd better avoid that. Perhaps GIT_LIBDIR?
+
+Btw, I re-visited ye ole "git binary directory?" thread and noticed the 
+nifty trick you did with PATH from the wrapper. I'll add that to git.c 
+and, unless I get a better suggestion, rename GIT_LIB to GIT_LIBDIR (and 
+git --libdir).
 
 
+> Even if the actual 
+> directory ends up being /usr/lib/git-<version>/ as in my original 
+> suggestion, I think it's good to make it clear that it's not just some 
+> kind of "link type" library, but more of a combination of libraries and 
+> plugins and executables.
+> 
+> But maybe that's just me?
+> 
 
-martin
+It's not just you, but GIT_DIR was taken and I felt lazy.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
