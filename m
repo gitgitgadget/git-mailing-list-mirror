@@ -1,76 +1,93 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] C implementation of the 'git' program.
-Date: Thu, 10 Nov 2005 11:41:10 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511101133550.4627@g5.osdl.org>
-References: <20051110182631.3C5615BF90@nox.op5.se>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: merge-one-file: use common as base, instead of emptiness.
+Date: Thu, 10 Nov 2005 20:43:17 +0100
+Message-ID: <20051110194317.GV30496@pasky.or.cz>
+References: <E1EZKOB-0002j5-VY@jdl.com> <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net> <20051108095600.GA1431@pasky.or.cz> <7v64r16ro9.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 10 20:42:25 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 20:43:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaIIR-0001It-Lm
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 20:41:20 +0100
+	id 1EaIKS-0001zK-1V
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 20:43:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751199AbVKJTlQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 14:41:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751200AbVKJTlQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 14:41:16 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:1241 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751199AbVKJTlQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 14:41:16 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAAJfDnO024973
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 10 Nov 2005 11:41:13 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAAJfAdl002082;
-	Thu, 10 Nov 2005 11:41:12 -0800
-To: Andreas Ericsson <exon@op5.se>
-In-Reply-To: <20051110182631.3C5615BF90@nox.op5.se>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751201AbVKJTnV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 14:43:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbVKJTnV
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 14:43:21 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:13227 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751201AbVKJTnU (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 14:43:20 -0500
+Received: (qmail 23559 invoked by uid 2001); 10 Nov 2005 20:43:17 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v64r16ro9.fsf_-_@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11512>
 
-
-
-On Thu, 10 Nov 2005, Andreas Ericsson wrote:
+Dear diary, on Thu, Nov 10, 2005 at 05:41:10AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Petr Baudis <pasky@suse.cz> writes:
 > 
-> This patch provides a C implementation of the 'git' program and introduces
-> support for putting the git-* commands in their own directory. It also
-> saves some time on executing git-* commands in a tight loop and it prints
-> the currently available git commands in a nicely formatted list.
-
-I think this makes sense - "git" may be a very simple program even in 
-shell, but hey, it's simple even in C, and while performance may be a 
-secondary issue, when it is in C we will have the option to extend in more 
-effectively later.
-
-For example, we might implement some things directly in the "git" wrapper.
-
-And the performance difference does seem to be quite noticeable too..
-
-> The location of the GIT_LIB can be obtained by running
+> > I think having
+> >
+> > 	<<<<<
+> > 	file1
+> > 	=====
+> > 	file2
+> > 	>>>>>
+> >
+> > is an awful PITA to resolve, especially when the files actually are
+> > similar. Running some vimdiff (or just diff and possibly applying either
+> > way) on two separate files is much more convenient.
 > 
-> 	git --lib
+> You are right.
+> 
+> How about something like this?  This adds a specialized hackery
+> flag, --no-add, to git-apply, and uses it to compute common base
+> to be used for 2-file merge, instead of using /dev/null.
 
-I think this might be a bit ambiguous. When I see "GIT_LIB", to me it 
-implies traditional libraries (ie a "libgit.a" kind of thing), not the 
-kind of "git executable plugin" directory.
+Wow, astonishingly simple.
 
-So I'd suggest renaming "--lib" and "GIT_LIB" to be more of a "--libexec" 
-kind of flavor, if only to avoid that confusion. Even if the actual 
-directory ends up being /usr/lib/git-<version>/ as in my original 
-suggestion, I think it's good to make it clear that it's not just some 
-kind of "link type" library, but more of a combination of libraries and 
-plugins and executables.
+>  -- >8 -- cut here -- >8 --
+> Unlike the previous round that merged the path added differently
+> in each branches using emptiness as the base, compute a common
+> version and use it as input to 'merge' program.
+> 
+> This would show the resulting (still conflicting) file left in
+> the working tree as:
+> 
+> 	common file contents...
+> 	<<<<<< FILENAME
+> 	version from our branch...
+> 	======
+> 	version from their branch...
+> 	>>>>>> .merge_file_XXXXXX
+> 	more common file contents...
+> 
+> when both sides added similar contents.
 
-But maybe that's just me?
+But obviously now the trouble is opposite, when the files are completely
+unrelated, since now you likely get large conflicting areas interleaved
+with some scarce common lines... And this might get to be a big PITA to
+resolve as well.
 
-		Linus
+That said, I still really like --no-add and it would be heart-wrenching
+to just coldly dismiss it. It is a great tool, but I would let the user
+to use it manually. Possibly something like
+
+	git-twofile-merge foo~1 foo~2
+
+(the name is stupid, obviously) or a button in some GUI tool.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
