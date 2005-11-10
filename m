@@ -1,107 +1,81 @@
-From: Frank Sorenson <frank@tuxrocks.com>
-Subject: [PATCH] cg-log: ignore merges by default, and add --show-merges option
-Date: Thu, 10 Nov 2005 14:03:10 -0700
-Message-ID: <4373B58E.6030606@tuxrocks.com>
-References: <4373B1A6.8000706@tuxrocks.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Do I misunderstand cg-merge --squash option
+Date: Thu, 10 Nov 2005 22:16:37 +0100
+Message-ID: <20051110211637.GA30496@pasky.or.cz>
+References: <200511100025.05993.alan@chandlerfamily.org.uk> <200511101915.53736.alan@chandlerfamily.org.uk> <20051110192923.GT30496@pasky.or.cz> <200511102036.06484.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Nov 10 22:05:47 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 22:18:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaJZo-0003I3-Aj
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 22:03:20 +0100
+	id 1EaJml-0007QX-Ic
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 22:16:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932117AbVKJVDR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 16:03:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932118AbVKJVDR
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 16:03:17 -0500
-Received: from www.tuxrocks.com ([64.62.190.123]:24333 "EHLO tuxrocks.com")
-	by vger.kernel.org with ESMTP id S932117AbVKJVDQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 16:03:16 -0500
-Received: from [192.168.30.20] (obelix.cs.byu.edu [128.187.81.137])
-	(authenticated bits=0)
-	by tuxrocks.com (8.13.1/8.13.1) with ESMTP id jAAL3AlB006787
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 10 Nov 2005 14:03:12 -0700
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Petr Baudis <pasky@suse.cz>, Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <4373B1A6.8000706@tuxrocks.com>
-X-Enigmail-Version: 0.92.1.0
+	id S932078AbVKJVQk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 16:16:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932086AbVKJVQk
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 16:16:40 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:15060 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932078AbVKJVQj (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 16:16:39 -0500
+Received: (qmail 13872 invoked by uid 2001); 10 Nov 2005 22:16:37 +0100
+To: Alan Chandler <alan@chandlerfamily.org.uk>
+Content-Disposition: inline
+In-Reply-To: <200511102036.06484.alan@chandlerfamily.org.uk>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11528>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Dear diary, on Thu, Nov 10, 2005 at 09:36:06PM CET, I got a letter
+where Alan Chandler <alan@chandlerfamily.org.uk> said that...
+> On Thursday 10 Nov 2005 19:29, Petr Baudis wrote:
+> 
+> >
+> > Right now, what about trying to manually select the merge base?
+> >
+> > 	public$ cg-merge -b v1.0 master
+> 
+> Actually, that does merge very nicely.  However, I don't think its what I 
+> want. From gitk I get both routes back to my initial commit, both the fast 
+> track one and the slow train via all stations en-route.
+> 
+> I have had more success with grafting (which you kindly informed me about 
+> yesterday)
+> 
+> something like
+> 
+> echo `cg-object-id v1.0` `cg-object-id initial_commit` >.git/info/grafts
+> 
+> lf I make a branch out of the parent of v1.0 before doing this,  I end up with 
+> there being a side branch of the old history and my master branch headed back 
+> through a quick route to the initial_commit.
 
-This patch allows cg-log to ignore merges by default,but will display
-them if requested (with "--show-merges").
+Huh. But you still have the history cluttered and both routes to your
+initial commit, don't you? I'm now confused - I fear I don't know what
+you want anymore. But well, whatever is working out for you... ;-)
 
-Signed-off-by: Frank Sorenson <frank@tuxrocks.com>
+> Something strange (well actually not that unexpected, the more I think about 
+> it) has happened though.  
+> 
+> I was trying to see if cg-clone would effectively me make a new repository 
+> without the grafts in it (ie with real commit object with a parent as 
+> specified via the graft) but it doesn't - it just looses the graft and 
+> rebrings all the old history back in
+> 
+> Is that a bug?
 
- cg-log |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
+So far grafts were considered a private thing to enable some cool things
+like tying ancient history to your current history tree, etc. But if you
+want to do some persistent changes in the DAG, you are really best off
+just rebuilding the whole history.
 
-diff --git a/cg-log b/cg-log
-index 7d955e3..ed2278e 100755
-- --- a/cg-log
-+++ b/cg-log
-@@ -58,6 +58,9 @@
- #	by their author. This is also known as a "shortlog", suitable
- #	e.g. for contribution summaries of announcements.
- #
-+# --show-merges::
-+#	Display merges in the log as well (ignored by default).
-+#
- # -uUSERNAME::
- #	List only commits where author or committer contains 'USERNAME'.
- #	The search for 'USERNAME' is case-insensitive.
-@@ -255,6 +258,7 @@ user=
- mergebase=
- date_from=
- date_to=
-+no_merges="--no-merges"
-
- while optparse; do
- 	if optparse -c; then
-@@ -300,6 +304,8 @@ while optparse; do
- 		summary=1
- 	elif optparse --summary; then
- 		shortlog=1
-+	elif optparse --show-merges; then
-+		no_merges=""
- 	else
- 		optfail
- 	fi
-@@ -315,9 +321,9 @@ if [ "$mergebase" ]; then
- fi
-
- if [ "$shortlog" ]; then
-- -	revls="git-rev-list --pretty=short $date_from $date_to"
-+	revls="git-rev-list --pretty=short $no_merges $date_from $date_to"
- else
-- -	revls="git-rev-list --pretty=raw $date_from $date_to"
-+	revls="git-rev-list --pretty=raw $no_merges $date_from $date_to"
- fi
- revls="$revls $date_from $date_to"
-
-
-
-Frank
-- --
-Frank Sorenson - KD7TZK
-Systems Manager, Computer Science Department
-Brigham Young University
-frank@tuxrocks.com
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.7 (GNU/Linux)
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
-
-iD8DBQFDc7WOaI0dwg4A47wRAsPuAJ0W0s82jfxu+c/oHRPULaa5l9ITagCdEkhz
-NZAE2w8SnNbHl3/8MDtFT3w=
-=4cRS
------END PGP SIGNATURE-----
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
