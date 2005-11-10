@@ -1,61 +1,52 @@
-From: Jim Radford <radford@blackbean.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [ANNOUNCE] GIT 0.99.9g
-Date: Thu, 10 Nov 2005 10:54:23 -0800
-Message-ID: <20051110185423.GA7212@blackbean.org>
+Date: Thu, 10 Nov 2005 11:04:07 -0800
+Message-ID: <7vk6fgz5nc.fsf@assigned-by-dhcp.cox.net>
 References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net>
+	<43737EC7.6090109@zytor.com> <7v4q6k1jp0.fsf@assigned-by-dhcp.cox.net>
+	<20051110180311.GR30496@pasky.or.cz>
+	<Pine.LNX.4.64.0511101317500.25300@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 19:56:25 2005
+X-From: git-owner@vger.kernel.org Thu Nov 10 20:07:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaHZB-0002Zw-Oq
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 19:54:34 +0100
+	id 1EaHin-000608-Og
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 20:04:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751215AbVKJSya (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 13:54:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751217AbVKJSya
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 13:54:30 -0500
-Received: from cpe-66-74-186-186.socal.res.rr.com ([66.74.186.186]:46311 "EHLO
-	mail.blackbean.org") by vger.kernel.org with ESMTP id S1751215AbVKJSy3
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2005 13:54:29 -0500
-Received: from home.blackbean.org (localhost.localdomain [127.0.0.1])
-	by mail.blackbean.org (8.13.4/8.13.4) with ESMTP id jAAIsNjB007654;
-	Thu, 10 Nov 2005 10:54:23 -0800
-Received: (from jim@localhost)
-	by home.blackbean.org (8.13.4/8.13.4/Submit) id jAAIsN38007651;
-	Thu, 10 Nov 2005 10:54:23 -0800
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.2.1i
+	id S932158AbVKJTEL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 14:04:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932159AbVKJTEK
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 14:04:10 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:11247 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932158AbVKJTEJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2005 14:04:09 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051110190320.JTBC29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 10 Nov 2005 14:03:20 -0500
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.64.0511101317500.25300@iabervon.org> (Daniel
+	Barkalow's message of "Thu, 10 Nov 2005 13:31:16 -0500 (EST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11503>
 
-On Thu, Nov 10, 2005 at 12:14:29AM -0800, Junio C Hamano wrote:
->    I think archimport part needs to be split out just like its
->    svn/cvs cousins,
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-I don't agree.  The chance of running git-archimport and not having
-arch installed is significantly less likely than the chance of not
-noticing that the git-archimport program exists because it was moved
-into a separate package that you didn't know you needed to install in
-the first place.
+> ... (That is, you 
+> want the head of an unreachable chain listed for recovery, but not other 
+> things reachable from it; you also may want the list of blobs and trees 
+> not reachable either from a ref or from something listed for recovery, but 
+> not omitting a blob reachable only from an unreachable tree)
 
-The main reason I see for splitting cvs and email import out is the
-non-standard dependencies, cvsps and perl(Email::Valid).  While for
-svn import it's to keep from requiring subversion-perl of everone who
-installs git-core.  This dependency is added automatically, so you
-cannot easily just ignore it like you can in the arch/tla case.
-
-> and perhaps documentation into another separate package.
-
-There is no need for a separate documentation RPM, since the
-documentation is marked as such and rpm has a standard way to avoid
-installing them (--excludedocs).
-
--Jim
+I thought that was what those 'dangling blah' was about...
+That is, if you make commit A and then on top of that commit B,
+and lose both, you will see dnagling for B but not A (which is
+reachable from B).
