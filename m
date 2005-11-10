@@ -1,53 +1,75 @@
-From: Ben Clifford <benc@hawaga.org.uk>
-Subject: Re: latest stg/git commandline completions code
-Date: Thu, 10 Nov 2005 13:03:37 +1100
-Message-ID: <40549FF6-EB51-4756-B9B9-31724F701300@hawaga.org.uk>
-References: <Pine.LNX.4.60.0510251222510.8565@mundungus.clifford.ac> <200510251642.46169.blaisorblade@yahoo.it> <A44A02AA-BDA8-4623-825E-288F1107A5ED@hawaga.org.uk> <20051109222338.GK16061@pasky.or.cz>
-Mime-Version: 1.0 (Apple Message framework v734)
-Content-Type: text/plain; charset=UTF-8;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Nov 10 03:05:05 2005
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Expected Behavior?
+Date: Thu, 10 Nov 2005 15:47:38 +1300
+Message-ID: <46a038f90511091847t70567e50o2303f1dc7ada2464@mail.gmail.com>
+References: <E1EZKOB-0002j5-VY@jdl.com>
+	 <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net>
+	 <20051108210332.GB23265@c165.ib.student.liu.se>
+	 <20051109112452.GD30496@pasky.or.cz>
+	 <46a038f90511091504l7218df18k251bec75491891e9@mail.gmail.com>
+	 <20051109231248.GL16061@pasky.or.cz>
+	 <46a038f90511091543h520f6a84k3e3b14c2e502989f@mail.gmail.com>
+	 <20051109234925.GL30496@pasky.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Fredrik Kuivinen <freku045@student.liu.se>,
+	Junio C Hamano <junkio@cox.net>,
+	Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 03:49:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ea1my-0000yp-0X
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 03:03:44 +0100
+	id 1Ea2TX-0007nn-AL
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 03:47:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751379AbVKJCDk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 9 Nov 2005 21:03:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbVKJCDk
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 21:03:40 -0500
-Received: from mundungus.clifford.ac ([81.187.211.39]:30732 "EHLO
-	mundungus.clifford.ac") by vger.kernel.org with ESMTP
-	id S1751379AbVKJCDj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 21:03:39 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by mundungus.clifford.ac (8.13.3/8.13.3) with ESMTP id jAA23Wfv018477;
-	Thu, 10 Nov 2005 02:03:33 GMT
-In-Reply-To: <20051109222338.GK16061@pasky.or.cz>
-To: Git Mailing List <git@vger.kernel.org>
-X-Mailer: Apple Mail (2.734)
+	id S1751038AbVKJCrj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Nov 2005 21:47:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751673AbVKJCrj
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 21:47:39 -0500
+Received: from zproxy.gmail.com ([64.233.162.205]:50729 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751038AbVKJCri convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 21:47:38 -0500
+Received: by zproxy.gmail.com with SMTP id j2so311209nzf
+        for <git@vger.kernel.org>; Wed, 09 Nov 2005 18:47:38 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ncoug6p4A07jFC+/NYhThy6nnQfHiy+XmuZiQwvMBtTcVa34XNB+6EuRoo+qDLyx8Du3edgUWS1v18eyST4Jb5ZGrvo//fQ9215c2wzc67elyDBjQYbejavc/tzcvX/oxrw03j+dfFx0N+OPTTJiYHa9ldtxVu/kk7uLsr0kZ0s=
+Received: by 10.64.201.20 with SMTP id y20mr242099qbf;
+        Wed, 09 Nov 2005 18:47:38 -0800 (PST)
+Received: by 10.64.242.4 with HTTP; Wed, 9 Nov 2005 18:47:38 -0800 (PST)
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051109234925.GL30496@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11461>
 
+On 11/10/05, Petr Baudis <pasky@suse.cz> wrote:
+> But that's something different that I'm talking about. :-)
 
-On 10 Nov 2005, at 09:23, Petr Baudis wrote:
+Ack! Sorry about that!
 
-> Dear diary, on Tue, Nov 08, 2005 at 11:16:28AM CET, I got a letter
-> where Ben Clifford <benc@hawaga.org.uk> told me that...
+> Yes. My longer plan is to use the strategy resolvers as well, but my
+> TODO list is big... And I don't perceive this as a critical thing (the
+> standard strategy seems to work well enough), although I would like to
+> see this before 1.0.
+
+Fair enough. If you can outline how the interaction between cg-merge
+and cg-commit are expected to work, I'll try and find some time for
+that.
+
+> > Right now I am seeing some slightly abnormal things (*) in how some
+> > our our merges are going, so I' ll have to roll up my sleeves at some
+> > point and try and figure out what's going on. And as I look into
+> > cg-merge and cg-Xmergefile, not many eyes have been through it...
 >
->> I've added some stuff to this to do a few cogito, gitk and (one) git
->> completions, split into different files. I thought I might as well
->> toss what I have out for anyone interested to play with.
+> At least this is the one area of Cogito that has at least a bit
+> reasonable automated testing suite. ;-)
 
-btw, I got the repository for this working (it was working all along, =20
-it seems)...
+The good news is that git-merge is doing almost the same. Posted separately...
 
-cg clone http://www.hawaga.org.uk/gitcompletion.git
 
---=20
-Ben =E3=83=99=E3=83=B3 =D0=91=D1=8D=D0=BD
-http://www.hawaga.org.uk/ben/
+martin
