@@ -1,99 +1,74 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Getting rid of symlinks in .git?
-Date: Thu, 10 Nov 2005 21:45:43 +0100
-Message-ID: <20051110204543.GZ30496@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [ANNOUNCE] GIT 0.99.9g
+Date: Thu, 10 Nov 2005 12:48:15 -0800
+Message-ID: <7v4q6kxm9c.fsf@assigned-by-dhcp.cox.net>
+References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net>
+	<20051110185423.GA7212@blackbean.org> <4373AE02.9050909@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 10 21:46:33 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 21:49:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaJIs-0006Bm-AW
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 21:45:50 +0100
+	id 1EaJLJ-00075j-K3
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 21:48:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932095AbVKJUpr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 15:45:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932098AbVKJUpq
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 15:45:46 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:42433 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932095AbVKJUpq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 15:45:46 -0500
-Received: (qmail 1398 invoked by uid 2001); 10 Nov 2005 21:45:43 +0100
-To: Pavel Roskin <proski@gnu.org>
-Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932100AbVKJUsS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 15:48:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932105AbVKJUsS
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 15:48:18 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:40627 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932100AbVKJUsR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2005 15:48:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051110204754.GKFA1668.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 10 Nov 2005 15:47:54 -0500
+To: Andreas Ericsson <ae@op5.se>, Jim Radford <radford@blackbean.org>
+In-Reply-To: <4373AE02.9050909@op5.se> (Andreas Ericsson's message of "Thu, 10
+	Nov 2005 21:30:58 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11525>
 
-I'm deliberately breaking up the thread here, not to make the list
-reading even more difficult for all the poor readers not so interested
-in electronic archaeology (but I feel better after I began taking my
-new meds, I can even resist this huge urge to start replying to mails
-from June).
+Andreas Ericsson <ae@op5.se> writes:
 
-In-Reply-To: <1131653507.11283.31.camel@dv>
-7261 N T Nov 10 Pavel Roskin    ( 1.8K)
-	Re: [PATCH] cg-pull to stop treating "master" specially,
-	fix fetch_local for .git/HEAD
-(deliberately quoted in entirety)
+> Jim Radford wrote:
+>> On Thu, Nov 10, 2005 at 12:14:29AM -0800, Junio C Hamano wrote:
+>>
+>>>   I think archimport part needs to be split out just like its
+>>>   svn/cvs cousins,
+>> I don't agree...
+>
+> How is this different for when svnimport and cvsimport was moved out?..
+>
+>> The main reason I see for splitting cvs and email import out is the
+>> non-standard dependencies, cvsps and perl(Email::Valid).
+>
+> Define "non-standard". String::ShellQuote isn't installed by default on 
+> Fedora Core 3 but is required by git-archimport.
 
-Dear diary, on Thu, Nov 10, 2005 at 09:11:47PM CET, I got a letter
-where Pavel Roskin <proski@gnu.org> said that...
-> On Thu, 2005-11-10 at 20:24 +0100, Petr Baudis wrote:
-> >   can you still remember why did you introduce this? In GNU cp
-> > documentation, I can see just
-> > 
-> >        -b, --backup
-> >               Make backups of files that are about to be overwritten or removed.
-> > 
-> > which doesn't make sense to me - -L dereferences symlinks.
-> 
-> You are right, it must be my error.  Anyway, it was so long ago that I
-> would need to review and retest it.
+I am with Andreas here.
 
-Is it correct that all there is to it is to check if cloning locally
-works properly with symlinked HEAD in the remote repository?
+If you are using git to manage development in a tightly knitted
+group (e.g. company internal project) and are unlikely to be
+exchanging email patches, not having to pull Email::Valid into
+your system is a good thing, because you would not be using
+git-mail.  If you are not dealing with development history
+stored in svn or tla, not having to install git-svn nor git-tla
+is a good thing.
 
-> While at that, let's stop using symlinks.  git doesn't use symlinks on
-> Cygwin.  I think git should use that code on all OSes, since the
-> benefits of using symlinks are minimal (I think the only benefits are
-> their atomicity and resolving the reference in the kernel rather than in
-> userspace).  Having more uniform code for all platforms would simplify
-> development and testing.  It could also reduce requirements for the
-> transport protocols.  Finally, symlinks could be still used by the users
-> (if they know what they are doing) - git and cogito would simply become
-> symlink agnostic.
-> 
-> When files are copied around, symlinks are pain to deal with.  They
-> require special handling to be preserved both for remote operation and
-> dereferenced for local operation (that's what my patch was intended to
-> do).  I'm not even considering what would happen when cloning from Linux
-> to Windows or vice versa.
+Technical reasons like package availablity and required package
+size count, but I do not think we should be doing the split
+purely for technical reasons.  The split should aim primarily
+to give convenience for the users.
 
-I personally would not mind getting rid of symlinks completely, but we
-will still have to support them for some reasonable time period (several
-major releases, as far as Cogito is concerned - actually, there is
-plenty of people still using 0.13 and such).
-
-If more people think this is good idea, I could even again introduce
-some compatibility code to cg-Xlib which will rewrite symlinkish HEAD
-when it hits it (the kind of stuff we did in the old times).
-
-> Sure, it can wait until git 1.0, but it would be great to keep this goal
-> in mind.
-> 
-> Disclaimer - I'm not reading the git mailing list, so if it was
-> discussed, I'm sorry, I don't intend to restart that discussion - just
-> give me the pointer and I'll read it.
-
-I didn't notice such a discussion yet.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+That reminds me, Andreas, you said something about feeding me
+spec updates last week but Jim beated you.  I am open to
+improvements from both of you.  Obviously the invitation is not
+limited to two of you ;-).
