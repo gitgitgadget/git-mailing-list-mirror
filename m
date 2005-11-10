@@ -1,60 +1,53 @@
-From: "Earnestine" <billteatsrcsy@froggyradio.com>
-Subject: To you pay not enough money? You want more?
-Date: Wed, 9 Nov 2005 14:07:23 -0800
-Message-ID: <3266730966.20051109140723@ogukitiheupnl>
-Reply-To: "Earnestine Buck" <billteatsrcsy@froggyradio.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Expected Behavior?
+Date: Wed, 09 Nov 2005 16:03:30 -0800
+Message-ID: <7vacgd8j3h.fsf@assigned-by-dhcp.cox.net>
+References: <E1EZKOB-0002j5-VY@jdl.com>
+	<7vwtjjllw4.fsf@assigned-by-dhcp.cox.net>
+	<20051108210332.GB23265@c165.ib.student.liu.se>
+	<20051109112452.GD30496@pasky.or.cz>
+	<46a038f90511091504l7218df18k251bec75491891e9@mail.gmail.com>
+	<7virv18kc3.fsf@assigned-by-dhcp.cox.net>
+	<20051109234212.GJ30496@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Nov 10 01:00:30 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 01:04:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EZzrA-0004gV-Jy
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 00:59:57 +0100
+	id 1EZzuh-0005yo-Jj
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 01:03:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750885AbVKIX7x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Nov 2005 18:59:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750882AbVKIX7w
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 18:59:52 -0500
-Received: from [200.12.231.146] ([200.12.231.146]:813 "HELO 200.12.231.146")
-	by vger.kernel.org with SMTP id S1750814AbVKIX7v (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 18:59:51 -0500
-Received: from mail.securedc.com (mail.securedc.com [69.56.128.242])
-	by 200.12.231.146 (8.12.11/8.12.11) with ESMTP id QetYXqbljX6khh
-	for <git@vger.kernel.org>; Wed, 9 Nov 2005 14:07:23 -0800
-Received: from linx (218.168.145.60)
-	by mail.securedc.com (Postfix) with ESMTP id l22KV5V1J1yw
-	for <git@vger.kernel.org>; Wed, 9 Nov 2005 14:07:23 -0800
-To: <git@vger.kernel.org>
+	id S1751093AbVKJADd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Nov 2005 19:03:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbVKJADd
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 19:03:33 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:446 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751093AbVKJADc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Nov 2005 19:03:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051110000229.LIEY2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 9 Nov 2005 19:02:29 -0500
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051109234212.GJ30496@pasky.or.cz> (Petr Baudis's message of
+	"Thu, 10 Nov 2005 00:42:12 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.2 points;
- *  3.4 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
- *  0.0 RCVD_BY_IP Received by mail server with no name
- *  0.3 J_CHICKENPOX_83 BODY: {8}Letter - dot - {3}Letter
- *  0.5 BIZ_TLD URI: Contains an URL in the BIZ top-level domain
- *  4.0 RCVD_IN_XBL RBL: Received via a relay in Spamhaus XBL
- *      [200.12.231.146 listed in sbl-xbl.spamhaus.org]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11450>
 
-Thank You for Your interest.capo  
+Petr Baudis <pasky@suse.cz> writes:
 
+> I'm not sure I follow you here - what exactly does not feel disturbing
+> and what good reasons are there for whatever they are? :-)
 
-Job for you! just  
-
-
-MakePay Corporation offers the External Financial Management Services leadership, 
-experience and results in cash flow management.  mail  
-We offer You the job of finance manager. 
-Thank You for Your interest.hot
-Contact us on our post client and specify the.  here
-Full name
-Address
-Contact info (e-mail, phone, fax)
-And we shall contact you within one day
-
-Details on a site www.makepay.biz
-
-Contact as support@makepay.biz
+My misunderstanding, I guess.  I somehow thought you were
+suggesting that recursive should implement mergeFile through
+merge-index.  Going the other way, to make the current
+merge-index users to feed mergeFile with what is stored as three
+stages in an index file, would make a lot more sense.
