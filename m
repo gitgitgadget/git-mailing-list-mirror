@@ -1,68 +1,56 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Do I misunderstand cg-merge --squash option
-Date: Thu, 10 Nov 2005 20:29:23 +0100
-Message-ID: <20051110192923.GT30496@pasky.or.cz>
-References: <200511100025.05993.alan@chandlerfamily.org.uk> <20051110101206.GP30496@pasky.or.cz> <200511101915.53736.alan@chandlerfamily.org.uk>
+Subject: Re: Expected Behavior?
+Date: Thu, 10 Nov 2005 20:34:30 +0100
+Message-ID: <20051110193430.GU30496@pasky.or.cz>
+References: <E1EZKOB-0002j5-VY@jdl.com> <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net> <20051108210332.GB23265@c165.ib.student.liu.se> <20051109112452.GD30496@pasky.or.cz> <46a038f90511091504l7218df18k251bec75491891e9@mail.gmail.com> <20051109231248.GL16061@pasky.or.cz> <46a038f90511091543h520f6a84k3e3b14c2e502989f@mail.gmail.com> <20051109234925.GL30496@pasky.or.cz> <46a038f90511091847t70567e50o2303f1dc7ada2464@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 20:31:15 2005
+Cc: Fredrik Kuivinen <freku045@student.liu.se>,
+	Junio C Hamano <junkio@cox.net>,
+	Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 20:35:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaI70-00060q-6H
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 20:29:30 +0100
+	id 1EaIBw-0007bh-Jw
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 20:34:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932108AbVKJT31 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 14:29:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbVKJT31
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 14:29:27 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:1950 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751219AbVKJT31 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 14:29:27 -0500
-Received: (qmail 21530 invoked by uid 2001); 10 Nov 2005 20:29:23 +0100
-To: Alan Chandler <alan@chandlerfamily.org.uk>
+	id S932166AbVKJTee (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 14:34:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbVKJTee
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 14:34:34 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:52961 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751219AbVKJTed (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 14:34:33 -0500
+Received: (qmail 22367 invoked by uid 2001); 10 Nov 2005 20:34:30 +0100
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <200511101915.53736.alan@chandlerfamily.org.uk>
+In-Reply-To: <46a038f90511091847t70567e50o2303f1dc7ada2464@mail.gmail.com>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11509>
 
-Dear diary, on Thu, Nov 10, 2005 at 08:15:53PM CET, I got a letter
-where Alan Chandler <alan@chandlerfamily.org.uk> said that...
-> On Thursday 10 Nov 2005 10:12, Petr Baudis wrote:
-> > Why do you want to do a squash merge?
+Dear diary, on Thu, Nov 10, 2005 at 03:47:38AM CET, I got a letter
+where Martin Langhoff <martin.langhoff@gmail.com> said that...
+> On 11/10/05, Petr Baudis <pasky@suse.cz> wrote:
+> > Yes. My longer plan is to use the strategy resolvers as well, but my
+> > TODO list is big... And I don't perceive this as a critical thing (the
+> > standard strategy seems to work well enough), although I would like to
+> > see this before 1.0.
 > 
-> I used git experimentally as I built a web application from scratch, learning 
-> both what I wanted the application to look like and how to do it with the 
-> packages I was using.  There is several hundreds of commits that are totally 
-> irrelevant (both because they were all different directions I was trying and 
-> then backing out of and because I saved state just were I was when I gave up 
-> for the day).
-> 
-> So what I was experimenting with was whether I could somehow get rid of that 
-> history (at least in one branch) before making that history public.
+> Fair enough. If you can outline how the interaction between cg-merge
+> and cg-commit are expected to work, I'll try and find some time for
+> that.
 
-Aha. That sounds reasonable.
+Well, basically like right now ;-).
 
-> > I told you in the documentation - "re-merging with that branch later
-> > will cause trouble". If you want to be able to re-merge the branch
-> > later, you shouldn't use squash merge. And you shouldn't use squash
-> > merge anyway, expect for few narrow use cases.
-> 
-> I know - I saw the warning - and I was only experimenting.  I just didn't 
-> understand what had happened.
-
-If you would be doing something like this again, it's best to merge, and
-then rather than continuing to develop what you merged, just throw that
-branch again and re-clone the merged repository.
-
-Right now, what about trying to manually select the merge base?
-
-	public$ cg-merge -b v1.0 master
+Merging is a two-stage process, where the two stages are isolated and
+the latter does not interfere with the former. The former one is doing
+the actual content merge, and that's what cg-merge does. The latter one
+is recording the merge in history, and that's what cg-commit does.
 
 -- 
 				Petr "Pasky" Baudis
