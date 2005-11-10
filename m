@@ -1,101 +1,79 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Expected Behavior?
-Date: Thu, 10 Nov 2005 21:10:28 +0100
-Message-ID: <20051110201027.GW30496@pasky.or.cz>
-References: <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net> <20051108210332.GB23265@c165.ib.student.liu.se> <20051109112452.GD30496@pasky.or.cz> <46a038f90511091504l7218df18k251bec75491891e9@mail.gmail.com> <20051109231248.GL16061@pasky.or.cz> <46a038f90511091543h520f6a84k3e3b14c2e502989f@mail.gmail.com> <20051109234925.GL30496@pasky.or.cz> <46a038f90511091847t70567e50o2303f1dc7ada2464@mail.gmail.com> <20051110193430.GU30496@pasky.or.cz> <46a038f90511101154p4ef99cddv82d56272921a80ac@mail.gmail.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] cg-pull to stop treating "master" specially, fix
+	fetch_local for .git/HEAD
+Date: Thu, 10 Nov 2005 15:11:47 -0500
+Message-ID: <1131653507.11283.31.camel@dv>
+References: <1124832796.23795.9.camel@dv>
+	 <20051110192430.GS30496@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Kuivinen <freku045@student.liu.se>,
-	Junio C Hamano <junkio@cox.net>,
-	Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 21:11:52 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 10 21:14:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaIkj-0002Jv-ON
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 21:10:34 +0100
+	id 1EaImZ-00032P-Gv
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 21:12:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbVKJUKa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 15:10:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbVKJUKa
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 15:10:30 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:52455 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750812AbVKJUKa (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 15:10:30 -0500
-Received: (qmail 27586 invoked by uid 2001); 10 Nov 2005 21:10:28 +0100
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f90511101154p4ef99cddv82d56272921a80ac@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751062AbVKJUMZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 15:12:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbVKJUMZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 15:12:25 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:20102 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751062AbVKJUMY
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2005 15:12:24 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EaImS-0007vp-6D
+	for git@vger.kernel.org; Thu, 10 Nov 2005 15:12:20 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.54)
+	id 1EaIlv-0000aY-TE; Thu, 10 Nov 2005 15:11:47 -0500
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051110192430.GS30496@pasky.or.cz>
+X-Mailer: Evolution 2.4.1 (2.4.1-5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11518>
 
-Dear diary, on Thu, Nov 10, 2005 at 08:54:43PM CET, I got a letter
-where Martin Langhoff <martin.langhoff@gmail.com> said that...
-> On 11/11/05, Petr Baudis <pasky@suse.cz> wrote:
-> > Well, basically like right now ;-).
+Hi, Petr!
+
+On Thu, 2005-11-10 at 20:24 +0100, Petr Baudis wrote:
+>   can you still remember why did you introduce this? In GNU cp
+> documentation, I can see just
 > 
-> Exactly. Which isn't documented, and has several subtleties that I
-> don't know of.
+>        -b, --backup
+>               Make backups of files that are about to be overwritten or removed.
+> 
+> which doesn't make sense to me - -L dereferences symlinks.
 
-Yes - from the user standpoint it is supposed to be a foolproof (for a
-reasonable value of 'fool') and should always guide you around. From a
-developer's standpoint it might not be entirely crystal-clear, though.
-;-)
+You are right, it must be my error.  Anyway, it was so long ago that I
+would need to review and retest it.
 
-> There are some semantics to exchange info between cg-merge and
-> cg-commit and for handling the index while the user is resolving
-> conflicts or reviewing the merge before committing. I'm not familiar
-> with them, and I'm unsure what the design is...
+While at that, let's stop using symlinks.  git doesn't use symlinks on
+Cygwin.  I think git should use that code on all OSes, since the
+benefits of using symlinks are minimal (I think the only benefits are
+their atomicity and resolving the reference in the kernel rather than in
+userspace).  Having more uniform code for all platforms would simplify
+development and testing.  It could also reduce requirements for the
+transport protocols.  Finally, symlinks could be still used by the users
+(if they know what they are doing) - git and cogito would simply become
+symlink agnostic.
 
-The design is "keep arbitrary bunch of files in .git recording our state
-wrt. merging". I want to tidy that up and keep all that in
-.git/cg-merge-state/ or something.
+When files are copied around, symlinks are pain to deal with.  They
+require special handling to be preserved both for remote operation and
+dereferenced for local operation (that's what my patch was intended to
+do).  I'm not even considering what would happen when cloning from Linux
+to Windows or vice versa.
 
->  - how do cg-merge and cg-commit pass around the parents, commit msg,
-> files being merged vs dirty files on tree, etc? (easy: those lowercase
-> temp files in .git)
+Sure, it can wait until git 1.0, but it would be great to keep this goal
+in mind.
 
-Yes, lowercase temp files. Well, the commit msg itself is composed only
-in cg-commit.
-
->  - how do you run cg-status/cg-diff without messing up the index? does
-> running cg-status or cg-diff stand any risk of accidentally marking
-> for inclusion dirty files that are not part of the merge? hopefully
-> not, and then what's the technique?
-
-cg-status and cg-diff are safe anytime, being basically read-only
-commands wrt. the interesting index information.
-
-Well, they _do_ touch your index (but only modifying the stat
-information), and that may get you into some trouble, but only in case
-of some seemingly quite rare permission problem, I think (and that will
-trash your index anytime, not just during a merge). There was a thread
-about that about a month or two ago, IIRC.
-
->  - should cg-status show more about the status of the index ?
-
-In what sense? It shows if merge is in progress. It doesn't show
-conflicts, but that's because...
-
->  - how does cg-commit know whether conflicts have been resolved at
-> all? (perhaps it doesn't even try!)
-
-...we don't actually track them yet. That's considered a bug, I want to
-fix it, and it even has some non-zero priority.
-
->  - how do you reset the 'we are merging' status?
-
-cg-reset (except when you were merging over a dirty state; hmm, we don't
-have a direct command for cancelling that, it seems).
-
-cg-merge will now hint you about cg-reset.
+Disclaimer - I'm not reading the git mailing list, so if it was
+discussed, I'm sorry, I don't intend to restart that discussion - just
+give me the pointer and I'll read it.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Regards,
+Pavel Roskin
