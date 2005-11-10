@@ -1,60 +1,74 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: [ANNOUNCE] GIT 0.99.9g
-Date: Thu, 10 Nov 2005 04:09:13 -0500
-Message-ID: <43730E39.6030601@pobox.com>
-References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Add --pretty=fuller
+Date: Thu, 10 Nov 2005 10:11:25 +0100
+Message-ID: <43730EBD.90307@op5.se>
+References: <7vzmod58ot.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750707AbVKJJJT@vger.kernel.org Thu Nov 10 10:11:37 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750707AbVKJJJT@vger.kernel.org>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 10:13:15 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ea8RT-00069y-6Y
-	for glk-linux-kernel-3@gmane.org; Thu, 10 Nov 2005 10:09:59 +0100
+	id 1Ea8Sw-0006cz-G7
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 10:11:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750707AbVKJJJT (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 10 Nov 2005 04:09:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750702AbVKJJJT
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Thu, 10 Nov 2005 04:09:19 -0500
-Received: from mail.dvmed.net ([216.237.124.58]:1260 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1750701AbVKJJJR (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 10 Nov 2005 04:09:17 -0500
-Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1Ea8Ql-0006rz-Rf; Thu, 10 Nov 2005 09:09:17 +0000
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+	id S1750702AbVKJJL1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 04:11:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750703AbVKJJL0
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 04:11:26 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:26003 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750702AbVKJJL0
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2005 04:11:26 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 5A5266BCFF
+	for <git@vger.kernel.org>; Thu, 10 Nov 2005 10:11:25 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
 X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Score: 0.0 (/)
-Sender: linux-kernel-owner@vger.kernel.org
+In-Reply-To: <7vzmod58ot.fsf@assigned-by-dhcp.cox.net>
+To: unlisted-recipients:; (no To-header on input)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11471>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11472>
 
 Junio C Hamano wrote:
->  - One important newcomer is git-pack-redundant.  It is still in
->    "pu" not because I doubt what it does is useful, but simply
->    because I have not had a chance to study how it does its
->    thing.  I expect to fully merge it into "master" before 1.0
->    happens.
+> git log without --pretty showed author and author-date, while
+> with --pretty=full showed author and committer but no dates.
+> The new formatting option, --pretty=fuller, shows both name and
+> timestamp for author and committer.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> 
+> ---
+> 
+>  * again, likes, dislikes, don't-cares?
+> 
 
-IMHO git-prune-packed should prune redundant pack files...
+Why not use:
 
+--show=cdm,atn
 
+for
+Committer: date, mail
+Author: timestamp,name
 
-> Oh, and we will not be moving things out of /usr/bin/ during 1.0
-> timeframe.
+or
 
-:(  bummer.  I do like the elegance of having /usr/bin/git executing 
-stuff out of /usr/libexec/git.
+--show-author=date,timestamp,name
+--show-committer=name,time
+--show=name,date (for both author and committer)
 
-/usr/libexec/git also makes it IMO cleaner when integrating git plugins 
-from third parties (rpm -Uvh git-newfeature), because you don't have to 
-worry about the /usr/bin namespace.
+or some such, with --pretty=<something> just a short-hand for those 
+show-options?
 
-	Jeff
+We'll run out of superlatives really quickly if there are more author 
+and committer info added sometime in the future, while the --show 
+flag(s) can be extended more or less indefinitely.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
