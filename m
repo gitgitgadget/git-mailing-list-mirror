@@ -1,86 +1,49 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: latest stg/git commandline completions code
-Date: Thu, 10 Nov 2005 10:40:13 +0100
-Message-ID: <20051110094013.GM30496@pasky.or.cz>
-References: <Pine.LNX.4.60.0510251222510.8565@mundungus.clifford.ac> <200510251642.46169.blaisorblade@yahoo.it> <A44A02AA-BDA8-4623-825E-288F1107A5ED@hawaga.org.uk> <20051109222338.GK16061@pasky.or.cz> <CDEAA4E3-54FE-4825-BFCF-DCE34DBD138A@hawaga.org.uk> <Pine.LNX.4.60.0510251222510.8565@mundungus.clifford.ac> <200510251642.46169.blaisorblade@yahoo.it> <A44A02AA-BDA8-4623-825E-288F1107A5ED@hawaga.org.uk> <20051109222338.GK16061@pasky.or.cz> <33CE6BA8-415D-405F-89B3-982811C3A0CF@hawaga.org.uk>
+Subject: Re: git binary directory?
+Date: Thu, 10 Nov 2005 10:49:31 +0100
+Message-ID: <20051110094931.GO30496@pasky.or.cz>
+References: <7voe4y5w3v.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511052013550.3316@g5.osdl.org> <7vy84249re.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511060816390.3316@g5.osdl.org> <7v7jbly1lh.fsf@assigned-by-dhcp.cox.net> <20051106221952.GP1431@pasky.or.cz> <7virv5wc86.fsf@assigned-by-dhcp.cox.net> <20051107004346.GR1431@pasky.or.cz> <Pine.LNX.4.64.0511061653380.3316@g5.osdl.org> <7vvez4s6zv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Blaisorblade <blaisorblade@yahoo.it>,
-	Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
-X-From: git-owner@vger.kernel.org Thu Nov 10 10:41:25 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 10:50:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ea8uy-0007cx-HT
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 10:40:29 +0100
+	id 1Ea94B-0002Pa-At
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 10:50:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750727AbVKJJkR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 04:40:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750731AbVKJJkR
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 04:40:17 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:46270 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750727AbVKJJkP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 04:40:15 -0500
-Received: (qmail 12112 invoked by uid 2001); 10 Nov 2005 10:40:13 +0100
-To: Ben Clifford <benc@hawaga.org.uk>
+	id S1750732AbVKJJtg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 04:49:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750735AbVKJJtg
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 04:49:36 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:61144 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750732AbVKJJtf (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 04:49:35 -0500
+Received: (qmail 13079 invoked by uid 2001); 10 Nov 2005 10:49:31 +0100
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <CDEAA4E3-54FE-4825-BFCF-DCE34DBD138A@hawaga.org.uk> <33CE6BA8-415D-405F-89B3-982811C3A0CF@hawaga.org.uk>
+In-Reply-To: <7vvez4s6zv.fsf@assigned-by-dhcp.cox.net>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11474>
 
-Dear diary, on Thu, Nov 10, 2005 at 02:59:09AM CET, I got a letter
-where Ben Clifford <benc@hawaga.org.uk> said that...
-> There are a few small common functions that are used by all the git  
-> completions, though. I suppose for going into cogito's contrib/ I  
-> should include them directly in cogito completion code, but that  
-> seems a little messy, as it would be nice to keep them in-sync with  
-> what is used in the other completion files. hmm.
+Dear diary, on Mon, Nov 07, 2005 at 06:27:48PM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> It looks like that both you and Pasky are not so enthusiastic
+> about moving thing out of /usr/bin/, so let's keep things the
+> way they are for 1.0 release and rethink when we do 2.0 (or
+> whatever comes after 1.0).
 
-Then could you please separate those from the git completion to some
-kind of 'library'?
-
-Dear diary, on Thu, Nov 10, 2005 at 07:57:34AM CET, I got a letter
-where Ben Clifford <benc@hawaga.org.uk> said that...
-> On 10 Nov 2005, at 09:23, Petr Baudis wrote:
-> >Besides, it would be probably best to just autogenerate the
-> >auto-completion code - the usage information in Cogito is supposed  
-> >to be
-> >100% consistent and correct, so it should be a reliable source for  
-> >that.
-> 
-> Maybe reliable and consistent but I think that info would need a bit  
-> of augmentation to use for specifying autocompletion - for example,  
-> in the case of:
-> 
-> > Usage: cg-branch-add BRANCH_NAME LOCATION
-> 
-> BRANCH_NAME should *not* exist so it doesn't make sense to  
-> autocomplete from the branch list, but in the case of:
-
-When you do
-
-	cat > <tab><tab>
-
-bash happily autocompletes as well. I don't think this is a problem,
-besides it can be useful when you want to use some existing branch name,
-just slightly modified.
-
-> The amount of augmentation is probably not too much -  probably  
-> sufficient  to specify for each parameter a completion-source(s)  
-> (heads, branches, filenames, blah) that doesn't get displayed in -- 
-> help. But this is more information to maintain and get out of date...
-
-It's enough if we auto-build the completion and complain loudly and
-error out when we hit something unknown.
-
-> (I confess to having pretty much no idea how zsh completion works...)
-
-Me neither. :-)
+Well, just to clarify - I'm personally not opposed to it, as long as it
+gets done in some timeframe where it won't drastically break backwards
+compatibility (that is, not in 1.0.1 or such, but e.g. at some right
+moment before 1.0 or at the start of the next development series
+whenever that happens), and as long as I get a way to get the path
+of the git commands by a single fork().
 
 -- 
 				Petr "Pasky" Baudis
