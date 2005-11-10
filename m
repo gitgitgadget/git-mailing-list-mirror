@@ -1,71 +1,73 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Expected Behavior?
-Date: Thu, 10 Nov 2005 21:34:11 +0100
-Message-ID: <20051110203411.GX30496@pasky.or.cz>
-References: <E1EZKOB-0002j5-VY@jdl.com> <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net> <20051108210332.GB23265@c165.ib.student.liu.se> <7v7jbig6m7.fsf@assigned-by-dhcp.cox.net> <20051108225320.GB4805@c165.ib.student.liu.se> <7vmzkenzcx.fsf@assigned-by-dhcp.cox.net> <20051109081906.GA4960@c165.ib.student.liu.se>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Re: Do I misunderstand cg-merge --squash option
+Date: Thu, 10 Nov 2005 20:36:06 +0000
+Message-ID: <200511102036.06484.alan@chandlerfamily.org.uk>
+References: <200511100025.05993.alan@chandlerfamily.org.uk> <200511101915.53736.alan@chandlerfamily.org.uk> <20051110192923.GT30496@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 21:34:41 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Nov 10 21:36:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaJ7j-0002L1-8u
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 21:34:19 +0100
+	id 1EaJ9T-0002ph-8V
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 21:36:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932073AbVKJUeQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 15:34:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932074AbVKJUeQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 15:34:16 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:34015 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932073AbVKJUeP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 15:34:15 -0500
-Received: (qmail 32180 invoked by uid 2001); 10 Nov 2005 21:34:11 +0100
-To: Fredrik Kuivinen <freku045@student.liu.se>
+	id S932082AbVKJUgE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 15:36:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932083AbVKJUgE
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 15:36:04 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:19079
+	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
+	id S932082AbVKJUgB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2005 15:36:01 -0500
+Received: from kanger.home ([192.168.0.21])
+	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
+	id 1EaJ9M-0004lz-JS; Thu, 10 Nov 2005 20:36:00 +0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+In-Reply-To: <20051110192923.GT30496@pasky.or.cz>
 Content-Disposition: inline
-In-Reply-To: <20051109081906.GA4960@c165.ib.student.liu.se>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11522>
 
-Dear diary, on Wed, Nov 09, 2005 at 09:19:06AM CET, I got a letter
-where Fredrik Kuivinen <freku045@student.liu.se> said that...
-> On Tue, Nov 08, 2005 at 09:50:54PM -0800, Junio C Hamano wrote:
-> > Fredrik Kuivinen <freku045@student.liu.se> writes:
-> > 
-> > >> Oops, I missed that part.  This is unsafe in theory, if you
-> > >> could overwrite existing file3_master or file3_dev.  Does that
-> > >> matter in practice?
-> > >
-> > > It wont overwrite any existing files. If there is a file named
-> > > 'file3_master' then the new file will be named 'file3_master_1' and if
-> > > that file also exists the new file will be named 'file3_master_2', and
-> > > so on.
-> > 
-> > Another thing to watch out is that a branch name could have a
-> > slash in it.  It might make more sense to just name the heads file3~2
-> > or file3~3 (with as many ~s repeated to avoid name clashes) like
-> > Pasky does.
-> > 
-> 
-> Oups, I haven't thought about that. I kind of like the idea that you
-> can see the branch name in the file names though. How about replacing
-> any slashes in the branch names with underscores? So the branch
-> 'foo/bar' will give rise to files with suffixes like '_foo_bar' and
-> '_foo_bar_<number>'.
+On Thursday 10 Nov 2005 19:29, Petr Baudis wrote:
 
-I like it too. :-)
+>
+> Right now, what about trying to manually select the merge base?
+>
+> 	public$ cg-merge -b v1.0 master
 
-Now, this would look like file3~master in Cogito (or file3~~master in
-case of name conflict, etc.).
+Actually, that does merge very nicely.  However, I don't think its what I 
+want. From gitk I get both routes back to my initial commit, both the fast 
+track one and the slow train via all stations en-route.
 
-Thanks for the idea,
+I have had more success with grafting (which you kindly informed me about 
+yesterday)
+
+something like
+
+echo `cg-object-id v1.0` `cg-object-id initial_commit` >.git/info/grafts
+
+lf I make a branch out of the parent of v1.0 before doing this,  I end up with 
+there being a side branch of the old history and my master branch headed back 
+through a quick route to the initial_commit.
+
+Something strange (well actually not that unexpected, the more I think about 
+it) has happened though.  
+
+I was trying to see if cg-clone would effectively me make a new repository 
+without the grafts in it (ie with real commit object with a parent as 
+specified via the graft) but it doesn't - it just looses the graft and 
+rebrings all the old history back in
+
+Is that a bug?
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Alan Chandler
+http://www.chandlerfamily.org.uk
+Open Source. It's the difference between trust and antitrust.
