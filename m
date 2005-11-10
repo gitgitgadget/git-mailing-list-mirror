@@ -1,63 +1,46 @@
-From: Wyatt Jacobson <msetnicarbwfl@isac.org>
-Subject: You the student also require money? You should begin with us
-Date: Thu, 10 Nov 2005 03:41:42 -0800
-Message-ID: <019647039622.086538561155@isac.org>
-Reply-To: Wyatt Jacobson <msetnicarbwfl@isac.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Nov 10 15:21:35 2005
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [PATCH] Add --pretty=fuller
+Date: Thu, 10 Nov 2005 08:42:57 -0600
+Message-ID: <E1EaDdh-0007qo-E2@jdl.com>
+X-From: git-owner@vger.kernel.org Thu Nov 10 15:43:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaDG8-0006gn-Bi
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 15:18:37 +0100
+	id 1EaDdy-0007NW-9c
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 15:43:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750770AbVKJOS2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 09:18:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750822AbVKJOS2
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 09:18:28 -0500
-Received: from ppp-G-012.dialup.telenergo.pl ([81.15.186.12]:25607 "HELO
-	ppp-G-012.dialup.telenergo.pl") by vger.kernel.org with SMTP
-	id S1750770AbVKJOS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2005 09:18:27 -0500
-Received: from webmail.isac.org
-	by ppp-G-012.dialup.telenergo.pl (8.9.3/8.9.3) with SMTP id bEv9wANNyi45
-	for <git@vger.kernel.org>; Thu, 10 Nov 2005 03:41:42 -0800
-Received: from unknown (HELO nlcj) (197.159.33.85)
-	by webmail.isac.org (Postfix) with ESMTP id ZqXxEQQ9GgZS
-	for <git@vger.kernel.org>; Thu, 10 Nov 2005 03:41:42 -0800
-To: <git@vger.kernel.org>
+	id S1750877AbVKJOnI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 09:43:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750966AbVKJOnI
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 09:43:08 -0500
+Received: from jdl.com ([66.118.10.122]:54998 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S1750877AbVKJOnH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 09:43:07 -0500
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1EaDdh-0007qo-E2
+	for git@vger.kernel.org; Thu, 10 Nov 2005 08:42:58 -0600
+To: git@vger.kernel.org
+In-Reply-To: 43730EBD.90307@op5.se
+X-Spam-Score: -105.9 (---------------------------------------------------)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 11.6 points;
- *  3.9 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
- *  2.3 BIZ_TLD URI: Contains an URL in the BIZ top-level domain
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4811]
- *  4.0 RCVD_IN_XBL RBL: Received via a relay in Spamhaus XBL
- *      [81.15.186.12 listed in sbl-xbl.spamhaus.org]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: makepay.biz]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11485>
-
-Thank You for Your interest.huge  
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11486>
 
 
-Job for you! happy  
+Andreas wrote:
 
+> --show-author=date,timestamp,name
+> --show-committer=name,time
+> --show=name,date (for both author and committer)
+> 
+> or some such, with --pretty=<something> just a short-hand for those 
+> show-options?
 
-MakePay Corporation offers the External Financial Management Services leadership, 
-experience and results in cash flow management.  access  
-We offer You the job of finance manager. more
-Thank You for Your interest.dream
-Contact us on our post client and specify the.  open
-Full name
-Address
-Contact info (e-mail, phone, fax)
-And we shall contact you within one day
+Which just looks like a candidate for the [log]
+section of the config file to me.  Or is the "git log"
+output needing to be standardized enough that this
+level of flexability is a bad idea?  Dunno.
 
-Details on a site www.makepay.biz
-
-Contact as support@makepay.biz
+jdl
