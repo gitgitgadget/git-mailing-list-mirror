@@ -1,70 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Expected Behavior?
-Date: Thu, 10 Nov 2005 14:52:46 -0800
-Message-ID: <7vzmocw1xd.fsf@assigned-by-dhcp.cox.net>
-References: <E1EZKOB-0002j5-VY@jdl.com>
-	<7vwtjjllw4.fsf@assigned-by-dhcp.cox.net>
-	<20051108210332.GB23265@c165.ib.student.liu.se>
-	<7v7jbig6m7.fsf@assigned-by-dhcp.cox.net>
-	<20051108225320.GB4805@c165.ib.student.liu.se>
-	<7vmzkenzcx.fsf@assigned-by-dhcp.cox.net>
-	<20051109081906.GA4960@c165.ib.student.liu.se>
-	<20051110203411.GX30496@pasky.or.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: rsync deprecated but promoted?
+Date: Fri, 11 Nov 2005 00:17:04 +0100
+Message-ID: <20051110231704.GB30496@pasky.or.cz>
+References: <20050925163201.GA29198@tumblerings.org> <4d4586301dca616f42880612fae01492@cream.org> <20050926133204.GB21019@pasky.or.cz> <Pine.LNX.4.58.0509260801430.3308@g5.osdl.org> <20050926163846.GD21019@pasky.or.cz> <Pine.LNX.4.58.0509260941340.3308@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 23:53:10 2005
+Cc: Martin Coxall <quasi@cream.org>,
+	Zack Brown <zbrown@tumblerings.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 11 00:17:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaLHo-0005sm-Qr
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 23:52:53 +0100
+	id 1EaLfM-0004sG-48
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 00:17:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932174AbVKJWwt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 17:52:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932216AbVKJWwt
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 17:52:49 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:19396 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S932174AbVKJWws (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2005 17:52:48 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051110225226.WGMH16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 10 Nov 2005 17:52:26 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051110203411.GX30496@pasky.or.cz> (Petr Baudis's message of
-	"Thu, 10 Nov 2005 21:34:11 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932250AbVKJXRI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 18:17:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbVKJXRI
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 18:17:08 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:16821 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932250AbVKJXRH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 18:17:07 -0500
+Received: (qmail 315 invoked by uid 2001); 11 Nov 2005 00:17:04 +0100
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0509260941340.3308@g5.osdl.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11533>
 
-Petr Baudis <pasky@suse.cz> writes:
+Dear diary, on Mon, Sep 26, 2005 at 06:43:08PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> said that...
+> 
+> 
+> On Mon, 26 Sep 2005, Petr Baudis wrote:
+> > 
+> > Actually, it would be nice to be able to tell git-fsck-objects to only
+> > verify objects which are referenced between given two commits (perhaps
+> > just make it support the ^object notation). Then I wouldn't mind running
+> > that after each rsync fetch in Cogito.
+> 
+> You can kind of do it.
+> 
+> Do
+> 
+> 	git-rev-list --objects $oldheads --not $newheads >& /dev/null
+> 	echo "$?"
+> 
+> and it _should_ largely work. Untested, of course, but I _hope_ that if 
+> any object is missing, git-rev-list should die with an error. And if it 
+> doesn't, I should fix it ;)
 
-> Dear diary, on Wed, Nov 09, 2005 at 09:19:06AM CET, I got a letter
-> where Fredrik Kuivinen <freku045@student.liu.se> said that...
->> On Tue, Nov 08, 2005 at 09:50:54PM -0800, Junio C Hamano wrote:
->> > Fredrik Kuivinen <freku045@student.liu.se> writes:
->> > 
->> Oups, I haven't thought about that. I kind of like the idea that you
->> can see the branch name in the file names though. How about replacing
->> any slashes in the branch names with underscores? So the branch
->> 'foo/bar' will give rise to files with suffixes like '_foo_bar' and
->> '_foo_bar_<number>'.
->
-> I like it too. :-)
->
-> Now, this would look like file3~master in Cogito (or file3~~master in
-> case of name conflict, etc.).
+It should obviously be
 
-One thing I like about Cogito's is the use of tilde instead of
-underscore -- much much less likely to clash with real filenames
-and easiliy recognizable as throwaway copies.
+	git-rev-list $(git-rev-parse $newheads --not $oldheads) >& /dev/null
 
-One thing I _don't_ like about both is there is no way for 'git
-reset --hard' to get rid of them, when the user decides to retry
-from scratch after seeing a failed merge that left too many of
-them.
+but it is indeed broken:
+
+	$ git-rev-list --objects ... ^... && echo ':)'
+	001439c6a797461c3e75018d95744d463077ae33
+	841e3297d8df764da417da81dbfe1044e24d4082
+	cf11a3d561e76c8ba273cb0bb62d46a4b2959c1f file
+	:)
+	$ git-cat-file -t cf11a3d561e76c8ba273cb0bb62d46a4b2959c1f
+	error: unable to find cf11a3d561e76c8ba273cb0bb62d46a4b2959c1f
+	fatal: git-cat-file cf11a3d561e76c8ba273cb0bb62d46a4b2959c1f: bad file
+
+Currently I just modified it so that I iterate through all the sha1s
+git-rev-list spits out, and test them by git-cat-file -t.
+
+Thanks for the hint,
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
