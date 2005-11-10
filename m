@@ -1,81 +1,70 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] C implementation of the 'git' program.
-Date: Thu, 10 Nov 2005 23:50:16 +0100
-Message-ID: <4373CEA8.1020900@op5.se>
-References: <20051110182631.3C5615BF90@nox.op5.se> <Pine.LNX.4.64.0511101133550.4627@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Expected Behavior?
+Date: Thu, 10 Nov 2005 14:52:46 -0800
+Message-ID: <7vzmocw1xd.fsf@assigned-by-dhcp.cox.net>
+References: <E1EZKOB-0002j5-VY@jdl.com>
+	<7vwtjjllw4.fsf@assigned-by-dhcp.cox.net>
+	<20051108210332.GB23265@c165.ib.student.liu.se>
+	<7v7jbig6m7.fsf@assigned-by-dhcp.cox.net>
+	<20051108225320.GB4805@c165.ib.student.liu.se>
+	<7vmzkenzcx.fsf@assigned-by-dhcp.cox.net>
+	<20051109081906.GA4960@c165.ib.student.liu.se>
+	<20051110203411.GX30496@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Nov 10 23:51:54 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 23:53:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaLFX-0004y4-L0
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 23:50:32 +0100
+	id 1EaLHo-0005sm-Qr
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 23:52:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932122AbVKJWuS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 17:50:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932216AbVKJWuS
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 17:50:18 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:59300 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932122AbVKJWuS
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2005 17:50:18 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id A35866BCFF
-	for <git@vger.kernel.org>; Thu, 10 Nov 2005 23:50:16 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0511101133550.4627@g5.osdl.org>
+	id S932174AbVKJWwt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 17:52:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932216AbVKJWwt
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 17:52:49 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:19396 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932174AbVKJWws (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2005 17:52:48 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051110225226.WGMH16347.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 10 Nov 2005 17:52:26 -0500
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051110203411.GX30496@pasky.or.cz> (Petr Baudis's message of
+	"Thu, 10 Nov 2005 21:34:11 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11532>
 
-Linus Torvalds wrote:
-> 
-> And the performance difference does seem to be quite noticeable too..
-> 
+Petr Baudis <pasky@suse.cz> writes:
 
-Yes. I was quite astonished when I noticed first, thinking the shell 
-kept the parsed script in cache or some such. Apparently it doesn't.
+> Dear diary, on Wed, Nov 09, 2005 at 09:19:06AM CET, I got a letter
+> where Fredrik Kuivinen <freku045@student.liu.se> said that...
+>> On Tue, Nov 08, 2005 at 09:50:54PM -0800, Junio C Hamano wrote:
+>> > Fredrik Kuivinen <freku045@student.liu.se> writes:
+>> > 
+>> Oups, I haven't thought about that. I kind of like the idea that you
+>> can see the branch name in the file names though. How about replacing
+>> any slashes in the branch names with underscores? So the branch
+>> 'foo/bar' will give rise to files with suffixes like '_foo_bar' and
+>> '_foo_bar_<number>'.
+>
+> I like it too. :-)
+>
+> Now, this would look like file3~master in Cogito (or file3~~master in
+> case of name conflict, etc.).
 
-> 
->>The location of the GIT_LIB can be obtained by running
->>
->>	git --lib
-> 
-> 
-> I think this might be a bit ambiguous. When I see "GIT_LIB", to me it 
-> implies traditional libraries (ie a "libgit.a" kind of thing), not the 
-> kind of "git executable plugin" directory.
-> 
-> So I'd suggest renaming "--lib" and "GIT_LIB" to be more of a "--libexec" 
-> kind of flavor, if only to avoid that confusion.
+One thing I like about Cogito's is the use of tilde instead of
+underscore -- much much less likely to clash with real filenames
+and easiliy recognizable as throwaway copies.
 
-
-Someone said libexec was moving out (of Linux, at least), so I thought 
-I'd better avoid that. Perhaps GIT_LIBDIR?
-
-Btw, I re-visited ye ole "git binary directory?" thread and noticed the 
-nifty trick you did with PATH from the wrapper. I'll add that to git.c 
-and, unless I get a better suggestion, rename GIT_LIB to GIT_LIBDIR (and 
-git --libdir).
-
-
-> Even if the actual 
-> directory ends up being /usr/lib/git-<version>/ as in my original 
-> suggestion, I think it's good to make it clear that it's not just some 
-> kind of "link type" library, but more of a combination of libraries and 
-> plugins and executables.
-> 
-> But maybe that's just me?
-> 
-
-It's not just you, but GIT_DIR was taken and I felt lazy.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+One thing I _don't_ like about both is there is no way for 'git
+reset --hard' to get rid of them, when the user decides to retry
+from scratch after seeing a failed merge that left too many of
+them.
