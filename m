@@ -1,75 +1,154 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Expected Behavior?
-Date: Thu, 10 Nov 2005 15:47:38 +1300
-Message-ID: <46a038f90511091847t70567e50o2303f1dc7ada2464@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: merge-one-file: use common as base, instead of emptiness.
+Date: Wed, 09 Nov 2005 20:41:10 -0800
+Message-ID: <7v64r16ro9.fsf_-_@assigned-by-dhcp.cox.net>
 References: <E1EZKOB-0002j5-VY@jdl.com>
-	 <7vwtjjllw4.fsf@assigned-by-dhcp.cox.net>
-	 <20051108210332.GB23265@c165.ib.student.liu.se>
-	 <20051109112452.GD30496@pasky.or.cz>
-	 <46a038f90511091504l7218df18k251bec75491891e9@mail.gmail.com>
-	 <20051109231248.GL16061@pasky.or.cz>
-	 <46a038f90511091543h520f6a84k3e3b14c2e502989f@mail.gmail.com>
-	 <20051109234925.GL30496@pasky.or.cz>
+	<7vwtjjllw4.fsf@assigned-by-dhcp.cox.net>
+	<20051108095600.GA1431@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Fredrik Kuivinen <freku045@student.liu.se>,
-	Junio C Hamano <junkio@cox.net>,
-	Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 03:49:33 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 10 05:42:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ea2TX-0007nn-AL
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 03:47:44 +0100
+	id 1Ea4FR-0000e0-Fi
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 05:41:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751038AbVKJCrj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Nov 2005 21:47:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751673AbVKJCrj
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 21:47:39 -0500
-Received: from zproxy.gmail.com ([64.233.162.205]:50729 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751038AbVKJCri convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 9 Nov 2005 21:47:38 -0500
-Received: by zproxy.gmail.com with SMTP id j2so311209nzf
-        for <git@vger.kernel.org>; Wed, 09 Nov 2005 18:47:38 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ncoug6p4A07jFC+/NYhThy6nnQfHiy+XmuZiQwvMBtTcVa34XNB+6EuRoo+qDLyx8Du3edgUWS1v18eyST4Jb5ZGrvo//fQ9215c2wzc67elyDBjQYbejavc/tzcvX/oxrw03j+dfFx0N+OPTTJiYHa9ldtxVu/kk7uLsr0kZ0s=
-Received: by 10.64.201.20 with SMTP id y20mr242099qbf;
-        Wed, 09 Nov 2005 18:47:38 -0800 (PST)
-Received: by 10.64.242.4 with HTTP; Wed, 9 Nov 2005 18:47:38 -0800 (PST)
+	id S1751473AbVKJElN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Nov 2005 23:41:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbVKJElN
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Nov 2005 23:41:13 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:31180 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751473AbVKJElM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Nov 2005 23:41:12 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051110044025.OUQD29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 9 Nov 2005 23:40:25 -0500
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051109234925.GL30496@pasky.or.cz>
-Content-Disposition: inline
+In-Reply-To: <20051108095600.GA1431@pasky.or.cz> (Petr Baudis's message of
+	"Tue, 8 Nov 2005 10:56:00 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11462>
 
-On 11/10/05, Petr Baudis <pasky@suse.cz> wrote:
-> But that's something different that I'm talking about. :-)
+Petr Baudis <pasky@suse.cz> writes:
 
-Ack! Sorry about that!
-
-> Yes. My longer plan is to use the strategy resolvers as well, but my
-> TODO list is big... And I don't perceive this as a critical thing (the
-> standard strategy seems to work well enough), although I would like to
-> see this before 1.0.
-
-Fair enough. If you can outline how the interaction between cg-merge
-and cg-commit are expected to work, I'll try and find some time for
-that.
-
-> > Right now I am seeing some slightly abnormal things (*) in how some
-> > our our merges are going, so I' ll have to roll up my sleeves at some
-> > point and try and figure out what's going on. And as I look into
-> > cg-merge and cg-Xmergefile, not many eyes have been through it...
+> I think having
 >
-> At least this is the one area of Cogito that has at least a bit
-> reasonable automated testing suite. ;-)
+> 	<<<<<
+> 	file1
+> 	=====
+> 	file2
+> 	>>>>>
+>
+> is an awful PITA to resolve, especially when the files actually are
+> similar. Running some vimdiff (or just diff and possibly applying either
+> way) on two separate files is much more convenient.
 
-The good news is that git-merge is doing almost the same. Posted separately...
+You are right.
 
+How about something like this?  This adds a specialized hackery
+flag, --no-add, to git-apply, and uses it to compute common base
+to be used for 2-file merge, instead of using /dev/null.
 
-martin
+On top of the previous round.
+
+ -- >8 -- cut here -- >8 --
+Unlike the previous round that merged the path added differently
+in each branches using emptiness as the base, compute a common
+version and use it as input to 'merge' program.
+
+This would show the resulting (still conflicting) file left in
+the working tree as:
+
+	common file contents...
+	<<<<<< FILENAME
+	version from our branch...
+	======
+	version from their branch...
+	>>>>>> .merge_file_XXXXXX
+	more common file contents...
+
+when both sides added similar contents.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+---
+
+ apply.c               |   11 +++++++++--
+ git-merge-one-file.sh |    6 ++++--
+ 2 files changed, 13 insertions(+), 4 deletions(-)
+
+applies-to: 75c7cdf0addfcb4df5ed093f9b57bb98432489e1
+f158ab58fd3846a784805849bd9228bf060e4b2d
+diff --git a/apply.c b/apply.c
+index 3e53b34..7584888 100644
+--- a/apply.c
++++ b/apply.c
+@@ -23,6 +23,7 @@ static int numstat = 0;
+ static int summary = 0;
+ static int check = 0;
+ static int apply = 1;
++static int no_add = 0;
+ static int show_index_info = 0;
+ static int line_termination = '\n';
+ static const char apply_usage[] =
+@@ -1099,8 +1100,10 @@ static int apply_one_fragment(struct buf
+ 				break;
+ 		/* Fall-through for ' ' */
+ 		case '+':
+-			memcpy(new + newsize, patch + 1, plen);
+-			newsize += plen;
++			if (*patch != '+' || !no_add) {
++				memcpy(new + newsize, patch + 1, plen);
++				newsize += plen;
++			}
+ 			break;
+ 		case '@': case '\\':
+ 			/* Ignore it, we already handled it */
+@@ -1697,6 +1700,10 @@ int main(int argc, char **argv)
+ 			excludes = x;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--no-add")) {
++			no_add = 1;
++			continue;
++		}
+ 		if (!strcmp(arg, "--stat")) {
+ 			apply = 0;
+ 			diffstat = 1;
+diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
+index 32e17cb..d9ee458 100755
+--- a/git-merge-one-file.sh
++++ b/git-merge-one-file.sh
+@@ -57,18 +57,20 @@ case "${1:-.}${2:-.}${3:-.}" in
+ # Modified in both, but differently.
+ #
+ "$1$2$3" | ".$2$3")
++	src2=`git-unpack-file $3`
+ 	case "$1" in
+ 	'')
+ 		echo "Added $4 in both, but differently."
++		# This extracts OUR file in $orig, and uses git-apply to
++		# remove lines that are unique to ours.
+ 		orig=`git-unpack-file $2`
+-		: >$orig
++		diff -u -La/$orig -Lb/$orig $orig $src2 | git-apply --no-add 
+ 		;;
+ 	*)
+ 		echo "Auto-merging $4."
+ 		orig=`git-unpack-file $1`
+ 		;;
+ 	esac
+-	src2=`git-unpack-file $3`
+ 
+ 	# We reset the index to the first branch, making
+ 	# git-diff-file useful
+---
+0.99.9.GIT
