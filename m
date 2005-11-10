@@ -1,86 +1,87 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: Check for differents trees
-Date: Wed, 9 Nov 2005 22:57:14 -0800 (PST)
-Message-ID: <20051110065714.88318.qmail@web26310.mail.ukl.yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 10 07:58:16 2005
+From: Ben Clifford <benc@hawaga.org.uk>
+Subject: Re: latest stg/git commandline completions code
+Date: Thu, 10 Nov 2005 17:57:34 +1100
+Message-ID: <CDEAA4E3-54FE-4825-BFCF-DCE34DBD138A@hawaga.org.uk>
+References: <Pine.LNX.4.60.0510251222510.8565@mundungus.clifford.ac> <200510251642.46169.blaisorblade@yahoo.it> <A44A02AA-BDA8-4623-825E-288F1107A5ED@hawaga.org.uk> <20051109222338.GK16061@pasky.or.cz>
+Mime-Version: 1.0 (Apple Message framework v734)
+Content-Type: text/plain; charset=UTF-8;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Blaisorblade <blaisorblade@yahoo.it>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 10 07:59:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ea6N5-00018O-9d
-	for gcvg-git@gmane.org; Thu, 10 Nov 2005 07:57:19 +0100
+	id 1Ea6O0-0001ME-Oz
+	for gcvg-git@gmane.org; Thu, 10 Nov 2005 07:58:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751234AbVKJG5Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 01:57:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbVKJG5Q
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 01:57:16 -0500
-Received: from web26310.mail.ukl.yahoo.com ([217.146.176.21]:8879 "HELO
-	web26310.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1751234AbVKJG5P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Nov 2005 01:57:15 -0500
-Received: (qmail 88320 invoked by uid 60001); 10 Nov 2005 06:57:14 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=gpksFqlzpMskH7ikOG5tnSKHmap3NVG9xd97iMYI59E2sdOYwugK9KhmLpcA1i5+qku8nm9OeCGP4HcMMzpdBYNVIlS+iMuR2N/evPiK3t4q+/rE4lQe6ADAfSwDeuheBAI7BrDnDR+lGg/7DIdm80sv+pNrUUNh3deUzYQKFqk=  ;
-Received: from [151.44.24.184] by web26310.mail.ukl.yahoo.com via HTTP; Wed, 09 Nov 2005 22:57:14 PST
-To: junkio@cox.net
+	id S1751101AbVKJG6N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 10 Nov 2005 01:58:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbVKJG6N
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 01:58:13 -0500
+Received: from mundungus.clifford.ac ([81.187.211.39]:18445 "EHLO
+	mundungus.clifford.ac") by vger.kernel.org with ESMTP
+	id S1751101AbVKJG6M convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 01:58:12 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by mundungus.clifford.ac (8.13.3/8.13.3) with ESMTP id jAA6vaLR021198;
+	Thu, 10 Nov 2005 06:57:54 GMT
+In-Reply-To: <20051109222338.GK16061@pasky.or.cz>
+To: Petr Baudis <pasky@suse.cz>,
+	Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
+X-Mailer: Apple Mail (2.734)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11467>
 
-Junio C Hamano wrote:
+On 10 Nov 2005, at 09:23, Petr Baudis wrote:
 
->Marco Costalba <mcostalba@yahoo.it> writes:
+
+
+
+
+
+> Besides, it would be probably best to just autogenerate the
+> auto-completion code - the usage information in Cogito is supposed =20
+> to be
+> 100% consistent and correct, so it should be a reliable source for =20
+> that.
 >
->>   as you said, the speed is almost the same but your way is clearly better.
 >
 >
->How often do you do this --diff-filter=AD and why?
->
->If it is a common enough operation, we could add a specific hack
->to stop feeding the diff machinery with unwanted kind of changes
->when diff-filter is set and none of -B/-C/-M are used.  That
->_might_ speed things up for you.
 >
 
-Sorry for late answer but I was off line a few days.
+Maybe reliable and consistent but I think that info would need a bit =20
+of augmentation to use for specifying autocompletion - for example, =20
+in the case of:
 
-QGit has a tree viewer now. Tree view is updated when user browses through revisions. Loading the
-file names of a given tree, although only for the open directories, is an expensive operation. So
-qgit checks for different files anytime the user selects a new revision and the tree viewer is
-open, I use this test to skip tree reloading if trees have the same files.
+ > Usage: cg-branch-add BRANCH_NAME LOCATION
 
-I have made some speed test on Linux tree with 
-       git-diff-tree -r --name-status --diff-filter=AD sha1 sha2
+BRANCH_NAME should *not* exist so it doesn't make sense to =20
+autocomplete from the branch list, but in the case of:
 
-On my box it takes from 50-100ms for near revisions to almost 2 seconds when you select a new
-revision very far from current one. Add to this the fact that in distant revs case there is a high
-probability that the trees are found different, so you need also to reload the tree at the end,
-adding extra time before GUI update.
+ > Usage: cg-fetch [-f] [-v] [BRANCH_NAME]
 
-So definitely, It will be great to keep tree browsing snappy. I speak for qgit, but I think any
-git viewer that adds tree browsing feature should benefit from this change.
+BRANCH_NAME *must* exist so it makes sense to autocomplete from the =20
+branch list.
 
+The amount of augmentation is probably not too much -  probably =20
+sufficient  to specify for each parameter a completion-source(s) =20
+(heads, branches, filenames, blah) that doesn't get displayed in --=20
+help. But this is more information to maintain and get out of date...
 
-  Marco
+I wonder if Nikolai has had thoughts about that for zsh completion?
+Hopefully if anything gets added, it would be useful for both zsh and =20
+bash
 
-P.S: By the way, if I understand correctly, what you propone is a different behavior of
---diff-filter=AD. Not to filter for AD, but to find first match of AD. Because of this, IMHO
-should be better to have a --first-match=AD flag or, better idea, to use --max-count option (from
-git-rev-list) togheter with --diff-filter and have something like:
+(I confess to having pretty much no idea how zsh completion works...)
 
-git-diff-tree -r --name-status --diff-filter=AD --max-count=1 sha1 sha2
+Ben
 
-
-
-
-	
-		
-__________________________________ 
-Yahoo! Mail - PC Magazine Editors' Choice 2005 
-http://mail.yahoo.com
+--=20
+Ben =E3=83=99=E3=83=B3 =D0=91=D1=8D=D0=BD
+http://www.hawaga.org.uk/ben/
+My email is high latency but best way to contact me. Alternatively, =20
+SMS numbers at above URL.
