@@ -1,75 +1,53 @@
-From: Simon Richter <Simon.Richter@hogyros.de>
-Subject: Re: Getting rid of symlinks in .git?
-Date: Fri, 11 Nov 2005 10:15:04 +0100
-Message-ID: <43746118.30404@hogyros.de>
-References: <20051110204543.GZ30496@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] specfile cleanups
+Date: Fri, 11 Nov 2005 01:22:24 -0800
+Message-ID: <7vveyzpmi7.fsf@assigned-by-dhcp.cox.net>
+References: <20051111091029.GW8041@shell0.pdx.osdl.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig7E765C7AA9F55284B8E21786"
-Cc: Pavel Roskin <proski@gnu.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 11 10:16:42 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 11 10:24:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaV0a-0005cl-9i
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 10:15:44 +0100
+	id 1EaV76-0007zZ-TR
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 10:22:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932306AbVKKJPl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 04:15:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932307AbVKKJPl
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 04:15:41 -0500
-Received: from kleinhenz.com ([213.239.205.196]:6825 "EHLO kleinhenz.com")
-	by vger.kernel.org with ESMTP id S932306AbVKKJPk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 04:15:40 -0500
-Received: from [192.168.115.35] (p54996A14.dip.t-dialin.net [84.153.106.20])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "Simon Richter", Issuer "Kleinhenz Elektronik CA" (verified OK))
-	by kleinhenz.com (Postfix) with ESMTP id 278BF4A800D;
-	Fri, 11 Nov 2005 10:15:25 +0100 (CET)
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051019)
-X-Accept-Language: en-us, en
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051110204543.GZ30496@pasky.or.cz>
-X-Enigmail-Version: 0.93.0.0
-OpenPGP: url=http://www.hogyros.de/simon.asc
+	id S932312AbVKKJW0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 04:22:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932313AbVKKJW0
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 04:22:26 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:34206 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932312AbVKKJWZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2005 04:22:25 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051111092135.CNDD29333.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 11 Nov 2005 04:21:35 -0500
+To: Chris Wright <chrisw@osdl.org>
+In-Reply-To: <20051111091029.GW8041@shell0.pdx.osdl.net> (Chris Wright's
+	message of "Fri, 11 Nov 2005 01:10:29 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11577>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig7E765C7AA9F55284B8E21786
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Chris Wright <chrisw@osdl.org> writes:
 
-Hello,
+> Some specfile cleanups after the split.
 
-Petr Baudis wrote:
+Thanks.
 
-> I personally would not mind getting rid of symlinks completely, but we
-> will still have to support them for some reasonable time period (several
-> major releases, as far as Cogito is concerned - actually, there is
-> plenty of people still using 0.13 and such).
+Does it matter some Requires use comma and others don't?
 
-As someone who carries around git repositories on VFAT formatted USB 
-sticks, I welcome our symlink-deprived overlords.
-
-    Simon
-
---------------enig7E765C7AA9F55284B8E21786
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iQCVAwUBQ3RhJFYr4CN7gCINAQKRDwP+IEvNbgkcMCqMdjVtlxxPRHf6WQKW12Ka
-q2JN1P/ufsJ8sZgxkDv1D9ZVenbgCCn9f5aMLtji+0P81YRuyjD0Zf4OHKxW6aIY
-09MsyE3EXDJm8BxfrkdedenpIoPak3MiGsPLYJZ3yEx/W90tPJccAAPXpsROKGhm
-JUmmvfmj7xk=
-=t+Pc
------END PGP SIGNATURE-----
-
---------------enig7E765C7AA9F55284B8E21786--
+> -BuildRequires:	zlib-devel, openssl-devel, curl-devel  %{!?_without_docs:, xmlto, asciidoc > 6.0.3}
+> +BuildRequires:	zlib-devel >= 1.2, openssl-devel, curl-devel  %{!?_without_docs:, xmlto, asciidoc > 6.0.3}
+>  BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+>  Requires:	zlib >= 1.2, rsync, rcs, curl, less, openssh-clients, python >= 2.3, tk >= 8.4
+>  
+>  Group:          Development/Tools
+> -Requires:       subversion
+> +Requires:       git-core = %{version}-%{release} subversion
