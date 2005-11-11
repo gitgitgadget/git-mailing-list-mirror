@@ -1,55 +1,65 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: What is cg-clone
-Date: Fri, 11 Nov 2005 06:56:29 +0000
-Message-ID: <200511110656.29553.alan@chandlerfamily.org.uk>
+From: Raja R Harinath <rharinath@novell.com>
+Subject: Re: [PATCH] C implementation of the 'git' program.
+Date: Fri, 11 Nov 2005 12:28:08 +0530
+Organization: Linux Private Site
+Message-ID: <m3lkzv4qnz.fsf@harinath.blr.novell.com>
+References: <20051110182631.3C5615BF90@nox.op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Nov 11 07:57:23 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Nov 11 08:01:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaSpn-0003KK-4B
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 07:56:27 +0100
+	id 1EaSt7-000419-MO
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 07:59:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751094AbVKKG4X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 01:56:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751127AbVKKG4W
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 01:56:22 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:31113
-	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
-	id S1751094AbVKKG4W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 01:56:22 -0500
-Received: from kanger.home ([192.168.0.21])
-	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
-	id 1EaSph-0008Dc-Kp
-	for git@vger.kernel.org; Fri, 11 Nov 2005 06:56:21 +0000
+	id S1751127AbVKKG7v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 01:59:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751233AbVKKG7v
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 01:59:51 -0500
+Received: from main.gmane.org ([80.91.229.2]:48520 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751127AbVKKG7u (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 01:59:50 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EaSrt-0003jE-G3
+	for git@vger.kernel.org; Fri, 11 Nov 2005 07:58:37 +0100
+Received: from 202.144.95.245 ([202.144.95.245])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Nov 2005 07:58:37 +0100
+Received: from rharinath by 202.144.95.245 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Nov 2005 07:58:37 +0100
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-Content-Disposition: inline
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 202.144.95.245
+User-Agent: Gnus/5.110003 (No Gnus v0.3) Emacs/21.3 (gnu/linux)
+Cancel-Lock: sha1:MYezVAJ2/1vglE2dwC9FDgY8ePs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11565>
 
-Just trying to set up my public repository and test it. 
+Hi,
 
-cg-clone http://www.chandlerfamily.org.uk/git/famtree.git new
+exon@op5.se (Andreas Ericsson) writes:
 
-When I get near the end the following happens:
+[snip]
+> As a nice side-effect, the patch also fixes the problem with
+> 	make
+> 	make prefix=/usr install
+>
+> Signed-off-by: Andreas Ericsson <ae@op5.se>
+[snip]
+> +# Force rebuild so that "make prefix=<something> install" Just Works.
+> +.PHONY: git
 
-http://www.chandlerfamily.org.uk/git/famtree.git/refs/tags/:
-05:46:53 ERROR 403: Forbidden.
+This is bad, since it does the wrong thing for the correct way:
 
-I suspect its trying to get a list of tags, but is the ":" part of the error 
-message, or was that what it was trying to receive.
+  make prefix=/usr
+  sudo make prefix=/usr install
 
-Does it require that apache serves the directories properly, because at the 
-moment I have DirectoryIndex on these set to gitweb.cgi (although thats 
-giving me 403 errors at the moment, hence my suspicions)
+With your patch 'git' will be compiled as root.
 
--- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
-Open Source. It's the difference between trust and antitrust.
+- Hari
