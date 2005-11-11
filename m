@@ -1,82 +1,58 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Something looks like CVS modules
-Date: Fri, 11 Nov 2005 22:29:53 +0100
-Message-ID: <20051111212953.GX30496@pasky.or.cz>
-References: <200511111313.27273.lan@ac-sw.com> <200511111642.25908.lan@ac-sw.com> <20051111105820.GN30496@pasky.or.cz> <200511111713.58018.lan@ac-sw.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Strange merge conflicts against earlier merge.
+Date: Fri, 11 Nov 2005 22:56:20 +0100
+Message-ID: <20051111215620.GX16061@pasky.or.cz>
+References: <46a038f90511091638k726d605r170717539225a712@mail.gmail.com> <20051111075257.GA4765@c165.ib.student.liu.se> <20051111114511.GQ30496@pasky.or.cz> <7v64qzozyx.fsf@assigned-by-dhcp.cox.net> <20051111173239.GU16061@pasky.or.cz> <7v1x1nni78.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 11 22:31:21 2005
+X-From: git-owner@vger.kernel.org Fri Nov 11 22:58:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EagTF-0000Ql-Ri
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 22:30:06 +0100
+	id 1Eagsk-0007z1-Nh
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 22:56:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbVKKV35 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 16:29:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbVKKV34
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 16:29:56 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:56739 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751209AbVKKV34 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 16:29:56 -0500
-Received: (qmail 9339 invoked by uid 2001); 11 Nov 2005 22:29:53 +0100
-To: Alexander Litvinov <lan@ac-sw.com>
+	id S1751247AbVKKV4Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 16:56:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbVKKV4Y
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 16:56:24 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:913 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751247AbVKKV4X (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 16:56:23 -0500
+Received: (qmail 11149 invoked by uid 2001); 11 Nov 2005 22:56:20 +0100
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <200511111713.58018.lan@ac-sw.com>
+In-Reply-To: <7v1x1nni78.fsf@assigned-by-dhcp.cox.net>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11638>
 
-Dear diary, on Fri, Nov 11, 2005 at 12:13:57PM CET, I got a letter
-where Alexander Litvinov <lan@ac-sw.com> said that...
-> On Friday 11 November 2005 16:58, Petr Baudis wrote:
-> > But this is troublesome, and doesn't fit into GIT's model at all. Do you
-> > have any concrete example of a scenario where something like this would
-> > be useful?
+Dear diary, on Fri, Nov 11, 2005 at 07:38:19PM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Petr Baudis <pasky@suse.cz> writes:
+> > Yes, but what I didn't find out is whether the additional trees result
+> > in additional stages, what are the trivial merging rules, how does it
+> > play together with git-merge-index, etc. Doesn't seem to be documented
+> > either.
 > 
-> For eaxmle: I have java lib A. I setup project B in this way:
-> B/src/
-> B/A/src
-> 
-> Have another project C:
-> C/src/
-> C/A/src
-> 
-> Both of them share the same code from library's module. I can tag them, edit, 
-> commit: do all work I usualy do. If I change something in B/A/src this will 
-> be updated into C/A/src.
+> Documentation/technical/ perhaps?
 
-Aha. So it isn't so much about modules, but more about nested checkouts,
-described in Cogito's TODO as:
+This contains the merge resolution tables, which is very useful - thanks
+for that.
 
-* Subprojects
-	Support a GIT project inside a GIT project:
+However, it still doesn't seem to answer my question - do the additional
+trees result in additional stages? Let's take e.g.:
 
-		x/.git
-		x/foo/bar/.git
-		x/foo/bar/baz/.git
-		x/quux/zot/.git
+	16    anc1/anc2 anc1    anc2      no merge
 
-	That means cg-update working recursively and cg-add'n'stuff
-	checking if there isn't another .git along the path of its
-	argument.
+What ends up in the index at this moment as "stage 1"? anc1? anc2?
+Two stage 1 entries? And what does git-merge-index do about this?
 
-	Needs more thought, especially wrt. fetching and merging
-	recursive semantics.
-
-Yes, that would be nice - it is something that you get kind of for-free
-in CVS given its internal architecture, but needs specially crafted
-support in the GIT environment. But when thinking about it (and we
-discussed it with Jonas during one night bike ride through Copenhagen
-some time ago ;), most of the problems with fetching and merging
-semantics turn out to be actually largely artificial, and just doing
-the intuitively right thing should be ok.
-
-Patches welcome. Otherwise, I will get to it, but not very fast. :-)
+Thanks,
 
 -- 
 				Petr "Pasky" Baudis
