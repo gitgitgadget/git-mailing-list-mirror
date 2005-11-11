@@ -1,91 +1,75 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] specfile cleanups
-Date: Fri, 11 Nov 2005 12:31:16 +0100
-Message-ID: <43748104.5020707@op5.se>
-References: <20051111091029.GW8041@shell0.pdx.osdl.net> <7vveyzpmi7.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Strange merge conflicts against earlier merge.
+Date: Fri, 11 Nov 2005 12:35:46 +0100
+Message-ID: <20051111113546.GP30496@pasky.or.cz>
+References: <46a038f90511091638k726d605r170717539225a712@mail.gmail.com> <20051110102043.GQ30496@pasky.or.cz> <46a038f90511102040n3e251252rce54117c51ce0429@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------020906030407040303080602"
-X-From: git-owner@vger.kernel.org Fri Nov 11 12:33:12 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 11 12:36:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaX7q-0008AM-So
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 12:31:23 +0100
+	id 1EaXCB-00014D-TI
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 12:35:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750725AbVKKLbT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 06:31:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750727AbVKKLbS
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 06:31:18 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:54444 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750725AbVKKLbS
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 06:31:18 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id DABF16BD0D
-	for <git@vger.kernel.org>; Fri, 11 Nov 2005 12:31:16 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <7vveyzpmi7.fsf@assigned-by-dhcp.cox.net>
+	id S1750745AbVKKLft (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 06:35:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750768AbVKKLft
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 06:35:49 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:445 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750745AbVKKLfs (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 06:35:48 -0500
+Received: (qmail 29384 invoked by uid 2001); 11 Nov 2005 12:35:46 +0100
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f90511102040n3e251252rce54117c51ce0429@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11588>
 
-This is a multi-part message in MIME format.
---------------020906030407040303080602
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Dear diary, on Fri, Nov 11, 2005 at 05:40:05AM CET, I got a letter
+where Martin Langhoff <martin.langhoff@gmail.com> said that...
+> On 11/10/05, Petr Baudis <pasky@suse.cz> wrote:
+> > > For an example, clone
+> > > http://locke.catalyst.net.nz/git/moodle.git#mdl-artena-tairawhiti and
+> > > register also the
+> > > http://locke.catalyst.net.nz/git/moodle.git#mdl-local branch. Create
+> > > two heads:
+> >
+> > Could you please run git-update-server-info over there?
+> 
+> Should be fixed now...
 
-Junio C Hamano wrote:
-> Chris Wright <chrisw@osdl.org> writes:
-> 
-> 
->>Some specfile cleanups after the split.
-> 
-> 
-> Thanks.
-> 
-> Does it matter some Requires use comma and others don't?
-> 
+I still have trouble cloning:
 
-Other than for consistency reasons, no. Most distributions have it in 
-their conventions to use commas. Some don't.
+$ cg-clone http://locke.catalyst.net.nz/git/moodle.git#mdl-artena-tairawhiti
+defaulting to local storage area
+warning: templates not found /home/xpasky/share/git-core/templates/
+12:13:31 URL:http://locke.catalyst.net.nz/git/moodle.git/refs/heads/mdl-artena-tairawhiti [41/41] -> ".git/refs/heads/.origin-fetching" [1]
+progress: 3 objects, 860 bytes
+Getting alternates list
+progress: 4 objects, 1934 bytes
+Getting pack list
+progress: 19 objects, 12532 bytes
+error: The requested URL returned error: 404
+error: Unable to find 214e6374d49e6d014f0ba6f159d585a3fe468909 under
+http://locke.catalyst.net.nz/git/moodle.git/
 
-Most also have the conventions enforced by the attached script as it 
-enhances readability by removing much un-necessary clutter.
+Cannot obtain needed commit 214e6374d49e6d014f0ba6f159d585a3fe468909
+while processing commit 6d32aa8241387e58ffd0e18862114add0d20d686.
+cg-fetch: objects fetch failed
+cg-clone: fetch failed
+
+
+PS: Do I understand it right that git-clone can't clone just a single
+head?
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
---------------020906030407040303080602
-Content-Type: application/x-shellscript;
- name="specwash.sh"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="specwash.sh"
-
-IyEvYmluL2Jhc2gKIwojIHNwZWN3YXNoLnNoIC0gd2FzaCB1bm5lZWRlZCBjdXJsaWVzIGZy
-b20gc2NyaXB0cyBhbmQgc3BlYy1maWxlcwojICAgICAgICAgICAgICAgdXNlIG1hY3JvcyBp
-biBmYXZvciBvZiBhbnl0aGluZyBlbHNlCiMKCmlmIFsgJCMgLWx0IDEgXTsgdGhlbgoJZWNo
-byAiVXNhZ2U6ICR7MCMjKi99IHNjcmlwdHMvc3BlYy1maWxlcyIKCWV4aXQgMQpmaQoKIyB2
-YXJjaGFycyBpbiByZWdleCBmb3JtCiMgdXNpbmcgdGhpcyB3aGl0ZWxpc3QgYWxsb3dzIHRo
-aW5ncyBsaWtlICR7MCMjKi99IHRvIHBhc3MgdW5tb2xlc3RlZAojIGl0IG1pZ2h0IGJyZWFr
-IHNvbWUgb3RoZXIgdGhpbmdzIHRob3VnaCwgc28gd2Uga2VlcCB0aGUgYmFja3Vwcy4KdmM9
-ImEtekEtWjAtOV8iCiMJCS1lICJzL15cKFteI10uKlteX11cKW1rZGlyL1wxJV9fbWtkaXIv
-IiBcCgpmb3IgaSBpbiAiJEAiOyBkbwoJbXYgLWkgJGkgJGkuYmFrIHx8IGNvbnRpbnVlCglz
-ZWQgLWUgInMvICokLy9nIiBcCgkJLWUgInMvXChbXCVcJF1cKXtcKFskdmNdKlwpXH1cKFte
-JHZjXVwpL1wxXDJcMy9nIiBcCgkJLWUgInMvXChbXCVcJF1cKXtcKFskdmNdKlwpXH0kL1wx
-XDIvZyIgXAoJCS1lICdzLC91c3IvYmluLywlX2JpbmRpci8sZycgLWUgJ3MsL3Vzci9zYmlu
-LywlX3NiaW5kaXIvLGcnIFwKCQktZSAncywvdXNyL2xpYmV4ZWMvLCVfbGliZXhlY2Rpci8s
-ZycgLWUgJ3MsL3Vzci9saWIvLCVfbGliZGlyLyxnJyBcCgkJLWUgJ3MsL3Vzci9pbmNsdWRl
-LywlX2luY2x1ZGVkaXIvLGcnIFwKCQktZSAncywvdXNyL2luZm8vLCVfaW5mb2Rpci8sZycg
-LWUgJ3MsL3Vzci9tYW4vLCVfbWFuZGlyLyxnJyBcCgkJLWUgJ3MsL3Vzci9zaGFyZS9pbmZv
-LywlX2luZm9kaXIvLGcnIC1lICdzLC91c3Ivc2hhcmUvbWFuLywlX21hbmRpci8sZycgXAoJ
-CS1lICdzLC91c3IvLCVfcHJlZml4LyxnJyBcCgkJLWUgJ3MsXCRSUE1fQlVJTERfUk9PVCwl
-YnVpbGRyb290LGcnIFwKCQktZSAncyxcJFJQTV9PUFRfRkxBR1MsJW9wdGZsYWdzLGcnIFwK
-CSRpLmJhayA+ICRpCmRvbmUK
---------------020906030407040303080602--
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
