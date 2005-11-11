@@ -1,53 +1,51 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: The host:remote syntax mess
-Date: Fri, 11 Nov 2005 02:22:16 +0100
-Message-ID: <20051111012216.GJ30496@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Change 'cache' to 'index' in the docs
+Date: Thu, 10 Nov 2005 17:34:41 -0800
+Message-ID: <7voe4svufi.fsf@assigned-by-dhcp.cox.net>
+References: <4373EFFB.6060802@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Nov 11 02:22:36 2005
+Content-Type: text/plain; charset=iso-2022-jp-2
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Fri Nov 11 02:35:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaNcU-0007Xm-7d
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 02:22:22 +0100
+	id 1EaNoa-0002vP-BL
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 02:34:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932281AbVKKBWT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 20:22:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932333AbVKKBWT
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 20:22:19 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:28590 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932281AbVKKBWT (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 20:22:19 -0500
-Received: (qmail 12490 invoked by uid 2001); 11 Nov 2005 02:22:16 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932335AbVKKBen (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 20:34:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932333AbVKKBen
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 20:34:43 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:40674 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932325AbVKKBen (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2005 20:34:43 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051111013355.FWVY29216.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 10 Nov 2005 20:33:55 -0500
+To: Lukas =?iso-2022-jp-2?B?U2FuZHN0chsuQRtOdm0=?= 
+	<lukass@etek.chalmers.se>
+In-Reply-To: <4373EFFB.6060802@etek.chalmers.se> (Lukas
+ =?iso-2022-jp-2?B?U2FuZHN0chsuQRtOdm0ncw==?= message
+	of "Fri, 11 Nov 2005 02:12:27 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11550>
 
-  Hello,
+Lukas Sandstr.ANvm <lukass@etek.chalmers.se> writes:
 
-  I've just noticed that host:remote syntax seems to have been hijacked
-again and is now attached to the GIT protocol in
+> git-update-index.txt says:
+> "Modifies the index or directory cache."
+>
+> I thought the index was the directory cache.
+> Is git-update-index.txt badly worded or is there something
+> I'm missing?
 
-	Documentation/pull-fetch-param.txt
-
-(which BTW misses git+ssh). I said "seems", because connect.c still
-appears to assume it is SSH. So what is the plan? One possible
-explanation is just that the git+ssh line should have been between the
-git line and the : line in the documentation.
-
-  But if you really intend to change it, please don't. It's enough mess
-as it is now, and I'm actually not convinced at all that we should
-support it at all (god forbid promote it). When you have a location
-specifier, you don't want it to randomly switch protocols, especially
-such significantly different ones as ssh and git.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Nothing.  Just 'cache' is so ingrained to the brain of some/many
+of us that we let it go unnoticed, with an excuse that somewhere
+we say "index aka cache".
