@@ -1,53 +1,65 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: tracking a tree that doesn't progress linearly
-Date: Fri, 11 Nov 2005 14:18:31 +1100
-Message-ID: <17268.3463.252020.591687@cargo.ozlabs.ibm.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Strange merge conflicts against earlier merge.
+Date: Fri, 11 Nov 2005 17:40:05 +1300
+Message-ID: <46a038f90511102040n3e251252rce54117c51ce0429@mail.gmail.com>
+References: <46a038f90511091638k726d605r170717539225a712@mail.gmail.com>
+	 <20051110102043.GQ30496@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Nov 11 04:18:51 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 11 05:41:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaPR5-0007Gl-Al
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 04:18:43 +0100
+	id 1EaQin-0002V8-1B
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 05:41:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932294AbVKKDSk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Nov 2005 22:18:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932327AbVKKDSk
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 22:18:40 -0500
-Received: from ozlabs.org ([203.10.76.45]:28872 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S932294AbVKKDSk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Nov 2005 22:18:40 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 201466871D; Fri, 11 Nov 2005 14:18:39 +1100 (EST)
-To: git@vger.kernel.org
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S932340AbVKKEkH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Nov 2005 23:40:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932341AbVKKEkH
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Nov 2005 23:40:07 -0500
+Received: from zproxy.gmail.com ([64.233.162.204]:61963 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932340AbVKKEkG convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Nov 2005 23:40:06 -0500
+Received: by zproxy.gmail.com with SMTP id x3so646411nzd
+        for <git@vger.kernel.org>; Thu, 10 Nov 2005 20:40:05 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KJNLpMuQhj8RCPQapk/9JnDXwySwc5/M9V9h3/8gu+JOja7YZRRwWfshABMMX13ESYAhNmxventPXyLRm0/ZdhCJfCBaZ62l5baA8eCg27rflBjpGM2+8NXZ7zCWUx9+UtCLktDBI7rKpkIFR3Ym2Jn32aryXI3WTJG19jZafVw=
+Received: by 10.65.197.18 with SMTP id z18mr1850200qbp;
+        Thu, 10 Nov 2005 20:40:05 -0800 (PST)
+Received: by 10.64.242.4 with HTTP; Thu, 10 Nov 2005 20:40:05 -0800 (PST)
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051110102043.GQ30496@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11554>
 
-I want to be able to publish a git tree for others to follow but I
-also want to be retain the freedom to remove commits and/or rebase
-commits in the tree.  For example, if someone sends me a patch and I
-put it in the tree, then they send me a revised version, I want to be
-able to roll back to just before I applied the older patch and start
-again from there.
+On 11/10/05, Petr Baudis <pasky@suse.cz> wrote:
+> Interesting. Could you check what the merge base is?
+>
+>         git-merge-base local remote
+>
+> It should be the merge from (1).
 
-What this means, AFAICS, is that the head of the published tree won't
-always be a descendent of all previous values of the head.  If
-somebody is following the state of the tree by doing a git pull every
-so often, and I have rolled back the tree and applied some new
-patches, then the git pull will try to merge the old and new state,
-which is not what we want.  What we want is something that just gets
-the local tree to the same state as the remote tree.
+It seems to be actually one of the parents, not the merge itself.
 
-Is there a git command which does the equivalent of a git fetch,
-followed by setting the head and checking it out?
+> > For an example, clone
+> > http://locke.catalyst.net.nz/git/moodle.git#mdl-artena-tairawhiti and
+> > register also the
+> > http://locke.catalyst.net.nz/git/moodle.git#mdl-local branch. Create
+> > two heads:
+>
+> Could you please run git-update-server-info over there?
 
-Or is this an incredibly stupid idea for some reason that hasn't
-occurred to me yet? :)
+Should be fixed now...
 
-Thanks,
-Paul.
+cheers,
+
+
+martin
