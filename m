@@ -1,67 +1,66 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [ANNOUNCE] GIT 0.99.9g
-Date: Fri, 11 Nov 2005 09:46:59 -0800
-Message-ID: <4374D913.503@zytor.com>
-References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net> <43737EC7.6090109@zytor.com> <Pine.LNX.4.63.0511111516170.7575@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git-core-arch: Missing dependency
+Date: Fri, 11 Nov 2005 19:20:31 +0100
+Message-ID: <4374E0EF.2020801@op5.se>
+References: <200511111446.jABEk6QM023362@pincoya.inf.utfsm.cl> <7vy83vnl7r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750947AbVKKRrQ@vger.kernel.org Fri Nov 11 18:49:26 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750947AbVKKRrQ@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 11 19:22:52 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eaczz-0006zD-Mi
-	for glk-linux-kernel-3@gmane.org; Fri, 11 Nov 2005 18:47:40 +0100
+	id 1EadVv-0000TY-Oq
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 19:20:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750947AbVKKRrQ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 11 Nov 2005 12:47:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbVKKRrQ
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Fri, 11 Nov 2005 12:47:16 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:53451 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750947AbVKKRrP
-	(ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 11 Nov 2005 12:47:15 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jABHl0KR002571
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 11 Nov 2005 09:47:01 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+	id S1750970AbVKKSUc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 13:20:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbVKKSUc
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 13:20:32 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:47023 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750965AbVKKSUc
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2005 13:20:32 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 3730B6BD02
+	for <git@vger.kernel.org>; Fri, 11 Nov 2005 19:20:31 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
 X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0511111516170.7575@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
-Sender: linux-kernel-owner@vger.kernel.org
+To: git@vger.kernel.org
+In-Reply-To: <7vy83vnl7r.fsf@assigned-by-dhcp.cox.net>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11622>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11623>
 
-Johannes Schindelin wrote:
+Junio C Hamano wrote:
+> Horst von Brand <vonbrand@inf.utfsm.cl> writes:
 > 
-> Two reasons against renaming:
 > 
-> - we call it fsck-objects for a reason. We are working on a file system, 
->   which just so happens to be implemented in user space, not kernel space.
->   If lost+found has to find a new name, so does fsck-objects.
+>>The command git-archimport makes use of tla, but the relevant package(s) are
+>>not on the requirements
 > 
-
-I'm sorry, but that is bull.  The problem here isn't the conventional 
-naming, it's that you're implementing your filesystem on top of another 
-filesystem, and you're running into a layering conflict.
-
-> - lost+found has a special meaning, granted. So, a backup would not be 
->   made of it. So what? I *don't* want it backup'ed. I want to repair what
->   was wrong with it. When I repaired it, the result is stored somewhere
->   else. To backup lost+found would make as much sense as to backup /tmp.
 > 
+> Thanks.  Should the fix be like this?
+> 
+>  Group:          Development/Tools
+> -Requires:       git-core = %{version}-%{release}
+> +Requires:       git-core = %{version}-%{release}, tla
 
-The default should ALWAYS be no data loss.
+Just to be anal;
+Requires doesn't usually include the %release, since that's supposed to 
+represent changes in the spec-file rather than the source (although 
+patches included in the spec-file often counts as a new %release, but 
+that's no reason to make it so in the official spec).
 
-	-hpa
+I really have to sobner up and get cracking on that spec-file thingie 
+stuff. Or some such.
+
+Cheers for the beers and review of the peers.
+
+Hooray for firday. ;)
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
