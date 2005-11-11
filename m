@@ -1,66 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [ANNOUNCE] GIT 0.99.9g
-Date: Fri, 11 Nov 2005 15:19:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511111516170.7575@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net> <43737EC7.6090109@zytor.com>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH] cg-pull to stop treating "master" specially, fix fetch_local for .git/HEAD
+Date: Fri, 11 Nov 2005 15:22:37 +0100
+Message-ID: <200511111522.37979.Josef.Weidendorfer@gmx.de>
+References: <1124832796.23795.9.camel@dv> <200511110213.54846.Josef.Weidendorfer@gmx.de> <1131684784.31172.16.camel@dv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 11 15:21:15 2005
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 11 15:25:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaZkF-0002ZC-3j
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 15:19:11 +0100
+	id 1EaZo1-0003on-5j
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 15:23:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750784AbVKKOTH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 09:19:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbVKKOTH
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 09:19:07 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:21408 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750779AbVKKOTF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 09:19:05 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id AC4C313F17F; Fri, 11 Nov 2005 15:19:04 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 906D79F24F; Fri, 11 Nov 2005 15:19:04 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 7B02A92739; Fri, 11 Nov 2005 15:19:04 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 1EE3413F17F; Fri, 11 Nov 2005 15:19:04 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <43737EC7.6090109@zytor.com>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1750789AbVKKOWn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 09:22:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750792AbVKKOWn
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 09:22:43 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:27880 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1750789AbVKKOWm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2005 09:22:42 -0500
+Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
+	by mail.in.tum.de (Postfix) with ESMTP id 3D0EE265E;
+	Fri, 11 Nov 2005 15:22:39 +0100 (MET)
+To: Pavel Roskin <proski@gnu.org>
+User-Agent: KMail/1.8.2
+In-Reply-To: <1131684784.31172.16.camel@dv>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11598>
 
-Hi,
+On Friday 11 November 2005 05:53, Pavel Roskin wrote:
+> I'm not sure if we understand each other, but "recorded" refers to
+> automatically determined branch name.  If cg-clone can determine the
+> branch name, that name should be saved and used for updates.
+> 
+> Whether the branch name is saved in .git/branches/ using hash notation
+> (old style) or in .git/remotes/ (new style) is irrelevant.
 
-On Thu, 10 Nov 2005, H. Peter Anvin wrote:
+Yes.
+But for the conrete implementation it is relevant.
 
-> May I *STRONGLY* urge you to name that something different. "lost+found" 
-> is a name with special properties in Unix; for example, many backup 
-> solutions will ignore a directory with that name.
+AFAIK, there is not really a "new" and "old" style, but more the
+git way (attributes for remote repositories in .git/remotes) and the
+Cogito way (attributes for a remote branch).
 
-Two reasons against renaming:
+"Recording" talks about storing the name of the remote branch that
+maps to the local "origin" branch, so I would vote for storing this
+in .git/branches/origin.
 
-- we call it fsck-objects for a reason. We are working on a file system, 
-  which just so happens to be implemented in user space, not kernel space.
-  If lost+found has to find a new name, so does fsck-objects.
+For cg-clone, this is no problem because cg-clone writes this file itself.
+Another thing is if you add later on a remote branch with cg-branch-add
+without specifying a concrete remote branch name. Do we want the
+record the branch name at the first cg-fetch for the future?
 
-- lost+found has a special meaning, granted. So, a backup would not be 
-  made of it. So what? I *don't* want it backup'ed. I want to repair what
-  was wrong with it. When I repaired it, the result is stored somewhere
-  else. To backup lost+found would make as much sense as to backup /tmp.
+> That's why I mentioned the idea of having a separate file to indicate
+> the default branch for export.
 
-Ciao,
-Dscho
+Agree.
+
+Josef
