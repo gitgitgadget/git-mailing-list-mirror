@@ -1,90 +1,169 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: merge-base: fully contaminate the well.
-Date: Fri, 11 Nov 2005 00:28:56 -0800
-Message-ID: <7v8xvvr3jr.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
-	<7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
-	<Pine.LNX.4.63.0511081254520.2649@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20051108210211.GA23265@c165.ib.student.liu.se>
-	<Pine.LNX.4.64.0511081351020.3247@g5.osdl.org>
-	<20051108223609.GA4805@c165.ib.student.liu.se>
-	<Pine.LNX.4.64.0511081450080.3247@g5.osdl.org>
-	<20051109003236.GA30496@pasky.or.cz>
-	<Pine.LNX.4.64.0511081646160.3247@g5.osdl.org>
-	<7vlkzyd4aq.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511081716450.3247@g5.osdl.org>
-	<7v8xvyd2bh.fsf@assigned-by-dhcp.cox.net>
-	<7v4q6mgm1l.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511090800330.3247@g5.osdl.org>
-	<7virv1efzv.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511091348530.4627@g5.osdl.org>
-	<7virv1a0ro.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511091518370.4627@g5.os
+From: Chris Wright <chrisw@osdl.org>
+Subject: [PATCH] specfile cleanups
+Date: Fri, 11 Nov 2005 01:10:29 -0800
+Message-ID: <20051111091029.GW8041@shell0.pdx.osdl.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 11 09:30:52 2005
+X-From: git-owner@vger.kernel.org Fri Nov 11 10:12:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaUHm-0000WN-Pj
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 09:29:27 +0100
+	id 1EaUvv-0004Ml-2h
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 10:10:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932220AbVKKI3R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 03:29:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbVKKI3Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 03:29:16 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:143 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932220AbVKKI26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 03:28:58 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051111082830.ICKC4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 11 Nov 2005 03:28:30 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511102125510.4627@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 10 Nov 2005 21:36:03 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932303AbVKKJKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 04:10:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932305AbVKKJKi
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 04:10:38 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:37055 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932303AbVKKJKf (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 04:10:35 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAB9ATnO028067
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 11 Nov 2005 01:10:30 -0800
+Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAB9AT68032016;
+	Fri, 11 Nov 2005 01:10:29 -0800
+Received: (from chrisw@localhost)
+	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id jAB9ATCq032015;
+	Fri, 11 Nov 2005 01:10:29 -0800
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11575>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Some specfile cleanups after the split.
+- zlib dependency fix, current method is inconsistent, you can
+  potentially build a package that you can't install on machine you
+  built it on
+- Add proper defattr
+- Remove trailing '.' in summary
+- Add docs to split up packages
+- Add git-core dependency for each subpackage
+- Move arch import to separate package as well
 
-> Btw, I don't think your contamination logic is necessarily complete. We 
-> may not even have parsed some of the commits that end up being on that 
-> strange corner case....
+Signed-off-by: Chris Wright <chrisw@osdl.org>
+---
 
-You are right.  And the situation seems really bad.
-
-The full-contaminator is not full at all, and fails miserably in
-not so pathlogical case.  If we have something like this:
-
-	1	2	List		A B C D E F G
-	F	E	F1 E2		- - - - 2 1 -
-        |\     /|	G1 E2 D1 C1	- - 1 1 2 1 1
-        \ \   / |	E2 D1 C1	- - 1 1 2 1 1
-        |\  D  /|	G3 D3 C3	- - 3 3 2 1 3
-        | \ | / |	D3 C3		- - 3 3 2 1 3
-        |   C   |	C7		- - 7 3 2 1 3
-        |   |   |
-        |   B   |
-        |   |   /
-         \  A  /
-          \ | /
-            G
-
-we would end up finding D and G and stop there, without ever
-seeing A or B.  B _might_ be touched when we look at C at the
-last round, but there is no way for us to find G is reachable
-from D (or C) without parsing more than what we parsed in the
-main loop.
-
-The worst part of this is that you can indefinitely extend C-B-A
-chain trivially, and all it takes is the one, initial commit G,
-that has a screwed-up timestamp.  All the other commits in this
-example are in the right time order.  Very sad.
+diff --git a/git-core.spec.in b/git-core.spec.in
+index 26846d0..8ef29b8 100644
+--- a/git-core.spec.in
++++ b/git-core.spec.in
+@@ -1,4 +1,4 @@
+-# Pass --without docs to rpmbuild if you don't want the documetnation
++# Pass --without docs to rpmbuild if you don't want the documentation
+ Name: 		git-core
+ Version: 	@@VERSION@@
+ Release: 	1%{?dist}
+@@ -7,7 +7,7 @@ License: 	GPL
+ Group: 		Development/Tools
+ URL: 		http://kernel.org/pub/software/scm/git/
+ Source: 	http://kernel.org/pub/software/scm/git/%{name}-%{version}.tar.gz
+-BuildRequires:	zlib-devel, openssl-devel, curl-devel  %{!?_without_docs:, xmlto, asciidoc > 6.0.3}
++BuildRequires:	zlib-devel >= 1.2, openssl-devel, curl-devel  %{!?_without_docs:, xmlto, asciidoc > 6.0.3}
+ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+ Requires:	zlib >= 1.2, rsync, rcs, curl, less, openssh-clients, python >= 2.3, tk >= 8.4
+ 
+@@ -20,22 +20,30 @@ rudimentary tools that can be used as a 
+ elsewhere for tools for ordinary humans layered on top of this.
+ 
+ %package svn
+-Summary:        Git tools for importing Subversion repositories.
++Summary:        Git tools for importing Subversion repositories
+ Group:          Development/Tools
+-Requires:       subversion
++Requires:       git-core = %{version}-%{release} subversion
+ %description svn
+ Git tools for importing Subversion repositories.
+ 
+ %package cvs
+-Summary:        Git tools for importing CVS repositories.
++Summary:        Git tools for importing CVS repositories
+ Group:          Development/Tools
+-Requires:       cvs
++Requires:       git-core = %{version}-%{release} cvs
+ %description cvs
+ Git tools for importing CVS repositories.
+ 
++%package arch
++Summary:        Git tools for importing Arch repositories
++Group:          Development/Tools
++Requires:       git-core = %{version}-%{release}
++%description arch
++Git tools for importing Arch repositories.
++
+ %package email
+-Summary:        Git tools for sending email.
++Summary:        Git tools for sending email
+ Group:          Development/Tools
++Requires:	git-core = %{version}-%{release} 
+ %description email
+ Git tools for sending email.
+ 
+@@ -52,33 +60,54 @@ make %{_smp_mflags} DESTDIR=$RPM_BUILD_R
+      prefix=%{_prefix} mandir=%{_mandir} \
+      install %{!?_without_docs: install-doc}
+ 
+-(find $RPM_BUILD_ROOT%{_bindir} -type f | grep -vE "svn|cvs|email" | sed -e s@^$RPM_BUILD_ROOT@@)               > bin-man-files
++(find $RPM_BUILD_ROOT%{_bindir} -type f | grep -vE "arch|svn|cvs|email" | sed -e s@^$RPM_BUILD_ROOT@@)               > bin-man-doc-files
+ %if %{!?_without_docs:1}0
+-(find $RPM_BUILD_ROOT%{_mandir} -type f | grep -vE "svn|cvs|email" | sed -e s@^$RPM_BUILD_ROOT@@ -e 's/$/*/' ) >> bin-man-files
++(find $RPM_BUILD_ROOT%{_mandir} $RPM_BUILD_ROOT/Documentation -type f | grep -vE "arch|svn|git-cvs|email" | sed -e s@^$RPM_BUILD_ROOT@@ -e 's/$/*/' ) >> bin-man-doc-files
+ %endif
+ 
+ %clean
+ rm -rf $RPM_BUILD_ROOT
+ 
+ %files svn
++%defattr(-,root,root)
+ %{_bindir}/*svn*
++%doc Documentation/*svn*.txt
+ %{!?_without_docs: %{_mandir}/man1/*svn*.1*}
++%{!?_without_docs: %doc Documentation/*svn*.html }
+ 
+ %files cvs
++%defattr(-,root,root)
++%doc Documentation/*git-cvs*.txt
+ %{_bindir}/*cvs*
+ %{!?_without_docs: %{_mandir}/man1/*cvs*.1*}
++%{!?_without_docs: %doc Documentation/*git-cvs*.html }
++
++%files arch
++%defattr(-,root,root)
++%doc Documentation/*arch*.txt
++%{_bindir}/*arch*
++%{!?_without_docs: %{_mandir}/man1/*arch*.1*}
++%{!?_without_docs: %doc Documentation/*arch*.html }
+ 
+ %files email
++%defattr(-,root,root)
++%doc Documentation/*email*.txt
+ %{_bindir}/*email*
+ %{!?_without_docs: %{_mandir}/man1/*email*.1*}
++%{!?_without_docs: %doc Documentation/*email*.html }
+ 
+-%files -f bin-man-files
++%files -f bin-man-doc-files
+ %defattr(-,root,root)
+ %{_datadir}/git-core/
+ %doc README COPYING Documentation/*.txt
+ %{!?_without_docs: %doc Documentation/*.html }
+ 
+ %changelog
++* Thu Nov 10 2005 Chris Wright <chrisw@osdl.org> 0.99.9g-1
++- zlib dependency fix
++- Minor cleanups from split
++- Move arch import to separate package as well
++
+ * Tue Sep 27 2005 Jim Radford <radford@blackbean.org>
+ - Move programs with non-standard dependencies (svn, cvs, email)
+   into separate packages
