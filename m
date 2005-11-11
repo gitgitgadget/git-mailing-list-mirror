@@ -1,61 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-core-arch: Missing dependency
-Date: Fri, 11 Nov 2005 10:51:38 -0800
-Message-ID: <7vu0ejm30l.fsf@assigned-by-dhcp.cox.net>
-References: <200511111446.jABEk6QM023362@pincoya.inf.utfsm.cl>
-	<7vy83vnl7r.fsf@assigned-by-dhcp.cox.net> <4374E0EF.2020801@op5.se>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: merge-recursive: include heapq?
+Date: Fri, 11 Nov 2005 19:52:46 +0100
+Message-ID: <20051111185246.GB13524@steel.home>
+References: <Pine.LNX.4.63.0511111520260.7575@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Chris Wright <chrisw@osdl.org>
-X-From: git-owner@vger.kernel.org Fri Nov 11 19:53:26 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 11 19:54:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eae0E-0001hD-VT
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 19:51:59 +0100
+	id 1Eae1D-0001zM-8W
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 19:52:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751033AbVKKSvl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 13:51:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751032AbVKKSvl
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 13:51:41 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:54718 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751033AbVKKSvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 13:51:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051111185112.OGQG4527.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 11 Nov 2005 13:51:12 -0500
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <4374E0EF.2020801@op5.se> (Andreas Ericsson's message of "Fri, 11
-	Nov 2005 19:20:31 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751031AbVKKSw5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 13:52:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751035AbVKKSw4
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 13:52:56 -0500
+Received: from devrace.com ([198.63.210.113]:21522 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S1751031AbVKKSw4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 13:52:56 -0500
+Received: from tigra.home (p54A0D6F6.dip.t-dialin.net [84.160.214.246])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id jABIqlCj028970;
+	Fri, 11 Nov 2005 12:52:48 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1Eae10-0000EC-00; Fri, 11 Nov 2005 19:52:46 +0100
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1Eae10-0006Jt-27; Fri, 11 Nov 2005 19:52:46 +0100
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0511111520260.7575@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=1.6 required=4.5 tests=AWL,BAYES_50,
+	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11628>
 
-Andreas Ericsson <ae@op5.se> writes:
+Johannes Schindelin, Fri, Nov 11, 2005 15:23:04 +0100:
+> I get this when pulling:
+> 
+> -- snip --
+> Traceback (most recent call last):
+>   File "./git-merge-recursive", line 4, in ?
+>     from heapq import heappush, heappop
+> ImportError: No module named heapq
+> -- snap --
+> 
+> Okay, my python is *old*:
+> 
+> $ python -V
+> Python 2.2.1
+> 
+> Is it worthwhile to include heapq as we did with subprocess? Or should I 
+> upgrade...
 
-> Junio C Hamano wrote:
->> Horst von Brand <vonbrand@inf.utfsm.cl> writes:
->>
->>>The command git-archimport makes use of tla, but the relevant package(s) are
->>>not on the requirements
->> Thanks.  Should the fix be like this?
->>  Group:          Development/Tools
->> -Requires:       git-core = %{version}-%{release}
->> +Requires:       git-core = %{version}-%{release}, tla
->
-> Just to be anal;
-> Requires doesn't usually include the %release,...
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+Traceback (most recent call last):
+  File "/home/raa/bin/git-merge-recursive", line 8, in ?
+    from gitMergeCommon import *
+  File "/home/raa/share/git-core/python/gitMergeCommon.py", line 14, in ?
+    import subprocess
+ImportError: No module named subprocess
+Automatic merge failed/prevented; fix up by hand
 
-Obviously both you and Chris (who did the part you are quoting
-for us) know RPM spec a lot better than I do, and I see two
-experts contradicting with each other.  It could have been just
-an oversight, or it might have done deliberately --- I cannot
-judge myself, so I punt here.  I'll remove "-%{release}" when I
-hear Chris says he agrees with you.
-
-Thanks both.
+That said, I thought an upgrade was worth it and upgraded my 2.3 to 2.4 :)
