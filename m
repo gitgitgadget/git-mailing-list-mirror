@@ -1,68 +1,72 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] git-clone: quote destination directory name
-Date: Fri, 11 Nov 2005 00:19:04 -0500
-Message-ID: <1131686344.31172.24.camel@dv>
+From: Kevin Geiss <kevin@desertsol.com>
+Subject: Re: git-archimport
+Date: Thu, 10 Nov 2005 22:19:10 -0700
+Message-ID: <20051111051910.GP9131@raven.localdomain>
+References: <D92ED0A1-B83A-43C3-B39C-AA8A21934D7F@desertsol.com> <46a038f90511101332r3389734uc1aa1effd2898e15@mail.gmail.com> <20051110214959.GO9131@raven.localdomain> <46a038f90511101421o7988a1bfi89eb0e33bd34e4bb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Nov 11 06:22:57 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Kevin Geiss <kevin@desertsol.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 11 06:23:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaRKA-00011C-7i
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 06:19:46 +0100
+	id 1EaRKJ-00011C-J2
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 06:19:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932361AbVKKFTI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 00:19:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932364AbVKKFTI
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 00:19:08 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:39363 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932361AbVKKFTG
+	id S932363AbVKKFTO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 00:19:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932362AbVKKFTO
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 00:19:14 -0500
+Received: from 12-219-167-192.client.mchsi.com ([12.219.167.192]:7378 "EHLO
+	desertsol.com") by vger.kernel.org with ESMTP id S932363AbVKKFTM
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 00:19:06 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EaRJZ-0006p8-VF
-	for git@vger.kernel.org; Fri, 11 Nov 2005 00:19:06 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1EaRJZ-0001AU-18
-	for git@vger.kernel.org; Fri, 11 Nov 2005 00:19:05 -0500
-To: git <git@vger.kernel.org>
-X-Mailer: Evolution 2.4.1 (2.4.1-5) 
+	Fri, 11 Nov 2005 00:19:12 -0500
+Received: from kevin by desertsol.com with local (Exim 4.50)
+	id 1EaRJe-0006u2-V5; Thu, 10 Nov 2005 22:19:10 -0700
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f90511101421o7988a1bfi89eb0e33bd34e4bb@mail.gmail.com>
+X-PGP-Key: http://www.desertsol.com/~kevin/gpg.txt
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11559>
 
-git-clone doesn't quote the full path to the destination directory,
-which causes it to fail if the path contains spaces or other characters
-interpreted by the shell.
+On Fri, Nov 11, 2005 at 11:21:12AM +1300, Martin Langhoff wrote:
+> On 11/11/05, Kevin Geiss <kevin@desertsol.com> wrote:
+> > Cannot find patchset for 'kevin@desertsol.com--files/scripts--oco--0--patch-1' at /usr/bin/git-archimport line 784
+> 
+> Hmmm. The script uses tla itself to get the patch. What happens if you do
+> 
+>   tla get-changeset -A kevin@desertsol.com--files/scripts--oco--0--patch-1
+> 
+> In short, you must have a recent tla configured and with the archive
+> registered.
+> 
+> cheers,
+> 
+> 
+> 
+> martin
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
+I've got tla 1.3, and the changeset seems to be there:
 
-diff --git a/git-clone.sh b/git-clone.sh
-index 4fdd652..0f37dff 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -163,7 +163,7 @@ yes,yes)
- 			rm -f "$D/.git/TMP_ALT"
- 		if test -f "$D/.git/TMP_ALT"
- 		then
--		    ( cd $D &&
-+		    ( cd "$D" &&
- 		      . git-parse-remote &&
- 		      resolve_alternates "$repo" <"./.git/TMP_ALT" ) |
- 		    while read alt
-@@ -191,7 +191,7 @@ yes,yes)
- 	;;
- esac
- 
--cd $D || exit
-+cd "$D" || exit
- 
- if test -f ".git/HEAD"
- then
+10:15pm0raven>tla get-changeset -A kevin@desertsol.com--files/scripts--oco--0--patch-1                                         /tmp
+usage: tla get-changeset [options] revision [dir]
+try get-changeset --help
+10:15pm1raven>tla get-changeset  kevin@desertsol.com--files/scripts--oco--0--patch-1                                           /tmp
+gpg: Signature made Mon Feb 14 12:28:10 2005 MST using DSA key ID E1E6A3B1
+gpg: Good signature from "Kevin Geiss <kevin@desertsol.com>"
+10:15pm0raven>tla get-changeset --help                                                                                         /tmp
+retrieve a changeset from an archive
+usage: tla get-changeset [options] revision [dir]
 
+  -h, --help     Display a help message and exit.
+  -H             Display a verbose help message and exit.
+  -V, --version  Display a release identifier string
+                 and exit.
+  -A, --archive  Override `my-default-archive'
 
--- 
-Regards,
-Pavel Roskin
+10:16pm0raven>tla --version                                                                                                    /tmp
+tla lord@emf.net--gnu-arch-2004/dists--tla--1.3--version-0(configs/gnu/This-release) from regexps.com
