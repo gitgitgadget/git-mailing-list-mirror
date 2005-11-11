@@ -1,97 +1,54 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: merge-recursive: include heapq?
-Date: Fri, 11 Nov 2005 11:26:39 -0800
-Message-ID: <7viruzm1e8.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0511111520260.7575@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20051111185246.GB13524@steel.home>
+Subject: Re: [PATCH] C implementation of the 'git' program.
+Date: Fri, 11 Nov 2005 11:31:22 -0800
+Message-ID: <7vek5nm16d.fsf@assigned-by-dhcp.cox.net>
+References: <20051110182631.3C5615BF90@nox.op5.se>
+	<Pine.LNX.4.64.0511101133550.4627@g5.osdl.org>
+	<4373CEA8.1020900@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 11 20:27:43 2005
+X-From: git-owner@vger.kernel.org Fri Nov 11 20:32:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaeYG-0004ZA-KO
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 20:27:09 +0100
+	id 1EaecR-0005wm-0C
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 20:31:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751099AbVKKT0m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 14:26:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751100AbVKKT0m
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 14:26:42 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:55019 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751099AbVKKT0k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 14:26:40 -0500
+	id S1751092AbVKKTbY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 14:31:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751100AbVKKTbY
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 14:31:24 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:43248 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751092AbVKKTbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2005 14:31:23 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051111192543.QZFO11356.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 11 Nov 2005 14:25:43 -0500
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <20051111185246.GB13524@steel.home> (Alex Riesen's message of
-	"Fri, 11 Nov 2005 19:52:46 +0100")
+          id <20051111193019.ZJR2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 11 Nov 2005 14:30:19 -0500
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <4373CEA8.1020900@op5.se> (Andreas Ericsson's message of "Thu, 10
+	Nov 2005 23:50:16 +0100")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11631>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Andreas Ericsson <ae@op5.se> writes:
 
-> Johannes Schindelin, Fri, Nov 11, 2005 15:23:04 +0100:
->> I get this when pulling:
->>... 
->> Okay, my python is *old*:
->> 
->> $ python -V
->> Python 2.2.1
->> 
->> Is it worthwhile to include heapq as we did with subprocess? Or should I 
->> upgrade...
+> Linus Torvalds wrote:
 >
-> Trying really trivial in-index merge...
-> fatal: Merge requires file-level merging
-> Nope.
-> Traceback (most recent call last):
->   File "/home/raa/bin/git-merge-recursive", line 8, in ?
->     from gitMergeCommon import *
->   File "/home/raa/share/git-core/python/gitMergeCommon.py", line 14, in ?
->     import subprocess
-> ImportError: No module named subprocess
-> Automatic merge failed/prevented; fix up by hand
+>> I think this might be a bit ambiguous. When I see "GIT_LIB", to me
+>> it implies traditional libraries (ie a "libgit.a" kind of thing),
+>> not the kind of "git executable plugin" directory.
+>> So I'd suggest renaming "--lib" and "GIT_LIB" to be more of a
+>> "--libexec" kind of flavor, if only to avoid that confusion.
 >
-> That said, I thought an upgrade was worth it and upgraded my 2.3 to 2.4 :)
+> Someone said libexec was moving out (of Linux, at least), so I thought 
+> I'd better avoid that. Perhaps GIT_LIBDIR?
 
-Something like this is needed, I suppose...
-
--- >8 -- cut here -- >8 --
-INSTALL: duplicate python requirements from Makefile
-
-and refer the reader to Makefile for other things that can be
-tweaked.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-git diff
-diff --git a/INSTALL b/INSTALL
-index 06b11e1..63ccf62 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -75,3 +75,15 @@ Issues of note:
-           history graphically
- 
- 	- "ssh" is used to push and pull over the net
-+
-+	- "perl" and POSIX-compliant shells are needed to use most of
-+	  the barebone Porcelainish scripts.
-+
-+	- "python" 2.3 or more recent; if you have 2.3, you may need
-+          to build with "make WITH_OWN_SUBPROCESS_PY=YesPlease".
-+
-+ - Some platform specific issues are dealt with Makefile rules,
-+   but depending on your specific installation, you may not
-+   have all the libraries/tools needed, or you may have
-+   necessary libraries at unusual locations.  Please look at the
-+   top of the Makefile to see what can be adjusted for your needs.
-
-Compilation finished at Fri Nov 11 11:24:14
+More like "the rest of git executables".  GIT_EXEC_PATH, with
+"git --exec-path" command, perhaps?
