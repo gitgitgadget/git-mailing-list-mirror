@@ -1,62 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: merge-recursive: include heapq?
-Date: Fri, 11 Nov 2005 15:23:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511111520260.7575@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Change 'cache' to 'index' in the docs
+Date: Fri, 11 Nov 2005 15:34:31 +0100
+Message-ID: <4374ABF7.1010304@op5.se>
+References: <4373EFFB.6060802@etek.chalmers.se> <7voe4svufi.fsf@assigned-by-dhcp.cox.net> <43748566.2070204@op5.se> <Pine.LNX.4.63.0511111514420.7575@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Nov 11 15:26:01 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Nov 11 15:34:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaZoD-0003tg-7i
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 15:23:17 +0100
+	id 1EaZzA-0007vS-26
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 15:34:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750792AbVKKOXH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 09:23:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbVKKOXH
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 09:23:07 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:21409 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750792AbVKKOXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 09:23:05 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id E4A4613F302
-	for <git@vger.kernel.org>; Fri, 11 Nov 2005 15:23:04 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id C3B46B5144
-	for <git@vger.kernel.org>; Fri, 11 Nov 2005 15:23:04 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id 9D042B35C8
-	for <git@vger.kernel.org>; Fri, 11 Nov 2005 15:23:04 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 8992213F302
-	for <git@vger.kernel.org>; Fri, 11 Nov 2005 15:23:04 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1750794AbVKKOed (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 09:34:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750796AbVKKOed
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 09:34:33 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:26030 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750794AbVKKOec
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2005 09:34:32 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 79E496BD0D
+	for <git@vger.kernel.org>; Fri, 11 Nov 2005 15:34:31 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
 To: git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+In-Reply-To: <Pine.LNX.4.63.0511111514420.7575@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11600>
 
-Hi,
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Fri, 11 Nov 2005, Andreas Ericsson wrote:
+> 
+> 
+>>This had me puzzled for quite some time. Some notice to the tutorial about
+>>what's meant when it says "tree-ish" or "commit-ish" would be nice (I still
+>>haven't been able to figure it out).
+> 
+> 
+> See glossary.txt.
+> 
 
-I get this when pulling:
+Ahhh. Terminology (here daft ole me was grep'ing away for 
+"nomenclature"...). Thanks a million.
 
--- snip --
-Traceback (most recent call last):
-  File "./git-merge-recursive", line 4, in ?
-    from heapq import heappush, heappop
-ImportError: No module named heapq
--- snap --
+Although it would be nice if it was mentioned up top with the other 
+"read these first" files.
 
-Okay, my python is *old*:
+> 
+>>The wording in git-diff-index.txt isn't exactly stellar either.
+> 
+> 
+> Agree. Want to do something about it?
+> 
 
-$ python -V
-Python 2.2.1
+Why not? Usually I can't even understand my own documentation, but it 
+might at least raise the discussion.
 
-Is it worthwhile to include heapq as we did with subprocess? Or should I 
-upgrade...
-
-Ciao,
-Dscho
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
