@@ -1,97 +1,74 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH] cg-pull to stop treating "master" specially, fix fetch_local for .git/HEAD
-Date: Fri, 11 Nov 2005 17:10:21 +0100
-Message-ID: <200511111710.21984.Josef.Weidendorfer@gmx.de>
-References: <1124832796.23795.9.camel@dv> <200511111522.37979.Josef.Weidendorfer@gmx.de> <1131722791.1284.20.camel@dv>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: merge-base: fully contaminate the well.
+Date: Fri, 11 Nov 2005 08:18:21 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511110805350.4627@g5.osdl.org>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+ <Pine.LNX.4.63.0511081254520.2649@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20051108210211.GA23265@c165.ib.student.liu.se> <Pine.LNX.4.64.0511081351020.3247@g5.osdl.org>
+ <20051108223609.GA4805@c165.ib.student.liu.se> <Pine.LNX.4.64.0511081450080.3247@g5.osdl.org>
+ <20051109003236.GA30496@pasky.or.cz> <Pine.LNX.4.64.0511081646160.3247@g5.osdl.org>
+ <7vlkzyd4aq.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511081716450.3247@g5.osdl.org>
+ <7v8xvyd2bh.fsf@assigned-by-dhcp.cox.net> <7v4q6mgm1l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0511090800330.3247@g5.osdl.org> <7virv1efzv.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0511091348530.4627@g5.osdl.org> <7virv1a0ro.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0511091518370.4627@g5.osdl.org> <7vzmobuc00.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0511102125510.4627@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 11 17:11:44 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 11 17:20:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EabTw-0007h7-6a
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 17:10:28 +0100
+	id 1Eabbj-0001xh-Ll
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 17:18:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750833AbVKKQKZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 11:10:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750835AbVKKQKZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 11:10:25 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:58244 "EHLO
-	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S1750833AbVKKQKZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 11:10:25 -0500
-Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
-	by mail.in.tum.de (Postfix) with ESMTP id A3B8423A2;
-	Fri, 11 Nov 2005 17:10:23 +0100 (MET)
-To: Pavel Roskin <proski@gnu.org>
-User-Agent: KMail/1.8.2
-In-Reply-To: <1131722791.1284.20.camel@dv>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+	id S1750837AbVKKQS3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 11:18:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbVKKQS3
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 11:18:29 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:39870 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750837AbVKKQS2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 11:18:28 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jABGIMnO011957
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 11 Nov 2005 08:18:22 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jABGILtr012291;
+	Fri, 11 Nov 2005 08:18:21 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7viruzu3du.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11613>
 
-On Friday 11 November 2005 16:26, Pavel Roskin wrote:
-> > AFAIK, there is not really a "new" and "old" style, but more the
-> > git way (attributes for remote repositories in .git/remotes) and the
-> > Cogito way (attributes for a remote branch).
+
+
+On Thu, 10 Nov 2005, Junio C Hamano wrote:
 > 
-> Switching to the "git way" is long overdue, since hashes can be used in
-> the actual path.
-
-Currently, Git does not store mappings of remote to local branches in
-.git/remotes/ per se. "Pull" lines allow you to specify default actions
-for git-fetch/git-pull, but even this is quite limited:
-"git-fetch" defaults to fetching all heads mentioned, and "git-pull"
-defaults to merging the first head on the first "Pull" line.
-
-Because the git way is per-remote-repository, you always have to specify
-the remote repository shortcut in git-fetch/git-pull/git-push, as there
-is no implicit remote repository. With per-branch, it is far simpler as
-you always have a current active branch which is HEAD. By using
-.git/remotes, you more or less get a shortcut name for a remote repository.
-Of course, Cogito could use this shortcut in the .git/branches/, too.
-
-Another thing: Per branch configuration is not only about branches which
-have a mapping to a remote file. I would *love* to be able to specify
-merge candidates and default merge branches for every local branch.
-Such configuration of local branches can also reside in .git/branches.
-
-But you are right, hashes can be part of an path, so Cogito should use
-multiple lines in .git/branches/ like Git does in .git/remotes.
-
-So what are possible configuration items for a branch?
-Branches can be of 2 kinds: either a branch should track a remote branch,
-or it is used for local development.
-
-A branch which is tracking a remote one does need
-* the remote repository URL, or path (if local)
-* the branch name to track from the remote repository
-
-A branch used for development can have:
-* set of local branch names which are candidates for merging
-* set of local branch names for default merge action
-* a default remote branch to use for pushing
-
-> > For cg-clone, this is no problem because cg-clone writes this file itself.
-> > Another thing is if you add later on a remote branch with cg-branch-add
-> > without specifying a concrete remote branch name. Do we want the
-> > record the branch name at the first cg-fetch for the future?
+> > Btw, I don't think your contamination logic is necessarily complete. We 
+> > may not even have parsed some of the commits that end up being on that 
+> > strange corner case.
 > 
-> Good that you noticed that.
-> 
-> cg-fetch could do that, but maybe cg-branch-add would be an even better
-> place for that?  I mean, cg-branch-add could actually check the
-> repository and prompt the user which branch to use if there is no
-> obvious default.  I think, there should be a way to run cg-branch-add
-> without having it connect the repository or prompt the user, but the
-> default should be user-friendly.
+> I haven't tried walking any other test cases, but wouldn't that
+> be arguing that the our assumption that the current merge-base
+> is at least complete if not optimum?
 
-Yes.
+Oh yes, it's always complete, even though it may not be optimal. And it's 
+going to be optimal in all realistic cases.
 
-Josef
+And even in the unrealistic cases if we end up returning a commit that is 
+actually reachable by another one (through at least two levels of other 
+commits that were in the wrong date-order with the _other_ ways of 
+reaching that commit), the recursive strategy of merging the merge-bases 
+will always end up boiling it doing to the optimal thing.
+
+So I think this is absolutely 100% correct.
+
+			Linus
