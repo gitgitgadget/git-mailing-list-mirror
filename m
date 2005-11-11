@@ -1,150 +1,70 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Fix bunch of fd leaks in http-fetch
-Date: Sat, 12 Nov 2005 00:55:16 +0100
-Message-ID: <20051111235516.GY30496@pasky.or.cz>
-References: <dd9dee136a573d72fc7332373cfd8ac1@freescale.com>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH 3/3] merge-recursive: Use '~' instead of '_' to separate file names from branch names
+Date: Sat, 12 Nov 2005 00:55:36 +0100
+Message-ID: <20051111235536.GC9757@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: junkio@cox.net
 X-From: git-owner@vger.kernel.org Sat Nov 12 00:56:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaikC-00007b-NY
-	for gcvg-git@gmane.org; Sat, 12 Nov 2005 00:55:45 +0100
+	id 1EaikC-00007b-5p
+	for gcvg-git@gmane.org; Sat, 12 Nov 2005 00:55:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750745AbVKKXzV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 18:55:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750782AbVKKXzU
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 18:55:20 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:19422 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750745AbVKKXzT (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 18:55:19 -0500
-Received: (qmail 21765 invoked by uid 2001); 12 Nov 2005 00:55:16 +0100
-To: Becky Bruce <becky.bruce@freescale.com>
+	id S1750754AbVKKXzi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 18:55:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750782AbVKKXzi
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 18:55:38 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:64660 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1750754AbVKKXzh (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 18:55:37 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 1E5BE40FD; Sat, 12 Nov 2005 01:04:11 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1Eaik4-0006RT-00; Sat, 12 Nov 2005 00:55:36 +0100
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <dd9dee136a573d72fc7332373cfd8ac1@freescale.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11649>
 
-Dear diary, on Fri, Nov 11, 2005 at 11:58:39PM CET, I got a letter
-where Becky Bruce <becky.bruce@freescale.com> said that...
-> I grabbed 0.99.9g this morning, and tried to clone Paul Mackerras' 
-> linux merge tree. The clone failed and reported errors in http-fetch 
-> with a bunch of messages of the form:
-> 
-> error: Couldn't create temporary file 
-> .git/objects/04/48fa7de8a416a48cd1977f29858be54e67c078.temp for .git
-> /objects/04/48fa7de8a416a48cd1977f29858be54e67c078: Error 24: Too many 
-> open files
+
+Makes it less probable that we get a clash with an existing file,
+furthermore Cogito already uses '~' for this purpose.
+
+Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
+
 
 ---
 
-The current http-fetch is rather careless about fd leakage, causing
-problems while fetching large repositories. This patch does not reserve
-exhaustiveness, but I covered everything I spotted. I also left some
-safeguards in place in case I missed something, so that we get to know,
-sooner or later.
+ git-merge-recursive.py |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Reported by Becky Bruce <becky.bruce@freescale.com>.
-
-Signed-off-by: Petr Baudis <pasky@suse.cz>
+applies-to: cd30fe9db68f151066eeadd75eb2fdcb7ff89148
+188d233dddacf754d1b7e8c7154293f9a4668180
+diff --git a/git-merge-recursive.py b/git-merge-recursive.py
+index 21f1e92..1bf73f3 100755
+--- a/git-merge-recursive.py
++++ b/git-merge-recursive.py
+@@ -304,13 +304,13 @@ def uniquePath(path, branch):
+                 raise
+ 
+     branch = branch.replace('/', '_')
+-    newPath = path + '_' + branch
++    newPath = path + '~' + branch
+     suffix = 0
+     while newPath in currentFileSet or \
+           newPath in currentDirectorySet  or \
+           fileExists(newPath):
+         suffix += 1
+-        newPath = path + '_' + branch + '_' + str(suffix)
++        newPath = path + '~' + branch + '_' + str(suffix)
+     currentFileSet.add(newPath)
+     return newPath
+ 
 ---
-
- http-fetch.c |   16 ++++++++++++++--
- 1 files changed, 14 insertions(+), 2 deletions(-)
-
-diff --git a/http-fetch.c b/http-fetch.c
-index 99921cc..e7655d1 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -413,6 +413,8 @@ static void start_request(struct transfe
- 	rename(request->tmpfile, prevfile);
- 	unlink(request->tmpfile);
- 
-+	if (request->local != -1)
-+		error("fd leakage in start: %d", request->local);
- 	request->local = open(request->tmpfile,
- 			      O_WRONLY | O_CREAT | O_EXCL, 0666);
- 	/* This could have failed due to the "lazy directory creation";
-@@ -511,7 +513,7 @@ static void start_request(struct transfe
- 	/* Try to get the request started, abort the request on error */
- 	if (!start_active_slot(slot)) {
- 		request->state = ABORTED;
--		close(request->local);
-+		close(request->local); request->local = -1;
- 		free(request->url);
- 		return;
- 	}
-@@ -525,7 +527,7 @@ static void finish_request(struct transf
- 	struct stat st;
- 
- 	fchmod(request->local, 0444);
--	close(request->local);
-+	close(request->local); request->local = -1;
- 
- 	if (request->http_code == 416) {
- 		fprintf(stderr, "Warning: requested range invalid; we may already have all the data.\n");
-@@ -557,6 +559,8 @@ static void release_request(struct trans
- {
- 	struct transfer_request *entry = request_queue_head;
- 
-+	if (request->local != -1)
-+		error("fd leakage in release: %d", request->local);
- 	if (request == request_queue_head) {
- 		request_queue_head = request->next;
- 	} else {
-@@ -613,6 +617,8 @@ static void process_curl_messages(void)
- 					if (request->repo->next != NULL) {
- 						request->repo =
- 							request->repo->next;
-+						close(request->local);
-+							request->local = -1;
- 						start_request(request);
- 					}
- 				} else {
-@@ -743,6 +749,7 @@ static int fetch_index(struct alt_base *
- 				     curl_errorstr);
- 		}
- 	} else {
-+		fclose(indexfile);
- 		return error("Unable to start request");
- 	}
- 
-@@ -1025,6 +1032,7 @@ static int fetch_pack(struct alt_base *r
- 				     curl_errorstr);
- 		}
- 	} else {
-+		fclose(packfile);
- 		return error("Unable to start request");
- 	}
- 
-@@ -1087,6 +1095,7 @@ static int fetch_object(struct alt_base 
- 			fetch_alternates(alt->base);
- 			if (request->repo->next != NULL) {
- 				request->repo = request->repo->next;
-+				close(request->local); request->local = -1;
- 				start_request(request);
- 			}
- 		} else {
-@@ -1095,6 +1104,9 @@ static int fetch_object(struct alt_base 
- 		}
- #endif
- 	}
-+	if (request->local != -1) {
-+		close(request->local); request->local = -1;
-+	}
- 
- 	if (request->state == ABORTED) {
- 		release_request(request);
-
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+0.99.9.GIT
