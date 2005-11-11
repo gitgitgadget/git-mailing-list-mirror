@@ -1,49 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: HTTP redirection with git-clone/git-fetch ?
-Date: Fri, 11 Nov 2005 09:38:00 -0800
-Message-ID: <7vu0ejnkzr.fsf@assigned-by-dhcp.cox.net>
-References: <200511092331.36421.Josef.Weidendorfer@gmx.de>
-	<20051110002419.GB4051@reactrix.com>
-	<200511101409.48618.Josef.Weidendorfer@gmx.de>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [ANNOUNCE] GIT 0.99.9g
+Date: Fri, 11 Nov 2005 09:46:59 -0800
+Message-ID: <4374D913.503@zytor.com>
+References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net> <43737EC7.6090109@zytor.com> <Pine.LNX.4.63.0511111516170.7575@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 11 18:40:00 2005
-Return-path: <git-owner@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750947AbVKKRrQ@vger.kernel.org Fri Nov 11 18:49:26 2005
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750947AbVKKRrQ@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eacqm-0003Yn-9B
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 18:38:08 +0100
+	id 1Eaczz-0006zD-Mi
+	for glk-linux-kernel-3@gmane.org; Fri, 11 Nov 2005 18:47:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750951AbVKKRiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 12:38:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750955AbVKKRiE
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 12:38:04 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:60044 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1750956AbVKKRiD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 12:38:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051111173658.YUHC2059.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 11 Nov 2005 12:36:58 -0500
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <200511101409.48618.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Thu, 10 Nov 2005 14:09:48 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id S1750947AbVKKRrQ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 11 Nov 2005 12:47:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbVKKRrQ
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Fri, 11 Nov 2005 12:47:16 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:53451 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750947AbVKKRrP
+	(ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 11 Nov 2005 12:47:15 -0500
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jABHl0KR002571
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 11 Nov 2005 09:47:01 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0511111516170.7575@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11621>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11622>
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+Johannes Schindelin wrote:
+> 
+> Two reasons against renaming:
+> 
+> - we call it fsck-objects for a reason. We are working on a file system, 
+>   which just so happens to be implemented in user space, not kernel space.
+>   If lost+found has to find a new name, so does fsck-objects.
+> 
 
->> This should fix it, although it still tries every GET with the original
->> URL which is a bit inefficient.
->
-> Thanks, I just sent a patch for git-clone, including your patch, to
-> Junio.
+I'm sorry, but that is bull.  The problem here isn't the conventional 
+naming, it's that you're implementing your filesystem on top of another 
+filesystem, and you're running into a layering conflict.
 
-Thank you both.
+> - lost+found has a special meaning, granted. So, a backup would not be 
+>   made of it. So what? I *don't* want it backup'ed. I want to repair what
+>   was wrong with it. When I repaired it, the result is stored somewhere
+>   else. To backup lost+found would make as much sense as to backup /tmp.
+> 
+
+The default should ALWAYS be no data loss.
+
+	-hpa
