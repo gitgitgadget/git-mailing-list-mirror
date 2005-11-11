@@ -1,93 +1,119 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Something looks like CVS modules
-Date: Fri, 11 Nov 2005 23:40:07 +0100
-Message-ID: <200511112340.07794.Josef.Weidendorfer@gmx.de>
-References: <200511111313.27273.lan@ac-sw.com> <200511111713.58018.lan@ac-sw.com> <20051111212953.GX30496@pasky.or.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Comments on recursive merge..
+Date: Fri, 11 Nov 2005 14:53:56 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511111437410.3228@g5.osdl.org>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+ <20051107225807.GA10937@c165.ib.student.liu.se> <7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org> <7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Nov 11 23:43:23 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 11 23:55:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eahav-0005aE-Rd
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 23:42:06 +0100
+	id 1Eahmb-0000sT-F1
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 23:54:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294AbVKKWlG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 17:41:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751297AbVKKWkO
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 17:40:14 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:54497 "EHLO
-	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S1751286AbVKKWkM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 17:40:12 -0500
-Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
-	by mail.in.tum.de (Postfix) with ESMTP id 0C066198A
-	for <git@vger.kernel.org>; Fri, 11 Nov 2005 23:40:11 +0100 (MET)
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-In-Reply-To: <20051111212953.GX30496@pasky.or.cz>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+	id S1751303AbVKKWyF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 17:54:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751306AbVKKWyF
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 17:54:05 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:19905 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751303AbVKKWyD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 17:54:03 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jABMrvnO031126
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 11 Nov 2005 14:53:58 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jABMruuX000589;
+	Fri, 11 Nov 2005 14:53:57 -0800
+To: Junio C Hamano <junkio@cox.net>, Paul Mackerras <paulus@samba.org>
+In-Reply-To: <7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11642>
 
-On Friday 11 November 2005 22:29, Petr Baudis wrote:
-> Dear diary, on Fri, Nov 11, 2005 at 12:13:57PM CET, I got a letter
-> where Alexander Litvinov <lan@ac-sw.com> said that...
->
-> Aha. So it isn't so much about modules, but more about nested checkouts,
-> described in Cogito's TODO as:
+
+
+On Fri, 11 Nov 2005, Junio C Hamano wrote:
 > 
-> * Subprojects
-> ...
+> Some observations.
+> 
+>  - Trivial Merges count is surprisingly high.  About 1/3 of
+>    merges are pure in-index merges.
 
-Interesting. So these would be multiple git repositories, which are
-more or less loosely coupled via same head and tag names?
+I actually don't think that is surprisingly high, and would actually have 
+expected it to be closer to 50%.
 
-Instead of putting multiple git repositories in subdirectories,
-these possibly could be combined into one .git/ with different index
-files, and simultaneously checked out files. This way, the
-partitioning of files does not have to follow directory boundaries
-(similar to the "todo" branch of git itself).
+On the other hand, the merges that end up being pure fast-forwards aren't 
+counted as merges at all (since they don't show up as commits), so maybe 
+that's what skews my preception of a big percentage of merges as being 
+really trivial.
 
-We would need a configuration for the partitioning.
-E.g. a .git/projects
+>  - Most of the commits (developer commits, not merges) are
+>    small and touches only a couple of paths.
 
- gitk: gitk
- todo: TODO TODO-docu
- docu: Documentation/*
- git: *
+This is something where I think the kernel is perhaps unusual, especially 
+for a big project. We really do encourage people to make lots of small and 
+well-defined changes, and the whole flow of development has been geared 
+towards it. 
 
-(perhaps with path remapping between checkout files and paths in the
-git tree objects of every subproject, to be flexible)
+>  - Nobody does octopus ;-).
 
-You would have multiple indexes: .git/index.gitk, .git/index.todo...
-.git/HEAD would have to hold multiple references for the currently
-checked out subprojects:
+I do think octopus is really cool, and still think seeing that five-way 
+octopus-merge in gitk in the git history was really really cool.
 
- gitk: refs/gitk/heads/master
- git: refs/git/heads/master
+It doesn't look as good any more, btw: do "gitk" on the current git tree, 
+and search for "Octopus merge", and you'll see some of the history lines 
+crossing each other. Paul?
 
-On commiting, the subproject partitions are checked seperatly for
-changes, and commits objects are done for each subproject.
-Fetching/merging is done on each subproject of its own.
+But yeah, it's a pretty special thing. I think its coolness factor way 
+outweighs its usefullness factor ;^p
 
-You probably want to have multi-head tags covering all subprojects.
+>  - We did not have multi-base merge case during the period
+>    looked at (but the sample count is very low).
 
-And for a more tight coupling of subprojects, you probably even want
-to have multihead commits every time a commit is done in one subproject,
-which leads to branches tracking the versioning of all subprojects,
-i.e. multihead heads ;-)
-I think that even subprojects of subprojects fall out naturally.
+Again, this is possibly because the kernel has already had a few years of 
+distributed SCM usage under its belt, and we've tried to not only merge 
+in a timely manner, but also try to keep history reasonably clean and not 
+have a lot of cross-merging back and forth. That cuts down on multi-base 
+possibilities.
 
-I am quite sure this can be done in a fully compatible way to Git-1:
-with Git-1, you have only one subproject, the empty one.
-It should be possible to combine multiple Git-1 repositories to a
-repository with multiple subprojects, where each subproject was its
-own project with Git-1.
+>  - merge-one-file was called for only a handful (median 8)
+>    files, which is negligibly small compared to the total 17K
+>    files in the kernel tree, and fairly small compared to the
+>    number of changed paths from the first parent (meaning,
+>    read-tree trivial collapsing helped majorly).  Among them,
+>    the number of paths that needed real file-level 3-way merges
+>    were even smaller (avg 1.96).
 
-Josef
+I definitely think this is true for any big project.
+
+Small projects will inevitably have changes that modify large portions of 
+the source base. But with small projects, it doesn't really matter _what_ 
+you do, you can do it fast.
+
+Big projects (at least the sane kind) will never have lots of changes that 
+modify a very big percentage of the source-tree. It's just too painful 
+(and I'm not talking from a SCM angle, just from a developer angle).
+
+>    All three of these points together is a fine demonstration
+>    that you designed git really right.
+
+Well, it's self-re-inforcing. It was designed for the kernel usage 
+patterns, so using the kernel to confirm that it's the "right design" is a 
+bit self-serving. Sure, it's a good sign that my mental model of what the 
+usage patters are does actually match reality, but at the same time it 
+might be more interesting to see if other projects that use git end up 
+using it the same way and/or have different statistics.
+
+I do expect that the size of the project will impact the statistics a lot. 
+
+		Linus
