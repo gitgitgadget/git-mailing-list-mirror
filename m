@@ -1,85 +1,91 @@
-From: Alexander Litvinov <lan@ac-sw.com>
-Subject: Re: Something looks like CVS modules
-Date: Fri, 11 Nov 2005 17:13:57 +0600
-Organization: AcademSoft Ltd.
-Message-ID: <200511111713.58018.lan@ac-sw.com>
-References: <200511111313.27273.lan@ac-sw.com> <200511111642.25908.lan@ac-sw.com> <20051111105820.GN30496@pasky.or.cz>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] specfile cleanups
+Date: Fri, 11 Nov 2005 12:31:16 +0100
+Message-ID: <43748104.5020707@op5.se>
+References: <20051111091029.GW8041@shell0.pdx.osdl.net> <7vveyzpmi7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 11 12:14:37 2005
+Content-Type: multipart/mixed;
+ boundary="------------020906030407040303080602"
+X-From: git-owner@vger.kernel.org Fri Nov 11 12:33:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaWpz-0002Pq-W7
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 12:12:56 +0100
+	id 1EaX7q-0008AM-So
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 12:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751139AbVKKLMx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 06:12:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbVKKLMx
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 06:12:53 -0500
-Received: from gw.ac-sw.com ([81.1.223.2]:33213 "EHLO gw.ac-sw.com")
-	by vger.kernel.org with ESMTP id S1751139AbVKKLMw (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 06:12:52 -0500
-Received: from lan.ac-sw.lcl (unknown [192.168.0.69])
-	by gw.ac-sw.com (Postfix) with ESMTP
-	id 31B61BD1B; Fri, 11 Nov 2005 17:12:51 +0600 (NOVT)
-Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
-	id E6629FBF09; Fri, 11 Nov 2005 17:13:58 +0600 (NOVT)
-Received: from localhost (localhost [127.0.0.1])
-	by lan.ac-sw.lcl (Postfix) with ESMTP id 509BABAD27;
-	Fri, 11 Nov 2005 17:13:58 +0600 (NOVT)
-To: Petr Baudis <pasky@suse.cz>
-User-Agent: KMail/1.8
-In-Reply-To: <20051111105820.GN30496@pasky.or.cz>
-Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on lan.ac-sw.lcl
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.4
+	id S1750725AbVKKLbT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 06:31:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750727AbVKKLbS
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 06:31:18 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:54444 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750725AbVKKLbS
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2005 06:31:18 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id DABF16BD0D
+	for <git@vger.kernel.org>; Fri, 11 Nov 2005 12:31:16 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <7vveyzpmi7.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11587>
 
-On Friday 11 November 2005 16:58, Petr Baudis wrote:
-> > 1. The problem with checkout - single checkout should checkout all needed
-> > modules to build project. Update should also update all modules. The same
-> > with commit.
-> > 2. Tags should be done on all modules. All modules should be able to be
-> > in the same branch.
->
-> > And in the same time one module should be able to exists in two or more
-> > projects !
->
-> Then just have only a bunch of directories in your project root, and
-> that shall be your modules. :-)
->
-> (CVS modules don't work like that either, do they?)
+This is a multi-part message in MIME format.
+--------------020906030407040303080602
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-As far as CVS tracks tags/branches separatly for each file, tags abd branches 
-work well for modules.
+Junio C Hamano wrote:
+> Chris Wright <chrisw@osdl.org> writes:
+> 
+> 
+>>Some specfile cleanups after the split.
+> 
+> 
+> Thanks.
+> 
+> Does it matter some Requires use comma and others don't?
+> 
 
-Bunch of directories is almost what I want except tags/branches/history. CVS 
-does not care if two directories have separate root/repos. All it wants -is a 
-properly CVS dir.
+Other than for consistency reasons, no. Most distributions have it in 
+their conventions to use commas. Some don't.
 
-> But this is troublesome, and doesn't fit into GIT's model at all. Do you
-> have any concrete example of a scenario where something like this would
-> be useful?
+Most also have the conventions enforced by the attached script as it 
+enhances readability by removing much un-necessary clutter.
 
-For eaxmle: I have java lib A. I setup project B in this way:
-B/src/
-B/A/src
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-Have another project C:
-C/src/
-C/A/src
+--------------020906030407040303080602
+Content-Type: application/x-shellscript;
+ name="specwash.sh"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="specwash.sh"
 
-Both of them share the same code from library's module. I can tag them, edit, 
-commit: do all work I usualy do. If I change something in B/A/src this will 
-be updated into C/A/src.
-
-This is what I dreaming about :-)
+IyEvYmluL2Jhc2gKIwojIHNwZWN3YXNoLnNoIC0gd2FzaCB1bm5lZWRlZCBjdXJsaWVzIGZy
+b20gc2NyaXB0cyBhbmQgc3BlYy1maWxlcwojICAgICAgICAgICAgICAgdXNlIG1hY3JvcyBp
+biBmYXZvciBvZiBhbnl0aGluZyBlbHNlCiMKCmlmIFsgJCMgLWx0IDEgXTsgdGhlbgoJZWNo
+byAiVXNhZ2U6ICR7MCMjKi99IHNjcmlwdHMvc3BlYy1maWxlcyIKCWV4aXQgMQpmaQoKIyB2
+YXJjaGFycyBpbiByZWdleCBmb3JtCiMgdXNpbmcgdGhpcyB3aGl0ZWxpc3QgYWxsb3dzIHRo
+aW5ncyBsaWtlICR7MCMjKi99IHRvIHBhc3MgdW5tb2xlc3RlZAojIGl0IG1pZ2h0IGJyZWFr
+IHNvbWUgb3RoZXIgdGhpbmdzIHRob3VnaCwgc28gd2Uga2VlcCB0aGUgYmFja3Vwcy4KdmM9
+ImEtekEtWjAtOV8iCiMJCS1lICJzL15cKFteI10uKlteX11cKW1rZGlyL1wxJV9fbWtkaXIv
+IiBcCgpmb3IgaSBpbiAiJEAiOyBkbwoJbXYgLWkgJGkgJGkuYmFrIHx8IGNvbnRpbnVlCglz
+ZWQgLWUgInMvICokLy9nIiBcCgkJLWUgInMvXChbXCVcJF1cKXtcKFskdmNdKlwpXH1cKFte
+JHZjXVwpL1wxXDJcMy9nIiBcCgkJLWUgInMvXChbXCVcJF1cKXtcKFskdmNdKlwpXH0kL1wx
+XDIvZyIgXAoJCS1lICdzLC91c3IvYmluLywlX2JpbmRpci8sZycgLWUgJ3MsL3Vzci9zYmlu
+LywlX3NiaW5kaXIvLGcnIFwKCQktZSAncywvdXNyL2xpYmV4ZWMvLCVfbGliZXhlY2Rpci8s
+ZycgLWUgJ3MsL3Vzci9saWIvLCVfbGliZGlyLyxnJyBcCgkJLWUgJ3MsL3Vzci9pbmNsdWRl
+LywlX2luY2x1ZGVkaXIvLGcnIFwKCQktZSAncywvdXNyL2luZm8vLCVfaW5mb2Rpci8sZycg
+LWUgJ3MsL3Vzci9tYW4vLCVfbWFuZGlyLyxnJyBcCgkJLWUgJ3MsL3Vzci9zaGFyZS9pbmZv
+LywlX2luZm9kaXIvLGcnIC1lICdzLC91c3Ivc2hhcmUvbWFuLywlX21hbmRpci8sZycgXAoJ
+CS1lICdzLC91c3IvLCVfcHJlZml4LyxnJyBcCgkJLWUgJ3MsXCRSUE1fQlVJTERfUk9PVCwl
+YnVpbGRyb290LGcnIFwKCQktZSAncyxcJFJQTV9PUFRfRkxBR1MsJW9wdGZsYWdzLGcnIFwK
+CSRpLmJhayA+ICRpCmRvbmUK
+--------------020906030407040303080602--
