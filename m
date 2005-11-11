@@ -1,61 +1,114 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Strange merge conflicts against earlier merge.
-Date: Fri, 11 Nov 2005 22:56:20 +0100
-Message-ID: <20051111215620.GX16061@pasky.or.cz>
-References: <46a038f90511091638k726d605r170717539225a712@mail.gmail.com> <20051111075257.GA4765@c165.ib.student.liu.se> <20051111114511.GQ30496@pasky.or.cz> <7v64qzozyx.fsf@assigned-by-dhcp.cox.net> <20051111173239.GU16061@pasky.or.cz> <7v1x1nni78.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Comments on recursive merge..
+Date: Fri, 11 Nov 2005 14:25:49 -0800
+Message-ID: <7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+	<20051107225807.GA10937@c165.ib.student.liu.se>
+	<7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 11 22:58:50 2005
+X-From: git-owner@vger.kernel.org Fri Nov 11 23:27:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eagsk-0007z1-Nh
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 22:56:27 +0100
+	id 1EahLJ-0000gA-AS
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 23:25:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbVKKV4Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 16:56:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbVKKV4Y
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 16:56:24 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:913 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751247AbVKKV4X (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 16:56:23 -0500
-Received: (qmail 11149 invoked by uid 2001); 11 Nov 2005 22:56:20 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v1x1nni78.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751216AbVKKWZw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 17:25:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751278AbVKKWZw
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 17:25:52 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:58367 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751216AbVKKWZv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2005 17:25:51 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051111222457.XDQU776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 11 Nov 2005 17:24:57 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 7 Nov 2005 16:33:56 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11639>
 
-Dear diary, on Fri, Nov 11, 2005 at 07:38:19PM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@suse.cz> writes:
-> > Yes, but what I didn't find out is whether the additional trees result
-> > in additional stages, what are the trivial merging rules, how does it
-> > play together with git-merge-index, etc. Doesn't seem to be documented
-> > either.
-> 
-> Documentation/technical/ perhaps?
+Linus Torvalds <torvalds@osdl.org> writes:
 
-This contains the merge resolution tables, which is very useful - thanks
-for that.
+>> Another thing to consider is if it is fast enough for everyday
+>> trivial merges.
+>
+> Hmm. True. The _really_ trivial in-index case triggers for me pretty 
+> often, but I haven't done any statistics. It might be only 50% of the 
+> time.
 
-However, it still doesn't seem to answer my question - do the additional
-trees result in additional stages? Let's take e.g.:
+Just for fun, I randomly picked two heads/master commits from
+linux-2.6 repository (one was when I happened to have pulled the
+last time, and the other was when I thought this might be an
+interesting exercise and pulled again), and fed the commits
+between the two to a little script that looks at commits and
+tries to stat what they did (the script ignores renames so they
+appear as deletes and adds).
 
-	16    anc1/anc2 anc1    anc2      no merge
+Here is what the script spitted out:
 
-What ends up in the index at this moment as "stage 1"? anc1? anc2?
-Two stage 1 entries? And what does git-merge-index do about this?
+        Total commit objects: 3957
+        Trivial Merges: 72 (1.82%)
+        Merges: 225 (5.69%)
+        Number of paths touched by non-merge commits:
+                average 4.50, median 2, min 2, max 199
+        Number of merge parents:
+                average 2.00, median 2, min 2, max 2
+        Number of merge bases:
+                average 1.00, median 1, min 1, max 1
+        File level merges:
+                average 37.61, median 8, min 0, max 555
+        Number of changed paths from the first parent:
+                average 379.09, median 66, min 1, max 7553
+        File level 3-ways:
+                average 1.96, median 1, min 0, max 37
+        Paths deleted:
+                average 47.56, median 15, min 0, max 554
 
-Thanks,
+This counts what happened in individual devleoper's trees,
+subsystem maintainer trees and your tree, not just what you saw
+yourself.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Some observations.
+
+ - Trivial Merges count is surprisingly high.  About 1/3 of
+   merges are pure in-index merges.
+
+ - Most of the commits (developer commits, not merges) are
+   small and touches only a couple of paths.
+
+ - Nobody does octopus ;-).
+
+ - We did not have multi-base merge case during the period
+   looked at (but the sample count is very low).
+
+ - merge-one-file was called for only a handful (median 8)
+   files, which is negligibly small compared to the total 17K
+   files in the kernel tree, and fairly small compared to the
+   number of changed paths from the first parent (meaning,
+   read-tree trivial collapsing helped majorly).  Among them,
+   the number of paths that needed real file-level 3-way merges
+   were even smaller (avg 1.96).
+
+   All three of these points together is a fine demonstration
+   that you designed git really right.
+
+The samples were between these two commits:
+
+commit 6693e74a16ef563960764bd963f1048392135c3c
+Author: Linus Torvalds <torvalds@g5.osdl.org>
+Date:   Tue Oct 25 20:40:09 2005 -0700
+
+commit 388f7ef720a982f49925e7b4e96f216f208f8c03
+Author: Linus Torvalds <torvalds@g5.osdl.org>
+Date:   Fri Nov 11 09:26:39 2005 -0800
