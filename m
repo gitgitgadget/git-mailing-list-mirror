@@ -1,107 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE] GIT 0.99.9g
-Date: Fri, 11 Nov 2005 10:37:03 -0800
-Message-ID: <7v64qzni9c.fsf@assigned-by-dhcp.cox.net>
-References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net>
-	<43730E39.6030601@pobox.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Getting rid of symlinks in .git?
+Date: Fri, 11 Nov 2005 19:42:02 +0100
+Message-ID: <20051111184202.GA13524@steel.home>
+References: <20051110204543.GZ30496@pasky.or.cz> <43746118.30404@hogyros.de> <81b0412b0511110443x48415032k8ca40d999071e8a9@mail.gmail.com> <437494B2.30309@hogyros.de>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 11 19:38:40 2005
+X-From: git-owner@vger.kernel.org Fri Nov 11 19:45:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eadlu-0005Xz-9z
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 19:37:10 +0100
+	id 1Eadqu-00072M-6y
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 19:42:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750998AbVKKShG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 13:37:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751000AbVKKShG
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 13:37:06 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:48285 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750998AbVKKShF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 13:37:05 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051111183635.FACI9394.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 11 Nov 2005 13:36:35 -0500
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <43730E39.6030601@pobox.com> (Jeff Garzik's message of "Thu, 10
-	Nov 2005 04:09:13 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751007AbVKKSmR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 13:42:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751011AbVKKSmR
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 13:42:17 -0500
+Received: from devrace.com ([198.63.210.113]:61712 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S1751002AbVKKSmQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 13:42:16 -0500
+Received: from tigra.home (p54A0D6F6.dip.t-dialin.net [84.160.214.246])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id jABIg4JD028920;
+	Fri, 11 Nov 2005 12:42:06 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1Eadqd-0000EA-00; Fri, 11 Nov 2005 19:42:03 +0100
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1Eadqc-0003WR-Et; Fri, 11 Nov 2005 19:42:02 +0100
+To: Simon Richter <Simon.Richter@hogyros.de>
+Content-Disposition: inline
+In-Reply-To: <437494B2.30309@hogyros.de>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=0.7 required=4.5 tests=AWL,BAYES_50,
+	RCVD_IN_NJABL_DUL autolearn=no version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11626>
 
-Jeff Garzik <jgarzik@pobox.com> writes:
+Simon Richter, Fri, Nov 11, 2005 13:55:14 +0100:
+> >But you shouldn't care if you have reasonably recent git everywhere:
+> >symlinks and their absence already handled:
+> 
+> Well, I don't have working directories on USB sticks, so I don't 
+> actually use the symlinks, would they be there, but I'm definitely 
+> annoyed by not being able to copy a .git directory from some project 
+> over and be done with it.
+> 
 
-> Junio C Hamano wrote:
->>  - One important newcomer is git-pack-redundant...
->
-> IMHO git-prune-packed should prune redundant pack files...
+Reasonable, perhaps. But are the git-pull and -clone _that_ slow or
+awkward? Besides, you'd probably end up copying more than you'd want.
 
-Maybe not in git-prune-packed, but you are right.  We should at
-least do that in git-prune.  Maybe with something like the patch
-at the end?
-
->> Oh, and we will not be moving things out of /usr/bin/ during 1.0
->> timeframe.
->
-> :(  bummer.  I do like the elegance of having /usr/bin/git executing 
-> stuff out of /usr/libexec/git.
-
-Bummer here as well.  This is not my first preference, but more
-or less "all things considered...".  I can go over cogito and
-stgit with Pasky and Catalin and coordinate the transition, but
-at the same time, everybody's existing scripts need to be
-adjusted.  As Linus said, we broke kernel.org snapshot scripts
-number of times.
-
-Also places we execute git-upload-pack and git-receive-pack over
-an SSH connection need to be updated to execute 'git' with the
-first parameter 'upload-pack' and 'receive-pack' to make sure it
-would keep working with older or newer git on the other end.
-
-After all that happens, we can start installing things in
-/usr/lib/git/.  During the transition, the C rewrite of git
-wrapper posted by Andreas Ericsson might help, so I am planning
-to merge it before 1.0, after deciding what the right word for
-the "path to the rest of git executables" should be.
-
-So let's say 1.0 will ship with all things in /usr/bin/, with
-updated docs that explain the situation: (1) the dash form
-'git-frotz' is being deprecated, and you are encouraged to spell
-it as 'git frotz'; (2) if you want to use the dash form in your
-scripts for performance reasons, you need to have something like
-PATH="$(git --exec-path):$PATH" at the beginning of your script.
-
-And after some time (say 2 months) we can switch.
-
-I just do not want to wait that long before 1.0.
-
--- >8 -- cut here -- >8 --
-[PATCH] git-prune: prune redundant packs.
-
----
-diff --git a/git-prune.sh b/git-prune.sh
-index ef31bd2..aa79807 100755
---- a/git-prune.sh
-+++ b/git-prune.sh
-@@ -27,3 +27,14 @@ sed -ne '/unreachable /{
- }
- 
- git-prune-packed $dryrun
-+
-+redundant=$(git-pack-redundant --all)
-+if test "" != "$redundant"
-+then
-+	if test "" = $dryrun
-+	then
-+		echo "$redundant" | xargs rm -f
-+	else
-+		echo rm -f "$redundant"
-+	fi
-+fi
+That's interesting case, btw. I'm restoring git mailing list in cc, so
+it gets a bit wider of auditorium.
