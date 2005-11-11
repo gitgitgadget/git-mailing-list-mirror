@@ -1,76 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: merge-base: fully contaminate the well.
-Date: Thu, 10 Nov 2005 22:04:13 -0800
-Message-ID: <7viruzu3du.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
-	<7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
-	<Pine.LNX.4.63.0511081254520.2649@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20051108210211.GA23265@c165.ib.student.liu.se>
-	<Pine.LNX.4.64.0511081351020.3247@g5.osdl.org>
-	<20051108223609.GA4805@c165.ib.student.liu.se>
-	<Pine.LNX.4.64.0511081450080.3247@g5.osdl.org>
-	<20051109003236.GA30496@pasky.or.cz>
-	<Pine.LNX.4.64.0511081646160.3247@g5.osdl.org>
-	<7vlkzyd4aq.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511081716450.3247@g5.osdl.org>
-	<7v8xvyd2bh.fsf@assigned-by-dhcp.cox.net>
-	<7v4q6mgm1l.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511090800330.3247@g5.osdl.org>
-	<7virv1efzv.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511091348530.4627@g5.osdl.org>
-	<7virv1a0ro.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511091518370.4627@g5.os
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: What is cg-clone
+Date: Fri, 11 Nov 2005 06:56:29 +0000
+Message-ID: <200511110656.29553.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 11 07:04:20 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Nov 11 07:57:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaS1K-0000uo-NH
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 07:04:19 +0100
+	id 1EaSpn-0003KK-4B
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 07:56:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751252AbVKKGEQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 01:04:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbVKKGEP
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 01:04:15 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:58864 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751252AbVKKGEP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 01:04:15 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051111060415.LTFT9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 11 Nov 2005 01:04:15 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511102125510.4627@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 10 Nov 2005 21:36:03 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751094AbVKKG4X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 01:56:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751127AbVKKG4W
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 01:56:22 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:31113
+	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
+	id S1751094AbVKKG4W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2005 01:56:22 -0500
+Received: from kanger.home ([192.168.0.21])
+	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
+	id 1EaSph-0008Dc-Kp
+	for git@vger.kernel.org; Fri, 11 Nov 2005 06:56:21 +0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11564>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Just trying to set up my public repository and test it. 
 
-> So the cheap test is to just say
->
-> 	/* Do we have multiple results? */
-> 	if (result->next)
-> 		contaminate_well(result);
->
-> no?
+cg-clone http://www.chandlerfamily.org.uk/git/famtree.git new
 
-Correct.  And this is only for really artificial corner case so
-we should try to avoid for normal cases as much as possible,
-cheaply.
+When I get near the end the following happens:
 
-> Btw, I don't think your contamination logic is necessarily complete. We 
-> may not even have parsed some of the commits that end up being on that 
-> strange corner case.
+http://www.chandlerfamily.org.uk/git/famtree.git/refs/tags/:
+05:46:53 ERROR 403: Forbidden.
 
-I haven't tried walking any other test cases, but wouldn't that
-be arguing that the our assumption that the current merge-base
-is at least complete if not optimum?
+I suspect its trying to get a list of tags, but is the ":" part of the error 
+message, or was that what it was trying to receive.
+
+Does it require that apache serves the directories properly, because at the 
+moment I have DirectoryIndex on these set to gitweb.cgi (although thats 
+giving me 403 errors at the moment, hence my suspicions)
+
+-- 
+Alan Chandler
+http://www.chandlerfamily.org.uk
+Open Source. It's the difference between trust and antitrust.
