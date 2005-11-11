@@ -1,53 +1,59 @@
-From: Nick Hengeveld <nickh@reactrix.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Getting rid of symlinks in .git?
-Date: Fri, 11 Nov 2005 07:55:26 -0800
-Message-ID: <20051111155525.GD4051@reactrix.com>
-References: <20051110204543.GZ30496@pasky.or.cz> <43746118.30404@hogyros.de> <Pine.LNX.4.63.0511111511050.7575@wbgn013.biozentrum.uni-wuerzburg.de> <20051111150530.GT30496@pasky.or.cz> <Pine.LNX.4.63.0511111636400.16210@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Fri, 11 Nov 2005 17:03:29 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511111703001.16340@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051110204543.GZ30496@pasky.or.cz> <43746118.30404@hogyros.de>
+ <Pine.LNX.4.63.0511111511050.7575@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20051111150530.GT30496@pasky.or.cz> <Pine.LNX.4.63.0511111636400.16210@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20051111154938.GU30496@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>,
-	Simon Richter <Simon.Richter@hogyros.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Simon Richter <Simon.Richter@hogyros.de>,
 	Pavel Roskin <proski@gnu.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 11 16:59:22 2005
+X-From: git-owner@vger.kernel.org Fri Nov 11 17:05:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EabGF-00031w-Cj
-	for gcvg-git@gmane.org; Fri, 11 Nov 2005 16:56:20 +0100
+	id 1EabNQ-0005Ka-Od
+	for gcvg-git@gmane.org; Fri, 11 Nov 2005 17:03:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750830AbVKKP4R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 10:56:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750831AbVKKP4Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 10:56:16 -0500
-Received: from 194.37.26.69.virtela.com ([69.26.37.194]:35271 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1750830AbVKKP4Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Nov 2005 10:56:16 -0500
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jABFtcg8027276;
-	Fri, 11 Nov 2005 07:55:38 -0800
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jABFtQZL027272;
-	Fri, 11 Nov 2005 07:55:26 -0800
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0511111636400.16210@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.4.1i
+	id S1750821AbVKKQDb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 11:03:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbVKKQDb
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 11:03:31 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:5562 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750821AbVKKQDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2005 11:03:30 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id AE86413F375; Fri, 11 Nov 2005 17:03:29 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8E5549F24F; Fri, 11 Nov 2005 17:03:29 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 787E891B78; Fri, 11 Nov 2005 17:03:29 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 53C6913F375; Fri, 11 Nov 2005 17:03:29 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051111154938.GU30496@pasky.or.cz>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11611>
 
-On Fri, Nov 11, 2005 at 04:40:43PM +0100, Johannes Schindelin wrote:
+Hi,
 
-> Note that the only symlink/symref you usually have is .git/HEAD. But it 
-> feels wrong to take the worse approach in *all* cases, just because 
-> *one* brain-fscked file system/operating system does not support the 
-> superior approach.
+On Fri, 11 Nov 2005, Petr Baudis wrote:
 
-Symlinks at the other end of an HTTP transport are also similarly
-brain-challenged.
+> This is about being consistent, and also to support dumber protocols
+> better.
 
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+For my local development, I couldn't care less about dumber protocols.
+
+Hth,
+Dscho
