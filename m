@@ -1,87 +1,83 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git-archimport
-Date: Sun, 13 Nov 2005 00:30:13 +1300
-Message-ID: <46a038f90511120330y537c74cat56cce259ad661243@mail.gmail.com>
-References: <D92ED0A1-B83A-43C3-B39C-AA8A21934D7F@desertsol.com>
-	 <46a038f90511101332r3389734uc1aa1effd2898e15@mail.gmail.com>
-	 <20051110214959.GO9131@raven.localdomain>
-	 <46a038f90511101421o7988a1bfi89eb0e33bd34e4bb@mail.gmail.com>
-	 <20051111051910.GP9131@raven.localdomain>
-	 <46a038f90511102158k5078e37fn2558cf69bc5794fa@mail.gmail.com>
-	 <20051111232428.GS9131@raven.localdomain>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [ANNOUNCE] GIT 0.99.9g
+Date: Sat, 12 Nov 2005 12:37:21 +0100
+Message-ID: <4375D3F1.2070506@op5.se>
+References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net> <43730E39.6030601@pobox.com> <43737F9E.60703@zytor.com> <437392AD.20906@op5.se> <43750A53.9090602@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 12 12:31:08 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Nov 12 12:38:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EataQ-0003eV-LM
-	for gcvg-git@gmane.org; Sat, 12 Nov 2005 12:30:23 +0100
+	id 1EathR-0005ZF-CN
+	for gcvg-git@gmane.org; Sat, 12 Nov 2005 12:37:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932340AbVKLLaP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 06:30:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932344AbVKLLaP
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 06:30:15 -0500
-Received: from zproxy.gmail.com ([64.233.162.202]:22981 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932340AbVKLLaN convert rfc822-to-8bit
+	id S932352AbVKLLhX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 06:37:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932354AbVKLLhX
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 06:37:23 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:60852 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932352AbVKLLhX
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Nov 2005 06:30:13 -0500
-Received: by zproxy.gmail.com with SMTP id 40so788501nzk
-        for <git@vger.kernel.org>; Sat, 12 Nov 2005 03:30:13 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=j3i3NedHY48Hxqv2E1W72k1Wr3uvSzSvTKphuqwamA6/ntqB7VSyHkkJPQN+hgq1w/DXc6N4w52nCP68jHV0G7f8yorlQzfmSoBVqDH2zxzMP4g7bOLQWp6I8hGCWZQuLJJ2CFAeqUBSkLWUUhGPOXTe4MGo41F3qVnfKQQysBU=
-Received: by 10.64.210.17 with SMTP id i17mr626461qbg;
-        Sat, 12 Nov 2005 03:30:13 -0800 (PST)
-Received: by 10.64.242.4 with HTTP; Sat, 12 Nov 2005 03:30:13 -0800 (PST)
-To: Kevin Geiss <kevin@desertsol.com>
-In-Reply-To: <20051111232428.GS9131@raven.localdomain>
-Content-Disposition: inline
+	Sat, 12 Nov 2005 06:37:23 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 1232E6BD02
+	for <git@vger.kernel.org>; Sat, 12 Nov 2005 12:37:22 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <43750A53.9090602@zytor.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11671>
 
-On 11/12/05, Kevin Geiss <kevin@desertsol.com> wrote:
-> it's not really public, perhaps I can make it public though. can a tla mirror
-> be served over http? or does it require ssh?
+H. Peter Anvin wrote:
+> Andreas Ericsson wrote:
+> 
+>>>
+>>> It's nice in concept, but I think there are a lot of reasons why this 
+>>> is a bad idea:
+>>>
+>>> - "man" doesn't handle it.  It would be another thing if "man" could 
+>>> be taught to understand commands like "man cvs checkout" or "man git 
+>>> fetch".
+>>
+>>
+>> This is moot. man-pages can still be named git-fetch.
+>>
+> 
+> Yes, of course, but that requires the user to be aware of yet another 
+> program-specific convention.  I do believe that supporting hierarchial 
+> man pages would be a good thing, but one has to start that in the proper 
+> point.
+> 
 
-It can be served over http, though the repo needs to be setup with
-some special options. You can easily setup a mirror that works over
-http, though I can't remember the exact options.
+Someone sent in a (broken) patch that pulls up the proper man-page for
+	git help <command>
 
-> I'm confident the gpg signatures aren't the problem. I imported some branches
-> yesterday which were all signed, they worked fine.
+It's a rather good idea, so I'll be working it into the C implementation 
+of git as soon as the core of it is implemented.
 
-Cool. That's good to know...
+>>> - There is no general way to teach shells etc about it, for tab 
+>>> completion etc.
+>>
+>>
+>> Add the lib directory to the path (for git-<tab><tab>) or have it 
+>> auto-evaluate the result of a git command-listing.
+> 
+> 
+> ... which means the end user has to do something specific to their 
+> environment.
+> 
+> All in all, I think the negatives outweigh the positives.
+> 
 
-> I suspuect the problem is that after tagging the oco branch from the base
-> branch, there are several places where I replayed some patches from one of the
-> branches to the other. some patches were skipped, some were replayed.  there
-> was definitely a lot of hard core cherry picking going on, in both directions.
-> do you think that would cause a problem?
+Perhaps, but allowing the possibility of splitting them can't be wrong. 
+When that's in place we only have to decide if we're going to or not.
 
-The archimport script was written and tested against the branches I
-maintained in Arch, which had a reasonably rich and messy scheme of
-branching, cherry picking and replaying of patches. We just imported
-some additional branches from an unrelated project and it worked
-pretty well. So cherry picking/replaying itself should not be an
-issue.
-
-On the other hand, some versions of tla are notoriously sloppy in the
-patchsets they generate, forgetting to add files or adding them in two
-consecutive patchsets. I don't think archimport is too tolerant, and I
-did find some particular patchsets that wouldn't work correctly.
-
-I'm interested in patches that make the import more resilient, though.
-So if you can fixup archimport so your import works, and the patch is
-sane, I'll vouch for its inclusion.
-
-cheers,
-
-
-
-martin
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
