@@ -1,103 +1,101 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Cloning speed comparison, round II
-Date: Sat, 12 Nov 2005 16:53:02 +0100
-Message-ID: <20051112155302.GD30496@pasky.or.cz>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: cg-admin-setuprepo fails to make a cg-clone'able repo
+Date: 12 Nov 2005 08:51:35 -0800
+Message-ID: <8664qxn71k.fsf@blue.stonehenge.com>
+References: <86wtjg31lo.fsf@blue.stonehenge.com>
+	<20051111001333.GH30496@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Nov 12 16:53:54 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Nov 12 17:53:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eaxh7-0005nG-6j
-	for gcvg-git@gmane.org; Sat, 12 Nov 2005 16:53:33 +0100
+	id 1Eaybt-0003r4-TH
+	for gcvg-git@gmane.org; Sat, 12 Nov 2005 17:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932392AbVKLPxF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 10:53:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932396AbVKLPxF
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 10:53:05 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:42440 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932392AbVKLPxE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2005 10:53:04 -0500
-Received: (qmail 26595 invoked by uid 2001); 12 Nov 2005 16:53:02 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932409AbVKLQvl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 11:51:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932414AbVKLQvl
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 11:51:41 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:38064 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932409AbVKLQvl
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Nov 2005 11:51:41 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 6F3618F890;
+	Sat, 12 Nov 2005 08:51:36 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 23215-01-24; Sat, 12 Nov 2005 08:51:35 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id D35568F894; Sat, 12 Nov 2005 08:51:35 -0800 (PST)
+To: Petr Baudis <pasky@suse.cz>
+x-mayan-date: Long count = 12.19.12.14.4; tzolkin = 8 Kan; haab = 2 Ceh
+In-Reply-To: <20051111001333.GH30496@pasky.or.cz>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11693>
 
-  Hello,
+>>>>> "Petr" == Petr Baudis <pasky@suse.cz> writes:
 
-  here comes another round of the cloning speed comparison. For the
-previous round, see
+Petr> But this is actually an entirely unrelated bug, it seems - pretty
+Petr> strange.  I revived another few months old thread because of this, since
+Petr> it seems the 'b' was actually a typo and we don't want to pass 'cp' this
+Petr> argument at all, but something different. Does cloning locally otherwise
+Petr> work?
 
-	6395   F Aug 13 Petr Baudis     ( 2.6K) Cloning speed comparison
-	Message-ID: <20050813015402.GC20812@pasky.ji.cz>
+When I tried "local cloning", I first tried to make an empty archive
+with cgi-init, but it dumped me into an editor.  I couldn't find a
+switch to turn that off.  Perhaps the manpage should say "you'll
+be dumped in to an editor", and perhaps provide a way to pass that
+message with "-m".
 
-  What do we have here:
+So, on a whim, I realize that it's performing an initial commit, so
+I try cg-init -I.  And here's the result:
 
-	git.git: 10267 objects, mostly packed
-	cogito.git: 99903903 objects, no packs
+    localhost:~/Projects/Git % cg-init -I my_master
+    defaulting to local storage area
+    localhost:~/Projects/Git % cg-clone my_master my_slave
+    defaulting to local storage area
+    find: /Users/merlyn/Projects/Git/my_master: No such file or directory
+    Hard links don't work - using copy
+    Fetching head...
+    cp: illegal option -- b
+    usage: cp [-R [-H | -L | -P]] [-f | -i | -n] [-pv] src target
+           cp [-R [-H | -L | -P]] [-f | -i | -n] [-pv] src1 ... srcN directory
+    cg-fetch: unable to get the HEAD branch
+    cg-clone: fetch failed
 
-  (But please note that compared to the previous round, there are
-probably more unpacked objects lying around in the git.git repository
-- actually roughly 1000.)
+So, I guess your answer is no.  What is "-b" for cp.  That's not
+on my manpage.
 
-  Latest GIT, latest Cogito, performed by cg-clone to the official
-kernel.org hostnames for each transport. 'real' medians from several
-tries (number of tries usually at least three, based on their variance):
+And, after reading the manpage closer, I see my first "my_master"
+was created wrong.  But no error message. :(  So, repeating this
+using a subdirectory...
 
+    localhost:~/Projects/Git % rm -rf .git 
+    localhost:~/Projects/Git % mkdir my_master
+    localhost:~/Projects/Git % cd my_master
+    localhost:..ects/Git/my_master % cg-init -I
+    defaulting to local storage area
+    localhost:..ects/Git/my_master % cd ..
+    localhost:~/Projects/Git % cg-clone my_master my_slave
+    defaulting to local storage area
+    Hard links don't work - using copy
+    Fetching head...
+    cp: illegal option -- b
+    usage: cp [-R [-H | -L | -P]] [-f | -i | -n] [-pv] src target
+           cp [-R [-H | -L | -P]] [-f | -i | -n] [-pv] src1 ... srcN directory
+    cg-fetch: unable to get the HEAD branch
+    cg-clone: fetch failed
 
-             rsync   git+ssh(*)   git(**)   http
-
-git.git      0m45s   0m34s        5m30s     4m01s (++)
-
-cogito.git   2m09s   1m54s (+)    4m30s     15m11s (only single run)
-
-
-(*) git+ssh was to master.kernel.org, which was under significant load
-    from some seemingly runaway gzip process, so that slowed things
-    down.
-
-(**) The unpacking was slooooooooow yet the load was quite low. This
-     should be investigated, the native git fetching is much slower
-     than even HTTP.
-
-(+) There was unusually high variance here - the results range from
-    0m27s to 2m30s. In all other cases the results for all runs were
-    very similiar.
-
-(++) Messy - it stalls at 72 objects, then does seemingly nothing for
-     a long while, then requests a pack. Huh? Also, I saw the
-
-	Getting alternates list for http://www.kernel.org/pub/scm/git/git.git/
-
-     line about 100 times for the 72 objects (but never after the pack
-     is fetched, at least).
-
-
-  Conclusion: The GIT protocol has some major problem which is dragging
-it down to ridiculous slowness (isn't it supposed to be as fast as git+ssh
-or even slightly faster?). rsync unfortunately still provides the fastest
-anonymous access. HTTP is better than it was, but especially when fetching
-packs, there is a room for improvement - the mysterious stalls should be
-eliminated, and it shouldn't get bogged down by repeated silly requests
-for alternates lists etc.
-
-  Compared to the last round, HTTP is much faster for unpacked object
-stores (thanks to parallel fetching), but much slower for packed object
-stores - however that can be caused by more objects lying unpacked now
-in the git.git repository. git+ssh (back then clone-pack:ssh) is as
-fast as usual - the 0m27s case suggests that it would be much faster
-for Cogito if master.kernel.org wouldn't be under load.
-
-  GIT protocol is the great disappointment. And I kind of hoped that I could
-push the rsync deprecation further because of the GIT protocol.
+Again, lots of "no" answers there.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
