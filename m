@@ -1,83 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] GIT commit statistics.
-Date: Sat, 12 Nov 2005 20:04:24 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511121947050.31652@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org> 
- <20051107225807.GA10937@c165.ib.student.liu.se>  <7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
-  <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>  <7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net>
-  <43758D21.3060107@michonline.com>  <7v7jbeia3v.fsf_-_@assigned-by-dhcp.cox.net>
- <46a038f90511120419v70166c60t93d58b7544e03e3b@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Cloning speed comparison, round II
+Date: Sat, 12 Nov 2005 11:40:11 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511121134170.3263@g5.osdl.org>
+References: <20051112155302.GD30496@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 12 20:05:14 2005
+X-From: git-owner@vger.kernel.org Sat Nov 12 20:41:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eb0gG-0002fL-7J
-	for gcvg-git@gmane.org; Sat, 12 Nov 2005 20:04:52 +0100
+	id 1Eb1Ee-0003H3-Gj
+	for gcvg-git@gmane.org; Sat, 12 Nov 2005 20:40:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932458AbVKLTE3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 14:04:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932465AbVKLTE3
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 14:04:29 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:10965 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932458AbVKLTE2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Nov 2005 14:04:28 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 7C49D13F312; Sat, 12 Nov 2005 20:04:25 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 59051B5156; Sat, 12 Nov 2005 20:04:25 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D0E689B6B4; Sat, 12 Nov 2005 20:04:24 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A93C513F312; Sat, 12 Nov 2005 20:04:24 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90511120419v70166c60t93d58b7544e03e3b@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932477AbVKLTkV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 14:40:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932479AbVKLTkV
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 14:40:21 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:41637 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932477AbVKLTkU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2005 14:40:20 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jACJeCnO008855
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 12 Nov 2005 11:40:12 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jACJeBPB008823;
+	Sat, 12 Nov 2005 11:40:11 -0800
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051112155302.GD30496@pasky.or.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11699>
 
-Hi,
 
-On Sun, 13 Nov 2005, Martin Langhoff wrote:
 
-> [...] I've been wondering whether it'd be possible to teach git to 
-> rebase local patches, even if that means rewriting local history. When 
-> you are dealing with team shared repo, the sequences of pull/push end up 
-> being quite messy, full of little meaningless merges. Similarly, when 
-> dealing with an upstream, my tree gets slowly out of sync and slightly 
-> messy. Eventually I get a new checkout, and rebase any pending patches 
-> with git-format-patch and git-am.
+On Sat, 12 Nov 2005, Petr Baudis wrote:
+>
+>              rsync   git+ssh(*)   git(**)   http
+> 
+> git.git      0m45s   0m34s        5m30s     4m01s (++)
+> 
+> cogito.git   2m09s   1m54s (+)    4m30s     15m11s (only single run)
+> 
+> 
+> (*) git+ssh was to master.kernel.org, which was under significant load
+>     from some seemingly runaway gzip process, so that slowed things
+>     down.
+> 
+> (**) The unpacking was slooooooooow yet the load was quite low. This
+>      should be investigated, the native git fetching is much slower
+>      than even HTTP.
 
-I thought about this problem for a while. You described a typical use case 
-(in a small team with one central repo), where pushes are done only from a 
-cleaned up branch, but the work branches stay.
+git:// and git+ssh:// should be the exact same protocol, the main 
+difference in this case being the server they go to.
 
-If the tree corresponding to the central HEAD matches the tree 
-corresponding of your private merge branch at a given stage, a simple 
-graft should be your solution.
+In the case of (**), the unpacking itself is fast, but it's done as the 
+stream of data comes in, so it will appear slow if the server at the other 
+end is slow (or the network to that server is slow).
 
-Example: You pull and push from/to origin on a central server. Your 
-(dirty) work branch is master. Now, at a given time, 
-origin^{tree}==master~15^{tree}. You could then generate a graft which 
-tells git that all parents of origin are also parents of master~15.
+So I think the difference between your git+ssh and git tests are purely 
+due to the fact that master.kernel.org sees a lot less load (both in CPU 
+and in networking) than the public sites, and the time differences have 
+nothing to do with the protocol per se.
 
-If at a given stage, origin^{tree}==master^{tree}, that graft would make 
-your next merge a fast forward, effectively cleaning up your branch 
-without loosing your history.
+I suspect master.kernel.org also has a beefier machine with more memory 
+(but even if that's not the case, it's simply true that the public 
+machines obviously do mirroring to a lot of other machines, and run things 
+like webgit and just basic serving too).
 
-The graft could be generated by a simple script.
+If anything, git:// as a protocol is theoretically a bit faster, since the 
+login procedure is faster and there's no encryption overhead.
 
-Would this help you?
-
-Ciao,
-Dscho
+			Linus
