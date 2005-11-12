@@ -1,67 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Cloning speed comparison, round II
-Date: Sat, 12 Nov 2005 14:03:03 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511121352500.3263@g5.osdl.org>
-References: <20051112155302.GD30496@pasky.or.cz> <Pine.LNX.4.64.0511121134170.3263@g5.osdl.org>
- <20051112194646.GE30496@pasky.or.cz> <Pine.LNX.4.64.0511121159470.3263@g5.osdl.org>
- <20051112212030.GH30496@pasky.or.cz>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: Re: Remove unneeded packs
+Date: Sat, 12 Nov 2005 23:13:15 +0100
+Message-ID: <1131833595.25203.10.camel@blade>
+References: <1131800663.29461.11.camel@blade>  <4375EA80.7070405@op5.se>
+	 <1131802238.29461.18.camel@blade>  <43766687.2000007@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 12 23:04:24 2005
+X-From: git-owner@vger.kernel.org Sat Nov 12 23:14:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eb3Sp-0008Gy-Ub
-	for gcvg-git@gmane.org; Sat, 12 Nov 2005 23:03:12 +0100
+	id 1Eb3cW-0002Ip-N9
+	for gcvg-git@gmane.org; Sat, 12 Nov 2005 23:13:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964823AbVKLWDJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 17:03:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964825AbVKLWDJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 17:03:09 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:47036 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964823AbVKLWDH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2005 17:03:07 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jACM33nO014363
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 12 Nov 2005 14:03:04 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jACM33CC013734;
-	Sat, 12 Nov 2005 14:03:03 -0800
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051112212030.GH30496@pasky.or.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964844AbVKLWNJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 17:13:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964845AbVKLWNJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 17:13:09 -0500
+Received: from coyote.holtmann.net ([217.160.111.169]:53657 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S964844AbVKLWNI
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Nov 2005 17:13:08 -0500
+Received: from blade (p5487E170.dip.t-dialin.net [84.135.225.112])
+	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id jACMDNGB004898
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Sat, 12 Nov 2005 23:13:24 +0100
+To: Lukas =?ISO-8859-1?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>
+In-Reply-To: <43766687.2000007@etek.chalmers.se>
+X-Mailer: Evolution 2.5.1 
+X-Virus-Scanned: ClamAV 0.85.1/1169/Fri Nov 11 22:28:05 2005 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11713>
 
+Hi Lukas,
 
-
-On Sat, 12 Nov 2005, Petr Baudis wrote:
+> > you are right. It is exactly what I was looking for. I just saw it some
+> > minutes ago, when I pulled the latest git tree. However to make an old
+> > GCC 2.95 happy, the attached patch is needed.
+> > 
+> > I am not sure if it is fully working. It deletes a lot of old packs, but
+> > in case of the linux-2.6 tree it leaves on additional behind.
+> > 
+> > .git/objects/pack/pack-4d7682fb8230fef33eb518fa8e53885ec675795e.idx
+> > .git/objects/pack/pack-4d7682fb8230fef33eb518fa8e53885ec675795e.pack
+> > .git/objects/pack/pack-b3c6fbdfa36a326815de6358885c7a570a986b1b.pack
+> > .git/objects/pack/pack-b3c6fbdfa36a326815de6358885c7a570a986b1b.idx
+> > 
+> > The 4d76... is the current pack, but the b3c6... is an old one that is
+> > not needed anymore.
 > 
->  From kernel.org to machine X, it takes 20s, and from machine X to my
-> home machine, it takes 20s. From kernel.org to my home machine, it takes
-> 5 minutes.
+> This is most likley because the pack b3c6... contains unreachable objects.
+> git-pack-redundant only makes sure that all objects present in packfiles
+> still are present in packfiles after the redundant packs have been removed.
+> 
+> Thus, unreachable objects will also be considered as required.
+> 
+> Note that I haven't checked if this is the cause in this particular case,
+> but I have the same packfiles (I use the HTTP transport too).
 
-That's a twilight zone moment ;)
+maybe these packs are from a previous bad update. The cloned repository
+I found it, is actually quite old. When I checked it with some others it
+seems that it works perfect.
 
-The pack-file writer is even trying to be good about not doing lots of 
-small writes (it should chunk things up into 8kB chunks) so it should 
-actually be a nice network app and send full-sized TCP frames from the 
-very beginning (and nagle should mean that it continues to do so even 
-around the chunk boundaries, assuming the server is fast enough at 
-generating the data).
+> I'm thinking of the possibility passing a list of objects to be ignored
+> on stdin to git-pack-redundant. This would hopefully solve this problem.
 
-But it's entirely possible that one of the paths between the machine has 
-some logic that prioritizes known stream types - gives higher priority to 
-http/ssh over "unknown" protocols. That's a bad thing to do (the whole 
-point of the internet is that the smarts is in the end-points, not in the 
-network), but with so much of the packets whizzing by being 
-virus-generated crap, some places apparently do things like that.
+Sounds good, but I don't even know what objects are involved in this
+case and stops it from being marked as redundant.
 
-			Linus
+Regards
+
+Marcel
