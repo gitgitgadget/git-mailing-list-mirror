@@ -1,93 +1,72 @@
-From: "Fernando J. Pereda" <ferdy@ferdyx.org>
-Subject: Re: [PATCH Cogito] Fix t/t9300-seek.sh
-Date: Sun, 13 Nov 2005 00:01:17 +0100
-Message-ID: <20051112230117.GB13674@ferdyx.org>
-References: <20051112223914.GA1150@ferdyx.org> <20051112224743.GJ30496@pasky.or.cz> <20051112225525.GA13674@ferdyx.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: http protocol, cloning git.git, fails (too many open files)
+Date: Sat, 12 Nov 2005 15:21:45 -0800
+Message-ID: <7vmzk9e9km.fsf@assigned-by-dhcp.cox.net>
+References: <86acg9ijwa.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ZfOjI3PrQbgiZnxM"
-X-From: git-owner@vger.kernel.org Sun Nov 13 00:02:42 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 13 00:21:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eb4NH-00057c-Mq
-	for gcvg-git@gmane.org; Sun, 13 Nov 2005 00:01:32 +0100
+	id 1Eb4gw-0001Ej-TC
+	for gcvg-git@gmane.org; Sun, 13 Nov 2005 00:21:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932353AbVKLXBX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 18:01:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932503AbVKLXBX
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 18:01:23 -0500
-Received: from 170.Red-213-96-222.staticIP.rima-tde.net ([213.96.222.170]:58259
-	"EHLO smtp.ferdyx.org") by vger.kernel.org with ESMTP
-	id S932353AbVKLXBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Nov 2005 18:01:22 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.ferdyx.org (Postfix) with ESMTP id 8949A8D314
-	for <git@vger.kernel.org>; Sun, 13 Nov 2005 00:01:06 +0100 (CET)
-Received: from smtp.ferdyx.org ([127.0.0.1])
-	by localhost (tungsteno [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 07664-06 for <git@vger.kernel.org>;
-	Sun, 13 Nov 2005 00:01:04 +0100 (CET)
-Received: from posidon.ferdyx.org (posidon.ferdyx.org [192.168.0.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.ferdyx.org (Postfix) with ESMTP id E74088D30B
-	for <git@vger.kernel.org>; Sun, 13 Nov 2005 00:01:03 +0100 (CET)
-Received: by posidon.ferdyx.org (nbSMTP-1.01-cvs) for uid 1000
-	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	ferdy@ferdyx.org; Sun, 13 Nov 2005 00:01:18 +0100 (CET)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20051112225525.GA13674@ferdyx.org>
-User-Agent: Mutt/1.5.11
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at ferdyx.org
+	id S964857AbVKLXVs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 18:21:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964858AbVKLXVs
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 18:21:48 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:64952 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S964857AbVKLXVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Nov 2005 18:21:47 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051112232115.UZKM9394.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 12 Nov 2005 18:21:15 -0500
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+In-Reply-To: <86acg9ijwa.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "12 Nov 2005 14:25:09 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11720>
 
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
---ZfOjI3PrQbgiZnxM
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>     $ mkdir foo
+>     $ cd foo
+>     $ cg-clone http://www.kernel.org/pub/scm/git/git.git git.new
+>     Fetching head...
+>     Fetching objects...
+>     progress: 1 objects, 191 bytes
+> progress: 2 objects, 519 bytes
+> progress: 3 objects, 5851 bytes
+> progress: 4 objects, 7671 bytes
+>...
+>
+>     progress: 66 objects, 187452 bytes
+>
+> And at this point, it hung.  I had to ^C.
 
-On Sat, Nov 12, 2005 at 11:55:25PM +0100, Fernando J. Pereda wrote:
-| On Sat, Nov 12, 2005 at 11:47:43PM +0100, Petr Baudis wrote:
-| | Dear diary, on Sat, Nov 12, 2005 at 11:39:14PM CET, I got a letter
-| | where "Fernando J. Pereda" <ferdy@ferdyx.org> said that...
-| | > After 'seeking' to the first commit, identical should have 'identical'
-| | > instead of 'nonconflicting'.
-| |=20
-| | Nope, since we locally change it to "nonconflicting", and cg-seek is
-| | supposed to keep local changes.
-|=20
-| Ouch... I failed to see that. Then that test is failing for me,
-| 'identical' actually contains 'identical'. I used cogito-0.16rc1 is it
-| suposed to work? Or is it known to be broken?
+This sounds like the problem the patch Pasky posted last night
+addresses.
 
-Actually don't mind me. It justs fails under the Gentoo sandbox. Sorry
-for the noise.
+However, one thing puzzles me.  I just tried to reproduce it by
+doing this:
 
-Cheers,
-Ferdy
+	$ rm -fr git-http
+        $ ulimit -n 16
+        $ git clone http://www.kernel.org/pub/scm/git/git.git git-http
 
---=20
-Fernando J. Pereda Garcimart=EDn
-Gentoo Developer (Alpha,net-mail,mutt,git)
-20BB BDC3 761A 4781 E6ED  ED0B 0A48 5B0C 60BD 28D4
+and it did not fail on my Linux box.  This is from the tip of
+the master tree (essentially the same as 0.99.9h aka 1.0rc1),
+built without Pasky's patch.  Maybe the number of in-transit
+requests in your case is much higher with your connection while
+waiting for a packfile to arrive than my setup.
 
---ZfOjI3PrQbgiZnxM
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFDdnQ9CkhbDGC9KNQRAtp3AKCQARo3eLugL2bffwp7kNAXjij3cgCbBaAM
-NxUXQI0JSkVQ4LfpytzO4xw=
-=j3Hn
------END PGP SIGNATURE-----
-
---ZfOjI3PrQbgiZnxM--
+Could you please try with the patch Nick posted (which covers
+less) and then with Pasky's patch?
