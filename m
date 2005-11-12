@@ -1,56 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix bunch of fd leaks in http-fetch
-Date: Fri, 11 Nov 2005 21:45:30 -0800
-Message-ID: <7vk6feiflx.fsf@assigned-by-dhcp.cox.net>
-References: <dd9dee136a573d72fc7332373cfd8ac1@freescale.com>
-	<20051111235516.GY30496@pasky.or.cz>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: Comments on recursive merge..
+Date: Sat, 12 Nov 2005 01:35:13 -0500
+Message-ID: <43758D21.3060107@michonline.com>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>	<20051107225807.GA10937@c165.ib.student.liu.se>	<7vll00ov2l.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0511071629270.3247@g5.osdl.org> <7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 12 06:46:20 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigA6D7E004108C984356BA2866"
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 12 07:35:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EaoCy-0007EZ-8N
-	for gcvg-git@gmane.org; Sat, 12 Nov 2005 06:45:48 +0100
+	id 1Eaoz4-0006TM-Hn
+	for gcvg-git@gmane.org; Sat, 12 Nov 2005 07:35:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932153AbVKLFpd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 00:45:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932150AbVKLFpc
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 00:45:32 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:31111 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932136AbVKLFpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Nov 2005 00:45:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051112054437.CPYU776.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 12 Nov 2005 00:44:37 -0500
-To: Petr Baudis <pasky@suse.cz>, Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20051111235516.GY30496@pasky.or.cz> (Petr Baudis's message of
-	"Sat, 12 Nov 2005 00:55:16 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932170AbVKLGf1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 01:35:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932173AbVKLGf1
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 01:35:27 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:6891 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S932170AbVKLGf0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2005 01:35:26 -0500
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1Eaoys-000096-72; Sat, 12 Nov 2005 01:35:18 -0500
+Received: from [10.254.251.12] (helo=mythryan)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1Eaoyr-0006U7-00; Sat, 12 Nov 2005 01:35:17 -0500
+Received: from localhost ([127.0.0.1])
+	by mythryan with esmtp (Exim 4.54)
+	id 1Eaoyr-0000dK-B5; Sat, 12 Nov 2005 01:35:17 -0500
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11659>
 
-Petr Baudis <pasky@suse.cz> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigA6D7E004108C984356BA2866
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-> The current http-fetch is rather careless about fd leakage, causing
-> problems while fetching large repositories. This patch does not reserve
-> exhaustiveness, but I covered everything I spotted...
+Junio C Hamano wrote:
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> 
+>>>Another thing to consider is if it is fast enough for everyday
+>>>trivial merges.
+>>
+>>Hmm. True. The _really_ trivial in-index case triggers for me pretty 
+>>often, but I haven't done any statistics. It might be only 50% of the 
+>>time.
+> 
+> 
+> Just for fun, I randomly picked two heads/master commits from
+> linux-2.6 repository (one was when I happened to have pulled the
+> last time, and the other was when I thought this might be an
+> interesting exercise and pulled again), and fed the commits
+> between the two to a little script that looks at commits and
+> tries to stat what they did (the script ignores renames so they
+> appear as deletes and adds).
 
-Thanks.  While I am sure a quick fix is better for the end user
-than not doing anything at all, I am a bit reluctant.
+Mind sharing the script?
 
-It strikes me somewhat odd that these close() are not tied to
-the lifetime rule of the transfer_request structure.  When the
-program falls back from an individual object to alternates, the
-same request structure is reused, but in that case ->local stays
-the same.  Otherwise, the original request structure is released
-so I wonder if would make things cleaner to close ->local inside
-request_release()...
+It'be nice to know if these stats are typical, or unusual when you get
+numbers from a variety of other trees.
 
-Nick?
+
+
+--------------enigA6D7E004108C984356BA2866
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFDdY0kfhVDhkBuUKURAq7GAKCepTha/8APJgMqahWhdP5ofF/36QCfRro9
+2CvVCNI1nnunQ0lgmtfvuls=
+=oM7J
+-----END PGP SIGNATURE-----
+
+--------------enigA6D7E004108C984356BA2866--
