@@ -1,117 +1,146 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Cloning speed comparison, round II
-Date: Sat, 12 Nov 2005 12:13:20 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511121159470.3263@g5.osdl.org>
-References: <20051112155302.GD30496@pasky.or.cz> <Pine.LNX.4.64.0511121134170.3263@g5.osdl.org>
- <20051112194646.GE30496@pasky.or.cz>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] archimport improvements
+Date: Sat, 12 Nov 2005 12:21:51 -0800
+Message-ID: <20051112202150.GA2037@Muzzle>
+References: <20051112092336.GA16218@Muzzle> <46a038f90511120354n4584aedfhb1f2928ac41478ab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 12 21:14:20 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Nov 12 21:24:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eb1kr-0005i0-ST
-	for gcvg-git@gmane.org; Sat, 12 Nov 2005 21:13:42 +0100
+	id 1Eb1tu-0008Sa-M7
+	for gcvg-git@gmane.org; Sat, 12 Nov 2005 21:23:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932490AbVKLUNh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 15:13:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932491AbVKLUNh
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 15:13:37 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:17068 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932490AbVKLUNg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2005 15:13:36 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jACKDQnO010112
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 12 Nov 2005 12:13:27 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jACKDKjb009847;
-	Sat, 12 Nov 2005 12:13:23 -0800
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051112194646.GE30496@pasky.or.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932497AbVKLUVx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 15:21:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932498AbVKLUVx
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 15:21:53 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:13712 "EHLO mail.yhbt.net")
+	by vger.kernel.org with ESMTP id S932497AbVKLUVx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2005 15:21:53 -0500
+Received: from mayonaise.dyndns.org (user-118bgak.cable.mindspring.com [66.133.193.84])
+	by mail.yhbt.net (Postfix) with SMTP id 6F08F7DC0C1;
+	Sat, 12 Nov 2005 12:21:51 -0800 (PST)
+Received: by mayonaise.dyndns.org (sSMTP sendmail emulation); Sat, 12 Nov 2005 12:21:51 -0800
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f90511120354n4584aedfhb1f2928ac41478ab@mail.gmail.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11703>
 
-
-
-On Sat, 12 Nov 2005, Petr Baudis wrote:
-
-> Dear diary, on Sat, Nov 12, 2005 at 08:40:11PM CET, I got a letter
-> where Linus Torvalds <torvalds@osdl.org> said that...
-> > 
-> > 
-> > On Sat, 12 Nov 2005, Petr Baudis wrote:
-> > >
-> > >              rsync   git+ssh(*)   git(**)   http
-> > > 
-> > > git.git      0m45s   0m34s        5m30s     4m01s (++)
-> > > 
-> > > cogito.git   2m09s   1m54s (+)    4m30s     15m11s (only single run)
+Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> Eric,
 > 
-> Well, at the time of fetching, master.kernel.org with git+ssh had load
-> about ~3.5 and some wild gzip was eating most of the CPU there. So if
-> the git protocol still manages to be TEN times slower while rsync goes
-> full speed from that machine, I would say that this means the git server
-> requires way too much CPU.
+> 
+> On 11/12/05, Eric Wong <normalperson@yhbt.net> wrote:
+> > I'm another Arch-user trying out git.  Unfortunately, I encountered
+> > several problems with git-archimport that I needed fixed before my
+> > development trees could be imported into git.
+> 
+> Welcome and good stuff! I'll give your patches a try when I sober up.
+> In the meantime, some notes after having read the patches a bit...
+> 
+> > Bug Fixes:
+> >
+> > * Support for '--branch'-less Arch version names.
+> >   Encoding '/' to '--' (as was previously done) is not 100% reversable
+> >   because the "--branch" portion of an fully-qualified Arch version name
+> >   is optional (though not many people or Arch-related tools know this).
+> >
+> > * I'm encoding the '/' in the fully-qualified name as ',' to not confuse
+> >   other porcelains, but leaving '/' in branch names may be alright
+> >   provided porcelains can support them.
+> >
+> > * Identify git branches as an Arch "archive,category<--branch>--version"
+> >   Anything less than that is ambiguous as far as history and patch
+> >   relationships go.
+> 
+> These bug/sanity fixes are _good_. As you mention, I wasn't aware that
+> patchnames could show up not having a --branch part. Tricky...
 
-Look again.
+Thanks.  I got lazy one day and started ignoring --branch on some of my
+personal projects to save my fingers :)
 
-master.kernel.org was _faster_ than rsync using the native git protocol, 
-despite being under a load of 3.5.
+> > * Renamed directories containing renamed/moved files inside didn't get
+> >   tracked properly.  The original code was inadequate for this, and
+> >   making it support all rename cases that Arch supports is too much
+> >   work.  Instead, I maintain full-blown Arch trees in the temp dir and
+> >   replay patches + rsync based on that.  Performance is slightly slower
+> >   than before, but accuracy is more important to me.
+> >
+> > * Permission (execute bit only because of git) tracking as a side effect
+> >   of the above.
+> 
+> Hmmm. I understand what you are doing, but I'm not sure we'd want to
+> replace the current code with this strategy.  Importing large trees
+> with hundreds (thousands) of commits is so slow it is just a no go.
+> Renames are described quite well in the 'commit log', and the current
+> code does handle file renames...
 
-Look at the numbers: 45 secs for rsync, 34 secs for git protocol to 
-master.
+Untouched files inside renamed directories aren't explicitly tracked.
+Renamed directories are especially a pain when a renamed one contains
+sub-directories that are also renamed.
 
-Now, I don't know which rsync machine you used (you can rsync both from 
-master and from rync.kernel.org), since you don't say. 
+> > * Tracking changes from branches that are only cherry-picked now works
+> 
+> Can you elaborate a bit more on this?
 
-Now, it's unquestionably true that rsync can be faster under many 
-circumstances. Most notably when disk IO is really slow, since the native 
-git protocol will do a lot more synchronous operations, since it actually 
-tests what it is doing.
+Basically, don't die when merge-base fails, look a few lines down.
 
-But I _guarantee_ you that rsync is at least ten times slower than the 
-native git protocol in many circumstances. It can't handle repacking 
-(which is critical for good server performance).
+> > * Pika-escaped filenames unhandled.  This seems fixed in the latest
+> >   git, but I fixed it more generally and removed the ShellQuote module
+> >   dependency along the way.
+> 
+> Yes, this got fixed recently. Your change here goes together with the
+> 'tla get' + rsync strategy which I'm not sure about.
+> 
+> > * Don't die() when a merge-base can't be found.  Arch supports
+> >   merging between unrelated trees.
+> 
+> Fair enough. Does it result on a good graft in git?
 
-And in fact it can't handle totally unpacked directories and small updates 
-well either (the reason I totally stopped doing rsync was because it took 
-minutes to go through the whole list of unpacked objects for a small 
-update, while the native protocol would just fetch the needed objects and 
-be done with it.
+Right now I end up with separate branches that are imported (according
+to git-branch) but the git-log and gitk don't seem to to show
+relationships between the unrelated trees.  I think find_parents()
+may need to use an alternate strategy instead of warning and skipping
+if a merge-base can't be found.
 
-So sometimes rsync is faster, sometimes the git protocol is faster. But 
-the git protocol is _always_ better from a sanity standpoint.
+> > Usability enhancements:
+> >
+> > * Optionally detect merged branches and attempt to import their history,
+> >   too.  Use the -D <depth> option for this.  Specifying a <depth>
+> >   greater than 1 is usually not needed unless the tree you're tracking
+> >   has had history pruned.
+> >
+> > * Optionally attempt to auto-register unknown Arch archives from
+> >   mirrors.sourcecontrol.net to pull their history with the -a (boolean)
+> >   switch.  Not sure how useful users will find this.
+> 
+> Those two are interesting!
+> 
+> > * Removed -A <archive> usage (unnecessary in all cases) and made all
+> >   Arch calls and output parsing to be compatible with both tla (tested
+> >   1.3.3) and baz (1.4.2).  Default is still tla, but the ARCH_CLIENT
+> >   environment variable may be changed to baz.
+> 
+> That's excellent -- thanks!
+> 
+> > Current weaknesses:
+> >
+> > * (Present in the original code as well).
+> >   The code still assumes that dates in commit logs can be trusted, which is
+> >   fine in most cases, but a wayward branch can screw up git-archimport and
+> >   cause parents to be missed.
+> 
+> Fair enough. You mention an alternative strategy (tla ancestry) --
+> have you tried it at all?
 
-The things you get with the native git protocol:
+No, not yet.
 
- - you don't have to trust the other end. If the other end lies about the 
-   SHA1's of its objects, rsync will never know. It will just download the 
-   thing, and you may have a corrupt database.
-
-   With the git protocol, we just get the objects, and recompute their 
-   names. The other end can't lie about what their SHA is.
-
- - the rsync protocol totally breaks down with multiple branches. It 
-   fetches stuff it shouldn't because it doesn't know better.
-
- - the rsync protocol scales with project size, not with change size. This 
-   works well for small projects, where the changes are usually not all 
-   that hugely different from the total size of the project, but it really 
-   sucks for big projects.
-
- - the rsync protocol fundamentally cannot handle two differently packed 
-   trees well. That doesn't matter if you only track one tree, but it 
-   matters _hugely_ for people (like me) who pull from tens of different 
-   trees.
-
-So the fact is: rsync is often slower, and _always_ less capable. 
-
-			Linus
+-- 
+Eric Wong
