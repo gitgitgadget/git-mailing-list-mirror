@@ -1,120 +1,77 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [ANNOUNCE] GIT 0.99.9g
-Date: Sat, 12 Nov 2005 13:17:14 +0100
-Message-ID: <4375DD4A.5050103@op5.se>
-References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net>	<43730E39.6030601@pobox.com> <7v64qzni9c.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] GIT commit statistics.
+Date: Sun, 13 Nov 2005 01:19:45 +1300
+Message-ID: <46a038f90511120419v70166c60t93d58b7544e03e3b@mail.gmail.com>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+	 <20051107225807.GA10937@c165.ib.student.liu.se>
+	 <7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
+	 <7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net>
+	 <43758D21.3060107@michonline.com>
+	 <7v7jbeia3v.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Nov 12 13:17:48 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Ryan Anderson <ryan@michonline.com>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 12 13:20:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EauK2-00074Q-3A
-	for gcvg-git@gmane.org; Sat, 12 Nov 2005 13:17:30 +0100
+	id 1EauMJ-0007dE-UP
+	for gcvg-git@gmane.org; Sat, 12 Nov 2005 13:19:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932368AbVKLMRQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 07:17:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932370AbVKLMRQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 07:17:16 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:5557 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S932368AbVKLMRQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2005 07:17:16 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id C57536BD02
-	for <git@vger.kernel.org>; Sat, 12 Nov 2005 13:17:14 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <7v64qzni9c.fsf@assigned-by-dhcp.cox.net>
+	id S932370AbVKLMTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 07:19:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932372AbVKLMTr
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 07:19:47 -0500
+Received: from zproxy.gmail.com ([64.233.162.197]:45422 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932370AbVKLMTr convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Nov 2005 07:19:47 -0500
+Received: by zproxy.gmail.com with SMTP id i1so721020nzh
+        for <git@vger.kernel.org>; Sat, 12 Nov 2005 04:19:46 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mbs4aioEn9udAyW/soDD6SyvUQQ4hviqB+mZgt7i9g4cJ2BHwEZYL9vnbhGfXNlgRc7vkKm57yYzjt7MmUPjH43zX6/klP92+ZtGkscSVU0N1A5mVPeMRjNf58mwR0tNX7maLIqxUd8FqOqiMmXfAVGWBQmAlnVgc4NKEpraD1M=
+Received: by 10.65.233.8 with SMTP id k8mr3542390qbr;
+        Sat, 12 Nov 2005 04:19:46 -0800 (PST)
+Received: by 10.64.242.4 with HTTP; Sat, 12 Nov 2005 04:19:45 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7jbeia3v.fsf_-_@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11675>
 
-Junio C Hamano wrote:
-> 
->>>Oh, and we will not be moving things out of /usr/bin/ during 1.0
->>>timeframe.
->>
->>:(  bummer.  I do like the elegance of having /usr/bin/git executing 
->>stuff out of /usr/libexec/git.
-> 
-> 
-> Bummer here as well.  This is not my first preference, but more
-> or less "all things considered...".  I can go over cogito and
-> stgit with Pasky and Catalin and coordinate the transition, but
-> at the same time, everybody's existing scripts need to be
-> adjusted.  As Linus said, we broke kernel.org snapshot scripts
-> number of times.
-> 
-> Also places we execute git-upload-pack and git-receive-pack over
-> an SSH connection need to be updated to execute 'git' with the
-> first parameter 'upload-pack' and 'receive-pack' to make sure it
-> would keep working with older or newer git on the other end.
-> 
+On 11/12/05, Junio C Hamano <junkio@cox.net> wrote:
+> Ryan Anderson <ryan@michonline.com> writes:
+>
+> > Junio C Hamano wrote:
+> >
+> >> Just for fun, I randomly picked two heads/master commits from
+> >> linux-2.6 repository ... and fed the commits
+> >> between the two to a little script that looks at commits and
+> >> tries to stat what they did (the script ignores renames so they
+> >> appear as deletes and adds).
 
-I've cooked up a patch that takes care of this if;
-	git daemon
-is executed (rather than git-daemon). Otherwise we could just mention in 
-the docs that git-daemon must be run with the --libdir parameter (or 
-whatever we decide to call it). If it prepends the libdir to the path 
-everything will work same as always in the rest of the code so it'll be 
-a very small change.
+Related to this, I've been wondering whether it'd be possible to teach
+git to rebase local patches, even if that means rewriting local
+history. When you are dealing with team shared repo, the sequences of
+pull/push end up being quite messy, full of little meaningless merges.
+Similarly, when dealing with an upstream, my tree gets slowly out of
+sync and slightly messy. Eventually I get a new checkout, and rebase
+any pending patches with git-format-patch and git-am.
 
-> After all that happens, we can start installing things in
-> /usr/lib/git/.  During the transition, the C rewrite of git
-> wrapper posted by Andreas Ericsson might help, so I am planning
-> to merge it before 1.0,> after deciding what the right word for
-> the "path to the rest of git executables" should be.
-> 
+The same process would be much easier if I could just cg-update from
+the repo and get it to try and actually rebase my local commits --
+rewriting history as if I had committed them after the update. Of
+course, it'd be cheating... but we cheat all the time anyway, we only
+sweat harder at it ;-)
 
-All I really need to finalize it is that name, so It's up to you how 
-fast you want it. Perhaps we could take a poll?
-
-The suggestions so far come from the threads "git binary directory?" and 
-"[PATCH] C implementation of the 'git' program" and some I just thought 
-up. And here are the nominees;
-
-	libdir
-	path
-	exec-path
+cheers,
 
 
-Kay Sievers pointed out that libexec is not "LSB conformant" so it might 
-be going away and is thus not listed.
-
-exec-path was the last suggested name I got from Junio.
-
-The form will be
-	exec_path=$(prefix)/lib/git-@@VERSION@@
-	GIT_EXEC_PATH
-	--exec-path
-
-for Makefile, environment and 'git', respectively. Substitute the 
-obvious part with whatever you prefer.
-
-> So let's say 1.0 will ship with all things in /usr/bin/, with
-> updated docs that explain the situation: (1) the dash form
-> 'git-frotz' is being deprecated, and you are encouraged to spell
-> it as 'git frotz'; (2) if you want to use the dash form in your
-> scripts for performance reasons, you need to have something like
-> PATH="$(git --exec-path):$PATH" at the beginning of your script.
-> 
-> And after some time (say 2 months) we can switch.
-> 
-
-Sounds sensible, although I'm implementing Linus' idea of prepending the 
-GIT_EXEC_PATH to $PATH so the porcelainish scripts in git-core shouldn't 
-have to do it. If someone executes git-<script> from command-line I 
-think it's safe to assume that they've added the exec-path to $PATH 
-themselves. Someone *might* run
-
-	/usr/lib/git-$GIT_VERSION/git-<script>
-
-which should be cautioned against in the documentation.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+martin
