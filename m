@@ -1,64 +1,70 @@
-From: Adrien Beau <adrienbeau@gmail.com>
-Subject: Re: git.org registered
-Date: Sat, 12 Nov 2005 13:50:33 +0100
-Message-ID: <94fc236b0511120450v417f74dm70d39e9046488930@mail.gmail.com>
-References: <4375DF45.3020301@op5.se> <86wtjem4kx.fsf@blue.stonehenge.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] GIT commit statistics.
+Date: Sat, 12 Nov 2005 13:53:31 +0100
+Message-ID: <20051112125331.GB30496@pasky.or.cz>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org> <20051107225807.GA10937@c165.ib.student.liu.se> <7vll00ov2l.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org> <7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net> <43758D21.3060107@michonline.com> <7v7jbeia3v.fsf_-_@assigned-by-dhcp.cox.net> <46a038f90511120419v70166c60t93d58b7544e03e3b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sat Nov 12 13:51:02 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Ryan Anderson <ryan@michonline.com>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
+	catalin.marinas@gmail.com
+X-From: git-owner@vger.kernel.org Sat Nov 12 13:53:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eauq6-0006py-5T
-	for gcvg-git@gmane.org; Sat, 12 Nov 2005 13:50:38 +0100
+	id 1Eausy-0007ZY-FC
+	for gcvg-git@gmane.org; Sat, 12 Nov 2005 13:53:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932250AbVKLMue (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 07:50:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932259AbVKLMue
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 07:50:34 -0500
-Received: from zproxy.gmail.com ([64.233.162.194]:49568 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932250AbVKLMue convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Nov 2005 07:50:34 -0500
-Received: by zproxy.gmail.com with SMTP id 13so854063nzn
-        for <git@vger.kernel.org>; Sat, 12 Nov 2005 04:50:33 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lXNJLF8cP0gj5j8PzKALPUvchj5w1b+xGuQBwEAaZuUeX/hESnWHrOBj6SNY40igfyuHz91uDWmumnIUMdCie4YpyN4Vj9M/H70LCxoQhcUMLJzFTQKk+OshfOflDu7xyzdIAfqQQzHsTgxdgxooa9Qm+7oxwbX0ffdGw/A5otY=
-Received: by 10.36.13.10 with SMTP id 10mr2255720nzm;
-        Sat, 12 Nov 2005 04:50:33 -0800 (PST)
-Received: by 10.36.250.69 with HTTP; Sat, 12 Nov 2005 04:50:33 -0800 (PST)
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <86wtjem4kx.fsf@blue.stonehenge.com>
+	id S932259AbVKLMxd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 07:53:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932260AbVKLMxd
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 07:53:33 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:56006 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932259AbVKLMxd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2005 07:53:33 -0500
+Received: (qmail 11979 invoked by uid 2001); 12 Nov 2005 13:53:31 +0100
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <46a038f90511120419v70166c60t93d58b7544e03e3b@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11682>
 
-Andreas Ericsson wrote:
->
-> git.org has just been registered (well, "just" being what www.git.org says).
->
-> Might be nothing and it might be someone hitching a free ride.
-> I just thought you all ought to know.
+Dear diary, on Sat, Nov 12, 2005 at 01:19:45PM CET, I got a letter
+where Martin Langhoff <martin.langhoff@gmail.com> said that...
+> The same process would be much easier if I could just cg-update from
+> the repo and get it to try and actually rebase my local commits --
+> rewriting history as if I had committed them after the update. Of
+> course, it'd be cheating... but we cheat all the time anyway, we only
+> sweat harder at it ;-)
 
-whois git.org says:
->
-> Domain Name:GIT.ORG
-> Created On:12-May-1997 04:00:00 UTC
-> Last Updated On:25-Oct-2005 16:16:54 UTC
-> Expiration Date:13-May-2011 04:00:00 UTC
+I'm a bit reluctant about this functionality available in cg-update, but
+then people will start to want commit stack and stuff, while they should
+be just already long using StGIT for tracking their patches.
 
-Looks like git.org has been registered many years ago, and maybe
-renewed or transfered a few weeks ago.
+Actually, I wanted to also implement e-mail functionality to cg-mkpatch,
+but I'm not sure now - perhaps people wanting that should really just
+use StGIT. Cogito or GIT core is not very suitable for keeping your
+patches against someone else's tree if he is not going to GIT-merge with
+you, exactly because it's not really very convenient to update your
+patches.
 
-Randal L. Schwartz wrote:
->
-> Might be a good time to register gitsoftware.org for future use.
+On the same note, I would like StGIT to drop functionality not really
+belonging to patch stack manager (stg add, stg rm, stg status, ...) so
+that its commandset gets smaller and more focused - but before I would
+suggest dropping stg status, cg-status must be able to do conflicts
+tracking, so I will dedicate another mail to this sometime in the
+future, with a more detailed proposal.
 
-Or maybe gitscm.org or global-information-tracker.com? Anyway, the
-various Git sites already rank very well in Google, I don't think we
-have an emergency here.
+So, is there any reason why you want this in GIT/Cogito and don't want
+to use StGIT?
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
