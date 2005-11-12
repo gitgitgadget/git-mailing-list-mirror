@@ -1,73 +1,74 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH 2/3] merge-recursive: Add copyright notice
-Date: Sat, 12 Nov 2005 00:54:55 +0100
-Message-ID: <20051111235455.GB9757@c165.ib.student.liu.se>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Comments on recursive merge..
+Date: Fri, 11 Nov 2005 16:42:37 -0800
+Message-ID: <7v8xvuk876.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+	<20051107225807.GA10937@c165.ib.student.liu.se>
+	<7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
+	<7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511111437410.3228@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Sat Nov 12 00:57:00 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 12 01:44:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eaiji-0008NV-9e
-	for gcvg-git@gmane.org; Sat, 12 Nov 2005 00:55:14 +0100
+	id 1EajTe-0001yN-LE
+	for gcvg-git@gmane.org; Sat, 12 Nov 2005 01:42:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750765AbVKKXzF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Nov 2005 18:55:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750745AbVKKXzF
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 18:55:05 -0500
-Received: from [85.8.31.11] ([85.8.31.11]:64148 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S1750765AbVKKXzB (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Nov 2005 18:55:01 -0500
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 3A33F40FD; Sat, 12 Nov 2005 01:03:29 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EaijP-0006Qy-00; Sat, 12 Nov 2005 00:54:55 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S1750802AbVKLAmk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Nov 2005 19:42:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbVKLAmk
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Nov 2005 19:42:40 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:42211 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750802AbVKLAmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Nov 2005 19:42:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051112004139.WPMT11356.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 11 Nov 2005 19:41:39 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511111437410.3228@g5.osdl.org> (Linus Torvalds's
+	message of "Fri, 11 Nov 2005 14:53:56 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11651>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
+> I actually don't think that is surprisingly high, and would actually have 
+> expected it to be closer to 50%.
+>
+> On the other hand, the merges that end up being pure fast-forwards aren't 
+> counted as merges at all (since they don't show up as commits), so maybe 
+> that's what skews my preception of a big percentage of merges as being 
+> really trivial.
 
+That is what I meant by "it does not show just what you saw".
+It shows the whole community experience by everybody who has
+commit there.  Being _the_ integration point, I imagine that
+most of the pure fast-forwards you saw were real merges for
+somebody else, and that merge being fast/safe/convenient
+counts, not for you but for your subsystem people.
 
----
+>>    All three of these points together is a fine demonstration
+>>    that you designed git really right.
+>
+> Well, it's self-re-inforcing. It was designed for the kernel
+> usage patterns, so using the kernel to confirm that it's the
+> "right design" is a bit self-serving.
 
+That is true.  My point was that it's not like git was done
+right only for _you_, sacrificing subsystem people.  The sample
+4k commits show that the assumption of the usage pattern git is
+optimized for actually holds (commits being small, merges being
+mostly trivial) for kernel people other than you.
 
- git-merge-recursive.py |    3 +++
- gitMergeCommon.py      |    4 ++++
- 2 files changed, 7 insertions(+), 0 deletions(-)
-
-applies-to: ec5d71bfe5c1519652081888a49f36b1bd044975
-eeffb2de39045197fe945959e7029ca146540353
-diff --git a/git-merge-recursive.py b/git-merge-recursive.py
-index e6cbdde..21f1e92 100755
---- a/git-merge-recursive.py
-+++ b/git-merge-recursive.py
-@@ -1,4 +1,7 @@
- #!/usr/bin/python
-+#
-+# Copyright (C) 2005 Fredrik Kuivinen
-+#
- 
- import sys, math, random, os, re, signal, tempfile, stat, errno, traceback
- from heapq import heappush, heappop
-diff --git a/gitMergeCommon.py b/gitMergeCommon.py
-index 1b5bddd..ff6f58a 100644
---- a/gitMergeCommon.py
-+++ b/gitMergeCommon.py
-@@ -1,3 +1,7 @@
-+#
-+# Copyright (C) 2005 Fredrik Kuivinen
-+#
-+
- import sys, re, os, traceback
- from sets import Set
- 
----
-0.99.9.GIT
+It is yet to be seen if the same assumption holds for other
+projects.
