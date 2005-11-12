@@ -1,55 +1,73 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: RPM build report
-Date: Fri, 11 Nov 2005 23:55:21 -0300
-Message-ID: <200511120255.jAC2tLbc003153@pincoya.inf.utfsm.cl>
-References: <jwboyer@gmail.com>
-Cc: Horst von Brand <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 12 13:25:57 2005
+From: Andreas Ericsson <ae@op5.se>
+Subject: git.org registered
+Date: Sat, 12 Nov 2005 13:25:41 +0100
+Message-ID: <4375DF45.3020301@op5.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Nov 12 13:26:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EauR5-0000MF-Q1
-	for gcvg-git@gmane.org; Sat, 12 Nov 2005 13:24:48 +0100
+	id 1EauS4-0000cG-N1
+	for gcvg-git@gmane.org; Sat, 12 Nov 2005 13:25:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932373AbVKLMYo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 07:24:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932375AbVKLMYo
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 07:24:44 -0500
-Received: from pincoya.inf.utfsm.cl ([200.1.19.3]:16552 "EHLO
-	pincoya.inf.utfsm.cl") by vger.kernel.org with ESMTP
-	id S932373AbVKLMYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Nov 2005 07:24:43 -0500
-Received: from pincoya.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by pincoya.inf.utfsm.cl (8.13.5/8.13.1) with ESMTP id jAC2tLbc003153;
-	Fri, 11 Nov 2005 23:55:21 -0300
-To: Josh Boyer <jwboyer@gmail.com>
-In-Reply-To: Message from Josh Boyer <jwboyer@gmail.com> 
-   of "Fri, 11 Nov 2005 09:28:15 MDT." <625fc13d0511110728p7dccbfd9td3b0000c90334ae4@mail.gmail.com> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+	id S932374AbVKLMZn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 07:25:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932375AbVKLMZm
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 07:25:42 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:6837 "EHLO smtp-gw1.op5.se")
+	by vger.kernel.org with ESMTP id S932374AbVKLMZm (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2005 07:25:42 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 3903B6BD02
+	for <git@vger.kernel.org>; Sat, 12 Nov 2005 13:25:41 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11677>
 
-Josh Boyer <jwboyer@gmail.com> wrote:
-> On 11/11/05, Horst von Brand <vonbrand@inf.utfsm.cl> wrote:
-> > Again, on Fedora rawhide, x86_64.
-> >
-> > After the big splitup, the builds for git and cogito go fine but
-> > git-core-email requires perl(Email::Valid), which is not in Fedora's
-> > repositories. The rest installs OK.
+git.org has just been registered (well, "just" being what www.git.org says).
 
-> How recent of a rawhide snapshot did you use?
+Might be nothing and it might be someone hitching a free ride.
+I just thought you all ought to know.
 
-Updated daily, or nearly.
- 
->                                               I ask because openssl
-> was recently updated in rawhide and I was just wondering if git coped
-> with that.
+$ dig git.org any
+; <<>> DiG 9.3.1 <<>> git.org any
+;; global options:  printcmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 57025
+;; flags: qr rd ra; QUERY: 1, ANSWER: 6, AUTHORITY: 2, ADDITIONAL: 2
 
-Dunno, can't update openssl as lots of stuff depends on the old version.
+;; QUESTION SECTION:
+;git.org.                       IN      ANY
+
+;; ANSWER SECTION:
+git.org.                86380   IN      SOA     ns33.1and1.co.uk. 
+hostmaster.1and1.co.uk. 2005102501 28800 7200 604800 86400
+git.org.                10780   IN      A       82.165.85.125
+git.org.                86380   IN      MX      10 mx01.1and1.co.uk.
+git.org.                86380   IN      MX      10 mx00.1and1.co.uk.
+git.org.                86380   IN      NS      ns33.1and1.co.uk.
+git.org.                86380   IN      NS      ns34.1and1.co.uk.
+
+;; AUTHORITY SECTION:
+git.org.                86380   IN      NS      ns33.1and1.co.uk.
+git.org.                86380   IN      NS      ns34.1and1.co.uk.
+
+;; ADDITIONAL SECTION:
+ns33.1and1.co.uk.       86299   IN      A       195.20.224.152
+ns34.1and1.co.uk.       86297   IN      A       212.227.123.27
+
+;; Query time: 47 msec
+;; SERVER: 193.201.96.2#53(193.201.96.2)
+;; WHEN: Sat Nov 12 13:19:25 2005
+;; MSG SIZE  rcvd: 239
+
 -- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
