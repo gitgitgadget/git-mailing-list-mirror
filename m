@@ -1,72 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: http protocol, cloning git.git, fails (too many open files)
-Date: Sat, 12 Nov 2005 15:21:45 -0800
-Message-ID: <7vmzk9e9km.fsf@assigned-by-dhcp.cox.net>
-References: <86acg9ijwa.fsf@blue.stonehenge.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: cg-admin-setuprepo fails to make a cg-clone'able repo
+Date: Sun, 13 Nov 2005 01:29:16 +0100
+Message-ID: <20051113002916.GK30496@pasky.or.cz>
+References: <86wtjg31lo.fsf@blue.stonehenge.com> <20051111001333.GH30496@pasky.or.cz> <8664qxn71k.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 13 00:21:56 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Nov 13 01:30:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eb4gw-0001Ej-TC
-	for gcvg-git@gmane.org; Sun, 13 Nov 2005 00:21:51 +0100
+	id 1Eb5kO-0007cy-P2
+	for gcvg-git@gmane.org; Sun, 13 Nov 2005 01:29:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964857AbVKLXVs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 18:21:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964858AbVKLXVs
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 18:21:48 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:64952 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S964857AbVKLXVr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Nov 2005 18:21:47 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051112232115.UZKM9394.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 12 Nov 2005 18:21:15 -0500
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-In-Reply-To: <86acg9ijwa.fsf@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "12 Nov 2005 14:25:09 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964894AbVKMA3T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 19:29:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964895AbVKMA3T
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 19:29:19 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:20706 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964894AbVKMA3S (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2005 19:29:18 -0500
+Received: (qmail 25630 invoked by uid 2001); 13 Nov 2005 01:29:16 +0100
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+Content-Disposition: inline
+In-Reply-To: <8664qxn71k.fsf@blue.stonehenge.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11721>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
+Dear diary, on Sat, Nov 12, 2005 at 05:51:35PM CET, I got a letter
+where "Randal L. Schwartz" <merlyn@stonehenge.com> said that...
+> >>>>> "Petr" == Petr Baudis <pasky@suse.cz> writes:
+> 
+> Petr> But this is actually an entirely unrelated bug, it seems - pretty
+> Petr> strange.  I revived another few months old thread because of this, since
+> Petr> it seems the 'b' was actually a typo and we don't want to pass 'cp' this
+> Petr> argument at all, but something different. Does cloning locally otherwise
+> Petr> work?
+> 
+> When I tried "local cloning", I first tried to make an empty archive
+> with cgi-init, but it dumped me into an editor.  I couldn't find a
+> switch to turn that off.  Perhaps the manpage should say "you'll
+> be dumped in to an editor",
 
->     $ mkdir foo
->     $ cd foo
->     $ cg-clone http://www.kernel.org/pub/scm/git/git.git git.new
+Well, that's pretty obvious after the first try. ;-)
+
+> and perhaps provide a way to pass that message with "-m".
+
+Good idea. Added.
+
+> So, on a whim, I realize that it's performing an initial commit,
+
+It says that right in the editor, after all. :-)
+
+> so I try cg-init -I.
+> 
+> And here's the result:
+> 
+>     localhost:~/Projects/Git % cg-init -I my_master
+>     defaulting to local storage area
+>     localhost:~/Projects/Git % cg-clone my_master my_slave
+>     defaulting to local storage area
+>     find: /Users/merlyn/Projects/Git/my_master: No such file or directory
+>     Hard links don't work - using copy
 >     Fetching head...
->     Fetching objects...
->     progress: 1 objects, 191 bytes
-> progress: 2 objects, 519 bytes
-> progress: 3 objects, 5851 bytes
-> progress: 4 objects, 7671 bytes
->...
->
->     progress: 66 objects, 187452 bytes
->
-> And at this point, it hung.  I had to ^C.
+>     cp: illegal option -- b
+>     usage: cp [-R [-H | -L | -P]] [-f | -i | -n] [-pv] src target
+>            cp [-R [-H | -L | -P]] [-f | -i | -n] [-pv] src1 ... srcN directory
+>     cg-fetch: unable to get the HEAD branch
+>     cg-clone: fetch failed
+> 
+> So, I guess your answer is no.  What is "-b" for cp.  That's not
+> on my manpage.
 
-This sounds like the problem the patch Pasky posted last night
-addresses.
+It's something totally weird "backup" thing. A bug in Cogito, what we
+_want_ is to have cp dereferencing its symlink. I replaced it with -L
+now. Could you try the latest version from git or -rc2 (coming out in
+few minutes), please?
 
-However, one thing puzzles me.  I just tried to reproduce it by
-doing this:
+> And, after reading the manpage closer, I see my first "my_master"
+> was created wrong.  But no error message. :(
 
-	$ rm -fr git-http
-        $ ulimit -n 16
-        $ git clone http://www.kernel.org/pub/scm/git/git.git git-http
+Good catch. Fixed.
 
-and it did not fail on my Linux box.  This is from the tip of
-the master tree (essentially the same as 0.99.9h aka 1.0rc1),
-built without Pasky's patch.  Maybe the number of in-transit
-requests in your case is much higher with your connection while
-waiting for a packfile to arrive than my setup.
-
-Could you please try with the patch Nick posted (which covers
-less) and then with Pasky's patch?
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
