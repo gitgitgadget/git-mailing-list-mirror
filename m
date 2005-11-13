@@ -1,58 +1,120 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] GIT commit statistics.
-Date: Sun, 13 Nov 2005 12:11:30 +0100
-Message-ID: <20051113111130.GN30496@pasky.or.cz>
-References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org> <20051107225807.GA10937@c165.ib.student.liu.se> <7vll00ov2l.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org> <7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net> <43758D21.3060107@michonline.com> <7v7jbeia3v.fsf_-_@assigned-by-dhcp.cox.net> <46a038f90511120419v70166c60t93d58b7544e03e3b@mail.gmail.com>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: Remove unneeded packs
+Date: Sun, 13 Nov 2005 15:00:51 +0300
+Message-ID: <20051113150051.4a10365d.vsu@altlinux.ru>
+References: <1131800663.29461.11.camel@blade>
+	<4375EA80.7070405@op5.se>
+	<1131802238.29461.18.camel@blade>
+	<43766687.2000007@etek.chalmers.se>
+	<7voe4pclwm.fsf@assigned-by-dhcp.cox.net>
+	<43771C43.7000104@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Ryan Anderson <ryan@michonline.com>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 13 12:12:12 2005
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="pgp-sha1";
+ boundary="Signature=_Sun__13_Nov_2005_15_00_51_+0300_byGCazDNw0IUgu5Y"
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Nov 13 13:02:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbFln-0003mG-Gt
-	for gcvg-git@gmane.org; Sun, 13 Nov 2005 12:11:35 +0100
+	id 1EbGYJ-0000Iv-7e
+	for gcvg-git@gmane.org; Sun, 13 Nov 2005 13:01:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964913AbVKMLLd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 Nov 2005 06:11:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932473AbVKMLLc
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 06:11:32 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:57760 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932400AbVKMLLc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Nov 2005 06:11:32 -0500
-Received: (qmail 1737 invoked by uid 2001); 13 Nov 2005 12:11:30 +0100
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f90511120419v70166c60t93d58b7544e03e3b@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932475AbVKMMBS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Nov 2005 07:01:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932480AbVKMMBS
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 07:01:18 -0500
+Received: from master.altlinux.ru ([62.118.250.235]:24582 "EHLO
+	master.altlinux.org") by vger.kernel.org with ESMTP id S932475AbVKMMBS
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Nov 2005 07:01:18 -0500
+Received: from procyon.home (localhost.localdomain [127.0.0.1])
+	by master.altlinux.org (Postfix) with ESMTP
+	id 74668E3642; Sun, 13 Nov 2005 15:01:07 +0300 (MSK)
+Received: by procyon.home (Postfix, from userid 500)
+	id F3A8DE385D3; Sun, 13 Nov 2005 15:00:54 +0300 (MSK)
+To: Lukas Sandstr__m <lukass@etek.chalmers.se>
+In-Reply-To: <43771C43.7000104@etek.chalmers.se>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i586-alt-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11735>
 
-Dear diary, on Sat, Nov 12, 2005 at 01:19:45PM CET, I got a letter
-where Martin Langhoff <martin.langhoff@gmail.com> said that...
-> Similarly, when dealing with an upstream, my tree gets slowly out of
-> sync and slightly messy.
+--Signature=_Sun__13_Nov_2005_15_00_51_+0300_byGCazDNw0IUgu5Y
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-I've been replying only to this, but missed the team shared repo case,
-where StGIT obviously does not make much sense.
+On Sun, 13 Nov 2005 11:58:11 +0100 Lukas Sandstr__m wrote:
 
-> Related to this, I've been wondering whether it'd be possible to teach
-> git to rebase local patches, even if that means rewriting local
-> history. When you are dealing with team shared repo, the sequences of
-> pull/push end up being quite messy, full of little meaningless merges.
+> Subject: [PATCH] Make sure all old packfiles are removed when doing a full repack
+> 
+> This is nessecary because unrachable objects in packfiles makes git-pack-redundant
+> flag them as non-redundant.
+> 
+> Signed-off-by: Lukas Sandstr____m <lukass@etek.chalmers.se>
+> 
+> ---
+> 
+>  git-repack.sh |   16 +++++++++++++++-
+>  1 files changed, 15 insertions(+), 1 deletions(-)
+> 
+> applies-to: 9a0f0c748316751fbf593a21f2b16bcdd975095a
+> 08df1f641bd3f98a607a8413d647667adc18a633
+> diff --git a/git-repack.sh b/git-repack.sh
+> index f347207..293bb50 100755
+> --- a/git-repack.sh
+> +++ b/git-repack.sh
+> @@ -32,6 +32,8 @@ case ",$all_into_one," in
+>  	rev_list=
+>  	rev_parse='--all'
+>  	pack_objects=
+> +	existing=`cd "$PACKDIR" && \
+> +	    find . -type f \( -name '*.pack' -o -name '*.idx' \) -print`
+>  	;;
+>  esac
+>  if [ "$local" ]; then
+> @@ -60,7 +62,19 @@ mv .tmp-pack-$name.pack "$PACKDIR/pack-$
+>  mv .tmp-pack-$name.idx  "$PACKDIR/pack-$name.idx" ||
+>  exit
+>  
+> -if test "$remove_redandant" = t
+> +if test "$all_into_one" = t
 
-Well, only pulls make up for merges. But what's wrong with that? This is
-just what you get when using distributed VCS, and what's the point in
-skewing the history to look different than how did it happen? I'd just
-get used to it. :-)
+This should be
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+if test "$all_into_one$remove_redandant" = tt
+
+(otherwise "git repack -a" becomes the same as "git repack -a -d").
+
+> +then
+> +	sync
+> +	( cd "$PACKDIR" &&
+> +		for e in $existing
+> +		do
+> +		case "$e" in
+> +		./pack-$name.pack | ./pack-$name.idx) ;;
+> +		*)	rm -f $e ;;
+> +		esac
+> +		done
+> +	)
+> +else if test "$remove_redandant" = t
+>  then
+>  	sync
+>  	redundant=$(git-pack-redundant --all)
+> ---
+> 0.99.9.GIT
+
+--Signature=_Sun__13_Nov_2005_15_00_51_+0300_byGCazDNw0IUgu5Y
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFDdyr2W82GfkQfsqIRAohSAJ0WVL0xAxYmrvPCcvrspy3UbS/SKQCglduq
+bwbyP5KCmDJNPyTkEMPkAPc=
+=gb8i
+-----END PGP SIGNATURE-----
+
+--Signature=_Sun__13_Nov_2005_15_00_51_+0300_byGCazDNw0IUgu5Y--
