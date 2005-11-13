@@ -1,83 +1,83 @@
-From: =?ISO-8859-1?Q?Ed=E9sio_Costa_e_Silva?= <edesiocs@gmail.com>
-Subject: Re: git.org registered
-Date: Sun, 13 Nov 2005 11:27:04 -0200
-Message-ID: <1073a5540511130527o5d046f6exe93155cca6bdf4c8@mail.gmail.com>
-References: <4375DF45.3020301@op5.se> <86wtjem4kx.fsf@blue.stonehenge.com>
-	 <94fc236b0511120450v417f74dm70d39e9046488930@mail.gmail.com>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: [PATCH] Bugfix: stop if directory already exists
+Date: Sun, 13 Nov 2005 15:03:31 +0100
+Message-ID: <200511131503.32078.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Nov 13 14:27:43 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 13 15:04:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbHtR-0001FF-8k
-	for gcvg-git@gmane.org; Sun, 13 Nov 2005 14:27:37 +0100
+	id 1EbISX-0005fd-52
+	for gcvg-git@gmane.org; Sun, 13 Nov 2005 15:03:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932499AbVKMN1M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 13 Nov 2005 08:27:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932500AbVKMN1M
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 08:27:12 -0500
-Received: from wproxy.gmail.com ([64.233.184.206]:43724 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932499AbVKMN1L convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Nov 2005 08:27:11 -0500
-Received: by wproxy.gmail.com with SMTP id i3so1051866wra
-        for <git@vger.kernel.org>; Sun, 13 Nov 2005 05:27:06 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BH7YgZtmUjDtmotBOK8uUUbvAxz3D5GgzMoxtiyIF+/rlg7gZJ5ztzWk2GkKImk8bM7NYh3rvRbGnzcJIFeg/tRPt+DdEVSQtd+EQctHR6Iv5TUGYy8lKRnHzlN02bVDoUF2ilrLKhyw3tCLKhMs103sKNLYuXZ1K2deKmVnCFo=
-Received: by 10.65.93.7 with SMTP id v7mr4448721qbl;
-        Sun, 13 Nov 2005 05:27:06 -0800 (PST)
-Received: by 10.65.95.7 with HTTP; Sun, 13 Nov 2005 05:27:04 -0800 (PST)
-To: Adrien Beau <adrienbeau@gmail.com>
-In-Reply-To: <94fc236b0511120450v417f74dm70d39e9046488930@mail.gmail.com>
+	id S932495AbVKMODh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Nov 2005 09:03:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932500AbVKMODh
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 09:03:37 -0500
+Received: from mail.gmx.de ([213.165.64.20]:23221 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932495AbVKMODg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Nov 2005 09:03:36 -0500
+Received: (qmail invoked by alias); 13 Nov 2005 14:03:34 -0000
+Received: from p549699FE.dip0.t-ipconnect.de (EHLO [192.168.178.21]) [84.150.153.254]
+  by mail.gmx.net (mp019) with SMTP; 13 Nov 2005 15:03:34 +0100
+X-Authenticated: #352111
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.8.2
 Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11740>
 
-Hi!
+Fix a typo: We do not want to run the directory as command,
+and want to terminate if the directory exists
+Additionally, update the usage message
 
-I registered gitscm.org. Currently it is redirected to
-http://www.kernel.org/pub/scm. Maybe in the future we could create a
-wiki there.
+Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 
-Other suggestions are welcome.
+---
 
-Ed=E9sio
+Regarding the usage: I do not think that on an error condition
+the usage string should be outputted. This helps nothing:
+either the user knows the usage, and can see what is wrong by
+the error message, or he should look up the man page.
+Should we use "git clone" or "git-clone" in the usage message?
+Or perhaps
+ usage: git clone ...
+ For more details, see 'man git-clone'
+?
 
-On 11/12/05, Adrien Beau <adrienbeau@gmail.com> wrote:
-> Andreas Ericsson wrote:
-> >
-> > git.org has just been registered (well, "just" being what www.git.o=
-rg says).
-> >
-> > Might be nothing and it might be someone hitching a free ride.
-> > I just thought you all ought to know.
->
-> whois git.org says:
-> >
-> > Domain Name:GIT.ORG
-> > Created On:12-May-1997 04:00:00 UTC
-> > Last Updated On:25-Oct-2005 16:16:54 UTC
-> > Expiration Date:13-May-2011 04:00:00 UTC
->
-> Looks like git.org has been registered many years ago, and maybe
-> renewed or transfered a few weeks ago.
->
-> Randal L. Schwartz wrote:
-> >
-> > Might be a good time to register gitsoftware.org for future use.
->
-> Or maybe gitscm.org or global-information-tracker.com? Anyway, the
-> various Git sites already rank very well in Google, I don't think we
-> have an emergency here.
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+ git-clone.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+applies-to: 62fad3f1275b9bbf07fba50c328a3bd730c3454c
+3de065bff303bd4caa433dfa685fdc1164be2b81
+diff --git a/git-clone.sh b/git-clone.sh
+index f99e0ad..c09979a 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -9,7 +9,7 @@
+ unset CDPATH
+ 
+ usage() {
+-	echo >&2 "* git clone [-l [-s]] [-q] [-u <upload-pack>] [-n] <repo> <dir>"
++	echo >&2 "* git clone [-l [-s]] [-q] [-u <upload-pack>] [-n] <repo> [<dir>]"
+ 	exit 1
+ }
+ 
+@@ -98,7 +98,7 @@ fi
+ dir="$2"
+ # Try using "humanish" part of source repo if user didn't specify one
+ [ -z "$dir" ] && dir=$(echo "$repo" | sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*/||g')
+-[ -e "$dir" ] && $(echo "$dir already exists."; usage)
++[ -e "$dir" ] && echo "$dir already exists." && usage
+ mkdir -p "$dir" &&
+ D=$(
+ 	(cd "$dir" && git-init-db && pwd)
+---
+0.99.9.GIT
