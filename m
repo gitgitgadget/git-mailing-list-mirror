@@ -1,126 +1,120 @@
-From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-Subject: Re: Remove unneeded packs
-Date: Sun, 13 Nov 2005 11:58:11 +0100
-Organization: Chalmers
-Message-ID: <43771C43.7000104@etek.chalmers.se>
-References: <1131800663.29461.11.camel@blade> <4375EA80.7070405@op5.se>	<1131802238.29461.18.camel@blade> <43766687.2000007@etek.chalmers.se> <7voe4pclwm.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] GIT commit statistics.
+Date: Sun, 13 Nov 2005 02:59:43 -0800
+Message-ID: <7vy83s95k0.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
+	<20051107225807.GA10937@c165.ib.student.liu.se>
+	<7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
+	<7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net>
+	<43758D21.3060107@michonline.com>
+	<7v7jbeia3v.fsf_-_@assigned-by-dhcp.cox.net>
+	<46a038f90511120419v70166c60t93d58b7544e03e3b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>,
-	=?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-X-From: git-owner@vger.kernel.org Sun Nov 13 11:58:56 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 13 12:00:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbFYX-0002VN-HU
-	for gcvg-git@gmane.org; Sun, 13 Nov 2005 11:57:53 +0100
+	id 1EbFaR-0002bz-Ih
+	for gcvg-git@gmane.org; Sun, 13 Nov 2005 11:59:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932414AbVKMK5t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 13 Nov 2005 05:57:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932417AbVKMK5t
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 05:57:49 -0500
-Received: from pne-smtpout1-sn2.hy.skanova.net ([81.228.8.83]:60857 "EHLO
-	pne-smtpout1-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
-	id S932414AbVKMK5t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Nov 2005 05:57:49 -0500
-Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout1-sn2.hy.skanova.net (7.2.060.1)
-        id 43721F89000F2246; Sun, 13 Nov 2005 11:57:45 +0100
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <7voe4pclwm.fsf@assigned-by-dhcp.cox.net>
+	id S932417AbVKMK7r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Nov 2005 05:59:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932428AbVKMK7r
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 05:59:47 -0500
+Received: from eastrmmtao02.cox.net ([68.230.240.37]:19681 "EHLO
+	eastrmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932417AbVKMK7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Nov 2005 05:59:46 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by eastrmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051113105852.NRR8508.eastrmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 13 Nov 2005 05:58:52 -0500
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90511120419v70166c60t93d58b7544e03e3b@mail.gmail.com>
+	(Martin Langhoff's message of "Sun, 13 Nov 2005 01:19:45 +1300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11732>
 
-Junio C Hamano wrote:
-> Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se> writes:
->>This is most likley because the pack b3c6... contains unreachable obj=
-ects.
->>git-pack-redundant only makes sure that all objects present in packfi=
-les
->>still are present in packfiles after the redundant packs have been re=
-moved.
->>...
->>I'm thinking of the possibility passing a list of objects to be ignor=
-ed
->>on stdin to git-pack-redundant. This would hopefully solve this probl=
-em.
->=20
->=20
-> But once you go down that path, wouldn't doing 'repack -a -d'
-> become looking simpler and more attractive, I wonder?
->=20
->=20
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-It depends on how expensive git-fsck-objects --full --unreacahble is ve=
-rsus
-a full repack.
+> Similarly, when dealing with an upstream, my tree gets slowly out of
+> sync and slightly messy. Eventually I get a new checkout, and rebase
+> any pending patches with git-format-patch and git-am.
 
-Howerver, if I read the source correctly git-fsck-objects doesn't curre=
-ntly test=20
-the reachablility of packed objects. This would have to change, and I'm=
- not certain
-of how to do that properly.
+The key is not to let your tree go "slowly" out of sync, from my
+experience.  When Linus was the maintainer, I used to do the
+equivalent of the following all the time to keep up with his
+tree while keeping my history clean [*1*].
 
-Note that the following patch is reqired if git-repack -a -d is to work=
- as expected.
-(Remove all packs except the new one)
+Frequently [*2*], I tried to see if Linus made something new and
+interesting.  My "origin" branch was always copy of Linus head.
 
-Btw, I'm sending this patch in utf8, let's see if it works...
+	$ git fetch origin
 
-----
-Subject: [PATCH] Make sure all old packfiles are removed when doing a f=
-ull repack
+The command would say "Fast forward".  So what did he do?
 
-This is nessecary because unrachable objects in packfiles makes git-pac=
-k-redundant
-flag them as non-redundant.
+	$ git show-branch master origin
+        ! [origin] Separate LDFLAGS and CFLAGS.
+         * [master] Rename lost+found to lost-found.
+        --
+         + [master] Rename lost+found to lost-found.
+         + [master^] Fix compilation warnings in pack-redundant.c
+         + [master~2] Debian: build-depend on libexpat-dev.
+        +  [origin] Separate LDFLAGS and CFLAGS.
+        ++ [master~3] Split gitk into seperate RPM package
 
-Signed-off-by: Lukas Sandstr=C3=83=C2=B6m <lukass@etek.chalmers.se>
+Ah, the commit master~3 was what he had the last time I pulled
+from him, and since then he made a commit while I did three.  I
+could do "git pull . origin" at this point, but that would
+result in a useless mini-merge.  My tree is not public so I can
+freely rebase to clean things up.
 
----
+	$ git rebase origin
+	$ git show-branch
+        ! [origin] Separate LDFLAGS and CFLAGS.
+         * [master] Rename lost+found to lost-found.
+        --
+         + [master] Rename lost+found to lost-found.
+         + [master^] Fix compilation warnings in pack-redundant.c
+         + [master~2] Debian: build-depend on libexpat-dev.
+        ++ [origin] Separate LDFLAGS and CFLAGS.
 
- git-repack.sh |   16 +++++++++++++++-
- 1 files changed, 15 insertions(+), 1 deletions(-)
+Now I am fast-forward, so I could ask him to pull from me [*3*].
 
-applies-to: 9a0f0c748316751fbf593a21f2b16bcdd975095a
-08df1f641bd3f98a607a8413d647667adc18a633
-diff --git a/git-repack.sh b/git-repack.sh
-index f347207..293bb50 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -32,6 +32,8 @@ case ",$all_into_one," in
- 	rev_list=3D
- 	rev_parse=3D'--all'
- 	pack_objects=3D
-+	existing=3D`cd "$PACKDIR" && \
-+	    find . -type f \( -name '*.pack' -o -name '*.idx' \) -print`
- 	;;
- esac
- if [ "$local" ]; then
-@@ -60,7 +62,19 @@ mv .tmp-pack-$name.pack "$PACKDIR/pack-$
- mv .tmp-pack-$name.idx  "$PACKDIR/pack-$name.idx" ||
- exit
-=20
--if test "$remove_redandant" =3D t
-+if test "$all_into_one" =3D t
-+then
-+	sync
-+	( cd "$PACKDIR" &&
-+		for e in $existing
-+		do
-+		case "$e" in
-+		./pack-$name.pack | ./pack-$name.idx) ;;
-+		*)	rm -f $e ;;
-+		esac
-+		done
-+	)
-+else if test "$remove_redandant" =3D t
- then
- 	sync
- 	redundant=3D$(git-pack-redundant --all)
----
-0.99.9.GIT
+I think each of your developers can do the same, treating the
+"project shared repository" as "Linus repository" and pull that
+into the "origin" branch, and when the "master" is ready, push
+it back into the shared repository (which is equivalent of Linus
+pulling everything from me while doing nothing else in his
+repository).
+
+For a sizable change that deserves a topic branch with a long
+sequence of commits, rebasing is not always the optimum
+solution; and you may want to keep the full merge history of
+such a branch pushed into the public repository as is.  But for
+simpler cases that 'git rebase' can handle easily without
+conflicts, the above procedure would help you keeping the
+history of your shared repository less cluttered.
+
+[Footnotes]
+
+*1* Back then we did not have multi-head fetch, show-branch nor
+rebase, so I did these using a homebrew Porcelain.
+
+*2* Unlike CVS which always mucks with the working tree, 'git
+fetch' into a branch that is not current one is an operation and
+can be done even when I am in the middle of a heavy hackery.
+Being able to peek into what others are up even when your tree
+is in a messy state (the fetch is often followed by log and
+diff) helps you to avoid doing duplicated work or going in a
+wrong direction, which was great.
+
+*3* Even back then almost all changes were fed via e-mail to
+the maintainer.
