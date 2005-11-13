@@ -1,78 +1,65 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: GIT character codecs
-Date: Sun, 13 Nov 2005 12:52:40 -0800 (PST)
-Message-ID: <20051113205241.70221.qmail@web26301.mail.ukl.yahoo.com>
+From: wa1ter@myrealbox.com
+Subject: Re: [PATCH] Building git on NetBSD
+Date: Sun, 13 Nov 2005 14:51:31 -0800
+Organization: none
+Message-ID: <Pine.NEB.4.63.0511131446500.4257@x9.ybpnyarg>
+References: <Pine.LNX.4.64.0511120649430.2695@x2.ybpnyarg> <43760AF5.1010704@op5.se>
+ <7vhdahclr5.fsf@assigned-by-dhcp.cox.net> <7vlkzsc262.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Nov 13 21:54:18 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Nov 14 00:02:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbOqD-0001la-A1
-	for gcvg-git@gmane.org; Sun, 13 Nov 2005 21:52:45 +0100
+	id 1EbQpd-0005nk-GO
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 00:00:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751031AbVKMUwm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 Nov 2005 15:52:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751033AbVKMUwm
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 15:52:42 -0500
-Received: from web26301.mail.ukl.yahoo.com ([217.146.176.12]:26720 "HELO
-	web26301.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1751024AbVKMUwm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Nov 2005 15:52:42 -0500
-Received: (qmail 70223 invoked by uid 60001); 13 Nov 2005 20:52:41 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=N6ZO9n0de6pEZP9ExxbkzRHnKBLsCAtIrMUM7KxBaD5CRleQhR9NqRKtpITNy4ec/Lb0dOy3nXH/kRT8iHp3p580stE+o6xMvEadpcJLmMTsQG10FUOj9jL4GdJI3kIEPvdoOOntA2xZeZSw7bhsPExMEo2FAnG2yNMrTklYWGQ=  ;
-Received: from [151.56.23.39] by web26301.mail.ukl.yahoo.com via HTTP; Sun, 13 Nov 2005 12:52:40 PST
-To: Linus Torvalds <torvalds@osdl.org>, Junio C Hamano <junkio@cox.net>
+	id S1750788AbVKMW7u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Nov 2005 17:59:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750791AbVKMW7u
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 17:59:50 -0500
+Received: from main.gmane.org ([80.91.229.2]:33768 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750788AbVKMW7t (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Nov 2005 17:59:49 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EbQl5-0003K9-H7
+	for git@vger.kernel.org; Sun, 13 Nov 2005 23:55:35 +0100
+Received: from adsl-69-234-227-15.dsl.irvnca.pacbell.net ([69.234.227.15])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 13 Nov 2005 23:55:35 +0100
+Received: from wa1ter by adsl-69-234-227-15.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 13 Nov 2005 23:55:35 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-227-15.dsl.irvnca.pacbell.net
+In-Reply-To: <7vlkzsc262.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11753>
 
-Linus Torvalds wrote:
+On Sun, 13 Nov 2005, Junio C Hamano wrote:
 
+> Date: Sun, 13 Nov 2005 01:44:37 -0800
+> From: Junio C Hamano <junkio@cox.net>
+> Cc: git@vger.kernel.org
+> Newsgroups: gmane.comp.version-control.git
+> Subject: Re: [PATCH] Building git on NetBSD
 >
->On Sun, 13 Nov 2005, Marco Costalba wrote:
->
->>If encoding is a per-blob _and_ per-log message property a real solution, although cumbersone,
->>could be that git stores encoding togheter with the blob and the commits.
->
->
->We'd be much better off with just saying "we encourage people to use 
->utf-8, but if you don't, just set your locale to make things show up 
->properly".
->
->utf-8 is clearly the future, and if we make git internally aware of 
->locales, that's just going to complicate things. And usually for no good 
->reason, since users don't really care that much.
+> Junio C Hamano <junkio@cox.net> writes:
 >
 
-Yes, I agree with you and Junio, a workaround like let the user to choose the code page 
-in the viewer is more then enough.
+> > Very well.  Maybe LDFLAGS and ALL_LDFLAGS pair to parallel
+> > CFLAGS and ALL_CFLAGS (the former is for the end user to
+> > override from make command line, the latter is for Makefile to
+> > augment and use)?
+>
+> Does this look OK?
 
-And also in this case, a choice between the local codec and utf-8 should take almost 
-all cases.
+<patch snipped>
 
-Because of this, I added a text codec selector in qgit, reachable from settings menu.
-
-There is a new release, qgit-0.97.2, with this new feature and some good
-annotate fixes.
-
-For the people interested the page with all the links is:
- http://digilander.libero.it/mcostalba/
-
-  Marco
-
-P.S: Now I can finally see Junio japanese name ;-)
-
-
-
-	
-		
-__________________________________ 
-Yahoo! Mail - PC Magazine Editors' Choice 2005 
-http://mail.yahoo.com
+Yes, git now compiles on NetBSD without modification and with no
+warnings about unused linker flags.  Thanks!
