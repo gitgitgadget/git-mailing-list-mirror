@@ -1,209 +1,105 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: [PATCH] Remove git-rename. git-mv does the same
-Date: Sun, 13 Nov 2005 15:08:00 +0100
-Message-ID: <200511131508.00964.Josef.Weidendorfer@gmx.de>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: git-merge-recursive: documentation and implementation notes
+Date: Sun, 13 Nov 2005 18:12:07 +0100
+Message-ID: <20051113171207.GB4805@c165.ib.student.liu.se>
+References: <20051112203457.GA5234@c165.ib.student.liu.se> <20051112210306.GG30496@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 13 15:08:55 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 13 18:13:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbIWt-0006Ck-Hr
-	for gcvg-git@gmane.org; Sun, 13 Nov 2005 15:08:23 +0100
+	id 1EbLOv-00071t-BN
+	for gcvg-git@gmane.org; Sun, 13 Nov 2005 18:12:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964914AbVKMOII (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 Nov 2005 09:08:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932505AbVKMOII
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 09:08:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:32687 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932503AbVKMOIH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Nov 2005 09:08:07 -0500
-Received: (qmail invoked by alias); 13 Nov 2005 14:08:04 -0000
-Received: from p549699FE.dip0.t-ipconnect.de (EHLO [192.168.178.21]) [84.150.153.254]
-  by mail.gmx.net (mp016) with SMTP; 13 Nov 2005 15:08:04 +0100
-X-Authenticated: #352111
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.8.2
+	id S964946AbVKMRMQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Nov 2005 12:12:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964947AbVKMRMQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 12:12:16 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:35734 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S964946AbVKMRMO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Nov 2005 12:12:14 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id E440C4100; Sun, 13 Nov 2005 18:20:47 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EbLOh-0001a0-00; Sun, 13 Nov 2005 18:12:07 +0100
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20051112210306.GG30496@pasky.or.cz>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11742>
 
-Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
----
+On Sat, Nov 12, 2005 at 10:03:06PM +0100, Petr Baudis wrote:
+>   Hi,
+> 
+> Dear diary, on Sat, Nov 12, 2005 at 09:34:57PM CET, I got a letter
+> where Fredrik Kuivinen <freku045@student.liu.se> said that...
+> > Lets assume there is a merge conflict when we merge B and C in the
+> > criss-cross case above. Then both D and E must resolve this
+> > conflict. If they have done it in the same way we wont get a merge
+> > conflict at M, if they have resolved it differently we will get a
+> > merge conflict. In the first case there is no merge conflict at M, in
+> > the second case the user has to pick which one of the two different
+> > resolutions she wants.
+> > 
+> > Note that the algorithm will happily write non-clean merge results to
+> > the object database during the "merge common ancestors" stage. Hence,
+> > when we are merging B and C "internally" we will _not_ ask the user to
+> > resolve any eventual merge conflicts.
+> 
+>   I find this part somewhat unclear. So how does the user pick which of
+> the two different resolution she wants if we will not ask the user to
+> resolve any conflicts?
+> 
 
-We have git-mv now since quite some time, and it does all which
-git-rename did, as it is derived from it. Even if you want to
-keep git-rename, it should be a symlink to git-mv instead.
+If we have a conflict when we merge B and C we will get a file with
+conflict markers from merge(1) in it, so it will look something like
 
- .gitignore                   |    1 -
- Documentation/git-rename.txt |   32 -------------------
- Documentation/git.txt        |    3 --
- Makefile                     |    2 +
- git-rename.perl              |   70 ------------------------------------------
- 5 files changed, 1 insertions(+), 107 deletions(-)
- delete mode 100644 Documentation/git-rename.txt
- delete mode 100755 git-rename.perl
+    1
+    2
+    3
+    <<<<<<
+    4
+    5
+    ======
+    6
+    7
+    >>>>>>
+    8
+    9
 
-applies-to: e915ab830dbf42430138b4542278097d16f9f2f1
-9a06e0c0981cae2417e4355ae7220f1e4bae5e85
-diff --git a/.gitignore b/.gitignore
-index 328b399..26398b3 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -74,7 +74,6 @@ git-read-tree
- git-rebase
- git-receive-pack
- git-relink
--git-rename
- git-repack
- git-request-pull
- git-reset
-diff --git a/Documentation/git-rename.txt b/Documentation/git-rename.txt
-deleted file mode 100644
-index 583cb03..0000000
---- a/Documentation/git-rename.txt
-+++ /dev/null
-@@ -1,32 +0,0 @@
--git-rename(1)
--=============
--
--NAME
------
--git-rename - Script used to rename a file, directory or symlink.
--
--
--SYNOPSIS
----------
--'git-rename' <source> <destination>
--
--DESCRIPTION
-------------
--This script is used to rename a file, directory or symlink.
--
--The index is updated after successful completion, but the change must still be
--committed.
--
--Author
--------
--Written by Linus Torvalds <torvalds@osdl.org>
--Rewritten by Ryan Anderson <ryan@michonline.com>
--
--Documentation
----------------
--Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
--
--GIT
-----
--Part of the gitlink:git[7] suite
--
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index a9d47c1..62c8ce7 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -262,9 +262,6 @@ gitlink:git-push[1]::
- gitlink:git-rebase[1]::
- 	Rebase local commits to new upstream head.
- 
--gitlink:git-rename[1]::
--	Rename files and directories.
--
- gitlink:git-repack[1]::
- 	Pack unpacked objects in a repository.
- 
-diff --git a/Makefile b/Makefile
-index 514ab60..24884ab 100644
---- a/Makefile
-+++ b/Makefile
-@@ -94,7 +94,7 @@ SCRIPT_SH = \
- 
- SCRIPT_PERL = \
- 	git-archimport.perl git-cvsimport.perl git-relink.perl \
--	git-rename.perl git-shortlog.perl git-fmt-merge-msg.perl \
-+	git-shortlog.perl git-fmt-merge-msg.perl \
- 	git-svnimport.perl git-mv.perl git-cvsexportcommit.perl
- 
- SCRIPT_PYTHON = \
-diff --git a/git-rename.perl b/git-rename.perl
-deleted file mode 100755
-index 3b1127b..0000000
---- a/git-rename.perl
-+++ /dev/null
-@@ -1,70 +0,0 @@
--#!/usr/bin/perl
--#
--# Copyright 2005, Ryan Anderson <ryan@michonline.com>
--#
--# This file is licensed under the GPL v2, or a later version
--# at the discretion of Linus Torvalds.
--
--
--use warnings;
--use strict;
--
--sub usage($);
--
--# Sanity checks:
--my $GIT_DIR = $ENV{'GIT_DIR'} || ".git";
--
--unless ( -d $GIT_DIR && -d $GIT_DIR . "/objects" && 
--	-d $GIT_DIR . "/objects/" && -d $GIT_DIR . "/refs") {
--	usage("Git repository not found.");
--}
--
--usage("") if scalar @ARGV != 2;
--
--my ($src,$dst) = @ARGV;
--
--unless (-f $src || -l $src || -d $src) {
--	usage("git rename: bad source '$src'");
--}
--
--if (-e $dst) {
--	usage("git rename: destinations '$dst' already exists");
--}
--
--my (@allfiles,@srcfiles,@dstfiles);
--
--$/ = "\0";
--open(F,"-|","git-ls-files","-z")
--	or die "Failed to open pipe from git-ls-files: " . $!;
--
--@allfiles = map { chomp; $_; } <F>;
--close(F);
--
--my $safesrc = quotemeta($src);
--@srcfiles = grep /^$safesrc/, @allfiles;
--@dstfiles = @srcfiles;
--s#^$safesrc(/|$)#$dst$1# for @dstfiles;
--
--rename($src,$dst)
--	or die "rename failed: $!";
--
--my $rc = system("git-update-index","--add","--",@dstfiles);
--die "git-update-index failed to add new name with code $?\n" if $rc;
--
--$rc = system("git-update-index","--remove","--",@srcfiles);
--die "git-update-index failed to remove old name with code $?\n" if $rc;
--
--
--sub usage($) {
--	my $s = shift;
--	print $s, "\n" if (length $s != 0);
--	print <<EOT;
--$0 <source> <dest>
--source must exist and be either a file, symlink or directory.
--dest must NOT exist.
--
--Renames source to dest, and updates the git cache to reflect the change.
--Use "git commit" to make record the change permanently.
--EOT
--	exit(1);
--}
----
-0.99.9.GIT
+This file will be stored in the object database and the temporary tree
+which is created by the merge of B and C will refer to it.
+
+The algorithm will then merge D and E and use the file above as the
+common ancestor. There are now two cases to consider, the first one is
+that both D and E resolve the conflict above in the same way (and
+possible make other changes which can be cleanly merged), we end up
+with something like
+
+    1
+    2
+    3
+    4
+    5
+    8
+    9
+
+in both D and E. This will be merged cleanly into M. The other case is
+that D and E either resolves the conflict differently or that they do
+other modifications which aren't possible to merge automatically. In
+this case we will let the user do the conflict resolution.
+
+So, what I meant was that during the first merge, of B and C, the user
+do not have to do anything with any eventual conflicts. However, in
+the top-level merge, conflict resolution works in the same way as it
+does for the 'resolve' strategy, i.e., the output of merge(1) is
+stored in the working directory and the index is updated to make 'git
+diff' useful.
+
+- Fredrik
