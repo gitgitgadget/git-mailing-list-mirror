@@ -1,67 +1,55 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [ANNOUNCE] Cogito-0.16rc2
-Date: Sun, 13 Nov 2005 02:02:30 +0100
-Message-ID: <20051113010230.GL30496@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Balanced packing strategy
+Date: Sat, 12 Nov 2005 18:34:02 -0800
+Message-ID: <7vveyxcm3p.fsf@assigned-by-dhcp.cox.net>
+References: <1131800663.29461.11.camel@blade>
+	<cae2e895f6598781f4f22b76e781684b@codefountain.com>
+	<20051112135947.GC30496@pasky.or.cz>
+	<b6abcb70496730705046934973221b93@codefountain.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Nov 13 02:03:52 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 13 03:36:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eb6Gq-0005zG-AT
-	for gcvg-git@gmane.org; Sun, 13 Nov 2005 02:03:00 +0100
+	id 1Eb7iK-0007jP-Ad
+	for gcvg-git@gmane.org; Sun, 13 Nov 2005 03:35:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750703AbVKMBCc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Nov 2005 20:02:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750727AbVKMBCc
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 20:02:32 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:35049 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750703AbVKMBCb (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Nov 2005 20:02:31 -0500
-Received: (qmail 7599 invoked by uid 2001); 13 Nov 2005 02:02:30 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1750854AbVKMCeH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Nov 2005 21:34:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750858AbVKMCeH
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Nov 2005 21:34:07 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:13740 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1750854AbVKMCeG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Nov 2005 21:34:06 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051113023404.KAIB9260.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 12 Nov 2005 21:34:04 -0500
+To: Craig Schlenter <craig@codefountain.com>
+In-Reply-To: <b6abcb70496730705046934973221b93@codefountain.com> (Craig
+	Schlenter's message of "Sat, 12 Nov 2005 17:14:36 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11723>
 
-  Hello,
+Craig Schlenter <craig@codefountain.com> writes:
 
-  I'm announcing the release of Cogito version 0.16rc2, the human-friendly
-version control UI for Linus' GIT tool. Share and enjoy at:
+> Does the pack index file contain enough information to enable a client
+> to send http byte range requests to grab individual objects from a pack?
+> It does seem to store object offsets...
 
-	http://www.kernel.org/pub/software/scm/cogito/
+Yes, it is certainly doable; there is enough information.  I am
+not sure if it is worth the complexity, though.
 
-  Compared to rc1, this carries few bugfixes, a minor feature or two,
-some small documentation updates, extended testsuites etc.
-
-  The new stuff includes:
-
-  * Curl is used instead of wget for HTTP heads fetching
-  * Handle multiple merge bases (leaving the decision on the user)
-  * cg-init -m'msg' support
-
-  * Fix a long-standing bug with some stale files not being removed
-    during large fast-forwards
-  * Non-symlink HEADs are now fetched from properly
-  * cg-commit -f now really works
-  * Local fetching should work even without GNU cp now
-  * Some fetch progressbar fixes
-
-  * Few tiny improvements
-  * Several new tests
-  * Small documentation updates
-
-  If I will get no more bugreports during the next few days, this will
-become 0.16 final.
-
-  Happy hacking,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Many objects are stored delitified, so your byte range requests
+would return delta and base object name.  After you read what
+was returned and find out the base object name, you would need
+to get it, which can be another delta against its base object.
+This would make tangling a delta chain would become a serialized
+sequence of requests.
