@@ -1,64 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Franck <vagabon.xyz@gmail.com>
 Subject: Re: Can't use gitk.
-Date: Mon, 14 Nov 2005 14:45:11 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511141442310.8531@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <cda58cb80511140253s92f28e2g@mail.gmail.com>  <437870AF.8060607@op5.se>
-  <cda58cb80511140322v686e4ee0g@mail.gmail.com>  <43787831.3030404@op5.se>
- <cda58cb80511140355q1add0ba5n@mail.gmail.com>
+Date: Mon, 14 Nov 2005 15:00:50 +0100
+Message-ID: <cda58cb80511140600k2c0188c4i@mail.gmail.com>
+References: <cda58cb80511140253s92f28e2g@mail.gmail.com>
+	 <437870AF.8060607@op5.se>
+	 <cda58cb80511140322v686e4ee0g@mail.gmail.com>
+	 <43787831.3030404@op5.se>
+	 <cda58cb80511140355q1add0ba5n@mail.gmail.com>
+	 <43787E6E.8030702@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 14:47:51 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 14 15:01:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbeeD-0004cg-ME
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 14:45:26 +0100
+	id 1EbetC-0004HL-Ro
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 15:00:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751123AbVKNNpU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 08:45:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbVKNNpU
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 08:45:20 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:36065 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751123AbVKNNpT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 08:45:19 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5171E13F3DC; Mon, 14 Nov 2005 14:45:16 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 383859F2C2; Mon, 14 Nov 2005 14:45:16 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 25519907C8; Mon, 14 Nov 2005 14:45:16 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D36F913F43C; Mon, 14 Nov 2005 14:45:11 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Franck <vagabon.xyz@gmail.com>
-In-Reply-To: <cda58cb80511140355q1add0ba5n@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751128AbVKNOAw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 09:00:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751129AbVKNOAw
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 09:00:52 -0500
+Received: from zproxy.gmail.com ([64.233.162.195]:17526 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751128AbVKNOAv convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 09:00:51 -0500
+Received: by zproxy.gmail.com with SMTP id 14so1273619nzn
+        for <git@vger.kernel.org>; Mon, 14 Nov 2005 06:00:50 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pcz2+C93fzklGQk/i/o4iJQZoi5joOknZEku/JmQzhdtzGNuR6yUKl4BbD2S7G5/M5PRQSqtt26JtmZpkgyWf4AtSN82ltEseCv1ofQAY0RGPSw0r+o6uh+8CJZQ7plYq4rOqIBUMH6RE0NUwiMcZXhVN/7CbPLM5wjouvnXjOc=
+Received: by 10.37.21.21 with SMTP id y21mr611049nzi;
+        Mon, 14 Nov 2005 06:00:50 -0800 (PST)
+Received: by 10.36.47.8 with HTTP; Mon, 14 Nov 2005 06:00:50 -0800 (PST)
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <43787E6E.8030702@op5.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11798>
 
-Hi,
+Andreas
 
-On Mon, 14 Nov 2005, Franck wrote:
+2005/11/14, Andreas Ericsson <ae@op5.se>:
+> Yes, but wish or some such might strip $HOME/bin away from it.
+>
+> Try doing
+>
+> make clean; make prefix=/usr
+> sudo make prefix=/usr install
+>
+> and see if it works.
 
-> nope every commands I'm running are not run as root. $HOME/bin is in my 
-> path.
+it works.
 
-Is it possible that your wish is stripping away $HOME/bin from your PATH? 
-Could you try the following?
+>
+> If it does, some program somewhere is manipulating your $PATH.
 
-	$ wish
-	% git-rev-list
+It seems that once wish is executed, $PATH does not include anymore my
+$HOME/bin directory. Do you have any idea why ?
 
-(If a lot of SHA1s are whizzing by, you can Ctrl-C it, and I am wrong.)
-
-Hth,
-Dscho
+Thanks
+--
+               Franck
