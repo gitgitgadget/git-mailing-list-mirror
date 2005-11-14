@@ -1,105 +1,97 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Balanced packing strategy
-Date: Sun, 13 Nov 2005 15:13:12 -0800
-Message-ID: <7vbr0o87lj.fsf@assigned-by-dhcp.cox.net>
-References: <1131800663.29461.11.camel@blade>
-	<cae2e895f6598781f4f22b76e781684b@codefountain.com>
-	<20051112135947.GC30496@pasky.or.cz>
-	<200511132106.29841.Josef.Weidendorfer@gmx.de>
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: http protocol, cloning git.git, fails (too many open files)
+Date: Sun, 13 Nov 2005 16:01:33 -0800
+Organization: gmane
+Message-ID: <1131926492.14637.5.camel@k9.localnet>
+References: <86acg9ijwa.fsf@blue.stonehenge.com>
+	 <7vmzk9e9km.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 14 00:14:21 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Nov 14 01:05:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbR2O-0003CC-Fw
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 00:13:29 +0100
+	id 1EbRpi-0000N7-Dm
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 01:04:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbVKMXNP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 Nov 2005 18:13:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750784AbVKMXNP
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 18:13:15 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:29918 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750783AbVKMXNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Nov 2005 18:13:14 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051113231248.FEPH15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 13 Nov 2005 18:12:48 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <200511132106.29841.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Sun, 13 Nov 2005 21:06:29 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750802AbVKNAEJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Nov 2005 19:04:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750804AbVKNAEJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 19:04:09 -0500
+Received: from main.gmane.org ([80.91.229.2]:30914 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750802AbVKNAEI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Nov 2005 19:04:08 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EbRo9-0008C8-EB
+	for git@vger.kernel.org; Mon, 14 Nov 2005 01:02:49 +0100
+Received: from adsl-69-234-227-15.dsl.irvnca.pacbell.net ([69.234.227.15])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 14 Nov 2005 01:02:49 +0100
+Received: from wa1ter by adsl-69-234-227-15.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 14 Nov 2005 01:02:49 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-227-15.dsl.irvnca.pacbell.net
+In-Reply-To: <7vmzk9e9km.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.4.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11756>
 
-Petr Baudis <pasky@suse.cz> writes:
+On Sat, 2005-11-12 at 15:21 -0800, Junio C Hamano wrote:
+[...]
+> However, one thing puzzles me.  I just tried to reproduce it by
+> doing this:
+> 
+> 	$ rm -fr git-http
+>         $ ulimit -n 16
+>         $ git clone http://www.kernel.org/pub/scm/git/git.git git-http
+> 
+> and it did not fail on my Linux box...
 
-> This has the property that the second half of given pack is covered by
-> objects with precision lower by one. This is a relatively high overload
-> (this can be balanced by only keeping the last third or whatever), but
-> it designed to reduce the overhead of fetching packs over dumb
-> transport.
+I've never seen it on Linux, but I do see it on NetBSD every time
+with ulimit -n 64 (the default):
 
-I have a feeling that you would be better off if instead do the
-repacking on the server side to prepare multiple packs, each of
-which has all the necessary objects to bring people who was
-up-to-date at various timerange ago, to arrange that you would
-need only one patch fetch with individual objects near the tip.
+> Could you please try with the patch Nick posted (which covers
+> less) and then with Pasky's patch?
 
-This obviously needs smarter client-side support.
+Neither patch fixes the 'too many open files' error, but Pasky's
+patch produces this debugging output:
 
-Suppose we are somewhere after releasing v1.8 and inching
-towards v1.9:
+[...]
+progress: 46 objects, 105660 bytes
+error: Couldn't create temporary
+file .git/objects/ee/baf3aaffa72996ac8bdbc8e9498814cd99f506.temp
+for .git/objects/ee/baf3aaffa72996ac8bdbc8e9498814cd99f506: Too many
+open files
 
-In your proposal, the object ranges each pack contains would
-look like this:
-
- v1.0..v1.5 --------
- v1.5..v1.6        -----
- v1.6..v1.7            -------
- v1.7..v1.8                  -----
- individual objects               ....
-
-That is, there are slight overlaps but you would do multiple
-packs if you are really behind.
-
-Instead, you could do this:
-
- v1.0..v1.8 ----------------------
- v1.5..v1.8         --------------
- v1.6..v1.8             ----------
- v1.7..v1.8                   ----
- individual objects               ....
-
-Everybody starts from the tip, fetching individual objects, and
-when the last repack boundary (the time we released 1.8) is
-reached, the dumb protocol downloader now faces a choice.  The
-indices are fairly small, so you fetch all of them and see how
-many objects you are lacking from each pack.  If you were
-up-to-date very long time ago, say at v1.2, you would obviously
-need to fetch the longest pack.  If you were up-to-date
-recently, say after v1.6 was released, you need to fetch smaller
-pack.
-
-Given the self containedness requirements, any path that is
-touched once in a period needs at least one full copy of it in
-each pack (all other revisions could be deltified), and I
-suspect in practice the oldest pack (v1.0..v1.5 pack in your
-scheme) would not save much space by not having v1.5..v1.8
-history.  We could tweak things further to do something like
-this:
-
- v1.0..v1.8 ------------------
- v1.5..v1.8         ----------
- v1.6..v1.8             ------
- v1.7..v1.8                   ----
- individual objects               ....
-
-to also account for a fact that the recent ones cover shorter
-time range and not many paths are touched.
+progress: 48 objects, 108247 bytes
+error: fd leakage in release: 9
+error: fd leakage in release: 11
+error: fd leakage in release: 3
+error: fd leakage in release: 13
+error: fd leakage in release: 6
+error: fd leakage in release: 12
+error: fd leakage in release: 14
+error: fd leakage in release: 8
+error: fd leakage in release: 16
+error: fd leakage in release: 15
+error: fd leakage in release: 10
+error: fd leakage in release: 5
+error: fd leakage in release: 21
+error: fd leakage in release: 17
+error: fd leakage in release: 22
+error: fd leakage in release: 19
+error: fd leakage in release: 20
+error: fd leakage in release: 25
+error: fd leakage in release: 26
+error: Could not read e8700aa756a3296ede4403db349dc64586935139
+Waiting for
+http://www.kernel.org/pub/scm/git/git.git/objects/dd/d5823df728bf213425533dcd2e47d61cbccf9e
+cg-fetch: objects fetch failed
+cg-clone: fetch failed
