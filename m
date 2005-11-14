@@ -1,81 +1,62 @@
-From: exon@op5.se (Andreas Ericsson)
-Subject: [PATCH] git-branch: Mention -d and -D in man-page.
-Date: Mon, 14 Nov 2005 17:53:42 +0100 (CET)
-Message-ID: <20051114165342.3F8185BF92@nox.op5.se>
-X-From: git-owner@vger.kernel.org Mon Nov 14 17:54:23 2005
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Simple questions on GIT usage.
+Date: Mon, 14 Nov 2005 17:56:10 +0100
+Message-ID: <4378C1AA.9090209@op5.se>
+References: <cda58cb80511140746w2f691fb8y@mail.gmail.com>	<4378B687.3060701@op5.se> <86iruvxk1i.fsf@blue.stonehenge.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 14 17:58:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbhaV-0004Av-EW
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 17:53:47 +0100
+	id 1Ebhct-0005Hs-I8
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 17:56:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751197AbVKNQxn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 11:53:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbVKNQxn
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 11:53:43 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:38339 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751195AbVKNQxn
+	id S1751195AbVKNQ4M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 11:56:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbVKNQ4M
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 11:56:12 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:38851 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751195AbVKNQ4L
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 11:53:43 -0500
-Received: from nox.op5.se (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 6011C6BD08
-	for <git@vger.kernel.org>; Mon, 14 Nov 2005 17:53:42 +0100 (CET)
-Received: by nox.op5.se (Postfix, from userid 500)
-	id 3F8185BF92; Mon, 14 Nov 2005 17:53:42 +0100 (CET)
-To: git@vger.kernel.org
+	Mon, 14 Nov 2005 11:56:11 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 5225E6BD01; Mon, 14 Nov 2005 17:56:10 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+In-Reply-To: <86iruvxk1i.fsf@blue.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11827>
 
+Randal L. Schwartz wrote:
+>>>>>>"Andreas" == Andreas Ericsson <ae@op5.se> writes:
+> 
+> 
+> Andreas> man git-branch
+> 
+> Andreas> It will tell you about its -d and -D options.
+> 
+> It will?  My manpage has no -d or -D option for git-branch.
+> 
 
-Signed-off-by: Andreas Ericsson <ae@op5.se>
+Ah. It's the help output that has them. I've submitted a patch to add 
+them to the man-page though, so it should show up soonish.
 
----
+> And I've been looking for something like that too.  If I want to
+> abandon a what-if branch, how do I make sure that the branch and all
+> objects are deleted?
+> 
 
- Documentation/git-branch.txt |   15 +++++++++++----
- 1 files changed, 11 insertions(+), 4 deletions(-)
+git branch -D branchname
+git prune
 
-applies-to: 963d67921d6f65c08d51a8c93811f03274c34703
-f67747f6501aa0b8bd5e58a3933fd1a738f69441
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index a7121a4..98014f6 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -3,11 +3,11 @@ git-branch(1)
- 
- NAME
- ----
--git-branch - Create a new branch.
-+git-branch - Create a new branch, or remove an old one.
- 
- SYNOPSIS
- --------
--'git-branch' [<branchname> [start-point]]
-+'git-branch' [-d | -D] [<branchname> [start-point]]
- 
- DESCRIPTION
- -----------
-@@ -19,11 +19,18 @@ created, otherwise it will be created at
- 
- OPTIONS
- -------
-+-d::
-+	Delete a branch. The branch must be fully merged.
-+
-+-D::
-+	Delete a branch irrespective of its index status.
-+
- <branchname>::
--	The name of the branch to create.
-+	The name of the branch to create or delete.
- 
- start-point::
--	Where to create the branch; defaults to HEAD.
-+	Where to create the branch; defaults to HEAD. This
-+	option has no meaning with -d and -D.
- 
- Author
- ------
----
-0.99.9.GIT
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
