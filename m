@@ -1,91 +1,94 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] GIT commit statistics.
-Date: Mon, 14 Nov 2005 21:51:29 +1300
-Message-ID: <46a038f90511140051o1fa5ef7cyb9dd723fb8161ef9@mail.gmail.com>
-References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
-	 <7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net>
-	 <43758D21.3060107@michonline.com>
-	 <7v7jbeia3v.fsf_-_@assigned-by-dhcp.cox.net>
-	 <46a038f90511120419v70166c60t93d58b7544e03e3b@mail.gmail.com>
-	 <7vy83s95k0.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f90511131242p4692c74fn20c015998620b9f4@mail.gmail.com>
-	 <7vlkzr6gzz.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f90511132001x6a9109fk17593b7ceaf3177e@mail.gmail.com>
-	 <7vwtjb4vc4.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 1/2] Add expat and expat-devel dependencies (for http-push)
+ to RPM spec.
+Date: Mon, 14 Nov 2005 09:57:12 +0100
+Message-ID: <43785168.7050808@op5.se>
+References: <4376C797.3050600@matysik.co.nz>	<Pine.LNX.4.64.0511130942490.3263@g5.osdl.org>	<437788A0.6030103@op5.se> <7vr79j1wfl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 14 09:54:23 2005
+X-From: git-owner@vger.kernel.org Mon Nov 14 09:57:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eba4a-0001v1-JG
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 09:52:21 +0100
+	id 1Eba9P-0003wi-UT
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 09:57:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750998AbVKNIva (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 03:51:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751004AbVKNIva
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 03:51:30 -0500
-Received: from zproxy.gmail.com ([64.233.162.205]:7668 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750998AbVKNIva convert rfc822-to-8bit
+	id S1751004AbVKNI5O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 03:57:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751006AbVKNI5O
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 03:57:14 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:32192 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750917AbVKNI5O
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 03:51:30 -0500
-Received: by zproxy.gmail.com with SMTP id 40so1058927nzk
-        for <git@vger.kernel.org>; Mon, 14 Nov 2005 00:51:29 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gd2YaJoR7rV6VhpV6WmRaPdPeZBoTY1NWSxIIJiWimfgJcS+WIWVe34+/xBkuwGiSIILR4mW6BnK2vSEP1GFAhKRjCwJKyXIkX7Es0eJol4BxRTKthOsQuSuPwSbLaeJDfnH+Gl/9GX/rgDU9/25rEK5a5RC/inFv8Pusw6mndg=
-Received: by 10.64.131.4 with SMTP id e4mr2491669qbd;
-        Mon, 14 Nov 2005 00:51:29 -0800 (PST)
-Received: by 10.64.242.4 with HTTP; Mon, 14 Nov 2005 00:51:29 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@suse.cz>
-In-Reply-To: <7vwtjb4vc4.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	Mon, 14 Nov 2005 03:57:14 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id D3E6A6BCBE; Mon, 14 Nov 2005 09:57:12 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vr79j1wfl.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11774>
 
-On 11/14/05, Junio C Hamano <junkio@cox.net> wrote:
-> It shouldn't be too tricky to enhance "git am" (git-apply called
-> at around line 49 in it) to grok binary differences for this
-> purpose, because you would have both pre- and post-image blob in
-> your object database, because the patch is being used only to
-> replay what you have in your reository, and it records their
-> abbreviated SHA1 name.
+Junio C Hamano wrote:
+> Andreas Ericsson <ae@op5.se> writes:
+> 
+> 
+>>git-email; This one only uses Email::Valid->address(), so I'll import 
+>>that function from the perl module so this dependency can be dropped and 
+>>git-send-email can be in the 'git' package.
+> 
+> 
+> Hmph.  This should have occurred to somebody when we did the same
+> with subprocess.py, but obviously it went unnoticed.
+> 
 
-I'm curious. What would be the advantages of this over git-read-tree
--m for use within a single repo? I keep thinking that I need an
-intra-repo way of doing it (arguably faster and more reliable),
-instead of git-format-patch|git-am, which is less reliable and slower.
+Apparently it's not so easy. The Email::Valid thing contains a regex 
+some 5000 chars long. I personally think it's a fair bit overkill for 
+the purpose of send-email so we could well do with a much simpler 
+verification.
 
-OTOH,  if this is heading towards teaching git-am how to apply changes
-to binary files based on known SHA1s, this will give birth to a type
-of patch that applies only if you have the objects beforehand. Is that
-enough to get by? Perhaps we need a format to fully describe binary
-files?
-
-> I've never felt need to "merge" the binary files myself and had
-> never got around doing this, but if you are interested, it would
-> go something like this:
-
-That's quite a bit of C hacking... I'm game for all the Perl and shell
-scripts in git, but I know better than start learning C in _this_
-project with you, Linus and the whole list watching me make the fool
-;-)
-
-So noone hacks this bit of C you are proposing I'll eventually get
-something done with cg-update and git-rebase.
-
-In the meantime, the user experience of working with a small team and
-a shared repo has improved significantly by switching from cg-update
-to cg-fetch && git-rebase origin. So much so that I suspect that it'd
-be a big win for cg-update to default to rebase on merges from
-'origin'.
-
-cheers,
+> 
+>>Programs introducing obscene or plain weird dependencies (cvsimport, 
+>>svnimport) can be put into their own package, but we should really try 
+>>to keep those extra packages to a minimum and simply force users who 
+>>want all the fluffy niceties of the 'git' package to install whatever's 
+>>required (or install with --nodeps, or from source, or...).
+> 
+> 
+> I am not so sure about that.  Why should the number of packages
+> matter?
 
 
-martin
+Because it's a nuisance to keep track of them.
+
+
+>  We could argue that the current splitting of RPM
+> packages is half-done in that sense --- we lack the "tying
+> together" package which itself is empty but depends on
+> subpackages that implements common client-side.  Call that
+> git-scm (or "git") and have the end users install it, then it
+> would pull what it depends on along with it.  No?
+> 
+
+Isn't this exactly what I suggested (apart from git-scm)? client-side 
+stuff goes in "git", basic functionality (server side stuff) in git-core 
+and git-* for special functionality introducing odd dependencies (cvs, 
+svn, http).
+
+Since all packages would require git-core we can tack everything that 
+doesn't require anything special in there and server-side installs will 
+be smooth as you please.
+
+This change should be done before 1.0 though, since people will probably 
+expect some sort of package naming stability later.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
