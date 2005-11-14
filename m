@@ -1,54 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [Question] info/grafts file.
-Date: Mon, 14 Nov 2005 20:59:11 +0100
-Message-ID: <20051114195911.GU30496@pasky.or.cz>
-References: <20051114182019.GA19105@hpsvcnb.fc.hp.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] cg-clean: fix argument processing
+Date: Mon, 14 Nov 2005 15:03:33 -0500
+Message-ID: <1131998613.24084.18.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Nov 14 21:03:21 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Mon Nov 14 21:04:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbkU1-0007DX-Nr
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 20:59:18 +0100
+	id 1EbkYS-0000yS-PE
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 21:03:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932070AbVKNT7O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 14:59:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932071AbVKNT7O
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 14:59:14 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:20147 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932070AbVKNT7N (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 14:59:13 -0500
-Received: (qmail 30338 invoked by uid 2001); 14 Nov 2005 20:59:11 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20051114182019.GA19105@hpsvcnb.fc.hp.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932071AbVKNUDu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 15:03:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932074AbVKNUDu
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 15:03:50 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:46743 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932071AbVKNUDt
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 15:03:49 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EbkYF-0004Gu-9h
+	for git@vger.kernel.org; Mon, 14 Nov 2005 15:03:43 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.54)
+	id 1EbkYA-0005qH-8p; Mon, 14 Nov 2005 15:03:34 -0500
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.4.1 (2.4.1-5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11842>
 
-  Hello,
+cg-clean was broken by the "robustified usage checks".  This patch
+restores the old behavior, i.e. cg-clean reports errors if there is
+anything but switches on the command line.  Empty arguments are rejected
+now as well.
 
-Dear diary, on Mon, Nov 14, 2005 at 07:20:19PM CET, I got a letter
-where Carl Baldwin <cnb@fc.hp.com> said that...
-> A simple question to clarify something in the repository.
-> 
-> What level of support is to be expected for the .git/info/grafts file?
-> I added a grafts file to a repository imported from SVN.  However, when
-> I cloned the repository using git clone -l -s I did not end up with a
-> grafts file in the cloned repository.
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-  grafts are meant to be a purely local thing, private to your current
-repository so that you can extend it in certain way. If you want
-something public and official, that's what the "parent" lines in the
-commit objects are - so you are really better off just rewriting the
-history.
+diff --git a/cg-clean b/cg-clean
+index f680aee..1cc1ae8 100755
+--- a/cg-clean
++++ b/cg-clean
+@@ -44,7 +44,7 @@ while optparse; do
+ 	fi
+ done
+ 
+-[ ${#ARGS[*]} -ge 1 ] || usage
++[ ${#ARGS[*]} = 0 ] || usage
+ 
+ 
+ clean_dirs()
+
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Regards,
+Pavel Roskin
