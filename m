@@ -1,50 +1,58 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [ANNOUNCE] GIT 0.99.9g
-Date: Mon, 14 Nov 2005 10:32:26 +0100
-Message-ID: <20051114093226.GS30496@pasky.or.cz>
-References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net> <43730E39.6030601@pobox.com> <7v64qzni9c.fsf@assigned-by-dhcp.cox.net> <4375DD4A.5050103@op5.se> <7vwtjb3c4i.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Bugfix: stop if directory already exists
+Date: Mon, 14 Nov 2005 10:37:24 +0100
+Message-ID: <43785AD4.7020201@op5.se>
+References: <200511131503.32078.Josef.Weidendorfer@gmx.de> <7vpsp3zjwm.fsf@assigned-by-dhcp.cox.net> <200511141029.18256.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 14 10:32:58 2005
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Mon Nov 14 10:40:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbahU-0002v3-Ih
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 10:32:32 +0100
+	id 1EbamH-0005UY-Pr
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 10:37:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751045AbVKNJca (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 04:32:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbVKNJc3
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 04:32:29 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:33463 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751045AbVKNJc3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 04:32:29 -0500
-Received: (qmail 27137 invoked by uid 2001); 14 Nov 2005 10:32:26 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vwtjb3c4i.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1750944AbVKNJh0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 14 Nov 2005 04:37:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbVKNJh0
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 04:37:26 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:43968 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750944AbVKNJh0
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 04:37:26 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 2CE856BD01
+	for <git@vger.kernel.org>; Mon, 14 Nov 2005 10:37:25 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <200511141029.18256.Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11782>
 
-Dear diary, on Mon, Nov 14, 2005 at 08:46:37AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> BTW, does anybody actually use these commit walkers over SSH?
-> Cogito switched out of it before 0.16r1 if I understand
-> correctly, and git barebone never used it.  It might not be a
-> bad idea to deprecate these altogether, now packed transfer
-> seems to be much nicer.
+Josef Weidendorfer wrote:
+> So just another suggestion: Why not put most of the
+> documentation in a huge "git" man page?
 
-Yes, Cogito switched out of it before 0.16rc1, but there is still plenty
-of users of older Cogito versions. Well, when 0.16 is out, those should
-upgrade anyway, so this could be a nice gentle kick... ;-)
+Becuase it's horrible. I like the fact that they are split up.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+> cvs does this (3601 lines
+> here), all the shells have huge man pages (bash: 4794).
+> We would be in a good tradition ;-)
+>=20
+
+We would be in tradition, but not necessarily a good one. Just because=20
+some stupid swede let some herrings ferment in a tin can some 800 years=
+=20
+ago there's really no need to say "surstr=F6mming! What a clever idea!!=
+"=20
+and actually eat the horrible things.
+
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
