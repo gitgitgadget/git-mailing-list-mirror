@@ -1,62 +1,48 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Simple questions on GIT usage.
-Date: Mon, 14 Nov 2005 17:56:10 +0100
-Message-ID: <4378C1AA.9090209@op5.se>
-References: <cda58cb80511140746w2f691fb8y@mail.gmail.com>	<4378B687.3060701@op5.se> <86iruvxk1i.fsf@blue.stonehenge.com>
+From: Chris Wedgwood <cw@f00f.org>
+Subject: Re: ./configure script prototype
+Date: Mon, 14 Nov 2005 09:45:35 -0800
+Message-ID: <20051114174535.GA25978@taniwha.stupidest.org>
+References: <43788078.4040403@op5.se> <437880AC.3040101@op5.se> <20051114132956.GT30496@pasky.or.cz> <43789FED.7060401@op5.se> <20051114155119.GA23912@taniwha.stupidest.org> <4378B74E.2060208@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 17:58:11 2005
+X-From: git-owner@vger.kernel.org Mon Nov 14 18:46:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ebhct-0005Hs-I8
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 17:56:15 +0100
+	id 1EbiP5-0002sk-T4
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 18:46:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751195AbVKNQ4M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 11:56:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbVKNQ4M
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 11:56:12 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:38851 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751195AbVKNQ4L
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 11:56:11 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 5225E6BD01; Mon, 14 Nov 2005 17:56:10 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-In-Reply-To: <86iruvxk1i.fsf@blue.stonehenge.com>
+	id S1751211AbVKNRps (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 12:45:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbVKNRps
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 12:45:48 -0500
+Received: from ylpvm12-ext.prodigy.net ([207.115.57.43]:42658 "EHLO
+	ylpvm12.prodigy.net") by vger.kernel.org with ESMTP
+	id S1751211AbVKNRpr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 12:45:47 -0500
+Received: from pimout5-ext.prodigy.net (pimout5-int.prodigy.net [207.115.4.21])
+	by ylpvm12.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id jAEHk6in017372
+	for <git@vger.kernel.org>; Mon, 14 Nov 2005 12:46:07 -0500
+X-ORBL: [70.132.51.62]
+Received: from stupidest.org ([70.132.51.62])
+	by pimout5-ext.prodigy.net (8.13.4 outbound domainkey aix/8.13.4) with ESMTP id jAEHjZdL104610;
+	Mon, 14 Nov 2005 12:45:42 -0500
+Received: by taniwha.stupidest.org (Postfix, from userid 38689)
+	id 7D433528F22; Mon, 14 Nov 2005 09:45:35 -0800 (PST)
+To: Andreas Ericsson <ae@op5.se>
+Content-Disposition: inline
+In-Reply-To: <4378B74E.2060208@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11828>
 
-Randal L. Schwartz wrote:
->>>>>>"Andreas" == Andreas Ericsson <ae@op5.se> writes:
-> 
-> 
-> Andreas> man git-branch
-> 
-> Andreas> It will tell you about its -d and -D options.
-> 
-> It will?  My manpage has no -d or -D option for git-branch.
-> 
+On Mon, Nov 14, 2005 at 05:11:58PM +0100, Andreas Ericsson wrote:
 
-Ah. It's the help output that has them. I've submitted a patch to add 
-them to the man-page though, so it should show up soonish.
+> Ach no. The configure script really needs to be portable. POSIX (or
+> SUS or some such) define a minimum syntax that any shell must
+> support when invoked as /bin/sh.
 
-> And I've been looking for something like that too.  If I want to
-> abandon a what-if branch, how do I make sure that the branch and all
-> objects are deleted?
-> 
-
-git branch -D branchname
-git prune
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Then bashism need to go away and it should be test with
+dash/ash/whatever.
