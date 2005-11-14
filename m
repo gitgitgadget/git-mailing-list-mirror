@@ -1,66 +1,52 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Bugfix: stop if directory already exists
-Date: Mon, 14 Nov 2005 11:47:02 +0100
-Message-ID: <43786B26.703@op5.se>
-References: <200511131503.32078.Josef.Weidendorfer@gmx.de> <7vpsp3zjwm.fsf@assigned-by-dhcp.cox.net> <437858A1.9010007@op5.se> <200511141136.19192.Josef.Weidendorfer@gmx.de>
+From: Franck <vagabon.xyz@gmail.com>
+Subject: Can't use gitk.
+Date: Mon, 14 Nov 2005 11:53:39 +0100
+Message-ID: <cda58cb80511140253s92f28e2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Nov 14 11:47:38 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Nov 14 11:56:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ebbrg-0004q3-LJ
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 11:47:09 +0100
+	id 1Ebby3-0007zv-Co
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 11:53:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751073AbVKNKrF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 05:47:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbVKNKrE
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 05:47:04 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:63424 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751073AbVKNKrE
+	id S1751079AbVKNKxl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 05:53:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbVKNKxl
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 05:53:41 -0500
+Received: from zproxy.gmail.com ([64.233.162.194]:36163 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751079AbVKNKxk convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 05:47:04 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id CAF506BCBE
-	for <git@vger.kernel.org>; Mon, 14 Nov 2005 11:47:02 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <200511141136.19192.Josef.Weidendorfer@gmx.de>
+	Mon, 14 Nov 2005 05:53:40 -0500
+Received: by zproxy.gmail.com with SMTP id 14so1234251nzn
+        for <git@vger.kernel.org>; Mon, 14 Nov 2005 02:53:39 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=OEWIIXMlC646MmVEvJgoaVPvLnbyAlx1OSKF8HLn0c35VFVUC4dC/yzU6KIAs8bh1VQ1Cnw5G4ezUYP606EQC9orY9q8EelitgHfFT1zyEr0aLHBMJAIUV5mIA22mGRCGwuPgHAdAcuWp6N0/tWoJsGd+qHpcZgPbjcCvGeNTzw=
+Received: by 10.36.224.48 with SMTP id w48mr1725599nzg;
+        Mon, 14 Nov 2005 02:53:39 -0800 (PST)
+Received: by 10.36.47.8 with HTTP; Mon, 14 Nov 2005 02:53:39 -0800 (PST)
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11787>
 
-Josef Weidendorfer wrote:
-> On Monday 14 November 2005 10:28, Andreas Ericsson wrote:
-> 
->>But we name them differently, as hpa pointed out some week ago.
->>
->>When I see "usage: <prog> <command>" I expect to find the info in "man 
->><prog>". Soon, this will work to get the right page
->>
->>	git --help <command>
-> 
-> 
-> This is a nice feature, but still needs educating the user.
+Hi,
 
-This feature goes away with the huge man-page.
+I'm trying to use gitk --all command but it fails like this:
 
-> I think that the idea of a huge git man page is not that bad; for sure,
-> it can be created automatically.
-> 
-> A huge man page helps searching a command name (Ah, what was the
-> command to see commit logs per file?  What is the counterpart of
-> "cvs update" called?).
-> 
+"""
+Error executing git-rev-list: couldn't execute "git-rev-list": no such
+file or directory
+"""
 
-This is already implemented (sort of), but perhaps have both? Or 
-pointers to the other man-pages from the "git" one (as is already sort 
-of done).
+I'm running git on a fedora core 3. Can anybody give me some help ?
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Thanks
+--
+               Franck
