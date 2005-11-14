@@ -1,54 +1,70 @@
-From: Franck <vagabon.xyz@gmail.com>
-Subject: Question on GIT tutorial.
-Date: Mon, 14 Nov 2005 11:20:23 +0100
-Message-ID: <cda58cb80511140220n26da3edm@mail.gmail.com>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: Balanced packing strategy
+Date: Mon, 14 Nov 2005 11:24:35 +0100
+Message-ID: <200511141124.35429.Josef.Weidendorfer@gmx.de>
+References: <W4340426396265721131944586@webmail12>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Nov 14 11:23:16 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Craig Schlenter" <craig@codefountain.com>,
+	"Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Nov 14 11:26:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbbS1-0001B4-Tm
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 11:20:38 +0100
+	id 1EbbW0-0003bP-5G
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 11:24:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751067AbVKNKUZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 05:20:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751069AbVKNKUZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 05:20:25 -0500
-Received: from zproxy.gmail.com ([64.233.162.198]:2202 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751067AbVKNKUY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 05:20:24 -0500
-Received: by zproxy.gmail.com with SMTP id 14so1227642nzn
-        for <git@vger.kernel.org>; Mon, 14 Nov 2005 02:20:23 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=FWfoLUVWN+8GrwdtepE+zT+0RmJl2YJOyinrxj5z4BP8C0vm5G8keg6B9lUEhxl4coCWQ1hRAWOKD3mXMYoBThSCEXrGtqHQJ5fLDRdD3tFUIZ3dJajjVQk7fumkEZA7/eEmiy0PA+OxGvF+K+1XVKacHjtDygu+LcHqLy5QgqQ=
-Received: by 10.36.39.14 with SMTP id m14mr3952995nzm;
-        Mon, 14 Nov 2005 02:20:23 -0800 (PST)
-Received: by 10.36.47.8 with HTTP; Mon, 14 Nov 2005 02:20:23 -0800 (PST)
-To: Git Mailing List <git@vger.kernel.org>
+	id S1751056AbVKNKYl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 05:24:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751057AbVKNKYk
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 05:24:40 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:61061 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1751044AbVKNKYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 05:24:40 -0500
+Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
+	by mail.in.tum.de (Postfix) with ESMTP id F179027E6;
+	Mon, 14 Nov 2005 11:24:36 +0100 (MET)
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+In-Reply-To: <W4340426396265721131944586@webmail12>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11784>
 
-Hi,
+On Monday 14 November 2005 06:03, Craig Schlenter wrote:
+> Hi
+> 
+> > From: Josef Weidendorfer [mailto:Josef.Weidendorfer@gmx.de]
+> > [snip]
+> > AFAICS, the git native protocol (which is nothing more than a pack itself
+> > for each transfer) even has this problem, too: If you are updating every
+> > day via git native, the sum of transfered bytes in a month will be a
+> > multiple of one git transfer for all the month's changes.
+> 
+> Interesting ... is this because in a bigger pack the compression will
+> be better as there is probably more stuff to "delta" against?
 
-I have a question about the GIT tutorial. At page 21, there is a
-description of "subsystem maintainer" work cycle, I don't understand
-why point 3 is needed. This point tells:
+No, it is because of the self-containment of git packs: Deltas (storing
+differences instead of full file content) are only allowed to other
+objects in the same pack. The self-containment is a safety measure: you
+do not want to have dependencies to the outside, because this would
+destroy the contents of a pack by changing/removing another file.
 
-"""
-Copy over the packed files from "project lead" public repository to
-your public repository.
-"""
+So if the changes of a day are 100 oneliners to different files, the pack
+has to contain the full content of the 100 files. With incremental
+packing, you would probably add only the 100 oneliners (ie. deltas) at end
+of the pack, because the full file contents have to be in the pack if there
+was a change to them recorded in the pack previously. And this probability
+is higher if the pack contains a larger history of the project.
 
-Why is it needed ?
+Back to the example: By doing a git transfer every day, you always will
+transfer the full contents of files which where changed on this day, because
+git protocol transfers self-contained packs.
 
-Thanks
---
-               Franck
+Josef
