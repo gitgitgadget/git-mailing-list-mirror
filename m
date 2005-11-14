@@ -1,74 +1,76 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Offtopic [Re: Can't use gitk.]
-Date: Mon, 14 Nov 2005 10:24:10 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511141005590.3263@g5.osdl.org>
-References: <cda58cb80511140253s92f28e2g@mail.gmail.com>  <437870AF.8060607@op5.se>
-  <cda58cb80511140322v686e4ee0g@mail.gmail.com>  <43787831.3030404@op5.se>
- <cda58cb80511140355q1add0ba5n@mail.gmail.com>
+From: Carl Baldwin <cnb@fc.hp.com>
+Subject: [RFC] Not grabbing ALL branches and tags with git clone
+Date: Mon, 14 Nov 2005 11:26:16 -0700
+Organization: Hewlett Packard
+Message-ID: <20051114182616.GB19105@hpsvcnb.fc.hp.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="21872808-268129498-1131992650=:3263"
-Cc: Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 19:28:33 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Nov 14 19:29:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ebj09-000467-FV
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 19:24:21 +0100
+	id 1Ebj24-0004sw-Mx
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 19:26:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751224AbVKNSYR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 13:24:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbVKNSYR
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 13:24:17 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:17880 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751224AbVKNSYP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 13:24:15 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAEIOBnO024569
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 14 Nov 2005 10:24:12 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAEIOAj0021306;
-	Mon, 14 Nov 2005 10:24:11 -0800
-To: Franck <vagabon.xyz@gmail.com>
-In-Reply-To: <cda58cb80511140355q1add0ba5n@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751226AbVKNS0R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 13:26:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbVKNS0R
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 13:26:17 -0500
+Received: from atlrel6.hp.com ([156.153.255.205]:54675 "EHLO atlrel6.hp.com")
+	by vger.kernel.org with ESMTP id S1751226AbVKNS0Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 13:26:16 -0500
+Received: from smtp2.fc.hp.com (smtp.fc.hp.com [15.15.136.253])
+	by atlrel6.hp.com (Postfix) with ESMTP id 5CA829D30
+	for <git@vger.kernel.org>; Mon, 14 Nov 2005 13:26:16 -0500 (EST)
+Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
+	by smtp2.fc.hp.com (Postfix) with ESMTP id 314EE41E1C8
+	for <git@vger.kernel.org>; Mon, 14 Nov 2005 18:26:16 +0000 (UTC)
+Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
+	id 25690B614; Mon, 14 Nov 2005 11:26:16 -0700 (MST)
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+X-Origin: hpsvcnb.fc.hp.com
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11833>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Greetings,
 
---21872808-268129498-1131992650=:3263
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Lately, I've found that 'git clone' gives me more than what I want.
+Especially when there are a lot of branches and tags in the remote
+repository.
 
+I have found myself doing something like the following in most cases.
 
+% mkdir work && cd work
+% git init-db
+% git fetch <url> <refspec>
+% git checkout -f -b master <branch>
 
-On Mon, 14 Nov 2005, Franck wrote:
-> 
-> oops, sorry Andreas for that ! I use to spelling this name without 's'
-> that's why I did the mistake I think.
+Usually, I will use a file in .git/remotes but you get the idea.  I was
+thinking that it might make sense to make git clone able to do this.
+Change the usage of git clone so that it looks like this:
 
-In Finland and Sweden Andrea without the "s" is a girls name, while 
-Andreas with the "s" (or André without "-as") is a boy.
+git clone [-l [-s]] [-q] [-u <upload-pack>] [-n] <repo> <dir> [<refspec>] ...
 
-It's not even very rare. "Andrea" was the 84th most popular female name in 
-Sweden in 2000.
+git clone would behave exactly the same way if no refspec were given but
+if a refspec (or multiple refspecs) were given on the command line then
+git clone would behave more like my series of three commands above.
 
-It can be confusing, since in Italy (and, I think, southern Germany and 
-much of Eastern Europe), "Andrea" is a boy, and in fact, the name 
-originally comes from the Greek meaning "man".
+I haven't looked at what it would take to patch git clone for this
+purpose.  Just wanted to see what you thought.
 
-In the rest of the world, Andrea seems to mostly female, but it probably 
-depends on where the cultural influences come from.
+Cheers,
+Carl
 
-So leaving off the "s" can be very strange to the recipient.
-
-			Linus
---21872808-268129498-1131992650=:3263--
+-- 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Carl Baldwin                        Systems VLSI Laboratory
+ Hewlett Packard Company
+ MS 88                               work: 970 898-1523
+ 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
+ Fort Collins, CO 80525              home: Carl@ecBaldwin.net
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
