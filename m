@@ -1,63 +1,89 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Franck <vagabon.xyz@gmail.com>
 Subject: Re: Can't use gitk.
-Date: Mon, 14 Nov 2005 12:10:39 +0100
-Message-ID: <437870AF.8060607@op5.se>
+Date: Mon, 14 Nov 2005 12:22:12 +0100
+Message-ID: <cda58cb80511140322v686e4ee0g@mail.gmail.com>
 References: <cda58cb80511140253s92f28e2g@mail.gmail.com>
+	 <437870AF.8060607@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 12:12:56 2005
+X-From: git-owner@vger.kernel.org Mon Nov 14 12:24:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbcEr-00083P-0K
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 12:11:05 +0100
+	id 1EbcPh-0005uK-6r
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 12:22:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750907AbVKNLKn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 06:10:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbVKNLKn
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 06:10:43 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:3521 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S1750907AbVKNLKn (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 06:10:43 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 620226BCBE; Mon, 14 Nov 2005 12:10:40 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Franck <vagabon.xyz@gmail.com>
-In-Reply-To: <cda58cb80511140253s92f28e2g@mail.gmail.com>
+	id S1751081AbVKNLWO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 06:22:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbVKNLWN
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 06:22:13 -0500
+Received: from zproxy.gmail.com ([64.233.162.195]:21722 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751081AbVKNLWN convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 06:22:13 -0500
+Received: by zproxy.gmail.com with SMTP id 14so1239579nzn
+        for <git@vger.kernel.org>; Mon, 14 Nov 2005 03:22:12 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=d3OB4QQOGQzZ313V8KT2UXxgd+o2VeNx+Hhy9MbG1ly8drgiMVNuSuXM5kfUpCtTbOpuciYgWoxGyQBk0+FUiDgDdX0thdpHu6lXa5NXyEbVQwD9qukj1KdWMBd0F1BNT4eHqmI6drCJYIyGAGQcWAgRHBSOhEt8f4CFpnkWv6Q=
+Received: by 10.36.100.4 with SMTP id x4mr1612886nzb;
+        Mon, 14 Nov 2005 03:22:12 -0800 (PST)
+Received: by 10.36.47.8 with HTTP; Mon, 14 Nov 2005 03:22:12 -0800 (PST)
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <437870AF.8060607@op5.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11789>
 
-Franck wrote:
-> Hi,
-> 
-> I'm trying to use gitk --all command but it fails like this:
-> 
-> """
-> Error executing git-rev-list: couldn't execute "git-rev-list": no such
-> file or directory
-> """
-> 
+Hi Andrea
 
-Is git-rev-list in your $PATH?
-Did you compile (and/or install) with
+2005/11/14, Andreas Ericsson <ae@op5.se>:
+> Franck wrote:
+> > Hi,
+> >
+> > I'm trying to use gitk --all command but it fails like this:
+> >
+> > """
+> > Error executing git-rev-list: couldn't execute "git-rev-list": no such
+> > file or directory
+> > """
+> >
+>
+> Is git-rev-list in your $PATH?
 
-	make NO_OPENSSL=YesPlease
-	make NO_OPENSSL=YesPlease install
+yes:
+            # git-rev-list HEAD
+            3f1d5f26509defe2f691f5e94a2848848d1ba3a0
+            cd9a0ae21e015cc25a0ea98169451a59d49c0909
+            538310ad38629a1c1f983d982e52b568bc1dbe79
 
-Do other git commands work?
+> Did you compile (and/or install) with
+>
+>         make NO_OPENSSL=YesPlease
+>         make NO_OPENSSL=YesPlease install
+>
 
-> I'm running git on a fedora core 3. Can anybody give me some help ?
-> 
+nope I just did: "make; make install". I tried what you suggested but
+it's still failing the same way...
 
-Trying to, but a bit more verbosity in the error report wouldn't hurt.
+> Do other git commands work?
+>
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+yes, at least some other commands like git-diff-xxx, git-checkout....
+
+> > I'm running git on a fedora core 3. Can anybody give me some help ?
+> >
+>
+> Trying to, but a bit more verbosity in the error report wouldn't hurt.
+>
+
+I'm usig git v0.99.9h
+
+Thanks
+--
+               Franck
