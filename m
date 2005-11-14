@@ -1,71 +1,53 @@
-From: Franck <vagabon.xyz@gmail.com>
-Subject: Re: Can't use gitk.
-Date: Mon, 14 Nov 2005 15:31:20 +0100
-Message-ID: <cda58cb80511140631n46fdce52n@mail.gmail.com>
-References: <cda58cb80511140253s92f28e2g@mail.gmail.com>
-	 <437870AF.8060607@op5.se>
-	 <cda58cb80511140322v686e4ee0g@mail.gmail.com>
-	 <43787831.3030404@op5.se>
-	 <cda58cb80511140355q1add0ba5n@mail.gmail.com>
-	 <43787E6E.8030702@op5.se>
-	 <cda58cb80511140600k2c0188c4i@mail.gmail.com>
-	 <59a6e5830511140604o12af40fdp1b05cc84962d5903@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: ./configure script prototype
+Date: Mon, 14 Nov 2005 15:32:13 +0100
+Message-ID: <43789FED.7060401@op5.se>
+References: <43788078.4040403@op5.se> <437880AC.3040101@op5.se> <20051114132956.GT30496@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 15:35:18 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Nov 14 15:36:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbfN5-0002Y8-SG
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 15:31:48 +0100
+	id 1EbfNf-0002pS-E3
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 15:32:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751132AbVKNObV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 09:31:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbVKNObV
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 09:31:21 -0500
-Received: from zproxy.gmail.com ([64.233.162.200]:10825 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751132AbVKNObV convert rfc822-to-8bit
+	id S1751133AbVKNOcP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 09:32:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbVKNOcP
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 09:32:15 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:15810 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751133AbVKNOcP
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 09:31:21 -0500
-Received: by zproxy.gmail.com with SMTP id 14so1281697nzn
-        for <git@vger.kernel.org>; Mon, 14 Nov 2005 06:31:20 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UE3bF8yLsRlF22f/oyKjplXoG7auwhIE6t0AZgTdaCbxJG2s3ANhYqVQTvSMgYBlSXDIhgM6heJvhwhmsJ87r7ToBx1FtKqvZ3X/HumxRDKveRM4IzNDEqrZ96BCRb5iq9HWzY9CbZCO+QTzfQOEnuh6wL2aSYYtZJRVvBlqyBE=
-Received: by 10.36.247.78 with SMTP id u78mr4159347nzh;
-        Mon, 14 Nov 2005 06:31:20 -0800 (PST)
-Received: by 10.36.47.8 with HTTP; Mon, 14 Nov 2005 06:31:20 -0800 (PST)
-To: Wayne Scott <wsc9tt@gmail.com>
-In-Reply-To: <59a6e5830511140604o12af40fdp1b05cc84962d5903@mail.gmail.com>
-Content-Disposition: inline
+	Mon, 14 Nov 2005 09:32:15 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id BEB326BD00
+	for <git@vger.kernel.org>; Mon, 14 Nov 2005 15:32:13 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <20051114132956.GT30496@pasky.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11802>
 
-2005/11/14, Wayne Scott <wsc9tt@gmail.com>:
-> Probably you need to fix your .profile or .bashrc.   Set your PATH
-> unconditionally and not just for interactive shells. In general
-> anytime you make some setup in your shell conditional on being
-> interactive it is just asking for problems.
->
-> Test like this:
->    ssh localhost 'echo $PATH'
->
+Petr Baudis wrote:
+> Dear diary, on Mon, Nov 14, 2005 at 01:18:52PM CET, I got a letter
+> where Andreas Ericsson <ae@op5.se> said that...
+> 
+>>		--prefix=*)
+>>			prefix=${1##*=}
+> 
+> 
+> Aren't those heavy bashisms?
+> 
 
-well I found a fix, but I don't know why it actually fixes things :)
+Dunno. I only know bash-scripting, really. I'll replace them with some 
+sed thing instead.
 
-I replaced in .bash_profile
-        PATH=~/bin:$PATH
-by
-        PATH=$HOME/bin:$PATH
-
-Any ideas ?
-
-Thanks
---
-               Franck
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
