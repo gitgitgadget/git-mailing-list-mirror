@@ -1,38 +1,49 @@
-From: Kevin Geiss <kevin@desertsol.com>
-Subject: Re: eth
-Date: Mon, 14 Nov 2005 09:47:37 -0700
-Message-ID: <20051114164737.GG9131@raven.localdomain>
-References: <20051114164047.GB9131@raven.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: martin.langhoff@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 14 17:51:50 2005
+From: Chuck Lever <cel@netapp.com>
+Subject: [PATCH 4/4] Fix a typo in the "add" command's documentation
+Date: Mon, 14 Nov 2005 11:51:02 -0500
+Message-ID: <20051114165101.22202.91257.stgit@dexter.citi.umich.edu>
+References: <20051114165007.22202.69803.stgit@dexter.citi.umich.edu>
+X-From: git-owner@vger.kernel.org Mon Nov 14 17:53:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbhUb-00015d-Bh
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 17:47:42 +0100
+	id 1EbhY0-0002xN-67
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 17:51:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751188AbVKNQri (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 11:47:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbVKNQri
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 11:47:38 -0500
-Received: from 12-219-167-192.client.mchsi.com ([12.219.167.192]:39883 "EHLO
-	desertsol.com") by vger.kernel.org with ESMTP id S1751188AbVKNQri
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 11:47:38 -0500
-Received: from kevin by desertsol.com with local (Exim 4.50)
-	id 1EbhUX-0008D0-Ga; Mon, 14 Nov 2005 09:47:37 -0700
-To: Kevin Geiss <kevin@desertsol.com>
-Content-Disposition: inline
-In-Reply-To: <20051114164047.GB9131@raven.localdomain>
-X-PGP-Key: http://www.desertsol.com/~kevin/gpg.txt
-User-Agent: Mutt/1.5.8i
+	id S1751191AbVKNQvE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 11:51:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbVKNQvD
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 11:51:03 -0500
+Received: from citi.umich.edu ([141.211.133.111]:93 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S1751191AbVKNQvC (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 11:51:02 -0500
+Received: from dexter.citi.umich.edu (dexter.citi.umich.edu [141.211.133.33])
+	by citi.umich.edu (Postfix) with ESMTP id E0FB21BB9A
+	for <git@vger.kernel.org>; Mon, 14 Nov 2005 11:51:01 -0500 (EST)
+To: git@vger.kernel.org
+In-Reply-To: <20051114165007.22202.69803.stgit@dexter.citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11821>
 
-oops, I munged up the subject on this one. I resent it with '1/1' in the subject. :(
+Signed-off-by: J. Bruce Fields <bfields@fieldses.org>
+Signed-off-by: Chuck Lever <cel@netapp.com>
+---
 
-On Mon, Nov 14, 2005 at 09:40:47AM -0700, Kevin Geiss wrote:
+ stgit/commands/add.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/stgit/commands/add.py b/stgit/commands/add.py
+index 999ce2b..fc9c5a7 100644
+--- a/stgit/commands/add.py
++++ b/stgit/commands/add.py
+@@ -27,7 +27,7 @@ from stgit import stack, git
+ help = 'add files or directories to the repository'
+ usage = """%prog [options] <files/dirs...>
+ 
+-Add a the files or directories passed as arguments to the
++Add the files or directories passed as arguments to the
+ repository. When a directory name is given, all the files and
+ subdirectories are recursively added."""
+ 
