@@ -1,60 +1,65 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] cg-clean: fix argument processing
-Date: Mon, 14 Nov 2005 15:03:33 -0500
-Message-ID: <1131998613.24084.18.camel@dv>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Show URL in the "Getting <foo> list" http-fetch messages
+Date: Mon, 14 Nov 2005 12:11:46 -0800
+Message-ID: <7vveyvxa4d.fsf@assigned-by-dhcp.cox.net>
+References: <20051112004958.21857.95728.stgit@machine.or.cz>
+	<20051112005803.GZ30496@pasky.or.cz>
+	<7vwtjeis09.fsf@assigned-by-dhcp.cox.net>
+	<20051112172201.GF4051@reactrix.com>
+	<20051114190225.GA3793@reactrix.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 21:04:49 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 14 21:14:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbkYS-0000yS-PE
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 21:03:53 +0100
+	id 1EbkgI-00055y-U9
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 21:11:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932071AbVKNUDu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 15:03:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932074AbVKNUDu
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 15:03:50 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:46743 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932071AbVKNUDt
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 15:03:49 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EbkYF-0004Gu-9h
-	for git@vger.kernel.org; Mon, 14 Nov 2005 15:03:43 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1EbkYA-0005qH-8p; Mon, 14 Nov 2005 15:03:34 -0500
-To: git <git@vger.kernel.org>
-X-Mailer: Evolution 2.4.1 (2.4.1-5) 
+	id S932074AbVKNULt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 15:11:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932076AbVKNULt
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 15:11:49 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:43194 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932074AbVKNULs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 15:11:48 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051114201039.UFTV17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 14 Nov 2005 15:10:39 -0500
+To: Nick Hengeveld <nickh@reactrix.com>
+In-Reply-To: <20051114190225.GA3793@reactrix.com> (Nick Hengeveld's message of
+	"Mon, 14 Nov 2005 11:02:26 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11843>
 
-cg-clean was broken by the "robustified usage checks".  This patch
-restores the old behavior, i.e. cg-clean reports errors if there is
-anything but switches on the command line.  Empty arguments are rejected
-now as well.
+Nick Hengeveld <nickh@reactrix.com> writes:
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
+> On Sat, Nov 12, 2005 at 09:22:02AM -0800, Nick Hengeveld wrote:
+>
+>> This should not be an issue with index requests because they are only
+>> initiated from fetch().  The previous patch to load alternates on demand
+>> added alternate handling to process_curl_messages() so that a 404 for an
+>> object can be handled immediately rather than waiting for the fetch()
+>> call for that object to notice.
+>
+> Seems like it might make sense to handle pack downloads immediately when
+> an object is unavailable rather than waiting for the fetch() call.  It
+> could prevent attempts to download any other objects inside that pack,
+> although queued requests that activate while a pack is downloading
+> would have to wait to see whether the download is successful.
 
-diff --git a/cg-clean b/cg-clean
-index f680aee..1cc1ae8 100755
---- a/cg-clean
-+++ b/cg-clean
-@@ -44,7 +44,7 @@ while optparse; do
- 	fi
- done
- 
--[ ${#ARGS[*]} -ge 1 ] || usage
-+[ ${#ARGS[*]} = 0 ] || usage
- 
- 
- clean_dirs()
-
-
--- 
-Regards,
-Pavel Roskin
+I think that makes sense, and it probably is preferable to make
+them wait than blindly go ahead.  Although we are issuing
+requests in parallel, these simultaneous requests are asking for
+related things (e.g. parent commit objects or the tree object of
+the commit we just saw; blob objects contained in the tree we
+just saw) and are more likely than not to be found in the pack
+being requested.  Losing parallelism while a pack is in transit
+would not be too much of a problem.
