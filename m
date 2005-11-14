@@ -1,37 +1,39 @@
 From: Alex Riesen <raa.lkml@gmail.com>
 Subject: allow git-update-ref create refs with slashes in names
-Date: Mon, 14 Nov 2005 22:59:05 +0100
-Message-ID: <20051114215905.GA5714@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Date: Mon, 14 Nov 2005 23:10:59 +0100
+Message-ID: <20051114221059.GA20233@steel.home>
+References: <20051114215905.GA5714@steel.home>
+Reply-To: Alex Riesen <fork0@users.sourceforge.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Nov 14 23:06:15 2005
+X-From: git-owner@vger.kernel.org Mon Nov 14 23:11:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbmOj-0006xI-3m
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 23:01:57 +0100
+	id 1EbmXh-0002aW-P0
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 23:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932185AbVKNV7h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 16:59:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932176AbVKNV7g
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 16:59:36 -0500
-Received: from devrace.com ([198.63.210.113]:31494 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S932188AbVKNV7b (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 16:59:31 -0500
+	id S932198AbVKNWLK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 17:11:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932199AbVKNWLK
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 17:11:10 -0500
+Received: from devrace.com ([198.63.210.113]:41989 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S932198AbVKNWLJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 17:11:09 -0500
 Received: from tigra.home (p54A0FD16.dip.t-dialin.net [84.160.253.22])
 	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id jAELx6Lp062852;
-	Mon, 14 Nov 2005 15:59:08 -0600 (CST)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id jAEMB3j5063025;
+	Mon, 14 Nov 2005 16:11:04 -0600 (CST)
 	(envelope-from fork0@users.sourceforge.net)
 Received: from steel.home ([192.168.1.2])
 	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1EbmLx-0000KW-00; Mon, 14 Nov 2005 22:59:05 +0100
+	id 1EbmXT-0000KY-00; Mon, 14 Nov 2005 23:10:59 +0100
 Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1EbmLx-0001V9-EU; Mon, 14 Nov 2005 22:59:05 +0100
+	id 1EbmXT-0005GT-K1; Mon, 14 Nov 2005 23:10:59 +0100
 To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20051114215905.GA5714@steel.home>
 User-Agent: Mutt/1.5.6i
 X-Spam-Status: No, score=1.7 required=4.5 tests=AWL,BAYES_50,
 	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
@@ -40,7 +42,10 @@ X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11855>
+
+Sorry for the previuos untested patch, the tradition seem to be
+catching... This one is actualy tested.
 
 Make git-update-ref create references with slashes in them. git-branch
 and git-checkout already support such reference names.
@@ -84,10 +89,20 @@ index 5f98f64..36f7749 100755
 +
  test_done
 diff --git a/update-ref.c b/update-ref.c
-index d79dc52..aac04e6 100644
+index d79dc52..e6fbddb 100644
 --- a/update-ref.c
 +++ b/update-ref.c
-@@ -49,6 +49,8 @@ int main(int argc, char **argv)
+@@ -19,7 +19,8 @@ static int re_verify(const char *path, u
+ int main(int argc, char **argv)
+ {
+ 	char *hex;
+-	const char *refname, *value, *oldval, *path, *lockpath;
++	const char *refname, *value, *oldval, *path;
++	char *lockpath;
+ 	unsigned char sha1[20], oldsha1[20], currsha1[20];
+ 	int fd, written;
+ 
+@@ -49,6 +50,8 @@ int main(int argc, char **argv)
  	}
  	path = strdup(path);
  	lockpath = mkpath("%s.lock", path);
