@@ -1,59 +1,79 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: [PATCH] Show URL in the "Getting <foo> list" http-fetch messages
-Date: Mon, 14 Nov 2005 11:02:26 -0800
-Message-ID: <20051114190225.GA3793@reactrix.com>
-References: <20051112004958.21857.95728.stgit@machine.or.cz> <20051112005803.GZ30496@pasky.or.cz> <7vwtjeis09.fsf@assigned-by-dhcp.cox.net> <20051112172201.GF4051@reactrix.com>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: ./configure script prototype
+Date: Mon, 14 Nov 2005 10:59:49 -0800
+Message-ID: <20051114185949.GE20749@ca-server1.us.oracle.com>
+References: <43788078.4040403@op5.se> <437880AC.3040101@op5.se> <20051114132956.GT30496@pasky.or.cz> <20051114181958.GD20749@ca-server1.us.oracle.com> <Pine.LNX.4.64.0511141027380.3263@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 14 20:05:10 2005
+Cc: Petr Baudis <pasky@suse.cz>, Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 14 20:05:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbjbQ-0005w8-8X
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 20:02:52 +0100
+	id 1EbjYm-0004Vo-TZ
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 20:00:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751233AbVKNTCt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 14:02:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbVKNTCs
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 14:02:48 -0500
-Received: from 193.37.26.69.virtela.com ([69.26.37.193]:22198 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1751233AbVKNTCs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 14:02:48 -0500
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jAEJ2QEr006772;
-	Mon, 14 Nov 2005 11:02:26 -0800
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jAEJ2QDP006770;
-	Mon, 14 Nov 2005 11:02:26 -0800
-To: Junio C Hamano <junkio@cox.net>
+	id S1751239AbVKNTAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 14:00:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbVKNTAF
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 14:00:05 -0500
+Received: from rgminet01.oracle.com ([148.87.122.30]:9854 "EHLO
+	rgminet01.oracle.com") by vger.kernel.org with ESMTP
+	id S1751239AbVKNTAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 14:00:04 -0500
+Received: from rgmsgw01.us.oracle.com (rgmsgw01.us.oracle.com [138.1.186.51])
+	by rgminet01.oracle.com (Switch-3.1.6/Switch-3.1.6) with ESMTP id jAEIxpuw024586;
+	Mon, 14 Nov 2005 11:59:51 -0700
+Received: from rgmsgw01.us.oracle.com (localhost.localdomain [127.0.0.1])
+	by rgmsgw01.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id jAEIxo8T005181;
+	Mon, 14 Nov 2005 11:59:50 -0700
+Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
+	by rgmsgw01.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id jAEIxnmJ005153
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 14 Nov 2005 11:59:50 -0700
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.53)
+	id 1EbjYT-0008F7-R8; Mon, 14 Nov 2005 10:59:49 -0800
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <20051112172201.GF4051@reactrix.com>
-User-Agent: Mutt/1.4.1i
+In-Reply-To: <Pine.LNX.4.64.0511141027380.3263@g5.osdl.org>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
+User-Agent: Mutt/1.5.11
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11838>
 
-On Sat, Nov 12, 2005 at 09:22:02AM -0800, Nick Hengeveld wrote:
+On Mon, Nov 14, 2005 at 10:39:26AM -0800, Linus Torvalds wrote:
+> > 	${i# and ${i% are POSIX, iirc.
+> 
+> They may be in POSIX, but they sure as h*ll aren't portable.
 
-> This should not be an issue with index requests because they are only
-> initiated from fetch().  The previous patch to load alternates on demand
-> added alternate handling to process_curl_messages() so that a 404 for an
-> object can be handled immediately rather than waiting for the fetch()
-> call for that object to notice.
+	By POSIX I meant POSIX shell, which is ksh.  That's available on
+just about all modern non-free Unices, and we all know bash and zsh are
+compatible with it.
+	But I had no intention of arguing how portable POSIX is, I was
+just trying to describe the minimum breadth of support.  My personal
+experience is that these particular variable forms have worked on Linux,
+Solaris, AIX, Ultrix, IRIX, and the BSDs for, I dunno, eight to ten
+years or so.
+	That said, $(echo | sed), or `echo | sed` for even more
+backwards portability (I bet $() is about as portable as ${i%}), can be
+used to replace the ${i%} forms.
 
-Seems like it might make sense to handle pack downloads immediately when
-an object is unavailable rather than waiting for the fetch() call.  It
-could prevent attempts to download any other objects inside that pack,
-although queued requests that activate while a pack is downloading
-would have to wait to see whether the download is successful.  If such
-an object also exists loose it would prevent a redundant download and if
-not it would at least prevent an unnecessary check and 404.
-
-Thoughts?
+Joel
 
 -- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+
+"I always thought the hardest questions were those I could not answer.
+ Now I know they are the ones I can never ask."
+			- Charlie Watkins
+
+Joel Becker
+Principal Software Developer
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
