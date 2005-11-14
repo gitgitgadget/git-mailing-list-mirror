@@ -1,59 +1,71 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: [Question] info/grafts file.
-Date: Mon, 14 Nov 2005 11:20:19 -0700
-Organization: Hewlett Packard
-Message-ID: <20051114182019.GA19105@hpsvcnb.fc.hp.com>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: ./configure script prototype
+Date: Mon, 14 Nov 2005 10:19:58 -0800
+Message-ID: <20051114181958.GD20749@ca-server1.us.oracle.com>
+References: <43788078.4040403@op5.se> <437880AC.3040101@op5.se> <20051114132956.GT30496@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Nov 14 19:23:26 2005
+Cc: Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 14 19:23:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbiwW-0002U0-R2
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 19:20:37 +0100
+	id 1EbiwW-0002U0-5p
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 19:20:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751221AbVKNSUW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 13:20:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbVKNSUW
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 13:20:22 -0500
-Received: from atlrel6.hp.com ([156.153.255.205]:42123 "EHLO atlrel6.hp.com")
-	by vger.kernel.org with ESMTP id S1751221AbVKNSUU (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 13:20:20 -0500
-Received: from smtp2.fc.hp.com (smtp2b.fc.hp.com [15.15.136.253])
-	by atlrel6.hp.com (Postfix) with ESMTP id 79AE2112F1
-	for <git@vger.kernel.org>; Mon, 14 Nov 2005 13:20:19 -0500 (EST)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp2.fc.hp.com (Postfix) with ESMTP id 40CAA41E220
-	for <git@vger.kernel.org>; Mon, 14 Nov 2005 18:20:19 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 29B50B614; Mon, 14 Nov 2005 11:20:19 -0700 (MST)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
+	id S1751218AbVKNSUK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 13:20:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbVKNSUK
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 13:20:10 -0500
+Received: from rgminet01.oracle.com ([148.87.122.30]:39506 "EHLO
+	rgminet01.oracle.com") by vger.kernel.org with ESMTP
+	id S1751218AbVKNSUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 13:20:08 -0500
+Received: from rgmsgw01.us.oracle.com (rgmsgw01.us.oracle.com [138.1.186.51])
+	by rgminet01.oracle.com (Switch-3.1.6/Switch-3.1.6) with ESMTP id jAEIJxwp012483;
+	Mon, 14 Nov 2005 11:20:00 -0700
+Received: from rgmsgw01.us.oracle.com (localhost.localdomain [127.0.0.1])
+	by rgmsgw01.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id jAEIJxI7028351;
+	Mon, 14 Nov 2005 11:19:59 -0700
+Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
+	by rgmsgw01.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id jAEIJwQc028328
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 14 Nov 2005 11:19:59 -0700
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.53)
+	id 1Ebivu-0007nN-Nu; Mon, 14 Nov 2005 10:19:58 -0800
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-X-Origin: hpsvcnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20051114132956.GT30496@pasky.or.cz>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
+User-Agent: Mutt/1.5.11
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11831>
 
-Greetings,
+On Mon, Nov 14, 2005 at 02:29:56PM +0100, Petr Baudis wrote:
+> Dear diary, on Mon, Nov 14, 2005 at 01:18:52PM CET, I got a letter
+> where Andreas Ericsson <ae@op5.se> said that...
+> > 		--prefix=*)
+> > 			prefix=${1##*=}
 
-A simple question to clarify something in the repository.
+	${i# and ${i% are POSIX, iirc.
 
-What level of support is to be expected for the .git/info/grafts file?
-I added a grafts file to a repository imported from SVN.  However, when
-I cloned the repository using git clone -l -s I did not end up with a
-grafts file in the cloned repository.
-
-Cheers,
-Carl
+Joel
 
 -- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        Systems VLSI Laboratory
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Life's Little Instruction Book #197
+
+	"Don't forget, a person's greatest emotional need is to 
+	 feel appreciated."
+
+Joel Becker
+Principal Software Developer
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
