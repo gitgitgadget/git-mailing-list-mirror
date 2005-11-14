@@ -1,69 +1,64 @@
-From: Thomas Matysik <thomas@matysik.co.nz>
-Subject: Re: [PATCH 1/2] Add expat and expat-devel dependencies (for http-push)
- to RPM spec.
-Date: Mon, 14 Nov 2005 13:29:17 +1300
-Message-ID: <4377DA5D.9090002@matysik.co.nz>
-References: <4376C797.3050600@matysik.co.nz> <Pine.LNX.4.64.0511130942490.3263@g5.osdl.org>
+From: wa1ter@myrealbox.com
+Subject: Re: http protocol, cloning git.git, fails (too many open files)
+Date: Sun, 13 Nov 2005 16:42:33 -0800
+Organization: none
+Message-ID: <Pine.LNX.4.64.0511131625490.32662@x2.ybpnyarg>
+References: <86acg9ijwa.fsf@blue.stonehenge.com>  <7vmzk9e9km.fsf@assigned-by-dhcp.cox.net>
+ <1131926492.14637.5.camel@k9.localnet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 14 01:30:17 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Nov 14 01:46:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbSEI-0000Hw-QY
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 01:29:51 +0100
+	id 1EbSTW-0005Fw-Iq
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 01:45:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750808AbVKNA3b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 Nov 2005 19:29:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750809AbVKNA3b
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 19:29:31 -0500
-Received: from [202.37.90.137] ([202.37.90.137]:59085 "EHLO xena.matysik.co.nz")
-	by vger.kernel.org with ESMTP id S1750808AbVKNA3a (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Nov 2005 19:29:30 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by xena.matysik.co.nz (Postfix) with ESMTP id 19BDD189C69;
-	Mon, 14 Nov 2005 13:29:16 +1300 (NZDT)
-Received: from xena.matysik.co.nz ([127.0.0.1])
- by localhost (xena.matysik.co.nz [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 06953-10; Mon, 14 Nov 2005 13:29:15 +1300 (NZDT)
-Received: from [202.37.90.142] (joxer.matysik.co.nz [202.37.90.142])
-	by xena.matysik.co.nz (Postfix) with ESMTP id 31759189C30;
-	Mon, 14 Nov 2005 13:29:15 +1300 (NZDT)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051011)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511130942490.3263@g5.osdl.org>
-X-Enigmail-Version: 0.92.0.0
-X-Virus-Scanned: by amavisd-new at matysik.co.nz
+	id S1750813AbVKNAp1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Nov 2005 19:45:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750814AbVKNAp1
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Nov 2005 19:45:27 -0500
+Received: from main.gmane.org ([80.91.229.2]:26338 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750813AbVKNAp1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Nov 2005 19:45:27 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EbSRw-0004jv-SF
+	for git@vger.kernel.org; Mon, 14 Nov 2005 01:43:56 +0100
+Received: from adsl-69-234-227-15.dsl.irvnca.pacbell.net ([69.234.227.15])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 14 Nov 2005 01:43:56 +0100
+Received: from wa1ter by adsl-69-234-227-15.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 14 Nov 2005 01:43:56 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-227-15.dsl.irvnca.pacbell.net
+In-Reply-To: <1131926492.14637.5.camel@k9.localnet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11758>
 
-Linus Torvalds wrote:
-> 
-> Quite frankly, I'd really prefer to see the git-core-http as a separate 
-> package.
-> 
-> I think it's ludicrous that people want to split out gitk (because it 
-> wants tcl/tk), but that we then add all of these really obscure 
-> dependencies for the http part. 
 
-Well, splitting out http occurred to me, but personally I don't have a
-problem with installing expat (I'd need it eventually anyway) and I
-figured anyone who did have a problem would say something.  ;-)
 
-The reason for this patch is that the RPM currently fails to build
-without expat-dev.
+On Sun, 13 Nov 2005, walt wrote:
 
-The reason for wanting to split out gitk is that, for a machine where I
-will never run gitk, I think the following dependency list is ludicrous:
+> On Sat, 2005-11-12 at 15:21 -0800, Junio C Hamano wrote:
+> [...]
+> > However, one thing puzzles me.  I just tried to reproduce it by
+> > doing this:
+> >
+> > 	$ rm -fr git-http
+> >         $ ulimit -n 16
+> >         $ git clone http://www.kernel.org/pub/scm/git/git.git git-http
+> >
+> > and it did not fail on my Linux box...
 
- fontconfig
- freetype
- tcl
- tk
- xorg-x11-Mesa-libGL
- xorg-x11-libs
+> I've never seen it on Linux...
+
+Aha!  I do indeed see it on linux with ulimit -n 64 but *only* when I
+do the clone with cg-clone.  When I use 'git clone' it works just fine.
+
+So, what does cogito do differently that accounts for more open files?
