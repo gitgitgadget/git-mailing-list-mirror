@@ -1,60 +1,59 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Command line hint of the day
-Date: Mon, 14 Nov 2005 10:58:34 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511141049410.3263@g5.osdl.org>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: [PATCH] Show URL in the "Getting <foo> list" http-fetch messages
+Date: Mon, 14 Nov 2005 11:02:26 -0800
+Message-ID: <20051114190225.GA3793@reactrix.com>
+References: <20051112004958.21857.95728.stgit@machine.or.cz> <20051112005803.GZ30496@pasky.or.cz> <7vwtjeis09.fsf@assigned-by-dhcp.cox.net> <20051112172201.GF4051@reactrix.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Nov 14 20:00:00 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 14 20:05:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbjXK-0003oT-TM
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 19:58:39 +0100
+	id 1EbjbQ-0005w8-8X
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 20:02:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751238AbVKNS6g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 13:58:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbVKNS6g
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 13:58:36 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:51427 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751238AbVKNS6g (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 13:58:36 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAEIwYnO026462
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
-	for <git@vger.kernel.org>; Mon, 14 Nov 2005 10:58:35 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAEIwYpB023120
-	for <git@vger.kernel.org>; Mon, 14 Nov 2005 10:58:34 -0800
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751233AbVKNTCt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 14:02:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbVKNTCs
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 14:02:48 -0500
+Received: from 193.37.26.69.virtela.com ([69.26.37.193]:22198 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1751233AbVKNTCs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 14:02:48 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jAEJ2QEr006772;
+	Mon, 14 Nov 2005 11:02:26 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jAEJ2QDP006770;
+	Mon, 14 Nov 2005 11:02:26 -0800
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20051112172201.GF4051@reactrix.com>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11837>
 
+On Sat, Nov 12, 2005 at 09:22:02AM -0800, Nick Hengeveld wrote:
 
-So I got a question about ppp in the kernel, and quite frankly, the things 
-I know about ppp can be engraved with a jack-hammer on a grain of rice.
+> This should not be an issue with index requests because they are only
+> initiated from fetch().  The previous patch to load alternates on demand
+> added alternate handling to process_curl_messages() so that a 404 for an
+> object can be handled immediately rather than waiting for the fetch()
+> call for that object to notice.
 
-So what did I do?
+Seems like it might make sense to handle pack downloads immediately when
+an object is unavailable rather than waiting for the fetch() call.  It
+could prevent attempts to download any other objects inside that pack,
+although queued requests that activate while a pack is downloading
+would have to wait to see whether the download is successful.  If such
+an object also exists loose it would prevent a redundant download and if
+not it would at least prevent an unnecessary check and 404.
 
-	git whatchanged $(git-ls-files *ppp*)
+Thoughts?
 
-actually does something useful. It will only look at files that are 
-_currently_ called *ppp*, so you'd not see files that have been deleted, 
-but it does the right thing for what I wanted.
-
-You can also do "git log" or "gitk" instead of "git whatchanged", but the 
-whatchanged thing has the advantage that it can run incrementally. Doing a 
-"git log" ends up figuring out _all_ the commits before it can display 
-them, since it also does the densification etc.
-
-Maybe we should have a git man-page section of "strange but useful 
-examples"? Things people do just because they are useful, but may not be 
-immediately obvious to somebody who comes from CVS-land and uses git as 
-just another old SCM?
-
-		Linus
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
