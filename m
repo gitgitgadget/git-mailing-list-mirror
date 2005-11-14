@@ -1,62 +1,45 @@
 From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Can't use gitk.
-Date: Mon, 14 Nov 2005 13:09:18 +0100
-Message-ID: <43787E6E.8030702@op5.se>
-References: <cda58cb80511140253s92f28e2g@mail.gmail.com>	 <437870AF.8060607@op5.se>	 <cda58cb80511140322v686e4ee0g@mail.gmail.com>	 <43787831.3030404@op5.se> <cda58cb80511140355q1add0ba5n@mail.gmail.com>
+Subject: ./configure script prototype
+Date: Mon, 14 Nov 2005 13:18:00 +0100
+Message-ID: <43788078.4040403@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 14 13:11:24 2005
+X-From: git-owner@vger.kernel.org Mon Nov 14 13:19:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ebd9I-0002IO-9p
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 13:09:24 +0100
+	id 1EbdHn-0006lx-LA
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 13:18:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751099AbVKNMJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 07:09:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751100AbVKNMJU
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 07:09:20 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:20161 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751099AbVKNMJU
+	id S1751104AbVKNMSE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 07:18:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751103AbVKNMSE
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 07:18:04 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:24769 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751104AbVKNMSC
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 07:09:20 -0500
+	Mon, 14 Nov 2005 07:18:02 -0500
 Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id D92446BCBE; Mon, 14 Nov 2005 13:09:18 +0100 (CET)
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 8EC466BCBE
+	for <git@vger.kernel.org>; Mon, 14 Nov 2005 13:18:00 +0100 (CET)
 User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
 X-Accept-Language: en-us, en
-To: Franck <vagabon.xyz@gmail.com>
-In-Reply-To: <cda58cb80511140355q1add0ba5n@mail.gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11793>
 
-Franck wrote:
-> 2005/11/14, Andreas Ericsson <ae@op5.se>:
-> 
->> The default
->>installation directory for git is $HOME/bin which might not necessarily
->>be in the $PATH once "wish" and friends have had their say.
-> 
-> 
-> nope every commands I'm running are not run as root. $HOME/bin is in my path.
-> 
+I've started writing up a configuration script to move some of the logic 
+out of the Makefile and make it a bit easier to enable/disable certain 
+stuff.
 
-Yes, but wish or some such might strip $HOME/bin away from it.
+I'm not exactly fluent in what sh flavours accept what syntax and the 
+uname -m output is a bit of a mystery for some architectures (PowerPC, 
+notably) so the SHA1 method selection stuff might not work.
 
-Try doing
-
-make clean; make prefix=/usr
-sudo make prefix=/usr install
-
-and see if it works.
-
-If it does, some program somewhere is manipulating your $PATH.
-Otherwise I'm at my wits end. Perhaps someone more clever than myself 
-will take a stab at answering tonight when it's daytime in the US.
+Thoughts? Comments? Patches?
 
 -- 
 Andreas Ericsson                   andreas.ericsson@op5.se
