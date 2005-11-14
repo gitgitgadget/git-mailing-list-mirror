@@ -1,49 +1,54 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Command line hint of the day
-Date: Mon, 14 Nov 2005 20:08:11 +0100
-Message-ID: <4378E09B.9010504@op5.se>
-References: <Pine.LNX.4.64.0511141049410.3263@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [Question] info/grafts file.
+Date: Mon, 14 Nov 2005 20:59:11 +0100
+Message-ID: <20051114195911.GU30496@pasky.or.cz>
+References: <20051114182019.GA19105@hpsvcnb.fc.hp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Nov 14 20:10:00 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Nov 14 21:03:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ebjgg-0008Mw-Sx
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 20:08:19 +0100
+	id 1EbkU1-0007DX-Nr
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 20:59:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751231AbVKNTIM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 14:08:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751243AbVKNTIM
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 14:08:12 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:4036 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S1751231AbVKNTIM (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 14:08:12 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 3DD736BD01
-	for <git@vger.kernel.org>; Mon, 14 Nov 2005 20:08:11 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0511141049410.3263@g5.osdl.org>
+	id S932070AbVKNT7O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 14:59:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932071AbVKNT7O
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 14:59:14 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:20147 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932070AbVKNT7N (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 14:59:13 -0500
+Received: (qmail 30338 invoked by uid 2001); 14 Nov 2005 20:59:11 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20051114182019.GA19105@hpsvcnb.fc.hp.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11841>
 
-Linus Torvalds wrote:
-> Maybe we should have a git man-page section of "strange but useful 
-> examples"? Things people do just because they are useful, but may not be 
-> immediately obvious to somebody who comes from CVS-land and uses git as 
-> just another old SCM?
+  Hello,
+
+Dear diary, on Mon, Nov 14, 2005 at 07:20:19PM CET, I got a letter
+where Carl Baldwin <cnb@fc.hp.com> said that...
+> A simple question to clarify something in the repository.
 > 
+> What level of support is to be expected for the .git/info/grafts file?
+> I added a grafts file to a repository imported from SVN.  However, when
+> I cloned the repository using git clone -l -s I did not end up with a
+> grafts file in the cloned repository.
 
-Sounds like a good idea. The sed1liners.txt (sic) has probably saved me 
-several hundred hours of boring and tedious cut'n paste work (or more 
-interesting but still not exactly fun one-shot programming).
+  grafts are meant to be a purely local thing, private to your current
+repository so that you can extend it in certain way. If you want
+something public and official, that's what the "parent" lines in the
+commit objects are - so you are really better off just rewriting the
+history.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
