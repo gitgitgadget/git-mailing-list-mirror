@@ -1,89 +1,97 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: GIT character codecs
-Date: Mon, 14 Nov 2005 08:42:46 +0100
-Message-ID: <20051114074246.GP27727@kiste.smurf.noris.de>
-References: <20051114063126.27817.qmail@web26306.mail.ukl.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [ANNOUNCE] GIT 0.99.9g
+Date: Sun, 13 Nov 2005 23:46:37 -0800
+Message-ID: <7vwtjb3c4i.fsf@assigned-by-dhcp.cox.net>
+References: <7vmzkc2a3e.fsf@assigned-by-dhcp.cox.net>
+	<43730E39.6030601@pobox.com> <7v64qzni9c.fsf@assigned-by-dhcp.cox.net>
+	<4375DD4A.5050103@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="SCOJXUq1iwCn05li"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 14 08:45:05 2005
+X-From: git-owner@vger.kernel.org Mon Nov 14 08:47:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbZ0G-00061K-Sm
-	for gcvg-git@gmane.org; Mon, 14 Nov 2005 08:43:49 +0100
+	id 1EbZ35-0007A8-Pk
+	for gcvg-git@gmane.org; Mon, 14 Nov 2005 08:46:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750957AbVKNHnl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 02:43:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750958AbVKNHnl
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 02:43:41 -0500
-Received: from run.smurf.noris.de ([192.109.102.41]:49850 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S1750956AbVKNHnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Nov 2005 02:43:41 -0500
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1EbYzH-00048i-Et; Mon, 14 Nov 2005 08:42:58 +0100
-Received: (nullmailer pid 661 invoked by uid 501);
-	Mon, 14 Nov 2005 07:42:46 -0000
-To: Marco Costalba <mcostalba@yahoo.it>
-Content-Disposition: inline
-In-Reply-To: <20051114063126.27817.qmail@web26306.mail.ukl.yahoo.com>
-User-Agent: Mutt/1.5.9i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S1750961AbVKNHqk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 02:46:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750958AbVKNHqk
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 02:46:40 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:50149 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1750966AbVKNHqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 02:46:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051114074528.LXIC20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 14 Nov 2005 02:45:28 -0500
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <4375DD4A.5050103@op5.se> (Andreas Ericsson's message of "Sat, 12
+	Nov 2005 13:17:14 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11771>
 
+Andreas Ericsson <ae@op5.se> writes:
 
---SCOJXUq1iwCn05li
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> Also places we execute git-upload-pack and git-receive-pack over
+>> an SSH connection need to be updated to execute 'git' with the
+>> first parameter 'upload-pack' and 'receive-pack' to make sure it
+>> would keep working with older or newer git on the other end.
+>
+> I've cooked up a patch that takes care of this if;
+> 	git daemon
+> is executed (rather than git-daemon)...
 
-Hi,
+Actually I was more worried about these git native protocols
+going over ssh, which is not helped by git-daemon.  I think
+teaching the libdir to git-shell would make sense for "git
+restricted shell" users, but most users coming from ssh to run
+git native protocols would need to have some way of running the
+executable on the other end.
 
-Marco Costalba:
-> >Or, if you want to be super-flexible, just try to decode as UTF-8.
-> >Success? fine -- otherwise use whatever your application's default is
-> >set to, or your local encoding (which may of course also be UTF-8), or
-> >fall back to 8859-15.
->=20
-> How it is possible to test for success?
+My current thinking about this problem is that the handful
+programs that need to run "on the other end" should stay in
+/usr/bin, even after we move most things out of /usr/bin, if
+only to avoid configuration hassles.  They are:
 
-UTF-8 decoding does NOT always succeed.
+	receive-pack, upload-pack
+        ssh-fetch, ssh-pull, ssh-push, ssh-upload
 
-In fact, there is no other 8-bit encoding which decodes as valid UTF-8,
-given real-world text.
+BTW, does anybody actually use these commit walkers over SSH?
+Cogito switched out of it before 0.16r1 if I understand
+correctly, and git barebone never used it.  It might not be a
+bad idea to deprecate these altogether, now packed transfer
+seems to be much nicer.
 
-> The codec could see everything decodable, but It's only from the
-> context, i.e. the user who reads, that it is possible to realize it's
-> the wrong codec. =20
->=20
-True in general, but not with UTF-8 (or ASCII, for that matter ;-).
+BTW^2, git-octopus should be deprecated as well; I am a bit
+reluctant to see git-resolve go but it probably should too.
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-You can fool the people about many things, but only a fool would be foolish
-enough to fool the people about money.
-					-- Italo Bombolini
+> All I really need to finalize it is that name, so It's up to you how 
+> fast you want it. Perhaps we could take a poll?
 
---SCOJXUq1iwCn05li
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+Somehow libdir reminds me of where libraries are installed by
+the Makefile, which usually does not mean executables, and that
+was the reason I mentioned --exec-path.  Although I do not have
+strong preference myself either way, I do not think the list
+cares too much either, so in order not to waste time by
+indecision, let's just say we use this one:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+> The form will be
+> 	exec_path=$(prefix)/lib/git-@@VERSION@@
+> 	GIT_EXEC_PATH
+> 	--exec-path
+>
+> for Makefile, environment and 'git', respectively. Substitute the 
+> obvious part with whatever you prefer.
 
-iD8DBQFDeD/28+hUANcKr/kRAmpyAKCAaq7QjWN5Gue78RwklDYm05NT3gCgneCD
-/E9RYzgfNNkNpszmnAbHjDw=
-=lPPw
------END PGP SIGNATURE-----
+> ..., although I'm implementing Linus' idea of prepending the
+> GIT_EXEC_PATH to $PATH so the porcelainish scripts in git-core
+> shouldn't have to do it.
 
---SCOJXUq1iwCn05li--
+This sounds good to me; let's go with it.  Thanks.
