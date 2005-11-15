@@ -1,78 +1,78 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] Disable USE_SYMLINK_HEAD by default
-Date: Tue, 15 Nov 2005 12:06:15 -0500
-Message-ID: <1132074375.25640.47.camel@dv>
-References: <1132034390.22207.18.camel@dv>
-	 <7vveyuqto5.fsf@assigned-by-dhcp.cox.net> <1132042427.3512.50.camel@dv>
-	 <7vpsp2qpx4.fsf@assigned-by-dhcp.cox.net>
-	 <7vd5l2mco1.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0511151207070.21671@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <20051115121854.GV30496@pasky.or.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [Question] info/grafts file.
+Date: Tue, 15 Nov 2005 09:16:00 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511150910230.3945@g5.osdl.org>
+References: <20051114182019.GA19105@hpsvcnb.fc.hp.com>
+ <7vhdafx81m.fsf@assigned-by-dhcp.cox.net> <20051115000349.GA32136@hpsvcnb.fc.hp.com>
+ <200511150831.40463.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 15 18:12:14 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 15 18:19:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ec4HY-0006wh-VS
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 18:07:45 +0100
+	id 1Ec4Pq-0001oh-0D
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 18:16:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964957AbVKORHm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 12:07:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964966AbVKORHm
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 12:07:42 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:63382 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S964957AbVKORHl
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2005 12:07:41 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1Ec4HM-00025i-SH
-	for git@vger.kernel.org; Tue, 15 Nov 2005 12:07:39 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1Ec4G7-00072P-Eo; Tue, 15 Nov 2005 12:06:15 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051115121854.GV30496@pasky.or.cz>
-X-Mailer: Evolution 2.4.1 (2.4.1-5) 
+	id S1751425AbVKORQP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 12:16:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbVKORQP
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 12:16:15 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:55439 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751425AbVKORQO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 12:16:14 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAFHG1nO021189
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 15 Nov 2005 09:16:02 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAFHG08d009449;
+	Tue, 15 Nov 2005 09:16:00 -0800
+To: Alan Chandler <alan@chandlerfamily.org.uk>
+In-Reply-To: <200511150831.40463.alan@chandlerfamily.org.uk>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11920>
 
-On Tue, 2005-11-15 at 13:18 +0100, Petr Baudis wrote:
-> Dear diary, on Tue, Nov 15, 2005 at 12:09:42PM CET, I got a letter
-> where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> > I think Junio is right: we should not force everybody not to use symlinks, 
-> > only because there happens to be VFAT-, SMB- or HTTP-shared repositories. 
-> > As Junio says, if there are people experiencing problems because they lack 
-> > symbolic links, they should fix it.
+
+
+On Tue, 15 Nov 2005, Alan Chandler wrote:
+
+> On Tuesday 15 Nov 2005 00:03, Carl Baldwin wrote:
+> > This is fine, I just needed to know.
+> >
+> > How hard is it to, in a generic way, take a grafts file and reconstruct
+> > commits to include the parents in the graft file in the actual tree?  I
+> > am wondering because I couldn't, after much work, get git-svnimport to
+> > find my merges correctly.  So, I am needing to hand-graft some merges in
+> > to make things right.  Any suggestions?  I could try to figure something
+> > out if I can find some time.  I'm good with graph traversals and such.
+> >
 > 
-> I'm ambivalent here. I would like to have just a single behaviour here,
-> since the symbolic ref otherwise really does not get much testing. But I
-> can also understand that we are breaking tools here.
-> 
-> Still, for the reason above, I think we should aim at the symbolic refs
-> being the canonical format in the next major release after 1.0, giving
-> users time to fix their tools. I can see no advantage in symlinks except
-> the backwards compatibility - speed argument was presented, but I don't
-> buy that until I see hard data supporting that.
+> I am interested in that question as well.  If you recall I was asking on this 
+> list about a week ago how to lose history (because it was irrelevent).
 
-I planned to write about symrefs long ago, and probably I waited for too
-long.  I still hope it will be the default for 1.0 release, but if not,
-I hope the next release won't be too far away.
+I think you should be able to use "git-convert-objects" to do both history 
+pruning and history adding.
 
-> > On the other hand, I think it would be useful to be able to configure the 
-> > behaviour via .git/config.
-> 
-> Yes, I would very much like to have this. I still want to go
-> symrefs-only for public repositories created for cg-admin-setuprepo, so
-> that fetching over HTTP works properly.
+It would need a bit of work: right now "convert_commit()" parses the 
+commit 100% by hand, and doesn't care about the grafts file. But that is 
+where such a conversion would be done.
 
-Agreed.  By the way, the symref doesn't need to be called HEAD - it
-could be "trunk" or "main" or "default-branch".
+Right now "convert_commit()" actually does the first conversion in-place 
+(because the size of the head of the commit never changes), and then calls 
+"convert_date()" which will allocate a new buffer and do the conversion 
+there - that's for totally stupid hysterical raisins, and it should really 
+have allocated the new buffer in convert_commit() - something you'd need 
+to do if you end up editing the "parent" information at that point.
 
--- 
-Regards,
-Pavel Roskin
+So it would take some work, but the infrastructure for doing these kinds 
+of conversions is all there.
+
+		Linus
