@@ -1,116 +1,95 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 0/4] reworking git-rebase
-Date: Tue, 15 Nov 2005 15:32:05 -0800
-Message-ID: <7voe4lfpxm.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH 4/4] rebase: make it usable for binary files as well.
+Date: Tue, 15 Nov 2005 15:34:18 -0800
+Message-ID: <7v64qtfptx.fsf@assigned-by-dhcp.cox.net>
+References: <7voe4lfpxm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Nov 16 00:33:16 2005
+X-From: git-owner@vger.kernel.org Wed Nov 16 00:34:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcAHc-00042G-1F
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:32:13 +0100
+	id 1EcAJj-0004kA-Te
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:34:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932573AbVKOXcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 18:32:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932575AbVKOXcI
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:32:08 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:45459 "EHLO
+	id S965075AbVKOXeV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 18:34:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965076AbVKOXeV
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:34:21 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:43669 "EHLO
 	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932573AbVKOXcH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2005 18:32:07 -0500
+	id S965074AbVKOXeU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 18:34:20 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
           by fed1rmmtao11.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051115233133.SCDR6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 15 Nov 2005 18:31:33 -0500
+          id <20051115233346.SDFY6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 15 Nov 2005 18:33:46 -0500
 To: git@vger.kernel.org
+In-Reply-To: <7voe4lfpxm.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 15 Nov 2005 15:32:05 -0800")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11966>
 
-The current rebase implementation finds commits in our tree but
-not in the upstream tree using git-cherry, and tries to apply
-them using git-cherry-pick (i.e. always use 3-way) one by one.
+Use git-format-patch --full-index to generate a patch, and feed
+that to git-am that uses git-apply --allow-binary-replacement.
+This way, rebase can be used to move development that contains
+binary files as long as there is no need for file-level merges.
 
-Which is fine, but when some of the changes do not apply
-cleanly, it punts, and punts badly.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-Suppose you have commits A-B-C-D-E since you forked from the
-upstream and submitted the changes for inclusion.  You fetch
-from upstream head U and find that B has been picked up.  You
-run git-rebase to update your branch, which tries to apply
-changes contained in A-C-D-E, in this order, but replaying of C
-fails, because the upstream got changes that touch the same area
-from elsewhere.
+---
 
-Now what?
+ git-am.sh     |    7 ++++---
+ git-rebase.sh |    2 +-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-It notes that fact, and goes ahead to apply D and E, and at the
-very end tells you to deal with C by hand.  Even if you somehow
-managed to replay C on top of the result, you would now end up
-with ...-B-...-U-A-D-E-C.
-
-Breaking the order between B and others was the conscious
-decision made by the upstream, so we would not worry about it,
-and even if it were worrisome, it is too late for us to fix now.
-What D and E do may well depend on having C applied before them,
-which is a problem for us.
-
-Here is a series requesting comments and testing.  I think this
-change makes rebase easier to use when some of the changes do
-not replay cleanly.  What it does is:
-
- - Instead of calling git-cherry-pick, it runs git-format-patch
-   on the unmerged commits git-cherry found, and feeds the
-   result to "git-am --3way".
-
- - To keep rebase working on a repository that manages binary
-   files, it adds a very limited support to handle "binary
-   diffs".
-
-In the "unapplicable patch in the middle" case, this "rebase"
-works like this:
-
- - A series of patches in e-mail form is created that records
-   what A-C-D-E do, and is fed to git-am.  This is stored in
-   .dotest/ directory, just like the case you tried to apply
-   them from your mailbox.  Your branch is rewound to the tip of
-   upstream U, and the original head is kept in .git/ORIG_HEAD,
-   so you could "git reset --hard ORIG_HEAD" in case the end
-   result is really messy.
-
- - Patch A applies cleanly.  This could either be a clean patch
-   application on top of rewound head (i.e. same as upstream
-   head), or git-am might have internally fell back on 3-way
-   (i.e.  it would have done the same thing as git-cherry-pick).
-   In either case, a rebased commit A is made on top of U.
-
- - Patch C does not apply.  git-am stops here, with conflicts to
-   be resolved in the working tree.  Yet-to-be-applied D and E
-   are still kept in .dotest/ directory at this point.  What the
-   user does is exactly the same as fixing up unapplicable patch
-   when running git-am:
-
-   - Resolve conflict just like any merge conflicts. 
-
-   - "git diff -p --full-index HEAD >.dotest/patch" to pretend
-     as if you received a perfect, applicable patch.
-
-   - "git reset --hard", to pretend you have not tried to apply
-     that patch yet.
-
-   [Side note] I think the latter two steps can and should be
-   made into a short-hand to tell "git-am" that the conflicting
-   patch is resolved.  "git-am --resolved", perhaps?
-
- - Continue with "git am --3way".  This applies the fixed-up
-   patch so by definition it had better apply.  "git am" knows
-   the patch after the fixed-up one is D and then E; it applies
-   them, and you will get the changes from A-C-D-E commits on
-   top of U, in this order.
-
-I've been using this without noticing any problem, and as people
-may know I do a lot of rebases.
+applies-to: 349326f3647597dabf38d82e1c2806cef45060f7
+7f5bff7c3e5b1245e479fc13665641424dee9a41
+diff --git a/git-am.sh b/git-am.sh
+index 38841d9..8307d77 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -46,7 +46,7 @@ fall_back_3way () {
+ 	    cd "$dotest/patch-merge-tmp-dir" &&
+ 	    GIT_INDEX_FILE="../patch-merge-tmp-index" \
+ 	    GIT_OBJECT_DIRECTORY="$O_OBJECT" \
+-	    git-apply --index <../patch
++	    git-apply --allow-binary-replacement --index <../patch
+         )
+     then
+ 	echo Using index info to reconstruct a base tree...
+@@ -77,7 +77,7 @@ fall_back_3way () {
+ 		GIT_OBJECT_DIRECTORY="$O_OBJECT" &&
+ 		export GIT_INDEX_FILE GIT_OBJECT_DIRECTORY &&
+ 		git-read-tree "$base" &&
+-		git-apply --index &&
++		git-apply --index --allow-binary-replacement &&
+ 		mv ../patch-merge-tmp-index ../patch-merge-index &&
+ 		echo "$base" >../patch-merge-base
+ 	    ) <"$dotest/patch"  2>/dev/null && break
+@@ -310,7 +310,8 @@ do
+ 	echo "Applying '$SUBJECT'"
+ 	echo
+ 
+-	git-apply --index "$dotest/patch"; apply_status=$?
++	git-apply --allow-binary-replacement --index "$dotest/patch"
++	apply_status=$?
+ 	if test $apply_status = 1 && test "$threeway" = t
+ 	then
+ 		if (fall_back_3way)
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 56196e7..b8abf33 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -25,4 +25,4 @@ esac
+ 
+ # Rewind the head to "$other"
+ git-reset --hard "$other"
+-git-format-patch -k --stdout "$other" ORIG_HEAD | git am -3 -k
++git-format-patch -k --stdout --full-index "$other" ORIG_HEAD | git am -3 -k
+---
+0.99.9.GIT
