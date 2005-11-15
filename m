@@ -1,65 +1,50 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
 Subject: Re: fix git-pack-redundant crashing sometimes
-Date: Tue, 15 Nov 2005 18:08:48 +0200
-Message-ID: <20051115180848.561a6da5.tihirvon@gmail.com>
+Date: Tue, 15 Nov 2005 17:11:17 +0100
+Message-ID: <81b0412b0511150811w2a7a2c4ft9a2920ac4f030ee4@mail.gmail.com>
 References: <81b0412b0511150749g5672158v7b39c02ffdf13e08@mail.gmail.com>
+	 <20051115180848.561a6da5.tihirvon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, lukass@etek.chalmers.se, junkio@cox.net
-X-From: git-owner@vger.kernel.org Tue Nov 15 17:13:43 2005
+X-From: git-owner@vger.kernel.org Tue Nov 15 17:15:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ec3Mx-000801-Ja
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 17:09:15 +0100
+	id 1Ec3P0-0000YW-9c
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 17:11:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932533AbVKOQJB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 11:09:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932548AbVKOQJA
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 11:09:00 -0500
-Received: from marski.suomi.net ([212.50.131.142]:56052 "EHLO marski.suomi.net")
-	by vger.kernel.org with ESMTP id S932533AbVKOQI7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 11:08:59 -0500
-Received: from prolisok.suomi.net (prolisok.suomi.net [212.50.140.226])
- by marski.suomi.net (Sun Java System Messaging Server 6.2 (built Dec  2 2004))
- with ESMTP id <0IQ000JRJ7IS3000@marski.suomi.net> for git@vger.kernel.org;
- Tue, 15 Nov 2005 18:08:53 +0200 (EET)
-Received: from spam1.suomi.net (spam1.suomi.net [212.50.131.165])
- by mailstore.suomi.net
- (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
- with ESMTP id <0IQ0004XJ7PSFH40@mailstore.suomi.net>; Tue,
- 15 Nov 2005 18:13:05 +0200 (EET)
-Received: from garlic.home.net (addr-82-128-203-211.suomi.net [82.128.203.211])
-	by spam1.suomi.net (Postfix) with SMTP id 886C31ABDB6; Tue,
- 15 Nov 2005 18:08:47 +0200 (EET)
-In-reply-to: <81b0412b0511150749g5672158v7b39c02ffdf13e08@mail.gmail.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.6; i686-pc-linux-gnu)
-X-OPOY-MailScanner-Information: Please contact the OPOY for more information
-X-OPOY-MailScanner: Found to be clean
-X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (score=-2.075,	required 5,
- autolearn=not spam, AWL 0.52, BAYES_00 -2.60)
-X-OPOY-MailScanner-From: tihirvon@gmail.com
+	id S964808AbVKOQLT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 11:11:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964817AbVKOQLT
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 11:11:19 -0500
+Received: from nproxy.gmail.com ([64.233.182.198]:37624 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964808AbVKOQLS convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 11:11:18 -0500
+Received: by nproxy.gmail.com with SMTP id c29so307371nfb
+        for <git@vger.kernel.org>; Tue, 15 Nov 2005 08:11:17 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DnJeK1cpXrrfyUSP5E454VOlHWtHITAEIL8xBIixZXldgjF35rWUSTRZGirKshiMSrLWtUxaHZDJRHzb8wyjzv3Zd73z3YDV6pwqr9uCXjLeYypBflv+97ghnJJDC6CP1Wc3L6RbEGLCTmKX6GmASD0P8bksxmbjD5xbWT9rp1E=
+Received: by 10.48.202.10 with SMTP id z10mr34415nff;
+        Tue, 15 Nov 2005 08:11:17 -0800 (PST)
+Received: by 10.48.247.3 with HTTP; Tue, 15 Nov 2005 08:11:17 -0800 (PST)
+To: Timo Hirvonen <tihirvon@gmail.com>
+In-Reply-To: <20051115180848.561a6da5.tihirvon@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11914>
 
-On Tue, 15 Nov 2005 16:49:30 +0100
-Alex Riesen <raa.lkml@gmail.com> wrote:
+On 11/15/05, Timo Hirvonen <tihirvon@gmail.com> wrote:
+> > The code could profit from double-linked lists greatly, IMHO.
+>
+> I use list.h from Linux when I need double-linked lists.  It is very
+> easy to use, efficient and fast.
+>
 
-> llist_sorted_difference_inplace didn't handle the match in the first
-> sha1 correctly and the lists went wild everywhere.
-> 
-> ---
-> 
-> I noticed it on a very big repository (more than 100k files), trying
-> to prune it.
-> The code could profit from double-linked lists greatly, IMHO.
-
-I use list.h from Linux when I need double-linked lists.  It is very
-easy to use, efficient and fast.
-
--- 
-http://onion.dynserv.net/~timo/
+Yes, I had it in mind, too.
