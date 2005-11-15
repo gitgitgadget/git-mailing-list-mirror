@@ -1,75 +1,72 @@
-From: Josh Boyer <jwboyer@gmail.com>
-Subject: Re: [PATCH] git-core-foo -> git-foo, except the core package
-Date: Tue, 15 Nov 2005 11:19:00 -0600
-Message-ID: <625fc13d0511150919l48786dcam6fda56bc9d3a9fa0@mail.gmail.com>
-References: <43797C41.2050809@zytor.com>
-	 <625fc13d0511150641k353d7128pf72f3542da601104@mail.gmail.com>
-	 <437A09F2.8080109@zytor.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] Disable USE_SYMLINK_HEAD by default
+Date: Tue, 15 Nov 2005 12:21:35 -0500
+Message-ID: <1132075295.25640.59.camel@dv>
+References: <1132034390.22207.18.camel@dv>
+	 <7vveyuqto5.fsf@assigned-by-dhcp.cox.net> <1132042427.3512.50.camel@dv>
+	 <7vpsp2qpx4.fsf@assigned-by-dhcp.cox.net>
+	 <7vd5l2mco1.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.63.0511151207070.21671@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20051115121854.GV30496@pasky.or.cz>
+	 <7v8xvpn8ne.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 15 18:22:31 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 15 18:26:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ec4SZ-0002rr-Dw
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 18:19:07 +0100
+	id 1Ec4W7-0004Th-P7
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 18:22:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbVKORTE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 12:19:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbVKORTE
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 12:19:04 -0500
-Received: from zproxy.gmail.com ([64.233.162.207]:8422 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751451AbVKORTD convert rfc822-to-8bit
+	id S1751448AbVKORWp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 12:22:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbVKORWp
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 12:22:45 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:11160 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751448AbVKORWo
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2005 12:19:03 -0500
-Received: by zproxy.gmail.com with SMTP id 14so1632487nzn
-        for <git@vger.kernel.org>; Tue, 15 Nov 2005 09:19:00 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qZizUQDLIst2BSiXgfqBVd5msfGRmbYLzgJrc2eSTfzEyxu5NDLsXSWDQdlvETzkMX2yestaGcRTyD2qkFSq5tsd7yeS/MuRaPF/teJQJhQdLFpYOMMAReaCqegcxDRgc6S8iflw0DgYDe5ERyVRWNm/9byNaW07gdUCSNbqqG0=
-Received: by 10.37.13.80 with SMTP id q80mr722256nzi;
-        Tue, 15 Nov 2005 09:19:00 -0800 (PST)
-Received: by 10.36.100.14 with HTTP; Tue, 15 Nov 2005 09:19:00 -0800 (PST)
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <437A09F2.8080109@zytor.com>
-Content-Disposition: inline
+	Tue, 15 Nov 2005 12:22:44 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1Ec4W3-0002bQ-K3
+	for git@vger.kernel.org; Tue, 15 Nov 2005 12:22:43 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.54)
+	id 1Ec4Ux-00072z-QF; Tue, 15 Nov 2005 12:21:35 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xvpn8ne.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.4.1 (2.4.1-5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11922>
 
-On 11/15/05, H. Peter Anvin <hpa@zytor.com> wrote:
-> Josh Boyer wrote:
-> > On 11/15/05, H. Peter Anvin <hpa@zytor.com> wrote:
-> >
-> >>This patch renames the tarball "git" rather than "git-core", and changes
-> >>the names of various packages from git-core-foo to git-foo.  git-core is
-> >>still the true core package; an empty RPM package named "git" pulls in
-> >>ALL the git packages -- this makes updates work correctly, and allows
-> >>"yum install git" to do the obvious thing.
-> >
-> > What about "yum remove git" ?  I don't think that will work quite so
-> > well.  The "git" package will be removed just fine since nothing
-> > depends on it, but git-<foo> will still remain.  Maybe not that big of
-> > a deal, but it might not be obvious to some.
->
-> True.  If you have a solution to that, I'd love to hear it.  Note that
-> having the core package depend on everything else is not acceptable.
+On Tue, 2005-11-15 at 09:05 -0800, Junio C Hamano wrote:
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> > Yes, I would very much like to have this. I still want to go
+> > symrefs-only for public repositories created for cg-admin-setuprepo, so
+> > that fetching over HTTP works properly.
+> 
+> Sorry, I must have missed that part.  How does fetch-over-HTTP
+> break with symlinked HEAD?
 
-%preun section that does rpm -e of the packages it brings in.  But
-that is a hack that would cause some to become violently ill.  Perhaps
-it's an issue not worth worrying about.
+With symlinks, cogito doesn't know which branch it is fetching if the
+branch is not explicitly specified.
 
->
-> > Also, what about http://www.gnu.org/software/git/git.html ?  I seem to
-> > recall that was the reason the name git-core was used in the first
-> > place.
->
-> It's changing its name to "gitfm".
+The old behavior was to fetch the "master" branch by default.
+Currently, cogito uses HEAD, but it cannot read the symlink, it can only
+read the SHA1.  So, if somebody decides to use "cg-switch" on the public
+repository (admittedly not a very good idea), all the clients that are
+not using an explicit branch will unknowingly switch to another branch
+upon update.
 
-Sweet.
+It also could be useful for users to know the branch name.  I, for one,
+would like to know if HEAD links to "stable" or "sandbox4crazyhacks",
+even if both have the same SHA1 at the moment.
 
-josh
+-- 
+Regards,
+Pavel Roskin
