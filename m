@@ -1,59 +1,54 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Small script to patch .spec for Suse
-Date: Tue, 15 Nov 2005 22:59:43 +0100
-Message-ID: <20051115215943.GW30496@pasky.or.cz>
-References: <200511151230.30030.Josef.Weidendorfer@gmx.de> <7vfypxlp8k.fsf@assigned-by-dhcp.cox.net> <437A46E4.5010909@zytor.com>
+From: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
+Subject: Deprecate --cache.* ?
+Date: Tue, 15 Nov 2005 23:19:52 +0100
+Message-ID: <437A5F08.7020908@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 15 23:06:02 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Nov 15 23:22:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ec8qC-0005wA-SE
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 22:59:49 +0100
+	id 1Ec99E-0004kZ-KC
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 23:19:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965032AbVKOV7q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 16:59:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbVKOV7q
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 16:59:46 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:35559 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750842AbVKOV7q (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 16:59:46 -0500
-Received: (qmail 13341 invoked by uid 2001); 15 Nov 2005 22:59:43 +0100
-To: "H. Peter Anvin" <hpa@zytor.com>
-Content-Disposition: inline
-In-Reply-To: <437A46E4.5010909@zytor.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932195AbVKOWT0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 17:19:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932197AbVKOWT0
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 17:19:26 -0500
+Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:20665 "EHLO
+	pne-smtpout2-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S932195AbVKOWTZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 17:19:25 -0500
+Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout2-sn2.hy.skanova.net (7.2.060.1)
+        id 4378EBDA00073EDF; Tue, 15 Nov 2005 23:19:24 +0100
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11952>
 
-Dear diary, on Tue, Nov 15, 2005 at 09:36:52PM CET, I got a letter
-where "H. Peter Anvin" <hpa@zytor.com> said that...
-> Junio C Hamano wrote:
-> >
-> >I've applied the patch from HPA to update it to git.spec already
-> >in my tree, so your script would not work any more ;-)
-> >
-> >But seriously, I suspect we should take a hint from the fact
-> >that "git.spec.in" has ".in" in its name already.
-> >
-> 
-> I'd prefer to have just @@OPENSSH_PACKAGE@@ and @@EXPAT_PACKAGE@@ 
-> instead of completely virtualizing the dependencies.  Less flexible to 
-> be sure, but it makes it less confusing to read and fix.
+Currently, most of the remaining references to "cache" in Documantation/
+are related to the --cache.* flag of four git commands.
 
-Actually, can you have some kind of %if in specfiles? Then you could
-keep everything in the specfile and just pass it whatever system you
-want to build for.
+git-dif-*index* uses --cached to mean "do not consider on-disk files at all"
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+git-fsck-objects uses --cache to consider index entries as head nodes for 
+unreachability traces.
+
+git-ls-files --cached shows all files recorded in the index.
+
+git-update-*index* --cacheinfo is used to place a "fake" entry in the index
+
+git-update-index also has the option --index-info which does something different.
+
+My suggestion is that these cache-references be deprecated in favor of
+--index, --in-index, --index-only, --insert-index, or something along those lines.
+
+Backward compability could be ensured by having both versions of the flags
+around for a while and issuing a warning when the old form is used.
+
+Good idea? Bad? Stupid? Do we want to keep "cache" around?
