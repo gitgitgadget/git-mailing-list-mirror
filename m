@@ -1,69 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] git --help COMMAND brings up the git-COMMAND man-page.
-Date: Tue, 15 Nov 2005 15:49:18 -0800
-Message-ID: <7vsltxeakh.fsf@assigned-by-dhcp.cox.net>
-References: <20051115233125.2C0355BF73@nox.op5.se>
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: [ANNOUNCE] GIT 0.99.9i aka 1.0rc2
+Date: Tue, 15 Nov 2005 15:48:58 -0800
+Organization: none
+Message-ID: <Pine.NEB.4.63.0511151539360.12158@x9.ybpnyarg>
+References: <7vr79isfy9.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0511150715390.17817@x2.ybpnyarg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 00:50:54 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 16 00:54:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcAYG-0000tm-PE
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:49:25 +0100
+	id 1EcAbo-0001t6-9f
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:53:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965090AbVKOXtW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 18:49:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965088AbVKOXtW
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:49:22 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:20146 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S965090AbVKOXtV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2005 18:49:21 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051115234817.TQRM17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 15 Nov 2005 18:48:17 -0500
-To: exon@op5.se (Andreas Ericsson)
-In-Reply-To: <20051115233125.2C0355BF73@nox.op5.se> (Andreas Ericsson's
-	message of "Wed, 16 Nov 2005 00:31:25 +0100 (CET)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965088AbVKOXxA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 18:53:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965091AbVKOXxA
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:53:00 -0500
+Received: from main.gmane.org ([80.91.229.2]:53640 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S965088AbVKOXxA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 18:53:00 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EcAZx-0001Hi-4T
+	for git@vger.kernel.org; Wed, 16 Nov 2005 00:51:09 +0100
+Received: from adsl-69-234-227-15.dsl.irvnca.pacbell.net ([69.234.227.15])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Nov 2005 00:51:09 +0100
+Received: from wa1ter by adsl-69-234-227-15.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Nov 2005 00:51:09 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-227-15.dsl.irvnca.pacbell.net
+In-Reply-To: <Pine.LNX.4.64.0511150715390.17817@x2.ybpnyarg>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11973>
 
-exon@op5.se (Andreas Ericsson) writes:
+On Tue, 15 Nov 2005, walt wrote:
 
-> It's by design a bit stupid (matching ^git rather than ^git-), so as
-> to work with 'gitk' and 'git' as well.
+> On Mon, 14 Nov 2005, Junio C Hamano wrote:
 >
-> Signed-off-by: Andreas Ericsson <ae@op5.se>
+> > I think the source-tree-wise almost everything is done except:
+> >  - http-fetch file descriptor leak fix...
 
-Thanks, stupid is fine.
+> So, you're saying that you have *not* fixed it?...
 
-> +/* has anyone seen 'man' installed anywhere else than in /usr/bin? */
-> +#define PATH_TO_MAN "/usr/bin/man"
-> +static void show_man_page(char *git_cmd)
-> +{
-> +	char *page;
-> +
-> +	if (!strncmp(git_cmd, "git", 3))
-> +		page = git_cmd;
-> +	else {
-> +		int page_len = strlen(git_cmd) + 4;
-> +
-> +		page = malloc(page_len + 1);
-> +		strcpy(page, "git-");
-> +		strcpy(page + 4, git_cmd);
-> +		page[page_len] = 0;
-> +	}
-> +
-> +	execlp(PATH_TO_MAN, "man", page, NULL);
-> +}
-
-If you do PATH_TO_MAN absolute, execl would suffice, but just
-saying "man" and have execlp look for it would be easier to
-manage.
+I just confirmed the good news on NetBSD.  Out of curiosity I did
+this test:  I cg-updated and reinstalled cogito, which did *not*
+fix the too-many-open-files error.  Then I cg-updated and rebuilt
+git which *did* fix the error.  Clearly, something you committed
+in the last two days has fixed this problem.  Dunno what you did,
+but thanks :o)
