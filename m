@@ -1,79 +1,63 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Fix cg-version -h by sourcing cg-Xlib
-Date: Tue, 15 Nov 2005 13:03:12 +0100
-Message-ID: <20051115120312.GA13925@diku.dk>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Disable USE_SYMLINK_HEAD by default
+Date: Tue, 15 Nov 2005 13:18:54 +0100
+Message-ID: <20051115121854.GV30496@pasky.or.cz>
+References: <1132034390.22207.18.camel@dv> <7vveyuqto5.fsf@assigned-by-dhcp.cox.net> <1132042427.3512.50.camel@dv> <7vpsp2qpx4.fsf@assigned-by-dhcp.cox.net> <7vd5l2mco1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0511151207070.21671@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 15 13:05:19 2005
+Cc: Junio C Hamano <junkio@cox.net>, Pavel Roskin <proski@gnu.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 15 13:21:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbzWy-00021V-9z
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 13:03:20 +0100
+	id 1EbzmA-0001Su-Gq
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 13:19:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932377AbVKOMDS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 07:03:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932390AbVKOMDR
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 07:03:17 -0500
-Received: from nhugin.diku.dk ([130.225.96.140]:25308 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S932377AbVKOMDR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 07:03:17 -0500
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id C10926DFF39; Tue, 15 Nov 2005 13:02:50 +0100 (CET)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 1F33D6DFD84; Tue, 15 Nov 2005 13:02:48 +0100 (CET)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 2E13261339; Tue, 15 Nov 2005 13:03:13 +0100 (CET)
-To: Petr Baudis <pasky@ucw.cz>
+	id S932406AbVKOMS6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 07:18:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932420AbVKOMS6
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 07:18:58 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:55683 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932406AbVKOMS5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 07:18:57 -0500
+Received: (qmail 7849 invoked by uid 2001); 15 Nov 2005 13:18:54 +0100
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+In-Reply-To: <Pine.LNX.4.63.0511151207070.21671@wbgn013.biozentrum.uni-wuerzburg.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11900>
 
-Also requires cg-version to become a bash script.
+Dear diary, on Tue, Nov 15, 2005 at 12:09:42PM CET, I got a letter
+where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
+> I think Junio is right: we should not force everybody not to use symlinks, 
+> only because there happens to be VFAT-, SMB- or HTTP-shared repositories. 
+> As Junio says, if there are people experiencing problems because they lack 
+> symbolic links, they should fix it.
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
-diff --git a/Makefile b/Makefile
-index 72d7d12..b18e79f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -42,7 +42,7 @@ endif
- cg-version: $(VERSION) $(GIT_HEAD) Makefile
- 	@echo Generating cg-version...
- 	@rm -f $@
--	@echo "#!/bin/sh" > $@
-+	@echo "#!/usr/bin/env bash" >> $@
- 	@echo "#" >> $@
- 	@echo "# Show the version of the Cogito toolkit." >> $@
- 	@echo "# Copyright (c) Petr Baudis, 2005" >> $@
-@@ -53,6 +53,9 @@ cg-version: $(VERSION) $(GIT_HEAD) Makef
- 	@echo "# at the build time." >> $@
- 	@echo >> $@
- 	@echo "USAGE=\"cg-version\"" >> $@
-+	@echo "_git_repo_unneeded=1" >> $@
-+	@echo >> $@
-+	@echo ". \$${COGITO_LIB}cg-Xlib || exit 1" >> $@
- 	@echo >> $@
- 	@echo "echo \"$(shell cat $(VERSION))$(GIT_HEAD_ID)\"" >> $@
- 	@chmod +x $@
-@@ -92,7 +95,7 @@ install-cogito: $(SCRIPT) $(LIB_SCRIPT) 
- 	$(INSTALL) -m755 -d $(DESTDIR)$(libdir)
- 	$(INSTALL) $(LIB_SCRIPT) $(DESTDIR)$(libdir)
- 	cd $(DESTDIR)$(bindir); \
--	for file in $(SCRIPT); do \
-+	for file in $(SCRIPT) $(GEN_SCRIPT); do \
- 		sed -e 's/\$${COGITO_LIB}/"\$${COGITO_LIB:-$(sedlibdir)\/}"/g' $$file > $$file.new; \
- 		cat $$file.new > $$file; rm $$file.new; \
- 	done
+I'm ambivalent here. I would like to have just a single behaviour here,
+since the symbolic ref otherwise really does not get much testing. But I
+can also understand that we are breaking tools here.
+
+Still, for the reason above, I think we should aim at the symbolic refs
+being the canonical format in the next major release after 1.0, giving
+users time to fix their tools. I can see no advantage in symlinks except
+the backwards compatibility - speed argument was presented, but I don't
+buy that until I see hard data supporting that.
+
+> On the other hand, I think it would be useful to be able to configure the 
+> behaviour via .git/config.
+
+Yes, I would very much like to have this. I still want to go
+symrefs-only for public repositories created for cg-admin-setuprepo, so
+that fetching over HTTP works properly.
+
 -- 
-Jonas Fonseca
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
