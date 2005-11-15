@@ -1,92 +1,69 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/3] C implementation of the 'git' program, take two.
-Date: Tue, 15 Nov 2005 15:45:37 -0800
-Message-ID: <7vwtj9eaqm.fsf@assigned-by-dhcp.cox.net>
-References: <20051115233125.3153B5BF76@nox.op5.se>
+Subject: Re: [PATCH 3/3] git --help COMMAND brings up the git-COMMAND man-page.
+Date: Tue, 15 Nov 2005 15:49:18 -0800
+Message-ID: <7vsltxeakh.fsf@assigned-by-dhcp.cox.net>
+References: <20051115233125.2C0355BF73@nox.op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 00:47:16 2005
+X-From: git-owner@vger.kernel.org Wed Nov 16 00:50:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcAUh-0008KJ-Ey
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:45:43 +0100
+	id 1EcAYG-0000tm-PE
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:49:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965083AbVKOXpk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 18:45:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965084AbVKOXpk
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:45:40 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:32471 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S965083AbVKOXpk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2005 18:45:40 -0500
+	id S965090AbVKOXtW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 18:49:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965088AbVKOXtW
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:49:22 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:20146 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S965090AbVKOXtV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 18:49:21 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051115234504.UZKB20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 15 Nov 2005 18:45:04 -0500
+          id <20051115234817.TQRM17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 15 Nov 2005 18:48:17 -0500
 To: exon@op5.se (Andreas Ericsson)
-In-Reply-To: <20051115233125.3153B5BF76@nox.op5.se> (Andreas Ericsson's
+In-Reply-To: <20051115233125.2C0355BF73@nox.op5.se> (Andreas Ericsson's
 	message of "Wed, 16 Nov 2005 00:31:25 +0100 (CET)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11972>
 
 exon@op5.se (Andreas Ericsson) writes:
 
-> This patch provides a C implementation of the 'git' program and
-> introduces support for putting the git-* commands in a directory
-> of their own.
+> It's by design a bit stupid (matching ^git rather than ^git-), so as
+> to work with 'gitk' and 'git' as well.
+>
+> Signed-off-by: Andreas Ericsson <ae@op5.se>
 
-Very nice, thanks.  Two questions and a half.
+Thanks, stupid is fine.
 
-> +static void prepend_to_path(const char *dir, int len)
+> +/* has anyone seen 'man' installed anywhere else than in /usr/bin? */
+> +#define PATH_TO_MAN "/usr/bin/man"
+> +static void show_man_page(char *git_cmd)
 > +{
-> +	char *path, *old_path = getenv("PATH");
-> +	int path_len = len;
+> +	char *page;
 > +
-> +	if (!old_path)
-> +		old_path = "/bin:/usr/bin:.";
-
-This is to cover strange case and probably would not matter in
-practice, but perhaps without current directory?
-
-> +int main(int argc, char **argv, char **envp)
-> +{
-> +	char git_command[PATH_MAX + 1];
-> +	char wd[PATH_MAX + 1];
-> +	int i, len, show_help = 0;
-> +	char *exec_path = getenv("GIT_EXEC_PATH");
+> +	if (!strncmp(git_cmd, "git", 3))
+> +		page = git_cmd;
+> +	else {
+> +		int page_len = strlen(git_cmd) + 4;
 > +
-> +	getcwd(wd, PATH_MAX);
-> +...
-> +	/* allow relative paths, but run with exact */
-> +	if (chdir(exec_path)) {
-> +		printf("git: '%s': %s\n", exec_path, strerror(errno));
-> +		exit (1);
+> +		page = malloc(page_len + 1);
+> +		strcpy(page, "git-");
+> +		strcpy(page + 4, git_cmd);
+> +		page[page_len] = 0;
 > +	}
 > +
-> +	getcwd(git_command, sizeof(git_command));
-> +	chdir(wd);
+> +	execlp(PATH_TO_MAN, "man", page, NULL);
+> +}
 
-Can we always come back from where we started?
-
-> +
-> +	len = strlen(git_command);
-> +	prepend_to_path(git_command, len);
-> +
-> +	strncat(&git_command[len], "/git-", sizeof(git_command) - len);
-> +	len += 5;
-> +	strncat(&git_command[len], argv[i], sizeof(git_command) - len);
-> +
-> +	if (access(git_command, X_OK))
-> +		usage(exec_path, "'%s' is not a git-command", argv[i]);
-> +
-> +	/* execve() can only ever return if it fails */
-> +	execve(git_command, &argv[i], envp);
-
-Shell version for Cygwin seems to do ".exe" at the end --- does
-it matter?
+If you do PATH_TO_MAN absolute, execl would suffice, but just
+saying "man" and have execlp look for it would be easier to
+manage.
