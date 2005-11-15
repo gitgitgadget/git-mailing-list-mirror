@@ -1,59 +1,69 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: Re: [ANNOUNCE] GIT 0.99.9i aka 1.0rc2
-Date: Tue, 15 Nov 2005 15:48:58 -0800
-Organization: none
-Message-ID: <Pine.NEB.4.63.0511151539360.12158@x9.ybpnyarg>
-References: <7vr79isfy9.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0511150715390.17817@x2.ybpnyarg>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: fix git-pack-redundant crashing sometimes
+Date: Tue, 15 Nov 2005 15:58:02 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511151552400.11232@g5.osdl.org>
+References: <81b0412b0511150749g5672158v7b39c02ffdf13e08@mail.gmail.com>
+ <20051115213442.GA4256@steel.home> <437A560E.8020500@etek.chalmers.se>
+ <20051115223340.GA3951@steel.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 00:54:45 2005
+Cc: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>,
+	git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Nov 16 01:00:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcAbo-0001t6-9f
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:53:04 +0100
+	id 1EcAgr-0003aa-PK
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:58:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965088AbVKOXxA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 18:53:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965091AbVKOXxA
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:53:00 -0500
-Received: from main.gmane.org ([80.91.229.2]:53640 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965088AbVKOXxA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 18:53:00 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EcAZx-0001Hi-4T
-	for git@vger.kernel.org; Wed, 16 Nov 2005 00:51:09 +0100
-Received: from adsl-69-234-227-15.dsl.irvnca.pacbell.net ([69.234.227.15])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Nov 2005 00:51:09 +0100
-Received: from wa1ter by adsl-69-234-227-15.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Nov 2005 00:51:09 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-227-15.dsl.irvnca.pacbell.net
-In-Reply-To: <Pine.LNX.4.64.0511150715390.17817@x2.ybpnyarg>
+	id S965092AbVKOX6O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 18:58:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965093AbVKOX6O
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:58:14 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:20402 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965092AbVKOX6O (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 18:58:14 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAFNw4nO008725
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 15 Nov 2005 15:58:04 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAFNw2Ux027603;
+	Tue, 15 Nov 2005 15:58:03 -0800
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20051115223340.GA3951@steel.home>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11974>
 
-On Tue, 15 Nov 2005, walt wrote:
 
-> On Mon, 14 Nov 2005, Junio C Hamano wrote:
->
-> > I think the source-tree-wise almost everything is done except:
-> >  - http-fetch file descriptor leak fix...
 
-> So, you're saying that you have *not* fixed it?...
+On Tue, 15 Nov 2005, Alex Riesen wrote:
+> 
+> Sorry, it doesn't. The code loops here:
+> 
+> 401             /* find the permutations which contain all missing objects */
+> 402             perm_all = perm = get_all_permutations(non_unique);
 
-I just confirmed the good news on NetBSD.  Out of curiosity I did
-this test:  I cg-updated and reinstalled cogito, which did *not*
-fix the too-many-open-files error.  Then I cg-updated and rebuilt
-git which *did* fix the error.  Clearly, something you committed
-in the last two days has fixed this problem.  Dunno what you did,
-but thanks :o)
+Looks like the whole thing is exponential.
+
+A good way to do sane pack handling is to keep a _sorted_ list of all 
+objects each pack has. At that point it becomes much easier to see which 
+objects only exist in one particular pack.
+
+The sorting itself is O(nlogn), and the "does this pack have any unique 
+objects" (or "is this pack a superset of all other packs") question should 
+then be O(n).
+
+This is how the packs are generated in the first place - by sorting the 
+objects and limiting the diff generation to the "neighbors" of the 
+objects, you can generate pack-files in O(n logn) rather than O(n**2). 
+Which is pretty important when there are currently 140,000+ objects in the 
+kernel tree.
+
+		Linus
