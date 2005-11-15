@@ -1,82 +1,96 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] GIT commit statistics.
-Date: Tue, 15 Nov 2005 10:04:32 +0000
-Message-ID: <b0943d9e0511150204h25417993l@mail.gmail.com>
-References: <Pine.LNX.4.64.0511070837530.3193@g5.osdl.org>
-	 <20051107225807.GA10937@c165.ib.student.liu.se>
-	 <7vll00ov2l.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0511071629270.3247@g5.osdl.org>
-	 <7v4q6ilt3m.fsf@assigned-by-dhcp.cox.net>
-	 <43758D21.3060107@michonline.com>
-	 <7v7jbeia3v.fsf_-_@assigned-by-dhcp.cox.net>
-	 <46a038f90511120419v70166c60t93d58b7544e03e3b@mail.gmail.com>
-	 <20051112125331.GB30496@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Disable USE_SYMLINK_HEAD by default
+Date: Tue, 15 Nov 2005 02:24:30 -0800
+Message-ID: <7vd5l2mco1.fsf@assigned-by-dhcp.cox.net>
+References: <1132034390.22207.18.camel@dv>
+	<7vveyuqto5.fsf@assigned-by-dhcp.cox.net>
+	<1132042427.3512.50.camel@dv>
+	<7vpsp2qpx4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Ryan Anderson <ryan@michonline.com>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 15 11:06:27 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 15 11:26:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ebxg4-0006GI-A1
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 11:04:36 +0100
+	id 1EbxzQ-0006o3-Bk
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 11:24:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932339AbVKOKEd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 05:04:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932337AbVKOKEd
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 05:04:33 -0500
-Received: from xproxy.gmail.com ([66.249.82.207]:39020 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932336AbVKOKEc convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2005 05:04:32 -0500
-Received: by xproxy.gmail.com with SMTP id i30so1376600wxd
-        for <git@vger.kernel.org>; Tue, 15 Nov 2005 02:04:32 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=g/4VD7zqIlnbCnfRXqlRkN/uTehLnRftGi9vB8lG9+/79+xlwrZ9m85QG10NigTZuzHvyDRnirjfInx45f1LHWJnrcahekDK27eUqLfXJX3M0eYnL8t6fsJIsWMEipiZCGtvCfV5s2LecC6kYYV1PRGCshR43ySviMS/2xjFT5U=
-Received: by 10.70.54.2 with SMTP id c2mr2581390wxa;
-        Tue, 15 Nov 2005 02:04:32 -0800 (PST)
-Received: by 10.70.27.12 with HTTP; Tue, 15 Nov 2005 02:04:32 -0800 (PST)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051112125331.GB30496@pasky.or.cz>
-Content-Disposition: inline
+	id S1750752AbVKOKYe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 05:24:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbVKOKYe
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 05:24:34 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:22691 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1750752AbVKOKYd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 05:24:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051115102359.EYQJ6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 15 Nov 2005 05:23:59 -0500
+To: Pavel Roskin <proski@gnu.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11893>
 
-On 12/11/05, Petr Baudis <pasky@suse.cz> wrote:
-> On the same note, I would like StGIT to drop functionality not really
-> belonging to patch stack manager (stg add, stg rm, stg status, ...) so
-> that its commandset gets smaller and more focused
+Junio C Hamano <junkio@cox.net> writes:
 
-This was the case with the first StGIT implementations but I slowly
-began to want to only use StGIT and not switch to something else for
-trivial SCM operations. I eventually added 'stg commit' which stores
-the patches permanently into the base of the stack to enable some kind
-of maintainer mode for StGIT. My main use for this was to import
-patches directly into the main branch and not keep a separate one and
-pull between them.
+> Pavel Roskin <proski@gnu.org> writes:
+>
+>> In particular, StGIT still needs fixing.
+>>> ...
+>> I'm talking from my experience now.  If there is an option, there are
+>> users that have it enabled and those who have it disabled (by
+>> definition).  As is often happens, one of the configurations is more
+>> popular with developers.  The other configuration almost inevitably
+>> starts suffering from the "bit rot".
+>
+> That's a real concern, I should agree.
 
-> - but before I would
-> suggest dropping stg status, cg-status must be able to do conflicts
-> tracking, so I will dedicate another mail to this sometime in the
-> future, with a more detailed proposal.
+I think I need to qualify this comment.  It is a real concern
+because we need to know when it is safe to start using textual
+symrefs everywhere, *if* we would want to do that switch.
 
-The gitmergeonefile.py script in StGIT adds every conflict to the
-.git/conflicts file which is read by 'stg status'. My goal is not to
-leave any unmerged entried in the index even if there are conflicts.
-Maybe this could be changed and .git/conflicts file avoided entirely.
+I wonder how ready StGIT and Cogito are, but also I wonder how
+ready other things are.  People built homebrew scripts around
+git without calling them Porcelains, and git is designed to be
+used that way.  We do not know how many things we are breaking
+if we switch to do textual symrefs by default.
 
-Anyway, while I'll try not to add more SCM functionality to StGIT, I
-don't think I should remove the existing add/rm/status functionality.
-It's just handy not to use a different command when you want a new
-file added to a patch.
+I just checked the latest gitweb, and it does not seem to be
+ready.  I do not, however, necessarily think it is a high
+priority problem.  It does not feel to me a realistic issue that
+you cannot serve a public repository on a filesystem incapable
+of symlinks via getweb.  This change is breaking things for
+gitweb running on kernel.org machines without real benefit.
 
---
-Catalin
+Thinking about it a bit more, the current setup to use symlinks
+on systems that supports them, and textual symrefs on others, is
+looking more and more sensible to me.  If supporting
+symlink-challenged filesystems become a real issue for a "third
+party tool", certainly that will be updated, because people
+would want it.  Switching to do textual symrefs by default
+everywhere is a way to *force* people to scramble and update
+their scripts everywhere, but I am not so sure that is worth it;
+I cannot justify why I'd be forcing them to do so, especially if
+supporting VFAT is a low priority for some of the tools.
+
+"Bit rot" may first seem a concern, but actually it is not.  I
+suspect that serverish applications such as gitweb view
+supporting symlink-challenged filesystems as a lower priority
+task, while more client-oriented applications rate it higher.
+The core support for textual symrefs cannot afford to rot as
+long as some Porcelain needs it, and worrying about it would not
+be a good justification to break everybody "just to see what
+breaks".  On the other hand, if the support for textual symrefs
+rot, it probably deserves to --- the only reason that would
+happen would be because nobody uses them.
+
+IOW, if we see real breakage in either git itself or Porcelains
+that use git, send in fixes to appropriate parties.  I think
+that's being constructive.  Otherwise, let's not break things
+just for the sake of consistency.  I do not think that is
+helping anything.
