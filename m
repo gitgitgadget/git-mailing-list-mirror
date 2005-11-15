@@ -1,102 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: A case for tailor
-Date: Tue, 15 Nov 2005 19:48:09 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511151931001.1157@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Add config variable core.symrefsonly
+Date: Tue, 15 Nov 2005 10:39:50 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511151028540.3945@g5.osdl.org>
+References: <Pine.LNX.4.63.0511151923120.1103@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-675411281-1132080489=:1157"
-X-From: git-owner@vger.kernel.org Tue Nov 15 19:49:54 2005
+Content-Type: MULTIPART/MIXED; BOUNDARY="21872808-688111548-1132079462=:3945"
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Nov 15 19:50:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ec5qo-000334-OW
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 19:48:15 +0100
+	id 1Ec5jx-0000S3-Lu
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 19:41:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964969AbVKOSsM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 13:48:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964967AbVKOSsL
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 13:48:11 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:42137 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S964969AbVKOSsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2005 13:48:11 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 0F2D313F7B5
-	for <git@vger.kernel.org>; Tue, 15 Nov 2005 19:48:10 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id D7FBEB51E5
-	for <git@vger.kernel.org>; Tue, 15 Nov 2005 19:48:09 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id B9084B51D2
-	for <git@vger.kernel.org>; Tue, 15 Nov 2005 19:48:09 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id A895413F7B5
-	for <git@vger.kernel.org>; Tue, 15 Nov 2005 19:48:09 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S964964AbVKOSlF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 13:41:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964968AbVKOSlF
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 13:41:05 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:50862 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964964AbVKOSlB (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 13:41:01 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAFIdpnO025530
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 15 Nov 2005 10:39:52 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAFIdoBJ013282;
+	Tue, 15 Nov 2005 10:39:50 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0511151923120.1103@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-ID: <Pine.LNX.4.64.0511151031160.3945@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11931>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
----1148973799-675411281-1132080489=:1157
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: quoted-printable
+--21872808-688111548-1132079462=:3945
+Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
+Content-ID: <Pine.LNX.4.64.0511151031161.3945@g5.osdl.org>
 
-Hi,
 
-I was trying to import a project into git, the upstream of which is=20
-managed by Subversion. There has been a flurry of enhancements to=20
-git-svnimport, so I thought I=B4d give it a try.
 
-Short version: it did not work.
+On Tue, 15 Nov 2005, Johannes Schindelin wrote:
+> 
+> 	Linus, is there any reason you don´t allow spaces, underscores
+> 	and dashes in the config variables?
 
-Longer version: depending on the argument to "-T", it stopped right away,=
-=20
-or it stopped after about 60 commits. Right at the beginning, a lot of=20
-warnings told me about some files not being where they were expected.
+I much preferred being anal and maybe relaxing the rules later than being 
+permissive and accepting horrible crap.
 
-Possible explanation: at some early stage, the trunk was named "trunk",=20
-but somehow (don=B4t ask me how, I am a fan of git, not svn) renamed to=20
-"head".
+Spaces are definitely out, since we are trying to igore whitespace 
+everywhere, but underscores and dashes might be ok.
 
-Well, could also be cygwin, which I am stuck with in my office.=20
+However, the traditional way to do these kinds of things in ini files is 
+with PrettyCaps(tm), ie you'd do
 
-BTW, I noticed that the manpage tells me that "-t" should be used to=20
-specify the trunk, but the program (and it=B4s usage message) disagree.
+	[core]
+		SymRefsOnly = true
 
-Enter tailor. It is a program written in python, which is meant to conver=
-t=20
-repositories between different SCM formats. It was mentioned some time ag=
-o=20
-on this list, supports svn import and git export, so I thought I=B4d give=
-=20
-that a try.
+rather than the C way.
 
-Short version: it worked.
+Let's face it, the C way is the only true way for a programming language, 
+but having case matter in something unimportant and human-readable like a 
+"ini" file is just bothersome, so PrettyCase(tm) actually makes sense 
+there.
 
-Longer version: I had to fix a little bug which made git ignore the=20
-author_date (only to find that this had been fixed in the current devel=20
-version of tailor), had to make sure .git/info existed, and I added a=20
-dirty workaround to git so that empty commits would not lead to a=20
-screeching halt of the conversion.
+PrettyCase is for toys - unimportant things where it's more important to 
+say "we don't care" over saying "we need to be precise". So Pascal is PC. 
+It's a toy language. FAT is PC - it's a toy filesystem. And ini files are 
+PC: it's more important that a config file is human-readable than it is 
+that it's very precise and strict.
 
-Comparing the speeds, I=B4d also say that they are comparable, maybe=20
-git-svnimport is just a tad faster (until it fscks up).
+Put another way: real programmers want strict rules, because they know 
+they'll be hurt without them. But _users_ need to be coddled. And ini 
+files aren't for programmers, they are for users.
 
-I am right now trying to convert tailor=B4s repository (since I don=B4t l=
-ike=20
-to keep it in the darcs (pun intended) format). However there is still a=20
-little problem with darcs, which is probably a problem with the operating=
-=20
-system.
-
-Just wanted to let people know...
-
-Ciao,
-Dscho
-
----1148973799-675411281-1132080489=:1157--
+		Linus
+--21872808-688111548-1132079462=:3945--
