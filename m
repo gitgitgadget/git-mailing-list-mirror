@@ -1,64 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Disable USE_SYMLINK_HEAD by default
-Date: Mon, 14 Nov 2005 23:03:38 -0800
-Message-ID: <7vveyuqto5.fsf@assigned-by-dhcp.cox.net>
-References: <1132034390.22207.18.camel@dv>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Getting rid of symlinks in .git?
+Date: Tue, 15 Nov 2005 08:13:14 +0100
+Message-ID: <81b0412b0511142313r9635121wb4fdfe12c3ec35fe@mail.gmail.com>
+References: <20051110204543.GZ30496@pasky.or.cz> <43746118.30404@hogyros.de>
+	 <81b0412b0511110443x48415032k8ca40d999071e8a9@mail.gmail.com>
+	 <7vhdaevedu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 15 08:05:18 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Simon Richter <Simon.Richter@hogyros.de>
+X-From: git-owner@vger.kernel.org Tue Nov 15 08:14:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EburH-0007rq-0L
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 08:03:59 +0100
+	id 1Ebv0W-0004Gk-WF
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 08:13:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932319AbVKOHDk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 02:03:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932320AbVKOHDk
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 02:03:40 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:19874 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932319AbVKOHDk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2005 02:03:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051115070310.EQUD20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 15 Nov 2005 02:03:10 -0500
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1132034390.22207.18.camel@dv> (Pavel Roskin's message of "Tue,
-	15 Nov 2005 00:59:50 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932317AbVKOHNQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 02:13:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932320AbVKOHNQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 02:13:16 -0500
+Received: from nproxy.gmail.com ([64.233.182.194]:1553 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932317AbVKOHNQ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 02:13:16 -0500
+Received: by nproxy.gmail.com with SMTP id q29so261976nfc
+        for <git@vger.kernel.org>; Mon, 14 Nov 2005 23:13:14 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=uTMTjeC3m/HLlosBgGTTBiQ6XFe+DtdsNJfa7cRq9Fk+ljbsimVhHVa9/pU9PaDp88s6Hr+dxdevXUH9ucrJpoAuH5got8N6fouUHMm2AyuHL2yYSBgdIH0nEgnMipQNTxTfiBKbkBxYzL4qOtN0fCrE1AsafqzRK9zNAzgkBI4=
+Received: by 10.48.199.17 with SMTP id w17mr250210nff;
+        Mon, 14 Nov 2005 23:13:14 -0800 (PST)
+Received: by 10.48.247.3 with HTTP; Mon, 14 Nov 2005 23:13:14 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhdaevedu.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11880>
 
-Pavel Roskin <proski@gnu.org> writes:
+On 11/15/05, Junio C Hamano <junkio@cox.net> wrote:
+> > But you shouldn't care if you have reasonably recent git everywhere:
+> > symlinks and their absence already handled: .git/config created by
+> > init-db contains the configuration parameter for filemode, which
+> > decides whether it is safe to use the symlinks on the underlying
+> > filesystem.
+>
+> No, no no nononononono....
+>
+> core.filemode is whether the executable bit is trustworthy and
+> does not have anything to do with symlinked heads, although
+> these two happen to become problematic on VFAT.
 
-> Applying this patch before 1.0 may be controversial,...
-
-If I am not mistaken, I thought the last thread on the list
-showed general consensus that symlinks were preferred when
-available.  So applying this patch anytime would be
-controversial...
-
-> but I think there is a very good reason for that.
-
-Which is...?  I do not think this paragraph justifies it:
-
-> There should be exactly one git 1.0 repository format.  Now we
-> have two that are present in the sources and that have
-> received testing from the git users.
-
-The one format is that .git/HEAD can either be a symlink or
-regular file text symref; both variants are tested -- wouldn't
-that be good enough?
-
-The only thing I can think of that might be inconvenient is if
-you try doing "cp -a" off of a filesystem that supports symlinks
-to another filesystem that does not -- probably that would fail
-copying the symlinked .git/HEAD.  But if that is the problem,
-you could always git-clone, which should do the right thing, I
-think.
+Of course! Silly me...
