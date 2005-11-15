@@ -1,68 +1,86 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: [Question] info/grafts file.
-Date: Mon, 14 Nov 2005 17:03:49 -0700
-Organization: Hewlett Packard
-Message-ID: <20051115000349.GA32136@hpsvcnb.fc.hp.com>
-References: <20051114182019.GA19105@hpsvcnb.fc.hp.com> <7vhdafx81m.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH]: cogito testsuite: use git-symbolic-ref
+Date: Mon, 14 Nov 2005 20:13:00 -0500
+Message-ID: <1132017180.24084.39.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 15 01:05:46 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Nov 15 02:13:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EboIt-0001Dq-B8
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 01:04:03 +0100
+	id 1EbpNj-0003mL-DZ
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 02:13:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932252AbVKOADz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Nov 2005 19:03:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932253AbVKOADz
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 19:03:55 -0500
-Received: from atlrel8.hp.com ([156.153.255.206]:23002 "EHLO atlrel8.hp.com")
-	by vger.kernel.org with ESMTP id S932252AbVKOADz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 19:03:55 -0500
-Received: from smtp1.fc.hp.com (smtp.fc.hp.com [15.11.136.119])
-	by atlrel8.hp.com (Postfix) with ESMTP id C9CD44992;
-	Mon, 14 Nov 2005 19:03:54 -0500 (EST)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp1.fc.hp.com (Postfix) with ESMTP
-	id 98B9A380C5; Tue, 15 Nov 2005 00:03:49 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 806ECB614; Mon, 14 Nov 2005 17:03:49 -0700 (MST)
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vhdafx81m.fsf@assigned-by-dhcp.cox.net>
-X-Origin: hpsvcnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+	id S1751298AbVKOBNE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Nov 2005 20:13:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751304AbVKOBNE
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 20:13:04 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:43968 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751298AbVKOBND
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Nov 2005 20:13:03 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EbpNe-0004vl-01
+	for git@vger.kernel.org; Mon, 14 Nov 2005 20:13:02 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.54)
+	id 1EbpNc-0003uY-Og; Mon, 14 Nov 2005 20:13:00 -0500
+To: git <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
+X-Mailer: Evolution 2.4.1 (2.4.1-5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11871>
 
-This is fine, I just needed to know.
+cogito testsuite fails if git is compiled with USE_SYMLINK_HEAD=0.
+To fix it, use git-symbolic-ref instead of readlink.
 
-How hard is it to, in a generic way, take a grafts file and reconstruct
-commits to include the parents in the graft file in the actual tree?  I
-am wondering because I couldn't, after much work, get git-svnimport to
-find my merges correctly.  So, I am needing to hand-graft some merges in
-to make things right.  Any suggestions?  I could try to figure something
-out if I can find some time.  I'm good with graph traversals and such.
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-Carl
+diff --git a/t/t9300-seek.sh b/t/t9300-seek.sh
+index d3fed11..a6f3a65 100755
+--- a/t/t9300-seek.sh
++++ b/t/t9300-seek.sh
+@@ -30,7 +30,7 @@ test_expect_success 'seeking to the firs
+ test_expect_success 'we should have .git/head-name == master' \
+ 	"[ $(cat .git/head-name) = master ]"
+ test_expect_success 'current branch should be cg-seek-point' \
+-	"[ $(basename $(readlink .git/HEAD)) = cg-seek-point ]"
++	"[ $(basename $(git-symbolic-ref HEAD)) = cg-seek-point ]"
+ test_expect_success 'current commit should be commit1' \
+ 	"[ $(cg-object-id -c) = $commit1 ]"
+ 
+@@ -47,14 +47,16 @@ test_expect_success 'identical should be
+ test_expect_success 'seeking to the second commit' \
+ 	"cg-seek $commit2"
+ test_expect_success 'we should not unseeked properly' \
+-	"([ -e .git/head-name ] && [ $(basename $(readlink .git/HEAD)) = cg-seek-point ])"
++	"([ -e .git/head-name ] &&
++	 [ $(basename $(git-symbolic-ref HEAD)) = cg-seek-point ])"
+ test_expect_success 'current commit should be commit2' \
+ 	"[ $(cg-object-id -c) = $commit2 ]"
+ 
+ test_expect_success 'seeking to the last (well, still second) commit' \
+ 	"cg-seek master"
+ test_expect_success 'we should be unseeked properly' \
+-	"([ ! -e .git/head-name ] && [ $(basename $(readlink .git/HEAD)) = master ])"
++	"([ ! -e .git/head-name ] &&
++	 [ $(basename $(git-symbolic-ref HEAD)) = master ])"
+ test_expect_success 'current commit should be commit2' \
+ 	"[ $(cg-object-id -c) = $commit2 ]"
+ 
+@@ -88,7 +90,8 @@ test_expect_success 'identical should be
+ test_expect_success 'unseeking' \
+ 	"cg-seek"
+ test_expect_success 'we should be unseeked properly' \
+-	"([ ! -e .git/head-name ] && [ $(basename $(readlink .git/HEAD)) = master ])"
++	"([ ! -e .git/head-name ] &&
++	 [ $(basename $(git-symbolic-ref HEAD)) = master ])"
+ test_expect_success 'current commit should be commit2' \
+ 	"[ $(cg-object-id -c) = $commit2 ]"
+ 
 
-On Mon, Nov 14, 2005 at 12:56:37PM -0800, Junio C Hamano wrote:
-> Grafts are considered local preference, and not copied when
-> cloned.  I am unsure this was a right decision, but that is how
-> things are right now.
-> 
 
 -- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        Systems VLSI Laboratory
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Regards,
+Pavel Roskin
