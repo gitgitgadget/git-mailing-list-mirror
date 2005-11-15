@@ -1,145 +1,50 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Re: Make "gitk" work better with dense revlists
-Date: Tue, 15 Nov 2005 23:57:40 +0100
-Message-ID: <20051115225740.GB28173@nowhere.earth>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/3] Support setting SymrefsOnly=true from scripts
+Date: Tue, 15 Nov 2005 15:07:44 -0800
+Message-ID: <7vfypxh5mn.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0511152233430.2152@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Nov 15 23:59:10 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 16 00:08:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ec9jK-0000j1-U9
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 23:56:47 +0100
+	id 1Ec9u9-00051p-8j
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:07:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965067AbVKOW4a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 17:56:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965069AbVKOW4a
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 17:56:30 -0500
-Received: from smtp2-g19.free.fr ([212.27.42.28]:58572 "EHLO smtp2-g19.free.fr")
-	by vger.kernel.org with ESMTP id S965067AbVKOW43 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 17:56:29 -0500
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id A5D2D522EE
-	for <git@vger.kernel.org>; Tue, 15 Nov 2005 23:56:27 +0100 (CET)
-Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.54)
-	id 1Ec9kC-0006PG-US
-	for git@vger.kernel.org; Tue, 15 Nov 2005 23:57:40 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S965072AbVKOXHr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 18:07:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965073AbVKOXHq
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:07:46 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:21906 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S965072AbVKOXHq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 18:07:46 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051115230632.ULCT20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 15 Nov 2005 18:06:32 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0511152233430.2152@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 15 Nov 2005 22:36:05 +0100
+	(CET)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11960>
 
-Linus wrote:
->To generate the diff for a commit, gitk used to do
->
->	git-diff-tree -p -C $p $id
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Although the "$p" reference is harmful to --dense mode, and redundant
-when we just want to look at a single commit, removing it breaks the
-"Diff this -> selected" and "Diff selected -> this" features.
+> 	- set SymrefsOnly=true right from the start with
+> 		git-init-db --dont-use-symrefs
 
-A minimal fix would be at least make your change dependant on being in
-dense mode, and disable those extra features then (better than keeping
-them broken) if noone takes the lead to fix it.
+I am almost tempted to say that we should be doing --template=
+option to git-init-db for something like this, and make the
+template instantiation first thing before even reading the
+config file.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
-
-diff --git a/gitk b/gitk
-index a9d37d9..f73ab41 100755
---- a/gitk
-+++ b/gitk
-@@ -2801,12 +2801,17 @@ proc addtocflist {ids} {
- }
- 
- proc gettreediffs {ids} {
--    global treediff parents treepending
-+    global treediff parents treepending isdense
-     set treepending $ids
-     set treediff {}
-     set id [lindex $ids 0]
-     set p [lindex $ids 1]
--    if [catch {set gdtf [open "|git-diff-tree -r $id" r]}] return
-+    if {$isdense == 1} {
-+       set range "$id"
-+    } else {
-+       set range "$p $id"
-+    }
-+    if [catch {set gdtf [open "|git-diff-tree -r $range" r]}] return
-     fconfigure $gdtf -blocking 0
-     fileevent $gdtf readable [list gettreediffline $gdtf $ids]
- }
-@@ -2837,12 +2842,16 @@ proc gettreediffline {gdtf ids} {
- 
- proc getblobdiffs {ids} {
-     global diffopts blobdifffd diffids env curdifftag curtagstart
--    global difffilestart nextupdate diffinhdr treediffs
-+    global difffilestart nextupdate diffinhdr treediffs isdense
- 
-     set id [lindex $ids 0]
-     set p [lindex $ids 1]
-     set env(GIT_DIFF_OPTS) $diffopts
--    set cmd [list | git-diff-tree -r -p -C $id]
-+    if {$isdense == 1} {
-+       set cmd [list | git-diff-tree -r -p -C $id]
-+    } else {
-+       set cmd [list | git-diff-tree -r -p -C $p $id]
-+    }
-     if {[catch {set bdf [open $cmd r]} err]} {
-        puts "error getting diffs: $err"
-        return
-@@ -3299,16 +3308,21 @@ proc mstime {} {
- }
- 
- proc rowmenu {x y id} {
--    global rowctxmenu idline selectedline rowmenuid
-+    global rowctxmenu idline selectedline rowmenuid isdense
- 
-     if {![info exists selectedline] || $idline($id) eq $selectedline} {
--       set state disabled
-+       set patchstate disabled
-     } else {
--       set state normal
-+       set patchstate normal
-+    }
-+    if {$isdense || $patchstate eq "disabled"} {
-+       set diffstate disabled
-+    } else {
-+       set diffstate normal
-     }
--    $rowctxmenu entryconfigure 0 -state $state
--    $rowctxmenu entryconfigure 1 -state $state
--    $rowctxmenu entryconfigure 2 -state $state
-+    $rowctxmenu entryconfigure 0 -state $diffstate
-+    $rowctxmenu entryconfigure 1 -state $diffstate
-+    $rowctxmenu entryconfigure 2 -state $patchstate
-     set rowmenuid $id
-     tk_popup $rowctxmenu $x $y
- }
-@@ -3653,6 +3667,7 @@ proc doquit {} {
- # defaults...
- set datemode 0
- set boldnames 0
-+set isdense 0
- set diffopts "-U 5 -p"
- set wrcomcmd "git-diff-tree --stdin -p --pretty"
- 
-@@ -3678,6 +3693,10 @@ foreach arg $argv {
-        "^$" { }
-        "^-b" { set boldnames 1 }
-        "^-d" { set datemode 1 }
-+       "^--dense$" {
-+           set isdense 1
-+           lappend revtreeargs $arg
-+       }
-        default {
-            lappend revtreeargs $arg
-        }
-
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+The rest might be useful to better support end-users, but I am
+not sure.  Is it that much hassle to them to edit an .ini file?
