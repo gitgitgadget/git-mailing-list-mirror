@@ -1,142 +1,105 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [RFC] Add support for short help to Cogito commands
-Date: Tue, 15 Nov 2005 13:55:16 +0100
-Message-ID: <20051115125516.GD13925@diku.dk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Disable USE_SYMLINK_HEAD by default
+Date: Tue, 15 Nov 2005 15:24:58 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511151518210.23020@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1132034390.22207.18.camel@dv> <7vveyuqto5.fsf@assigned-by-dhcp.cox.net>
+ <1132042427.3512.50.camel@dv> <7vpsp2qpx4.fsf@assigned-by-dhcp.cox.net>
+ <7vd5l2mco1.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0511151207070.21671@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20051115121854.GV30496@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Nov 15 13:55:32 2005
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1445958752-1132064698=:23020"
+Cc: Junio C Hamano <junkio@cox.net>, Pavel Roskin <proski@gnu.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 15 15:28:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ec0LJ-0007d4-QV
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 13:55:22 +0100
+	id 1Ec1kI-00055t-4B
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 15:25:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932466AbVKOMzT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 07:55:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932467AbVKOMzT
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 07:55:19 -0500
-Received: from nhugin.diku.dk ([130.225.96.140]:11231 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S932466AbVKOMzR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 07:55:17 -0500
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 7045F6DFD6D; Tue, 15 Nov 2005 13:54:51 +0100 (CET)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP id 2990F6DF8C8
-	for <git@vger.kernel.org>; Tue, 15 Nov 2005 13:54:51 +0100 (CET)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 4486A6133A; Tue, 15 Nov 2005 13:55:16 +0100 (CET)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+	id S1750960AbVKOOZE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 09:25:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbVKOOZE
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 09:25:04 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:7329 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750960AbVKOOZC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 09:25:02 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8000213F788; Tue, 15 Nov 2005 15:24:59 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 623119F2ED; Tue, 15 Nov 2005 15:24:59 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 45B2D9F2EB; Tue, 15 Nov 2005 15:24:59 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C8A7813F785; Tue, 15 Nov 2005 15:24:58 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051115121854.GV30496@pasky.or.cz>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11904>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+---1148973799-1445958752-1132064698=:23020
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-I hope I am not the only one feeling that -h can sometimes be a little
-too verbose when you want to have a quick overview of a Cogito command.
-I'd like to make -h show only a short summary of the available options
-and keep the longer help text for --help. I have attached a patch that
-does something like this. Example:
+On Tue, 15 Nov 2005, Petr Baudis wrote:
 
-  $ cg diff -h
-  Usage: cg-diff [-c] [-m] [-s] [-p] [-r FROM_ID[..TO_ID]] [FILE]...
+> Dear diary, on Tue, Nov 15, 2005 at 12:09:42PM CET, I got a letter
+> where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
+> > I think Junio is right: we should not force everybody not to use=20
+> > symlinks, only because there happens to be VFAT-, SMB- or HTTP-shared=
+=20
+> > repositories. As Junio says, if there are people experiencing problem=
+s=20
+> > because they lack symbolic links, they should fix it.
+>=20
+> I'm ambivalent here. I would like to have just a single behaviour here,=
+=20
+> since the symbolic ref otherwise really does not get much testing. But =
+I=20
+> can also understand that we are breaking tools here.
+>=20
+> Still, for the reason above, I think we should aim at the symbolic refs
+> being the canonical format in the next major release after 1.0, giving
+> users time to fix their tools. I can see no advantage in symlinks excep=
+t
+> the backwards compatibility - speed argument was presented, but I don't
+> buy that until I see hard data supporting that.
 
-  Options:
-    -c                   Colorize the diff output
-    -p                   Use parent commit to specified ID
-    -s                   Summarize the diff
-    -r FROM_ID[..TO_ID]  Specify the revisions to diff
-    -m                   Base the diff at the merge base of specified revision
-    -h                   Print short usage help
-    --help               Print long usage help
+<yousortofaskedforit>
+Well, I can see no good reason for symrefs, except for backwards=20
+compatibility! Modern systems do support symlinks, you know?
 
-If something like this is acceptable, I'd like to know how to proceed
-with improving the option captions. I've considered two possibilities:
+Let=B4s face it. The main target for git is not Windows users. If we real=
+ly=20
+want to support all idiocies of all possible ones, how about this one:
 
- - Get the caption from the first line of the option description.  This
-   is similar to what the patch does (it also roughly removes everything
-   after the first punctuation char). But it will require that all
-   option descriptions are changed to have a one line caption at the
-   start. Example:
+If I clone a repository to a USB stick on cygwin, and try to access it=20
+from my iBook, it does not work, because for *backward compatibility*=20
+reasons, files fitting the 8.3 format are stored in UPPER CASE.
 
-	# ...
-	#
-	# -r FROM_ID[..TO_ID]::
-	#	Specify revisions to diff. Revisions can be specified
-	#	using either '-r rev1 ...
+So, I would like to have support for UPPER CASE files in .git, please? An=
+d=20
+since I cannot do my own testing, please could you force everybody=B4s gi=
+t=20
+to write OBJECTS and MASTER in UPPER CASE?
+</yousortofaskedforit>
 
- - Add a special line with the caption. Since we already 'filters' the
-   help text in the script headers this could go after the '::'.
-   Example:
+Ciao,
+Dscho
 
-	# ...
-	#
-	# -r FROM_ID[..TO_ID]:: Specify revisions to diff
-	#	Specify the revisions to diff using either '-r rev1
-	#	...
-
-   So that it will be easy to remove from the --help output and from the
-   generated manpages.
-
-The last option is less intrusive, but does make the syntax of the
-script headers less clean. Comments?
-
-diff --git a/cg-Xlib b/cg-Xlib
-index fa3a059..a1c89dc 100755
---- a/cg-Xlib
-+++ b/cg-Xlib
-@@ -347,18 +347,39 @@ deprecated_alias()
- 
- print_help()
- {
--	which "cg-$1" >/dev/null 2>&1 || exit 1
-+	which "cg-$2" >/dev/null 2>&1 || exit 1
- 	sed -n '/^USAGE=/,0s/.*"\(.*\)"/Usage: \1/p;
--	        /^deprecated_alias/,0s/^deprecated_alias \([^ ]*\)/\1 is the new name for/p' < $(which cg-$1) 
-+	        /^deprecated_alias/,0s/^deprecated_alias \([^ ]*\)/\1 is the new name for/p' < $(which cg-$2) 
- 	echo
--	sed -n '3,/^$/s/^# *//p' < $(which cg-$1)
-+	if [ x"$1" = xshort ]; then
-+		echo "Options:"
-+		_cg_fmt="  %-20s %s\n"
-+		sed -n '/# \(-.*::\)/,/^#/s/#//p' < $(which cg-$2) | while read line; do
-+			case "$line" in
-+			-*::)
-+				_cg_option="$(echo -n " $line" | sed 's/ \(-.*\)::/\1/')"
-+				;;
-+			*)
-+				printf "$_cg_fmt" "$_cg_option" \
-+					"$(echo "$line" | sed 's/\([^-][^.,]*\)[.,].*/\1/')"
-+				_cg_option=
-+				;;
-+			esac
-+		done
-+		printf "$_cg_fmt" "-h" "Print short usage help"
-+		printf "$_cg_fmt" "--help" "Print long usage help"
-+	else
-+		sed -n '3,/^$/s/^# *//p' < $(which cg-$2)
-+	fi
- 	exit
- }
- 
- for option in "$@"; do
- 	[ x"$option" = x-- ] && break
--	if [ x"$option" = x"-h" -o x"$option" = x"--help" ]; then
--		print_help ${_cg_cmd##cg-}
-+	if [ x"$option" = x"-h" ]; then
-+		print_help short ${_cg_cmd##cg-}
-+	elif [ x"$option" = x"--help" ]; then
-+		print_help long ${_cg_cmd##cg-}
- 	fi
- done
- 
--- 
-Jonas Fonseca
+---1148973799-1445958752-1132064698=:23020--
