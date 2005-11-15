@@ -1,72 +1,76 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] Disable USE_SYMLINK_HEAD by default
-Date: Tue, 15 Nov 2005 12:21:35 -0500
-Message-ID: <1132075295.25640.59.camel@dv>
-References: <1132034390.22207.18.camel@dv>
-	 <7vveyuqto5.fsf@assigned-by-dhcp.cox.net> <1132042427.3512.50.camel@dv>
-	 <7vpsp2qpx4.fsf@assigned-by-dhcp.cox.net>
-	 <7vd5l2mco1.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0511151207070.21671@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <20051115121854.GV30496@pasky.or.cz>
-	 <7v8xvpn8ne.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: fix git-pack-redundant crashing sometimes
+Date: Tue, 15 Nov 2005 09:28:25 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511150921420.3945@g5.osdl.org>
+References: <81b0412b0511150749g5672158v7b39c02ffdf13e08@mail.gmail.com> 
+ <20051115180848.561a6da5.tihirvon@gmail.com>
+ <81b0412b0511150811w2a7a2c4ft9a2920ac4f030ee4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 15 18:26:13 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org,
+	lukass@etek.chalmers.se, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Nov 15 18:32:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ec4W7-0004Th-P7
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 18:22:48 +0100
+	id 1Ec4cj-0007Jx-AJ
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 18:29:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751448AbVKORWp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 12:22:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbVKORWp
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 12:22:45 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:11160 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751448AbVKORWo
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2005 12:22:44 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1Ec4W3-0002bQ-K3
-	for git@vger.kernel.org; Tue, 15 Nov 2005 12:22:43 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1Ec4Ux-00072z-QF; Tue, 15 Nov 2005 12:21:35 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xvpn8ne.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.4.1 (2.4.1-5) 
+	id S1751453AbVKOR3e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 12:29:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751454AbVKOR3e
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 12:29:34 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:18069 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751453AbVKOR3e (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 12:29:34 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAFHSRnO021891
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 15 Nov 2005 09:28:28 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAFHSPEE009954;
+	Tue, 15 Nov 2005 09:28:26 -0800
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0511150811w2a7a2c4ft9a2920ac4f030ee4@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11923>
 
-On Tue, 2005-11-15 at 09:05 -0800, Junio C Hamano wrote:
-> Petr Baudis <pasky@suse.cz> writes:
+
+
+On Tue, 15 Nov 2005, Alex Riesen wrote:
+
+> On 11/15/05, Timo Hirvonen <tihirvon@gmail.com> wrote:
+> > > The code could profit from double-linked lists greatly, IMHO.
+> >
+> > I use list.h from Linux when I need double-linked lists.  It is very
+> > easy to use, efficient and fast.
 > 
-> > Yes, I would very much like to have this. I still want to go
-> > symrefs-only for public repositories created for cg-admin-setuprepo, so
-> > that fetching over HTTP works properly.
-> 
-> Sorry, I must have missed that part.  How does fetch-over-HTTP
-> break with symlinked HEAD?
+> Yes, I had it in mind, too.
 
-With symlinks, cogito doesn't know which branch it is fetching if the
-branch is not explicitly specified.
+There's a "ptrlist" implementation in sparse, which does a very 
+space-efficient implementation of arbitrary lists of pointers. It's also 
+very CPU-efficient (in fact, thanks to being very cache-friendly, more so 
+than the kernel list.h implementation) for most well-behaved operations 
+(ie it's not hugely friendly to removal, but it's great for "add to end" 
+and "traverse the list").
 
-The old behavior was to fetch the "master" branch by default.
-Currently, cogito uses HEAD, but it cannot read the symlink, it can only
-read the SHA1.  So, if somebody decides to use "cg-switch" on the public
-repository (admittedly not a very good idea), all the clients that are
-not using an explicit branch will unknowingly switch to another branch
-upon update.
+The ptrlist implementation is optimized for cases where the lists are 
+usually shortish, but not trivial. So they are worthwhile if you expect 
+the list length to be on the order of 5-10 entries rather than just 1-2 
+(if you have just a couple of entries, the kernel lists are better). But 
+perhaps more importantly, they are very space-efficient when the lists 
+grow bigger (ie they average to just about 5% over the memory cost of a 
+single pointer per list element for long lists).
 
-It also could be useful for users to know the branch name.  I, for one,
-would like to know if HEAD links to "stable" or "sandbox4crazyhacks",
-even if both have the same SHA1 at the moment.
+Sparse in general is under the OSL license, but I'll happily dual-license 
+the ptrlist thing, it's trivial and all my code (and I already checked 
+with the person who did the list sorting code that we can dual-license 
+that too).
 
--- 
-Regards,
-Pavel Roskin
+			Linus
