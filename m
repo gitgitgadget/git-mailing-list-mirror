@@ -1,112 +1,104 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] archimport improvements
-Date: Tue, 15 Nov 2005 00:03:52 -0800
-Message-ID: <20051115080352.GG7484@mail.yhbt.net>
-References: <20051112092336.GA16218@Muzzle> <46a038f90511120354n4584aedfhb1f2928ac41478ab@mail.gmail.com> <20051112202150.GA2037@Muzzle> <46a038f90511141438q1d85d429vedcf2a3b54d761e1@mail.gmail.com>
+Subject: [PATCH 1/2] archimport: allow for old style branch and public tag names
+Date: Tue, 15 Nov 2005 00:05:46 -0800
+Message-ID: <20051115080546.GA30506@Muzzle>
+References: <20051112092336.GA16218@Muzzle> <46a038f90511120354n4584aedfhb1f2928ac41478ab@mail.gmail.com> <20051112202150.GA2037@Muzzle> <46a038f90511141438q1d85d429vedcf2a3b54d761e1@mail.gmail.com> <20051115080352.GG7484@mail.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 15 09:05:21 2005
+X-From: git-owner@vger.kernel.org Tue Nov 15 09:07:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbvnH-0004g1-U4
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 09:03:56 +0100
+	id 1Ebvp8-0005KG-Ss
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 09:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751367AbVKOIDx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 03:03:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751369AbVKOIDx
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 03:03:53 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:28834 "EHLO mail.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751367AbVKOIDx (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 03:03:53 -0500
-Received: by mail.yhbt.net (Postfix, from userid 500)
-	id 3F1112DC033; Tue, 15 Nov 2005 00:03:52 -0800 (PST)
-To: Martin Langhoff <martin.langhoff@gmail.com>
+	id S1751369AbVKOIFs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 03:05:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751374AbVKOIFs
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 03:05:48 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:29346 "EHLO mail.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751369AbVKOIFs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 03:05:48 -0500
+Received: from mayonaise.dyndns.org (user-118bgak.cable.mindspring.com [66.133.193.84])
+	by mail.yhbt.net (Postfix) with SMTP id BEA662DC033;
+	Tue, 15 Nov 2005 00:05:46 -0800 (PST)
+Received: by mayonaise.dyndns.org (sSMTP sendmail emulation); Tue, 15 Nov 2005 00:05:46 -0800
+To: Martin Langhoff <martin@catalyst.net.nz>
 Content-Disposition: inline
-In-Reply-To: <46a038f90511141438q1d85d429vedcf2a3b54d761e1@mail.gmail.com>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20051115080352.GG7484@mail.yhbt.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11883>
 
-Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> Eric,
-> 
-> thanks for resending those so quickly. I think I'm going to sit on the
-> 'overhaul of changeset application' patch a bit -- I'll test & ack
-> your other patches for merge soonish but I want to review and test
-> this one carefully.
-> 
-> My main concern is that it seems to be calling tla get for each
-> revision that it imports. For large trees, this is slow. I would be
-> much happier with a fast Perl-based approach. Have you got a public
-> repo with directory renames?
+This patch adds the -o switch, which lets old trees tracked by
+git-archmirror continue working with their old branch and tag names
+to make life easier for people tracking your tree.
 
-Please read my sync_to_ps() function very carefully.  Next is a patch
-that helps you track which Arch command (get/replay/apply-delta) is used
-for each changeset.
+Private tags that are only used internally by git-archimport continue to be
+new-style, and automatically converted upon first run.
 
-tla replay is the most common for any halfway normal (changeset-based)
-tree by far.
+Signed-off-by:: Eric Wong <normalperson@yhbt.net>
 
-tla get is not called any more often than before.
+---
 
-apply-delta is hardly, if ever called.  It may not even be reachable
-unless somebody commits revisions to the same tree with clocks out of
-order from patchlevel order.  Heck, if it's ever called, it's most
-likely faster just to rmtree and tla get again.
+ git-archimport.perl |   22 +++++++++++++++++-----
+ 1 files changed, 17 insertions(+), 5 deletions(-)
 
-Unfortunately, my heavily used and abused trees are private.
-
-> Additional comments follow...
-> 
-> On 11/13/05, Eric Wong <normalperson@yhbt.net> wrote:
-> > > > * Identify git branches as an Arch "archive,category<--branch>--version"
-> > > >   Anything less than that is ambiguous as far as history and patch
-> > > >   relationships go.
-> > >
-> > > These bug/sanity fixes are _good_. As you mention, I wasn't aware that
-> > > patchnames could show up not having a --branch part. Tricky...
-> >
-> > Thanks.  I got lazy one day and started ignoring --branch on some of my
-> > personal projects to save my fingers :)
-> 
-> Yup, makes sense. My concern now is that existing imports will change
-> the name of branches and tags going forward. Can I ask you to resend
-> that patch with the new branchname mangling as default, and the old
-> one as optional?
-
-Ok, good idea.  My previous patch already automatically converted the
-private tags, which we actually need to parse, and I see no reason to
-change that, but branch names and public tags which affect
-non-gitarchimport users can be preserved with the -o flag.
-
-> I know it'll force us to go back to using shellquote, but I am not too
-> worried by that dependency at the moment.
+applies-to: 44d831812786f4dfbf54a67b51e5f48c7d5afd66
+4b341dd903883db0a89fe2f04e93dab053beb045
+diff --git a/git-archimport.perl b/git-archimport.perl
+index 1f721f6..304d462 100755
+--- a/git-archimport.perl
++++ b/git-archimport.perl
+@@ -67,12 +67,12 @@ my $git_dir = $ENV{"GIT_DIR"} || ".git";
+ $ENV{"GIT_DIR"} = $git_dir;
+ my $ptag_dir = "$git_dir/archimport/tags";
  
-Actually, usage of shell_quote() in git-archimport was always
-unnecessary.  Passing arguments to external programs as an array,
-using the 3-argument version of open() for files, and using -z in
-git-commands with pipes are better ways to go.
-
-> > > > Current weaknesses:
-> > > >
-> > > > * (Present in the original code as well).
-> > > >   The code still assumes that dates in commit logs can be trusted, which is
-> > > >   fine in most cases, but a wayward branch can screw up git-archimport and
-> > > >   cause parents to be missed.
-> > >
-> > > Fair enough. You mention an alternative strategy (tla ancestry) --
-> > > have you tried it at all?
-> >
-> > No, not yet.
-> 
-> Also interested in this if you get around to it.
-
-It's not a high priority for me and I probably don't have time to do
-this.
-
--- 
-Eric Wong
+-our($opt_h,$opt_v,$opt_T,$opt_t,$opt_D,$opt_a);
++our($opt_h,$opt_v,$opt_T,$opt_t,$opt_D,$opt_a,$opt_o);
+ 
+ sub usage() {
+     print STDERR <<END;
+ Usage: ${\basename $0}     # fetch/update GIT from Arch
+-       [ -h ] [ -v ] [ -T ] [ -a ] [ -D depth  ] [ -t tempdir ]
++       [ -o ] [ -h ] [ -v ] [ -T ] [ -a ] [ -D depth  ] [ -t tempdir ]
+        repository/arch-branch [ repository/arch-branch] ...
+ END
+     exit(1);
+@@ -267,7 +267,15 @@ sub tree_dirname {
+     return $name;
+ }
+ 
+-*git_branchname = *tree_dirname;
++# old versions of git-archimport just use the <category--branch> part:
++sub old_style_branchname {
++    my $id = shift;
++    my $ret = safe_pipe_capture($TLA,'parse-package-name','-p',$id);
++    chomp $ret;
++    return $ret;
++}
++
++*git_branchname = $opt_o ? *old_style_branchname : *tree_dirname;
+ 
+ # process patchsets in ancestry order
+ foreach my $ps (@psets) {
+@@ -527,8 +535,12 @@ sub parselog {
+ sub tag {
+     my ($tag, $commit) = @_;
+  
+-    # don't use subdirs for tags yet, it could screw up other porcelains
+-    $tag =~ s|/|,|;
++    if ($opt_o) {
++        $tag =~ s|/|--|g;
++    } else {
++        # don't use subdirs for tags yet, it could screw up other porcelains
++        $tag =~ s|/|,|g;
++    }
+     
+     if ($commit) {
+         open(C,">","$git_dir/refs/tags/$tag")
+---
+0.99.9.GIT
