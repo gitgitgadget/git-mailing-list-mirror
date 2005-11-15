@@ -1,96 +1,107 @@
-From: =?ISO-8859-15?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
-Subject: Re: fix git-pack-redundant crashing sometimes
-Date: Wed, 16 Nov 2005 00:13:14 +0100
-Message-ID: <437A6B8A.8060905@etek.chalmers.se>
-References: <81b0412b0511150749g5672158v7b39c02ffdf13e08@mail.gmail.com> <20051115213442.GA4256@steel.home> <437A560E.8020500@etek.chalmers.se> <20051115223340.GA3951@steel.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Nov 16 00:14:20 2005
+From: exon@op5.se (Andreas Ericsson)
+Subject: [PATCH 3/3] git --help COMMAND brings up the git-COMMAND man-page.
+Date: Wed, 16 Nov 2005 00:31:25 +0100 (CET)
+Message-ID: <20051115233125.2C0355BF73@nox.op5.se>
+X-From: git-owner@vger.kernel.org Wed Nov 16 00:32:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ec9yx-0006Wg-24
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:12:58 +0100
+	id 1EcAH0-0003qm-UV
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:31:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932550AbVKOXMs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 15 Nov 2005 18:12:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932557AbVKOXMs
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:12:48 -0500
-Received: from pne-smtpout1-sn2.hy.skanova.net ([81.228.8.83]:51948 "EHLO
-	pne-smtpout1-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
-	id S932550AbVKOXMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Nov 2005 18:12:47 -0500
-Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout1-sn2.hy.skanova.net (7.2.060.1)
-        id 4378E95300070F73; Wed, 16 Nov 2005 00:12:46 +0100
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
-X-Accept-Language: en-us, en
+	id S932568AbVKOXb1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 18:31:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932575AbVKOXb1
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:31:27 -0500
+Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:62648 "EHLO
+	pne-smtpout2-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S932568AbVKOXb0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 18:31:26 -0500
+Received: from vrrx50sn1.teliamobile.net (192.71.148.196) by pne-smtpout2-sn2.hy.skanova.net (7.2.060.1)
+        id 4378EBDA00076099 for git@vger.kernel.org; Wed, 16 Nov 2005 00:31:25 +0100
+Received: from nox.op5.se (host-n13-90.homerun.telia.com [212.181.228.90])
+	by vrrx50sn1.teliamobile.net (8.11.6/8.11.6) with ESMTP id jAFNVPf24370
+	for <git@vger.kernel.org>; Wed, 16 Nov 2005 00:31:25 +0100
+Received: by nox.op5.se (Postfix, from userid 500)
+	id 2C0355BF73; Wed, 16 Nov 2005 00:31:25 +0100 (CET)
 To: git@vger.kernel.org
-In-Reply-To: <20051115223340.GA3951@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11962>
 
-Alex Riesen wrote:
-> Lukas Sandstr=F6m, Tue, Nov 15, 2005 22:41:34 +0100:
->=20
->>>>llist_sorted_difference_inplace didn't handle the match in the firs=
-t
->>>>sha1 correctly and the lists went wild everywhere.
->>>
->>>This wasn't enough. It never (>5 min on 2.4GHz PIV) finishes on
->>>my local mirror of git, which has 22 packs by now.
->>
->>If the patch I just sent out doesn't fix the problem, and you don't
->=20
->=20
-> Sorry, it doesn't. The code loops here:
->=20
-> 401             /* find the permutations which contain all missing ob=
-jects */
-> 402             perm_all =3D perm =3D get_all_permutations(non_unique=
-);
-> 403             while (perm) {
-> 404                     if (is_superset(perm->pl, missing)) {
-> 405                             new_perm =3D xmalloc(sizeof(struct pl=
-l));
-> 406                             new_perm->pl =3D perm->pl;
-> 407                             new_perm->next =3D perm_ok;
-> 408                             perm_ok =3D new_perm;
-> (gdb)=20
-> 409                     }
-> 410                     perm =3D perm->next;
-> 411             }
-> 412
-> 413             if (perm_ok =3D=3D NULL)
->=20
->=20
->=20
->>want to debug it yourself, could you please publish the .idx files
->>so I could have a look at them?
->=20
->=20
-> Of course: http://home.arcor.de/fork0/download/idx.tar.gz
->=20
 
-After giving it a quick look, I don't think it locks up. It is just hor=
-ribly
-slow. get_all_permutations returns (nice ASCII-art follows)
+It's by design a bit stupid (matching ^git rather than ^git-), so as
+to work with 'gitk' and 'git' as well.
 
-    ___n___
-    \
-     \ ____1____
-n! * /  k!(n-k)!
-    /______
-      k=3D1
+Signed-off-by: Andreas Ericsson <ae@op5.se>
 
-permutations, which for your case (22 packs) adds up to 4194303.
+---
 
-I'll look into an optimization so we won't have to call is_superset
-for every one of them.
+ Documentation/git.txt |    2 ++
+ git.c                 |   28 ++++++++++++++++++++++++++--
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
-OTOH, I might be wrong and it could very well be an infinite loop.
-Mind running it over the night? I won't look further into this in
-20 hours or so anyway.
+applies-to: 8a47ae8a825ab0e68ac46392bccd1ec16df39456
+3b7d6e6722b0d27ef5f9ae99a76d3ff909d3e98a
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 91e9f9f..7cbfaf8 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -24,6 +24,8 @@ OPTIONS
+ 
+ --help::
+ 	prints the synopsis and a list of available commands.
++	If a git command is named this option will bring up the
++	man-page for that command.
+ 
+ --exec-path::
+ 	path to wherever your core git programs are installed.
+diff --git a/git.c b/git.c
+index d189801..583923d 100644
+--- a/git.c
++++ b/git.c
+@@ -160,6 +160,26 @@ static void prepend_to_path(const char *
+ 	setenv("PATH", path, 1);
+ }
+ 
++/* has anyone seen 'man' installed anywhere else than in /usr/bin? */
++#define PATH_TO_MAN "/usr/bin/man"
++static void show_man_page(char *git_cmd)
++{
++	char *page;
++
++	if (!strncmp(git_cmd, "git", 3))
++		page = git_cmd;
++	else {
++		int page_len = strlen(git_cmd) + 4;
++
++		page = malloc(page_len + 1);
++		strcpy(page, "git-");
++		strcpy(page + 4, git_cmd);
++		page[page_len] = 0;
++	}
++
++	execlp(PATH_TO_MAN, "man", page, NULL);
++}
++
+ int main(int argc, char **argv, char **envp)
+ {
+ 	char git_command[PATH_MAX + 1];
+@@ -199,8 +219,12 @@ int main(int argc, char **argv, char **e
+ 			usage(NULL, NULL);
+ 	}
+ 
+-	if (i >= argc || show_help)
+-		usage(exec_path, NULL);
++	if (i >= argc || show_help) {
++		if (i >= argc)
++			usage(exec_path, NULL);
++
++		show_man_page(argv[i]);
++	}
+ 
+ 	/* allow relative paths, but run with exact */
+ 	if (chdir(exec_path)) {
+---
+0.99.9.GIT
