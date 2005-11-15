@@ -1,172 +1,91 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 0.99.9i aka 1.0rc2
-Date: Mon, 14 Nov 2005 20:17:02 -0800
-Message-ID: <7vr79isfy9.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH 1/1] git-cvsexportcommit.perl: Fix usage() output.
+Date: Tue, 15 Nov 2005 18:10:41 +1300
+Message-ID: <46a038f90511142110x3aa22882j768f33ec1a882dab@mail.gmail.com>
+References: <20051114164047.GB9131@raven.localdomain>
+	 <20051114164505.GF9131@raven.localdomain>
+	 <7vbr0mx4fj.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f90511141420u11e396d3q9a6710c79abe0ca3@mail.gmail.com>
+	 <7vsltyvnjf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 15 05:17:21 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Kevin Geiss <kevin@desertsol.com>
+X-From: git-owner@vger.kernel.org Tue Nov 15 06:11:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EbsFu-0001pJ-F7
-	for gcvg-git@gmane.org; Tue, 15 Nov 2005 05:17:14 +0100
+	id 1Ebt5g-0003mm-U8
+	for gcvg-git@gmane.org; Tue, 15 Nov 2005 06:10:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932362AbVKOERF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 14 Nov 2005 23:17:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932365AbVKOERF
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Nov 2005 23:17:05 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:29866 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932362AbVKOERE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Nov 2005 23:17:04 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051115041633.CEHS20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 14 Nov 2005 23:16:33 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932383AbVKOFKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 00:10:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932519AbVKOFKm
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 00:10:42 -0500
+Received: from zproxy.gmail.com ([64.233.162.206]:61 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932383AbVKOFKl convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 00:10:41 -0500
+Received: by zproxy.gmail.com with SMTP id 40so1283493nzk
+        for <git@vger.kernel.org>; Mon, 14 Nov 2005 21:10:41 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NKq5TCy/S8PZIozeGuEhphISrQ+CPIk3ZM6xWZTU6mL+v8wStouYP8AmP+ZJnPCffTAGAtIS6tnbshVdQDLMj3halAVag+5h4w74gmwry4LVyuaDRHeT5dFZvCOGGADJKC4Mtj+Ob/d5SdvpmJJLvVf0d0VVlwVkbH4YzCYPS2s=
+Received: by 10.64.193.9 with SMTP id q9mr3789249qbf;
+        Mon, 14 Nov 2005 21:10:41 -0800 (PST)
+Received: by 10.64.242.4 with HTTP; Mon, 14 Nov 2005 21:10:41 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>, git list <git@vger.kernel.org>
+In-Reply-To: <7vsltyvnjf.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11876>
 
-GIT 0.99.9i aka 1.0rc2 is found at usual places.
+On 11/15/05, Junio C Hamano <junkio@cox.net> wrote:
+> Given that you are far more familiar with that part of the code,
+> and I suspect I'd be asking your help in archimport as well, a
+> repo I can pull from would be more preferable (and sign-off by
+> you is certainly an added bonus).  If a public repo is too much
+> hassle, however, e-mail forwarding is perfectly fine as well.
+> Your choice.
 
-I think the source-tree-wise almost everything is done except:
+It is _easy_. I've setup a server for git-related paraphernalia at
+work already ;)
 
- - http-fetch file descriptor leak fix; I tried Nick's
-   clean-ups, but haven't tried Pasky's patch yet.  Walt reports
-   neither patch fixed the problem.  I wasted the weekend not
-   being able to reproduce this myself, until Pasky reminded me
-   that I have an old special code in git-clone, which was
-   unrelated to this problem, but nevertheless was masking it.
+The URL is:
+  http://locke.catalyst.net.nz/git/git-martinlanghoff.git/#tojunio
 
- - Preparation for later dash-less "git frotz" installation
-   scheme.  As I said earlier, I intend to do 1.0 with a
-   Makefile that installs everything in one directory (either
-   $HOME/bin or /usr/bin) by default, but at least we should
-   encourage our users to get used to spelling the subcommands
-   in dash-less form.  Andreas Ericsson's git wrapper
-   implementation was reviewed favourably on the list, and I'd
-   like to go with it.
+gitweb at:
+  http://locke.catalyst.net.nz/gitweb?p=git-martinlanghoff.git;a=summary
 
- - archimport update by Eric Wong has not been reviewed yet;
-   this is difficult for me since I do not use tla anymore, and
-   I am asking help from Martin Langhoff.  I am hoping Eric and
-   Martin would come up with an updated patch that satisfies the
-   needs of both, at that time the update will happen.
-   Personally I do not think 1.0 has to wait for this.
+That gitweb has per-branch RSS feeds, if you are an rss junkio ;-) you
+can just subscribe to it...
 
-There is a bit of restructuring in the binary packaging for RPM
-(and probably Debian side needs matching change as well) before
-1.0 can happen.
+A word of warning, though: those branches rewind/rebase often, and I
+won't apologise about it. You should be able to just delete your
+'martinlanghoff' head and refetch it. Anyone else reading this... just
+_don't_ base your work on my branch as it's bound to break.
 
-Anyway, here is the short-log between 0.99.9g and 0.99.9i.
-Please give it a good beating.
+> BTW, there is no "mana" points involved in deciding if I
+> directly pull from somewhere.  Even if that were the case, you
+> have accumulated enough of them already ;-).
 
--- >8 -- cut here -- >8 --
+:-)
 
-Alex Riesen:
-      allow git-update-ref create refs with slashes in names
+/me is happy that you've forgotten about my brown-paper-bag patch with
+a random character in the middle!
 
-Andreas Ericsson:
-      git-clone: Keep remote names when cloning unless explicitly told =
-not to.
-      git-clone: Allow cloning into directories other than child of cur=
-rent dir.
-      git-branch: Mention -d and -D in man-page.
+> Although some might find "${\function}" expansion too cute for
+> their taste, Keven's code is fine as-is for me.  I launched the
+> baloon just wanting to see what others have to say ;-).
 
-Chris Wright:
-      specfile cleanups
+Fine w me -- TIMTOWDI. I do understand, however, your interest in
+having full paths in the usage line to make debugging easier. Whatever
+is consistent with the project in general.
 
-=46redrik Kuivinen:
-      merge-recursive: Indent the output properly
-      merge-recursive: Add copyright notice
-      merge-recursive: Use '~' instead of '_' to separate file names fr=
-om branch names
+cheers,
 
-Jim Radford:
-      Add missing git-core and cvsps RPM dependencies.
 
-Josef Weidendorfer:
-      Let git-clone/git-fetch follow HTTP redirections
-      Bugfix: stop if directory already exists
-      Remove git-rename. git-mv does the same
-
-Junio C Hamano:
-      Documentation: "host:path/to/repo" is git native over ssh.
-      Do not lose author name information to locale gotchas.
-      Add --pretty=3Dfuller
-      octopus: do not do AND'ed merge base.
-      RPM: arch submodule needs tla.
-      merge-base: fully contaminate the well.
-      merge-base: avoid unnecessary postprocessing.
-      Add test case for merge-base.
-      git-show-branch: tighten merge-base computation.
-      Fully detect uninteresting commits.
-      t1200: use --topo-order to keep the show-branch output stable.
-      INSTALL: duplicate python requirements from Makefile
-      merge with /dev/null as base, instead of punting O=3D=3Dempty cas=
-e
-      merge-one-file: use common as base, instead of emptiness.
-      Documentation: git-apply --no-add
-      merge-one-file: use empty- or common-base condintionally in two-s=
-tage merge.
-      git-prune: prune redundant packs
-      git-lost+found
-      Rename .git/lost+found to .git/lost-found.
-      Documentation: asciidoc sources are utf-8
-      Ignore built git-lost+found.
-      Debian: build-depend on libexpat-dev.
-      Rename lost+found to lost-found.
-      Separate LDFLAGS and CFLAGS.
-      apply: fix binary patch detection.
-      Update topo-order test.
-
-Kai Ruemmler:
-      Fix compilation warnings in pack-redundant.c
-
-Linus Torvalds:
-      Fix git-rev-list "date order" with --topo-order
-
-Lukas_Sandstr=F6m:
-      Change 'cache' to 'index' in the docs
-      Add git-pack-intersect
-      Add documentation for git-pack-intersect
-      Add git-pack-intersect to .gitignore
-      Make git-repack use git-pack-intersect.
-      Rename git-pack-intersect to git-pack-redundant
-      Make git-pack-redundant consider alt-odbs
-
-Martin Langhoff:
-      archimport: handle pika escaping
-
-Matthias Urlichs:
-      debian packaging: git-cvs needs cvsps
-      Remove trailing slashes
-      Depend on asciidoc 7 (at least).
-
-Nick Hengeveld:
-      Fix for multiple alternates requests in http-fetch
-      Fix fd leak in http-fetch
-
-Nikolai Weibull:
-      Document the -n command-line option to git-unpack-objects
-      Document a couple of missing command-line options.
-      Documentation nitpicking
-
-Pavel Roskin:
-      Add --no-commit-id option for git-diff-tree, use it in gitk
-      git-clone: quote destination directory name
-
-Petr Baudis:
-      Fix confusing git-update-ref error message
-      Show URL in the "Getting <foo> list" http-fetch messages
-
-Thomas Matysik:
-      Add expat and expat-devel dependencies (for http-push) to RPM spe=
-c.
-      Split gitk into seperate RPM package
+martin
