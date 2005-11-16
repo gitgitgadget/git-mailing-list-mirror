@@ -1,49 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Deprecate --cache.* ?
-Date: Tue, 15 Nov 2005 22:06:48 -0800
-Message-ID: <7vsltxazyf.fsf@assigned-by-dhcp.cox.net>
-References: <437A5F08.7020908@etek.chalmers.se>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Fix compilation of git.c
+Date: Wed, 16 Nov 2005 07:54:30 +0100
+Message-ID: <437AD7A6.6050906@op5.se>
+References: <Pine.LNX.4.63.0511160243360.14176@wbgn013.biozentrum.uni-wuerzburg.de> <7v4q6de1oc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 07:23:41 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Nov 16 07:54:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcGRk-000410-B5
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 07:07:10 +0100
+	id 1EcHBm-0007GI-6F
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 07:54:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030186AbVKPGG4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 Nov 2005 01:06:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030185AbVKPGG4
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 01:06:56 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:49065 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1030186AbVKPGGz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 01:06:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051116060652.YZOB25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Nov 2005 01:06:52 -0500
-To: Lukas =?iso-8859-1?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>
-In-Reply-To: <437A5F08.7020908@etek.chalmers.se> (Lukas =?iso-8859-1?Q?San?=
- =?iso-8859-1?Q?dstr=F6m's?= message
-	of "Tue, 15 Nov 2005 23:19:52 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030198AbVKPGyc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 01:54:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbVKPGyc
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 01:54:32 -0500
+Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:45557 "EHLO
+	pne-smtpout2-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S1751184AbVKPGyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 01:54:32 -0500
+Received: from vrrx50sn1.teliamobile.net (192.71.148.196) by pne-smtpout2-sn2.hy.skanova.net (7.2.060.1)
+        id 4378EBDA000871B5 for git@vger.kernel.org; Wed, 16 Nov 2005 07:54:31 +0100
+Received: from [212.181.228.90] (host-n13-90.homerun.telia.com [212.181.228.90])
+	by vrrx50sn1.teliamobile.net (8.11.6/8.11.6) with ESMTP id jAG6sUf26088
+	for <git@vger.kernel.org>; Wed, 16 Nov 2005 07:54:30 +0100
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <7v4q6de1oc.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12005>
 
-Lukas Sandstr=F6m <lukass@etek.chalmers.se> writes:
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> 
+>>Some systems do not define GLOB_ABORTED and GLOB_NOMATCH.
+> 
+> 
+> That's true, but the glob does not distinguish executables and
+> others anyway, do wouldn't it be more portable and easier to do
+> readdir, stat and list in the loop?
+> 
 
-> Backward compability could be ensured by having both versions of the =
-flags
-> around for a while and issuing a warning when the old form is used.
->
-> Good idea? Bad? Stupid? Do we want to keep "cache" around?
+Got one implementation of that too, but it doesn't sort the command list 
+and I thought it was nice to have them that way while too lazy to 
+implement myself.
 
-I agree that may be a logical move, with proper b/c slack, but I
-am not _so_ enthused about this...
+OTOH, that switch/case thing was for debugging (forgot prefix=/usr when 
+compiling...). I'm perfectly fine with
+
+if (glob(....)) {
+	error_out("friendly message");
+}
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
