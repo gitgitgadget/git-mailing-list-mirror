@@ -1,97 +1,105 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 1/3] C implementation of the 'git' program, take two.
-Date: Tue, 15 Nov 2005 16:18:26 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511151603510.11232@g5.osdl.org>
-References: <20051115233125.3153B5BF76@nox.op5.se>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 01:19:34 2005
+From: exon@op5.se (Andreas Ericsson)
+Subject: [PATCH 3/3] git --help COMMAND brings up the git-COMMAND man-page., take two
+Date: Wed, 16 Nov 2005 01:23:18 +0100 (CET)
+Message-ID: <20051116002318.A46C55BF97@nox.op5.se>
+X-From: git-owner@vger.kernel.org Wed Nov 16 01:24:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcB0U-00019K-1c
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 01:18:34 +0100
+	id 1EcB59-0002St-BA
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 01:23:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965100AbVKPASb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 19:18:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965101AbVKPASb
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 19:18:31 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:61879 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965100AbVKPASb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 19:18:31 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAG0IRnO009844
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 15 Nov 2005 16:18:27 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAG0IQcr028496;
-	Tue, 15 Nov 2005 16:18:27 -0800
-To: Andreas Ericsson <exon@op5.se>
-In-Reply-To: <20051115233125.3153B5BF76@nox.op5.se>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965103AbVKPAXU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 19:23:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965105AbVKPAXU
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 19:23:20 -0500
+Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:59123 "EHLO
+	pne-smtpout2-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S965103AbVKPAXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 19:23:19 -0500
+Received: from vrrx50sn1.teliamobile.net (192.71.148.196) by pne-smtpout2-sn2.hy.skanova.net (7.2.060.1)
+        id 4378EBDA00077025 for git@vger.kernel.org; Wed, 16 Nov 2005 01:23:19 +0100
+Received: from nox.op5.se (host-n13-90.homerun.telia.com [212.181.228.90])
+	by vrrx50sn1.teliamobile.net (8.11.6/8.11.6) with ESMTP id jAG0NIf24547
+	for <git@vger.kernel.org>; Wed, 16 Nov 2005 01:23:18 +0100
+Received: by nox.op5.se (Postfix, from userid 500)
+	id A46C55BF97; Wed, 16 Nov 2005 01:23:18 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11978>
 
 
+It's by design a bit stupid (matching ^git rather than ^git-), so as
+to work with 'gitk' and 'git' as well.
 
-On Wed, 16 Nov 2005, Andreas Ericsson wrote:
-> +
-> +	/* allow relative paths, but run with exact */
-> +	if (chdir(exec_path)) {
-> +		printf("git: '%s': %s\n", exec_path, strerror(errno));
-> +		exit (1);
-> +	}
-> +
-> +	getcwd(git_command, sizeof(git_command));
-> +	chdir(wd);
+Signed-off-by: Andreas Ericsson <ae@op5.se>
 
-Argh. This is pretty horrible way to turn a path into an absolute one. 
-Especially since you didn't even test whether the original "wd" was 
-successful.
+---
 
-Why don't you just do
+ Documentation/git.txt |    2 ++
+ git.c                 |   26 ++++++++++++++++++++++++--
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-	if (exec_path[0] != '/') {
-		.. prepend "cwd/" to exec_path ..
-
-since as far as I can tell you don't actually care whether it's a 
-simplified path or not (you can remove "./" at the beginning just to make 
-it cleaner, if you wish. In fact, you can remove "../" at the beginning 
-too (but only the beginning) since getcwd() shouldn't have any symlink 
-components).
-
-The reason to avoid "chdir(relative) + chdir(back)" is that it totally 
-unnecessarily breaks under some extreme cases. For example, if the 
-exec_path is already absolute, and we just happen to be in a really deep 
-subdirectory, then the getcwd() could have failed due to the PATH_MAX 
-limitations.
-
-Also, depending on getcwd() will not work if any parent directory is 
-unreadable or non-executable (well, under Linux it will, as long as it's 
-executable, since getcwd() is actually a system call. Not in UNIX in 
-general, though). Again, that means that unless you _have_ to know what 
-the cwd is, you should try to avoid relying on it.
-
-Now, there are Linux-specific tricks that can avoid some of the problems 
-if you want to, but they are very much hacks:
-
-	if (filename[0] != '/') {
-		fd = open(filename, O_DIRECTORY);
-		if (fd >= 0) {
-			snprintf(link_name, sizeof(link_name), "/proc/self/fd/%d", fd);
-			if (!readlink(link_name ...)) {
-				.. there it is ..
-			}
-			close(fd);
-		}
-	..
-
-and the nicer thign to do is to just not try to be clever.
-
-		Linus
+applies-to: 8a47ae8a825ab0e68ac46392bccd1ec16df39456
+53e2024f89514d31a45936e3596e3d285dfd1bfe
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 91e9f9f..7cbfaf8 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -24,6 +24,8 @@ OPTIONS
+ 
+ --help::
+ 	prints the synopsis and a list of available commands.
++	If a git command is named this option will bring up the
++	man-page for that command.
+ 
+ --exec-path::
+ 	path to wherever your core git programs are installed.
+diff --git a/git.c b/git.c
+index d189801..4b7cbf6 100644
+--- a/git.c
++++ b/git.c
+@@ -160,6 +160,24 @@ static void prepend_to_path(const char *
+ 	setenv("PATH", path, 1);
+ }
+ 
++static void show_man_page(char *git_cmd)
++{
++	char *page;
++
++	if (!strncmp(git_cmd, "git", 3))
++		page = git_cmd;
++	else {
++		int page_len = strlen(git_cmd) + 4;
++
++		page = malloc(page_len + 1);
++		strcpy(page, "git-");
++		strcpy(page + 4, git_cmd);
++		page[page_len] = 0;
++	}
++
++	execlp("man", "man", page, NULL);
++}
++
+ int main(int argc, char **argv, char **envp)
+ {
+ 	char git_command[PATH_MAX + 1];
+@@ -199,8 +217,12 @@ int main(int argc, char **argv, char **e
+ 			usage(NULL, NULL);
+ 	}
+ 
+-	if (i >= argc || show_help)
+-		usage(exec_path, NULL);
++	if (i >= argc || show_help) {
++		if (i >= argc)
++			usage(exec_path, NULL);
++
++		show_man_page(argv[i]);
++	}
+ 
+ 	/* allow relative paths, but run with exact */
+ 	if (chdir(exec_path)) {
+---
+0.99.9.GIT
