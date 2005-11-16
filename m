@@ -1,69 +1,124 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: fix git-pack-redundant crashing sometimes
-Date: Tue, 15 Nov 2005 15:58:02 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511151552400.11232@g5.osdl.org>
-References: <81b0412b0511150749g5672158v7b39c02ffdf13e08@mail.gmail.com>
- <20051115213442.GA4256@steel.home> <437A560E.8020500@etek.chalmers.se>
- <20051115223340.GA3951@steel.home>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 1/3] C implementation of the 'git' program, take two.
+Date: Wed, 16 Nov 2005 01:10:36 +0100
+Message-ID: <437A78FC.10608@op5.se>
+References: <20051115233125.3153B5BF76@nox.op5.se> <7vwtj9eaqm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>,
-	git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Nov 16 01:00:06 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Nov 16 01:11:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcAgr-0003aa-PK
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 00:58:18 +0100
+	id 1EcAsr-0007EK-Dr
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 01:10:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965092AbVKOX6O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 18:58:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965093AbVKOX6O
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 18:58:14 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:20402 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965092AbVKOX6O (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 18:58:14 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAFNw4nO008725
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 15 Nov 2005 15:58:04 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAFNw2Ux027603;
-	Tue, 15 Nov 2005 15:58:03 -0800
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <20051115223340.GA3951@steel.home>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965095AbVKPAKi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 19:10:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965096AbVKPAKi
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 19:10:38 -0500
+Received: from pne-smtpout1-sn2.hy.skanova.net ([81.228.8.83]:13751 "EHLO
+	pne-smtpout1-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S965095AbVKPAKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 19:10:37 -0500
+Received: from vrrx50sn1.teliamobile.net (192.71.148.196) by pne-smtpout1-sn2.hy.skanova.net (7.2.060.1)
+        id 4378E95300072376 for git@vger.kernel.org; Wed, 16 Nov 2005 01:10:36 +0100
+Received: from [212.181.228.90] (host-n13-90.homerun.telia.com [212.181.228.90])
+	by vrrx50sn1.teliamobile.net (8.11.6/8.11.6) with ESMTP id jAG0Aaf24504
+	for <git@vger.kernel.org>; Wed, 16 Nov 2005 01:10:36 +0100
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <7vwtj9eaqm.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11975>
 
-
-
-On Tue, 15 Nov 2005, Alex Riesen wrote:
+Junio C Hamano wrote:
+> exon@op5.se (Andreas Ericsson) writes:
 > 
-> Sorry, it doesn't. The code loops here:
 > 
-> 401             /* find the permutations which contain all missing objects */
-> 402             perm_all = perm = get_all_permutations(non_unique);
+>>This patch provides a C implementation of the 'git' program and
+>>introduces support for putting the git-* commands in a directory
+>>of their own.
+> 
+> 
+> Very nice, thanks.  Two questions and a half.
+> 
+> 
+>>+static void prepend_to_path(const char *dir, int len)
+>>+{
+>>+	char *path, *old_path = getenv("PATH");
+>>+	int path_len = len;
+>>+
+>>+	if (!old_path)
+>>+		old_path = "/bin:/usr/bin:.";
+> 
+> 
+> This is to cover strange case and probably would not matter in
+> practice, but perhaps without current directory?
+> 
 
-Looks like the whole thing is exponential.
+I have no preference really and since it already covers a strange case 
+it probably shouldn't matter either way.
 
-A good way to do sane pack handling is to keep a _sorted_ list of all 
-objects each pack has. At that point it becomes much easier to see which 
-objects only exist in one particular pack.
+> 
+>>+int main(int argc, char **argv, char **envp)
+>>+{
+>>+	char git_command[PATH_MAX + 1];
+>>+	char wd[PATH_MAX + 1];
+>>+	int i, len, show_help = 0;
+>>+	char *exec_path = getenv("GIT_EXEC_PATH");
+>>+
+>>+	getcwd(wd, PATH_MAX);
+>>+...
+>>+	/* allow relative paths, but run with exact */
+>>+	if (chdir(exec_path)) {
+>>+		printf("git: '%s': %s\n", exec_path, strerror(errno));
+>>+		exit (1);
+>>+	}
+>>+
+>>+	getcwd(git_command, sizeof(git_command));
+>>+	chdir(wd);
+> 
+> 
+> Can we always come back from where we started?
+> 
 
-The sorting itself is O(nlogn), and the "does this pack have any unique 
-objects" (or "is this pack a superset of all other packs") question should 
-then be O(n).
+Not sure what you mean. Perhaps "Come back *to* where we started"?
 
-This is how the packs are generated in the first place - by sorting the 
-objects and limiting the diff generation to the "neighbors" of the 
-objects, you can generate pack-files in O(n logn) rather than O(n**2). 
-Which is pretty important when there are currently 140,000+ objects in the 
-kernel tree.
+If getcwd(wd, sizeof(wd)) fails then chdir(wd) will also fail (or do 
+something strange, at least). wd is otherwise absolute.
 
-		Linus
+> 
+>>+
+>>+	len = strlen(git_command);
+>>+	prepend_to_path(git_command, len);
+>>+
+>>+	strncat(&git_command[len], "/git-", sizeof(git_command) - len);
+>>+	len += 5;
+>>+	strncat(&git_command[len], argv[i], sizeof(git_command) - len);
+>>+
+>>+	if (access(git_command, X_OK))
+>>+		usage(exec_path, "'%s' is not a git-command", argv[i]);
+>>+
+>>+	/* execve() can only ever return if it fails */
+>>+	execve(git_command, &argv[i], envp);
+> 
+> 
+> Shell version for Cygwin seems to do ".exe" at the end --- does
+> it matter?
+> 
+
+Dunno, really. I suppose it does as it bypasses the shell with the 
+execve() call, unless windows or the cygwin stuff does some trickery to 
+find an .exe regardless.
+
+Is it ok if I send a separate patch for it, or would you rather have me 
+redo this one?
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
