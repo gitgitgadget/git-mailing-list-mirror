@@ -1,112 +1,52 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] symref support for import scripts
-Date: Wed, 16 Nov 2005 13:27:28 -0500
-Message-ID: <1132165648.4024.6.camel@dv>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Sourceforge doesn't like git cvsimport
+Date: Thu, 17 Nov 2005 08:00:42 +1300
+Message-ID: <46a038f90511161100x4263ac01iaf3c0497db5021f6@mail.gmail.com>
+References: <437B7416.8030704@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Nov 16 19:33:57 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 16 20:02:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcS1z-0003aX-Kn
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 19:29:16 +0100
+	id 1EcSWV-0004JD-MY
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 20:00:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030423AbVKPS3N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 13:29:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030425AbVKPS3M
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 13:29:12 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:38798 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1030423AbVKPS3M
+	id S1030419AbVKPTAp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 14:00:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030430AbVKPTAp
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 14:00:45 -0500
+Received: from zproxy.gmail.com ([64.233.162.205]:10042 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1030419AbVKPTAo convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2005 13:29:12 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EcS0R-0006cY-PC
-	for git@vger.kernel.org; Wed, 16 Nov 2005 13:29:03 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1EcS0G-000279-TM
-	for git@vger.kernel.org; Wed, 16 Nov 2005 13:27:28 -0500
-To: git <git@vger.kernel.org>
-X-Mailer: Evolution 2.4.1 (2.4.1-5) 
+	Wed, 16 Nov 2005 14:00:44 -0500
+Received: by zproxy.gmail.com with SMTP id z3so1479105nzf
+        for <git@vger.kernel.org>; Wed, 16 Nov 2005 11:00:43 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=g/hXw2YfFvyzsdJrR6AA2CkvksdeDrg+jCCmrg+jFMVCnf2w2ytseKU3KxYZdAsyyn3km6Q6cjdXDb3jUZuPkx6Lt24qCatzDa8jkY0o6MGaZAzCArHoTyxqLCEBUEsJod6q4lKzsaaQMS3RvSUDNgosQAe3wxdQnrAAATBO7uQ=
+Received: by 10.65.188.4 with SMTP id q4mr516385qbp;
+        Wed, 16 Nov 2005 11:00:42 -0800 (PST)
+Received: by 10.64.242.4 with HTTP; Wed, 16 Nov 2005 11:00:42 -0800 (PST)
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <437B7416.8030704@zytor.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12039>
 
-Fix git import script not to assume that .git/HEAD is a symlink.
+Unpossible!
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
+I run git-cvsimport against Moodle's cvs repo on SF.net at least twice
+a day over SSH. I did it several times with anon cvs too. SF.net cvs
+servers have been up, down and unreliable the last week, but that's
+bad with the plain old cvs client too.
 
-diff --git a/git-archimport.perl b/git-archimport.perl
-index e22c816..23becb7 100755
---- a/git-archimport.perl
-+++ b/git-archimport.perl
-@@ -410,8 +410,7 @@ foreach my $ps (@psets) {
-     open  HEAD, ">$git_dir/refs/heads/$ps->{branch}";
-     print HEAD $commitid;
-     close HEAD;
--    unlink ("$git_dir/HEAD");
--    symlink("refs/heads/$ps->{branch}","$git_dir/HEAD");
-+    system('git-update-ref', 'HEAD', "$ps->{branch}");
- 
-     # tag accordingly
-     ptag($ps->{id}, $commitid); # private tag
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 7bd9136..efe1934 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -437,7 +437,11 @@ unless(-d $git_dir) {
- 		       "Either use the correct '-o branch' option,\n".
- 		       "or import to a new repository.\n";
- 
--	$last_branch = basename(readlink("$git_dir/HEAD"));
-+	open(F, "git-symbolic-ref HEAD |") or
-+		die "Cannot run git-symbolic-ref: $!\n";
-+	chomp ($last_branch = <F>);
-+	$last_branch = basename($last_branch);
-+	close(F);
- 	unless($last_branch) {
- 		warn "Cannot read the last branch name: $! -- assuming 'master'\n";
- 		$last_branch = "master";
-@@ -829,8 +833,7 @@ if($orig_branch) {
- 	print "DONE; creating $orig_branch branch\n" if $opt_v;
- 	system("cp","$git_dir/refs/heads/$opt_o","$git_dir/refs/heads/master")
- 		unless -f "$git_dir/refs/heads/master";
--	unlink("$git_dir/HEAD");
--	symlink("refs/heads/$orig_branch","$git_dir/HEAD");
-+	system('git-update-ref', 'HEAD', "$orig_branch");
- 	unless ($opt_i) {
- 		system('git checkout');
- 		die "checkout failed: $?\n" if $?;
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index af13fdd..45d77c5 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -216,7 +216,11 @@ unless(-d $git_dir) {
- 	-f "$git_dir/svn2git"
- 		or die "'$git_dir/svn2git' does not exist.\n".
- 		       "You need that file for incremental imports.\n";
--	$last_branch = basename(readlink("$git_dir/HEAD"));
-+	open(F, "git-symbolic-ref HEAD |") or
-+		die "Cannot run git-symbolic-ref: $!\n";
-+	chomp ($last_branch = <F>);
-+	$last_branch = basename($last_branch);
-+	close(F);
- 	unless($last_branch) {
- 		warn "Cannot read the last branch name: $! -- assuming 'master'\n";
- 		$last_branch = "master";
-@@ -766,8 +770,7 @@ if($orig_branch) {
- 	print "DONE; creating $orig_branch branch\n" if $opt_v and (not defined $opt_l or $opt_l > 0);
- 	system("cp","$git_dir/refs/heads/$opt_o","$git_dir/refs/heads/master")
- 		unless -f "$git_dir/refs/heads/master";
--	unlink("$git_dir/HEAD");
--	symlink("refs/heads/$orig_branch","$git_dir/HEAD");
-+	system('git-update-ref', 'HEAD', "$orig_branch");
- 	unless ($opt_i) {
- 		system('git checkout');
- 		die "checkout failed: $?\n" if $?;
+Can we get more info on what's happening?
 
 
--- 
-Regards,
-Pavel Roskin
+martin
