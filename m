@@ -1,74 +1,103 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] symref support for import scripts
-Date: Wed, 16 Nov 2005 11:43:41 -0800
-Message-ID: <7vu0ec7502.fsf@assigned-by-dhcp.cox.net>
-References: <1132165648.4024.6.camel@dv>
+From: Andrew Wozniak <awozniak@mc.com>
+Subject: Re: recent patch breaks the build ?
+Date: Wed, 16 Nov 2005 14:47:56 -0500
+Message-ID: <437B8CEC.8040002@mc.com>
+References: <437B6997.8010903@mc.com> <7v64qs8kuo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>,
-	Matthias Urlichs <smurf@smurf.noris.de>
-X-From: git-owner@vger.kernel.org Wed Nov 16 20:46:16 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Nick Hengeveld <nickh@reactrix.com>
+X-From: git-owner@vger.kernel.org Wed Nov 16 20:52:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcTC9-0004Ts-5e
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 20:43:49 +0100
+	id 1EcTGO-00067I-V8
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 20:48:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030463AbVKPTnq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 14:43:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030460AbVKPTnq
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 14:43:46 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:57078 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1030463AbVKPTnp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2005 14:43:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051116194310.HQFI6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Nov 2005 14:43:10 -0500
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1132165648.4024.6.camel@dv> (Pavel Roskin's message of "Wed, 16
-	Nov 2005 13:27:28 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030468AbVKPTsJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 14:48:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030470AbVKPTsJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 14:48:09 -0500
+Received: from iris-63.mc.com ([63.96.239.141]:27843 "EHLO mc.com")
+	by vger.kernel.org with ESMTP id S1030468AbVKPTsI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 14:48:08 -0500
+Received: from ad-email1.ad.mc.com by mc.com (8.8.8+Sun/SMI-SVR4)
+	id OAA04184; Wed, 16 Nov 2005 14:47:56 -0500 (EST)
+Received: from [172.16.124.85] ([172.16.124.85]) by ad-email1.ad.mc.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Wed, 16 Nov 2005 14:47:39 -0500
+User-Agent: Thunderbird 1.5 (Windows/20051025)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64qs8kuo.fsf@assigned-by-dhcp.cox.net>
+X-OriginalArrivalTime: 16 Nov 2005 19:47:39.0279 (UTC) FILETIME=[99BFD1F0:01C5EAE6]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12045>
 
-Pavel Roskin <proski@gnu.org> writes:
+Yes, that suggestion worked - it is similar to other code fragments and 
+ifdefs within the same file.
 
-> Fix git import script not to assume that .git/HEAD is a symlink.
->
-> Signed-off-by: Pavel Roskin <proski@gnu.org>
+Unfortunately, now there are other failures:
 
-Thanks.
+gcc -o http-push.o -c -g -O2 -Wall -DSHA1_HEADER='<openssl/sha.h>' 
+http-push.c
+http-push.c: In function `start_mkcol':
+http-push.c:479: `CURLOPT_HTTPGET' undeclared (first use in this function)
+http-push.c:479: (Each undeclared identifier is reported only once
+http-push.c:479: for each function it appears in.)
+http-push.c: In function `start_move':
+http-push.c:581: `CURLOPT_HTTPGET' undeclared (first use in this function)
+http-push.c: In function `refresh_lock':
+http-push.c:615: `CURLOPT_HTTPGET' undeclared (first use in this function)
+http-push.c: In function `fetch_index':
+http-push.c:890: `CURLOPT_HTTPGET' undeclared (first use in this function)
+http-push.c: In function `lock_remote':
+http-push.c:1215: `CURLOPT_HTTPGET' undeclared (first use in this function)
+http-push.c: In function `main':
 
-Martin and Matthias, are these OK with you two?  All of the
-changes look trivially correct, so I'll take them.
+I grep'd for these defines and they are nowhere to be found!  Is some 
+other package needed to resolve these undefines on my RH7.2 build host?
 
-> diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-> index 7bd9136..efe1934 100755
-> --- a/git-cvsimport.perl
-> +++ b/git-cvsimport.perl
-> @@ -437,7 +437,11 @@ unless(-d $git_dir) {
->  		       "Either use the correct '-o branch' option,\n".
->  		       "or import to a new repository.\n";
+I'm really surprised that the unmodified tarball source fails to build. 
+Just curious, is the git project rebuilt on a "nightly" basis to verify 
+recent patches?
+
+Thanks again, Andrew
+
+Junio C Hamano wrote:
+> Andrew Wozniak <awozniak@mc.com> writes:
+> 
+>> Have just started using git for u-boot related development. After 
+>> downloading git-snapshot-20051116 tarball and attempting a build under 
+>> RH7.2, I get the following failure:
+> 
+> Would this help?
+> 
+> -- >8 --
+> 
+> diff --git a/http-fetch.c b/http-fetch.c
+> index 21cc1b9..45e97f9 100644
+> --- a/http-fetch.c
+> +++ b/http-fetch.c
+> @@ -902,16 +902,18 @@ static void fetch_alternates(char *base)
+>  	char *data;
+>  	struct active_request_slot *slot;
+>  	static struct alt_request alt_req;
+> -	int num_transfers;
 >  
-> -	$last_branch = basename(readlink("$git_dir/HEAD"));
-> +	open(F, "git-symbolic-ref HEAD |") or
-> +		die "Cannot run git-symbolic-ref: $!\n";
-> +	chomp ($last_branch = <F>);
-> +	$last_branch = basename($last_branch);
-> +	close(F);
->  	unless($last_branch) {
->  		warn "Cannot read the last branch name: $! -- assuming 'master'\n";
->  		$last_branch = "master";
-
-This part, before or after Pavel's fixes, seems to refuse a
-branch named 'topic/#1'.  This is not a problem for import
-scripts that name their own branches based on what is in the
-foreign SCM and flatten their the branch namespaces, but I'd
-prefer a comment about the issue somewhere around this code, to
-prevent people from copying and pasting the use of "basename()".
-There is a corresponding piece in svnimport as well.
+> +#ifdef USE_CURL_MULTI
+>  	/* If another request has already started fetching alternates,
+>  	   wait for them to arrive and return to processing this request's
+>  	   curl message */
+>  	while (got_alternates == 0) {
+> +		int num_transfers;
+>  		curl_multi_perform(curlm, &num_transfers);
+>  		process_curl_messages();
+>  		process_request_queue();
+>  	}
+> +#endif
+>  
+>  	/* Nothing to do if they've already been fetched */
+>  	if (got_alternates == 1)
+> 
+> 
