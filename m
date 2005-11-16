@@ -1,67 +1,61 @@
-From: Alecs King <alecsk@gmail.com>
-Subject: [PATCH] Documentation/git-log.txt: trivial typo fix.
-Date: Thu, 17 Nov 2005 03:06:03 +0800
-Message-ID: <20051116190603.GA13321@localhost>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Sourceforge doesn't like git cvsimport
+Date: Wed, 16 Nov 2005 11:09:43 -0800
+Message-ID: <437B83F7.6010500@zytor.com>
+References: <437B7416.8030704@zytor.com> <46a038f90511161100x4263ac01iaf3c0497db5021f6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Nov 16 20:09:03 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 16 20:12:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcSbc-00072L-6m
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 20:06:04 +0100
+	id 1EcSfR-0000mv-2V
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 20:10:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751010AbVKPTFu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 14:05:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751490AbVKPTFt
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 14:05:49 -0500
-Received: from zproxy.gmail.com ([64.233.162.195]:31666 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751010AbVKPTFs (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 14:05:48 -0500
-Received: by zproxy.gmail.com with SMTP id 18so1790089nzp
-        for <git@vger.kernel.org>; Wed, 16 Nov 2005 11:05:46 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:subject:message-id:mail-followup-to:mime-version:content-type:content-disposition:user-agent;
-        b=brP5bgqT+uSw3K1IOy6zsL+b89foxSO1DIrMDVC0PlpxB1vWDWLAgjKYJNj7JtL9FgvpgapIJj0xNM1YfqJ2POD3MBtnzAotPyjkZTwN622vRDfRNFsh9CYSaHPn4nOKHOyFBMMQeg2ODXGOE6FEYc3okefDhlDXLxl2S5sGN8o=
-Received: by 10.36.38.13 with SMTP id l13mr6580182nzl;
-        Wed, 16 Nov 2005 11:05:46 -0800 (PST)
-Received: from localhost ( [221.222.170.245])
-        by mx.gmail.com with ESMTP id 7sm993311nzo.2005.11.16.11.05.43;
-        Wed, 16 Nov 2005 11:05:45 -0800 (PST)
-To: git <git@vger.kernel.org>
-Mail-Followup-To: git <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S1751490AbVKPTJ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 14:09:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbVKPTJ6
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 14:09:58 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:10920 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751490AbVKPTJ5
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 14:09:57 -0500
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jAGJ9mBD005774
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 16 Nov 2005 11:09:48 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90511161100x4263ac01iaf3c0497db5021f6@mail.gmail.com>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12042>
 
+Martin Langhoff wrote:
+> Unpossible!
+> 
+> I run git-cvsimport against Moodle's cvs repo on SF.net at least twice
+> a day over SSH. I did it several times with anon cvs too. SF.net cvs
+> servers have been up, down and unreliable the last week, but that's
+> bad with the plain old cvs client too.
+> 
+> Can we get more info on what's happening?
+> 
 
-Signed-off-by: Alecs King <alecsk@gmail.com>
+No idea.  I used it as late as earlier this week, but now I'm getting 
+the error seen in the message.
 
----
+It also frequently connects and immediately disconnects, which I 
+attribute to the unreliability you describe.
 
- Documentation/git-log.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-applies-to: 1e3fcf60526c196a46433e6947c9104ca236f230
-c9c64ee3f4e333a7c3626da45b38105e67c6517f
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 9cac088..e995d1b 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -20,7 +20,7 @@ This manual page describes only the most
- 
- OPTIONS
- -------
----pretty=<format>:
-+--pretty=<format>::
- 	Controls the way the commit log is formatted.
- 
- --max-count=<n>::
----
-0.99.9.GIT
--- 
-Alecs King
+	-hpa
