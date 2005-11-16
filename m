@@ -1,77 +1,74 @@
-From: Ben Clifford <benc@hawaga.org.uk>
-Subject: Re: latest stg/git commandline completions code
-Date: Wed, 16 Nov 2005 13:35:42 +1000
-Message-ID: <6387EBD2-F476-4A43-B764-3D9F2B653483@hawaga.org.uk>
-References: <Pine.LNX.4.60.0510251222510.8565@mundungus.clifford.ac> <200510251642.46169.blaisorblade@yahoo.it> <A44A02AA-BDA8-4623-825E-288F1107A5ED@hawaga.org.uk> <20051109222338.GK16061@pasky.or.cz> <CDEAA4E3-54FE-4825-BFCF-DCE34DBD138A@hawaga.org.uk> <Pine.LNX.4.60.0510251222510.8565@mundungus.clifford.ac> <200510251642.46169.blaisorblade@yahoo.it> <A44A02AA-BDA8-4623-825E-288F1107A5ED@hawaga.org.uk> <20051109222338.GK16061@pasky.or.cz> <33CE6BA8-415D-405F-89B3-982811C3A0CF@hawaga.org.uk> <20051110094013.GM30496@pasky.or.cz>
-Mime-Version: 1.0 (Apple Message framework v734)
-Content-Type: text/plain; charset=UTF-8;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Blaisorblade <blaisorblade@yahoo.it>,
-	Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
-X-From: git-owner@vger.kernel.org Wed Nov 16 04:39:02 2005
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH 3/3] git --help COMMAND brings up the git-COMMAND man-page.,
+ take two
+Date: Tue, 15 Nov 2005 19:45:12 -0800
+Message-ID: <437AAB48.7090904@zytor.com>
+References: <20051116002318.A46C55BF97@nox.op5.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 16 04:46:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcE7C-0006cK-2c
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 04:37:42 +0100
+	id 1EcEEv-000094-MW
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 04:45:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965209AbVKPDfz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 15 Nov 2005 22:35:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965212AbVKPDfz
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 22:35:55 -0500
-Received: from mundungus.clifford.ac ([81.187.211.39]:27665 "EHLO
-	mundungus.clifford.ac") by vger.kernel.org with ESMTP
-	id S965209AbVKPDfz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 22:35:55 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by mundungus.clifford.ac (8.13.3/8.13.3) with ESMTP id jAG3ZMCr007284;
-	Wed, 16 Nov 2005 03:35:24 GMT
-In-Reply-To: <20051110094013.GM30496@pasky.or.cz>
-To: Petr Baudis <pasky@suse.cz>
-X-Mailer: Apple Mail (2.734)
+	id S965217AbVKPDpU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 22:45:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965220AbVKPDpU
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 22:45:20 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:37573 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S965217AbVKPDpR
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 22:45:17 -0500
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jAG3jCgg014378
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 15 Nov 2005 19:45:13 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Andreas Ericsson <exon@op5.se>
+In-Reply-To: <20051116002318.A46C55BF97@nox.op5.se>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12002>
 
+Andreas Ericsson wrote:
+>  
+> +static void show_man_page(char *git_cmd)
+> +{
+> +	char *page;
+> +
+> +	if (!strncmp(git_cmd, "git", 3))
+> +		page = git_cmd;
+> +	else {
+> +		int page_len = strlen(git_cmd) + 4;
+> +
+> +		page = malloc(page_len + 1);
+> +		strcpy(page, "git-");
+> +		strcpy(page + 4, git_cmd);
+> +		page[page_len] = 0;
+> +	}
+> +
+> +	execlp("man", "man", page, NULL);
+> +}
+> +
 
->> There are a few small common functions that are used by all the git
->> completions, though.
+The way this made it into the actual tree was to call /usr/bin/man, but 
+still using execlp().  This is clearly bogus.  There *ARE* good reasons 
+to use PATH resolutions for this, since man is one of the interactive 
+commands the user may want to wrapper.
 
-> Then could you please separate those from the git completion to some
-> kind of 'library'?
+So please drop PATH_TO_MAN that made it into the repository and revert 
+to the original patch.
 
-that's done now.
-
-
-> When you do
->
->     cat > <tab><tab>
->
-> bash happily autocompletes as well. I don't think this is a problem,
-> besides it can be useful when you want to use some existing branch =20
-> name,
-> just slightly modified.
-
-ok, convinced - I changed 'branch' and 'checkout' to complete on new =20
-branch name.
-
-http://www.hawaga.org.uk/gitcompletion/git-compl-lib
-http://www.hawaga.org.uk/gitcompletion/cg-compl
-
-are the two latest versions of the code (source the -lib then the cg- =20
-file)
-
-There is no autogeneration - I'm still playing round. Its just good-=20
-old-fashioned manually hard coded.
-
-The git repo that I'm keeping this and the other completion code =20
-(stg, git and gitk) in is at http://www.hawaga.org.uk/gitcompletion.git
-
---=20
-Ben =E3=83=99=E3=83=B3 =D0=91=D1=8D=D0=BD
-http://www.hawaga.org.uk/ben/
-My email is high latency but best way to contact me. Alternatively, =20
-SMS number(s) at above URL.
+	-hpa
