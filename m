@@ -1,59 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [QUESTION] Access to a huge GIT repository.
-Date: Wed, 16 Nov 2005 12:10:56 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511161208140.13959@g5.osdl.org>
-References: <cda58cb80511160424j1acac7c6j@mail.gmail.com> 
- <7vveys8n8q.fsf@assigned-by-dhcp.cox.net> <46a038f90511161201h54c5fa73l20b5dcf3b5c19399@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: recent patch breaks the build ?
+Date: Wed, 16 Nov 2005 21:18:06 +0100
+Message-ID: <437B93FE.9000108@op5.se>
+References: <437B6997.8010903@mc.com> <7v64qs8kuo.fsf@assigned-by-dhcp.cox.net> <437B8CEC.8040002@mc.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Franck <vagabon.xyz@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 21:15:14 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 16 21:21:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcTd7-0007R2-3V
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 21:11:41 +0100
+	id 1EcTjS-0002DB-MY
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 21:18:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030483AbVKPULP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 15:11:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030485AbVKPULP
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 15:11:15 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:15316 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030483AbVKPULN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 15:11:13 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAGKB2nO031269
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 16 Nov 2005 12:11:02 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAGKAvRk012425;
-	Wed, 16 Nov 2005 12:10:59 -0800
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90511161201h54c5fa73l20b5dcf3b5c19399@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932587AbVKPUSK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 15:18:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932589AbVKPUSJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 15:18:09 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:5074 "EHLO smtp-gw1.op5.se")
+	by vger.kernel.org with ESMTP id S932587AbVKPUSI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 15:18:08 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id BE66B6BCBE; Wed, 16 Nov 2005 21:18:06 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Andrew Wozniak <awozniak@mc.com>
+In-Reply-To: <437B8CEC.8040002@mc.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12050>
 
+Andrew Wozniak wrote:
+> Yes, that suggestion worked - it is similar to other code fragments and 
+> ifdefs within the same file.
+> 
+> Unfortunately, now there are other failures:
+> 
+> gcc -o http-push.o -c -g -O2 -Wall -DSHA1_HEADER='<openssl/sha.h>' 
+> http-push.c
+> http-push.c: In function `start_mkcol':
+> http-push.c:479: `CURLOPT_HTTPGET' undeclared (first use in this function)
+> 
 
+....
 
-On Thu, 17 Nov 2005, Martin Langhoff wrote:
->
-> cg-clone already does this. One tricky thing with the selective
-> cloning is that you want to pull the named head plus all its related
-> objects, and then pull only the _relevant_ tags.
+> I grep'd for these defines and they are nowhere to be found!  Is some 
+> other package needed to resolve these undefines on my RH7.2 build host?
+> 
 
-Well, if you keep to native git protocols, you can trivially do that by 
-just fetching the required heads, and then fetching only the tags for 
-which you have the pointed-to object (ie look for the ^{} thing in 
-git-ls-remote, and check if you have that object, then get those tags).
+curl and curl-devel. Or you can build with
 
-For rsync, since you get all objects anyway, there's no point to limiting 
-the branches. Might as well just delete them and prune them.
+	make NO_CURL=YesPlease
 
-		Linus
+which just means you won't have http and https transports available. 
+This shouldn't be much of a problem on a server though.
+
+> I'm really surprised that the unmodified tarball source fails to build. 
+> Just curious, is the git project rebuilt on a "nightly" basis to verify 
+> recent patches?
+> 
+
+I have no idea, but since it's a developer tool in pre-1.0 I think the 
+general consensus is that user-friendliness in the build-process comes 
+somewhere between "not so important" and "what? users? oh, those living 
+in the *other* land!"
+
+Perhaps you should try the RPM's at 
+http://www.kernel.org/pub/software/scm/git-core/ ?
+
+If nothing else it will tell you what other packages you need.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
