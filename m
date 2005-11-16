@@ -1,67 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix git_config_set() for mean cases
-Date: Thu, 17 Nov 2005 00:19:21 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511170013470.9284@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0511161045310.16596@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vhdac738c.fsf@assigned-by-dhcp.cox.net>
+From: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
+Subject: Re: git-pack-redundant returns the most containing pack
+Date: Thu, 17 Nov 2005 00:23:09 +0100
+Organization: Chalmers
+Message-ID: <437BBF5D.5040105@etek.chalmers.se>
+References: <20051116230956.GA21444@steel.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 00:20:56 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	=?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
+X-From: git-owner@vger.kernel.org Thu Nov 17 00:23:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcWYm-0007Yj-Sr
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 00:19:25 +0100
+	id 1EcWc0-0000SN-RX
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 00:22:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161009AbVKPXTX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 18:19:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161007AbVKPXTX
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 18:19:23 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:40919 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1030564AbVKPXTW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2005 18:19:22 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 8B963E3302; Thu, 17 Nov 2005 00:19:21 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 707249F324; Thu, 17 Nov 2005 00:19:21 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 524C17E7A6; Thu, 17 Nov 2005 00:19:21 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 17882E3302; Thu, 17 Nov 2005 00:19:21 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhdac738c.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1161011AbVKPXWl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 18:22:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161012AbVKPXWl
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 18:22:41 -0500
+Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:52218 "EHLO
+	pne-smtpout2-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S1161011AbVKPXWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 18:22:41 -0500
+Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout2-sn2.hy.skanova.net (7.2.060.1)
+        id 4378EBDA000D2E34; Thu, 17 Nov 2005 00:22:40 +0100
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <20051116230956.GA21444@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12068>
 
-Hi,
+Alex Riesen wrote:
+> ...which very confusing: "git-repack -a -d" leaves the repository with
+> exactly the same packs as before, by creating a super-pack, and then
+> happily removing it, because pack-redundant returns the newly created
+> pack!
+> 
+> So, even if it is logically correct, it's hardly useful in practice.
+> 
 
-On Wed, 16 Nov 2005, Junio C Hamano wrote:
+That's bad. Your new pack should contain some objects not present in
+the older packfiles and thus it shouldn't be removed, unless there
+were no new objects to pack. 
 
-> Why do you spell apostrophe with 0xb4 not ASCII 0x27?  Not that
-> it matters because I'll apply it with -u flag to git-am to
-> convert it to UTF-8 in the log message, but I am just curious.
+If no new objects were packed, the sum of the old packs might be smaller 
+than the new superpack, or the old packs could contain unreachable objects,
+which makes git-pack-redundant unable to detect that they should be removed.
 
-Efficiency. I often do the patches on my iBook w/ German keyboard. The 
-apostrophe 0xb4 (upward accent) is just beside my back space key, i.e. in 
-a favorite location for my right little finger.
-
-OTOH, 0x27 (the real apostrophe) is just beside the Enter key, which is 
-the only key Apple made too small. Way too small. So I try to avoid that 
-key, since I hit it by accident already too often. Furthermore, on the 
-German keyboard you have to hold Shift down for the apostrophe, while you 
-do not for 0xb4.
-
-Besides, the character is there, so why not use it? ;-)
-
-Ciao,
-Dscho
+Could you try updating to the latest snapshot? There was a bug in a
+list handling function which was fixed recently, perhaps your problem
+is related.
