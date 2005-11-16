@@ -1,76 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cogito and --exclude vs --exclude-per-directory
-Date: Wed, 16 Nov 2005 11:01:50 -0800
-Message-ID: <7vd5l08li9.fsf@assigned-by-dhcp.cox.net>
-References: <20051116093630.GA2783@diana.vm.bytemark.co.uk>
+From: Alecs King <alecsk@gmail.com>
+Subject: [PATCH] Documentation/git-log.txt: trivial typo fix.
+Date: Thu, 17 Nov 2005 03:06:03 +0800
+Message-ID: <20051116190603.GA13321@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 20:07:20 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Nov 16 20:09:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcSXb-0004lR-GD
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 20:01:56 +0100
+	id 1EcSbc-00072L-6m
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 20:06:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030430AbVKPTBx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 Nov 2005 14:01:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030438AbVKPTBx
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 14:01:53 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:64250 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1030430AbVKPTBw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 14:01:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051116190037.KIPX20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Nov 2005 14:00:37 -0500
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-In-Reply-To: <20051116093630.GA2783@diana.vm.bytemark.co.uk> (Karl
-	=?iso-8859-1?Q?Hasselstr=F6m's?= message of "Wed, 16 Nov 2005 10:36:30
- +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751010AbVKPTFu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 14:05:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751490AbVKPTFt
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 14:05:49 -0500
+Received: from zproxy.gmail.com ([64.233.162.195]:31666 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751010AbVKPTFs (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 14:05:48 -0500
+Received: by zproxy.gmail.com with SMTP id 18so1790089nzp
+        for <git@vger.kernel.org>; Wed, 16 Nov 2005 11:05:46 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:subject:message-id:mail-followup-to:mime-version:content-type:content-disposition:user-agent;
+        b=brP5bgqT+uSw3K1IOy6zsL+b89foxSO1DIrMDVC0PlpxB1vWDWLAgjKYJNj7JtL9FgvpgapIJj0xNM1YfqJ2POD3MBtnzAotPyjkZTwN622vRDfRNFsh9CYSaHPn4nOKHOyFBMMQeg2ODXGOE6FEYc3okefDhlDXLxl2S5sGN8o=
+Received: by 10.36.38.13 with SMTP id l13mr6580182nzl;
+        Wed, 16 Nov 2005 11:05:46 -0800 (PST)
+Received: from localhost ( [221.222.170.245])
+        by mx.gmail.com with ESMTP id 7sm993311nzo.2005.11.16.11.05.43;
+        Wed, 16 Nov 2005 11:05:45 -0800 (PST)
+To: git <git@vger.kernel.org>
+Mail-Followup-To: git <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12041>
 
-Karl Hasselstr=F6m <kha@treskal.com> writes:
 
-> [Note: this experiment was done with git 0.99.9g and Cogito 0.15.1, s=
-o ]
->
-> It seems that --exclude patterns always take precedence over
-> --exclude-per-directory patterns.
->
-> Is this the intended behavior?
+Signed-off-by: Alecs King <alecsk@gmail.com>
 
-Yes, we had a lengthy discussion on this before ls-files
-acquired the exclude patterns.
+---
 
-Documentation/git-ls-files.txt "Exclude Patterns" summarizes the
-precedence rule, and it was done that way to allow command line
-users to override what are in individual per-directory pattern
-files per-invocation basis.  That is, --exclude-per-directory is
-to store project defaults, and --exclude is for end-users to
-specify override per-invocation.  --exclude-from has the lowest
-precedence to give overall default.  The example in the
-documetation has a a good illustration.
+ Documentation/git-log.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-	* --exclude-from contains '*.[oa]' to catch generic
-          "uninteresting" files.
-
-	* --exclude-per-directory files contain patterns to
-          catch files that are built by the Makefile in the
-          directory.
-
-        * --exclude specifies whatever the user feels like for
-          the particular invocation.
-
-If I were writing a Porcelain, I would probably install default
-exclude list in /usr/lib/MyPorcelain/exclude file and point at
-the file with --exclude-from.  I may also be tempted to check
-$HOME/.MyPorcelain/exclude file and add it to give defaults per
-user, but I do not do Porcelains, so...
+applies-to: 1e3fcf60526c196a46433e6947c9104ca236f230
+c9c64ee3f4e333a7c3626da45b38105e67c6517f
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 9cac088..e995d1b 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -20,7 +20,7 @@ This manual page describes only the most
+ 
+ OPTIONS
+ -------
+---pretty=<format>:
++--pretty=<format>::
+ 	Controls the way the commit log is formatted.
+ 
+ --max-count=<n>::
+---
+0.99.9.GIT
+-- 
+Alecs King
