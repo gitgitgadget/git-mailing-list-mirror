@@ -1,52 +1,47 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix git_config_set() for mean cases
-Date: Wed, 16 Nov 2005 12:21:55 -0800
-Message-ID: <7vhdac738c.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0511161045310.16596@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: recent patch breaks the build ?
+Date: Wed, 16 Nov 2005 12:25:01 -0800
+Message-ID: <7vd5l07336.fsf@assigned-by-dhcp.cox.net>
+References: <437B6997.8010903@mc.com>
+	<7v64qs8kuo.fsf@assigned-by-dhcp.cox.net> <437B8CEC.8040002@mc.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 21:24:34 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Nov 16 21:27:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcTn6-00044t-6l
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 21:22:02 +0100
+	id 1EcTqF-0005ge-4E
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 21:25:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030365AbVKPUV5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 Nov 2005 15:21:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030397AbVKPUV5
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 15:21:57 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:61074 "EHLO
+	id S1030482AbVKPUZF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 15:25:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030486AbVKPUZF
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 15:25:05 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:48020 "EHLO
 	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1030365AbVKPUV4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 15:21:56 -0500
+	id S1030482AbVKPUZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 15:25:03 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
           by fed1rmmtao05.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051116202102.MORB17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Nov 2005 15:21:02 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0511161045310.16596@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Wed, 16 Nov 2005 10:47:37 +0100
-	(CET)")
+          id <20051116202409.MPZA17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 16 Nov 2005 15:24:09 -0500
+To: git@vger.kernel.org
+In-Reply-To: <437B8CEC.8040002@mc.com> (Andrew Wozniak's message of "Wed, 16
+	Nov 2005 14:47:56 -0500")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12052>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Andrew Wozniak <awozniak@mc.com> writes:
 
-> There were problems when the keys=B4 case didn=B4t match, and also wh=
-en the
-> section was in the same line as the key.
->
-> This patch also adds a test case, so you see that it works now.
->
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Unfortunately, now there are other failures:
+> ...
+> I grep'd for these defines and they are nowhere to be found!  Is some 
+> other package needed to resolve these undefines on my RH7.2 build host?
 
-Why do you spell apostrophe with 0xb4 not ASCII 0x27?  Not that
-it matters because I'll apply it with -u flag to git-am to
-convert it to UTF-8 in the log message, but I am just curious.
+Probably.  Maybe you can look at INSTALL and report missing
+dependencies?  Also the top of the Makefile (huge ugly comment
+section).
