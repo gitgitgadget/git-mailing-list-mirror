@@ -1,59 +1,59 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: pushing patches to an imap folder
-Date: Thu, 17 Nov 2005 00:49:49 +0100
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.11.16.23.49.48.613211@smurf.noris.de>
-References: <43799A67.9030705@codeweavers.com> <7vd5l2qnq6.fsf@assigned-by-dhcp.cox.net> <4379B9F6.5020402@codeweavers.com> <Pine.LNX.4.63.0511151227300.21902@wbgn013.biozentrum.uni-wuerzburg.de>
+From: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
+Subject: Re: fix git-pack-redundant crashing sometimes
+Date: Thu, 17 Nov 2005 00:59:13 +0100
+Organization: Chalmers
+Message-ID: <437BC7D1.1070605@etek.chalmers.se>
+References: <81b0412b0511150749g5672158v7b39c02ffdf13e08@mail.gmail.com> <20051115213442.GA4256@steel.home> <437A560E.8020500@etek.chalmers.se> <20051115223340.GA3951@steel.home> <Pine.LNX.4.64.0511151552400.11232@g5.osdl.org> <437BA6A6.8080900@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Thu Nov 17 00:55:17 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Alex Riesen <raa.lkml@gmail.com>, junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Nov 17 01:00:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcX5x-0005wC-Jv
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 00:53:42 +0100
+	id 1EcXBD-0008B9-1f
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 00:59:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030578AbVKPXxi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 18:53:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030579AbVKPXxi
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 18:53:38 -0500
-Received: from main.gmane.org ([80.91.229.2]:50828 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030578AbVKPXxh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 18:53:37 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EcX3Z-0004k3-4B
-	for git@vger.kernel.org; Thu, 17 Nov 2005 00:51:13 +0100
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 17 Nov 2005 00:51:13 +0100
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 17 Nov 2005 00:51:13 +0100
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1161034AbVKPX6q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 Nov 2005 18:58:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161031AbVKPX6p
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 18:58:45 -0500
+Received: from pne-smtpout1-sn2.hy.skanova.net ([81.228.8.83]:9861 "EHLO
+	pne-smtpout1-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S1161034AbVKPX6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 18:58:45 -0500
+Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout1-sn2.hy.skanova.net (7.2.060.1)
+        id 4378E953000CE349; Thu, 17 Nov 2005 00:58:44 +0100
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
+X-Accept-Language: en-us, en
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+In-Reply-To: <437BA6A6.8080900@etek.chalmers.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12076>
 
-Hi, Johannes Schindelin wrote:
-
-> It would be cool to have something like git-cvs-daemon, which simulates a 
-> CVS server.
-
-read-only would not be that difficult. You'd have to cache CVS version
-numbers for individual files and decide on a branch ordering, but those
-are basically non-problems.
-
-Don't even *think* about committing.
-
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Conscience is what hurts when everything else feels so good.
+Lukas Sandstr=F6m wrote:
+> Linus Torvalds wrote:
+>=20
+>>On Tue, 15 Nov 2005, Alex Riesen wrote:
+>>
+>>
+>>>Sorry, it doesn't. The code loops here:
+>>>
+>>>401             /* find the permutations which contain all missing o=
+bjects */
+>>>402             perm_all =3D perm =3D get_all_permutations(non_uniqu=
+e);
+>>
+>>
+>>Looks like the whole thing is exponential.
+>>
+>=20
+> Slightly less, but not far from.
+>=20
+After doing some maths; actually it is very exponential. 2**n - 1 to be=
+ precise.
