@@ -1,70 +1,73 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: stgit truncates binary files to zero length when applying patches
-Date: Wed, 16 Nov 2005 12:54:49 +0100
-Message-ID: <20051116115449.GA5933@diana.vm.bytemark.co.uk>
-References: <20051115144223.GA18111@diana.vm.bytemark.co.uk> <b0943d9e0511160311k725526d8v@mail.gmail.com>
+From: Franck <vagabon.xyz@gmail.com>
+Subject: [QUESTION] Access to a huge GIT repository.
+Date: Wed, 16 Nov 2005 13:24:25 +0100
+Message-ID: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 12:56:56 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Nov 16 13:26:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcLsc-0004nI-Mh
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 12:55:11 +0100
+	id 1EcML3-00007J-LG
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 13:24:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030266AbVKPLyz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 Nov 2005 06:54:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030281AbVKPLyz
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 06:54:55 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2564 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S1030266AbVKPLyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2005 06:54:54 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1EcLsH-0001aI-00; Wed, 16 Nov 2005 11:54:49 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+	id S1030301AbVKPMY1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 07:24:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030304AbVKPMY1
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 07:24:27 -0500
+Received: from zproxy.gmail.com ([64.233.162.198]:12164 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1030301AbVKPMY0 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 07:24:26 -0500
+Received: by zproxy.gmail.com with SMTP id v1so1770058nzb
+        for <git@vger.kernel.org>; Wed, 16 Nov 2005 04:24:26 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=i0CroBKK7JPdEbCZ3DogKI6pCz+ocg6QwR9a7cQOa78rUpXDCidQowQIMWH5XBKdha7/iRAjdzR5zpFq/ZWx1+ud650KXSDuJiZx6VB1+bf8Gq3fyVx4IK8W6Iym6Ta9UPbiTKLz7IYkRjW2BGVmL19sGbfni2DyrTm04/QbAXU=
+Received: by 10.36.224.48 with SMTP id w48mr3868114nzg;
+        Wed, 16 Nov 2005 04:24:26 -0800 (PST)
+Received: by 10.36.47.8 with HTTP; Wed, 16 Nov 2005 04:24:25 -0800 (PST)
+To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0511160311k725526d8v@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12022>
 
-On 2005-11-16 11:11:56 +0000, Catalin Marinas wrote:
+Hi,
 
-> On 15/11/05, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > When applying patches and not fast-forwarding, stgit truncates the
-> > binary files to zero length:
->
-> I've never tried binaries with StGIT before.
+I'm trying to clone a small part of a big repository. This repository
+contains several branchs that are useless for me. Actually this
+repository is the linux-mips one, and branchs are used to track each
+kernel minor version. That is to say it contains 4 branchs which are
+linux-2.0, linux-2.2, linux-2.4 and master (linux-2.6).
 
-I don't blame you. Binary patches aren't something I normally create
-either. It's just that I find stgit patches a good way to logically
-structure a largeish change that I'm working on before committing it.
-(I could probably accoplish the same thing with one branch instead of
-each stgit patch, but then it would be quite a lot of work to manually
-push updates through all the branches.)
+I'd like to clone this repository without grabbing linux-2.0,
+linux-2.2, linux-2.4 branchs. I tried several things like:
 
-> When pushing a patch, if a merge is needed (like in your case, the
-> base of the foo patch has changed), StGIT first tries "git-diff-tree
-> | git-apply" for speed reasons. If this fails, it falls back to a
-> three-way merge.
->
-> Unfortunately, git-apply doesn't fail for patches including binary
-> files and simply creates an empty file. I think git-apply should be
-> changed to fail to apply this kind of patches.
+        $ git init-db
+        $ git fetch rsync://ftp.linux-mips.org/git/linux.git master
 
-Yes, at least if stgit is going to continue to use it like this.
-Refusing to handle binary files is somewhat disappointing, but still
-OK; agreeing to handle them and then silently wiping them is a bit
-less OK. (But don't worry; it is a perfect world, after all, so of
-course I had backups. :-)
+But all tries download every objects of each branchs. I believe that's
+because of (a) the protocol used to access of the remote repo (b) the
+master branch has been created from linux-2.4 branch so its first
+commit object contains a branch 2.4 commit obj as parent object (let's
+call it the "father" object). Is that correct ?
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+So I downloaded the whole thing, and try to remove "father" object and
+right after run a 'git prune'. But unfortunately I can't find it
+anywhere in .git directory. I did:
+
+        $ git-verify-pack < .git/objects/pack/*.idx
+        $ git-unpack-objects < .git/objects/pack/*.pack
+
+But I can't find "father object" anywhere in .git/objects directory.
+Still it's referenced by .git/objects/pack/pack-....idx file.
+
+Can anybody give me some advices ?
+
+Thanks
+--
+               Franck
