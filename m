@@ -1,51 +1,77 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH] Small script to patch .spec for Suse
-Date: Wed, 16 Nov 2005 02:32:14 +0100
-Message-ID: <200511160232.15162.Josef.Weidendorfer@gmx.de>
-References: <200511151230.30030.Josef.Weidendorfer@gmx.de> <20051115215943.GW30496@pasky.or.cz> <437A5FAF.2000609@zytor.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Fix compilation of git.c
+Date: Wed, 16 Nov 2005 02:44:12 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511160243360.14176@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Nov 16 02:34:01 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Wed Nov 16 02:45:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcCA3-00030X-Mn
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 02:32:32 +0100
+	id 1EcCLV-0007bs-K4
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 02:44:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964770AbVKPBc3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Nov 2005 20:32:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932558AbVKPBc2
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 20:32:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:32705 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932261AbVKPBc2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Nov 2005 20:32:28 -0500
-Received: (qmail invoked by alias); 16 Nov 2005 01:32:26 -0000
-Received: from p5496C7F9.dip0.t-ipconnect.de (EHLO linux) [84.150.199.249]
-  by mail.gmx.net (mp037) with SMTP; 16 Nov 2005 02:32:26 +0100
-X-Authenticated: #352111
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-In-Reply-To: <437A5FAF.2000609@zytor.com>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S932565AbVKPBoO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Nov 2005 20:44:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932577AbVKPBoO
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Nov 2005 20:44:14 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:29067 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932565AbVKPBoN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Nov 2005 20:44:13 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 9EAB513F8C9; Wed, 16 Nov 2005 02:44:12 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 86B379F309; Wed, 16 Nov 2005 02:44:12 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 72E109F2E3; Wed, 16 Nov 2005 02:44:12 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 5906F13F8C9; Wed, 16 Nov 2005 02:44:12 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/11985>
 
-On Tuesday 15 November 2005 23:22, H. Peter Anvin wrote:
-> Sure.  It's called %if.  There is also %ifdef and %define.
 
-So by replacing @@FOR_SUSE@@ to 0 or 1 in the Makefile, this: 
+Some systems do not define GLOB_ABORTED and GLOB_NOMATCH.
 
- %if @@FOR_SUSE@@
- BuildRequires: openssh ...
- %else
- BuildRequires: openssh-clients ...
- %endif
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-would work?
+---
 
-Josef
+ git.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+applies-to: c20dc1194fcfa73a7bf6e9d315c878d4f8c2828a
+57cce66195a824221c0e9517ff4999daf2fbe2d2
+diff --git a/git.c b/git.c
+index 583923d..30b3c04 100644
+--- a/git.c
++++ b/git.c
+@@ -77,13 +77,17 @@ static void list_commands(const char *ex
+ 	case GLOB_NOSPACE:
+ 		puts("Out of memory when running glob()");
+ 		exit(2);
++#ifdef GLOB_ABORTED
+ 	case GLOB_ABORTED:
+ 		printf("'%s': Read error: %s\n", exec_path, strerror(errno));
+ 		exit(2);
++#endif
++#ifdef GLOB_NOMATCH
+ 	case GLOB_NOMATCH:
+ 		printf("No git commands available in '%s'.\n", exec_path);
+ 		printf("Do you need to specify --exec-path or set GIT_EXEC_PATH?\n");
+ 		exit(1);
++#endif
+ 	}
+ 
+ 	for (i = 0; i < gl.gl_pathc; i++) {
+---
+0.99.9.GIT
