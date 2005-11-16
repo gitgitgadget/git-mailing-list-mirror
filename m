@@ -1,63 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [QUESTION] Access to a huge GIT repository.
-Date: Wed, 16 Nov 2005 12:35:05 -0800
-Message-ID: <7vwtj85o1y.fsf@assigned-by-dhcp.cox.net>
-References: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
-	<7vveys8n8q.fsf@assigned-by-dhcp.cox.net>
-	<46a038f90511161201h54c5fa73l20b5dcf3b5c19399@mail.gmail.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] Fix git_config_set() for mean cases
+Date: Wed, 16 Nov 2005 12:52:04 -0800
+Message-ID: <437B9BF4.6020803@zytor.com>
+References: <Pine.LNX.4.63.0511161045310.16596@wbgn013.biozentrum.uni-wuerzburg.de> <7vhdac738c.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 21:36:42 2005
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 16 21:52:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcTzt-0001iQ-I5
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 21:35:13 +0100
+	id 1EcUGc-0000ex-1k
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 21:52:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030493AbVKPUfJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 15:35:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030494AbVKPUfJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 15:35:09 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:36294 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1030493AbVKPUfH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2005 15:35:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051116203430.KTLL20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Nov 2005 15:34:30 -0500
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90511161201h54c5fa73l20b5dcf3b5c19399@mail.gmail.com>
-	(Martin Langhoff's message of "Thu, 17 Nov 2005 09:01:04 +1300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030489AbVKPUw1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 Nov 2005 15:52:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030501AbVKPUw1
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 15:52:27 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:9946 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1030489AbVKPUw0
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 15:52:26 -0500
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jAGKq9oa008603
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 16 Nov 2005 12:52:09 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhdac738c.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12056>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>=20
+>=20
+>>There were problems when the keys=B4 case didn=B4t match, and also wh=
+en the
+>>section was in the same line as the key.
+>>
+>>This patch also adds a test case, so you see that it works now.
+>>
+>>Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>=20
+>=20
+> Why do you spell apostrophe with 0xb4 not ASCII 0x27?  Not that
+> it matters because I'll apply it with -u flag to git-am to
+> convert it to UTF-8 in the log message, but I am just curious.
+>=20
 
-> On 11/17/05, Junio C Hamano <junkio@cox.net> wrote:
->> The underlying network transfer program, 'git-clone-pack', can
->> be told to clone only specified branches.  If somebody is
->> interested, updating the 'git-clone' wrapper to use it should
->> not be too hard -- obviously this needs to be done for other
->> transports as well, though.
->
-> cg-clone already does this.
+Not to mention the fact that it's just plain wrong -- U+00B4 is accute=20
+accent, not apostrophe.
 
-Yes, but it can be improved.  It does fetch-pack for git native
-transports, which means the receiving end expands the pack.  I
-think we would either need to teach cg-clone to tell cg-fetch
-that it is cloning and invoke git-clone-pack, or add an optional
-"do not expand" option to git-fetch-pack (git-clone-pack always
-keeps the downloaded pack unexpanded).  Huge pack transfer
-spends long time on the downloader side unpacking the pack.
-
-> If you just pull tagrefs and all the objects needed for them, chances
-> are you'll get the whole repo anyway ;-)
-
-Yes, that's why we changed ls-remote to report the magic ^{}
-entries and it is used in cg-fetch::fetch_tags.
+	-hpa
