@@ -1,46 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] symref support for import scripts
-Date: Wed, 16 Nov 2005 12:26:42 -0800
-Message-ID: <7v8xvo730d.fsf@assigned-by-dhcp.cox.net>
-References: <1132165648.4024.6.camel@dv>
-	<7vu0ec7502.fsf@assigned-by-dhcp.cox.net>
-	<20051116195737.GE27727@kiste.smurf.noris.de>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: recent patch breaks the build ?
+Date: Wed, 16 Nov 2005 12:33:34 -0800
+Message-ID: <20051116203334.GA3968@reactrix.com>
+References: <437B6997.8010903@mc.com> <7v64qs8kuo.fsf@assigned-by-dhcp.cox.net> <437B8CEC.8040002@mc.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 21:28:02 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 16 21:35:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcTrj-0006LM-QD
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 21:26:48 +0100
+	id 1EcTyt-0001G5-Op
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 21:34:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030486AbVKPU0p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 15:26:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030488AbVKPU0p
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 15:26:45 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:32717 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1030485AbVKPU0o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2005 15:26:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051116202550.LOWB17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Nov 2005 15:25:50 -0500
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <20051116195737.GE27727@kiste.smurf.noris.de> (Matthias Urlichs's
-	message of "Wed, 16 Nov 2005 20:57:37 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030492AbVKPUeI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 15:34:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030493AbVKPUeI
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 15:34:08 -0500
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:7431 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1030492AbVKPUeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 15:34:07 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jAGKXZ9J008007;
+	Wed, 16 Nov 2005 12:33:35 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jAGKXYab008005;
+	Wed, 16 Nov 2005 12:33:34 -0800
+To: Andrew Wozniak <awozniak@mc.com>
+Content-Disposition: inline
+In-Reply-To: <437B8CEC.8040002@mc.com>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12054>
 
-Matthias Urlichs <smurf@smurf.noris.de> writes:
+On Wed, Nov 16, 2005 at 02:47:56PM -0500, Andrew Wozniak wrote:
 
-> The only thing we want to do with HEAD, in order to accomplish that,
-> is to find the SHA1 it points to, before and after the import.
-> No use of git-symbolic-ref is necessary for that.
+> Unfortunately, now there are other failures:
+> 
+> gcc -o http-push.o -c -g -O2 -Wall -DSHA1_HEADER='<openssl/sha.h>'
+> http-push.c
+> http-push.c: In function `start_mkcol':
+> http-push.c:479: `CURLOPT_HTTPGET' undeclared (first use in this
+> function)
 
-True.  'git-rev-parse --verify HEAD^0' would be sufficient.
+http-push requires a curl option that looks like it was added around
+version 7.8.1.  If you have the option to upgrade your version of curl,
+it should fix the problem.  You can also disable building http-push but
+keep http-fetch by defining NO_EXPAT.
+
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
