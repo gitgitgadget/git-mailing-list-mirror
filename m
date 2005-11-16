@@ -1,71 +1,74 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: recent patch breaks the build ?
-Date: Wed, 16 Nov 2005 11:15:59 -0800
-Message-ID: <7v64qs8kuo.fsf@assigned-by-dhcp.cox.net>
-References: <437B6997.8010903@mc.com>
+Subject: Re: [PATCH] symref support for import scripts
+Date: Wed, 16 Nov 2005 11:43:41 -0800
+Message-ID: <7vu0ec7502.fsf@assigned-by-dhcp.cox.net>
+References: <1132165648.4024.6.camel@dv>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nick Hengeveld <nickh@reactrix.com>
-X-From: git-owner@vger.kernel.org Wed Nov 16 20:18:50 2005
+Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>,
+	Matthias Urlichs <smurf@smurf.noris.de>
+X-From: git-owner@vger.kernel.org Wed Nov 16 20:46:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcSlL-0003WK-Hu
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 20:16:08 +0100
+	id 1EcTC9-0004Ts-5e
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 20:43:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499AbVKPTQE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 14:16:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751504AbVKPTQE
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 14:16:04 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:45698 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751501AbVKPTQB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2005 14:16:01 -0500
+	id S1030463AbVKPTnq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 14:43:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030460AbVKPTnq
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 14:43:46 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:57078 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1030463AbVKPTnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 14:43:45 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao11.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051116191450.JILC17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Nov 2005 14:14:50 -0500
-To: Andrew Wozniak <awozniak@mc.com>
-In-Reply-To: <437B6997.8010903@mc.com> (Andrew Wozniak's message of "Wed, 16
-	Nov 2005 12:17:11 -0500")
+          id <20051116194310.HQFI6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 16 Nov 2005 14:43:10 -0500
+To: Pavel Roskin <proski@gnu.org>
+In-Reply-To: <1132165648.4024.6.camel@dv> (Pavel Roskin's message of "Wed, 16
+	Nov 2005 13:27:28 -0500")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12044>
 
-Andrew Wozniak <awozniak@mc.com> writes:
+Pavel Roskin <proski@gnu.org> writes:
 
-> Have just started using git for u-boot related development. After 
-> downloading git-snapshot-20051116 tarball and attempting a build under 
-> RH7.2, I get the following failure:
+> Fix git import script not to assume that .git/HEAD is a symlink.
+>
+> Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-Would this help?
+Thanks.
 
--- >8 --
+Martin and Matthias, are these OK with you two?  All of the
+changes look trivially correct, so I'll take them.
 
-diff --git a/http-fetch.c b/http-fetch.c
-index 21cc1b9..45e97f9 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -902,16 +902,18 @@ static void fetch_alternates(char *base)
- 	char *data;
- 	struct active_request_slot *slot;
- 	static struct alt_request alt_req;
--	int num_transfers;
- 
-+#ifdef USE_CURL_MULTI
- 	/* If another request has already started fetching alternates,
- 	   wait for them to arrive and return to processing this request's
- 	   curl message */
- 	while (got_alternates == 0) {
-+		int num_transfers;
- 		curl_multi_perform(curlm, &num_transfers);
- 		process_curl_messages();
- 		process_request_queue();
- 	}
-+#endif
- 
- 	/* Nothing to do if they've already been fetched */
- 	if (got_alternates == 1)
+> diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+> index 7bd9136..efe1934 100755
+> --- a/git-cvsimport.perl
+> +++ b/git-cvsimport.perl
+> @@ -437,7 +437,11 @@ unless(-d $git_dir) {
+>  		       "Either use the correct '-o branch' option,\n".
+>  		       "or import to a new repository.\n";
+>  
+> -	$last_branch = basename(readlink("$git_dir/HEAD"));
+> +	open(F, "git-symbolic-ref HEAD |") or
+> +		die "Cannot run git-symbolic-ref: $!\n";
+> +	chomp ($last_branch = <F>);
+> +	$last_branch = basename($last_branch);
+> +	close(F);
+>  	unless($last_branch) {
+>  		warn "Cannot read the last branch name: $! -- assuming 'master'\n";
+>  		$last_branch = "master";
+
+This part, before or after Pavel's fixes, seems to refuse a
+branch named 'topic/#1'.  This is not a problem for import
+scripts that name their own branches based on what is in the
+foreign SCM and flatten their the branch namespaces, but I'd
+prefer a comment about the issue somewhere around this code, to
+prevent people from copying and pasting the use of "basename()".
+There is a corresponding piece in svnimport as well.
