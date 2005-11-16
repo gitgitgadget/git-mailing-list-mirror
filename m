@@ -1,93 +1,76 @@
-From: exon@op5.se (Andreas Ericsson)
-Subject: [PATCH] daemon.c: fix arg parsing bugs
-Date: Thu, 17 Nov 2005 00:38:29 +0100 (CET)
-Message-ID: <20051116233829.071CC5BF78@nox.op5.se>
-X-From: git-owner@vger.kernel.org Thu Nov 17 00:45:42 2005
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: A case for tailor
+Date: Thu, 17 Nov 2005 00:40:20 +0100
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.11.16.23.40.20.119887@smurf.noris.de>
+References: <Pine.LNX.4.63.0511151931001.1157@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Nov 17 00:45:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcWwn-0001uk-VA
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 00:44:14 +0100
+	id 1EcWwb-0001oR-A2
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 00:44:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030556AbVKPXoJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 18:44:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161019AbVKPXoJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 18:44:09 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:60114 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030556AbVKPXoG
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2005 18:44:06 -0500
-Received: from nox.op5.se (1-2-9-7b.gkp.gbg.bostream.se [82.182.116.45])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 32FDC6BCBE
-	for <git@vger.kernel.org>; Thu, 17 Nov 2005 00:44:05 +0100 (CET)
-Received: by nox.op5.se (Postfix, from userid 500)
-	id 071CC5BF78; Thu, 17 Nov 2005 00:38:29 +0100 (CET)
+	id S1030555AbVKPXn6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 Nov 2005 18:43:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030556AbVKPXn6
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 18:43:58 -0500
+Received: from main.gmane.org ([80.91.229.2]:12931 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030555AbVKPXn5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 18:43:57 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EcWus-00019Q-2x
+	for git@vger.kernel.org; Thu, 17 Nov 2005 00:42:14 +0100
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 17 Nov 2005 00:42:14 +0100
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 17 Nov 2005 00:42:14 +0100
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12074>
 
+Hi, Johannes Schindelin wrote:
 
-Allow --init-timeout and --timeout to be specified without falling
-through to usage().
+> Possible explanation: at some early stage, the trunk was named "trunk=
+",=20
+> but somehow (don=C2=B4t ask me how, I am a fan of git, not svn) renam=
+ed to=20
+> "head".
 
-Make sure openlog() is called even if implied by --inetd, or messages
-will be sent to wherever LOG_USER ends up.
+Well, you *could* use "-T trunk" to import the first part, ^C when it
+starts complaining about 'head', duplicate the last line of .git/svn2gi=
+t
+(incrementing the SVN change number), and continue with "-T head".
 
-Signed-off-by: Andreas Ericsson <ae@op5.se>
+That hackery sortof depends on Upstream not changing anything *else* wh=
+ile
+renaming 'trunk' to 'head' ...
 
----
+Of course, the second possibility is to allow patterns as prefixes, dro=
+p
+the distinction of "trunk" and "branch", and store the refs as full
+paths under .git/refs/heads/**. You're welcome to submit a patch; pleas=
+e
+don't forget backwards compatibility for those poor souls who need to d=
+o
+incremental imports. ;-)
 
- daemon.c |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
-
-applies-to: 1e3fcf60526c196a46433e6947c9104ca236f230
-83a3edea8623834fd7827f80cad2af4927f5a19e
-diff --git a/daemon.c b/daemon.c
-index e184752..2b81152 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -594,6 +594,7 @@ int main(int argc, char **argv)
- 		}
- 		if (!strcmp(arg, "--inetd")) {
- 			inetd_mode = 1;
-+			log_syslog = 1;
- 			continue;
- 		}
- 		if (!strcmp(arg, "--verbose")) {
-@@ -602,7 +603,6 @@ int main(int argc, char **argv)
- 		}
- 		if (!strcmp(arg, "--syslog")) {
- 			log_syslog = 1;
--			openlog("git-daemon", 0, LOG_DAEMON);
- 			continue;
- 		}
- 		if (!strcmp(arg, "--export-all")) {
-@@ -611,9 +611,11 @@ int main(int argc, char **argv)
- 		}
- 		if (!strncmp(arg, "--timeout=", 10)) {
- 			timeout = atoi(arg+10);
-+			continue;
- 		}
- 		if (!strncmp(arg, "--init-timeout=", 15)) {
- 			init_timeout = atoi(arg+15);
-+			continue;
- 		}
- 		if (!strcmp(arg, "--")) {
- 			ok_paths = &argv[i+1];
-@@ -626,9 +628,11 @@ int main(int argc, char **argv)
- 		usage(daemon_usage);
- 	}
- 
-+	if (log_syslog)
-+		openlog("git-daemon", 0, LOG_DAEMON);
-+
- 	if (inetd_mode) {
- 		fclose(stderr); //FIXME: workaround
--		log_syslog = 1;
- 		return execute();
- 	}
- 
----
-0.99.9.GIT
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.nor=
+is.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.nor=
+is.de
+ - -
+Got a dictionary?  I want to know the meaning of life.
