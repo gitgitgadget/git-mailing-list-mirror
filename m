@@ -1,63 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add option USE_INPLACE to Makefile
-Date: Wed, 16 Nov 2005 00:36:40 -0800
-Message-ID: <7vpsp19eg7.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0511160333460.15130@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vmzk5cmnd.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0511160903360.16063@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: Deprecate --cache.* ?
+Date: Wed, 16 Nov 2005 10:18:18 +0100
+Message-ID: <200511161018.19374.Josef.Weidendorfer@gmx.de>
+References: <437A5F08.7020908@etek.chalmers.se> <7vsltxazyf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 16 09:38:07 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Nov 16 10:18:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcImp-0001z8-KB
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 09:36:59 +0100
+	id 1EcJR9-0008Ae-Uj
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 10:18:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030229AbVKPIgn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 03:36:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030230AbVKPIgn
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 03:36:43 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:1004 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1030229AbVKPIgm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2005 03:36:42 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051116083615.CLBM15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Nov 2005 03:36:15 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0511160903360.16063@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Wed, 16 Nov 2005 09:10:10 +0100
-	(CET)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030256AbVKPJSX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 Nov 2005 04:18:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030261AbVKPJSX
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 04:18:23 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:39628 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1030256AbVKPJSW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 04:18:22 -0500
+Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
+	by mail.in.tum.de (Postfix) with ESMTP id 2C52C950
+	for <git@vger.kernel.org>; Wed, 16 Nov 2005 10:18:21 +0100 (MET)
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+In-Reply-To: <7vsltxazyf.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12014>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wednesday 16 November 2005 07:06, Junio C Hamano wrote:
+> Lukas Sandstr=F6m <lukass@etek.chalmers.se> writes:
+>=20
+> > Backward compability could be ensured by having both versions of th=
+e flags
+> > around for a while and issuing a warning when the old form is used.
+> >
+> > Good idea? Bad? Stupid? Do we want to keep "cache" around?
+>=20
+> I agree that may be a logical move, with proper b/c slack, but I
+> am not _so_ enthused about this...
 
-> Now, *I* know what I have to put into config.mak, but I would hate the 
-> project if I was new to it, tried to play around with it, and nothing 
-> would work in spite of being compiled with just one warning, thank you.
+Probably, as your fingers are trained. I just tried it to write 10
+times as fast as possible: cache, and afterwards index; and writing
+cache *is* faster ;-)
 
-Hmph.  That certainly sounds like what I might do.  Especially
-the part "play around before installing", so I am *very*
-sympathetic.
+But for someone new to git, these options must be totally confusing
+and coming out of nowhere. Not that I use these often - I am a
+Cogito user.
 
-OTOH, I do not particularly want to advertise/encourage in-place
-use.  Once you built today's git ;-), wouldn't you cd somewhere
-else and use it for your real work?  That would mean you have
-one location on your PATH that you keep the latest git build
-and I am not sure why being able to run in-place is such a big
-deal.  Is it because $HOME is under a tight quota?
+Practically, the opinion of people using these options often should
+count, as it will be inconvenient for them. Rare users can look up
+the man page.
 
-> Just a safety measure for the price of two lines. When I check out a new 
-> project, I do "make", play around with it, and then do "make install". If 
-> I had to set "export USE_INPLACE=1", "make install" should barf, because 
-> the compiled programs are not meant to be used anywhere else.
-
-OK.  That's sensible.
+Josef
