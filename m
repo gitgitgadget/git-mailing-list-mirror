@@ -1,81 +1,54 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: [RFC] git email submissions
-Date: Wed, 16 Nov 2005 13:01:06 -0500
-Message-ID: <437B73E2.3080903@pobox.com>
-References: <437B4472.1080401@pobox.com> <Pine.LNX.4.64.0511160847250.13959@g5.osdl.org> <437B7213.2020406@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [QUESTION] Access to a huge GIT repository.
+Date: Wed, 16 Nov 2005 10:24:21 -0800
+Message-ID: <7vveys8n8q.fsf@assigned-by-dhcp.cox.net>
+References: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 16 19:05:49 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 16 19:25:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcRay-0004oc-QJ
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 19:01:21 +0100
+	id 1EcRxO-00017v-7v
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 19:24:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030293AbVKPSBR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 13:01:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030294AbVKPSBR
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 13:01:17 -0500
-Received: from mail.dvmed.net ([216.237.124.58]:56757 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1030293AbVKPSBQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 13:01:16 -0500
-Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1EcRao-0004UA-AY; Wed, 16 Nov 2005 18:01:11 +0000
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <437B7213.2020406@zytor.com>
-X-Spam-Score: 0.0 (/)
+	id S1030418AbVKPSYY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 13:24:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030425AbVKPSYY
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 13:24:24 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:35755 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1030418AbVKPSYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 13:24:23 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051116182328.KHXU17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 16 Nov 2005 13:23:28 -0500
+To: Franck <vagabon.xyz@gmail.com>
+In-Reply-To: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
+	(vagabon.xyz@gmail.com's message of "Wed, 16 Nov 2005 13:24:25 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12036>
 
-H. Peter Anvin wrote:
-> Linus Torvalds wrote:
-> 
->>
->> On Wed, 16 Nov 2005, Jeff Garzik wrote:
->>
->>> For people without _any_ hosting, it would be nice to give them a 
->>> method to
->>> submit some git changes via email.
->>
->>
->> Well, as long as you don't expect me to take those things..
->>
->> BK had it with "bk send"/"bk receive", I used it a couple of times and 
->> refuse to do it again.
->>
-> 
-> Personally I think it would be nice if you could do an augmented 
-> patchset so that the end result is the same (with the same SHA1 IDs) as 
-> if one had merged a pull, while still being a human-readable patchset. 
-> The advantage with that is that once merged it'll do the right thing on 
-> the author's end.  I think that's pretty much my answer to Jeff's 
-> question :)
+Franck <vagabon.xyz@gmail.com> writes:
 
-Agreed.
+> I'm trying to clone a small part of a big repository.
 
-Though as a disclaimer to Linus and others, I don't plan to use this in 
-my own submissions to Linus.  Just thinking it would be a nice thing to 
-have, because there are definitely users out there who don't (for 
-whatever reason) have git-capable hosting.
+What Linus has already said...
 
-I would presume an email body would look like
+This is the second time this week the issue came up, so maybe
+"large bundled repository, whose users typically are interested
+in only one branch" may not be so uncommon as I first expected.
+An optional form of 'git-clone' that clones only from a limited
+subset of branches might be useful.
 
-overall description of changes
-git log master..HEAD | git shortlog
-git diff master..HEAD | diffstat -p1
-git diff master..HEAD
-<pack file MIME attachment>
-
-Smarter programs would send the overall description and pack file as 
-"[patch 0/N]", and then post the for-review patches in separate emails 
-as "[patch M/N]".
-
-	Jeff
+The underlying network transfer program, 'git-clone-pack', can
+be told to clone only specified branches.  If somebody is
+interested, updating the 'git-clone' wrapper to use it should
+not be too hard -- obviously this needs to be done for other
+transports as well, though.
