@@ -1,56 +1,68 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: [PATCH 3/3] git --help COMMAND brings up the git-COMMAND man-page.,
  take two
-Date: Wed, 16 Nov 2005 15:17:42 -0800
-Message-ID: <437BBE16.3090109@zytor.com>
-References: <20051116002318.A46C55BF97@nox.op5.se>	<437AAB48.7090904@zytor.com> <7vbr0law3z.fsf@assigned-by-dhcp.cox.net> <437BAA5F.5060608@zytor.com> <437BBDD6.40809@op5.se>
+Date: Thu, 17 Nov 2005 00:16:38 +0100
+Message-ID: <437BBDD6.40809@op5.se>
+References: <20051116002318.A46C55BF97@nox.op5.se>	<437AAB48.7090904@zytor.com> <7vbr0law3z.fsf@assigned-by-dhcp.cox.net> <437BAA5F.5060608@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 00:18:55 2005
+X-From: git-owner@vger.kernel.org Thu Nov 17 00:19:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcWXh-000775-QM
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 00:18:18 +0100
+	id 1EcWWB-0006LF-UW
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 00:16:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030563AbVKPXR7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 18:17:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030559AbVKPXR7
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 18:17:59 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:49628 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1030563AbVKPXR6
+	id S1161004AbVKPXQl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 18:16:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030565AbVKPXQk
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 18:16:40 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:55506 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030564AbVKPXQk
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2005 18:17:58 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jAGNHk0t012465
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 16 Nov 2005 15:17:46 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+	Wed, 16 Nov 2005 18:16:40 -0500
+Received: from [82.182.116.45] (1-2-9-7b.gkp.gbg.bostream.se [82.182.116.45])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 07CE96BCBE; Thu, 17 Nov 2005 00:16:39 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
 X-Accept-Language: en-us, en
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <437BBDD6.40809@op5.se>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <437BAA5F.5060608@zytor.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12066>
 
-Andreas Ericsson wrote:
+H. Peter Anvin wrote:
+> Junio C Hamano wrote:
 > 
-> True, but it's possible to have a 180 iq and still know nothing about 
-> programming. Anyhow, I sent the first patch too, so please blame me if 
-> anyone. If I was hoping to be admired I'd go play video-games with my 6 
-> year old cousin.
+>> "H. Peter Anvin" <hpa@zytor.com> writes:
+>>
+>>> The way this made it into the actual tree was to call /usr/bin/man, 
+>>> but still using execlp().  This is clearly bogus.  There *ARE* good 
+>>> reasons to use PATH resolutions for this, since man is one of the 
+>>> interactive commands the user may want to wrapper.
+>>
+>>
+>> Oh, that was my call, so please do not blame Andreas.
+>> I just sent out a proposed patch to address all the points
+>> discussed on the list for the last several hours.
+>>
+> 
+> FWIW, I rarely blame people for bad code; *everyone* does something 
+> stupid every now and then, and for most of us, far more often than that. 
+>  "This piece of code is stupid" != "the author of this piece of code is 
+> stupid", a distinction which unfortunately often gets lost.
 > 
 
-The point was: mistakes happen.  No point in arguing about whose fault 
-it was.
+True, but it's possible to have a 180 iq and still know nothing about 
+programming. Anyhow, I sent the first patch too, so please blame me if 
+anyone. If I was hoping to be admired I'd go play video-games with my 6 
+year old cousin.
 
-	-hpa
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
