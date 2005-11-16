@@ -1,59 +1,69 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH] Fix git_config_set() for mean cases
-Date: Thu, 17 Nov 2005 00:26:28 +0100
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.11.16.23.26.26.638493@smurf.noris.de>
-References: <Pine.LNX.4.63.0511161045310.16596@wbgn013.biozentrum.uni-wuerzburg.de> <7vhdac738c.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Thu Nov 17 00:32:49 2005
+From: exon@op5.se (Andreas Ericsson)
+Subject: [PATCH] git-commit: Having $GIT_COMMITTER_NAME implies -s
+Date: Thu, 17 Nov 2005 00:38:29 +0100 (CET)
+Message-ID: <20051116233829.0B3C55BA81@nox.op5.se>
+X-From: git-owner@vger.kernel.org Thu Nov 17 00:45:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcWjf-0004Sm-Hn
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 00:30:40 +0100
+	id 1EcWwo-0001uk-On
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 00:44:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161016AbVKPXah (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 18:30:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161018AbVKPXah
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 18:30:37 -0500
-Received: from main.gmane.org ([80.91.229.2]:16353 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161016AbVKPXag (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 18:30:36 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EcWhp-0003Of-UH
-	for git@vger.kernel.org; Thu, 17 Nov 2005 00:28:45 +0100
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 17 Nov 2005 00:28:45 +0100
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 17 Nov 2005 00:28:45 +0100
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1030564AbVKPXoI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 18:44:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030565AbVKPXoI
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 18:44:08 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:60370 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030564AbVKPXoG
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 18:44:06 -0500
+Received: from nox.op5.se (1-2-9-7b.gkp.gbg.bostream.se [82.182.116.45])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 3A19B6BD03
+	for <git@vger.kernel.org>; Thu, 17 Nov 2005 00:44:05 +0100 (CET)
+Received: by nox.op5.se (Postfix, from userid 500)
+	id 0B3C55BA81; Thu, 17 Nov 2005 00:38:29 +0100 (CET)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12072>
 
-Hi, Junio C Hamano wrote:
 
-> Why do you spell apostrophe with 0xb4 not ASCII 0x27?
+I've been trying, in vain, to tell my colleagues to use the -s flag.
+With this patch I can at least fix up their .profile's myself.
 
-Because on German keyboards these two characters are right next to each
-other, I'd suspect...
+Signed-off-by: Andreas Ericsson <ae@op5.se>
 
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-"A horrible little boy came up to me and said, `You know in your book
-The Martian Chronicles?'  I said, `Yes?'  He said, `You know where you
-talk about Deimos rising in the East?'  I said, `Yes?'  He said `No.'
--- So I hit him."
-		-- attributed to Ray Bradbury
+---
+
+ git-commit.sh |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
+
+applies-to: a2fe76123d6f5b835d3312a70a02ed4d07e25f8e
+d32c78570e25a9718721937b1ee9051e950ad1fd
+diff --git a/git-commit.sh b/git-commit.sh
+index 41955e8..ff9502c 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -134,8 +134,7 @@ then
+ 	cat "$GIT_DIR/MERGE_MSG"
+ fi | git-stripspace >"$GIT_DIR"/COMMIT_EDITMSG
+ 
+-case "$signoff" in
+-t)
++if [ "$signoff" = t -o "$GIT_COMMITTER_NAME" ]; then
+ 	{
+ 		echo
+ 		git-var GIT_COMMITTER_IDENT | sed -e '
+@@ -143,8 +142,7 @@ t)
+ 			s/^/Signed-off-by: /
+ 		'
+ 	} >>"$GIT_DIR"/COMMIT_EDITMSG
+-	;;
+-esac
++fi
+ 
+ if [ -f "$GIT_DIR/MERGE_HEAD" ]; then
+ 	echo "#"
+---
+0.99.9.GIT
