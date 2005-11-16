@@ -1,34 +1,34 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [QUESTION] Access to a huge GIT repository.
-Date: Wed, 16 Nov 2005 08:46:01 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511160837000.13959@g5.osdl.org>
-References: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
+Subject: Re: [RFC] git email submissions
+Date: Wed, 16 Nov 2005 08:59:00 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511160847250.13959@g5.osdl.org>
+References: <437B4472.1080401@pobox.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 16 17:51:23 2005
+X-From: git-owner@vger.kernel.org Wed Nov 16 18:04:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcQQL-0006PV-4y
-	for gcvg-git@gmane.org; Wed, 16 Nov 2005 17:46:18 +0100
+	id 1EcQd0-0004Xc-TI
+	for gcvg-git@gmane.org; Wed, 16 Nov 2005 17:59:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030411AbVKPQqO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 11:46:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030413AbVKPQqO
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 11:46:14 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:5009 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030411AbVKPQqN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 11:46:13 -0500
+	id S1030401AbVKPQ7Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 11:59:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030413AbVKPQ7Q
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 11:59:16 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:17556 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030401AbVKPQ7P (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 11:59:15 -0500
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAGGk9nO020147
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAGGx4nO020650
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 16 Nov 2005 08:46:10 -0800
+	Wed, 16 Nov 2005 08:59:04 -0800
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAGGk2rj031985;
-	Wed, 16 Nov 2005 08:46:07 -0800
-To: Franck <vagabon.xyz@gmail.com>
-In-Reply-To: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAGGx0JF032363;
+	Wed, 16 Nov 2005 08:59:02 -0800
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: <437B4472.1080401@pobox.com>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
 X-MIMEDefang-Filter: osdl$Revision: 1.127 $
@@ -36,81 +36,66 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12029>
 
 
 
-On Wed, 16 Nov 2005, Franck wrote:
+On Wed, 16 Nov 2005, Jeff Garzik wrote:
 > 
-> I'm trying to clone a small part of a big repository. This repository
-> contains several branchs that are useless for me. Actually this
-> repository is the linux-mips one, and branchs are used to track each
-> kernel minor version. That is to say it contains 4 branchs which are
-> linux-2.0, linux-2.2, linux-2.4 and master (linux-2.6).
+> For people without _any_ hosting, it would be nice to give them a method to
+> submit some git changes via email.
+
+Well, as long as you don't expect me to take those things..
+
+BK had it with "bk send"/"bk receive", I used it a couple of times and 
+refuse to do it again.
+
+> - what form would the emails take?  MIME-attach a .pack file, plus a
+> GPG-signed sha1sum in a separate attachment?
+
+Yes, that sounds sane. You also need to specify the head(s) of the 
+pack-file (maybe that's what you meant by the GPG-signed sha1sum).
+
+> - what's the easiest user interface for selecting the changes?  for my usage,
+> it would be
 > 
-> I'd like to clone this repository without grabbing linux-2.0,
-> linux-2.2, linux-2.4 branchs. I tried several things like:
-> 
->         $ git init-db
->         $ git fetch rsync://ftp.linux-mips.org/git/linux.git master
+> 	GIT_GPG_AUTHOR=jgarzik... \
+> 	GIT_DEF_HEADERS=./email.headers \
+> 	git-mkmail --sign master..upstream > email.rfc822
+> 	Enter GPG passphrase:
 
-First off, "rsync://" will never do what you want. It uses rsync 
-(surprised surprise) to grab the objects, so since it has no clue what the 
-objects are, it has no choice but to just grab them all.
+Sounds sane.
 
-> But all tries download every objects of each branchs. I believe that's
-> because of (a) the protocol used to access of the remote repo
+> - what user interface does a kernel maintainer use, to merge changes submitted
+> using this method?
 
-Yes. Note that ftp.linux-mips.org does run the git daemon, so you can use 
-"git://" instead of "rsync://" (that's how I pull from them when I sync).
+As long as it's not me, I'd suggest doing something like
 
->								 (b) the
-> master branch has been created from linux-2.4 branch so its first
-> commit object contains a branch 2.4 commit obj as parent object (let's
-> call it the "father" object). Is that correct ?
+	git getmail <path-to-git-repo> < raw-email
 
-Not having looked at that particular repo, I don't know. git can do it 
-either way - either one long common history, or branches with totally 
-unrelated histories. 
+Why? Because a lot of email clients know how to pipe the email to a 
+program, so you might use this from within the email client by just doing
 
-The fact that _some_ of the linux-mips repositories are based on mine 
-makes me suspect that all their 2.6-based ones are rooted like mine is, 
-but that may or may not be true.
+	| git getmail myrepo
 
-Just try your above command line with "git://" instead.
+and please also have an option to make it do the equivalent of a "fetch" 
+rather than a "pull" (ie to "get" it as a separate branch without the 
+merge):
 
-(NOTE! Doing a full clone like the above is pretty expensive with git for 
-the server side, so it might take a while before it starts feeding you 
-stuff if it is under heavy load)
+	| git getmail -b garzik myrepo
 
-> So I downloaded the whole thing, and try to remove "father" object and
-> right after run a 'git prune'. But unfortunately I can't find it
-> anywhere in .git directory. I did:
-> 
->         $ git-verify-pack < .git/objects/pack/*.idx
->         $ git-unpack-objects < .git/objects/pack/*.pack
-> 
-> But I can't find "father object" anywhere in .git/objects directory.
-> Still it's referenced by .git/objects/pack/pack-....idx file.
-> 
-> Can anybody give me some advices ?
+or something. 
 
-If you want to get rid of other branches, do:
+More importantly, the "git-getmail" (or whatever) scipt must absolutely be 
+anal and verify that the pack is "complete". Since you don't have the git 
+protocol to do the interactive "find the common parent" thing, it's easy 
+for the other end to specify a commit you don't actually have, and make a 
+pack that is perfectly valid, but which wouldn't have full connectivity to 
+what the person that pulls is trying to get.
 
-	# Remove the branches
-	git branch -D linux-2.0
-	git branch -D linux-2.2
-	git branch -D linux-2.4
-	.. whatever other branches you don't want ..
+The minimal thing to do is to run a "git-fsck-cache" after the fetch and 
+before the merge (if any). If the destination repo is regularly packed, it 
+should even be fast (for example, since I repack my repo pretty regularly, 
+a non-full fsck usually takes just a fraction of a second for me).
 
-	# Repack the repo
-	git repack -a -d
-
-	# Prune it all down
-	git prune-packed
-	git prune
-
-and you should have a nice single pack that only contains the branch(es) 
-that you're interested in.
-
-		Linus
+			Linus
