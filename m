@@ -1,52 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: master has some toys
-Date: Thu, 17 Nov 2005 02:12:27 -0800
-Message-ID: <7vy83ny450.fsf@assigned-by-dhcp.cox.net>
-References: <20051115144223.GA18111@diana.vm.bytemark.co.uk>
-	<b0943d9e0511160311k725526d8v@mail.gmail.com>
-	<7vr79g8mys.fsf@assigned-by-dhcp.cox.net>
-	<7v7jb83w8m.fsf_-_@assigned-by-dhcp.cox.net>
-	<81b0412b0511170029xac34cdbtddf74eb766281b3c@mail.gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH 0/4] reworking git-rebase
+Date: Thu, 17 Nov 2005 11:30:27 +0100
+Message-ID: <20051117103027.GR8383MdfPADPa@greensroom.kotnet.org>
+References: <7voe4lfpxm.fsf@assigned-by-dhcp.cox.net>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 11:12:47 2005
+X-From: git-owner@vger.kernel.org Thu Nov 17 11:32:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ecgl1-0002WJ-QE
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 11:12:44 +0100
+	id 1Ech2d-0001QR-VB
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 11:30:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750717AbVKQKM3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 05:12:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750719AbVKQKM3
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 05:12:29 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:19396 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1750717AbVKQKM2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 05:12:28 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051117101116.WDSG17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 17 Nov 2005 05:11:16 -0500
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0511170029xac34cdbtddf74eb766281b3c@mail.gmail.com>
-	(Alex Riesen's message of "Thu, 17 Nov 2005 09:29:03 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750724AbVKQKad (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 05:30:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750732AbVKQKad
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 05:30:33 -0500
+Received: from smtp18.wxs.nl ([195.121.247.9]:39120 "EHLO smtp18.wxs.nl")
+	by vger.kernel.org with ESMTP id S1750724AbVKQKad (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Nov 2005 05:30:33 -0500
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp18.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0IQ300AS7H6RGC@smtp18.wxs.nl> for git@vger.kernel.org; Thu,
+ 17 Nov 2005 11:30:28 +0100 (CET)
+Received: (qmail 19921 invoked by uid 500); Thu, 17 Nov 2005 10:30:27 +0000
+In-reply-to: <7voe4lfpxm.fsf@assigned-by-dhcp.cox.net>
+To: Junio C Hamano <junkio@cox.net>
+Mail-followup-to: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12093>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+On Tue, Nov 15, 2005 at 03:32:05PM -0800, Junio C Hamano wrote:
+> It notes that fact, and goes ahead to apply D and E, and at the
+> very end tells you to deal with C by hand.  Even if you somehow
+> managed to replay C on top of the result, you would now end up
+> with ...-B-...-U-A-D-E-C.
 
-> cygwin is completely broken. Still debugging, but it looks like the
-> old "windows can't unlink/rename open files" problem.
+Actually this is sometimes useful when rewriting history.
+Suppose you cherry-pick two changes that touch the same piece
+of code and combine them into a single change and then rebase
+all your changes on top of this combined change.
+The two cherry-picked changes will not apply and end up and
+at the end of the chain where you can simply discard them.
 
-Ouch.  Sorry, and thanks for reporting.
+Will the reworked rebase still support this use or is there
+a better way to do this ?
 
-Ideally I should get a cygwin environment myself, but for that
-first I need to procure Windows box.  Or does cygwin run on
-Wine, and if so is cygwin running on Wine a good enough
-approximation of the real thing?
+skimo
