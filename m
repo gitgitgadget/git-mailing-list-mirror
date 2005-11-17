@@ -1,63 +1,77 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: master has some toys
-Date: Thu, 17 Nov 2005 11:36:31 +0100
-Message-ID: <81b0412b0511170236r28572db9i84dc271700ded79a@mail.gmail.com>
-References: <20051115144223.GA18111@diana.vm.bytemark.co.uk>
-	 <b0943d9e0511160311k725526d8v@mail.gmail.com>
-	 <7vr79g8mys.fsf@assigned-by-dhcp.cox.net>
-	 <7v7jb83w8m.fsf_-_@assigned-by-dhcp.cox.net>
-	 <81b0412b0511170029xac34cdbtddf74eb766281b3c@mail.gmail.com>
-	 <7vy83ny450.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/4] reworking git-rebase
+Date: Thu, 17 Nov 2005 02:57:51 -0800
+Message-ID: <7v1x1fy21c.fsf@assigned-by-dhcp.cox.net>
+References: <7voe4lfpxm.fsf@assigned-by-dhcp.cox.net>
+	<20051117103027.GR8383MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 11:38:56 2005
+X-From: git-owner@vger.kernel.org Thu Nov 17 11:59:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ech88-00042t-3b
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 11:36:36 +0100
+	id 1EchTP-0006Os-Es
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 11:58:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750734AbVKQKgd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 05:36:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbVKQKgd
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 05:36:33 -0500
-Received: from nproxy.gmail.com ([64.233.182.204]:11783 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750734AbVKQKgc convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 05:36:32 -0500
-Received: by nproxy.gmail.com with SMTP id k26so389420nfc
-        for <git@vger.kernel.org>; Thu, 17 Nov 2005 02:36:31 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fHn0qPk114fqHrBts3hLAVEOCLkh0B63ByUD1XZN39YoU2Qtf7TcpWdjSTYD0QHf78q0m44PXjOr9UyGXsD/0NjRZUEZhNIPE88nsEELpWYco9zGwXc5hhU0QB1CIiq0rznK6ldAvjNvICjfezfSWkOJTT9jT67jIEd2I5hdgY0=
-Received: by 10.48.239.18 with SMTP id m18mr383603nfh;
-        Thu, 17 Nov 2005 02:36:31 -0800 (PST)
-Received: by 10.48.247.3 with HTTP; Thu, 17 Nov 2005 02:36:31 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy83ny450.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1750746AbVKQK5y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 05:57:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbVKQK5y
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 05:57:54 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:47334 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1750746AbVKQK5y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 05:57:54 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051117105755.TICI25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 17 Nov 2005 05:57:55 -0500
+To: skimo@liacs.nl
+In-Reply-To: <20051117103027.GR8383MdfPADPa@greensroom.kotnet.org> (Sven
+	Verdoolaege's message of "Thu, 17 Nov 2005 11:30:27 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12097>
 
-On 11/17/05, Junio C Hamano <junkio@cox.net> wrote:
-> > cygwin is completely broken. Still debugging, but it looks like the
-> > old "windows can't unlink/rename open files" problem.
->
-> Ouch.  Sorry, and thanks for reporting.
+Sven Verdoolaege <skimo@kotnet.org> writes:
 
-As it turned out, not the git.c is guilty, but the missing
-NO_MMAP=YesPlease in Cygwin section. I had it for a long time and
-accidentally removed by the recent pull. BTW, I couldn't find nowhere
-on original branch. Was it never submitted?
+> Will the reworked rebase still support this use or is there
+> a better way to do this ?
 
-> Ideally I should get a cygwin environment myself, but for that
-> first I need to procure Windows box.  Or does cygwin run on
-> Wine, and if so is cygwin running on Wine a good enough
-> approximation of the real thing?
+I think it is reasonable to assume that you would not usually
+want to muck with commits that cleanly replay.  Further, you
+would do that kind of irregular replaying (e.g. not replaying
+all of them, or skipping some of them) only after one of the
+commit fails to cleanly replay, and you would not mind (rather,
+you would be happy) to keep the commits that have been already
+cleanly replayed, and would start playing games like dropping
+patches after the one that fails.
 
-I don't know. One should try real hard to create as much junk as there is.
+If the above is a reasonable assumption, then, the answer is
+yes.  And if not, you can always resort to manual
+"git-format-patch -k", followed by file editing, followed by
+"git am -k -3", to reorder patches.  Although at that point you
+should either be looking at StGIT or doing a just plain merge.
+
+When "git am" first fails, all the rest of patches are kept in
+.dotest/.  And after fixing up the failed one in your working
+tree, you can restart it with interactive flag, like this: "git
+am -i -3 --resolved".  It lets you tell it skip one patch, or
+not apply any of the rest.  [Side note: it might be a good idea
+to make --resolved imply --interactive].
+
+Quite often, the reason why a rebased patch does not apply is
+because an equivalent patch (or a set of patches whose
+cumulative effect is the same as one of your patches) has been
+thrown in to the new "master".  "git cherry" is too dumb (IOW,
+git-patch-id is too strict) to notice such cases.  "git am -3"
+first tries to do git-apply, and when it fails (and it will fail
+if your working tree already has what the patch would do), it
+falls back to 3-way merge by picking up the pre-image blob ids
+recorded in the patch.  When seeing an already applied patch,
+this 3-way merge often results in the same tree as you started.
+When "git am" notices the situation, it throws away that patch
+(it says "already applied") automatically.
