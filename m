@@ -1,64 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Add .git/version
-Date: Thu, 17 Nov 2005 11:35:11 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511171131260.13959@g5.osdl.org>
-References: <11322339372137-git-send-email-matlads@dsmagic.com>
- <200511171644.48438.Josef.Weidendorfer@gmx.de> <7v7jb7uler.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Question on GIT tutorial.
+Date: Thu, 17 Nov 2005 11:47:27 -0800
+Message-ID: <7vlkznt5tc.fsf@assigned-by-dhcp.cox.net>
+References: <cda58cb80511140220n26da3edm@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	git@vger.kernel.org, Martin Atukunda <matlads@dsmagic.com>
-X-From: git-owner@vger.kernel.org Thu Nov 17 20:41:56 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 17 20:50:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcpbN-0001j6-AT
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 20:39:22 +0100
+	id 1EcpjY-0005M1-0v
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 20:47:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964820AbVKQTi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 14:38:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964821AbVKQTi6
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 14:38:58 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:30097 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964818AbVKQTi5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Nov 2005 14:38:57 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAHJZCnO029476
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 17 Nov 2005 11:35:12 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAHJZBGO005329;
-	Thu, 17 Nov 2005 11:35:11 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7jb7uler.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964812AbVKQTr3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 14:47:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964824AbVKQTr3
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 14:47:29 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:31916 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S964812AbVKQTr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 14:47:28 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051117194651.CYJG20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 17 Nov 2005 14:46:51 -0500
+To: Franck <vagabon.xyz@gmail.com>
+In-Reply-To: <cda58cb80511140220n26da3edm@mail.gmail.com>
+	(vagabon.xyz@gmail.com's message of "Mon, 14 Nov 2005 11:20:23 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12149>
 
+Franck <vagabon.xyz@gmail.com> writes:
 
+> Hi,
+>
+> I have a question about the GIT tutorial. At page 21, there is a
+> description of "subsystem maintainer" work cycle, I don't understand
+> why point 3 is needed. This point tells:
+>
+> """
+> Copy over the packed files from "project lead" public repository to
+> your public repository.
+> """
+>
+> Why is it needed ?
 
-On Thu, 17 Nov 2005, Junio C Hamano wrote:
-> 
->  - We want repository-format-version but that may be too
->    long. Just saying version is a bit confusing.  Abbreviating
->    it to repository-version makes it sound as if somebody took a
->    snapshot (i.e. tar-tree $commit).  Whatever name we choose,
->    let's pick a one not so confusing.
-
-My one argument against this is that I don't see why we have to have a 
-separate file for this.
-
-Why not just add a "core.version" flag to the config file? If no version 
-exists, assume it's version 1. And then, if we ever start using some other 
-version, make git-init-db always create the config file (the way we 
-already do for "core.filemode")
-
-Sure, people can edit the version flag by hand, but hey, that's true even 
-if it's in a separate .git/version file.
-
-		Linus
+That was a remnant from the days some transports did not
+understand objects/info/alternates; I think we do not need that
+step anymore.
