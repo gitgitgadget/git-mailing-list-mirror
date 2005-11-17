@@ -1,61 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: "make test" fails with current HEAD
-Date: Thu, 17 Nov 2005 16:52:28 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511171652020.17402@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <pan.2005.11.17.15.31.56.755022@smurf.noris.de>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: recent patch breaks the build ?
+Date: Thu, 17 Nov 2005 07:57:09 -0800
+Message-ID: <20051117155709.GD3968@reactrix.com>
+References: <437B6997.8010903@mc.com> <Pine.LNX.4.63.0511171258440.2104@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 17:02:35 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Wozniak <awozniak@mc.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 17 17:09:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ecm3t-00073b-HL
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 16:52:33 +0100
+	id 1Ecm8n-0001Ts-6m
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 16:57:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932122AbVKQPwa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 10:52:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932133AbVKQPwa
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 10:52:30 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:53180 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932122AbVKQPw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 10:52:29 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E633D13F95E; Thu, 17 Nov 2005 16:52:28 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id C4902B5231; Thu, 17 Nov 2005 16:52:28 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 92311B521E; Thu, 17 Nov 2005 16:52:28 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 7005B13F95E; Thu, 17 Nov 2005 16:52:28 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <pan.2005.11.17.15.31.56.755022@smurf.noris.de>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932182AbVKQP5e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 10:57:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932220AbVKQP5e
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 10:57:34 -0500
+Received: from 193.37.26.69.virtela.com ([69.26.37.193]:51620 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S932182AbVKQP5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 10:57:33 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jAHFvAVm012039;
+	Thu, 17 Nov 2005 07:57:10 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jAHFv97O012037;
+	Thu, 17 Nov 2005 07:57:09 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0511171258440.2104@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12124>
 
-Hi,
+On Thu, Nov 17, 2005 at 01:00:19PM +0100, Johannes Schindelin wrote:
 
-On Thu, 17 Nov 2005, Matthias Urlichs wrote:
+> Note that I had no success making http-fetch work without USE_CURL_MULTI. 
+> So maybe you can compile it, but maybe you experience the same problems as 
+> I had.
 
-> t4103.sh:
-> 
-> fatal: patch with only garbage at line 30
-> * FAIL 7: check binary diff with replacement.
->         git-checkout master
->                  git-apply --check --allow-binary-replacement BF.diff
+http-fetch or http-push?
 
-Does not fail here.
-
-Did you set your GIT_EXEC_PATH?
-
-Hth,
-Dscho
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
