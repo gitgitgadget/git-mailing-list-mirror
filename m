@@ -1,79 +1,53 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Teach "approxidate" about weekday syntax
-Date: Thu, 17 Nov 2005 15:18:32 -0800
-Message-ID: <437D0FC8.6000906@zytor.com>
-References: <Pine.LNX.4.64.0511171223110.13959@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git rebase conflict help?
+Date: Thu, 17 Nov 2005 15:21:26 -0800
+Message-ID: <7voe4isvwp.fsf@assigned-by-dhcp.cox.net>
+References: <33D6F7FB-7864-471B-A111-9991C768577A@desertsol.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 18 00:21:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 18 00:23:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ect1u-0001j1-I1
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 00:18:58 +0100
+	id 1Ect4M-0002hp-Jz
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 00:21:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964884AbVKQXSz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 18:18:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964889AbVKQXSz
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 18:18:55 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:698 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S964884AbVKQXSz
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 18:18:55 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jAHNIbuO017609
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 17 Nov 2005 15:18:37 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511171223110.13959@g5.osdl.org>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S965107AbVKQXV2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 18:21:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965108AbVKQXV2
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 18:21:28 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:11723 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S965107AbVKQXV1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 18:21:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051117232056.FUTE20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 17 Nov 2005 18:20:56 -0500
+To: Kevin Geiss <kevin@desertsol.com>
+In-Reply-To: <33D6F7FB-7864-471B-A111-9991C768577A@desertsol.com> (Kevin
+	Geiss's message of "Thu, 17 Nov 2005 15:20:25 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12171>
 
-Linus Torvalds wrote:
-> This allows people to use syntax like "last thursday" for the approxidate. 
-> 
-> (Or, indeed, more complex "three thursdays ago", but I suspect that would 
-> be pretty unusual).
-> 
-> NOTE! The parsing is strictly sequential, so if you do
-> 
-> 	"one day before last thursday"
-> 
-> it will _not_ do what you think it does. It will take the current time, 
-> subtract one day, and then go back to the thursday before that. So to get 
-> what you want, you'd have to write it the other way around:
-> 
-> 	"last thursday and one day before"
-> 
-> which is insane (it's usually the same as "last wednesday" _except_ if 
-> today is Thursday, in which case "last wednesday" is yesterday, and "last 
-> thursday and one day before" is eight days ago).
-> 
-> Similarly,
-> 
-> 	"last thursday one month ago"
-> 
-> will first go back to last thursday, and then go back one month from 
-> there, not the other way around.
-> 
-> I doubt anybody would ever use insane dates like that, but I thought I'd 
-> point out that the approxidate parsing is not exactly "standard English".
-> 
+Kevin Geiss <kevin@desertsol.com> writes:
 
-I believe English would always parse from right to left, it might be the 
-right thing to do...
+> I fetched my origin branch, then tried to run 'git rebase origin'.  
+> one of my commits from master which is not yet in origin got a  
+> conflict, so git rebase origin told me that the Simple cherry-pick  
+> failed, and the Automatic cherry-pick got conflicts. and it saved the  
+> commit message for me in .msg and my offending commit's id in .rebase- 
+> tmp32409.
 
-	-hpa
+Sorry, the tool support for this situation is very poor in the
+original rebase code.
+
+With the tool you have, you need to make sure that the working
+tree matches the (halfway) rebased master's head, and run
+"git-cherry-pick --replay $commit" on the offending commits
+stored in .rebase-tmp$$, one by one.
