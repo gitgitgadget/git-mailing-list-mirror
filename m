@@ -1,73 +1,70 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: Re: git and cogito update, gitweb problem
-Date: Thu, 17 Nov 2005 15:23:24 +0100
-Message-ID: <20051117142324.GD16963@schottelius.org>
-References: <20051110120201.GE22064@schottelius.org> <7vvez0z8yj.fsf@assigned-by-dhcp.cox.net>
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: [PATCH] git-repack: Fix variable name
+Date: Thu, 17 Nov 2005 14:34:47 +0000
+Message-ID: <20051117143447.GA13227@linux-mips.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6Nae48J/T25AfBN4"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 15:27:00 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Nov 17 15:36:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eckfn-0006T6-2l
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 15:23:35 +0100
+	id 1Eckqj-0002sH-Hj
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 15:34:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750862AbVKQOXb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 09:23:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750863AbVKQOXb
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 09:23:31 -0500
-Received: from [217.14.64.54] ([217.14.64.54]:54152 "HELO
-	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
-	id S1750861AbVKQOXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 09:23:31 -0500
-Received: (qmail 25337 invoked by uid 1000); 17 Nov 2005 14:23:24 -0000
-To: Junio C Hamano <junkio@cox.net>
+	id S1750900AbVKQOeu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 09:34:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750903AbVKQOeu
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 09:34:50 -0500
+Received: from extgw-uk.mips.com ([62.254.210.129]:4876 "EHLO
+	bacchus.net.dhis.org") by vger.kernel.org with ESMTP
+	id S1750870AbVKQOeu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 09:34:50 -0500
+Received: from dea.linux-mips.net (localhost.localdomain [127.0.0.1])
+	by bacchus.net.dhis.org (8.13.4/8.13.1) with ESMTP id jAHEYlhv013303
+	for <git@vger.kernel.org>; Thu, 17 Nov 2005 14:34:47 GMT
+Received: (from ralf@localhost)
+	by dea.linux-mips.net (8.13.4/8.13.4/Submit) id jAHEYlrg013302
+	for git@vger.kernel.org; Thu, 17 Nov 2005 14:34:47 GMT
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vvez0z8yj.fsf@assigned-by-dhcp.cox.net>
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Linux-Info: http://linux.schottelius.org/
-X-Operating-System: Linux 2.6.14
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12116>
 
+Three times remove_redandant -> remove_redundant.
 
---6Nae48J/T25AfBN4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
-Junio C Hamano [Thu, Nov 10, 2005 at 09:52:36AM -0800]:
-> [...]
-> I think this minimally should fix it [...]
-
-Will try that the next days!
-
-Nico
-
---6Nae48J/T25AfBN4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iQIVAwUBQ3ySW7OTBMvCUbrlAQKeIg//Vm6GQ4bKrZQ0KKmVsBM/WPkS/68xXvMn
-gSteenzjXqwQv5dn/0UIDi/jBSB7k6wKSfBo3lAerj2vkAbsNeNrQ/3PhyMq/OBs
-GD9zJvKGdW1WWoMOI0Z+VfvsI0+Q4hPMRRhSrveNk0eabPZ3tKmACRHEK/oRQljh
-/Q0+znIZV3Cpf2Hf1FVA2SaEDP0anX5WtpRyCGE9fBhAOwDOLTG0V8BP286y8gIa
-phVvzip6i+1IC1R5djdyJ7V+DFmKd5+aAB148ZRkpONHxiJr9Ag15N7aD3PuNam0
-y4LuVddBi83iZFPplfpnucqE7E0eP/0Aym0up2uw81ccRZaOPAXg0EDz6fwIn+Dx
-PkoFwOxmPcPiZY4s2Aanh0GVPEy6lbettPsc1QG9kTiBTQs0GYsIuTZaFCYn21Ia
-tfo8fJaa4cIK6CedzssJuYk5e0bEA3cetfmjof5vGFoFY3VY6YqKUzu94TXTi+0i
-gOxn5ozdBDz8H8PRfg8kdLn2DaNYzh7vmPNMqAprA0Ji9P6o7DhtRJ1NInwBseop
-nM75MBJi4IpnRm9ebMDFGvSX8gZKjeFogNArE/cxc8zPIaqdabuVnpclTEokmbxF
-JvCN1AP5bMXfHfgoKO8D4PupLJs3A9O1jf0SvVd6cQrk/xd/g/RS1Sbwqlkm5BcG
-Z2E7rIEu0bk=
-=mTTe
------END PGP SIGNATURE-----
-
---6Nae48J/T25AfBN4--
+Index: git.git/git-repack.sh
+===================================================================
+--- git.git.orig/git-repack.sh
++++ git.git/git-repack.sh
+@@ -11,7 +11,7 @@ do
+ 	case "$1" in
+ 	-n)	no_update_info=t ;;
+ 	-a)	all_into_one=t ;;
+-	-d)	remove_redandant=t ;;
++	-d)	remove_redundant=t ;;
+ 	-l)	local=t ;;
+ 	*)	break ;;
+ 	esac
+@@ -42,7 +42,7 @@ name=$(git-rev-list --objects $rev_list 
+ 	exit 1
+ if [ -z "$name" ]; then
+ 	echo Nothing new to pack.
+-	if test "$remove_redandant" = t ; then
++	if test "$remove_redundant" = t ; then
+ 		echo "Removing redundant packs."
+ 		sync
+ 		redundant=$(git-pack-redundant --all)
+@@ -60,7 +60,7 @@ mv .tmp-pack-$name.pack "$PACKDIR/pack-$
+ mv .tmp-pack-$name.idx  "$PACKDIR/pack-$name.idx" ||
+ exit
+ 
+-if test "$remove_redandant" = t
++if test "$remove_redundant" = t
+ then
+ 	sync
+ 	redundant=$(git-pack-redundant --all)
