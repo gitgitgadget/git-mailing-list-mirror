@@ -1,53 +1,51 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git rebase conflict help?
-Date: Thu, 17 Nov 2005 15:21:26 -0800
-Message-ID: <7voe4isvwp.fsf@assigned-by-dhcp.cox.net>
-References: <33D6F7FB-7864-471B-A111-9991C768577A@desertsol.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Teach "approxidate" about weekday syntax
+Date: Thu, 17 Nov 2005 15:23:00 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511171520390.13959@g5.osdl.org>
+References: <Pine.LNX.4.64.0511171223110.13959@g5.osdl.org>
+ <7v1x1eubpr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511171505080.13959@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 18 00:23:49 2005
+X-From: git-owner@vger.kernel.org Fri Nov 18 00:25:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ect4M-0002hp-Jz
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 00:21:33 +0100
+	id 1Ect60-0003Lp-Oa
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 00:23:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965107AbVKQXV2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 18:21:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965108AbVKQXV2
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 18:21:28 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:11723 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S965107AbVKQXV1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 18:21:27 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051117232056.FUTE20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 17 Nov 2005 18:20:56 -0500
-To: Kevin Geiss <kevin@desertsol.com>
-In-Reply-To: <33D6F7FB-7864-471B-A111-9991C768577A@desertsol.com> (Kevin
-	Geiss's message of "Thu, 17 Nov 2005 15:20:25 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965110AbVKQXXJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 18:23:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965111AbVKQXXI
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 18:23:08 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:36570 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965110AbVKQXXG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Nov 2005 18:23:06 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAHNN1nO009738
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 17 Nov 2005 15:23:02 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAHNN1Vs016642;
+	Thu, 17 Nov 2005 15:23:01 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.64.0511171505080.13959@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12172>
 
-Kevin Geiss <kevin@desertsol.com> writes:
 
-> I fetched my origin branch, then tried to run 'git rebase origin'.  
-> one of my commits from master which is not yet in origin got a  
-> conflict, so git rebase origin told me that the Simple cherry-pick  
-> failed, and the Automatic cherry-pick got conflicts. and it saved the  
-> commit message for me in .msg and my offending commit's id in .rebase- 
-> tmp32409.
 
-Sorry, the tool support for this situation is very poor in the
-original rebase code.
+On Thu, 17 Nov 2005, Linus Torvalds wrote:
+>
+> I think I'm done.
 
-With the tool you have, you need to make sure that the working
-tree matches the (halfway) rebased master's head, and run
-"git-cherry-pick --replay $commit" on the offending commits
-stored in .rebase-tmp$$, one by one.
+The only thing I might want to do is add some support for time-of-day to 
+the thing. Notably "noon" and "midnight".
+
+		Linus
