@@ -1,57 +1,71 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Add git-config-set, a simple helper for scripts to set config
- variables
-Date: Fri, 18 Nov 2005 00:24:57 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511180024130.18775@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0511172244230.18285@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vveyqswzx.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [RFC] Applying a graft to a tree and "rippling" the changes
+ through
+Date: Fri, 18 Nov 2005 00:28:56 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511180026080.18775@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051117230723.GD26122@nowhere.earth>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 18 00:26:39 2005
+Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 18 00:30:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ect7r-0004DT-G8
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 00:25:07 +0100
+	id 1EctBd-0006JH-Pk
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 00:29:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964848AbVKQXZE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 18:25:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964874AbVKQXZD
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 18:25:03 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:11222 "EHLO
+	id S964946AbVKQX26 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 18:28:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964961AbVKQX26
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 18:28:58 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:46550 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S964848AbVKQXZB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 18:25:01 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	id S964946AbVKQX26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 18:28:58 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 6D08513FE21; Fri, 18 Nov 2005 00:24:58 +0100 (CET)
+	id 5DE3D13F199; Fri, 18 Nov 2005 00:28:57 +0100 (CET)
 Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 4A4A0B5238; Fri, 18 Nov 2005 00:24:58 +0100 (CET)
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 419409F34A; Fri, 18 Nov 2005 00:28:57 +0100 (CET)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 2C53FB2D42; Fri, 18 Nov 2005 00:24:58 +0100 (CET)
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 2A15A98FA6; Fri, 18 Nov 2005 00:28:57 +0100 (CET)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E9E9513FE21; Fri, 18 Nov 2005 00:24:57 +0100 (CET)
+	id 85ED613F199; Fri, 18 Nov 2005 00:28:56 +0100 (CET)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vveyqswzx.fsf@assigned-by-dhcp.cox.net>
+To: Yann Dirson <ydirson@altern.org>
+In-Reply-To: <20051117230723.GD26122@nowhere.earth>
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12174>
 
 Hi,
 
-On Thu, 17 Nov 2005, Junio C Hamano wrote:
+On Fri, 18 Nov 2005, Yann Dirson wrote:
 
-> It's kinda funny that your users cannot edit a plain text file
-> with an editor, but know how to do regex ;-).
+> Current commit objects refer to a child tree, but to parent _commits_.
+> Whereas it seems necessary to walk through the history line, and
+> easily get a changelog, it is semantically quite not right:
 
-No, they can't. But they deem it a cool feature... FDM...
+Yes, it is. You base *your* work on *some* work. So, even if the trees may 
+be equal, the base isn't.
+
+> Indeed that emphasizes that the history lines are on living on a
+> higher level of abstraction that commits.  Now what if we used
+> trees->tree commits, instead of the current commits->tree ones ?
+
+Now, how exactly would that be more abstract? Trees are just that: 
+collections of files. Noone tells you what the idea was, which led from 
+the last tree(s) to this one. That is not abstract.
+
+> Any genius with a solution out there ? :)
+
+Not a genius, but me: Write down your ideas in the commit message. That it 
+the place to put abstract thoughts into.
 
 Ciao,
 Dscho
