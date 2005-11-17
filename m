@@ -1,242 +1,111 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Add test case for git-config-set
-Date: Thu, 17 Nov 2005 22:50:08 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511172249410.18285@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Stgit - gitmergeonefile.py: handle removal vs. changes
+Date: Thu, 17 Nov 2005 22:10:11 +0000
+Message-ID: <b0943d9e0511171410y357fb0bfv@mail.gmail.com>
+References: <20051113194225.20447.57910.stgit@zion.home.lan>
+	 <b0943d9e0511150154y2d2af24ck@mail.gmail.com>
+	 <200511161544.13825.blaisorblade@yahoo.it>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Nov 17 22:53:57 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 17 23:12:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcreN-0003cx-40
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 22:50:35 +0100
+	id 1EcrxU-0004D3-1N
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 23:10:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751503AbVKQVuL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 16:50:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbVKQVuL
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 16:50:11 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:58298 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751503AbVKQVuJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 16:50:09 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 9EF3A13FCE7; Thu, 17 Nov 2005 22:50:08 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 79770B5232; Thu, 17 Nov 2005 22:50:08 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 48318B5230; Thu, 17 Nov 2005 22:50:08 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3B06413FCE0; Thu, 17 Nov 2005 22:50:08 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932287AbVKQWKQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 17:10:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932295AbVKQWKQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 17:10:16 -0500
+Received: from xproxy.gmail.com ([66.249.82.195]:43448 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932287AbVKQWKO convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 17:10:14 -0500
+Received: by xproxy.gmail.com with SMTP id i30so38259wxd
+        for <git@vger.kernel.org>; Thu, 17 Nov 2005 14:10:14 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZdhQflJTpprDGkpKlUFk5UoBQOINlxDagbrkQOL7JgnziMAMIVOe1esCRzXy0p2LDNBWVIuxXXUz0jGsAgcgbhvMwvQykVLXfod1h+4L9BO22vjDxApw1l/+O7ChEYdZA+Wt+QL1DUh8opADNRVrHjT3NCaZbHJj9YPA82PJLzk=
+Received: by 10.70.54.15 with SMTP id c15mr5553059wxa;
+        Thu, 17 Nov 2005 14:10:11 -0800 (PST)
+Received: by 10.70.27.12 with HTTP; Thu, 17 Nov 2005 14:10:11 -0800 (PST)
+To: Blaisorblade <blaisorblade@yahoo.it>
+In-Reply-To: <200511161544.13825.blaisorblade@yahoo.it>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12162>
 
+On 16/11/05, Blaisorblade <blaisorblade@yahoo.it> wrote:
+> On Tuesday 15 November 2005 10:54, Catalin Marinas wrote:
+> Actually, with .git/commits we are reimplementing handling of "unmerged"
+> entries... it could be better to use the "unmerged entry" stgit idea. So "stg
+> resolved" should modify the entries by itself.
 
-... includes the mean tests I mentioned on the list.
+But would a git-diff-tree still show the changes between the current
+files and the index if there are unmerged entries? I haven't tried it.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > My initial idea was to make
+> > gitmergeonefile not to leave any unmerged entries in the index. As you
+> > could see, there are cases where it failed.
+>
+> Yep... it seems you took examples from git-merge-one-file, but that's lacking
+> (but it's low-level so it's appropriate for it - it must leave unmerged
+> entries when there are conflicts).
 
----
+When I started writing StGIT, my main thoughts were driven towards the
+patch merging/commuting via the diff3 algorithm. I found it simpler to
+copy the algorithm from git-merge-one-file since that wasn't my main
+interest in StGIT. I also looked at how Cogito did it.
 
- t1300-config-set.sh |  180 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 180 insertions(+), 0 deletions(-)
- create mode 100644 t1300-config-set.sh
+> > I can see the following scenarios for a file:
+>
+> In both cases, we're going to have a conflict, so we leave file.
+> {older,remote,local} as appropriate and already done.
+>
+> > 1. deleted in the base and modified by the patch. It should leave the
+> > file in the tree together with file.older.
+>
+> Why not leaving file.remote? We already do that in general, so we have a
+> duplicate, but it's easier to understand.
 
-applies-to: de5d2a42ebd69e3608e0f99f615fbcf55a88c101
-3fa048df0d691d3423ec81f8dba947e2c05fa996
-diff --git a/t1300-config-set.sh b/t1300-config-set.sh
-new file mode 100644
-index 0000000..df89216
---- /dev/null
-+++ b/t1300-config-set.sh
-@@ -0,0 +1,180 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2005 Johannes Schindelin
-+#
-+
-+test_description='Test git-config-set in different settings'
-+
-+. ./test-lib.sh
-+
-+test -f .git/config && rm .git/config
-+
-+git-config-set core.penguin "little blue"
-+
-+cat > expect << EOF
-+#
-+# This is the config file
-+#
-+
-+[core]
-+	penguin = little blue
-+EOF
-+
-+test_expect_success 'initial' 'cmp .git/config expect'
-+
-+git-config-set Core.Movie BadPhysics
-+
-+cat > expect << EOF
-+#
-+# This is the config file
-+#
-+
-+[core]
-+	penguin = little blue
-+	Movie = BadPhysics
-+EOF
-+
-+test_expect_success 'mixed case' 'cmp .git/config expect'
-+
-+git-config-set Cores.WhatEver Second
-+
-+cat > expect << EOF
-+#
-+# This is the config file
-+#
-+
-+[core]
-+	penguin = little blue
-+	Movie = BadPhysics
-+[Cores]
-+	WhatEver = Second
-+EOF
-+
-+test_expect_success 'similar section' 'cmp .git/config expect'
-+
-+git-config-set CORE.UPPERCASE true
-+
-+cat > expect << EOF
-+#
-+# This is the config file
-+#
-+
-+[core]
-+	penguin = little blue
-+	Movie = BadPhysics
-+	UPPERCASE = true
-+[Cores]
-+	WhatEver = Second
-+EOF
-+
-+test_expect_success 'similar section' 'cmp .git/config expect'
-+
-+cat > .git/config << EOF
-+[beta] ; silly comment # another comment
-+noIndent= sillyValue ; 'nother silly comment
-+
-+# empty line
-+		; comment
-+		haha   ="beta" # last silly comment
-+[nextSection] noNewline = ouch
-+EOF
-+
-+git-config-set beta.haha alpha
-+
-+cat > expect << EOF
-+[beta] ; silly comment # another comment
-+noIndent= sillyValue ; 'nother silly comment
-+
-+# empty line
-+		; comment
-+	haha = alpha
-+[nextSection] noNewline = ouch
-+EOF
-+
-+test_expect_success 'really mean test' 'cmp .git/config expect'
-+
-+git-config-set nextsection.nonewline wow
-+
-+cat > expect << EOF
-+[beta] ; silly comment # another comment
-+noIndent= sillyValue ; 'nother silly comment
-+
-+# empty line
-+		; comment
-+	haha = alpha
-+[nextSection]
-+	nonewline = wow
-+EOF
-+
-+test_expect_success 'really really mean test' 'cmp .git/config expect'
-+
-+git-config-set beta.haha
-+
-+cat > expect << EOF
-+[beta] ; silly comment # another comment
-+noIndent= sillyValue ; 'nother silly comment
-+
-+# empty line
-+		; comment
-+[nextSection]
-+	nonewline = wow
-+EOF
-+
-+test_expect_success 'unset' 'cmp .git/config expect'
-+
-+git-config-set nextsection.NoNewLine "wow2 for me" "for me$"
-+
-+cat > expect << EOF
-+[beta] ; silly comment # another comment
-+noIndent= sillyValue ; 'nother silly comment
-+
-+# empty line
-+		; comment
-+[nextSection]
-+	nonewline = wow
-+	NoNewLine = wow2 for me
-+EOF
-+
-+test_expect_success 'multivar' 'cmp .git/config expect'
-+
-+git-config-set nextsection.nonewline "wow3" "wow$"
-+
-+cat > expect << EOF
-+[beta] ; silly comment # another comment
-+noIndent= sillyValue ; 'nother silly comment
-+
-+# empty line
-+		; comment
-+[nextSection]
-+	nonewline = wow3
-+	NoNewLine = wow2 for me
-+EOF
-+
-+test_expect_success 'multivar replace' 'cmp .git/config expect'
-+
-+test_expect_failure 'ambiguous unset' \
-+	'git-config-set --unset nextsection.nonewline'
-+
-+test_expect_failure 'invalid unset' \
-+	'git-config-set --unset somesection.nonewline'
-+
-+git-config-set --unset nextsection.nonewline "wow3$"
-+
-+cat > expect << EOF
-+[beta] ; silly comment # another comment
-+noIndent= sillyValue ; 'nother silly comment
-+
-+# empty line
-+		; comment
-+[nextSection]
-+	NoNewLine = wow2 for me
-+EOF
-+
-+test_expect_success 'multivar unset' 'cmp .git/config expect'
-+
-+test_expect_failure 'invalid key' 'git-config-set inval.2key blabla'
-+
-+test_expect_success 'correct key' 'git-config-set 123456.a123 987'
-+
-+test_done
-+
----
-0.99.9.GIT
+I agree with this.
+
+> > Another option would be to
+> > remove the file and leave both file.older and file.remote in the tree
+> > (here .remote means the version in the patch)
+>
+> I remember that at times, but .remote is very confusing... I see that's the
+> mishandling is induced by various sources, maybe including "merge" itself,
+> but that program (and possibly others) supports changing the labels, and this
+> should probably be done (using "original", "patched" and "upstream"
+> probably).
+
+I know that diff3/merge support labels. I don't exactly remember my
+reasons but I think that I chose those namings because StGIT was
+supporting another type of merge where "patched" etc. did not apply.
+
+I agree that we should change them. I would rather use "ancestor",
+"patch" and "base" but I don't have a strong opinion.
+
+> > 2. changed in the base but deleted by the patch. It should remove the
+> > file from the tree but leave file.older and file.local. The other
+> > option is to leave the file in the tree but, as above, I prefer the
+> > first one.
+>
+> The policy about when to remove the file and when to leave it is very
+> personal... the user must anyway solve the conflict in some smart way...
+> about the defaults, anything would do, but if we really care we could leave
+> the user the choice.
+
+At the moment, the conflicts usually leave the index in the state
+before pushing the patch. I think it should also leave the file and
+just mark it as conflict in .git/conflicts.
+
+--
+Catalin
