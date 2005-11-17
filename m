@@ -1,59 +1,183 @@
-From: Franck <vagabon.xyz@gmail.com>
-Subject: Re: [QUESTION] Access to a huge GIT repository.
-Date: Thu, 17 Nov 2005 22:47:20 +0100
-Message-ID: <cda58cb80511171347yef4f090g@mail.gmail.com>
-References: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
-	 <Pine.LNX.4.64.0511160837000.13959@g5.osdl.org>
-	 <cda58cb80511170236p4a7e2baay@mail.gmail.com>
-	 <Pine.LNX.4.64.0511170817480.13959@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Add documentation for git-config-set
+Date: Thu, 17 Nov 2005 22:49:19 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511172249000.18285@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 17 22:50:09 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Nov 17 22:51:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcrbI-00023p-4q
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 22:47:24 +0100
+	id 1EcrdD-000323-RM
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 22:49:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751365AbVKQVrV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 16:47:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbVKQVrV
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 16:47:21 -0500
-Received: from zproxy.gmail.com ([64.233.162.207]:50071 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751365AbVKQVrV convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 16:47:21 -0500
-Received: by zproxy.gmail.com with SMTP id 40so34643nzk
-        for <git@vger.kernel.org>; Thu, 17 Nov 2005 13:47:20 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gIsP8g3KCwNn6gGLwIt7bKBrVM7+kWzcAvx2h/xcRoWZMVqhOv8636LIQSB/DqzD8HIci6dlbPzuWEGL1uq3zsYqe8lMjBopOH67W1pF8RO3tTId3bDCaJLI0sxK2PymlcX/QN5oC7lqu3L3j6yswr3dtmerx4wJBKHcZFriots=
-Received: by 10.36.100.4 with SMTP id x4mr5437097nzb;
-        Thu, 17 Nov 2005 13:47:20 -0800 (PST)
-Received: by 10.36.47.8 with HTTP; Thu, 17 Nov 2005 13:47:20 -0800 (PST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511170817480.13959@g5.osdl.org>
-Content-Disposition: inline
+	id S1751500AbVKQVtV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 16:49:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751501AbVKQVtV
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 16:49:21 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:48314 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751500AbVKQVtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 16:49:20 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 9056813FCE0; Thu, 17 Nov 2005 22:49:19 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 714129F342; Thu, 17 Nov 2005 22:49:19 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 531AF837F7; Thu, 17 Nov 2005 22:49:19 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 4607713FCE0; Thu, 17 Nov 2005 22:49:19 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12159>
 
-2005/11/17, Linus Torvalds <torvalds@osdl.org>:
->
-> What you probably _can_ do is to find whatever top-most commit you want
-> (say, the v2.6.0 commit), and use grafting to make that have no parents.
-> Then you can do git-prune to get rid of everything under it.
->
 
-ok that's what I was trying to do by killing the parent object.  Now
-when looking a the graph using gitk all old objects have been removed.
-But I'm suprised because the git repository is the same size as it was
-before pruning all old objects. Can you explain why ?
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Thanks
---
-               Franck
+---
+
+ Documentation/git-config-set.txt |  108 ++++++++++++++++++++++++++++++++++++++
+ Documentation/git.txt            |    3 +
+ 2 files changed, 111 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-config-set.txt
+
+applies-to: ee7303ec1f89940eeb5b565477ad903c379004fd
+51745dec61000862d5afbdf7024e7793424e7c10
+diff --git a/Documentation/git-config-set.txt b/Documentation/git-config-set.txt
+new file mode 100644
+index 0000000..8e897be
+--- /dev/null
++++ b/Documentation/git-config-set.txt
+@@ -0,0 +1,108 @@
++git-config-set(1)
++===============
++
++NAME
++----
++git-config-set - Set options in .git/config.
++
++
++SYNOPSIS
++--------
++'git-config-set' ( name [value [value_regex]] | --unset name [value_regex] )
++
++DESCRIPTION
++-----------
++You can set/replace/unset options with this command. The name is actually
++the section and the key separated by a dot, and the value will be escaped.
++
++If you want to set/unset an option which can occor on multiple lines, you
++should provide a POSIX regex for the value.
++
++This command will fail if
++
++. .git/config is invalid,
++. .git/config can not be written to,
++. no section was provided,
++. the section or key is invalid,
++. you try to unset an option which does not exist, or
++. you try to unset/set an option for which multiple lines match.
++
++
++OPTIONS
++-------
++
++--unset::
++	Remove the given option from .git/config
++
++
++EXAMPLE
++-------
++
++Given a .git/config like this:
++
++	#
++	# This is the config file, and
++	# a '#' or ';' character indicates
++	# a comment
++	#
++
++	; core variables
++	[core]
++		; Don't trust file modes
++		filemode = false
++
++	; Our diff algorithm
++	[diff]
++		external = "/usr/local/bin/gnu-diff -u"
++		renames = true
++
++	; Proxy settings
++	[proxy]
++		command="ssh" for "ssh://kernel.org/"
++		command="proxy-command" for kernel.org
++		command="myprotocol-command" for "my://"
++
++you can set the filemode to true with
++
++------------
++% git config-set core.filemode true
++------------
++
++The hypothetic proxy command entries actually have a postfix to discern
++to what URL they apply. Here is how to change the entry for kernel.org
++to "ssh".
++
++------------
++% git config-set proxy.command '"ssh" for kernel.org' 'for kernel.org$'
++------------
++
++This makes sure that only the key/value pair for kernel.org is replaced.
++
++To delete the entry for renames, do
++
++------------
++% git config-set --unset diff.renames
++------------
++
++or just
++
++------------
++% git config-set diff.renames
++------------
++
++If you want to delete an entry for a multivar (like proxy.command above),
++you have to provide a regex matching the value of exactly one line.
++
++
++Author
++------
++Written by Johannes Schindelin <Johannes.Schindelin@gmx.de>
++
++Documentation
++--------------
++Documentation by Johannes Schindelin.
++
++GIT
++---
++Part of the gitlink:git[7] suite
++
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 338e5ac..694fee8 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -84,6 +84,9 @@ gitlink:git-checkout-index[1]::
+ gitlink:git-commit-tree[1]::
+ 	Creates a new commit object
+ 
++gitlink:git-config-set[1]::
++	Set options in .git/config.
++
+ gitlink:git-hash-object[1]::
+ 	Computes the object ID from a file.
+ 
+---
+0.99.9.GIT
