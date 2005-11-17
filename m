@@ -1,99 +1,72 @@
-From: Martin Atukunda <matlads@dsmagic.com>
-Subject: [PATCH] Add .git/version (Take 2)
-Date: Thu, 17 Nov 2005 22:18:21 +0300
-Message-ID: <20051117191821.GC5745@igloo.ds.co.ug>
-References: <11322339372137-git-send-email-matlads@dsmagic.com> <200511171644.48438.Josef.Weidendorfer@gmx.de> <437CB0CA.6070306@op5.se> <200511171741.23147.Josef.Weidendorfer@gmx.de> <20051117190848.GA5745@igloo.ds.co.ug>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add .git/version
+Date: Thu, 17 Nov 2005 11:25:16 -0800
+Message-ID: <7v7jb7uler.fsf@assigned-by-dhcp.cox.net>
+References: <11322339372137-git-send-email-matlads@dsmagic.com>
+	<200511171644.48438.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Nov 17 20:24:50 2005
+Cc: git@vger.kernel.org, Martin Atukunda <matlads@dsmagic.com>
+X-From: git-owner@vger.kernel.org Thu Nov 17 20:28:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcpHg-0001ey-Lc
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 20:19:01 +0100
+	id 1EcpNr-0004NK-Rr
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 20:25:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964815AbVKQTSx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 14:18:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964822AbVKQTSx
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 14:18:53 -0500
-Received: from metronet39.infocom.co.ug ([217.113.73.39]:63237 "EHLO
-	entandikwa.ds.co.ug") by vger.kernel.org with ESMTP id S964815AbVKQTSw
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 14:18:52 -0500
-Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
-	by entandikwa.ds.co.ug (Postfix) with ESMTP id 01FE05160
-	for <git@vger.kernel.org>; Thu, 17 Nov 2005 22:20:30 +0300 (EAT)
-Received: from matlads by igloo.ds.co.ug with local (Exim 4.54)
-	id 1EcpH3-0001lQ-87
-	for git@vger.kernel.org; Thu, 17 Nov 2005 22:18:21 +0300
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20051117190848.GA5745@igloo.ds.co.ug>
-User-Agent: Mutt/1.5.11
+	id S964787AbVKQTZU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 14:25:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964786AbVKQTZU
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 14:25:20 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:7052 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S964787AbVKQTZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 14:25:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051117192404.DCMO17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 17 Nov 2005 14:24:04 -0500
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12139>
 
+Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 
-Currently the version number can be considered version 1, so this patch
-just sets it to that. This patch supercedes my earlier attempt that
-erroneously used the git version number as the repo format version.
+> [*] Junio: This should be done before Git 1.0 - it is needed to be able
+> to change the repository format in the future without taking the risk
+> that old git commands possibly corrupt a repo in the new format. This
+> has nothing to do with backwards compatibility. Without a version, we
+> are forced to be forwards compatible ;-)
+> Needed in init-db.c is a "echo 1 >.git/version"; and the mentioned check
+> in the tools against this version.
 
-Signed-Off-By: Martin Atukunda <matlads@dsmagic.com>
+I agree with the general direction.
 
----
+ - Futureproofing is good.
 
- init-db.c |   17 +++++++++++++++++
- 1 files changed, 17 insertions(+), 0 deletions(-)
+ - We want repository-format-version but that may be too
+   long. Just saying version is a bit confusing.  Abbreviating
+   it to repository-version makes it sound as if somebody took a
+   snapshot (i.e. tar-tree $commit).  Whatever name we choose,
+   let's pick a one not so confusing.
 
-applies-to: d1bb16b919a119cca6ee001f755f83251a2c2964
-31e78e387d708da5e09f40436d5fdc9e9ec5e16c
-diff --git a/init-db.c b/init-db.c
-index bd88291..e403dac 100644
---- a/init-db.c
-+++ b/init-db.c
-@@ -9,6 +9,8 @@
- #define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates/"
- #endif
- 
-+#define REPO_VERSION 1
-+
- static void safe_create_dir(const char *dir)
- {
- 	if (mkdir(dir, 0777) < 0) {
-@@ -19,6 +21,17 @@ static void safe_create_dir(const char *
- 	}
- }
- 
-+static void record_repo_version(const char *path)
-+{
-+	FILE *verfile = fopen(path, "w");
-+	if (!verfile)
-+		die ("Can not write to %s?", path);
-+	
-+	fprintf(verfile, "%d\n", REPO_VERSION);
-+	
-+	fclose(verfile);
-+}
-+
- static int copy_file(const char *dst, const char *src, int mode)
- {
- 	int fdi, fdo, status;
-@@ -212,6 +225,10 @@ static void create_default_files(const c
- 				fprintf(stderr, "Ignoring file modes\n");
- 		}
- 	}
-+
-+	/* record the version of the git repo */
-+	strcpy(path + len, "version");
-+	record_repo_version(path);
- }
- 
- static const char init_db_usage[] =
----
-0.99.9.GIT
+ - Not having .git/version (or whatever name) signals the tools
+   our repository is in the original format.  This will keep the
+   existing repositories happy.  What this means is that the
+   tools need to check for the absense of .git/version in this
+   round.  When we change the repository format, we will have
+   .git/version file that records it.
 
--- 
-Due to a shortage of devoted followers, the production of great leaders has been discontinued.
+ - You can run git-init-db on an existing repository.  This is
+   sometimes handy if you added a new hook in the template suite
+   and want to copy it over (it never overwrites but happily
+   copies what you do not have).  This mechanism needs to be
+   told about the version file -- specifically, it should check
+   version in the template area and refuse to do use that
+   template if it does not match the repository.  Similarly,
+   when creating a repository from scratch, it should not copy
+   the version file from templates.
