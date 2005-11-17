@@ -1,79 +1,54 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: [Question] info/grafts file.
-Date: Wed, 16 Nov 2005 19:57:14 -0500
-Message-ID: <437BD56A.7030402@michonline.com>
-References: <20051114182019.GA19105@hpsvcnb.fc.hp.com> <7vhdafx81m.fsf@assigned-by-dhcp.cox.net> <20051115000349.GA32136@hpsvcnb.fc.hp.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: recent patch breaks the build ?
+Date: Wed, 16 Nov 2005 17:15:40 -0800
+Message-ID: <7vd5l03whv.fsf@assigned-by-dhcp.cox.net>
+References: <437B6997.8010903@mc.com>
+	<7v64qs8kuo.fsf@assigned-by-dhcp.cox.net> <437B8CEC.8040002@mc.com>
+	<20051116203334.GA3968@reactrix.com>
+	<Pine.LNX.4.63.0511170023040.9284@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20051117004621.GB3968@reactrix.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig2D979CA5D178BD0E2FB30DB9"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 01:59:33 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 17 02:16:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcY6H-0007uK-FW
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 01:58:05 +0100
+	id 1EcYNQ-0006SI-Bh
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 02:15:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161049AbVKQA5z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 19:57:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161050AbVKQA5z
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 19:57:55 -0500
-Received: from mail.autoweb.net ([198.172.237.26]:28113 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S1161049AbVKQA5y (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Nov 2005 19:57:54 -0500
-Received: from [10.100.10.12] (helo=[10.100.10.12])
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1EcY61-0002vs-15; Wed, 16 Nov 2005 19:57:49 -0500
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
-X-Accept-Language: en-us, en
-To: Carl Baldwin <cnb@fc.hp.com>
-In-Reply-To: <20051115000349.GA32136@hpsvcnb.fc.hp.com>
-X-Enigmail-Version: 0.93.0.0
+	id S1161068AbVKQBPn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 20:15:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161070AbVKQBPn
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 20:15:43 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:21431 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1161068AbVKQBPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 20:15:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051117011542.NBAH25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 16 Nov 2005 20:15:42 -0500
+To: Nick Hengeveld <nickh@reactrix.com>
+In-Reply-To: <20051117004621.GB3968@reactrix.com> (Nick Hengeveld's message of
+	"Wed, 16 Nov 2005 16:46:21 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12080>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig2D979CA5D178BD0E2FB30DB9
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Nick Hengeveld <nickh@reactrix.com> writes:
 
-Carl Baldwin wrote:
-> This is fine, I just needed to know.
-> 
-> How hard is it to, in a generic way, take a grafts file and reconstruct
-> commits to include the parents in the graft file in the actual tree?  I
-> am wondering because I couldn't, after much work, get git-svnimport to
-> find my merges correctly.  So, I am needing to hand-graft some merges in
-> to make things right.  Any suggestions?  I could try to figure something
-> out if I can find some time.  I'm good with graph traversals and such.
+> On Thu, Nov 17, 2005 at 12:25:06AM +0100, Johannes Schindelin wrote:
+>
+>> #if LIBCURL_VERSION_NUM < 0x070801
+>> #error http-push needs curl >= 7.8.1 (because of CURLOPT_HTTPGET)
+>> #endif
+>
+> Is it worth trying to figure this out in the Makefile instead, using eg.
+> curl-config --vernum?
 
-It's actually pretty easy.  I wrote a rough (and not quite safe) tool to
-do this a week or so ago.
-
-http://marc.theaimsgroup.com/?l=git&m=113131673606637&w=2
-
-I will try and clean it up a bit and submit it for inclusion in contrib/
-sometime this coming weekend, but you should be able to use it to solve
-this problem.
-
-It's pretty straightforward, honestly.  (And I'm pretty sure it could be
-faster if I did things slightly differently.)
-
-
---------------enig2D979CA5D178BD0E2FB30DB9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFDe9VvfhVDhkBuUKURApeIAKDsA2jkeQBgHvO4RXRO+enshR4NuACfZV64
-VLRwD/nmzTDiMhhmN2APEVE=
-=B1LS
------END PGP SIGNATURE-----
-
---------------enig2D979CA5D178BD0E2FB30DB9--
+If we can do that reliably, that would be very nice for the
+users.  Might be worth a try.
