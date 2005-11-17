@@ -1,79 +1,69 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: Problem with cg-update
-Date: Thu, 17 Nov 2005 16:16:49 +0100
-Message-ID: <20051117151649.GE16963@schottelius.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add .git/version
+Date: Thu, 17 Nov 2005 16:38:17 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511171634460.17319@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11322339372137-git-send-email-matlads@dsmagic.com>
+ <Pine.LNX.4.63.0511171436170.13358@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20051117151653.GB3626@igloo.ds.co.ug>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="J4XPiPrVK1ev6Sgr"
-X-From: git-owner@vger.kernel.org Thu Nov 17 16:19:11 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 17 16:44:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EclVO-0007Dp-GE
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 16:16:54 +0100
+	id 1EclrJ-0000oP-Kv
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 16:39:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751024AbVKQPQv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 10:16:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbVKQPQv
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 10:16:51 -0500
-Received: from [217.14.64.54] ([217.14.64.54]:40345 "HELO
-	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
-	id S1751001AbVKQPQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 10:16:51 -0500
-Received: (qmail 26008 invoked by uid 1000); 17 Nov 2005 15:16:49 -0000
-To: GIT ML <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Linux-Info: http://linux.schottelius.org/
-X-Operating-System: Linux 2.6.14
+	id S1751343AbVKQPid (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 10:38:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751000AbVKQPi1
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 10:38:27 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:59062 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751135AbVKQPiS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 10:38:18 -0500
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id DF65313F7B3; Thu, 17 Nov 2005 16:38:17 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id BDFCFB5231; Thu, 17 Nov 2005 16:38:17 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A095DB521E; Thu, 17 Nov 2005 16:38:17 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8C51A13F7B3; Thu, 17 Nov 2005 16:38:17 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Martin Atukunda <matlads@dsmagic.com>
+In-Reply-To: <20051117151653.GB3626@igloo.ds.co.ug>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12119>
 
+Hi,
 
---J4XPiPrVK1ev6Sgr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, 17 Nov 2005, Martin Atukunda wrote:
 
-Hello!
+> On Thu, Nov 17, 2005 at 02:39:21PM +0100, Johannes Schindelin wrote:
+> > 
+> > I think you are more interested in knowing which version the tools are at.
+> 
+> Actually this patch series is more a response to the thread
+> "Re: [PATCH] Disable USE_SYMLINK_HEAD by default" in  particular see
+> this message 200511160205.43443.Josef.Weidendorfer@gmx.de by Josef
+> Weidendorfer.
 
-I tried an update which failed and then to commit which failed [0].
+When we disable USE_SYMLINK_HEAD by default, tools are expected to work 
+with USE_SYMLINK_HEAD enabled, too, so .git/version is not needed for 
+that.
 
-Could someone tell me what would be the correct way now?
+But yes, it might be handy to know at some time. But I think it would make 
+sense to add .git/version *then*, because you can distinguish repositories 
+before/after the change by testing for .git/version.
 
-Nico
-
-[0]: The log:
-http://creme.schottelius.org/~nico/linux/debug/git/update-local_changes_com=
-mit
-
---=20
-Latest project: cinit-0.2.1 (http://linux.schottelius.org/cinit/)
-Open Source nutures open minds and free, creative developers.
-
---J4XPiPrVK1ev6Sgr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iQIVAwUBQ3ye4LOTBMvCUbrlAQK7IQ//Xrbiq/iRnoxA0iFzpB7z2G5paHHir7mD
-yQohp4XulUrkDhe/IWD92bAXS5aO60e6iE00SmJxgwOteROHuNJ5AahRhFll5CUL
-qjqCgbUfhUBRn+5ixD/CWe/rJWk9C6ac9EZbHvzdFdaz0KOTMoj0AuhRFumF+1D9
-EJeEdwzkHF7vdB14iVfvzWjPSiaJqSN1lh6kj+exWR3GnR/S9K2za5YK09MoCbWK
-YTSb371BINl7Fe00gzZLdcjaNpWKAGsYFRmWRHFITH5g5dbhXew22WcR6l/VFK0M
-DiwEVG1NGmwHtYj3PEqHxlZENT3WCmeKtJfswqYw/SiWVjBnOUgItyULLz3Uxkle
-kDPZ1k1gMpA7pXwtj5hbjoTS5RELZtstcE9YvhB2P3jKOZTNP8x/LVRfUsu3W/NI
-zKOcFcF2/UVh60rVnCnY4nV1blkQvWpnr1EBsPeKB+6uc1UriiOmx1xT9rDnfp0d
-XykYaeMQgmCtLZI6wrV8Y0p2yMBTqptkZAvF/USpdtlFpNVbIX0iva8XGZ3+vz7b
-Z9jhxO9SrDDeBoA9b623paatUGfaFAmrCeXdZ/llAw2/xC/giGxGxvDC7Q5XSV0+
-CaakchJJr7bhwv941rAKzbLevko96tcwSmMAAB4F0qLDUT8iG7xmuLY2CG3zP66R
-FsnKsw3lHwY=
-=ZSCQ
------END PGP SIGNATURE-----
-
---J4XPiPrVK1ev6Sgr--
+Ciao,
+Dscho
