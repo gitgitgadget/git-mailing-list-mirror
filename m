@@ -1,129 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 0.99.9j aka 1.0rc3
-Date: Wed, 16 Nov 2005 22:36:51 -0800
-Message-ID: <7vfypvzsos.fsf@assigned-by-dhcp.cox.net>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: fix git-pack-redundant crashing sometimes
+Date: Thu, 17 Nov 2005 08:08:52 +0100
+Message-ID: <20051117070852.GA4921@c165.ib.student.liu.se>
+References: <81b0412b0511150749g5672158v7b39c02ffdf13e08@mail.gmail.com> <20051115213442.GA4256@steel.home> <437A560E.8020500@etek.chalmers.se> <20051115223340.GA3951@steel.home> <Pine.LNX.4.64.0511151552400.11232@g5.osdl.org> <437BA6A6.8080900@etek.chalmers.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1161147AbVKQGgx@vger.kernel.org Thu Nov 17 07:38:09 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1161147AbVKQGgx@vger.kernel.org>
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
+	Alex Riesen <raa.lkml@gmail.com>, junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Nov 17 08:09:08 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcdOg-0007A8-M0
-	for glk-linux-kernel-3@gmane.org; Thu, 17 Nov 2005 07:37:27 +0100
+	id 1EcdtK-0008Sg-Vm
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 08:09:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161147AbVKQGgx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 17 Nov 2005 01:36:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932619AbVKQGgx
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Thu, 17 Nov 2005 01:36:53 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:38788 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S932618AbVKQGgw convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 17 Nov 2005 01:36:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051117063628.SASE3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 17 Nov 2005 01:36:28 -0500
-To: git@vger.kernel.org
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1161155AbVKQHJA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 17 Nov 2005 02:09:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161156AbVKQHJA
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 02:09:00 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:50588 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1161155AbVKQHJA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Nov 2005 02:09:00 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 0E9C340FF; Thu, 17 Nov 2005 08:17:46 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1Ecdt6-0001Kw-00; Thu, 17 Nov 2005 08:08:52 +0100
+To: Lukas =?iso-8859-1?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>
+Content-Disposition: inline
+In-Reply-To: <437BA6A6.8080900@etek.chalmers.se>
+User-Agent: Mutt/1.5.9i
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12087>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12088>
 
-GIT 0.99.9j aka 1.0rc3 is found at usual places.
+On Wed, Nov 16, 2005 at 10:37:42PM +0100, Lukas Sandstr=F6m wrote:
+> Linus Torvalds wrote:
+> >=20
+> > On Tue, 15 Nov 2005, Alex Riesen wrote:
+> >=20
+> >>Sorry, it doesn't. The code loops here:
+> >>
+> >>401             /* find the permutations which contain all missing =
+objects */
+> >>402             perm_all =3D perm =3D get_all_permutations(non_uniq=
+ue);
+> >=20
+> >=20
+> > Looks like the whole thing is exponential.
+> >=20
+> Slightly less, but not far from.
+> > A good way to do sane pack handling is to keep a _sorted_ list of a=
+ll=20
+> > objects each pack has. At that point it becomes much easier to see =
+which=20
+> > objects only exist in one particular pack.
+> >=20
+> git-pack-redundant already does this.
+> > The sorting itself is O(nlogn), and the "does this pack have any un=
+ique=20
+> > objects" (or "is this pack a superset of all other packs") question=
+ should=20
+> > then be O(n).
+> >=20
+> Ah, but the question is: "Does this set of packs contain a superset o=
+f
+> all objects available in packfiles?" The answer to the question for a
+> certain set is indeed O(n), but the number of sets which have to be t=
+ested
+> are ~ O(e**n). (Where n is the number of non-unique packs.)
+>=20
 
-Notable change since 1.0rc2 are:
-
- - RPM packages has been split a bit differently [H. Peter
-   Anvin].  Simon Richter asked me not to muck with debian
-   packaging, so I take that Simon volunteered to update things
-   to match what happened to RPM side.
-
- - On platforms and filesystems that can handle symlinks, you
-   can now force symbolic refs by configuration item
-   core.symrefsonly [Johannes Schindelin].
-
- - http-fetch is less leaky [Petr Baudis, Nick Hengeveld].
-
- - fsck-objects and refs tracking uses much less memory [Sergey
-   Vlasov].
-
- - git wrapper is rewritten in C [Andreas Ericsson].
-
- - diff piped to patch inside a single repository is made binary
-   safe [me]
+If haven't looked closely at neither the packing nor the pack
+redundant code, but the problem looks very similar to Minimum Set
+Cover (see http://www.nada.kth.se/~viggo/wwwcompendium/node146.html
+for more information), which is NP-hard. So, if Minimum Set Cover is
+the problem we are trying to solve we can't hope to find a polynomial
+time algorithm. However, there is a quite simple greedy approximation
+algorithm in [1] which is referenced from the URL above.
 
 
-There was a discussion to always use symrefs for .git/HEAD; this
-will _not_ happen before 1.0.  It breaks too many exiting tools
-without giving them enough advance notice.
+- Fredrik
 
-The proposed updates branch has a couple of topics I consider
-1.0 material.
-
- - git-log --since=3D"two weeks ago", without using GNU date [Linus]
- - git-rebase to use "diff-piped-to-patch" [me]
- - git-branch -f to forcibly reset branch head [me]
-
-
-Here is the shortlog.
-
-Alecs King:
-      Documentation/git-log.txt: trivial typo fix.
-
-Andreas Ericsson:
-      git-daemon: --inetd implies --syslog
-      C implementation of the 'git' program, take two.
-      Update git(7) man-page for the C wrapper.
-      git --help COMMAND brings up the git-COMMAND man-page.
-      daemon.c: fix arg parsing bugs
-
-H. Peter Anvin:
-      git-core-foo -> git-foo, except the core package
-
-Johannes Schindelin:
-      Add config variable core.symrefsonly
-      Fix tests with new git in C
-      Give python a chance to find "backported" modules
-
-Jonas Fonseca:
-      Fix git(1) link to git-index-pack
-
-Junio C Hamano:
-      Documentation: do not blindly run 'cat' .git/HEAD, or echo into i=
-t.
-      diff: make default rename detection limit configurable.
-      sha1_file.c::add_packed_git(): fix type mismatch.
-      git wrapper: basic fixes.
-      git-apply: fail if a patch cannot be applied.
-      git-am: --resolved.
-      apply: allow-binary-replacement.
-      diff: --full-index
-      tests: binary diff application.
-
-Kevin Geiss:
-      git-cvsexportcommit.perl: Fix usage() output.
-      git-cvsexportcommit.perl: use getopts to get binary flags
-      git-cvsexportcommit.perl: exit with non-0 status if patch fails.
-      git-cvsexportcommit.perl: fix typos in output
-
-Linus Torvalds:
-      Disallow empty pattern in "git grep"
-
-Lukas Sandstr=F6m:
-      Fix llist_sorted_difference_inplace in git-pack-redundant
-
-Pavel Roskin:
-      symref support for import scripts
-
-Petr Baudis:
-      Fix bunch of fd leaks in http-fetch
-
-Sergey Vlasov:
-      git-fsck-objects: Free tree entries after use
-      Rework object refs tracking to reduce memory usage
+[1]: Johnson, D. S. (1974), "Approximation algorithms for
+     combinatorial problems", J. Comput. System Sci. 9, 256-278.
