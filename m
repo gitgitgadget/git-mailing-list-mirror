@@ -1,82 +1,47 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: "make test" fails with current HEAD
-Date: Thu, 17 Nov 2005 17:03:18 +0100
-Message-ID: <20051117160318.GE31613@kiste.smurf.noris.de>
-References: <pan.2005.11.17.15.31.56.755022@smurf.noris.de> <Pine.LNX.4.63.0511171652020.17402@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH] Add .git/version
+Date: Thu, 17 Nov 2005 17:04:15 +0100
+Message-ID: <200511171704.15503.Josef.Weidendorfer@gmx.de>
+References: <11322339372137-git-send-email-matlads@dsmagic.com> <20051117151653.GB3626@igloo.ds.co.ug> <Pine.LNX.4.63.0511171634460.17319@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="IU5/I01NYhRvwH70"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 17:11:14 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Nov 17 17:12:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcmFn-0005Ub-UA
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 17:04:52 +0100
+	id 1EcmFM-0005Ho-I1
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 17:04:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932288AbVKQQEt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 11:04:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932294AbVKQQEt
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 11:04:49 -0500
-Received: from run.smurf.noris.de ([192.109.102.41]:62907 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S932288AbVKQQEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 11:04:49 -0500
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1EcmEI-00027q-Rg; Thu, 17 Nov 2005 17:03:57 +0100
-Received: (nullmailer pid 13873 invoked by uid 501);
-	Thu, 17 Nov 2005 16:03:18 -0000
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S932166AbVKQQEV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 11:04:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932288AbVKQQEV
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 11:04:21 -0500
+Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:53727 "EHLO
+	tuminfo2.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S932166AbVKQQEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 11:04:21 -0500
+Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
+	by mail.in.tum.de (Postfix) with ESMTP id D2FFA27C2
+	for <git@vger.kernel.org>; Thu, 17 Nov 2005 17:04:17 +0100 (MET)
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+In-Reply-To: <Pine.LNX.4.63.0511171634460.17319@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0511171652020.17402@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.9i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12126>
 
+On Thursday 17 November 2005 16:38, Johannes Schindelin wrote:
+> But yes, it might be handy to know at some time. But I think it would make 
+> sense to add .git/version *then*, because you can distinguish repositories 
+> before/after the change by testing for .git/version.
 
---IU5/I01NYhRvwH70
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+No, as old git tools then still could corrupt a repository with a new format,
+as they currently do not check any kind of format version; it would work if
+the git 1 tools would bail out if a .git/version is found ;-)
 
-Hi,
-
-Johannes Schindelin:
-> Does not fail here.
->=20
-Does fail here...
-
-> Did you set your GIT_EXEC_PATH?
->=20
-Yes. :-/
-
-I'll dig.
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-"Today, the theory of evolution is an accepted fact for everyone but
- a fundamentalist minority, whose objections are based not on reasoning
- but on doctrinaire adherence to religious principles."
-           [Dr. James D. Watson, winner of the Nobel prize
-            for his co-discovery of the structure of DNA]
-
---IU5/I01NYhRvwH70
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFDfKnG8+hUANcKr/kRAqLBAJ0dFp8WJiurTKsou2ZIMTdncMIfpQCdEjtF
-mfiGGfDASXw0Ablm7RHAiO8=
-=ix4t
------END PGP SIGNATURE-----
-
---IU5/I01NYhRvwH70--
+Josef
