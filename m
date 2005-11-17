@@ -1,47 +1,62 @@
-From: Kevin Geiss <kevin@desertsol.com>
-Subject: git rebase conflict help?
-Date: Thu, 17 Nov 2005 15:20:25 -0700
-Message-ID: <33D6F7FB-7864-471B-A111-9991C768577A@desertsol.com>
-Mime-Version: 1.0 (Apple Message framework v746.2)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Nov 17 23:22:32 2005
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [QUESTION] Access to a huge GIT repository.
+Date: Thu, 17 Nov 2005 14:44:09 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511171443000.13959@g5.osdl.org>
+References: <cda58cb80511160424j1acac7c6j@mail.gmail.com> 
+ <Pine.LNX.4.64.0511160837000.13959@g5.osdl.org>  <cda58cb80511170236p4a7e2baay@mail.gmail.com>
+  <Pine.LNX.4.64.0511170817480.13959@g5.osdl.org> <cda58cb80511171347yef4f090g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 17 23:47:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ecs7Y-00019T-96
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 23:20:44 +0100
+	id 1EcsUK-0004Bw-OM
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 23:44:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964877AbVKQWUb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 17:20:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964874AbVKQWUb
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 17:20:31 -0500
-Received: from 12-219-167-192.client.mchsi.com ([12.219.167.192]:60640 "EHLO
-	desertsol.com") by vger.kernel.org with ESMTP id S964848AbVKQWUa
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 17:20:30 -0500
-Received: from [205.132.171.76] (helo=[29.6.1.216])
-	by desertsol.com with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.50)
-	id 1Ecs7K-0000HA-EG
-	for git@vger.kernel.org; Thu, 17 Nov 2005 15:20:30 -0700
-To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.746.2)
+	id S964938AbVKQWoN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 17:44:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964944AbVKQWoN
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 17:44:13 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:37326 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964938AbVKQWoN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Nov 2005 17:44:13 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAHMiAnO007655
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 17 Nov 2005 14:44:10 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAHMi9B9014608;
+	Thu, 17 Nov 2005 14:44:10 -0800
+To: Franck <vagabon.xyz@gmail.com>
+In-Reply-To: <cda58cb80511171347yef4f090g@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12164>
 
-I fetched my origin branch, then tried to run 'git rebase origin'.  
-one of my commits from master which is not yet in origin got a  
-conflict, so git rebase origin told me that the Simple cherry-pick  
-failed, and the Automatic cherry-pick got conflicts. and it saved the  
-commit message for me in .msg and my offending commit's id in .rebase- 
-tmp32409.
 
-I'm not sure how to proceed from here. actually, I know what the  
-offending changes are, and I could re-do the changes by hand and  
-commit them again, but I'd like to know what git tools I'm supposed  
-to use in this case...
 
-thanks.
+On Thu, 17 Nov 2005, Franck wrote:
+
+> 2005/11/17, Linus Torvalds <torvalds@osdl.org>:
+> >
+> > What you probably _can_ do is to find whatever top-most commit you want
+> > (say, the v2.6.0 commit), and use grafting to make that have no parents.
+> > Then you can do git-prune to get rid of everything under it.
+> >
+> 
+> ok that's what I was trying to do by killing the parent object.  Now
+> when looking a the graph using gitk all old objects have been removed.
+> But I'm suprised because the git repository is the same size as it was
+> before pruning all old objects. Can you explain why ?
+
+make sure you re-pack if it was packed. "git prune" will not remove packs 
+at all, so..
+
+		Linus
