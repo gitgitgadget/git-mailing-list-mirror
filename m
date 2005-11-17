@@ -1,56 +1,76 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH 0/4] reworking git-rebase
-Date: Thu, 17 Nov 2005 11:30:27 +0100
-Message-ID: <20051117103027.GR8383MdfPADPa@greensroom.kotnet.org>
-References: <7voe4lfpxm.fsf@assigned-by-dhcp.cox.net>
-Reply-To: skimo@liacs.nl
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: recent patch breaks the build ?
+Date: Thu, 17 Nov 2005 02:33:02 -0800
+Message-ID: <7voe4jy36p.fsf@assigned-by-dhcp.cox.net>
+References: <437B6997.8010903@mc.com>
+	<7v64qs8kuo.fsf@assigned-by-dhcp.cox.net> <437B8CEC.8040002@mc.com>
+	<20051116203334.GA3968@reactrix.com>
+	<Pine.LNX.4.63.0511170023040.9284@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20051117004621.GB3968@reactrix.com>
+	<7vd5l03whv.fsf@assigned-by-dhcp.cox.net>
+	<20051117021014.GC3968@reactrix.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 11:32:41 2005
+X-From: git-owner@vger.kernel.org Thu Nov 17 11:34:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ech2d-0001QR-VB
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 11:30:56 +0100
+	id 1Ech4s-0002Iu-JB
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 11:33:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750724AbVKQKad (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 05:30:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750732AbVKQKad
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 05:30:33 -0500
-Received: from smtp18.wxs.nl ([195.121.247.9]:39120 "EHLO smtp18.wxs.nl")
-	by vger.kernel.org with ESMTP id S1750724AbVKQKad (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Nov 2005 05:30:33 -0500
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp18.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0IQ300AS7H6RGC@smtp18.wxs.nl> for git@vger.kernel.org; Thu,
- 17 Nov 2005 11:30:28 +0100 (CET)
-Received: (qmail 19921 invoked by uid 500); Thu, 17 Nov 2005 10:30:27 +0000
-In-reply-to: <7voe4lfpxm.fsf@assigned-by-dhcp.cox.net>
-To: Junio C Hamano <junkio@cox.net>
-Mail-followup-to: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1750732AbVKQKdF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 05:33:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750733AbVKQKdE
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 05:33:04 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:63670 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1750732AbVKQKdD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 05:33:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051117103239.SZAA3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 17 Nov 2005 05:32:39 -0500
+To: Nick Hengeveld <nickh@reactrix.com>
+In-Reply-To: <20051117021014.GC3968@reactrix.com> (Nick Hengeveld's message of
+	"Wed, 16 Nov 2005 18:10:14 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12094>
 
-On Tue, Nov 15, 2005 at 03:32:05PM -0800, Junio C Hamano wrote:
-> It notes that fact, and goes ahead to apply D and E, and at the
-> very end tells you to deal with C by hand.  Even if you somehow
-> managed to replay C on top of the result, you would now end up
-> with ...-B-...-U-A-D-E-C.
+Nick Hengeveld <nickh@reactrix.com> writes:
 
-Actually this is sometimes useful when rewriting history.
-Suppose you cherry-pick two changes that touch the same piece
-of code and combine them into a single change and then rebase
-all your changes on top of this combined change.
-The two cherry-picked changes will not apply and end up and
-at the end of the chain where you can simply discard them.
+> Assuming --vernum does work, is there a reasonable/portable way to
+> compare two hex values like 070801?
 
-Will the reworked rebase still support this use or is there
-a better way to do this ?
+I would assume that it is always 6 lowercase hexdigits %06x when
+supported, or showing nothing to stdout for ancient ones.
 
-skimo
+A horrible but probably portable way would be:
+
+	case `(echo 070801; curl-config --vernum) 2>/dev/null |
+        	sort -r | sed -ne 2p` in
+	070801)
+        	echo Happy ;;
+        *)
+        	echo Sad ;;
+	esac
+
+The obvious one is unfortunately not very portable:
+
+	if test 070801 \< `curl-config --vernum`
+        then
+        	echo "Happy"
+	else
+        	echo "Sad"
+	fi
+
+This would work if your test is bash/dash-builtin.  The
+following do not seem to know about '<' '>' string comparison:
+
+	GNU /usr/bin/test from coreutils (version 5.2.1)
+        OpenBSD shell builtin
+        Solaris /usr/bin/test
