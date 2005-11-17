@@ -1,87 +1,136 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [Question] info/grafts file.
-Date: Thu, 17 Nov 2005 22:45:57 +0100
-Message-ID: <20051117214557.GA26122@nowhere.earth>
-References: <20051114182019.GA19105@hpsvcnb.fc.hp.com> <7vhdafx81m.fsf@assigned-by-dhcp.cox.net> <20051115000349.GA32136@hpsvcnb.fc.hp.com> <437BD56A.7030402@michonline.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Add git-config-set, a simple helper for scripts to set config
+ variables
+Date: Thu, 17 Nov 2005 22:44:55 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511172244230.18285@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 22:47:11 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Nov 17 22:47:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcrYf-0000rF-Ou
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 22:44:42 +0100
+	id 1EcrYx-0000zi-FX
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 22:44:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751354AbVKQVoj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 16:44:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355AbVKQVoj
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 16:44:39 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:47563 "EHLO smtp5-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1751354AbVKQVoi (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Nov 2005 16:44:38 -0500
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 3C6A2979D;
-	Thu, 17 Nov 2005 22:44:37 +0100 (CET)
-Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.54)
-	id 1EcrZt-0006tX-Ve; Thu, 17 Nov 2005 22:45:58 +0100
-To: Ryan Anderson <ryan@michonline.com>
-Content-Disposition: inline
-In-Reply-To: <437BD56A.7030402@michonline.com>
-User-Agent: Mutt/1.5.11
+	id S1751355AbVKQVo5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 16:44:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751361AbVKQVo5
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 16:44:57 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:50361 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751355AbVKQVo4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 16:44:56 -0500
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 6445013FCDA; Thu, 17 Nov 2005 22:44:55 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 41547B5231; Thu, 17 Nov 2005 22:44:55 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 24209B5215; Thu, 17 Nov 2005 22:44:55 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 16AC913FCD6; Thu, 17 Nov 2005 22:44:55 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12156>
 
-On Wed, Nov 16, 2005 at 07:57:14PM -0500, Ryan Anderson wrote:
-> Carl Baldwin wrote:
-> > This is fine, I just needed to know.
-> > 
-> > How hard is it to, in a generic way, take a grafts file and reconstruct
-> > commits to include the parents in the graft file in the actual tree?  I
-> > am wondering because I couldn't, after much work, get git-svnimport to
-> > find my merges correctly.  So, I am needing to hand-graft some merges in
-> > to make things right.  Any suggestions?  I could try to figure something
-> > out if I can find some time.  I'm good with graph traversals and such.
-> 
-> It's actually pretty easy.  I wrote a rough (and not quite safe) tool to
-> do this a week or so ago.
-> 
-> http://marc.theaimsgroup.com/?l=git&m=113131673606637&w=2
-> 
-> I will try and clean it up a bit and submit it for inclusion in contrib/
-> sometime this coming weekend, but you should be able to use it to solve
-> this problem.
-> 
-> It's pretty straightforward, honestly.  (And I'm pretty sure it could be
-> faster if I did things slightly differently.)
 
-Hey, this exactly looks like the kind of script I intended to write in
-the following days !  I'll have a close look at it.  Do you have a git
-repo from where I could pull the latest version ?
+This is meant for the end user, who cannot be expected to edit
+.git/config by hand.
 
-My goal is to write an "AcheoloGIT" toolkit, to be able to reconstruct
-an history incrementally, from patches, identifying in the way patches
-which build upon other patches.  To make it more clear, there are in
-the embedded world a number of vendor shipping "jumbo patches", which
-include parts or all of official arch-specific trees, with more stuff
-added.
+Example:
 
-And well, since it is not an easy task, the process has to be
-incremental, grafting here and there between various parts of the tree
-to gradually refine my view of its history.
+	git-config-set core.filemode true
 
-There is some preliminary work, but for now only focussed on making
-the import of series of patches more comforable.  Grafting was
-supposed to be the next step :)
+will set filemode in the section [core] to true,
 
-http://ydirson.free.fr/soft/git/argit.git/
+	git-config-set --unset core.filemode
 
-Best regards,
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+will remove the entry (failing if it is not there), and
+
+	git-config-set --unset diff.twohead ^recar
+
+will remove the unique entry whose value matches the regex "^recar"
+(failing if there is no unique such entry).
+
+It is just a light wrapper around git_config_set() and
+git_config_set_multivar().
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+---
+
+ .gitignore   |    1 +
+ Makefile     |    3 ++-
+ config-set.c |   26 ++++++++++++++++++++++++++
+ 3 files changed, 29 insertions(+), 1 deletions(-)
+ create mode 100644 config-set.c
+
+applies-to: 8ff699dffc817e92fb2101f538f84c38d5ed0a0f
+acf7869a158171bf4552d0b0da64b20d48e4bf27
+diff --git a/.gitignore b/.gitignore
+index 0dd7b9c..d17a8b5 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -17,6 +17,7 @@ git-clone
+ git-clone-pack
+ git-commit
+ git-commit-tree
++git-config-set
+ git-convert-objects
+ git-count-objects
+ git-cvsexportcommit
+diff --git a/Makefile b/Makefile
+index ebff990..8e84e28 100644
+--- a/Makefile
++++ b/Makefile
+@@ -125,7 +125,8 @@ PROGRAMS = \
+ 	git-unpack-objects$X git-update-index$X git-update-server-info$X \
+ 	git-upload-pack$X git-verify-pack$X git-write-tree$X \
+ 	git-update-ref$X git-symbolic-ref$X git-check-ref-format$X \
+-	git-name-rev$X git-pack-redundant$X git-var$X $(SIMPLE_PROGRAMS)
++	git-name-rev$X git-pack-redundant$X git-config-set$X git-var$X \
++	$(SIMPLE_PROGRAMS)
+ 
+ # Backward compatibility -- to be removed after 1.0
+ PROGRAMS += git-ssh-pull$X git-ssh-push$X
+diff --git a/config-set.c b/config-set.c
+new file mode 100644
+index 0000000..1b1547b
+--- /dev/null
++++ b/config-set.c
+@@ -0,0 +1,26 @@
++#include "cache.h"
++
++static const char git_config_set_usage[] =
++"git-config-set name [value [value_regex]] | --unset name [value_regex]";
++
++int main(int argc, const char **argv)
++{
++	setup_git_directory();
++	switch (argc) {
++	case 2:
++		return git_config_set(argv[1], NULL);
++	case 3:
++		if (!strcmp(argv[1], "--unset"))
++			return git_config_set(argv[2], NULL);
++		else
++			return git_config_set(argv[1], argv[2]);
++	case 4:
++		if (!strcmp(argv[1], "--unset"))
++			return git_config_set_multivar(argv[2], NULL, argv[3]);
++		else
++			return git_config_set_multivar(argv[1], argv[2], argv[3]);
++	default:
++		usage(git_config_set_usage);
++	}
++	return 0;
++}
+---
+0.99.9.GIT
