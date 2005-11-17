@@ -1,50 +1,117 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/3] Support setting SymrefsOnly=true from scripts
-Date: Thu, 17 Nov 2005 11:29:58 -0800
-Message-ID: <7vpsozt6mh.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0511152233430.2152@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vfypxh5mn.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0511160127130.4334@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v8xvpe6vi.fsf@assigned-by-dhcp.cox.net>
-	<20051117120909.GA30496@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 17 20:32:36 2005
+From: exon@op5.se (Andreas Ericsson)
+Subject: [PATCH 3/5] Client side support for user-relative paths.
+Date: Thu, 17 Nov 2005 20:37:14 +0100 (CET)
+Message-ID: <20051117193714.3CCC35C7F6@nox.op5.se>
+X-From: git-owner@vger.kernel.org Thu Nov 17 20:38:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcpSe-0006Om-Qh
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 20:30:21 +0100
+	id 1EcpZm-0000lW-1g
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 20:37:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964795AbVKQTaA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 14:30:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964797AbVKQTaA
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 14:30:00 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:57244 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S964796AbVKQT37 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Nov 2005 14:29:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051117192921.CQHP20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 17 Nov 2005 14:29:21 -0500
-To: Petr Baudis <pasky@suse.cz>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964811AbVKQThZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 14:37:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964813AbVKQThY
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 14:37:24 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:36570 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S964818AbVKQThP
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 14:37:15 -0500
+Received: from nox.op5.se (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 7C2B26BD15
+	for <git@vger.kernel.org>; Thu, 17 Nov 2005 20:37:14 +0100 (CET)
+Received: by nox.op5.se (Postfix, from userid 500)
+	id 3CCC35C7F6; Thu, 17 Nov 2005 20:37:14 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12142>
 
-Petr Baudis <pasky@suse.cz> writes:
 
-> The disadvantage is that I will have to maintain my own template for
-> Cogito, which is silly - I would much rather just use GIT's default
-> templates and only add the symrefonly option on behalf of Cogito.
+With this patch, the client side passes identical paths for these two:
+	ssh://host.xz/~junio/repo
+	host.xz:~junio/repo
 
-That's very true.  However I suspect Cogito users are expected
-to run cg-admin-init not git-init-db, so admin-init can do
-whatever postprocessing necessary after calling init-db?  That
-way would let you do more than what template would, I presume.
+Signed-off-by: Andreas Ericsson <ae@op5.se>
+
+---
+
+ connect.c |   53 ++++++++++++++++++++++++++++++++---------------------
+ 1 files changed, 32 insertions(+), 21 deletions(-)
+
+applies-to: cd3bc724fea293b623abee6b0b4995560dd9f32e
+c460d84cc8431089ddf6a888a418826ff8248509
+diff --git a/connect.c b/connect.c
+index c2badc7..73187a1 100644
+--- a/connect.c
++++ b/connect.c
+@@ -454,34 +454,45 @@ static int git_tcp_connect(int fd[2], co
+ int git_connect(int fd[2], char *url, const char *prog)
+ {
+ 	char command[1024];
+-	char *host, *path;
+-	char *colon;
++	char *host, *path = url;
++	char *colon = NULL;
+ 	int pipefd[2][2];
+ 	pid_t pid;
+-	enum protocol protocol;
++	enum protocol protocol = PROTO_LOCAL;
+ 
+-	host = NULL;
+-	path = url;
+-	colon = strchr(url, ':');
+-	protocol = PROTO_LOCAL;
+-	if (colon) {
+-		*colon = 0;
++	host = strstr(url, "://");
++	if(host) {
++		*host = '\0';
++		protocol = get_protocol(url);
++		host += 3;
++		path = strchr(host, '/');
++	}
++	else {
+ 		host = url;
+-		path = colon+1;
+-		protocol = PROTO_SSH;
+-		if (!memcmp(path, "//", 2)) {
+-			char *slash = strchr(path + 2, '/');
+-			if (slash) {
+-				int nr = slash - path - 2;
+-				memmove(path, path+2, nr);
+-				path[nr] = 0;
+-				protocol = get_protocol(url);
+-				host = path;
+-				path = slash;
+-			}
++		if ((colon = strchr(host, ':'))) {
++			protocol = PROTO_SSH;
++			*colon = '\0';
++			path = colon + 1;
+ 		}
+ 	}
+ 
++	if (!path || !*path)
++		die("No path specified. See 'man git-pull' for valid url syntax");
++
++	/*
++	 * null-terminate hostname and point path to ~ for URL's like this:
++	 *    ssh://host.xz/~user/repo
++	 */
++	if (protocol != PROTO_LOCAL && host != url) {
++		char *ptr = path;
++		if (path[1] == '~')
++			path++;
++		else
++			path = strdup(ptr);
++
++		*ptr = '\0';
++	}
++
+ 	if (protocol == PROTO_GIT)
+ 		return git_tcp_connect(fd, prog, host, path);
+ 
+---
+0.99.9.GIT
