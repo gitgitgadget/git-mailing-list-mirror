@@ -1,52 +1,53 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [RFC] git email submissions
-Date: Thu, 17 Nov 2005 13:38:19 +1300
-Message-ID: <46a038f90511161638l61d8a8bjbfbeaa92041298f7@mail.gmail.com>
-References: <437B4472.1080401@pobox.com>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: recent patch breaks the build ?
+Date: Wed, 16 Nov 2005 16:46:21 -0800
+Message-ID: <20051117004621.GB3968@reactrix.com>
+References: <437B6997.8010903@mc.com> <7v64qs8kuo.fsf@assigned-by-dhcp.cox.net> <437B8CEC.8040002@mc.com> <20051116203334.GA3968@reactrix.com> <Pine.LNX.4.63.0511170023040.9284@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 17 01:39:46 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Wozniak <awozniak@mc.com>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 17 01:47:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcXnD-0008Sg-Mg
-	for gcvg-git@gmane.org; Thu, 17 Nov 2005 01:38:24 +0100
+	id 1EcXvF-00038S-IE
+	for gcvg-git@gmane.org; Thu, 17 Nov 2005 01:46:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161047AbVKQAiU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Nov 2005 19:38:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161048AbVKQAiU
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 19:38:20 -0500
-Received: from zproxy.gmail.com ([64.233.162.204]:837 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1161047AbVKQAiU convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Nov 2005 19:38:20 -0500
-Received: by zproxy.gmail.com with SMTP id q3so1831128nzb
-        for <git@vger.kernel.org>; Wed, 16 Nov 2005 16:38:19 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hDTSosdeHQuREI5ivLoQQBi3NGuQEZdwuQ2T8SrmkSvIqDSJvG0svb8xZ2Q8dIoiaKBNmIKiYJkJQ9/w4O5ohOEtYCjpIcliHwUeWTZbBY5/zunglNWLkfBJZAr+EBFRnl5VnbDvQ3n24ip7stDZdVhM20/TXCZu3rggUCqZzt0=
-Received: by 10.65.183.3 with SMTP id k3mr1812826qbp;
-        Wed, 16 Nov 2005 16:38:19 -0800 (PST)
-Received: by 10.64.242.4 with HTTP; Wed, 16 Nov 2005 16:38:19 -0800 (PST)
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <437B4472.1080401@pobox.com>
+	id S1161055AbVKQAqi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Nov 2005 19:46:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161056AbVKQAqi
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Nov 2005 19:46:38 -0500
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:47190 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1161055AbVKQAqi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Nov 2005 19:46:38 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jAH0kMLf027605;
+	Wed, 16 Nov 2005 16:46:22 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jAH0kLZ9027603;
+	Wed, 16 Nov 2005 16:46:21 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0511170023040.9284@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12078>
 
-On 11/17/05, Jeff Garzik <jgarzik@pobox.com> wrote:
-> For people without _any_ hosting, it would be nice to give them a method
-> to submit some git changes via email.
+On Thu, Nov 17, 2005 at 12:25:06AM +0100, Johannes Schindelin wrote:
 
-I'm sure SF.net will host GIT projects sooner or later. I'm planning
-on offering support on Eduforge.org as soon as I have some free time.
+> It was 7.8.1. I checked. You might want to add this somewhere:
+> 
+> #if LIBCURL_VERSION_NUM < 0x070801
+> #error http-push needs curl >= 7.8.1 (because of CURLOPT_HTTPGET)
+> #endif
 
-cheers,
+Is it worth trying to figure this out in the Makefile instead, using eg.
+curl-config --vernum?
 
-
-martin
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
