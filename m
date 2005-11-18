@@ -1,79 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Do not show .exe in git command list.
-Date: Fri, 18 Nov 2005 15:44:46 -0800
-Message-ID: <7vacg1frm9.fsf_-_@assigned-by-dhcp.cox.net>
-References: <pan.2005.11.17.15.31.56.755022@smurf.noris.de>
-	<7v7jb6o1kl.fsf@assigned-by-dhcp.cox.net> <437E5A79.9070402@gmail.com>
+From: John Benes <smartcat99s@gmail.com>
+Subject: Re: "make test" fails with current HEAD
+Date: Fri, 18 Nov 2005 16:49:29 -0600
+Message-ID: <437E5A79.9070402@gmail.com>
+References: <pan.2005.11.17.15.31.56.755022@smurf.noris.de> <7v7jb6o1kl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Nov 19 00:52:00 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Nov 19 00:52:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdFuV-0006c2-DE
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 00:44:51 +0100
+	id 1EdF3G-0002LJ-BZ
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 23:49:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213AbVKRXos (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 18:44:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbVKRXos
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 18:44:48 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:53499 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751213AbVKRXor (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 18:44:47 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051118234448.XDIY25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 18 Nov 2005 18:44:48 -0500
-To: git@vger.kernel.org
-In-Reply-To: <437E5A79.9070402@gmail.com> (John Benes's message of "Fri, 18
-	Nov 2005 16:49:29 -0600")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932122AbVKRWtr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 17:49:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932125AbVKRWtr
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 17:49:47 -0500
+Received: from zproxy.gmail.com ([64.233.162.199]:54091 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932122AbVKRWtr (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 17:49:47 -0500
+Received: by zproxy.gmail.com with SMTP id 13so323010nzn
+        for <git@vger.kernel.org>; Fri, 18 Nov 2005 14:49:46 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding;
+        b=l+mSIqNS2N0JdC+a5HqgkVzNEXSuLdK9JeVvej5WNqCRbdUT+mSzbfXok3MVvNNSfmKnJhZ/AQrNgEonsRZ3kOPrb76i0941r8rLr9IW9Swj93rYGfGPD17CGVazKp/ycs1t14VZnU2M3qBWwjQUYzjVhAcQeTxcK+VBcAGaWQw=
+Received: by 10.36.20.16 with SMTP id 16mr257385nzt;
+        Fri, 18 Nov 2005 14:49:46 -0800 (PST)
+Received: from ?192.168.0.198? ( [68.96.128.241])
+        by mx.gmail.com with ESMTP id 24sm285123nzn.2005.11.18.14.49.44;
+        Fri, 18 Nov 2005 14:49:46 -0800 (PST)
+User-Agent: Thunderbird 1.5 (Windows/20051118)
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+In-Reply-To: <7v7jb6o1kl.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12291>
 
-Truncate the result from readdir() in the exec-path if they end
-with .exe, to make it a bit more readable on Cygwin.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Junio C Hamano wrote:
+> I *think* this is the same problem as I fixed tonight with help
+> from LASCM and John Benes, and I'm hoping to push the fix out
+> before going to bed tonight.  If you are impatient the patch has
+> already been sent out.
 
----
+I can verify that "make test" now passes on Cygwin without NO_MMAP
+uncommented.
+Commit: 2e67a5f449f4026097494569f871d79bf263ab28
+Desc: Cygwin *might* be helped with NO_MMAP
 
- Today I borrowed a Cygwin environment to build things without
- any customization (no config.mak nor make command line
- override), and I have to report that make test passed OK for
- me.
+- --
+John Benes
+GPG Fingerprint: D519 25DB BB5C 38FC 9D02  02E7 596D BC50 F880 27FA
+"It is not only the living who are killed in war." - Isaac Asimov
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (MingW32)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
- git.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-applies-to: ff891e258456492507934e82d90fd8aacb124845
-f9039f30d56e3815eaab870d8b19c7b94aded8aa
-diff --git a/git.c b/git.c
-index b9b8c62..bdd3f8d 100644
---- a/git.c
-+++ b/git.c
-@@ -59,7 +59,8 @@ static void add_cmdname(const char *name
- 	if (!ent)
- 		oom();
- 	ent->len = len;
--	memcpy(ent->name, name, len+1);
-+	memcpy(ent->name, name, len);
-+	ent->name[len] = 0;
- 	cmdname[cmdname_cnt++] = ent;
- }
- 
-@@ -132,6 +133,8 @@ static void list_commands(const char *ex
- 			continue;
- 
- 		entlen = strlen(de->d_name);
-+		if (4 < entlen && !strcmp(de->d_name + entlen - 4, ".exe"))
-+			entlen -= 4;
- 
- 		if (longest < entlen)
- 			longest = entlen;
----
-0.99.9.GIT
+iQIVAwUBQ35aeWF0oWcU9kCNAQIpgg/9GFi++HvW5J2GYZbcHhAld2cqd6KtgbPN
+oUsbPuvGKSM9uP/9pKhOxp+DKJMuFd9mK5FG63jS8i8bthbEzegErLWcfbfM1+Js
+0kYIfQEZpJu0+S1uMfsHX1CfS/OtjHebQCD7M9jgMFa1kgJXZl0Zu1rvG5hxTIZV
+OwssVwxz9Z2/gWzKFlAwyL4UgI4/mr2f7t43AVSKI0gR0Dry8Ou6B7vjBid9clMd
+JNoVHF437FVzAypoSUjmgHJJt+GHYn5noQTOMD0KnokznQckFVxNdALXaoAgkT1Q
+adgY+8TObmTbctJ9q2Qi1Z9Y0CAncC0TEGt8D8FBxiH+eJKqEKdmL7JT3ckaQO6S
+WZJf/u9SnkUJ089rYbYCvV10hqXz0y5XcGxo8kRKS6XGnY+Ff0hqtxVtHqbog8+y
+RtPyeST3vymkPuxx3g/gHrGtXJSZStE2/uNTKyA6IHA9dRUkLn70vHRKZsKKyj/f
+n5Ka1CJhIw+DzN4tANsQz9U/Q1olbQIr1khykds5DOhTvdSydSQtT3yOx9Wtt8QZ
+OH16pbWSGRNuL/vtwmonnVDsX/JJkUKSn3Z5gwmIvThvrD5TbJjyyYBaYZ9xvtkK
+XShm05Xf0yaryVlyUNCjlfNoLhi+gBoTVeaZmx/c1yrDZL6I53g3S79Bktdfd/rE
+r0eQqS7GEWc=
+=+a+2
+-----END PGP SIGNATURE-----
