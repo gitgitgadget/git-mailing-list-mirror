@@ -1,88 +1,119 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: current HEAD in bash prompt
-Date: Fri, 18 Nov 2005 15:57:48 +0100
-Message-ID: <81b0412b0511180657h6c5a66f8y4a41f3fa20a8b238@mail.gmail.com>
-References: <9C44605A-4F0F-42FA-A8ED-A4F7EFA24C32@hawaga.org.uk>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFC] Applying a graft to a tree and "rippling" the changes through
+Date: Fri, 18 Nov 2005 16:54:20 +0100
+Message-ID: <200511181654.21052.Josef.Weidendorfer@gmx.de>
+References: <20051117230723.GD26122@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_3836_1753326.1132325868784"
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 18 15:58:42 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Nov 18 16:57:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ed7gY-0001Dp-1M
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 15:57:54 +0100
+	id 1Ed8a8-0004OK-87
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 16:55:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750759AbVKRO5v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 09:57:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750757AbVKRO5v
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 09:57:51 -0500
-Received: from nproxy.gmail.com ([64.233.182.204]:38349 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750759AbVKRO5u (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 09:57:50 -0500
-Received: by nproxy.gmail.com with SMTP id l37so460591nfc
-        for <git@vger.kernel.org>; Fri, 18 Nov 2005 06:57:48 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=a2izXgBm2xCRxO0Stzmy8eOPOIZQwJN45kF0mnu+Kohtc0D9LUKzQ2iYXLBJel8i1BFnLBNr7UBN8QsBl/npq9EtgDblOFMaFm+WMDPOrRJKfA6BmDzAHMvN6FZFgQQSOjYPuOiUuULIoPJRMo9OCl70xoutuyZclA4pyX0jhEQ=
-Received: by 10.48.226.5 with SMTP id y5mr76395nfg;
-        Fri, 18 Nov 2005 06:57:48 -0800 (PST)
-Received: by 10.48.248.18 with HTTP; Fri, 18 Nov 2005 06:57:48 -0800 (PST)
-To: Ben Clifford <benc@hawaga.org.uk>
-In-Reply-To: <9C44605A-4F0F-42FA-A8ED-A4F7EFA24C32@hawaga.org.uk>
+	id S932105AbVKRPy1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 10:54:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932088AbVKRPy0
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 10:54:26 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:65152 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S932105AbVKRPy0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 10:54:26 -0500
+Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
+	by mail.in.tum.de (Postfix) with ESMTP id AC90428A0
+	for <git@vger.kernel.org>; Fri, 18 Nov 2005 16:54:22 +0100 (MET)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9
+In-Reply-To: <20051117230723.GD26122@nowhere.earth>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12235>
 
-------=_Part_3836_1753326.1132325868784
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Friday 18 November 2005 00:07, Yann Dirson wrote:
+> Current commit objects refer to a child tree, but to parent _commits_.
+> Whereas it seems necessary to walk through the history line, and
+> easily get a changelog, it is semantically quite not right: the
+> changes we record with a commit indeed come from modification of
+> trees, not of commits.
 
-On 11/17/05, Ben Clifford <benc@hawaga.org.uk> wrote:
-> After getting a bit confused when having too many branches, and for
-> people who don't mind extra forks and like too much info in their
-> prompt, I've recently started using this:
->
-> export PS1=3D'!\! [\j] \u@\h:\w$(output-git-head-or-blank)\$ '
->
+Yes. The change to a tree (which is equalent to 2 trees - new old and
+the new one; or for merges multiple old ones and the new one) does not
+depend on any history. Unfortunately, we have no separate object to
+specify the "the change to a tree". We include this information into
+the commit object, and thus, bind it to the history.
 
-I did almost the same, but in .c (attached).
+This could be changed in git, i.e. put the tree relationship into a
+separate object; even comments could be split up in change related and
+history related. The question is: is this useful, is there any
+important usage scenario that rectifies such a change?
+I do not really think so.
 
-------=_Part_3836_1753326.1132325868784
-Content-Type: application/octet-stream; name=current-branch.c
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="current-branch.c"
+> That is, the resulting tree does not depend on 
+> the history of the parent trees, but on the parent trees themselves.
 
-#include "cache.h"
+No, the resulting tree is an independent object, it is the tree ;-)
+Do not confuse this with the commit pointing to the tree.
 
-static const char * basename(const char *p)
-{
-	const char *f = strrchr(p, '/');
-	return f ? ++f: p;
-}
+> And similarly, tags usually denote a particular state of the tree,
+> "somewhat" independantly of its history: linux-2.6.11 is the same
+> beast, whereas the repository holds full history since 0.1 or not.
 
-int main(int argc, const char **argv)
-{
-	argv0 = *argv;
-	setup_git_directory();
+I agree that tags for tree objects are useful, but what is the problem?
+You can do this already.
 
-	if ( argc < 2 ) {
-		static const char *def[] = { NULL, "HEAD", NULL };
-		argv = def;
-	}
+But tags for commit objects are equally useful, especially signed ones:
+they include a fixed history which can not be changed. Eg. they include
+all the people which attributed code to the project, and this is important
+for license questions. This is the reason that "grafting" should stay
+a local workaround.
 
-	while ( *++argv ) {
-		unsigned char sha1[20];
-		char *ref = strdup(git_path("%s", *argv));
-		const char *deref = resolve_ref(ref, sha1, 0);
-		puts(deref ? basename(deref): *argv);
-		free(ref);
-	}
-	return 0;
-}
+That the concrete tag "linux-2.6.11" points to a commit, and not to the
+tree object, probably was done on purpose; i.e. the creator of the tag
+wanted to include the history. If not, he could have made the tag for the
+tree object directly.
 
-------=_Part_3836_1753326.1132325868784--
+> Indeed that emphasizes that the history lines are on living on a
+> higher level of abstraction that commits.
+
+Hmm.. If you only have tree changes, there is no history. The history
+specifies an order of the changes. The changes themselve do not include
+any such order.
+
+> Now what if we used 
+> trees->tree commits, instead of the current commits->tree ones ?
+
+It would be better to not talk about "commits" for tree changes (perhaps
+with comments about the change). As said above, tree change objects
+could be introduced. The question is why?
+
+> The
+> main problem would be to be able to reconstruct those history lines,
+> so that we can still extract the log
+
+No problem: You still have the chain of commits, and one commit points
+to the parent commit(s) and the corresponding new introduced tree change
+objects.
+
+> - what's a better model if we 
+> loose functionnality ? ;)
+
+There is nothing lost. If you regard the comments entered at "git commit"
+time as purely change related, this comments can be put together with the
+tree change object. So if you "apply a graft to a tree", (signed) tags for tree
+changes would include the comment, and stay valid after "regrafting".
+But why would anyone want to sign a change?
+
+> However, I must admit that at this point, I have not found a
+> reasonable solution to this problem.
+> 
+> Any genius with a solution out there ? :)
+
+What is the difficult problem here?
+
+Josef
