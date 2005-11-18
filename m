@@ -1,86 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 5/5] git-daemon support for user-relative paths.
-Date: Fri, 18 Nov 2005 13:13:28 -0800
-Message-ID: <7viruphd6v.fsf@assigned-by-dhcp.cox.net>
-References: <20051117193714.428785C7FA@nox.op5.se>
-	<7voe4ird8v.fsf@assigned-by-dhcp.cox.net> <437DAA66.6070301@op5.se>
+From: Ismail Donmez <ismail@uludag.org.tr>
+Subject: Re: Rss produced by git is not valid xml?
+Date: Fri, 18 Nov 2005 23:22:36 +0200
+Organization: =?utf-8?q?T=C3=9CB=C4=B0TAK/UEKAE?=
+Message-ID: <200511182322.37050.ismail@uludag.org.tr>
+References: <200511181833.40048.ismail@uludag.org.tr> <200511182245.01713.ismail@uludag.org.tr> <Pine.LNX.4.64.0511181301320.13959@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 18 22:13:35 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Nov 18 22:23:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdDY6-0000jj-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 22:13:35 +0100
+	id 1EdDhe-0001Wt-00
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 22:23:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161248AbVKRVNb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 16:13:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161249AbVKRVNb
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 16:13:31 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:197 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1161248AbVKRVNb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 16:13:31 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051118211223.YHHC17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 18 Nov 2005 16:12:23 -0500
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <437DAA66.6070301@op5.se> (Andreas Ericsson's message of "Fri, 18
-	Nov 2005 11:18:14 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750961AbVKRVXX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 16:23:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750967AbVKRVXX
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 16:23:23 -0500
+Received: from ns2.uludag.org.tr ([193.140.100.220]:39605 "EHLO uludag.org.tr")
+	by vger.kernel.org with ESMTP id S1750961AbVKRVXW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 16:23:22 -0500
+Received: from dsl.dynamic8599158195.ttnet.net.tr (unknown [85.99.158.195])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uludag.org.tr (Postfix) with ESMTP id 991EBAB471
+	for <git@vger.kernel.org>; Fri, 18 Nov 2005 23:23:15 +0200 (EET)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9
+In-Reply-To: <Pine.LNX.4.64.0511181301320.13959@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12264>
 
-Andreas Ericsson <ae@op5.se> writes:
-
->>>-static int upload(char *dir)
->>>-{
->>>-	/* Try paths in this order */
->>>-	static const char *paths[] = { "%s", "%s/.git", "%s.git", "%s.git/.git", NULL };
+On Friday 18 November 2005 23:13, you wrote:
+> On Fri, 18 Nov 2005, Ismail Donmez wrote:
+> > Maybe you could officially require all commit messages to be UTF-8 then
+> > the problem would be just solved for future commits at least.
 >
->...
+> Just think about what that would mean for a second.
 >
->> Under strict-path, I think not doing any DWIM like this is fine,
->> but otherwise I suspect changing this would break existing
->> remotes/origin file people may have.  In addition enter_repo()
->> as posted does its own DWIM to chdir to ".git" unconditionally
->> as I pointed out...
+> What do people put in commit messages? They put things like filenames, to
+> indicate that they changed file so-and-so because of issue so-and-so, or
+> they needed to include header file so-and-so to fix a problem.
 >
-> DWIM? That's an acronym I don't know.
+> So by virtue of forcing all commit messages to be in UTF-8, you've
+> suddenly forced all filesystems to do UTF-8 too.
+>
+> Take that one step further: you've also forced all the file _contents_
+> you talk about to be in UTF-8, since the commit message might quote part
+> of the file ("'xyzzy' was misspelled, it should be 'abcde'").
+>
+> Or alternatively, you've forced the commit message to no longer match the
+> reality that it tries to explain.
+>
+> See the problem?
+>
+> And that's ignoring the fact that you've unilaterally forced probably 50%
+> of asian users to use an environment that they don't normally use.
+>
+> Remember: it's actually pretty _easy_ for most of the western world to
+> move to UTF-8, because 99% of what we do doesn't really care one whit, and
+> the remaining 1% isn't usually even a huge problem (ie it's such a small
+> percentage that even if you show the wrong character for it, people
+> understand what it said).
 
-"Do what I mean".  It lets users say:
+These days you can just open kwrite, select encoding and voila you don't have 
+to change anything on the filesystem you can still use whatever $LANG you 
+use. We would just force them to use a working editor imho. Nothing else. And 
+thats not much to ask is it? Even joe(1) can edit utf-8 these days that must 
+tell something.
 
-	git clone git://sample.xz/pub/uemacs uemacs
-
-when the repository on the server side is at any of the
-following places:
-
-	/pub/uemacs
-
-	-- a regular naked repository, with subdirectories
-           /pub/uemacs/refs and /pub/uemacs/objects/, obviously.
-
-        /pub/uemacs/.git
-
-        -- /pub/uemacs is an ordinary repository with possibly a
-           working tree; has /pub/uemacs/.git/refs and friends.
-
-	/pub/uemacs.git
-
-        -- when above two do not exist but this does; a regular
-	   naked repository, with subdirectories
-	   /pub/uemacs.git/refs and friends.
-
-	/pub/uemacs.git/.git
-
-        -- no /pub/uemacs, and /pub/uemacs.git is an ordinary
-           repository with possibly a working tree; has
-           /pub/uemacs.git/.git/refs and friends.
-
-which is a nice feature, but under --strict-path we need to be
-careful that we apply whitelist correctly while allowing DWIM.
+Regards,
+ismail
