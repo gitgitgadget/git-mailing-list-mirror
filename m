@@ -1,93 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: master has some toys
-Date: Fri, 18 Nov 2005 12:09:27 -0800
-Message-ID: <7vu0e9hg5k.fsf@assigned-by-dhcp.cox.net>
-References: <20051115144223.GA18111@diana.vm.bytemark.co.uk>
-	<b0943d9e0511160311k725526d8v@mail.gmail.com>
-	<7vr79g8mys.fsf@assigned-by-dhcp.cox.net>
-	<7v7jb83w8m.fsf_-_@assigned-by-dhcp.cox.net>
-	<81b0412b0511170029xac34cdbtddf74eb766281b3c@mail.gmail.com>
-	<Pine.LNX.4.63.0511171207580.20898@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vsltvwmlr.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0511171249550.737@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vveyrt6ms.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Rss produced by git is not valid xml?
+Date: Fri, 18 Nov 2005 12:22:34 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511181220350.13959@g5.osdl.org>
+References: <200511181833.40048.ismail@uludag.org.tr> <200511182127.06958.ismail@uludag.org.tr>
+ <20051118200217.GA2831@vrfy.org> <200511182208.24248.ismail@uludag.org.tr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Nov 18 21:09:34 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 18 21:22:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdCY9-00046m-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 21:09:34 +0100
+	id 1EdCl6-0005Cn-00
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 21:22:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932428AbVKRUJa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 15:09:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932438AbVKRUJa
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 15:09:30 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:35505 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932428AbVKRUJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 15:09:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051118200902.XQBP15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 18 Nov 2005 15:09:02 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1161171AbVKRUWx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 15:22:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161172AbVKRUWx
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 15:22:53 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:6302 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1161171AbVKRUWx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 15:22:53 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAIKMdnO027502
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 18 Nov 2005 12:22:40 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAIKMZ3Q030364;
+	Fri, 18 Nov 2005 12:22:37 -0800
+To: Ismail Donmez <ismail@uludag.org.tr>
+In-Reply-To: <200511182208.24248.ismail@uludag.org.tr>
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12254>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-I just had a small excitement finding out I did something right
-and felt an urge to brag ;-).
 
-> I am not so sure about forcing people upgrade, but we may end up
-> deciding it is better not to have NO_MMAP as the default.  If
-> that turns out to be the case, I'd prefer to have something like
-> this instead:
->
-> diff --git a/Makefile b/Makefile
-> index 7ce62e8..215abf0 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -213,6 +213,10 @@ endif
->  ifeq ($(uname_O),Cygwin)
->  	NO_STRCASESTR = YesPlease
->  	NEEDS_LIBICONV = YesPlease
-> +	# There are conflicting reports about this.
-> +	# On some boxes NO_MMAP is needed, and not so elsewhere.
-> +	# Try uncommenting this if you see things break -- YMMV.
-> +	# NO_MMAP = YesPlease
->  	NO_IPV6 = YesPlease
->  	X = .exe
->  endif
+On Fri, 18 Nov 2005, Ismail Donmez wrote:
+> 
+> > And git guys, please start to think again about your insane options,
+> > that cause more harm than anything good.
+> 
+> Can git maintainer(s) comment on this please? 
 
-I did the above patch on top of "pu", which contained the patch
-from Pavel Roskin and sent it out.  Later I saved the message
-from my mbox, went back to the "master" branch, whose Makefile
-had the releveant part like this:
+It's easy to say "just do the right thing", and ignore reality.
 
-        ifeq ($(uname_O),Cygwin)
-                NO_STRCASESTR = YesPlease
-                NEEDS_LIBICONV = YesPlease
-                NO_IPV6 = YesPlease
-                X = .exe
-                ALL_CFLAGS += -DUSE_SYMLINK_HEAD=0
-        endif
+git commit logs have always been "8-bit data". It's actually gitweb that 
+is buggy if it claims it is UTF-8 without checking or converting it to 
+such.
 
-Notice ALL_CFLAGS line?  The patch does not apply cleanly and
-usual e-mail patch application tool would have barfed; git-apply
-would not allow any fuzz, and patch would have dropped a .rej
-file.
+I agree that UTF-8 is a good idea, but that's a totally different 
+argument.
 
-However, I usually run "git-am" with --3way option enabled when
-applying the e-mailed patches.  After git-apply failed, it
-noticed I am applying on top of a different blob, namely, the
-Makefile from somewhere else (it reads the "index 7ce62e8"),
-then fell back on 3-way merge and made a clean commit.  Happy.
-
-Back to day-job.
+		Linus
