@@ -1,96 +1,126 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: "make test" fails with current HEAD
-Date: Fri, 18 Nov 2005 11:54:15 +0100
-Message-ID: <20051118105415.GN31613@kiste.smurf.noris.de>
-References: <pan.2005.11.17.15.31.56.755022@smurf.noris.de> <7v7jb6o1kl.fsf@assigned-by-dhcp.cox.net> <20051118075117.GK31613@kiste.smurf.noris.de> <7vbr0imlha.fsf@assigned-by-dhcp.cox.net> <pan.2005.11.18.08.56.22.908009@smurf.noris.de> <Pine.LNX.4.63.0511181134080.8037@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add test case for git-config-set
+Date: Fri, 18 Nov 2005 11:57:14 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511181148520.8037@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0511172249410.18285@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vd5kypjv2.fsf@assigned-by-dhcp.cox.net> <7vsltuo49q.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="dp9QYJgVRVEW2bsm"
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 18 11:56:28 2005
+X-From: git-owner@vger.kernel.org Fri Nov 18 11:58:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ed3tb-0005xa-Hs
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 11:55:07 +0100
+	id 1Ed3vj-0006Wu-AB
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 11:57:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161050AbVKRKzE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 05:55:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161044AbVKRKzD
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 05:55:03 -0500
-Received: from run.smurf.noris.de ([192.109.102.41]:40931 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S1161039AbVKRKzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 05:55:01 -0500
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1Ed3sl-0002Bu-Ce; Fri, 18 Nov 2005 11:54:25 +0100
-Received: (nullmailer pid 25239 invoked by uid 501);
-	Fri, 18 Nov 2005 10:54:15 -0000
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0511181134080.8037@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.9i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S1161039AbVKRK5Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 05:57:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161044AbVKRK5Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 05:57:16 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:27557 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1161039AbVKRK5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 05:57:16 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 13805140050; Fri, 18 Nov 2005 11:57:15 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E17C09F351; Fri, 18 Nov 2005 11:57:14 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C21739F34B; Fri, 18 Nov 2005 11:57:14 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id B95B8140050; Fri, 18 Nov 2005 11:57:14 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vsltuo49q.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12223>
-
-
---dp9QYJgVRVEW2bsm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12224>
 
 Hi,
 
-Johannes Schindelin:
-> From my diff man page:
->=20
-> -- snip --
-> DIAGNOSTICS
->        An  exit status of 0 means no differences were found, 1 means some=
-=20
->        differences were found, and 2 means trouble.
-> -- snap --
->=20
-> The exit value 2 is ambiguous for at least one version of GNU diff.
->=20
-AFAIK, We have
-0 - no difference
-1 - produced a reasonable diff
-1 - produced a bad diff because binary stuff starts
-    after 4096-or-whatever bytes and diff didn't notice
-2 - didn't produce a diff -- binary files differ
-2 - something else broke
+On Thu, 17 Nov 2005, Junio C Hamano wrote:
 
-Right now we simply don't consider the second -2- case, because we just
-successfully wrote the two files in question; there's not *that* much
-that can fail after that. The second -1- case is sufficiently rare too.
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+> > 	git-config-set section.key
+> >
+> > confusingly enough is --unset (we probably would want to require
+> > an explicit command line noise-word "--unset" in this case).
 
-So I still think a "Just write a 'Binary files FOO and BAR differ' line
-if the exit status is 2" rule would at least fix the current bug with
-diff 2.8.7.
+As mentioned in my previous mail, this will go.
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-<Knghtbrd> xtifr - beware of james when he's off his medication  =3D3D>
+> A revised suggestion is:
+> 
+> 	;# remove all
+> 	git-config-set --unset section.key
 
---dp9QYJgVRVEW2bsm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+No. Just remove one unique entry. If people insist it is a good idea to 
+throw away all multivars, I'll think about it. But I am not convinced. 
+Your use case of a multivar does not fit what I think multivars are useful 
+for.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+IMHO, multiple key/value pairs are only sensible when they provide a sort 
+of subkey, like Linus did in his example:
 
-iD8DBQFDfbLX8+hUANcKr/kRApyFAKCPsoYq0QVFsRyw95lpdkEEbISh5gCgqEIf
-1XLVp5izmpm37HL5c/O4LpQ=
-=HW1d
------END PGP SIGNATURE-----
+	[proxy]
+		command=ssh for kernel.org
+		command=rsh for myprivate.machine
 
---dp9QYJgVRVEW2bsm--
+See, there is a subkey, namely "for kernel.org", which can nicely be 
+expressed as a regex.
+
+IMOHO, your example
+
+	[diff]
+		twohead = resolve
+		twohead = recursive
+
+would look much better in this way
+
+	[diff]
+		twohead = recursive resolve
+
+Several reasons:
+
+	- it is easier to read
+	- it does the job
+	- it is clear from the beginning, which one precedes the other
+	  (for me it was not at all clear that the last entry wins...)
+
+> 	;# remove values that match rx and then append zero or more values
+> 	git-config-set --remove rx section.key [value...]
+
+As I said. *If*, then these must be two operations, for your security. But 
+I still don't see a sensible use case of removing all key/value pairs for 
+a certain key (and possibly a regex for the values).
+
+Rather, if you have a sensible setup, you'll want to set/replace/unset 
+exactly one entry.
+
+> 	;# append one or more values (equivalent to specifying --remove
+>         ;# with rx that never matches anything).  To reduce
+>         ;# confusion, we always require at least one value here.
+> 	git-config-set section.key value [value...]
+
+I think it is less error prone to add them one by one, else you have to 
+check the values for uniqueness, too.
+
+> I think (aside from "*-set" now becomes confusing), showing the
+> value of the specified key to stdout with
+> 
+> 	git-config-set section.key
+> 
+> would be a nice addition to complete the suite; has anybody
+> noticed that git-var is cumbersome to use for this?
+
+Good point! This will be in my next version.
+
+Ciao,
+Dscho
