@@ -1,75 +1,65 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Rss produced by git is not valid xml?
-Date: Sat, 19 Nov 2005 00:53:32 +0100
-Message-ID: <437E697C.7090307@op5.se>
-References: <200511181833.40048.ismail@uludag.org.tr> <200511182127.06958.ismail@uludag.org.tr> <20051118200217.GA2831@vrfy.org> <200511182208.24248.ismail@uludag.org.tr> <Pine.LNX.4.64.0511181220350.13959@g5.osdl.org> <20051118205513.GA3168@vrfy.org> <Pine.LNX.4.64.0511181314470.13959@g5.osdl.org> <Pine.LNX.4.64.0511181338460.13959@g5.osdl.org> <437E51EB.7050100@zytor.com> <Pine.LNX.4.64.0511181519100.13959@g5.osdl.org> <437E6505.8000201@zytor.com>
+Date: Fri, 18 Nov 2005 15:57:02 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511181554580.13959@g5.osdl.org>
+References: <200511181833.40048.ismail@uludag.org.tr> <200511182127.06958.ismail@uludag.org.tr>
+ <20051118200217.GA2831@vrfy.org> <200511182208.24248.ismail@uludag.org.tr>
+ <Pine.LNX.4.64.0511181220350.13959@g5.osdl.org> <20051118205513.GA3168@vrfy.org>
+ <Pine.LNX.4.64.0511181314470.13959@g5.osdl.org> <Pine.LNX.4.64.0511181338460.13959@g5.osdl.org>
+ <437E51EB.7050100@zytor.com> <Pine.LNX.4.64.0511181519100.13959@g5.osdl.org>
+ <437E6505.8000201@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Nov 19 01:21:12 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Kay Sievers <kay.sievers@vrfy.org>,
+	Ismail Donmez <ismail@uludag.org.tr>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 19 01:21:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdG2z-0000uw-Bz
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 00:53:37 +0100
+	id 1EdG6W-0002Xr-Ou
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 00:57:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101AbVKRXxe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 18:53:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751119AbVKRXxe
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 18:53:34 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:13025 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751101AbVKRXxe
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 18:53:34 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 26B046BCFE
-	for <git@vger.kernel.org>; Sat, 19 Nov 2005 00:53:33 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
+	id S1751104AbVKRX5N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 18:57:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbVKRX5N
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 18:57:13 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:30418 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751104AbVKRX5N (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 18:57:13 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAINv6nO005652
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 18 Nov 2005 15:57:06 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAINv3CY008519;
+	Fri, 18 Nov 2005 15:57:04 -0800
+To: "H. Peter Anvin" <hpa@zytor.com>
 In-Reply-To: <437E6505.8000201@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12301>
-
-H. Peter Anvin wrote:
-> Linus Torvalds wrote:
-> 
->>
->> On Fri, 18 Nov 2005, H. Peter Anvin wrote:
->>
->>> On the fly conversion on CVS import isn't particularly crazy, as long 
->>> as it's
->>> under user control.
->>
->>
->> Actually, it is.
->>
->> Why?
->>
->> How are you going to feed your changes back to the original (and 
->> initially main) project?
->>
->> Hint: they're not going to pull from your git tree, are they?
->>
->> Ahh. Maybe patches would be a good idea.
->>
->> Ooops.
->>
-> 
-> You're assuming there *IS* an original (and initially main) project.
-> 
-> There is another usage mode: "we're dumping CVS and switching to this 
-> new-fangled git thing."  I have myself done this with several projects 
-> by now.
-> 
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12302>
 
 
-I'm guessing Linus' scenario is more common. I do it myself and I'd like 
-it to keep working.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+On Fri, 18 Nov 2005, H. Peter Anvin wrote:
+> 
+> There is another usage mode: "we're dumping CVS and switching to this
+> new-fangled git thing."  I have myself done this with several projects by now.
+
+I agree that in that case, the problem space is _much_ simpler, and you're 
+able to do much more. 
+
+And I suspect it works well for projects with a few developers that can 
+just afford to do that. And it obviously works for a big project with 
+hundreds of developers that is forced to do it. 
+
+But I suspect it's not the common way of doing things. There's already a 
+few projects that do the "maintain in parallel" thing, like the Wine tree 
+discussed a few days ago.
+
+		Linus
