@@ -1,65 +1,56 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 5/5] git-daemon support for user-relative paths.
-Date: Sat, 19 Nov 2005 00:45:48 +0100
-Message-ID: <437E67AC.2010400@op5.se>
-References: <20051117193714.428785C7FA@nox.op5.se>	<7voe4ird8v.fsf@assigned-by-dhcp.cox.net> <437DAA66.6070301@op5.se> <7voe4hfssj.fsf@assigned-by-dhcp.cox.net>
+From: Ismail Donmez <ismail@uludag.org.tr>
+Subject: Re: Rss produced by git is not valid xml?
+Date: Fri, 18 Nov 2005 19:26:10 +0200
+Organization: =?utf-8?q?T=C3=9CB=C4=B0TAK/UEKAE?=
+Message-ID: <200511181926.10357.ismail@uludag.org.tr>
+References: <200511181833.40048.ismail@uludag.org.tr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 00:47:26 2005
+X-From: git-owner@vger.kernel.org Sat Nov 19 00:49:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
-	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdFvV-0006oa-N7
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 00:45:54 +0100
+	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
+	id 1EdASK-0008ME-00
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 18:55:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218AbVKRXpu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 18:45:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbVKRXpu
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 18:45:50 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:9185 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S1751218AbVKRXpu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 18:45:50 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id DC4D16BCFE; Sat, 19 Nov 2005 00:45:48 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe4hfssj.fsf@assigned-by-dhcp.cox.net>
+	id S1030229AbVKRR1R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 12:27:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030217AbVKRR1H
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 12:27:07 -0500
+Received: from ns2.uludag.org.tr ([193.140.100.220]:32684 "EHLO uludag.org.tr")
+	by vger.kernel.org with ESMTP id S1160999AbVKRR0z (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 12:26:55 -0500
+Received: from dsl.dynamic8599158195.ttnet.net.tr (unknown [85.99.158.195])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uludag.org.tr (Postfix) with ESMTP id E18E58D955
+	for <git@vger.kernel.org>; Fri, 18 Nov 2005 19:26:49 +0200 (EET)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9
+In-Reply-To: <200511181833.40048.ismail@uludag.org.tr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12287>
 
-Junio C Hamano wrote:
-> 
-> I think it might make sense to inserting something like the
-> attached untested patch in your series, between library and
-> upload-pack.
+On Friday 18 November 2005 18:33, you wrote:
+> Hi all,
+>
+> I am trying to parse git's rss feed and now xml parsers seems to choke on
+> it because of an error in the produced feed. Looking at
+> http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=rss
+>
+> line 781 says :
+>
+> On Thu, 17 Nov 2005, David G\363mez wrote:<br/>
+>
+> which is part of the commit :
+> http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=comm
+>it;h=05b8b0fafd4cac75d205ecd5ad40992e2cc5934d
 
-I'll run the clone/fetch/push test-suite again tomorrow, with this 
-applied. It looks good though.
+Ok looks like this text is latin-1 encoded although xml is served as utf-8.
 
->  The validation done by path_ok() in git-daemon
-> probabaly needs to lose alternate checks and validate only the
-> path returned by enter_repo().  This would make writing
-> whitelist by git-daemon administrator a bit more cumbersome,
-
-
-Not necessarily. The repositories in the whitelist should be validated 
-(and possibly converted) using the path_ok() function. This will also 
-make it possible to catch typos and permission errors that are just 
-plain annoying for the admins.
-
-In non-strict mode this isn't really a problem so long as all 
-whitelist-paths are absolute and doesn't contain any symlinks, although 
-we could use the chdir() + getcwd() thingie since we don't need the 
-ability to go back to where we started and that's what will be used 
-later when serving the repos.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+/ismail
