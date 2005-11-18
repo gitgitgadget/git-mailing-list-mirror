@@ -1,78 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] Applying a graft to a tree and "rippling" the changes
- through
-Date: Fri, 18 Nov 2005 09:25:45 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511180915560.13959@g5.osdl.org>
-References: <20051117230723.GD26122@nowhere.earth> <437DDDB1.60103@b-i-t.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Do not show .exe in git command list.
+Date: Fri, 18 Nov 2005 15:44:46 -0800
+Message-ID: <7vacg1frm9.fsf_-_@assigned-by-dhcp.cox.net>
+References: <pan.2005.11.17.15.31.56.755022@smurf.noris.de>
+	<7v7jb6o1kl.fsf@assigned-by-dhcp.cox.net> <437E5A79.9070402@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 00:51:34 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Nov 19 00:52:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
-	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdASN-0008ME-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 18:55:27 +0100
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1EdFuV-0006c2-DE
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 00:44:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932287AbVKRRZz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 12:25:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932332AbVKRRZz
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 12:25:55 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:61405 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932287AbVKRRZy (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 12:25:54 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAIHPlnO018762
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 18 Nov 2005 09:25:48 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAIHPkKN020008;
-	Fri, 18 Nov 2005 09:25:46 -0800
-To: sf <sf@b-i-t.de>
-In-Reply-To: <437DDDB1.60103@b-i-t.de>
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751213AbVKRXos (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 18:44:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbVKRXos
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 18:44:48 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:53499 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1751213AbVKRXor (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 18:44:47 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051118234448.XDIY25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 18 Nov 2005 18:44:48 -0500
+To: git@vger.kernel.org
+In-Reply-To: <437E5A79.9070402@gmail.com> (John Benes's message of "Fri, 18
+	Nov 2005 16:49:29 -0600")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12290>
 
+Truncate the result from readdir() in the exec-path if they end
+with .exe, to make it a bit more readable on Cygwin.
 
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-On Fri, 18 Nov 2005, sf wrote:
-> 
-> I would go even further: The resulting tree does not depend on anything. A
-> tree is a tree is a tree.
+---
 
-Agreed.
+ Today I borrowed a Cygwin environment to build things without
+ any customization (no config.mak nor make command line
+ override), and I have to report that make test passed OK for
+ me.
 
-> A commit is really just the statement: "I changed the tree from state A to
-> state B". After all, the commit message does not describe the new state
-> (neither the old state) but does describe the changes.
+ git.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-No.
-
-A commit is _not_ just the statement of change between two trees.
-
-It's a statement of _history_ of the resulting tree. This is important. 
-It's why a commit does not just point to the previous tree, but to the 
-previous commit(s).
-
-And that's really important. If you don't have a history of what has 
-happened, then all the trees are just random collections of files. They're 
-not a project any more.
-
-So a commit doesn't just say "tree A changed into tree B". It very much 
-says something much much stronger, which includes how you got to A in the 
-first place.
-
-The history is also what allow a commit to be meaningful. Without that 
-history, you could never say "I fixed the bug that was introduced by xyz", 
-which is often a very integral part of _why_ the change happened.
-
-There are lots of changelog entries that don't necessarily make sense 
-without knowing what went before them, so history is actually important 
-even in a local sense - it's often what allows the explanation to make 
-sense.
-
-			Linus
+applies-to: ff891e258456492507934e82d90fd8aacb124845
+f9039f30d56e3815eaab870d8b19c7b94aded8aa
+diff --git a/git.c b/git.c
+index b9b8c62..bdd3f8d 100644
+--- a/git.c
++++ b/git.c
+@@ -59,7 +59,8 @@ static void add_cmdname(const char *name
+ 	if (!ent)
+ 		oom();
+ 	ent->len = len;
+-	memcpy(ent->name, name, len+1);
++	memcpy(ent->name, name, len);
++	ent->name[len] = 0;
+ 	cmdname[cmdname_cnt++] = ent;
+ }
+ 
+@@ -132,6 +133,8 @@ static void list_commands(const char *ex
+ 			continue;
+ 
+ 		entlen = strlen(de->d_name);
++		if (4 < entlen && !strcmp(de->d_name + entlen - 4, ".exe"))
++			entlen -= 4;
+ 
+ 		if (longest < entlen)
+ 			longest = entlen;
+---
+0.99.9.GIT
