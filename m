@@ -1,77 +1,38 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: "make test" fails with current HEAD
-Date: Fri, 18 Nov 2005 08:21:16 +0100
-Message-ID: <20051118072115.GJ31613@kiste.smurf.noris.de>
-References: <pan.2005.11.17.15.31.56.755022@smurf.noris.de> <Pine.LNX.4.63.0511171652020.17402@wbgn013.biozentrum.uni-wuerzburg.de> <437D4924.50307@gmail.com> <Pine.LNX.4.63.0511180425200.6820@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] 'make clean' forgot about some files
+Date: Thu, 17 Nov 2005 22:48:34 -0800
+Message-ID: <7voe4io3i5.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0511171038290.14287@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="4LwthZj+AV2mq5CX"
-Cc: A Large Angry SCM <gitzilla@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 18 08:48:07 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 18 08:48:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ed0ZS-0005O1-Ai
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 08:22:06 +0100
+	id 1Ed03C-0007Kr-Ho
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 07:48:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932559AbVKRHWD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 02:22:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932562AbVKRHWC
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 02:22:02 -0500
-Received: from run.smurf.noris.de ([192.109.102.41]:49055 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S932559AbVKRHWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 02:22:00 -0500
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1Ed0Ye-0004iL-Kl; Fri, 18 Nov 2005 08:21:33 +0100
-Received: (nullmailer pid 28054 invoked by uid 501);
-	Fri, 18 Nov 2005 07:21:16 -0000
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0511180425200.6820@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.9i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S932509AbVKRGsg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 01:48:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932559AbVKRGsg
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 01:48:36 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:42896 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932509AbVKRGsg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 01:48:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051118064809.LBUT3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 18 Nov 2005 01:48:09 -0500
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0511171038290.14287@localhost.localdomain>
+	(Nicolas Pitre's message of "Thu, 17 Nov 2005 10:40:22 -0500 (EST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12206>
 
-
---4LwthZj+AV2mq5CX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-Johannes Schindelin:
-> Any chance you investigate this in detail? Like inserting "test_done;=20
-> exit" right before that test, only running t4103-*, and then executing
-> the command yourself?
->=20
-Thank you, I know how to debug ;-)
-
-Already in progress.
-
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-A life spent in search of the perfect hash brownie is a life well spent.
-
---4LwthZj+AV2mq5CX
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFDfYDr8+hUANcKr/kRAk+FAKCqX9vRJixR/dDQbv0XtogaMP7CUgCfaO04
-I/simJR8BW9Q6HBpuqkDdrk=
-=S1bv
------END PGP SIGNATURE-----
-
---4LwthZj+AV2mq5CX--
+Thanks
