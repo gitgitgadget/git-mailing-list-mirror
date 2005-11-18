@@ -1,85 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Teach "approxidate" about weekday syntax
-Date: Thu, 17 Nov 2005 18:38:23 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511171828380.13959@g5.osdl.org>
-References: <Pine.LNX.4.64.0511171223110.13959@g5.osdl.org> 
- <7v1x1eubpr.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0511171505080.13959@g5.osdl.org>
-  <Pine.LNX.4.63.0511180030260.18775@wbgn013.biozentrum.uni-wuerzburg.de>
- <46a038f90511171740x756b0336ib8b8937ee3a2af03@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: master has some toys
+Date: Fri, 18 Nov 2005 03:48:57 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511180345450.6359@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051115144223.GA18111@diana.vm.bytemark.co.uk>
+ <b0943d9e0511160311k725526d8v@mail.gmail.com> <7vr79g8mys.fsf@assigned-by-dhcp.cox.net>
+ <7v7jb83w8m.fsf_-_@assigned-by-dhcp.cox.net>
+ <81b0412b0511170029xac34cdbtddf74eb766281b3c@mail.gmail.com>
+ <7vy83ny450.fsf@assigned-by-dhcp.cox.net> <81b0412b0511170236r28572db9i84dc271700ded79a@mail.gmail.com>
+ <7vwtj7wn7n.fsf@assigned-by-dhcp.cox.net> <437D2D14.5080205@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 18 03:40:00 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 18 03:50:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ecw9P-0000Md-3l
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 03:38:55 +0100
+	id 1EcwJE-00035L-7a
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 03:49:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447AbVKRCik (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Nov 2005 21:38:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbVKRCik
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 21:38:40 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:49814 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751447AbVKRCik (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Nov 2005 21:38:40 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAI2cRnO017895
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 17 Nov 2005 18:38:29 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAI2cNcL025880;
-	Thu, 17 Nov 2005 18:38:25 -0800
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90511171740x756b0336ib8b8937ee3a2af03@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751439AbVKRCs7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 21:48:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751446AbVKRCs7
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 21:48:59 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:3980 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751439AbVKRCs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 21:48:59 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 2972313FE38; Fri, 18 Nov 2005 03:48:58 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 0D5ED9F34A; Fri, 18 Nov 2005 03:48:58 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id EA4619CC6E; Fri, 18 Nov 2005 03:48:57 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id CAE4B13FE38; Fri, 18 Nov 2005 03:48:57 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: John Benes <smartcat99s@gmail.com>
+In-Reply-To: <437D2D14.5080205@gmail.com>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12185>
 
+Hi,
 
+On Thu, 17 Nov 2005, John Benes wrote:
 
-On Fri, 18 Nov 2005, Martin Langhoff wrote:
-> 
-> That'd be even harder to define -- I'd rather have it spit out what it
-> interpreted so that porcelains can display it to the user. The user
-> can tell at a glance if the parser is off -- for it will be off by a
-> mile.
+> I was able to compile master and pu on Cygwin without NO_MMAP=YesPlease
+> in the Cygwin section.  However, the make test failed on the
+> binary-apply on both master and pu, output follows.
 
-Well, quite frankly, almost always it's pretty damn obvious.
+Nobody doubts that you can *compile* it. The problem is the fixing of the 
+mmap()ed regions after fork(). Since win32 is such a sane system, it does 
+not provide mmap() or fork() out of the box. And under some very obscure 
+circumstances, cygwin's emulation of mmap() and fork() fails.
 
-We could make it less so: the most common mistake when it doesn't parse 
-sanely is that it doesn't parse anything at all, but it saw a number 
-somewhere, and thought it was a day of the month.
+BTW, it would be more helpful if you do not just tell *what* test fails, 
+but *how*. For example, try to run "git-whatchanged -p" and send just 
+the first page of the output (both stdout and stderr). I bet it says it 
+has a problem fixing up mmap() after fork().
 
-For example, "last janurary" will silently parse to just "1" (miss-spelled 
-"january"), which will be interpreted as the "first of this month".
-
-And we could make _that_ be an error. If you want the first of this month, 
-you'd have to spell out the month, ie write "Nov 1" instead of just "1".
-
-Apart from that parsign error, pretty much everything else will tend to 
-parse correctly or just give "now" (which is pretty obvious when you ask 
-for a log "since now", and get an empty answer back).
-
-But quite frankly, I don't think the approximate date-parsing is serious 
-enough to even worry about these kinds of things. I actually use it, but I 
-don't think anybody _depends_ on it. It's useful to do
-
-	gitk --since=last.week
-
-just as a way to speed up the startup (if you're just interested in the 
-top of the tree, the kernel history is so big that it's just pointless to 
-do a full gitk, and doing the "since last week" is a quick way to just 
-limit the history enough that it makes the graph cleaner).
-
-And if you get that wrong, who cares? It's not a big deal. The approxidate 
-parsing is one of those "hey, that's nice" features, but it's definitely 
-not important.
-
-		Linus
+Hth,
+Dscho
