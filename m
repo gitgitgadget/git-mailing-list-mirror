@@ -1,68 +1,80 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH 1/5] Library code for user-relative paths, take three.
-Date: Fri, 18 Nov 2005 12:33:31 -0800
-Message-ID: <437E3A9B.1070801@zytor.com>
-References: <20051117193714.2B8995BF93@nox.op5.se> <7v8xvmsu9o.fsf@assigned-by-dhcp.cox.net> <437DA828.6020207@op5.se>
+From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+Subject: [PATCH] Remove all old packfiles when doing "git repack -a -d"
+Date: Fri, 18 Nov 2005 21:36:12 +0100
+Message-ID: <437E3B3C.9000409@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 18 21:34:28 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: junio C Hamano <junkio@cox.net>,
+	=?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+X-From: git-owner@vger.kernel.org Fri Nov 18 21:35:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdCwF-00068S-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 21:34:28 +0100
+	id 1EdCxg-0006FM-00
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 21:35:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161189AbVKRUdv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 15:33:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161195AbVKRUdu
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 15:33:50 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:63917 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1161191AbVKRUdr
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 15:33:47 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jAIKXaXG012222
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 18 Nov 2005 12:33:36 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+	id S1161202AbVKRUfs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 18 Nov 2005 15:35:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161203AbVKRUfr
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 15:35:47 -0500
+Received: from pne-smtpout1-sn1.fre.skanova.net ([81.228.11.98]:15324 "EHLO
+	pne-smtpout1-sn1.fre.skanova.net") by vger.kernel.org with ESMTP
+	id S1161202AbVKRUfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 15:35:45 -0500
+Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout1-sn1.fre.skanova.net (7.2.060.1)
+        id 437DDFC200014971; Fri, 18 Nov 2005 21:35:42 +0100
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
 X-Accept-Language: en-us, en
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <437DA828.6020207@op5.se>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12257>
 
-Andreas Ericsson wrote:
-> Junio C Hamano wrote:
-> 
->>
->>> +    /* This is perfectly safe, and people tend to think of the 
->>> directory
->>> +     * where they ran git-init-db as their repository, so humour 
->>> them. */
->>> +    (void)chdir(".git");
->>
->>
->> It might be safe, but I think it changes the behaviour of
->> upload-pack with strict case.  My gut reaction is we would want
->> "if (!strict)" in front.  Thoughts?
-> 
-> As it says in the comment; People tend to think of the directory where 
-> they ran "git init-db" as their repository, so humour them. It's nice 
-> for sharing files between devs in the office, and it *is* safe.
+No point in running git-pack-redundant if we already know=20
+which packs are redundant.
 
-No, it's not.
+Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
+---
+This should be correct. I even tested it.
 
-The whole point with --strict is that it shouldn't DWIM.  DWIMming is 
-*NOT* safe if the data has previously passed through a security screen.
 
-Don't DWIM in strict mode, ever.  If you do, you create security holes. 
-  If not immediately, then later.
+ git-repack.sh |   19 ++++++++++++++++---
+ 1 files changed, 16 insertions(+), 3 deletions(-)
 
-	-hpa
+applies-to: 8c987c24bed7f7a30f4e74b12e8acc2cc5eeea93
+2f49d2a3a7cf0fc64edfad2febf986252392b667
+diff --git a/git-repack.sh b/git-repack.sh
+index e58fdd6..55a7b27 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -63,9 +63,22 @@ exit
+ if test "$remove_redundant" =3D t
+ then
+ 	sync
+-	redundant=3D$(git-pack-redundant --all)
+-	if test "$redundant" !=3D "" ; then
+-		echo $redundant | xargs rm
++	if test "$all_into_one" =3D t
++	then
++		cd "$PACKDIR"
++		existing=3D`find . -type f \( -name '*.pack' -o -name '*.idx' \) -pr=
+int`
++		for e in $existing
++		do
++			case "$e" in
++			./pack-$name.pack | ./pack-$name.idx) ;;
++			*)      rm -f $e ;;
++			esac
++		done
++	else
++		redundant=3D$(git-pack-redundant --all)
++		if test "$redundant" !=3D "" ; then
++			echo $redundant | xargs rm
++		fi
+ 	fi
+ fi
+=20
+---
+0.99.9.GIT
