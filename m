@@ -1,68 +1,88 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Rss produced by git is not valid xml?
-Date: Fri, 18 Nov 2005 21:55:13 +0100
-Message-ID: <20051118205513.GA3168@vrfy.org>
-References: <200511181833.40048.ismail@uludag.org.tr> <200511182127.06958.ismail@uludag.org.tr> <20051118200217.GA2831@vrfy.org> <200511182208.24248.ismail@uludag.org.tr> <Pine.LNX.4.64.0511181220350.13959@g5.osdl.org>
+Date: Fri, 18 Nov 2005 13:13:01 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511181301320.13959@g5.osdl.org>
+References: <200511181833.40048.ismail@uludag.org.tr> <200511182208.24248.ismail@uludag.org.tr>
+ <Pine.LNX.4.64.0511181220350.13959@g5.osdl.org> <200511182245.01713.ismail@uludag.org.tr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ismail Donmez <ismail@uludag.org.tr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 18 21:55:29 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 18 22:13:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdDGa-0007ov-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 21:55:28 +0100
+	id 1EdDXv-0000j8-00
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 22:13:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161199AbVKRUzY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 15:55:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161214AbVKRUzY
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 15:55:24 -0500
-Received: from soundwarez.org ([217.160.171.123]:24197 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S1161199AbVKRUzY (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 15:55:24 -0500
-Received: by soundwarez.org (Postfix, from userid 2702)
-	id 1ED4F684B1; Fri, 18 Nov 2005 21:55:13 +0100 (CET)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0511181220350.13959@g5.osdl.org>
-User-Agent: Mutt/1.5.9i
+	id S1161247AbVKRVNU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 16:13:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161248AbVKRVNU
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 16:13:20 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:39338 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1161247AbVKRVNT (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 16:13:19 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAILD7nO030362
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 18 Nov 2005 13:13:08 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAILD1RN000725;
+	Fri, 18 Nov 2005 13:13:04 -0800
+To: Ismail Donmez <ismail@uludag.org.tr>
+In-Reply-To: <200511182245.01713.ismail@uludag.org.tr>
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12262>
 
-On Fri, Nov 18, 2005 at 12:22:34PM -0800, Linus Torvalds wrote:
+
+
+On Fri, 18 Nov 2005, Ismail Donmez wrote:
 > 
-> 
-> On Fri, 18 Nov 2005, Ismail Donmez wrote:
-> > 
-> > > And git guys, please start to think again about your insane options,
-> > > that cause more harm than anything good.
-> > 
-> > Can git maintainer(s) comment on this please? 
-> 
-> It's easy to say "just do the right thing", and ignore reality.
+> Maybe you could officially require all commit messages to be UTF-8 then the 
+> problem would be just solved for future commits at least.
 
-Well the reality tells that everything that is successful does not give
-too many options that harm adoption. For me it's a very simple and "real"
-rule.
+Just think about what that would mean for a second.
 
-It's all about a sane default, which git obviously doesn't have. You
-guys may look at it from the very low level, but that isn't what I call
-"reality".
+What do people put in commit messages? They put things like filenames, to 
+indicate that they changed file so-and-so because of issue so-and-so, or 
+they needed to include header file so-and-so to fix a problem.
 
-> git commit logs have always been "8-bit data". It's actually gitweb that 
-> is buggy if it claims it is UTF-8 without checking or converting it to 
-> such.
+So by virtue of forcing all commit messages to be in UTF-8, you've 
+suddenly forced all filesystems to do UTF-8 too.
 
-Actually, the real bug is not to try to prevent binary nonsense in textual
-commit logs, which are distibuted. Remember, that you provide a SCM not a
-filesystem.
+Take that one step further: you've also forced all the file _contents_ 
+you talk about to be in UTF-8, since the commit message might quote part 
+of the file ("'xyzzy' was misspelled, it should be 'abcde'").
 
-> I agree that UTF-8 is a good idea, but that's a totally different 
-> argument.
+Or alternatively, you've forced the commit message to no longer match the 
+reality that it tries to explain.
 
-Well, I don't see real arguments against sane a default.
+See the problem?
 
-Thanks,
-Kay
+And that's ignoring the fact that you've unilaterally forced probably 50% 
+of asian users to use an environment that they don't normally use.
+
+Remember: it's actually pretty _easy_ for most of the western world to 
+move to UTF-8, because 99% of what we do doesn't really care one whit, and 
+the remaining 1% isn't usually even a huge problem (ie it's such a small 
+percentage that even if you show the wrong character for it, people 
+understand what it said).
+
+There's only one thing that is easier still: to force your way of working 
+on others. 
+
+This is why I'm so steadfast on it being just a stream of bytes. Because 
+let's face it, no english-speaking project will ever _really_ care: we'll 
+get a few peoples names wrong, but it's all going to be pretty irrelevant, 
+and there's not going to be any real confusion.
+
+In contrast, _forcing_ people to use UTF-8 results in real problems, and 
+really limits what can be done. 
+
+A data stream of 8-bit bytes is really powerful. And oh, btw, it just 
+happens to be the UNIX way.
+
+			Linus
