@@ -1,88 +1,86 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Rss produced by git is not valid xml?
-Date: Fri, 18 Nov 2005 13:13:01 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511181301320.13959@g5.osdl.org>
-References: <200511181833.40048.ismail@uludag.org.tr> <200511182208.24248.ismail@uludag.org.tr>
- <Pine.LNX.4.64.0511181220350.13959@g5.osdl.org> <200511182245.01713.ismail@uludag.org.tr>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 5/5] git-daemon support for user-relative paths.
+Date: Fri, 18 Nov 2005 13:13:28 -0800
+Message-ID: <7viruphd6v.fsf@assigned-by-dhcp.cox.net>
+References: <20051117193714.428785C7FA@nox.op5.se>
+	<7voe4ird8v.fsf@assigned-by-dhcp.cox.net> <437DAA66.6070301@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 18 22:13:24 2005
+X-From: git-owner@vger.kernel.org Fri Nov 18 22:13:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdDXv-0000j8-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 22:13:23 +0100
+	id 1EdDY6-0000jj-00
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 22:13:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161247AbVKRVNU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 16:13:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161248AbVKRVNU
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 16:13:20 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:39338 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161247AbVKRVNT (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 16:13:19 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAILD7nO030362
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 18 Nov 2005 13:13:08 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAILD1RN000725;
-	Fri, 18 Nov 2005 13:13:04 -0800
-To: Ismail Donmez <ismail@uludag.org.tr>
-In-Reply-To: <200511182245.01713.ismail@uludag.org.tr>
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1161248AbVKRVNb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 16:13:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161249AbVKRVNb
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 16:13:31 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:197 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1161248AbVKRVNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 16:13:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051118211223.YHHC17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 18 Nov 2005 16:12:23 -0500
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <437DAA66.6070301@op5.se> (Andreas Ericsson's message of "Fri, 18
+	Nov 2005 11:18:14 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12263>
 
+Andreas Ericsson <ae@op5.se> writes:
 
+>>>-static int upload(char *dir)
+>>>-{
+>>>-	/* Try paths in this order */
+>>>-	static const char *paths[] = { "%s", "%s/.git", "%s.git", "%s.git/.git", NULL };
+>
+>...
+>
+>> Under strict-path, I think not doing any DWIM like this is fine,
+>> but otherwise I suspect changing this would break existing
+>> remotes/origin file people may have.  In addition enter_repo()
+>> as posted does its own DWIM to chdir to ".git" unconditionally
+>> as I pointed out...
+>
+> DWIM? That's an acronym I don't know.
 
-On Fri, 18 Nov 2005, Ismail Donmez wrote:
-> 
-> Maybe you could officially require all commit messages to be UTF-8 then the 
-> problem would be just solved for future commits at least.
+"Do what I mean".  It lets users say:
 
-Just think about what that would mean for a second.
+	git clone git://sample.xz/pub/uemacs uemacs
 
-What do people put in commit messages? They put things like filenames, to 
-indicate that they changed file so-and-so because of issue so-and-so, or 
-they needed to include header file so-and-so to fix a problem.
+when the repository on the server side is at any of the
+following places:
 
-So by virtue of forcing all commit messages to be in UTF-8, you've 
-suddenly forced all filesystems to do UTF-8 too.
+	/pub/uemacs
 
-Take that one step further: you've also forced all the file _contents_ 
-you talk about to be in UTF-8, since the commit message might quote part 
-of the file ("'xyzzy' was misspelled, it should be 'abcde'").
+	-- a regular naked repository, with subdirectories
+           /pub/uemacs/refs and /pub/uemacs/objects/, obviously.
 
-Or alternatively, you've forced the commit message to no longer match the 
-reality that it tries to explain.
+        /pub/uemacs/.git
 
-See the problem?
+        -- /pub/uemacs is an ordinary repository with possibly a
+           working tree; has /pub/uemacs/.git/refs and friends.
 
-And that's ignoring the fact that you've unilaterally forced probably 50% 
-of asian users to use an environment that they don't normally use.
+	/pub/uemacs.git
 
-Remember: it's actually pretty _easy_ for most of the western world to 
-move to UTF-8, because 99% of what we do doesn't really care one whit, and 
-the remaining 1% isn't usually even a huge problem (ie it's such a small 
-percentage that even if you show the wrong character for it, people 
-understand what it said).
+        -- when above two do not exist but this does; a regular
+	   naked repository, with subdirectories
+	   /pub/uemacs.git/refs and friends.
 
-There's only one thing that is easier still: to force your way of working 
-on others. 
+	/pub/uemacs.git/.git
 
-This is why I'm so steadfast on it being just a stream of bytes. Because 
-let's face it, no english-speaking project will ever _really_ care: we'll 
-get a few peoples names wrong, but it's all going to be pretty irrelevant, 
-and there's not going to be any real confusion.
+        -- no /pub/uemacs, and /pub/uemacs.git is an ordinary
+           repository with possibly a working tree; has
+           /pub/uemacs.git/.git/refs and friends.
 
-In contrast, _forcing_ people to use UTF-8 results in real problems, and 
-really limits what can be done. 
-
-A data stream of 8-bit bytes is really powerful. And oh, btw, it just 
-happens to be the UNIX way.
-
-			Linus
+which is a nice feature, but under --strict-path we need to be
+careful that we apply whitelist correctly while allowing DWIM.
