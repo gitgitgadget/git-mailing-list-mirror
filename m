@@ -1,90 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Question on GIT tutorial.
-Date: Thu, 17 Nov 2005 23:24:02 -0800
-Message-ID: <7vd5kyo1v1.fsf@assigned-by-dhcp.cox.net>
-References: <cda58cb80511140220n26da3edm@mail.gmail.com>
-	<7vlkznt5tc.fsf@assigned-by-dhcp.cox.net>
+From: "Fernando J. Pereda" <ferdy@ferdyx.org>
+Subject: Re: [ANNOUNCE] GIT 0.99.9j aka 1.0rc3
+Date: Fri, 18 Nov 2005 09:32:15 +0100
+Message-ID: <20051118083215.GA9551@ferdyx.org>
+References: <7vfypvzsos.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 18 08:53:40 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="zhXaljGHf11kAtnf"
+X-From: git-owner@vger.kernel.org Fri Nov 18 08:55:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ed0bP-0005rK-Sk
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 08:24:08 +0100
+	id 1Ed0ek-0006TX-L0
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 08:27:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932560AbVKRHYF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 02:24:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932562AbVKRHYE
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 02:24:04 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:35049 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932560AbVKRHYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 02:24:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051118072308.QMSB17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 18 Nov 2005 02:23:08 -0500
-To: Franck <vagabon.xyz@gmail.com>
-In-Reply-To: <7vlkznt5tc.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 17 Nov 2005 11:47:27 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932562AbVKRH1c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 02:27:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932564AbVKRH1c
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 02:27:32 -0500
+Received: from 170.Red-213-96-222.staticIP.rima-tde.net ([213.96.222.170]:36494
+	"EHLO smtp.ferdyx.org") by vger.kernel.org with ESMTP
+	id S932562AbVKRH1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 02:27:31 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.ferdyx.org (Postfix) with ESMTP id DE3268D340
+	for <git@vger.kernel.org>; Fri, 18 Nov 2005 08:27:28 +0100 (CET)
+Received: from smtp.ferdyx.org ([127.0.0.1])
+	by localhost (tungsteno [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 05765-04 for <git@vger.kernel.org>;
+	Fri, 18 Nov 2005 08:27:25 +0100 (CET)
+Received: from posidon.ferdyx.org (posidon.ferdyx.org [192.168.0.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.ferdyx.org (Postfix) with ESMTP id C6BF68D30B
+	for <git@vger.kernel.org>; Fri, 18 Nov 2005 08:27:24 +0100 (CET)
+Received: by posidon.ferdyx.org (nbSMTP-1.01-cvs) for uid 1000
+	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	ferdy@ferdyx.org; Fri, 18 Nov 2005 09:32:16 +0100 (CET)
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vfypvzsos.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at ferdyx.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12208>
 
-Junio C Hamano <junkio@cox.net> writes:
 
->> """
->> Copy over the packed files from "project lead" public repository to
->> your public repository.
->> """
->>
->> Why is it needed ?
->
-> That was a remnant from the days some transports did not
-> understand objects/info/alternates; I think we do not need that
-> step anymore.
+--zhXaljGHf11kAtnf
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-After re-reading that section, I take it back.  What I meant to
-say there was this:
+On Wed, Nov 16, 2005 at 10:36:51PM -0800, Junio C Hamano wrote:
+| GIT 0.99.9j aka 1.0rc3 is found at usual places.
 
-   You are the subsystem maintainer, so your tree would have
-   many overlapping objects with your project lead.  So in step
-   2, you prepare an empty repository first, and then in step
-   3., copy the packs from the project lead.  Then pushing into
-   that repository in step 4 would prevent the objects you
-   inherited from your project lead from getting expanded in
-   your public repository.
+We use the full tarball to build git in Gentoo Linux, are you planning
+to provide it ? Or from now on you won't provide the full tarball ?
 
-But these days, there is a more efficient way *if* your public
-repository resides on the same machine as the public repository
-of your project lead.  First, on the public repository side:
+It is not a big problem since I can download it from git, but hey, it is
+always easier to use the sources provided by upstream for us.
 
-   pub$ export GIT_DIR=/pub/my.git
-   pub$ HIS_GIT=/pub/his.git
-   pub$ git-init-db
-   pub$ echo "$HIS_GIT/objects" >"$GIT_DIR/objects/info/alternates"
-   pub$ (cd "$HIS_GIT/refs" && tar - heads tags) |
-        (cd "$GIT_DIR/refs" && mkdir j.u.n.k && cd j.u.n.k && tar xf -)
+Thanks
+	Ferdy
 
-This makes your repository to have the same refs as your
-project lead has but under funny names.  Then from your primary
-development repository, you push into your public repository:
+--=20
+Fernando J. Pereda Garcimart=EDn
+Gentoo Developer (Alpha,net-mail,mutt,git)
+20BB BDC3 761A 4781 E6ED  ED0B 0A48 5B0C 60BD 28D4
 
-   home$ git-send-pack --all ssh://pub.repo.xz/pub/my.git/
+--zhXaljGHf11kAtnf
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Thanks to the funny refs you stole from your project lead when
-you prepared your public repository, this transfer sends only
-objects the project lead does not have, and your refs.  After
-this is done, you can get rid of the funny refs you stole from
-your project lead:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
 
-   pub$ cd "$GIT_DIR/refs" && rm -fr j.u.n.k
+iD8DBQFDfZGPCkhbDGC9KNQRAoi2AKCD4O0lZVy144pNFP8H65Ig8P4ZhQCdFbiX
+RvDU9szxdBD7UifEZtd0DQ0=
+=mKa1
+-----END PGP SIGNATURE-----
 
-If your public repository is not on the same machine as your
-project lead's, objects/info/alternates trick cannot be used, so
-what we have in the tutorial section still applies.
+--zhXaljGHf11kAtnf--
