@@ -1,55 +1,47 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Teach "approxidate" about weekday syntax
-Date: Fri, 18 Nov 2005 09:33:16 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511180931390.13959@g5.osdl.org>
-References: <Pine.LNX.4.64.0511171223110.13959@g5.osdl.org>
- <7v1x1eubpr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511171505080.13959@g5.osdl.org>
- <Pine.LNX.4.64.0511171520390.13959@g5.osdl.org> <20051118121210.GA19714@abridgegame.org>
- <Pine.LNX.4.64.0511180842480.13959@g5.osdl.org> <437E0ECC.8000503@op5.se>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: "make test" fails with current HEAD
+Date: Fri, 18 Nov 2005 09:16:23 -0800
+Message-ID: <7vwtj5lvvc.fsf@assigned-by-dhcp.cox.net>
+References: <pan.2005.11.17.15.31.56.755022@smurf.noris.de>
+	<7v7jb6o1kl.fsf@assigned-by-dhcp.cox.net>
+	<20051118075117.GK31613@kiste.smurf.noris.de>
+	<7vbr0imlha.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511180812200.13959@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: David Roundy <droundy@abridgegame.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Fri Nov 18 18:55:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdAS6-0008ME-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 18:55:10 +0100
+	id 1EdAS7-0008ME-00
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 18:55:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964844AbVKRRdW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 12:33:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964851AbVKRRdW
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 12:33:22 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:41183 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964848AbVKRRdV (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 12:33:21 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAIHXHnO019234
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 18 Nov 2005 09:33:18 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAIHXGGp020488;
-	Fri, 18 Nov 2005 09:33:17 -0800
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <437E0ECC.8000503@op5.se>
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030210AbVKRRQ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 12:16:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030217AbVKRRQ0
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 12:16:26 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:37007 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1030210AbVKRRQZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 12:16:25 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051118171559.QGEM3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 18 Nov 2005 12:15:59 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511180812200.13959@g5.osdl.org> (Linus Torvalds's
+	message of "Fri, 18 Nov 2005 08:14:01 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12243>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> Umm.. Why not just say "if the line after the 'diff' line doesn't start 
+> with '@@ ', then it's a binary diff"?
 
-On Fri, 18 Nov 2005, Andreas Ericsson wrote:
-> 
-> 5 months with 73 days each; Chaos, Discord, Confusion, Bureaucracy, The
-> Aftermath
-> 5 days: Sweetmorn, Boomtime, Pungenday, Prickle-Prickle, Setting Orange
-> 
-> February 29 is "St. Tibs day".
-
-I'm sorry, but having "git log --since=confusion" would just be 
-irresponsible.
-
-		Linus
+Thanks, that makes sense.
