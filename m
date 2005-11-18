@@ -1,133 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Make "git fetch" less verbose by default
-Date: Fri, 18 Nov 2005 08:31:55 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511180820130.13959@g5.osdl.org>
+From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+Subject: [PATCH] Fix bug introduced by the latest changes to git-pack-redundant
+Date: Fri, 18 Nov 2005 17:30:29 +0100
+Message-ID: <437E01A5.7040501@etek.chalmers.se>
+References: <81b0412b0511150749g5672158v7b39c02ffdf13e08@mail.gmail.com> <20051115213442.GA4256@steel.home> <437A560E.8020500@etek.chalmers.se> <20051115223340.GA3951@steel.home> <437C819C.4040507@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Nov 18 17:32:18 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>,
+	Alex Riesen <raa.lkml@gmail.com>, junkio@cox.net
+X-From: git-owner@vger.kernel.org Fri Nov 18 17:34:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ed99p-0008Qm-1t
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 17:32:13 +0100
+	id 1Ed97p-0007lm-9v
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 17:30:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932383AbVKRQcE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 11:32:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932395AbVKRQcE
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 11:32:04 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:12238 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932377AbVKRQcC (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 11:32:02 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAIGVunO016122
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 18 Nov 2005 08:31:56 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAIGVtoq017756;
-	Fri, 18 Nov 2005 08:31:55 -0800
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932362AbVKRQaA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 18 Nov 2005 11:30:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932370AbVKRQaA
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 11:30:00 -0500
+Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:29597 "EHLO
+	pne-smtpout2-sn1.fre.skanova.net") by vger.kernel.org with ESMTP
+	id S932362AbVKRQ37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 11:29:59 -0500
+Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout2-sn1.fre.skanova.net (7.2.069.1)
+        id 437D32AE000325D8; Fri, 18 Nov 2005 17:29:58 +0100
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <437C819C.4040507@etek.chalmers.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12239>
 
+I forgot to initialize part of the pll struct when copying it.
+=46ound by valgrind.
 
-When doing something like
-
-	git fetch --tags origin
-
-the excessively verbose output of git fetch makes the result totally 
-unreadable. It's impossible to tell if it actually fetched anything new or 
-not, since the screen will fill up with an endless supply of
-
-   ...
-   * committish: 9165ec17fde255a1770886189359897dbb541012
-     tag 'v0.99.7c' of master.kernel.org:/pub/scm/git/git
-   * refs/tags/v0.99.7c: same as tag 'v0.99.7c' of master.kernel.org:/pub/scm/git/git
-   ...
-
-and any new tags that got fetched will be totally hidden.
-
-So add a new "--verbose" flag to "git fetch" to enable this verbose mode, 
-but make the default be quiet.
-
-NOTE! The quiet mode will still report about new or changed heads, so if 
-you are really fetching a new head, you'll see something like this:
-
-   [torvalds@g5 git]$ git fetch --tags parent
-   Packing 6 objects
-   Unpacking 6 objects
-    100% (6/6) done
-   * refs/tags/v1.0rc2: storing tag 'v1.0rc2' of master.kernel.org:/pub/scm/git/git
-   * refs/tags/v1.0rc3: storing tag 'v1.0rc3' of master.kernel.org:/pub/scm/git/git
-   * refs/tags/v1.0rc1: storing tag 'v1.0rc1' of master.kernel.org:/pub/scm/git/git
-
-which actually tells you something useful that isn't hidden by all the 
-useless crud that you already had.
-
-Extensively tested (hey, for me, this _is_ extensive) by doing a
-
-   rm .git/refs/tags/v1.0rc*
-
-and re-fetching with both --verbose and without. 
-
-NOTE! This means that if the fetch didn't actually fetch anything at all, 
-git fetch will be totally quiet. I think that's much better than being so 
-verbose that you can't even tell whether something was fetched or not, but 
-some people might prefer to get a "nothing to fetch" message in that case.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
 ---
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 8564cbf..6586e77 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -12,6 +12,7 @@ IFS="$LF"
- tags=
- append=
- force=
-+verbose=
- update_head_ok=
- while case "$#" in 0) break ;; esac
- do
-@@ -30,6 +31,9 @@ do
- 	--update-head-o|--update-head-ok)
- 		update_head_ok=t
- 		;;
-+	-v|--verbose)
-+		verbose=Yes
-+		;;
- 	*)
- 		break
- 		;;
-@@ -91,12 +95,12 @@ append_fetch_head () {
-     then
- 	headc_=$(git-rev-parse --verify "$head_^0") || exit
- 	echo "$headc_	$not_for_merge_	$note_" >>"$GIT_DIR/FETCH_HEAD"
--	echo >&2 "* committish: $head_"
--	echo >&2 "  $note_"
-+	[ "$verbose" ] && echo >&2 "* committish: $head_"
-+	[ "$verbose" ] && echo >&2 "  $note_"
-     else
- 	echo "$head_	not-for-merge	$note_" >>"$GIT_DIR/FETCH_HEAD"
--	echo >&2 "* non-commit: $head_"
--	echo >&2 "  $note_"
-+	[ "$verbose" ] && echo >&2 "* non-commit: $head_"
-+	[ "$verbose" ] && echo >&2 "  $note_"
-     fi
-     if test "$local_name_" != ""
-     then
-@@ -116,7 +120,7 @@ fast_forward_local () {
- 	then
- 		if now_=$(cat "$GIT_DIR/$1") && test "$now_" = "$2"
- 		then
--			echo >&2 "* $1: same as $3"
-+			[ "$verbose" ] && echo >&2 "* $1: same as $3"
- 		else
- 			echo >&2 "* $1: updating with $3"
- 		fi
+
+ pack-redundant.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+applies-to: 500482a7b3ebb2ebac182136696cb124332feba8
+b51be59ab5b323ef148f833976a9c324d6a27404
+diff --git a/pack-redundant.c b/pack-redundant.c
+index 2d7183e..3123f45 100644
+--- a/pack-redundant.c
++++ b/pack-redundant.c
+@@ -442,7 +442,7 @@ void minimize(struct pack_list **min)
+ 			break; /* ignore all larger permutations */
+ 		if (is_superset(perm->pl, missing)) {
+ 			new_perm =3D xmalloc(sizeof(struct pll));
+-			new_perm->pl =3D perm->pl;
++			memcpy(new_perm, perm, sizeof(struct pll));
+ 			new_perm->next =3D perm_ok;
+ 			perm_ok =3D new_perm;
+ 		}
+---
+0.99.9.GIT
