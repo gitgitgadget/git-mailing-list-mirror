@@ -1,101 +1,65 @@
-From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-Subject: [PATCH] Make git-pack-redundant take a list of unimportant objs on
- stdin
-Date: Fri, 18 Nov 2005 23:17:50 +0100
-Message-ID: <437E530E.1020803@etek.chalmers.se>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 5/5] git-daemon support for user-relative paths.
+Date: Sat, 19 Nov 2005 00:45:48 +0100
+Message-ID: <437E67AC.2010400@op5.se>
+References: <20051117193714.428785C7FA@nox.op5.se>	<7voe4ird8v.fsf@assigned-by-dhcp.cox.net> <437DAA66.6070301@op5.se> <7voe4hfssj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>,
-	=?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-X-From: git-owner@vger.kernel.org Sat Nov 19 00:39:06 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 19 00:47:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdEXr-0002qA-1i
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 23:17:24 +0100
+	id 1EdFvV-0006oa-N7
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 00:45:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751038AbVKRWRU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 18 Nov 2005 17:17:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042AbVKRWRU
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 17:17:20 -0500
-Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:24055 "EHLO
-	pne-smtpout2-sn1.fre.skanova.net") by vger.kernel.org with ESMTP
-	id S1751034AbVKRWRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 17:17:20 -0500
-Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout2-sn1.fre.skanova.net (7.2.069.1)
-        id 437D32AE000404C5; Fri, 18 Nov 2005 23:17:19 +0100
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
+	id S1751218AbVKRXpu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 18:45:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbVKRXpu
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 18:45:50 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:9185 "EHLO smtp-gw1.op5.se")
+	by vger.kernel.org with ESMTP id S1751218AbVKRXpu (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 18:45:50 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id DC4D16BCFE; Sat, 19 Nov 2005 00:45:48 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
 X-Accept-Language: en-us, en
-To: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7voe4hfssj.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12286>
 
-This lets us do "git-fsck-objects --full --unreachable | cut -d ' ' -f3=
- |
-git-pack-redundant --all", which will keep git-pack-redundant from keep=
-ing
-packs just because they contain unreachable objects.
+Junio C Hamano wrote:
+> 
+> I think it might make sense to inserting something like the
+> attached untested patch in your series, between library and
+> upload-pack.
 
-Also add some more --verbose output.
+I'll run the clone/fetch/push test-suite again tomorrow, with this 
+applied. It looks good though.
 
-Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
+>  The validation done by path_ok() in git-daemon
+> probabaly needs to lose alternate checks and validate only the
+> path returned by enter_repo().  This would make writing
+> whitelist by git-daemon administrator a bit more cumbersome,
 
----
 
- pack-redundant.c |   21 +++++++++++++++++++++
- 1 files changed, 21 insertions(+), 0 deletions(-)
+Not necessarily. The repositories in the whitelist should be validated 
+(and possibly converted) using the path_ok() function. This will also 
+make it possible to catch typos and permission errors that are just 
+plain annoying for the admins.
 
-applies-to: 3771756c044fa4338acc9f6acac3971f2309cc7c
-4173f0c77793b13ad50d9c1a1ff5da32fec5e573
-diff --git a/pack-redundant.c b/pack-redundant.c
-index fb6cb48..f3097a1 100644
---- a/pack-redundant.c
-+++ b/pack-redundant.c
-@@ -579,6 +579,8 @@ int main(int argc, char **argv)
- {
- 	int i;
- 	struct pack_list *min, *red, *pl;
-+	struct llist *ignore;
-+	char *sha1, buf[42]; /* 40 byte sha1 + \n + \0 */
-=20
- 	for (i =3D 1; i < argc; i++) {
- 		const char *arg =3D argv[i];
-@@ -621,6 +623,23 @@ int main(int argc, char **argv)
- 	if (alt_odb)
- 		scan_alt_odb_packs();
-=20
-+	/* ignore objects given on stdin */
-+	llist_init(&ignore);
-+	if (!isatty(0)) {
-+		while (fgets(buf, sizeof(buf), stdin)) {
-+			sha1 =3D xmalloc(20);
-+			if (get_sha1_hex(buf, sha1))
-+				die("Bad sha1 on stdin: %s", buf);
-+			llist_insert_sorted_unique(ignore, sha1, NULL);
-+		}
-+	}
-+	llist_sorted_difference_inplace(all_objects, ignore);
-+	pl =3D local_packs;
-+	while (pl) {
-+		llist_sorted_difference_inplace(pl->unique_objects, ignore);
-+		pl =3D pl->next;
-+	}
-+
- 	minimize(&min);
-=20
- 	if (verbose) {
-@@ -647,6 +666,8 @@ int main(int argc, char **argv)
- 		       pl->pack->pack_name);
- 		pl =3D pl->next;
- 	}
-+	if (verbose)
-+		fprintf(stderr, "%luMB of redundant packs in total.\n", pack_set_byt=
-ecount(red)/(1024*1024));
-=20
- 	return 0;
- }
----
-0.99.9.GIT
+In non-strict mode this isn't really a problem so long as all 
+whitelist-paths are absolute and doesn't contain any symlinks, although 
+we could use the chdir() + getcwd() thingie since we don't need the 
+ability to go back to where we started and that's what will be used 
+later when serving the repos.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
