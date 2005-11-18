@@ -1,69 +1,78 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Teach "approxidate" about weekday syntax
-Date: Fri, 18 Nov 2005 18:26:36 +0100
-Message-ID: <437E0ECC.8000503@op5.se>
-References: <Pine.LNX.4.64.0511171223110.13959@g5.osdl.org> <7v1x1eubpr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511171505080.13959@g5.osdl.org> <Pine.LNX.4.64.0511171520390.13959@g5.osdl.org> <20051118121210.GA19714@abridgegame.org> <Pine.LNX.4.64.0511180842480.13959@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] Applying a graft to a tree and "rippling" the changes
+ through
+Date: Fri, 18 Nov 2005 09:25:45 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511180915560.13959@g5.osdl.org>
+References: <20051117230723.GD26122@nowhere.earth> <437DDDB1.60103@b-i-t.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: David Roundy <droundy@abridgegame.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 00:50:34 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 19 00:51:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdASA-0008ME-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 18:55:14 +0100
+	id 1EdASN-0008ME-00
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 18:55:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030251AbVKRR1o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 12:27:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932397AbVKRR0m
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 12:26:42 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:60383 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932362AbVKRR0i
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 12:26:38 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id B74826BD02; Fri, 18 Nov 2005 18:26:36 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511180842480.13959@g5.osdl.org>
+	id S932287AbVKRRZz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 12:25:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932332AbVKRRZz
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 12:25:55 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:61405 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932287AbVKRRZy (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 12:25:54 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAIHPlnO018762
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 18 Nov 2005 09:25:48 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAIHPkKN020008;
+	Fri, 18 Nov 2005 09:25:46 -0800
+To: sf <sf@b-i-t.de>
+In-Reply-To: <437DDDB1.60103@b-i-t.de>
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12289>
 
-Linus Torvalds wrote:
+
+
+On Fri, 18 Nov 2005, sf wrote:
 > 
-> On Fri, 18 Nov 2005, David Roundy wrote:
-> 
->>Don't forget "high noon"!  (and perhaps "tea time"?)  :)
-> 
-> 
-> Done.
-> 
+> I would go even further: The resulting tree does not depend on anything. A
+> tree is a tree is a tree.
 
-What about Discordian dates? You seem to be having so much fun and I'd 
-hate to spoil it for you. :)
+Agreed.
 
-It should be easier than Gregorian ones too.
+> A commit is really just the statement: "I changed the tree from state A to
+> state B". After all, the commit message does not describe the new state
+> (neither the old state) but does describe the changes.
 
-5 months with 73 days each; Chaos, Discord, Confusion, Bureaucracy, The 
-Aftermath
-5 days: Sweetmorn, Boomtime, Pungenday, Prickle-Prickle, Setting Orange
+No.
 
-February 29 is "St. Tibs day".
+A commit is _not_ just the statement of change between two trees.
 
-For years, just tack on 1166 and you're good to go.
+It's a statement of _history_ of the resulting tree. This is important. 
+It's why a commit does not just point to the previous tree, but to the 
+previous commit(s).
 
-It'd be just lovely to be able to say
-	git whatchanged --since=chaos
+And that's really important. If you don't have a history of what has 
+happened, then all the trees are just random collections of files. They're 
+not a project any more.
 
-Incidentally, git was first released in "Discord" which seems somehow 
-appropriate. :)
+So a commit doesn't just say "tree A changed into tree B". It very much 
+says something much much stronger, which includes how you got to A in the 
+first place.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+The history is also what allow a commit to be meaningful. Without that 
+history, you could never say "I fixed the bug that was introduced by xyz", 
+which is often a very integral part of _why_ the change happened.
+
+There are lots of changelog entries that don't necessarily make sense 
+without knowing what went before them, so history is actually important 
+even in a local sense - it's often what allows the explanation to make 
+sense.
+
+			Linus
