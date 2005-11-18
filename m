@@ -1,80 +1,53 @@
-From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-Subject: [PATCH] Remove all old packfiles when doing "git repack -a -d"
-Date: Fri, 18 Nov 2005 21:36:12 +0100
-Message-ID: <437E3B3C.9000409@etek.chalmers.se>
+From: Mitchell Blank Jr <mitch@sfgoth.com>
+Subject: Re: [ANNOUNCE] gitfs pre-release 0.03
+Date: Fri, 18 Nov 2005 12:50:19 -0800
+Message-ID: <20051118205019.GH87234@gaz.sfgoth.com>
+References: <20051118124532.GG87234@gaz.sfgoth.com> <34a7ae040511180620v5f6ac014g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: junio C Hamano <junkio@cox.net>,
-	=?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Fri Nov 18 21:35:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdCxg-0006FM-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 21:35:56 +0100
+	id 1EdCxg-0006FM-01
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 21:35:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161202AbVKRUfs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 18 Nov 2005 15:35:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161203AbVKRUfr
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 15:35:47 -0500
-Received: from pne-smtpout1-sn1.fre.skanova.net ([81.228.11.98]:15324 "EHLO
-	pne-smtpout1-sn1.fre.skanova.net") by vger.kernel.org with ESMTP
-	id S1161202AbVKRUfp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 15:35:45 -0500
-Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout1-sn1.fre.skanova.net (7.2.060.1)
-        id 437DDFC200014971; Fri, 18 Nov 2005 21:35:42 +0100
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
+	id S1161197AbVKRUfG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 15:35:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161198AbVKRUfF
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 15:35:05 -0500
+Received: from gaz.sfgoth.com ([69.36.241.230]:42222 "EHLO gaz.sfgoth.com")
+	by vger.kernel.org with ESMTP id S1161197AbVKRUfB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 15:35:01 -0500
+Received: from gaz.sfgoth.com (localhost.sfgoth.com [127.0.0.1])
+	by gaz.sfgoth.com (8.12.10/8.12.10) with ESMTP id jAIKoJi0045640;
+	Fri, 18 Nov 2005 12:50:19 -0800 (PST)
+	(envelope-from mitch@gaz.sfgoth.com)
+Received: (from mitch@localhost)
+	by gaz.sfgoth.com (8.12.10/8.12.6/Submit) id jAIKoJes045639;
+	Fri, 18 Nov 2005 12:50:19 -0800 (PST)
+	(envelope-from mitch)
+To: Paolo Teti <paolo.teti@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <34a7ae040511180620v5f6ac014g@mail.gmail.com>
+User-Agent: Mutt/1.4.2.1i
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.2.2 (gaz.sfgoth.com [127.0.0.1]); Fri, 18 Nov 2005 12:50:19 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12258>
 
-No point in running git-pack-redundant if we already know=20
-which packs are redundant.
+Paolo Teti wrote:
+> A question: the gitFS in your intent has to became a "clone" of the
+> Rational MultiVersion File System?
 
-Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
----
-This should be correct. I even tested it.
+Well, I guess I can't give a real solid answer since I've never used
+Rational and I'm only vaguely aware of its capabilities.  However I think
+the answer is "no".  My personal belief is that the filesystem abstraction
+isn't a good fit to be the main interface to an SCM, especially git.
+That's why I'm currently working on just visualizing the contents of the
+git repository and I'll add features on top of that as they seem to make
+sense.
 
-
- git-repack.sh |   19 ++++++++++++++++---
- 1 files changed, 16 insertions(+), 3 deletions(-)
-
-applies-to: 8c987c24bed7f7a30f4e74b12e8acc2cc5eeea93
-2f49d2a3a7cf0fc64edfad2febf986252392b667
-diff --git a/git-repack.sh b/git-repack.sh
-index e58fdd6..55a7b27 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -63,9 +63,22 @@ exit
- if test "$remove_redundant" =3D t
- then
- 	sync
--	redundant=3D$(git-pack-redundant --all)
--	if test "$redundant" !=3D "" ; then
--		echo $redundant | xargs rm
-+	if test "$all_into_one" =3D t
-+	then
-+		cd "$PACKDIR"
-+		existing=3D`find . -type f \( -name '*.pack' -o -name '*.idx' \) -pr=
-int`
-+		for e in $existing
-+		do
-+			case "$e" in
-+			./pack-$name.pack | ./pack-$name.idx) ;;
-+			*)      rm -f $e ;;
-+			esac
-+		done
-+	else
-+		redundant=3D$(git-pack-redundant --all)
-+		if test "$redundant" !=3D "" ; then
-+			echo $redundant | xargs rm
-+		fi
- 	fi
- fi
-=20
----
-0.99.9.GIT
+-Mitch
