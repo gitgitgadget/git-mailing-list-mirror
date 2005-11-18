@@ -1,75 +1,61 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH rev-list.c] max-count in terms of intersection
-Date: Fri, 18 Nov 2005 13:47:22 -0800 (PST)
-Message-ID: <20051118214722.4449.qmail@web31813.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+Subject: [PATCH] Fix a bug in get_all_permutations.
+Date: Fri, 18 Nov 2005 22:53:24 +0100
+Message-ID: <437E4D54.60901@etek.chalmers.se>
+References: <81b0412b0511150749g5672158v7b39c02ffdf13e08@mail.gmail.com> <20051115213442.GA4256@steel.home> <437A560E.8020500@etek.chalmers.se> <20051115223340.GA3951@steel.home> <437C819C.4040507@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Fri Nov 18 22:47:27 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	=?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+X-From: git-owner@vger.kernel.org Fri Nov 18 22:53:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdE4s-0003M0-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 22:47:26 +0100
+	id 1EdEAO-0003mu-00
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 22:53:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161257AbVKRVrX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 16:47:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161258AbVKRVrX
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 16:47:23 -0500
-Received: from web31813.mail.mud.yahoo.com ([68.142.207.76]:52093 "HELO
-	web31813.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1161257AbVKRVrX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 16:47:23 -0500
-Received: (qmail 4451 invoked by uid 60001); 18 Nov 2005 21:47:22 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=HpKaCjs9PjKr6bIf0wsIDc6q6TMsjZBTl7CNvbS07fyTvlaInykxLpcodfEulMofWQ69eiib8atyQRQVbQ1jqT6/9fdaM4PDD3nCEbLbzbnr4PWV2aSkCYARvgBCbWupBhLwm19m+L26NkeK+BRsg69dkc5/zRdNrBnJQndn6dw=  ;
-Received: from [68.221.46.29] by web31813.mail.mud.yahoo.com via HTTP; Fri, 18 Nov 2005 13:47:22 PST
-To: git@vger.kernel.org
+	id S1161267AbVKRVxD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 18 Nov 2005 16:53:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161270AbVKRVxB
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 16:53:01 -0500
+Received: from pne-smtpout1-sn1.fre.skanova.net ([81.228.11.98]:24285 "EHLO
+	pne-smtpout1-sn1.fre.skanova.net") by vger.kernel.org with ESMTP
+	id S1161269AbVKRVxA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 16:53:00 -0500
+Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout1-sn1.fre.skanova.net (7.2.060.1)
+        id 437DDFC2000174AC; Fri, 18 Nov 2005 22:52:53 +0100
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
+X-Accept-Language: en-us, en
+To: junkio@cox.net
+In-Reply-To: <437C819C.4040507@etek.chalmers.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12268>
 
-diff-tree 768b79de9eadc38a839332df0fcce021f7174d6d (from 2e67a5f449f4026097494569f871d79bf263ab28)
-tree 6403fc730f8d5843043788f4c2f466727ba94bc0
-parent 2e67a5f449f4026097494569f871d79bf263ab28
-author Luben Tuikov <ltuikov@yahoo.com> 1132349344 -0500
-committer Luben Tuikov <ltuikov@yahoo.com> 1132349344 -0500
+This line was missing in the previous patch for some reason.
 
-    [PATCH rev-list.c] max-count in terms of intersection
-    
-    When a path designation is given, max-count counts the number
-    of commits therein (intersection), not globally.
-    
-    This avoids the case where in case path has been inactive
-    for the last N commits, --max-count=N and path designation
-    at git-rev-list is given, would give no commits.
-    
-    Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
 
-diff --git a/rev-list.c b/rev-list.c
-index 6e6ffde..e17f928 100644
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -124,8 +124,6 @@ static int filter_commit(struct commit *
-                stop_traversal=1;
-                return CONTINUE;
-        }
--       if (max_count != -1 && !max_count--)
--               return STOP;
-        if (no_merges && (commit->parents && commit->parents->next))
-                return CONTINUE;
-        if (paths && dense) {
-@@ -148,6 +146,9 @@ static int process_commit(struct commit 
-                return CONTINUE;
-        }
- 
-+       if (max_count != -1 && !max_count--)
-+               return STOP;
-+
-        show_commit(commit);
- 
-        return CONTINUE;
+---
+
+ pack-redundant.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+applies-to: 5b820842ce0afb836ddbeded3a3f9e8d0ba223f9
+e65d77b8ece9f6e463de0ceeaf6812a2df6d7d96
+diff --git a/pack-redundant.c b/pack-redundant.c
+index 3655609..3e3f33a 100644
+--- a/pack-redundant.c
++++ b/pack-redundant.c
+@@ -291,6 +291,7 @@ struct pll * get_all_permutations(struct
+ 		hint[0] =3D new_pll;
+ 		new_pll->next =3D NULL;
+ 		new_pll->pl =3D list;
++		new_pll->pl_size =3D 1;
+ 		return new_pll;
+ 	}
+=20
+---
+0.99.9.GIT
