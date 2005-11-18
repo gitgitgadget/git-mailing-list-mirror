@@ -1,56 +1,126 @@
 From: Nick Hengeveld <nickh@reactrix.com>
-Subject: [PATCH 0/5] HTTP refactoring/cleanup
-Date: Fri, 18 Nov 2005 11:02:52 -0800
-Message-ID: <20051118190251.GE3968@reactrix.com>
+Subject: [PATCH 5/5] http-push memory/fd cleanup
+Date: Fri, 18 Nov 2005 11:03:25 -0800
+Message-ID: <20051118190324.GJ3968@reactrix.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Nov 19 00:04:44 2005
+X-From: git-owner@vger.kernel.org Sat Nov 19 00:17:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdBVk-0006ao-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 20:03:00 +0100
+	id 1EdBWE-0006el-00
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 20:03:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750758AbVKRTC5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 14:02:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbVKRTC5
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 14:02:57 -0500
-Received: from 194.37.26.69.virtela.com ([69.26.37.194]:48987 "EHLO
+	id S1161136AbVKRTD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 14:03:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161131AbVKRTD0
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 14:03:26 -0500
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:9812 "EHLO
 	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1750758AbVKRTC4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 14:02:56 -0500
+	id S1750776AbVKRTDZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 14:03:25 -0500
 Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jAIJ2q4b026703
-	for <git@vger.kernel.org>; Fri, 18 Nov 2005 11:02:52 -0800
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jAIJ3Pg3026745
+	for <git@vger.kernel.org>; Fri, 18 Nov 2005 11:03:25 -0800
 Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jAIJ2qIM026701
-	for git@vger.kernel.org; Fri, 18 Nov 2005 11:02:52 -0800
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jAIJ3P0n026743
+	for git@vger.kernel.org; Fri, 18 Nov 2005 11:03:25 -0800
 To: git@vger.kernel.org
 Content-Disposition: inline
 User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12281>
 
-The following set of patches cleans up http-fetch and http-push.
+Clean up memory and file descriptor usage
 
-- Common HTTP code has been moved to http.c/http.h.  While
-  curl-specific code still exists in both http-fetch and http-push,
-  it is a step in the direction of allowing use of a different HTTP
-  request library if someone is so inclined.
+Signed-off-by: Nick Hengeveld <nickh@reactrix.com>
 
-- Object request functions and data have been renamed to keep clear
-  what types of requests are being processed, which will make it
-  easier to process additional types of requests in parallel (eg.
-  starting pack downloads immediately when an object 404s)
 
-- The reliability and performance of http-fetch has been improved when
-  built in an environment without curl multi support.
+---
 
-- XML parsing in http-push has been improved, which will make it
-  easier to add functionality to update remote server info.
+ http-push.c |   17 ++++++++++++++---
+ 1 files changed, 14 insertions(+), 3 deletions(-)
 
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+applies-to: 697c3fa609568c3befb803dd8a131814ca1fad6a
+898a8d2e69916757f423a8bd487d97f19c06c1e0
+diff --git a/http-push.c b/http-push.c
+index 2932693..f3c92c9 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -165,6 +165,7 @@ static void start_check(struct transfer_
+ 	} else {
+ 		request->state = ABORTED;
+ 		free(request->url);
++		request->url = NULL;
+ 	}
+ }
+ 
+@@ -198,6 +199,7 @@ static void start_mkcol(struct transfer_
+ 	} else {
+ 		request->state = ABORTED;
+ 		free(request->url);
++		request->url = NULL;
+ 	}
+ }
+ 
+@@ -244,8 +246,6 @@ static void start_put(struct transfer_re
+ 	request->buffer.size = stream.total_out;
+ 	request->buffer.posn = 0;
+ 
+-	if (request->url != NULL)
+-		free(request->url);
+ 	request->url = xmalloc(strlen(remote->url) + 
+ 			       strlen(request->lock->token) + 51);
+ 	strcpy(request->url, remote->url);
+@@ -281,6 +281,7 @@ static void start_put(struct transfer_re
+ 	} else {
+ 		request->state = ABORTED;
+ 		free(request->url);
++		request->url = NULL;
+ 	}
+ }
+ 
+@@ -306,6 +307,7 @@ static void start_move(struct transfer_r
+ 	} else {
+ 		request->state = ABORTED;
+ 		free(request->url);
++		request->url = NULL;
+ 	}
+ }
+ 
+@@ -370,6 +372,13 @@ static void finish_request(struct transf
+ 
+ 	if (request->headers != NULL)
+ 		curl_slist_free_all(request->headers);
++
++	/* URL is reused for MOVE after PUT */
++	if (request->state != RUN_PUT) {
++		free(request->url);
++		request->url = NULL;
++	}		
++
+ 	if (request->state == RUN_HEAD) {
+ 		if (request->http_code == 404) {
+ 			request->state = NEED_PUSH;
+@@ -435,7 +444,8 @@ static void release_request(struct trans
+ 			entry->next = entry->next->next;
+ 	}
+ 
+-	free(request->url);
++	if (request->url != NULL)
++		free(request->url);
+ 	free(request);
+ }
+ 
+@@ -575,6 +585,7 @@ static int fetch_index(unsigned char *sh
+ 		}
+ 	} else {
+ 		free(url);
++		fclose(indexfile);
+ 		return error("Unable to start request");
+ 	}
+ 
+---
+0.99.9.GIT
