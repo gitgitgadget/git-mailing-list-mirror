@@ -1,68 +1,105 @@
-From: Ben Clifford <benc@hawaga.org.uk>
-Subject: current HEAD in bash prompt
-Date: Thu, 17 Nov 2005 18:39:49 +1000
-Message-ID: <9C44605A-4F0F-42FA-A8ED-A4F7EFA24C32@hawaga.org.uk>
-Mime-Version: 1.0 (Apple Message framework v734)
-Content-Type: text/plain; charset=UTF-8;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri Nov 18 05:45:14 2005
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Deal with binary diff output from (unknown version of) diff
+Date: Thu, 17 Nov 2005 20:46:29 -0800
+Message-ID: <7v1x1er2ai.fsf_-_@assigned-by-dhcp.cox.net>
+References: <20051115144223.GA18111@diana.vm.bytemark.co.uk>
+	<b0943d9e0511160311k725526d8v@mail.gmail.com>
+	<7vr79g8mys.fsf@assigned-by-dhcp.cox.net>
+	<7v7jb83w8m.fsf_-_@assigned-by-dhcp.cox.net>
+	<81b0412b0511170029xac34cdbtddf74eb766281b3c@mail.gmail.com>
+	<7vy83ny450.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0511170236r28572db9i84dc271700ded79a@mail.gmail.com>
+	<7vwtj7wn7n.fsf@assigned-by-dhcp.cox.net> <437D2D14.5080205@gmail.com>
+	<7vfypur5jb.fsf@assigned-by-dhcp.cox.net> <437D4F57.9070303@gmail.com>
+	<7vbr0ir387.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 18 05:48:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ecy4i-0004Ne-3i
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 05:42:12 +0100
+	id 1Ecy8x-0005fo-1Y
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 05:46:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750707AbVKREmJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 17 Nov 2005 23:42:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751446AbVKREmJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 23:42:09 -0500
-Received: from mundungus.clifford.ac ([81.187.211.39]:25609 "EHLO
-	mundungus.clifford.ac") by vger.kernel.org with ESMTP
-	id S1750707AbVKREmI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Nov 2005 23:42:08 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by mundungus.clifford.ac (8.13.3/8.13.3) with ESMTP id jAI4efsW005048;
-	Fri, 18 Nov 2005 04:40:45 GMT
-To: Git Mailing List <git@vger.kernel.org>
-X-Mailer: Apple Mail (2.734)
+	id S1751446AbVKREqc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Nov 2005 23:46:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751496AbVKREqc
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Nov 2005 23:46:32 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:46800 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751446AbVKREqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Nov 2005 23:46:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051118044601.LJYL20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 17 Nov 2005 23:46:01 -0500
+To: A Large Angry SCM <gitzilla@gmail.com>,
+	John Benes <smartcat99s@gmail.com>
+In-Reply-To: <7vbr0ir387.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 17 Nov 2005 20:26:16 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12198>
 
-After getting a bit confused when having too many branches, and for =20
-people who don't mind extra forks and like too much info in their =20
-prompt, I've recently started using this:
+Some vintage of diff says just "Files X and Y differ\n", instead
+of "Binary files X and Y differ\n", so catch both patterns.
 
-export PS1=3D'!\! [\j] \u@\h:\w$(output-git-head-or-blank)\$ '
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-where output-git-head-or-blank is:
+---
 
-#!/bin/bash
+    Junio C Hamano <junkio@cox.net> writes:
 
-PS_GIT=3D$(git-symbolic-ref HEAD 2>/dev/null) && echo "[$(basename =20
-$PS_GIT)]" && exit
+    >> Files /dev/null and b/file3 differ
+    >> diff --git a/file4 b/file4
+    >> index edc575d..adb07b7 100644
+    >> Files a/file4 and b/file4 differ
+    >
+    > Thanks.  I've seen enough.  I expected diff (GNU diffutils 2.8.1
+    > is what I have handy) output which says "Binary files a/foo and
+    > b/foo differ".
+    >
+    > Hmph.  Now I'd need to find a way to catch at least these two
+    > cases...
 
-# else output nothing
+    Could you two try this patch please?
 
-
-When in a non-git directory, you get a non-git prompt (of course, =20
-modify this to whatever you want)
-
-!502 [0] benc@piva:~$
-
-and when in a git directory you get (a truncated form of) whatever =20
-today's head points at:
-
-
-!502 [0] benc@piva:~$ cd src/globe
-!503 [0] benc@piva:~/src/globe[master]$
-
-
---=20
-Ben =E2=80=A2 =E3=83=99=E3=83=B3 =E2=80=A2 =D0=91=D1=8D=D0=BD =E2=80=A2=
- =EB=B2=A4 =E2=80=A2 =E7=8F=AD=E6=98=8E
-http://www.hawaga.org.uk/ben/
-My email is high latency but best way to contact me. Alternatively, =20
-SMS number(s) at above URL.
+diff --git a/apply.c b/apply.c
+index 129edb1..50be8f3 100644
+--- a/apply.c
++++ b/apply.c
+@@ -893,12 +893,24 @@ static int parse_chunk(char *buffer, uns
+ 	patchsize = parse_single_patch(buffer + offset + hdrsize, size - offset - hdrsize, patch);
+ 
+ 	if (!patchsize) {
+-		static const char binhdr[] = "Binary files ";
+-
+-		if (sizeof(binhdr) - 1 < size - offset - hdrsize &&
+-		    !memcmp(binhdr, buffer + hdrsize + offset,
+-			    sizeof(binhdr)-1))
+-			patch->is_binary = 1;
++		static const char *binhdr[] = {
++			"Binary files ",
++			"Files ",
++			NULL,
++		};
++		int i;
++		int hd = hdrsize + offset;
++		unsigned long llen = linelen(buffer + hd, size - hd);
++
++		if (!memcmp(" differ\n", buffer + hd + llen - 8, 8))
++			for (i = 0; binhdr[i]; i++) {
++				int len = strlen(binhdr[i]);
++				if (len < size - hd &&
++				    !memcmp(binhdr[i], buffer + hd, len)) {
++					patch->is_binary = 1;
++					break;
++				}
++			}
+ 
+ 		/* Empty patch cannot be applied if:
+ 		 * - it is a binary patch and we do not do binary_replace, or
