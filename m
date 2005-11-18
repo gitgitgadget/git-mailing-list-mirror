@@ -1,76 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add test case for git-config-set
-Date: Thu, 17 Nov 2005 22:32:01 -0800
-Message-ID: <7vsltuo49q.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0511172249410.18285@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vd5kypjv2.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: "make test" fails with current HEAD
+Date: Fri, 18 Nov 2005 08:21:16 +0100
+Message-ID: <20051118072115.GJ31613@kiste.smurf.noris.de>
+References: <pan.2005.11.17.15.31.56.755022@smurf.noris.de> <Pine.LNX.4.63.0511171652020.17402@wbgn013.biozentrum.uni-wuerzburg.de> <437D4924.50307@gmail.com> <Pine.LNX.4.63.0511180425200.6820@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri Nov 18 07:55:05 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="4LwthZj+AV2mq5CX"
+Cc: A Large Angry SCM <gitzilla@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 18 08:48:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EcznI-0003da-9j
-	for gcvg-git@gmane.org; Fri, 18 Nov 2005 07:32:20 +0100
+	id 1Ed0ZS-0005O1-Ai
+	for gcvg-git@gmane.org; Fri, 18 Nov 2005 08:22:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932489AbVKRGcG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 01:32:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932419AbVKRGcF
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 01:32:05 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:62110 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932489AbVKRGcD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 01:32:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051118063047.QBCV20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 18 Nov 2005 01:30:47 -0500
+	id S932559AbVKRHWD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 02:22:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932562AbVKRHWC
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 02:22:02 -0500
+Received: from run.smurf.noris.de ([192.109.102.41]:49055 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S932559AbVKRHWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 02:22:00 -0500
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1Ed0Ye-0004iL-Kl; Fri, 18 Nov 2005 08:21:33 +0100
+Received: (nullmailer pid 28054 invoked by uid 501);
+	Fri, 18 Nov 2005 07:21:16 -0000
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <7vd5kypjv2.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 17 Nov 2005 22:09:53 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0511180425200.6820@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.9i
+X-Smurf-Spam-Score: -2.5 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12204>
-
-Junio C Hamano <junkio@cox.net> writes:
-
-> 	git-config-set section.key
->
-> confusingly enough is --unset (we probably would want to require
-> an explicit command line noise-word "--unset" in this case).
-
-This is too confusing, so I think we should require --unset.  I
-think the C-interface I suggested in the previous message can
-stay the same, but from the command line perspective, we should
-have a bit easier syntax.
-
-A revised suggestion is:
-
-	;# remove all
-	git-config-set --unset section.key
-
-	;# remove values that match rx and then append zero or more values
-	git-config-set --remove rx section.key [value...]
-
-	;# append one or more values (equivalent to specifying --remove
-        ;# with rx that never matches anything).  To reduce
-        ;# confusion, we always require at least one value here.
-	git-config-set section.key value [value...]
-
-	;# Additionally, purely as a syntax sugar, replace the
-	;# entire multivalue with one or more values
-	;# (equivalent to saying --remove '^').
-	git-config-set --replace section.key value [value...]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12205>
 
 
-I think (aside from "*-set" now becomes confusing), showing the
-value of the specified key to stdout with
+--4LwthZj+AV2mq5CX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-	git-config-set section.key
+Hi,
 
-would be a nice addition to complete the suite; has anybody
-noticed that git-var is cumbersome to use for this?
+Johannes Schindelin:
+> Any chance you investigate this in detail? Like inserting "test_done;=20
+> exit" right before that test, only running t4103-*, and then executing
+> the command yourself?
+>=20
+Thank you, I know how to debug ;-)
+
+Already in progress.
+
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+A life spent in search of the perfect hash brownie is a life well spent.
+
+--4LwthZj+AV2mq5CX
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFDfYDr8+hUANcKr/kRAk+FAKCqX9vRJixR/dDQbv0XtogaMP7CUgCfaO04
+I/simJR8BW9Q6HBpuqkDdrk=
+=S1bv
+-----END PGP SIGNATURE-----
+
+--4LwthZj+AV2mq5CX--
