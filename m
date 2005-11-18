@@ -1,84 +1,93 @@
-From: Ismail Donmez <ismail@uludag.org.tr>
-Subject: Re: Rss produced by git is not valid xml?
-Date: Fri, 18 Nov 2005 22:08:22 +0200
-Organization: =?utf-8?q?T=C3=9CB=C4=B0TAK/UEKAE?=
-Message-ID: <200511182208.24248.ismail@uludag.org.tr>
-References: <200511181833.40048.ismail@uludag.org.tr> <200511182127.06958.ismail@uludag.org.tr> <20051118200217.GA2831@vrfy.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: master has some toys
+Date: Fri, 18 Nov 2005 12:09:27 -0800
+Message-ID: <7vu0e9hg5k.fsf@assigned-by-dhcp.cox.net>
+References: <20051115144223.GA18111@diana.vm.bytemark.co.uk>
+	<b0943d9e0511160311k725526d8v@mail.gmail.com>
+	<7vr79g8mys.fsf@assigned-by-dhcp.cox.net>
+	<7v7jb83w8m.fsf_-_@assigned-by-dhcp.cox.net>
+	<81b0412b0511170029xac34cdbtddf74eb766281b3c@mail.gmail.com>
+	<Pine.LNX.4.63.0511171207580.20898@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vsltvwmlr.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0511171249550.737@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vveyrt6ms.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Nov 18 21:09:19 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Nov 18 21:09:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1EdCXu-00045D-00
-	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 21:09:18 +0100
+	id 1EdCY9-00046m-00
+	for <gcvg-git@gmane.org>; Fri, 18 Nov 2005 21:09:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932426AbVKRUJP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 15:09:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932428AbVKRUJO
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 15:09:14 -0500
-Received: from ns2.uludag.org.tr ([193.140.100.220]:39096 "EHLO uludag.org.tr")
-	by vger.kernel.org with ESMTP id S932426AbVKRUJO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 15:09:14 -0500
-Received: from dsl.dynamic8599158195.ttnet.net.tr (unknown [85.99.158.195])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id 060C6AAF91
-	for <git@vger.kernel.org>; Fri, 18 Nov 2005 22:09:06 +0200 (EET)
+	id S932428AbVKRUJa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 15:09:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932438AbVKRUJa
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 15:09:30 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:35505 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932428AbVKRUJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 15:09:29 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051118200902.XQBP15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 18 Nov 2005 15:09:02 -0500
 To: git@vger.kernel.org
-User-Agent: KMail/1.9
-In-Reply-To: <20051118200217.GA2831@vrfy.org>
-Content-Disposition: inline
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12253>
 
-On Friday 18 November 2005 22:02, you wrote:
-> On Fri, Nov 18, 2005 at 09:27:06PM +0200, Ismail Donmez wrote:
-> > On Friday 18 November 2005 19:26, you wrote:
-> > > On Friday 18 November 2005 18:33, you wrote:
-> > > > Hi all,
-> > > >
-> > > > I am trying to parse git's rss feed and now xml parsers seems to
-> > > > choke on it because of an error in the produced feed. Looking at
-> > > > http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;
-> > > >a=rs s
-> > > >
-> > > > line 781 says :
-> > > >
-> > > > On Thu, 17 Nov 2005, David G\363mez wrote:<br/>
-> > > >
-> > > > which is part of the commit :
-> > > > http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;
-> > > >a=co mm it;h=05b8b0fafd4cac75d205ecd5ad40992e2cc5934d
-> > >
-> > > Ok looks like this text is latin-1 encoded although xml is served as
-> > > utf-8.
-> >
-> > Any comments on this?
+Junio C Hamano <junkio@cox.net> writes:
+
+I just had a small excitement finding out I did something right
+and felt an urge to brag ;-).
+
+> I am not so sure about forcing people upgrade, but we may end up
+> deciding it is better not to have NO_MMAP as the default.  If
+> that turns out to be the case, I'd prefer to have something like
+> this instead:
 >
-> Yes, convince the git maintainers, that it's incredibly stupid not to
-> enforce utf8 in commit messages. It makes absolutely zero sense in a
-> SCM, which merges forth and back between people around the world to
-> allow random encodings from the last century.
->
+> diff --git a/Makefile b/Makefile
+> index 7ce62e8..215abf0 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -213,6 +213,10 @@ endif
+>  ifeq ($(uname_O),Cygwin)
+>  	NO_STRCASESTR = YesPlease
+>  	NEEDS_LIBICONV = YesPlease
+> +	# There are conflicting reports about this.
+> +	# On some boxes NO_MMAP is needed, and not so elsewhere.
+> +	# Try uncommenting this if you see things break -- YMMV.
+> +	# NO_MMAP = YesPlease
+>  	NO_IPV6 = YesPlease
+>  	X = .exe
+>  endif
 
-I totally agree, utf8 should be default else the produced XML is wrong. Its 
-advertised as utf-8 but the content is latin1. 
+I did the above patch on top of "pu", which contained the patch
+from Pavel Roskin and sent it out.  Later I saved the message
+from my mbox, went back to the "master" branch, whose Makefile
+had the releveant part like this:
 
-> With the next round of gitweb, I will substitute these caracters with
-> valid utf8, which will show up as invalid chars.
+        ifeq ($(uname_O),Cygwin)
+                NO_STRCASESTR = YesPlease
+                NEEDS_LIBICONV = YesPlease
+                NO_IPV6 = YesPlease
+                X = .exe
+                ALL_CFLAGS += -DUSE_SYMLINK_HEAD=0
+        endif
 
-When should we expect this? Currently I can't parse commit feed without 
-encoding to utf8 first.
+Notice ALL_CFLAGS line?  The patch does not apply cleanly and
+usual e-mail patch application tool would have barfed; git-apply
+would not allow any fuzz, and patch would have dropped a .rej
+file.
 
-> And git guys, please start to think again about your insane options,
-> that cause more harm than anything good.
+However, I usually run "git-am" with --3way option enabled when
+applying the e-mailed patches.  After git-apply failed, it
+noticed I am applying on top of a different blob, namely, the
+Makefile from somewhere else (it reads the "index 7ce62e8"),
+then fell back on 3-way merge and made a clean commit.  Happy.
 
-Can git maintainer(s) comment on this please? 
-
-Regards,
-ismail
+Back to day-job.
