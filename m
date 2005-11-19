@@ -1,67 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Rss produced by git is not valid xml?
-Date: Sat, 19 Nov 2005 01:04:42 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511190101590.28126@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200511181833.40048.ismail@uludag.org.tr> <200511181926.10357.ismail@uludag.org.tr>
- <200511182127.06958.ismail@uludag.org.tr> <20051118200217.GA2831@vrfy.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Teach "approxidate" about weekday syntax
+Date: Sat, 19 Nov 2005 01:07:07 +0100
+Message-ID: <437E6CAB.8060200@op5.se>
+References: <Pine.LNX.4.64.0511171223110.13959@g5.osdl.org>	<7v1x1eubpr.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0511171505080.13959@g5.osdl.org>	<Pine.LNX.4.64.0511171520390.13959@g5.osdl.org>	<20051118121210.GA19714@abridgegame.org>	<Pine.LNX.4.63.0511181419340.28109@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.58.0511180806550.25159@shark.he.net>	<Pine.LNX.4.64.0511180857170.13959@g5.osdl.org> <7vzmo1ecbf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ismail Donmez <ismail@uludag.org.tr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 01:23:43 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 19 01:24:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdGDq-0005VP-5N
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 01:04:50 +0100
+	id 1EdGG9-0006Rj-TE
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 01:07:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbVKSAEq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 19:04:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751173AbVKSAEq
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 19:04:46 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:57536 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751167AbVKSAEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 19:04:46 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 0EBEC13FFEE; Sat, 19 Nov 2005 01:04:43 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E4E5E9F36D; Sat, 19 Nov 2005 01:04:42 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D1AF6907C8; Sat, 19 Nov 2005 01:04:42 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 35B7013FFEE; Sat, 19 Nov 2005 01:04:42 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Kay Sievers <kay.sievers@vrfy.org>
-In-Reply-To: <20051118200217.GA2831@vrfy.org>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751137AbVKSAHK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 19:07:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbVKSAHK
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 19:07:10 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:16609 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751137AbVKSAHJ
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 19:07:09 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 345DC6BCFE; Sat, 19 Nov 2005 01:07:08 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmo1ecbf.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12304>
 
-Hi,
+Junio C Hamano wrote:
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> 
+>>On Fri, 18 Nov 2005, Randy.Dunlap wrote:
+>>
+>>>~Randy  [who would just use ISO standard date format]
+>>
+>>That actually _does_ work, and has done so since the beginning:
+>>
+>>   [torvalds@g5 git]$ ./test-date "2005-11-02 14:45:00"
+> 
+> 
+> Doesn't ISO spell that as "2005-11-02T14:45:00"?
+> 
 
-On Fri, 18 Nov 2005, Kay Sievers wrote:
+nox!exon:~$ date --iso-8601=seconds
+2005-11-19T01:04:56+0100
 
-> Yes, convince the git maintainers, that it's incredibly stupid not to
-> enforce utf8 in commit messages. It makes absolutely zero sense in a
-> SCM, which merges forth and back between people around the world to
-> allow random encodings from the last century.
+No human will spell it with T though.
 
-Oh, but it makes sense! Just because you happen to work on a very 
-international project does not mean everybody does.
-
-Just because you happen to like utf-8 does not mean that you still do in 
-2046. The encoding-du-jour might well be a 64-bit wide char code by then, 
-since they'll laugh about our dreaming about terabytes.
-
-BTW, utf-8 was designed on purpose to be easily distinguishable from other 
-encodings so that you don't have to rely on every document obeying a 
-certain encoding.
-
-Hth,
-Dscho
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
