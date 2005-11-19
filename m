@@ -1,69 +1,62 @@
-From: Ismail Donmez <ismail@uludag.org.tr>
-Subject: Re: Change encoding of RSS feed to latin-1
-Date: Sat, 19 Nov 2005 22:18:33 +0200
-Organization: =?utf-8?q?T=C3=9CB=C4=B0TAK/UEKAE?=
-Message-ID: <200511192218.33352.ismail@uludag.org.tr>
-References: <200511192156.23259.ismail@uludag.org.tr> <20051119201406.GA8985@puritan.petwork>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [QUESTION] Access to a huge GIT repository.
+Date: Sat, 19 Nov 2005 12:42:01 -0800
+Message-ID: <7vu0e84bfq.fsf@assigned-by-dhcp.cox.net>
+References: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
+	<Pine.LNX.4.64.0511160837000.13959@g5.osdl.org>
+	<cda58cb80511170236p4a7e2baay@mail.gmail.com>
+	<Pine.LNX.4.64.0511170817480.13959@g5.osdl.org>
+	<cda58cb80511171347yef4f090g@mail.gmail.com>
+	<Pine.LNX.4.64.0511171443000.13959@g5.osdl.org>
+	<cda58cb80511190423w1e46bf5bu@mail.gmail.com>
+	<437F1E67.8020302@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sat Nov 19 21:19:21 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 19 21:42:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdZAX-00028t-2A
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 21:18:41 +0100
+	id 1EdZXF-0008Nq-9s
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 21:42:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750795AbVKSUSh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 19 Nov 2005 15:18:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbVKSUSh
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 15:18:37 -0500
-Received: from ns2.uludag.org.tr ([193.140.100.220]:23722 "EHLO uludag.org.tr")
-	by vger.kernel.org with ESMTP id S1750795AbVKSUSh convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Nov 2005 15:18:37 -0500
-Received: from [85.101.239.128] (unknown [85.101.239.128])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id 44496AB39C
-	for <git@vger.kernel.org>; Sat, 19 Nov 2005 22:18:31 +0200 (EET)
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.92
-In-Reply-To: <20051119201406.GA8985@puritan.petwork>
-Content-Disposition: inline
+	id S1750819AbVKSUmE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 19 Nov 2005 15:42:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750809AbVKSUmE
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 15:42:04 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:65203 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1750819AbVKSUmD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Nov 2005 15:42:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051119204125.LBRF20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 19 Nov 2005 15:41:25 -0500
+To: Lukas =?iso-8859-1?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>
+In-Reply-To: <437F1E67.8020302@etek.chalmers.se> (Lukas =?iso-8859-1?Q?San?=
+ =?iso-8859-1?Q?dstr=F6m's?= message
+	of "Sat, 19 Nov 2005 13:45:27 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12352>
 
-Saturday 19 November 2005 22:14 tarihinde, Nikolai Weibull =C5=9Funlar=C4=
-=B1 yazm=C4=B1=C5=9Ft=C4=B1:=20
-> Ismail Donmez wrote:
-> > As the other thread grew into merits of using UTF-8 I think best fi=
-x
-> > for now is putting encoding=3Dlatin-1 into RSS feed so everyone is
-> > happy. After all its latin-1 encoded data not utf-8. Anyone disagre=
-es?
-> > Can we now please fix/change gitweb so xml parsers can parse it
-> > without workarounding?
->
-> If you know that your log-messages will be in latin-1 or UTF-8 or
-> whatever encoding you like, then modify your gitweb.cgi to match.  Ju=
-st
-> search for 'utf-8' and change it to what you prefer.
->
-> What perhaps is of general interest is modifying the distributed
-> gitweb.cgi to allow for easily changing the encoding on a
-> per-installation basis, just like $projectroot is configurable on a
-> per-installation basis.
->
-> UTF-8 is still a sane default for gitweb.cgi.
+Lukas Sandstr=F6m <lukass@etek.chalmers.se> writes:
 
-I am just interested in parsing linus's tree's rss feed. And no UTF-8 i=
-s not a=20
-sane default when the encoding used is not UTF-8. And Linus puts it it =
-will=20
-be latin-1 for long I guess.
+> The "git-repack -a -d" case is fixed in Junios master, and I have sen=
+t out
+> a patch which lets you pipe git-fsck-objects --full --unreachable to
+> git-pack-redundant in the other cases, so the problem should hopefull=
+y
+> be resolved shortly.
 
-Regards,
-ismail
+After thinking a bit about it, I tend to agree with what Linus
+said, and would vote for the simplicity of the older way.  From
+usage point of view, git-repack is primarily about repacking,
+and the -d option is a funny exception applicable to -a case,
+only because it is so obvious (i.e. after repacking everything
+into one, it is obvious any other packs are unneeded).  We might
+even want to make the "-a" flag to imply "-a -d" there.
