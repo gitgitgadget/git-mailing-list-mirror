@@ -1,55 +1,54 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [RFC] Applying a graft to a tree and "rippling" the changes through
-Date: Sat, 19 Nov 2005 02:38:37 +0100
-Message-ID: <20051119013837.GA3393@nowhere.earth>
-References: <20051117230723.GD26122@nowhere.earth> <437DDDB1.60103@b-i-t.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Rss produced by git is not valid xml?
+Date: Fri, 18 Nov 2005 19:28:47 -0800
+Message-ID: <7v64qpco40.fsf@assigned-by-dhcp.cox.net>
+References: <200511181833.40048.ismail@uludag.org.tr>
+	<200511181926.10357.ismail@uludag.org.tr>
+	<200511182127.06958.ismail@uludag.org.tr>
+	<20051118200217.GA2831@vrfy.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 02:38:29 2005
+X-From: git-owner@vger.kernel.org Sat Nov 19 04:29:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdHfM-00030E-7N
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 02:37:20 +0100
+	id 1EdJPI-0002Gj-TP
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 04:28:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161110AbVKSBhR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 20:37:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161115AbVKSBhQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 20:37:16 -0500
-Received: from smtp2-g19.free.fr ([212.27.42.28]:23986 "EHLO smtp2-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1161110AbVKSBhP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 20:37:15 -0500
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 957C08AD5;
-	Sat, 19 Nov 2005 02:37:14 +0100 (CET)
-Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.54)
-	id 1EdHgd-0006Z1-Ed; Sat, 19 Nov 2005 02:38:39 +0100
-To: sf <sf@b-i-t.de>
-Content-Disposition: inline
-In-Reply-To: <437DDDB1.60103@b-i-t.de>
-User-Agent: Mutt/1.5.11
+	id S1161235AbVKSD2u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 22:28:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161237AbVKSD2u
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 22:28:50 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:52966 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1161235AbVKSD2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 22:28:49 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051119032735.EDCK17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 18 Nov 2005 22:27:35 -0500
+To: git@vger.kernel.org
+In-Reply-To: <20051118200217.GA2831@vrfy.org> (Kay Sievers's message of "Fri,
+	18 Nov 2005 21:02:17 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12320>
 
-On Fri, Nov 18, 2005 at 02:57:05PM +0100, sf wrote:
-> >Indeed that emphasizes that the history lines are on living on a
-> >higher level of abstraction that commits.  Now what if we used
-> >trees->tree commits, instead of the current commits->tree ones ?  The
-> >main problem would be to be able to reconstruct those history lines,
-> >so that we can still extract the log - what's a better model if we
-> >loose functionnality ? ;)
-> 
-> You can traverse tree -> commit -> tree -> commit -> tree ... to get the 
-> history. No functionality lost.
+I just looked at the diff this commit introduces:
 
-No, that would require that a tree knows about the commits leading to
-it, which would mix levels of abstraction as well.
+	e6bd23911efd0a2bd756c77d9e7ba6576eb739a1
+        Documentation: asciidoc sources are utf-8
 
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+with gitk (BTW, I pulled from paulus today, so "master" branch
+has the latest gitk) while my locale set to LC_CTYPE=en_US.utf8.
+
+Surprisingly, the diff to Documentation/git-pack-redundant.txt,
+which changes Lukas' name originally incorrectly encoded in
+iso-8859-1 to utf-8, was shown and both pre-image and post-image
+lines are readable.
+
+I do not know how tcl/tk does it, but it is doing the right
+thing.
