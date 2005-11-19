@@ -1,76 +1,56 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: git --exec-path conversion
-Date: Sat, 19 Nov 2005 03:14:44 -0800 (PST)
-Message-ID: <20051119111444.82122.qmail@web26309.mail.ukl.yahoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git --exec-path conversion
+Date: Sat, 19 Nov 2005 12:20:26 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511191218370.27986@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051119111444.82122.qmail@web26309.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 12:14:51 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 19 12:21:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdQgE-00063i-1t
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 12:14:50 +0100
+	id 1EdQlj-0007ch-J8
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 12:20:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751041AbVKSLOq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 Nov 2005 06:14:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbVKSLOq
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 06:14:46 -0500
-Received: from web26309.mail.ukl.yahoo.com ([217.146.176.20]:63074 "HELO
-	web26309.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1751041AbVKSLOq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Nov 2005 06:14:46 -0500
-Received: (qmail 82124 invoked by uid 60001); 19 Nov 2005 11:14:44 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=v4HY8jtIL4KmtE4OHzscJDLMijvnmpSLPi54VmHnHp/mcTAV2udVXBrEBnLEeZrXcnJR6Tu4P/+n9KvdVNGn0cRviy75rFVrIw/67IqLnQBlqonxKmUZ6nnZnLSqB4ay6wG0qxsYDYatTxGtZn2W2+EPwFaroYFLjmYk6tLXtxU=  ;
-Received: from [151.44.24.124] by web26309.mail.ukl.yahoo.com via HTTP; Sat, 19 Nov 2005 03:14:44 PST
-To: junkio@cox.net
+	id S1751064AbVKSLU2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 Nov 2005 06:20:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751187AbVKSLU2
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 06:20:28 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:20152 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751064AbVKSLU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Nov 2005 06:20:28 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 2795613FECC; Sat, 19 Nov 2005 12:20:27 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 0E4389F36D; Sat, 19 Nov 2005 12:20:27 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id EEE9391B78; Sat, 19 Nov 2005 12:20:26 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8C03613FECC; Sat, 19 Nov 2005 12:20:26 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Marco Costalba <mcostalba@yahoo.it>
+In-Reply-To: <20051119111444.82122.qmail@web26309.mail.ukl.yahoo.com>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12329>
 
 Hi,
 
-   if I understood correctly, git programs will be installed somewhere in $PATH for at least next
-two months.
+On Sat, 19 Nov 2005, Marco Costalba wrote:
 
-But I would like to update to what will be the future, i.e. prepending what 'git --exec-path' says
-to any git command.
+>     if (cmd.left(3) == "git") 
+>          cmd = cmd.prepend(exec-path);
 
-I don't call git programs directly but I use a function QGit::run(cmd) that does this plus other
-things.
+Little nit: Test for "git-", because "git" and "gitk" will stay in the 
+PATH.
 
-The problem is that I call QGit::run() also for other commands not related to git (ls, cat,
-etc..).
-
-How can I make the transition?
-
-Now I have two ways, the brute force way and the easy (peraphs tricky) way.
-
-The brute force is to create a new function QGit::runGitCmd() that deals only with git commands
-_and_ replace all the occurences of run() with the latter.
-
-The easy way is to prepend the exec-path *inside* run(), and to use to disambiguate bewteen git
-and shell commands the testing of first three chars of the command to launch, something like:
-
-    if (cmd.left(3) == "git") 
-         cmd = cmd.prepend(exec-path);
-
-
-I would like to go with the second one, I'm a bit lazy ;-) , but I would like to ask if this is a
-good policy, i.e. if also inside git programs/scripts (like in git.c I guess) is used or is
-foreseen to keep using something like this.
-
-
-Thanks
-Marco
-
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+Ciao,
+Dscho
