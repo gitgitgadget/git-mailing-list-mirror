@@ -1,62 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Rss produced by git is not valid xml?
-Date: Sat, 19 Nov 2005 11:58:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511191156450.12213@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200511181833.40048.ismail@uludag.org.tr> <200511182127.06958.ismail@uludag.org.tr>
- <20051118200217.GA2831@vrfy.org> <200511182208.24248.ismail@uludag.org.tr>
- <Pine.LNX.4.64.0511181220350.13959@g5.osdl.org> <20051118205513.GA3168@vrfy.org>
- <Pine.LNX.4.64.0511181314470.13959@g5.osdl.org> <Pine.LNX.4.64.0511181338460.13959@g5.osdl.org>
- <437E51EB.7050100@zytor.com> <Pine.LNX.4.64.0511181519100.13959@g5.osdl.org>
- <437E6505.8000201@zytor.com> <437E697C.7090307@op5.se> <437E7E3E.4040303@zytor.com>
- <437EE72A.3050704@op5.se>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: git --exec-path conversion
+Date: Sat, 19 Nov 2005 03:14:44 -0800 (PST)
+Message-ID: <20051119111444.82122.qmail@web26309.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 11:58:53 2005
+X-From: git-owner@vger.kernel.org Sat Nov 19 12:14:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdQQ7-0001jv-7g
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 11:58:11 +0100
+	id 1EdQgE-00063i-1t
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 12:14:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751014AbVKSK6H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 Nov 2005 05:58:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751046AbVKSK6H
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 05:58:07 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:13747 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751014AbVKSK6F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Nov 2005 05:58:05 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 238191401BE; Sat, 19 Nov 2005 11:58:05 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 03746B525D; Sat, 19 Nov 2005 11:58:05 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id CFB44B525B; Sat, 19 Nov 2005 11:58:04 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 9A3411401BE; Sat, 19 Nov 2005 11:58:04 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <437EE72A.3050704@op5.se>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751041AbVKSLOq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 Nov 2005 06:14:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbVKSLOq
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 06:14:46 -0500
+Received: from web26309.mail.ukl.yahoo.com ([217.146.176.20]:63074 "HELO
+	web26309.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1751041AbVKSLOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Nov 2005 06:14:46 -0500
+Received: (qmail 82124 invoked by uid 60001); 19 Nov 2005 11:14:44 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=v4HY8jtIL4KmtE4OHzscJDLMijvnmpSLPi54VmHnHp/mcTAV2udVXBrEBnLEeZrXcnJR6Tu4P/+n9KvdVNGn0cRviy75rFVrIw/67IqLnQBlqonxKmUZ6nnZnLSqB4ay6wG0qxsYDYatTxGtZn2W2+EPwFaroYFLjmYk6tLXtxU=  ;
+Received: from [151.44.24.124] by web26309.mail.ukl.yahoo.com via HTTP; Sat, 19 Nov 2005 03:14:44 PST
+To: junkio@cox.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12328>
 
 Hi,
 
-On Sat, 19 Nov 2005, Andreas Ericsson wrote:
+   if I understood correctly, git programs will be installed somewhere in $PATH for at least next
+two months.
 
-> Isn't it already? You can install and use any hooks you like after all.
+But I would like to update to what will be the future, i.e. prepending what 'git --exec-path' says
+to any git command.
 
-Exactly. All you have to do is provide a recipe for Documentation/howto/. 
-Anybody wanting to enforce policy just takes that recipe, adjusts it for 
-her needs, and installs the hook.
+I don't call git programs directly but I use a function QGit::run(cmd) that does this plus other
+things.
 
-Hth,
-Dscho
+The problem is that I call QGit::run() also for other commands not related to git (ls, cat,
+etc..).
+
+How can I make the transition?
+
+Now I have two ways, the brute force way and the easy (peraphs tricky) way.
+
+The brute force is to create a new function QGit::runGitCmd() that deals only with git commands
+_and_ replace all the occurences of run() with the latter.
+
+The easy way is to prepend the exec-path *inside* run(), and to use to disambiguate bewteen git
+and shell commands the testing of first three chars of the command to launch, something like:
+
+    if (cmd.left(3) == "git") 
+         cmd = cmd.prepend(exec-path);
+
+
+I would like to go with the second one, I'm a bit lazy ;-) , but I would like to ask if this is a
+good policy, i.e. if also inside git programs/scripts (like in git.c I guess) is used or is
+foreseen to keep using something like this.
+
+
+Thanks
+Marco
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
