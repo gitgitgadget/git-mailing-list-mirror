@@ -1,55 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] git email submissions
-Date: Sat, 19 Nov 2005 13:08:13 -0800
-Message-ID: <7vlkzk4a82.fsf@assigned-by-dhcp.cox.net>
-References: <437B4472.1080401@pobox.com>
-	<Pine.LNX.4.64.0511160847250.13959@g5.osdl.org>
-	<437B7213.2020406@zytor.com> <437B73E2.3080903@pobox.com>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: cg-commit doesn't like new repository
+Date: Sat, 19 Nov 2005 22:43:10 +0000
+Message-ID: <200511192243.10815.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Nov 19 22:09:00 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Nov 19 23:44:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdZwY-0007lO-9M
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 22:08:18 +0100
+	id 1EdbQL-0006W0-AP
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 23:43:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750808AbVKSVIP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 Nov 2005 16:08:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750844AbVKSVIP
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 16:08:15 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:57549 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1750808AbVKSVIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Nov 2005 16:08:14 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051119210717.SQVB17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 19 Nov 2005 16:07:17 -0500
+	id S1751003AbVKSWnD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 Nov 2005 17:43:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751009AbVKSWnB
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 17:43:01 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:41133
+	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
+	id S1751003AbVKSWnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Nov 2005 17:43:00 -0500
+Received: from kanger.home ([192.168.0.21])
+	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
+	id 1EdbQB-0006HB-MS
+	for git@vger.kernel.org; Sat, 19 Nov 2005 22:42:59 +0000
 To: git@vger.kernel.org
-In-Reply-To: <437B73E2.3080903@pobox.com> (Jeff Garzik's message of "Wed, 16
-	Nov 2005 13:01:06 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+User-Agent: KMail/1.8.2
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12354>
 
-Jeff Garzik <jgarzik@pobox.com> writes:
+I just decided to make a repository of /etc, but because I didn't want to load 
+in all the files, I used git-init-db to create the repository rather than 
+cg-init-db
 
-> I would presume an email body would look like
->
-> overall description of changes
-> git log master..HEAD | git shortlog
-> git diff master..HEAD | diffstat -p1
-> git diff master..HEAD
-> <pack file MIME attachment>
+I then did cg-add for fstab
 
-As Smurf commented, the delta data is sent twice if you sent a
-pack of "^his mine" -- once as a textual diff and then the delta
-data in the pack.  You can slightly do better than that.
-Because you are sending the diff, the pack you send does not
-have to include the post-image of patch application, and I
-suspect your pack would not have to contain anything other than
-commit objects.
+followed up by cg-commit which then failed as shown below
+
+As soon as I have done a git-commit, all is OK, and cg-commit works again.
+
+I presume there is something that cg-init-db does which makes it suitable for 
+cogito - but what, and shouldn't cg-commit notice and either do it 
+automatically or give a different error message?
+
+
+cg-commit
+usage: git-diff-index [-m] [--cached] [<common diff options>] <tree-ish> 
+[<path>...]
+common diff options:
+  -z            output diff-raw with lines terminated with NUL.
+  -p            output patch format.
+  -u            synonym for -p.
+  --name-only   show only names of changed files.
+  --name-status show names and status of changed files.
+  -R            swap input file pairs.
+  -B            detect complete rewrites.
+  -M            detect renames.
+  -C            detect copies.
+  --find-copies-harder
+                try unchanged files as candidate for copy detection.
+  -l<n>         limit rename attempts up to <n> paths.
+  -O<file>      reorder diffs according to the <file>.
+  -S<string>    find filepair whose only one side contains the string.
+  --pickaxe-all
+                show all files diff when -S is used and hit is found.
+
+cg-commit: Nothing to commit
+root@kanger etc[master]#                                            
+-- 
+Alan Chandler
+http://www.chandlerfamily.org.uk
+Open Source. It's the difference between trust and antitrust.
