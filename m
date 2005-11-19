@@ -1,81 +1,105 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: Rss produced by git is not valid xml?
-Date: Fri, 18 Nov 2005 22:31:24 -0800 (PST)
-Message-ID: <20051119063125.40234.qmail@web26303.mail.ukl.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitk: moving all three panes if clicking on an arrow.
+Date: Sat, 19 Nov 2005 00:31:47 -0800
+Message-ID: <7vfyptavik.fsf@assigned-by-dhcp.cox.net>
+References: <20051105195529.GB6081@scotty.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Nov 19 07:32:21 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 19 09:33:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdMG9-000504-0Y
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 07:31:37 +0100
+	id 1EdO8m-0001iU-Rx
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 09:32:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423AbVKSGbb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 Nov 2005 01:31:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751444AbVKSGbb
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 01:31:31 -0500
-Received: from web26303.mail.ukl.yahoo.com ([217.146.176.14]:12409 "HELO
-	web26303.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1751423AbVKSGbb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Nov 2005 01:31:31 -0500
-Received: (qmail 40237 invoked by uid 60001); 19 Nov 2005 06:31:25 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=PaolBlCqS1sa3joSHXcrcddMRZlC4aM/dlFIlF/pP+vb/06GkyQz/HmEkU6UJCm3c4AMdbgB6RJYRYtyLBDbnPipGR0njel8GeLFbpHbl+/wLmqNIHHezvDZkEHoX0JjvfcSSs/4TF3KgcPDlR+acVCAj8Q13vqYwaDFWQTvB6g=  ;
-Received: from [151.44.24.124] by web26303.mail.ukl.yahoo.com via HTTP; Fri, 18 Nov 2005 22:31:24 PST
-To: "H. Peter Anvin" <hpa@zytor.com>
+	id S1750953AbVKSIbu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 Nov 2005 03:31:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750971AbVKSIbu
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 03:31:50 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:34222 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1750953AbVKSIbt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Nov 2005 03:31:49 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051119083117.GJJI20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 19 Nov 2005 03:31:17 -0500
+To: paulus@samba.org
+In-Reply-To: <20051105195529.GB6081@scotty.home> (Stefan-W. Hahn's message of
+	"Sat, 5 Nov 2005 20:55:29 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12323>
 
-H. Peter Anvin wrote:
+"Stefan-W. Hahn" <stefan.hahn@s-hahn.de> writes:
 
-> Junio C Hamano wrote:
+> [PATCH] gitk: moving all three panes if clicking on an arrow.
 >
->> I just looked at the diff this commit introduces:
->>
->>     e6bd23911efd0a2bd756c77d9e7ba6576eb739a1
->>         Documentation: asciidoc sources are utf-8
->>
->> with gitk (BTW, I pulled from paulus today, so "master" branch
->> has the latest gitk) while my locale set to LC_CTYPE=en_US.utf8.
->>
->> Surprisingly, the diff to Documentation/git-pack-redundant.txt,
->> which changes Lukas' name originally incorrectly encoded in
->> iso-8859-1 to utf-8, was shown and both pre-image and post-image
->> lines are readable.
->>
->> I do not know how tcl/tk does it, but it is doing the right
->> thing.
->>
->
-> Tcl/Tk assumes that anything that isn't valid UTF-8 is Latin-1.
->
->     -hpa
-> -
-My locale is set to LC_CTYPE=it_IT (local codec is ISO 8859-15).
+> Signed-off-by: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
 
-Gitk shows correctly pre-image lines, but not post-image. BTW it's 
-the same output I have with
+Obviously correct and much more pleasant to use.
 
-      git-diff-tree -p e6bd23911efd0a2bd756c77d9e7ba6576eb739a1
+Acked-by: Junio C Hamano <junkio@cox.net>
 
-run from KDE Konsole.
+Paul, I earlier sent a pull request; I included this patch there
+as well.  So you will find the following four.
 
-So I think the local encoding (LC_CTYPE) has a role in the story.
+commit e3fe532ddce7311cfbbdc98d2e157d33f6275231
+Author: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
+Date:   Sat Nov 5 20:55:29 2005 +0100
 
-Marco
+    gitk: moving all three panes if clicking on an arrow.
+    
+    Signed-off-by: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
 
+commit fd913b39101c6ff185e76e459479621c9b475fa1
+Author: Pavel Roskin <proski@gnu.org>
+Date:   Fri Nov 11 10:09:12 2005 -0500
 
+    gitk: use git-diff-tree --no-commit-id
+    
+    gitk switched to use git-diff-tree with one argument in gettreediffs and
+    getblobdiffs.  git-diff-tree with one argument outputs commit ID in from
+    of the patch.  This causes an empty line after "Comments" in the lower
+    right pane.  Also, the diff in the lower left pane has the commit ID,
+    which is useless there.
+    
+    This patch makes git use the newly added -no-commit-id option for
+    git-diff-tree to suppress commit ID.  It also removes the p variable in
+    both functions, since it has become useless after switching to the
+    one-argument invocation for git-diff-tree.
+    
+    Signed-off-by: Pavel Roskin <proski@gnu.org>
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-	
-		
-__________________________________ 
-Yahoo! Mail - PC Magazine Editors' Choice 2005 
-http://mail.yahoo.com
+commit e246483dc5b56d7deb04a93b0aa08aba4cde0625
+Author: Frank Sorenson <frank@tuxrocks.com>
+Date:   Sun Oct 30 02:06:46 2005 -0700
+
+    gitk: Specify line hover font
+    
+    Hovering over a line in gitk displays the commit one-liner in a
+    box, but the text usually overflows the box.  The box size is
+    computed with a specified font, so this patch sets the text font
+    as well.
+    
+    Signed-off-by: Frank Sorenson <frank@tuxrocks.com>
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+commit 36a7cad6e4ae8a331731666d985a7619a76bb4fb
+Author: Junio C Hamano <junkio@cox.net>
+Date:   Fri Nov 18 23:54:17 2005 -0800
+
+    readrefs: grab all refs with one call to ls-remote.
+    
+    Instead of reading refs/heads/* and refs/tags/* files ourselves
+    and missing files in subdirectories of heads/ and tags/, use
+    ls-remote on local repository and grab all of them.  This lets us
+    also remove the procedure readotherrefs.
+    
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
