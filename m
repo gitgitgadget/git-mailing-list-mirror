@@ -1,72 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Applying a graft to a tree and "rippling" the changes through
-Date: Fri, 18 Nov 2005 16:49:34 -0800
-Message-ID: <7v3bltea1t.fsf@assigned-by-dhcp.cox.net>
-References: <20051117230723.GD26122@nowhere.earth> <437DDDB1.60103@b-i-t.de>
-	<Pine.LNX.4.64.0511180915560.13959@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Rss produced by git is not valid xml?
+Date: Fri, 18 Nov 2005 17:05:10 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511181653191.13959@g5.osdl.org>
+References: <200511181833.40048.ismail@uludag.org.tr> <200511182127.06958.ismail@uludag.org.tr>
+ <20051118200217.GA2831@vrfy.org> <200511182208.24248.ismail@uludag.org.tr>
+ <Pine.LNX.4.64.0511181220350.13959@g5.osdl.org> <20051118205513.GA3168@vrfy.org>
+ <Pine.LNX.4.64.0511181314470.13959@g5.osdl.org> <Pine.LNX.4.64.0511181338460.13959@g5.osdl.org>
+ <437E51EB.7050100@zytor.com> <Pine.LNX.4.64.0511181520390.13959@g5.osdl.org>
+ <7vek5deam6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 01:50:57 2005
+X-From: git-owner@vger.kernel.org Sat Nov 19 02:06:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdGvD-0005bm-6C
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 01:49:39 +0100
+	id 1EdHAX-0001Bk-9Q
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 02:05:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751254AbVKSAtg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 19:49:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbVKSAtg
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 19:49:36 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:62904 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751254AbVKSAtg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Nov 2005 19:49:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051119004857.BFHO20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 18 Nov 2005 19:48:57 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932140AbVKSBF0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 20:05:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932142AbVKSBF0
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 20:05:26 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:9440 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932140AbVKSBF0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 20:05:26 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAJ15GnO008665
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 18 Nov 2005 17:05:18 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAJ15BBf011315;
+	Fri, 18 Nov 2005 17:05:15 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vek5deam6.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12313>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> On Fri, 18 Nov 2005, sf wrote:
->> 
->> A commit is really just the statement: "I changed the tree from state A to
->> state B". After all, the commit message does not describe the new state
->> (neither the old state) but does describe the changes.
->
-> There are lots of changelog entries that don't necessarily make sense 
-> without knowing what went before them, so history is actually important 
-> even in a local sense - it's often what allows the explanation to make 
-> sense.
 
-I agree with what you said about commit objects and what they
-are meant to describe.  At the same time, I am sympathetic if
-somebody wants to be able to say just "The change this commit
-brings in can be used to modify the behaviour X to Y".  An
-implied prerequisite for such a statement is that you can apply
-such a change only to something that has behaviour X, and
-internally works in a certain way to exhibit that behaviour, to
-begin with (IOW, otherwise the patch does not apply).  While
-your "commit describes all the history leading to it" obviously
-satisfies that prerequisite, it is stronger than necessary.
+On Fri, 18 Nov 2005, Junio C Hamano wrote:
+> 
+> Pulls are "too late, sorry you have to live with it"; for
+> patches, mailinfo and am have -u (I do not remember if I added
+> it to applymbox -- I do not use applymbox anymore myself).
 
-For that matter, "tree A changed into tree B" is stronger than
-necessary as well.  There are trees other than tree A that has
-the same behaviour X, and applying such a change would be valid
-to modify its behaviour to Y.
+It's in applymbox too, although the default is not to use it (and 
+applymbox only supports the short "-u" form, not the "--utf8" one).
 
-You are absolutely right that commit messages should be taken in
-the context of the history leading to it.  However, when we
-exchange patches via e-mail, or do "rebase" in the repository,
-we also use the commit message to label the change -- and with
-that usage, the log message becomes less about describing the
-history and more about "modifies X to Y", so it is easy to get
-confused.
+> Maybe we should make -u the default and countermand with -U to
+> encourage the use of utf8 further?
+
+Probably. 
+
+Although right now "-u" doesn't actually _force_ a conversion: if you have 
+an email with 8-bit characters and no character set mentioned, it will 
+silently just do nothing, and the end result won't be valid UTF-8 after 
+all.
+
+I think. You're the one who wrote all the conversion stuff ;)
+
+If we want utf-8, we should probably force it, and default to the latin1 
+translation (with some way to specify alternatives).
+
+			Linus
