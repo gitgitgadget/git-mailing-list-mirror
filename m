@@ -1,65 +1,67 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Rss produced by git is not valid xml?
-Date: Fri, 18 Nov 2005 15:57:02 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511181554580.13959@g5.osdl.org>
-References: <200511181833.40048.ismail@uludag.org.tr> <200511182127.06958.ismail@uludag.org.tr>
- <20051118200217.GA2831@vrfy.org> <200511182208.24248.ismail@uludag.org.tr>
- <Pine.LNX.4.64.0511181220350.13959@g5.osdl.org> <20051118205513.GA3168@vrfy.org>
- <Pine.LNX.4.64.0511181314470.13959@g5.osdl.org> <Pine.LNX.4.64.0511181338460.13959@g5.osdl.org>
- <437E51EB.7050100@zytor.com> <Pine.LNX.4.64.0511181519100.13959@g5.osdl.org>
- <437E6505.8000201@zytor.com>
+Date: Sat, 19 Nov 2005 01:04:42 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511190101590.28126@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200511181833.40048.ismail@uludag.org.tr> <200511181926.10357.ismail@uludag.org.tr>
+ <200511182127.06958.ismail@uludag.org.tr> <20051118200217.GA2831@vrfy.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kay Sievers <kay.sievers@vrfy.org>,
-	Ismail Donmez <ismail@uludag.org.tr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 19 01:21:49 2005
+Cc: Ismail Donmez <ismail@uludag.org.tr>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 19 01:23:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdG6W-0002Xr-Ou
-	for gcvg-git@gmane.org; Sat, 19 Nov 2005 00:57:17 +0100
+	id 1EdGDq-0005VP-5N
+	for gcvg-git@gmane.org; Sat, 19 Nov 2005 01:04:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751104AbVKRX5N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Nov 2005 18:57:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbVKRX5N
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 18:57:13 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:30418 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751104AbVKRX5N (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Nov 2005 18:57:13 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAINv6nO005652
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 18 Nov 2005 15:57:06 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAINv3CY008519;
-	Fri, 18 Nov 2005 15:57:04 -0800
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <437E6505.8000201@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751167AbVKSAEq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Nov 2005 19:04:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751173AbVKSAEq
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Nov 2005 19:04:46 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:57536 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751167AbVKSAEq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Nov 2005 19:04:46 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 0EBEC13FFEE; Sat, 19 Nov 2005 01:04:43 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E4E5E9F36D; Sat, 19 Nov 2005 01:04:42 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id D1AF6907C8; Sat, 19 Nov 2005 01:04:42 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 35B7013FFEE; Sat, 19 Nov 2005 01:04:42 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Kay Sievers <kay.sievers@vrfy.org>
+In-Reply-To: <20051118200217.GA2831@vrfy.org>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12303>
 
+Hi,
 
+On Fri, 18 Nov 2005, Kay Sievers wrote:
 
-On Fri, 18 Nov 2005, H. Peter Anvin wrote:
-> 
-> There is another usage mode: "we're dumping CVS and switching to this
-> new-fangled git thing."  I have myself done this with several projects by now.
+> Yes, convince the git maintainers, that it's incredibly stupid not to
+> enforce utf8 in commit messages. It makes absolutely zero sense in a
+> SCM, which merges forth and back between people around the world to
+> allow random encodings from the last century.
 
-I agree that in that case, the problem space is _much_ simpler, and you're 
-able to do much more. 
+Oh, but it makes sense! Just because you happen to work on a very 
+international project does not mean everybody does.
 
-And I suspect it works well for projects with a few developers that can 
-just afford to do that. And it obviously works for a big project with 
-hundreds of developers that is forced to do it. 
+Just because you happen to like utf-8 does not mean that you still do in 
+2046. The encoding-du-jour might well be a 64-bit wide char code by then, 
+since they'll laugh about our dreaming about terabytes.
 
-But I suspect it's not the common way of doing things. There's already a 
-few projects that do the "maintain in parallel" thing, like the Wine tree 
-discussed a few days ago.
+BTW, utf-8 was designed on purpose to be easily distinguishable from other 
+encodings so that you don't have to rely on every document obeying a 
+certain encoding.
 
-		Linus
+Hth,
+Dscho
