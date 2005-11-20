@@ -1,97 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Get rid of .git/branches/ and .git/remotes/?
-Date: Sun, 20 Nov 2005 20:50:41 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511202039340.23586@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Support username and password inside URL
+Date: Sun, 20 Nov 2005 12:21:53 -0800
+Message-ID: <7vwtj3xe72.fsf@assigned-by-dhcp.cox.net>
+References: <87u0e71zpx.fsf@litku.valo.iki.fi>
+	<873blriqh0.fsf@litku.valo.iki.fi>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 20 20:50:56 2005
+X-From: git-owner@vger.kernel.org Sun Nov 20 21:22:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdvDD-0005Zb-RB
-	for gcvg-git@gmane.org; Sun, 20 Nov 2005 20:50:56 +0100
+	id 1EdvhR-0004xa-Oo
+	for gcvg-git@gmane.org; Sun, 20 Nov 2005 21:22:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932070AbVKTTuo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 14:50:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932072AbVKTTuo
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 14:50:44 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:63183 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932070AbVKTTun (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2005 14:50:43 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5CEB6140294; Sun, 20 Nov 2005 20:50:42 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 41A9B9F398; Sun, 20 Nov 2005 20:50:42 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 2CB8F9F396; Sun, 20 Nov 2005 20:50:42 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id CE59B140294; Sun, 20 Nov 2005 20:50:41 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1750776AbVKTUV4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 15:21:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750795AbVKTUVz
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 15:21:55 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:7346 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1750776AbVKTUVz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2005 15:21:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051120202050.TEAR26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 20 Nov 2005 15:20:50 -0500
+To: Kalle Valo <Kalle.Valo@iki.fi>
+In-Reply-To: <873blriqh0.fsf@litku.valo.iki.fi> (Kalle Valo's message of "Sun,
+	20 Nov 2005 12:05:47 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12397>
 
-Hi,
+Kalle Valo <Kalle.Valo@iki.fi> writes:
 
-On Sun, 20 Nov 2005, Linus Torvalds wrote:
+> Currently usage of curl was so that netrc was mandatory and passwords in URL
+> weren't allowed. Change netrc to optional to make HTTP basic authentication
+> with username and password in URL also work.
 
-> 	[branches.origin]
-> 		url = master.kernel.org:/pub/scm/git/git.git
-> 		pull = master:origin
-> 
-> 	[branches.mine]
-> 		url = my.domain.com:/other/repo
-> 		pull = master:mine
+HTTP "basic"?  Let's at least say "digest" for starters ;-).
 
-I like this approach best. In fact, that was my idea on how to go about 
-implementing that feature.
+I am modestly against letting users use auth-embedding URLs, and
+fairly strongly against encouraging users to do so.
 
-However, 
+It is handy to have weak "authentication" in some situations.  I
+am not ashamed to admit that I've used security-by-obscurity
+myself, when I sent an email to a friend, saying:
 
-> 	[branches.origin]
-> 		url = master.kernel.org:/pub/scm/git/git.git
-> 		pull = master:origin
-> 
-> 	    [.mine]
-> 		url = my.domain.com:/other/repo
-> 		pull = master:mine
+        Hi, I have some pictures I took during our last trip
+        together, but due to their size I am not attaching them
+        to this e-mail.  Please pick them up at:
 
-I don't like this. Usually, data in ini files is not dependent on its 
-position in the file, with the notable exception of section names. I never 
-ran across nested sections (probably for all the reasons XML is 
-unreadable). And the sections should be exchangable, just for clarities 
-sake.
+	        http://members.cox.net/junkio/r0ZIEF/5S54m/
 
-> And I'm not 100% convinced that putting these branches in the config file 
-> has any real advantages over keeping them as separate files. Having 
-> everything in one place is nice, of course, and being able to copy just 
-> one file around might be convenient, but it _does_ make the config file 
-> more complicated.
+        Please drop me a note after picking them up, so that I
+        can clean-up the directory.
 
-And it _does_ make finding the information for less savvy git users more 
-easy.
+Auth-embedding URLs are about as secure as the above URL, but it
+is worse because they may tempt you to reuse the same username
+password pair for other purposes later.
 
-I'm not 100% convinced, either, but it could be a better concept than 
-different files in different places and different formats basically doing 
-the same.
-
-But my thinking went like this: if Pasky and Junio can not agree on one 
-location and format, and therefore none of the two is deprecated, how 
-about giving them a way out they both might be able to agree to?
-
-Ciao,
-Dscho
-
-P.S.: Anybody noticed that I did not use 0xb4 in five days?
+If you are using the password protected URL yourself, I'd
+imagine having them in your netrc would not be such a big deal,
+so I suspect your expected usage is not for yourself, but more
+like giving a temporary, even one-shot, access to others like
+the above example, and making it more convenient for them (even
+in that case, if it is not one-shot but for repeated use, I'd
+imagine it would not be such a big deal to ask them to do
+appropriate netrc).  If that is what is going on here, then
+IMNSHO it would be better to make it clear that you are doing
+security-by-obscurity by not using username password pair, which
+makes you pretend that you are doing _some_ security.
