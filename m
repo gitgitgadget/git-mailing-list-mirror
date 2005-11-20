@@ -1,82 +1,83 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Rss produced by git is not valid xml?
-Date: Sun, 20 Nov 2005 10:28:11 -0800
-Message-ID: <4380C03B.9090603@zytor.com>
-References: <200511181833.40048.ismail@uludag.org.tr> <200511181926.10357.ismail@uludag.org.tr> <200511182127.06958.ismail@uludag.org.tr> <20051118200217.GA2831@vrfy.org> <Pine.LNX.4.63.0511190101590.28126@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: Get rid of .git/branches/ and .git/remotes/?
+Date: Sun, 20 Nov 2005 19:29:43 +0100
+Message-ID: <20051120182943.GG8383MdfPADPa@greensroom.kotnet.org>
+References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Kay Sievers <kay.sievers@vrfy.org>,
-	Ismail Donmez <ismail@uludag.org.tr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 20 19:29:25 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 20 19:30:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdtvT-0001z3-3g
-	for gcvg-git@gmane.org; Sun, 20 Nov 2005 19:28:31 +0100
+	id 1Edtwo-0002HI-L2
+	for gcvg-git@gmane.org; Sun, 20 Nov 2005 19:29:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750896AbVKTS2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 13:28:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750888AbVKTS2Z
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 13:28:25 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:13241 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750792AbVKTS2Y
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2005 13:28:24 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jAKISBih027876
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 20 Nov 2005 10:28:12 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0511190101590.28126@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1750892AbVKTS3w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 13:29:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750900AbVKTS3w
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 13:29:52 -0500
+Received: from smtp19.wxs.nl ([195.121.247.10]:64391 "EHLO smtp19.wxs.nl")
+	by vger.kernel.org with ESMTP id S1750888AbVKTS3v (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Nov 2005 13:29:51 -0500
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp19.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0IQ9009PUNDJB8@smtp19.wxs.nl> for git@vger.kernel.org; Sun,
+ 20 Nov 2005 19:29:43 +0100 (CET)
+Received: (qmail 22112 invoked by uid 500); Sun, 20 Nov 2005 18:29:43 +0000
+In-reply-to: <Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
+To: Linus Torvalds <torvalds@osdl.org>
+Mail-followup-to: Linus Torvalds <torvalds@osdl.org>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12393>
 
-Johannes Schindelin wrote:
-> Hi,
+On Sun, Nov 20, 2005 at 10:09:50AM -0800, Linus Torvalds wrote:
+> and that would result in a parse of
 > 
-> On Fri, 18 Nov 2005, Kay Sievers wrote:
-> 
-> 
->>Yes, convince the git maintainers, that it's incredibly stupid not to
->>enforce utf8 in commit messages. It makes absolutely zero sense in a
->>SCM, which merges forth and back between people around the world to
->>allow random encodings from the last century.
-> 
-> 
-> Oh, but it makes sense! Just because you happen to work on a very 
-> international project does not mean everybody does.
-> 
-> Just because you happen to like utf-8 does not mean that you still do in 
-> 2046. The encoding-du-jour might well be a 64-bit wide char code by then, 
-> since they'll laugh about our dreaming about terabytes.
-> 
-> BTW, utf-8 was designed on purpose to be easily distinguishable from other 
-> encodings so that you don't have to rely on every document obeying a 
-> certain encoding.
+> 	core.values.fixed = true
+> 	core.values.nested = fine
+> 	core.values.example.test = Hell yes
+> 	core.other.example = strange
+> 	core.name = hi
+> 	secontion.example = yet another
 > 
 
-No, it wasn't.  It was designated on purpose to be ASCII-compatible, 
-substring-safe, and minimally stateful.
+[..]
 
-Furthermore, it's extensible.  Although the original UTF-8 is limited to 
-31 bits, and the officially published UTF-8 is further crippled to 21 
-bits by Mirco$oft cronies who wanted it to be brainfuck-compatible with 
-UTF-16, it could easily be extended to 64 bits or beyond.
+> I dunno. That seems a nice extension, and it would make these things 
+> very unambiguous. But how do other .ini-file-like things do this?
 
-I think it's *definitely* safe to say that whatever encoding we'll use 
-in 2046, current UTF-8 will be a subset.  If you don't believe me, 
-consider how long we've had ASCII and the first of the design criteria 
-for UTF-8 that I listed in the first paragraph.
+Not sure if this falls in the ".ini-file-like" category, but
+YAML (www.yaml.org) does nesting based on indentation.
+Your example would look like
 
-	-hpa
+core:
+  values:
+    fixed: true
+    nested: fine
+    example:
+      test: Hell yes
+  other:
+    example: strange
+  name: hi
+secontion:
+  example: yet another
+
+or
+
+core:
+  values: { fixed: true, nested: fine, example: { test: Hell yes } }
+  other: { example: strange }
+  name: hi
+secontion: { example: 'yet another' }
+
+skimo
