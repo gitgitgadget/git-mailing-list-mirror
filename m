@@ -1,76 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] merge-one-file: remove empty directories
-Date: Sun, 20 Nov 2005 09:17:38 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511200901450.13959@g5.osdl.org>
-References: <17279.1674.22992.607091@cargo.ozlabs.ibm.com>
-	<20051119140736.GA24901@lst.de>
-	<Pine.LNX.4.64.0511190957320.13959@g5.osdl.org>
-	<7v4q683qhe.fsf@assigned-by-dhcp.cox.net>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: Diffs "from" working directory
+Date: Sun, 20 Nov 2005 12:43:59 -0500
+Message-ID: <20051120174359.GA24177@fieldses.org>
+References: <200511201817.15780.blaisorblade@yahoo.it>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, linuxppc64-dev@ozlabs.org,
-	Paul Mackerras <paulus@samba.org>, Git Mailing List <git@vger.kernel.org>
-X-From: linuxppc64-dev-bounces@ozlabs.org Sun Nov 20 18:18:17 2005
-Return-path: <linuxppc64-dev-bounces@ozlabs.org>
-Received: from ozlabs.org ([203.10.76.45])
+Content-Type: text/plain; charset=us-ascii
+Cc: Chuck Lever <cel@netapp.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 20 18:44:53 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdspG-0008NL-68
-	for glppd-linuxppc64-dev@m.gmane.org; Sun, 20 Nov 2005 18:18:03 +0100
-Received: from ozlabs.org (localhost [127.0.0.1])
-	by ozlabs.org (Postfix) with ESMTP id 24FA9687A5;
-	Mon, 21 Nov 2005 04:17:57 +1100 (EST)
-X-Original-To: linuxppc64-dev@ozlabs.org
-Delivered-To: linuxppc64-dev@ozlabs.org
-Received: from smtp.osdl.org (smtp.osdl.org [65.172.181.4])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(Client CN "smtp.osdl.org", Issuer "OSDL Hostmaster" (not verified))
-	by ozlabs.org (Postfix) with ESMTP id 4A2CA681C2
-	for <linuxppc64-dev@ozlabs.org>; Mon, 21 Nov 2005 04:17:55 +1100 (EST)
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAKHHenO007357
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 20 Nov 2005 09:17:41 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAKHHcEA010022;
-	Sun, 20 Nov 2005 09:17:39 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4q683qhe.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
-X-BeenThere: linuxppc64-dev@ozlabs.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: 64-bit Linux on PowerPC Developers Mail List
-	<linuxppc64-dev.ozlabs.org>
-List-Unsubscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
-	<mailto:linuxppc64-dev-request@ozlabs.org?subject=unsubscribe>
-List-Archive: <http://ozlabs.org/pipermail/linuxppc64-dev>
-List-Post: <mailto:linuxppc64-dev@ozlabs.org>
-List-Help: <mailto:linuxppc64-dev-request@ozlabs.org?subject=help>
-List-Subscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
-	<mailto:linuxppc64-dev-request@ozlabs.org?subject=subscribe>
-Sender: linuxppc64-dev-bounces@ozlabs.org
-Errors-To: linuxppc64-dev-bounces@ozlabs.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12387>
+	id 1EdtEV-0006vo-Qw
+	for gcvg-git@gmane.org; Sun, 20 Nov 2005 18:44:08 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751237AbVKTRoE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 12:44:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751300AbVKTRoE
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 12:44:04 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:16101 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP
+	id S1751237AbVKTRoC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2005 12:44:02 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.54)
+	id 1EdtEN-0006ec-AT; Sun, 20 Nov 2005 12:43:59 -0500
+To: Blaisorblade <blaisorblade@yahoo.it>
+Content-Disposition: inline
+In-Reply-To: <200511201817.15780.blaisorblade@yahoo.it>
+User-Agent: Mutt/1.5.11
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12388>
 
+On Sun, Nov 20, 2005 at 06:17:15PM +0100, Blaisorblade wrote:
+> I've given a look at commit fcc1ad70be5ff89996358b6d770cd229fec2a3ba, and 
+> while it may or may not be the right thing to do, there's a misunderstanding 
+> at the base.
 
+What misunderstanding?  Could you quote it?
 
-On Sat, 19 Nov 2005, Junio C Hamano wrote:
+> For instance, in the stg tree, before that patch, I can do:
 > 
-> [jc: We probably could use "rmdir -p", but for now we do that by
-> hand for portability.]
+> $ echo ciao >> README
+> $ stg diff -r HEAD:
+> $ stg diff -r HEAD
+> diff --git a/README b/README
+> index 184ded8..adb3970 100644
+> --- a/README
+> +++ b/README
+> @@ -12,3 +12,4 @@ StGIT commands.
+> 
+>  For the latest version see http://www.procode.org/stgit/
+>  For a tutorial see http://wiki.procode.org/cgi-bin/wiki.cgi/StGIT_Tutorial
+> +ciao
 
-Some googling seems to imply that "-p" is pretty much globally available.
+That's a diff *to* the working directory.  My complaint was that there
+wasn't a convenient way to get a diff *from* the working directory.
 
-It's in POSIX.1, but more importantly, it seems to actually be actively 
-used in BSD projects, and I found a man-page with copyright date in -92 
-(SCO of all places) which mentiones AT&T SVID2 - but not the more modern 
-standards.
+It's nice to have a convenient shorthand for the current working
+directory, and since there's already a shorthand for the HEAD ("HEAD")
+it seemed more sensible to make "" the current working directory.
 
-Even VMS seems to have it (although if git is ever ported to VMS, I'll 
-just have to shoot myself. I used VMS in -88, and the scars are _still_ 
-fresh).
+It's a minor point, but it seems convenient.
 
-			Linus
+--b.
