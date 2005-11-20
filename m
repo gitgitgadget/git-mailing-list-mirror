@@ -1,92 +1,69 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: still unclear on setting up a repository
-Date: 19 Nov 2005 16:40:20 -0800
-Message-ID: <86br0g883v.fsf@blue.stonehenge.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: still unclear on setting up a repository
+Date: Sun, 20 Nov 2005 02:07:44 +0100
+Message-ID: <437FCC60.3090100@op5.se>
+References: <86br0g883v.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Nov 20 01:41:27 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 20 02:08:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EddGM-0008F8-L7
-	for gcvg-git@gmane.org; Sun, 20 Nov 2005 01:40:59 +0100
+	id 1EddgO-0005oR-IE
+	for gcvg-git@gmane.org; Sun, 20 Nov 2005 02:07:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750802AbVKTAk0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 Nov 2005 19:40:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750787AbVKTAk0
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 19:40:26 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:47770 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1750802AbVKTAkZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Nov 2005 19:40:25 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id EBEE38F36B
-	for <git@vger.kernel.org>; Sat, 19 Nov 2005 16:40:20 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 20177-03-3 for <git@vger.kernel.org>;
- Sat, 19 Nov 2005 16:40:20 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 6A95C8F36C; Sat, 19 Nov 2005 16:40:20 -0800 (PST)
-To: git@vger.kernel.org
-x-mayan-date: Long count = 12.19.12.14.11; tzolkin = 2 Chuen; haab = 9 Ceh
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1750937AbVKTBHq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 Nov 2005 20:07:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943AbVKTBHq
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Nov 2005 20:07:46 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:50152 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750937AbVKTBHp
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Nov 2005 20:07:45 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 67BA26BD00; Sun, 20 Nov 2005 02:07:44 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+In-Reply-To: <86br0g883v.fsf@blue.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12358>
+
+Randal L. Schwartz wrote:
+> And then, another "go-boom" problem:
+> 
+>     % cg-fetch
+>     Hard links don't work - using copy
+>     Fetching head...
+>     cp: illegal option -- d
 
 
-I'm really unclear here if it's me, the code, or the docs...
+I think this was resolved some weeks ago. Perhaps you could try the 
+latest cogito from git://git.kernel.org/pub/scm/cogito/cogito.git ?
 
-first, create the "remote"
+> 
+> Any chance you could make this more POSIX-like?  I know you have a big
+> warning in README.osx, but are you *really* needing all those weird
+> GNU-isms?  Maybe you could fall back to using rsync to copy exactly
+> what you need?
+> 
 
-        % cg-admin-setuprepo remote.git
+There aren't that many. This particular one was a typo, iirc.
 
-that works fine, now set up the "local"
+As for rsync; From the output you posted above, you were setting up both 
+the repositories on your local machine. Using rsync for those cases 
+would be pretty stupid.
 
-        % mkdir local.git
-        % cd local-git
-        % cg-init -m "junk message why should I have to do this one, it's dumb"
-
-Now here's where I'm unclear.  I need to "push" this into the remote,
-so I try this:
-
-        % cg-branch-add origin "$(cd ..; pwd)/remote.git#master"
-        % cg-branch-ls
-
-This seems to report the right thing.  I have a branch "origin"
-that points at the remote repository.  So far, I think I'm understanding
-what's happening.  But now, go boom:
-
-        % cg-push
-        cg-push: where to push to?
-
-Huh?  How do I do the initial push?  Not this way?  Is it me, docs, or
-code that is broken here?
-
-UPDATE...
-
-aha... "cg-push origin" works.  But "cg-push" is documented to
-default to "origin".  Why doesn't it?
-
-And then, another "go-boom" problem:
-
-    % cg-fetch
-    Hard links don't work - using copy
-    Fetching head...
-    cp: illegal option -- d
-    usage: cp [-R [-H | -L | -P]] [-f | -i | -n] [-pv] src target
-           cp [-R [-H | -L | -P]] [-f | -i | -n] [-pv] src1 ... srcN directory
-    cg-fetch: unable to get the head pointer of branch master
-
-Any chance you could make this more POSIX-like?  I know you have a big
-warning in README.osx, but are you *really* needing all those weird
-GNU-isms?  Maybe you could fall back to using rsync to copy exactly
-what you need?
+On a side-note, could you please turn off your spamvertising auto-reply? 
+It sends me some info about your perl-expertise and contact-numbers 
+every now and then. It's getting a bit annoying.
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
