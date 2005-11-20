@@ -1,89 +1,63 @@
-From: exon@op5.se (Andreas Ericsson)
-Subject: [PATCH] git-reset.txt: Small fix + clarifications.
-Date: Sun, 20 Nov 2005 22:42:11 +0100 (CET)
-Message-ID: <20051120214211.09A595BF78@nox.op5.se>
-X-From: git-owner@vger.kernel.org Sun Nov 20 22:42:31 2005
+From: "David S. Miller" <davem@davemloft.net>
+Subject: non-trivial merge failures
+Date: Sun, 20 Nov 2005 13:49:45 -0800 (PST)
+Message-ID: <20051120.134945.104623647.davem@davemloft.net>
+Mime-Version: 1.0
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Nov 20 22:50:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Edwwz-0003OK-4z
-	for gcvg-git@gmane.org; Sun, 20 Nov 2005 22:42:17 +0100
+	id 1Edx4F-00057r-Bu
+	for gcvg-git@gmane.org; Sun, 20 Nov 2005 22:49:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932083AbVKTVmO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 16:42:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932082AbVKTVmN
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 16:42:13 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:45804 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932083AbVKTVmN
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2005 16:42:13 -0500
-Received: from nox.op5.se (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 5978A6BD00
-	for <git@vger.kernel.org>; Sun, 20 Nov 2005 22:42:12 +0100 (CET)
-Received: by nox.op5.se (Postfix, from userid 500)
-	id 09A595BF78; Sun, 20 Nov 2005 22:42:11 +0100 (CET)
+	id S932090AbVKTVt3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 16:49:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932086AbVKTVt3
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 16:49:29 -0500
+Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:31662
+	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
+	id S932090AbVKTVt2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2005 16:49:28 -0500
+Received: from localhost ([127.0.0.1] ident=davem)
+	by sunset.davemloft.net with esmtp (Exim 4.54)
+	id 1Edx4D-0005QO-FD
+	for git@vger.kernel.org; Sun, 20 Nov 2005 13:49:45 -0800
 To: git@vger.kernel.org
+X-Mailer: Mew version 4.2.53 on Emacs 21.4 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12404>
 
 
-This basically translates the man-page from 'git-developerish' to plain
-english, adding some almost-sample output from git-status so users can
-recognize what will happen.
+Every time I try to do a non-trivial merge, I always
+get this:
 
-Also mention explicitly that --mixed updates the index, while --soft
-doesn't. I understood the old text to mean "--mixed is exactly like
---soft, but verbose".
+davem@sunset:~/src/GIT/net-2.6$ git pull git://git.skbuff.net/gitroot/yoshfuji/linux-2.6.14+advapi-fix/
+Unpacking 21 objects
+ 100% (21/21) done
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+Traceback (most recent call last):
+  File "/home/davem/bin/git-merge-recursive", line 13, in ?
+    from gitMergeCommon import *
+  File "/home/davem/share/git-core/python/gitMergeCommon.py", line 18, in ?
+    import subprocess
+ImportError: No module named subprocess
+Automatic merge failed/prevented; fix up by hand
+davem@sunset:~/src/GIT/net-2.6$ 
 
-Signed-off-by: Andreas Ericsson <ae@op5.se>
+(one can reproduce this exact tree state by cloning:
+	master.kernel.org:/pub/scm/linux/kernel/git/davem/net-2.6.git
+ then executing the above pull command)
 
----
+Maybe something is wrong with my python installation or
+something like that?
 
- Documentation/git-reset.txt |   19 +++++++++++++++----
- 1 files changed, 15 insertions(+), 4 deletions(-)
-
-applies-to: 0262dd41632580ee56288ad12fce71b6d260bf38
-615aa2e01117c5ec82df3a5ad2f0328c89acdde8
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 31ec207..6af3a4f 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -14,19 +14,30 @@ DESCRIPTION
- Sets the current head to the specified commit and optionally resets the
- index and working tree to match.
- 
-+This command is useful if you notice some small error in a recent
-+commit (or set of commits) and want to redo that part without showing
-+the undo in the history.
-+
-+If you want to undo a commit other than the latest on a branch,
-+gitlink:git-revert[1] is your friend.
-+
- OPTIONS
- -------
- --mixed::
--	Like --soft but reports what has not been updated. This is the
--	default action.
-+	Resets the index but not the working tree (ie, the changed files
-+	are preserved but not marked for commit) and reports what has not
-+	been updated. This is the default action.
- 
- --soft::
- 	Does not touch the index file nor the working tree at all, but
--	requires them in a good order.
-+	requires them to be in a good order. This leaves all your changed
-+	files "Updated but not checked in", as gitlink:git-status[1] would
-+	put it.
- 
- --hard::
- 	Matches the working tree and index to that of the tree being
--	switched to.
-+	switched to. Any changes to tracked files in the working tree
-+	since <commit-ish> are lost.
- 
- <commit-ish>::
- 	Commit to make the current HEAD.
----
-0.99.9.GIT
+It looks like it's failing to import some python module called
+"subprocess", and I aparently don't have that installed.
+/usr/bin/python on this Debian box is aparently python-2.3, do
+I need to be using python-2.4 for this merge stuff to work?
