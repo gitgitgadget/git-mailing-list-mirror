@@ -1,83 +1,63 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Get rid of .git/branches/ and .git/remotes/?
-Date: Sun, 20 Nov 2005 19:29:43 +0100
-Message-ID: <20051120182943.GG8383MdfPADPa@greensroom.kotnet.org>
+Date: Sun, 20 Nov 2005 11:07:49 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511201103280.13959@g5.osdl.org>
 References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
  <Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
-Reply-To: skimo@liacs.nl
+ <20051120182943.GG8383MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 20 19:30:43 2005
+X-From: git-owner@vger.kernel.org Sun Nov 20 20:09:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Edtwo-0002HI-L2
-	for gcvg-git@gmane.org; Sun, 20 Nov 2005 19:29:55 +0100
+	id 1EduXy-0003X6-9j
+	for gcvg-git@gmane.org; Sun, 20 Nov 2005 20:08:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750892AbVKTS3w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 13:29:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750900AbVKTS3w
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 13:29:52 -0500
-Received: from smtp19.wxs.nl ([195.121.247.10]:64391 "EHLO smtp19.wxs.nl")
-	by vger.kernel.org with ESMTP id S1750888AbVKTS3v (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Nov 2005 13:29:51 -0500
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp19.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0IQ9009PUNDJB8@smtp19.wxs.nl> for git@vger.kernel.org; Sun,
- 20 Nov 2005 19:29:43 +0100 (CET)
-Received: (qmail 22112 invoked by uid 500); Sun, 20 Nov 2005 18:29:43 +0000
-In-reply-to: <Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
-To: Linus Torvalds <torvalds@osdl.org>
-Mail-followup-to: Linus Torvalds <torvalds@osdl.org>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1750776AbVKTTID (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 14:08:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbVKTTID
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 14:08:03 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:57254 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750776AbVKTTIB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Nov 2005 14:08:01 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAKJ7onO011178
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 20 Nov 2005 11:07:50 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAKJ7nYv013208;
+	Sun, 20 Nov 2005 11:07:49 -0800
+To: skimo@liacs.nl
+In-Reply-To: <20051120182943.GG8383MdfPADPa@greensroom.kotnet.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12394>
 
-On Sun, Nov 20, 2005 at 10:09:50AM -0800, Linus Torvalds wrote:
-> and that would result in a parse of
+
+
+On Sun, 20 Nov 2005, Sven Verdoolaege wrote:
 > 
-> 	core.values.fixed = true
-> 	core.values.nested = fine
-> 	core.values.example.test = Hell yes
-> 	core.other.example = strange
-> 	core.name = hi
-> 	secontion.example = yet another
-> 
+> Not sure if this falls in the ".ini-file-like" category, but
+> YAML (www.yaml.org) does nesting based on indentation.
 
-[..]
+The main reason I don't like indentation is that it tends to have strange 
+rules for "tab". Some people (incorrectly, of course) think that tabs are 
+not at fixed 8-byte things, so deciding the indentation of a tab often 
+ends up either disallowing tabs altogether (bad) or having other strange 
+rules (disallowing spaces).
 
-> I dunno. That seems a nice extension, and it would make these things 
-> very unambiguous. But how do other .ini-file-like things do this?
+So I'm not religiously opposed to it, but I find it to be less than 
+optimal.
 
-Not sure if this falls in the ".ini-file-like" category, but
-YAML (www.yaml.org) does nesting based on indentation.
-Your example would look like
+I'd rather have just _pure_ braces, but while that is natural to 
+programmers, it's not very natural to most users, I think.
 
-core:
-  values:
-    fixed: true
-    nested: fine
-    example:
-      test: Hell yes
-  other:
-    example: strange
-  name: hi
-secontion:
-  example: yet another
-
-or
-
-core:
-  values: { fixed: true, nested: fine, example: { test: Hell yes } }
-  other: { example: strange }
-  name: hi
-secontion: { example: 'yet another' }
-
-skimo
+		Linus
