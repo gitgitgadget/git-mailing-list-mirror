@@ -1,63 +1,49 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: Get rid of .git/branches/ and .git/remotes/?
-Date: Sun, 20 Nov 2005 11:07:49 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511201103280.13959@g5.osdl.org>
-References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
- <20051120182943.GG8383MdfPADPa@greensroom.kotnet.org>
+Date: Sun, 20 Nov 2005 20:16:58 +0100
+Message-ID: <4380CBAA.9010708@op5.se>
+References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0511200935081.13959@g5.osdl.org> <20051120182943.GG8383MdfPADPa@greensroom.kotnet.org> <Pine.LNX.4.64.0511201103280.13959@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 20 20:09:17 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Nov 20 20:18:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EduXy-0003X6-9j
-	for gcvg-git@gmane.org; Sun, 20 Nov 2005 20:08:18 +0100
+	id 1EdugS-0005hJ-Sr
+	for gcvg-git@gmane.org; Sun, 20 Nov 2005 20:17:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750776AbVKTTID (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 14:08:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbVKTTID
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 14:08:03 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:57254 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750776AbVKTTIB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Nov 2005 14:08:01 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAKJ7onO011178
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 20 Nov 2005 11:07:50 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAKJ7nYv013208;
-	Sun, 20 Nov 2005 11:07:49 -0800
-To: skimo@liacs.nl
-In-Reply-To: <20051120182943.GG8383MdfPADPa@greensroom.kotnet.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932070AbVKTTRA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 14:17:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932071AbVKTTRA
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 14:17:00 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:61163 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932070AbVKTTRA
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2005 14:17:00 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id D84786BD00
+	for <git@vger.kernel.org>; Sun, 20 Nov 2005 20:16:58 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0511201103280.13959@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12395>
 
-
-
-On Sun, 20 Nov 2005, Sven Verdoolaege wrote:
+Linus Torvalds wrote:
 > 
-> Not sure if this falls in the ".ini-file-like" category, but
-> YAML (www.yaml.org) does nesting based on indentation.
+> I'd rather have just _pure_ braces, but while that is natural to 
+> programmers, it's not very natural to most users, I think.
+> 
 
-The main reason I don't like indentation is that it tends to have strange 
-rules for "tab". Some people (incorrectly, of course) think that tabs are 
-not at fixed 8-byte things, so deciding the indentation of a tab often 
-ends up either disallowing tabs altogether (bad) or having other strange 
-rules (disallowing spaces).
+Sysadmins should be used to braces too (xinetd, dhcpd, named...).
 
-So I'm not religiously opposed to it, but I find it to be less than 
-optimal.
+How many office clerks do you expect to use git?
 
-I'd rather have just _pure_ braces, but while that is natural to 
-programmers, it's not very natural to most users, I think.
-
-		Linus
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
