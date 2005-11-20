@@ -1,72 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Get rid of .git/branches/ and .git/remotes/?
-Date: Sun, 20 Nov 2005 18:00:52 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] merge-one-file: remove empty directories
+Date: Sun, 20 Nov 2005 09:17:38 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511200901450.13959@g5.osdl.org>
+References: <17279.1674.22992.607091@cargo.ozlabs.ibm.com>
+	<20051119140736.GA24901@lst.de>
+	<Pine.LNX.4.64.0511190957320.13959@g5.osdl.org>
+	<7v4q683qhe.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun Nov 20 18:02:52 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, linuxppc64-dev@ozlabs.org,
+	Paul Mackerras <paulus@samba.org>, Git Mailing List <git@vger.kernel.org>
+X-From: linuxppc64-dev-bounces@ozlabs.org Sun Nov 20 18:18:17 2005
+Return-path: <linuxppc64-dev-bounces@ozlabs.org>
+Received: from ozlabs.org ([203.10.76.45])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdsZ7-0003gq-Ti
-	for gcvg-git@gmane.org; Sun, 20 Nov 2005 18:01:22 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750748AbVKTRAy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 12:00:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751278AbVKTRAy
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 12:00:54 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:35244 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750748AbVKTRAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2005 12:00:54 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 2644113F73D
-	for <git@vger.kernel.org>; Sun, 20 Nov 2005 18:00:53 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 0E93B9F394
-	for <git@vger.kernel.org>; Sun, 20 Nov 2005 18:00:53 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id EF7899F381
-	for <git@vger.kernel.org>; Sun, 20 Nov 2005 18:00:52 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id CA3D913F73D
-	for <git@vger.kernel.org>; Sun, 20 Nov 2005 18:00:52 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12386>
+	id 1EdspG-0008NL-68
+	for glppd-linuxppc64-dev@m.gmane.org; Sun, 20 Nov 2005 18:18:03 +0100
+Received: from ozlabs.org (localhost [127.0.0.1])
+	by ozlabs.org (Postfix) with ESMTP id 24FA9687A5;
+	Mon, 21 Nov 2005 04:17:57 +1100 (EST)
+X-Original-To: linuxppc64-dev@ozlabs.org
+Delivered-To: linuxppc64-dev@ozlabs.org
+Received: from smtp.osdl.org (smtp.osdl.org [65.172.181.4])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(Client CN "smtp.osdl.org", Issuer "OSDL Hostmaster" (not verified))
+	by ozlabs.org (Postfix) with ESMTP id 4A2CA681C2
+	for <linuxppc64-dev@ozlabs.org>; Mon, 21 Nov 2005 04:17:55 +1100 (EST)
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAKHHenO007357
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 20 Nov 2005 09:17:41 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAKHHcEA010022;
+	Sun, 20 Nov 2005 09:17:39 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v4q683qhe.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
+X-BeenThere: linuxppc64-dev@ozlabs.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: 64-bit Linux on PowerPC Developers Mail List
+	<linuxppc64-dev.ozlabs.org>
+List-Unsubscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
+	<mailto:linuxppc64-dev-request@ozlabs.org?subject=unsubscribe>
+List-Archive: <http://ozlabs.org/pipermail/linuxppc64-dev>
+List-Post: <mailto:linuxppc64-dev@ozlabs.org>
+List-Help: <mailto:linuxppc64-dev-request@ozlabs.org?subject=help>
+List-Subscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
+	<mailto:linuxppc64-dev-request@ozlabs.org?subject=subscribe>
+Sender: linuxppc64-dev-bounces@ozlabs.org
+Errors-To: linuxppc64-dev-bounces@ozlabs.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12387>
 
-Hi,
 
-I just had a crazy idea. Since we have a framework in place to read/write 
-.git/config, I thought that maybe it would be a nice thing to move the 
-information which is in .git/branches or .git/remotes into the config.
 
-Advantages:
+On Sat, 19 Nov 2005, Junio C Hamano wrote:
+> 
+> [jc: We probably could use "rmdir -p", but for now we do that by
+> hand for portability.]
 
-- it would be easy to copy your private configuration by copying just one 
-  file,
+Some googling seems to imply that "-p" is pretty much globally available.
 
-- it would be easy to add a switch to git-fetch/git-pull to actually
-  store/update the URL and head mapping under a certain nick,
+It's in POSIX.1, but more importantly, it seems to actually be actively 
+used in BSD projects, and I found a man-page with copyright date in -92 
+(SCO of all places) which mentiones AT&T SVID2 - but not the more modern 
+standards.
 
-- we could get rid of some parsing code, and
+Even VMS seems to have it (although if git is ever ported to VMS, I'll 
+just have to shoot myself. I used VMS in -88, and the scars are _still_ 
+fresh).
 
-- it would arguably be more consistent.
-
-Disadvantage:
-
-- I know, I know, yet another change to the location of this 
-  information...
-
-- (very lame) you could not find out which nicks you have stored with "ls"
-
-Comments?
-
-Ciao,
-Dscho
-
-P.S.: I did not yet say anything about .git/info/, did I?
+			Linus
