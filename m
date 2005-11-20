@@ -1,51 +1,76 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [PATCH] Cogito documentation updates
-Date: 20 Nov 2005 07:37:07 -0800
-Message-ID: <86veyn49gc.fsf@blue.stonehenge.com>
-References: <20051120101112.GA2302@diku.dk>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [PATCH] max-count in terms of intersection
+Date: Sun, 20 Nov 2005 07:53:57 -0800 (PST)
+Message-ID: <20051120155357.833.qmail@web31807.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 20 16:37:24 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sun Nov 20 16:54:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdrFn-0007fv-G9
-	for gcvg-git@gmane.org; Sun, 20 Nov 2005 16:37:19 +0100
+	id 1EdrWC-0003IC-Q8
+	for gcvg-git@gmane.org; Sun, 20 Nov 2005 16:54:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751252AbVKTPhP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 10:37:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbVKTPhP
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 10:37:15 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:8233 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751252AbVKTPhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2005 10:37:13 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id A1D0F8F32B;
-	Sun, 20 Nov 2005 07:37:08 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 23148-01; Sun, 20 Nov 2005 07:37:08 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 2C81F8F32C; Sun, 20 Nov 2005 07:37:08 -0800 (PST)
-To: Jonas Fonseca <fonseca@diku.dk>
-x-mayan-date: Long count = 12.19.12.14.12; tzolkin = 3 Eb; haab = 10 Ceh
-In-Reply-To: <20051120101112.GA2302@diku.dk>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1751263AbVKTPx7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 10:53:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751264AbVKTPx7
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 10:53:59 -0500
+Received: from web31807.mail.mud.yahoo.com ([68.142.207.70]:52379 "HELO
+	web31807.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1751263AbVKTPx6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2005 10:53:58 -0500
+Received: (qmail 835 invoked by uid 60001); 20 Nov 2005 15:53:57 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=sdcu6aQ056byDH/0a9ev8yvNfaznlFlNWQiTHGEbV/YIan9aYzVMNEVscSjiqECzTWnm39lqkltjqpiHEkJ7PrX/WTeskwGPkzbzCpie/SVAFvIYBAhNXu3op9wmRfxn9atON+LoEr+ofljXd31cz+iJLBPepB9EMatNlPstxXw=  ;
+Received: from [68.221.112.229] by web31807.mail.mud.yahoo.com via HTTP; Sun, 20 Nov 2005 07:53:57 PST
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12385>
 
->>>>> "Jonas" == Jonas Fonseca <fonseca@diku.dk> writes:
+When a path designation is given, max-count counts the number
+of commits therein (intersection), not globally.
 
-Jonas>  - local cg-fetch now works without the cp option -u
+This avoids the case where in case path has been inactive
+for the last N commits, --max-count=N and path designation
+at git-rev-list is given, would give no commits.
 
-But it still requires cp -d, unless some other patch fixed that recently.
+Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+---
+
+ rev-list.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+applies-to: 5b820842ce0afb836ddbeded3a3f9e8d0ba223f9
+768b79de9eadc38a839332df0fcce021f7174d6d
+diff --git a/rev-list.c b/rev-list.c
+index 6e6ffde..e17f928 100644
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -124,8 +124,6 @@ static int filter_commit(struct commit *
+                stop_traversal=1;
+                return CONTINUE;
+        }
+-       if (max_count != -1 && !max_count--)
+-               return STOP;
+        if (no_merges && (commit->parents && commit->parents->next))
+                return CONTINUE;
+        if (paths && dense) {
+@@ -148,6 +146,9 @@ static int process_commit(struct commit 
+                return CONTINUE;
+        }
+ 
++       if (max_count != -1 && !max_count--)
++               return STOP;
++
+        show_commit(commit);
+ 
+        return CONTINUE;
+---
+0.99.9.GIT
