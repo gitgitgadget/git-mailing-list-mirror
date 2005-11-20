@@ -1,63 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Applying a graft to a tree and "rippling" the changes
- through
-Date: Sun, 20 Nov 2005 12:44:28 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511201242210.27791@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20051117230723.GD26122@nowhere.earth>
- <Pine.LNX.4.63.0511180026080.18775@wbgn013.biozentrum.uni-wuerzburg.de>
- <20051119140404.GD3393@nowhere.earth> <20051119141341.GE3393@nowhere.earth>
- <Pine.LNX.4.63.0511191612350.4895@wbgn013.biozentrum.uni-wuerzburg.de>
- <20051119170929.GF3393@nowhere.earth> <pan.2005.11.19.17.23.17.920228@smurf.noris.de>
- <Pine.LNX.4.63.0511200217200.11653@wbgn013.biozentrum.uni-wuerzburg.de>
- <20051120073244.GA7902@kiste.smurf.noris.de>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: [PATCH] merge-recursive::removeFile: remove empty directories
+Date: Sun, 20 Nov 2005 12:51:02 +0100
+Message-ID: <20051120115102.GC4946@c165.ib.student.liu.se>
+References: <17279.1674.22992.607091@cargo.ozlabs.ibm.com> <20051119140736.GA24901@lst.de> <Pine.LNX.4.64.0511190957320.13959@g5.osdl.org> <7vy83k2bwn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 20 12:45:32 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Christoph Hellwig <hch@lst.de>,
+	Paul Mackerras <paulus@samba.org>, linuxppc64-dev@ozlabs.org,
+	Git Mailing List <git@vger.kernel.org>,
+	Fredrik Kuivinen <freku045@student.liu.se>
+X-From: git-owner@vger.kernel.org Sun Nov 20 12:52:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Edncl-0002Qs-3q
-	for gcvg-git@gmane.org; Sun, 20 Nov 2005 12:44:47 +0100
+	id 1Ednj2-0003iX-7s
+	for gcvg-git@gmane.org; Sun, 20 Nov 2005 12:51:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750861AbVKTLoa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 06:44:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbVKTLoa
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 06:44:30 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:31451 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750861AbVKTLo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2005 06:44:29 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 56D6A1402F4; Sun, 20 Nov 2005 12:44:28 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3C1C09F38A; Sun, 20 Nov 2005 12:44:28 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 27B099D8EA; Sun, 20 Nov 2005 12:44:28 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 018C31402F4; Sun, 20 Nov 2005 12:44:28 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <20051120073244.GA7902@kiste.smurf.noris.de>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751051AbVKTLvK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 06:51:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751216AbVKTLvK
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 06:51:10 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:28833 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1751051AbVKTLvJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Nov 2005 06:51:09 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 8823C4102; Sun, 20 Nov 2005 13:00:07 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1Ednip-0004Cx-00; Sun, 20 Nov 2005 12:51:03 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vy83k2bwn.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12380>
 
-Hi,
+On Sat, Nov 19, 2005 at 08:14:48PM -0800, Junio C Hamano wrote:
+> When the last file in a directory is removed as the result of a
+> merge, try to rmdir the now-empty directory.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> 
+> ---
+> 
+>  And this is the one for 'git pull -s recursive' which is the
+>  default these days.
+> 
+>  git-merge-recursive.py |    4 ++++
+>  1 files changed, 4 insertions(+), 0 deletions(-)
+> 
+> applies-to: ea62f7003bb2769fa23d5ca371d84cee9d2ec46f
+> 80e21a9ed809d98788ff6fb705d911bee37d460b
+> diff --git a/git-merge-recursive.py b/git-merge-recursive.py
+> index d7d36aa..37258ad 100755
+> --- a/git-merge-recursive.py
+> +++ b/git-merge-recursive.py
+> @@ -293,6 +293,10 @@ def removeFile(clean, path):
+>          except OSError, e:
+>              if e.errno != errno.ENOENT and e.errno != errno.EISDIR:
+>                  raise
+> +        try:
+> +            os.removedirs(os.path.dirname(path))
+> +        except:
+> +            pass
+>  
 
-On Sun, 20 Nov 2005, Matthias Urlichs wrote:
+Looks good, but I would prefer to have 'except OSError:' instead of
+the except without any exception class. A plain 'except:' will catch
+every kind of exception which includes things such as NameError and
+AttributeError and we really don't want to silently ignore those two.
 
-> Why not simply use info/grafts?
+A plain 'except:' exists in one other place (actually two, but one of
+them is ok) in git-merge-recursive.py. I will send a patch to remove
+that one.
 
-'Cause you can't fetch a graft. But I agree, instead of telling somebody: 
-"I have this new branch which unifies history", you can send your friend a 
-oneliner which appends a graft.
-
-Ciao,
-Dscho
+- Fredrik
