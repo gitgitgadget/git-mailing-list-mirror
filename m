@@ -1,82 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in master tonight.
-Date: Sun, 20 Nov 2005 00:40:21 -0800
-Message-ID: <7v7jb31zm2.fsf@assigned-by-dhcp.cox.net>
+From: Kalle Valo <Kalle.Valo@iki.fi>
+Subject: [PATCH] Support username and password inside URL
+Date: Sun, 20 Nov 2005 12:05:47 +0200
+Message-ID: <873blriqh0.fsf@litku.valo.iki.fi>
+References: <87u0e71zpx.fsf@litku.valo.iki.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Nov 20 09:42:04 2005
+X-From: git-owner@vger.kernel.org Sun Nov 20 11:07:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Edkkv-0006Qz-2y
-	for gcvg-git@gmane.org; Sun, 20 Nov 2005 09:41:01 +0100
+	id 1Edm5I-0007Ze-MT
+	for gcvg-git@gmane.org; Sun, 20 Nov 2005 11:06:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbVKTIkX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 03:40:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbVKTIkX
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 03:40:23 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:647 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751164AbVKTIkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2005 03:40:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051120083901.XFLG20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 20 Nov 2005 03:39:01 -0500
+	id S1750778AbVKTKFw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 05:05:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbVKTKFw
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 05:05:52 -0500
+Received: from fep30-0.kolumbus.fi ([193.229.0.32]:57017 "EHLO
+	fep30-app.kolumbus.fi") by vger.kernel.org with ESMTP
+	id S1750778AbVKTKFw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2005 05:05:52 -0500
+Received: from litku.valo.iki.fi ([81.197.35.21]) by fep30-app.kolumbus.fi
+          with ESMTP
+          id <20051120100548.FDUA1672.fep30-app.kolumbus.fi@litku.valo.iki.fi>
+          for <git@vger.kernel.org>; Sun, 20 Nov 2005 12:05:48 +0200
 To: git@vger.kernel.org
+In-Reply-To: <87u0e71zpx.fsf@litku.valo.iki.fi> (Kalle Valo's message of "Sun,
+	20 Nov 2005 10:38:02 +0200")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12376>
 
-I've merged http updates (mostly code refactoring and cleanups)
-from Nick Hengeveld, config-set from Johannes Schindelin, and
-most of user-relative paths series from Andreas Ericsson.
-Cooking in proposed updates are the final part of user-relative
-paths series that changes git-daemon, git:// proxy support from
-Paul Collins, and repository format futureproofing from Martin
-Atukunda.
+Currently usage of curl was so that netrc was mandatory and passwords in URL
+weren't allowed. Change netrc to optional to make HTTP basic authentication
+with username and password in URL also work.
 
-I'd like to do the next 1.0rc when at least the repository
-format futureproofing is ready.  I personally can live without
-user-relative paths or git:// proxy, although both are probably
-nice to have.  Here are the current status of these three
-topics.
+Here's an example of such URL:
 
-repository format futureproofing::
+http://foo:bar@www.example.com/auth.git/
 
-	I think the current code can copy template/config that
-	was prepared for wrong version of repository format
-	without complaining.  It should barf and fail.
+Signed-off-by: Kalle Valo <Kalle.Valo@iki.fi>
 
-        I am unsure if the check in setup_git_repository() is
-        the right thing to do.  It doesn't check when $GIT_DIR
-        environment is set, which is wrong; receive-pack and
-        upload-pack are run with this environment set to ".".
+---
 
-	Although majority of important core programs do check
-	the repository format before doing any harmful
-	operations, some higher level scripts should be told to
-	do the checking upfront.  The config-set command by
-	Johannes is probably handy for this purpose.
+ git-clone.sh     |    2 +-
+ git-fetch.sh     |    2 +-
+ git-ls-remote.sh |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-user relative paths::
-
-	What's left from the master is the part that touches the
-	git-daemon.  We need to be careful about being strict
-	while validating the path against whitelist _after_
-	DWIM, so the version in the proposed updates need to be
-	checked to make sure it is safe.
-
-proxy for git:// transport:
-
-	I do not have any pending issues on this patch, and I
-	think it is ready to go in when somebody, preferably
-	other than the original author, says it is useful and
-	does not break things.
-
-The master branch is fairly ahead of the last 1.0rc as of this
-writing, and I'll be attending a wedding of a coworker, so there
-will not be maint updates this weekend.
+applies-to: 8839be40e9401452691ae1b0bf4c86ac616b7bb6
+43a79922ab5d3468f0e8614d526b693772d8b1d6
+diff --git a/git-clone.sh b/git-clone.sh
+index c09979a..8af0d5f 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -23,7 +23,7 @@ fi
+ 
+ http_fetch () {
+ 	# $1 = Remote, $2 = Local
+-	curl -nsfL $curl_extra_args "$1" >"$2"
++	curl -sfL --netrc-optional $curl_extra_args "$1" >"$2"
+ }
+ 
+ clone_dumb_http () {
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 6586e77..e983cef 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -234,7 +234,7 @@ do
+ 	    $u =~ s{([^-a-zA-Z0-9/.])}{sprintf"%%%02x",ord($1)}eg;
+ 	    print "$u";
+ 	' "$remote_name")
+-	head=$(curl -nsfL $curl_extra_args "$remote/$remote_name_quoted") &&
++	head=$(curl -sfL --netrc-optional $curl_extra_args "$remote/$remote_name_quoted") &&
+ 	expr "$head" : "$_x40\$" >/dev/null ||
+ 		die "Failed to fetch $remote_name from $remote"
+ 	echo >&2 Fetching "$remote_name from $remote" using http
+diff --git a/git-ls-remote.sh b/git-ls-remote.sh
+index f0f0b07..af8f4b1 100755
+--- a/git-ls-remote.sh
++++ b/git-ls-remote.sh
+@@ -42,7 +42,7 @@ http://* | https://* )
+         if [ -n "$GIT_SSL_NO_VERIFY" ]; then
+             curl_extra_args="-k"
+         fi
+-	curl -nsf $curl_extra_args "$peek_repo/info/refs" ||
++	curl -sf --netrc-optional $curl_extra_args "$peek_repo/info/refs" ||
+ 		echo "failed	slurping"
+ 	;;
+ 
+---
+0.99.9.GIT
