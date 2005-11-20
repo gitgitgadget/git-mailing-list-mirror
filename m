@@ -1,76 +1,72 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH] max-count in terms of intersection
-Date: Sun, 20 Nov 2005 07:53:57 -0800 (PST)
-Message-ID: <20051120155357.833.qmail@web31807.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Get rid of .git/branches/ and .git/remotes/?
+Date: Sun, 20 Nov 2005 18:00:52 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sun Nov 20 16:54:54 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sun Nov 20 18:02:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EdrWC-0003IC-Q8
-	for gcvg-git@gmane.org; Sun, 20 Nov 2005 16:54:17 +0100
+	id 1EdsZ7-0003gq-Ti
+	for gcvg-git@gmane.org; Sun, 20 Nov 2005 18:01:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263AbVKTPx7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 10:53:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751264AbVKTPx7
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 10:53:59 -0500
-Received: from web31807.mail.mud.yahoo.com ([68.142.207.70]:52379 "HELO
-	web31807.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1751263AbVKTPx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2005 10:53:58 -0500
-Received: (qmail 835 invoked by uid 60001); 20 Nov 2005 15:53:57 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=sdcu6aQ056byDH/0a9ev8yvNfaznlFlNWQiTHGEbV/YIan9aYzVMNEVscSjiqECzTWnm39lqkltjqpiHEkJ7PrX/WTeskwGPkzbzCpie/SVAFvIYBAhNXu3op9wmRfxn9atON+LoEr+ofljXd31cz+iJLBPepB9EMatNlPstxXw=  ;
-Received: from [68.221.112.229] by web31807.mail.mud.yahoo.com via HTTP; Sun, 20 Nov 2005 07:53:57 PST
+	id S1750748AbVKTRAy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 12:00:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751278AbVKTRAy
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 12:00:54 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:35244 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750748AbVKTRAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2005 12:00:54 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 2644113F73D
+	for <git@vger.kernel.org>; Sun, 20 Nov 2005 18:00:53 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 0E93B9F394
+	for <git@vger.kernel.org>; Sun, 20 Nov 2005 18:00:53 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id EF7899F381
+	for <git@vger.kernel.org>; Sun, 20 Nov 2005 18:00:52 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id CA3D913F73D
+	for <git@vger.kernel.org>; Sun, 20 Nov 2005 18:00:52 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12386>
 
-When a path designation is given, max-count counts the number
-of commits therein (intersection), not globally.
+Hi,
 
-This avoids the case where in case path has been inactive
-for the last N commits, --max-count=N and path designation
-at git-rev-list is given, would give no commits.
+I just had a crazy idea. Since we have a framework in place to read/write 
+.git/config, I thought that maybe it would be a nice thing to move the 
+information which is in .git/branches or .git/remotes into the config.
 
-Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+Advantages:
 
----
+- it would be easy to copy your private configuration by copying just one 
+  file,
 
- rev-list.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+- it would be easy to add a switch to git-fetch/git-pull to actually
+  store/update the URL and head mapping under a certain nick,
 
-applies-to: 5b820842ce0afb836ddbeded3a3f9e8d0ba223f9
-768b79de9eadc38a839332df0fcce021f7174d6d
-diff --git a/rev-list.c b/rev-list.c
-index 6e6ffde..e17f928 100644
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -124,8 +124,6 @@ static int filter_commit(struct commit *
-                stop_traversal=1;
-                return CONTINUE;
-        }
--       if (max_count != -1 && !max_count--)
--               return STOP;
-        if (no_merges && (commit->parents && commit->parents->next))
-                return CONTINUE;
-        if (paths && dense) {
-@@ -148,6 +146,9 @@ static int process_commit(struct commit 
-                return CONTINUE;
-        }
- 
-+       if (max_count != -1 && !max_count--)
-+               return STOP;
-+
-        show_commit(commit);
- 
-        return CONTINUE;
----
-0.99.9.GIT
+- we could get rid of some parsing code, and
+
+- it would arguably be more consistent.
+
+Disadvantage:
+
+- I know, I know, yet another change to the location of this 
+  information...
+
+- (very lame) you could not find out which nicks you have stored with "ls"
+
+Comments?
+
+Ciao,
+Dscho
+
+P.S.: I did not yet say anything about .git/info/, did I?
