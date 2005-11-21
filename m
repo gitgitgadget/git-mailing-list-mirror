@@ -1,68 +1,52 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Rss produced by git is not valid xml?
-Date: Mon, 21 Nov 2005 09:38:38 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511210937500.3931@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200511181833.40048.ismail@uludag.org.tr> <200511181926.10357.ismail@uludag.org.tr>
- <200511182127.06958.ismail@uludag.org.tr> <20051118200217.GA2831@vrfy.org>
- <Pine.LNX.4.63.0511190101590.28126@wbgn013.biozentrum.uni-wuerzburg.de>
- <4380C03B.9090603@zytor.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] fix cg-fetch so that it doesn't use -d (to work with
+ POSIX cp)
+Date: Mon, 21 Nov 2005 09:46:30 +0100
+Message-ID: <43818966.7020800@op5.se>
+References: <863blq4p4x.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kay Sievers <kay.sievers@vrfy.org>,
-	Ismail Donmez <ismail@uludag.org.tr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 09:40:31 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 21 09:47:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ee7CG-00008V-2e
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 09:38:44 +0100
+	id 1Ee7Jq-00040d-VN
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 09:46:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932225AbVKUIil (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 03:38:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932227AbVKUIil
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 03:38:41 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:28627 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932225AbVKUIik (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 03:38:40 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5761E1403D1; Mon, 21 Nov 2005 09:38:39 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 383D59F3A5; Mon, 21 Nov 2005 09:38:39 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 259BC9C78A; Mon, 21 Nov 2005 09:38:39 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id ACE701403D1; Mon, 21 Nov 2005 09:38:38 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <4380C03B.9090603@zytor.com>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932229AbVKUIqc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 03:46:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbVKUIqc
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 03:46:32 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:22400 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932229AbVKUIqb
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 03:46:31 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id B65386BCFF; Mon, 21 Nov 2005 09:46:30 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+In-Reply-To: <863blq4p4x.fsf@blue.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12431>
 
-Hi,
-
-On Sun, 20 Nov 2005, H. Peter Anvin wrote:
-
-> Johannes Schindelin wrote:
-> > 
-> > BTW, utf-8 was designed on purpose to be easily distinguishable from 
-> > other encodings so that you don't have to rely on every document 
-> > obeying a certain encoding.
-> > 
+Randal L. Schwartz wrote:
+> I simply removed -d, since I don't know how necessary it is to make
+> it work better, but it seems to work fine on OSX now.
 > 
-> No, it wasn't.  It was designated on purpose to be ASCII-compatible,
-> substring-safe, and minimally stateful.
 
-For the record, my information stems from
+This enforces symrefs instead of symlinks when cloning locally. There 
+have been some discussions on the topic before, and the decision was to 
+maintain symlink support on filesystems that can do it. OTOH, Pasky 
+(cogito author) was all for only supporting symrefs, so perhaps he'll 
+accept this anyways.
 
-http://en.wikipedia.org/wiki/Utf-8#Rationale_behind_UTF-8.27s_mechanics
-
-Hth,
-Dscho
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
