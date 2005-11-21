@@ -1,60 +1,67 @@
-From: "David S. Miller" <davem@davemloft.net>
-Subject: Re: non-trivial merge failures
-Date: Sun, 20 Nov 2005 20:20:32 -0800 (PST)
-Message-ID: <20051120.202032.37639519.davem@davemloft.net>
-References: <20051120.134945.104623647.davem@davemloft.net>
-	<20051120230738.GA16861@mythryan2.michonline.com>
+From: YOSHIFUJI Hideaki / =?iso-2022-jp?B?GyRCNUhGIzFRTEAbKEI=?= 
+	<yoshfuji@linux-ipv6.org>
+Subject: [PATCH] GIT: fix compilation error in pack-redundant.c
+Date: Mon, 21 Nov 2005 14:09:58 +0900 (JST)
+Organization: USAGI/WIDE Project
+Message-ID: <20051121.140958.91408363.yoshfuji@linux-ipv6.org>
 Mime-Version: 1.0
 Content-Type: Text/Plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 05:21:38 2005
+Cc: git@vger.kernel.org, yoshfuji@linux-ipv6.org
+X-From: git-owner@vger.kernel.org Mon Nov 21 06:10:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ee3AB-0002dR-Pi
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 05:20:20 +0100
+	id 1Ee3vy-0004yH-E2
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 06:09:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750970AbVKUEUR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 23:20:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932145AbVKUEUQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 23:20:16 -0500
-Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:38573
-	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
-	id S1750970AbVKUEUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2005 23:20:15 -0500
-Received: from localhost ([127.0.0.1] ident=davem)
-	by sunset.davemloft.net with esmtp (Exim 4.54)
-	id 1Ee3AP-0005zs-1w; Sun, 20 Nov 2005 20:20:33 -0800
-To: ryan@michonline.com
-In-Reply-To: <20051120230738.GA16861@mythryan2.michonline.com>
-X-Mailer: Mew version 4.2.53 on Emacs 21.4 / Mule 5.0 (SAKAKI)
+	id S932180AbVKUFJV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 00:09:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932187AbVKUFJV
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 00:09:21 -0500
+Received: from yue.linux-ipv6.org ([203.178.140.15]:56845 "EHLO
+	yue.st-paulia.net") by vger.kernel.org with ESMTP id S932180AbVKUFJV
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 00:09:21 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by yue.st-paulia.net (Postfix) with ESMTP
+	id 71B8533CC2; Mon, 21 Nov 2005 14:09:58 +0900 (JST)
+To: junkio@cox.net
+X-URL: http://www.yoshifuji.org/%7Ehideaki/
+X-Fingerprint: 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
+X-PGP-Key-URL: http://www.yoshifuji.org/%7Ehideaki/hideaki@yoshifuji.org.asc
+X-Face: "5$Al-.M>NJ%a'@hhZdQm:."qn~PA^gq4o*>iCFToq*bAi#4FRtx}enhuQKz7fNqQz\BYU]
+ $~O_5m-9'}MIs`XGwIEscw;e5b>n"B_?j/AkL~i/MEa<!5P`&C$@oP>ZBLP
+X-Mailer: Mew version 2.2 on Emacs 20.7 / Mule 4.1 (AOI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12422>
 
-From: Ryan Anderson <ryan@michonline.com>
-Date: Sun, 20 Nov 2005 18:07:38 -0500
+Hello.
 
-> On Sun, Nov 20, 2005 at 01:49:45PM -0800, David S. Miller wrote:
-> > 
-> > Every time I try to do a non-trivial merge, I always
-> > get this:
-> 
-> git-merge-recursive became the default merge tool recently, and Debian
-> uses Python 2.3 as the default, which lacks "subprocess.py".  Luckily,
-> git ships a backport, so you can do:
-> 
-> 	make WITH_OWN_SUBPROCESS_PY=YesPlease all doc test install install-doc
-> or
-> 	make PYTHON_PATH=/usr/bin/python2.4 all doc test install install-doc
+Fix compilation error in pack-redundant.c.
 
-All these ways to make it work are nice, and in fact I have
-no problem with upgrading to python2.4 on my system if that
-makes it work.
+Signed-off-by: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
 
-I have a huge problem with the fact that "make test" passes %100
-cleanly even if you have the wrong python version installed.  It's
-amazing that this is that possible if even the most non-trivial merge
-needs this Python code :-)
+diff --git a/pack-redundant.c b/pack-redundant.c
+index fb6cb48..954dc55 100644
+--- a/pack-redundant.c
++++ b/pack-redundant.c
+@@ -376,11 +376,11 @@ size_t sizeof_union(struct packed_git *p
+ size_t get_pack_redundancy(struct pack_list *pl)
+ {
+ 	struct pack_list *subset;
++	size_t ret = 0;
+ 
+ 	if (pl == NULL)
+ 		return 0;
+ 
+-	size_t ret = 0;
+ 	while ((subset = pl->next)) {
+ 		while(subset) {
+ 			ret += sizeof_union(pl->pack, subset->pack);
+
+-- 
+YOSHIFUJI Hideaki @ USAGI Project  <yoshfuji@linux-ipv6.org>
+GPG-FP  : 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
