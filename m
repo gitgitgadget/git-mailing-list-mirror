@@ -1,80 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [RFC] Make grafts versionable
-Date: Mon, 21 Nov 2005 21:54:51 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511212152110.4611@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Pure renames/copies
+Date: Mon, 21 Nov 2005 13:01:30 -0800
+Message-ID: <438235AA.8070805@zytor.com>
+References: <87hda61a80.fsf@gmail.com>	<Pine.LNX.4.64.0511211020130.13959@g5.osdl.org> <7vacfxrdao.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Nov 21 21:56:34 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 21 22:02:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeIgj-0002K4-H7
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 21:54:58 +0100
+	id 1EeInm-0004ZL-Cy
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 22:02:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932459AbVKUUyy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 15:54:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932343AbVKUUyy
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 15:54:54 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:34720 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932459AbVKUUyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 15:54:53 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 19DF51401D6
-	for <git@vger.kernel.org>; Mon, 21 Nov 2005 21:54:52 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id ECD29B529A
-	for <git@vger.kernel.org>; Mon, 21 Nov 2005 21:54:51 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id C9EF8B528E
-	for <git@vger.kernel.org>; Mon, 21 Nov 2005 21:54:51 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id B2F1C1401D6
-	for <git@vger.kernel.org>; Mon, 21 Nov 2005 21:54:51 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1750706AbVKUVCJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 16:02:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750702AbVKUVCJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 16:02:09 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:56216 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750706AbVKUVCI
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 16:02:08 -0500
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jALL1Z6x030150
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 21 Nov 2005 13:01:37 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vacfxrdao.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12481>
 
+Junio C Hamano wrote:
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> 
+>>Of course, arguably "-M100" should really do this optimization for you. 
+>>Junio?
+> 
+> 
+> Probably something like this would suffice.
+> 
+> -- >8 --
+> Subject: rename detection with -M100 means "exact renames only".
+> 
+> When the user is interested in pure renames, there is no point
+> doing the similarity scores.  This changes the score argument
+> parsing to special case -M100 (otherwise, it is a precision
+> scaled value 0 <= v < 1 and would mean 0.1, not 1.0 --- if you
+> do mean 0.1, you can say -M1), and optimizes the diffcore_rename
+> transformation to only look at pure renames in that case.
+> 
 
-... by moving the location from .git/info/grafts to .gitgrafts. This 
-allows checking it in like .gitignore, and sure enough also pulling it (as 
-well as knowing who the heck added that particular graft anyway).
+Any reason we can't make it take an actual decimal number, like -M1.0 or 
+-M0.345?  It seems odd and annoying to invent our own notation for 
+floating-point numbers, especially in userspace.
 
-Totally untested.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
----
-
-	This would make half the discussion about rewriting history
-	obsolete, methinks.
-
-	Of course, to take advantage of it, you have to move the file 
-	.git/info/grafts (if it exists) into the correct place yourself:
-
-		mv -i .git/info/grafts .gitgrafts
-
- environment.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-applies-to: 20259f7c4418392e0e0c2f3a867811f657498afe
-a1756142e3be780ed7992cd6a3f5e64b53c42253
-diff --git a/environment.c b/environment.c
-index b5026f1..b0c2f79 100644
---- a/environment.c
-+++ b/environment.c
-@@ -35,7 +35,7 @@ static void setup_git_env(void)
- 	}
- 	git_graft_file = getenv(GRAFT_ENVIRONMENT);
- 	if (!git_graft_file)
--		git_graft_file = strdup(git_path("info/grafts"));
-+		git_graft_file = strdup(git_path("../.gitgrafts"));
- }
- 
- char *get_git_dir(void)
----
-0.99.9.GIT
+	-hpa
