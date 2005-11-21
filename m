@@ -1,59 +1,52 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [RFC] Make grafts versionable
-Date: Mon, 21 Nov 2005 13:04:20 -0800
-Message-ID: <43823654.2060904@zytor.com>
-References: <Pine.LNX.4.63.0511212152110.4611@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: 2.6.15-rc2 tag
+Date: Mon, 21 Nov 2005 16:25:49 -0500
+Message-ID: <20051121212549.GA23213@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 22:06:19 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Nov 21 22:27:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeIqT-0005Px-4T
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 22:05:01 +0100
+	id 1EeJAp-0004Qr-R7
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 22:26:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750702AbVKUVE6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 16:04:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750708AbVKUVE6
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 16:04:58 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:6297 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750702AbVKUVE5
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 16:04:57 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jALL4QOO030217
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 21 Nov 2005 13:04:27 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0511212152110.4611@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1750770AbVKUVZv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 16:25:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750763AbVKUVZv
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 16:25:51 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:59268 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP
+	id S1750770AbVKUVZu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 16:25:50 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.54)
+	id 1EeJAb-000659-Tc
+	for git@vger.kernel.org; Mon, 21 Nov 2005 16:25:49 -0500
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12483>
 
-Johannes Schindelin wrote:
-> ... by moving the location from .git/info/grafts to .gitgrafts. This 
-> allows checking it in like .gitignore, and sure enough also pulling it (as 
-> well as knowing who the heck added that particular graft anyway).
+Help!  I'm confused.
 
-This is problematic, because it means something that isn't in GIT_DIR 
-affects its interpretation.  I would say that that is a showstopper.
+	git-fetch --tags http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
 
-One could even argue that it's incorrect, since it would mean different 
-points on the history have different grafts.
+isn't getting me a 2.6.15-rc2 tag.  So maybe there's some delay?  There
+does, however, appear to be a file
 
-Now, CVS has a reserved namespace (CVSROOT/) for things under version 
-control which are still significant to CVS.  The logical equivalent to 
-git would be to have .git/ be such a namespace, if it makes sense.
+	http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/tags/v2.6.15-rc2
 
-	-hpa
+Its contents are 7305b5cb045e2c71250b5b7472771ed2620bc514 which isn't
+anything I can find anywhere.
+
+gitweb, on the other hand:
+
+	http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=tag;h=7305b5cb045e2c71250b5b7472771ed2620bc514
+
+shows 3bedff1d73b86e0cf52634efb447e9ada08f2cc6 as the tagged commit,
+which is something I do have.  What don't I understand?
+
+--b.
