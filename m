@@ -1,85 +1,55 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 5/5] git-daemon support for user-relative paths.
-Date: Mon, 21 Nov 2005 12:10:48 +0100
-Message-ID: <4381AB38.7090209@op5.se>
-References: <20051117193714.428785C7FA@nox.op5.se>	<7voe4ird8v.fsf@assigned-by-dhcp.cox.net> <437DAA66.6070301@op5.se>	<7voe4hfssj.fsf@assigned-by-dhcp.cox.net> <437E67AC.2010400@op5.se> <7vfypquz88.fsf@assigned-by-dhcp.cox.net>
+From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+Subject: Re: [PATCH] Make git-pack-redundant take a list of unimportant objs
+ on   stdin
+Date: Mon, 21 Nov 2005 12:45:22 +0100
+Message-ID: <4381B352.20107@etek.chalmers.se>
+References: <437E530E.1020803@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 12:13:08 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 21 12:45:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ee9ZV-0005y3-4h
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 12:10:53 +0100
+	id 1EeA6W-00072K-EB
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 12:45:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932261AbVKULKu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 06:10:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932262AbVKULKu
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 06:10:50 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:56704 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932261AbVKULKt
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 06:10:49 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 4FFE96BCFF; Mon, 21 Nov 2005 12:10:48 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+	id S932182AbVKULo5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 21 Nov 2005 06:44:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932216AbVKULo5
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 06:44:57 -0500
+Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:51855 "EHLO
+	pne-smtpout2-sn1.fre.skanova.net") by vger.kernel.org with ESMTP
+	id S932182AbVKULo4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 06:44:56 -0500
+Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout2-sn1.fre.skanova.net (7.2.069.1)
+        id 437D32AE000B53D9; Mon, 21 Nov 2005 12:44:49 +0100
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
 X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfypquz88.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <437E530E.1020803@etek.chalmers.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12438>
 
-Junio C Hamano wrote:
-> Andreas Ericsson <ae@op5.se> writes:
-> 
-> 
->>I'll run the clone/fetch/push test-suite again tomorrow, with this 
->>applied. It looks good though.
-> 
-> 
-> Sorry, but there was a thinko in my butchered version of
-> enter_repo().  While allowing only absolute path was good for
-> the version with your daemon.c change, it was not with the
-> current one that runs upload-pack with "." as repo.  In either
-> case we _do_ chdir() to it after validating the path, so I am
-> wondering if it is a good idea to keep sending "." as repo when
-> executing upload-pack with this patch as well.
+Lukas Sandstr=C3=B6m wrote:
+> This lets us do "git-fsck-objects --full --unreachable | cut -d ' ' -=
+f3 |
+> git-pack-redundant --all", which will keep git-pack-redundant from ke=
+eping
+> packs just because they contain unreachable objects.
+>=20
+> Also add some more --verbose output.
+>=20
+> Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
+>=20
 
-It might be, and it's good since it prevents the otherwise possible race 
-that occurs when git-upload-pack chdir()'s again.
+The patch which documents this feature was committed (9a888b758f48d88d1=
+e83c9765e33d4452710d5a5),
+but not the feature. Did you just miss the patch, or is there something=
+ wrong with it?
 
->  This does not
-> make any practical difference, but I think it makes the intent
-> clearer -- "we are already there so do not try going anywhere
-> else".
-> 
-
-So enter_repo allows "." (exactly and without chdir()) and all paths 
-starting with '/' if strict?
-
-> So I am thinking about applying something like this patch
-> on top of the last part of your patch.
-> 
->  - Do validation only on canonicalized paths;
->  - Run upload-pack with "." as repo, not full path;
->  - allow trailing slash under --strict-paths i.e. "git://host/my/repo.git/"
-> 
-> What do you think?
-> 
-
-Apart from comments and indentation it's more or less exactly what I 
-have in my revised git-daemon patch (although without what you mentioned 
-in your own reply to this mail).
-
-Do you want the revised one from me or will you apply the original with 
-this on top?
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+/Lukas
