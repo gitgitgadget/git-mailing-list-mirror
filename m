@@ -1,109 +1,74 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [RFC] Applying a graft to a tree and "rippling" the changes through
-Date: Mon, 21 Nov 2005 03:24:28 +0100
-Message-ID: <20051121022428.GB7902@kiste.smurf.noris.de>
-References: <20051117230723.GD26122@nowhere.earth> <Pine.LNX.4.63.0511180026080.18775@wbgn013.biozentrum.uni-wuerzburg.de> <20051119140404.GD3393@nowhere.earth> <20051119141341.GE3393@nowhere.earth> <Pine.LNX.4.63.0511191612350.4895@wbgn013.biozentrum.uni-wuerzburg.de> <20051119170929.GF3393@nowhere.earth> <pan.2005.11.19.17.23.17.920228@smurf.noris.de> <Pine.LNX.4.63.0511200217200.11653@wbgn013.biozentrum.uni-wuerzburg.de> <20051120223249.GI3393@nowhere.earth> <Pine.LNX.4.63.0511210041370.24681@wbgn013.biozentrum.uni-wuerzburg.de>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: [PATCH] fix cg-fetch so that it doesn't use -d (to work with POSIX cp)
+Date: 20 Nov 2005 20:10:38 -0800
+Message-ID: <863blq4p4x.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="NMuMz9nt05w80d4+"
-Cc: Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 03:26:31 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Nov 21 05:11:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ee1NT-0006z7-4m
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 03:25:55 +0100
+	id 1Ee31B-0000Ww-Uq
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 05:11:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932179AbVKUCZv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 21:25:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932180AbVKUCZv
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 21:25:51 -0500
-Received: from run.smurf.noris.de ([192.109.102.41]:10408 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S932179AbVKUCZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2005 21:25:51 -0500
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1Ee1M5-0005Xr-H6; Mon, 21 Nov 2005 03:24:55 +0100
-Received: (nullmailer pid 24771 invoked by uid 501);
-	Mon, 21 Nov 2005 02:24:28 -0000
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0511210041370.24681@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.9i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S1750958AbVKUEKp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 23:10:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750961AbVKUEKo
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 23:10:44 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:32599 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1750958AbVKUEKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2005 23:10:44 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 8A8188F2CE
+	for <git@vger.kernel.org>; Sun, 20 Nov 2005 20:10:39 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 11664-01 for <git@vger.kernel.org>;
+ Sun, 20 Nov 2005 20:10:39 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 0505B8F2CF; Sun, 20 Nov 2005 20:10:38 -0800 (PST)
+To: git@vger.kernel.org
+x-mayan-date: Long count = 12.19.12.14.12; tzolkin = 3 Eb; haab = 10 Ceh
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12418>
 
 
---NMuMz9nt05w80d4+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I simply removed -d, since I don't know how necessary it is to make
+it work better, but it seems to work fine on OSX now.
 
-Hi,
+remove -d flag from cp
 
-Johannes Schindelin:
-> > > ORIG1 .. ORIG2 .. .. ORIG_HEAD
-> > >                          |
-> > >                          |   GIT1 .. GIT2 .. .. GIT_HEAD
-> > >                          |   /                    /
-> > >                          | /                     /
-> > >                       UNIFYING_MERGE           /
-> > >                                    \         /
-> > >                                      \     /
-> > >                                NEW_HEAD_FOR_ARCHEOLOGICAL_PURPOSES
-> > >=20
-> > Note: it's not only about research (ie. something that would be static
-> > for browsing only), it's also about using the results of the research
-> > in further developement.
->=20
-> Then you could base your future development on=20
-> NEW_HEAD_FOR_ARCHEOLOGICAL_PURPOSES.
->=20
-If you need a new HEAD *anyway*, then re-basing your trees would
-IMHO be a better solution.
+---
+commit 3e7bc5b605f58376688f1cf195f51965becd5c3f
+tree 1c53f8753ff9c31f0ff2692b64754ad48e45f143
+parent 22ff47e9b3c5fc8aa2efbc5ac8690b06b868ef6f
+author Randal L. Schwartz <merlyn@localhost.(none)> Sun, 20 Nov 2005 20:01:38 -0800
+committer Randal L. Schwartz <merlyn@localhost.(none)> Sun, 20 Nov 2005 20:01:38 -0800
 
-ORIG1 .. ORIG2 .. .. ORIG_HEAD
-                         |
-                         |   GIT1 .. GIT2 .. .. GIT_HEAD
-                         |  //       //           //   \
-                         | //       //           //    TAG
-                      NEWGIT1 .. GIT2 .. .. NEW_HEAD
-                                                   \
-                                                  NEW_TAG
+ cg-fetch |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Those // links might be real parent pointers, which allows you to keep=20
-your old tags -- or not, which allows you to have a sane history. The
-good part is that you can do this incrementally, so you won't need a
-flag day.
+diff --git a/cg-fetch b/cg-fetch
+index 5a2039f..eb89ebe 100755
+--- a/cg-fetch
++++ b/cg-fetch
+@@ -158,7 +158,7 @@ get_local()
+ 		cp_flags_l="$cp_flags_l -L"
+ 		shift
+ 	else
+-		cp_flags_l="$cp_flags_l -dpR"
++		cp_flags_l="$cp_flags_l -pR"
+ 	fi
+ 
+ 	[ "$1" = "-i" ] && shift
 
-I seriously doubt that all of this is worth the effort, given that you
-can do the same thing with a graft line... and most people could care
-less whether their histor starts at 2.6.11-whatever, 2.4, or 0.11.
-(*Has* anybody imported the old tarballs into git, by the way?)
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-lately waking up i'm not sure where i've been
-		-- Indigo Girls, "Language or the Kiss"
-
---NMuMz9nt05w80d4+
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFDgS/c8+hUANcKr/kRAuy6AKCgEq0I/YtNQ8iXN5cevqcA1NZhNwCgmF3s
-sjYFRmurA0HUFrT98mkWw/g=
-=dyyc
------END PGP SIGNATURE-----
-
---NMuMz9nt05w80d4+--
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
