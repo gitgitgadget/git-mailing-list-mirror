@@ -1,47 +1,62 @@
-From: Rob Landley <rob@landley.net>
-Subject: UI tweak suggestion for kernel.org git web gui.
-Date: Mon, 21 Nov 2005 10:19:50 -0600
-Organization: Boundaries Unlimited
-Message-ID: <200511211019.51110.rob@landley.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [RFC] git-format-patch options
+Date: Mon, 21 Nov 2005 08:25:40 -0800 (PST)
+Message-ID: <20051121162540.4722.qmail@web31812.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Nov 21 17:26:46 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Nov 21 17:32:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeEOc-0007vO-5C
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 17:19:58 +0100
+	id 1EeEUC-0002M1-OP
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 17:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932354AbVKUQTz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 11:19:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932356AbVKUQTz
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 11:19:55 -0500
-Received: from dsl092-053-140.phl1.dsl.speakeasy.net ([66.92.53.140]:1424 "EHLO
-	grelber.thyrsus.com") by vger.kernel.org with ESMTP id S932354AbVKUQTy
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 11:19:54 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by grelber.thyrsus.com (8.13.4/8.13.4) with ESMTP id jALHsEP2026175
-	for <git@vger.kernel.org>; Mon, 21 Nov 2005 12:54:14 -0500
+	id S932382AbVKUQZn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 11:25:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932384AbVKUQZn
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 11:25:43 -0500
+Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:35212 "HELO
+	web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932382AbVKUQZm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 11:25:42 -0500
+Received: (qmail 4724 invoked by uid 60001); 21 Nov 2005 16:25:40 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=b9YvPkrBEUt0NMzsEr8HXlXv4hEXWPjw6v/tRJ3yIKU6Bwn/M8pWkCdWoCHIqEC1Wk6UV2RFjRA+jrjvfNvEd9kyA5NK696FU39OvjhzUl2eQNGCONmeON3js+dGMN8y4tLGJvdkhONfy0hGtL+DPxkV4i9ZgiECepFyeeGHIYY=  ;
+Received: from [68.221.112.229] by web31812.mail.mud.yahoo.com via HTTP; Mon, 21 Nov 2005 08:25:40 PST
 To: git@vger.kernel.org
-User-Agent: KMail/1.8
-Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12454>
 
-When I view the changelog at:
-http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=shortlog
+It is often the case that "since <mine> head forked from
+<his> head" (quoting the manual page of git-format-patch),
+for various projects, some patches have been accepted and
+some have not.
 
-It mixes in tags, which is cool, but they're the same color as regular 
-commits.  Is there any way that tags could stand out visually?  (Bold them, 
-give them a different color background, etc.)
+I was wondering about the value of
 
-I'd try to ask this in the right place, but the above page doesn't even say 
-which git web display package kernel.org is using.  (A small discreet link at 
-the bottom would be nice...)
+  git-format-patch <commit-ish>
 
-Rob
+to output/prepare a diff patch between the indicated commit
+and its parent.  As opposed to the current behaviour giving
+all changes between the indicated commit and HEAD.
+
+So in effect the form above would become the trivial:
+
+  git-format-patch <commit-ish>..HEAD
+
+and
+
+  git-format-patch <commit-ish>
+
+would give the diff patch between the indicated commit and
+its parent.
+
+?
+
+    Luben
