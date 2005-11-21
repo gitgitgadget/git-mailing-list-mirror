@@ -1,64 +1,75 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] merge-one-file: remove empty directories
-Date: Mon, 21 Nov 2005 15:22:59 +0100
-Message-ID: <81b0412b0511210622v87ecab6y7dbe703cb4395dad@mail.gmail.com>
-References: <17279.1674.22992.607091@cargo.ozlabs.ibm.com>
-	 <20051119140736.GA24901@lst.de>
-	 <Pine.LNX.4.64.0511190957320.13959@g5.osdl.org>
-	 <7v4q683qhe.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0511200901450.13959@g5.osdl.org>
-	 <4380BB97.7070407@zytor.com>
+From: Alexander Litvinov <lan@ac-sw.com>
+Subject: cvsexportcommit/cvsimport workflow
+Date: Mon, 21 Nov 2005 20:43:57 +0600
+Organization: AcademSoft Ltd.
+Message-ID: <200511212043.57434.lan@ac-sw.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Christoph Hellwig <hch@lst.de>,
-	Paul Mackerras <paulus@samba.org>, linuxppc64-dev@ozlabs.org,
-	Git Mailing List <git@vger.kernel.org>,
-	Fredrik Kuivinen <freku045@student.liu.se>
-X-From: git-owner@vger.kernel.org Mon Nov 21 15:24:31 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Nov 21 15:44:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeCZW-0000bu-Ls
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 15:23:07 +0100
+	id 1EeCrf-0000sQ-E0
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 15:41:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932298AbVKUOXD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 09:23:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932312AbVKUOXC
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 09:23:02 -0500
-Received: from nproxy.gmail.com ([64.233.182.193]:27054 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932298AbVKUOXB convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 09:23:01 -0500
-Received: by nproxy.gmail.com with SMTP id x4so91775nfb
-        for <git@vger.kernel.org>; Mon, 21 Nov 2005 06:22:59 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OJebekmtX03ybdIeHXxLIxgGOzNvF1/8EGLhv0yqzKeS/Xl76L00V94NpKDvh/q8MyYceppFw3tjLJ6sVFf0MEiA7aMRril0mUhvWyuOBC3QBTzKX2ng4//V4S5zZ2WPlg9cdzKW5Jalj/6mOMtKR8mkILeKkTRyCKa03755LgU=
-Received: by 10.49.5.19 with SMTP id h19mr267882nfi;
-        Mon, 21 Nov 2005 06:22:59 -0800 (PST)
-Received: by 10.48.248.18 with HTTP; Mon, 21 Nov 2005 06:22:59 -0800 (PST)
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <4380BB97.7070407@zytor.com>
+	id S932314AbVKUOlh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 09:41:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932315AbVKUOlg
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 09:41:36 -0500
+Received: from gw.ac-sw.com ([81.1.223.2]:32184 "EHLO gw.ac-sw.com")
+	by vger.kernel.org with ESMTP id S932314AbVKUOlg (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Nov 2005 09:41:36 -0500
+Received: from lan.ac-sw.lcl (unknown [192.168.0.69])
+	by gw.ac-sw.com (Postfix) with ESMTP id 2CFC3BD37
+	for <git@vger.kernel.org>; Mon, 21 Nov 2005 20:41:27 +0600 (NOVT)
+Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
+	id A873B159123; Mon, 21 Nov 2005 20:44:03 +0600 (NOVT)
+Received: from localhost (localhost [127.0.0.1])
+	by lan.ac-sw.lcl (Postfix) with ESMTP id E0AD0154417
+	for <git@vger.kernel.org>; Mon, 21 Nov 2005 20:43:57 +0600 (NOVT)
+To: Git Mailing List <git@vger.kernel.org>
+User-Agent: KMail/1.8
 Content-Disposition: inline
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on lan.ac-sw.lcl
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
+	autolearn=ham version=3.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12446>
 
-On 11/20/05, H. Peter Anvin <hpa@zytor.com> wrote:
-> Linus Torvalds wrote:
-> >
-> > Even VMS seems to have it (although if git is ever ported to VMS, I'll
-> > just have to shoot myself. I used VMS in -88, and the scars are _still_
-> > fresh).
-> >
->
-> Yeah, well, WinNT is basically the successor to VMS.  (I have heard from
-> several ex-DECers that WNT was done on top of a stolen copy of what was
-> supposed-to-have-been the successor to VMS.)
+Hello,
 
-...and yes, the users of NT are almost ready to shoot themselves.
+Can ypu please explain how to use cvsimport with cvsexportcommit scripts ? 
+
+I have tried these steps:
+1. Make git repo from cvs repo using cvsimport command - everything works 
+great.
+2. Start traking cvs changes by incremental running cvsimport - It works.
+3. Change files in git repo (master branch) - works :-)
+4. Export git commits to cvs: 
+      first question: What should be exported and in what order ? Lets skip 
+this part - it is the smallest problem.
+      Two test commits were exported to cvs without any problmes.
+5. Importing cvs again - I have found my exported commits became separate 
+commits in git repo in origin branch (solved by git-pull . origin). But thay 
+were merged idealy.
+6. Changing files again in git.
+7. Export git commits to cvs: What should be exported question become harder 
+and harder. Possible I should use some tag and run:
+git-rev-list MY-TAG..master | xargs -n 1 git-cvsexportcommit -vX -cX (by the 
+way, why just -v -c does not work ? I must add something to make options 
+work)
+
+This cycle is a bit of mess. I can write some scripts but I have no idea how 
+this is supposed to work !
+
+The biggest problem - conflict. I should resove them twice, during merging 
+origin branch to master and when exporting these changes to cvs. By the way, 
+I still can't export merge commit :-)
+
+Thanks for help.
+Alexander Litvinov.
