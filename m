@@ -1,75 +1,206 @@
-From: Alexander Litvinov <lan@ac-sw.com>
-Subject: cvsexportcommit/cvsimport workflow
-Date: Mon, 21 Nov 2005 20:43:57 +0600
-Organization: AcademSoft Ltd.
-Message-ID: <200511212043.57434.lan@ac-sw.com>
+From: llandre <r&d2@dave-tech.it>
+Subject: cvsimport and RTAI repository
+Date: Mon, 21 Nov 2005 16:19:01 +0100
+Message-ID: <4381E565.4020108@dave-tech.it>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Nov 21 15:44:22 2005
+X-From: git-owner@vger.kernel.org Mon Nov 21 16:20:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeCrf-0000sQ-E0
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 15:41:51 +0100
+	id 1EeDQg-0001l0-Kf
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 16:18:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932314AbVKUOlh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 09:41:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932315AbVKUOlg
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 09:41:36 -0500
-Received: from gw.ac-sw.com ([81.1.223.2]:32184 "EHLO gw.ac-sw.com")
-	by vger.kernel.org with ESMTP id S932314AbVKUOlg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Nov 2005 09:41:36 -0500
-Received: from lan.ac-sw.lcl (unknown [192.168.0.69])
-	by gw.ac-sw.com (Postfix) with ESMTP id 2CFC3BD37
-	for <git@vger.kernel.org>; Mon, 21 Nov 2005 20:41:27 +0600 (NOVT)
-Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
-	id A873B159123; Mon, 21 Nov 2005 20:44:03 +0600 (NOVT)
-Received: from localhost (localhost [127.0.0.1])
-	by lan.ac-sw.lcl (Postfix) with ESMTP id E0AD0154417
-	for <git@vger.kernel.org>; Mon, 21 Nov 2005 20:43:57 +0600 (NOVT)
-To: Git Mailing List <git@vger.kernel.org>
-User-Agent: KMail/1.8
-Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on lan.ac-sw.lcl
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
-	autolearn=ham version=3.0.4
+	id S932295AbVKUPR6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 10:17:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932306AbVKUPR6
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 10:17:58 -0500
+Received: from host46-203.pool8538.interbusiness.it ([85.38.203.46]:18436 "HELO
+	dave-tech.it") by vger.kernel.org with SMTP id S932295AbVKUPR5
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 10:17:57 -0500
+Received: (qmail 16323 invoked by uid 0); 21 Nov 2005 16:21:50 -0000
+Received: from unknown (HELO ?192.168.0.6?) (192.168.2.253)
+  by 192.168.2.1 with SMTP; 21 Nov 2005 16:21:50 -0000
+User-Agent: Mozilla Thunderbird 1.0.6 (Windows/20050716)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12447>
 
-Hello,
+Hi all,
 
-Can ypu please explain how to use cvsimport with cvsexportcommit scripts ? 
+I'm trying to cvsimport vulcano module of rtai CVS repository at 
+cvs.gna.org. Unfortunately it does not work: git-cvsimport hangs after 
+printing the messages below. git version is 0.99.9.GIT. Anybody can help me?
 
-I have tried these steps:
-1. Make git repo from cvs repo using cvsimport command - everything works 
-great.
-2. Start traking cvs changes by incremental running cvsimport - It works.
-3. Change files in git repo (master branch) - works :-)
-4. Export git commits to cvs: 
-      first question: What should be exported and in what order ? Lets skip 
-this part - it is the smallest problem.
-      Two test commits were exported to cvs without any problmes.
-5. Importing cvs again - I have found my exported commits became separate 
-commits in git repo in origin branch (solved by git-pull . origin). But thay 
-were merged idealy.
-6. Changing files again in git.
-7. Export git commits to cvs: What should be exported question become harder 
-and harder. Possible I should use some tag and run:
-git-rev-list MY-TAG..master | xargs -n 1 git-cvsexportcommit -vX -cX (by the 
-way, why just -v -c does not work ? I must add something to make options 
-work)
+Thanks a lot in advance.
 
-This cycle is a bit of mess. I can write some scripts but I have no idea how 
-this is supposed to work !
 
-The biggest problem - conflict. I should resove them twice, during merging 
-origin branch to master and when exporting these changes to cvs. By the way, 
-I still can't export merge commit :-)
 
-Thanks for help.
-Alexander Litvinov.
+[llandre@linuxserver rtai]$ git-cvsimport -v -d 
+:pserver:anonymous@cvs.gna.org:/cvs/rtai -C vulcano vulcano
+cvs_direct initialized to CVSROOT /cvs/rtai
+cvs rlog: Logging vulcano
+cvs [rlog aborted]: received abort signal
+cvs: lock.c:178: lock_name: Assertion `(__extension__ 
+(__builtin_constant_p (strlen (current_parsed_root->directory)) && 
+((__builtin_constant_p (repository) && strlen (repository) < ((size_t) 
+(strlen (current_parsed_root->directory)))) || (__builtin_constant_p 
+(current_parsed_root->directory) && strlen 
+(current_parsed_root->directory) < ((size_t) (strlen 
+(current_parsed_root->directory))))) ? __extension__ ({ size_t __s1_len, 
+__s2_len; (__builtin_constant_p (repository) && __builtin_constant_p 
+(current_parsed_root->directory) && (__s1_len = strlen (repository), 
+__s2_len = strlen (current_parsed_root->directory), (!((size_t)(const 
+void *)((repository) + 1) - (size_t)(const void *)(repository) == 1) || 
+__s1_len >= 4) && (!((size_t)(const void 
+*)((current_parsed_root->directory) + 1) - (size_t)(const void 
+*)(current_parsed_root->directory) == 1) || __s2_len >= 4)) ? memcmp 
+((__const char *) (repository), (__const char *) 
+(current_parsed_root->directory), (__s1_len < __s2_len ? __s1_len : 
+__s2_len) + 1) : (__builtin_constant_p (repository) && ((size_t)(const 
+void *)((repository) + 1) - (size_t)(const void *)(repository) == 1) && 
+(__s1_len = strlen (repository), __s1_len < 4) ? (__builtin_constant_p 
+(current_parsed_root->directory) && ((size_t)(const void 
+*)((current_parsed_root->directory) + 1) - (size_t)(const void 
+*)(current_parsed_root->directory) == 1) ? (__extension__ ({ register 
+int __result = (((__const unsigned char *) (__const char *) 
+(repository))[0] - ((__const unsigned char *) (__const char 
+*)(current_parsed_root->directory))[0]); if (__s1_len > 0 && __result == 
+0) { __result = (((__const unsigned char *) (__const char *) 
+(repository))[1] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[1]); if (__s1_len > 1 && __result == 
+0) { __result = (((__const unsigned char *) (__const char *) 
+(repository))[2] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[2]); if (__s1_len > 2 && __result == 
+0) __result = (((__const unsigned char *) (__const char *) 
+(repository))[3] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[3]); } } __result; })) : 
+(__extension__ ({ __const unsigned char *__s2 = (__const unsigned char 
+*) (__const char *) (current_parsed_root->directory); register int 
+__result = (((__const unsigned char *) (__const char *) (repository))[0] 
+- __s2[0]); if (__s1_len > 0 && __result == 0) { __result = (((__const 
+unsigned char *) (__const char *) (repository))[1] - __s2[1]); if 
+(__s1_len > 1 && __result == 0) { __result = (((__const unsigned char *) 
+(__const char *) (repository))[2] - __s2[2]); if (__s1_len > 2 && 
+__result == 0) __result = (((__const unsigned char *) (__const char *) 
+(repository))[3] - __s2[3]); } } __result; }))) : (__builtin_constant_p 
+(current_parsed_root->directory) && ((size_t)(const void 
+*)((current_parsed_root->directory) + 1) - (size_t)(const void 
+*)(current_parsed_root->directory) == 1) && (__s2_len = strlen 
+(current_parsed_root->directory), __s2_len < 4) ? (__builtin_constant_p 
+(repository) && ((size_t)(const void *)((repository) + 1) - 
+(size_t)(const void *)(repository) == 1) ? (__extension__ ({ register 
+int __result = (((__const unsigned char *) (__const char *) 
+(repository))[0] - ((__const unsigned char *) (__const char 
+*)(current_parsed_root->directory))[0]); if (__s2_len > 0 && __result == 
+0) { __result = (((__const unsigned char *) (__const char *) 
+(repository))[1] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[1]); if (__s2_len > 1 && __result == 
+0) { __result = (((__const unsigned char *) (__const char *) 
+(repository))[2] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[2]); if (__s2_len > 2 && __result == 
+0) __result = (((__const unsigned char *) (__const char *) 
+(repository))[3] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[3]); } } __result; })) : 
+(__extension__ ({ __const unsigned char *__s1 = (__const unsigned char 
+*) (__const char *) (repository); register int __result = __s1[0] - 
+((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[0]; if (__s2_len > 0 && __result == 0) 
+{ __result = (__s1[1] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[1]); if (__s2_len > 1 && __result == 
+0) { __result = (__s1[2] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[2]); if (__s2_len > 2 && __result == 
+0) __result = (__s1[3] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[3]); } } __result; }))) : strcmp 
+(repository, current_parsed_root->directory)))); }) : strncmp 
+(repository, current_parsed_root->directory, strlen 
+(current_parsed_root->directory)))) == 0' failed.
+cvs [rlog aborted]: received abort signal
+cvs: lock.c:178: lock_name: Assertion `(__extension__ 
+(__builtin_constant_p (strlen (current_parsed_root->directory)) && 
+((__builtin_constant_p (repository) && strlen (repository) < ((size_t) 
+(strlen (current_parsed_root->directory)))) || (__builtin_constant_p 
+(current_parsed_root->directory) && strlen 
+(current_parsed_root->directory) < ((size_t) (strlen 
+(current_parsed_root->directory))))) ? __extension__ ({ size_t __s1_len, 
+__s2_len; (__builtin_constant_p (repository) && __builtin_constant_p 
+(current_parsed_root->directory) && (__s1_len = strlen (repository), 
+__s2_len = strlen (current_parsed_root->directory), (!((size_t)(const 
+void *)((repository) + 1) - (size_t)(const void *)(repository) == 1) || 
+__s1_len >= 4) && (!((size_t)(const void 
+*)((current_parsed_root->directory) + 1) - (size_t)(const void 
+*)(current_parsed_root->directory) == 1) || __s2_len >= 4)) ? memcmp 
+((__const char *) (repository), (__const char *) 
+(current_parsed_root->directory), (__s1_len < __s2_len ? __s1_len : 
+__s2_len) + 1) : (__builtin_constant_p (repository) && ((size_t)(const 
+void *)((repository) + 1) - (size_t)(const void *)(repository) == 1) && 
+(__s1_len = strlen (repository), __s1_len < 4) ? (__builtin_constant_p 
+(current_parsed_root->directory) && ((size_t)(const void 
+*)((current_parsed_root->directory) + 1) - (size_t)(const void 
+*)(current_parsed_root->directory) == 1) ? (__extension__ ({ register 
+int __result = (((__const unsigned char *) (__const char *) 
+(repository))[0] - ((__const unsigned char *) (__const char 
+*)(current_parsed_root->directory))[0]); if (__s1_len > 0 && __result == 
+0) { __result = (((__const unsigned char *) (__const char *) 
+(repository))[1] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[1]); if (__s1_len > 1 && __result == 
+0) { __result = (((__const unsigned char *) (__const char *) 
+(repository))[2] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[2]); if (__s1_len > 2 && __result == 
+0) __result = (((__const unsigned char *) (__const char *) 
+(repository))[3] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[3]); } } __result; })) : 
+(__extension__ ({ __const unsigned char *__s2 = (__const unsigned char 
+*) (__const char *) (current_parsed_root->directory); register int 
+__result = (((__const unsigned char *) (__const char *) (repository))[0] 
+- __s2[0]); if (__s1_len > 0 && __result == 0) { __result = (((__const 
+unsigned char *) (__const char *) (repository))[1] - __s2[1]); if 
+(__s1_len > 1 && __result == 0) { __result = (((__const unsigned char *) 
+(__const char *) (repository))[2] - __s2[2]); if (__s1_len > 2 && 
+__result == 0) __result = (((__const unsigned char *) (__const char *) 
+(repository))[3] - __s2[3]); } } __result; }))) : (__builtin_constant_p 
+(current_parsed_root->directory) && ((size_t)(const void 
+*)((current_parsed_root->directory) + 1) - (size_t)(const void 
+*)(current_parsed_root->directory) == 1) && (__s2_len = strlen 
+(current_parsed_root->directory), __s2_len < 4) ? (__builtin_constant_p 
+(repository) && ((size_t)(const void *)((repository) + 1) - 
+(size_t)(const void *)(repository) == 1) ? (__extension__ ({ register 
+int __result = (((__const unsigned char *) (__const char *) 
+(repository))[0] - ((__const unsigned char *) (__const char 
+*)(current_parsed_root->directory))[0]); if (__s2_len > 0 && __result == 
+0) { __result = (((__const unsigned char *) (__const char *) 
+(repository))[1] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[1]); if (__s2_len > 1 && __result == 
+0) { __result = (((__const unsigned char *) (__const char *) 
+(repository))[2] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[2]); if (__s2_len > 2 && __result == 
+0) __result = (((__const unsigned char *) (__const char *) 
+(repository))[3] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[3]); } } __result; })) : 
+(__extension__ ({ __const unsigned char *__s1 = (__const unsigned char 
+*) (__const char *) (repository); register int __result = __s1[0] - 
+((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[0]; if (__s2_len > 0 && __result == 0) 
+{ __result = (__s1[1] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[1]); if (__s2_len > 1 && __result == 
+0) { __result = (__s1[2] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[2]); if (__s2_len > 2 && __result == 
+0) __result = (__s1[3] - ((__const unsigned char *) (__const char *) 
+(current_parsed_root->directory))[3]); } } __result; }))) : strcmp 
+(repository, current_parsed_root->directory)))); }) : strncmp 
+(repository, current_parsed_root->directory, strlen 
+(current_parsed_root->directory)))) == 0' failed.
+
+
+
+-- 
+llandre
+
+DAVE Electronics System House - R&D Department
+web:   http://www.dave-tech.it
+email: r&d2@dave-tech.it
