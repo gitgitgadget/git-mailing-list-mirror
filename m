@@ -1,67 +1,99 @@
-From: YOSHIFUJI Hideaki / =?iso-2022-jp?B?GyRCNUhGIzFRTEAbKEI=?= 
-	<yoshfuji@linux-ipv6.org>
-Subject: [PATCH] GIT: fix compilation error in pack-redundant.c
-Date: Mon, 21 Nov 2005 14:09:58 +0900 (JST)
-Organization: USAGI/WIDE Project
-Message-ID: <20051121.140958.91408363.yoshfuji@linux-ipv6.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [RFC] Applying a graft to a tree and "rippling" the changes through
+Date: Mon, 21 Nov 2005 00:18:12 -0500
+Message-ID: <43815894.20602@michonline.com>
+References: <20051117230723.GD26122@nowhere.earth> <Pine.LNX.4.63.0511180026080.18775@wbgn013.biozentrum.uni-wuerzburg.de> <20051119140404.GD3393@nowhere.earth> <20051119141341.GE3393@nowhere.earth> <Pine.LNX.4.63.0511191612350.4895@wbgn013.biozentrum.uni-wuerzburg.de> <20051119170929.GF3393@nowhere.earth> <pan.2005.11.19.17.23.17.920228@smurf.noris.de> <Pine.LNX.4.63.0511200217200.11653@wbgn013.biozentrum.uni-wuerzburg.de> <20051120223249.GI3393@nowhere.earth> <Pine.LNX.4.63.0511210041370.24681@wbgn013.biozentrum.uni-wuerzburg.de> <20051121022428.GB7902@kiste.smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, yoshfuji@linux-ipv6.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 06:10:14 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigD10447C70479BD232FA4799D"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 21 06:19:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ee3vy-0004yH-E2
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 06:09:42 +0100
+	id 1Ee44P-0006TY-4I
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 06:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932180AbVKUFJV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 00:09:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932187AbVKUFJV
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 00:09:21 -0500
-Received: from yue.linux-ipv6.org ([203.178.140.15]:56845 "EHLO
-	yue.st-paulia.net") by vger.kernel.org with ESMTP id S932180AbVKUFJV
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 00:09:21 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by yue.st-paulia.net (Postfix) with ESMTP
-	id 71B8533CC2; Mon, 21 Nov 2005 14:09:58 +0900 (JST)
-To: junkio@cox.net
-X-URL: http://www.yoshifuji.org/%7Ehideaki/
-X-Fingerprint: 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
-X-PGP-Key-URL: http://www.yoshifuji.org/%7Ehideaki/hideaki@yoshifuji.org.asc
-X-Face: "5$Al-.M>NJ%a'@hhZdQm:."qn~PA^gq4o*>iCFToq*bAi#4FRtx}enhuQKz7fNqQz\BYU]
- $~O_5m-9'}MIs`XGwIEscw;e5b>n"B_?j/AkL~i/MEa<!5P`&C$@oP>ZBLP
-X-Mailer: Mew version 2.2 on Emacs 20.7 / Mule 4.1 (AOI)
+	id S932191AbVKUFSW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 00:18:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932192AbVKUFSW
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 00:18:22 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:58053 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S932191AbVKUFSW (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Nov 2005 00:18:22 -0500
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.50)
+	id 1Ee44F-0004j1-VQ; Mon, 21 Nov 2005 00:18:16 -0500
+Received: from [10.254.251.12] (helo=mythryan)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1Ee44F-0004JA-00; Mon, 21 Nov 2005 00:18:15 -0500
+Received: from localhost ([127.0.0.1])
+	by mythryan with esmtp (Exim 4.54)
+	id 1Ee44F-0007vH-FL; Mon, 21 Nov 2005 00:18:15 -0500
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
+X-Accept-Language: en-us, en
+To: Matthias Urlichs <smurf@smurf.noris.de>
+In-Reply-To: <20051121022428.GB7902@kiste.smurf.noris.de>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12423>
 
-Hello.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigD10447C70479BD232FA4799D
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-Fix compilation error in pack-redundant.c.
+Matthias Urlichs wrote:
 
-Signed-off-by: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
+> If you need a new HEAD *anyway*, then re-basing your trees would
+> IMHO be a better solution.
+> 
+> ORIG1 .. ORIG2 .. .. ORIG_HEAD
+>                          |
+>                          |   GIT1 .. GIT2 .. .. GIT_HEAD
+>                          |  //       //           //   \
+>                          | //       //           //    TAG
+>                       NEWGIT1 .. GIT2 .. .. NEW_HEAD
+>                                                    \
+>                                                   NEW_TAG
+> 
+> Those // links might be real parent pointers, which allows you to keep 
+> your old tags -- or not, which allows you to have a sane history. The
+> good part is that you can do this incrementally, so you won't need a
+> flag day.
 
-diff --git a/pack-redundant.c b/pack-redundant.c
-index fb6cb48..954dc55 100644
---- a/pack-redundant.c
-+++ b/pack-redundant.c
-@@ -376,11 +376,11 @@ size_t sizeof_union(struct packed_git *p
- size_t get_pack_redundancy(struct pack_list *pl)
- {
- 	struct pack_list *subset;
-+	size_t ret = 0;
- 
- 	if (pl == NULL)
- 		return 0;
- 
--	size_t ret = 0;
- 	while ((subset = pl->next)) {
- 		while(subset) {
- 			ret += sizeof_union(pl->pack, subset->pack);
+This is exactly what the script I started this thread with does. It
+would be mostly useful if someone had serious development work based of
+an old, out-of-git branch, and wanted to use the git merging tools to
+get it merged into something based against the current development.
 
--- 
-YOSHIFUJI Hideaki @ USAGI Project  <yoshfuji@linux-ipv6.org>
-GPG-FP  : 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
+I would expect that they would then want to rebase it or do something
+else to clean up the mess that is created, and apply it directly to the
+current development tree, rather than leaving it as part of that very
+messy tree.
+
+My other goal was to provide myself (and others) an example of using the
+barebones core tools for some strange tasks that no *real* porcelain
+would ever find useful.
+
+
+
+--------------enigD10447C70479BD232FA4799D
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFDgViXfhVDhkBuUKURAlcpAKDjfCj7dVYuEz921TRbBcJoKmmZiQCdFurx
+1TYLUVIByz5JnQQsSGkGryU=
+=lOhc
+-----END PGP SIGNATURE-----
+
+--------------enigD10447C70479BD232FA4799D--
