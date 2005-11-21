@@ -1,73 +1,109 @@
-From: Franck <vagabon.xyz@gmail.com>
-Subject: Re: [QUESTION] Access to a huge GIT repository.
-Date: Mon, 21 Nov 2005 21:11:27 +0100
-Message-ID: <cda58cb80511211211l2ff6ff12j@mail.gmail.com>
-References: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
-	 <Pine.LNX.4.64.0511160837000.13959@g5.osdl.org>
-	 <cda58cb80511170236p4a7e2baay@mail.gmail.com>
-	 <Pine.LNX.4.64.0511170817480.13959@g5.osdl.org>
-	 <cda58cb80511171347yef4f090g@mail.gmail.com>
-	 <Pine.LNX.4.64.0511171443000.13959@g5.osdl.org>
-	 <cda58cb80511190423w1e46bf5bu@mail.gmail.com>
-	 <Pine.LNX.4.64.0511190953520.13959@g5.osdl.org>
-	 <7vzmo04dpl.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC 1/2] Use remote information in .git/config
+Date: Mon, 21 Nov 2005 21:24:44 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511212109440.4213@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0511211452470.13775@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v4q65sst3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 21 21:12:33 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 21 21:25:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeI0i-0004JJ-8u
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 21:11:32 +0100
+	id 1EeIDZ-0000MS-Ny
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 21:24:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750701AbVKUUL3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 15:11:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750777AbVKUUL3
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 15:11:29 -0500
-Received: from zproxy.gmail.com ([64.233.162.204]:44071 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750701AbVKUUL2 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 15:11:28 -0500
-Received: by zproxy.gmail.com with SMTP id 14so928246nzn
-        for <git@vger.kernel.org>; Mon, 21 Nov 2005 12:11:27 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=N2EG0KbtoSvDQqW85cVrBik0zKKNtA9xrhG1BhBehBVAcWxhOAPdRH1Xwd2hvjAwTGXAwUlfFRtqjQMTOSD37yTnieEC4OtBcn/cEEVVjhScWMBep6RKaGssXMFw6oDXT4vvhaZpKMDcApwkoQudwXkfYQhVPs5pT1DwxheP94g=
-Received: by 10.36.247.9 with SMTP id u9mr200239nzh;
-        Mon, 21 Nov 2005 12:11:27 -0800 (PST)
-Received: by 10.36.47.8 with HTTP; Mon, 21 Nov 2005 12:11:27 -0800 (PST)
+	id S1751035AbVKUUYq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 15:24:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbVKUUYq
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 15:24:46 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:43419 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751027AbVKUUYq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 15:24:46 -0500
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E79B6140512; Mon, 21 Nov 2005 21:24:44 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C4D58B529A; Mon, 21 Nov 2005 21:24:44 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 9D36BB371C; Mon, 21 Nov 2005 21:24:44 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 808DC140512; Mon, 21 Nov 2005 21:24:44 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmo04dpl.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <7v4q65sst3.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12477>
 
-2005/11/19, Junio C Hamano <junkio@cox.net>:
-> Linus Torvalds <torvalds@osdl.org> writes:
->
-> > So "git repack" should _never_ call git-redundant-pack. It's always either
-> > wrong or pointless.
->
-> Right-o.
->
+Hi,
 
-Ok, it works now. My new git repository is only 60Mo. But :), I would
-like to make up my public repository based on this "light" repository.
-And if someone has the big repository, I would like him to be able to
-pull my public repo into his one. But since I used grafting to "cut"
-my light repo and .git/info/grafts file is not copied during
-push/pull/clone operations it's not going to work. Is it a scheme that
-could work ?
+On Mon, 21 Nov 2005, Junio C Hamano wrote:
 
-Moreover, I'm wondering if my public repository really needs to store
-big repo's pack files as it is described in git tutorial ?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Note that there is only one pair per "pull" line, to allow for spaces
+> > (urgh!) in the branch names.
+> 
+> I think "allow for spaces" nonsense can be removed by now.  I
+> did it initially that way before making the ref name validation
+> tighter with check-ref-format.  And if I understand what you
+> wrote about multivalues correctly, your intent is that "orders
+> do not matter"; with pull refspecs, orders do matter, so it
+> probably is a good idea to allow only a single line.
 
-Thanks
---
-               Franck
+Okay. (I also wondered how git-config-set could be used to replace the 
+first pair, which is what gets merged when pulling).
+
+> Personally I do not mind moving remotes/branches information
+> there, except that I suspect the git-config-set interface makes
+> it cumbersome to (1) find out what remotes I defined (i.e. an
+> equivalent of "ls .git/remotes") and (2) remove a single remote
+> when I do not want it anymore (--unset-all would remove the keys
+> but would leave the empty section).
+
+(1) git-var -l | grep '^remote\.'
+
+(2) I would add --remove-section for that. (Though I'll wait to implement 
+that until I know if people want it.)
+
+> I am unsure if putting everything in .git/config file is the
+> right approach, though.  What will we put there next?  ls-files
+> ignore patterns?  grafts?  alternates?  We should be able to
+> even get rid of .git/refs directory hierarchy and replace that
+> with something like this:
+> 
+> 	[refs]
+>         	head = ABCD1234ABCD1234ABCD1234ABCD1234ABCD1234	for master
+>         	head = ABCD1234ABCD1234ABCD1234ABCD1234ABCD1234	for pu
+> 		tag = ABCD1234ABCD1234ABCD1234ABCD1234ABCD1234 for v1.0rc1
+> 	...
+> 
+> Where will we stop, and why?
+
+Ahh! I have a clear picture of what *I* would put into it: all interesting 
+static data about that particular repository which I would not like to 
+version.
+
+For that matter, .gitignore would stay where it is, though I'd also like 
+to version grafts, i.e. move the location from .git/info/grafts to 
+.gitgrafts (which would effectively end another thread on this list).
+
+I would not like to version refs, evidently, or alternates. But the refs 
+would not be static (they *want* to change often), while the alterates 
+would be.
+
+But I will not be a bugger about it. If things stay where they are 
+(including .git/remotes), I will not be sad. There was just this crazy 
+idea in my head (not the tip of the development branch, but the object my 
+eyes are in), and I wanted to discuss it with you guys, just in case...
+
+Ciao,
+Dscho
