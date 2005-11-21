@@ -1,86 +1,70 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [RFC] Make grafts versionable
-Date: Mon, 21 Nov 2005 13:41:10 -0800
-Message-ID: <43823EF6.6010302@zytor.com>
-References: <Pine.LNX.4.63.0511212152110.4611@wbgn013.biozentrum.uni-wuerzburg.de> <43823654.2060904@zytor.com> <Pine.LNX.4.64.0511211326110.13959@g5.osdl.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: Diffs "from" working directory
+Date: Mon, 21 Nov 2005 21:45:49 +0000
+Message-ID: <b0943d9e0511211345p41fcca6eu@mail.gmail.com>
+References: <200511201817.15780.blaisorblade@yahoo.it>
+	 <20051120174359.GA24177@fieldses.org>
+	 <Pine.LNX.4.64.0511201010490.13959@g5.osdl.org>
+	 <20051120205855.GA30346@fieldses.org>
+	 <4381287F.5080402@citi.umich.edu>
+	 <b0943d9e0511211328j7c062c07s@mail.gmail.com>
+	 <7vhda5of1r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 22:46:15 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 21 22:48:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeJPu-0001Hi-DL
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 22:41:38 +0100
+	id 1EeJU2-0002qQ-3v
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 22:45:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006AbVKUVlb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 16:41:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbVKUVlb
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 16:41:31 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:63679 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751051AbVKUVla
+	id S1751070AbVKUVpv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 16:45:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751073AbVKUVpv
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 16:45:51 -0500
+Received: from xproxy.gmail.com ([66.249.82.199]:37539 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751069AbVKUVpu convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 16:41:30 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jALLfFvK030984
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 21 Nov 2005 13:41:17 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511211326110.13959@g5.osdl.org>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	Mon, 21 Nov 2005 16:45:50 -0500
+Received: by xproxy.gmail.com with SMTP id i30so736605wxd
+        for <git@vger.kernel.org>; Mon, 21 Nov 2005 13:45:49 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=P5sklcN3ggI8xb8bkcfFD4lUK2/YgR0agRGKYsnFlCIy3LR/NlTheWTiJa2SBbxJFtQp2oLmGW82HhDvaLG5EY3EUhXcjXvp0lF5Snoukg2L9rP5JNETcETktojTivEzw1z+SV2h2FDjby/teJQxtLfnFyw87tD7zvio0FmIt9w=
+Received: by 10.70.54.9 with SMTP id c9mr2688273wxa;
+        Mon, 21 Nov 2005 13:45:49 -0800 (PST)
+Received: by 10.70.27.12 with HTTP; Mon, 21 Nov 2005 13:45:49 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhda5of1r.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12492>
 
-Linus Torvalds wrote:
-> 
-> However, there's one fundamental reason:
-> 
->  - if you have a file in ".git", that implies that even a "raw git repo" 
->    would have versions matter, since technically such a file would be 
->    inside the "raw" part. And that I find to be confusing. One of the 
->    whole points of a raw git repo is that because it doesn't have anything 
->    that is version-controlled and checked out, none of the branches or 
->    tags are special, and nothing needs to be updated when you push to such 
->    a repo.
-> 
->    Now, if you have files in .git, suddenly that fundamental nature of a 
->    raw repository is no longer clear.
-> 
+On 21/11/05, Junio C Hamano <junkio@cox.net> wrote:
+> Catalin Marinas <catalin.marinas@gmail.com> writes:
+>
+> > My import command sets the author to the e-mail sender, which was you.
+> > Maybe this should be changed but I don't know which option is better.
+> > In the meantime, you can change the default e-mail template to set the
+> > From: line with to the author of the patch and maybe add a Reply-to:
+> > with your address.
+>
+> ... and Sender: perhaps?
 
-Note that I didn't actually mean that they should necessarily represent 
-files in .git/.  The point was more that if we wanted to have 
-version-controlled metadata, using .git/ as a namespace would be suitable.
+Yes.
 
-In particular, I believe that if we ever do that, git should obtain this 
-metadata from the repository/object database.
+> The first lines in the commit log message sent over e-mail can
+> have "Subject: " (or "[PATCH] "), "From: ", and "Date: " to
+> override what is slurped from e-mail headers if you use mailinfo,
+> so that might be a better alternative to suggest.
 
-> In general, making any internal git data versionable is very confusing. So 
-> you make the grafts file versionable - that suddenly means that different 
-> branches may have different parents for the same commit. And that 
-> depending on which branch you have checked out, git-fsck-cache may result 
-> in an error, or it may not. That's _nasty_, in my opinion.
-> 
-> So I much prefer to say: everything under ".git" is not versionable, for 
-> the fundamental reason that the files under .git are "global" to that git 
-> repository. 
-> 
-> And I think .git/grafts in particular makes no sense to version.
-> 
-> If you want to track a git "grafts" file, you can do it as another git 
-> repository and a symlink.
+Thanks for the suggestion. It is indeed a good idea to parse the
+commit log and override the information from the headers.
 
-I fully concur with this (as I pointed out in my post, although perhaps 
-fuzzily.)
-
-	-hpa
+--
+Catalin
