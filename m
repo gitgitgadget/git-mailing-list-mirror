@@ -1,52 +1,98 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] fix cg-fetch so that it doesn't use -d (to work with
- POSIX cp)
-Date: Mon, 21 Nov 2005 09:46:30 +0100
-Message-ID: <43818966.7020800@op5.se>
-References: <863blq4p4x.fsf@blue.stonehenge.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Fix git.c compilation target
+Date: Mon, 21 Nov 2005 10:24:17 +0100
+Message-ID: <81b0412b0511210124u5cc0d4efv2045123d92872c66@mail.gmail.com>
+References: <81b0412b0511210010m66a3f898q6d108a799de023d9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_13008_25905472.1132565057233"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 09:47:57 2005
+X-From: git-owner@vger.kernel.org Mon Nov 21 10:24:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ee7Jq-00040d-VN
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 09:46:35 +0100
+	id 1Ee7uQ-00040o-Nr
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 10:24:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932229AbVKUIqc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 03:46:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbVKUIqc
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 03:46:32 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:22400 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932229AbVKUIqb
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 03:46:31 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id B65386BCFF; Mon, 21 Nov 2005 09:46:30 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-In-Reply-To: <863blq4p4x.fsf@blue.stonehenge.com>
+	id S932213AbVKUJYT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 04:24:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932238AbVKUJYT
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 04:24:19 -0500
+Received: from nproxy.gmail.com ([64.233.182.196]:15704 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932213AbVKUJYS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Nov 2005 04:24:18 -0500
+Received: by nproxy.gmail.com with SMTP id x4so75115nfb
+        for <git@vger.kernel.org>; Mon, 21 Nov 2005 01:24:17 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=XGW4iC19YEz2KKOth/wNH2WhSLiUPT+MGh5g+boSOEkLEy78mdy/7i3tV6NoIlZ0joZugSt+8jKvsCh7j/Blh3TLkeN7QYPPA9oof0VSp0HTAmXx3F38OjrOqMnTF16CqEGC/O5m9a8Q2joB4q1++oB2m9RJ2RgYamJk5fw8vnw=
+Received: by 10.48.239.10 with SMTP id m10mr235702nfh;
+        Mon, 21 Nov 2005 01:24:17 -0800 (PST)
+Received: by 10.48.248.18 with HTTP; Mon, 21 Nov 2005 01:24:17 -0800 (PST)
+To: Andreas Ericsson <exon@op5.se>
+In-Reply-To: <81b0412b0511210010m66a3f898q6d108a799de023d9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12432>
 
-Randal L. Schwartz wrote:
-> I simply removed -d, since I don't know how necessary it is to make
-> it work better, but it seems to work fine on OSX now.
-> 
+------=_Part_13008_25905472.1132565057233
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-This enforces symrefs instead of symlinks when cloning locally. There 
-have been some discussions on the topic before, and the decision was to 
-maintain symlink support on filesystems that can do it. OTOH, Pasky 
-(cogito author) was all for only supporting symrefs, so perhaps he'll 
-accept this anyways.
+There was more to it.
+The patch removes a reference to git.sh from Makefile and installs
+_all_ programs and scripts.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+
+------=_Part_13008_25905472.1132565057233
+Content-Type: text/plain; 
+	name=0002-forget-git.sh-and-install-all-programs-and-scripts.txt; 
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="0002-forget-git.sh-and-install-all-programs-and-scripts.txt"
+
+Subject: [PATCH] forget git.sh and install all programs and scripts
+
+Signed-off-by: Alex Riesen <ariesen@harmanbecker.com>
+
+
+---
+
+ Makefile |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+applies-to: 0d9013b9e1804aa68afbc6328d9cf93f36a6bebe
+c32490dd373e0fb8b963aa0d2aa31f8a209e09b1
+diff --git a/Makefile b/Makefile
+index 65b948b..f6f4b87 100644
+--- a/Makefile
++++ b/Makefile
+@@ -352,7 +352,7 @@ git$(X): git.c Makefile
+ 	$(CC) -DGIT_EXEC_PATH='"$(bindir)"' -DGIT_VERSION='"$(GIT_VERSION)"' \
+ 		$(CFLAGS) $< -o $@
+ 
+-$(filter-out git,$(patsubst %.sh,%,$(SCRIPT_SH))) : % : %.sh
++$(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+ 	rm -f $@
+ 	sed -e '1s|#!.*/sh|#!$(call shq,$(SHELL_PATH))|' \
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+@@ -436,9 +436,9 @@ check:
+ 
+ ### Installation rules
+ 
+-install: $(PROGRAMS) $(SCRIPTS) git
++install: $(PROGRAMS) $(SCRIPTS) git$(X)
+ 	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(bindir))
+-	$(INSTALL) git $(PROGRAMS) $(SCRIPTS) $(call shellquote,$(DESTDIR)$(bindir))
++	$(INSTALL) $+ $(call shellquote,$(DESTDIR)$(bindir))
+ 	$(MAKE) -C templates install
+ 	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(GIT_PYTHON_DIR))
+ 	$(INSTALL) $(PYMODULES) $(call shellquote,$(DESTDIR)$(GIT_PYTHON_DIR))
+---
+0.99.9.GIT
+
+------=_Part_13008_25905472.1132565057233--
