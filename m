@@ -1,98 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] Make grafts versionable
-Date: Mon, 21 Nov 2005 13:35:46 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511211326110.13959@g5.osdl.org>
-References: <Pine.LNX.4.63.0511212152110.4611@wbgn013.biozentrum.uni-wuerzburg.de>
- <43823654.2060904@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: auto-packing on kernel.org? please?
+Date: Mon, 21 Nov 2005 13:35:37 -0800
+Message-ID: <7vlkzhof9y.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org>
+	<20051121190151.GA2568@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.64.0511211110480.13959@g5.osdl.org>
+	<7v3blprcwk.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511211211130.13959@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 22:38:30 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 21 22:38:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeJLb-0008GR-MZ
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 22:37:12 +0100
+	id 1EeJKR-0007jL-Dl
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 22:35:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750921AbVKUVgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 16:36:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750930AbVKUVgI
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 16:36:08 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:62876 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750921AbVKUVgG (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Nov 2005 16:36:06 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jALLZsnO011350
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 21 Nov 2005 13:35:56 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jALLZkql002056;
-	Mon, 21 Nov 2005 13:35:50 -0800
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <43823654.2060904@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750895AbVKUVfn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 16:35:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbVKUVfm
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 16:35:42 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:52945 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1750895AbVKUVfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 16:35:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051121213510.DGLZ15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 21 Nov 2005 16:35:10 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511211211130.13959@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 21 Nov 2005 12:38:31 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12488>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> ...just pipe stderr too. That, together with making git-pack-objects tell 
+> what garbage it got, actually does the rigth thing:
+>
+> 	[torvalds@g5 git-clone]$ git repack -a -d
+> 	fatal: expected sha1, got garbage:
+> 	 error: Could not read 7f59dbbb8f8d479c1d31453eac06ec765436a780
+>
+> with this pretty simple patch.
+>
+> Whaddaya think?
 
-On Mon, 21 Nov 2005, H. Peter Anvin wrote:
-> 
-> Now, CVS has a reserved namespace (CVSROOT/) for things under version control
-> which are still significant to CVS.  The logical equivalent to git would be to
-> have .git/ be such a namespace, if it makes sense.
-
-Well, there's two reasons for disallowing git from tracking it's own .git 
-directory:
-
- - it protects against people doing somethin glike
-
-	git-update-cache --add -- $(find . -type f | cut -c3..)
-
-   and finding the pre-existing files in ".git"
-
-   This used to literally be how I imported trees into git. These days, 
-   you can just do it with "git-ls-files --others", and in fact that is 
-   exactly what "git add" does, so now you can just do
-
-	git add .
-
-   and be done with it - without getting that ".git" directory by mistake.
-
-   So that _old_ reason may not be as valid any more.
-
-However, there's one fundamental reason:
-
- - if you have a file in ".git", that implies that even a "raw git repo" 
-   would have versions matter, since technically such a file would be 
-   inside the "raw" part. And that I find to be confusing. One of the 
-   whole points of a raw git repo is that because it doesn't have anything 
-   that is version-controlled and checked out, none of the branches or 
-   tags are special, and nothing needs to be updated when you push to such 
-   a repo.
-
-   Now, if you have files in .git, suddenly that fundamental nature of a 
-   raw repository is no longer clear.
-
-In general, making any internal git data versionable is very confusing. So 
-you make the grafts file versionable - that suddenly means that different 
-branches may have different parents for the same commit. And that 
-depending on which branch you have checked out, git-fsck-cache may result 
-in an error, or it may not. That's _nasty_, in my opinion.
-
-So I much prefer to say: everything under ".git" is not versionable, for 
-the fundamental reason that the files under .git are "global" to that git 
-repository. 
-
-And I think .git/grafts in particular makes no sense to version.
-
-If you want to track a git "grafts" file, you can do it as another git 
-repository and a symlink.
-
-		Linus
+Obviously the right thing to do ;-).  I like it.
