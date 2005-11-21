@@ -1,74 +1,47 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: [PATCH] fix cg-fetch so that it doesn't use -d (to work with POSIX cp)
-Date: 20 Nov 2005 20:10:38 -0800
-Message-ID: <863blq4p4x.fsf@blue.stonehenge.com>
+From: "David S. Miller" <davem@davemloft.net>
+Subject: Re: non-trivial merge failures
+Date: Sun, 20 Nov 2005 20:15:16 -0800 (PST)
+Message-ID: <20051120.201516.51180644.davem@davemloft.net>
+References: <20051120.134945.104623647.davem@davemloft.net>
+	<200511202351.42320.ismail@uludag.org.tr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Nov 21 05:11:48 2005
+Content-Type: Text/Plain; charset=iso-2022-jp-2
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 21 05:16:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ee31B-0000Ww-Uq
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 05:11:02 +0100
+	id 1Ee35N-0001VO-7k
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 05:15:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750958AbVKUEKp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Nov 2005 23:10:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750961AbVKUEKo
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 23:10:44 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:32599 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1750958AbVKUEKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Nov 2005 23:10:44 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 8A8188F2CE
-	for <git@vger.kernel.org>; Sun, 20 Nov 2005 20:10:39 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 11664-01 for <git@vger.kernel.org>;
- Sun, 20 Nov 2005 20:10:39 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 0505B8F2CF; Sun, 20 Nov 2005 20:10:38 -0800 (PST)
-To: git@vger.kernel.org
-x-mayan-date: Long count = 12.19.12.14.12; tzolkin = 3 Eb; haab = 10 Ceh
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1750818AbVKUEPO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Nov 2005 23:15:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750970AbVKUEPO
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Nov 2005 23:15:14 -0500
+Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:50401
+	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
+	id S1750818AbVKUEPM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Nov 2005 23:15:12 -0500
+Received: from localhost ([127.0.0.1] ident=davem)
+	by sunset.davemloft.net with esmtp (Exim 4.54)
+	id 1Ee35I-0005yi-TV; Sun, 20 Nov 2005 20:15:16 -0800
+To: ismail@uludag.org.tr
+In-Reply-To: <200511202351.42320.ismail@uludag.org.tr>
+X-Mailer: Mew version 4.2.53 on Emacs 21.4 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12419>
 
+From: Ismail Donmez <ismail@uludag.org.tr>
+Date: Sun, 20 Nov 2005 23:51:42 +0200
 
-I simply removed -d, since I don't know how necessary it is to make
-it work better, but it seems to work fine on OSX now.
+> Sunday 20 November 2005 23:49 tarihinde $,1 (Bunlar$,1 Q(B yazm$,1 Q (Bt$,1 Q(Bn$,1 Q(Bz:
+> > ImportError: No module named subprocess
+> 
+> You need Python 2.4.x, subprocess is a new module in Python 2.4
 
-remove -d flag from cp
+It's amazing that "make test" passes in the presence of Python 2.3 :-)
 
----
-commit 3e7bc5b605f58376688f1cf195f51965becd5c3f
-tree 1c53f8753ff9c31f0ff2692b64754ad48e45f143
-parent 22ff47e9b3c5fc8aa2efbc5ac8690b06b868ef6f
-author Randal L. Schwartz <merlyn@localhost.(none)> Sun, 20 Nov 2005 20:01:38 -0800
-committer Randal L. Schwartz <merlyn@localhost.(none)> Sun, 20 Nov 2005 20:01:38 -0800
-
- cg-fetch |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/cg-fetch b/cg-fetch
-index 5a2039f..eb89ebe 100755
---- a/cg-fetch
-+++ b/cg-fetch
-@@ -158,7 +158,7 @@ get_local()
- 		cp_flags_l="$cp_flags_l -L"
- 		shift
- 	else
--		cp_flags_l="$cp_flags_l -dpR"
-+		cp_flags_l="$cp_flags_l -pR"
- 	fi
- 
- 	[ "$1" = "-i" ] && shift
-
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Maybe at least a trivial version check can be added to GIT somewhere?
