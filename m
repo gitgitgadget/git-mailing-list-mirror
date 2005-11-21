@@ -1,109 +1,123 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC 1/2] Use remote information in .git/config
-Date: Mon, 21 Nov 2005 21:24:44 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511212109440.4213@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0511211452470.13775@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v4q65sst3.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: auto-packing on kernel.org? please?
+Date: Mon, 21 Nov 2005 12:38:31 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511211211130.13959@g5.osdl.org>
+References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org>
+ <20051121190151.GA2568@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0511211110480.13959@g5.osdl.org>
+ <7v3blprcwk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 21:25:06 2005
+X-From: git-owner@vger.kernel.org Mon Nov 21 21:41:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeIDZ-0000MS-Ny
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 21:24:52 +0100
+	id 1EeIRW-0005Hy-Eo
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 21:39:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035AbVKUUYq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 15:24:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbVKUUYq
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 15:24:46 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:43419 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751027AbVKUUYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 15:24:46 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E79B6140512; Mon, 21 Nov 2005 21:24:44 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id C4D58B529A; Mon, 21 Nov 2005 21:24:44 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 9D36BB371C; Mon, 21 Nov 2005 21:24:44 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 808DC140512; Mon, 21 Nov 2005 21:24:44 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S932473AbVKUUi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 15:38:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932472AbVKUUi7
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 15:38:59 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:53645 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932463AbVKUUi6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Nov 2005 15:38:58 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jALKcZnO007979
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 21 Nov 2005 12:38:35 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jALKcV7l031533;
+	Mon, 21 Nov 2005 12:38:33 -0800
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4q65sst3.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+In-Reply-To: <7v3blprcwk.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12478>
 
-Hi,
+
 
 On Mon, 21 Nov 2005, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > Note that there is only one pair per "pull" line, to allow for spaces
-> > (urgh!) in the branch names.
+> One cop-out: do fsck-objects upfront before making a pack.  This
+> would populate your buffer cache so it might not be a bad thing.
+
+Well, it's extremely expensive most of the time. It's often as expensive 
+as the packing itself. So I don't like that option very much.
+
+> Alternatively:
 > 
-> I think "allow for spaces" nonsense can be removed by now.  I
-> did it initially that way before making the ref name validation
-> tighter with check-ref-format.  And if I understand what you
-> wrote about multivalues correctly, your intent is that "orders
-> do not matter"; with pull refspecs, orders do matter, so it
-> probably is a good idea to allow only a single line.
+>         name=$( {
+>                 git-rev-list --objects $rev_list $(git-rev-parse $rev_parse) ||
+>                 echo Gaaahhh
+>         } | git-pack-objects --non-empty $pack_objects .tmp-pack)
 
-Okay. (I also wondered how git-config-set could be used to replace the 
-first pair, which is what gets merged when pulling).
+Actually, some dim memories prodded me to some man-page digging, and the 
+"pipefail" option in particular.
 
-> Personally I do not mind moving remotes/branches information
-> there, except that I suspect the git-config-set interface makes
-> it cumbersome to (1) find out what remotes I defined (i.e. an
-> equivalent of "ls .git/remotes") and (2) remove a single remote
-> when I do not want it anymore (--unset-all would remove the keys
-> but would leave the empty section).
+It seems to be a common option to both ksh and bash, so
 
-(1) git-var -l | grep '^remote\.'
+	set -o pipefail
 
-(2) I would add --remove-section for that. (Though I'll wait to implement 
-that until I know if people want it.)
+seems like it should fix this. Sadly, I think it's pretty recent in bash 
+(ksh apparently got it in -93, bash seems to have gotten it only as of 
+version 3.0, which is definitely recent enough that we can't just assume 
+it).
 
-> I am unsure if putting everything in .git/config file is the
-> right approach, though.  What will we put there next?  ls-files
-> ignore patterns?  grafts?  alternates?  We should be able to
-> even get rid of .git/refs directory hierarchy and replace that
-> with something like this:
-> 
-> 	[refs]
->         	head = ABCD1234ABCD1234ABCD1234ABCD1234ABCD1234	for master
->         	head = ABCD1234ABCD1234ABCD1234ABCD1234ABCD1234	for pu
-> 		tag = ABCD1234ABCD1234ABCD1234ABCD1234ABCD1234 for v1.0rc1
-> 	...
-> 
-> Where will we stop, and why?
+[ Also, bash seems to have a variable called $PIPESTATUS, but that's 
+  bash-specific (I don't know when it was enabled). ]
 
-Ahh! I have a clear picture of what *I* would put into it: all interesting 
-static data about that particular repository which I would not like to 
-version.
+Anyway, doing a
 
-For that matter, .gitignore would stay where it is, though I'd also like 
-to version grafts, i.e. move the location from .git/info/grafts to 
-.gitgrafts (which would effectively end another thread on this list).
+	set -o pipefail
 
-I would not like to version refs, evidently, or alternates. But the refs 
-would not be static (they *want* to change often), while the alterates 
-would be.
+should never be the wrong thing to do, but the problem is figuring out 
+whether the option is available or not, since if it isn't available, it's 
+considered an error ;/
 
-But I will not be a bugger about it. If things stay where they are 
-(including .git/remotes), I will not be sad. There was just this crazy 
-idea in my head (not the tip of the development branch, but the object my 
-eyes are in), and I wanted to discuss it with you guys, just in case...
+So with all that, how about we take your "Gaah" idea, and simplify it: 
+just pipe stderr too. That, together with making git-pack-objects tell 
+what garbage it got, actually does the rigth thing:
 
-Ciao,
-Dscho
+	[torvalds@g5 git-clone]$ git repack -a -d
+	fatal: expected sha1, got garbage:
+	 error: Could not read 7f59dbbb8f8d479c1d31453eac06ec765436a780
+
+with this pretty simple patch.
+
+Whaddaya think?
+
+			Linus
+
+---
+diff --git a/git-repack.sh b/git-repack.sh
+index 4e16d34..c0f271d 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -41,7 +41,7 @@ esac
+ if [ "$local" ]; then
+ 	pack_objects="$pack_objects --local"
+ fi
+-name=$(git-rev-list --objects $rev_list $(git-rev-parse $rev_parse) |
++name=$(git-rev-list --objects $rev_list $(git-rev-parse $rev_parse) 2>&1 |
+ 	git-pack-objects --non-empty $pack_objects .tmp-pack) ||
+ 	exit 1
+ if [ -z "$name" ]; then
+diff --git a/pack-objects.c b/pack-objects.c
+index 4e941e7..8864a31 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -524,7 +524,7 @@ int main(int argc, char **argv)
+ 		unsigned char sha1[20];
+ 
+ 		if (get_sha1_hex(line, sha1))
+-			die("expected sha1, got garbage");
++			die("expected sha1, got garbage:\n %s", line);
+ 		hash = 0;
+ 		p = line+40;
+ 		while (*p) {
