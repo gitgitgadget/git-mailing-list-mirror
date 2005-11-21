@@ -1,50 +1,47 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: [BUG] cg-mkpatch uses non-portable "tac" command
-Date: 21 Nov 2005 08:10:08 -0800
-Message-ID: <86r79ayobj.fsf@blue.stonehenge.com>
+From: Rob Landley <rob@landley.net>
+Subject: UI tweak suggestion for kernel.org git web gui.
+Date: Mon, 21 Nov 2005 10:19:50 -0600
+Organization: Boundaries Unlimited
+Message-ID: <200511211019.51110.rob@landley.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Nov 21 17:15:58 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Nov 21 17:26:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeEFI-0002os-9m
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 17:10:20 +0100
+	id 1EeEOc-0007vO-5C
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 17:19:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932347AbVKUQKP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 11:10:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932350AbVKUQKP
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 11:10:15 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:60995 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932347AbVKUQKN
+	id S932354AbVKUQTz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 11:19:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932356AbVKUQTz
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 11:19:55 -0500
+Received: from dsl092-053-140.phl1.dsl.speakeasy.net ([66.92.53.140]:1424 "EHLO
+	grelber.thyrsus.com") by vger.kernel.org with ESMTP id S932354AbVKUQTy
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 11:10:13 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 147BE8F31D
-	for <git@vger.kernel.org>; Mon, 21 Nov 2005 08:10:09 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 09195-02-61 for <git@vger.kernel.org>;
- Mon, 21 Nov 2005 08:10:08 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 9BFC28F31F; Mon, 21 Nov 2005 08:10:08 -0800 (PST)
+	Mon, 21 Nov 2005 11:19:54 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by grelber.thyrsus.com (8.13.4/8.13.4) with ESMTP id jALHsEP2026175
+	for <git@vger.kernel.org>; Mon, 21 Nov 2005 12:54:14 -0500
 To: git@vger.kernel.org
-x-mayan-date: Long count = 12.19.12.14.13; tzolkin = 4 Ben; haab = 11 Ceh
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+User-Agent: KMail/1.8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12453>
 
+When I view the changelog at:
+http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=shortlog
 
-cg-mkpatch uses "tac" to reverse some lines.  This is not a POSIX command.
+It mixes in tags, which is cool, but they're the same color as regular 
+commits.  Is there any way that tags could stand out visually?  (Bold them, 
+give them a different color background, etc.)
 
-Since you already presume Perl, you can replace the use of tac with:
+I'd try to ask this in the right place, but the above page doesn't even say 
+which git web display package kernel.org is using.  (A small discreet link at 
+the bottom would be nice...)
 
-        | perl -e 'print reverse <>' |
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Rob
