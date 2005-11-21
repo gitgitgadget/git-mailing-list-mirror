@@ -1,58 +1,52 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] Stgit - gitmergeonefile.py: handle removal vs. changes
-Date: Mon, 21 Nov 2005 21:32:40 +0000
-Message-ID: <b0943d9e0511211332h41e3850dt@mail.gmail.com>
-References: <20051113194225.20447.57910.stgit@zion.home.lan>
-	 <b0943d9e0511150154y2d2af24ck@mail.gmail.com>
-	 <200511161544.13825.blaisorblade@yahoo.it>
-	 <b0943d9e0511171410y357fb0bfv@mail.gmail.com>
-	 <437D0949.3060505@citi.umich.edu>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Pure renames/copies
+Date: Mon, 21 Nov 2005 13:33:47 -0800
+Message-ID: <7vpsotofd0.fsf@assigned-by-dhcp.cox.net>
+References: <87hda61a80.fsf@gmail.com>
+	<Pine.LNX.4.64.0511211020130.13959@g5.osdl.org>
+	<7vacfxrdao.fsf@assigned-by-dhcp.cox.net> <438235AA.8070805@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Blaisorblade <blaisorblade@yahoo.it>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 22:34:07 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 21 22:36:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeJHJ-0006Yq-2M
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 22:32:45 +0100
+	id 1EeJIP-00071F-0w
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 22:33:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750881AbVKUVcm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 16:32:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750887AbVKUVcm
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 16:32:42 -0500
-Received: from xproxy.gmail.com ([66.249.82.197]:313 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750855AbVKUVcl convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 16:32:41 -0500
-Received: by xproxy.gmail.com with SMTP id i30so734066wxd
-        for <git@vger.kernel.org>; Mon, 21 Nov 2005 13:32:40 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FpHSpEyr76YosbpS6JjjEp/iIXlGXtfZD1MOxPlz2Y9H6R8vqknynK+g79S39FV8fe/y+xDQfsq2g8qt9CtjUEh8z/+znjznq4j0dOmfiNl2Al/RcS9t2mL3ewv0qNyAgAHyVEUtSQ05hTopLSEUz0ulT05Us+/DOOFnRc/FfB0=
-Received: by 10.70.63.14 with SMTP id l14mr2673663wxa;
-        Mon, 21 Nov 2005 13:32:40 -0800 (PST)
-Received: by 10.70.27.12 with HTTP; Mon, 21 Nov 2005 13:32:40 -0800 (PST)
-To: cel@citi.umich.edu
-In-Reply-To: <437D0949.3060505@citi.umich.edu>
-Content-Disposition: inline
+	id S1750750AbVKUVdt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 16:33:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750741AbVKUVdt
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 16:33:49 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:44777 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1750750AbVKUVdt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 16:33:49 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051121213250.EBBH17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 21 Nov 2005 16:32:50 -0500
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <438235AA.8070805@zytor.com> (H. Peter Anvin's message of "Mon,
+	21 Nov 2005 13:01:30 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12486>
 
-On 17/11/05, Chuck Lever <cel@citi.umich.edu> wrote:
-> i use "original" "patch" and "older" (set up in .stgitrc) because i
-> found the default labels to be confusing.
->
-> but "original" "patch" and "upstream" make sense to me.
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-These names would need to have a meaning for the result of the 'fold
---threeway' and 'pick' commands. 'patch' and 'original' are ok but
-'upstream' might not make sense since for these commands it can
-represent the top of an existing patch.
+> Any reason we can't make it take an actual decimal number, like -M1.0 or 
+> -M0.345?  It seems odd and annoying to invent our own notation for 
+> floating-point numbers, especially in userspace.
 
---
-Catalin
+No reason we "can't".  About we "don't", inertia and nothing
+else.  It happened around this time.
+
+	http://marc.theaimsgroup.com/?l=git&m=111654149421574
+
+We could in addition to take 0 <= x <= 1 decimal number and that
+should be a simple patch to diff.c::parse_num().
