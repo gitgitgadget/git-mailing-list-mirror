@@ -1,49 +1,63 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: default update hook broken
-Date: Mon, 21 Nov 2005 19:08:11 +0100
-Message-ID: <43820D0B.6000006@op5.se>
-References: <20051121140914.GB1598@parisc-linux.org>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [RFC] git-format-patch options
+Date: Mon, 21 Nov 2005 10:27:37 -0800 (PST)
+Message-ID: <20051121182737.43012.qmail@web31811.mail.mud.yahoo.com>
+References: <43820AF8.5060208@op5.se>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Nov 21 19:12:09 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Nov 21 19:28:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeG5S-0000aU-Lr
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 19:08:19 +0100
+	id 1EeGON-00018z-58
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 19:27:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932440AbVKUSIO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 13:08:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932437AbVKUSIO
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 13:08:14 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:53891 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932442AbVKUSIM
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 13:08:12 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 3AB9B6BD08
-	for <git@vger.kernel.org>; Mon, 21 Nov 2005 19:08:11 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <20051121140914.GB1598@parisc-linux.org>
+	id S932405AbVKUS1k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 13:27:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932425AbVKUS1k
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 13:27:40 -0500
+Received: from web31811.mail.mud.yahoo.com ([68.142.207.74]:37782 "HELO
+	web31811.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932405AbVKUS1j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 13:27:39 -0500
+Received: (qmail 43015 invoked by uid 60001); 21 Nov 2005 18:27:37 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=SzkAiloj1xDiVSNO5TgOvtnmkpfXLMzZPO3ETUuKIFX3PuCEb4LSAlRBiwAKZl7xrl4fFeMsp6pqhD+MjnE3WygVe0fXbzS5mmJhy08HFP7YCfmACK1syDJNcAPkbClSi6r8kfBPNB4xo7t9gdxnQWP6RwMt0kf/SpaNmmNTYAI=  ;
+Received: from [68.221.112.229] by web31811.mail.mud.yahoo.com via HTTP; Mon, 21 Nov 2005 10:27:37 PST
+To: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+In-Reply-To: <43820AF8.5060208@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12465>
 
-Matthew Wilcox wrote:
-> There's two syntax errors and one good-netizen error in the hooks/update
-> file created when cloning Linus' linux-2.6.git repo.  I don't know
-> if that file is created fresh or if it gets pulled from Linus' tree.
-> Here's a patch to fix it
+--- Andreas Ericsson <ae@op5.se> wrote:
+
+> Here's how to automate it.
 > 
+> git format-patch $(git rev-list --max-count=2 <commit-ish> | tail -n 
+> 1)..<commit-ish>
 
-Good thing I read new list entries before I send things. I did this 
-exact same patch too. :)
+I've a similar script, called
+"git-format-commit-patch <commit-ish>" which is slightly
+more involved.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> Either way, you need to know <commit-ish>, but this format should be 
+> fairly easy to add to git-format-patch. If you do, please
+
+How about git-format-patch --commit <commit-ish>
+to generate the formatted patch of only what _that_ commit
+introduced? (i.e. <parent>..<commit-ish>)
+
+Do people find this valuable to have?
+
+    Luben
+P.S. Since it is really trivial to write such a script
+on top of git-rev-list and git-format-patch, it may be
+easier to just leave things as they are.  It was just
+something I needed, which I thought other people might
+need too.
