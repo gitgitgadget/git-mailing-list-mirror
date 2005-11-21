@@ -1,123 +1,82 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: auto-packing on kernel.org? please?
-Date: Mon, 21 Nov 2005 12:38:31 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511211211130.13959@g5.osdl.org>
-References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org>
- <20051121190151.GA2568@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0511211110480.13959@g5.osdl.org>
- <7v3blprcwk.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [QUESTION] Access to a huge GIT repository.
+Date: Mon, 21 Nov 2005 12:45:06 -0800
+Message-ID: <7vhda5pw6l.fsf@assigned-by-dhcp.cox.net>
+References: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
+	<Pine.LNX.4.64.0511160837000.13959@g5.osdl.org>
+	<cda58cb80511170236p4a7e2baay@mail.gmail.com>
+	<Pine.LNX.4.64.0511170817480.13959@g5.osdl.org>
+	<cda58cb80511171347yef4f090g@mail.gmail.com>
+	<Pine.LNX.4.64.0511171443000.13959@g5.osdl.org>
+	<cda58cb80511190423w1e46bf5bu@mail.gmail.com>
+	<Pine.LNX.4.64.0511190953520.13959@g5.osdl.org>
+	<7vzmo04dpl.fsf@assigned-by-dhcp.cox.net>
+	<cda58cb80511211211l2ff6ff12j@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 21:41:54 2005
+X-From: git-owner@vger.kernel.org Mon Nov 21 21:46:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeIRW-0005Hy-Eo
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 21:39:16 +0100
+	id 1EeIXS-0007Ok-Hc
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 21:45:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932473AbVKUUi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 15:38:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932472AbVKUUi7
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 15:38:59 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:53645 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932463AbVKUUi6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Nov 2005 15:38:58 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jALKcZnO007979
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 21 Nov 2005 12:38:35 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jALKcV7l031533;
-	Mon, 21 Nov 2005 12:38:33 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3blprcwk.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932259AbVKUUpL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 15:45:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932358AbVKUUpL
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 15:45:11 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:8622 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932349AbVKUUpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 15:45:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051121204349.OFBL17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 21 Nov 2005 15:43:49 -0500
+To: Franck <vagabon.xyz@gmail.com>
+In-Reply-To: <cda58cb80511211211l2ff6ff12j@mail.gmail.com>
+	(vagabon.xyz@gmail.com's message of "Mon, 21 Nov 2005 21:11:27 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12479>
 
+Franck <vagabon.xyz@gmail.com> writes:
 
+> ... But since I used grafting to "cut"
+> my light repo and .git/info/grafts file is not copied during
+> push/pull/clone operations it's not going to work. Is it a scheme that
+> could work ?
 
-On Mon, 21 Nov 2005, Junio C Hamano wrote:
-> 
-> One cop-out: do fsck-objects upfront before making a pack.  This
-> would populate your buffer cache so it might not be a bad thing.
+If you tell your downloaders that your repository is incomplete
+and they need to have at least up to such and such commits from
+another repository, they should be able to slurp from you.
 
-Well, it's extremely expensive most of the time. It's often as expensive 
-as the packing itself. So I don't like that option very much.
+It might be possible to teach upload-pack (that is run when your
+downloaders run git-fetch or git-clone against your repository)
+to somehow send a customized error message to the client when it
+finds the other end needs certain objects that you yourself do
+not even have. In that message you could say something like "due
+to space constraints this repository is an incomplete one, and
+you can only use it on top of a clone of such and such
+repository, found at this URL: ...".
 
-> Alternatively:
-> 
->         name=$( {
->                 git-rev-list --objects $rev_list $(git-rev-parse $rev_parse) ||
->                 echo Gaaahhh
->         } | git-pack-objects --non-empty $pack_objects .tmp-pack)
+> Moreover, I'm wondering if my public repository really needs to store
+> big repo's pack files as it is described in git tutorial ?
 
-Actually, some dim memories prodded me to some man-page digging, and the 
-"pipefail" option in particular.
+Copying is one way, but if the repository you are borrowing from
+lives on the same machine, you could use objects/info/alternates
+to point at it from your public repository.  In either case, the
+point in that section is to reduce the need to transfer and
+expand much stuff in your public repository while keeping the
+repository complete.  The recommended procedure in the tutorial
+always assumes that the public repository is kept fsck-objects
+clean and complete.
 
-It seems to be a common option to both ksh and bash, so
-
-	set -o pipefail
-
-seems like it should fix this. Sadly, I think it's pretty recent in bash 
-(ksh apparently got it in -93, bash seems to have gotten it only as of 
-version 3.0, which is definitely recent enough that we can't just assume 
-it).
-
-[ Also, bash seems to have a variable called $PIPESTATUS, but that's 
-  bash-specific (I don't know when it was enabled). ]
-
-Anyway, doing a
-
-	set -o pipefail
-
-should never be the wrong thing to do, but the problem is figuring out 
-whether the option is available or not, since if it isn't available, it's 
-considered an error ;/
-
-So with all that, how about we take your "Gaah" idea, and simplify it: 
-just pipe stderr too. That, together with making git-pack-objects tell 
-what garbage it got, actually does the rigth thing:
-
-	[torvalds@g5 git-clone]$ git repack -a -d
-	fatal: expected sha1, got garbage:
-	 error: Could not read 7f59dbbb8f8d479c1d31453eac06ec765436a780
-
-with this pretty simple patch.
-
-Whaddaya think?
-
-			Linus
-
----
-diff --git a/git-repack.sh b/git-repack.sh
-index 4e16d34..c0f271d 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -41,7 +41,7 @@ esac
- if [ "$local" ]; then
- 	pack_objects="$pack_objects --local"
- fi
--name=$(git-rev-list --objects $rev_list $(git-rev-parse $rev_parse) |
-+name=$(git-rev-list --objects $rev_list $(git-rev-parse $rev_parse) 2>&1 |
- 	git-pack-objects --non-empty $pack_objects .tmp-pack) ||
- 	exit 1
- if [ -z "$name" ]; then
-diff --git a/pack-objects.c b/pack-objects.c
-index 4e941e7..8864a31 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -524,7 +524,7 @@ int main(int argc, char **argv)
- 		unsigned char sha1[20];
- 
- 		if (get_sha1_hex(line, sha1))
--			die("expected sha1, got garbage");
-+			die("expected sha1, got garbage:\n %s", line);
- 		hash = 0;
- 		p = line+40;
- 		while (*p) {
+What you are trying to do is to keep your public repository
+fsck-objects *un*clean and still let downloaders work with it;
+so I suspect following that section of the tutorial procedure
+defeats the purpose your experiments.
