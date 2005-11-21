@@ -1,62 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: auto-packing on kernel.org? please?
-Date: Mon, 21 Nov 2005 11:58:35 -0800
-Message-ID: <7v3blprcwk.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org>
-	<20051121190151.GA2568@hpsvcnb.fc.hp.com>
-	<Pine.LNX.4.64.0511211110480.13959@g5.osdl.org>
+From: Franck <vagabon.xyz@gmail.com>
+Subject: Re: [QUESTION] Access to a huge GIT repository.
+Date: Mon, 21 Nov 2005 21:11:27 +0100
+Message-ID: <cda58cb80511211211l2ff6ff12j@mail.gmail.com>
+References: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
+	 <Pine.LNX.4.64.0511160837000.13959@g5.osdl.org>
+	 <cda58cb80511170236p4a7e2baay@mail.gmail.com>
+	 <Pine.LNX.4.64.0511170817480.13959@g5.osdl.org>
+	 <cda58cb80511171347yef4f090g@mail.gmail.com>
+	 <Pine.LNX.4.64.0511171443000.13959@g5.osdl.org>
+	 <cda58cb80511190423w1e46bf5bu@mail.gmail.com>
+	 <Pine.LNX.4.64.0511190953520.13959@g5.osdl.org>
+	 <7vzmo04dpl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 21 21:01:33 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 21 21:12:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeHoO-0007zX-Pm
-	for gcvg-git@gmane.org; Mon, 21 Nov 2005 20:58:49 +0100
+	id 1EeI0i-0004JJ-8u
+	for gcvg-git@gmane.org; Mon, 21 Nov 2005 21:11:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750755AbVKUT6i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 14:58:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750778AbVKUT6i
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 14:58:38 -0500
-Received: from fed1rmmtai08.cox.net ([68.230.241.51]:6788 "EHLO
-	fed1rmmtai08.cox.net") by vger.kernel.org with ESMTP
-	id S1750755AbVKUT6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 14:58:37 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051121195731.JHAR26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 21 Nov 2005 14:57:31 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511211110480.13959@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 21 Nov 2005 11:24:11 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750701AbVKUUL3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 15:11:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750777AbVKUUL3
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 15:11:29 -0500
+Received: from zproxy.gmail.com ([64.233.162.204]:44071 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750701AbVKUUL2 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Nov 2005 15:11:28 -0500
+Received: by zproxy.gmail.com with SMTP id 14so928246nzn
+        for <git@vger.kernel.org>; Mon, 21 Nov 2005 12:11:27 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=N2EG0KbtoSvDQqW85cVrBik0zKKNtA9xrhG1BhBehBVAcWxhOAPdRH1Xwd2hvjAwTGXAwUlfFRtqjQMTOSD37yTnieEC4OtBcn/cEEVVjhScWMBep6RKaGssXMFw6oDXT4vvhaZpKMDcApwkoQudwXkfYQhVPs5pT1DwxheP94g=
+Received: by 10.36.247.9 with SMTP id u9mr200239nzh;
+        Mon, 21 Nov 2005 12:11:27 -0800 (PST)
+Received: by 10.36.47.8 with HTTP; Mon, 21 Nov 2005 12:11:27 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmo04dpl.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12476>
 
-Linus Torvalds <torvalds@osdl.org> writes:
-
-> Can anybody tell me how to do that sanely? Right now we do
+2005/11/19, Junio C Hamano <junkio@cox.net>:
+> Linus Torvalds <torvalds@osdl.org> writes:
 >
-> 	..
-> 	name=$(git-rev-list --objects $rev_list $(git-rev-parse $rev_parse) |
-> 	        git-pack-objects --non-empty $pack_objects .tmp-pack) ||
-> 	        exit 1
-> 	..
+> > So "git repack" should _never_ call git-redundant-pack. It's always either
+> > wrong or pointless.
 >
-> and the thing is, the "git-pack-objects" thing is happy, it's the 
-> "git-rev-list" that fails. So because the last command in the pipeline 
-> returns ok, we think it all is ok..
+> Right-o.
+>
 
-One cop-out: do fsck-objects upfront before making a pack.  This
-would populate your buffer cache so it might not be a bad thing.
+Ok, it works now. My new git repository is only 60Mo. But :), I would
+like to make up my public repository based on this "light" repository.
+And if someone has the big repository, I would like him to be able to
+pull my public repo into his one. But since I used grafting to "cut"
+my light repo and .git/info/grafts file is not copied during
+push/pull/clone operations it's not going to work. Is it a scheme that
+could work ?
 
-Alternatively:
+Moreover, I'm wondering if my public repository really needs to store
+big repo's pack files as it is described in git tutorial ?
 
-        name=$( {
-                git-rev-list --objects $rev_list $(git-rev-parse $rev_parse) ||
-                echo Gaaahhh
-        } | git-pack-objects --non-empty $pack_objects .tmp-pack)
+Thanks
+--
+               Franck
