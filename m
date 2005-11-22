@@ -1,91 +1,96 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Get rid of .git/branches/ and .git/remotes/?
-Date: Tue, 22 Nov 2005 10:07:38 +0100
-Message-ID: <4382DFDA.6040306@op5.se>
-References: <20051122041843.9436.qmail@science.horizon.com>
+From: Franck <vagabon.xyz@gmail.com>
+Subject: Re: [QUESTION] Access to a huge GIT repository.
+Date: Tue, 22 Nov 2005 10:22:46 +0100
+Message-ID: <cda58cb80511220122r76ca69a2y@mail.gmail.com>
+References: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
+	 <cda58cb80511170236p4a7e2baay@mail.gmail.com>
+	 <Pine.LNX.4.64.0511170817480.13959@g5.osdl.org>
+	 <cda58cb80511171347yef4f090g@mail.gmail.com>
+	 <Pine.LNX.4.64.0511171443000.13959@g5.osdl.org>
+	 <cda58cb80511190423w1e46bf5bu@mail.gmail.com>
+	 <Pine.LNX.4.64.0511190953520.13959@g5.osdl.org>
+	 <7vzmo04dpl.fsf@assigned-by-dhcp.cox.net>
+	 <cda58cb80511211211l2ff6ff12j@mail.gmail.com>
+	 <7vhda5pw6l.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: torvalds@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 10:08:29 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 10:24:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeU7s-0004Hm-Ft
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 10:07:44 +0100
+	id 1EeUMW-0000PT-Ph
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 10:22:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750704AbVKVJHl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 04:07:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbVKVJHl
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 04:07:41 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:27271 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750704AbVKVJHk
+	id S1751287AbVKVJWt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 04:22:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbVKVJWt
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 04:22:49 -0500
+Received: from zproxy.gmail.com ([64.233.162.207]:39586 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751287AbVKVJWs convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 04:07:40 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 3031F6BCFF; Tue, 22 Nov 2005 10:07:39 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: linux@horizon.com
-In-Reply-To: <20051122041843.9436.qmail@science.horizon.com>
+	Tue, 22 Nov 2005 04:22:48 -0500
+Received: by zproxy.gmail.com with SMTP id 14so1083497nzn
+        for <git@vger.kernel.org>; Tue, 22 Nov 2005 01:22:48 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HKqqE/Q1CrREmYLDiQJiL/c5JP+OibwtXaCTgBkJIFEm30vVodEOOelsiJp2iiXtsYDDv21v3WUDwbAs4IcFE/QRCmgkeogO/1bzUEfztjrvcFEtDSkeTx+TQYRrDvwDPkGw/LG9g3HPH3LVKiGmWt2w97lxMwa0Eplq3hEOic8=
+Received: by 10.36.247.9 with SMTP id u9mr670819nzh;
+        Tue, 22 Nov 2005 01:22:47 -0800 (PST)
+Received: by 10.36.47.8 with HTTP; Tue, 22 Nov 2005 01:22:46 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhda5pw6l.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12540>
 
-linux@horizon.com wrote:
->>This is like Makefiles: if you have spaces in the wrong place, it may all 
->>_look_ fine, but the Makefile just doesn't work. Really irritating.
-> 
-> 
-> Makefiles are more annoying because spaces instead of tabs can cause
-> them to work *differently*.  It's hard to write syntax that will
-> actually do that, but the parser ahs to go past the problem a bit to
-> really figure it out, so it can't print a nice error message.
-> 
-> With the strict prefix convention, the parser can produce excellent
-> error messages.
-> 
+2005/11/21, Junio C Hamano <junkio@cox.net>:
+> Franck <vagabon.xyz@gmail.com> writes:
+>
+> > ... But since I used grafting to "cut"
+> > my light repo and .git/info/grafts file is not copied during
+> > push/pull/clone operations it's not going to work. Is it a scheme that
+> > could work ?
+>
+> If you tell your downloaders that your repository is incomplete
+> and they need to have at least up to such and such commits from
+> another repository, they should be able to slurp from you.
+>
 
-Excellent error messages aren't good enough. It's ok for Python, since 
-that's a programming language. We can expect infinitely more from 
-programmers than we can from users.
+What do you mean by "have at least up to such and such commits" ? I
+can see only one commit that they need: the one I used to create my
+public repository...
 
-> It irritates you the first few times until you learn to do it right in 
-> first place, just like it irritates most beginning C programmers that the
-> compiler keeps complaining about missing semicolons.
-> 
+> It might be possible to teach upload-pack (that is run when your
+> downloaders run git-fetch or git-clone against your repository)
+> to somehow send a customized error message to the client when it
+> finds the other end needs certain objects that you yourself do
+> not even have. In that message you could say something like "due
+> to space constraints this repository is an incomplete one, and
+> you can only use it on top of a clone of such and such
+> repository, found at this URL: ...".
+>
 
-If I'm trying out some new stuff that annoys me three times without me 
-seeing an obvious error on my part (in the editor of my choice) I 
-usually write it down as broken and move on.
+That's a good idea. We get the same thing when cloning linux
+repository. BTW how is it done in that case ?
 
-> Computers will be annoying about syntax until they learn to do what
-> I want them to do rather than what I tell them to do, at which point
-> they'll be smart enough to start being annoying by doing what they want
-> to to instead of what I want them to do.
-> 
+> > Moreover, I'm wondering if my public repository really needs to store
+> > big repo's pack files as it is described in git tutorial ?
+>
+> What you are trying to do is to keep your public repository
+> fsck-objects *un*clean and still let downloaders work with it;
+> so I suspect following that section of the tutorial procedure
+> defeats the purpose your experiments.
+>
 
-That's not the point. If everything looks good it should work good, 
-regardless of which editor or tab-setting one's using.
+Absolutely.  My question was not accurate sorry. It should have been
+"can I have a public repository wiith fsck-objects unclean and with a
+grafts file that should be downloaded when cloning it.
 
-> 
->>Of course, since I believe that tabs are always exactly 8 characters, I'd 
->>also be perfectly happy to just declare that anybody who disagrees with me 
->>is a moron and deserves to die (*).
-> 
-> 
-> Seriously, you could always have it print warning messages but try to
-> keep going by assuming 8 space tabs so that at least you can postpone
-> fixing the problem until your current train of thought has pulled into
-> the station.
-
-
-There used to be $TABSIZE (or some such). Check it if you implement 
-this. Or just skip it entirely. I would prefer the latter.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Thanks
+--
+               Franck
