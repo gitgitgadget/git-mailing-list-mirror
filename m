@@ -1,68 +1,49 @@
-From: Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: Get rid of .git/branches/ and .git/remotes/?
-Date: Tue, 22 Nov 2005 20:12:34 +0100
-Message-ID: <20051122191234.GA9040@puritan.petwork>
-References: <20051122041843.9436.qmail@science.horizon.com> <4382DFDA.6040306@op5.se>
+Date: Tue, 22 Nov 2005 20:30:48 +0100
+Message-ID: <438371E8.2030701@op5.se>
+References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0511200935081.13959@g5.osdl.org> <200511210026.30280.Josef.Weidendorfer@gmx.de> <200511221831.03954.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.63.0511221854120.27872@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Nov 22 20:17:07 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 20:33:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EedZJ-0006A0-4Q
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 20:12:41 +0100
+	id 1Eedqv-0005n8-T5
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 20:30:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965105AbVKVTMh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 14:12:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965124AbVKVTMh
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 14:12:37 -0500
-Received: from mxfep02.bredband.com ([195.54.107.73]:16035 "EHLO
-	mxfep02.bredband.com") by vger.kernel.org with ESMTP
-	id S965105AbVKVTMg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 14:12:36 -0500
-Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82])
-          by mxfep02.bredband.com with ESMTP
-          id <20051122191234.NJDE9142.mxfep02.bredband.com@ironport.bredband.com>
-          for <git@vger.kernel.org>; Tue, 22 Nov 2005 20:12:34 +0100
-Received: from c-fa2b70d5.018-10-67626713.cust.bredbandsbolaget.se (HELO puritan.petwork) ([213.112.43.250])
-  by ironport.bredband.com with ESMTP; 22 Nov 2005 20:11:51 +0100
-X-BrightmailFiltered: true
-X-IronPort-AV: i="3.97,362,1125871200"; 
-   d="scan'208"; a="12211269:sNHT33422472"
-Received: by puritan.petwork (Postfix, from userid 1000)
-	id D4CEAADFE5; Tue, 22 Nov 2005 20:12:34 +0100 (CET)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <4382DFDA.6040306@op5.se>
-User-Agent: Mutt/1.5.11
+	id S965144AbVKVTav (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 14:30:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965145AbVKVTav
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 14:30:51 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:24716 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S965144AbVKVTau
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2005 14:30:50 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id EDB996BCBE; Tue, 22 Nov 2005 20:30:48 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0511221854120.27872@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12568>
 
-Andreas Ericsson wrote:
+Johannes Schindelin wrote:
+> 
+> 	git-config-set --get remote.origin.url
+> 
 
-> Excellent error messages aren't good enough. It's ok for Python, since
-> that's a programming language. We can expect infinitely more from
-> programmers than we can from users.
-
-A semi-related question: who is the target audience of git?  I get the
-feeling that most users will be programmers, so that's kind of a
-non-argument (even though I agree with your standpoint).
-
-Furthermore, does it really matter what format .git/config has now that
-we have git-config-set?  Shouldn't all access go through that command,
-so that we can change to some other format (YAML, XML, STUPIDABBR) if we
-so desire without breaking anything?
-
-Finally, a plain-text easy-to-edit format is great, and that's a good
-enough argument not to use indentation (as has already been pointed out,
-indentation is not always what it seems).
-
-        nikolai
+So... "git-config-set" is used for both getting and setting? Why not 
+just "git-config --set" and "git-config --get" to make things a bit less 
+confusing?
 
 -- 
-Nikolai Weibull: now available free of charge at http://bitwi.se/!
-Born in Chicago, IL USA; currently residing in Gothenburg, Sweden.
-main(){printf(&linux["\021%six\012\0"],(linux)["have"]+"fun"-97);}
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
