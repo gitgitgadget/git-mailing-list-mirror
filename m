@@ -1,132 +1,107 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: strange cg-add problem
-Date: Tue, 22 Nov 2005 13:30:58 +0100
-Message-ID: <20051122123058.GB19989@schottelius.org>
+From: Martin Atukunda <matlads@dsmagic.com>
+Subject: Re: [PATCH 4/6] Add check_repo_format check for all major operations.
+Date: Tue, 22 Nov 2005 15:55:23 +0300
+Organization: digital Solutions
+Message-ID: <200511221555.24572.matlads@dsmagic.com>
+References: <11326192921291-git-send-email-matlads@dsmagic.com> <113261929333-git-send-email-matlads@dsmagic.com> <7vlkzhf5li.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="4bRzO86E/ozDv8r1"
-X-From: git-owner@vger.kernel.org Tue Nov 22 13:36:16 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 13:58:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeXMC-0004qp-1O
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 13:34:44 +0100
+	id 1EeXh7-0005dA-ND
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 13:56:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964902AbVKVMdY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 07:33:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964929AbVKVMdY
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 07:33:24 -0500
-Received: from wg.technophil.ch ([213.189.149.230]:22159 "HELO
-	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
-	id S964902AbVKVMdY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 07:33:24 -0500
-Received: (qmail 20472 invoked by uid 1000); 22 Nov 2005 12:30:58 -0000
-To: Git ML <git@vger.kernel.org>
+	id S964936AbVKVM4P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 07:56:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964935AbVKVM4P
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 07:56:15 -0500
+Received: from metronet39.infocom.co.ug ([217.113.73.39]:34564 "EHLO
+	entandikwa.ds.co.ug") by vger.kernel.org with ESMTP id S964936AbVKVM4O
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2005 07:56:14 -0500
+Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
+	by entandikwa.ds.co.ug (Postfix) with ESMTP
+	id 886F2524E; Tue, 22 Nov 2005 15:57:18 +0300 (EAT)
+Received: from matlads by igloo.ds.co.ug with local (Exim 4.54)
+	id 1EeXgD-0004FZ-Ho; Tue, 22 Nov 2005 15:55:25 +0300
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.8.2
+In-Reply-To: <7vlkzhf5li.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Linux-Info: http://linux.schottelius.org/
-X-Operating-System: Linux 2.6.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12545>
 
+On Tuesday 22 November 2005 11:29, Junio C Hamano wrote:
+> Martin Atukunda <matlads@dsmagic.com> writes:
+> > The git-* command set uses 3 entry points in order to prepare
+> > to work with a git repo: enter_repo, get_git_dir, and obviously
+> > setup_git_directory.
+>
+> Thanks, but I think this one is wrong.
+<snip>
+> In setup_git_env() you have only read GIT_DIR environment but
+> have not done the toplevel discovery.  Especially, this is
+> called from get_git_dir(), and you call that as the first thing
+> as setup_git_directory().  However, that function is supposed to
+> be callable by processes that are in a subdirectory, without
+> GIT_DIR explicitly specified, and the place get_git_dir() is
+> called in that function is way before the discovery of the
+> toplevel happens.  Until then, you do not know where your .git/
+> directory or .git/config file is. If you start in Documentation
+> subdirectory in git project, your setup_git_directory() would
+> first call get_git_dir(), which says "I assume the config file
+> is at ./.git/config -- oh there is no such thing".  At that
+> point you are checking Documentation/.git/config.
+>
+> It would happen to work because you intend to allow version 0
+> repository for any future version of tool, and even if this
+> codepath mistakenly thinks the repository is version 0, it does
+> not hurt, as long as your setup_git_directory() calls
+> check_repo_format again after doing the toplevel discovery and
+> checks the true .git/config file, but I do not think you have
+> that call in the current series yet.  Even if you had, this does
+> not feel quite right to me.
 
---4bRzO86E/ozDv8r1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+would something like the following apply in this case: (totally untested :)
 
-Hello!
+--
 
-I try to backup a MySQLDump and put it into git so we have easy access
-to diffs and can have a real history.
+Add check_repo_format check for setup_git_directory(). This check needs
+to be done in 2 cases in this function. first if GIT_DIR is set, and also
+after the top_level directory is found.
 
-The problem I have is that it works perfectly, when running manually,
-but when running in the script git refuses to use the file:
+Signed-Off-By: Martin Atukunda <matlads@dsmagic.com>
 
-----------------------------------------------------------------------
-srwali01:/home/server/backup/db# ~/db-dump.sh=20
-/home/server/backup/db//2005-11-22/13:26 does not exist or is not a regular=
- file
-cg-add: warning: not all files could be added
-cg-commit: Nothing to commit
-----------------------------------------------------------------------
-(The script can be found at [0].)
-
-When I do that on the command line, this happens:
-
-----------------------------------------------------------------------
-srwali01:/home/server/backup/db# cg-add /home/server/backup/db//2005-11-22/=
-13:26
-Adding file /home/server/backup/db//2005-11-22/13:26
-Ignoring path /home/server/backup/db//2005-11-22/13:26
-srwali01:/home/server/backup/db# cg-commit -m "Backup vom 2005-11-22 um 13:=
-26"
-cg-commit: Nothing to commit
-----------------------------------------------------------------------
-
-When I add it with a relative path it works:
-----------------------------------------------------------------------
-Adding file 2005-11-22/13:26
-srwali01:/home/server/backup/db# cg-commit -m "Backup vom 2005-11-22 um 13:=
-26"
-A 2005-11-22/13:26
-Committed as 3086174c1c84ce598137062867c07a4b7c619c39.
-----------------------------------------------------------------------
-
-When I change it in the script to be relativeo
-[( cd "$DDIR"; cg-add "$SUBDIR/$FILENAME"; cg-commit -m "Backup vom $SUBDIR=
- um $FILENAME") ]
-than the same happens:
-
-----------------------------------------------------------------------
-srwali01:~# ./db-dump.sh=20
-2005-11-22/13:31 does not exist or is not a regular file
-cg-add: warning: not all files could be added
-cg-commit: Nothing to commit
-----------------------------------------------------------------------
-
-Any hint why it behaves differently in script and command line?
-
-Btw, does someone know, why mysqldump does just one insert and a very very =
-long line
-and not many inserts with only one value? The bevahiour of it seems to have=
- changed,
-as mysqldump did that in earlier releases [sorry bit offtopic].
-
-Greetings,
-
-Nico
-
-
-[0]: http://linux.schottelius.org/scripts/#db-dump+git.sh
-
---=20
-Latest project: cinit-0.2.1 (http://linux.schottelius.org/cinit/)
-Open Source nutures open minds and free, creative developers.
-
---4bRzO86E/ozDv8r1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iQIVAwUBQ4MPgrOTBMvCUbrlAQJ24w//ewvmbmiLdyeYkmeQseTAOpWMd3slxW12
-K27628zOg6omvVib2LJFhAa/FxYPkljqlnF5LmxLfN3JixHmaPL3LpQZV4WZtGK4
-uAEG4jbTueLdDKiwo2LYUeT7pCWTF0wtABkgNttCdEbmadyaNFTAtmrq9idoZnKH
-STpB1uAMO2n58M5zvjHrcSVPBnabtocp7pVIzsBMZGXACZ1stevxRDqEe3UuhTeA
-UTuuxK+2jWAwQKuCFligKrxQgI1IeV61Upwg8L1TXz9uehYCQe/2D7QRZRVW+fhB
-Tl1eoLBSFvfUGVy9D4bdNKXLRZPpJgIgHYZNMZ9YpyTzEfz8BL3MpsBHnyXsEBe5
-yI9ibZIj+AGZEvzkhTjbXeSoZJKwUEYteh6X3XcRpmE+8wP0MZbAOAl+8DgHX4Rn
-kfh/YNigaY85MjXrjE1sIVmMzwdDmurSS8sK9gCqbHiiRsfY1p/qmjRWJ6+EK9rn
-nAYRiZN6xDC8rrG0HrcDOMw0csLGmKEmROctJ8J5L1/1Va1GEpfJehONzAQDObIc
-WfzHY1pSlER+4ZDLwYH/d+qSswNyZ5AG1/XI1hAqixqFOchc+JGP3GNX0a5FE6Qs
-YVK+vUPmSvyXAEa3WoQfEK7OoB3AesBc4k+54Uuq+ECrMpjrCJWSaodgpItOKAtU
-yejzNywKMwk=
-=18KX
------END PGP SIGNATURE-----
-
---4bRzO86E/ozDv8r1--
+diff --git a/setup.c b/setup.c
+index 44b9866..45e716a 100644
+--- a/setup.c
++++ b/setup.c
+@@ -101,8 +101,11 @@ const char *setup_git_directory(void)
+ 	 * If GIT_DIR is set explicitly, we're not going
+ 	 * to do any discovery
+ 	 */
+-	if (getenv(GIT_DIR_ENVIRONMENT))
++	if (getenv(GIT_DIR_ENVIRONMENT)) {
++		get_git_dir(1);
++		check_repo_format();
+ 		return NULL;
++	}
+ 
+ 	if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
+ 		die("Unable to read current working directory");
+@@ -118,6 +121,8 @@ const char *setup_git_directory(void)
+ 		} while (cwd[--offset] != '/');
+ 	}
+ 
++	check_repo_format();
++
+ 	if (offset == len)
+ 		return NULL;
+ 
