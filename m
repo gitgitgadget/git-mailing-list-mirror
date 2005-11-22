@@ -1,59 +1,72 @@
-From: linux@horizon.com
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Get rid of .git/branches/ and .git/remotes/?
-Date: 21 Nov 2005 22:20:14 -0500
-Message-ID: <20051122032014.32539.qmail@science.horizon.com>
+Date: Mon, 21 Nov 2005 19:38:12 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511211931350.13959@g5.osdl.org>
+References: <20051122032014.32539.qmail@science.horizon.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 04:21:50 2005
+X-From: git-owner@vger.kernel.org Tue Nov 22 04:39:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeOhh-00038n-42
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 04:20:21 +0100
+	id 1EeOzO-0001Cd-N7
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 04:38:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750701AbVKVDUQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 22:20:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750702AbVKVDUQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 22:20:16 -0500
-Received: from science.horizon.com ([192.35.100.1]:52795 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1750701AbVKVDUP
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 22:20:15 -0500
-Received: (qmail 32540 invoked by uid 1000); 21 Nov 2005 22:20:14 -0500
-To: torvalds@osdl.org
+	id S1750907AbVKVDiV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Nov 2005 22:38:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750926AbVKVDiV
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 22:38:21 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:15239 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750850AbVKVDiV (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Nov 2005 22:38:21 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAM3cDnO028782
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 21 Nov 2005 19:38:13 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAM3cCii018934;
+	Mon, 21 Nov 2005 19:38:12 -0800
+To: linux@horizon.com
+In-Reply-To: <20051122032014.32539.qmail@science.horizon.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12518>
 
-> The main reason I don't like indentation is that it tends to have strange 
-> rules for "tab". Some people (incorrectly, of course) think that tabs are 
-> not at fixed 8-byte things, so deciding the indentation of a tab often 
-> ends up either disallowing tabs altogether (bad) or having other strange 
-> rules (disallowing spaces).
+
+
+On Mon, 21 Nov 2005, linux@horizon.com wrote:
 > 
-> So I'm not religiously opposed to it, but I find it to be less than 
-> optimal.
+> Actually, most indentation-sensitive languages have a simpler solution:
+> they don't try to convert whitespace strings to a number like "horizontal
+> position"; they just compare strings.
 
-Actually, most indentation-sensitive languages have a simpler solution:
-they don't try to convert whitespace strings to a number like "horizontal
-position"; they just compare strings.
+Yes, but that doesn't really change the problem: you can't _visually_ see 
+what is wrong in most editors (some editors end up showing tabs as 
+something that isn't quite whitespace, but that's also really irritating).
 
-Each line must either have the same indentation string as some active
-scope, or its indentation must have the current innermost scope as a
-prefix, in which case it introduces a new scope.
+This is like Makefiles: if you have spaces in the wrong place, it may all 
+_look_ fine, but the Makefile just doesn't work. Really irritating.
 
-This allows anything except for
+And obviously using the file will show the problem (the parser will 
+complain with a nice line number and readable error, hopefully), but I 
+personally find that to just be too damn late. By then, you're already 
+irritated.
 
-foo		# No prefix
-    bar		# 4 spaces prefix
-	baz	# tab prefix: illegal!
+So I like the notion of depending on indentation, but I just feel it falls 
+down in practice. 
 
-The "baz" line would have to begin with 4 spaces to be legal.
-They could be followed by 4 more spaces, or a tab, or any other
-whitespace pattern.
+Of course, since I believe that tabs are always exactly 8 characters, I'd 
+also be perfectly happy to just declare that anybody who disagrees with me 
+is a moron and deserves to die (*).
 
-It's also possible to combine the two, as Haskell does.  Haskell inserts
-open braces automatically if there is no such punctuation between two
-lines with differing indentation, but if you supply a brace explicitly,
-you can do whatever indentation you like.  (And the close brace must be
-explicit if the open brace is, of course.)
+		Linus
+
+(*) That's obviously true of _anything_ that people disagree with me on,
+but at the same time, I have this nagging suspicion that it's just better 
+to not depend on indentation.
