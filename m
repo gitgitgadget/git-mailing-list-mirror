@@ -1,51 +1,82 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: index manipulation -- how?
-Date: Mon, 21 Nov 2005 21:03:37 -0800 (PST)
-Message-ID: <20051122050337.46450.qmail@web31808.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: Chuck Lever <cel@citi.umich.edu>
+Subject: Re: Diffs "from" working directory
+Date: Tue, 22 Nov 2005 00:15:30 -0500
+Organization: Network Appliance, Inc.
+Message-ID: <4382A972.1010801@citi.umich.edu>
+References: <200511201817.15780.blaisorblade@yahoo.it>	 <20051120174359.GA24177@fieldses.org>	 <Pine.LNX.4.64.0511201010490.13959@g5.osdl.org>	 <20051120205855.GA30346@fieldses.org>	 <4381287F.5080402@citi.umich.edu> <b0943d9e0511211328j7c062c07s@mail.gmail.com>
+Reply-To: cel@citi.umich.edu
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Nov 22 06:04:44 2005
+Content-Type: multipart/mixed;
+ boundary="------------060809000303070406060907"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 06:18:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeQJh-0001O3-GT
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 06:03:41 +0100
+	id 1EeQVY-0005vX-9m
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 06:16:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750980AbVKVFDj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 00:03:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750984AbVKVFDi
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 00:03:38 -0500
-Received: from web31808.mail.mud.yahoo.com ([68.142.207.71]:43391 "HELO
-	web31808.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1750977AbVKVFDi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 00:03:38 -0500
-Received: (qmail 46452 invoked by uid 60001); 22 Nov 2005 05:03:37 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=QRwFsDhCeRGAPKRdJGhcgmHzRXStPCOsDz8dECG/WHDy1dcBcSqqftXgUWP8yG1eUK9VXHKiY4QFNvxB5M7Wq7U48SwaYFndBWhSglftccMUkVZnX7IBkLWYCXaA96PW3Da42OXcLu1ar9/pj76bQjX5OV4hKs7h8f8idpknQrY=  ;
-Received: from [68.221.119.157] by web31808.mail.mud.yahoo.com via HTTP; Mon, 21 Nov 2005 21:03:37 PST
-To: git@vger.kernel.org
+	id S932268AbVKVFPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 00:15:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932259AbVKVFPf
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 00:15:35 -0500
+Received: from citi.umich.edu ([141.211.133.111]:64569 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S932253AbVKVFPc (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 00:15:32 -0500
+Received: from [10.58.52.182] (nat-198-95-226-230.netapp.com [198.95.226.230])
+	by citi.umich.edu (Postfix) with ESMTP id 94DDE1BC27;
+	Tue, 22 Nov 2005 00:15:31 -0500 (EST)
+User-Agent: Mozilla Thunderbird 1.0 (Windows/20041206)
+X-Accept-Language: en-us, en
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <b0943d9e0511211328j7c062c07s@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12523>
 
-I've a question:
+This is a multi-part message in MIME format.
+--------------060809000303070406060907
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Suppose I've updated the index and there is
-several updates pending in it: several new
-files, and several updates, etc.
+Catalin Marinas wrote:
+>>btw, catalin, this was bruce's patch.  i'm not sure why i was listed as
+>>the author (probably a mistake of mine when i imported his patch into my
+>>repository).  ah well.
+> 
+> 
+> My import command sets the author to the e-mail sender, which was you.
+> Maybe this should be changed but I don't know which option is better.
+> In the meantime, you can change the default e-mail template to set the
+> From: line with to the author of the patch and maybe add a Reply-to:
+> with your address.
 
-That is a sequence of:
-git-update-index [options] <file>
-...
+for some reason i was under the impression that it would parse the 
+Signed-off-by: fields in the patch description, and take the first one 
+as the patch author.
 
-My question is:
-How do I reverse a _single_ "git-update-index" operation?
-Be it --add or just an update.
+--------------060809000303070406060907
+Content-Type: text/x-vcard; charset=utf-8;
+ name="cel.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="cel.vcf"
 
-Thanks,
-    Luben
+begin:vcard
+fn:Chuck Lever
+n:Lever;Charles
+org:Network Appliance, Incorporated;Linux NFS Client Development
+adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
+email;internet:cel@citi.umich.edu
+title:Member of Technical Staff
+tel;work:+1 734 763-4415
+tel;fax:+1 734 763 4434
+tel;home:+1 734 668-1089
+x-mozilla-html:FALSE
+url:http://www.monkey.org/~cel/
+version:2.1
+end:vcard
+
+
+--------------060809000303070406060907--
