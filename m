@@ -1,107 +1,148 @@
-From: Martin Atukunda <matlads@dsmagic.com>
-Subject: Re: [PATCH 4/6] Add check_repo_format check for all major operations.
-Date: Tue, 22 Nov 2005 15:55:23 +0300
-Organization: digital Solutions
-Message-ID: <200511221555.24572.matlads@dsmagic.com>
-References: <11326192921291-git-send-email-matlads@dsmagic.com> <113261929333-git-send-email-matlads@dsmagic.com> <7vlkzhf5li.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 13:58:00 2005
+From: linux@horizon.com
+Subject: Re: Get rid of .git/branches/ and .git/remotes/?
+Date: 22 Nov 2005 08:21:44 -0500
+Message-ID: <20051122132144.24691.qmail@science.horizon.com>
+References: <4382D31E.40400@op5.se>
+Cc: git@vger.kernel.org, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 14:24:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeXh7-0005dA-ND
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 13:56:22 +0100
+	id 1EeY5r-0007lq-4z
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 14:21:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964936AbVKVM4P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 07:56:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964935AbVKVM4P
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 07:56:15 -0500
-Received: from metronet39.infocom.co.ug ([217.113.73.39]:34564 "EHLO
-	entandikwa.ds.co.ug") by vger.kernel.org with ESMTP id S964936AbVKVM4O
+	id S1751306AbVKVNVw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 08:21:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751309AbVKVNVw
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 08:21:52 -0500
+Received: from science.horizon.com ([192.35.100.1]:53826 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1751306AbVKVNVv
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 07:56:14 -0500
-Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
-	by entandikwa.ds.co.ug (Postfix) with ESMTP
-	id 886F2524E; Tue, 22 Nov 2005 15:57:18 +0300 (EAT)
-Received: from matlads by igloo.ds.co.ug with local (Exim 4.54)
-	id 1EeXgD-0004FZ-Ho; Tue, 22 Nov 2005 15:55:25 +0300
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.8.2
-In-Reply-To: <7vlkzhf5li.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	Tue, 22 Nov 2005 08:21:51 -0500
+Received: (qmail 24692 invoked by uid 1000); 22 Nov 2005 08:21:44 -0500
+To: ae@op5.se, linux@horizon.com
+In-Reply-To: <4382D31E.40400@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12546>
 
-On Tuesday 22 November 2005 11:29, Junio C Hamano wrote:
-> Martin Atukunda <matlads@dsmagic.com> writes:
-> > The git-* command set uses 3 entry points in order to prepare
-> > to work with a git repo: enter_repo, get_git_dir, and obviously
-> > setup_git_directory.
->
-> Thanks, but I think this one is wrong.
-<snip>
-> In setup_git_env() you have only read GIT_DIR environment but
-> have not done the toplevel discovery.  Especially, this is
-> called from get_git_dir(), and you call that as the first thing
-> as setup_git_directory().  However, that function is supposed to
-> be callable by processes that are in a subdirectory, without
-> GIT_DIR explicitly specified, and the place get_git_dir() is
-> called in that function is way before the discovery of the
-> toplevel happens.  Until then, you do not know where your .git/
-> directory or .git/config file is. If you start in Documentation
-> subdirectory in git project, your setup_git_directory() would
-> first call get_git_dir(), which says "I assume the config file
-> is at ./.git/config -- oh there is no such thing".  At that
-> point you are checking Documentation/.git/config.
->
-> It would happen to work because you intend to allow version 0
-> repository for any future version of tool, and even if this
-> codepath mistakenly thinks the repository is version 0, it does
-> not hurt, as long as your setup_git_directory() calls
-> check_repo_format again after doing the toplevel discovery and
-> checks the true .git/config file, but I do not think you have
-> that call in the current series yet.  Even if you had, this does
-> not feel quite right to me.
+> So, would this be considered legal or would it barf on baz?
+> 
+> foo		# No prefix
+> 	bar	# tab prefix
+>         baz     # 8 spaces prefix
 
-would something like the following apply in this case: (totally untested :)
+It would barf on baz.  "\t" is not a prefix of "        ".
 
---
+> Most people have tabsize at 8. Some don't. Some editors insert spaces
+> instead of tabs while others don't. If we just match strings we'll
+> end up with users sending bug-reports by cut'n pasting their perfectly
+> valid-looking config which mixes tabs and spaces just because it's
+> been edited by people using different editors.
 
-Add check_repo_format check for setup_git_directory(). This check needs
-to be done in 2 cases in this function. first if GIT_DIR is set, and also
-after the top_level directory is found.
+> Real fun would be if the mta sends tabs as spaces. Then there'd
+> be no way at all of telling if the config *is* valid or not.
 
-Signed-Off-By: Martin Atukunda <matlads@dsmagic.com>
+We have this problem already with whitespace damage in the "before"
+parts of patches.  Are you suggesting that the user will be confused
+because some third party edited their config using an editor that
+messed up the leading whitespace and then just left it broken?
 
-diff --git a/setup.c b/setup.c
-index 44b9866..45e716a 100644
---- a/setup.c
-+++ b/setup.c
-@@ -101,8 +101,11 @@ const char *setup_git_directory(void)
- 	 * If GIT_DIR is set explicitly, we're not going
- 	 * to do any discovery
- 	 */
--	if (getenv(GIT_DIR_ENVIRONMENT))
-+	if (getenv(GIT_DIR_ENVIRONMENT)) {
-+		get_git_dir(1);
-+		check_repo_format();
- 		return NULL;
-+	}
- 
- 	if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
- 		die("Unable to read current working directory");
-@@ -118,6 +121,8 @@ const char *setup_git_directory(void)
- 		} while (cwd[--offset] != '/');
- 	}
- 
-+	check_repo_format();
-+
- 	if (offset == len)
- 		return NULL;
- 
+There's a certain level of "evil gremlins came in during the night and
+added bugs to my code" that I bloody well expect to be confusing!
+
+You might have problems inserting a line that suffers mailer damage,
+mailer sends you, but if you had sent it as a context diff, the patch
+process would have choked on the whitespace anyway.
+
+I'm not particularly agitating for an indent-based syntax, but it
+is moderately popular and successful, and anyone criticising it should
+at least know how it works.
+
+The standard interpretation of leading whitespace accepts basically
+that subset of "looks right" that is insensitive to tab setting.
+
+> Excellent error messages aren't good enough. It's ok for Python, since 
+> that's a programming language. We can expect infinitely more from 
+> programmers than we can from users.
+
+We're talking about git users here, right?
+More specifically, we're talking about git users who are pulling from
+multiple remote trees, no?
+
+Perhaps you could clarify how this set of people is not a strict
+subset of the set of programmers...
+
+>> It irritates you the first few times until you learn to do it right in 
+>> first place, just like it irritates most beginning C programmers that the
+>> compiler keeps complaining about missing semicolons.
+
+> If I'm trying out some new stuff that annoys me three times without me 
+> seeing an obvious error on my part (in the editor of my choice) I 
+> usually write it down as broken and move on.
+
+What part of something like:
+	Can't figure out nesting level on line 232.  Its leading
+	whitespace ("        ", all spaces), is not a prefix or
+	extension of the whitespace on the preceding line 230
+	("\t", all tabs).
+makes the error non-obvious?
+
+If you refuse to read the error message at all, you can get confused,
+but you'll also be confused by perfectly valid code producing diagnostics
+like "error: dereferencing pointer to incomplete type" if you forget to
+#include the right header 200 lines before the location of your error.
+
+>> Computers will be annoying about syntax until they learn to do what
+>> I want them to do rather than what I tell them to do, at which point
+>> they'll be smart enough to start being annoying by doing what they want
+>> to to instead of what I want them to do.
+
+> That's not the point. If everything looks good it should work good, 
+> regardless of which editor or tab-setting one's using.
+
+Unfortunately, that's provably impossible, because it will look
+different to different people.
+
+Proof by example:
+
+header1
+    header2	# 4 spaces
+        body3	# 8 spaces
+	body4	# one tab
+
+That looks good to me, with 8-space tabs:
+
+header1 {
+    header2 {
+        body3
+        body4
+    }
+}
+
+But it also looks great to someone with 4-space tabs:
+
+header1 {
+    header2 {
+        body3
+    }
+    body4
+}
+
+Too bad it doesn't work the same.
+
+The standard whitespace-parsing algorithm rejects "body4" on the grounds
+that it's ambiguous.  Simple, robust, and no making guesses that lead
+to an error message 20 lines beyond the actual problem.  It just says
+"Hey!  Fix line 4!"
+
+>> Seriously, you could always have it print warning messages but try to
+>> keep going by assuming 8 space tabs so that at least you can postpone
+>> fixing the problem until your current train of thought has pulled into
+>> the station.
+
+> There used to be $TABSIZE (or some such). Check it if you implement 
+> this. Or just skip it entirely. I would prefer the latter.
+
+Fine with me.  It's a fallback heuristic anyway.
