@@ -1,91 +1,83 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Diffs "from" working directory
-Date: Tue, 22 Nov 2005 10:32:54 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511221025580.13959@g5.osdl.org>
-References: <200511201817.15780.blaisorblade@yahoo.it>  <20051120174359.GA24177@fieldses.org>
-  <Pine.LNX.4.64.0511201010490.13959@g5.osdl.org>  <20051120205855.GA30346@fieldses.org>
-  <4381287F.5080402@citi.umich.edu> <b0943d9e0511211328j7c062c07s@mail.gmail.com>
- <4382A972.1010801@citi.umich.edu> <Pine.LNX.4.64.0511212124160.13959@g5.osdl.org>
- <43835D8E.60109@citi.umich.edu>
+From: Franck <vagabon.xyz@gmail.com>
+Subject: Re: [QUESTION] Access to a huge GIT repository.
+Date: Tue, 22 Nov 2005 20:10:26 +0100
+Message-ID: <cda58cb80511221110i3d7ea4dj@mail.gmail.com>
+References: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
+	 <cda58cb80511190423w1e46bf5bu@mail.gmail.com>
+	 <Pine.LNX.4.64.0511190953520.13959@g5.osdl.org>
+	 <7vzmo04dpl.fsf@assigned-by-dhcp.cox.net>
+	 <cda58cb80511211211l2ff6ff12j@mail.gmail.com>
+	 <7vhda5pw6l.fsf@assigned-by-dhcp.cox.net>
+	 <cda58cb80511220122r76ca69a2y@mail.gmail.com>
+	 <7vfyppf1va.fsf@assigned-by-dhcp.cox.net>
+	 <cda58cb80511220240u45267b18o@mail.gmail.com>
+	 <7v1x18fw8j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 19:34:47 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 20:13:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EecxD-00053M-Tx
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 19:33:20 +0100
+	id 1EedXD-0004mZ-99
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 20:10:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965094AbVKVSdB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 13:33:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965099AbVKVSdB
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 13:33:01 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:33759 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965094AbVKVSc7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 13:32:59 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAMIWtnO001957
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 22 Nov 2005 10:32:56 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAMIWs95020579;
-	Tue, 22 Nov 2005 10:32:55 -0800
-To: Chuck Lever <cel@citi.umich.edu>
-In-Reply-To: <43835D8E.60109@citi.umich.edu>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965121AbVKVTK2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 14:10:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965123AbVKVTK1
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 14:10:27 -0500
+Received: from zproxy.gmail.com ([64.233.162.204]:38367 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S965121AbVKVTK0 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2005 14:10:26 -0500
+Received: by zproxy.gmail.com with SMTP id 14so77422nzn
+        for <git@vger.kernel.org>; Tue, 22 Nov 2005 11:10:26 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=siFvlJuNsR9o+BKHJpIWSmeO/yQ+3OyGCmZ96gkV2ocykhrB/dtTwlq654NekzJdF7OLwHofPfNwwuHysszfxF0o6822m+ojQyYNcbneOJ1UcwRBBDzQiVBSQVTaAnlfmNBaR9UO/MyfMQ2PaEfgEB6GN55nC3XmEdr1baHTnL4=
+Received: by 10.36.91.13 with SMTP id o13mr1677392nzb;
+        Tue, 22 Nov 2005 11:10:26 -0800 (PST)
+Received: by 10.36.47.8 with HTTP; Tue, 22 Nov 2005 11:10:26 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1x18fw8j.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12566>
 
+2005/11/22, Junio C Hamano <junkio@cox.net>:
+> Were you around on this list, around the beginning of this
+> month?
 
+nope, I subscribed to the list one week later.
 
-On Tue, 22 Nov 2005, Chuck Lever wrote:
-> 
-> then perhaps the problem is that the "stg mail" tool should place the author
-> in the From: field automatically?  (ie change the tool, or permanently modify
-> the default template that comes with StGIT to do this, as Catalin suggested
-> earlier).
-> 
-> that seems a little twisty to me; you're overloading the SMTP header field
-> instead of explicitly specifying patch authorship.  seems like a layering
-> violation.
+> The thread that starts here may be of interest:
+>
+>         http://marc.theaimsgroup.com/?l=git&m=113089701819420
+>
+> I think (although I do not exactly know how the "lite"
+> repository was constructed) what you are doing is similar to
+> what I called "shallow clone" there in that thread.
 
-No, I only use the actual SMTP header field if the _body_ of the email 
-doesn't contain the "From:".
+Indeed. What I'm doing to get my "shallow clone" is basicaly remove
+every ref/branchs I don't want, then run git-prune, git-repack -a -d.
+But the result should be the same as your "shallow clone" method.
 
-So there's really two different "From:" lines: there's the SMTP header 
-one, which is just a default fallback one, and there's the first non-empty 
-line of the email body itself, which is the preferred one. No layering 
-violation, just two different layers that have the same format for the 
-line.
+>  At the end
+> of the thread I think I listed what you can and cannot do in
+> such an incomplete repository.
+>
 
-See "The Perfect Patch" by Andrew, and bullet (4): Attribution:
+Yes. But the big difference is that, in my case, the shallow copy is
+used as a public repository, whereas in your case the shallow copy is
+used as a working repository. Anyway, Ralf (the mips arch maintainer)
+is going to create a new pruned repository that should resolve my
+problem. I'm going to wait for it instead of trying to make my own
+"broken" repository.
 
-	http://www.zip.com.au/~akpm/linux/patches/stuff/tpp.txt
-
-To quote:
-
-   'If someone else wrote the patch, they should be credited (and blamed) 
-    for it. To communicate this, add a line:
-
-    From: John Doe <jdoe@wherever.com>
-
-    as the very first line of the email.  Downstream tools will pick this 
-    up and jdoe will get the git "Author" line.'
-
-and I'd be even more anal about it: I would seriously suggest to people 
-that they just _always_ add the "From:" line at the head of the email, 
-even if it just is exactly the same as what will be in the SMTP header.
-
-Why? Simple. It makes is less likely that somebody who just forwards the 
-patch will forget to add that line for you. So you are really helping 
-people out - and making sure the attribution stays correct - by adding 
-that extra "From:" line at the top of your email body, even if it is 
-"unnecessary" in the sense that it's also in your SMTP header.
-
-		Linus
+Thanks
+--
+               Franck
