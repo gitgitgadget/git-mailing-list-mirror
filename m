@@ -1,168 +1,132 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Chuck Lever <cel@citi.umich.edu>
 Subject: Re: auto-packing on kernel.org? please?
-Date: Tue, 22 Nov 2005 09:58:45 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511220939540.13959@g5.osdl.org>
-References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org>
- <20051121190151.GA2568@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0511211110480.13959@g5.osdl.org>
- <20051122172558.GA1935@hpsvcnb.fc.hp.com>
+Date: Tue, 22 Nov 2005 13:18:53 -0500
+Organization: Network Appliance, Inc.
+Message-ID: <4383610D.7080100@citi.umich.edu>
+References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org> <20051121190151.GA2568@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0511211110480.13959@g5.osdl.org> <4382AC11.5090209@citi.umich.edu> <Pine.LNX.4.64.0511212134330.13959@g5.osdl.org>
+Reply-To: cel@citi.umich.edu
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 22 19:08:59 2005
+Content-Type: multipart/mixed;
+ boundary="------------030502030609000400070705"
+Cc: Carl Baldwin <cnb@fc.hp.com>, "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 22 19:20:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EecWA-0001ZN-0J
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 19:05:22 +0100
+	id 1Eecjb-0006zQ-Oo
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 19:19:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965067AbVKVSFQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 13:05:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965066AbVKVSFQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 13:05:16 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:46296 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965067AbVKVSFO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 13:05:14 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAMHwnnO032472
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 22 Nov 2005 09:58:50 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAMHwjwS018897;
-	Tue, 22 Nov 2005 09:58:45 -0800
-To: Carl Baldwin <cnb@fc.hp.com>
-In-Reply-To: <20051122172558.GA1935@hpsvcnb.fc.hp.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965040AbVKVSTD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 13:19:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965078AbVKVSTC
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 13:19:02 -0500
+Received: from citi.umich.edu ([141.211.133.111]:54202 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S965040AbVKVSTA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 13:19:00 -0500
+Received: from [10.58.52.99] (nat-198-95-226-230.netapp.com [198.95.226.230])
+	by citi.umich.edu (Postfix) with ESMTP id 01A081C19D;
+	Tue, 22 Nov 2005 13:18:53 -0500 (EST)
+User-Agent: Mozilla Thunderbird 1.0 (Windows/20041206)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511212134330.13959@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12564>
 
+This is a multi-part message in MIME format.
+--------------030502030609000400070705
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-On Tue, 22 Nov 2005, Carl Baldwin wrote:
-
-> On Mon, Nov 21, 2005 at 11:24:11AM -0800, Linus Torvalds wrote:
-> > NOTE! Since that email, "git repack" has gotten a "local" option (-l), 
-> > which is very useful if the repositories have pointers to alternates.
-> > 
-> > So do
-> > 
-> > 	git repack -l
-> > 
-> > instead, to get much better packs (and "-a -d" for the full case, of 
-> > course).
+Linus Torvalds wrote:
 > 
-> I'm assuming that this option will have no effect on a repository with
-> no alternates file.
-
-Correct.
-
-The only thing it does is that when it looks up an object, if it's not in 
-our _own_ ".git/objects/" dir, it won't pack it.
-
-Actually, that's not entirely true. It isn't smart enough to know where 
-every object exists, so it only knows about remote _packs_. So what 
-happens is that if you do
-
-	git repack -l -a -d
-
-it will create a pack-file that contains _all_ unpacked objects (whether 
-local or not) and all objects that are in local packs (because of the 
-"-a"), but not any objects that are in "alternate packs".
-
-Which is actually exactly what you want, if you are in the situation that 
-kernel.org is, and you have people who point their alternates to mine: 
-when I repack my objects, they'll use my packs, but other than that, 
-they'll prefer to use their own packs over any unpacked objects.
-
-> > So right now, repacking a broken archive can actually break it even more.
+> On Tue, 22 Nov 2005, Chuck Lever wrote:
 > 
-> Interesting.
-
-Well, with the latest git repack script, that should no longer be true.
-
-> > NOTE! Your "git verify-pack" wouldn't even catch this: the _pack_ is fine, 
-> > it's just incomplete.
+>>there are some things repacking does that breaks StGIT, though.
+>>
+>>git repack -d
+>>
+>>seems to remove old commits that StGIT was still depending on.
 > 
-> In my opinion, git repack did the right thing in creating the pack even
-> if it is more broken.  Starting with a broken repository was the real
-> problem.  git repack shouldn't need to worry too much about it.
+> 
+> If that is true, then "git-fsck-cache" probably also reports errors on a 
+> StGIT repository. No? Basically, it implies that the tool doesn't know how 
+> to find all the "heads".
 
-Well, "git repack" did the wrong thing in that it never _noticed_, and it 
-then removed all old packs - even though those old packs contained objects 
-that we hadn't repacked because of the broken repository.
+indeed.  this is one area where StGIT is "not safe" to use with other 
+porcelains.  these raw GIT commands can show a bunch of confusing 
+"dangling references" type errors, or actually modify the index in ways 
+that eliminate StGIT-related commits that aren't currently attached to 
+any ancestry.  (i think Catalin mentioned these are related to the 
+unapplied patches in a stack, but there could be others; see below).
 
-Of course, _usually_ a broken repository is just that - broken. The way 
-you fix a broken repo is to find a non-broken one, and clone that. 
-However, sometimes what you can do (if you literally just lost a few 
-objects) is to find a non-broken repo, and make that the _alternates_, in 
-which case you may be able to save any work you had in the broken one 
-(assuming you only lost objects that were available somewhere else).
+> The preferred way would be to just list the references somewhere under 
+> .git/refs/stgit, in which case fsck and repack should pick them up 
+> automatically (so clearly stgit doesn't do that right now ;).
 
-> Looking at it from the nervous repository admin's point of view I think
-> he would want to make sure that the repository is good to begin with.
+that could be an extremely large number of commits on a large repository 
+with a lot of patches that have been worked on over a long period.  so 
+whatever mechanism is created to do this needs to scale well in the 
+number of commits.
 
-Doing an fsck is certainly always a good idea. I do a "shallow" fsck 
-usually several times a day ("shallow" means that it doesn't fsck packs, 
-only new objects that I have aquired since the last repacking), and I do a 
-full fsck a couple of times a week.
+> It also implies that doing a "git prune" will do horribly bad things to a 
+> stgit repo, since it would remove all the objects that it thinks aren't 
+> reachable..
 
-I don't actually know why I do that, though. I don't think I've really 
-_ever_ had a broken repo since some very early days, except for the cases 
-where I break things on purpose (like remove an object to check whether 
-"git repack" does the right thing or not). I'm just used to it, and the 
-shallow fsck takes a fraction of a second, so I tend to do it after each 
-pull.
+yup.  been there, done that.  lucky for me i have an excellent hourly 
+backup scheme.
 
-So I really think that an admin has to be more than "nervous" to worry 
-about it. He has to be really anal.
+>>git repack -a -n
+>>
+>>seems to work fine with StGIT,
+> 
+> 
+> Well, it "works", but not "fine". Since it doesn't know about the stgit 
+> objects, it won't ever pack them.
 
-(Now, doing a repack and a fsck every week or so might be good, and 
-automatic shallow fsck's daily is probably a great idea too. After all, it 
-_is_ checking checksums, so if you worry about security and want to make 
-sure that nobody is trying to break in and do bad things to your repo, a 
-regular fsck is a good thing even if you're not otherwise worried about 
-corruption).
+ah!
 
-> *NOTE*  There is one question that I feel remains unanswered.  Is it
-> possible to split up the repack -a and repack -d so that the nervous
-> repository owner can insert a git verify-pack in the middle.
+> But maybe that's what stgit wants (since they are "temporary"), but it 
+> does mean that if you see a big advantage from packing, you might be 
+> losing some of it.
 
-They are already split up inside "git-repack", so we could add a hook 
-there, I guess. See the git-repack.sh file, and notice how it does the 
-"remove_redundant" part only after it has created the new pack-file and 
-done a "sync".
+actually, those commits aren't all that "temporary".  the 
+history/revision feature i'm working on would like to maintain all the 
+commits ever done to an StGIT patch.
 
-> I don't mean to say that I don't trust git repack to do the right thing.
-> Fundamentally, I just think that I shouldn't depend on it to do the
-> right thing in order to avoid corruption in my repository.
+the only time you can throw away such commits is when the patch is 
+deleted or when it is finally committed to the repository via "stg 
+commit".  otherwise, keeping these commits in a pack would be quite a 
+good thing.
 
-That's good. However, as the previous failure of git repack showed, to 
-some degree the more likely failure mode is actually that the pack 
-generated by "git repack" is perfectly fine, but it's not _complete_. Say 
-we have a bug in git repack, for example.
+maybe the first thing to do is to get a basic understanding of an StGIT 
+commit's lifetime.
 
-Another case where it's not complete is when you have deleted a branch. 
-"git repack -a -d" will effectively do a "git prune" wrt objects that are 
-no longer reachable, and that were in the old packs.
+--------------030502030609000400070705
+Content-Type: text/x-vcard; charset=utf-8;
+ name="cel.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="cel.vcf"
 
-So I'd actually suggest a slightly different approach. When-ever you 
-remove old objects (whether it's "git prune" or "git prune-packed" or "git 
-repack -a -d"), you might want to have an option that doesn't actually 
-_remove_ them, but just moves them into ".git/attic" or something like 
-that.
+begin:vcard
+fn:Chuck Lever
+n:Lever;Charles
+org:Network Appliance, Incorporated;Linux NFS Client Development
+adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
+email;internet:cel@citi.umich.edu
+title:Member of Technical Staff
+tel;work:+1 734 763-4415
+tel;fax:+1 734 763 4434
+tel;home:+1 734 668-1089
+x-mozilla-html:FALSE
+url:http://www.monkey.org/~cel/
+version:2.1
+end:vcard
 
-Then you can clean up the attic after doing your weekly full fsck or 
-something. And it has the advantage that if somebody has deleted a branch, 
-and notices later that maybe he wanted that branch back, you can "unprune" 
-all the objects, run "git-fsck-objects --full" to find any dangling 
-commits, and you'll have all your branches back.
 
-So in many ways it would perhaps be nicer to have that kind of "safe 
-remove" option to the pruning commands?
-
-			Linus
+--------------030502030609000400070705--
