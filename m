@@ -1,75 +1,62 @@
-From: YOSHIFUJI Hideaki / =?iso-2022-jp?B?GyRCNUhGIzFRTEAbKEI=?= 
-	<yoshfuji@linux-ipv6.org>
-Subject: [PATCH] GIT: Fix compilation error in connect.c
-Date: Tue, 22 Nov 2005 12:18:23 +0900 (JST)
-Organization: USAGI/WIDE Project
-Message-ID: <20051122.121823.46966877.yoshfuji@linux-ipv6.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Question Building Deb Packages
+Date: Mon, 21 Nov 2005 21:01:49 -0800
+Message-ID: <7vr799i8ci.fsf@assigned-by-dhcp.cox.net>
+References: <E1EeOHi-0007Bx-HH@jdl.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, yoshfuji@linux-ipv6.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 05:19:19 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 06:02:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EePbx-0006o7-63
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 05:18:30 +0100
+	id 1EeQHy-0000mT-Uy
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 06:01:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932154AbVKVESA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Nov 2005 23:18:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932167AbVKVESA
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Nov 2005 23:18:00 -0500
-Received: from yue.linux-ipv6.org ([203.178.140.15]:36622 "EHLO
-	yue.st-paulia.net") by vger.kernel.org with ESMTP id S932154AbVKVER7
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Nov 2005 23:17:59 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by yue.st-paulia.net (Postfix) with ESMTP
-	id 9E95B33CC2; Tue, 22 Nov 2005 12:18:24 +0900 (JST)
-To: junkio@cox.net
-X-URL: http://www.yoshifuji.org/%7Ehideaki/
-X-Fingerprint: 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
-X-PGP-Key-URL: http://www.yoshifuji.org/%7Ehideaki/hideaki@yoshifuji.org.asc
-X-Face: "5$Al-.M>NJ%a'@hhZdQm:."qn~PA^gq4o*>iCFToq*bAi#4FRtx}enhuQKz7fNqQz\BYU]
- $~O_5m-9'}MIs`XGwIEscw;e5b>n"B_?j/AkL~i/MEa<!5P`&C$@oP>ZBLP
-X-Mailer: Mew version 2.2 on Emacs 20.7 / Mule 4.1 (AOI)
+	id S932250AbVKVFBv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 00:01:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932253AbVKVFBv
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 00:01:51 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:252 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932250AbVKVFBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2005 00:01:51 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051122050051.NXAU17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 22 Nov 2005 00:00:51 -0500
+To: Jon Loeliger <jdl@freescale.com>
+In-Reply-To: <E1EeOHi-0007Bx-HH@jdl.com> (Jon Loeliger's message of "Mon, 21
+	Nov 2005 20:53:30 -0600")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12521>
 
-Fix compilation error for gcc-2.95.
+Jon Loeliger <jdl@freescale.com> writes:
 
-Signed-off-by: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
+> It _appears_ that the "deb" make target requires it to be
+> done in an actual git repository.
 
-diff --git a/connect.c b/connect.c
-index a4d6d35..7a417e5 100644
---- a/connect.c
-+++ b/connect.c
-@@ -455,6 +455,10 @@ static int rhost_len;
- static int git_proxy_command_options(const char *var, const char *value)
- {
- 	if (!strcmp(var, "core.gitproxy")) {
-+		const char *for_pos;
-+		int matchlen = -1;
-+		int hostlen;
-+
- 		if (git_proxy_command)
- 			return 0;
- 		/* [core]
-@@ -463,10 +467,7 @@ static int git_proxy_command_options(con
- 		 * gitproxy = netcatter-2 for sample.xz
- 		 * gitproxy = netcatter-default
- 		 */
--		const char *for_pos = strstr(value, " for ");
--		int matchlen = -1;
--		int hostlen;
--
-+		for_pos = strstr(value, " for ");
- 		if (!for_pos)
- 			/* matches everybody */
- 			matchlen = strlen(value);
+I think we could cheat:
 
--- 
-YOSHIFUJI Hideaki @ USAGI Project  <yoshfuji@linux-ipv6.org>
-GPG-FP  : 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
+    $ tar zxf original-tarball-of-0.99.9j.tar.gz
+    $ cd there
+    $ fakeroot debian/rules binary
+
+But you are right; "make deb" at the toplevel would not work
+well on a virgin machine, because it uses git-tar-tree to do the
+tarball construction; we inherited this braindamage from RPM
+building procedure.  So if you do not want to cheat:
+
+    $ tar zxf original-tarball-of-0.99.9j.tar.gz
+    $ cd there
+    $ make install ;# to install in $HOME/bin
+    $ cd ..
+    $ git clone git://kernel.org/pub/scm/git/git.git/
+    $ git checkout -b build v0.99.9j
+    $ make deb
+
+Then install the resulting deb and get rid of $HOME/bin/git*.
