@@ -1,91 +1,124 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: index manipulation -- how?
-Date: Mon, 21 Nov 2005 21:23:45 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511212113080.13959@g5.osdl.org>
-References: <20051122050337.46450.qmail@web31808.mail.mud.yahoo.com>
+From: Chuck Lever <cel@citi.umich.edu>
+Subject: Re: auto-packing on kernel.org? please?
+Date: Tue, 22 Nov 2005 00:26:41 -0500
+Organization: Network Appliance, Inc.
+Message-ID: <4382AC11.5090209@citi.umich.edu>
+References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org> <20051121190151.GA2568@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0511211110480.13959@g5.osdl.org>
+Reply-To: cel@citi.umich.edu
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 06:26:36 2005
+Content-Type: multipart/mixed;
+ boundary="------------050800000301050105010708"
+Cc: Carl Baldwin <cnb@fc.hp.com>, "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 22 06:28:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeQdF-00010j-8b
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 06:23:53 +0100
+	id 1EeQgA-0002m7-6T
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 06:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932305AbVKVFXs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 00:23:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932307AbVKVFXs
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 00:23:48 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:57240 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932305AbVKVFXs (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 00:23:48 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAM5NknO032741
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 21 Nov 2005 21:23:47 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAM5Nk0i023145;
-	Mon, 21 Nov 2005 21:23:46 -0800
-To: Luben Tuikov <ltuikov@yahoo.com>
-In-Reply-To: <20051122050337.46450.qmail@web31808.mail.mud.yahoo.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932307AbVKVF0v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 00:26:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932328AbVKVF0v
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 00:26:51 -0500
+Received: from citi.umich.edu ([141.211.133.111]:59067 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S932307AbVKVF0u (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 00:26:50 -0500
+Received: from [10.58.52.182] (nat-198-95-226-230.netapp.com [198.95.226.230])
+	by citi.umich.edu (Postfix) with ESMTP id 140AD1BAD0;
+	Tue, 22 Nov 2005 00:26:43 -0500 (EST)
+User-Agent: Mozilla Thunderbird 1.0 (Windows/20041206)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511211110480.13959@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12526>
 
+This is a multi-part message in MIME format.
+--------------050800000301050105010708
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-On Mon, 21 Nov 2005, Luben Tuikov wrote:
+Linus Torvalds wrote:
 > 
-> How do I reverse a _single_ "git-update-index" operation?
-> Be it --add or just an update.
+> On Mon, 21 Nov 2005, Carl Baldwin wrote:
+> 
+>>I have a question about automatic repacking.
+>>
+>>I am thinking of turning something like Linus' repacking heuristic loose
+>>on my repositories.  I just want to make sure it is as safe as possible.
+>>
+>>At the core of the incremental and full repack strategies are these
+>>statements.
+>>
+>>Incremental...
+>>
+>>>		git repack &&
+>>>			git prune-packed
+>>
+>>Full...
+>>
+>>>		git repack -a -d &&
+>>>			git prune-packed
+> 
+> 
+> NOTE! Since that email, "git repack" has gotten a "local" option (-l), 
+> which is very useful if the repositories have pointers to alternates.
+> 
+> So do
+> 
+> 	git repack -l
+> 
+> instead, to get much better packs (and "-a -d" for the full case, of 
+> course).
+> 
+> Other that than, the old email suggestion should still be fine.
 
-An "add" is easy enough to undo: just do a
+i've been playing with "git repack" on StGIT-managed repositories.
 
-	git-update-index --force-remove filename
+on NFS, using packs instead of individual objects is quite a bit faster, 
+because a single NFS GETATTR will tell you if your NFS client's cached 
+pack file is still valid, whereas a whole bunch of GETATTRs are required 
+for validating individual object files.
 
-which will remove the entry from the index even if the file on your 
-filesystem still remains (so you can "git add" it later when you do want 
-to commit it).
+there are some things repacking does that breaks StGIT, though.
 
-For a file that you had in your old index, but you've updated (either mode 
-or SHA1), you need to figure out what the old mode/sha1 was. USUALLY this 
-would be just the state that you still have in your HEAD tree, but if 
-you want to go back to something else, you'd need to figure out what that 
-was.
+git repack -d
 
-If it's the "last commit" state (ie just your HEAD state), then do
+seems to remove old commits that StGIT was still depending on.
 
-	git-ls-tree HEAD filename
+git repack -a -n
 
-which will show you the info, and then you do
+seems to work fine with StGIT, as does
 
-	git-update-index --cacheinfo <mode> <sha1> filename
+git prune-packed
 
-from that state.
+i'm really interested in trying out the new command to remove redundant 
+objects and packs, but haven't gotten around to it yet.
 
-You could obviously script something like "git-downdate-index":
+--------------050800000301050105010708
+Content-Type: text/x-vcard; charset=utf-8;
+ name="cel.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="cel.vcf"
 
-	#!/bin/sh
-	filename="$1"
-	tree_info=$(git-ls-tree HEAD -- "$filename")
-	if [ -z "$tree_info" ]; then
-		git-update-index --force-remove -- "$filename"
-	else
-		echo "$tree_info" | while read mode type sha1 name; do
-			git-update-index --cacheinfo "$mode" "$sha1" "$filename"
-		done
-	fi
+begin:vcard
+fn:Chuck Lever
+n:Lever;Charles
+org:Network Appliance, Incorporated;Linux NFS Client Development
+adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
+email;internet:cel@citi.umich.edu
+title:Member of Technical Staff
+tel;work:+1 734 763-4415
+tel;fax:+1 734 763 4434
+tel;home:+1 734 668-1089
+x-mozilla-html:FALSE
+url:http://www.monkey.org/~cel/
+version:2.1
+end:vcard
 
-but the above is totally untested, and "git-downdate-index" is a really 
-sucky name too, so you'd need to rename it and test whether it does what 
-you want.
 
-Hmm?
-
-		Linus
+--------------050800000301050105010708--
