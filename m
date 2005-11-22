@@ -1,88 +1,57 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Question about handling of heterogeneous repositories
-Date: Tue, 22 Nov 2005 20:40:50 +0100
-Message-ID: <43837442.9060602@op5.se>
-References: <81b0412b0511220850w429d2f36lafe9de7ce19ce8f@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: 2.6.15-rc2 tag
+Date: Tue, 22 Nov 2005 12:01:08 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511221200340.13959@g5.osdl.org>
+References: <20051121212549.GA23213@fieldses.org> <20051122193418.GC5628@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 20:44:50 2005
+X-From: git-owner@vger.kernel.org Tue Nov 22 21:04:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eee12-0003NV-EH
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 20:41:20 +0100
+	id 1EeeKT-0004vl-5s
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 21:01:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965153AbVKVTkx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 14:40:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965151AbVKVTkx
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 14:40:53 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:25996 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S965150AbVKVTkw
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 14:40:52 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id CFC146BCBE
-	for <git@vger.kernel.org>; Tue, 22 Nov 2005 20:40:50 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-In-Reply-To: <81b0412b0511220850w429d2f36lafe9de7ce19ce8f@mail.gmail.com>
-To: unlisted-recipients:; (no To-header on input)
+	id S965163AbVKVUBU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 15:01:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965164AbVKVUBT
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 15:01:19 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:36749 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965163AbVKVUBS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 15:01:18 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAMK1DnO007473
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 22 Nov 2005 12:01:14 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAMK19RA025384;
+	Tue, 22 Nov 2005 12:01:11 -0800
+To: "J. Bruce Fields" <bfields@fieldses.org>
+In-Reply-To: <20051122193418.GC5628@fieldses.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.56__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12571>
 
-Alex Riesen wrote:
-> Hi,
-> 
-> it is sometimes the case that a project consists of parts which are
-> unrelated to each other, and only thing in common between them is that
-> they all are used in that particular project. For example a program
-> uses some library and the developer(s) of that program would like to
-> have the source of that library somewhere close. Well, for this simple
-> example one could just use two repositories, laid close to each other
-> in a directory, like project/lib and project/prog.
-> Now, if I make the example a bit more complex and say, that the
-> developers of the program are the developers in that project and
-> change everything under project/ directory, including
-> project/library/. They are also good people and ready to give the
-> changes to the library upstream.
-> 
-> How do they achieve that, without sending project/ and project/program/?
-> 
-> For everyone who have an experience with ClearCase or Perforce (I'm
-> sorry for mentioning it) it is what the "mappings" are often used for:
-> a project is build together from different parts, which can be worked
-> on separately.
-> 
-> I'm trying to introduce git at work, but have to prepare myself for
-> possible questions first, and this is one of them :)
-> 
 
-We do like this;
 
-core
-core/gui
-core/lib
+On Tue, 22 Nov 2005, J. Bruce Fields wrote:
+>
+> I'm still not getting a 2.6.15-rc2 tag with either git-clone or
+> git-fetch --tags.  Any ideas?  Is the problem with me or with the
+> repository?
 
-$ cat .gitignore
-gui
-lib
+Try using 
 
-This is also nice because it lets the gui maintainers have the gui as 
-the root with the core and lib parts as subdirectories. Everyone has 
-their own responsibility checked out at top-level with other pieces 
-below it. It's easy enough to script a pull of all repos so everyone's 
-up to sync and everybody's happy.
+  git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
 
-It would certainly be nicer to have git ignore directories that have the 
-".git" directory (so long as it's not the top of the repo, that is), but 
-I haven't had the energy to fix that when there's already a solution 
-that's simple enough and quite adequate.
+instead. Does that help? 
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I don't understand how http:// works (or doesn't), so..
+
+		Linus
