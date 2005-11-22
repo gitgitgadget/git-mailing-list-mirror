@@ -1,77 +1,117 @@
-From: Alex Riesen <raa.lkml@gmail.com>
+From: =?ISO-8859-15?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
 Subject: Re: [PATCH] speedup allocation in pack-redundant.c
-Date: Wed, 23 Nov 2005 00:46:22 +0100
-Message-ID: <20051122234622.GD2916@steel.home>
-References: <81b0412b0511220656l528436b1xea80ee18965e4dda@mail.gmail.com> <7vek58ct4b.fsf@assigned-by-dhcp.cox.net> <4383A053.8020100@etek.chalmers.se>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Date: Wed, 23 Nov 2005 00:55:07 +0100
+Organization: Chalmers
+Message-ID: <4383AFDB.90907@etek.chalmers.se>
+References: <81b0412b0511220656l528436b1xea80ee18965e4dda@mail.gmail.com> <7vek58ct4b.fsf@assigned-by-dhcp.cox.net> <20051122230011.GA2916@steel.home> <4383A66D.2030201@etek.chalmers.se> <20051122233845.GC2916@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Nov 23 00:48:24 2005
+X-From: git-owner@vger.kernel.org Wed Nov 23 00:55:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EehqO-0007PT-CO
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 00:46:36 +0100
+	id 1EehyA-0002jo-NE
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 00:54:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030257AbVKVXqd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 22 Nov 2005 18:46:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030258AbVKVXqd
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 18:46:33 -0500
-Received: from devrace.com ([198.63.210.113]:28942 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1030257AbVKVXqc (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 18:46:32 -0500
-Received: from tigra.home (p54A0E32F.dip.t-dialin.net [84.160.227.47])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id jAMNkO4B004575;
-	Tue, 22 Nov 2005 17:46:24 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1EehqA-0000gE-00; Wed, 23 Nov 2005 00:46:22 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1EehqA-0000wO-By; Wed, 23 Nov 2005 00:46:22 +0100
-To: Lukas =?iso-8859-15?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>
-Content-Disposition: inline
-In-Reply-To: <4383A053.8020100@etek.chalmers.se>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.8 required=4.5 tests=AWL,BAYES_50,
-	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S1030260AbVKVXyf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 22 Nov 2005 18:54:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030262AbVKVXyf
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 18:54:35 -0500
+Received: from pne-smtpout1-sn2.hy.skanova.net ([81.228.8.83]:4587 "EHLO
+	pne-smtpout1-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S1030260AbVKVXyf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2005 18:54:35 -0500
+Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout1-sn2.hy.skanova.net (7.2.060.1)
+        id 438335A2000210B5; Wed, 23 Nov 2005 00:54:32 +0100
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
+X-Accept-Language: en-us, en
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20051122233845.GC2916@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12589>
 
-Lukas Sandstr=F6m, Tue, Nov 22, 2005 23:48:51 +0100:
-> >>Subject: [PATCH] speedup allocation in pack-redundant.c
-> >>Reuse discarded nodes of llists
-> >>Signed-off-by: Alex Riesen <ariesen@harmanbecker.com>
-> >=20
-> > I think making allocation/deallocation to the central place is a
-> > good cleanup, but I am not sure about the free-nodes reusing.
-> > Does this make difference in real life?  If so, it might be
-> > worth doing the slab-like allocation, since free-nodes are very
-> > small structure and malloc overhead is not ignorable there.
-> >=20
-> I have done some tests, and unfortunatley I saw approx. zero
-> improvement with Alex's patch. (less than 10ms difference when
-> total runtime is 1.850s, tested on http://home.arcor.de/fork0/downloa=
-d/idx.tar.gz)
+Alex Riesen wrote:
+> Lukas Sandstr=F6m, Wed, Nov 23, 2005 00:14:53 +0100:
+>=20
+>>>>I think making allocation/deallocation to the central place is a
+>>>>good cleanup, but I am not sure about the free-nodes reusing.
+>>>>Does this make difference in real life?
+>>>
+>>>It definitely does, though nor very much. I have no real numbers at
+>>>hand (being home now), but I remember it was 1 min with against 3 mi=
+n
+>>>without the patch on cygwin+fat32, which is already bad enough all b=
+y
+>>>itself. Very big repository with no redundant packs in it.
+>>
+>>Would you mind sharing the .idx files?
+>=20
+>=20
+> this time I probably would (they're not here)... But for a perfomance
+> testing any big repository will do, linux kernel, for example.
+>=20
+The problem is that the large repository I have contains lots of
+redundant packs, which makes quite fast to find a complete set
+and end the search. If you don't have any redundant packs, the
+complete set search really is 2**n (n =3D the number of packs).
 
-Can I suggest you try it in a really really weird environment? Like
-Cygwin. And switch some virus scanner on.
+I did some quick experiments with slab allocation and got a 4.4%
+improvement on the redundant repo, so that might be worth persuing.=20
+(Concept patch below)
 
-> Did someone else notice an improvement?
-
-My test case had over 100k files in it (just don't ask why. Weird
-environments, weird projects, ...)
-
-> It's a nice idea though. I'll look into doing slab-allocation
-> for the fun of it, but I'm not really sure that malloc is the
-> bottleneck.
-
-Yes, it usually is not a bottleneck. I think, it just another
-exception.
+diff --git a/pack-redundant.c b/pack-redundant.c
+index b38baa9..05294f8 100644
+--- a/pack-redundant.c
++++ b/pack-redundant.c
+@@ -8,6 +8,8 @@
+=20
+ #include "cache.h"
+=20
++#define BLKSIZE 1024
++
+ static const char pack_redundant_usage[] =3D
+ "git-pack-redundant [ --verbose ] [ --alt-odb ] < --all | <.pack filen=
+ame> ...>";
+=20
+@@ -38,24 +40,28 @@ struct pll {
+=20
+ static struct llist_item *free_nodes =3D NULL;
+=20
++static inline void llist_item_put(struct llist_item *item)
++{
++	item->next =3D free_nodes;
++	free_nodes =3D item;
++}
++
+ static inline struct llist_item *llist_item_get()
+ {
+ 	struct llist_item *new;
+ 	if ( free_nodes ) {
+ 		new =3D free_nodes;
+ 		free_nodes =3D free_nodes->next;
+-	} else
+-		new =3D xmalloc(sizeof(struct llist_item));
+-
++	} else {
++		int i =3D 1;
++		new =3D xmalloc(sizeof(struct llist_item) * BLKSIZE);
++		for(;i < BLKSIZE; i++) {
++			llist_item_put(&new[i]);
++		}
++	}
+ 	return new;
+ }
+=20
+-static inline void llist_item_put(struct llist_item *item)
+-{
+-	item->next =3D free_nodes;
+-	free_nodes =3D item;
+-}
+-
+ static void llist_free(struct llist *list)
+ {
+ 	while((list->back =3D list->front)) {
