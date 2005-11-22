@@ -1,103 +1,56 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [RFC] git-format-patch options
-Date: Mon, 21 Nov 2005 22:26:19 -0800 (PST)
-Message-ID: <20051122062619.97432.qmail@web31810.mail.mud.yahoo.com>
-References: <7vhda5ssxb.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: index manipulation -- how?
+Date: Mon, 21 Nov 2005 23:05:48 -0800
+Message-ID: <7vbr0dgo1f.fsf@assigned-by-dhcp.cox.net>
+References: <20051122062048.8891.qmail@web31805.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Nov 22 08:13:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 08:28:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeRbu-0005Oi-Dp
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 07:26:36 +0100
+	id 1EeSDx-0007nJ-5j
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 08:05:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750918AbVKVG0V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 01:26:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932106AbVKVG0V
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 01:26:21 -0500
-Received: from web31810.mail.mud.yahoo.com ([68.142.207.73]:44637 "HELO
-	web31810.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1750918AbVKVG0U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 01:26:20 -0500
-Received: (qmail 97434 invoked by uid 60001); 22 Nov 2005 06:26:19 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=QbgwiSTqGY4y3TctbCsPI/qXGI3aOeA4tIUpHbisdidp2GDnoFmvT0SreF/2Tucm4dyBSCsaA3g7EwuViRWwRRvn4zDgnBP5BgGnqh1BLLCAIwdoh4mHf8LAzcopPJPnI9Ky8Wu3yTny568+J2GUiGPh1jJLpAMrHzqm4URaiEQ=  ;
-Received: from [68.221.119.157] by web31810.mail.mud.yahoo.com via HTTP; Mon, 21 Nov 2005 22:26:19 PST
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhda5ssxb.fsf@assigned-by-dhcp.cox.net>
+	id S932143AbVKVHFu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 02:05:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932179AbVKVHFu
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 02:05:50 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:33211 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932143AbVKVHFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2005 02:05:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051122070550.UCEQ25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 22 Nov 2005 02:05:50 -0500
+To: ltuikov@yahoo.com
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12532>
 
---- Junio C Hamano <junkio@cox.net> wrote:
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-> 
-> The case statement that follows that comment is not quite right,
-> BTW.  "format-patch foo bar..baz" should mean sequence of "foo"
-> and then "bar..baz", but it incorrectly translates to a
-> malformed "foo..bar..baz".
-> 
-> Modulo that bug, what the current code does is to special case
-> one or two arguments case and rewrite them in that case
-> statement, and then iterate over the resulting "$@".  We barf if
-> each 'revpair' is not in rev1..rev2 format.
-> 
-> But it might make sense to (still keeping the above three
-> backward compatibility syntax exceptions) interpret "rev" to
-> mean "rev^1..rev", like this:
+> (There is a very similar construct in git-checkout.sh.
+> So if you apply the patch below, please make sure
+> git-checkout.sh doesn't break.)
 
-Ok, I don't understand the patch below.  I tried
-to get from "rev" to a "rev^1..rev" or the identical
-"rev^1 rev", but could never do it with git-format-patch.
-So for now I just use the "rev^1..rev".
+Thanks.
 
-BTW, here is the analogy:
-  git-diff-tree --pretty=raw -p <commit-id>
-does what I want, except that it is not in patch format
-as expected.  So it is quite possible to just add a
-command line parameter to git-diff-tree to indicate
-"formatted patch output", and we're done.
+> Question: so in effect, more generally:
+>   git checkout <tree-ish> <file>
+>
+> would do the right thing: update index and the working
+> tree as the file <file> looked as it was at <tree-ish>?
 
-    Luben
+Yes that is correct.  Also by omitting <tree-ish> you can
+checkout from the index.
 
-> 
-> ---
-> 
-> diff --git a/git-format-patch.sh b/git-format-patch.sh
-> index 7ee5d32..351790c 100755
-> --- a/git-format-patch.sh
-> +++ b/git-format-patch.sh
-> @@ -99,7 +99,7 @@ filelist=$tmp-files
->  # Also, "rev1.." should mean "rev1..HEAD"; git-diff users are
->  # familiar with that syntax.
->  
-> -case "$#,$1" in
-> +case "$#,$1$2" in
->  1,?*..?*)
->  	# single "rev1..rev2"
->  	;;
-> @@ -131,7 +131,8 @@ do
->  		rev2=`expr "$revpair" : '.*\.\.\(.*\)'`
->  		;;
->  	*)
-> -		usage
-> +		rev1="$revpair^"
-> +		rev2="$revpair"
->  		;;
->  	esac
->  	git-rev-parse --verify "$rev1^0" >/dev/null 2>&1 ||
-> 
-> 
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+I thought what you originally wanted to do was revert only index
+without losing your changes from the working tree, so just to
+make sure, the above does _not_ do it --- the named file in the
+working tree is also reverted to the one from <tree-ish>.
