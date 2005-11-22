@@ -1,139 +1,108 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] speedup allocation in pack-redundant.c
-Date: Tue, 22 Nov 2005 15:56:35 +0100
-Message-ID: <81b0412b0511220656l528436b1xea80ee18965e4dda@mail.gmail.com>
+Subject: [PATCH] arguments cleanup and some formatting
+Date: Tue, 22 Nov 2005 15:59:22 +0100
+Message-ID: <81b0412b0511220659u2d647b8aw5030ab7654dd8807@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed; 
-	boundary="----=_Part_4862_32952149.1132671395430"
+	boundary="----=_Part_4906_4844970.1132671562073"
 Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Nov 22 15:59:57 2005
+X-From: git-owner@vger.kernel.org Tue Nov 22 16:00:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeZZa-00008F-8S
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 15:56:42 +0100
+	id 1EeZcK-0001bl-2D
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 15:59:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964941AbVKVO4h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 09:56:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964955AbVKVO4h
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 09:56:37 -0500
-Received: from nproxy.gmail.com ([64.233.182.194]:54548 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964941AbVKVO4g (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 09:56:36 -0500
-Received: by nproxy.gmail.com with SMTP id x4so155445nfb
-        for <git@vger.kernel.org>; Tue, 22 Nov 2005 06:56:35 -0800 (PST)
+	id S964962AbVKVO7Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 09:59:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964959AbVKVO7Y
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 09:59:24 -0500
+Received: from nproxy.gmail.com ([64.233.182.207]:43604 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964960AbVKVO7X (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 09:59:23 -0500
+Received: by nproxy.gmail.com with SMTP id x4so155652nfb
+        for <git@vger.kernel.org>; Tue, 22 Nov 2005 06:59:22 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=MjBs4ZfsWpdf/HhkpCGWoXNlYqnc8BUSVNhPm8mFbz2rQHJdDSfv/Kq+RKNKARypUfoqOR/afXu1tu+d6Xg343sKB9hDrMJTDylRePiECJFFKYcRJyyvZ4If6K4Qp+SEDVr2P0gLivGIOdtpctg46Ubjz5tOXFfTqfRNhxPMrBo=
-Received: by 10.48.239.10 with SMTP id m10mr387205nfh;
-        Tue, 22 Nov 2005 06:56:35 -0800 (PST)
-Received: by 10.48.248.18 with HTTP; Tue, 22 Nov 2005 06:56:34 -0800 (PST)
+        b=jtU055Fz+MUaiIfvb60D4yn1ICZbB4WlT1efQda8nDPge36iruNO4BM+QzcjFoBJxdHHdA3DOq3nUcz++6OtyHpBhZPI9i/9lk9ywnjqkT4R4kjsf05wLGJlPiRV/DbWkfX1eVKaaW5/MEtWUEBE2D6AsIhkYAYco3QuplTFAk0=
+Received: by 10.48.248.6 with SMTP id v6mr388957nfh;
+        Tue, 22 Nov 2005 06:59:22 -0800 (PST)
+Received: by 10.48.248.18 with HTTP; Tue, 22 Nov 2005 06:59:22 -0800 (PST)
 To: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12551>
 
-------=_Part_4862_32952149.1132671395430
+------=_Part_4906_4844970.1132671562073
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: quoted-printable
 Content-Disposition: inline
 
-Reuse discarded nodes of llists
 
-------=_Part_4862_32952149.1132671395430
+
+------=_Part_4906_4844970.1132671562073
 Content-Type: text/plain; 
-	name=0001-speedup-allocation-in-pack-redundant.c.txt; 
+	name=0003-arguments-cleanup-and-some-formatting.txt; 
 	charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="0001-speedup-allocation-in-pack-redundant.c.txt"
+Content-Disposition: attachment; filename="0003-arguments-cleanup-and-some-formatting.txt"
 
-Subject: [PATCH] speedup allocation in pack-redundant.c
+Subject: [PATCH] arguments cleanup and some formatting
 
 Signed-off-by: Alex Riesen <ariesen@harmanbecker.com>
 
 
 ---
 
- pack-redundant.c |   32 ++++++++++++++++++++++++++------
- 1 files changed, 26 insertions(+), 6 deletions(-)
+ pack-redundant.c |   15 ++++++++-------
+ 1 files changed, 8 insertions(+), 7 deletions(-)
 
-applies-to: 0a8441bc998f995dd35380472314802f53c6e1f3
-738ce6cef594ae09b89372859d28f37b1bef9aa1
+applies-to: 50ace31f398f055b2d9b25dbc86c85ddf15beadc
+571f5a3ff794ff1afba5b9b708116c307b0f6aa7
 diff --git a/pack-redundant.c b/pack-redundant.c
-index 1519385..3681170 100644
+index 8b37da9..82bc8ad 100644
 --- a/pack-redundant.c
 +++ b/pack-redundant.c
-@@ -36,11 +36,31 @@ struct pll {
- 	size_t pl_size;
- };
- 
--static inline void llist_free(struct llist *list)
-+static struct llist_item *free_nodes = NULL;
-+
-+static inline struct llist_item *llist_item_get()
-+{
-+	struct llist_item *new;
-+	if ( free_nodes ) {
-+		new = free_nodes;
-+		free_nodes = free_nodes->next;
-+	} else
-+		new = xmalloc(sizeof(struct llist_item));
-+
-+	return new;
-+}
-+
-+static inline void llist_item_put(struct llist_item *item)
-+{
-+	item->next = free_nodes;
-+	free_nodes = item;
-+}
-+
-+static void llist_free(struct llist *list)
- {
- 	while((list->back = list->front)) {
- 		list->front = list->front->next;
--		free(list->back);
-+		llist_item_put(list->back);
- 	}
- 	free(list);
+@@ -149,8 +149,9 @@ static inline struct llist_item * llist_
  }
-@@ -62,13 +82,13 @@ static struct llist * llist_copy(struct 
- 	if ((ret->size = list->size) == 0)
- 		return ret;
  
--	new = ret->front = xmalloc(sizeof(struct llist_item));
-+	new = ret->front = llist_item_get();
- 	new->sha1 = list->front->sha1;
- 
- 	old = list->front->next;
- 	while (old) {
- 		prev = new;
--		new = xmalloc(sizeof(struct llist_item));
-+		new = llist_item_get();
- 		prev->next = new;
- 		new->sha1 = old->sha1;
- 		old = old->next;
-@@ -82,7 +102,7 @@ static struct llist * llist_copy(struct 
- static inline struct llist_item * llist_insert(struct llist *list,
- 					struct llist_item *after, char *sha1)
+ /* returns a pointer to an item in front of sha1 */
+-static inline struct llist_item * llist_sorted_remove(struct llist *list, char *sha1,
+-					       struct llist_item *hint)
++static inline struct llist_item * llist_sorted_remove(struct llist *list,
++						      const char *sha1,
++						      struct llist_item *hint)
  {
--	struct llist_item *new = xmalloc(sizeof(struct llist_item));
-+	struct llist_item *new = llist_item_get();
- 	new->sha1 = sha1;
- 	new->next = NULL;
+ 	struct llist_item *prev, *l;
  
-@@ -153,7 +173,7 @@ redo_from_start:
- 				prev->next = l->next;
- 			if (l == list->back)
- 				list->back = prev;
--			free(l);
-+			llist_item_put(l);
- 			list->size--;
- 			return prev;
- 		}
+@@ -218,10 +219,11 @@ static inline size_t pack_list_size(stru
+ 	return ret;
+ }
+ 
+-static struct pack_list * pack_list_difference(struct pack_list *A,
+-					struct pack_list *B)
++static struct pack_list * pack_list_difference(const struct pack_list *A,
++					       const struct pack_list *B)
+ {
+-	struct pack_list *ret, *pl;
++	struct pack_list *ret;
++	const struct pack_list *pl;
+ 
+ 	if (A == NULL)
+ 		return NULL;
+@@ -350,8 +352,7 @@ static int is_superset(struct pack_list 
+ 	diff = llist_copy(list);
+ 
+ 	while (pl) {
+-		llist_sorted_difference_inplace(diff,
+-						pl->all_objects);
++		llist_sorted_difference_inplace(diff, pl->all_objects);
+ 		if (diff->size == 0) { /* we're done */
+ 			llist_free(diff);
+ 			return 1;
 ---
 0.99.9.GIT
 
-------=_Part_4862_32952149.1132671395430--
+------=_Part_4906_4844970.1132671562073--
