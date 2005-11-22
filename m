@@ -1,49 +1,65 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Get rid of .git/branches/ and .git/remotes/?
-Date: Tue, 22 Nov 2005 20:30:48 +0100
-Message-ID: <438371E8.2030701@op5.se>
-References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0511200935081.13959@g5.osdl.org> <200511210026.30280.Josef.Weidendorfer@gmx.de> <200511221831.03954.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.63.0511221854120.27872@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: 2.6.15-rc2 tag
+Date: Tue, 22 Nov 2005 14:34:18 -0500
+Message-ID: <20051122193418.GC5628@fieldses.org>
+References: <20051121212549.GA23213@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 20:33:53 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Nov 22 20:36:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eedqv-0005n8-T5
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 20:30:54 +0100
+	id 1EeduJ-0007W4-D2
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 20:34:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965144AbVKVTav (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 14:30:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965145AbVKVTav
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 14:30:51 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:24716 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S965144AbVKVTau
+	id S965145AbVKVTeU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 14:34:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965146AbVKVTeU
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 14:34:20 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:12241 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP id S965145AbVKVTeT
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 14:30:50 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id EDB996BCBE; Tue, 22 Nov 2005 20:30:48 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0511221854120.27872@wbgn013.biozentrum.uni-wuerzburg.de>
+	Tue, 22 Nov 2005 14:34:19 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.54)
+	id 1EeduE-00026s-AI
+	for git@vger.kernel.org; Tue, 22 Nov 2005 14:34:18 -0500
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20051121212549.GA23213@fieldses.org>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12569>
 
-Johannes Schindelin wrote:
+I'm still not getting a 2.6.15-rc2 tag with either git-clone or
+git-fetch --tags.  Any ideas?  Is the problem with me or with the
+repository?
+
+--b.
+
+On Mon, Nov 21, 2005 at 04:25:49PM -0500, J. Bruce Fields wrote:
+> Help!  I'm confused.
 > 
-> 	git-config-set --get remote.origin.url
+> 	git-fetch --tags http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
 > 
-
-So... "git-config-set" is used for both getting and setting? Why not 
-just "git-config --set" and "git-config --get" to make things a bit less 
-confusing?
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> isn't getting me a 2.6.15-rc2 tag.  So maybe there's some delay?  There
+> does, however, appear to be a file
+> 
+> 	http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/tags/v2.6.15-rc2
+> 
+> Its contents are 7305b5cb045e2c71250b5b7472771ed2620bc514 which isn't
+> anything I can find anywhere.
+> 
+> gitweb, on the other hand:
+> 
+> 	http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=tag;h=7305b5cb045e2c71250b5b7472771ed2620bc514
+> 
+> shows 3bedff1d73b86e0cf52634efb447e9ada08f2cc6 as the tagged commit,
+> which is something I do have.  What don't I understand?
+> 
+> --b.
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
