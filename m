@@ -1,102 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: index manipulation -- how?
-Date: Mon, 21 Nov 2005 21:36:12 -0800
-Message-ID: <7v3blpi6r7.fsf@assigned-by-dhcp.cox.net>
-References: <20051122050337.46450.qmail@web31808.mail.mud.yahoo.com>
-	<7v8xvhi7bi.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: auto-packing on kernel.org? please?
+Date: Mon, 21 Nov 2005 21:41:17 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511212134330.13959@g5.osdl.org>
+References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org>
+ <20051121190151.GA2568@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0511211110480.13959@g5.osdl.org>
+ <4382AC11.5090209@citi.umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 06:43:40 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Carl Baldwin <cnb@fc.hp.com>, "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 22 06:54:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeQpG-0006ui-Bd
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 06:36:31 +0100
+	id 1EeR0Q-00022m-3T
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 06:47:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932328AbVKVFgO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 00:36:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932332AbVKVFgO
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 00:36:14 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:61591 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932328AbVKVFgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 00:36:13 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051122053508.UIRN26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 22 Nov 2005 00:35:08 -0500
-To: Luben Tuikov <ltuikov@yahoo.com>
-In-Reply-To: <7v8xvhi7bi.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 21 Nov 2005 21:24:01 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932347AbVKVFrq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 00:47:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932354AbVKVFrq
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 00:47:46 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:45211 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932347AbVKVFrp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 00:47:45 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAM5fLnO000980
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 21 Nov 2005 21:41:22 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAM5fHMg023907;
+	Mon, 21 Nov 2005 21:41:18 -0800
+To: Chuck Lever <cel@citi.umich.edu>
+In-Reply-To: <4382AC11.5090209@citi.umich.edu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12529>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Luben Tuikov <ltuikov@yahoo.com> writes:
+
+On Tue, 22 Nov 2005, Chuck Lever wrote:
 >
->> How do I reverse a _single_ "git-update-index" operation?
->> Be it --add or just an update.
->
-> Reverting working tree files are "git checkout HEAD the-file"
-> (both index and working tree file from the head commit) or "git
-> checkout -- the-file" (working tree file from the index), but I
-> do not think there is a prepackaged way to revert only a single
-> index path offhand.
->
->         git-ls-tree HEAD the-file |
->         sed -e 's/^\([0-7]*\) [^ ]* \(.*\)/\1 \2/' |
->         git-update-index --index-info
->
-> should work.
->
-> I think changing update-index --index-info so that you can lose
-> the sed in between without breaking its other usage (it reads
-> from git-apply --index-info, which does not say " blob " which
-> is what the sed is stripping out) is a worthwhile thing to do.
+> there are some things repacking does that breaks StGIT, though.
+> 
+> git repack -d
+> 
+> seems to remove old commits that StGIT was still depending on.
 
-And here is the patch to let you say:
+If that is true, then "git-fsck-cache" probably also reports errors on a 
+StGIT repository. No? Basically, it implies that the tool doesn't know how 
+to find all the "heads".
 
-	git-ls-tree HEAD the-file | git-update-index --index-info
+Could somebody (Catalin?) perhaps tell how tools like git-fsck-cache and 
+git-repack could figure out which objects are still in use by stgit?
 
+Preferably with some generic mechanism that _other_ projects (not just 
+stgit) might want to use?
 
----
+The preferred way would be to just list the references somewhere under 
+.git/refs/stgit, in which case fsck and repack should pick them up 
+automatically (so clearly stgit doesn't do that right now ;).
 
-diff --git a/update-index.c b/update-index.c
-index 5bbc3de..11b7f6a 100644
---- a/update-index.c
-+++ b/update-index.c
-@@ -338,7 +338,7 @@ static void read_index_info(int line_ter
- 	struct strbuf buf;
- 	strbuf_init(&buf);
- 	while (1) {
--		char *ptr;
-+		char *ptr, *tab;
- 		char *path_name;
- 		unsigned char sha1[20];
- 		unsigned int mode;
-@@ -348,12 +348,15 @@ static void read_index_info(int line_ter
- 			break;
- 
- 		mode = strtoul(buf.buf, &ptr, 8);
--		if (ptr == buf.buf || *ptr != ' ' ||
--		    get_sha1_hex(ptr + 1, sha1) ||
--		    ptr[41] != '\t')
-+		if (ptr == buf.buf || *ptr != ' ')
- 			goto bad_line;
- 
--		ptr += 42;
-+		tab = strchr(ptr, '\t');
-+		if (!tab || tab - ptr < 41)
-+			goto bad_line;
-+		if (get_sha1_hex(tab - 40, sha1) || tab[-41] != ' ')
-+			goto bad_line;
-+		ptr = tab + 1;
- 
- 		if (line_termination && ptr[0] == '"')
- 			path_name = unquote_c_style(ptr, NULL);
+It also implies that doing a "git prune" will do horribly bad things to a 
+stgit repo, since it would remove all the objects that it thinks aren't 
+reachable..
+
+> git repack -a -n
+> 
+> seems to work fine with StGIT,
+
+Well, it "works", but not "fine". Since it doesn't know about the stgit 
+objects, it won't ever pack them.
+
+But maybe that's what stgit wants (since they are "temporary"), but it 
+does mean that if you see a big advantage from packing, you might be 
+losing some of it.
+
+		Linus
