@@ -1,71 +1,102 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Diffs "from" working directory
-Date: Mon, 21 Nov 2005 21:33:41 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511212124160.13959@g5.osdl.org>
-References: <200511201817.15780.blaisorblade@yahoo.it>  <20051120174359.GA24177@fieldses.org>
-  <Pine.LNX.4.64.0511201010490.13959@g5.osdl.org>  <20051120205855.GA30346@fieldses.org>
-  <4381287F.5080402@citi.umich.edu> <b0943d9e0511211328j7c062c07s@mail.gmail.com>
- <4382A972.1010801@citi.umich.edu>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: index manipulation -- how?
+Date: Mon, 21 Nov 2005 21:36:12 -0800
+Message-ID: <7v3blpi6r7.fsf@assigned-by-dhcp.cox.net>
+References: <20051122050337.46450.qmail@web31808.mail.mud.yahoo.com>
+	<7v8xvhi7bi.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 06:34:48 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 06:43:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeQmt-0005lG-70
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 06:33:51 +0100
+	id 1EeQpG-0006ui-Bd
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 06:36:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932314AbVKVFds (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 00:33:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932328AbVKVFds
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 00:33:48 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:64409 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932314AbVKVFdr (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 00:33:47 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAM5XinO000733
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 21 Nov 2005 21:33:44 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAM5Xf7x023634;
-	Mon, 21 Nov 2005 21:33:43 -0800
-To: Chuck Lever <cel@citi.umich.edu>
-In-Reply-To: <4382A972.1010801@citi.umich.edu>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932328AbVKVFgO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 00:36:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932332AbVKVFgO
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 00:36:14 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:61591 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932328AbVKVFgN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2005 00:36:13 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051122053508.UIRN26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 22 Nov 2005 00:35:08 -0500
+To: Luben Tuikov <ltuikov@yahoo.com>
+In-Reply-To: <7v8xvhi7bi.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Mon, 21 Nov 2005 21:24:01 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12528>
+
+Junio C Hamano <junkio@cox.net> writes:
+
+> Luben Tuikov <ltuikov@yahoo.com> writes:
+>
+>> How do I reverse a _single_ "git-update-index" operation?
+>> Be it --add or just an update.
+>
+> Reverting working tree files are "git checkout HEAD the-file"
+> (both index and working tree file from the head commit) or "git
+> checkout -- the-file" (working tree file from the index), but I
+> do not think there is a prepackaged way to revert only a single
+> index path offhand.
+>
+>         git-ls-tree HEAD the-file |
+>         sed -e 's/^\([0-7]*\) [^ ]* \(.*\)/\1 \2/' |
+>         git-update-index --index-info
+>
+> should work.
+>
+> I think changing update-index --index-info so that you can lose
+> the sed in between without breaking its other usage (it reads
+> from git-apply --index-info, which does not say " blob " which
+> is what the sed is stripping out) is a worthwhile thing to do.
+
+And here is the patch to let you say:
+
+	git-ls-tree HEAD the-file | git-update-index --index-info
 
 
+---
 
-On Tue, 22 Nov 2005, Chuck Lever wrote:
-> 
-> for some reason i was under the impression that it would parse the
-> Signed-off-by: fields in the patch description, and take the first one as the
-> patch author.
-
-The first sign-off really isn't necessarily the author.
-
-It might be a company sign-off (many companies don't want any random 
-engineer to send out patches), but much more commonly it's a trivial patch 
-that somebody else signs off on, even if the original patcher didn't (see 
-case (b) in the sign-off-rules: you can sign of on somebody elses work if 
-you know it's under the GPL).
-
-So the fact that there was a sign-off procedure doesn't automatically mean 
-that the author will be the first sign-off person, although in _practice_ 
-that obviously would likely always be the most common case by far.
-
-(Another reason is that some people actually add the sign-offs above 
-previous ones. It happens, although if I notice, I try to point it out).
-
-So authorship really is totally separate from sign-off, and all _my_ tools 
-take the authorship from the first "From:" line at the top of the message 
-body or from the email itself.
-
-			Linus
+diff --git a/update-index.c b/update-index.c
+index 5bbc3de..11b7f6a 100644
+--- a/update-index.c
++++ b/update-index.c
+@@ -338,7 +338,7 @@ static void read_index_info(int line_ter
+ 	struct strbuf buf;
+ 	strbuf_init(&buf);
+ 	while (1) {
+-		char *ptr;
++		char *ptr, *tab;
+ 		char *path_name;
+ 		unsigned char sha1[20];
+ 		unsigned int mode;
+@@ -348,12 +348,15 @@ static void read_index_info(int line_ter
+ 			break;
+ 
+ 		mode = strtoul(buf.buf, &ptr, 8);
+-		if (ptr == buf.buf || *ptr != ' ' ||
+-		    get_sha1_hex(ptr + 1, sha1) ||
+-		    ptr[41] != '\t')
++		if (ptr == buf.buf || *ptr != ' ')
+ 			goto bad_line;
+ 
+-		ptr += 42;
++		tab = strchr(ptr, '\t');
++		if (!tab || tab - ptr < 41)
++			goto bad_line;
++		if (get_sha1_hex(tab - 40, sha1) || tab[-41] != ' ')
++			goto bad_line;
++		ptr = tab + 1;
+ 
+ 		if (line_termination && ptr[0] == '"')
+ 			path_name = unquote_c_style(ptr, NULL);
