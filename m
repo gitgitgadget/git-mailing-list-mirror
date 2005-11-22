@@ -1,56 +1,58 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: index manipulation -- how?
-Date: Mon, 21 Nov 2005 23:35:38 -0800 (PST)
-Message-ID: <20051122073538.4708.qmail@web31806.mail.mud.yahoo.com>
-References: <7vbr0dgo1f.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Re: [PATCH] Fix git.c compilation target
+Date: Tue, 22 Nov 2005 08:47:50 +0100
+Message-ID: <81b0412b0511212347n6f478824i7ad0ffdaa78285f3@mail.gmail.com>
+References: <81b0412b0511210010m66a3f898q6d108a799de023d9@mail.gmail.com>
+	 <81b0412b0511210124u5cc0d4efv2045123d92872c66@mail.gmail.com>
+	 <7vlkzhmwq4.fsf@assigned-by-dhcp.cox.net> <43825BCF.8040402@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 08:39:17 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 08:48:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeSgp-0002hL-2N
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 08:35:43 +0100
+	id 1EeSsd-0007uV-6F
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 08:47:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932387AbVKVHfk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 02:35:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932391AbVKVHfk
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 02:35:40 -0500
-Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:64614 "HELO
-	web31806.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932387AbVKVHfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 02:35:39 -0500
-Received: (qmail 4710 invoked by uid 60001); 22 Nov 2005 07:35:38 -0000
+	id S932382AbVKVHrw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 02:47:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932391AbVKVHrw
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 02:47:52 -0500
+Received: from nproxy.gmail.com ([64.233.182.204]:60312 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932382AbVKVHrv convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2005 02:47:51 -0500
+Received: by nproxy.gmail.com with SMTP id n28so117199nfc
+        for <git@vger.kernel.org>; Mon, 21 Nov 2005 23:47:50 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=W040Tw/kCEDD0Uv2jIZzR2Z3fS33VSWXBsejUwdWntgXN86RixEM+sYV0RhCc/boxM/2aqBkJxmCY3EbMlJEXzwCNMQCuZlifaRMPo0zRBY0hQMe+U+xUTkzd4DB/LLjXe0SwGSHp/VwA5k0sGSHDsne8vEBuNVG3FvlwkqTeC4=  ;
-Received: from [68.221.119.157] by web31806.mail.mud.yahoo.com via HTTP; Mon, 21 Nov 2005 23:35:38 PST
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr0dgo1f.fsf@assigned-by-dhcp.cox.net>
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=X4tQ2ey5tVPQmikyd7PDWUNjMX4auvRg7ZrJGKmitRnn7d7wmamQ0cPqf5Re4qiK42QqED0PnZtZ5tARnHeK9SjyRODYgdwIG3vd19nAKR49mUQta8VBUdEcs4LmDEB72uSG+leLjbjTCZNAtm24X3JALDZrKa1NZUrZXzkGqpk=
+Received: by 10.48.163.13 with SMTP id l13mr345404nfe;
+        Mon, 21 Nov 2005 23:47:50 -0800 (PST)
+Received: by 10.48.248.18 with HTTP; Mon, 21 Nov 2005 23:47:50 -0800 (PST)
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <43825BCF.8040402@op5.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12534>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> 
-> I thought what you originally wanted to do was revert only index
-> without losing your changes from the working tree, so just to
-> make sure, the above does _not_ do it --- the named file in the
-> working tree is also reverted to the one from <tree-ish>.
+On 11/22/05, Andreas Ericsson <ae@op5.se> wrote:
+> >  - make git$(X) part of PROGRAMS (probably it is a
+> >    SIMPLE_PROGRAM that does not link with many extra stuff, or a
+> >    class on its own);
+> >
+> >  - have "install" target depend on "all".
+> >
+>
+> Something like this?
+>
+> ##########
+> Introduce $(ALL_PROGRAMS) for 'all:' and 'install:' to operate on.
+>
 
-Exactly what I want.
-
-Thanks,
-   Luben
-P.S. I figured this one out in three stages:
-Since checked out files are in rw- mode, but unchecked
-files simply do not exist, first I want to "revert"
-a changed file in the working tree -- this one is easy.
-Then the second stage is if also the index is updated
-(but no commit), and the last stage is if also
-there is a commit, for which I think I know what to use.
+Yes, that's what I _actually_ mean :)
