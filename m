@@ -1,62 +1,51 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Question Building Deb Packages
-Date: Mon, 21 Nov 2005 21:01:49 -0800
-Message-ID: <7vr799i8ci.fsf@assigned-by-dhcp.cox.net>
-References: <E1EeOHi-0007Bx-HH@jdl.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: index manipulation -- how?
+Date: Mon, 21 Nov 2005 21:03:37 -0800 (PST)
+Message-ID: <20051122050337.46450.qmail@web31808.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 06:02:02 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Nov 22 06:04:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeQHy-0000mT-Uy
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 06:01:55 +0100
+	id 1EeQJh-0001O3-GT
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 06:03:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932250AbVKVFBv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 00:01:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932253AbVKVFBv
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 00:01:51 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:252 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932250AbVKVFBv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 00:01:51 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051122050051.NXAU17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 22 Nov 2005 00:00:51 -0500
-To: Jon Loeliger <jdl@freescale.com>
-In-Reply-To: <E1EeOHi-0007Bx-HH@jdl.com> (Jon Loeliger's message of "Mon, 21
-	Nov 2005 20:53:30 -0600")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750980AbVKVFDj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 00:03:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750984AbVKVFDi
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 00:03:38 -0500
+Received: from web31808.mail.mud.yahoo.com ([68.142.207.71]:43391 "HELO
+	web31808.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1750977AbVKVFDi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2005 00:03:38 -0500
+Received: (qmail 46452 invoked by uid 60001); 22 Nov 2005 05:03:37 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=QRwFsDhCeRGAPKRdJGhcgmHzRXStPCOsDz8dECG/WHDy1dcBcSqqftXgUWP8yG1eUK9VXHKiY4QFNvxB5M7Wq7U48SwaYFndBWhSglftccMUkVZnX7IBkLWYCXaA96PW3Da42OXcLu1ar9/pj76bQjX5OV4hKs7h8f8idpknQrY=  ;
+Received: from [68.221.119.157] by web31808.mail.mud.yahoo.com via HTTP; Mon, 21 Nov 2005 21:03:37 PST
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12522>
 
-Jon Loeliger <jdl@freescale.com> writes:
+I've a question:
 
-> It _appears_ that the "deb" make target requires it to be
-> done in an actual git repository.
+Suppose I've updated the index and there is
+several updates pending in it: several new
+files, and several updates, etc.
 
-I think we could cheat:
+That is a sequence of:
+git-update-index [options] <file>
+...
 
-    $ tar zxf original-tarball-of-0.99.9j.tar.gz
-    $ cd there
-    $ fakeroot debian/rules binary
+My question is:
+How do I reverse a _single_ "git-update-index" operation?
+Be it --add or just an update.
 
-But you are right; "make deb" at the toplevel would not work
-well on a virgin machine, because it uses git-tar-tree to do the
-tarball construction; we inherited this braindamage from RPM
-building procedure.  So if you do not want to cheat:
-
-    $ tar zxf original-tarball-of-0.99.9j.tar.gz
-    $ cd there
-    $ make install ;# to install in $HOME/bin
-    $ cd ..
-    $ git clone git://kernel.org/pub/scm/git/git.git/
-    $ git checkout -b build v0.99.9j
-    $ make deb
-
-Then install the resulting deb and get rid of $HOME/bin/git*.
+Thanks,
+    Luben
