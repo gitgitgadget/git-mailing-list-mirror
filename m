@@ -1,283 +1,73 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: [PATCH] Add git-graft-ripple, a tool for permanently grafting history into a tree.
-Date: Tue, 22 Nov 2005 15:50:50 -0500
-Message-ID: <11326926501602-git-send-email-ryan@michonline.com>
-Reply-To: Ryan Anderson <ryan@michonline.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: finding similar blobs (was: Re: $Revision$ keyword replacement?
+Date: Tue, 22 Nov 2005 14:42:07 -0800
+Message-ID: <7vy83gb8zk.fsf@assigned-by-dhcp.cox.net>
+References: <871x18h9ee.fsf@ifae.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Ryan Anderson <ryan@michonline.com>
-X-From: git-owner@vger.kernel.org Tue Nov 22 21:52:13 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 23:46:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eef6O-0005jW-Lp
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 21:50:59 +0100
+	id 1Eegs7-0004fa-Kt
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 23:44:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965180AbVKVUux (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 15:50:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965181AbVKVUux
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 15:50:53 -0500
-Received: from mail.autoweb.net ([198.172.237.26]:4067 "EHLO
-	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
-	id S965180AbVKVUuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 15:50:52 -0500
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.internal.autoweb.net with esmtp (Exim 4.50)
-	id 1Eef6K-0003ih-6b; Tue, 22 Nov 2005 15:50:52 -0500
-Received: from [10.254.251.12] (helo=mythryan)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1Eef6J-0000V0-00; Tue, 22 Nov 2005 15:50:51 -0500
-Received: from localhost ([127.0.0.1] helo=mythryan)
-	by mythryan with smtp (Exim 4.54)
-	id 1Eef6J-0005fO-Bn; Tue, 22 Nov 2005 15:50:51 -0500
-In-Reply-To: 
-X-Mailer: git-send-email
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+	id S965075AbVKVWnl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 22 Nov 2005 17:43:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965079AbVKVWnl
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 17:43:41 -0500
+Received: from fed1rmmtai19.cox.net ([68.230.241.40]:59379 "EHLO
+	fed1rmmtai19.cox.net") by vger.kernel.org with ESMTP
+	id S965075AbVKVWnj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 17:43:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051122224210.GDBG25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 22 Nov 2005 17:42:10 -0500
+To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
+In-Reply-To: <871x18h9ee.fsf@ifae.es> (Santi =?iso-8859-1?Q?B=E9jar's?=
+ message of "Tue, 22
+	Nov 2005 18:36:41 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12578>
 
-Enhancements over the original example:
+Santi B=E9jar <sbejar@gmail.com> writes:
 
-	o Each newly created commit A' references A, and (A^1)' (The first try
-	referenced A^1 and (A^1)' but not A)
+>         How similar this file is to the file $path in these commit(s)=
+?
 
-	o Support for incrementally rewriting history is present.
+Very cute.
 
-Signed-off-by: Ryan Anderson <ryan@michonline.com>
+> tmp=3D`mktemp -t -d git-find-sim.XXXXXXX`
+> ...
+> git update-index --add $file || exit 1
+> tree=3D`git-write-tree`
 
----
+Are you going through all this trouble just to avoid a blob and
+a tree object left dangling after you are done?  Or is there
+something else going on?
 
- Documentation/git-graft-ripple |   57 +++++++++++++++++
- Makefile                       |    3 +
- git-graft-ripple.perl          |  137 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 196 insertions(+), 1 deletions(-)
- create mode 100644 Documentation/git-graft-ripple
- create mode 100755 git-graft-ripple.perl
+> rev_arg=3D`GIT_DIR=3D$GIT_DIR_ORIG git-rev-parse --default HEAD --rev=
+s-only "$@"`
+> revs=3D`GIT_DIR=3D$GIT_DIR_ORIG git-rev-list $rev_arg`
+> for i in $revs; do
+>     git diff-tree --name-status $i -C $tree | grep $file |
+>     sed "s/^/$i:/"
+> done
 
-applies-to: 92551f12af8cd77f821d066a53c4dd301d1b41f5
-9bfbdd948e6c0c9a8f0383b355e5cbbb42e0a772
-diff --git a/Documentation/git-graft-ripple b/Documentation/git-graft-ripple
-new file mode 100644
-index 0000000..2fa38cb
---- /dev/null
-+++ b/Documentation/git-graft-ripple
-@@ -0,0 +1,57 @@
-+git-graft-ripple(1)
-+===============
-+
-+NAME
-+----
-+git-graft-ripple - Rewrite history with an additional commitish as a parent.
-+
-+
-+SYNOPSIS
-+--------
-+'git-log <git repository> <branch committish> <graft SHA1> [start commitish]'
-+
-+DESCRIPTION
-+-----------
-+
-+git-graft-ripple rewrites a series of commit objects by adding a new parent to
-+the most ancestral commit, and passing the changed history back up through the
-+revision history.
-+
-+Proceeding in reverse merge order a new commit is created using the following
-+algorithim:
-+
-+	If this is the first commit reached, append the graft object name to
-+	the parents.
-+
-+	Replace each parent object name with the object name generated by this
-+	algorithm earlier.
-+
-+	Add the original object name to the parents.
-+
-+If a start commitish is given, the output of git-rev-list is restricted using
-+it. This allows for incremental grafting to occur.
-+
-+Note: No branches are modified by this operation.
-+
-+Files
-+-----
-+
-+GIT_DIR/info/ripple-status contains a mapping between the original object name
-+and the object name generated by this algorithm. When doing incremental
-+grafting, this file is necessary to continue to rename objects. If this is not
-+present, git-graft-ripple will leave the old object name in the list of
-+parents, which should still allow most merges to occur cleanly.
-+
-+
-+Author
-+------
-+Written by Ryan Anderson <ryan@michonline.com>
-+
-+Documentation
-+--------------
-+Documentation by Ryan Anderson.
-+
-+GIT
-+---
-+Part of the gitlink:git[7] suite
-+
-diff --git a/Makefile b/Makefile
-index 1109dc6..984be32 100644
---- a/Makefile
-+++ b/Makefile
-@@ -97,7 +97,8 @@ SCRIPT_SH = \
- SCRIPT_PERL = \
- 	git-archimport.perl git-cvsimport.perl git-relink.perl \
- 	git-shortlog.perl git-fmt-merge-msg.perl \
--	git-svnimport.perl git-mv.perl git-cvsexportcommit.perl
-+	git-svnimport.perl git-mv.perl git-cvsexportcommit.perl \
-+	git-graft-ripple.perl
- 
- SCRIPT_PYTHON = \
- 	git-merge-recursive.py
-diff --git a/git-graft-ripple.perl b/git-graft-ripple.perl
-new file mode 100755
-index 0000000..b8ec990
---- /dev/null
-+++ b/git-graft-ripple.perl
-@@ -0,0 +1,137 @@
-+#!/usr/bin/perl
-+# Copyright 2005 Ryan Anderson <ryan@michonline.com>
-+#
-+# GPL v2 (See COPYING)
-+#
-+# This file is licensed under the GPL v2, or a later version
-+# at the discretion of Linus Torvalds.
-+
-+use strict;
-+use warnings;
-+
-+use IPC::Open2;
-+
-+sub git_commit_tree {
-+        my ($tree,$comments,@parents) = @_;
-+
-+        my @cparents;
-+        foreach my $p (@parents) {
-+                push @cparents,"-p",$p;
-+        }
-+
-+        my $pid = open2(*Reader, *Writer,
-+		"git-commit-tree",$tree,@cparents);
-+        print Writer $comments;
-+        close(Writer);
-+        my $commit = <Reader>;
-+
-+        waitpid $pid, 0;
-+        close(Reader);
-+
-+        chomp $commit;
-+
-+        return $commit;
-+}
-+
-+my ($gittree,$branch,$graft,$start) = @ARGV;
-+chdir($gittree)
-+	or die sprintf("Failed to chdir to '%s': %s\n", $ARGV[0], $!);
-+
-+my $range = defined $start ? sprintf("%s..%s",$start,$branch) : $branch;
-+
-+#printf("Running git-rev-list --parents --merge-order %s\n",$range);
-+open(GRL,"-|","git-rev-list","--parents", "--merge-order", $range)
-+	or die "Failed to run git-rev-list: " . $!;
-+
-+my %csets;
-+my @revs;
-+while(<GRL>) {
-+	chomp;
-+	my ($commit,@parents) = split;
-+	$csets{$commit}{parents} = \@parents;
-+	push @revs, $commit;
-+#	printf("Investigating %s\n", $commit);
-+
-+	open(GCF,"-|","git-cat-file","commit",$commit)
-+		or die "Failed to open git-cat-file: " . $!;
-+
-+	my $in_comments = 0;
-+	while(<GCF>) {
-+		chomp;
-+		if ($in_comments) {
-+			$csets{$commit}{comments} .= $_ . "\n";
-+
-+		} elsif (m/^tree (.+)$/) {
-+			$csets{$commit}{tree} = $1;
-+			#printf("tree = %s\n",$1);
-+
-+		} elsif (m/^parent (.+)$/) {
-+			# Do nothing, we already got
-+			# the parents from rev-list.
-+
-+		} elsif (m/^(author|committer) (.*) <(.*)> (.*)$/) {
-+			#printf("%s = %s <%s> at %s\n",$1, $2,$3,$4);
-+			@{$csets{$commit}{$1}}{qw(name email datetime)}
-+				= ($2,$3,$4);
-+
-+		} elsif (length == 0) {
-+			$in_comments = 1;
-+			$csets{$commit}{comments} = "";
-+			next;
-+		}
-+	}
-+	close(GCF);
-+
-+}
-+close(GRL);
-+
-+@revs = reverse @revs;
-+shift @revs if defined $start;
-+push @{$csets{$revs[0]}{parents}},$graft;
-+
-+my %newcsets;
-+if (-f ".git/info/ripple-status") {
-+	open(RSTATUS,"<",".git/info/ripple-status")
-+		or die "Failed to restore status from .git/info/ripple-status: " . $!;
-+
-+	while (<RSTATUS>) {
-+		chomp;
-+		my ($k,$newcset) = split;
-+		$newcsets{$k} = $newcset;
-+	}
-+	close(RSTATUS);
-+}
-+
-+
-+foreach my $old (@revs) {
-+	printf("\nProcessing commit %s\n",$old);
-+        $ENV{GIT_AUTHOR_EMAIL} = $csets{$old}{author}{email};
-+        $ENV{GIT_AUTHOR_NAME} = $csets{$old}{author}{name};
-+        $ENV{GIT_AUTHOR_DATE} = $csets{$old}{author}{datetime};
-+        $ENV{GIT_COMMITTER_DATE} = $csets{$old}{committer}{datetime};
-+        $ENV{GIT_COMMITTER_EMAIL} = $csets{$old}{committer}{email};
-+        $ENV{GIT_COMMITTER_NAME} = $csets{$old}{committer}{name};
-+
-+	my @parents = ($old);
-+	foreach my $p (@{$csets{$old}{parents}}) {
-+		if (exists $newcsets{$p}) {
-+			push @parents, $newcsets{$p};
-+			printf("\t%s => %s\n",
-+				$newcsets{$p},$p);
-+		} else {
-+			push @parents, $p;
-+		}
-+	}
-+        my $commit = git_commit_tree($csets{$old}{tree},
-+		$csets{$old}{comments},@parents);
-+	$newcsets{$old} = $commit;
-+        printf("\tNew commit: %s\n",$newcsets{$old});
-+}
-+
-+open(RSTATUS,">",".git/info/ripple-status")
-+	or die "Failed to save status in .git/info/ripple-status: " . $!;
-+
-+foreach my $k (keys %newcsets) {
-+	printf RSTATUS "%s\t%s\n", $k, $newcsets{$k};
-+}
-+close(RSTATUS);
----
-0.99.9.GIT
+Perhaps
+
+        GIT_DIR=3D$GIT_DIR_ORIG git-rev-list $rev_arg |
+        while read one
+            git diff-tree --name-status -r $one -C $tree | grep $file |
+            sed "s/^/$one:/"
+        done
+
+just in case the similar file you will discover is hidden in a
+subdirectory?
