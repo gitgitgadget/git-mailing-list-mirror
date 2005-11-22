@@ -1,74 +1,96 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Get rid of .git/branches/ and .git/remotes/?
-Date: Tue, 22 Nov 2005 09:13:18 +0100
-Message-ID: <4382D31E.40400@op5.se>
-References: <20051122032014.32539.qmail@science.horizon.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 4/6] Add check_repo_format check for all major operations.
+Date: Tue, 22 Nov 2005 00:29:29 -0800
+Message-ID: <7vlkzhf5li.fsf@assigned-by-dhcp.cox.net>
+References: <11326192921291-git-send-email-matlads@dsmagic.com>
+	<113261929333-git-send-email-matlads@dsmagic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: torvalds@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 09:13:25 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 09:31:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeTHH-0001Ho-4c
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 09:13:23 +0100
+	id 1EeTX0-0007NP-6d
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 09:29:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964844AbVKVINU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 03:13:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964845AbVKVINU
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 03:13:20 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:1415 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S964844AbVKVINT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 03:13:19 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id A27576BCFF; Tue, 22 Nov 2005 09:13:18 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: linux@horizon.com
-In-Reply-To: <20051122032014.32539.qmail@science.horizon.com>
+	id S1751013AbVKVI3d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 03:29:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751034AbVKVI3d
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 03:29:33 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:35068 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1750873AbVKVI3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2005 03:29:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051122082858.NLDQ20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 22 Nov 2005 03:28:58 -0500
+To: Martin Atukunda <matlads@dsmagic.com>
+In-Reply-To: <113261929333-git-send-email-matlads@dsmagic.com> (Martin
+	Atukunda's message of "Tue, 22 Nov 2005 03:28:13 +0300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12537>
 
-linux@horizon.com wrote:
-> Actually, most indentation-sensitive languages have a simpler solution:
-> they don't try to convert whitespace strings to a number like "horizontal
-> position"; they just compare strings.
-> 
-> Each line must either have the same indentation string as some active
-> scope, or its indentation must have the current innermost scope as a
-> prefix, in which case it introduces a new scope.
-> 
-> This allows anything except for
-> 
-> foo		# No prefix
->     bar		# 4 spaces prefix
-> 	baz	# tab prefix: illegal!
-> 
-> The "baz" line would have to begin with 4 spaces to be legal.
-> They could be followed by 4 more spaces, or a tab, or any other
-> whitespace pattern.
-> 
+Martin Atukunda <matlads@dsmagic.com> writes:
 
-So, would this be considered legal or would it barf on baz?
+> The git-* command set uses 3 entry points in order to prepare
+> to work with a git repo: enter_repo, get_git_dir, and obviously
+> setup_git_directory.
 
-foo		# No prefix
-	bar	# tab prefix
-        baz     # 8 spaces prefix
+Thanks, but I think this one is wrong.
 
-Most people have tabsize at 8. Some don't. Some editors insert spaces
-instead of tabs while others don't. If we just match strings we'll
-end up with users sending bug-reports by cut'n pasting their perfectly
-valid-looking config which mixes tabs and spaces just because it's
-been edited by people using different editors.
+> diff --git a/environment.c b/environment.c
+> index 6a961ca..458eff8 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -37,6 +37,9 @@ static void setup_git_env(void)
+>  	git_graft_file = getenv(GRAFT_ENVIRONMENT);
+>  	if (!git_graft_file)
+>  		git_graft_file = strdup(git_path("info/grafts"));
+> +
+> +	/* check the repo */
+> +	check_repo_format();
+>  }
 
-Real fun would be if the mta sends tabs as spaces. Then there'd
-be no way at all of telling if the config *is* valid or not.
+> diff --git a/setup.c b/setup.c
+> index 8597424..934f9a3 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -97,6 +97,9 @@ const char *setup_git_directory(void)
+>  	static char cwd[PATH_MAX+1];
+>  	int len, offset;
+>  
+> +	get_git_dir(1);
+> +	check_repo_format();
+> +
+>  	/*
+>  	 * If GIT_DIR is set explicitly, we're not going
+>  	 * to do any discovery
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+In setup_git_env() you have only read GIT_DIR environment but
+have not done the toplevel discovery.  Especially, this is
+called from get_git_dir(), and you call that as the first thing
+as setup_git_directory().  However, that function is supposed to
+be callable by processes that are in a subdirectory, without
+GIT_DIR explicitly specified, and the place get_git_dir() is
+called in that function is way before the discovery of the
+toplevel happens.  Until then, you do not know where your .git/
+directory or .git/config file is. If you start in Documentation
+subdirectory in git project, your setup_git_directory() would
+first call get_git_dir(), which says "I assume the config file
+is at ./.git/config -- oh there is no such thing".  At that
+point you are checking Documentation/.git/config.  
+
+It would happen to work because you intend to allow version 0
+repository for any future version of tool, and even if this
+codepath mistakenly thinks the repository is version 0, it does
+not hurt, as long as your setup_git_directory() calls
+check_repo_format again after doing the toplevel discovery and
+checks the true .git/config file, but I do not think you have
+that call in the current series yet.  Even if you had, this does
+not feel quite right to me.
