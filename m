@@ -1,69 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [QUESTION] Access to a huge GIT repository.
-Date: Tue, 22 Nov 2005 01:50:01 -0800
-Message-ID: <7vfyppf1va.fsf@assigned-by-dhcp.cox.net>
-References: <cda58cb80511160424j1acac7c6j@mail.gmail.com>
-	<cda58cb80511170236p4a7e2baay@mail.gmail.com>
-	<Pine.LNX.4.64.0511170817480.13959@g5.osdl.org>
-	<cda58cb80511171347yef4f090g@mail.gmail.com>
-	<Pine.LNX.4.64.0511171443000.13959@g5.osdl.org>
-	<cda58cb80511190423w1e46bf5bu@mail.gmail.com>
-	<Pine.LNX.4.64.0511190953520.13959@g5.osdl.org>
-	<7vzmo04dpl.fsf@assigned-by-dhcp.cox.net>
-	<cda58cb80511211211l2ff6ff12j@mail.gmail.com>
-	<7vhda5pw6l.fsf@assigned-by-dhcp.cox.net>
-	<cda58cb80511220122r76ca69a2y@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: Diffs "from" working directory
+Date: Tue, 22 Nov 2005 10:35:34 +0000
+Message-ID: <b0943d9e0511220235kf314b5dy@mail.gmail.com>
+References: <200511201817.15780.blaisorblade@yahoo.it>
+	 <20051120174359.GA24177@fieldses.org>
+	 <Pine.LNX.4.64.0511201010490.13959@g5.osdl.org>
+	 <20051120205855.GA30346@fieldses.org>
+	 <4381287F.5080402@citi.umich.edu>
+	 <b0943d9e0511211328j7c062c07s@mail.gmail.com>
+	 <4382A972.1010801@citi.umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 22 10:51:15 2005
+X-From: git-owner@vger.kernel.org Tue Nov 22 11:37:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeUmv-0002mG-Da
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 10:50:09 +0100
+	id 1EeVUz-0003Oh-V3
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 11:35:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964859AbVKVJuF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 04:50:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964862AbVKVJuF
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 04:50:05 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:9954 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S964859AbVKVJuD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 04:50:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051122095004.VPYM25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 22 Nov 2005 04:50:04 -0500
-To: Franck <vagabon.xyz@gmail.com>
-In-Reply-To: <cda58cb80511220122r76ca69a2y@mail.gmail.com>
-	(vagabon.xyz@gmail.com's message of "Tue, 22 Nov 2005 10:22:46 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964901AbVKVKfi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 05:35:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964903AbVKVKfi
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 05:35:38 -0500
+Received: from xproxy.gmail.com ([66.249.82.205]:54570 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964901AbVKVKfh convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Nov 2005 05:35:37 -0500
+Received: by xproxy.gmail.com with SMTP id i30so852909wxd
+        for <git@vger.kernel.org>; Tue, 22 Nov 2005 02:35:34 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KOSFhWaH9xXTGNap5EjA+8ce/vFE825wakCUgHcxkbvzN22PnZSeHx3IovGExKU9T+BDX0ubaXUWul0ssCcXBiSpMW9qm/BZK54Ze+DzIZRF1dtAW1S5i2mcaIaJ6qNv+BDGddqLZOFTJ+JfwD6Rc4o921G76iAhT+a4FLDTkWs=
+Received: by 10.70.73.20 with SMTP id v20mr3367991wxa;
+        Tue, 22 Nov 2005 02:35:34 -0800 (PST)
+Received: by 10.70.27.12 with HTTP; Tue, 22 Nov 2005 02:35:34 -0800 (PST)
+To: cel@citi.umich.edu
+In-Reply-To: <4382A972.1010801@citi.umich.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12542>
 
-Franck <vagabon.xyz@gmail.com> writes:
+On 22/11/05, Chuck Lever <cel@citi.umich.edu> wrote:
+> Catalin Marinas wrote:
+> > My import command sets the author to the e-mail sender, which was you.
+>
+> for some reason i was under the impression that it would parse the
+> Signed-off-by: fields in the patch description, and take the first one
+> as the patch author.
 
-> 2005/11/21, Junio C Hamano <junkio@cox.net>:
->> Franck <vagabon.xyz@gmail.com> writes:
->>
->> > ... But since I used grafting to "cut"
->> > my light repo and .git/info/grafts file is not copied during
->> > push/pull/clone operations it's not going to work. Is it a scheme that
->> > could work ?
->>
->> If you tell your downloaders that your repository is incomplete
->> and they need to have at least up to such and such commits from
->> another repository, they should be able to slurp from you.
+If you import a patch file and don't specify an author (and the patch
+is not an e-mail), the first Signed-off-by: line is used. As Linus
+mentioned, we could get rid of this assumption entirely and just
+report an error if no author information is given.
 
-I was not talking about _your_ case specifically.  If you happen
-to have based your partial history on top of a single commit
-then the set of "such and such commits" might be only one, but
-you could for example clone from Linus tip, merge in a couple of
-jgarzik branch heads, put your own commits on top of them and
-then cauterize your history, stopping at those foreign commits.
-In such a case you obviously need to tell others where you
-chopped your history off.
+--
+Catalin
