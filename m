@@ -1,132 +1,91 @@
-From: Chuck Lever <cel@citi.umich.edu>
-Subject: Re: auto-packing on kernel.org? please?
-Date: Tue, 22 Nov 2005 13:18:53 -0500
-Organization: Network Appliance, Inc.
-Message-ID: <4383610D.7080100@citi.umich.edu>
-References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org> <20051121190151.GA2568@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0511211110480.13959@g5.osdl.org> <4382AC11.5090209@citi.umich.edu> <Pine.LNX.4.64.0511212134330.13959@g5.osdl.org>
-Reply-To: cel@citi.umich.edu
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Diffs "from" working directory
+Date: Tue, 22 Nov 2005 10:32:54 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511221025580.13959@g5.osdl.org>
+References: <200511201817.15780.blaisorblade@yahoo.it>  <20051120174359.GA24177@fieldses.org>
+  <Pine.LNX.4.64.0511201010490.13959@g5.osdl.org>  <20051120205855.GA30346@fieldses.org>
+  <4381287F.5080402@citi.umich.edu> <b0943d9e0511211328j7c062c07s@mail.gmail.com>
+ <4382A972.1010801@citi.umich.edu> <Pine.LNX.4.64.0511212124160.13959@g5.osdl.org>
+ <43835D8E.60109@citi.umich.edu>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030502030609000400070705"
-Cc: Carl Baldwin <cnb@fc.hp.com>, "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 22 19:20:15 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 19:34:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eecjb-0006zQ-Oo
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 19:19:17 +0100
+	id 1EecxD-00053M-Tx
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 19:33:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965040AbVKVSTD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 13:19:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965078AbVKVSTC
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 13:19:02 -0500
-Received: from citi.umich.edu ([141.211.133.111]:54202 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S965040AbVKVSTA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 13:19:00 -0500
-Received: from [10.58.52.99] (nat-198-95-226-230.netapp.com [198.95.226.230])
-	by citi.umich.edu (Postfix) with ESMTP id 01A081C19D;
-	Tue, 22 Nov 2005 13:18:53 -0500 (EST)
-User-Agent: Mozilla Thunderbird 1.0 (Windows/20041206)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511212134330.13959@g5.osdl.org>
+	id S965094AbVKVSdB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 13:33:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965099AbVKVSdB
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 13:33:01 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:33759 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965094AbVKVSc7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 13:32:59 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAMIWtnO001957
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 22 Nov 2005 10:32:56 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAMIWs95020579;
+	Tue, 22 Nov 2005 10:32:55 -0800
+To: Chuck Lever <cel@citi.umich.edu>
+In-Reply-To: <43835D8E.60109@citi.umich.edu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.55__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12565>
 
-This is a multi-part message in MIME format.
---------------030502030609000400070705
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
 
-Linus Torvalds wrote:
+
+On Tue, 22 Nov 2005, Chuck Lever wrote:
 > 
-> On Tue, 22 Nov 2005, Chuck Lever wrote:
+> then perhaps the problem is that the "stg mail" tool should place the author
+> in the From: field automatically?  (ie change the tool, or permanently modify
+> the default template that comes with StGIT to do this, as Catalin suggested
+> earlier).
 > 
->>there are some things repacking does that breaks StGIT, though.
->>
->>git repack -d
->>
->>seems to remove old commits that StGIT was still depending on.
-> 
-> 
-> If that is true, then "git-fsck-cache" probably also reports errors on a 
-> StGIT repository. No? Basically, it implies that the tool doesn't know how 
-> to find all the "heads".
+> that seems a little twisty to me; you're overloading the SMTP header field
+> instead of explicitly specifying patch authorship.  seems like a layering
+> violation.
 
-indeed.  this is one area where StGIT is "not safe" to use with other 
-porcelains.  these raw GIT commands can show a bunch of confusing 
-"dangling references" type errors, or actually modify the index in ways 
-that eliminate StGIT-related commits that aren't currently attached to 
-any ancestry.  (i think Catalin mentioned these are related to the 
-unapplied patches in a stack, but there could be others; see below).
+No, I only use the actual SMTP header field if the _body_ of the email 
+doesn't contain the "From:".
 
-> The preferred way would be to just list the references somewhere under 
-> .git/refs/stgit, in which case fsck and repack should pick them up 
-> automatically (so clearly stgit doesn't do that right now ;).
+So there's really two different "From:" lines: there's the SMTP header 
+one, which is just a default fallback one, and there's the first non-empty 
+line of the email body itself, which is the preferred one. No layering 
+violation, just two different layers that have the same format for the 
+line.
 
-that could be an extremely large number of commits on a large repository 
-with a lot of patches that have been worked on over a long period.  so 
-whatever mechanism is created to do this needs to scale well in the 
-number of commits.
+See "The Perfect Patch" by Andrew, and bullet (4): Attribution:
 
-> It also implies that doing a "git prune" will do horribly bad things to a 
-> stgit repo, since it would remove all the objects that it thinks aren't 
-> reachable..
+	http://www.zip.com.au/~akpm/linux/patches/stuff/tpp.txt
 
-yup.  been there, done that.  lucky for me i have an excellent hourly 
-backup scheme.
+To quote:
 
->>git repack -a -n
->>
->>seems to work fine with StGIT,
-> 
-> 
-> Well, it "works", but not "fine". Since it doesn't know about the stgit 
-> objects, it won't ever pack them.
+   'If someone else wrote the patch, they should be credited (and blamed) 
+    for it. To communicate this, add a line:
 
-ah!
+    From: John Doe <jdoe@wherever.com>
 
-> But maybe that's what stgit wants (since they are "temporary"), but it 
-> does mean that if you see a big advantage from packing, you might be 
-> losing some of it.
+    as the very first line of the email.  Downstream tools will pick this 
+    up and jdoe will get the git "Author" line.'
 
-actually, those commits aren't all that "temporary".  the 
-history/revision feature i'm working on would like to maintain all the 
-commits ever done to an StGIT patch.
+and I'd be even more anal about it: I would seriously suggest to people 
+that they just _always_ add the "From:" line at the head of the email, 
+even if it just is exactly the same as what will be in the SMTP header.
 
-the only time you can throw away such commits is when the patch is 
-deleted or when it is finally committed to the repository via "stg 
-commit".  otherwise, keeping these commits in a pack would be quite a 
-good thing.
+Why? Simple. It makes is less likely that somebody who just forwards the 
+patch will forget to add that line for you. So you are really helping 
+people out - and making sure the attribution stays correct - by adding 
+that extra "From:" line at the top of your email body, even if it is 
+"unnecessary" in the sense that it's also in your SMTP header.
 
-maybe the first thing to do is to get a basic understanding of an StGIT 
-commit's lifetime.
-
---------------030502030609000400070705
-Content-Type: text/x-vcard; charset=utf-8;
- name="cel.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="cel.vcf"
-
-begin:vcard
-fn:Chuck Lever
-n:Lever;Charles
-org:Network Appliance, Incorporated;Linux NFS Client Development
-adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
-email;internet:cel@citi.umich.edu
-title:Member of Technical Staff
-tel;work:+1 734 763-4415
-tel;fax:+1 734 763 4434
-tel;home:+1 734 668-1089
-x-mozilla-html:FALSE
-url:http://www.monkey.org/~cel/
-version:2.1
-end:vcard
-
-
---------------030502030609000400070705--
+		Linus
