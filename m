@@ -1,65 +1,88 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: 2.6.15-rc2 tag
-Date: Tue, 22 Nov 2005 14:34:18 -0500
-Message-ID: <20051122193418.GC5628@fieldses.org>
-References: <20051121212549.GA23213@fieldses.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Question about handling of heterogeneous repositories
+Date: Tue, 22 Nov 2005 20:40:50 +0100
+Message-ID: <43837442.9060602@op5.se>
+References: <81b0412b0511220850w429d2f36lafe9de7ce19ce8f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Nov 22 20:36:16 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 22 20:44:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeduJ-0007W4-D2
-	for gcvg-git@gmane.org; Tue, 22 Nov 2005 20:34:23 +0100
+	id 1Eee12-0003NV-EH
+	for gcvg-git@gmane.org; Tue, 22 Nov 2005 20:41:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965145AbVKVTeU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 14:34:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965146AbVKVTeU
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 14:34:20 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:12241 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP id S965145AbVKVTeT
+	id S965153AbVKVTkx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Nov 2005 14:40:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965151AbVKVTkx
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 14:40:53 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:25996 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S965150AbVKVTkw
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 14:34:19 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.54)
-	id 1EeduE-00026s-AI
-	for git@vger.kernel.org; Tue, 22 Nov 2005 14:34:18 -0500
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20051121212549.GA23213@fieldses.org>
-User-Agent: Mutt/1.5.11
+	Tue, 22 Nov 2005 14:40:52 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id CFC146BCBE
+	for <git@vger.kernel.org>; Tue, 22 Nov 2005 20:40:50 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+In-Reply-To: <81b0412b0511220850w429d2f36lafe9de7ce19ce8f@mail.gmail.com>
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12570>
 
-I'm still not getting a 2.6.15-rc2 tag with either git-clone or
-git-fetch --tags.  Any ideas?  Is the problem with me or with the
-repository?
+Alex Riesen wrote:
+> Hi,
+> 
+> it is sometimes the case that a project consists of parts which are
+> unrelated to each other, and only thing in common between them is that
+> they all are used in that particular project. For example a program
+> uses some library and the developer(s) of that program would like to
+> have the source of that library somewhere close. Well, for this simple
+> example one could just use two repositories, laid close to each other
+> in a directory, like project/lib and project/prog.
+> Now, if I make the example a bit more complex and say, that the
+> developers of the program are the developers in that project and
+> change everything under project/ directory, including
+> project/library/. They are also good people and ready to give the
+> changes to the library upstream.
+> 
+> How do they achieve that, without sending project/ and project/program/?
+> 
+> For everyone who have an experience with ClearCase or Perforce (I'm
+> sorry for mentioning it) it is what the "mappings" are often used for:
+> a project is build together from different parts, which can be worked
+> on separately.
+> 
+> I'm trying to introduce git at work, but have to prepare myself for
+> possible questions first, and this is one of them :)
+> 
 
---b.
+We do like this;
 
-On Mon, Nov 21, 2005 at 04:25:49PM -0500, J. Bruce Fields wrote:
-> Help!  I'm confused.
-> 
-> 	git-fetch --tags http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-> 
-> isn't getting me a 2.6.15-rc2 tag.  So maybe there's some delay?  There
-> does, however, appear to be a file
-> 
-> 	http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/tags/v2.6.15-rc2
-> 
-> Its contents are 7305b5cb045e2c71250b5b7472771ed2620bc514 which isn't
-> anything I can find anywhere.
-> 
-> gitweb, on the other hand:
-> 
-> 	http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=tag;h=7305b5cb045e2c71250b5b7472771ed2620bc514
-> 
-> shows 3bedff1d73b86e0cf52634efb447e9ada08f2cc6 as the tagged commit,
-> which is something I do have.  What don't I understand?
-> 
-> --b.
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+core
+core/gui
+core/lib
+
+$ cat .gitignore
+gui
+lib
+
+This is also nice because it lets the gui maintainers have the gui as 
+the root with the core and lib parts as subdirectories. Everyone has 
+their own responsibility checked out at top-level with other pieces 
+below it. It's easy enough to script a pull of all repos so everyone's 
+up to sync and everybody's happy.
+
+It would certainly be nicer to have git ignore directories that have the 
+".git" directory (so long as it's not the top of the repo, that is), but 
+I haven't had the energy to fix that when there's already a solution 
+that's simple enough and quite adequate.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
