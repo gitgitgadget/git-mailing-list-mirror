@@ -1,63 +1,64 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Why not clone to a remote directory over SSH
-Date: Thu, 24 Nov 2005 00:15:02 +0100
-Message-ID: <4384F7F6.10404@op5.se>
-References: <20051123211601.GA2260@hpsvcnb.fc.hp.com> <20051123230838.GN3968@reactrix.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Get rid of .git/branches/ and .git/remotes/?
+Date: Wed, 23 Nov 2005 15:21:36 -0800
+Message-ID: <7viruj3q7z.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
+	<200511210026.30280.Josef.Weidendorfer@gmx.de>
+	<200511221831.03954.Josef.Weidendorfer@gmx.de>
+	<Pine.LNX.4.63.0511221854120.27872@wbgn013.biozentrum.uni-wuerzburg.de>
+	<438371E8.2030701@op5.se>
+	<Pine.LNX.4.63.0511231553390.8191@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 24 00:16:55 2005
+X-From: git-owner@vger.kernel.org Thu Nov 24 00:21:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ef3pW-0002Fc-U0
-	for gcvg-git@gmane.org; Thu, 24 Nov 2005 00:15:11 +0100
+	id 1Ef3vs-0003z8-KN
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 00:21:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030493AbVKWXPG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 18:15:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030496AbVKWXPF
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 18:15:05 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:37779 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030493AbVKWXPE
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 18:15:04 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 14D196BCBE; Thu, 24 Nov 2005 00:15:03 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20051123230838.GN3968@reactrix.com>
+	id S932575AbVKWXVk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 18:21:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932600AbVKWXVj
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 18:21:39 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:27107 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932599AbVKWXVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 18:21:38 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051123232103.WQIA20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 23 Nov 2005 18:21:03 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12658>
 
-Nick Hengeveld wrote:
-> On Wed, Nov 23, 2005 at 02:16:01PM -0700, Carl Baldwin wrote:
-> 
-> 
->>It might be cool to enable cloning to a remote over ssh if the remote
->>doesn't yet exist.
-> 
-> 
-> I would like to see the same for http.  There is limited support for
-> managing a repository using http but without the ability to run tools
-> like init-db/clone/update-server-info you still need shell access
-> or some other workaround.  I think it would be useful to allow someone
-> to create, manage, and share a repository without any special
-> intelligence on the server side.
-> 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-You'll still need to install at least git-init-db and git-receive-pack 
-(and git-merge, and...), even if they're run through commands from the 
-web. That's pretty special intelligence.
+>> So... "git-config-set" is used for both getting and setting? Why not just
+>> "git-config --set" and "git-config --get" to make things a bit less confusing?
+>
+> I tried to do this more like a proof of a concept (Yeah, famous last 
+> words...) and tried to be not so intrusive. There is already a config.c, 
+> and to keep with the naming, this would have to move to config-lib.c to 
+> make space for config.c which really is the source for git-config$(X).
+>
+> Should we rename config.c to config-lib.c, and config-set.c to config.c? 
+> Personally, I think it too intrusive, but what the heck.
 
-You'd also have to add some logic to enter_repo() to make it find 
-repositories without a HEAD correctly.
+I do not think that change is intrusive.  We've renamed source
+files number of times ;-).
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I somehow get a very funny feeling to see "git-XXXX --get"
+command that reports different things in different repositories
+(for obvious reasons) called git-config, and not
+git-repository-config.  But it probably is just me.
+
+Anyway, the whole "remote specification in config file" is not a
+very high priority for me right now.
