@@ -1,60 +1,78 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Problem merging
-Date: Wed, 23 Nov 2005 15:49:06 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511231546330.8191@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20051123025001.15527.qmail@web31812.mail.mud.yahoo.com>
- <7v4q6483ms.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Get rid of .git/branches/ and .git/remotes/?
+Date: Wed, 23 Nov 2005 15:53:02 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511231549320.8191@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200511221831.03954.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.63.0511221854120.27872@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200511230005.12957.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 15:53:30 2005
+X-From: git-owner@vger.kernel.org Wed Nov 23 15:55:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eevvs-0003u8-Ca
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 15:49:12 +0100
+	id 1Eevzh-0005UU-35
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 15:53:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750869AbVKWOtJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 09:49:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750874AbVKWOtI
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 09:49:08 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:25497 "EHLO
+	id S1750843AbVKWOxF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 09:53:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750875AbVKWOxF
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 09:53:05 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:39322 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750869AbVKWOtH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 09:49:07 -0500
+	id S1750843AbVKWOxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 09:53:03 -0500
 Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BF8B413FD9C; Wed, 23 Nov 2005 15:49:06 +0100 (CET)
+	id C8B3913FDAC; Wed, 23 Nov 2005 15:53:02 +0100 (CET)
 Received: from virusscan (localhost [127.0.0.1])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 960D19F3D0; Wed, 23 Nov 2005 15:49:06 +0100 (CET)
+	id A1AF59F3DB; Wed, 23 Nov 2005 15:53:02 +0100 (CET)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 6ECBA9F3DC; Wed, 23 Nov 2005 15:49:06 +0100 (CET)
+	id 8D2BB9F3D2; Wed, 23 Nov 2005 15:53:02 +0100 (CET)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3FFF913FDC1; Wed, 23 Nov 2005 15:49:06 +0100 (CET)
+	id 68C1213FDC1; Wed, 23 Nov 2005 15:53:02 +0100 (CET)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4q6483ms.fsf@assigned-by-dhcp.cox.net>
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+In-Reply-To: <200511230005.12957.Josef.Weidendorfer@gmx.de>
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12631>
 
 Hi,
 
-On Tue, 22 Nov 2005, Junio C Hamano wrote:
+On Wed, 23 Nov 2005, Josef Weidendorfer wrote:
 
-> Sorry, but I am not a good enough cryptoanalyst to reverse SHA1
-> hashes,
+> My suggestion complements hierarchical keys:
+> 
+>  [myporcelain.headproperties: my/head.name]
+>     merge.candidates = my/other.head
+>     merge.default = your/master
+> 
+> would be the same as
+> 
+>  [myporcelain.headproperties]
+>     merge.candidates = my/other.head for my/head.name
+>     merge.default = your/master for my/head.name
 
-I think nobody is. Since there are infinitely many files having the same 
-SHA1 (pigeon-hole principle), there probably are infinitely many of them 
-which compile just fine (and therefore could be the original).
+Okay. What about this config file?
 
-Now, I tried to find all of them, but I, too, failed ;-)
+-- snip --
+	[myporcelain.headproperties: my/head.name]
+		merge.candidates = my/other.head
+	[myporcelain.headproperties]
+		merge.candidates = blabla for my/head.name
+-- snap --
+
+I am not totally opposed to what you are trying, but I think it 
+contradicts the KISS principle. (Note: the restriction that key names must
+not start with a digit is also a contradiction to that.)
 
 Ciao,
 Dscho
