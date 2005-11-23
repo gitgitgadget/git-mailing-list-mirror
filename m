@@ -1,56 +1,60 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Why not clone to a remote directory over SSH
-Date: Thu, 24 Nov 2005 00:41:56 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511240038001.11106@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20051123211601.GA2260@hpsvcnb.fc.hp.com> <7vd5kr3pz1.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Get rid of .git/branches/ and .git/remotes/?
+Date: Thu, 24 Nov 2005 00:42:58 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511240042350.11106@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0511200935081.13959@g5.osdl.org> <200511210026.30280.Josef.Weidendorfer@gmx.de>
+ <200511221831.03954.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.63.0511221854120.27872@wbgn013.biozentrum.uni-wuerzburg.de>
+ <438371E8.2030701@op5.se> <Pine.LNX.4.63.0511231553390.8191@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7viruj3q7z.fsf@assigned-by-dhcp.cox.net> <4384FB61.40506@op5.se>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Carl Baldwin <cnb@fc.hp.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 24 00:44:06 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 24 00:46:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ef4Gq-0001tL-3u
-	for gcvg-git@gmane.org; Thu, 24 Nov 2005 00:43:24 +0100
+	id 1Ef4IW-0002PZ-PM
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 00:45:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030514AbVKWXmw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 18:42:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030513AbVKWXmL
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 18:42:11 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:54408 "EHLO
+	id S1030513AbVKWXoI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 18:44:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030508AbVKWXno
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 18:43:44 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:63112 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1030517AbVKWXmA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 18:42:00 -0500
+	id S1030513AbVKWXm7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 18:42:59 -0500
 Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 2648413FDE6; Thu, 24 Nov 2005 00:41:57 +0100 (CET)
+	id C105D13FC39; Thu, 24 Nov 2005 00:42:58 +0100 (CET)
 Received: from virusscan (localhost [127.0.0.1])
 	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 0B2EDB52E1; Thu, 24 Nov 2005 00:41:57 +0100 (CET)
+	id A44ACB52E1; Thu, 24 Nov 2005 00:42:58 +0100 (CET)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
 	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id DA593B521E; Thu, 24 Nov 2005 00:41:56 +0100 (CET)
+	id 86F46B521E; Thu, 24 Nov 2005 00:42:58 +0100 (CET)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 65F0013FDE6; Thu, 24 Nov 2005 00:41:56 +0100 (CET)
+	id 6C41A13FC39; Thu, 24 Nov 2005 00:42:58 +0100 (CET)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5kr3pz1.fsf@assigned-by-dhcp.cox.net>
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <4384FB61.40506@op5.se>
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12663>
 
 Hi,
 
-On Wed, 23 Nov 2005, Junio C Hamano wrote:
+On Thu, 24 Nov 2005, Andreas Ericsson wrote:
 
-> 	$ ssh machine 'git clone '`hostname`:`pwd`' /path/to/new/repository'
+> git-repo-config is way friendlier for us poor lazy folks. That last 'y' in
+> "repository" really breaks the flow.
 
-Obviously, this only works if the other side can connect to this side via 
-ssh. Hmm. Firewalls? Disabled sshd? `hostname` not reliably returning a 
-valid address for the remote side?
+How about "git-local-config"?
 
-Hth,
+Ciao,
 Dscho
