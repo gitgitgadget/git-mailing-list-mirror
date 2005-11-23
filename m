@@ -1,84 +1,88 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH] Cogito documentation updates
-Date: Wed, 23 Nov 2005 13:16:51 +0100
-Message-ID: <20051123121651.GB19302@diku.dk>
-References: <20051120101112.GA2302@diku.dk> <86veyn49gc.fsf@blue.stonehenge.com>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [PATCH] Add git-graft-ripple, a tool for permanently grafting history into a tree.
+Date: Wed, 23 Nov 2005 08:51:50 -0500
+Message-ID: <20051123135150.GA16995@mythryan2.michonline.com>
+References: <11326926501602-git-send-email-ryan@michonline.com> <Pine.LNX.4.64.0511221652530.13959@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 13:17:18 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 14:53:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EetYo-0002P3-Ue
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 13:17:15 +0100
+	id 1Eev2o-00063x-OI
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 14:52:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750738AbVKWMQx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 07:16:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750740AbVKWMQx
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 07:16:53 -0500
-Received: from nhugin.diku.dk ([130.225.96.140]:23492 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S1750738AbVKWMQw (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2005 07:16:52 -0500
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 3AD786DFEC9; Wed, 23 Nov 2005 13:16:16 +0100 (CET)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id EEAFC6DFE93; Wed, 23 Nov 2005 13:16:15 +0100 (CET)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 673C1613F9; Wed, 23 Nov 2005 13:16:51 +0100 (CET)
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+	id S1750775AbVKWNwD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 08:52:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750799AbVKWNwD
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 08:52:03 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:22253 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S1750775AbVKWNv5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 08:51:57 -0500
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1Eev2N-0007JG-L3; Wed, 23 Nov 2005 08:51:53 -0500
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1Eev2M-00023A-00; Wed, 23 Nov 2005 08:51:50 -0500
+Received: from ryan by mythical with local (Exim 4.54)
+	id 1Eev2M-0001Ph-Ke; Wed, 23 Nov 2005 08:51:50 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <86veyn49gc.fsf@blue.stonehenge.com>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+In-Reply-To: <Pine.LNX.4.64.0511221652530.13959@g5.osdl.org>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12620>
 
-Randal L. Schwartz <merlyn@stonehenge.com> wrote Sun, Nov 20, 2005:
-> >>>>> "Jonas" == Jonas Fonseca <fonseca@diku.dk> writes:
+On Tue, Nov 22, 2005 at 04:55:04PM -0800, Linus Torvalds wrote:
+> On Tue, 22 Nov 2005, Ryan Anderson wrote:
+> >
+> > Enhancements over the original example:
+> > 
+> > 	o Each newly created commit A' references A, and (A^1)' (The first try
+> > 	referenced A^1 and (A^1)' but not A)
+> > 
+> > 	o Support for incrementally rewriting history is present.
 > 
-> Jonas>  - local cg-fetch now works without the cp option -u
+> How about the case of having commits that have pointers to other commits 
+> in the comments? 
 > 
-> But it still requires cp -d, unless some other patch fixed that recently.
+> For example, on the kernel do
+> 
+> 	gitk 19842d67340e4a8f616552d344e97fc7452aa37a
+> 
+> and see how gitk highlights the SHA1's in the commit message and makes 
+> hyperlinks to the commits they point to..
 
-Ah, yes. I just recently tried local cloning on a FreeBSD box and it
-worked fine (apart from it spitting out a few errors, see the log below)
-and since the caveat section only mentioned the -u option I thought
-everything was fine. However, cloning a specific branch hits the error.
-So maybe the caveat section should just be updated to say that the -d
-option is required. 
+For some reason, my gut says that this goes too far.  I'm having a hard
+time pinning down a way to explain that.
 
----
+I guess something (untested) like this could do it, right before I call
+git_commit_tree():
 
-$ cg clone cogito cogito-now
-defaulting to local storage area
-Hard links don't work - using copy
-Fetching head...
-/home/jonas/src/cogito/.git/HEAD -> .git/refs/heads/.origin-fetching
-Fetching objects...
-progress: 10289 objects, 16992385 bytes
-Fetching tags...
-error: missing object referenced by 'refs/tags/junio-gpg-pub'
-fatal: protocol error: bad line length character
-Failed to find remote refs
-unable to get tags list (non-fatal)
-New branch: 73874dddeec2d0a8e5cd343eec762d98314def63
-Cloned to cogito-now/ (origin /home/jonas/src/cogito available as branch "origin")
+	my $found;
+	do {
+		$found = 0;
+		if ($csets{$old}{comments} =~ /\s([a-f0-9]{40})\s/ &&
+			exists $newcsets{$1}) {
 
-$ cg clone cogito#cogito-0.10 cogito-0.10
-cp: illegal option -- d
-usage: cp [-R [-H | -L | -P]] [-f | -i | -n] [-pv] src target
-       cp [-R [-H | -L | -P]] [-f | -i | -n] [-pv] src1 ... srcN
-       directory
-       cg-fetch: unable to get the head pointer of branch cogito-0.10
-       cg-clone: fetch failed
+			my $tcommit = $1;
+
+			$found = 1;
+			$csets{$old}{comments} =~ s/$tcommit/$newcsets{$tcommit}/g;
+		}
+	} while ($found);
+
+I'm not entirely convinced this is a good idea, but there it is.
+
+I'll write up a patch later for this (probably switching to GetOpt in
+the process.)
 
 -- 
-Jonas Fonseca
+
+Ryan Anderson
+  sometimes Pug Majere
