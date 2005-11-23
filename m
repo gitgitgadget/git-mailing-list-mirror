@@ -1,36 +1,32 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Cogito documentation updates
-Date: Wed, 23 Nov 2005 09:29:34 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511230923131.13959@g5.osdl.org>
-References: <20051120101112.GA2302@diku.dk> <86veyn49gc.fsf@blue.stonehenge.com>
- <20051123121651.GB19302@diku.dk> <8664qjph7d.fsf@blue.stonehenge.com>
+Subject: Allow editing of a revert-message
+Date: Wed, 23 Nov 2005 09:57:54 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511230954440.13959@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jonas Fonseca <fonseca@diku.dk>, Petr Baudis <pasky@ucw.cz>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 18:32:33 2005
+X-From: git-owner@vger.kernel.org Wed Nov 23 19:00:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeyRK-0002ig-9Z
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 18:29:50 +0100
+	id 1Eeysv-0005aI-N5
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 18:58:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751264AbVKWR3r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 12:29:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbVKWR3r
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 12:29:47 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:59072 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751264AbVKWR3q (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2005 12:29:46 -0500
+	id S932113AbVKWR6S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 12:58:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932119AbVKWR6S
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 12:58:18 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:55241 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932113AbVKWR6R (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2005 12:58:17 -0500
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jANHTanO030565
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jANHvtnO032125
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 23 Nov 2005 09:29:36 -0800
+	Wed, 23 Nov 2005 09:57:55 -0800
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jANHTYx0013233;
-	Wed, 23 Nov 2005 09:29:35 -0800
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-In-Reply-To: <8664qjph7d.fsf@blue.stonehenge.com>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jANHvsfb014549;
+	Wed, 23 Nov 2005 09:57:54 -0800
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.56__
 X-MIMEDefang-Filter: osdl$Revision: 1.127 $
@@ -38,35 +34,50 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12641>
 
 
+I think all commit operations should allow editing of the message (ie we 
+should do this for merges too), but that's _particularly_ true of doing a 
+"git revert".
 
-On Wed, 23 Nov 2005, Randal L. Schwartz wrote:
-> 
-> Delete the -d switch, or explain to me why it is there, and let's work
-> out a POSIX workaround.
+We should always explain why we needed to revert something.
 
-It's
+This patch adds a "-e" or "--edit" flag to "git revert", although I 
+actually suspect it should be on by default (and we should have a 
+"--no-edit" flag to disable it, probably together with an automatic 
+disable if stdin isn't a terminal).
 
-       -d:     same as --no-dereference --preserve=link
-
-       --no-dereference
-              never follow symbolic links
-
-       --preserve[=ATTR_LIST]
-              preserve   the   specified   attributes   (default:  mode,owner-
-              ship,timestamps) and security contexts, if  possible  additional
-              attributes: links, all
-
-so it's basically making sure that the copy copies the _link_, not the 
-file it points to.
-
-I think you may have to use "cpio -p" instead of "cp" to be portable. 
-Something like
-
-	cpio -plmu $src $dst
-
-might do it.
-
-		Linus
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+diff --git a/git-revert.sh b/git-revert.sh
+index 4154fe0..05bd854 100755
+--- a/git-revert.sh
++++ b/git-revert.sh
+@@ -25,7 +25,7 @@ usage () {
+ 	esac
+ }
+ 
+-no_commit= replay=
++no_commit= replay= edit=
+ while case "$#" in 0) break ;; esac
+ do
+ 	case "$1" in
+@@ -36,6 +36,9 @@ do
+ 	-r|--r|--re|--rep|--repl|--repla|--replay)
+ 		replay=t
+ 		;;
++	-e|--edit)
++		edit=t
++		;;
+ 	-*)
+ 		usage
+ 		;;
+@@ -161,6 +164,7 @@ echo >&2 "Finished one $me."
+ # If we are revert, or if our cherry-pick results in a hand merge,
+ # we had better say that the current user is responsible for that.
+ 
++[ "$edit" ] && ${EDITOR:-${VISUAL:-vi}} .msg
+ case "$no_commit" in
+ '')
+ 	git-commit -n -F .msg
