@@ -1,64 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] Add git-graft-ripple, a tool for permanently grafting
  history into a tree.
-Date: Wed, 23 Nov 2005 16:40:16 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511231638080.8993@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Wed, 23 Nov 2005 09:07:14 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511230905570.13959@g5.osdl.org>
 References: <11326926501602-git-send-email-ryan@michonline.com>
  <Pine.LNX.4.64.0511221652530.13959@g5.osdl.org> <20051123135150.GA16995@mythryan2.michonline.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 16:43:53 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 18:08:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eewjf-0007iZ-Jv
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 16:40:40 +0100
+	id 1Eey5t-0002Hs-US
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 18:07:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751049AbVKWPkU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 10:40:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751065AbVKWPkT
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 10:40:19 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:54441 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751049AbVKWPkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 10:40:17 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A184813FA2F; Wed, 23 Nov 2005 16:40:16 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 871299F3DA; Wed, 23 Nov 2005 16:40:16 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 6C6249F3D2; Wed, 23 Nov 2005 16:40:16 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E1EE013FA2F; Wed, 23 Nov 2005 16:40:15 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S932109AbVKWRHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 12:07:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932110AbVKWRHj
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 12:07:39 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:10170 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932109AbVKWRHi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2005 12:07:38 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jANH7GnO029542
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 23 Nov 2005 09:07:16 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jANH7FlN012348;
+	Wed, 23 Nov 2005 09:07:15 -0800
 To: Ryan Anderson <ryan@michonline.com>
 In-Reply-To: <20051123135150.GA16995@mythryan2.michonline.com>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.56__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12636>
 
-Hi,
+
 
 On Wed, 23 Nov 2005, Ryan Anderson wrote:
+> 
+> I'm not entirely convinced this is a good idea, but there it is.
 
-> For some reason, my gut says that this goes too far.  I'm having a hard
-> time pinning down a way to explain that.
+Well, quite frankly, I think the whole graft-rippling is just wrong (why 
+do it? The grafts are fine, and after you've rippled, you'll never be able 
+to merge with somebody who didn't) but if you do it, I think you should 
+fix it up properly and have a resulting tree that is at least as good as 
+the original.
 
-I can pin down what my gut says:
-
-- the old commits still exist, so the links are not invalid
-- the commit message is signed off as is
-- the process to find the correct new SHA1 is not straight-forward, i.e.
-  one would need to introduce a recursion where now suffices a simple
-  linear loop.
-
-Ciao,
-Dscho
+		Linus
