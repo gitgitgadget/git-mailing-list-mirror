@@ -1,65 +1,63 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Add git-graft-ripple, a tool for permanently grafting
- history into a tree.
-Date: Wed, 23 Nov 2005 08:22:51 +0100
-Message-ID: <438418CB.30509@op5.se>
-References: <11326926501602-git-send-email-ryan@michonline.com> <Pine.LNX.4.64.0511221652530.13959@g5.osdl.org>
+From: Alexander Litvinov <lan@ac-sw.com>
+Subject: Re: git-mv is not able to handle directory with one file in it
+Date: Wed, 23 Nov 2005 13:26:27 +0600
+Organization: AcademSoft Ltd.
+Message-ID: <200511231326.27972.lan@ac-sw.com>
+References: <200511231141.57683.lan@ac-sw.com> <7voe4b7uw7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Nov 23 08:23:51 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 08:25:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eeoy4-000092-PE
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 08:23:01 +0100
+	id 1Eeoyr-0000Pu-8v
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 08:23:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030338AbVKWHWx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 02:22:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030339AbVKWHWx
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 02:22:53 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:10382 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030338AbVKWHWw
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 02:22:52 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id CB43C6BCBE
-	for <git@vger.kernel.org>; Wed, 23 Nov 2005 08:22:51 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0511221652530.13959@g5.osdl.org>
+	id S1030344AbVKWHXp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 02:23:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030345AbVKWHXo
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 02:23:44 -0500
+Received: from gw.ac-sw.com ([81.1.223.2]:13739 "EHLO gw.ac-sw.com")
+	by vger.kernel.org with ESMTP id S1030344AbVKWHXo (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2005 02:23:44 -0500
+Received: from lan.ac-sw.lcl (unknown [192.168.0.69])
+	by gw.ac-sw.com (Postfix) with ESMTP
+	id 97BE7BD1B; Wed, 23 Nov 2005 13:23:42 +0600 (NOVT)
+Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
+	id C696B1962A9; Wed, 23 Nov 2005 13:26:33 +0600 (NOVT)
+Received: from localhost (localhost [127.0.0.1])
+	by lan.ac-sw.lcl (Postfix) with ESMTP id 8F7A91962A3;
+	Wed, 23 Nov 2005 13:26:28 +0600 (NOVT)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.8
+In-Reply-To: <7voe4b7uw7.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on lan.ac-sw.lcl
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12608>
 
-Linus Torvalds wrote:
-> 
-> On Tue, 22 Nov 2005, Ryan Anderson wrote:
-> 
->>Enhancements over the original example:
->>
->>	o Each newly created commit A' references A, and (A^1)' (The first try
->>	referenced A^1 and (A^1)' but not A)
->>
->>	o Support for incrementally rewriting history is present.
-> 
-> 
-> How about the case of having commits that have pointers to other commits 
-> in the comments? 
-> 
-> For example, on the kernel do
-> 
-> 	gitk 19842d67340e4a8f616552d344e97fc7452aa37a
-> 
-> and see how gitk highlights the SHA1's in the commit message and makes 
-> hyperlinks to the commits they point to..
-> 
+I have found one error during directory movig: If I move directory with one 
+file somewhere in it this script will try to add target directory instead of 
+file. Commenting lines starting from 190 solve this error. But I don't 
+understand what is the logic behind this case ? Why do target directory 
+checked instead of target file ? Should we replace $dst my $destfiles[0] ?
 
-For reference, gitweb does the same.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+at line 190 in git-mv:
+    if (scalar @srcfiles == 1) {
+	if ($overwritten{$dst} ==1) {
+	    push @changedfiles, $dst;
+	} else {
+	    push @addedfiles, $dst;
+	}
+    }
+    else {
+	push @addedfiles, @dstfiles;
+    }
