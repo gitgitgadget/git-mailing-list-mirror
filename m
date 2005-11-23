@@ -1,61 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-mv is not able to handle big directories
-Date: Tue, 22 Nov 2005 22:32:57 -0800
-Message-ID: <7vk6ez7u1y.fsf@assigned-by-dhcp.cox.net>
-References: <200511231141.57683.lan@ac-sw.com>
-	<7voe4b7uw7.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Add git-graft-ripple, a tool for permanently grafting
+ history into a tree.
+Date: Wed, 23 Nov 2005 08:22:51 +0100
+Message-ID: <438418CB.30509@op5.se>
+References: <11326926501602-git-send-email-ryan@michonline.com> <Pine.LNX.4.64.0511221652530.13959@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 07:57:01 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Nov 23 08:23:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeoBo-00036M-Ch
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 07:33:09 +0100
+	id 1Eeoy4-000092-PE
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 08:23:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030333AbVKWGdA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 01:33:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030329AbVKWGdA
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 01:33:00 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:20426 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1030333AbVKWGc7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 01:32:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051123063224.LMXI20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 23 Nov 2005 01:32:24 -0500
-To: Alexander Litvinov <lan@ac-sw.com>
-In-Reply-To: <7voe4b7uw7.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 22 Nov 2005 22:14:48 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030338AbVKWHWx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 02:22:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030339AbVKWHWx
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 02:22:53 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:10382 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030338AbVKWHWw
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 02:22:52 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id CB43C6BCBE
+	for <git@vger.kernel.org>; Wed, 23 Nov 2005 08:22:51 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0511221652530.13959@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12607>
 
-Junio C Hamano <junkio@cox.net> writes:
+Linus Torvalds wrote:
+> 
+> On Tue, 22 Nov 2005, Ryan Anderson wrote:
+> 
+>>Enhancements over the original example:
+>>
+>>	o Each newly created commit A' references A, and (A^1)' (The first try
+>>	referenced A^1 and (A^1)' but not A)
+>>
+>>	o Support for incrementally rewriting history is present.
+> 
+> 
+> How about the case of having commits that have pointers to other commits 
+> in the comments? 
+> 
+> For example, on the kernel do
+> 
+> 	gitk 19842d67340e4a8f616552d344e97fc7452aa37a
+> 
+> and see how gitk highlights the SHA1's in the commit message and makes 
+> hyperlinks to the commits they point to..
+> 
 
-> Two comments.
->
-> (1) the argument limit is enforced by the operating system in
-> ...
-> (2) I wonder if we can detect this particular failure case and
-> ...
+For reference, gitweb does the same.
 
-(3) Even better, 'git-update-index -z --stdin'
-
-	if (@changedfiles) {
-            open my $oh, qw(|- git-update-index -z --stdin)
-                    or die "oops";
-            for (@changedfiles) {
-                print $oh "$_\0";
-	    }
-	    close $oh;
-	}
-
-
-
-	JC "added too many features that myself cannot remember" Hamano
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
