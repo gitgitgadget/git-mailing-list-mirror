@@ -1,77 +1,88 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: auto-packing on kernel.org? please?
-Date: Wed, 23 Nov 2005 14:18:13 +0000
-Message-ID: <b0943d9e0511230618u31d80e57v@mail.gmail.com>
-References: <Pine.LNX.4.64.0510131113490.15297@g5.osdl.org>
-	 <20051121190151.GA2568@hpsvcnb.fc.hp.com>
-	 <Pine.LNX.4.64.0511211110480.13959@g5.osdl.org>
-	 <4382AC11.5090209@citi.umich.edu>
-	 <Pine.LNX.4.64.0511212134330.13959@g5.osdl.org>
-	 <4383610D.7080100@citi.umich.edu>
+From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+Subject: files are disappearing in git
+Date: Wed, 23 Nov 2005 15:23:03 +0100
+Message-ID: <20051123142303.GJ22568@schottelius.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>, Carl Baldwin <cnb@fc.hp.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 23 15:19:08 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="iRjOs3ViPWHdlw/I"
+X-From: git-owner@vger.kernel.org Wed Nov 23 15:25:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EevS0-0008K8-AV
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 15:18:20 +0100
+	id 1EevWw-0001lW-GA
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 15:23:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750810AbVKWOSR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 09:18:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750815AbVKWOSR
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 09:18:17 -0500
-Received: from xproxy.gmail.com ([66.249.82.195]:38072 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750810AbVKWOSQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 09:18:16 -0500
-Received: by xproxy.gmail.com with SMTP id i30so1160466wxd
-        for <git@vger.kernel.org>; Wed, 23 Nov 2005 06:18:15 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tfzdUtQkgCi5F4+i824Dqv6ckp4b6LVpQugpl0iJQwwWcS0Wbuer/LaZ9+MeC26kqcryWd8GJNouy3VuOv0EUsin1uuBnGOWdL0z/O9oDkWNev9vImnkRGXl/QxX7lh30j8mOhd0SUO0yJQ1bS2KRKg8TnE4Msw67YiW8u1KU9s=
-Received: by 10.70.74.2 with SMTP id w2mr4440088wxa;
-        Wed, 23 Nov 2005 06:18:13 -0800 (PST)
-Received: by 10.70.27.12 with HTTP; Wed, 23 Nov 2005 06:18:13 -0800 (PST)
-To: cel@citi.umich.edu
-In-Reply-To: <4383610D.7080100@citi.umich.edu>
+	id S1750817AbVKWOXJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 09:23:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750821AbVKWOXJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 09:23:09 -0500
+Received: from wg.technophil.ch ([213.189.149.230]:34500 "HELO
+	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
+	id S1750817AbVKWOXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 09:23:07 -0500
+Received: (qmail 17289 invoked by uid 1000); 23 Nov 2005 14:23:03 -0000
+To: Git ML <git@vger.kernel.org>
 Content-Disposition: inline
+User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
+X-Linux-Info: http://linux.schottelius.org/
+X-Operating-System: Linux 2.6.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12624>
 
-On 22/11/05, Chuck Lever <cel@citi.umich.edu> wrote:
-> Linus Torvalds wrote:
-> > But maybe that's what stgit wants (since they are "temporary"), but it
-> > does mean that if you see a big advantage from packing, you might be
-> > losing some of it.
->
-> actually, those commits aren't all that "temporary".  the
-> history/revision feature i'm working on would like to maintain all the
-> commits ever done to an StGIT patch.
 
-That's to avoid pruning them but you might not always want to add them
-to a pack.
+--iRjOs3ViPWHdlw/I
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> the only time you can throw away such commits is when the patch is
-> deleted or when it is finally committed to the repository via "stg
-> commit".  otherwise, keeping these commits in a pack would be quite a
-> good thing.
->
-> maybe the first thing to do is to get a basic understanding of an StGIT
-> commit's lifetime.
+Hello!
 
-My initial idea was to throw the old commit away once a patch is
-refreshed. Even if you want to preserve the history, it would be only
-preserved until you send the patch to be merged upstream and you would
-delete it locally. If all the patches are meant to be sent upstream at
-some point, you can avoid packing them.
+I've the problem that some files (a directory with 3 files) is simply 'away=
+':
 
---
-Catalin
+- We added it once
+- In current tree it's away
+- pasky aided me in irc to find the commit where it is gone with git bisect
+--> very nice tool
+- the commit, after which the directory was gone did NOT modify this direct=
+ory
+- though the directory is gone
+
+What should I do know to find out what's the reason git 'forgot' that direc=
+tory?
+
+Nico
+
+P.S.: I cannot put the .git directory online, it's a closed source project
+      for a special customer with customer data in it.
+
+--=20
+Latest project: cinit-0.2.1 (http://linux.schottelius.org/cinit/)
+Open Source nutures open minds and free, creative developers.
+
+--iRjOs3ViPWHdlw/I
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iQIVAwUBQ4R7RrOTBMvCUbrlAQJ+Vw/9FerkG9zZ1shGgWblYVgz5gQiXELyFFM3
+JdM6J0DQEhSlwGn4+rCRJErBEbNV9bfw0NG1DqI9xNBFRgXbE8HL48zOhf4PDHEt
+QL86mlHjT8rGAmX7MSkcHBPF1X0O24f4a2/hWlv98DO9qVcb+/EfIQHNcMflYqpZ
+xX8gbNaPKRlp1XezXU+dR+Hyya9gXtzqOFXh3w8olZCfjnUUlLFYBb0w4HP5wT5h
+U0TkIAzFqxRZocSnnJKnPovMw5LcmtNlKMNxHZnd0poCGY1OvFe1ewQZWud/Niep
+dUOJtwMabYS1jX/fCI0KT3nefU/0raoSnOT+2xb1N167NjWPId4aY/auwMZqYGC5
+L8T6td5dX1VALc0maZT2w61vhzxxFfIjqdAX8Hjz8C7gv8xXrUr+wi0g59qvdzEY
+wVYUv60J3O+ELH6h6tB4nJdm8APByYmid6BRdRiqH+l4Bi/n2EdeNIJL78jaZitQ
+mgF8sbbFAwXMZ4w0dSrvdFM6UQWnecs9pWB58QJ4Wvm0ujbDTuOnZZJLHwvowW+t
+47ihuXPE4U83Qg3YKxE4u79zJWwNwRqbH7m7fiXKzpi0LZlfn9Tvy4O2hAouSlS6
++U60XfFC1jJNJwbGfhkla8gUBBheV7X5v7Dq8Cv0QbZ3QY2AII8jrbc6XYCwTPfa
+pyHhWF4ylB0=
+=JM7w
+-----END PGP SIGNATURE-----
+
+--iRjOs3ViPWHdlw/I--
