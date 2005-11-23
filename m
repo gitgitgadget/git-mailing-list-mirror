@@ -1,68 +1,66 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: files are disappearing in git
-Date: Wed, 23 Nov 2005 09:20:28 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511230917130.13959@g5.osdl.org>
-References: <20051123142303.GJ22568@schottelius.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Get rid of .git/branches/ and .git/remotes/?
+Date: Wed, 23 Nov 2005 18:22:22 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511231746140.9446@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200511230005.12957.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.63.0511231549320.8191@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200511231639.59866.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 23 18:22:54 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 18:25:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeyIP-0007Yj-Qw
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 18:20:38 +0100
+	id 1EeyKP-0008En-Fn
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 18:22:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751214AbVKWRUf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 12:20:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751256AbVKWRUf
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 12:20:35 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:61117 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751214AbVKWRUe (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2005 12:20:34 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jANHKTnO030105
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 23 Nov 2005 09:20:30 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jANHKSCS012841;
-	Wed, 23 Nov 2005 09:20:29 -0800
-To: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-In-Reply-To: <20051123142303.GJ22568@schottelius.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.56__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751261AbVKWRWZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 12:22:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751256AbVKWRWZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 12:22:25 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:35266 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751259AbVKWRWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 12:22:24 -0500
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 4EE3313FD19; Wed, 23 Nov 2005 18:22:23 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 2E176B52C6; Wed, 23 Nov 2005 18:22:23 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 0819DB529A; Wed, 23 Nov 2005 18:22:23 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id DE5D513FDB9; Wed, 23 Nov 2005 18:22:22 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+In-Reply-To: <200511231639.59866.Josef.Weidendorfer@gmx.de>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12639>
 
+Hi,
 
+On Wed, 23 Nov 2005, Josef Weidendorfer wrote:
 
-On Wed, 23 Nov 2005, Nico -telmich- Schottelius wrote:
-> 
-> I've the problem that some files (a directory with 3 files) is simply 'away':
-> 
-> - We added it once
-> - In current tree it's away
-> - pasky aided me in irc to find the commit where it is gone with git bisect
-> --> very nice tool
-> - the commit, after which the directory was gone did NOT modify this directory
-> - though the directory is gone
-> 
-> What should I do know to find out what's the reason git 'forgot' that directory?
+>  [myporcelain]
+>     headproperties.merge.candidates = blabla
 
-I bet somebody just messed up the index before that commit. So the commit 
-probably _did_ modify the directory, though some incorrect patching or 
-some scripting bug.
+With such a config file, git complains loudly. Key names are only allowed 
+to be alphanumerical, and the first letter cannot even be a digit. No 
+dots.
 
-If you can guess at all what went on at around that commit (what else 
-happened there?) that might help. Was it a merge? If those three files 
-existed in the base commit of the merge but not in one of the branches, 
-then the merge would have assumed that the branch just deleted it.
+> This suggestion is about easier reading of config files; IMHO far easier
+> with some use cases; but yes, it is arguable if it's worth an added
+> complexity of config.c/config-set.c.
 
-Is the tree public so that we can look at it and perhaps make a guess from 
-what happened around it?
+Well, I'll be glad to help the implementation of whatever we agree on.
 
-		Linus
+Ciao,
+Dscho
