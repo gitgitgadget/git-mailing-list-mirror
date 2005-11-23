@@ -1,65 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Problem merging
-Date: Tue, 22 Nov 2005 19:06:03 -0800
-Message-ID: <7v4q6483ms.fsf@assigned-by-dhcp.cox.net>
-References: <20051123025001.15527.qmail@web31812.mail.mud.yahoo.com>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: gitweb on kernel.org and UTF-8
+Date: Wed, 23 Nov 2005 04:35:26 +0100
+Message-ID: <20051123033526.GA24098@vrfy.org>
+References: <7vzmnw9qo0.fsf@assigned-by-dhcp.cox.net> <4383BEE4.1060800@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Nov 23 04:08:22 2005
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 04:36:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EekxX-0005CE-2V
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 04:06:12 +0100
+	id 1EelPu-0007Gb-MD
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 04:35:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932489AbVKWDGH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Nov 2005 22:06:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932490AbVKWDGG
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 22:06:06 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:31475 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S932489AbVKWDGF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Nov 2005 22:06:05 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051123030537.JYME3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 22 Nov 2005 22:05:37 -0500
-To: git@vger.kernel.org
-In-Reply-To: <20051123025001.15527.qmail@web31812.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Tue, 22 Nov 2005 18:50:01 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932495AbVKWDf1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 22 Nov 2005 22:35:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932496AbVKWDf1
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Nov 2005 22:35:27 -0500
+Received: from soundwarez.org ([217.160.171.123]:34530 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S932495AbVKWDf1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Nov 2005 22:35:27 -0500
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id 2138824CA; Wed, 23 Nov 2005 04:35:26 +0100 (CET)
+To: "H. Peter Anvin" <hpa@zytor.com>
+Content-Disposition: inline
+In-Reply-To: <4383BEE4.1060800@zytor.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12599>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+On Tue, Nov 22, 2005 at 04:59:16PM -0800, H. Peter Anvin wrote:
+> Junio C Hamano wrote:
+> >Is it possible that the UTF-8 check in gitweb running on
+> >kernel.org machine is somehow too strict?
+> >
+> >The following two commits in git.git repository are not showing
+> >properly.
+> >
+> >I have a track record of getting peoples' names wrong, so I
+> >double checked my commit objects, and as far as I can tell, all
+> >of them are encoded in UTF-8 properly (or at least I can view
+> >what I expect if I throw raw bytes from the commit objects at my
+> >Firefox):
+> >
+> >        c3df8568424684bbcc7df7722eb3ec34bdae8b2d
+> >
+> >        This is from Yoshifuji-san; the third character in
+> >        author name field is mangled.
+> >
+> >	bb931cf9d73d94d9940b6d0ee56b6c13ad42f1a0
+> >
+> >	This is from Lukas Sandstr*m; o with Umlaut on top is
+> >	showing a ?.  Incidentally, the blob that records recent
+> >	version of Documentation/git-pack-redundant.txt has his
+> >	name in it, which has the same ? problem, but "plain"
+> >	option shows his name correctly in UTF-8.
+> >
+> >Interestingly enough, my name spelled in Japanese
+> >(Documentatino/git-lost-found.txt) is intact.  Am I getting a
+> >VIP treatment somehow?
+> >
+>=20
+> I think it's missing a "binmode STDOUT, ':utf8';" somewhere...
+>=20
+> For what it's worth, I looked at both the above examples and the bina=
+ry=20
+> encoding in the git repository is undoubtedly correct; the two=20
+> characters are U+82F1/E8 8B B1 (=E8=8B=B1) and U+00F6/C3 B6 (=C3=B6) =
+respectively,=20
+> both of which are 100% valid UTF-8.
 
-> Trying to merge 4b4a27dff4e2d4cc2eac1cde31aede834a966a48 into
-> e1ef47b54d7e7e477f7f1eb3251a9d37f38e0469 using 989e4d6cbc69191c41ddf4b1c492457410376b43.
-> Simple merge failed, trying Automatic merge
-> Removing include/asm-um/ldt.h
-> fatal: merge program failed
-> Automatic merge failed, fix up by hand
->
-> This is with git HEAD: 
-> 2392ee98eb76aa821de53c93c9e36acb18d27fc0 -- latest as
-> of now.
->
-> Is this a bug in git?  Since this process has always worked
-> before.
+Should be fine now. The escapeHTML() garbled the utf8 "=C3=B6", and the
+decode() failed that.
 
-As "Merging two branches" section in Documentation/tutorial.txt
-shows, it is one of the valid outcome from merge to leave
-conflicts and have you manually resolve.  So this process
-probably is working correctly for you this time as well.
-
-Sorry, but I am not a good enough cryptoanalyst to reverse SHA1
-hashes, and I cannot tell if the merge you did *should* have
-resulted in the conflict or not, just by looking at the three
-commit object IDs.
-
-What does "git diff" and "git diff HEAD" tell you after the
-merge procedure leaves conflict in the working tree (branchB
-directory, I mean)?
+Thanks,
+Kay
