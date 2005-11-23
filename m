@@ -1,65 +1,60 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: Perl version support (was Re: [PATCH] git-mv is not able to  handle  big directories)
-Date: 23 Nov 2005 14:01:07 -0800
-Message-ID: <86hda3korg.fsf@blue.stonehenge.com>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: Re: Perl version support (was Re: [PATCH] git-mv is not able to handle big directories)
+Date: Wed, 23 Nov 2005 17:02:40 -0500
+Message-ID: <118833cc0511231402k5fba4e1ta7704efbc5889b23@mail.gmail.com>
 References: <200511231141.57683.lan@ac-sw.com>
-	<7voe4b7uw7.fsf@assigned-by-dhcp.cox.net>
-	<7vk6ez7u1y.fsf@assigned-by-dhcp.cox.net>
-	<867jazre78.fsf@blue.stonehenge.com>
-	<7vu0e369p4.fsf@assigned-by-dhcp.cox.net>
-	<20051123135604.GB16995@mythryan2.michonline.com>
-	<86mzjvphhj.fsf_-_@blue.stonehenge.com> <4384E574.8060801@zytor.com>
+	 <7voe4b7uw7.fsf@assigned-by-dhcp.cox.net>
+	 <7vk6ez7u1y.fsf@assigned-by-dhcp.cox.net>
+	 <867jazre78.fsf@blue.stonehenge.com>
+	 <7vu0e369p4.fsf@assigned-by-dhcp.cox.net>
+	 <20051123135604.GB16995@mythryan2.michonline.com>
+	 <86mzjvphhj.fsf_-_@blue.stonehenge.com> <4384E574.8060801@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ryan Anderson <ryan@michonline.com>,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Ryan Anderson <ryan@michonline.com>,
 	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 23:03:10 2005
+X-From: git-owner@vger.kernel.org Wed Nov 23 23:06:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ef2fz-0000ma-3Q
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 23:01:16 +0100
+	id 1Ef2ho-0001Ww-1Z
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 23:03:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932536AbVKWWBL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 17:01:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932560AbVKWWBL
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 17:01:11 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:28989 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932536AbVKWWBJ
+	id S932566AbVKWWCn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 17:02:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932565AbVKWWCn
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 17:02:43 -0500
+Received: from xproxy.gmail.com ([66.249.82.206]:39448 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932564AbVKWWCl convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 17:01:09 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id B549E8F7CB;
-	Wed, 23 Nov 2005 14:01:08 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 26110-01-25; Wed, 23 Nov 2005 14:01:08 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 45B648F7CE; Wed, 23 Nov 2005 14:01:08 -0800 (PST)
+	Wed, 23 Nov 2005 17:02:41 -0500
+Received: by xproxy.gmail.com with SMTP id h26so326249wxd
+        for <git@vger.kernel.org>; Wed, 23 Nov 2005 14:02:41 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KoHt8LfD6bNVVM1jQ93XcqLyyzjyhI4SPHW+0ChJzv9mEC4kUjGQgQ47KJfVYBxAh1xekz3U1d6nIZ0Q9xx7hMb+KZqwXKBaohk0+Vg+o2+wSrefJrrplACUI4qCikCS59loCQIehzREPi3TSpmmTyOn7H3/DLYTwQHPvYn5Mgg=
+Received: by 10.65.105.3 with SMTP id h3mr1328527qbm;
+        Wed, 23 Nov 2005 14:02:40 -0800 (PST)
+Received: by 10.65.154.6 with HTTP; Wed, 23 Nov 2005 14:02:39 -0800 (PST)
 To: "H. Peter Anvin" <hpa@zytor.com>
-x-mayan-date: Long count = 12.19.12.14.15; tzolkin = 6 Men; haab = 13 Ceh
 In-Reply-To: <4384E574.8060801@zytor.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12654>
 
->>>>> "H" == H Peter Anvin <hpa@zytor.com> writes:
+> I'm very surprised you say that 5.6 is more prevalent than 5.8.
 
-H> There are a lot of Perl modules we use, so limiting it to 5.5 is
-H> probably a showstopper.
+You are overestimating the update-eagerness of the world.
 
-Hmm.  I should look at that then.  Most Perl Modules are 5.5
-compatible, unless they've been written by naive people recently. :)
+SunOS 5.8 seems to come with 5.005_03
+SunOS 5.9 seems to come with v5.6.1.
 
-H> I'm very surprised you say that 5.6 is more prevalent than 5.8.
+("Seems" because I am only 99% sure no-one around here has mucked with
+the perl in /usr/bin/.)
 
-For individual early adopters, 5.8 is nearly universal.  But a lot of
-my corporate clients upgrade *very* slowly, and are on 5.6 for now.
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+M.
