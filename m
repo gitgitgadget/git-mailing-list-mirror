@@ -1,64 +1,92 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [PATCH] git-mv is not able to handle big directories
-Date: 22 Nov 2005 23:55:07 -0800
-Message-ID: <867jazre78.fsf@blue.stonehenge.com>
-References: <200511231141.57683.lan@ac-sw.com>
-	<7voe4b7uw7.fsf@assigned-by-dhcp.cox.net>
-	<7vk6ez7u1y.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git-mv is not able to handle directory with one file in it
+Date: Wed, 23 Nov 2005 08:57:00 +0100
+Message-ID: <438420CC.4050303@op5.se>
+References: <200511231141.57683.lan@ac-sw.com> <7voe4b7uw7.fsf@assigned-by-dhcp.cox.net> <200511231326.27972.lan@ac-sw.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alexander Litvinov <lan@ac-sw.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 08:55:56 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Nov 23 08:58:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EepTO-0001KO-7z
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 08:55:22 +0100
+	id 1EepV7-0001vB-3E
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 08:57:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030349AbVKWHzP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 02:55:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030351AbVKWHzO
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 02:55:14 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:64378 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1030349AbVKWHzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 02:55:12 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 05A938F6EF;
-	Tue, 22 Nov 2005 23:55:08 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 04280-03-3; Tue, 22 Nov 2005 23:55:07 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 920478F6F3; Tue, 22 Nov 2005 23:55:07 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-x-mayan-date: Long count = 12.19.12.14.14; tzolkin = 5 Ix; haab = 12 Ceh
-In-Reply-To: <7vk6ez7u1y.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1030354AbVKWH5F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 02:57:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030353AbVKWH5F
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 02:57:05 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:15246 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030354AbVKWH5B
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 02:57:01 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 956DD6BCBE
+	for <git@vger.kernel.org>; Wed, 23 Nov 2005 08:57:00 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <200511231326.27972.lan@ac-sw.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12612>
 
->>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+Alexander Litvinov wrote:
+> I have found one error during directory movig: If I move directory with one 
+> file somewhere in it this script will try to add target directory instead of 
+> file.
 
-Junio>             open my $oh, qw(|- git-update-index -z --stdin)
-Junio>                     or die "oops";
+Are you saying this setup
+	foodir/somefile.c     <--file
+	newdir/               <--directory
 
-This is Perl 5.6 or later.  Breaks on Perl 5.5, which is still in use
-in some places.
+with this command
+	git-mv foodir/ newdir
 
-To be compatible with 5.5, you have to create a handle explicitly:
+tries to create
+	newdir/foodir/somefile.c  <-- directory
 
-        require IO::Handle;
-        my $oh = IO::Handle->new;
-        open $oh, qw(...) ...;
+or does it create
+	newdir/somefile.c         <-- file
 
-That works all the way back to 5.4, which is the earliest Perl
-supported by the core team.
+?
+
+It should create
+	newdir/foodir/somefile.c  <-- file
+
+Otherwise it's misbehaving.
+
+Try running it with the -v switch to make it shout out loud what it's 
+trying to do, and then paste the output here.
+
+> Commenting lines starting from 190 solve this error. But I don't 
+> understand what is the logic behind this case ? Why do target directory 
+> checked instead of target file ? Should we replace $dst my $destfiles[0] ?
+> 
+> at line 190 in git-mv:
+>     if (scalar @srcfiles == 1) {
+> 	if ($overwritten{$dst} ==1) {
+> 	    push @changedfiles, $dst;
+> 	} else {
+> 	    push @addedfiles, $dst;
+> 	}
+>     }
+>     else {
+> 	push @addedfiles, @dstfiles;
+>     }
+
+This is broken. It only checks if there's just one source-file 
+regardless of whether or not it resided in a subdirectory. I'm not 
+exactly fluent in perl so I can't submit a patch, but the src option 
+needs to be directory aware, traverse all source directories and then 
+move the files axing everything but the bottom-most dirname to the 
+destination directory.
+
+Any takers?
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
