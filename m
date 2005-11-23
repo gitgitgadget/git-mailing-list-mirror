@@ -1,113 +1,78 @@
-From: Alexander Litvinov <lan@ac-sw.com>
-Subject: [PATCH] git-mv is not able to handle big directories
-Date: Wed, 23 Nov 2005 11:41:57 +0600
-Organization: AcademSoft Ltd.
-Message-ID: <200511231141.57683.lan@ac-sw.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-mv is not able to handle big directories
+Date: Tue, 22 Nov 2005 22:14:48 -0800
+Message-ID: <7voe4b7uw7.fsf@assigned-by-dhcp.cox.net>
+References: <200511231141.57683.lan@ac-sw.com>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_lEAhDsdaBvOllH2"
-X-From: git-owner@vger.kernel.org Wed Nov 23 06:41:13 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 07:34:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EenLk-0008Mp-8x
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 06:39:20 +0100
+	id 1EenuA-0007QZ-Ee
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 07:14:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030315AbVKWFjR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 00:39:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030319AbVKWFjR
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 00:39:17 -0500
-Received: from gw.ac-sw.com ([81.1.223.2]:33181 "EHLO gw.ac-sw.com")
-	by vger.kernel.org with ESMTP id S1030315AbVKWFjQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2005 00:39:16 -0500
-Received: from lan.ac-sw.lcl (unknown [192.168.0.69])
-	by gw.ac-sw.com (Postfix) with ESMTP id 61B3BBD1B
-	for <git@vger.kernel.org>; Wed, 23 Nov 2005 11:39:12 +0600 (NOVT)
-Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
-	id E18111A12ED; Wed, 23 Nov 2005 11:42:02 +0600 (NOVT)
-Received: from localhost (localhost [127.0.0.1])
-	by lan.ac-sw.lcl (Postfix) with ESMTP id 08C6D19278A
-	for <git@vger.kernel.org>; Wed, 23 Nov 2005 11:41:58 +0600 (NOVT)
-To: git <git@vger.kernel.org>
-User-Agent: KMail/1.8
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on lan.ac-sw.lcl
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.4
+	id S1030325AbVKWGOv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 01:14:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030327AbVKWGOu
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 01:14:50 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:32676 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1030325AbVKWGOu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 01:14:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051123061451.OINL25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 23 Nov 2005 01:14:51 -0500
+To: Alexander Litvinov <lan@ac-sw.com>
+In-Reply-To: <200511231141.57683.lan@ac-sw.com> (Alexander Litvinov's message
+	of "Wed, 23 Nov 2005 11:41:57 +0600")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12605>
 
---Boundary-00=_lEAhDsdaBvOllH2
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Alexander Litvinov <lan@ac-sw.com> writes:
 
-When moving directory with large number of files git-mv says:
-> git-mv jsp* .
-Can't exec "git-update-index": Argument list too long at /usr/local/bin/git-mv 
-line 193.
-git-update-index failed to add new names with code -1
+> When moving directory with large number of files git-mv says:
+>> git-mv jsp* .
+> Can't exec "git-update-index": Argument list too long at /usr/local/bin/git-mv 
+> line 193.
+> git-update-index failed to add new names with code -1
+>
+> This patch fixes this by building list of files with limited len (currently 
+> 5000) and executing git-update-index few times until all files will be 
+> processed. I don't know how to determinate limit of command line but 5000 
+> seems safe enougth to me.
 
-This patch fixes this by building list of files with limited len (currently 
-5000) and executing git-update-index few times until all files will be 
-processed. I don't know how to determinate limit of command line but 5000 
-seems safe enougth to me.
+Two comments.
 
---Boundary-00=_lEAhDsdaBvOllH2
-Content-Type: text/x-diff;
-  charset="us-ascii";
-  name="git-mv.perl.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename="git-mv.perl.patch"
+(1) the argument limit is enforced by the operating system in
+    bytes (including environment size unfortunately) so we might
+    want to count bytes not number of paths.  I heard GNU xargs
+    uses 131072 as the default limit.
 
---- git-mv.perl.orig	2005-11-23 11:24:10.000000000 +0600
-+++ git-mv.perl	2005-11-23 11:33:31.000000000 +0600
-@@ -185,13 +185,36 @@
- }
- 	
- my $rc;
--if (scalar @changedfiles >0) {
--	$rc = system("git-update-index","--",@changedfiles);
-+while (scalar @changedfiles >0) {
-+	my @toHandle = ();
-+	my $len = 0;
-+	while ($len < 5000 && scalar(@changedfiles) >0) {
-+		my $f = pop(@changedfiles);
-+		$len += length($f) + 1;
-+		push(@toHandle, $f);
-+	}
-+	$rc = system("git-update-index","--",@toHandle);
- 	die "git-update-index failed to update changed files with code $?\n" if $rc;
- }
--if (scalar @addedfiles >0) {
--	$rc = system("git-update-index","--add","--",@addedfiles);
-+while (scalar @addedfiles >0) {
-+	my @toHandle = ();
-+	my $len = 0;
-+	while ($len < 5000 && scalar(@addedfiles) >0) {
-+		my $f = pop(@addedfiles);
-+		$len += length($f) + 1;
-+		push(@toHandle, $f);
-+	}
-+	$rc = system("git-update-index","--add","--",@toHandle);
- 	die "git-update-index failed to add new names with code $?\n" if $rc;
- }
--$rc = system("git-update-index","--remove","--",@deletedfiles);
--die "git-update-index failed to remove old names with code $?\n" if $rc;
-+while (scalar @deletedfiles > 0) {
-+	my @toHandle = ();
-+	my $len = 0;
-+	while ($len < 5000 && scalar(@deletedfiles) >0) {
-+		my $f = pop(@deletedfiles);
-+		$len += length($f) + 1;
-+		push(@toHandle, $f);
-+	}
-+	$rc = system("git-update-index","--remove","--",@toHandle);
-+	die "git-update-index failed to remove old names with code $?\n" if $rc;
-+}
+(2) I wonder if we can detect this particular failure case and
+    then fall back on splitting the arguments dynamically, maybe
+    something like this:
 
---Boundary-00=_lEAhDsdaBvOllH2--
+	sub xargs_system {
+        	my ($cmd, @args) = @_;
+                my $rc = system(@$cmd, @args);
+                if ($rc == 'argument list too long error') {
+                	my (@args0) = splice(@args, 0, @args/2);
+			$rc = xargs_system($cmd, @args0);
+                        return $c if ($rc);
+                        return xargs_system($cmd, @args);
+		}
+		return $rc;
+	}
+
+    and:
+
+	$rc = xargs_system([qw(git-update-index --)], @changedfiles);
+	$rc = xargs_system([qw(git-update-index --add --)], @addedfiles);
+	...
