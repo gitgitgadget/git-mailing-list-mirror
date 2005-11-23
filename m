@@ -1,91 +1,64 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Get rid of .git/branches/ and .git/remotes/?
-Date: Wed, 23 Nov 2005 16:39:58 +0100
-Message-ID: <200511231639.59866.Josef.Weidendorfer@gmx.de>
-References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de> <200511230005.12957.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.63.0511231549320.8191@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add git-graft-ripple, a tool for permanently grafting
+ history into a tree.
+Date: Wed, 23 Nov 2005 16:40:16 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511231638080.8993@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11326926501602-git-send-email-ryan@michonline.com>
+ <Pine.LNX.4.64.0511221652530.13959@g5.osdl.org> <20051123135150.GA16995@mythryan2.michonline.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Nov 23 16:43:52 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 23 16:43:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eewjg-0007iZ-Ej
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 16:40:41 +0100
+	id 1Eewjf-0007iZ-Jv
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 16:40:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751054AbVKWPkJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 10:40:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbVKWPkI
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 10:40:08 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:9906 "EHLO
-	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S1751053AbVKWPkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 10:40:06 -0500
-Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
-	by mail.in.tum.de (Postfix) with ESMTP id 8DCF82295
-	for <git@vger.kernel.org>; Wed, 23 Nov 2005 16:40:05 +0100 (MET)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9
-In-Reply-To: <Pine.LNX.4.63.0511231549320.8191@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+	id S1751049AbVKWPkU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 10:40:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751065AbVKWPkT
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 10:40:19 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:54441 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751049AbVKWPkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 10:40:17 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A184813FA2F; Wed, 23 Nov 2005 16:40:16 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 871299F3DA; Wed, 23 Nov 2005 16:40:16 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 6C6249F3D2; Wed, 23 Nov 2005 16:40:16 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E1EE013FA2F; Wed, 23 Nov 2005 16:40:15 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20051123135150.GA16995@mythryan2.michonline.com>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12635>
 
-On Wednesday 23 November 2005 15:53, Johannes Schindelin wrote:
-> Okay. What about this config file?
-> 
-> -- snip --
-> 	[myporcelain.headproperties: my/head.name]
-> 		merge.candidates = my/other.head
-> 	[myporcelain.headproperties]
-> 		merge.candidates = blabla for my/head.name
-> -- snap --
+Hi,
 
-I am not sure you want to show here. Your example gives
+On Wed, 23 Nov 2005, Ryan Anderson wrote:
 
- myporcelain.headproperties.merge.candidates = my/other.head for my/head.name
- myporcelain.headproperties.merge.candidates = blabla for my/head.name
+> For some reason, my gut says that this goes too far.  I'm having a hard
+> time pinning down a way to explain that.
 
-I.e. 2 values for the same variable with the same "for" specification.
-This is perfectly valid.
+I can pin down what my gut says:
 
-Are you talking about the multiple representations for the same thing?
-Then hierarchical config keys already introduce this:
+- the old commits still exist, so the links are not invalid
+- the commit message is signed off as is
+- the process to find the correct new SHA1 is not straight-forward, i.e.
+  one would need to introduce a recursion where now suffices a simple
+  linear loop.
 
- [myporcelain]
-    headproperties.merge.candidates = blabla
-
-is the same as
-
- [myprocelain.headproperties.merge]
-    candidates = blabla
- 
-> I am not totally opposed to what you are trying, but I think it 
-> contradicts the KISS principle.
-
-This suggestion is about easier reading of config files; IMHO far easier
-with some use cases; but yes, it is arguable if it's worth an added
-complexity of config.c/config-set.c.
-
-And of course this is no issue if config files are only to be written
-by git-config-set. But I do not think this was the goal of the config
-format.
-
-Josef
-
-> (Note: the restriction that key names must 
-> not start with a digit is also a contradiction to that.)
-> 
-> Ciao,
-> Dscho
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-> 
+Ciao,
+Dscho
