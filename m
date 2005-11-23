@@ -1,82 +1,103 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [RFC] Applying a graft to a tree and "rippling" the changes through
-Date: Wed, 23 Nov 2005 08:27:40 +0100
-Message-ID: <20051123072738.GI20960@kiste.smurf.noris.de>
-References: <20051117230723.GD26122@nowhere.earth> <Pine.LNX.4.63.0511180026080.18775@wbgn013.biozentrum.uni-wuerzburg.de> <20051119140404.GD3393@nowhere.earth> <20051119141341.GE3393@nowhere.earth> <Pine.LNX.4.63.0511191612350.4895@wbgn013.biozentrum.uni-wuerzburg.de> <20051119170929.GF3393@nowhere.earth> <pan.2005.11.19.17.23.17.920228@smurf.noris.de> <Pine.LNX.4.63.0511200217200.11653@wbgn013.biozentrum.uni-wuerzburg.de> <20051120073244.GA7902@kiste.smurf.noris.de> <17283.57854.256145.253465@cargo.ozlabs.ibm.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: speedup allocation in pack-redundant.c
+Date: Wed, 23 Nov 2005 08:31:57 +0100
+Message-ID: <81b0412b0511222331tc43057aqfd942afdebea052c@mail.gmail.com>
+References: <81b0412b0511220656l528436b1xea80ee18965e4dda@mail.gmail.com>
+	 <7vek58ct4b.fsf@assigned-by-dhcp.cox.net>
+	 <20051122230011.GA2916@steel.home> <4383A66D.2030201@etek.chalmers.se>
+	 <20051122233845.GC2916@steel.home> <4383AFDB.90907@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="FLPM4o+7JoHGki3m"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 08:31:33 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Nov 23 08:34:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eep4V-0002Bn-C2
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 08:29:39 +0100
+	id 1Eep7r-0003BL-Pm
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 08:33:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030345AbVKWH3g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 02:29:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030346AbVKWH3g
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 02:29:36 -0500
-Received: from run.smurf.noris.de ([192.109.102.41]:37805 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S1030345AbVKWH3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 02:29:35 -0500
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1Eep2b-0006Mh-5c; Wed, 23 Nov 2005 08:28:42 +0100
-Received: (nullmailer pid 6546 invoked by uid 501);
-	Wed, 23 Nov 2005 07:27:40 -0000
-To: Paul Mackerras <paulus@samba.org>
+	id S1030346AbVKWHdE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 23 Nov 2005 02:33:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030347AbVKWHdE
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 02:33:04 -0500
+Received: from zeus1.kernel.org ([204.152.191.4]:7565 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S1030346AbVKWHdB convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 02:33:01 -0500
+Received: from nproxy.gmail.com (nproxy.gmail.com [64.233.182.202])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id jAN7WxxP006944
+	for <git@vger.kernel.org>; Tue, 22 Nov 2005 23:32:59 -0800
+Received: by nproxy.gmail.com with SMTP id l37so210406nfc
+        for <git@vger.kernel.org>; Tue, 22 Nov 2005 23:31:57 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cUcizC6E9VWv3xTShifl4C3RssgGrI/ewksCm6Y/LkmxCYSR4GWpiT3KqtRuQAU6Kd+HbhMstuk+lNr0Q7Uo4dWeJbRTWdQcCUxP+gkXY7jScXuT3tTM7W6N1MiJhf2HgIfP+YCg/KDQ3ydSHaztg65nSyRNOVApyqWfHLUu+RI=
+Received: by 10.48.30.4 with SMTP id d4mr1354nfd;
+        Tue, 22 Nov 2005 23:31:57 -0800 (PST)
+Received: by 10.48.248.18 with HTTP; Tue, 22 Nov 2005 23:31:57 -0800 (PST)
+To: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
+In-Reply-To: <4383AFDB.90907@etek.chalmers.se>
 Content-Disposition: inline
-In-Reply-To: <17283.57854.256145.253465@cargo.ozlabs.ibm.com>
-User-Agent: Mutt/1.5.9i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12610>
 
+On 11/23/05, Lukas Sandstr=F6m <lukass@etek.chalmers.se> wrote:
+> >>>>I think making allocation/deallocation to the central place is a
+> >>>>good cleanup, but I am not sure about the free-nodes reusing.
+> >>>>Does this make difference in real life?
+> >>>
+> >>>It definitely does, though nor very much. I have no real numbers a=
+t
+> >>>hand (being home now), but I remember it was 1 min with against 3 =
+min
+> >>>without the patch on cygwin+fat32, which is already bad enough all=
+ by
+> >>>itself. Very big repository with no redundant packs in it.
+> >>
+> >>Would you mind sharing the .idx files?
+> >
+> > this time I probably would (they're not here)... But for a perfoman=
+ce
+> > testing any big repository will do, linux kernel, for example.
+> >
+> The problem is that the large repository I have contains lots of
+> redundant packs, which makes quite fast to find a complete set
+> and end the search. If you don't have any redundant packs, the
+> complete set search really is 2**n (n =3D the number of packs).
+>
+> I did some quick experiments with slab allocation and got a 4.4%
+> improvement on the redundant repo, so that might be worth persuing.
+> (Concept patch below)
+>
 
---FLPM4o+7JoHGki3m
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I don't have the old packs anymore, but I benchmarked all three
+allocation types anyway:
 
-Hi,
+malloc/free:
 
-Paul Mackerras:
-> However, I was unable to get current gitk to exhibit the problem, even
-> with Thomas Gleixner's enormous history.git repository.  Do you have a
-> specific example (repository and commit ID) where you see the problem
-> occur?
->=20
-I've seen it in the past ... hmmm ... testing ... and it seems to
-majickally have fixed itself.
+$ time git-pack-redundant --all --alt-odb
+real    0m0.092s
+user    0m0.108s
+sys     0m0.015s
 
-Oh well...
+simple node reuse (the patch in official tree):
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-The Tenth Commandment of Frisbee: The single most difficult move with a disc
-is to put it down. (Just one more.)
-					-- Dan Roddick
+$ time git-pack-redundant --all --alt-odb
+real    0m0.074s
+user    0m0.093s
+sys     0m0.015s
 
---FLPM4o+7JoHGki3m
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+slab node allocation (your concept patch):
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+$ time git-pack-redundant --all --alt-odb
+real    0m0.031s
+user    0m0.046s
+sys     0m0.015s
 
-iD8DBQFDhBnq8+hUANcKr/kRAkmGAJ9DMTaTjbeG1OHCojou4UJu4P+trgCggyyl
-6j4ZrcZY6o9vC71gTdnGyL0=
-=OH3b
------END PGP SIGNATURE-----
-
---FLPM4o+7JoHGki3m--
+This repository has one pack and 17758 files.
