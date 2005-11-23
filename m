@@ -1,58 +1,115 @@
-From: Alexander Litvinov <lan@ac-sw.com>
-Subject: Re: git-mv is not able to handle directory with one file in it
-Date: Wed, 23 Nov 2005 16:21:34 +0600
-Organization: AcademSoft Ltd.
-Message-ID: <200511231621.34259.lan@ac-sw.com>
-References: <200511231141.57683.lan@ac-sw.com> <200511231326.27972.lan@ac-sw.com> <438420CC.4050303@op5.se>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: [PATCH] Fix cg-mv for moving directories with 1 file
+Date: Wed, 23 Nov 2005 12:04:23 +0100
+Message-ID: <200511231204.24571.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 23 11:20:40 2005
+Cc: Junio C Hamano <junkio@cox.net>, Alexander Litvinov <lan@ac-sw.com>
+X-From: git-owner@vger.kernel.org Wed Nov 23 12:05:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EeriF-0007UG-Kq
-	for gcvg-git@gmane.org; Wed, 23 Nov 2005 11:18:52 +0100
+	id 1EesQj-0001s0-FQ
+	for gcvg-git@gmane.org; Wed, 23 Nov 2005 12:04:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030386AbVKWKSt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 05:18:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030388AbVKWKSt
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 05:18:49 -0500
-Received: from gw.ac-sw.com ([81.1.223.2]:49859 "EHLO gw.ac-sw.com")
-	by vger.kernel.org with ESMTP id S1030386AbVKWKSs (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2005 05:18:48 -0500
-Received: from lan.ac-sw.lcl (unknown [192.168.0.69])
-	by gw.ac-sw.com (Postfix) with ESMTP
-	id 2071DBD1B; Wed, 23 Nov 2005 16:18:47 +0600 (NOVT)
-Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
-	id 602A21C9B38; Wed, 23 Nov 2005 16:21:39 +0600 (NOVT)
-Received: from localhost (localhost [127.0.0.1])
-	by lan.ac-sw.lcl (Postfix) with ESMTP id 816BB1C9376;
-	Wed, 23 Nov 2005 16:21:34 +0600 (NOVT)
-To: Andreas Ericsson <ae@op5.se>
-User-Agent: KMail/1.8
-In-Reply-To: <438420CC.4050303@op5.se>
+	id S1030399AbVKWLE2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 06:04:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030400AbVKWLE2
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 06:04:28 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:62430 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1030399AbVKWLE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 06:04:27 -0500
+Received: from dhcp-3s-40.lrr.in.tum.de (dhcp-3s-40.lrr.in.tum.de [131.159.35.40])
+	by mail.in.tum.de (Postfix) with ESMTP id 17C682771;
+	Wed, 23 Nov 2005 12:04:26 +0100 (MET)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9
 Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on lan.ac-sw.lcl
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.4
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12617>
 
-On Wednesday 23 November 2005 13:57, Andreas Ericsson wrote:
-> This is broken. It only checks if there's just one source-file
-> regardless of whether or not it resided in a subdirectory. I'm not
-> exactly fluent in perl so I can't submit a patch, but the src option
-> needs to be directory aware, traverse all source directories and then
-> move the files axing everything but the bottom-most dirname to the
-> destination directory.
->
-> Any takers?
+This is fixed by putting the file into @changedfiles/@addedfiles,
+and not the directory this file is in.
 
-I still does not understand what this part should do. I know perl enought to 
-fix it but I don't understand the logic.
+Additionally, this fixes the behavior for attempting to overwrite
+a file with a directory, and gives a message for all cases where
+overwriting is not possible (file->dir,dir->file,dir->dir).
+
+Thanks for Alexander Litvinov for noting this problem.
+
+Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+
+---
+
+This should fix the wrong behavior.
+Alexander, can you confirm this?
+
+
+ git-mv.perl |   25 +++++++++++++++++--------
+ 1 files changed, 17 insertions(+), 8 deletions(-)
+
+applies-to: 5bc7f67c535dbbbb9340285c82226a8dd6e4afec
+5237e9ac4adc6bed0074ce1eeee6846e40f45d84
+diff --git a/git-mv.perl b/git-mv.perl
+index a21d87e..bf54c38 100755
+--- a/git-mv.perl
++++ b/git-mv.perl
+@@ -103,13 +103,22 @@ while(scalar @srcArgs > 0) {
+ 	$bad = "bad source '$src'";
+     }
+ 
++    $safesrc = quotemeta($src);
++    @srcfiles = grep /^$safesrc(\/|$)/, @allfiles;
++
+     $overwritten{$dst} = 0;
+     if (($bad eq "") && -e $dst) {
+ 	$bad = "destination '$dst' already exists";
+-	if (-f $dst && $opt_f) {
+-	    print "Warning: $bad; will overwrite!\n";
+-	    $bad = "";
+-	    $overwritten{$dst} = 1;
++	if ($opt_f) {
++	    # only files can overwrite each other: check both source and destination
++	    if (-f $dst && (scalar @srcfiles == 1)) {
++		print "Warning: $bad; will overwrite!\n";
++		$bad = "";
++		$overwritten{$dst} = 1;
++	    }
++	    else {
++		$bad = "Can not overwrite '$src' with '$dst'";
++	    }
+ 	}
+     }
+     
+@@ -118,8 +127,6 @@ while(scalar @srcArgs > 0) {
+     }
+ 
+     if ($bad eq "") {
+-	$safesrc = quotemeta($src);
+-	@srcfiles = grep /^$safesrc(\/|$)/, @allfiles;
+         if (scalar @srcfiles == 0) {
+ 	    $bad = "'$src' not under version control";
+ 	}
+@@ -166,10 +173,12 @@ while(scalar @srcs > 0) {
+ 
+     push @deletedfiles, @srcfiles;
+     if (scalar @srcfiles == 1) {
++	# $dst can be a directory with 1 file inside
+ 	if ($overwritten{$dst} ==1) {
+-	    push @changedfiles, $dst;
++	    push @changedfiles, $dstfiles[0];
++
+ 	} else {
+-	    push @addedfiles, $dst;
++	    push @addedfiles, $dstfiles[0];
+ 	}
+     }
+     else {
+---
+0.99.9.GIT
