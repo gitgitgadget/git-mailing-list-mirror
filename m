@@ -1,84 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Rename git-config-set to git-repo-config
-Date: Thu, 24 Nov 2005 03:33:30 -0800
-Message-ID: <7v8xveth4l.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
-	<200511210026.30280.Josef.Weidendorfer@gmx.de>
-	<200511221831.03954.Josef.Weidendorfer@gmx.de>
-	<Pine.LNX.4.63.0511221854120.27872@wbgn013.biozentrum.uni-wuerzburg.de>
-	<438371E8.2030701@op5.se>
-	<Pine.LNX.4.63.0511231553390.8191@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7viruj3q7z.fsf@assigned-by-dhcp.cox.net> <4384FB61.40506@op5.se>
-	<Pine.LNX.4.63.0511240042350.11106@wbgn013.biozentrum.uni-wuerzburg.de>
-	<43857430.7060103@op5.se> <7vsltmwiky.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0511241127020.12985@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Ed Tomlinson <tomlins@cam.org>
+Subject: Re: Linux 2.6.15-rc2
+Date: Thu, 24 Nov 2005 07:37:57 -0500
+Organization: me
+Message-ID: <200511240737.59153.tomlins@cam.org>
+References: <Pine.LNX.4.64.0511191934210.8552@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 24 12:35:35 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 24 13:38:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfFM8-000223-13
-	for gcvg-git@gmane.org; Thu, 24 Nov 2005 12:33:36 +0100
+	id 1EfGMA-0005bH-MK
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 13:37:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932528AbVKXLdd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Nov 2005 06:33:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932629AbVKXLdd
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 06:33:33 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:44187 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932528AbVKXLdc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Nov 2005 06:33:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051124113210.KKAH17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 24 Nov 2005 06:32:10 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932635AbVKXMhc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Nov 2005 07:37:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932632AbVKXMhb
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 07:37:31 -0500
+Received: from aeimail.aei.ca ([206.123.6.84]:15100 "EHLO aeimail.aei.ca")
+	by vger.kernel.org with ESMTP id S932331AbVKXMhb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Nov 2005 07:37:31 -0500
+Received: from grover (dsl-156-165.aei.ca [66.36.156.165])
+	by aeimail.aei.ca (8.12.10/8.12.10) with ESMTP id jAOCbHFP025803;
+	Thu, 24 Nov 2005 07:37:17 -0500 (EST)
+To: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+User-Agent: KMail/1.8.2
+In-Reply-To: <Pine.LNX.4.64.0511191934210.8552@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12706>
 
-Thanks for the patch.  I unfortunately was doing the same,
-because I wanted to get the repo-format-validation stuff into a
-presentable shape, and I thought this would interfere with it
-and wanted to do it first (fortunately it didn't).  They are
-both in the proposed updates branch.  At a quick glance, I think
-your patch is identical to what I did (there aren't that many
-different ways to rename a command after all).
+On Saturday 19 November 2005 22:40, Linus Torvalds wrote:
+> There it is (or will soon be - the tar-ball and patches are still 
+> uploading, and mirroring can obviously take some time after that).
 
-> 	Sorry, git-mv did not work on my system. I can now confirm that
-> 	there is *at least* one perl 5.6 version out there which does not
-> 	like lists in open statements at all. Grmpf.
+Something strange here.   After a cg-update, I had no tag for rc2.   Checking
+showed no problems so I used cg-clone to get another copy of the repository.
+Still no rc2.
 
-Yeah, perl5.8delta says that is 5.8 feature.  As discussed on
-the list with Merlyn, we have a fair amount of backporting, I
-suspect.  At least we should work on 5.6, if not 5.5.
+ed@grover:/usr/src/2.6$ cg-version
+cogito-0.16rc2 (73874dddeec2d0a8e5cd343eec762d98314def63)
+ed@grover:/usr/src/2.6$ git --version
+git version 0.99.9.GIT
 
-I do not use git-mv myself.  It does not work in subdirectories,
-and typing Documentation/ twice to move just one file is a
-chore, so I tend to just 'R' (rename) the file, move to the
-renamed file, and '!' (run shell command on the specified path)
-with 'git-add', all within a single Emacs dired buffer.
+cg-clone http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git 2.6
 
-> 	Further grpmf: Is it intended behaviour that git-diff *detects* 
-> 	renames, while git-format-patch *doesn't*?
+It looks to be the tag that is missing, gitk show commits after Nov 19.
 
-I do not want to force all the kernel subsystem maintainers to
-use git (namely, git-apply) to process e-mails, so format-patch
-should not default to git specific renaming patches.
+Both git and cg were  updated just prior to the cg-update (~Nov 22 8pm EST).
 
-An option to git-format-patch _might_ make sense someday.  Maybe
-after the world domination ;-).
+What is happening?
 
-Oh, wait.  It already can produce renaming patches, just does
-not do it by default.
-
-		Junio "again I forgot what I implemented before;
-		sheesh I even used it myself to feed some patches
-                to Linus" Hamano
- 
+TIA
+Ed Tomlinson
