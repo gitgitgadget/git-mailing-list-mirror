@@ -1,65 +1,105 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] gitk: UTF-8 support
-Date: Thu, 24 Nov 2005 02:12:31 -0500
-Message-ID: <20051124021231.nrg8448gk8w4owk8@webmail.spamcop.net>
-References: <1132719301.12227.5.camel@dv>
-	<7v64qi50sw.fsf@assigned-by-dhcp.cox.net>
-	<20051123235315.oht0zjidc4ccg8gs@webmail.spamcop.net>
-	<7v1x16y36r.fsf@assigned-by-dhcp.cox.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] archimport improvements
+Date: Wed, 23 Nov 2005 23:46:06 -0800
+Message-ID: <20051124074605.GA4789@mail.yhbt.net>
+References: <20051112092336.GA16218@Muzzle> <46a038f90511170126l5f04f4e0ta578fc2cb375db68@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 24 08:12:57 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 24 08:47:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfBHb-00034f-Sg
-	for gcvg-git@gmane.org; Thu, 24 Nov 2005 08:12:40 +0100
+	id 1EfBoE-00054w-Pv
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 08:46:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750809AbVKXHMe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Nov 2005 02:12:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbVKXHMd
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 02:12:33 -0500
-Received: from mailgate.cesmail.net ([216.154.195.36]:26831 "HELO
-	mailgate.cesmail.net") by vger.kernel.org with SMTP
-	id S1750809AbVKXHMd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Nov 2005 02:12:33 -0500
-Received: (qmail 29508 invoked from network); 24 Nov 2005 07:12:32 -0000
-Received: from unknown (HELO gamma.cesmail.net) (192.168.1.20)
-  by mailgate.cesmail.net with SMTP; 24 Nov 2005 07:12:32 -0000
-Received: (qmail 18779 invoked by uid 99); 24 Nov 2005 07:12:31 -0000
-Received: from static-68-161-241-229.ny325.east.verizon.net
-	(static-68-161-241-229.ny325.east.verizon.net [68.161.241.229]) by
-	webmail.spamcop.net (Horde) with HTTP for <proski@spamcop.net@cesmail.net>;
-	Thu, 24 Nov 2005 02:12:31 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1x16y36r.fsf@assigned-by-dhcp.cox.net>
+	id S1030557AbVKXHqJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Nov 2005 02:46:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030517AbVKXHqJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 02:46:09 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:56809 "EHLO mail.yhbt.net")
+	by vger.kernel.org with ESMTP id S1030557AbVKXHqG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Nov 2005 02:46:06 -0500
+Received: by mail.yhbt.net (Postfix, from userid 500)
+	id 257202DC033; Wed, 23 Nov 2005 23:46:06 -0800 (PST)
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.0-cvs
+In-Reply-To: <46a038f90511170126l5f04f4e0ta578fc2cb375db68@mail.gmail.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12681>
 
-Quoting Junio C Hamano <junkio@cox.net>:
+Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> Eric,
+> 
+> I've merged and pushed out to
+> http://locke.catalyst.net.nz/git/git-martinlanghoff.git/#tojunio
+> 
+>   [PATCH 1/5] remove shellquote usage for tags
+>   [PATCH 2/5] archimport: don't die on merge-base failure
+>   [PATCH 3/5] Disambiguate the term 'branch' in Arch vs git
+>   [PATCH 1/2] archimport: allow for old style branch and public tag names
+> 
+> That last one had a small edit to rebase it to the top of the head --
+> will probably have a small conflict for you on the usage line and
+> getopts() line.
+> 
+> What is pending is...
+> 
+> *  [PATCH 4/5] Overhaul of changeset application
+> 
+> I am testing it right now. Finding it rather slow on an idle linux
+> workstation with fast IDE disks, no X.org loaded and 1GB or RAM.
+> iowait is pegged at 90%. Wonder what will happen on a system with slow
+> disk access. tla/baz are unusable under any OS where the fs stack is
+> not _that_ polished (OSX and friends).
 
-> That is not the point.  Point is that I think the user can use
-> LANG and LC_ALL (I suspect LC_CTYPE is what matters) to get what
-> you want, and I suspect hardcoding utf8 robs users the
-> possibility to deal with a repository that uses something else.
+Ok, I didn't expect you guys to have 12k of files in your trees.  None
+of your source trees are remotely close to that size (but I have many
+more changesets).  I'm surprised you guys were able to put up
+with Arch in the first place!
 
-Not to argue with you, but it's worth pointing out that git is heavily multiuser
-software, and interoperability should not be ranked below local configurability.
+125m58.431s with my method.
+  8m24.504s with yours :)
 
-> And as I suggested in another message (in the died-out thread
-> about gitweb), we could have i18n.commitEncoding in the
-> configuration to help gitk and gitweb.  I think that is the same
-> as your "other option".
+All of my usual source trees imported 1k changesets in 10-15 minutes
 
-Yes.  Then my patch needs to be changed to set encoding to that setting and only
-if it's present.
+> The early versions of the import also used $TLA for all ops, and I was
+> forced to change it to get my repos transformed in a reasonable time.
+> 
+> Can you send me a patch that makes it optional, so users can choose
+> fast or correct? I don't want to force glacial imports on anyone,
+> specially me. Testing an import of a reasonably sized repo must be a
+> quick operation or I won't do it ;-) And I do work on OSX too.
 
---
-Regards,
-Pavel Roskin
+Patches on the way.
+
+OTOH, the time spent importing the bulk of the history is a one-time
+operation for most people and I'd much rather it get things as right as
+possible and move on.
+
+> On the other hand, I might just implement renamed directories tracking
+> separately, specially if someone can point me to a public repo with
+> some interesting cases of renamed directories.
+
+IIRC, there are several nasty cases all of which are ordering-related,
+especially with regard to nested directories or file renames inside
+directories that are also renamed.  It should be noted that not even tla
+gets all the possible directory rename cases right (baz seems better
+from my observations). 
+
+> These patches seem to hang from 4/5 so will need rebasing after a
+> reworked. The first one seems to be 3 or 4 patches in one. It'd be
+> good to break it up.
+
+Sorry, I rushed through the initial overhaul and didn't generate neat
+patches because I wanted to get some of my work moved to git ASAP.
+
+> * [ PATCH 5/5] -D <depth> option to recurse into merged branches
+> * Re: [PATCH 5/5] -D <depth> option to recurse into merged branches
+> * [PATCH 2/2] archimport: sync_to_ps() messages for tracking tla methods
+
+-- 
+Eric Wong
