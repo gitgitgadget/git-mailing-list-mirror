@@ -1,70 +1,57 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 1/9] archimport: first, make sure it still compiles
-Date: Thu, 24 Nov 2005 10:54:10 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511241051170.13959@g5.osdl.org>
-References: <20051112092336.GA16218@Muzzle> <46a038f90511170126l5f04f4e0ta578fc2cb375db68@mail.gmail.com>
- <20051124074605.GA4789@mail.yhbt.net> <20051124074739.GB4789@mail.yhbt.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Linux 2.6.15-rc2
+Date: Thu, 24 Nov 2005 11:42:33 -0800
+Message-ID: <7v4q61suhi.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0511191934210.8552@g5.osdl.org>
+	<200511240737.59153.tomlins@cam.org> <4385BAFC.7070906@op5.se>
+	<Pine.LNX.4.64.0511241037400.13959@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	git list <git@vger.kernel.org>,
-	Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Thu Nov 24 19:56:16 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, Ed Tomlinson <tomlins@cam.org>,
+	git@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 24 20:44:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfMEk-0001V2-NK
-	for gcvg-git@gmane.org; Thu, 24 Nov 2005 19:54:27 +0100
+	id 1EfN02-0000gA-3b
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 20:43:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751389AbVKXSyY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Nov 2005 13:54:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750761AbVKXSyY
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 13:54:24 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:2188 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751389AbVKXSyX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Nov 2005 13:54:23 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAOIsBnO030535
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 24 Nov 2005 10:54:14 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAOIsAU2007213;
-	Thu, 24 Nov 2005 10:54:10 -0800
-To: Eric Wong <normalperson@yhbt.net>
-In-Reply-To: <20051124074739.GB4789@mail.yhbt.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.56__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932651AbVKXTmg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Nov 2005 14:42:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932650AbVKXTmg
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 14:42:36 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:27123 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932648AbVKXTmf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Nov 2005 14:42:35 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051124194152.LDGX20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 24 Nov 2005 14:41:52 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511241037400.13959@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 24 Nov 2005 10:44:14 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12712>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> (This is in no way really fundamental, and the server could cache the 
+> packs it generates for initial clones, but that isn't implemented yet, and 
+> probably won't be for some times).
 
-Eric,
- I don't know about Junio, but if I were him, I'd have preferred that all 
-your patches had a
+Performance perceived by cloners is helped by
 
-	archimport: ..
+    $ mkdir -p .git/pack-cache
+    $ git-rev-list --objects --all | git-pack-objects .git/pack-cache/pack
 
-prefix in the subject line, not just the first one.
-
-For example, if you just merge the patches as-is now, and then look at the 
-end result with gitk (or any of the tools that show the shortlog format: 
-just the first line of the commit), you get explanations like
-
-	fix -t tmpdir switch
-
-which is clearly _correct_, but it's much nicer if they show which area 
-was implied, ie
-
-	archimport: fix -t tmpdir switch
-
-so that you can tell from the shortlog whether it was a "global" change, 
-or somethign that affected a specific program.
-
-Just a suggestion,
-
-		Linus
+on the server side.  This exact example of preparing by the
+repository maintainer is optimizing for a wrong case, and I do
+not think it is worth doing in practice, but this will give you
+the lower bound when server side cache is implemented to do it
+on demand.
