@@ -1,59 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitk: UTF-8 support
-Date: Wed, 23 Nov 2005 16:47:43 -0800
-Message-ID: <7v64qi50sw.fsf@assigned-by-dhcp.cox.net>
-References: <1132719301.12227.5.camel@dv>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Why not clone to a remote directory over SSH
+Date: Wed, 23 Nov 2005 16:51:27 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511231645100.13959@g5.osdl.org>
+References: <20051123211601.GA2260@hpsvcnb.fc.hp.com> <7vd5kr3pz1.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0511240038001.11106@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 24 01:48:16 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Carl Baldwin <cnb@fc.hp.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 24 01:58:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ef5HB-0003Yg-Du
-	for gcvg-git@gmane.org; Thu, 24 Nov 2005 01:47:49 +0100
+	id 1Ef5RD-0006wC-QO
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 01:58:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030546AbVKXArq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 19:47:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932607AbVKXArq
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 19:47:46 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:35571 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932535AbVKXArp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 19:47:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051124004636.DGK26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 23 Nov 2005 19:46:36 -0500
-To: Pavel Roskin <proski@gnu.org>, Paul Mackerras <paulus@samba.org>
-In-Reply-To: <1132719301.12227.5.camel@dv> (Pavel Roskin's message of "Tue, 22
-	Nov 2005 23:15:01 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030552AbVKXA6H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 19:58:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030553AbVKXA6H
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 19:58:07 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:41152 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030552AbVKXA6E (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Nov 2005 19:58:04 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAO0pSnO022261
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 23 Nov 2005 16:51:29 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAO0pRfb002153;
+	Wed, 23 Nov 2005 16:51:28 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0511240038001.11106@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.56__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12667>
 
-Pavel Roskin <proski@gnu.org> writes:
 
-> Add gitencoding variable and set it to "utf-8".  Use it for converting
-> git-rev-list output.
 
-Sounds good, but is it necessary?  Unless I am grossly mistaken,
-I am opposed to this patch.
+On Thu, 24 Nov 2005, Johannes Schindelin wrote:
+> 
+> On Wed, 23 Nov 2005, Junio C Hamano wrote:
+> 
+> > 	$ ssh machine 'git clone '`hostname`:`pwd`' /path/to/new/repository'
+> 
+> Obviously, this only works if the other side can connect to this side via 
+> ssh. Hmm. Firewalls? Disabled sshd? `hostname` not reliably returning a 
+> valid address for the remote side?
 
-When I run gitk with LANG and/or LC_CTYPE set to ja_JP.utf8 (I
-suspect *whatever*.utf8 would work the same way) on git.git
-repository, I see Lukas's name (originally in iso8859-1 but my
-commit objects have it in utf8) and Yoshifuji-san's name
-(iso2022 converted to utf8) just fine.
+Well, you could also just script it and just do
 
-And when I run gitk with LANG and/or LC_CTYPE set to ja_JP.ujis
-(that is another name for EUC-JP) on a toy repository I have
-commit log messages in EUC-JP (I am not recommending that, just
-pointing out a possibility), I can see them just fine.  In that
-test repository, setting locale to *.utf8 would not work.
+	ssh machine 'mkdir -p /path/to/new/repository ;
+		cd /path/to/new/repo;
+		git-init-db'
+	git push --all machine:/path/to/new/repository
+	ssh machine 'cd /path/to/new/repo ; git checkout'
 
-So I suspect your change breaks projects that use local
-encodings, without fixing or adding anything new.
+(and yes, we could obviously make this a "git-create-repo" command, and 
+then you could do
+
+	git-send-pack --exec=git-create-repo \
+		machine:/path/to/new/repository
+		$(git-rev-parse --all)
+
+or something like that).
+
+		Linus
