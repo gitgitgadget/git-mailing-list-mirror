@@ -1,92 +1,65 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] gitk: UTF-8 support
-Date: Wed, 23 Nov 2005 23:53:15 -0500
-Message-ID: <20051123235315.oht0zjidc4ccg8gs@webmail.spamcop.net>
-References: <1132719301.12227.5.camel@dv>
-	<7v64qi50sw.fsf@assigned-by-dhcp.cox.net>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: gitweb on kernel.org and UTF-8
+Date: Thu, 24 Nov 2005 00:01:04 -0500
+Message-ID: <20051124050104.GC16995@mythryan2.michonline.com>
+References: <7vzmnw9qo0.fsf@assigned-by-dhcp.cox.net> <4383BEE4.1060800@zytor.com> <20051123033526.GA24098@vrfy.org> <7vfypm20eh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 24 05:55:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Kay Sievers <kay.sievers@vrfy.org>,
+	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 24 06:01:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ef97C-0001rG-SG
-	for gcvg-git@gmane.org; Thu, 24 Nov 2005 05:53:47 +0100
+	id 1Ef9EW-0003cj-2b
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 06:01:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751342AbVKXExR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 23:53:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbVKXExR
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 23:53:17 -0500
-Received: from mailgate.cesmail.net ([216.154.195.36]:44706 "HELO
-	mailgate.cesmail.net") by vger.kernel.org with SMTP
-	id S1751342AbVKXExQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 23:53:16 -0500
-Received: (qmail 22655 invoked from network); 24 Nov 2005 04:53:15 -0000
-Received: from unknown (HELO gamma.cesmail.net) (192.168.1.20)
-  by mailgate.cesmail.net with SMTP; 24 Nov 2005 04:53:15 -0000
-Received: (qmail 8151 invoked by uid 99); 24 Nov 2005 04:53:15 -0000
-Received: from static-68-161-241-229.ny325.east.verizon.net
-	(static-68-161-241-229.ny325.east.verizon.net [68.161.241.229]) by
-	webmail.spamcop.net (Horde) with HTTP for <proski@spamcop.net@cesmail.net>;
-	Wed, 23 Nov 2005 23:53:15 -0500
+	id S1030459AbVKXFBM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Nov 2005 00:01:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030495AbVKXFBM
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 00:01:12 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:32484 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S1030459AbVKXFBL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Nov 2005 00:01:11 -0500
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1Ef9EG-0005d2-W7; Thu, 24 Nov 2005 00:01:06 -0500
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1Ef9EG-0000hB-00; Thu, 24 Nov 2005 00:01:04 -0500
+Received: from ryan by mythical with local (Exim 4.54)
+	id 1Ef9EG-0003cV-A2; Thu, 24 Nov 2005 00:01:04 -0500
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64qi50sw.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.0-cvs
+In-Reply-To: <7vfypm20eh.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12675>
 
-Hello!
+On Wed, Nov 23, 2005 at 07:24:38PM -0800, Junio C Hamano wrote:
+> 
+> How about doing something like this?
+> 
+> 	[i18n]
+>         	commitEncoding = utf8
+> 		blobEncoding = utf8
+> 
+> to mean:
+> 
+> 	If you _have_ to make an assumption on an encoding
+> 	commit and blob objects are in, utf8 is your best bet
+> 	(but mistakes can happen, and some blobs can be binary).
 
-Quoting Junio C Hamano <junkio@cox.net>:
+The rest of the options help clarify this, but can you make these
+options 'assumeCommitEncoding' and 'assumeBlobEncoding' to make it clear
+that these are *assumptions* and not actually controlling what gets
+written?
 
-> Pavel Roskin <proski@gnu.org> writes:
->
-> > Add gitencoding variable and set it to "utf-8".  Use it for converting
-> > git-rev-list output.
->
-> Sounds good, but is it necessary?  Unless I am grossly mistaken,
-> I am opposed to this patch.
->
-> When I run gitk with LANG and/or LC_CTYPE set to ja_JP.utf8 (I
-> suspect *whatever*.utf8 would work the same way) on git.git
-> repository, I see Lukas's name (originally in iso8859-1 but my
-> commit objects have it in utf8) and Yoshifuji-san's name
-> (iso2022 converted to utf8) just fine.
 
-I see.  I always use C locale.
+-- 
 
-> And when I run gitk with LANG and/or LC_CTYPE set to ja_JP.ujis
-> (that is another name for EUC-JP) on a toy repository I have
-> commit log messages in EUC-JP (I am not recommending that, just
-> pointing out a possibility), I can see them just fine.  In that
-> test repository, setting locale to *.utf8 would not work.
-
-Then what would you do to work with a repository using utf-8 if the current
-locale is not utf-8?
-
-> So I suspect your change breaks projects that use local
-> encodings, without fixing or adding anything new.
-
-I'll be away from any sane OS until Monday, but I assume my patch should help
-those whose locale is set to an encoding other than utf-8 if they want to use a
-repository using utf-8.
-
-Anyway, I see your point.  Not ever git repository uses utf-8.  It is not
-enforced by git.
-
-So we have two solutions.  One is to enforce utf-8 locale in git and force all
-"offenders" to convert.  That's probably too intrusive for now.
-
-The other solution is to have a publicly available file under .git that would
-keep the encoding name for the metadata (user names, logs etc).  gitk could use
-that file now.  git could implement conversions a bit later.  Maybe git could
-warn about mismatching encoding as the first step.
-
---
-Regards,
-Pavel Roskin
+Ryan Anderson
+  sometimes Pug Majere
