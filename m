@@ -1,76 +1,70 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Linux 2.6.15-rc2
-Date: Thu, 24 Nov 2005 10:44:14 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511241037400.13959@g5.osdl.org>
-References: <Pine.LNX.4.64.0511191934210.8552@g5.osdl.org>
- <200511240737.59153.tomlins@cam.org> <4385BAFC.7070906@op5.se>
+Subject: Re: [PATCH 1/9] archimport: first, make sure it still compiles
+Date: Thu, 24 Nov 2005 10:54:10 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511241051170.13959@g5.osdl.org>
+References: <20051112092336.GA16218@Muzzle> <46a038f90511170126l5f04f4e0ta578fc2cb375db68@mail.gmail.com>
+ <20051124074605.GA4789@mail.yhbt.net> <20051124074739.GB4789@mail.yhbt.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ed Tomlinson <tomlins@cam.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750733AbVKXSoe@vger.kernel.org Thu Nov 24 19:45:36 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750733AbVKXSoe@vger.kernel.org>
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	git list <git@vger.kernel.org>,
+	Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Thu Nov 24 19:56:16 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfM5v-0006jv-Le
-	for glk-linux-kernel-3@gmane.org; Thu, 24 Nov 2005 19:45:20 +0100
+	id 1EfMEk-0001V2-NK
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 19:54:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750733AbVKXSoe (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 24 Nov 2005 13:44:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750948AbVKXSod
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Thu, 24 Nov 2005 13:44:33 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:49034 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750733AbVKXSoc (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 24 Nov 2005 13:44:32 -0500
+	id S1751389AbVKXSyY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Nov 2005 13:54:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750761AbVKXSyY
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 13:54:24 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:2188 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751389AbVKXSyX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Nov 2005 13:54:23 -0500
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAOIiFnO030174
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAOIsBnO030535
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 24 Nov 2005 10:44:16 -0800
+	Thu, 24 Nov 2005 10:54:14 -0800
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAOIiE7c006913;
-	Thu, 24 Nov 2005 10:44:15 -0800
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <4385BAFC.7070906@op5.se>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAOIsAU2007213;
+	Thu, 24 Nov 2005 10:54:10 -0800
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <20051124074739.GB4789@mail.yhbt.net>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.56__
 X-MIMEDefang-Filter: osdl$Revision: 1.127 $
 X-Scanned-By: MIMEDefang 2.36
-Sender: linux-kernel-owner@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12710>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12711>
 
 
 
-On Thu, 24 Nov 2005, Andreas Ericsson wrote:
-> 
-> git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git 2.6
-> 
-> which works flawlessly for me although it takes quite some time to transfer
-> all the data.
+Eric,
+ I don't know about Junio, but if I were him, I'd have preferred that all 
+your patches had a
 
-The initial clone is very expensive for the native git protocol: the 
-protocol is designed to scale well for incremental updates (ie you have a 
-_huge_ repository that has changed just a bit, and the protocol should 
-work well for that), and that makes the initial clone quite expensive as 
-it marshalls the whole damn repository into this nice packed format.
+	archimport: ..
 
-So it's often nicer (certainly on the remote server) to use "rsync" for 
-the initial clone, and then only after that start using the git protocol.
+prefix in the subject line, not just the first one.
 
-(This is in no way really fundamental, and the server could cache the 
-packs it generates for initial clones, but that isn't implemented yet, and 
-probably won't be for some times).
+For example, if you just merge the patches as-is now, and then look at the 
+end result with gitk (or any of the tools that show the shortlog format: 
+just the first line of the commit), you get explanations like
 
-Of course, especially if you're mostly bandwidth-constrained and the 
-server side is not under a big load, using the native git protocol may 
-actually be faster anyway. Because it's always going to generate the 
-nicest packing, while rsync:// will just use whatever packing that the 
-server happens to have at that point (but I do repack every few weeks, so 
-rsync for the initial clone should never be horribly bad - and since I 
-just repacked, it should get that "perfect" pack too).
+	fix -t tmpdir switch
+
+which is clearly _correct_, but it's much nicer if they show which area 
+was implied, ie
+
+	archimport: fix -t tmpdir switch
+
+so that you can tell from the shortlog whether it was a "global" change, 
+or somethign that affected a specific program.
+
+Just a suggestion,
 
 		Linus
