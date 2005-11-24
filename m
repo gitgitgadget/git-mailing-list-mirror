@@ -1,105 +1,84 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: Re: files are disappearing in git
-Date: Thu, 24 Nov 2005 11:38:33 +0100
-Message-ID: <20051124103833.GF19989@schottelius.org>
-References: <20051123142303.GJ22568@schottelius.org> <Pine.LNX.4.64.0511230917130.13959@g5.osdl.org> <20051124084633.GA3361@schottelius.org> <7vfypmwgny.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Rename git-config-set to git-repo-config
+Date: Thu, 24 Nov 2005 03:33:30 -0800
+Message-ID: <7v8xveth4l.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
+	<200511210026.30280.Josef.Weidendorfer@gmx.de>
+	<200511221831.03954.Josef.Weidendorfer@gmx.de>
+	<Pine.LNX.4.63.0511221854120.27872@wbgn013.biozentrum.uni-wuerzburg.de>
+	<438371E8.2030701@op5.se>
+	<Pine.LNX.4.63.0511231553390.8191@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7viruj3q7z.fsf@assigned-by-dhcp.cox.net> <4384FB61.40506@op5.se>
+	<Pine.LNX.4.63.0511240042350.11106@wbgn013.biozentrum.uni-wuerzburg.de>
+	<43857430.7060103@op5.se> <7vsltmwiky.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0511241127020.12985@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ChQOR20MqfxkMJg9"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 24 11:39:58 2005
+X-From: git-owner@vger.kernel.org Thu Nov 24 12:35:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfEV1-00086V-Bo
-	for gcvg-git@gmane.org; Thu, 24 Nov 2005 11:38:43 +0100
+	id 1EfFM8-000223-13
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 12:33:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161005AbVKXKik (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Nov 2005 05:38:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030383AbVKXKik
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 05:38:40 -0500
-Received: from wg.technophil.ch ([213.189.149.230]:41907 "HELO
-	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
-	id S1030363AbVKXKij (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Nov 2005 05:38:39 -0500
-Received: (qmail 5615 invoked by uid 1000); 24 Nov 2005 10:38:33 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vfypmwgny.fsf@assigned-by-dhcp.cox.net>
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Linux-Info: http://linux.schottelius.org/
-X-Operating-System: Linux 2.6.14
+	id S932528AbVKXLdd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Nov 2005 06:33:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932629AbVKXLdd
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 06:33:33 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:44187 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932528AbVKXLdc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Nov 2005 06:33:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051124113210.KKAH17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 24 Nov 2005 06:32:10 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12705>
 
+Thanks for the patch.  I unfortunately was doing the same,
+because I wanted to get the repo-format-validation stuff into a
+presentable shape, and I thought this would interfere with it
+and wanted to do it first (fortunately it didn't).  They are
+both in the proposed updates branch.  At a quick glance, I think
+your patch is identical to what I did (there aren't that many
+different ways to rename a command after all).
 
---ChQOR20MqfxkMJg9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> 	Sorry, git-mv did not work on my system. I can now confirm that
+> 	there is *at least* one perl 5.6 version out there which does not
+> 	like lists in open statements at all. Grmpf.
 
-Junio C Hamano [Thu, Nov 24, 2005 at 01:15:13AM -0800]:
-> Nico -telmich- Schottelius <nico-linux-git@schottelius.org> writes:
->=20
-> > Linus Torvalds [Wed, Nov 23, 2005 at 09:20:28AM -0800]:
-> >> On Wed, 23 Nov 2005, Nico -telmich- Schottelius wrote:
-> >>...
-> >> I bet somebody just messed up the index before that commit.
-> >
-> > What would be the best things to corrupt the index?
-> > Our developers here do the following each day:
-> >
-> > - cg-update
-> > - <work>
-> > - cg-commit
-> > - cg-update + merge if there are changes
-> > - cg-push origin
->=20
-> Was any of the CG:F line changed/removed by the developer during
-> cg-commit?
+Yeah, perl5.8delta says that is 5.8 feature.  As discussed on
+the list with Merlyn, we have a fair amount of backporting, I
+suspect.  At least we should work on 5.6, if not 5.5.
 
-He said it could be possible. In fact the situation that we delete those li=
-nes
-are not so seldem.
+I do not use git-mv myself.  It does not work in subdirectories,
+and typing Documentation/ twice to move just one file is a
+chore, so I tend to just 'R' (rename) the file, move to the
+renamed file, and '!' (run shell command on the specified path)
+with 'git-add', all within a single Emacs dired buffer.
 
-> Does any of the files under Code/Spikes/Statistik/ have funny
-> characters in their pathnames?
+> 	Further grpmf: Is it intended behaviour that git-diff *detects* 
+> 	renames, while git-format-patch *doesn't*?
 
-No:
+I do not want to force all the kernel subsystem maintainers to
+use git (namely, git-apply) to process e-mails, so format-patch
+should not default to git specific renaming patches.
 
-Code/Spikes/Statistik/Project.dpr   [new file with mode: 0644]    blob
-Code/Spikes/Statistik/Statistik.pas    [new file with mode: 0644]    blob
-Code/Spikes/Statistik/Statistik.xfm    [new file with mode: 0644]    blob
+An option to git-format-patch _might_ make sense someday.  Maybe
+after the world domination ;-).
 
-Nico
+Oh, wait.  It already can produce renaming patches, just does
+not do it by default.
 
---=20
-Latest project: cinit-0.2.1 (http://linux.schottelius.org/cinit/)
-Open Source nutures open minds and free, creative developers.
-
---ChQOR20MqfxkMJg9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iQIVAwUBQ4WYKbOTBMvCUbrlAQJs0g//fqk7eSWtX7BPkOWN9gMgS8OcIyvwjJYT
-gcTPVDB/ICWR7sgvCOW1XW9FyWCOM6eDDKySuFnwhzdTr6zpn/sfynmHbfISjGUi
-6i8FL/aul217Ht9pQoINeZDHi/5/Dfp7GaelJTk10+T4Y33ffWe0h32d/5gTph4u
-X70douECtux5NkUPK8BTsq1QFVbWvF6thfAPpirDnXuTqhhF3SRumc8clnuY2+m6
-QkX9MPHEBNN8UgHB3wGdI0iu5MtuQT6M58eTAOIWNKb21lUSOvHhYeEIRVnOM4bN
-DkWH6fqbltSsPt9DdO4xMB/IMjBxrx+hTJ+UkGvOwo79bIyvfgsHGUImhiZ/jxCU
-O13v2BybfIoItyciksWU+xxA9oxWAEc9Tzhcl8PgVBP/jkJmBZ/ipIrjBgjnk8p0
-txLujxRPCXgGPTXUFzCXN0UjBVylX3aO7pVl3gO/Z1lwDtq6QZsxAE/PFhlCWMV4
-Gu8YgqOuooE05Zi323Ej2T0aPJwAWk0LqHSDSljbYFvP84pC9mKf/HMLpLnXnueO
-BFTWiZWf8C1FZilzDJJBbPuTUSj/803dLSiJpk9jnut1hLmH5deYLejTjT/xTcwt
-IQgH1/GAm30fuPcgnnVUslsqlxcwnQNbYcNGP6HRcsW5jGjdOnceNwxDf9l8yzUx
-0IvDqtBYjaE=
-=7ePG
------END PGP SIGNATURE-----
-
---ChQOR20MqfxkMJg9--
+		Junio "again I forgot what I implemented before;
+		sheesh I even used it myself to feed some patches
+                to Linus" Hamano
+ 
