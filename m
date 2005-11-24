@@ -1,67 +1,74 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: [RFC/PATCH 1/3] git-find-git: a new helper.
-Date: Thu, 24 Nov 2005 06:41:33 +0100
-Message-ID: <4385528D.7010203@yahoo.it>
-References: <7vmzjuzphl.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: gitweb on kernel.org and UTF-8
+Date: Wed, 23 Nov 2005 22:19:40 -0800
+Message-ID: <7vsltmy3cz.fsf@assigned-by-dhcp.cox.net>
+References: <7vzmnw9qo0.fsf@assigned-by-dhcp.cox.net>
+	<4383BEE4.1060800@zytor.com> <20051123033526.GA24098@vrfy.org>
+	<7vfypm20eh.fsf@assigned-by-dhcp.cox.net>
+	<20051124050104.GC16995@mythryan2.michonline.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Martin Atukunda <matlads@dsmagic.com>
-X-From: git-owner@vger.kernel.org Thu Nov 24 06:44:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 24 07:23:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ef9ro-0006ea-3d
-	for gcvg-git@gmane.org; Thu, 24 Nov 2005 06:41:56 +0100
+	id 1EfASQ-0006c7-Lg
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 07:19:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161003AbVKXFlw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Nov 2005 00:41:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161008AbVKXFlw
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 00:41:52 -0500
-Received: from smtp012.mail.yahoo.com ([216.136.173.32]:25511 "HELO
-	smtp012.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S1161003AbVKXFlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Nov 2005 00:41:51 -0500
-Received: (qmail 8211 invoked from network); 24 Nov 2005 05:41:48 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-  b=hUAUD454Mg/3daF525miZ94hAb+ptBADN139TMUnsyxoU0wms1Fg6Xp0XRe6MZuYHiK2iA7M1B3iUyICFzXxhT4lk8kYldLr6fR3Cbj7DxXVraW4rixiFyA2zSID6CagcgFG33AEOm5COYUf86efAxa/0RbjjBekOkPDq8lKAQU=  ;
-Received: from unknown (HELO ?10.0.0.13?) (mcostalba@151.44.27.8 with plain)
-  by smtp012.mail.yahoo.com with SMTP; 24 Nov 2005 05:41:47 -0000
-User-Agent: Mozilla Thunderbird 1.0.6-7.2.20060mdk (X11/20050322)
-X-Accept-Language: it, it-it, en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzjuzphl.fsf@assigned-by-dhcp.cox.net>
+	id S1161014AbVKXGTn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Nov 2005 01:19:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161015AbVKXGTn
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 01:19:43 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:65250 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1161014AbVKXGTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Nov 2005 01:19:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051124061820.JGHX17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 24 Nov 2005 01:18:20 -0500
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20051124050104.GC16995@mythryan2.michonline.com> (Ryan
+	Anderson's message of "Thu, 24 Nov 2005 00:01:04 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12677>
 
-Junio C Hamano wrote:
+Ryan Anderson <ryan@michonline.com> writes:
 
->  git-find-git uses it to find the
-> top-level, and if it was run from a subdirectory, outputs shell
-> script fragments that can be evaled to define the two variables:
-> 
->     GIT_DIR_PREFIX is a string to be prepended to cwd relative
->     paths to make them repository relative.
-> 
->     GIT_DIR_UPLEVEL is a string (e.g. "../") for the command to
->     use to cd to the top-level of repository.
-> 
+> On Wed, Nov 23, 2005 at 07:24:38PM -0800, Junio C Hamano wrote:
+>> 
+>> How about doing something like this?
+>> 
+>> 	[i18n]
+>>         	commitEncoding = utf8
+>> 		blobEncoding = utf8
+>> 
+>> to mean:
+>> 
+>> 	If you _have_ to make an assumption on an encoding
+>> 	commit and blob objects are in, utf8 is your best bet
+>> 	(but mistakes can happen, and some blobs can be binary).
 >
-Sounds very good.
+> The rest of the options help clarify this, but can you make these
+> options 'assumeCommitEncoding' and 'assumeBlobEncoding' to make it clear
+> that these are *assumptions* and not actually controlling what gets
+> written?
 
-I did't had the time to test it but I think I can now
-easily update qgit to run from a subdirectory with this new helper.
+As I outlined in the "editorEncoding" part, if everything works
+as planned, your latin-1 editing editor would leave latin-1
+message for git-commit to pick up (or command line "-m $msg"
+option would be encoded in latin-1), and iconv would munge that
+to utf8 to feed commit-tree (because of "commitEncoding" being
+utf8). In that sense, commitEncoding is not assumption for the
+writers.  If everybody, including outside sources we merge from,
+makes best effort not to screw up, these settings would
+faithfully describe what encoding logs are in.
 
-Marco
-
-	
-
-	
-		
-___________________________________ 
-Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
-http://mail.yahoo.it
+But writers can screw up, and funnily encoded commit messages
+merge from outside source brings in cannot be fixed after the
+fact, so "assume" part must be implied anyway for readers.
