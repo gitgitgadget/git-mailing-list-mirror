@@ -1,52 +1,59 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: Why not clone to a remote directory over SSH
-Date: Wed, 23 Nov 2005 16:19:55 -0800
-Message-ID: <20051124001955.GP3968@reactrix.com>
-References: <20051123211601.GA2260@hpsvcnb.fc.hp.com> <7vd5kr3pz1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0511240038001.11106@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitk: UTF-8 support
+Date: Wed, 23 Nov 2005 16:47:43 -0800
+Message-ID: <7v64qi50sw.fsf@assigned-by-dhcp.cox.net>
+References: <1132719301.12227.5.camel@dv>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Carl Baldwin <cnb@fc.hp.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 24 01:23:26 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 24 01:48:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ef4si-00053P-OA
-	for gcvg-git@gmane.org; Thu, 24 Nov 2005 01:22:33 +0100
+	id 1Ef5HB-0003Yg-Du
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 01:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030536AbVKXAW2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Nov 2005 19:22:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030544AbVKXAW2
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 19:22:28 -0500
-Received: from 195.37.26.69.virtela.com ([69.26.37.195]:1964 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1030536AbVKXAW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Nov 2005 19:22:27 -0500
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jAO0Jugi011537;
-	Wed, 23 Nov 2005 16:19:56 -0800
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jAO0Jtpb011535;
-	Wed, 23 Nov 2005 16:19:55 -0800
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0511240038001.11106@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.4.1i
+	id S1030546AbVKXArq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Nov 2005 19:47:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932607AbVKXArq
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Nov 2005 19:47:46 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:35571 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932535AbVKXArp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Nov 2005 19:47:45 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051124004636.DGK26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 23 Nov 2005 19:46:36 -0500
+To: Pavel Roskin <proski@gnu.org>, Paul Mackerras <paulus@samba.org>
+In-Reply-To: <1132719301.12227.5.camel@dv> (Pavel Roskin's message of "Tue, 22
+	Nov 2005 23:15:01 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12666>
 
-On Thu, Nov 24, 2005 at 12:41:56AM +0100, Johannes Schindelin wrote:
+Pavel Roskin <proski@gnu.org> writes:
 
-> Obviously, this only works if the other side can connect to this side via 
-> ssh. Hmm. Firewalls? Disabled sshd? `hostname` not reliably returning a 
-> valid address for the remote side?
+> Add gitencoding variable and set it to "utf-8".  Use it for converting
+> git-rev-list output.
 
-If sshd is running locally, you can forward a port back to yourself and
-have the remote clone localhost:`pwd`.  Assuming there's a way to clone
-using a nonstandard port.
+Sounds good, but is it necessary?  Unless I am grossly mistaken,
+I am opposed to this patch.
 
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+When I run gitk with LANG and/or LC_CTYPE set to ja_JP.utf8 (I
+suspect *whatever*.utf8 would work the same way) on git.git
+repository, I see Lukas's name (originally in iso8859-1 but my
+commit objects have it in utf8) and Yoshifuji-san's name
+(iso2022 converted to utf8) just fine.
+
+And when I run gitk with LANG and/or LC_CTYPE set to ja_JP.ujis
+(that is another name for EUC-JP) on a toy repository I have
+commit log messages in EUC-JP (I am not recommending that, just
+pointing out a possibility), I can see them just fine.  In that
+test repository, setting locale to *.utf8 would not work.
+
+So I suspect your change breaks projects that use local
+encodings, without fixing or adding anything new.
