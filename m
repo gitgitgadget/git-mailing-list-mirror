@@ -1,98 +1,111 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: simple git repository browser with vim
-Date: Thu, 24 Nov 2005 01:33:22 -0800
-Message-ID: <20051124093322.GA3899@mail.yhbt.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: simple git repository browser with vim
+Date: Thu, 24 Nov 2005 02:28:07 -0800
+Message-ID: <7v8xveuyq0.fsf@assigned-by-dhcp.cox.net>
+References: <20051124093322.GA3899@mail.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Nov 24 10:35:35 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 24 11:30:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfDTr-0007OS-Q0
-	for gcvg-git@gmane.org; Thu, 24 Nov 2005 10:33:28 +0100
+	id 1EfELB-0004bq-2l
+	for gcvg-git@gmane.org; Thu, 24 Nov 2005 11:28:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751327AbVKXJdY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Nov 2005 04:33:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbVKXJdY
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 04:33:24 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:30954 "EHLO mail.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751327AbVKXJdX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Nov 2005 04:33:23 -0500
-Received: by mail.yhbt.net (Postfix, from userid 500)
-	id DA1EF2DC033; Thu, 24 Nov 2005 01:33:22 -0800 (PST)
-To: git list <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S932070AbVKXK2K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Nov 2005 05:28:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750994AbVKXK2J
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Nov 2005 05:28:09 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:57992 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1750800AbVKXK2I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Nov 2005 05:28:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051124102725.HDJT20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 24 Nov 2005 05:27:25 -0500
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <20051124093322.GA3899@mail.yhbt.net> (Eric Wong's message of
+	"Thu, 24 Nov 2005 01:33:22 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12701>
 
-Here's a really quick and easy way to browse git repositories for vim
-users.  Hopefully somebody else finds this useful, I know I do.
+Eric Wong <normalperson@yhbt.net> writes:
 
-The idea is just to open a temporary file with git sha1sums (say git-log
-output) in vim, move your cursor over any one of the object sha1sums,
-and then hit ,G (or any shortcut of your choice) in normal mode to
-show what one of those was.
+> It relies on a simple shell script I wrote called 'git-show' that picks
+> a reasonable way to display each of the blob, tree, or commit object
+> types.  I'm fairly sure somebody else has written something like
+> git-show before, I just couldn't find it.  I'd imagine it's pretty
+> useful standalone without vim, too.
 
-It relies on a simple shell script I wrote called 'git-show' that picks
-a reasonable way to display each of the blob, tree, or commit object
-types.  I'm fairly sure somebody else has written something like
-git-show before, I just couldn't find it.  I'd imagine it's pretty
-useful standalone without vim, too.
+Aha.
 
-If you :set foldmethod=marker in vim, you can pass the -f
-flag to git-show and it'll enclose the output with the the default
-vim fold markers: {{{  }}}
+It strikes me that the blob case could be enhanced to do
+git-unpack-file, run "file -i" on it to figure out the file's
+mimetype, and then give it to an appropriate MIME type viewer
+;-).
 
-This is the line I've added to my .vimrc:
+For a tag object, you might want to deref it, and also if it is
+a signed kind, you may want to do git-verify-tag it.
 
-	map ,G yaw:.!git-show -f <c-r>" <CR>
+The following should not taken too seriously, but you might find
+it instructive to learn how to unwrap tag objects, verify them
+for signature, and pretty-print a single commit without running
+whatchanged.  I suspect the script as posted by you shows the
+commit message twice, BTW.
 
-And here is git-show in all it's glory:
----
-
+-- >8 --
 #!/bin/sh
 
-while : ; do
-	case "$1" in
-	-f|--fold-marker)
-		fold_marker=1
-		;;
+extract_tag_info='
+	s/^object /sha1=/p
+        /^type /{
+        	s//type=/
+                p
+                q
+	}
+'
+for sha1
+do
+    type=`git-cat-file -t "$sha1"` || continue
+    while case "$type" in tag) ;; *) break ;; esac
+    do
+	echo "*** tag $sha1 ***"
+        git-cat-file tag "$sha1"
+	git-verify-tag "$sha1"
+	echo
+	eval `git-cat-file tag "$sha1" | sed -n -e "$extract_tag_info"`
+    done
+    case "$type" in
+    tree)
+        echo "*** $type $sha1 ***"
+        git-ls-tree -r "$sha1"
+        ;;
+    blob)
+        temp=`git-unpack-file "$sha1"`
+	mimetype=`file -i "$temp" | sed -e 's/^[^:]*: *//'`
+        echo "*** $type ($mimetype) $sha1 ***"
+	case "$mimetype" in
+        image/*)
+        	display "$temp" ;;
+	audio/*)
+        	cat "$temp" >/dev/audio ;; # sorry I do not do audio
+        text/html)
+        	links -dump "$temp" ;; # hello, Pasky
 	*)
-		if [ -z "$sha1sum" ]; then
-			sha1sum="$1"
-		fi
-		break
-		;;
+		cat "$temp" ;;
 	esac
-	shift
+        rm -f $temp
+        ;;
+    commit)
+        echo "*** $type $sha1 ***"
+        git-diff-tree --pretty -m -C --find-copies-harder -p "$sha1"
+        ;;
+    esac
+    echo
 done
-
-type=`git-cat-file -t $sha1sum`
-
-if [ -n "$fold_marker" ]; then
-	echo "$type($1) {{{"
-fi
-
-case "$type" in
-	tree)
-		git-ls-tree -r $1
-		;;
-	blob)
-		git-cat-file blob $1
-		;;
-	commit)
-		git-cat-file commit $1
-		echo ''
-		git-whatchanged --max-count=1 -C -p -r $1
-		;;
-esac
-
-if [ -n "$fold_marker" ]; then
-	echo '}}}'
-fi
-
--- 
-Eric Wong
