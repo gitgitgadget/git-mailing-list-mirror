@@ -1,75 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Make git-mv work in subdirectories, too
-Date: Fri, 25 Nov 2005 12:36:35 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511251236060.30796@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Tommi Virtanen <tv@inoi.fi>
+Subject: [PATCH] Fix segfault in git-shell when given no argument.
+Date: Fri, 25 Nov 2005 13:49:31 +0200
+Message-ID: <11329193711298-git-send-email-tv@inoi.fi>
+Reply-To: Tommi Virtanen <tv@inoi.fi>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Nov 25 12:37:49 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Tommi Virtanen <tv@inoi.fi>
+X-From: git-owner@vger.kernel.org Fri Nov 25 12:51:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Efbst-0007Nc-IT
-	for gcvg-git@gmane.org; Fri, 25 Nov 2005 12:36:55 +0100
+	id 1Efc5S-0003dt-OM
+	for gcvg-git@gmane.org; Fri, 25 Nov 2005 12:49:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751449AbVKYLgh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Nov 2005 06:36:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbVKYLgh
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 06:36:37 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:24974 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751449AbVKYLgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Nov 2005 06:36:36 -0500
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id C322013FE4A; Fri, 25 Nov 2005 12:36:35 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A27D1B5315; Fri, 25 Nov 2005 12:36:35 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 8574EB52DA; Fri, 25 Nov 2005 12:36:35 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 64E1F13FE4A; Fri, 25 Nov 2005 12:36:35 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751219AbVKYLtk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 Nov 2005 06:49:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbVKYLtk
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 06:49:40 -0500
+Received: from i1.inoi.fi ([194.100.97.46]:31908 "EHLO mail.srv.inoi.fi")
+	by vger.kernel.org with ESMTP id S1751219AbVKYLtk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Nov 2005 06:49:40 -0500
+Received: from mail.srv.inoi.fi (localhost.localdomain [127.0.0.1])
+	by mail.srv.inoi.fi (Postfix) with ESMTP id 79591F5111;
+	Fri, 25 Nov 2005 13:49:47 +0200 (EET)
+Received: from pooch.inoi.fi (GMMDXXVII.dsl.saunalahti.fi [85.76.242.28])
+	by mail.srv.inoi.fi (Postfix) with ESMTP id 1CECCF4D30;
+	Fri, 25 Nov 2005 13:49:47 +0200 (EET)
+Received: from pooch (pooch [127.0.0.1])
+	by pooch.inoi.fi (Postfix) with SMTP id 8A551BA068;
+	Fri, 25 Nov 2005 13:49:31 +0200 (EET)
+In-Reply-To: 
+X-Mailer: git-send-email
+To: git@vger.kernel.org
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12739>
 
+The bug is trivially reproducible with "git-shell -c git-receive-pack"
 
-Turns out, all git programs git-mv uses are capable of operating in
-a subdirectory just fine. So don't complain about it.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Tommi Virtanen <tv@inoi.fi>
 
 ---
 
-	I am no Perl guru, so this might not be the best way to go
-	about it. Also, if people agree, I would like to remove the
-	extra check for GIT_DIR validity, since git-rev-parse --git-dir
-	does that already.
+ shell.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
- git-mv.perl |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-applies-to: 6b942d45a420cf8f4064f77713d9b218e7fa53cb
-fa750ba9ea3a27b39c8931b18cf0e60a89bf9fd7
-diff --git a/git-mv.perl b/git-mv.perl
-index bf54c38..bb61add 100755
---- a/git-mv.perl
-+++ b/git-mv.perl
-@@ -34,7 +34,8 @@ EOT
- }
+applies-to: 2ada0cb8fce070b6b2c56fa689791230636f1857
+4fbfea212a9afcd123a213e20388b1fa775fc7fe
+diff --git a/shell.c b/shell.c
+index 2c4789e..7fab432 100644
+--- a/shell.c
++++ b/shell.c
+@@ -5,6 +5,8 @@ static int do_generic_cmd(const char *me
+ {
+ 	const char *my_argv[4];
  
- # Sanity checks:
--my $GIT_DIR = $ENV{'GIT_DIR'} || ".git";
-+my $GIT_DIR = `git-rev-parse --git-dir`;
-+$GIT_DIR =~ s/\n$//;
- 
- unless ( -d $GIT_DIR && -d $GIT_DIR . "/objects" && 
- 	-d $GIT_DIR . "/objects/" && -d $GIT_DIR . "/refs") {
++	if (!arg)
++		die("missing argument");
+ 	arg = sq_dequote(arg);
+ 	if (!arg)
+ 		die("bad argument");
 ---
 0.99.9.GIT
