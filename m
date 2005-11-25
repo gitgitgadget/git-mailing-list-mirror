@@ -1,69 +1,56 @@
-From: Andreas Ericsson <ae@op5.se>
+From: A Large Angry SCM <gitzilla@gmail.com>
 Subject: Re: git-send-mail in sh
-Date: Fri, 25 Nov 2005 18:04:21 +0100
-Message-ID: <43874415.8040302@op5.se>
-References: <4386DD45.6030308@op5.se> <20051125163358.GF16995@mythryan2.michonline.com>
+Date: Fri, 25 Nov 2005 09:20:37 -0800
+Message-ID: <438747E5.80608@gmail.com>
+References: <4386DD45.6030308@op5.se> <Pine.LNX.4.63.0511251200190.30119@wbgn013.biozentrum.uni-wuerzburg.de> <43871ED8.9040506@op5.se>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 25 18:06:18 2005
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 25 18:22:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Efh0G-0006ON-Em
-	for gcvg-git@gmane.org; Fri, 25 Nov 2005 18:04:52 +0100
+	id 1EfhFm-0004z7-Cf
+	for gcvg-git@gmane.org; Fri, 25 Nov 2005 18:20:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161126AbVKYREW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Nov 2005 12:04:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161127AbVKYREW
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 12:04:22 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:40351 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161126AbVKYREW
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Nov 2005 12:04:22 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 3CFB16BCBE; Fri, 25 Nov 2005 18:04:21 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+	id S932693AbVKYRUl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 Nov 2005 12:20:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932702AbVKYRUk
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 12:20:40 -0500
+Received: from xproxy.gmail.com ([66.249.82.194]:31772 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932693AbVKYRUk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Nov 2005 12:20:40 -0500
+Received: by xproxy.gmail.com with SMTP id s14so796708wxc
+        for <git@vger.kernel.org>; Fri, 25 Nov 2005 09:20:39 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=PApktjEFTot1R5roTV+iy8XAgvATf7ijUYc0oDJ2ag5CZE+4MoMOBPD+jAq7J6JHBnfetwQepChruUv0upFWdKU2Jh1bQ44UEmRrMa40XAns2xHL2qBcNeQr7nThtIj5kYLd8o1MPl6E4xwOyhVv1AjDYjFuikDtZH26vaomgJk=
+Received: by 10.70.52.13 with SMTP id z13mr7467486wxz;
+        Fri, 25 Nov 2005 09:20:39 -0800 (PST)
+Received: from ?10.0.0.6? ( [69.175.230.211])
+        by mx.gmail.com with ESMTP id i15sm553173wxd.2005.11.25.09.20.38;
+        Fri, 25 Nov 2005 09:20:39 -0800 (PST)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
 X-Accept-Language: en-us, en
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20051125163358.GF16995@mythryan2.michonline.com>
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <43871ED8.9040506@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12743>
 
-Ryan Anderson wrote:
-> On Fri, Nov 25, 2005 at 10:45:41AM +0100, Andreas Ericsson wrote:
+Andreas Ericsson wrote:
+> Johannes Schindelin wrote:
+...
+>> The hints in SubmittingPatches did not help?
+>>
 > 
->>Finally giving up on git-send-email (I won't install the 6 perl-modules 
->>it requires and I don't know perl enough to remove the need for them), I 
->>hacked up a replacement in sh. It's more aptly named as well. ;)
-> 
-> 
-> Scanning the list, 2 are related to option handling (one of which is
-> builtin), one isn't used (Data::Dumper), and two are related to sending
-> valid emails.
+> Nopes. Perhaps because I started editing the message before I changed 
+> the settings. I'll investigate further and make amendments if necessary.
 
-
-When I try to install Email::Valid (using apt) it wants an additional 
-two modules. Mail::Sendmail wants one other, so that's Data::Dumper, the 
-two actually used and the three those two use. Six, for short.
-
-
-> The email address verification is ridiculously hard to get
-> correct, so using pre-written code for that seemed justified.
-> 
-
-But it isn't necessary to validate it to such exactness. Nothing worse 
-will happen than the user chiding himself for his butterfingers if 
-he/she makes a mistake.
-
-Besides, I think typos are by far the most common error. Those are 
-usually valid email addresses while still not being correct.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Definitely need to do the settings changes *before* opening the compose 
+window for them to have an effect.
