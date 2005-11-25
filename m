@@ -1,88 +1,62 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: files are disappearing in git
-Date: Fri, 25 Nov 2005 14:51:22 -0500
-Message-ID: <20051125195121.GG16995@mythryan2.michonline.com>
-References: <20051123142303.GJ22568@schottelius.org> <Pine.LNX.4.64.0511230917130.13959@g5.osdl.org> <20051124084633.GA3361@schottelius.org> <43866EDA.9050203@michonline.com> <20051125103048.GB30691@schottelius.org> <Pine.LNX.4.64.0511251022360.13959@g5.osdl.org>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: Why not clone to a remote directory over SSH
+Date: Fri, 25 Nov 2005 12:26:40 -0800
+Message-ID: <20051125202640.GS3968@reactrix.com>
+References: <20051123211601.GA2260@hpsvcnb.fc.hp.com> <20051123230838.GN3968@reactrix.com> <4384F7F6.10404@op5.se> <20051123232829.GO3968@reactrix.com> <Pine.LNX.4.63.0511240043300.11106@wbgn013.biozentrum.uni-wuerzburg.de> <20051124010409.GQ3968@reactrix.com> <Pine.LNX.4.63.0511241136370.12985@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>,
-	Git ML <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Nov 25 20:54:57 2005
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 25 21:28:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Efjbc-0003vU-Mb
-	for gcvg-git@gmane.org; Fri, 25 Nov 2005 20:51:38 +0100
+	id 1EfkAR-0002IT-TI
+	for gcvg-git@gmane.org; Fri, 25 Nov 2005 21:27:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751471AbVKYTvd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Nov 2005 14:51:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbVKYTvd
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 14:51:33 -0500
-Received: from mail.autoweb.net ([198.172.237.26]:17644 "EHLO
-	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
-	id S1751471AbVKYTvd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Nov 2005 14:51:33 -0500
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.internal.autoweb.net with esmtp (Exim 4.50)
-	id 1EfjbO-0003Ct-LZ; Fri, 25 Nov 2005 14:51:23 -0500
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1EfjbO-0007Ru-00; Fri, 25 Nov 2005 14:51:22 -0500
-Received: from ryan by mythical with local (Exim 4.54)
-	id 1EfjbO-0007lP-34; Fri, 25 Nov 2005 14:51:22 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751476AbVKYU0x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 Nov 2005 15:26:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbVKYU0x
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 15:26:53 -0500
+Received: from 193.37.26.69.virtela.com ([69.26.37.193]:20569 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1751476AbVKYU0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Nov 2005 15:26:53 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jAPKQfFC022357;
+	Fri, 25 Nov 2005 12:26:41 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jAPKQeqh022355;
+	Fri, 25 Nov 2005 12:26:40 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0511251022360.13959@g5.osdl.org>
-User-Agent: Mutt/1.5.11
+In-Reply-To: <Pine.LNX.4.63.0511241136370.12985@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12749>
 
-On Fri, Nov 25, 2005 at 11:12:00AM -0800, Linus Torvalds wrote:
+On Thu, Nov 24, 2005 at 11:36:58AM +0100, Johannes Schindelin wrote:
+
+> > > For that matter, is it possible to generate the file(s) needed for a dumb
+> > > server on the client side?
+> > 
+> > Which files are those?  I've been working on a way to update info/refs
+> > and eventually objects/info/packs.
 > 
-> Ok, 
-> 
->   Nico gave me private access to the tree, so I quickly cloned it and 
-> started bisecting it to figure out where the problem was. I haven't looked 
-> at the source code, and all the commit messages seem to be in German 
-> (which I can kind of understand if I work at it, but not very well), but 
-> it definitely turns out none of that matters.
-> 
-> The problem is a bad merge. And in fact, that merge lost _more_ than just 
-> the three files under Code/Spikes/Statistik/, it also lost a file called 
-> Code/lw1/Client/Pics/icon/lw1-icon.png.
-> 
-> I don't quite see _how_ it lost them. The merge in question is a totally 
-> trivial in-index merge, and when I re-do it, I don't lose those files. In 
-> this case, all the lost files were from the "other branch" of the merge, 
-> and they were new to that branch. IOW, in git-merge-one-file parlance, it 
-> is that trivial "added in one" case.
+> These I meant.
 
-Can something like this sequence do it?
+Yes - it should be straightforward to generate those files on the client
+side.  A PROPFIND request for the remote directory with Depth: 1 will
+return a list of files in the directory, so refs and objects/packs can
+be crawled to generate the contents of the server info files.  That's
+assuming that packs and tags are being pushed of course.
 
-	git-init-db
-	git add file1 ; git commit -m "1"
-	(cd .. ; git clone tree1 tree2 )
-	(cd .. ; git clone tree1 tree3 )
-	git add file2 ; git commit -m "2"
-	git push ../tree2/
-	git add file3 ; git commit -m "3"
-
-	cd ../tree3/
-	git add file4
-	git commit -m "4"
-
-	cd ../tree2/
-	git pull ../tree3/
-
-The key point being that the merge is done in a tree that has its index
-out of sync with its HEAD (git push ../tree2/ .... git pull ../tree3/ )
-
-I think that's the situation where I've personally managed to lose
-and/or revert some changes.
+Come to think of it, PROPFIND is probably a more efficient way to check
+for the existence of an object in the remote repo as well.  That would
+make it feasible to remove the --complete option and always verify the
+full history.
 
 -- 
-
-Ryan Anderson
-  sometimes Pug Majere
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
