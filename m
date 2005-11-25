@@ -1,64 +1,76 @@
-From: YOSHIFUJI Hideaki / =?iso-2022-jp?B?GyRCNUhGIzFRTEAbKEI=?= 
-	<yoshfuji@linux-ipv6.org>
-Subject: Fix a warning about unused value.
-Date: Fri, 25 Nov 2005 19:03:05 +0900 (JST)
-Organization: USAGI/WIDE Project
-Message-ID: <20051125.190305.106194770.yoshfuji@linux-ipv6.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-send-mail in sh
+Date: Fri, 25 Nov 2005 12:05:54 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511251200190.30119@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <4386DD45.6030308@op5.se>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, yoshfuji@linux-ipv6.org
-X-From: git-owner@vger.kernel.org Fri Nov 25 12:03:28 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 25 12:06:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfbLr-0003CC-5b
-	for gcvg-git@gmane.org; Fri, 25 Nov 2005 12:02:47 +0100
+	id 1EfbOx-0004Pj-14
+	for gcvg-git@gmane.org; Fri, 25 Nov 2005 12:05:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751444AbVKYLCo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Nov 2005 06:02:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751446AbVKYLCo
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 06:02:44 -0500
-Received: from yue.linux-ipv6.org ([203.178.140.15]:528 "EHLO
-	yue.st-paulia.net") by vger.kernel.org with ESMTP id S1751444AbVKYLCo
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Nov 2005 06:02:44 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by yue.st-paulia.net (Postfix) with ESMTP
-	id 411EF33CC2; Fri, 25 Nov 2005 19:03:07 +0900 (JST)
-To: junkio@cox.net
-X-URL: http://www.yoshifuji.org/%7Ehideaki/
-X-Fingerprint: 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
-X-PGP-Key-URL: http://www.yoshifuji.org/%7Ehideaki/hideaki@yoshifuji.org.asc
-X-Face: "5$Al-.M>NJ%a'@hhZdQm:."qn~PA^gq4o*>iCFToq*bAi#4FRtx}enhuQKz7fNqQz\BYU]
- $~O_5m-9'}MIs`XGwIEscw;e5b>n"B_?j/AkL~i/MEa<!5P`&C$@oP>ZBLP
-X-Mailer: Mew version 2.2 on Emacs 20.7 / Mule 4.1 (AOI)
+	id S1751445AbVKYLF4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 Nov 2005 06:05:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751446AbVKYLF4
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 06:05:56 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:37765 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751445AbVKYLF4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Nov 2005 06:05:56 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id D033A13FD8B; Fri, 25 Nov 2005 12:05:54 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id B79529F412; Fri, 25 Nov 2005 12:05:54 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A31269F3D4; Fri, 25 Nov 2005 12:05:54 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 944CB13FD8B; Fri, 25 Nov 2005 12:05:54 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <4386DD45.6030308@op5.se>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12735>
 
-Hello.
+Hi,
 
-Fix a warning:
-  git.c:276: warning: value computed is not used
+On Fri, 25 Nov 2005, Andreas Ericsson wrote:
 
-Signed-off-by: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
+> It's worse than the perl version because;
+> 1. It doesn't thread the patch-series (which I personally prefer anyway since
+> it's easier to follow a thread on a particular patch that way).
 
-diff --git a/git.c b/git.c
-index bdd3f8d..0b10b6e 100644
---- a/git.c
-+++ b/git.c
-@@ -273,7 +273,7 @@ int main(int argc, char **argv, char **e
- 		while (!strncmp(exec_path, "./", 2)) {
- 			exec_path += 2;
- 			while (*exec_path == '/')
--				*exec_path++;
-+				exec_path++;
- 		}
- 		snprintf(git_command + len, sizeof(git_command) - len,
- 			 "/%s", exec_path);
+I think you can do that easily by providing a Message-ID: and a 
+References: header. The id could be made up by "git-$commit_id" to be 
+reasonably unique.
 
--- 
-YOSHIFUJI Hideaki @ USAGI Project  <yoshfuji@linux-ipv6.org>
-GPG-FP  : 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
+> 2. The patches sent within the same second arrive in random order.
+
+I have that all the time. Sometimes, I send emails to the git list 
+several minutes apart, and they come out in the wrong order. So it is no 
+problem.
+
+> Sorry about the attachment btw. Thunderbird seems to wrap lines no 
+> matter what I tell it.
+
+The hints in SubmittingPatches did not help?
+
+> Thoughts? Comments?
+
+I find it very cool. And easy to read. Just a few nits: You could use 
+git-sh-setup.sh to ensure that you're in a valid git repository. Also, you 
+could reuse the "die" function contained therein instead of a new 
+function, "abort".
+
+Ciao,
+Dscho
