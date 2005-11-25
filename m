@@ -1,134 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] config.c: remove unnecessary header in minimum configuration file.
-Date: Fri, 25 Nov 2005 14:22:14 -0800
-Message-ID: <7vbr08mkq1.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: files are disappearing in git
+Date: Fri, 25 Nov 2005 23:48:57 +0100
+Message-ID: <20051125224857.GA10680@pasky.or.cz>
+References: <20051123142303.GJ22568@schottelius.org> <Pine.LNX.4.64.0511230917130.13959@g5.osdl.org> <20051124084633.GA3361@schottelius.org> <43866EDA.9050203@michonline.com> <20051125103048.GB30691@schottelius.org> <Pine.LNX.4.64.0511251022360.13959@g5.osdl.org> <20051125195121.GG16995@mythryan2.michonline.com> <Pine.LNX.4.64.0511251400570.13959@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Nov 25 23:24:15 2005
+Cc: Ryan Anderson <ryan@michonline.com>,
+	Nico -telmich- Schottelius <nico-linux-git@schottelius.org>,
+	Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 25 23:50:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eflxk-0002CW-O3
-	for gcvg-git@gmane.org; Fri, 25 Nov 2005 23:22:37 +0100
+	id 1EfmNI-0005VC-Lk
+	for gcvg-git@gmane.org; Fri, 25 Nov 2005 23:49:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751487AbVKYWWQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Nov 2005 17:22:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbVKYWWQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 17:22:16 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:65168 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751487AbVKYWWQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Nov 2005 17:22:16 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051125222132.XTEL20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 25 Nov 2005 17:21:32 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932425AbVKYWsn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 Nov 2005 17:48:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932418AbVKYWsn
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 17:48:43 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:64898 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932400AbVKYWsm (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Nov 2005 17:48:42 -0500
+Received: (qmail 25551 invoked by uid 2001); 25 Nov 2005 23:48:57 +0100
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0511251400570.13959@g5.osdl.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12755>
 
-It is just silly to start the file called "config" a comment
-that says "This is the config file."
+Dear diary, on Fri, Nov 25, 2005 at 11:11:22PM CET, I got a letter
+where Linus Torvalds <torvalds@osdl.org> said that...
+> For example, let's say that you had a dirty tree or something, and then 
+> the merge failed, and you didn't see anything wrong, so you just end up 
+> doing a "git commit". At _that_ point, what you had in the index matters 
+> very much, of course, since the index is what will be committed.
+> 
+> > I think that's the situation where I've personally managed to lose
+> > and/or revert some changes.
+> 
+> Hmm.. Can you elaborate?
+> 
+> (Side note: all my commentary is purely about the "raw git" interfaces. I 
+> don't know what cogito may do on top of it).
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Note that Cogito is now (v0.15.1 or later) supposed to handle merges on
+top of trees with local changes fine - it will either error out, or in
+case the merge is done on unrelated files it will temporarily ignore
+your local changes and cg-commit won't mix them up (even if you do some
+conflict fixups).
 
----
-
- config.c               |    8 --------
- t/t1300-repo-config.sh |   20 --------------------
- 2 files changed, 0 insertions(+), 28 deletions(-)
-
-applies-to: f316bfd81eaa2064c1d9e01a336eaed8d7a5bd4f
-55c2454c6f18323b5ff04504593603848084aa4d
-diff --git a/config.c b/config.c
-index 5cc8535..52659f9 100644
---- a/config.c
-+++ b/config.c
-@@ -445,12 +445,6 @@ int git_config_set_multivar(const char* 
- 	 * If .git/config does not exist yet, write a minimal version.
- 	 */
- 	if (stat(config_filename, &st)) {
--		static const char contents[] =
--			"#\n"
--			"# This is the config file\n"
--			"#\n"
--			"\n";
--
- 		free(store.key);
- 
- 		/* if nothing to unset, error out */
-@@ -461,8 +455,6 @@ int git_config_set_multivar(const char* 
- 		}
- 
- 		store.key = (char*)key;
--
--		write(fd, contents, sizeof(contents)-1);
- 		store_write_section(fd, key);
- 		store_write_pair(fd, key, value);
- 	} else{
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 5e994ff..207dd3d 100644
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -12,10 +12,6 @@ test -f .git/config && rm .git/config
- git-repo-config core.penguin "little blue"
- 
- cat > expect << EOF
--#
--# This is the config file
--#
--
- [core]
- 	penguin = little blue
- EOF
-@@ -25,10 +21,6 @@ test_expect_success 'initial' 'cmp .git/
- git-repo-config Core.Movie BadPhysics
- 
- cat > expect << EOF
--#
--# This is the config file
--#
--
- [core]
- 	penguin = little blue
- 	Movie = BadPhysics
-@@ -39,10 +31,6 @@ test_expect_success 'mixed case' 'cmp .g
- git-repo-config Cores.WhatEver Second
- 
- cat > expect << EOF
--#
--# This is the config file
--#
--
- [core]
- 	penguin = little blue
- 	Movie = BadPhysics
-@@ -55,10 +43,6 @@ test_expect_success 'similar section' 'c
- git-repo-config CORE.UPPERCASE true
- 
- cat > expect << EOF
--#
--# This is the config file
--#
--
- [core]
- 	penguin = little blue
- 	Movie = BadPhysics
-@@ -76,10 +60,6 @@ test_expect_success 'replace with non-ma
- 	'git-repo-config core.penguin "very blue" !kingpin'
- 
- cat > expect << EOF
--#
--# This is the config file
--#
--
- [core]
- 	penguin = very blue
- 	Movie = BadPhysics
----
-0.99.9.GIT
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
