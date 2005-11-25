@@ -1,82 +1,134 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: files are disappearing in git
-Date: Fri, 25 Nov 2005 14:11:22 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511251400570.13959@g5.osdl.org>
-References: <20051123142303.GJ22568@schottelius.org>
- <Pine.LNX.4.64.0511230917130.13959@g5.osdl.org> <20051124084633.GA3361@schottelius.org>
- <43866EDA.9050203@michonline.com> <20051125103048.GB30691@schottelius.org>
- <Pine.LNX.4.64.0511251022360.13959@g5.osdl.org> <20051125195121.GG16995@mythryan2.michonline.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] config.c: remove unnecessary header in minimum configuration file.
+Date: Fri, 25 Nov 2005 14:22:27 -0800
+Message-ID: <7v7jawmkpo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>,
-	Git ML <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Nov 25 23:12:45 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 25 23:23:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EflnU-0006Ad-66
-	for gcvg-git@gmane.org; Fri, 25 Nov 2005 23:12:00 +0100
+	id 1Eflxh-0002CW-4X
+	for gcvg-git@gmane.org; Fri, 25 Nov 2005 23:22:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932188AbVKYWLo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Nov 2005 17:11:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbVKYWLo
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 17:11:44 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:450 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751485AbVKYWLo (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Nov 2005 17:11:44 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAPMBSnO022555
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 25 Nov 2005 14:11:28 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAPMBMRA018536;
-	Fri, 25 Nov 2005 14:11:24 -0800
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20051125195121.GG16995@mythryan2.michonline.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.56__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751489AbVKYWW3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 Nov 2005 17:22:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbVKYWW3
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 17:22:29 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:10739 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751489AbVKYWW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Nov 2005 17:22:29 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051125222101.ZQJO20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 25 Nov 2005 17:21:01 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12753>
 
+It is just silly to start the file called "config" with a
+comment that says "This is the config file."
 
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-On Fri, 25 Nov 2005, Ryan Anderson wrote:
-> 
-> Can something like this sequence do it?
+---
 
-Nope, I don't think that should matter. Also, that doesn't seem to match 
-what Nico & co are doing, but that's hard to tell.. 
+ config.c               |    8 --------
+ t/t1300-repo-config.sh |   20 --------------------
+ 2 files changed, 0 insertions(+), 28 deletions(-)
 
-A merge result should be totally independent of the index file(s) 
-involved.
-
-A dirty index file can cause a merge to _fail_, in that git may refuse to 
-do the merge at all because of the index not matching the original branch, 
-but a successful automated merge should never have any dependencies on 
-what happens to be in the index at the time the merge was done.
-
-So you can think of a merge as being totally specified by the trees 
-involved, unless we have some bug, of course. I can't think of any.
-
-Now, what _can_ happen (I think) is that if a merge is a failure (and 
-there, a dirty index can certainly be the _cause_ of that failure), then 
-when you fix it up and commit, there's some mix-up at _that_ stage.
-
-For example, let's say that you had a dirty tree or something, and then 
-the merge failed, and you didn't see anything wrong, so you just end up 
-doing a "git commit". At _that_ point, what you had in the index matters 
-very much, of course, since the index is what will be committed.
-
-> I think that's the situation where I've personally managed to lose
-> and/or revert some changes.
-
-Hmm.. Can you elaborate?
-
-(Side note: all my commentary is purely about the "raw git" interfaces. I 
-don't know what cogito may do on top of it).
-
-		Linus
+applies-to: f316bfd81eaa2064c1d9e01a336eaed8d7a5bd4f
+55c2454c6f18323b5ff04504593603848084aa4d
+diff --git a/config.c b/config.c
+index 5cc8535..52659f9 100644
+--- a/config.c
++++ b/config.c
+@@ -445,12 +445,6 @@ int git_config_set_multivar(const char* 
+ 	 * If .git/config does not exist yet, write a minimal version.
+ 	 */
+ 	if (stat(config_filename, &st)) {
+-		static const char contents[] =
+-			"#\n"
+-			"# This is the config file\n"
+-			"#\n"
+-			"\n";
+-
+ 		free(store.key);
+ 
+ 		/* if nothing to unset, error out */
+@@ -461,8 +455,6 @@ int git_config_set_multivar(const char* 
+ 		}
+ 
+ 		store.key = (char*)key;
+-
+-		write(fd, contents, sizeof(contents)-1);
+ 		store_write_section(fd, key);
+ 		store_write_pair(fd, key, value);
+ 	} else{
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 5e994ff..207dd3d 100644
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -12,10 +12,6 @@ test -f .git/config && rm .git/config
+ git-repo-config core.penguin "little blue"
+ 
+ cat > expect << EOF
+-#
+-# This is the config file
+-#
+-
+ [core]
+ 	penguin = little blue
+ EOF
+@@ -25,10 +21,6 @@ test_expect_success 'initial' 'cmp .git/
+ git-repo-config Core.Movie BadPhysics
+ 
+ cat > expect << EOF
+-#
+-# This is the config file
+-#
+-
+ [core]
+ 	penguin = little blue
+ 	Movie = BadPhysics
+@@ -39,10 +31,6 @@ test_expect_success 'mixed case' 'cmp .g
+ git-repo-config Cores.WhatEver Second
+ 
+ cat > expect << EOF
+-#
+-# This is the config file
+-#
+-
+ [core]
+ 	penguin = little blue
+ 	Movie = BadPhysics
+@@ -55,10 +43,6 @@ test_expect_success 'similar section' 'c
+ git-repo-config CORE.UPPERCASE true
+ 
+ cat > expect << EOF
+-#
+-# This is the config file
+-#
+-
+ [core]
+ 	penguin = little blue
+ 	Movie = BadPhysics
+@@ -76,10 +60,6 @@ test_expect_success 'replace with non-ma
+ 	'git-repo-config core.penguin "very blue" !kingpin'
+ 
+ cat > expect << EOF
+-#
+-# This is the config file
+-#
+-
+ [core]
+ 	penguin = very blue
+ 	Movie = BadPhysics
+---
+0.99.9.GIT
