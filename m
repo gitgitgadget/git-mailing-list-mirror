@@ -1,76 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Fernando J. Pereda" <ferdy@ferdyx.org>
 Subject: Re: git-send-mail in sh
-Date: Fri, 25 Nov 2005 12:05:54 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0511251200190.30119@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <4386DD45.6030308@op5.se>
+Date: Fri, 25 Nov 2005 12:06:51 +0100
+Message-ID: <20051125110651.GA9924@ferdyx.org>
+References: <4386DD45.6030308@op5.se> <20051125101209.GA8868@puritan.petwork> <4386EE7B.7070604@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 25 12:06:14 2005
+X-From: git-owner@vger.kernel.org Fri Nov 25 12:08:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfbOx-0004Pj-14
-	for gcvg-git@gmane.org; Fri, 25 Nov 2005 12:05:59 +0100
+	id 1EfbPx-0004tX-Dl
+	for gcvg-git@gmane.org; Fri, 25 Nov 2005 12:07:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751445AbVKYLF4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Nov 2005 06:05:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751446AbVKYLF4
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 06:05:56 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:37765 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751445AbVKYLF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Nov 2005 06:05:56 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D033A13FD8B; Fri, 25 Nov 2005 12:05:54 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id B79529F412; Fri, 25 Nov 2005 12:05:54 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A31269F3D4; Fri, 25 Nov 2005 12:05:54 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 944CB13FD8B; Fri, 25 Nov 2005 12:05:54 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1751446AbVKYLG7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 Nov 2005 06:06:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751447AbVKYLG7
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 06:06:59 -0500
+Received: from 170.Red-213-96-222.staticIP.rima-tde.net ([213.96.222.170]:56497
+	"EHLO smtp.ferdyx.org") by vger.kernel.org with ESMTP
+	id S1751446AbVKYLG6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Nov 2005 06:06:58 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.ferdyx.org (Postfix) with ESMTP id 19C948D33B;
+	Fri, 25 Nov 2005 12:06:53 +0100 (CET)
+Received: from smtp.ferdyx.org ([127.0.0.1])
+	by localhost (tungsteno [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 18491-07; Fri, 25 Nov 2005 12:06:50 +0100 (CET)
+Received: from posidon.ferdyx.org (posidon.ferdyx.org [192.168.0.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.ferdyx.org (Postfix) with ESMTP id 7C81D8D30B;
+	Fri, 25 Nov 2005 12:06:49 +0100 (CET)
+Received: by posidon.ferdyx.org (nbSMTP-1.01-cvs) for uid 1000
+	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	ferdy@ferdyx.org; Fri, 25 Nov 2005 12:06:52 +0100 (CET)
 To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <4386DD45.6030308@op5.se>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+Mail-Followup-To: Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <4386EE7B.7070604@op5.se>
+User-Agent: Mutt/1.5.11
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at ferdyx.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12736>
 
-Hi,
 
-On Fri, 25 Nov 2005, Andreas Ericsson wrote:
+--a8Wt8u1KmwUX3Y2C
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> It's worse than the perl version because;
-> 1. It doesn't thread the patch-series (which I personally prefer anyway since
-> it's easier to follow a thread on a particular patch that way).
+On Fri, Nov 25, 2005 at 11:59:07AM +0100, Andreas Ericsson wrote:
+| As for implementation, I don't think most "mail" programs have the=20
+| functionality necessary to do so (dunno though since I didn't investigate=
+).
 
-I think you can do that easily by providing a Message-ID: and a 
-References: header. The id could be made up by "git-$commit_id" to be 
-reasonably unique.
+You can always generate a 'valid' mail message and use the sendmail
+binary directly. That way you can set proper Message-Id: and proper
+References: and/or In-Reply-To: in the following mails.
 
-> 2. The patches sent within the same second arrive in random order.
+Cheers,
+Ferdy
 
-I have that all the time. Sometimes, I send emails to the git list 
-several minutes apart, and they come out in the wrong order. So it is no 
-problem.
+--=20
+Fernando J. Pereda Garcimart=EDn
+Gentoo Developer (Alpha,net-mail,mutt,git)
+20BB BDC3 761A 4781 E6ED  ED0B 0A48 5B0C 60BD 28D4
 
-> Sorry about the attachment btw. Thunderbird seems to wrap lines no 
-> matter what I tell it.
+--a8Wt8u1KmwUX3Y2C
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-The hints in SubmittingPatches did not help?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
 
-> Thoughts? Comments?
+iD8DBQFDhvBLCkhbDGC9KNQRAtvBAJ9b2TOuLQg+qX+/tj4mawQO6mZh6ACgkK7D
+SFqxgVdoy6fkxpmZvDKrGdU=
+=Sozq
+-----END PGP SIGNATURE-----
 
-I find it very cool. And easy to read. Just a few nits: You could use 
-git-sh-setup.sh to ensure that you're in a valid git repository. Also, you 
-could reuse the "die" function contained therein instead of a new 
-function, "abort".
-
-Ciao,
-Dscho
+--a8Wt8u1KmwUX3Y2C--
