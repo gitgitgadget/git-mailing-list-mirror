@@ -1,64 +1,65 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Ryan Anderson <ryan@michonline.com>
 Subject: Re: git-send-mail in sh
-Date: Fri, 25 Nov 2005 15:25:28 +0100
-Message-ID: <43871ED8.9040506@op5.se>
-References: <4386DD45.6030308@op5.se> <Pine.LNX.4.63.0511251200190.30119@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Fri, 25 Nov 2005 11:33:58 -0500
+Message-ID: <20051125163358.GF16995@mythryan2.michonline.com>
+References: <4386DD45.6030308@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 25 15:26:48 2005
+X-From: git-owner@vger.kernel.org Fri Nov 25 17:36:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfeW9-00074k-9O
-	for gcvg-git@gmane.org; Fri, 25 Nov 2005 15:25:37 +0100
+	id 1EfgXQ-0003DF-El
+	for gcvg-git@gmane.org; Fri, 25 Nov 2005 17:35:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161090AbVKYOZa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Nov 2005 09:25:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161091AbVKYOZa
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 09:25:30 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:31134 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161090AbVKYOZ3
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Nov 2005 09:25:29 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 9A7836BCBE; Fri, 25 Nov 2005 15:25:28 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0511251200190.30119@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1161124AbVKYQeD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 Nov 2005 11:34:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161126AbVKYQeD
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 11:34:03 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:4054 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S1161124AbVKYQeB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Nov 2005 11:34:01 -0500
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1EfgWM-0008KH-QL; Fri, 25 Nov 2005 11:34:00 -0500
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1EfgWM-0005qL-00; Fri, 25 Nov 2005 11:33:58 -0500
+Received: from ryan by mythical with local (Exim 4.54)
+	id 1EfgWM-0006Yq-BP; Fri, 25 Nov 2005 11:33:58 -0500
+To: Andreas Ericsson <ae@op5.se>
+Content-Disposition: inline
+In-Reply-To: <4386DD45.6030308@op5.se>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12741>
 
-Johannes Schindelin wrote:
-> 
->>Sorry about the attachment btw. Thunderbird seems to wrap lines no 
->>matter what I tell it.
-> 
-> 
-> The hints in SubmittingPatches did not help?
-> 
+On Fri, Nov 25, 2005 at 10:45:41AM +0100, Andreas Ericsson wrote:
+> Finally giving up on git-send-email (I won't install the 6 perl-modules 
+> it requires and I don't know perl enough to remove the need for them), I 
+> hacked up a replacement in sh. It's more aptly named as well. ;)
 
-Nopes. Perhaps because I started editing the message before I changed 
-the settings. I'll investigate further and make amendments if necessary.
+Scanning the list, 2 are related to option handling (one of which is
+builtin), one isn't used (Data::Dumper), and two are related to sending
+valid emails. The email address verification is ridiculously hard to get
+correct, so using pre-written code for that seemed justified.
 
-> 
->>Thoughts? Comments?
-> 
-> 
-> I find it very cool. And easy to read. Just a few nits: You could use 
-> git-sh-setup.sh to ensure that you're in a valid git repository. Also, you 
-> could reuse the "die" function contained therein instead of a new 
-> function, "abort".
-> 
+> It's worse than the perl version because;
+> 1. It doesn't thread the patch-series (which I personally prefer anyway 
+> since it's easier to follow a thread on a particular patch that way).
 
-Will do. Thanks for the feedback.
+You can use --no-chain-reply-to in git-send-email.perl, and put a 0/N
+message in, and all subsequent replies get attached to that instead of
+in order, if you want.  This keeps everything in one thread, but all as
+responses to the first email, so the people that want everything in one
+thread can get that behavior.
+
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+Ryan Anderson
+  sometimes Pug Majere
