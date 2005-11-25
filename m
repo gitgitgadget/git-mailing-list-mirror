@@ -1,67 +1,64 @@
-From: Tommi Virtanen <tv@inoi.fi>
-Subject: [PATCH] Fix segfault in git-shell when given no argument.
-Date: Fri, 25 Nov 2005 13:49:31 +0200
-Message-ID: <11329193711298-git-send-email-tv@inoi.fi>
-Reply-To: Tommi Virtanen <tv@inoi.fi>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git-send-mail in sh
+Date: Fri, 25 Nov 2005 15:25:28 +0100
+Message-ID: <43871ED8.9040506@op5.se>
+References: <4386DD45.6030308@op5.se> <Pine.LNX.4.63.0511251200190.30119@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Tommi Virtanen <tv@inoi.fi>
-X-From: git-owner@vger.kernel.org Fri Nov 25 12:51:37 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 25 15:26:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Efc5S-0003dt-OM
-	for gcvg-git@gmane.org; Fri, 25 Nov 2005 12:49:55 +0100
+	id 1EfeW9-00074k-9O
+	for gcvg-git@gmane.org; Fri, 25 Nov 2005 15:25:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751219AbVKYLtk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Nov 2005 06:49:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbVKYLtk
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 06:49:40 -0500
-Received: from i1.inoi.fi ([194.100.97.46]:31908 "EHLO mail.srv.inoi.fi")
-	by vger.kernel.org with ESMTP id S1751219AbVKYLtk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Nov 2005 06:49:40 -0500
-Received: from mail.srv.inoi.fi (localhost.localdomain [127.0.0.1])
-	by mail.srv.inoi.fi (Postfix) with ESMTP id 79591F5111;
-	Fri, 25 Nov 2005 13:49:47 +0200 (EET)
-Received: from pooch.inoi.fi (GMMDXXVII.dsl.saunalahti.fi [85.76.242.28])
-	by mail.srv.inoi.fi (Postfix) with ESMTP id 1CECCF4D30;
-	Fri, 25 Nov 2005 13:49:47 +0200 (EET)
-Received: from pooch (pooch [127.0.0.1])
-	by pooch.inoi.fi (Postfix) with SMTP id 8A551BA068;
-	Fri, 25 Nov 2005 13:49:31 +0200 (EET)
-In-Reply-To: 
-X-Mailer: git-send-email
-To: git@vger.kernel.org
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1161090AbVKYOZa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 Nov 2005 09:25:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161091AbVKYOZa
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 09:25:30 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:31134 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161090AbVKYOZ3
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Nov 2005 09:25:29 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 9A7836BCBE; Fri, 25 Nov 2005 15:25:28 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0511251200190.30119@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12740>
 
-The bug is trivially reproducible with "git-shell -c git-receive-pack"
+Johannes Schindelin wrote:
+> 
+>>Sorry about the attachment btw. Thunderbird seems to wrap lines no 
+>>matter what I tell it.
+> 
+> 
+> The hints in SubmittingPatches did not help?
+> 
 
-Signed-off-by: Tommi Virtanen <tv@inoi.fi>
+Nopes. Perhaps because I started editing the message before I changed 
+the settings. I'll investigate further and make amendments if necessary.
 
----
+> 
+>>Thoughts? Comments?
+> 
+> 
+> I find it very cool. And easy to read. Just a few nits: You could use 
+> git-sh-setup.sh to ensure that you're in a valid git repository. Also, you 
+> could reuse the "die" function contained therein instead of a new 
+> function, "abort".
+> 
 
- shell.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Will do. Thanks for the feedback.
 
-applies-to: 2ada0cb8fce070b6b2c56fa689791230636f1857
-4fbfea212a9afcd123a213e20388b1fa775fc7fe
-diff --git a/shell.c b/shell.c
-index 2c4789e..7fab432 100644
---- a/shell.c
-+++ b/shell.c
-@@ -5,6 +5,8 @@ static int do_generic_cmd(const char *me
- {
- 	const char *my_argv[4];
- 
-+	if (!arg)
-+		die("missing argument");
- 	arg = sq_dequote(arg);
- 	if (!arg)
- 		die("bad argument");
----
-0.99.9.GIT
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
