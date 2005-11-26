@@ -1,71 +1,61 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: files are disappearing in git
-Date: Fri, 25 Nov 2005 23:57:49 +0100
-Message-ID: <20051125225749.GB10680@pasky.or.cz>
-References: <20051123142303.GJ22568@schottelius.org> <Pine.LNX.4.64.0511230917130.13959@g5.osdl.org> <20051124084633.GA3361@schottelius.org> <43866EDA.9050203@michonline.com> <20051125103048.GB30691@schottelius.org> <Pine.LNX.4.64.0511251022360.13959@g5.osdl.org> <20051125212846.GB5434@schottelius.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 2/4] Check repository format version in enter_repo().
+Date: Fri, 25 Nov 2005 17:15:11 -0800
+Message-ID: <7vd5kogqg0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Ryan Anderson <ryan@michonline.com>,
-	Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 25 23:58:41 2005
+X-From: git-owner@vger.kernel.org Sat Nov 26 02:15:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfmVe-0000pN-JI
-	for gcvg-git@gmane.org; Fri, 25 Nov 2005 23:57:39 +0100
+	id 1Efoez-0004aa-4I
+	for gcvg-git@gmane.org; Sat, 26 Nov 2005 02:15:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932705AbVKYW5e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Nov 2005 17:57:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932707AbVKYW5e
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 17:57:34 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:17110 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932705AbVKYW5d (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Nov 2005 17:57:33 -0500
-Received: (qmail 26634 invoked by uid 2001); 25 Nov 2005 23:57:49 +0100
-To: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Content-Disposition: inline
-In-Reply-To: <20051125212846.GB5434@schottelius.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932379AbVKZBPO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 Nov 2005 20:15:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932418AbVKZBPO
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Nov 2005 20:15:14 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:12164 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932379AbVKZBPN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Nov 2005 20:15:13 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051126011403.WAAT26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 25 Nov 2005 20:14:03 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12757>
 
-Dear diary, on Fri, Nov 25, 2005 at 10:28:46PM CET, I got a letter
-where Nico -telmich- Schottelius <nico-linux-git@schottelius.org> said that...
-> > Pasky - do you know of any historical cogito problems like this?
-> 
-> For information:
-> 
-> [22:07] srsyg03:packages% ls -l /usr/packages 
-> insgesamt 28
-> drwxr-xr-x  4 root root 4096 Nov 10 15:52 cogito-/
-> drwxr-xr-x  4 root root 4096 Okt 14 15:15 cogito-0.15/
-> drwxr-xr-x  4 root root 4096 Nov 23 13:31 cogito-73874dddeec2d0a8e5cd343eec762d98314def63/
-> drwxr-xr-x  4 root root 4096 Okt 14 15:15 cvsps-2.1/
-> drwxr-xr-x  4 root root 4096 Nov 10 15:52 git-/
-> drwxr-xr-x  4 root root 4096 Okt 17 14:09 git-20051016.git/
-> drwxr-xr-x  4 root root 4096 Nov 23 13:31 git-c61642185d411e5e3350566a68483e358ca392b9/
-> 
-> At the time of 2005-11-17 we'll have used a cogito and git version,
-> which was from 2005-11-10.
+After daemon, upload-pack and receive-pack find out where the
+git directory is and chdir() there, make sure that repository is
+in a format we understand, after putenv("GIT_DIR=.") so that it
+knows to pick up the configuration file from there.
 
-That's really weird - I can't see anything since then that could
-influence it. The only possibility is that you were working on those
-files before, left them modified but uncommitted, then did a merge which
-would touch them, the merge would fail because of local changes, then
-you would delete your local instances of the files and try the merge
-again.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-That's something I fixed only very recently and the fix is not even in
-any public release yet; I didn't realize that it could have such
-dangerous consequences, but apparently it does. I guess I will release
-0.16 final tomorrow.
+---
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+ path.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+applies-to: 936ce54dedc7c7cfcf8f83a742325b3329eb95a1
+ed2f604235d7f400ee5fa01a591158cdabd65197
+diff --git a/path.c b/path.c
+index 4d88947..2c077c0 100644
+--- a/path.c
++++ b/path.c
+@@ -199,6 +199,7 @@ char *enter_repo(char *path, int strict)
+ 	if(access("objects", X_OK) == 0 && access("refs", X_OK) == 0 &&
+ 	   validate_symref("HEAD") == 0) {
+ 		putenv("GIT_DIR=.");
++		check_repository_format();
+ 		return current_dir();
+ 	}
+ 
+---
+0.99.9.GIT
