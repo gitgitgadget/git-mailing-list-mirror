@@ -1,7 +1,7 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 3/8] fsck-objects: work from subdirectory.
-Date: Sat, 26 Nov 2005 01:56:49 -0800
-Message-ID: <7v7jav68bi.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH 2/8] peek-remote: honor proxy config even from subdirectory.
+Date: Sat, 26 Nov 2005 01:56:41 -0800
+Message-ID: <7vd5kn68bq.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
 	<Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
 	<200511210026.30280.Josef.Weidendorfer@gmx.de>
@@ -20,57 +20,114 @@ References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 26 10:57:05 2005
+X-From: git-owner@vger.kernel.org Sat Nov 26 10:57:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Efwne-0002Ng-Q7
-	for gcvg-git@gmane.org; Sat, 26 Nov 2005 10:56:55 +0100
+	id 1EfwnY-0002M4-B0
+	for gcvg-git@gmane.org; Sat, 26 Nov 2005 10:56:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750810AbVKZJ4w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Nov 2005 04:56:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750824AbVKZJ4w
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 04:56:52 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:39156 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750810AbVKZJ4v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Nov 2005 04:56:51 -0500
+	id S1750817AbVKZJ4n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Nov 2005 04:56:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbVKZJ4n
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 04:56:43 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:65455 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1750817AbVKZJ4m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Nov 2005 04:56:42 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051126095611.BRNN6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 26 Nov 2005 04:56:11 -0500
+          id <20051126095614.ZPZB3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 26 Nov 2005 04:56:14 -0500
 To: Linus Torvalds <torvalds@osdl.org>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12771>
 
-Not much point making it work from subdirectory, but for a
-consistency make it so.
+Introduce setup_git_directory_gently() which does not die() if
+called outside a git repository, and use it so that later
+git_config() would work as expected even from a subdirectory,
+without failing the whole command if run outside a git
+repository.
+
+Use it at the beginning of peek-remote so that git:// proxy can
+be picked up from the configuration file.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 
 ---
 
- fsck-objects.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ cache.h       |    1 +
+ peek-remote.c |    3 +++
+ setup.c       |   11 ++++++++---
+ 3 files changed, 12 insertions(+), 3 deletions(-)
 
-applies-to: 802056c105a0cb936137f141a8e6e546224f3a07
-1bd646921ec7278fad9a38281678227769046291
-diff --git a/fsck-objects.c b/fsck-objects.c
-index 0433a1d..90e638e 100644
---- a/fsck-objects.c
-+++ b/fsck-objects.c
-@@ -431,6 +431,8 @@ int main(int argc, char **argv)
- {
- 	int i, heads;
+applies-to: 6afe0a2dc5da18d1090e8d660e45e2c777bfeaaa
+1fe3fae4e1dcd864af4010ee572a3bc6de996e95
+diff --git a/cache.h b/cache.h
+index 62920ce..13806d3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -147,6 +147,7 @@ extern char *get_graft_file(void);
+ #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
  
-+	setup_git_directory();
+ extern const char **get_pathspec(const char *prefix, const char **pathspec);
++extern const char *setup_git_directory_gently(int *);
+ extern const char *setup_git_directory(void);
+ extern const char *prefix_path(const char *prefix, int len, const char *path);
+ extern const char *prefix_filename(const char *prefix, int len, const char *path);
+diff --git a/peek-remote.c b/peek-remote.c
+index ee49bf3..a90cf22 100644
+--- a/peek-remote.c
++++ b/peek-remote.c
+@@ -27,6 +27,9 @@ int main(int argc, char **argv)
+ 	char *dest = NULL;
+ 	int fd[2];
+ 	pid_t pid;
++	int nongit = 0;
 +
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
++	setup_git_directory_gently(&nongit);
  
+ 	for (i = 1; i < argc; i++) {
+ 		char *arg = argv[i];
+diff --git a/setup.c b/setup.c
+index 54f6a34..b697bf9 100644
+--- a/setup.c
++++ b/setup.c
+@@ -107,7 +107,7 @@ static int is_toplevel_directory(void)
+ 	return 1;
+ }
+ 
+-static const char *setup_git_directory_1(void)
++const char *setup_git_directory_gently(int *nongit_ok)
+ {
+ 	static char cwd[PATH_MAX+1];
+ 	int len, offset;
+@@ -154,8 +154,13 @@ static const char *setup_git_directory_1
+ 			break;
+ 		chdir("..");
+ 		do {
+-			if (!offset)
++			if (!offset) {
++				if (nongit_ok) {
++					*nongit_ok = 1;
++					return NULL;
++				}
+ 				die("Not a git repository");
++			}
+ 		} while (cwd[--offset] != '/');
+ 	}
+ 
+@@ -171,6 +176,6 @@ static const char *setup_git_directory_1
+ 
+ const char *setup_git_directory(void)
+ {
+-	const char *retval = setup_git_directory_1();
++	const char *retval = setup_git_directory_gently(NULL);
+ 	return retval;
+ }
 ---
 0.99.9.GIT
