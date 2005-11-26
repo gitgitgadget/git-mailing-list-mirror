@@ -1,131 +1,110 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: simple git repository browser with vim
-Date: Sat, 26 Nov 2005 14:05:17 -0800
-Message-ID: <20051126220517.GC3899@mail.yhbt.net>
-References: <20051124093322.GA3899@mail.yhbt.net> <7v8xveuyq0.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 26 23:06:56 2005
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Document the --(no-)edit switch of git-revert and git-cherry-pick
+Date: Sat, 26 Nov 2005 23:12:44 +0100
+Message-ID: <20051126221244.5131.65509.stgit@machine.or.cz>
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Nov 26 23:13:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eg8Ae-0003fI-1N
-	for gcvg-git@gmane.org; Sat, 26 Nov 2005 23:05:24 +0100
+	id 1Eg8Hc-0007Ht-58
+	for gcvg-git@gmane.org; Sat, 26 Nov 2005 23:12:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750759AbVKZWFT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Nov 2005 17:05:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbVKZWFS
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 17:05:18 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:9611 "EHLO mail.yhbt.net")
-	by vger.kernel.org with ESMTP id S1750759AbVKZWFR (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Nov 2005 17:05:17 -0500
-Received: by mail.yhbt.net (Postfix, from userid 500)
-	id 2F4B22DC033; Sat, 26 Nov 2005 14:05:17 -0800 (PST)
+	id S1750763AbVKZWMa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Nov 2005 17:12:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750764AbVKZWM3
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 17:12:29 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:63426 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750763AbVKZWM3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Nov 2005 17:12:29 -0500
+Received: (qmail 5155 invoked from network); 26 Nov 2005 23:12:44 +0100
+Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
+  by localhost with SMTP; 26 Nov 2005 23:12:44 +0100
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v8xveuyq0.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12789>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> 
-> > It relies on a simple shell script I wrote called 'git-show' that picks
-> > a reasonable way to display each of the blob, tree, or commit object
-> > types.  I'm fairly sure somebody else has written something like
-> > git-show before, I just couldn't find it.  I'd imagine it's pretty
-> > useful standalone without vim, too.
-> 
-> Aha.
-> 
-> It strikes me that the blob case could be enhanced to do
-> git-unpack-file, run "file -i" on it to figure out the file's
-> mimetype, and then give it to an appropriate MIME type viewer
-> ;-).
+This switch was not documented properly. I decided not to mention
+the --no-edit switch in the git-cherry-pick documentation since
+we always default to no editing.
 
-Maybe somebody else will find this useful, overkill for me.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-> For a tag object, you might want to deref it, and also if it is
-> a signed kind, you may want to do git-verify-tag it.
+ Documentation/git-cherry-pick.txt |    6 +++++-
+ Documentation/git-revert.txt      |   11 ++++++++++-
+ git-revert.sh                     |    4 ++--
+ 3 files changed, 17 insertions(+), 4 deletions(-)
 
-This is pretty useful, I've added it to my version, and also added
-extra vim foldmarkers for the dereferenced tag.
-
-> The following should not taken too seriously, but you might find
-> it instructive to learn how to unwrap tag objects, verify them
-> for signature, and pretty-print a single commit without running
-> whatchanged.  I suspect the script as posted by you shows the
-> commit message twice, BTW.
-
-That was semi-intentional, I wanted the short diff format with the
-sha1sums of the blobs so I could further expand those inside vim.
-Fortunately, I've figured out that diff-tree is better for this.
-
-Here's what I'm currently using:
---- 
-
-#!/bin/sh
-
-extract_tag_info='
-        s/^object /sha1=/p
-        /^type /{
-                s//type=/
-                p
-                q
-        }
-'
-sha1sums=
-while : ; do
-	case "$1" in
-	-f|--fold-marker)
-		fold_marker=1
-		;;
-	*)
-		sha1sums="$sha1sums $1"
-		break
-		;;
-	esac
-	shift
-done
-
-for sha1 in $sha1sums
-do
-	type=`git-cat-file -t $sha1` || continue
-	
-	test -n "$fold_marker" && echo "$type($1) {{{"
-	
-	while case "$type" in tag) ;; *) break ;; esac
-	do
-		git-cat-file tag "$sha1"
-		git-verify-tag "$sha1"
-		test -n "$fold_marker" && echo '}}}'
- 		
-		eval `git-cat-file tag "$sha1" | sed -n -e "$extract_tag_info"`
-		
-		test -n "$fold_marker" && echo "$type($1) {{{"
-	done
-	
-	case "$type" in
-	tree)
-		git-ls-tree -r "$sha1"
-		;;
-	blob)
-		git-cat-file blob "$sha1"
-		;;
-	commit)
-         	git-diff-tree --pretty=raw -r -m -C --find-copies-harder "$sha1"
-		
-		test -n "$fold_marker" && echo "commit_diff($1) {{{"
-
-        	git-diff-tree -m -C --find-copies-harder -p "$sha1"
-		
-		test -n "$fold_marker" && echo '}}}'
-		;;
-	esac
-
-	test -n "$fold_marker" && echo '}}}'
-done
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index 26e0467..5e0ef5a 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -7,7 +7,7 @@ git-cherry-pick - Apply the change intro
+ 
+ SYNOPSIS
+ --------
+-'git-cherry-pick' [-n] [-r] <commit>
++'git-cherry-pick' [--edit] [-n] [-r] <commit>
+ 
+ DESCRIPTION
+ -----------
+@@ -20,6 +20,10 @@ OPTIONS
+ <commit>::
+ 	Commit to cherry-pick.
+ 
++--edit::
++	With this option, `git-cherry-pick` will let you edit the commit
++	message prior committing.
++
+ -r::
+ 	Usually the command appends which commit was
+ 	cherry-picked after the original commit message when
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index feebd81..f471037 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -7,7 +7,7 @@ git-revert - Revert an existing commit.
+ 
+ SYNOPSIS
+ --------
+-'git-revert' [-n] <commit>
++'git-revert' [--edit | --no-edit] [-n] <commit>
+ 
+ DESCRIPTION
+ -----------
+@@ -20,6 +20,15 @@ OPTIONS
+ <commit>::
+ 	Commit to revert.
+ 
++--edit::
++	With this option, `git-revert` will let you edit the commit
++	message prior committing the revert. This is the default if
++	you run the command from a terminal.
++
++--no-edit::
++	With this option, `git-revert` will not start the commit
++	message editor.
++
+ -n::
+ 	Usually the command automatically creates a commit with
+ 	a commit log message stating which commit was reverted.
+diff --git a/git-revert.sh b/git-revert.sh
+index c1aebb1..5cb02b1 100755
+--- a/git-revert.sh
++++ b/git-revert.sh
+@@ -19,10 +19,10 @@ esac
+ usage () {
+ 	case "$me" in
+ 	cherry-pick)
+-		die "usage git $me [-n] [-r] <commit-ish>"
++		die "usage git $me [--edit] [-n] [-r] <commit-ish>"
+ 		;;
+ 	revert)
+-		die "usage git $me [-n] <commit-ish>"
++		die "usage git $me [--edit | --no-edit] [-n] <commit-ish>"
+ 		;;
+ 	esac
+ }
