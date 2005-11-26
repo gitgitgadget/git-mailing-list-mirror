@@ -1,133 +1,82 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: [ANNOUNCE qgit-0.97.3]
-Date: Sat, 26 Nov 2005 13:39:10 +0100
-Message-ID: <4388576E.3080705@yahoo.it>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 1/8] git-apply: work from subdirectory.
+Date: Sat, 26 Nov 2005 09:36:21 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511260932080.13959@g5.osdl.org>
+References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0511221854120.27872@wbgn013.biozentrum.uni-wuerzburg.de>
+ <438371E8.2030701@op5.se> <Pine.LNX.4.63.0511231553390.8191@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7viruj3q7z.fsf@assigned-by-dhcp.cox.net> <4384FB61.40506@op5.se>
+ <Pine.LNX.4.63.0511240042350.11106@wbgn013.biozentrum.uni-wuerzburg.de>
+ <43857430.7060103@op5.se> <7vsltmwiky.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0511241127020.12985@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v8xveth4l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0511241419390.14297@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vmzjtn3h1.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0511242252080.26485@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vy83cdu7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511251953081.13959@g5.osdl.org>
+ <7voe477n4i.fsf_-_@assigned-by-dhcp.cox
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Nov 26 13:41:33 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 26 18:37:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfzMI-0001kG-Dk
-	for gcvg-git@gmane.org; Sat, 26 Nov 2005 13:40:50 +0100
+	id 1Eg3yV-0005WU-Qv
+	for gcvg-git@gmane.org; Sat, 26 Nov 2005 18:36:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932143AbVKZMkr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Nov 2005 07:40:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932152AbVKZMkr
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 07:40:47 -0500
-Received: from smtp018.mail.yahoo.com ([216.136.174.115]:48035 "HELO
-	smtp018.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S932143AbVKZMkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Nov 2005 07:40:46 -0500
-Received: (qmail 63167 invoked from network); 26 Nov 2005 12:40:44 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:Subject:Content-Type:Content-Transfer-Encoding;
-  b=oPyrbPX6VR0N2a8QV0vKz8GyqJz8y50ZUVavLOFuFaGT6U12O5h7auFE5rat3sGQ+1VLBrF0tD6qSsWvVMq1FmEVb524WzIFppSLUFghfec2e50ronuAXZAk9IZsdh8ruJNRR567F9NZXIXao51YVTzY0XjKbp3LM4A2mUja8lo=  ;
-Received: from unknown (HELO ?10.0.0.13?) (mcostalba@151.44.27.208 with plain)
-  by smtp018.mail.yahoo.com with SMTP; 26 Nov 2005 12:40:43 -0000
-User-Agent: Mozilla Thunderbird 1.0.6-7.2.20060mdk (X11/20050322)
-X-Accept-Language: it, it-it, en-us, en
-To: git@vger.kernel.org
+	id S1750918AbVKZRg2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Nov 2005 12:36:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbVKZRg2
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 12:36:28 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:23168 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750828AbVKZRg1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Nov 2005 12:36:27 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAQHaMnO027309
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 26 Nov 2005 09:36:22 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAQHaLV5015032;
+	Sat, 26 Nov 2005 09:36:21 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7viruf68bz.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.56__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12780>
-
-qgit, a git GUI viewer.
-
-With qgit you will be able to browse revisions history, view patch 
-content and changed files, graphically following different development 
-branches.
-
-
-FEATURES
-
-  - View revisions, diffs, files history, files annotation, archive tree.
-
-  - Commit changes visually cherry picking modified files.
-
-  - Apply or format patch series from selected commits, drag and
-    drop commits between two instances of qgit.
-
-  - qgit implements a GUI for the most common StGIT commands like
-    push/pop and apply/format patches. You can also create new patches
-    or refresh current top one using the same semantics of git commit,
-    i.e. cherry picking single modified files.
-
-
-NEW IN THIS RELEASE
-
-This is mainly a fix release with only some little nice features added 
-(see changelog below).
-
-Due to some good fixes and stability improvements I suggest to update.
-
-qgit is now in '(almost) just fixes' mode to be in good shape for the 
-time of git 1.0 is out, then I will relase qgit 1.0
-
-
-DOWNLOAD
-
-The page with all the download links is:
-http://digilander.libero.it/mcostalba/
-
-
-INSTALLATION
-
-You need scons and qt-mt developer libs, version 3.3.4 or better, 
-already installed.
-
-qgit is NOT compatible with Qt4.
-
-On some platforms (Debian) you should set QTDIR before to compile.
-
-- unpack tar file
-- make
-- make install
-
-qgit will be installed in $HOME/bin
-
-
-CHANGELOG
-
-- qgit now works from subdirectories.
-
-- added 'save file as' feature. To save on disk selected tree files.
-
-- added support for tag messages. When tagging a revision it is
-   possible to add a message, this will be shown in status bar, togheter
-   with tag name, when a tagged revision is selected.
-
-- added support for tag delete.
-
-- rewritten file/annotate viewer to be more stable when user changes
-   request while updating. Now should be possible to safely browse
-   through logs and archive tree without waiting for update to finish.
-
-- do not assume git bins directory is in $PATH. Use 'git --exec-path'.
-
-- fix possibly wrong description for revs with no commit messages
-   nor subjects
-
-- fix annotate viewer to update correctly with 'jump to rev' function
-
-- fix diff viewer to always center on selected file
-
-- fix regression, bad annotation of deleted files
-
-- various GUI tweaks and small fixes.
-
-
-      Marco
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12781>
 
 
 
-	
+On Sat, 26 Nov 2005, Junio C Hamano wrote:
+>
+> This adds three things:
+> 
+>  - prefix_filename() is like prefix_path() but can be used to
+>    name any file on the filesystem, not the files that might go
+>    into the index file.
+> 
+>  - git-apply uses setup_git_directory() to find out the GIT_DIR
+>    and reads configuration file.  Later this would allow us to
+>    affect the behaviour of the command from the configuration.
+> 
+>  - When git-apply is run from a subdirectory, it applies the
+>    given patch only to the files under the current directory and
+>    below.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-	
-		
-___________________________________ 
-Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
-http://mail.yahoo.it
+This breaks git-apply when used to just do a "diffstat", or when used on a 
+non-git repository.
+
+For "git-apply --stat", we definitely don't want to force it inside a git 
+directory. In fact, even _trying_ to find a git directory would be wrong.
+
+The only case where we care about a git directory is the "--index" case. 
+In all other cases we should happily apply it (or stat it).
+
+		Linus
