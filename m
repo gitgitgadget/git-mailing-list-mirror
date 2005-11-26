@@ -1,7 +1,7 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/8] peek-remote: honor proxy config even from subdirectory.
-Date: Sat, 26 Nov 2005 01:56:41 -0800
-Message-ID: <7vd5kn68bq.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH 1/8] git-apply: work from subdirectory.
+Date: Sat, 26 Nov 2005 01:56:32 -0800
+Message-ID: <7viruf68bz.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
 	<Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
 	<200511210026.30280.Josef.Weidendorfer@gmx.de>
@@ -20,114 +20,142 @@ References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 26 10:57:06 2005
+X-From: git-owner@vger.kernel.org Sat Nov 26 10:57:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EfwnY-0002M4-B0
-	for gcvg-git@gmane.org; Sat, 26 Nov 2005 10:56:49 +0100
+	id 1EfwnP-0002JZ-6a
+	for gcvg-git@gmane.org; Sat, 26 Nov 2005 10:56:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750817AbVKZJ4n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Nov 2005 04:56:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbVKZJ4n
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 04:56:43 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:65455 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1750817AbVKZJ4m (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Nov 2005 04:56:42 -0500
+	id S1750809AbVKZJ4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Nov 2005 04:56:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbVKZJ4e
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 04:56:34 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:35474 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750809AbVKZJ4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Nov 2005 04:56:34 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051126095614.ZPZB3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 26 Nov 2005 04:56:14 -0500
+          id <20051126095517.FABP17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 26 Nov 2005 04:55:17 -0500
 To: Linus Torvalds <torvalds@osdl.org>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12772>
 
-Introduce setup_git_directory_gently() which does not die() if
-called outside a git repository, and use it so that later
-git_config() would work as expected even from a subdirectory,
-without failing the whole command if run outside a git
-repository.
+This adds three things:
 
-Use it at the beginning of peek-remote so that git:// proxy can
-be picked up from the configuration file.
+ - prefix_filename() is like prefix_path() but can be used to
+   name any file on the filesystem, not the files that might go
+   into the index file.
+
+ - git-apply uses setup_git_directory() to find out the GIT_DIR
+   and reads configuration file.  Later this would allow us to
+   affect the behaviour of the command from the configuration.
+
+ - When git-apply is run from a subdirectory, it applies the
+   given patch only to the files under the current directory and
+   below.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 
 ---
 
- cache.h       |    1 +
- peek-remote.c |    3 +++
- setup.c       |   11 ++++++++---
- 3 files changed, 12 insertions(+), 3 deletions(-)
+ apply.c |   15 +++++++++++++++
+ cache.h |    1 +
+ setup.c |   15 +++++++++++++++
+ 3 files changed, 31 insertions(+), 0 deletions(-)
 
-applies-to: 6afe0a2dc5da18d1090e8d660e45e2c777bfeaaa
-1fe3fae4e1dcd864af4010ee572a3bc6de996e95
-diff --git a/cache.h b/cache.h
-index 62920ce..13806d3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -147,6 +147,7 @@ extern char *get_graft_file(void);
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
- 
- extern const char **get_pathspec(const char *prefix, const char **pathspec);
-+extern const char *setup_git_directory_gently(int *);
- extern const char *setup_git_directory(void);
- extern const char *prefix_path(const char *prefix, int len, const char *path);
- extern const char *prefix_filename(const char *prefix, int len, const char *path);
-diff --git a/peek-remote.c b/peek-remote.c
-index ee49bf3..a90cf22 100644
---- a/peek-remote.c
-+++ b/peek-remote.c
-@@ -27,6 +27,9 @@ int main(int argc, char **argv)
- 	char *dest = NULL;
- 	int fd[2];
- 	pid_t pid;
-+	int nongit = 0;
+applies-to: 9ccf8849fa9b522a344645c2f28f12ab036e30d5
+c20b8d006edfa964b3df5e4c5cc28cb93edcb240
+diff --git a/apply.c b/apply.c
+index 50be8f3..ae06d41 100644
+--- a/apply.c
++++ b/apply.c
+@@ -16,6 +16,9 @@
+ //  --numstat does numeric diffstat, and doesn't actually apply
+ //  --index-info shows the old and new index info for paths if available.
+ //
++static const char *prefix;
++static int prefix_length;
 +
-+	setup_git_directory_gently(&nongit);
- 
- 	for (i = 1; i < argc; i++) {
- 		char *arg = argv[i];
-diff --git a/setup.c b/setup.c
-index 54f6a34..b697bf9 100644
---- a/setup.c
-+++ b/setup.c
-@@ -107,7 +107,7 @@ static int is_toplevel_directory(void)
+ static int allow_binary_replacement = 0;
+ static int check_index = 0;
+ static int write_index = 0;
+@@ -1706,6 +1709,12 @@ static int use_patch(struct patch *p)
+ 			return 0;
+ 		x = x->next;
+ 	}
++	if (prefix && *prefix) {
++		int pathlen = strlen(pathname);
++		if (pathlen <= prefix_length ||
++		    memcmp(prefix, pathname, prefix_length))
++			return 0;
++	}
  	return 1;
  }
  
--static const char *setup_git_directory_1(void)
-+const char *setup_git_directory_gently(int *nongit_ok)
- {
- 	static char cwd[PATH_MAX+1];
- 	int len, offset;
-@@ -154,8 +154,13 @@ static const char *setup_git_directory_1
- 			break;
- 		chdir("..");
- 		do {
--			if (!offset)
-+			if (!offset) {
-+				if (nongit_ok) {
-+					*nongit_ok = 1;
-+					return NULL;
-+				}
- 				die("Not a git repository");
-+			}
- 		} while (cwd[--offset] != '/');
- 	}
+@@ -1784,6 +1793,10 @@ int main(int argc, char **argv)
+ 	int i;
+ 	int read_stdin = 1;
  
-@@ -171,6 +176,6 @@ static const char *setup_git_directory_1
++	prefix = setup_git_directory();
++	prefix_length = prefix ? strlen(prefix) : 0;
++	git_config(git_default_config);
++
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 		int fd;
+@@ -1845,6 +1858,8 @@ int main(int argc, char **argv)
+ 			line_termination = 0;
+ 			continue;
+ 		}
++		arg = prefix_filename(prefix, prefix_length, arg);
++
+ 		fd = open(arg, O_RDONLY);
+ 		if (fd < 0)
+ 			usage(apply_usage);
+diff --git a/cache.h b/cache.h
+index 6ac94c5..62920ce 100644
+--- a/cache.h
++++ b/cache.h
+@@ -149,6 +149,7 @@ extern char *get_graft_file(void);
+ extern const char **get_pathspec(const char *prefix, const char **pathspec);
+ extern const char *setup_git_directory(void);
+ extern const char *prefix_path(const char *prefix, int len, const char *path);
++extern const char *prefix_filename(const char *prefix, int len, const char *path);
  
- const char *setup_git_directory(void)
- {
--	const char *retval = setup_git_directory_1();
-+	const char *retval = setup_git_directory_gently(NULL);
- 	return retval;
+ #define alloc_nr(x) (((x)+16)*3/2)
+ 
+diff --git a/setup.c b/setup.c
+index ab3c778..54f6a34 100644
+--- a/setup.c
++++ b/setup.c
+@@ -47,6 +47,21 @@ const char *prefix_path(const char *pref
+ 	return path;
  }
+ 
++/* 
++ * Unlike prefix_path, this should be used if the named file does
++ * not have to interact with index entry; i.e. name of a random file
++ * on the filesystem.
++ */
++const char *prefix_filename(const char *pfx, int pfx_len, const char *arg)
++{
++	static char path[PATH_MAX];
++	if (!pfx || !*pfx || arg[0] == '/')
++		return arg;
++	memcpy(path, pfx, pfx_len);
++	strcpy(path + pfx_len, arg);
++	return path;
++}
++
+ const char **get_pathspec(const char *prefix, const char **pathspec)
+ {
+ 	const char *entry = *pathspec;
 ---
 0.99.9.GIT
