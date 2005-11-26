@@ -1,101 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 5/8] hash-object: work within subdirectory.
-Date: Sat, 26 Nov 2005 01:57:00 -0800
-Message-ID: <7vveyf4tqr.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0511200935081.13959@g5.osdl.org>
-	<200511210026.30280.Josef.Weidendorfer@gmx.de>
-	<200511221831.03954.Josef.Weidendorfer@gmx.de>
-	<Pine.LNX.4.63.0511221854120.27872@wbgn013.biozentrum.uni-wuerzburg.de>
-	<438371E8.2030701@op5.se>
-	<Pine.LNX.4.63.0511231553390.8191@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7viruj3q7z.fsf@assigned-by-dhcp.cox.net> <4384FB61.40506@op5.se>
-	<Pine.LNX.4.63.0511240042350.11106@wbgn013.biozentrum.uni-wuerzburg.de>
-	<43857430.7060103@op5.se> <7vsltmwiky.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0511241127020.12985@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v8xveth4l.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0511241419390.14297@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vmzjtn3h1.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0511242252080.26485@wbgn013.biozentrum.uni
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH 1/9] archimport: first, make sure it still compiles
+Date: Sat, 26 Nov 2005 10:51:14 +0000
+Message-ID: <46a038f90511260251x7c470c2esc6e87048cf8eda6b@mail.gmail.com>
+References: <20051112092336.GA16218@Muzzle>
+	 <46a038f90511170126l5f04f4e0ta578fc2cb375db68@mail.gmail.com>
+	 <20051124074605.GA4789@mail.yhbt.net>
+	 <20051124074739.GB4789@mail.yhbt.net>
+	 <Pine.LNX.4.64.0511241051170.13959@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 26 10:58:46 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Eric Wong <normalperson@yhbt.net>, git list <git@vger.kernel.org>,
+	Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Sat Nov 26 11:52:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Efwnt-0002Ro-GK
-	for gcvg-git@gmane.org; Sat, 26 Nov 2005 10:57:09 +0100
+	id 1Efxea-00087q-Sc
+	for gcvg-git@gmane.org; Sat, 26 Nov 2005 11:51:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750828AbVKZJ5E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Nov 2005 04:57:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750829AbVKZJ5E
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 04:57:04 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:1236 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1750828AbVKZJ5C (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Nov 2005 04:57:02 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051126095533.GESW20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 26 Nov 2005 04:55:33 -0500
+	id S1750808AbVKZKvR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Nov 2005 05:51:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750817AbVKZKvR
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 05:51:17 -0500
+Received: from zproxy.gmail.com ([64.233.162.207]:40609 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750808AbVKZKvQ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Nov 2005 05:51:16 -0500
+Received: by zproxy.gmail.com with SMTP id 18so1900083nzp
+        for <git@vger.kernel.org>; Sat, 26 Nov 2005 02:51:15 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AI4YH2hpdd8pPiPhasurR68W71K/vjgbxTAky9EMGCZzkPRLJdUnBP1wPm6/bhCLsXl5DUClryUPQ2bIKwXBA3MkA+7AT7XrDaDYliGqRWJAkfXrNuyoDq5E8+u2XWMhVmYIZDVzWzYmxrY3vIsRdkvRZhmgFm9gL5yEH8QWd5s=
+Received: by 10.65.61.11 with SMTP id o11mr2306003qbk;
+        Sat, 26 Nov 2005 02:51:14 -0800 (PST)
+Received: by 10.64.242.12 with HTTP; Sat, 26 Nov 2005 02:51:14 -0800 (PST)
 To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.64.0511241051170.13959@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12778>
 
-When -w is given, it needs to find out where the .git directory
-is, so run the setup_git_directory() when we see a -w.
+On 11/24/05, Linus Torvalds <torvalds@osdl.org> wrote:
+>  I don't know about Junio, but if I were him, I'd have preferred that all
+> your patches had a
+>
+>         archimport: ..
+>
+> prefix in the subject line, not just the first one.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Good catch -- I'll prefix them all as I merge them. If Junio pulls
+from my tree, he'll get them prefixed.
 
----
+cheers,
 
- hash-object.c |   19 ++++++++++++++++---
- 1 files changed, 16 insertions(+), 3 deletions(-)
 
-applies-to: b0041c758e0fc01e5ec05bd0543d04d1a9cb17f5
-61fdef6a50c99c98feebd71f499450cf97a8c169
-diff --git a/hash-object.c b/hash-object.c
-index c8c9adb..3075328 100644
---- a/hash-object.c
-+++ b/hash-object.c
-@@ -6,6 +6,9 @@
-  */
- #include "cache.h"
- 
-+static const char *prefix;
-+static int prefix_length = -1;
-+
- static void hash_object(const char *path, const char *type, int write_object)
- {
- 	int fd;
-@@ -36,10 +39,20 @@ int main(int argc, char **argv)
- 				die(hash_object_usage);
- 			type = argv[i];
- 		}
--		else if (!strcmp(argv[i], "-w"))
-+		else if (!strcmp(argv[i], "-w")) {
-+			if (prefix_length < 0) {
-+				prefix = setup_git_directory();
-+				prefix_length = prefix ? strlen(prefix) : 0;
-+			}
- 			write_object = 1;
--		else
--			hash_object(argv[i], type, write_object);
-+		}
-+		else {
-+			char *arg = argv[i];
-+			if (0 <= prefix_length)
-+				arg = prefix_filename(prefix, prefix_length,
-+						      arg);
-+			hash_object(arg, type, write_object);
-+		}
- 	}
- 	return 0;
- }
----
-0.99.9.GIT
+
+martin
