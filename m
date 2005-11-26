@@ -1,89 +1,50 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-send-mail in sh
-Date: Sat, 26 Nov 2005 12:12:48 -0800
-Message-ID: <7vpsonp3r3.fsf@assigned-by-dhcp.cox.net>
-References: <4386DD45.6030308@op5.se>
-	<7v7jaxou5b.fsf@assigned-by-dhcp.cox.net> <43874935.2080804@op5.se>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 1/9] archimport: first, make sure it still compiles
+Date: Sat, 26 Nov 2005 12:43:38 -0800
+Message-ID: <20051126204338.GB3899@mail.yhbt.net>
+References: <20051112092336.GA16218@Muzzle> <46a038f90511170126l5f04f4e0ta578fc2cb375db68@mail.gmail.com> <20051124074605.GA4789@mail.yhbt.net> <20051124074739.GB4789@mail.yhbt.net> <Pine.LNX.4.64.0511241051170.13959@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 26 21:13:09 2005
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	git list <git@vger.kernel.org>,
+	Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Sat Nov 26 21:45:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eg6Pl-0008GT-E3
-	for gcvg-git@gmane.org; Sat, 26 Nov 2005 21:12:53 +0100
+	id 1Eg6tl-0004RN-Nt
+	for gcvg-git@gmane.org; Sat, 26 Nov 2005 21:43:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750729AbVKZUMu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Nov 2005 15:12:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750731AbVKZUMu
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 15:12:50 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:58288 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750729AbVKZUMt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Nov 2005 15:12:49 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051126201210.FJSC6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 26 Nov 2005 15:12:10 -0500
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <43874935.2080804@op5.se> (Andreas Ericsson's message of "Fri, 25
-	Nov 2005 18:26:13 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750735AbVKZUnk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Nov 2005 15:43:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbVKZUnk
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Nov 2005 15:43:40 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:50314 "EHLO mail.yhbt.net")
+	by vger.kernel.org with ESMTP id S1750735AbVKZUnj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Nov 2005 15:43:39 -0500
+Received: by mail.yhbt.net (Postfix, from userid 500)
+	id C04B22DC033; Sat, 26 Nov 2005 12:43:38 -0800 (PST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0511241051170.13959@g5.osdl.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12787>
 
-Subject: [PATCH] format-patch: output filename reported to stdout verbatim.
+Linus Torvalds <torvalds@osdl.org> wrote:
+> 
+> 
+> Eric,
+>  I don't know about Junio, but if I were him, I'd have preferred that all 
+> your patches had a
+> 
+> 	archimport: ..
+> 
+> prefix in the subject line, not just the first one.
 
-Prepending asterisk to the output was just adding noise, and
-forcing scripts like git-send-mail proposed by Andreas Ericsson
-do unnecessary work.
+Good idea, will do for future patches.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- Andreas Ericsson <ae@op5.se> writes:
-
- > Junio C Hamano wrote:
- >
- >> ...  If the standard output from format-patch is useful like
- >> this, I would like to drop the '* ' prefix from it, so that you
- >> do not have to sed it out.
- >
- > I'll do that then. It doesn't really add any value anyways.
-
- Agreed, so I'll push this out in the next batch.
-
- git-format-patch.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-applies-to: 9ccf8849fa9b522a344645c2f28f12ab036e30d5
-51b3c00e9d95371a9ad202204f01c5981f241b20
-diff --git a/git-format-patch.sh b/git-format-patch.sh
-index bc56876..9b40880 100755
---- a/git-format-patch.sh
-+++ b/git-format-patch.sh
-@@ -268,7 +268,7 @@ do
-     file=`printf '%04d-%stxt' $i "$title"`
-     if test '' = "$stdout"
-     then
--	    echo "* $file"
-+	    echo "$file"
- 	    process_one >"$outdir$file"
- 	    if test t = "$check"
- 	    then
-@@ -279,7 +279,7 @@ do
- 		:
- 	    fi
-     else
--	    echo >&2 "* $file"
-+	    echo >&2 "$file"
- 	    process_one
-     fi
-     i=`expr "$i" + 1`
----
-@@GIT_VERSION@@
+-- 
+Eric Wong
