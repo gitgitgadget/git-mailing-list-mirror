@@ -1,61 +1,166 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] t9105-fetch-local: quote path created with pwd
-Date: Sun, 27 Nov 2005 21:05:21 +0100
-Message-ID: <20051127200521.GA17293@diku.dk>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: [PATCH] git-mv: shrink usage, no usage on error
+Date: Sun, 27 Nov 2005 21:58:52 +0100
+Message-ID: <200511272158.53234.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 27 21:06:46 2005
+X-From: git-owner@vger.kernel.org Sun Nov 27 22:00:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgSm9-0006Bi-5p
-	for gcvg-git@gmane.org; Sun, 27 Nov 2005 21:05:29 +0100
+	id 1EgTcE-0006O1-7t
+	for gcvg-git@gmane.org; Sun, 27 Nov 2005 21:59:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750754AbVK0UFZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Nov 2005 15:05:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750834AbVK0UFZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 15:05:25 -0500
-Received: from nhugin.diku.dk ([130.225.96.140]:55783 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S1750754AbVK0UFZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Nov 2005 15:05:25 -0500
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id BAED66DFD8A; Sun, 27 Nov 2005 21:04:42 +0100 (CET)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 866206DFDE4; Sun, 27 Nov 2005 21:04:42 +0100 (CET)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id B56E161460; Sun, 27 Nov 2005 21:05:23 +0100 (CET)
-To: Petr Baudis <pasky@ucw.cz>
+	id S1751098AbVK0U65 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Nov 2005 15:58:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbVK0U64
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 15:58:56 -0500
+Received: from mail.gmx.de ([213.165.64.20]:42206 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751098AbVK0U64 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Nov 2005 15:58:56 -0500
+Received: (qmail invoked by alias); 27 Nov 2005 20:58:54 -0000
+Received: from p5496A06C.dip0.t-ipconnect.de (EHLO linux) [84.150.160.108]
+  by mail.gmx.net (mp016) with SMTP; 27 Nov 2005 21:58:54 +0100
+X-Authenticated: #352111
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12820>
 
-Small fix to let it work when pwd contains spaces.
+Small fixes to be consistent with other git scripts:
+- usage message is only about options and arguments
+- on error, exit(1) without the usage message
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+Additionally, "beautifies" output with -n a little bit
+
+Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+
 ---
-diff --git a/t/t9105-fetch-local.sh b/t/t9105-fetch-local.sh
-index a309693..35e2778 100755
---- a/t/t9105-fetch-local.sh
-+++ b/t/t9105-fetch-local.sh
-@@ -35,7 +35,7 @@ test_expect_success 'symlinked clone of 
- rm -rf repo2
- mkdir repo2
- test_expect_success 'clone in-current-dir repo2 from $(pwd)/../repo1/../repo1.git/' \
--	'(cd repo2 && cg-clone -s $(pwd)/../repo1/../repo1.git/)'
-+	'(cd repo2 && cg-clone -s "$(pwd)/../repo1/../repo1.git/")'
+This conflicts with Johannes's (and Junio's corrected)
+ [PATCH] Make git-mv work in subdirectories, too
+so this should be changed accordingly.
+Otherwise, I can acknowlegde that your correction to this
+patch (make git-mv work in subdirs) works for me.
+What is the correct way to "Ack" a patch?
+
+Josef
+
+ git-mv.perl |   46 +++++++++++++++++++---------------------------
+ 1 files changed, 19 insertions(+), 27 deletions(-)
+
+applies-to: 1dc0816b6c98ef90985d2761f1ab80739e4fbc7d
+58d858a354c10c3be0b9eae68cabdce8a3d87f27
+diff --git a/git-mv.perl b/git-mv.perl
+index b2eace5..990bec5 100755
+--- a/git-mv.perl
++++ b/git-mv.perl
+@@ -13,22 +13,8 @@ use Getopt::Std;
  
- echo file1v2 >repo1/file1
- test_expect_success 'commit in repo1' \
+ sub usage() {
+ 	print <<EOT;
+-$0 [-f] [-n] <source> <dest>
+-$0 [-f] [-k] [-n] <source> ... <dest directory>
+-
+-In the first form, source must exist and be either a file,
+-symlink or directory, dest must not exist. It renames source to dest.
+-In the second form, the last argument has to be an existing
+-directory; the given sources will be moved into this directory.
+-
+-Updates the git cache to reflect the change.
+-Use "git commit" to make the change permanently.
+-
+-Options:
+-  -f   Force renaming/moving, even if target exists
+-  -k   Continue on error by skipping
+-       not-existing or not revision-controlled source
+-  -n   Do nothing; show what would happen
++$0 [-f] [-n] <source> <destination>
++$0 [-f] [-n] [-k] <source> ... <destination directory>
+ EOT
+ 	exit(1);
+ }
+@@ -38,8 +24,8 @@ my $GIT_DIR = $ENV{'GIT_DIR'} || ".git";
  
--- 
-Jonas Fonseca
+ unless ( -d $GIT_DIR && -d $GIT_DIR . "/objects" && 
+ 	-d $GIT_DIR . "/objects/" && -d $GIT_DIR . "/refs") {
+-    print "Git repository not found.";
+-    usage();
++    print "Error: git repository not found.";
++    exit(1);
+ }
+ 
+ 
+@@ -70,7 +56,7 @@ else {
+ 	print "Error: moving to directory '"
+ 	    . $ARGV[$argCount-1]
+ 	    . "' not possible; not exisiting\n";
+-	usage;
++	exit(1);
+     }
+     @srcArgs = ($ARGV[0]);
+     @dstArgs = ($ARGV[1]);
+@@ -148,7 +134,7 @@ while(scalar @srcArgs > 0) {
+ 	    next;
+ 	}
+ 	print "Error: $bad\n";
+-	usage();
++	exit(1);
+     }
+     push @srcs, $src;
+     push @dsts, $dst;
+@@ -187,33 +173,39 @@ while(scalar @srcs > 0) {
+ }
+ 
+ if ($opt_n) {
++    if (@changedfiles) {
+ 	print "Changed  : ". join(", ", @changedfiles) ."\n";
++    }
++    if (@addedfiles) {
+ 	print "Adding   : ". join(", ", @addedfiles) ."\n";
++    }
++    if (@deletedfiles) {
+ 	print "Deleting : ". join(", ", @deletedfiles) ."\n";
+-	exit(1);
++    }
+ }
+-	
+-if (@changedfiles) {
++else {
++    if (@changedfiles) {
+ 	open(H, "| git-update-index -z --stdin")
+ 		or die "git-update-index failed to update changed files with code $!\n";
+ 	foreach my $fileName (@changedfiles) {
+ 		print H "$fileName\0";
+ 	}
+ 	close(H);
+-}
+-if (@addedfiles) {
++    }
++    if (@addedfiles) {
+ 	open(H, "| git-update-index --add -z --stdin")
+ 		or die "git-update-index failed to add new names with code $!\n";
+ 	foreach my $fileName (@addedfiles) {
+ 		print H "$fileName\0";
+ 	}
+ 	close(H);
+-}
+-if (@deletedfiles) {
++    }
++    if (@deletedfiles) {
+ 	open(H, "| git-update-index --remove -z --stdin")
+ 		or die "git-update-index failed to remove old names with code $!\n";
+ 	foreach my $fileName (@deletedfiles) {
+ 		print H "$fileName\0";
+ 	}
+ 	close(H);
++    }
+ }
+---
+0.99.9.GIT
