@@ -1,80 +1,71 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Cogito documentation updates
-Date: Sun, 27 Nov 2005 16:28:27 +0100
-Message-ID: <20051127152827.GJ22159@pasky.or.cz>
-References: <20051120101112.GA2302@diku.dk> <86veyn49gc.fsf@blue.stonehenge.com> <20051123121651.GB19302@diku.dk> <8664qjph7d.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0511230923131.13959@g5.osdl.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] cg-Xlib: use git-rev-parse to locate .git dir and set relpath
+Date: Sun, 27 Nov 2005 16:55:21 +0100
+Message-ID: <20051127155521.GA9558@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 27 16:29:45 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 27 16:57:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgOSc-0004yN-21
-	for gcvg-git@gmane.org; Sun, 27 Nov 2005 16:29:02 +0100
+	id 1EgOtQ-0006D8-Sd
+	for gcvg-git@gmane.org; Sun, 27 Nov 2005 16:56:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751092AbVK0P2M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Nov 2005 10:28:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751093AbVK0P2M
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 10:28:12 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:11756 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751092AbVK0P2M (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Nov 2005 10:28:12 -0500
-Received: (qmail 11794 invoked by uid 2001); 27 Nov 2005 16:28:27 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751098AbVK0PzY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Nov 2005 10:55:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbVK0PzY
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 10:55:24 -0500
+Received: from nhugin.diku.dk ([130.225.96.140]:26590 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S1751098AbVK0PzY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Nov 2005 10:55:24 -0500
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 0140F6DFFDE; Sun, 27 Nov 2005 16:54:41 +0100 (CET)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id C0D046DFFD5; Sun, 27 Nov 2005 16:54:41 +0100 (CET)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id B95766145C; Sun, 27 Nov 2005 16:55:22 +0100 (CET)
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0511230923131.13959@g5.osdl.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12813>
 
-Dear diary, on Wed, Nov 23, 2005 at 06:29:34PM CET, I got a letter
-where Linus Torvalds <torvalds@osdl.org> said that...
-> 
-> 
-> On Wed, 23 Nov 2005, Randal L. Schwartz wrote:
-> > 
-> > Delete the -d switch, or explain to me why it is there, and let's work
-> > out a POSIX workaround.
-> 
-> It's
-> 
->        -d:     same as --no-dereference --preserve=link
-> 
->        --no-dereference
->               never follow symbolic links
-> 
->        --preserve[=ATTR_LIST]
->               preserve   the   specified   attributes   (default:  mode,owner-
->               ship,timestamps) and security contexts, if  possible  additional
->               attributes: links, all
-> 
-> so it's basically making sure that the copy copies the _link_, not the 
-> file it points to.
-> 
-> I think you may have to use "cpio -p" instead of "cp" to be portable. 
-> Something like
-> 
-> 	cpio -plmu $src $dst
-> 
-> might do it.
-
-Well, but -l links the files instead of copying them, right? That's
-certainly not what I want, I want to really _copy_ the files. Also, does
-cpio preserve the hardlinks between the copied files? If not, then what
-you wrote is equivalent to
-
-	cp -pRP
-
-which should be even POSIX, hopefully. That's what I changed the -dpR to
-now.
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+---
+diff --git a/cg-Xlib b/cg-Xlib
+index dedbb62..e3c365f 100755
+--- a/cg-Xlib
++++ b/cg-Xlib
+@@ -502,16 +502,10 @@ fi
+ 
+ _git=${GIT_DIR:-.git}
+ if [ ! "$_git_repo_unneeded" ] && [ ! "$GIT_DIR" ] && [ ! -d $_git ]; then
+-	rootpath=.
+-	# while not /
+-	while [ ! -d $rootpath/.git ] && [ "$(stat -c %i $rootpath)" != "$(stat -c %i $rootpath/..)" ]; do
+-		rootpath=../$rootpath
+-	done
+-	if [ -d $rootpath/.git ]; then
+-		mainpath="$(echo "$(pwd)/$rootpath" | normpath)"
+-		_git_relpath=$(pwd)/
+-		export _git_relpath=${_git_relpath:$((${#mainpath}+1))}
+-		cd "$rootpath"
++	_git_abs_path="$(git-rev-parse --git-dir 2>/dev/null)"
++	if [ -d "$_git_abs_path" ]; then
++		export _git_relpath="$(git-rev-parse --show-prefix)"
++		cd "$_git_abs_path/.."
+ 	fi
+ fi
+ _git_objects="${GIT_OBJECT_DIRECTORY:-$_git/objects}"
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Jonas Fonseca
