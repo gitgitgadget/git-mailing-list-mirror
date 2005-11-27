@@ -1,57 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's in master and pu (aka when will 1.0rc4 be out)
-Date: Sun, 27 Nov 2005 13:08:38 -0800
-Message-ID: <7v8xv9dcix.fsf@assigned-by-dhcp.cox.net>
-References: <7voe48gqg9.fsf@assigned-by-dhcp.cox.net>
-	<7vek52e4ve.fsf@assigned-by-dhcp.cox.net>
-	<20051127151134.0eac7019.tihirvon@gmail.com>
-	<Pine.LNX.4.64.0511271106360.13959@g5.osdl.org>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: [PATCH] git-mv: follow -k request even on failing renames
+Date: Sun, 27 Nov 2005 22:11:33 +0100
+Message-ID: <200511272211.33293.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 27 22:09:49 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 27 22:12:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgTlP-0001Oh-U7
-	for gcvg-git@gmane.org; Sun, 27 Nov 2005 22:08:48 +0100
+	id 1EgTol-0002gI-Lz
+	for gcvg-git@gmane.org; Sun, 27 Nov 2005 22:12:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751154AbVK0VIp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Nov 2005 16:08:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751155AbVK0VIo
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 16:08:44 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:31994 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751154AbVK0VIo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Nov 2005 16:08:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051127210803.QRDK6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 27 Nov 2005 16:08:03 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511271106360.13959@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 27 Nov 2005 11:32:03 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751092AbVK0VMM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Nov 2005 16:12:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751098AbVK0VMM
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 16:12:12 -0500
+Received: from mail.gmx.net ([213.165.64.20]:21392 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751092AbVK0VMM (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Nov 2005 16:12:12 -0500
+Received: (qmail invoked by alias); 27 Nov 2005 21:12:10 -0000
+Received: from p5496A06C.dip0.t-ipconnect.de (EHLO linux) [84.150.160.108]
+  by mail.gmx.net (mp030) with SMTP; 27 Nov 2005 22:12:10 +0100
+X-Authenticated: #352111
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12825>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+-k requests to keep running on an error condition.
+Previously, git-mv stopped on failing renames even with -k.
 
-> The syntax is
->
-> 	git bisect start <pathspec>
->
-> followed by all the normal "git bisect good/bad" stuff.
+There are some error conditions which are not checked in the
+first phase of git-mv, eg. 'permission denied'. Still, option
+-k should work.
 
-I love how I can just say "this might be interesting" and 
-find your message in my mailbox next morning [*1*] ;-).
+Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 
-This would be useful to cut down the number of bisection needed
-to reach the culprit if the initial guess is correct as to which
-part of the tree is involved.
+---
 
-[Reference]
-*1* http://marc.theaimsgroup.com/?l=git&m=111669620826189
+ git-mv.perl |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+applies-to: 6ff4820f59a60e776e7a853cbe0fdbb908f3d8af
+190f908c52de643bcb05a11d8537551bd1df067f
+diff --git a/git-mv.perl b/git-mv.perl
+index 8d294d6..65b1dcf 100755
+--- a/git-mv.perl
++++ b/git-mv.perl
+@@ -151,6 +151,11 @@ while(scalar @srcs > 0) {
+     if (!$opt_n) {
+ 	if (!rename($src,$dst)) {
+ 	    $bad = "renaming '$src' failed: $!";
++	    if ($opt_k) {
++		print "Warning: skipped: $bad\n";
++		$bad = "";
++		next;
++	    }
+ 	    last;
+ 	}
+     }
+---
+0.99.9.GIT
