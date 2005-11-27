@@ -1,78 +1,67 @@
-From: Lars Magne Ingebrigtsen <larsi@gnus.org>
-Subject: Re: [PATCH 1/8] git-apply: work from subdirectory.
-Date: Sun, 27 Nov 2005 22:13:27 +0100
-Message-ID: <m3fyph7q14.fsf@quimbies.gnus.org>
-References: <Pine.LNX.4.63.0511201748440.14258@wbgn013.biozentrum.uni-wuerzburg.de>
-	<438371E8.2030701@op5.se>
-	<Pine.LNX.4.63.0511231553390.8191@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7viruj3q7z.fsf@assigned-by-dhcp.cox.net> <4384FB61.40506@op5.se>
-	<Pine.LNX.4.63.0511240042350.11106@wbgn013.biozentrum.uni-wuerzburg.de>
-	<43857430.7060103@op5.se> <7vsltmwiky.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0511241127020.12985@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v8xveth4l.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0511241419390.14297@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vmzjtn3h1.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0511242252080.26485@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vy83cdu7r.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511251953081.13959@g5.osdl.org>
-	<7voe477n4i.fsf_-_@assigned-by-dhcp.cox.net>
-	<7viruf68bz.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511260932080.13959@g5.osdl.org>
-	<7v4q5yohta.fsf@assigned-by-dhcp.cox.net>
-	<m364qef93a.fsf@quimbies.gnus.org>
-	<7vy839dfzk.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Reference technical/trivial-merge.txt in git-read-tree documentation
+Date: Sun, 27 Nov 2005 13:16:07 -0800
+Message-ID: <7v1x11dc6g.fsf@assigned-by-dhcp.cox.net>
+References: <20051111205140.5719.68724.stgit@machine.or.cz>
+	<20051127124108.GB22159@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 27 22:17:16 2005
+X-From: git-owner@vger.kernel.org Sun Nov 27 22:17:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgTtL-00047v-9P
-	for gcvg-git@gmane.org; Sun, 27 Nov 2005 22:16:59 +0100
+	id 1EgTsb-0003wW-Ca
+	for gcvg-git@gmane.org; Sun, 27 Nov 2005 22:16:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149AbVK0VQ4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Nov 2005 16:16:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbVK0VQ4
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 16:16:56 -0500
-Received: from quimbies.gnus.org ([80.91.231.2]:63388 "EHLO quimbies.gnus.org")
-	by vger.kernel.org with ESMTP id S1751149AbVK0VQz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Nov 2005 16:16:55 -0500
-Received: from larsi by quimbies.gnus.org with local (Exim 3.36 #1 (Debian))
-	id 1EgTpy-0000a0-00; Sun, 27 Nov 2005 22:13:30 +0100
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy839dfzk.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 27 Nov 2005 11:53:51 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.3.50 (gnu/linux)
-X-Now-Playing: Retsin's _Salt Lick_: "Country Style Spoonin'"
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEU0Lzc6OUZTLzlZT1BZ
- O0OsSEnNwq7JnGKYePg7AAAACXBIWXMAAABIAAAASABGyWs+AAACM0lEQVQ4y12USZObQAyF1eDK
- ueV2KldGY9/pyMDVC665Ywhnl2vwPVOGvx91N2Ay7+BFn56WZgFQiFYDyqcx1tqsCQIFynJuVSCG
- 2YcrAo15J0InxjHugMLHIEAcxuJkaHYkxZ3hJnE0x5LrS9s8hQgwDljpYC2Wm7pthkEcjTi4uLED
- Bo/lpWyefdc+mwrwJVOWpVTpO2cB1FMYE3LxZng8PZi1pu22adrhWXwDSKeTMwyFn0ovHKeLiw+D
- OCp3VKMiop2A/h4ci0pEvhIXw+NzAdZElQPMWPRLkPhK7aPv7j9lrhGAb+GIOzhznzZ3o2kP2ocD
- jwAUqhFIj7uATOZ1ILZ6nEpKXQVcGg+AhSlchz36vNtnbkHAVGCMG6CdA9x1+3M4q0O5MnGKJ3K1
- qjxvzGHnr2DGv/m8Ki87AdWOP+ntQ5KAOWuv9bk8SVYllmxP51/kwPnrWjyzrPY3jaANvcVEW+CW
- i4Kv7QwkaCJ6k1IpMwuSkchrdTJER7BCQDAnVAdQa1zDrBTSKAGgiLat3SgfARVIUMJ8QPdDv2Je
- 6+wuT0WoonF0iYwp5BJOWWrO/9Ehjw7tHh09gbiTKRkngLNH7nDGL+tbg1KQzsVMbrWx3mGWM0He
- 3aC4e7PREL/6/+kQouBQOk1R2xH0As6HsPH7nnleMv6bxJUOYPXBrx6SHUXznzSFw4ymsIaU/wOO
- JaFWLN/xEiSJ3zVl+C6tfGr0ioSN5GWkFyc7AkEJ4P4fnJmgR2GOvOsAAAAASUVORK5CYII=
+	id S1751098AbVK0VQK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Nov 2005 16:16:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbVK0VQK
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 16:16:10 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:53422 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751098AbVK0VQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Nov 2005 16:16:09 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051127211451.VTPQ17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 27 Nov 2005 16:14:51 -0500
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051127124108.GB22159@pasky.or.cz> (Petr Baudis's message of
+	"Sun, 27 Nov 2005 13:41:08 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12827>
 
-Junio C Hamano <junkio@cox.net> writes:
+Petr Baudis <pasky@suse.cz> writes:
 
-> It may be that news.gmane.org doesn't chop, but somebody between
-> vger.kernel.org mailing list manager and what comes out of the
-> newsserver does. 
+> Dear diary, on Fri, Nov 11, 2005 at 09:51:40PM CET, I got a letter
+> where Petr Baudis <pasky@suse.cz> said that...
+>> That file, with the so valuable (and so confusing) tables describing
+>> the precise resolution rules git-read-tree follows, silently sat in
+>> the corner and almost noone knew about it (well, I didn't, at least).
+>> This references it from the git-read-tree documentation, so that there
+>> is some chance that interested people will find it.
+>> 
+>> Signed-off-by: Petr Baudis <pasky@suse.cz>
+>
+> Any gripes, or just forgotten?
 
-Egads!  It's all my fault -- there's some code in the mail-to-news
-script that's truncating long header lines, and nobody's noticed up
-'till now.  I've now twiddled it slightly; it should stop mangling
-References headers now...
+What happened was that I thought I'd apply after rewording the
+sarcasm and maybe moving the existing table to the one in
+technical/ (or just removing the old table), and forgot about it.
 
--- 
-(domestic pets only, the antidote for overdose, milk.)
-  larsi@gnus.org * Lars Magne Ingebrigtsen
+One thing I do not like the table in technical/ is that it is
+harder to read as the "case table" than the original.
+Admittedly, it is meant to describe more complex situation, so
+it _is_ harder to understand, but a major difference is that the
+original table was designed to decribe things orthogonally and
+you did not have to read from top to bottom (any situation would
+have fallen in one case no matter what order you checked the
+condition for each case), while the updated table in technical/
+_must_ be read from top to bottom and take the first match, and
+that was what made me feel reluctant to remove the existing one
+from the original document.
