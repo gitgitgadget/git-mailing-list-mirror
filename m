@@ -1,53 +1,61 @@
-From: James Cloos <cloos@jhcloos.com>
-Subject: keeping remote repo checked out?
-Date: Mon, 28 Nov 2005 02:13:31 -0500
-Message-ID: <m3k6et9rdw.fsf@lugabout.cloos.reno.nv.us>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: git-mv: fully detect 'directory moved into itself'
+Date: Mon, 28 Nov 2005 07:54:34 +0100
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.11.28.06.54.32.809941@smurf.noris.de>
+References: <200511272206.43113.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Nov 28 08:29:03 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Mon Nov 28 08:30:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgdEI-0000bO-RE
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 08:15:15 +0100
+	id 1EgdOy-00030r-Ke
+	for gcvg-git@gmane.org; Mon, 28 Nov 2005 08:26:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932107AbVK1HPB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Nov 2005 02:15:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932110AbVK1HPB
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 02:15:01 -0500
-Received: from ore.jhcloos.com ([64.240.156.239]:10002 "EHLO ore.jhcloos.com")
-	by vger.kernel.org with ESMTP id S932107AbVK1HPA (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Nov 2005 02:15:00 -0500
-Received: from lugabout.jhcloos.org (host-69-48-15-9.roc.choiceone.net [69.48.15.9])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(Client CN "lugabout.jhcloos.org", Issuer "ca.jhcloos.com" (verified OK))
-	by ore.jhcloos.com (Postfix) with ESMTP id B2D271C2EF
-	for <git@vger.kernel.org>; Mon, 28 Nov 2005 01:14:48 -0600 (CST)
-Received: by lugabout.jhcloos.org (Postfix, from userid 500)
-	id C0D7C210C42; Mon, 28 Nov 2005 07:13:31 +0000 (GMT)
+	id S1751209AbVK1HZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Nov 2005 02:25:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbVK1HZ5
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 02:25:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:35737 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751209AbVK1HZ4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Nov 2005 02:25:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EgdIU-0001YE-3I
+	for git@vger.kernel.org; Mon, 28 Nov 2005 08:19:36 +0100
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 28 Nov 2005 08:19:33 +0100
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 28 Nov 2005 08:19:33 +0100
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Copyright: Copyright 2005 James Cloos
-X-Hashcash: 1:23:051128:git@vger.kernel.org::zU9xjWcePyODjvrw:000000000000000000000000000000000000000000J9JM
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/23.0.0 (gnu/linux)
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12856>
 
-I am testing git as a replacement for how I was using bk to manage web
-sites.  As such, I created a new git repo on the server, populated it
-with the old data (ignoring history; there wasn't much relevant on
-that site) and cloned that to the laptop.
+Hi, Josef Weidendorfer wrote:
 
-Editing on the server works well.  I can add, checking and a
-subsequent pull on the laptop grabs the changes.
+> +    if (($bad eq "") && ($dst =~ /^$src\//)) {
 
-But any edits on the laptop's copy are not checked out when I push
-them to the server.
+That should be
 
-Is it possible to arrange that a push does a checkout on the remote
-the same way a pull does on the local?
+> +    if (($bad eq "") && ($dst =~ /^\Q$src\E\//)) {
 
--JimC
+otherwise you will mistakenly match "foo-bar" with "foo.bar".
+
 -- 
-James H. Cloos, Jr. <cloos@jhcloos.com>
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+If people drank ink instead of Schlitz, they'd be better off.
+		-- Edward E. Hippensteel
+
+[What brand of ink?  Ed.]
