@@ -1,145 +1,178 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Re: keeping remote repo checked out?
-Date: Mon, 28 Nov 2005 22:40:33 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0511282208050.25300@iabervon.org>
-References: <m3k6et9rdw.fsf@lugabout.cloos.reno.nv.us>
- <7vbr051ad1.fsf@assigned-by-dhcp.cox.net> <20051128105736.GO22159@pasky.or.cz>
- <7vsltgtvk4.fsf@assigned-by-dhcp.cox.net> <20051128212804.GV22159@pasky.or.cz>
- <Pine.LNX.4.64.0511281420390.3263@g5.osdl.org> <Pine.LNX.4.64.0511281845280.25300@iabervon.org>
- <Pine.LNX.4.64.0511281637480.3177@g5.osdl.org> <Pine.LNX.4.64.0511282027360.25300@iabervon.org>
- <Pine.LNX.4.64.0511281837040.3177@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 29 04:42:33 2005
+From: linux@horizon.com
+Subject: git-name-rev off-by-one bug
+Date: 28 Nov 2005 18:42:56 -0500
+Message-ID: <20051128234256.1508.qmail@science.horizon.com>
+Cc: linux@horizon.com
+X-From: git-owner@vger.kernel.org Tue Nov 29 05:28:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgwMg-0002cS-RL
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 04:41:11 +0100
+	id 1Egx67-00069G-M5
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 05:28:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932354AbVK2DkH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Nov 2005 22:40:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932355AbVK2DkH
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 22:40:07 -0500
-Received: from iabervon.org ([66.92.72.58]:21256 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932354AbVK2DkF (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Nov 2005 22:40:05 -0500
-Received: (qmail 4061 invoked by uid 1000); 28 Nov 2005 22:40:33 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 28 Nov 2005 22:40:33 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0511281837040.3177@g5.osdl.org>
+	id S1750746AbVK2E2E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Nov 2005 23:28:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750761AbVK2E2E
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 23:28:04 -0500
+Received: from science.horizon.com ([192.35.100.1]:33093 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1750746AbVK2E2D
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Nov 2005 23:28:03 -0500
+Received: (qmail 1509 invoked by uid 1000); 28 Nov 2005 18:42:56 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12917>
 
-On Mon, 28 Nov 2005, Linus Torvalds wrote:
+I've been trying to wrap my head around git for a while now, and finding
+things a bit confusing.  Basically, the reason that I'm scared to trust
+it with my code is that all sharing is done via push and pull, and they
+are done by merging, and merging isn't described very well anywhere.
 
-> On Mon, 28 Nov 2005, Daniel Barkalow wrote:
-> > > 
-> > > but if you use a special git branch for the checked-out state, then you 
-> > > have to realize that nobody can push directly to it.
-> > 
-> > The idea is to have something which is private, to match the working tree, 
-> > which is obviously private (because it doesn't even exist from the point 
-> > of view of the database).
-> 
-> Sure. It's private because it has its own name, and you can make _sure_ 
-> that nobody tries to push to it by having a trigger that refuses to update 
-> that branch.
-> 
-> Now, if you want to make it also be _invisible_ (so that when others don't 
-> clone, they don't see what the checked-out state was when they cloned), 
-> you'd have to make some new rules to git. We could have rules like "branch 
-> names that start with '.' aren't listed", which would effectively do 
-> exactly that..
+There's lots of intimate *detail* of merge algorithms (hiding in, of all
+places, the git-read-tree documentation, which is not the obvious place
+for a beginner to look), but the important high-level questions like "what
+happens to all my hard work if there's a merge conflict?" or "what if I
+forget to git-update-index before doing the merge?" are not really clear.
+I don't like to go ahead if I'm not confident I can get back.
 
-I was planning to keep it in .git (instead of .git/refs/...), because it's 
-information about the working tree, not properly part of the repository. 
-It's like MERGE_HEAD in being about what the user is in the middle of.
+(Being able to back up the object database is obviously simple, but what
+happens if the index holds HEAD+1, the working directory holds HEAD+2,
+and I try to mere the latest changes from origin?  Are either HEAD+1 or
+HEAD+2 in danger of being lost, or will checking them in later overwrite
+the merge, or what?)
 
-I actually have a bit of a patch now, which only updates checkout and 
-commit (anything that updates HEAD should also update CHECKED_OUT, and 
-some things probably ought to read CHECKED_OUT instead of HEAD), but 
-should serve to give an idea of what I mean. Essentially, if somebody's 
-messed with your HEAD, than "git checkout" will update to that, and "git 
-commit" will give an error message until you do (I added a check so it 
-happens before you write a message, but the third argument to 
-"git-update-ref HEAD" would also complain).
+Anyway, I'm doing some experiments and trying to understand it, and writing
+what I learn as I go, which will hopefully be useful to someone.
 
-Obviously, not for application, since it breaks things like "git resolve" 
-which are supposed to change what your working tree contains and aren't 
-updated to make CHECKED_OUT match.
 
----
+Another very confusing thing is the ref syntax with all those ~12^3^22^2
+suffixes.  The git tutorial uses "master^" and "master^2" syntax, but
+doesn't actually explain it.
 
-Keep a private copy of the commit whose tree corresponds to the
-git-provided state of the working tree, in case somebody changes the
-branch we're on behind our backs.
+The meaning can be found on the second page of the git-rev-parse manual.
+If, that is, you think to read that man page, and if you don't stop
+reading after the first page tells you that it's a helper for scripts
+not meant to be invoked directly by the end-user.
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+Trying to see if I understood what was going on, I picked a random rev out of
+git-show-branch output and tried git-name-rev:
 
----
+> $ git-name-rev 365a00a3f280f8697e4735e1ac5b42a1c50f7887
+> 365a00a3f280f8697e4735e1ac5b42a1c50f7887 maint~404^1~7
 
- git-checkout.sh |    5 ++++-
- git-commit.sh   |   10 +++++++++-
- 2 files changed, 13 insertions(+), 2 deletions(-)
+(If you care, maint=93dcab2937624ebb97f91807576cddb242a55a46)
 
-applies-to: fe523a4df93cce3e5c5b0266b9d3f1cbea009afa
-8831e2595f29c90a259586250d5c6d044e9d7c8c
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 4cf30e2..503b34f 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -5,7 +5,8 @@ usage () {
-     die "usage: git checkout [-f] [-b <new_branch>] [<branch>] [<paths>...]"
- }
+And was very confused when git-rev-parse didn't invert the operation:
+
+> $ git-rev-parse maint~404^1~7
+> f69714c38c6f3296a4bfba0d057e0f1605373f49
+
+I spent a while verifying that I understood that ^1 == ^ == ~1, so
+~404^1~7 = ~412, and that gave the same unwanted result:
+
+> $ git-rev-parse maint~412
+> f69714c38c6f3296a4bfba0d057e0f1605373f49
+
+After confusing myself for a while, I looked to see why git-name-rev
+would output such a redundant name and found that it was simply
+wrong.  Fixing the symbolic name worked:
+
+> $ git-rev-parse maint~404^2~7
+> 365a00a3f280f8697e4735e1ac5b42a1c50f7887
+
+You can either go with a minimal fix:
+diff --git a/name-rev.c b/name-rev.c
+index 7d89401..f7fa18c 100644
+--- a/name-rev.c
++++ b/name-rev.c
+@@ -61,9 +61,10 @@ copy_data:
  
--old=$(git-rev-parse HEAD)
-+old=$(git-rev-parse --revs-only CHECKED_OUT)
-+[ -z $old ] && old=$(git-rev-parse HEAD)
- new=
- force=
- branch=
-@@ -117,6 +118,8 @@ else
-     git-read-tree -m -u $old $new
- fi
+ 			if (generation > 0)
+ 				sprintf(new_name, "%s~%d^%d", tip_name,
+-						generation, parent_number);
++						generation, parent_number+1);
+ 			else
+-				sprintf(new_name, "%s^%d", tip_name, parent_number);
++				sprintf(new_name, "%s^%d", tip_name,
++						parent_number+1);
  
-+git-update-ref CHECKED_OUT $new
+ 			name_rev(parents->item, new_name,
+ 				merge_traversals + 1 , 0, 0);
+
+
+Or you can get a bit more ambitious and write ~1 as ^:
+
+diff --git a/name-rev.c b/name-rev.c
+index 7d89401..82053c8 100644
+--- a/name-rev.c
++++ b/name-rev.c
+@@ -57,13 +57,17 @@ copy_data:
+ 			parents;
+ 			parents = parents->next, parent_number++) {
+ 		if (parent_number > 0) {
+-			char *new_name = xmalloc(strlen(tip_name)+8);
++			unsigned const len = strlen(tip_name);
++			char *new_name = xmalloc(len+8);
+ 
+-			if (generation > 0)
+-				sprintf(new_name, "%s~%d^%d", tip_name,
+-						generation, parent_number);
+-			else
+-				sprintf(new_name, "%s^%d", tip_name, parent_number);
++			memcpy(new_name, tip_name, len);
 +
- # 
- # Switch the HEAD pointer to the new branch if it we
- # checked out a branch head, and remove any potential
-diff --git a/git-commit.sh b/git-commit.sh
-index 3d250ec..e73003b 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -108,6 +108,13 @@ t,*)
- esac || exit 1
- git-update-index -q --refresh || exit 1
- 
-+current=$(git-rev-parse --revs-only CHECKED_OUT)
-+if test ! -z "$current" -a "$current" != "$(git-rev-parse HEAD)"
-+then
-+	echo "Changes have been pushed to this branch since you checked it out"
-+	exit 1
-+fi
++			if (generation == 1)
++				new_name[len++] = '^';
++			else if (generation > 1)
++				len += sprintf(new_name+len, "~%d", generation);
 +
- case "$verify" in
- t)
- 	if test -x "$GIT_DIR"/hooks/pre-commit
-@@ -232,7 +239,8 @@ then
- 	tree=$(git-write-tree) &&
- 	commit=$(cat "$GIT_DIR"/COMMIT_MSG | git-commit-tree $tree $PARENTS) &&
- 	git-update-ref HEAD $commit $current &&
--	rm -f -- "$GIT_DIR/MERGE_HEAD"
-+	rm -f -- "$GIT_DIR/MERGE_HEAD" &&
-+	git-update-ref CHECKED_OUT $commit
- else
- 	echo >&2 "* no commit message?  aborting commit."
- 	false
----
-0.99.9.GIT
++			sprintf(new_name+len, "^%d", parent_number+1);
+ 
+ 			name_rev(parents->item, new_name,
+ 				merge_traversals + 1 , 0, 0);
+
+
+While I'm at it, I notice some unnecessary invocations of expr in some
+of the shell scripts.  You can do it far more simply using the ${var#pat}
+and ${var%pat} expansions to strip off leading and trailing patterns.
+For example:
+
+diff --git a/git-cherry.sh b/git-cherry.sh
+index 867522b..c653a6a 100755
+--- a/git-cherry.sh
++++ b/git-cherry.sh
+@@ -23,8 +23,7 @@ case "$1" in -v) verbose=t; shift ;; esa
+ 
+ case "$#,$1" in
+ 1,*..*)
+-    upstream=$(expr "$1" : '\(.*\)\.\.') ours=$(expr "$1" : '.*\.\.\(.*\)$')
+-    set x "$upstream" "$ours"
++    set x "${1%..*}" "${1#*..}"
+     shift ;;
+ esac
+ 
+This works in dash and is in the POSIX spec.  It doesn't work in some
+very old /bin/sh implementations (such as Solaris still ships), but I'm
+pretty sure it was introduced at the same time as $(), and the scripts
+use *that* all over the place.
+
+% sh
+$ uname -s -r
+SunOS 5.9
+$ foo=bar
+$ echo ${foo#b}
+bad substitution
+$ echo `echo $foo`
+bar
+$ echo $(echo $foo)
+syntax error: `(' unexpected
+
+Anyway, if it's portable enough, it's faster.  Ah... I just found discussion
+of this in late September, but it's not clear what the resolution was.
+http://marc.theaimsgroup.com/?t=112746188000003
+
+
+(Oh, yes: all of the above patches are released into the public domain.
+Copyright abandoned.  Have fun.)
