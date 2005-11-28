@@ -1,67 +1,63 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: lost again on syntax change - local repository?
-Date: 28 Nov 2005 05:09:40 -0800
-Message-ID: <86d5kk7wbv.fsf@blue.stonehenge.com>
-References: <861x118r9t.fsf@blue.stonehenge.com>
-	<20051128104831.GN22159@pasky.or.cz>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [RFC 2/2] Automatically transform .git/{branches,remotes} into
+ .git/config
+Date: Mon, 28 Nov 2005 14:11:59 +0100
+Message-ID: <438B021F.5030204@op5.se>
+References: <Pine.LNX.4.63.0511211455120.13775@wbgn013.biozentrum.uni-wuerzburg.de> <7vfyph1ebq.fsf@assigned-by-dhcp.cox.net> <438AC32E.5010100@op5.se> <200511281359.04741.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 28 14:10:55 2005
+X-From: git-owner@vger.kernel.org Mon Nov 28 14:12:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgilS-0000Oo-6e
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 14:09:50 +0100
+	id 1Eginf-0001FG-Gf
+	for gcvg-git@gmane.org; Mon, 28 Nov 2005 14:12:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932086AbVK1NJq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Nov 2005 08:09:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932088AbVK1NJq
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 08:09:46 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:22359 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932086AbVK1NJq
+	id S932087AbVK1NME (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Nov 2005 08:12:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932089AbVK1NME
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 08:12:04 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:30890 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932087AbVK1NMC
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2005 08:09:46 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 88CA68F790;
-	Mon, 28 Nov 2005 05:09:41 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 24061-03-97; Mon, 28 Nov 2005 05:09:41 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 24D4A8F799; Mon, 28 Nov 2005 05:09:41 -0800 (PST)
-To: Petr Baudis <pasky@suse.cz>
-x-mayan-date: Long count = 12.19.12.15.0; tzolkin = 11 Ahau; haab = 18 Ceh
-In-Reply-To: <20051128104831.GN22159@pasky.or.cz>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	Mon, 28 Nov 2005 08:12:02 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 4480C6BCBE; Mon, 28 Nov 2005 14:12:00 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+In-Reply-To: <200511281359.04741.Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12876>
 
->>>>> "Petr" == Petr Baudis <pasky@suse.cz> writes:
+Josef Weidendorfer wrote:
+> 
+> To allow for this, git_config() should not be hardcoded to only
+> read .git/config, but perhaps a list of files in environment variable
+> GIT_CONFIG_FILES.
+> 
 
-Petr> Dear diary, on Mon, Nov 28, 2005 at 03:01:18AM CET, I got a letter
-Petr> where "Randal L. Schwartz" <merlyn@stonehenge.com> said that...
->> localhost:..Git/Play/local.git % cg-branch-add origin "$(cd ..; pwd)/remote.git#master"
+$HOME/.gitrc:$GIT_DIR/conf/*
 
-Petr> BTW, it should be fine to just say ../remote.git#master.
+All files could support the freestanding "include" syntax.
 
-Maybe this is why yours worked.
+> For (2), git-clone should copy some files, e.g. the .git/project.conf
+> or .git/info/exclude. But project config probably should be kept
+> up to date among all repositories for a project, i.e. it should be
+> version controlled itself, but independent from the project.
+> We could use a project config head .git/refs/projectconfig for this;
+> of course post-1.0 material.
 
-Ahh, yes, it did.
 
-So, cg-push treats '../..' differently from '/foo/bar/...'.
-
-This is bad.  That's the bug.
-
-cg-push treats "../" as a local filesystem, and "/..." as git-ssh.
-This is a change from before.
-
-Please make it recognize "/..." as a local file again.
+It would be very nifty to have some files that can hold maintainer-like 
+variables (like upstream email address for patches).
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
