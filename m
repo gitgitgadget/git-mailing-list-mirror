@@ -1,99 +1,85 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git-send-mail in sh
-Date: Mon, 28 Nov 2005 00:34:03 +0100
-Message-ID: <438A426B.7070607@op5.se>
-References: <4386DD45.6030308@op5.se>	<7v7jaxou5b.fsf@assigned-by-dhcp.cox.net> <43874935.2080804@op5.se>	<7vwtiwmvfp.fsf@assigned-by-dhcp.cox.net> <4388E33A.8000004@op5.se> <7v4q5xbvip.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitk: UTF-8 support
+Date: Sun, 27 Nov 2005 16:12:51 -0800
+Message-ID: <7vr7917hq4.fsf@assigned-by-dhcp.cox.net>
+References: <1132719301.12227.5.camel@dv>
+	<7v64qi50sw.fsf@assigned-by-dhcp.cox.net>
+	<20051123235315.oht0zjidc4ccg8gs@webmail.spamcop.net>
+	<7v1x16y36r.fsf@assigned-by-dhcp.cox.net>
+	<20051124021231.nrg8448gk8w4owk8@webmail.spamcop.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 28 00:36:00 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 28 01:14:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgW2O-00057C-HK
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 00:34:28 +0100
+	id 1EgWe2-00084K-9d
+	for gcvg-git@gmane.org; Mon, 28 Nov 2005 01:13:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751174AbVK0XeF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Nov 2005 18:34:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751175AbVK0XeF
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 18:34:05 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:63654 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751174AbVK0XeE
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Nov 2005 18:34:04 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 91CD96BCBE; Mon, 28 Nov 2005 00:34:03 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4q5xbvip.fsf@assigned-by-dhcp.cox.net>
+	id S1751161AbVK1AMy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Nov 2005 19:12:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751162AbVK1AMx
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 19:12:53 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:37550 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751161AbVK1AMx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Nov 2005 19:12:53 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051128001125.YDVP17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 27 Nov 2005 19:11:25 -0500
+To: Pavel Roskin <proski@gnu.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12836>
 
-Junio C Hamano wrote:
-> Andreas Ericsson <ae@op5.se> writes:
-> 
->>            # single commit
->>            com1="${com1##*^}"
->>            range="$com1^1..$com1"
->>            ;;
-> 
-> 
-> I wonder if you meant "${com1%^}" here, to remove the trailing '^'.
-> 
+Pavel Roskin <proski@gnu.org> writes:
 
-I did/do/done. :)
+>> And as I suggested in another message (in the died-out thread
+>> about gitweb), we could have i18n.commitEncoding in the
+>> configuration to help gitk and gitweb.  I think that is the same
+>> as your "other option".
+>
+> Yes.  Then my patch needs to be changed to set encoding to that setting and only
+> if it's present.
 
-> 
->>        ?*^[0-9]|?*^[0-9][0-9])
->>            # series of commits, ranging back from <commit-ish>
->>            range="$com1..${com1%%^*}"
->>            ;;
->>        ^[0-9]|^[0-9][0-9])
->>            # series of commits, ranging back from HEAD
->>            range="HEAD$com1..HEAD"
->>            ;;
-> 
-> 
-> N generation back in extended SHA1 notation uses a tilde '~',
+The following patch on top of your patch has seen only very
+light testing, but it seems to do the right thing for my
+repository with utf-8 commit messages and another with euc-jp
+commit messages.  For the latter, I needed to do:
 
+	$ git-repo-config i18n.commitencoding euc-jp
 
-I just noticed that after sending the original email. I've changed it to 
-take tilde instead.
+-- >8 --
+[PATCH] gitk: Use i18n.commitencoding configuration item.
 
-> Also limiting to between 0 and 99
-> generations misinterprets "HEAD~123".
-> 
-> Although checking only the letter that follows the tilde is a
-> digit mistakenly accepts something like "master~1-bad-one", that
-> is already malformed and whatever comes downstream would barf,
-> so that may be fine.  How about something like:
-> 
-> 	?*'~'[1-9]*)
->         	range="$com1..${com1%~*}" ;;
-> 	'~'[1-9]*)
->         	range="HEAD$com1..HEAD" ;;
-> 
+Hardcoding "utf-8" in the script breaks projects that use local
+encoding, so allow setting i18n.commitEncoding.
 
-Fine by me, although that 99 patches limit was sort of semi-intentional. 
-Doing it this way makes case order matter since
-	?*'~'[1-9]*
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-will also match
-
-	<commit>~3..HEAD
-
-I'll stick with your way though and put a comment there so people don't 
-touch the ordering.
-
-
-Thanks for the expr lesson btw.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+---
+diff --git a/gitk b/gitk
+index b53a5c5..2242216 100755
+--- a/gitk
++++ b/gitk
+@@ -3669,7 +3669,14 @@ set datemode 0
+ set boldnames 0
+ set diffopts "-U 5 -p"
+ set wrcomcmd "git-diff-tree --stdin -p --pretty"
+-set gitencoding "utf-8"
++
++set gitencoding ""
++catch {
++    set gitencoding [exec git-repo-config --get i18n.commitencoding]
++}
++if {$gitencoding == ""} {
++	set gitencoding "utf-8"
++}
+ 
+ set mainfont {Helvetica 9}
+ set textfont {Courier 9}
