@@ -1,94 +1,101 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: Perl version support (was Re: [PATCH] git-mv is not able to handle
- big directories)
-Date: Sun, 27 Nov 2005 20:46:29 -0500
-Message-ID: <438A6175.2020705@michonline.com>
-References: <200511231141.57683.lan@ac-sw.com>	<7voe4b7uw7.fsf@assigned-by-dhcp.cox.net>	<7vk6ez7u1y.fsf@assigned-by-dhcp.cox.net>	<867jazre78.fsf@blue.stonehenge.com>	<7vu0e369p4.fsf@assigned-by-dhcp.cox.net>	<20051123135604.GB16995@mythryan2.michonline.com> <86mzjvphhj.fsf_-_@blue.stonehenge.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] bisect: quote pathnames for eval safety.
+Date: Sun, 27 Nov 2005 17:51:23 -0800
+Message-ID: <7vmzjp35gk.fsf_-_@assigned-by-dhcp.cox.net>
+References: <7voe48gqg9.fsf@assigned-by-dhcp.cox.net>
+	<7vek52e4ve.fsf@assigned-by-dhcp.cox.net>
+	<20051127151134.0eac7019.tihirvon@gmail.com>
+	<Pine.LNX.4.64.0511271106360.13959@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigDC30F41C65B935997DAD7559"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 28 02:47:07 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 28 02:51:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgY6J-0005nI-VX
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 02:46:40 +0100
+	id 1EgYAy-0007dE-Mq
+	for gcvg-git@gmane.org; Mon, 28 Nov 2005 02:51:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbVK1Bqh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Nov 2005 20:46:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbVK1Bqg
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 20:46:36 -0500
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73]:57771
-	"EHLO h4x0r5.com") by vger.kernel.org with ESMTP id S1751211AbVK1Bqg
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Nov 2005 20:46:36 -0500
-Received: from [10.254.251.12] (helo=mythryan)
-	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.54)
-	id 1EgY6D-0001TP-Aw; Sun, 27 Nov 2005 20:46:33 -0500
-Received: from localhost ([127.0.0.1])
-	by mythryan with esmtp (Exim 4.54)
-	id 1EgY6D-0001DT-0H; Sun, 27 Nov 2005 20:46:33 -0500
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
-X-Accept-Language: en-us, en
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-In-Reply-To: <86mzjvphhj.fsf_-_@blue.stonehenge.com>
-X-Enigmail-Version: 0.93.0.0
+	id S1751216AbVK1Bv0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Nov 2005 20:51:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbVK1Bv0
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 20:51:26 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:63643 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1751216AbVK1BvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Nov 2005 20:51:25 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051128015126.TQBD25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 27 Nov 2005 20:51:26 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511271106360.13959@g5.osdl.org> (Linus Torvalds's
+	message of "Sun, 27 Nov 2005 11:32:03 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12845>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigDC30F41C65B935997DAD7559
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Randal L. Schwartz wrote:
->>>>>>"Ryan" == Ryan Anderson <ryan@michonline.com> writes:
-> Ryan> For the kernel, requiring 5.8 shouldn't be a big issue. I suspect it's
-> Ryan> really only the commercial Unixes where requiring 5.8 would be annoying.
-> 
-> Ryan> Randal, is my guess even remotely accurate?
-> 
-> I'd say that 50% of the Perl-using population is at 5.6, with 25% each
-> at 5.5 and 5.8.  Those on 5.5 are generally unable to upgrade Perl
-> for corporate reasons.
-> 
-> Targetting Perl 5.6 would assist broad acceptance of git for the
-> typical commercial end user.  Targetting 5.5 where possible would
-> ensure practical success for everyone.
-> 
-> However, I have not seen the "target market" of git discussed yet
-> (I came late to the party), so if support for 5.6 (or 5.5) is not chosen,
-> it merely limits the market.
+> Almost totally untested, and I guarantee that if your pathnames have 
+> spaces in them (or your GIT_DIR has spaces in it) this won't work. I don't 
+> know how to fix that, my shell programming isn't good enough.
 
-Well, I think the general target market[1] for Linux probably applies
-here, as well.  On the other hand, the users limited to Perl 5.5 for
-corporate reasons are probably also prevented from installing new tools
-for general use, so the difference may not matter very much.
+Like this?  I've placed the bisect patch with this in the
+proposed updates.
 
-[1] - "World domination", of course.
+---
 
--- 
+ git-bisect.sh |   16 ++++++++++++----
+ 1 files changed, 12 insertions(+), 4 deletions(-)
 
-Ryan Anderson
-  sometimes Pug Majere
-
---------------enigDC30F41C65B935997DAD7559
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
-
-iD8DBQFDimF4fhVDhkBuUKURAi2tAJoCvUyUF8zmLmzl0adIqezlAHDCkgCfaqnh
-xm+WzoebKdcfbaFLa/ll4jc=
-=Jaf5
------END PGP SIGNATURE-----
-
---------------enigDC30F41C65B935997DAD7559--
+applies-to: 7da44ab45773e0a424c1e08c838c1f6deeb6ceb2
+82c8f5bed2ae61f1f368cfca84f6b0194b1ad208
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 2455f00..d4196f9 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -1,9 +1,16 @@
+ #!/bin/sh
+ . git-sh-setup
+ 
++sq() {
++    for x
++    do
++	echo "$x" | sed -e "s/'/'\\\\''/g" -e "s/^/'/" -e "s/\$/'/"
++    done
++}
++
+ usage() {
+     echo >&2 'usage: git bisect [start|bad|good|next|reset|visualize]
+-git bisect start		reset bisect state and start bisection.
++git bisect start [<pathspec>]	reset bisect state and start bisection.
+ git bisect bad [<rev>]		mark <rev> a known-bad revision.
+ git bisect good [<rev>...]	mark <rev>... known-good revisions.
+ git bisect next			find next bisection to test and check it out.
+@@ -56,8 +63,8 @@ bisect_start() {
+ 	rm -f "$GIT_DIR/refs/heads/bisect"
+ 	rm -rf "$GIT_DIR/refs/bisect/"
+ 	mkdir "$GIT_DIR/refs/bisect"
+-	echo "git-bisect start $@" >"$GIT_DIR/BISECT_LOG"
+-	echo "$@" > "$GIT_DIR/BISECT_NAMES"
++	sq git-bisect start "$@" >"$GIT_DIR/BISECT_LOG"
++	sq "$@" >"$GIT_DIR/BISECT_NAMES"
+ }
+ 
+ bisect_bad() {
+@@ -142,7 +149,8 @@ bisect_next() {
+ 
+ bisect_visualize() {
+ 	bisect_next_check fail
+-	gitk bisect/bad --not `cd "$GIT_DIR/refs" && echo bisect/good-*` -- $(cat $GIT_DIR/BISECT_NAMES)
++	not=`cd "$GIT_DIR/refs" && echo bisect/good-*`
++	eval gitk bisect/bad --not $not -- $(cat "$GIT_DIR/BISECT_NAMES")
+ }
+ 
+ bisect_reset() {
+---
+0.99.9.GIT
