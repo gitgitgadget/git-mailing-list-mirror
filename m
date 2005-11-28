@@ -1,101 +1,105 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 1/3] Introduce i18n.commitencoding.
-Date: Sun, 27 Nov 2005 16:39:08 -0800
-Message-ID: <7vd5kl61xv.fsf@assigned-by-dhcp.cox.net>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: git-send-mail in sh
+Date: Sun, 27 Nov 2005 19:49:05 -0500
+Message-ID: <438A5401.3070008@michonline.com>
+References: <4386DD45.6030308@op5.se> <20051125163358.GF16995@mythryan2.michonline.com> <43874415.8040302@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Nov 28 01:40:52 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigB10F355AE5EEA7745CA48BD8"
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 28 01:50:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgX34-0007R6-Pn
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 01:39:15 +0100
+	id 1EgXCr-0001fd-MF
+	for gcvg-git@gmane.org; Mon, 28 Nov 2005 01:49:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbVK1AjM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Nov 2005 19:39:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbVK1AjL
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 19:39:11 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:45242 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751164AbVK1AjK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Nov 2005 19:39:10 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051128003742.YLTW17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 27 Nov 2005 19:37:42 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751164AbVK1AtM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Nov 2005 19:49:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbVK1AtM
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 19:49:12 -0500
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73]:62628
+	"EHLO h4x0r5.com") by vger.kernel.org with ESMTP id S1751164AbVK1AtL
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Nov 2005 19:49:11 -0500
+Received: from [10.254.251.12] (helo=mythryan)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.54)
+	id 1EgXCf-0000uj-Os; Sun, 27 Nov 2005 19:49:10 -0500
+Received: from localhost ([127.0.0.1])
+	by mythryan with esmtp (Exim 4.54)
+	id 1EgXCf-0000eP-9s; Sun, 27 Nov 2005 19:49:09 -0500
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
+X-Accept-Language: en-us, en
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <43874415.8040302@op5.se>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12841>
 
-This is to hold what the project-local rule as to the
-charset/encoding for the commit log message is.  Lack of it
-defaults to utf-8.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigB10F355AE5EEA7745CA48BD8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Andreas Ericsson wrote:
+> Ryan Anderson wrote:
+> 
+>> On Fri, Nov 25, 2005 at 10:45:41AM +0100, Andreas Ericsson wrote:
+>>
+>>> Finally giving up on git-send-email (I won't install the 6
+>>> perl-modules it requires and I don't know perl enough to remove the
+>>> need for them), I hacked up a replacement in sh. It's more aptly
+>>> named as well. ;)
+>>
+>> Scanning the list, 2 are related to option handling (one of which is
+>> builtin), one isn't used (Data::Dumper), and two are related to sending
+>> valid emails.
+> 
+> When I try to install Email::Valid (using apt) it wants an additional
+> two modules. Mail::Sendmail wants one other, so that's Data::Dumper, the
+> two actually used and the three those two use. Six, for short.
 
----
+Can I ask why you aren't willing to install packages, such as those?  I
+can understand a reluctance to install modules directly from CPAN, on an
+otherwise package-managed system, but I'm afraid I must confess to
+puzzlement over a reluctance to use pre-packaged modules.
 
- * This is not needed to make the gitk patch I just sent out
-   work, because git-repo-config can do its own thing without
-   the C-level integration like this.
+The major flaw in git-send-email, from my perspective, was a lack of
+support for SMTP AUTH, for situations like Junio's, where the local MTA
+(and thus "mail" as well) are not configured to handle SMTP AUTH. Moving
+to a purely shell based replacement seems to make this an even harder
+feature to support.  (Though, admittedly, I haven't even made an attempt
+to add it to the Perl version yet.)
 
-   That may or may not be a good thing, though.  I wished either
-   'git-var i18n.commitencoding' or 'git-repo-config --get
-   i18n.commitencoding' in a vanilla repository to emit the
-   default "utf-8".  Johannes?
+>> The email address verification is ridiculously hard to get
+>> correct, so using pre-written code for that seemed justified.
+>>
+> 
+> But it isn't necessary to validate it to such exactness. Nothing worse
+> will happen than the user chiding himself for his butterfingers if
+> he/she makes a mistake.
+> 
+> Besides, I think typos are by far the most common error. Those are
+> usually valid email addresses while still not being correct.
 
- cache.h       |    3 +++
- config.c      |    5 +++++
- environment.c |    1 +
- 3 files changed, 9 insertions(+), 0 deletions(-)
+Fair enough.
 
-applies-to: 5596ac6f4661c80f823d93de7fa9aeec65ace1f1
-4e72dcec89c7cda7022d4ec2dd686e77deb5376e
-diff --git a/cache.h b/cache.h
-index 61bf884..634b5aa 100644
---- a/cache.h
-+++ b/cache.h
-@@ -399,6 +399,9 @@ extern int check_repository_format_versi
- extern char git_default_email[MAX_GITNAME];
- extern char git_default_name[MAX_GITNAME];
- 
-+#define MAX_ENCODING_LENGTH 64
-+extern char git_commit_encoding[MAX_ENCODING_LENGTH];
-+
- /* Sane ctype - no locale, and works with signed chars */
- #undef isspace
- #undef isdigit
-diff --git a/config.c b/config.c
-index 0c43d76..152fa28 100644
---- a/config.c
-+++ b/config.c
-@@ -237,6 +237,11 @@ int git_default_config(const char *var, 
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "i18n.commitencoding")) {
-+		strncpy(git_commit_encoding, value, sizeof(git_commit_encoding));
-+		return 0;
-+	}
-+
- 	/* Add other config variables here.. */
- 	return 0;
- }
-diff --git a/environment.c b/environment.c
-index 3f19473..0886ad3 100644
---- a/environment.c
-+++ b/environment.c
-@@ -14,6 +14,7 @@ char git_default_name[MAX_GITNAME];
- int trust_executable_bit = 1;
- int only_use_symrefs = 0;
- int repository_format_version = 0;
-+char git_commit_encoding[MAX_ENCODING_LENGTH] = "utf-8";
- 
- static char *git_dir, *git_object_dir, *git_index_file, *git_refs_dir,
- 	*git_graft_file;
----
-0.99.9.GIT
+--------------enigB10F355AE5EEA7745CA48BD8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFDilQEfhVDhkBuUKURApBxAKClDcbVPE1tuxPB3EUGjlNqxtMF/ACffju/
+LppxobieQyJFioLTTGrL/R0=
+=1+iE
+-----END PGP SIGNATURE-----
+
+--------------enigB10F355AE5EEA7745CA48BD8--
