@@ -1,61 +1,62 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: lost again on syntax change - local repository?
-Date: 28 Nov 2005 05:59:40 -0800
-Message-ID: <86veyc6fg3.fsf@blue.stonehenge.com>
-References: <861x118r9t.fsf@blue.stonehenge.com>
-	<20051128104831.GN22159@pasky.or.cz>
-	<86d5kk7wbv.fsf@blue.stonehenge.com>
-	<20051128134111.GP22159@pasky.or.cz>
-	<86zmno6g3v.fsf@blue.stonehenge.com>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Generic configuration plumbing (Was: Re: [RFC 2/2] Automatically transform...)
+Date: Mon, 28 Nov 2005 15:32:35 +0100
+Message-ID: <200511281532.36054.Josef.Weidendorfer@gmx.de>
+References: <Pine.LNX.4.63.0511211455120.13775@wbgn013.biozentrum.uni-wuerzburg.de> <200511281359.04741.Josef.Weidendorfer@gmx.de> <438B021F.5030204@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 28 15:02:05 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Mon Nov 28 15:35:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgjXl-00046Z-6G
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 14:59:45 +0100
+	id 1Egk3w-0001wa-HU
+	for gcvg-git@gmane.org; Mon, 28 Nov 2005 15:33:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932106AbVK1N7m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Nov 2005 08:59:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751268AbVK1N7m
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 08:59:42 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:3479 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751262AbVK1N7l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2005 08:59:41 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id E4C8C8F75E;
-	Mon, 28 Nov 2005 05:59:40 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 29001-01-6; Mon, 28 Nov 2005 05:59:40 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 83DCF8F7AB; Mon, 28 Nov 2005 05:59:40 -0800 (PST)
-To: Petr Baudis <pasky@suse.cz>
-x-mayan-date: Long count = 12.19.12.15.0; tzolkin = 11 Ahau; haab = 18 Ceh
-In-Reply-To: <86zmno6g3v.fsf@blue.stonehenge.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1751253AbVK1Ock (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Nov 2005 09:32:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbVK1Ock
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 09:32:40 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:50313 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1751253AbVK1Ocj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Nov 2005 09:32:39 -0500
+Received: from dhcp-3s-61.lrr.in.tum.de (dhcp-3s-61.lrr.in.tum.de [131.159.35.61])
+	by mail.in.tum.de (Postfix) with ESMTP id 8465326F6;
+	Mon, 28 Nov 2005 15:32:38 +0100 (MET)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9
+In-Reply-To: <438B021F.5030204@op5.se>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12882>
 
->>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
+On Monday 28 November 2005 14:11, Andreas Ericsson wrote:
+> Josef Weidendorfer wrote:
+> > 
+> > To allow for this, git_config() should not be hardcoded to only
+> > read .git/config, but perhaps a list of files in environment variable
+> > GIT_CONFIG_FILES.
+> > 
+> 
+> $HOME/.gitrc:$GIT_DIR/conf/*
 
-Randal>     localhost:..Git/Play/local.git % cg-branch-add origin "$(cd ..; pwd)/remote.git#master"           
-Randal>     localhost:..Git/Play/local.git % cg-push
-Randal>     WARNING: I guessed the host:path syntax was used and fell back to the git+ssh protocol.
-Randal>     WARNING: The host:path syntax is evil because it is implicit. Please just use a URI.
-Randal>     ssh: \033]2;[zsh] localhost: No address associated with nodename
-Randal>     fatal: unexpected EOF
+Yes, perhaps with this as default...
 
-Oh, and make sure ssh is *off* on your machine.  You might be getting
-it to work by ssh'ing back to your own box.
+> All files could support the freestanding "include" syntax.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Better run cpp on the config files before loading ;-)
+Or provide a hook which returns the config on stdout.
+The default for .git/hooks/config would be
+
+	cat $GIT_DIR/config
+
+Hmm... this was only meant to be a joke; but now I actually think
+this is a nice idea as basic configuration mechanism of git plumbing.
+
+Josef
