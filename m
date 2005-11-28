@@ -1,105 +1,95 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: git-send-mail in sh
-Date: Sun, 27 Nov 2005 19:49:05 -0500
-Message-ID: <438A5401.3070008@michonline.com>
-References: <4386DD45.6030308@op5.se> <20051125163358.GF16995@mythryan2.michonline.com> <43874415.8040302@op5.se>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 6/8] ls-tree: work from subdirectory.
+Date: Sun, 27 Nov 2005 17:07:07 -0800
+Message-ID: <7vveyd37ic.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0511241419390.14297@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vmzjtn3h1.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0511242252080.26485@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vy83cdu7r.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511251953081.13959@g5.osdl.org>
+	<7voe477n4i.fsf_-_@assigned-by-dhcp.cox.net>
+	<7vpson4tqi.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511260855560.13959@g5.osdl.org>
+	<7vr792fnta.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511270949540.13959@g5.osdl.org>
+	<20051127182244.GK22159@pasky.or.cz>
+	<Pine.LNX.4.64.0511271049090.13959@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigB10F355AE5EEA7745CA48BD8"
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 28 01:50:25 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 28 02:09:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgXCr-0001fd-MF
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 01:49:22 +0100
+	id 1EgXUD-0006zO-FM
+	for gcvg-git@gmane.org; Mon, 28 Nov 2005 02:07:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbVK1AtM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Nov 2005 19:49:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbVK1AtM
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 19:49:12 -0500
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73]:62628
-	"EHLO h4x0r5.com") by vger.kernel.org with ESMTP id S1751164AbVK1AtL
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Nov 2005 19:49:11 -0500
-Received: from [10.254.251.12] (helo=mythryan)
-	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.54)
-	id 1EgXCf-0000uj-Os; Sun, 27 Nov 2005 19:49:10 -0500
-Received: from localhost ([127.0.0.1])
-	by mythryan with esmtp (Exim 4.54)
-	id 1EgXCf-0000eP-9s; Sun, 27 Nov 2005 19:49:09 -0500
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
-X-Accept-Language: en-us, en
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <43874415.8040302@op5.se>
-X-Enigmail-Version: 0.93.0.0
+	id S1751208AbVK1BHL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Nov 2005 20:07:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751209AbVK1BHL
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 20:07:11 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:50162 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751208AbVK1BHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Nov 2005 20:07:09 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051128010638.UXMJ15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 27 Nov 2005 20:06:38 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511271049090.13959@g5.osdl.org> (Linus Torvalds's
+	message of "Sun, 27 Nov 2005 11:00:09 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12842>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigB10F355AE5EEA7745CA48BD8
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Andreas Ericsson wrote:
-> Ryan Anderson wrote:
-> 
->> On Fri, Nov 25, 2005 at 10:45:41AM +0100, Andreas Ericsson wrote:
->>
->>> Finally giving up on git-send-email (I won't install the 6
->>> perl-modules it requires and I don't know perl enough to remove the
->>> need for them), I hacked up a replacement in sh. It's more aptly
->>> named as well. ;)
->>
->> Scanning the list, 2 are related to option handling (one of which is
->> builtin), one isn't used (Data::Dumper), and two are related to sending
->> valid emails.
-> 
-> When I try to install Email::Valid (using apt) it wants an additional
-> two modules. Mail::Sendmail wants one other, so that's Data::Dumper, the
-> two actually used and the three those two use. Six, for short.
+> On Sun, 27 Nov 2005, Petr Baudis wrote:
+>> Ugh. That's really weird. Wouldn't a better approach be to fix
+>> git-ls-files to behave more sanely? (That is, listing the entry for
+>> drivers/char instead of drivers?)
 
-Can I ask why you aren't willing to install packages, such as those?  I
-can understand a reluctance to install modules directly from CPAN, on an
-otherwise package-managed system, but I'm afraid I must confess to
-puzzlement over a reluctance to use pre-packaged modules.
+It behaves sanely, just not in the way you are expecting.
 
-The major flaw in git-send-email, from my perspective, was a lack of
-support for SMTP AUTH, for situations like Junio's, where the local MTA
-(and thus "mail" as well) are not configured to handle SMTP AUTH. Moving
-to a purely shell based replacement seems to make this an even harder
-feature to support.  (Though, admittedly, I haven't even made an attempt
-to add it to the Perl version yet.)
+> Well, it's not actually confusing if you see a path spec for
+> what it is: it's not a filename, it's a _pattern_.
 
->> The email address verification is ridiculously hard to get
->> correct, so using pre-written code for that seemed justified.
->>
-> 
-> But it isn't necessary to validate it to such exactness. Nothing worse
-> will happen than the user chiding himself for his butterfingers if
-> he/she makes a mistake.
-> 
-> Besides, I think typos are by far the most common error. Those are
-> usually valid email addresses while still not being correct.
+Well, that is confusing, although it may be sane.
 
-Fair enough.
+> So you should always do
+>
+> 	git-ls-tree -r pattern
+>
+> (and yes, we could even hardcode "-r", because git-ls-tree without it 
+> really is a pretty strange thing).
 
---------------enigB10F355AE5EEA7745CA48BD8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+If you mean "in the presense of pathspec, default to -r", I
+*might* agree, but I am not convinced yet.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+Without pathspec, ls-tree is a pretty-printing version of
+"git-cat-file tree", and that is how the command is used by the
+git browsers like gitweb.  I have never looked at qgit source,
+but I'd be surprised if it did not depend on the single-level
+behaviour of ls-tree for that purpose.
 
-iD8DBQFDilQEfhVDhkBuUKURApBxAKClDcbVPE1tuxPB3EUGjlNqxtMF/ACffju/
-LppxobieQyJFioLTTGrL/R0=
-=1+iE
------END PGP SIGNATURE-----
+It *is* "/bin/ls" after all, and you _would_ get annoyed if your
+/bin/ls always recursed if you gave an argument.  Imagine going
+to the kernel source and try "/bin/ls arch" with your version of
+/bin/ls that always recurses, when you only wanted to get the
+list of architectures you are supporting ;-).
 
---------------enigB10F355AE5EEA7745CA48BD8--
+> The _real_ strangeness in "git-ls-tree" is that it shows the tree nodes at 
+> all, which no other git tool does when it recurses. 
+
+Very true.  I do not think even git browsers need that but I may
+be mistaken.
+
+Having said all of the above, I do understand why we would
+_also_ want the behaviour parallel to ls-files, not /bin/ls
+behaviour.  Maybe we should have both?  Either rename the
+current ls-tree to browse-tree, and make the one that parallels
+ls-files the new ls-tree?
