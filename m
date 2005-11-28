@@ -1,141 +1,99 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: rebase problems
-Date: Mon, 28 Nov 2005 13:02:07 -0800
-Message-ID: <7vhd9wscz4.fsf@assigned-by-dhcp.cox.net>
-References: <20051128145814.GW8383MdfPADPa@greensroom.kotnet.org>
-	<7v4q5wttib.fsf@assigned-by-dhcp.cox.net>
-	<20051128202428.GA8383MdfPADPa@greensroom.kotnet.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: keeping remote repo checked out?
+Date: Mon, 28 Nov 2005 22:28:04 +0100
+Message-ID: <20051128212804.GV22159@pasky.or.cz>
+References: <m3k6et9rdw.fsf@lugabout.cloos.reno.nv.us> <7vbr051ad1.fsf@assigned-by-dhcp.cox.net> <20051128105736.GO22159@pasky.or.cz> <7vsltgtvk4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 28 22:05:49 2005
+X-From: git-owner@vger.kernel.org Mon Nov 28 22:30:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Egq8f-0004Cv-1C
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 22:02:17 +0100
+	id 1EgqXR-0000lj-9n
+	for gcvg-git@gmane.org; Mon, 28 Nov 2005 22:27:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300AbVK1VCM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Nov 2005 16:02:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbVK1VCL
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 16:02:11 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:6350 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751300AbVK1VCJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2005 16:02:09 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051128210038.PIBS20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 28 Nov 2005 16:00:38 -0500
-To: skimo@liacs.nl
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750884AbVK1V1u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Nov 2005 16:27:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbVK1V1u
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 16:27:50 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:2524 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750884AbVK1V1t (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Nov 2005 16:27:49 -0500
+Received: (qmail 7329 invoked by uid 2001); 28 Nov 2005 22:28:04 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vsltgtvk4.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12905>
 
-Sven Verdoolaege <skimo@kotnet.org> writes:
+Dear diary, on Mon, Nov 28, 2005 at 08:35:23PM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Both of us are right and talking about the same thing.  You are
+> right that as long as hooks/post-update is done correctly the
+> one who works on the server should not have to worry.  I am
+> right that the hooks/post-update for that setup needs to be done
+> very carefully ;-).
 
-> On Mon, Nov 28, 2005 at 12:19:40PM -0800, Junio C Hamano wrote:
->> The output seems very inconsistent I am not sure why the first
->> message says "Applying HEAD~2", not HEAD~6.    What patches do
->> you see in .dotest/ directory, and are they numbered in the
->> right order?  HEAD~6 should be numbered 0001 and that should be
->> the first one that was applied.
->
-> Ah!  It seems .dotest still contained some stuff from a previous
-> (expectedly) failed rebase.
->
-> Rebase worked after rm -rf'ing .dotest
->
-> Maybe rebase should clean up .dotest or at least warn about
-> an existing .dotest ?
+Aha, then I misunderstood what you wrote before - sorry. Obviously,
+you are right. ;-)
 
-Thanks, you are right.  I was coming to the same conclusion.
+> Here are the things whoever is doing the hooks/post-update for
+> this particular setup needs to think about.
+> 
+>  - is it safe to assume that the guy working on the server
+>    working tree never switch branches?  otherwise, what to do if
+>    the working tree has different branch checked out when push
+>    called post-update?
 
-There are a few more problems in the current rebase.
+I wouldn't do anything. Working copy reflects the HEAD; if you don't
+update HEAD, you needn't touch the working copy.
 
- - If the branch being rebased is fully in sync with the master
-   (i.e. there is no patch to apply), it fails with a mysterious
-   message "fatal: cannot read mbox".
+>  - should it allow forced-push that sets HEAD to non descendant
+>    of the current HEAD?  In a shared repository setup,
+>    disallowing forced-push is a good discipline.  OTOH, if this
+>    is primarily used as an installation mechanism to a remote
+>    hosting site, allowing forced-push may be ok.
 
- - If the branch being rebased is already a proper descendant of
-   the master, it still goes ahead and rebases.  This is
-   unnecessary.
+I would just leave this on the particular head policy.
 
-I think something like this is necessary.
+>  - should it do 'git-checkout', 'git-reset --hard HEAD', or
+>    'git-pull . branch_to_push_into'?  The former two pretty much
+>    assumes no development happens on the server repository and
+>    git push is used primarily as an installation mechanism.
 
--- >8 --
-[PATCH] rebase: one safety net, one bugfix and one optimization.
+Files should be removed properly, which pretty much excludes the former
+two, I think.
 
-When a .dotest from a previously failed rebase or patch
-application exists, rebase got confused and tried to apply
-mixture of what was already there and what is being rebased.
-Check the existence of the directory and barf.
+>    The latter is to keep a branch, other than "master" that is
+>    always checked out on the server machine, and have people
+>    push into a different branch and merge with it automatically
+>    when a push happens.  what would you do when a merge conflict
+>    happens?
 
-It failed with an mysterious "fatal: cannot read mbox" message
-if the branch being rebased is fully in sync with the base.
-Also if the branch is a proper descendant of the base, there is
-no need to run rebase logic.  Prevent these from happening by
-checking where the merge-base is.
+This seems weird and overcomplicated, and it seems to mirror that GIT
+does not want to deal with trees containing local modifications - which
+is fine, but I don't think you should go over huge hoops in the workflow
+to adjust to that. Just verify in the pre-update hook that the tree
+contains no local modifications, and disallow the push otherwise. Cogito
+can then use own update hooks which will enable it to handle local
+changes more gracefully (albeit still not ideally).
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+> On a tangent, the last point brings up an interesting
+> shared-repo usage pattern.  When you have a shared central
+> repository like CVS, you could arrange things this way:
+..snip..
+> I am not sure if people would find this useful, though.
 
----
+It is certainly quite interesting idea. I'm not sure how useful in
+practice is it either, though. ;-)
 
- git-rebase.sh |   28 +++++++++++++++++++++++++++-
- 1 files changed, 27 insertions(+), 1 deletions(-)
-
-applies-to: fe523a4df93cce3e5c5b0266b9d3f1cbea009afa
-7f4bd5d831ea838668d1de5f5af022f763230eee
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 2bc3a12..638ff0d 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -5,9 +5,25 @@
- 
- . git-sh-setup
- 
--# The other head is given
-+# Make sure we do not have .dotest
-+if mkdir .dotest
-+then
-+	rmdir .dotest
-+else
-+	echo >&2 '
-+It seems that I cannot create a .dotest directory, and I wonder if you
-+are in the middle of patch application or another rebase.  If that is not
-+the case, please rm -fr .dotest and run me again.  I am stopping in case
-+you still have something valuable there.'
-+	exit 1
-+fi
-+
-+# The other head is given.  Make sure it is valid.
- other=$(git-rev-parse --verify "$1^0") || exit
- 
-+# Make sure we have HEAD that is valid.
-+head=$(git-rev-parse --verify "HEAD^0") || exit
-+
- # The tree must be really really clean.
- git-update-index --refresh || exit
- diff=$(git-diff-index --cached --name-status -r HEAD)
-@@ -23,6 +39,16 @@ case "$#" in
- 	git-checkout "$2" || exit
- esac
- 
-+# If the HEAD is a proper descendant of $other, we do not even need
-+# to rebase.  Make sure we do not do needless rebase.  In such a
-+# case, merge-base should be the same as "$other".
-+mb=$(git-merge-base "$other" "$head")
-+if test "$mb" = "$other"
-+then
-+	echo >&2 "Current branch `git-symbolic-ref HEAD` is up to date."
-+	exit 0
-+fi
-+
- # Rewind the head to "$other"
- git-reset --hard "$other"
- git-format-patch -k --stdout --full-index "$other" ORIG_HEAD |
----
-0.99.9.GIT
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
