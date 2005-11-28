@@ -1,85 +1,51 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitk: UTF-8 support
-Date: Sun, 27 Nov 2005 16:12:51 -0800
-Message-ID: <7vr7917hq4.fsf@assigned-by-dhcp.cox.net>
-References: <1132719301.12227.5.camel@dv>
-	<7v64qi50sw.fsf@assigned-by-dhcp.cox.net>
-	<20051123235315.oht0zjidc4ccg8gs@webmail.spamcop.net>
-	<7v1x16y36r.fsf@assigned-by-dhcp.cox.net>
-	<20051124021231.nrg8448gk8w4owk8@webmail.spamcop.net>
+From: Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
+Subject: Re: git-send-mail in sh
+Date: Mon, 28 Nov 2005 01:15:41 +0100
+Message-ID: <20051128001541.GB8811@puritan.petwork>
+References: <4386DD45.6030308@op5.se> <7v7jaxou5b.fsf@assigned-by-dhcp.cox.net> <43874935.2080804@op5.se> <7vwtiwmvfp.fsf@assigned-by-dhcp.cox.net> <4388E33A.8000004@op5.se> <7v4q5xbvip.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 28 01:14:35 2005
+X-From: git-owner@vger.kernel.org Mon Nov 28 01:16:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgWe2-00084K-9d
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 01:13:22 +0100
+	id 1EgWgS-00005X-Cp
+	for gcvg-git@gmane.org; Mon, 28 Nov 2005 01:15:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751161AbVK1AMy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Nov 2005 19:12:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751162AbVK1AMx
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 19:12:53 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:37550 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751161AbVK1AMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Nov 2005 19:12:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051128001125.YDVP17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 27 Nov 2005 19:11:25 -0500
-To: Pavel Roskin <proski@gnu.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751162AbVK1APn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Nov 2005 19:15:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbVK1APn
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Nov 2005 19:15:43 -0500
+Received: from mxfep02.bredband.com ([195.54.107.73]:25784 "EHLO
+	mxfep02.bredband.com") by vger.kernel.org with ESMTP
+	id S1751162AbVK1APm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Nov 2005 19:15:42 -0500
+Received: from puritan.petwork ([213.112.43.250] [213.112.43.250])
+          by mxfep02.bredband.com with ESMTP
+          id <20051128001541.UKXO9142.mxfep02.bredband.com@puritan.petwork>
+          for <git@vger.kernel.org>; Mon, 28 Nov 2005 01:15:41 +0100
+Received: by puritan.petwork (Postfix, from userid 1000)
+	id 23E29ADFE5; Mon, 28 Nov 2005 01:15:41 +0100 (CET)
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v4q5xbvip.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12837>
 
-Pavel Roskin <proski@gnu.org> writes:
+Junio C Hamano wrote:
 
->> And as I suggested in another message (in the died-out thread
->> about gitweb), we could have i18n.commitEncoding in the
->> configuration to help gitk and gitweb.  I think that is the same
->> as your "other option".
->
-> Yes.  Then my patch needs to be changed to set encoding to that setting and only
-> if it's present.
+> The ${parameter##word} syntax is in IEEE 1003.1-2001, and bash, ksh,
+> and dash seem to work with it.
 
-The following patch on top of your patch has seen only very
-light testing, but it seems to do the right thing for my
-repository with utf-8 commit messages and another with euc-jp
-commit messages.  For the latter, I needed to do:
+You can add Zsh to that list.
 
-	$ git-repo-config i18n.commitencoding euc-jp
+        nikolai
 
--- >8 --
-[PATCH] gitk: Use i18n.commitencoding configuration item.
-
-Hardcoding "utf-8" in the script breaks projects that use local
-encoding, so allow setting i18n.commitEncoding.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-diff --git a/gitk b/gitk
-index b53a5c5..2242216 100755
---- a/gitk
-+++ b/gitk
-@@ -3669,7 +3669,14 @@ set datemode 0
- set boldnames 0
- set diffopts "-U 5 -p"
- set wrcomcmd "git-diff-tree --stdin -p --pretty"
--set gitencoding "utf-8"
-+
-+set gitencoding ""
-+catch {
-+    set gitencoding [exec git-repo-config --get i18n.commitencoding]
-+}
-+if {$gitencoding == ""} {
-+	set gitencoding "utf-8"
-+}
- 
- set mainfont {Helvetica 9}
- set textfont {Courier 9}
+-- 
+Nikolai Weibull: now available free of charge at http://bitwi.se/!
+Born in Chicago, IL USA; currently residing in Gothenburg, Sweden.
+main(){printf(&linux["\021%six\012\0"],(linux)["have"]+"fun"-97);}
