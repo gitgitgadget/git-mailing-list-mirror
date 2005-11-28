@@ -1,77 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: keeping remote repo checked out?
-Date: Mon, 28 Nov 2005 14:26:55 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511281420390.3263@g5.osdl.org>
-References: <m3k6et9rdw.fsf@lugabout.cloos.reno.nv.us>
- <7vbr051ad1.fsf@assigned-by-dhcp.cox.net> <20051128105736.GO22159@pasky.or.cz>
- <7vsltgtvk4.fsf@assigned-by-dhcp.cox.net> <20051128212804.GV22159@pasky.or.cz>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: 'git commit' ignoring args?
+Date: Tue, 29 Nov 2005 00:02:04 +0100
+Message-ID: <438B8C6C.8030407@op5.se>
+References: <438B2F40.6070801@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 28 23:33:16 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 29 00:05:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgrT0-0000Sn-NH
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 23:27:23 +0100
+	id 1Egs0s-0000iE-7Z
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 00:02:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932244AbVK1W1T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Nov 2005 17:27:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932257AbVK1W1T
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 17:27:19 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:19928 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932244AbVK1W1S (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Nov 2005 17:27:18 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jASMQvnO030311
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 28 Nov 2005 14:26:57 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jASMQtRT024339;
-	Mon, 28 Nov 2005 14:26:56 -0800
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051128212804.GV22159@pasky.or.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932307AbVK1XCI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Nov 2005 18:02:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932285AbVK1XCI
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 18:02:08 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:53420 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932304AbVK1XCG
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Nov 2005 18:02:06 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id E64426BCBE; Tue, 29 Nov 2005 00:02:04 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: <438B2F40.6070801@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12909>
 
-
-
-On Mon, 28 Nov 2005, Petr Baudis wrote:
+Jeff Garzik wrote:
 > 
-> >  - should it do 'git-checkout', 'git-reset --hard HEAD', or
-> >    'git-pull . branch_to_push_into'?  The former two pretty much
-> >    assumes no development happens on the server repository and
-> >    git push is used primarily as an installation mechanism.
+> With the latest git as of this writing, executing
 > 
-> Files should be removed properly, which pretty much excludes the former
-> two, I think.
+>     git commit Makefile stylesheet.xsl
+> 
+> results in an attempt to commit the above files, and also another file 
+> book.xml.  book.xml is modified, but I do not wish to check it in at 
+> this time, so I did not list it as an argument to 'git commit'.
+> 
 
-There are major locking issues with two people pushing at the same time.
+The index has been updated to match the file on disk somehow (perhaps 
+you did 'git add book.xml'?). You can un-mark it with
 
-The git logic does the right thing for a non-checked-out branch, but it 
-can do the right thing exactly _because_ it's not checked out. It can 
-create all the new objects whether the actual push succeeds or not, and it 
-can do the final switch-over as a single atomic file operation.
+	git reset HEAD
 
-The same is most emphatically _not_ true of "git checkout".
+which is equivalent to
 
-In other words, you need to add your very own locking for the shared 
-checked-out tree, and you need to (_within_ that lock) separately remember 
-what the _previous_ tree was that was checked out, because you can't just 
-rely on the previous head as reported by git, because that will have been 
-done ourside your "checked out lock".
+	git read-tree --reset HEAD
 
-And locking really isn't trivial. Especially if you _also_ do this with 
-multiple clients touching the same checked-out repo over NFS (which I'd 
-seriously suggest you not do).
+so long as you're operating on HEAD.
 
-There's a really good reason why the git core does _not_ do this. It's 
-damn complicated.
-
-		Linus
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
