@@ -1,113 +1,116 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: lost again on syntax change - local repository?
-Date: 28 Nov 2005 11:25:06 -0800
-Message-ID: <86psok378t.fsf@blue.stonehenge.com>
-References: <861x118r9t.fsf@blue.stonehenge.com>
-	<20051128104831.GN22159@pasky.or.cz>
-	<86d5kk7wbv.fsf@blue.stonehenge.com>
-	<20051128134111.GP22159@pasky.or.cz>
-	<86zmno6g3v.fsf@blue.stonehenge.com>
-	<20051128143428.GS22159@pasky.or.cz>
-	<868xv86dam.fsf@blue.stonehenge.com>
-	<20051128191546.GT22159@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: keeping remote repo checked out?
+Date: Mon, 28 Nov 2005 11:35:23 -0800
+Message-ID: <7vsltgtvk4.fsf@assigned-by-dhcp.cox.net>
+References: <m3k6et9rdw.fsf@lugabout.cloos.reno.nv.us>
+	<7vbr051ad1.fsf@assigned-by-dhcp.cox.net>
+	<20051128105736.GO22159@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 28 20:25:33 2005
+Cc: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Nov 28 20:35:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Egocn-0001RM-G2
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 20:25:17 +0100
+	id 1Egome-0006Dr-QP
+	for gcvg-git@gmane.org; Mon, 28 Nov 2005 20:35:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932192AbVK1TZK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Nov 2005 14:25:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932195AbVK1TZK
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 14:25:10 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:49198 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932192AbVK1TZI
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2005 14:25:08 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 8F2448F6FE;
-	Mon, 28 Nov 2005 11:25:07 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 01614-01-10; Mon, 28 Nov 2005 11:25:06 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id E3A3D8F6FF; Mon, 28 Nov 2005 11:25:06 -0800 (PST)
-To: Petr Baudis <pasky@suse.cz>
-x-mayan-date: Long count = 12.19.12.15.0; tzolkin = 11 Ahau; haab = 18 Ceh
-In-Reply-To: <20051128191546.GT22159@pasky.or.cz>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S932199AbVK1TfZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Nov 2005 14:35:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932203AbVK1TfZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 14:35:25 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:31203 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932199AbVK1TfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Nov 2005 14:35:25 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051128193443.FLKL6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 28 Nov 2005 14:34:43 -0500
+To: git@vger.kernel.org
+In-Reply-To: <20051128105736.GO22159@pasky.or.cz> (Petr Baudis's message of
+	"Mon, 28 Nov 2005 11:57:36 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12900>
 
->>>>> "Petr" == Petr Baudis <pasky@suse.cz> writes:
+Petr Baudis <pasky@suse.cz> writes:
 
-Petr> Could you try the following, please?
+> Dear diary, on Mon, Nov 28, 2005 at 08:48:26AM CET, I got a letter
+> where Junio C Hamano <junkio@cox.net> said that...
+>> James Cloos <cloos@jhcloos.com> writes:
+>> 
+>> > Is it possible to arrange that a push does a checkout on the remote
+>> > the same way a pull does on the local?
+>> 
+>> Creative use of hooks/post-update would solve that.
+>> 
+>> However, you should be very careful if you sometimes edit on
+>> server and sometimes push from other machine to the server on
+>> the same branch on the server.
+>
+> Why? At worst you will get files with conflict markers on the server,
+> which isn't that huge problem and just what you have to expect when you
+> do this kind of thing.
 
-Petr> diff --git a/cg-push b/cg-push
-Petr> index 1d59422..323ef26 100755
-Petr> --- a/cg-push
-Petr> +++ b/cg-push
-Petr> @@ -56,13 +56,13 @@ if echo "$uri" | grep -q '#'; then
-Petr>  	uri=$(echo $uri | cut -d '#' -f 1)
-Petr>  fi
- 
-Petr> -if echo "$uri" | grep -q "^http://"; then
-Petr> +if [ "${uri#http://}" != "$uri" ]; then
-Petr>  	die "pushing over HTTP not supported yet"
-Petr> -elif echo "$uri" | grep -q "^git+ssh://"; then
-Petr> +elif [ "${uri#git+ssh://}" != "$uri" ]; then
-Petr>  	send_pack_update "$name" "$(echo "$uri" | sed 's#^git+ssh://\([^/]*\)\(/.*\)$#\1:\2#')" $_git_head$sprembranch "${tags[@]}"
-Petr> -elif echo "$uri" | grep -q "^rsync://"; then
-Petr> +elif [ "${uri#rsync://}" != "$uri" ]; then
-Petr>          die "pushing over rsync not supported"
-Petr> -elif echo "$uri" | grep -q ":"; then
-Petr> +elif [ "${uri#*:}" != "$uri" ]; then
-Petr>  	echo "WARNING: I guessed the host:path syntax was used and fell back to the git+ssh protocol."
-Petr>  	echo "WARNING: The host:path syntax is evil because it is implicit. Please just use a URI."
-Petr>  	send_pack_update "$name" "$uri" $_git_head$sprembranch "${tags[@]}"
+Both of us are right and talking about the same thing.  You are
+right that as long as hooks/post-update is done correctly the
+one who works on the server should not have to worry.  I am
+right that the hooks/post-update for that setup needs to be done
+very carefully ;-).
 
-Bizarrely, same behavior.  Mark me "puzzled".
+Here are the things whoever is doing the hooks/post-update for
+this particular setup needs to think about.
 
-    localhost:~/Projects/Git/Play % cg-admin-setuprepo remote.git        
-    localhost:~/Projects/Git/Play % mkdir local.git
-    localhost:~/Projects/Git/Play % cd local.git 
-    localhost:..Git/Play/local.git % cg-init -mempty
-    defaulting to local storage area
-    Committing initial tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-    Committed as ee28097d96063ae660faf325f5bffdbcbc6818f4.
-    localhost:..Git/Play/local.git % cg-branch-add origin "$(cd ..; pwd)/remote.git#master"           
-    localhost:..Git/Play/local.git % cg-branch-ls   
-    origin  /Users/merlyn/Projects/Git/Play/remote.git#master
-    localhost:..Git/Play/local.git % cg-push
-    WARNING: I guessed the host:path syntax was used and fell back to the git+ssh protocol.
-    WARNING: The host:path syntax is evil because it is implicit. Please just use a URI.
-    ssh: \033]2;[zsh] localhost: No address associated with nodename
-    fatal: unexpected EOF
-    localhost:..Git/Play/local.git % which cg-push
-    /opt/git/bin/cg-push
-    localhost:..Git/Play/local.git % grep uri $(which cg-push)
-    uri=$(cat "$_git/branches/$name" 2>/dev/null) || die "unknown branch: $name"
-    if echo "$uri" | grep -q '#'; then
-            rembranch=$(echo $uri | cut -d '#' -f 2)
-            uri=$(echo $uri | cut -d '#' -f 1)
-    if [ "${uri#http://}" != "$uri" ]; then
-    elif [ "${uri#git+ssh://}" != "$uri" ]; then
-            send_pack_update "$name" "$(echo "$uri" | sed 's#^git+ssh://\([^/]*\)\(/.*\)$#\1:\2#')" $_git_head$sprembranch "${tags[@]}"
-    elif [ "${uri#rsync://}" != "$uri" ]; then
-    elif [ "${uri#*:}" != "$uri" ]; then
-            send_pack_update "$name" "$uri" $_git_head$sprembranch "${tags[@]}"
-            remgit="$uri"; [ -d "$remgit/.git" ] && remgit="$remgit/.git"
-                    send_pack_update "$name" "$uri" $_git_head$sprembranch "${tags[@]}"
+ - is it safe to assume that the guy working on the server
+   working tree never switch branches?  otherwise, what to do if
+   the working tree has different branch checked out when push
+   called post-update?
 
+ - should it allow forced-push that sets HEAD to non descendant
+   of the current HEAD?  In a shared repository setup,
+   disallowing forced-push is a good discipline.  OTOH, if this
+   is primarily used as an installation mechanism to a remote
+   hosting site, allowing forced-push may be ok.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+ - should it do 'git-checkout', 'git-reset --hard HEAD', or
+   'git-pull . branch_to_push_into'?  The former two pretty much
+   assumes no development happens on the server repository and
+   git push is used primarily as an installation mechanism.  The
+   latter is to keep a branch, other than "master" that is
+   always checked out on the server machine, and have people
+   push into a different branch and merge with it automatically
+   when a push happens.  what would you do when a merge conflict
+   happens?
+
+On a tangent, the last point brings up an interesting
+shared-repo usage pattern.  When you have a shared central
+repository like CVS, you could arrange things this way:
+
+ * On the shared repository, prepare one branch per developer
+   who is pushing into it, plus "master".
+
+ * The developer pull from "master" and work in her private
+   repository.  The changes are pushed into her own branch on
+   the shared repository machine.
+
+ * The the shared repository machine tries to merge "master"
+   into developer branches when the developer branch head is
+   updated.  If it does not trivially resolve, the developer
+   branch head is left as the last push by the developer
+   (i.e. not recording the merge).  If it does resolve, it is
+   checked out into playpen area, built and testsuite run, and
+   if all look well, "master" is updated with the result of the
+   merge.  A notification is sent to the developer to tell which
+   of the above actions happened.
+
+   This does not have to happen in the update hook and you
+   probably would not want to because it would be a lenthy
+   operation.  The update hook can be used to maintain recent
+   push log for a cron job that runs the "merge-test-integrate"
+   procedure to decide which branch is interesting.
+
+I am not sure if people would find this useful, though.
