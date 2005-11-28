@@ -1,55 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC 2/2] Automatically transform .git/{branches,remotes} into .git/config
-Date: Mon, 28 Nov 2005 01:14:15 -0800
-Message-ID: <7vpsolxhg8.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0511211455120.13775@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20051127125945.GD22159@pasky.or.cz>
-	<Pine.LNX.4.63.0511280248020.12343@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vfyph1ebq.fsf@assigned-by-dhcp.cox.net> <438AC32E.5010100@op5.se>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: [PATCH] git-mv: fully detect 'directory moved into itself'
+Date: Mon, 28 Nov 2005 10:15:15 +0100
+Message-ID: <200511281015.15188.Josef.Weidendorfer@gmx.de>
+References: <200511272206.43113.Josef.Weidendorfer@gmx.de> <pan.2005.11.28.06.54.32.809941@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Nov 28 10:15:54 2005
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Nov 28 10:16:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Egf5Z-0008Li-IJ
-	for gcvg-git@gmane.org; Mon, 28 Nov 2005 10:14:22 +0100
+	id 1Egf6c-0000Au-2M
+	for gcvg-git@gmane.org; Mon, 28 Nov 2005 10:15:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750754AbVK1JOR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Nov 2005 04:14:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751087AbVK1JOR
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 04:14:17 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:49087 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1750754AbVK1JOR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2005 04:14:17 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051128091250.EGEX17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 28 Nov 2005 04:12:50 -0500
+	id S1750834AbVK1JPV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Nov 2005 04:15:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751037AbVK1JPV
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 04:15:21 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:60659 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1750834AbVK1JPU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Nov 2005 04:15:20 -0500
+Received: from dhcp-3s-61.lrr.in.tum.de (dhcp-3s-61.lrr.in.tum.de [131.159.35.61])
+	by mail.in.tum.de (Postfix) with ESMTP id E08A12841;
+	Mon, 28 Nov 2005 10:15:16 +0100 (MET)
 To: git@vger.kernel.org
-In-Reply-To: <438AC32E.5010100@op5.se> (Andreas Ericsson's message of "Mon, 28
-	Nov 2005 09:43:26 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+User-Agent: KMail/1.9
+In-Reply-To: <pan.2005.11.28.06.54.32.809941@smurf.noris.de>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12864>
 
-Andreas Ericsson <ae@op5.se> writes:
+This gives a better error message when trying to move a directory
+into some subdirectory of itself; ie. no real bug fix: renaming
+already failed before, but with a strange "invalid argument".
 
-> I'd still like to see git-repo-config and git-user-config. Otherwise 
-> we'll need to continue having user-based environment variables 
-> (GIT_COMMITTER_IDENT and friends).
+Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 
-Since .git/config is not shared across repositories even on
-clone (and is deliberately so), "git-repo-config user.name" is
-for you to set *your* name.
+---
 
-Having said that, GIT_COMMITTER_IDENT and friends are there to
-stay, because that is how you override what you get from the
-config file per commit, which is needed for people playing the
-integrator role.  When one is playing an individual developer
-role, user.name or even not having any and relying on GECOS is
-often good enough.
+This is a corrected version.
+
+On Monday 28 November 2005 07:54, Matthias Urlichs wrote:
+> Hi, Josef Weidendorfer wrote:
+> 
+> > +    if (($bad eq "") && ($dst =~ /^$src\//)) {
+> 
+> That should be
+> 
+> > +    if (($bad eq "") && ($dst =~ /^\Q$src\E\//)) {
+> 
+> otherwise you will mistakenly match "foo-bar" with "foo.bar".
+> 
+
+Ah, thanks.
+You never end learning.
+
+Josef
+
+
+ git-mv.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+applies-to: 5d83477de7a407ab0ef183c6676114e1a507cf86
+3c1ed8adaff3f7492ef2afdb5585ae7412a02817
+diff --git a/git-mv.perl b/git-mv.perl
+index ac19876..bfe3c29 100755
+--- a/git-mv.perl
++++ b/git-mv.perl
+@@ -108,7 +108,7 @@ while(scalar @srcArgs > 0) {
+ 	}
+     }
+     
+-    if (($bad eq "") && ($src eq $dstDir)) {
++    if (($bad eq "") && ($dst =~ /^\Q$src\E\//)) {
+ 	$bad = "can not move directory '$src' into itself";
+     }
+ 
+---
+0.99.9.GIT
