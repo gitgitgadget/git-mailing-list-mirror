@@ -1,178 +1,73 @@
-From: linux@horizon.com
-Subject: git-name-rev off-by-one bug
-Date: 28 Nov 2005 18:42:56 -0500
-Message-ID: <20051128234256.1508.qmail@science.horizon.com>
-Cc: linux@horizon.com
-X-From: git-owner@vger.kernel.org Tue Nov 29 05:28:54 2005
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Re: keeping remote repo checked out?
+Date: Mon, 28 Nov 2005 20:34:11 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0511282029290.3177@g5.osdl.org>
+References: <m3k6et9rdw.fsf@lugabout.cloos.reno.nv.us>
+ <7vbr051ad1.fsf@assigned-by-dhcp.cox.net> <20051128105736.GO22159@pasky.or.cz>
+ <7vsltgtvk4.fsf@assigned-by-dhcp.cox.net> <20051128212804.GV22159@pasky.or.cz>
+ <Pine.LNX.4.64.0511281420390.3263@g5.osdl.org> <Pine.LNX.4.64.0511281845280.25300@iabervon.org>
+ <Pine.LNX.4.64.0511281637480.3177@g5.osdl.org> <Pine.LNX.4.64.0511282027360.25300@iabervon.org>
+ <Pine.LNX.4.64.0511281837040.3177@g5.osdl.org> <Pine.LNX.4.64.0511282208050.25300@iabervon.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 29 05:36:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Egx67-00069G-M5
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 05:28:09 +0100
+	id 1EgxCm-0000b4-Tv
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 05:35:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750746AbVK2E2E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Nov 2005 23:28:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750761AbVK2E2E
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 23:28:04 -0500
-Received: from science.horizon.com ([192.35.100.1]:33093 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1750746AbVK2E2D
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Nov 2005 23:28:03 -0500
-Received: (qmail 1509 invoked by uid 1000); 28 Nov 2005 18:42:56 -0500
-To: git@vger.kernel.org
+	id S1750733AbVK2Ee3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Nov 2005 23:34:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750756AbVK2Ee3
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Nov 2005 23:34:29 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:52662 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750733AbVK2Ee2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Nov 2005 23:34:28 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAT4YFnO013073
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 28 Nov 2005 20:34:16 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAT4YBrE007390;
+	Mon, 28 Nov 2005 20:34:13 -0800
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.64.0511282208050.25300@iabervon.org>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.127 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12917>
-
-I've been trying to wrap my head around git for a while now, and finding
-things a bit confusing.  Basically, the reason that I'm scared to trust
-it with my code is that all sharing is done via push and pull, and they
-are done by merging, and merging isn't described very well anywhere.
-
-There's lots of intimate *detail* of merge algorithms (hiding in, of all
-places, the git-read-tree documentation, which is not the obvious place
-for a beginner to look), but the important high-level questions like "what
-happens to all my hard work if there's a merge conflict?" or "what if I
-forget to git-update-index before doing the merge?" are not really clear.
-I don't like to go ahead if I'm not confident I can get back.
-
-(Being able to back up the object database is obviously simple, but what
-happens if the index holds HEAD+1, the working directory holds HEAD+2,
-and I try to mere the latest changes from origin?  Are either HEAD+1 or
-HEAD+2 in danger of being lost, or will checking them in later overwrite
-the merge, or what?)
-
-Anyway, I'm doing some experiments and trying to understand it, and writing
-what I learn as I go, which will hopefully be useful to someone.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12918>
 
 
-Another very confusing thing is the ref syntax with all those ~12^3^22^2
-suffixes.  The git tutorial uses "master^" and "master^2" syntax, but
-doesn't actually explain it.
 
-The meaning can be found on the second page of the git-rev-parse manual.
-If, that is, you think to read that man page, and if you don't stop
-reading after the first page tells you that it's a helper for scripts
-not meant to be invoked directly by the end-user.
+On Mon, 28 Nov 2005, Daniel Barkalow wrote:
+> 
+> I was planning to keep it in .git (instead of .git/refs/...), because it's 
+> information about the working tree, not properly part of the repository. 
+> It's like MERGE_HEAD in being about what the user is in the middle of.
 
-Trying to see if I understood what was going on, I picked a random rev out of
-git-show-branch output and tried git-name-rev:
+That's fine.
 
-> $ git-name-rev 365a00a3f280f8697e4735e1ac5b42a1c50f7887
-> 365a00a3f280f8697e4735e1ac5b42a1c50f7887 maint~404^1~7
+However, your patch isn't.
 
-(If you care, maint=93dcab2937624ebb97f91807576cddb242a55a46)
+Your patch just creates this eternal confusion of "why is HEAD different 
+from CHECKED_OUT". 
 
-And was very confused when git-rev-parse didn't invert the operation:
+It's really easy to do what you want to do _without_ any tool changes:
 
-> $ git-rev-parse maint~404^1~7
-> f69714c38c6f3296a4bfba0d057e0f1605373f49
+	git-rev-parse HEAD > .git/CHECKED_OUT
+	rm .git/HEAD
+	ln -s refs/heads/../../CHECKED_OUT .git/HEAD
 
-I spent a while verifying that I understood that ^1 == ^ == ~1, so
-~404^1~7 = ~412, and that gave the same unwanted result:
+and you're done. No tool changes necessary.
 
-> $ git-rev-parse maint~412
-> f69714c38c6f3296a4bfba0d057e0f1605373f49
+Now "HEAD" always points to the checked-out thing, but a "git clone" won't 
+ever actually clone your CHECKED_OUT branch.
 
-After confusing myself for a while, I looked to see why git-name-rev
-would output such a redundant name and found that it was simply
-wrong.  Fixing the symbolic name worked:
-
-> $ git-rev-parse maint~404^2~7
-> 365a00a3f280f8697e4735e1ac5b42a1c50f7887
-
-You can either go with a minimal fix:
-diff --git a/name-rev.c b/name-rev.c
-index 7d89401..f7fa18c 100644
---- a/name-rev.c
-+++ b/name-rev.c
-@@ -61,9 +61,10 @@ copy_data:
- 
- 			if (generation > 0)
- 				sprintf(new_name, "%s~%d^%d", tip_name,
--						generation, parent_number);
-+						generation, parent_number+1);
- 			else
--				sprintf(new_name, "%s^%d", tip_name, parent_number);
-+				sprintf(new_name, "%s^%d", tip_name,
-+						parent_number+1);
- 
- 			name_rev(parents->item, new_name,
- 				merge_traversals + 1 , 0, 0);
-
-
-Or you can get a bit more ambitious and write ~1 as ^:
-
-diff --git a/name-rev.c b/name-rev.c
-index 7d89401..82053c8 100644
---- a/name-rev.c
-+++ b/name-rev.c
-@@ -57,13 +57,17 @@ copy_data:
- 			parents;
- 			parents = parents->next, parent_number++) {
- 		if (parent_number > 0) {
--			char *new_name = xmalloc(strlen(tip_name)+8);
-+			unsigned const len = strlen(tip_name);
-+			char *new_name = xmalloc(len+8);
- 
--			if (generation > 0)
--				sprintf(new_name, "%s~%d^%d", tip_name,
--						generation, parent_number);
--			else
--				sprintf(new_name, "%s^%d", tip_name, parent_number);
-+			memcpy(new_name, tip_name, len);
-+
-+			if (generation == 1)
-+				new_name[len++] = '^';
-+			else if (generation > 1)
-+				len += sprintf(new_name+len, "~%d", generation);
-+
-+			sprintf(new_name+len, "^%d", parent_number+1);
- 
- 			name_rev(parents->item, new_name,
- 				merge_traversals + 1 , 0, 0);
-
-
-While I'm at it, I notice some unnecessary invocations of expr in some
-of the shell scripts.  You can do it far more simply using the ${var#pat}
-and ${var%pat} expansions to strip off leading and trailing patterns.
-For example:
-
-diff --git a/git-cherry.sh b/git-cherry.sh
-index 867522b..c653a6a 100755
---- a/git-cherry.sh
-+++ b/git-cherry.sh
-@@ -23,8 +23,7 @@ case "$1" in -v) verbose=t; shift ;; esa
- 
- case "$#,$1" in
- 1,*..*)
--    upstream=$(expr "$1" : '\(.*\)\.\.') ours=$(expr "$1" : '.*\.\.\(.*\)$')
--    set x "$upstream" "$ours"
-+    set x "${1%..*}" "${1#*..}"
-     shift ;;
- esac
- 
-This works in dash and is in the POSIX spec.  It doesn't work in some
-very old /bin/sh implementations (such as Solaris still ships), but I'm
-pretty sure it was introduced at the same time as $(), and the scripts
-use *that* all over the place.
-
-% sh
-$ uname -s -r
-SunOS 5.9
-$ foo=bar
-$ echo ${foo#b}
-bad substitution
-$ echo `echo $foo`
-bar
-$ echo $(echo $foo)
-syntax error: `(' unexpected
-
-Anyway, if it's portable enough, it's faster.  Ah... I just found discussion
-of this in late September, but it's not clear what the resolution was.
-http://marc.theaimsgroup.com/?t=112746188000003
-
-
-(Oh, yes: all of the above patches are released into the public domain.
-Copyright abandoned.  Have fun.)
+		Linus
