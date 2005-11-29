@@ -1,81 +1,364 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Question about handling of heterogeneous repositories
-Date: Tue, 29 Nov 2005 21:47:29 +0100
-Message-ID: <20051129204729.GA3033@steel.home>
-References: <81b0412b0511220850w429d2f36lafe9de7ce19ce8f@mail.gmail.com> <43837442.9060602@op5.se> <20051122232228.GB2916@steel.home> <20051127131147.GF22159@pasky.or.cz>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: [PATCH] gitk: add Update menu item.
+Date: Tue, 29 Nov 2005 22:15:51 +0100
+Message-ID: <20051129211551.GF8383MdfPADPa@greensroom.kotnet.org>
+References: <20051123222003.GA16290MdfPADPa@greensroom.kotnet.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 29 21:51:14 2005
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 29 22:19:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhCOz-0006UB-Kw
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 21:48:38 +0100
+	id 1EhCpi-0004M9-L2
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 22:16:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932396AbVK2Usb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 15:48:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932397AbVK2Usb
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 15:48:31 -0500
-Received: from devrace.com ([198.63.210.113]:58125 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S932396AbVK2Usa (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 15:48:30 -0500
-Received: from tigra.home (p54A0CEB2.dip.t-dialin.net [84.160.206.178])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id jATKlbxk020907;
-	Tue, 29 Nov 2005 14:47:39 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1EhCNz-0002jl-00; Tue, 29 Nov 2005 21:47:35 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1EhCNu-0007zr-OT; Tue, 29 Nov 2005 21:47:31 +0100
-To: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20051127131147.GF22159@pasky.or.cz>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.8 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S932402AbVK2VP4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 16:15:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932404AbVK2VP4
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 16:15:56 -0500
+Received: from smtp19.wxs.nl ([195.121.247.10]:22497 "EHLO smtp19.wxs.nl")
+	by vger.kernel.org with ESMTP id S932402AbVK2VP4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 16:15:56 -0500
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp19.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0IQQ006RWJ2FT8@smtp19.wxs.nl> for git@vger.kernel.org; Tue,
+ 29 Nov 2005 22:15:52 +0100 (CET)
+Received: (qmail 7961 invoked by uid 500); Tue, 29 Nov 2005 21:15:51 +0000
+In-reply-to: <20051123222003.GA16290MdfPADPa@greensroom.kotnet.org>
+To: Paul Mackerras <paulus@samba.org>, Junio C Hamano <junkio@cox.net>
+Mail-followup-to: Paul Mackerras <paulus@samba.org>,
+ Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12955>
 
-Petr Baudis, Sun, Nov 27, 2005 14:11:47 +0100:
-> > > >For everyone who have an experience with ClearCase or Perforce (I'm
-> > > >sorry for mentioning it) it is what the "mappings" are often used for:
-> > > >a project is build together from different parts, which can be worked
-> > > >on separately.
-> > > >
-> > > >I'm trying to introduce git at work, but have to prepare myself for
-> > > >possible questions first, and this is one of them :)
-> 
-> This is something e.g. Cogito wants to support, but does not yet.
-> Patches welcome.
+Update will redraw the commits if any commits have been added to any
+of the selected heads.  The new commits appear on the top.
 
-I wouldn't know what to patch, having no clear picture of the approach
-myself, and especially when I don't feel safe using the solution. For
-example, how do you go about moving/renaming files between subrepos?
-Rename detection will not work, which will be unexpected...
+Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
 
-BTW, how does git-mv behave for out-of-tree renaming? How about
-inter-repo renaming (remove+add)?
+---
+Junio noticed that my patch didn't work if you use path specifiers.
+This update should fix this problem.
 
-> > > It would certainly be nicer to have git ignore directories that have the 
-> > > ".git" directory (so long as it's not the top of the repo, that is), but 
-> > > I haven't had the energy to fix that when there's already a solution 
-> > > that's simple enough and quite adequate.
-> > 
-> > BTW, will something like "*/.git/*" in info/exclude work? IOW, does *
-> > match a "/"?
-> 
-> Nope, but try just '.git' - in case it is not a pathname but just a
-> filename (or dirname, for that matter), it will recursively apply to all
-> the subtrees.
+skimo
 
-well, it ignored the ".git"s in the subdirs, not _the_ subdirectories.
-I think that can be helped by putting the directories themselves into
-.gitignore lists.
+ gitk |  176 +++++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 files changed, 142 insertions(+), 34 deletions(-)
+
+applies-to: 4000f8b8d01ad35929972c07d98d89e2280cf3d3
+f24c2e402dd592f5bd5047724da30a8a5e0115eb
+diff --git a/gitk b/gitk
+index 730ffd9..de5c8b1 100755
+--- a/gitk
++++ b/gitk
+@@ -16,8 +16,24 @@ proc gitdir {} {
+     }
+ }
+ 
++proc parse_args {rargs} {
++    global parsed_args
++
++    if [catch {
++	set parse_args [concat --default HEAD $rargs]
++	set parsed_args [split [eval exec git-rev-parse $parse_args] "\n"]
++    }] {
++	# if git-rev-parse failed for some reason...
++	if {$rargs == {}} {
++	    set rargs HEAD
++	}
++	set parsed_args $rargs
++    }
++    return $parsed_args
++}
++
+ proc getcommits {rargs} {
+-    global commits commfd phase canv mainfont env
++    global oldcommits commits commfd phase canv mainfont env
+     global startmsecs nextupdate ncmupdate
+     global ctext maincursor textcursor leftover gitencoding
+ 
+@@ -27,21 +43,13 @@ proc getcommits {rargs} {
+ 	error_popup "Cannot find the git directory \"$gitdir\"."
+ 	exit 1
+     }
++    set oldcommits {}
+     set commits {}
+     set phase getcommits
+     set startmsecs [clock clicks -milliseconds]
+     set nextupdate [expr {$startmsecs + 100}]
+     set ncmupdate 1
+-    if [catch {
+-	set parse_args [concat --default HEAD $rargs]
+-	set parsed_args [split [eval exec git-rev-parse $parse_args] "\n"]
+-    }] {
+-	# if git-rev-parse failed for some reason...
+-	if {$rargs == {}} {
+-	    set rargs HEAD
+-	}
+-	set parsed_args $rargs
+-    }
++    set parsed_args [parse_args $rargs]
+     if [catch {
+ 	set commfd [open "|git-rev-list --header --topo-order --parents $parsed_args" r]
+     } err] {
+@@ -59,9 +67,10 @@ proc getcommits {rargs} {
+ }
+ 
+ proc getcommitlines {commfd}  {
+-    global commits parents cdate children
++    global oldcommits commits parents cdate children nchildren
+     global commitlisted phase nextupdate
+     global stopped redisplaying leftover
++    global canv
+ 
+     set stuff [read $commfd]
+     if {$stuff == {}} {
+@@ -119,10 +128,18 @@ proc getcommitlines {commfd}  {
+ 	set id [lindex $ids 0]
+ 	set olds [lrange $ids 1 end]
+ 	set cmit [string range $cmit [expr {$j + 1}] end]
++	if {$phase == "updatecommits"} {
++	    $canv delete all
++	    set oldcommits $commits
++	    set commits {}
++	    unset children
++	    unset nchildren
++	    set phase getcommits
++	}
+ 	lappend commits $id
+ 	set commitlisted($id) 1
+ 	parsecommit $id $cmit 1 [lrange $ids 1 end]
+-	drawcommit $id
++	drawcommit $id 1
+ 	if {[clock clicks -milliseconds] >= $nextupdate} {
+ 	    doupdate 1
+ 	}
+@@ -132,7 +149,7 @@ proc getcommitlines {commfd}  {
+ 		set stopped 0
+ 		set phase "getcommits"
+ 		foreach id $commits {
+-		    drawcommit $id
++		    drawcommit $id 1
+ 		    if {$stopped} break
+ 		    if {[clock clicks -milliseconds] >= $nextupdate} {
+ 			doupdate 1
+@@ -168,16 +185,9 @@ proc readcommit {id} {
+     parsecommit $id $contents 0 {}
+ }
+ 
+-proc parsecommit {id contents listed olds} {
+-    global commitinfo children nchildren parents nparents cdate ncleft
++proc updatechildren {id olds} {
++    global children nchildren parents nparents ncleft
+ 
+-    set inhdr 1
+-    set comment {}
+-    set headline {}
+-    set auname {}
+-    set audate {}
+-    set comname {}
+-    set comdate {}
+     if {![info exists nchildren($id)]} {
+ 	set children($id) {}
+ 	set nchildren($id) 0
+@@ -196,6 +206,19 @@ proc parsecommit {id contents listed old
+ 	    incr ncleft($p)
+ 	}
+     }
++}
++
++proc parsecommit {id contents listed olds} {
++    global commitinfo cdate
++
++    set inhdr 1
++    set comment {}
++    set headline {}
++    set auname {}
++    set audate {}
++    set comname {}
++    set comdate {}
++    updatechildren $id $olds
+     set hdrend [string first "\n\n" $contents]
+     if {$hdrend < 0} {
+ 	# should never happen...
+@@ -243,6 +266,9 @@ proc readrefs {} {
+     global tagids idtags headids idheads tagcontents
+     global otherrefids idotherrefs
+ 
++    foreach v {tagids idtags headids idheads otherrefids idotherrefs} {
++	catch {unset $v}
++    }
+     set refd [open [list | git-ls-remote [gitdir]] r]
+     while {0 <= [set n [gets $refd line]]} {
+ 	if {![regexp {^([0-9a-f]{40})	refs/([^^]*)$} $line \
+@@ -292,7 +318,7 @@ proc error_popup msg {
+     tkwait window $w
+ }
+ 
+-proc makewindow {} {
++proc makewindow {rargs} {
+     global canv canv2 canv3 linespc charspc ctext cflist textfont
+     global findtype findtypemenu findloc findstring fstring geometry
+     global entries sha1entry sha1string sha1but
+@@ -302,6 +328,7 @@ proc makewindow {} {
+     menu .bar
+     .bar add cascade -label "File" -menu .bar.file
+     menu .bar.file
++    .bar.file add command -label "Update" -command [list updatecommits $rargs]
+     .bar.file add command -label "Reread references" -command rereadrefs
+     .bar.file add command -label "Quit" -command doquit
+     menu .bar.help
+@@ -1416,8 +1443,9 @@ proc decidenext {{noread 0}} {
+     return $level
+ }
+ 
+-proc drawcommit {id} {
++proc drawcommit {id reading} {
+     global phase todo nchildren datemode nextupdate revlistorder
++    global numcommits ncmupdate displayorder todo onscreen
+     global numcommits ncmupdate displayorder todo onscreen parents
+ 
+     if {$phase != "incrdraw"} {
+@@ -1455,20 +1483,29 @@ proc drawcommit {id} {
+ 	    }
+ 	}
+     }
+-    drawmore 1
++    drawmore $reading
+ }
+ 
+ proc finishcommits {} {
+-    global phase
++    global phase oldcommits commits
+     global canv mainfont ctext maincursor textcursor
++    global parents
+ 
+-    if {$phase != "incrdraw"} {
++    if {$phase == "incrdraw" || $phase == "removecommits"} {
++	foreach id $oldcommits {
++	    lappend commits $id
++	    updatechildren $id $parents($id)
++	    drawcommit $id 0
++	}
++	set oldcommits {}
++	drawrest
++    } elseif {$phase == "updatecommits"} {
++	set phase {}
++    } else {
+ 	$canv delete all
+ 	$canv create text 3 3 -anchor nw -text "No commits selected" \
+ 	    -font $mainfont -tags textitems
+ 	set phase {}
+-    } else {
+-	drawrest
+     }
+     . config -cursor $maincursor
+     settextcursor $textcursor
+@@ -3595,9 +3632,6 @@ proc rereadrefs {} {
+ 	    set ref($id) [listrefs $id]
+ 	}
+     }
+-    foreach v {tagids idtags headids idheads otherrefids idotherrefs} {
+-	catch {unset $v}
+-    }
+     readrefs
+     set refids [lsort -unique [concat $refids [array names idtags] \
+ 			[array names idheads] [array names idotherrefs]]]
+@@ -3609,6 +3643,80 @@ proc rereadrefs {} {
+     }
+ }
+ 
++proc updatecommits {rargs} {
++    global commitlisted commfd phase
++    global startmsecs nextupdate ncmupdate
++    global idtags idheads idotherrefs
++    global leftover
++    global parsed_args
++    global canv
++    global oldcommits commits
++    global parents nchildren children ncleft
++
++    set old_args $parsed_args
++    parse_args $rargs
++
++    foreach id $old_args {
++	if {![regexp {^[0-9a-f]{40}$} $id]} continue
++	if {[info exists oldref($id)]} continue
++	set oldref($id) $id
++	lappend ignoreold "^$id"
++    }
++    foreach id $parsed_args {
++	if {![regexp {^[0-9a-f]{40}$} $id]} continue
++	if {[info exists ref($id)]} continue
++	set ref($id) $id
++	lappend ignorenew "^$id"
++    }
++
++    foreach a $old_args {
++	if {![info exists ref($a)]} {
++	    lappend ignorenew $a
++	}
++    }
++
++    set phase updatecommits
++    set removed_commits [split [eval exec git-rev-list $ignorenew] "\n" ]
++    if {[llength $removed_commits] > 0} {
++	$canv delete all
++	set oldcommits {}
++	foreach c $commits {
++	    if {[lsearch $c $removed_commits] < 0} {
++		lappend oldcommits $c
++	    } else {
++		unset commitlisted($c)
++	    }
++	}
++	set commits {}
++	unset children
++	unset nchildren
++	set phase removecommits
++    }
++
++    set args {}
++    foreach a $parsed_args {
++	if {![info exists oldref($a)]} {
++	    lappend args $a
++	}
++    }
++
++    readrefs
++    if [catch {
++	set commfd [open "|git-rev-list --header --topo-order --parents $ignoreold $args" r]
++    } err] {
++	puts stderr "Error executing git-rev-list: $err"
++	exit 1
++    }
++    set startmsecs [clock clicks -milliseconds]
++    set nextupdate [expr $startmsecs + 100]
++    set ncmupdate 1
++    set leftover {}
++    fconfigure $commfd -blocking 0 -translation lf
++    fileevent $commfd readable [list getcommitlines $commfd]
++    . config -cursor watch
++    settextcursor watch
++}
++
+ proc showtag {tag isnew} {
+     global ctext cflist tagcontents tagids linknum
+ 
+@@ -3704,6 +3812,6 @@ set redisplaying 0
+ set stuffsaved 0
+ set patchnum 0
+ setcoords
+-makewindow
++makewindow $revtreeargs
+ readrefs
+ getcommits $revtreeargs
+---
+0.99.9.GIT
