@@ -1,67 +1,61 @@
-From: Jan Andres <jandres@gmx.net>
-Subject: [PATCH] Fix typo in http-push.c, take two
-Date: Tue, 29 Nov 2005 16:30:46 +0100
-Message-ID: <20051129153046.GA9091@pitr.home.jan>
-References: <20051129005154.GA3076@pitr.home.jan> <Pine.LNX.4.63.0511290923390.16927@wbgn013.biozentrum.uni-wuerzburg.de> <20051129133537.GA490@pitr.home.jan>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix typo in http-push.c
+Date: Tue, 29 Nov 2005 17:40:02 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0511291739090.12136@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051129005154.GA3076@pitr.home.jan>
+ <Pine.LNX.4.63.0511290923390.16927@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20051129133537.GA490@pitr.home.jan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Nov 29 17:35:33 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 29 17:49:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eh8HC-0007US-44
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 17:24:18 +0100
+	id 1Eh8WY-0006hX-JG
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 17:40:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751399AbVK2QYP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 11:24:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbVK2QYP
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 11:24:15 -0500
-Received: from mail.gmx.de ([213.165.64.20]:63895 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751399AbVK2QYP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 11:24:15 -0500
-Received: (qmail invoked by alias); 29 Nov 2005 16:24:12 -0000
-Received: from e176049225.adsl.alicedsl.de (EHLO pitr.home.jan) [85.176.49.225]
-  by mail.gmx.net (mp013) with SMTP; 29 Nov 2005 17:24:12 +0100
-X-Authenticated: #11648398
-Received: by pitr.home.jan (Postfix, from userid 500)
-	id D59DB2135FE; Tue, 29 Nov 2005 16:30:46 +0100 (MET)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S932129AbVK2QkF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 11:40:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932081AbVK2QkF
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 11:40:05 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:60891 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932114AbVK2QkE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2005 11:40:04 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 0689213F7D7; Tue, 29 Nov 2005 17:40:03 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E1B2A9F492; Tue, 29 Nov 2005 17:40:02 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id CAD2B8365C; Tue, 29 Nov 2005 17:40:02 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id AC05613F7D7; Tue, 29 Nov 2005 17:40:02 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Jan Andres <jandres@gmx.net>
 In-Reply-To: <20051129133537.GA490@pitr.home.jan>
-User-Agent: Mutt/1.4.2.1i
-X-Y-GMX-Trusted: 0
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12947>
 
-Ok, so this is my final(?) proposal for the fix.
+Hi,
 
----
+On Tue, 29 Nov 2005, Jan Andres wrote:
 
-Fix a bug in handle_new_lock_ctx()'s memory allocation which may cause
-segfaults.
+> [...]
+>
+> +				lock->token = xmalloc(strlen(ctx->cdata + 16) + 1);
+> 
+> so as to account for the trailing NUL?
 
-Signed-off-by: Jan Andres <jandres@gmx.net>
+Of course! That's why I wanted to write "strlen(ctx->cdata + 15)", but I 
+fsck'ed up. Sorry.
 
----
-
-diff --git a/http-push.c b/http-push.c
-index 76c7886..bbb5118 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -784,7 +784,8 @@ static void handle_new_lock_ctx(struct x
- 					strtol(ctx->cdata + 7, NULL, 10);
- 		} else if (!strcmp(ctx->name, DAV_ACTIVELOCK_TOKEN)) {
- 			if (!strncmp(ctx->cdata, "opaquelocktoken:", 16)) {
--				lock->token = xmalloc(strlen(ctx->cdata - 15));
-+				lock->token =
-+					xmalloc(strlen(ctx->cdata + 16) + 1);
- 				strcpy(lock->token, ctx->cdata + 16);
- 			}
- 		}
----
-0.99.9.GIT
-
--- 
-Jan Andres <jandres@gmx.net>
+Ciao,
+Dscho
