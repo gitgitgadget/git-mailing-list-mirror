@@ -1,80 +1,58 @@
-From: jdl@freescale.com
-Subject: [PATCH] Fix typos and minor format issues.
-Date: Tue, 29 Nov 2005 08:59:56 -0600
-Message-ID: <E1Eh6xY-0007ul-NI@jdl.com>
-X-From: git-owner@vger.kernel.org Tue Nov 29 16:13:00 2005
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH] Re: keeping remote repo checked out?
+Date: Tue, 29 Nov 2005 14:39:02 +0100
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.11.29.13.39.01.958465@smurf.noris.de>
+References: <m3k6et9rdw.fsf@lugabout.cloos.reno.nv.us> <7vbr051ad1.fsf@assigned-by-dhcp.cox.net> <20051128105736.GO22159@pasky.or.cz> <7vsltgtvk4.fsf@assigned-by-dhcp.cox.net> <20051128212804.GV22159@pasky.or.cz> <Pine.LNX.4.64.0511281420390.3263@g5.osdl.org> <Pine.LNX.4.64.0511281845280.25300@iabervon.org> <Pine.LNX.4.64.0511281637480.3177@g5.osdl.org> <Pine.LNX.4.64.0511282027360.25300@iabervon.org> <Pine.LNX.4.64.0511281837040.3177@g5.osdl.org> <Pine.LNX.4.64.0511282208050.25300@iabervon.org> <Pine.LNX.4.64.0511282029290.3177@g5.osdl.org> <Pine.LNX.4.64.0511282337170.25300@iabervon.org> <7vmzjom00m.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511290141220.25300@iabervon.org> <7v8xv7lwlr.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Tue Nov 29 16:28:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eh6xo-0003xP-KC
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 16:00:12 +0100
+	id 1Eh6r5-0000q0-D8
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 15:53:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751371AbVK2PAJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 10:00:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751373AbVK2PAI
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 10:00:08 -0500
-Received: from mail.jdl.com ([66.118.10.122]:18108 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S1751371AbVK2PAH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 10:00:07 -0500
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1Eh6xY-0007ul-NI
-	for git@vger.kernel.org; Tue, 29 Nov 2005 08:59:57 -0600
+	id S1751374AbVK2OxM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 09:53:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751375AbVK2OxM
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 09:53:12 -0500
+Received: from main.gmane.org ([80.91.229.2]:53151 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751374AbVK2OxL (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 09:53:11 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1Eh6MY-0002Tv-U8
+	for git@vger.kernel.org; Tue, 29 Nov 2005 15:21:42 +0100
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 29 Nov 2005 15:21:42 +0100
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 29 Nov 2005 15:21:42 +0100
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-X-Spam-Score: -105.9 (---------------------------------------------------)
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12945>
 
+Hi, Junio C Hamano wrote:
 
-Signed-off-by: Jon Loeliger <jdl@freescale.com>
+> When everything goes well, the daemon goes to treeP and pulls
+> from treeR's master into "deploy", which is checked out.
 
----
+Why do you need a separate tree for that? -EOVERKILL.
+I just use a separate index file for the production tree (and a well-known
+name in refs/heads that's associated with it, for which the commit hook
+blocks updates).
 
- Documentation/pull-fetch-param.txt |   14 +++++++-------
- 1 files changed, 7 insertions(+), 7 deletions(-)
-
-applies-to: 116ec987c167ce1489acbe8c1b6161e9e19344f1
-6c335b09a1b8348eb750be4a86f1172e1f6d28ac
-diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-index 6413d52..b5b9792 100644
---- a/Documentation/pull-fetch-param.txt
-+++ b/Documentation/pull-fetch-param.txt
-@@ -15,10 +15,10 @@
- - ssh://host.xz/~/path/to/repo.git
- ===============================================================
- +
--	SSH Is the default transport protocol and also supports an
--	scp-like syntax.  Both syntaxes support username expansion,
--	as does the native git protocol. The following three are
--	identical to the last three above, respectively:
-+SSH Is the default transport protocol and also supports an
-+scp-like syntax.  Both syntaxes support username expansion,
-+as does the native git protocol. The following three are
-+identical to the last three above, respectively:
- +
- ===============================================================
- - host.xz:/path/to/repo.git/
-@@ -26,8 +26,8 @@
- - host.xz:path/to/repo.git
- ===============================================================
- +
--       To sync with a local directory, use:
--
-+To sync with a local directory, use:
-++
- ===============================================================
- - /path/to/repo.git/
- ===============================================================
-@@ -113,7 +113,7 @@ on the remote branch, merge it into your
- `git pull . remote-B`, while you are on `my-B` branch.
- The common `Pull: master:origin` mapping of a remote `master`
- branch to a local `origin` branch, which is then merged to a
--ocal development branch, again typically named `master`, is made
-+local development branch, again typically named `master`, is made
- when you run `git clone` for you to follow this pattern.
- +
- [NOTE]
----
-0.99.9j
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Nothing is so important that nothing else is important.
