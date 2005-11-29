@@ -1,66 +1,74 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: 'git commit' ignoring args?
-Date: Tue, 29 Nov 2005 06:03:11 -0500
-Message-ID: <438C356F.9080301@pobox.com>
-References: <438B2F40.6070801@pobox.com> <7vzmnotwyr.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git-send-mail in sh
+Date: Tue, 29 Nov 2005 14:04:22 +0100
+Message-ID: <438C51D6.8050207@op5.se>
+References: <4386DD45.6030308@op5.se>	<20051125163358.GF16995@mythryan2.michonline.com>	<43874415.8040302@op5.se> <438A5401.3070008@michonline.com>	<438AC7A0.7030407@op5.se> <7v64qdxgiz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 29 14:27:00 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 29 15:03:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eh3Gg-0001rN-6k
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 12:03:36 +0100
+	id 1Eh5A6-000131-28
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 14:04:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751144AbVK2LDT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 06:03:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbVK2LDT
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 06:03:19 -0500
-Received: from mail.dvmed.net ([216.237.124.58]:29609 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1751144AbVK2LDS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 06:03:18 -0500
-Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1Eh3GU-0006s2-LB; Tue, 29 Nov 2005 11:03:15 +0000
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+	id S1751351AbVK2NEY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 08:04:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbVK2NEY
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 08:04:24 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:27823 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751351AbVK2NEX
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2005 08:04:23 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 945016BD00; Tue, 29 Nov 2005 14:04:22 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc3 (X11/20050929)
 X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmnotwyr.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Score: 0.1 (/)
-X-Spam-Report: Spam detection software, running on the system "srv2.dvmed.net", has
-	identified this incoming email as possible spam.  The original message
-	has been attached to this so you can view it (if it isn't spam) or label
-	similar future email.  If you have any questions, see
-	the administrator of that system for details.
-	Content preview:  Junio C Hamano wrote: > Could it be that at some point
-	after touching book.xml before > running git commit you did
-	update-index on it? Not according to scrollback, no. > -- >8 -- > Here
-	is what I did to reproduce. [...] 
-	Content analysis details:   (0.1 points, 5.0 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.1 RCVD_IN_SORBS_DUL      RBL: SORBS: sent directly from dynamic IP address
-	[69.134.188.146 listed in dnsbl.sorbs.net]
+In-Reply-To: <7v64qdxgiz.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12940>
 
 Junio C Hamano wrote:
-> Could it be that at some point after touching book.xml before
-> running git commit you did update-index on it?
+> Andreas Ericsson <ae@op5.se> writes:
+> 
+> 
+>>By "local" do you mean "local on Junio's laptop" or "local at cox.net"?
+>>
+>>"mail" uses the "local on Junio's laptop" SMTP server so he can 
+>>configure it any way he wants.
+> 
+> 
+> I am puzzled.  What if I do not run any SMTP server on the
+> laptop and use ISP's SMTP server?  Right now my ISP's SMTP
+> server does not seem to require AUTH, so it is not an issue for
+> me, though..
+> 
 
-Not according to scrollback, no.
+It uses whatever the /bin/mail program on your system uses. This is 
+usually done by spooling the mail for delivery by the local MTA which 
+doesn't have to listen to any ports anywhere (mutt and friends work the 
+same way).
 
+Having an MTA installed is a requirement of the LSB. The /bin/mail 
+program requires that it's running, which the sendmail binary doesn't. 
+The sendmail binary is always shipped along with an MTA though, so to 
+get around having one at all one would have to re-implement the SMTP 
+protocol (which Mail::Sendmail does, but without authentication). I can 
+do that in C if you like. That way you can have support for SMTP over 
+SSL with all sorts of funny authentication mechanisms.
 
-> -- >8 --
-> Here is what I did to reproduce.
+The good thing about using the local MTA is that you get that for free 
+with very thoroughly tested code and you only have to set it up once 
+rather than passing all the auth stuff repeatedly on the command-line 
+each time you want to submit a patch.
 
-Unfortunately, I cannot reproduce the problem either :(
-
-Oh well, as long as the facility works in general, I'll live to fight 
-another day :)
-
-	Jeff
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
