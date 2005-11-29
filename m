@@ -1,44 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC 2/2] Automatically transform .git/{branches,remotes} into .git/config
-Date: Mon, 28 Nov 2005 22:04:07 -0800
-Message-ID: <7v4q5wng6g.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0511211455120.13775@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vfyph1ebq.fsf@assigned-by-dhcp.cox.net> <438AC32E.5010100@op5.se>
-	<200511281359.04741.Josef.Weidendorfer@gmx.de>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] git-clone --shared should imply --local
+Date: Tue, 29 Nov 2005 01:20:49 -0500
+Message-ID: <1133245249.27750.77.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 29 07:22:40 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Nov 29 07:47:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Egyb7-0004is-C1
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 07:04:16 +0100
+	id 1EgyrH-0007S6-J9
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 07:20:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751296AbVK2GEK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 01:04:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbVK2GEK
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 01:04:10 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:28408 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751296AbVK2GEJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2005 01:04:09 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051129060302.XOCK17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 29 Nov 2005 01:03:02 -0500
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751323AbVK2GUx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 01:20:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbVK2GUx
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 01:20:53 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:18593 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751323AbVK2GUw
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2005 01:20:52 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EgyrC-0000IB-Vj
+	for git@vger.kernel.org; Tue, 29 Nov 2005 01:20:51 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.54)
+	id 1EgyrB-0004bc-EN
+	for git@vger.kernel.org; Tue, 29 Nov 2005 01:20:49 -0500
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.4.1 (2.4.1-5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12923>
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+The "--shared" option to git-clone is silently ignored if "--local" is
+not specified.  The manual doesn't mention such dependency.  Make
+"--shared" imply "--local".
 
->> >  - we will add new ones to config, now we have it;
->
-> It is not really fitting for all purposes (eg. syntax restrictions).
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-OK; please read it as "when able".
+diff --git a/git-clone.sh b/git-clone.sh
+index c09979a..699205e 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -73,7 +73,7 @@ while
+ 	*,-n) no_checkout=yes ;;
+ 	*,-l|*,--l|*,--lo|*,--loc|*,--loca|*,--local) use_local=yes ;;
+         *,-s|*,--s|*,--sh|*,--sha|*,--shar|*,--share|*,--shared) 
+-          local_shared=yes ;;
++          local_shared=yes; use_local=yes ;;
+ 	*,-q|*,--quiet) quiet=-q ;;
+ 	1,-u|1,--upload-pack) usage ;;
+ 	*,-u|*,--upload-pack)
+
+
+-- 
+Regards,
+Pavel Roskin
