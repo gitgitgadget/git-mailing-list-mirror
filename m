@@ -1,113 +1,134 @@
-From: linux@horizon.com
-Subject: Re: git-name-rev off-by-one bug
-Date: 29 Nov 2005 16:40:55 -0500
-Message-ID: <20051129214055.8689.qmail@science.horizon.com>
-References: <20051129103157.GW22159@pasky.or.cz>
-Cc: git@vger.kernel.org, linux@horizon.com
-X-From: git-owner@vger.kernel.org Tue Nov 29 22:44:50 2005
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Re: keeping remote repo checked out?
+Date: Tue, 29 Nov 2005 16:44:56 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0511291525360.25300@iabervon.org>
+References: <m3k6et9rdw.fsf@lugabout.cloos.reno.nv.us>
+ <7vbr051ad1.fsf@assigned-by-dhcp.cox.net> <20051128105736.GO22159@pasky.or.cz>
+ <7vsltgtvk4.fsf@assigned-by-dhcp.cox.net> <20051128212804.GV22159@pasky.or.cz>
+ <Pine.LNX.4.64.0511281420390.3263@g5.osdl.org> <Pine.LNX.4.64.0511281845280.25300@iabervon.org>
+ <Pine.LNX.4.64.0511281637480.3177@g5.osdl.org> <Pine.LNX.4.64.0511282027360.25300@iabervon.org>
+ <Pine.LNX.4.64.0511281837040.3177@g5.osdl.org> <Pine.LNX.4.64.0511282208050.25300@iabervon.org>
+ <Pine.LNX.4.64.0511282029290.3177@g5.osdl.org> <Pine.LNX.4.64.0511282337170.25300@iabervon.org>
+ <7vmzjom00m.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511290141220.25300@iabervon.org>
+ <7v8xv7lwlr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511291157260.25300@iabervon.org>
+ <7vk6erfe3o.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue Nov 29 22:49:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhDDo-0007ke-8D
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 22:41:08 +0100
+	id 1EhDHD-00019X-Mp
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 22:44:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932418AbVK2VlF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 16:41:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932431AbVK2VlF
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 16:41:05 -0500
-Received: from science.horizon.com ([192.35.100.1]:13126 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S932418AbVK2VlC
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2005 16:41:02 -0500
-Received: (qmail 8690 invoked by uid 1000); 29 Nov 2005 16:40:55 -0500
-To: junkio@cox.net, pasky@suse.cz
-In-Reply-To: <20051129103157.GW22159@pasky.or.cz>
+	id S932436AbVK2Vo2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 16:44:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932437AbVK2Vo1
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 16:44:27 -0500
+Received: from iabervon.org ([66.92.72.58]:16655 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932436AbVK2Vo0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 16:44:26 -0500
+Received: (qmail 25059 invoked by uid 1000); 29 Nov 2005 16:44:56 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 29 Nov 2005 16:44:56 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk6erfe3o.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12957>
 
-I'm feeling slightly guilty about eliciting such a flood of help, but I'm
-certainly leraning a lot.  But there's one statement that, while I'm not
-doubting it's accuracy, seems at odds with the mental model I'm building.
-I must be misunderstanding something.
+On Tue, 29 Nov 2005, Junio C Hamano wrote:
 
-junkio wrote:
->> Okay, so git-update-index will overwrite a staged file with a
->> fresh stage-0 copy.  And git-commit will refuse to commit
->> (to be precise, it'll stop at the git-write-tree stage) if there
->> are unresolved conflicts.
->
-> Sorry, I was unclear that I was talking about end-user level
-> tool.  The update-index here is not about the conflict
-> resolution in the index file read-tree documentation talks
-> about.  That has already been done when "merge" ran in the
-> conflicting case.  In the conflicting case, the working tree
-> holds 3-way merge conflicting result, and the index holds HEAD
-> version at stage0 for such a path.  Hand resolving after
-> update-index is to record what you eventually want to commit
-> (i.e. you are not replacing higher stage entry in the index with
-> stage0 entry -- you are replacing stage0 entry with another).
+> Daniel Barkalow <barkalow@iabervon.org> writes:
 > 
->> If you want to see the unmodified input files, you can find their
->> IDs with "git-ls-files -u" and then get a copy with "git-cat-file blob"
->> or "git-unpack-file".  git-merge-index is basically a different way to
->> process the output of git-ls-files -u.
->
-> Yes, in principle.  But in practice you usually do not use these
-> low level tools yourself.  When git-merge returns with
-> conflicting paths, most of them have already been collapsed into
-> stage0 and git-ls-files --unmerged would not show.  The only
-> case I know of that you may still see higher stage entries in
-> the index these days is merging paths with different mode bits.
-> We used to leave higher stage entries when both sides added new
-> file at the same path, but even that we show as merge from
-> common these days.
+> > This seems maximally inconvenient. If you lose a race, you only find out 
+> > later, your reception branch is screwed up, and you have no way of finding 
+> > out in advance that this is going to happen?
+> 
+> I am not sure what you mean by "your reception branch is screwed
+> up".  We _could_ rewind that reception branch after acceptance
+> test fails but I did not mention that because I haven't thought
+> it through.
+> 
+> This was actually designed to reduce the chance of getting a
+> race in the first place, so I am not sure if it makes things
+> inconvenient.
+> 
+> Alice and Bob starts out from the central repository commit O
+> (for origin), and make progress independently.  They have one
+> commit on top of O each, A and B where A~1 === O and B~1 === O.
+> 
+> Alice pushes first, the central repository has O and accepts
+> because updating from O to A is a fast forward.  Bob tries to
+> push, and in the classic CVS-style shared repository setup in
+> the tutorial, this is prevented because this is not a fast
+> forward.  Bob needs to first pull and merge A and B to create C
+> (C^1 === B, C^2 === A) and push that.  This succeeds.
+> 
+> Instead, the approach allows you to choose to do the merge on
+> the server side unattended, as part of the acceptance check.
+> 
+> Alice pushes, and both her reception branch and the reception
+> repository master becomes A (fast forward).  When Bob pushes B
+> to his reception branch, we attempt to pull it into reception
+> repository master --- we do not have to fail this pull even if
+> it is not a fast forward (we could choose to fail it). reception
+> repository master becomes C which is a merge between A and B.
 
-And pasky reiterated:
->   From the user POV, the main difference between Cogito and GIT merging
-> is that:
->
->  (i) Cogito tries to never leave the index "dirty" (i.e. containing
-> unmerged entries), and instead all conflicts should propagate to the
-> working tree, so that the user can resolve them without any further
-> special tools. (What is lacking here is that Cogito won't proofcheck
-> that you really resolved them all during a commit. That's a big TODO.
-> But core GIT won't you warn about committing the classical << >> ==
-> conflicts either.)
+If the merge works automatically, then Bob can do it without any trouble. 
+If it doesn't work automatically, then Bob has to do it. But if Bob might 
+have to do a merge, he can't leave for the day until his commit has gone 
+all the way through, in which case he might as well do any merges while he 
+waits. In my mind, the critical issue for developers is time to success or 
+failure, and that's longer in your scheme. Perhaps a better idea is to 
+have a script on Bob's end react to failure of the push (due to not being 
+a fast-forward) by automatically pulling the thing that it's supposed to 
+merge with, and push again if it worked. (If it failed, Bob fixes it, and 
+then pushes again.)
 
-This seems odd to me.  There's an alternate implementation that
-I described that makes a lot more sense to me, based on my current
-state of knowledge.  Can someone explain why my idea is silly?
+> The result of this automerge needs to be checked for sanity, so
+> before this C (new reception repository master) is pulled into
+> the deployment repository, there is a validation step (this step
+> can do things other than validation; e.g. making tarballs for
+> distribution, automatic tagging).  While all that is happening,
+> other people can be pushing into their own reception branches,
+> waiting for their turn.  And we guarantee that what is moved to
+> the deployment repository has been tested "clean" (depending on
+> the quality of test, that is).
+> 
+> If the central repository acceptance policy is simple enough,
+> namely, if it takes whatever an individiual developer with push
+> access says is good at the face value, then we do not need any
+> of the above, and a simple "fast forward only" is good enough,
+> far simpler to explain and understand.
+> 
+> On the other hand, at places where management already has rules
+> that require any update to the central repository to first pass
+> a test suite, the acceptance test can take time to complete ---
+> which enlarges the race window --- and more importantly when a
+> push that passed a simple "fast forward only" rule fails, we
+> somehow need to prevent that failed head from leaking out to the
+> public.  That is cumbersome to arrange if we only use a single
+> reception branch.
 
+I think the right thing is to only allow pushes after something passes 
+testing, probably be having people push to tags, which the test server 
+tests and then pushes to the common upstream. The developers have to wait 
+for the testing, but can go home when that passes.
 
-I'd imagine you'd consider user editing to be a last-resort merge
-algorithm, but treat it like the other merges, and leave the file
-staged while it's in progress.
+I think there is the possibility for something really clever where, when 
+you try to submit, if there's something in the testing area, it rejects 
+you, you merge with the thing in the testing area, wait for the test ahead 
+of you to complete, and submit either the merge (if the previous thing 
+passed) or your original (if the previous thing failed). That way, you can 
+overlap the time that you spend waiting for the test farm to be free with 
+the time you spend merging against things that are getting in ahead of 
+you. (Of course, if the merge with the testing thing isn't automatic, you 
+might cancel it and do something else until you know whether that thing 
+will be rejected.)
 
-Either git-checkout-index or something similar would "check out"
-the staged file with CVS-style merge markers.  And an eventual
-git-update-index would replace the staged file with a stage-0,
-just like git-merge-one-file does automatically.
-
-"git-diff" could default to diffing against the stage-2 file to
-produce the same reults as now, but you could also have an
-option to diff against a different stage, which might be useful.
-
-(This is another reason for my earlier comment that I don't think
-the distinction between stage-0 and stage-2 is actually necessary.)
-
-And git-write-tree would naturally stop you from committing with
-unresolved conflicts.  You could still commit the conflict
-markers, but it would be a two-step process.
-
-You'd have the simple principle that all merges start with git-read-tree
-producing a staged file, and end with git-update-index collapsing
-them when it's been resolved.  (Or something like git-reset throwing
-everything away.)
-
-
-Having said all this, there's presumably a good reason why this is a
-bad idea.  Could someone enlighten me?
-
-Thanks!
+	-Daniel
+*This .sig left intentionally blank*
