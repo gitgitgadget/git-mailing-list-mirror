@@ -1,116 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] SVN import: Use one log call
-Date: Tue, 29 Nov 2005 12:22:11 -0800
-Message-ID: <7vhd9vdx1o.fsf@assigned-by-dhcp.cox.net>
-References: <pan.2005.11.29.07.13.02.145977@smurf.noris.de>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Question about handling of heterogeneous repositories
+Date: Tue, 29 Nov 2005 21:47:29 +0100
+Message-ID: <20051129204729.GA3033@steel.home>
+References: <81b0412b0511220850w429d2f36lafe9de7ce19ce8f@mail.gmail.com> <43837442.9060602@op5.se> <20051122232228.GB2916@steel.home> <20051127131147.GF22159@pasky.or.cz>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 29 21:28:40 2005
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 29 21:51:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhBzV-0000aG-9v
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 21:22:17 +0100
+	id 1EhCOz-0006UB-Kw
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 21:48:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932376AbVK2UWN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 15:22:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932378AbVK2UWN
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 15:22:13 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:235 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932376AbVK2UWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2005 15:22:12 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051129202103.MLWR17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 29 Nov 2005 15:21:03 -0500
-To: Matthias Urlichs <smurf@smurf.noris.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932396AbVK2Usb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 15:48:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932397AbVK2Usb
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 15:48:31 -0500
+Received: from devrace.com ([198.63.210.113]:58125 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S932396AbVK2Usa (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 15:48:30 -0500
+Received: from tigra.home (p54A0CEB2.dip.t-dialin.net [84.160.206.178])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id jATKlbxk020907;
+	Tue, 29 Nov 2005 14:47:39 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1EhCNz-0002jl-00; Tue, 29 Nov 2005 21:47:35 +0100
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1EhCNu-0007zr-OT; Tue, 29 Nov 2005 21:47:31 +0100
+To: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20051127131147.GF22159@pasky.or.cz>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=1.8 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12954>
 
-Matthias Urlichs <smurf@smurf.noris.de> writes:
+Petr Baudis, Sun, Nov 27, 2005 14:11:47 +0100:
+> > > >For everyone who have an experience with ClearCase or Perforce (I'm
+> > > >sorry for mentioning it) it is what the "mappings" are often used for:
+> > > >a project is build together from different parts, which can be worked
+> > > >on separately.
+> > > >
+> > > >I'm trying to introduce git at work, but have to prepare myself for
+> > > >possible questions first, and this is one of them :)
+> 
+> This is something e.g. Cogito wants to support, but does not yet.
+> Patches welcome.
 
-> One "svn log" (or its equivalent) per revision adds delay and server load.
-> Instead, open two SVN connections -- one for the log, and one for the files.
+I wouldn't know what to patch, having no clear picture of the approach
+myself, and especially when I don't feel safe using the solution. For
+example, how do you go about moving/renaming files between subrepos?
+Rename detection will not work, which will be unexpected...
 
-Thanks, applied and pushed out.
+BTW, how does git-mv behave for out-of-tree renaming? How about
+inter-repo renaming (remove+add)?
 
-BTW, I've never successfully managed to run svnimport from my
-private svn repository.  Admittedly the repository does not
-follow the recommended layout and that probably is the major
-cause (it started its life when svn documentation recommended
-{trunk,branches,tags}/{projectA,projectB,projectC} layout.
-{projectA,projectB,projectC}/{trunk,branches,tags} is the layout
-they recommend these days, I think [*1*]).
+> > > It would certainly be nicer to have git ignore directories that have the 
+> > > ".git" directory (so long as it's not the top of the repo, that is), but 
+> > > I haven't had the energy to fix that when there's already a solution 
+> > > that's simple enough and quite adequate.
+> > 
+> > BTW, will something like "*/.git/*" in info/exclude work? IOW, does *
+> > match a "/"?
+> 
+> Nope, but try just '.git' - in case it is not a pathname but just a
+> filename (or dirname, for that matter), it will recursively apply to all
+> the subtrees.
 
-It does not use any branches (it is primarily a random
-collection of small throwaway scripts).  The repository hosts
-many unrelated pieces ("http://127.0.0.1/svn/private/" is the
-root level of the repository), organized like this:
-
-    $ svn ls http://127.0.0.1/svn/private/
-    attic/
-    main/
-    tags/
-
-   main/ is the active one (trunk), and it has bunch of
-   unrelated subdirectories.
-
-   attic/ is where I prepared to "svn mv" things from main/ that
-   are no longer needed, but is empty.
-
-   tags/ have one tree that is a copy of one of the subtrees
-   under main/ from distant past.
-
-I wanted to convert one of the subsubdirectory of main to git.
-
-    $ svn ls http://127.0.0.1/svn/private/main/sources/photocat
-    Makefile
-    Notes
-    cmdmason.pm
-    ...
-
-What is the svnimport command line I should give?  Luckily, I do
-not have "tags" or "branches" under private/main/sources/, so I
-tried to cheat like this, hoping it would mistake "photocat" is the trunk of 
-"main/sources" project in the repository.  No such luck.
-
-$ cd /var/tmp && rm -fr try0 && mkdir try0 && cd try0
-$ git svnimport -v -i -t photocat http://127.0.0.1/svn/private main/sources
-1: Unrecognized path: /main/sources
-1: Unrecognized path: /main/in-place
-1: Unrecognized path: /main
-...
-1500: Unrecognized path: /main/sources/photocat/db/catalog.sql
-1501: Unrecognized path: /main/sources/photocat/data/035-maribon-making.yaml
-DONE; creating master branch
-cp: cannot stat `/var/tmp/try0/.git/refs/heads/origin': No such file or directory
-fatal: master: not a valid SHA1
-$ 
-
-If your answer is "your repository layout is too weird and
-nonstandard, you are screwed", that is perfectly fine.  I do not
-want you to bend over backwards to butcher the import script to
-support it, if it is too nonstandard.  I already converted what
-I wanted to convert manually already; history being linear
-without branches, that was easy enough.
-
-But I thought it would never hurt to ask ;-).
-
-[Footnote]
-
-*1*
-
-http://svnbook.red-bean.com/en/1.1/svn-book.html#svn-ch-5-sect-6.1
-shows two layouts, one with {trunk,tags,branches} at the top
-level of each project, another with nested projects (if you look
-at "utils" in the picture as a project with two subcomponents
-"calc" and "calendar"), with {trunk,tags,branches} under each
-subproject.  I think the current code should import from
-"calendar" or "calc" level just fine, but I wonder if we want to
-support importing from "utils" level.
+well, it ignored the ".git"s in the subdirs, not _the_ subdirectories.
+I think that can be helped by putting the directories themselves into
+.gitignore lists.
