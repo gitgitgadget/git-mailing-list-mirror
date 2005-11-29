@@ -1,47 +1,69 @@
-From: Chuck Lever <cel@citi.umich.edu>
-Subject: [PATCH 0/7]
-Date: Tue, 29 Nov 2005 17:05:52 -0500
-Message-ID: <20051129220552.9885.41086.stgit@dexter.citi.umich.edu>
+From: Chuck Lever <cel@netapp.com>
+Subject: [PATCH 5/7] Add facility to print short list of patches around 'top'
+Date: Tue, 29 Nov 2005 17:09:47 -0500
+Message-ID: <20051129220947.9885.63635.stgit@dexter.citi.umich.edu>
+References: <20051129220552.9885.41086.stgit@dexter.citi.umich.edu>
+Reply-To: Chuck Lever <cel@citi.umich.edu>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 29 23:12:19 2005
+X-From: git-owner@vger.kernel.org Tue Nov 29 23:13:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhDfQ-0006se-QM
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 23:09:41 +0100
+	id 1EhDfg-0006zv-TT
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 23:09:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932428AbVK2WJh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 17:09:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932438AbVK2WJh
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 17:09:37 -0500
-Received: from citi.umich.edu ([141.211.133.111]:53695 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S932428AbVK2WJg (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 17:09:36 -0500
+	id S964774AbVK2WJt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 17:09:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932441AbVK2WJs
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 17:09:48 -0500
+Received: from citi.umich.edu ([141.211.133.111]:16206 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S932440AbVK2WJr (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 17:09:47 -0500
 Received: from dexter.citi.umich.edu (dexter.citi.umich.edu [141.211.133.33])
-	by citi.umich.edu (Postfix) with ESMTP id 496FF1BBE0;
-	Tue, 29 Nov 2005 17:09:36 -0500 (EST)
+	by citi.umich.edu (Postfix) with ESMTP id 9436F1BBD7;
+	Tue, 29 Nov 2005 17:09:47 -0500 (EST)
 To: catalin.marinas@gmail.com
+In-Reply-To: <20051129220552.9885.41086.stgit@dexter.citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12962>
 
-These are road-tested and ready for your review.
+When working in the middle of a very long series, I often find it useful
+to have a list of the patches right around the current patch.  Add an
+option to "stg series" called "--short" to provide this short list.
 
-+ export-saves-base       | Make "stg export" save the base commit in the output directory
-+ stg-in-subdirectories   | Use git-rev-parse to find the local GIT repository
-+ fix-branch-description  | Align branch descriptions in output of "stg branch -l"
-+ stg-series-description  | "stg series" option to show patch summary descriptions
-+ stg-series-short        | Add facility to print short list of patches around 'top'
-+ stg-branch-clone        | Add a "--clone" option to "stg branch"
-> series-directory        | Use a separate directory for patches under each branch subdir
+Signed-off-by: Chuck Lever <cel@netapp.com>
+---
 
-Before 0.8, you might also consider addressing the patch authorship issues
-that come up when mailing out patches, as discussed on git@vger last week.
+ stgit/commands/series.py |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-I've adjusted my patchmail.tmpl file as a workaround.
-
-        -- Chuck Lever
---
-corporate:    <cel at netapp dot com>
-personal:     <chucklever at bigfoot dot com>
+diff --git a/stgit/commands/series.py b/stgit/commands/series.py
+index a843307..ec1aaaf 100644
+--- a/stgit/commands/series.py
++++ b/stgit/commands/series.py
+@@ -39,6 +39,9 @@ options = [make_option('-b', '--branch',
+            make_option('-e', '--empty',
+                        help = 'check whether patches are empty '
+                        '(much slower)',
++                       action = 'store_true'),
++           make_option('-s', '--short',
++                       help = 'list just the patches around the topmost patch',
+                        action = 'store_true') ]
+ 
+ 
+@@ -66,6 +69,13 @@ def func(parser, options, args):
+ 
+     applied = crt_series.get_applied()
+     unapplied = crt_series.get_unapplied()
++
++    if options.short:
++        if len(applied) > 5:
++            applied = applied[-6:]
++        if len(unapplied) > 5:
++            unapplied = unapplied[:5]
++
+     patches = applied + unapplied
+ 
+     max_len = 0
