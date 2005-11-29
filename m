@@ -1,364 +1,113 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: [PATCH] gitk: add Update menu item.
-Date: Tue, 29 Nov 2005 22:15:51 +0100
-Message-ID: <20051129211551.GF8383MdfPADPa@greensroom.kotnet.org>
-References: <20051123222003.GA16290MdfPADPa@greensroom.kotnet.org>
-Reply-To: skimo@liacs.nl
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 29 22:19:43 2005
+From: linux@horizon.com
+Subject: Re: git-name-rev off-by-one bug
+Date: 29 Nov 2005 16:40:55 -0500
+Message-ID: <20051129214055.8689.qmail@science.horizon.com>
+References: <20051129103157.GW22159@pasky.or.cz>
+Cc: git@vger.kernel.org, linux@horizon.com
+X-From: git-owner@vger.kernel.org Tue Nov 29 22:44:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhCpi-0004M9-L2
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 22:16:15 +0100
+	id 1EhDDo-0007ke-8D
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 22:41:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932402AbVK2VP4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 16:15:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932404AbVK2VP4
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 16:15:56 -0500
-Received: from smtp19.wxs.nl ([195.121.247.10]:22497 "EHLO smtp19.wxs.nl")
-	by vger.kernel.org with ESMTP id S932402AbVK2VP4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 16:15:56 -0500
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp19.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0IQQ006RWJ2FT8@smtp19.wxs.nl> for git@vger.kernel.org; Tue,
- 29 Nov 2005 22:15:52 +0100 (CET)
-Received: (qmail 7961 invoked by uid 500); Tue, 29 Nov 2005 21:15:51 +0000
-In-reply-to: <20051123222003.GA16290MdfPADPa@greensroom.kotnet.org>
-To: Paul Mackerras <paulus@samba.org>, Junio C Hamano <junkio@cox.net>
-Mail-followup-to: Paul Mackerras <paulus@samba.org>,
- Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S932418AbVK2VlF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 16:41:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932431AbVK2VlF
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 16:41:05 -0500
+Received: from science.horizon.com ([192.35.100.1]:13126 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S932418AbVK2VlC
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2005 16:41:02 -0500
+Received: (qmail 8690 invoked by uid 1000); 29 Nov 2005 16:40:55 -0500
+To: junkio@cox.net, pasky@suse.cz
+In-Reply-To: <20051129103157.GW22159@pasky.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12956>
 
-Update will redraw the commits if any commits have been added to any
-of the selected heads.  The new commits appear on the top.
+I'm feeling slightly guilty about eliciting such a flood of help, but I'm
+certainly leraning a lot.  But there's one statement that, while I'm not
+doubting it's accuracy, seems at odds with the mental model I'm building.
+I must be misunderstanding something.
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
+junkio wrote:
+>> Okay, so git-update-index will overwrite a staged file with a
+>> fresh stage-0 copy.  And git-commit will refuse to commit
+>> (to be precise, it'll stop at the git-write-tree stage) if there
+>> are unresolved conflicts.
+>
+> Sorry, I was unclear that I was talking about end-user level
+> tool.  The update-index here is not about the conflict
+> resolution in the index file read-tree documentation talks
+> about.  That has already been done when "merge" ran in the
+> conflicting case.  In the conflicting case, the working tree
+> holds 3-way merge conflicting result, and the index holds HEAD
+> version at stage0 for such a path.  Hand resolving after
+> update-index is to record what you eventually want to commit
+> (i.e. you are not replacing higher stage entry in the index with
+> stage0 entry -- you are replacing stage0 entry with another).
+> 
+>> If you want to see the unmodified input files, you can find their
+>> IDs with "git-ls-files -u" and then get a copy with "git-cat-file blob"
+>> or "git-unpack-file".  git-merge-index is basically a different way to
+>> process the output of git-ls-files -u.
+>
+> Yes, in principle.  But in practice you usually do not use these
+> low level tools yourself.  When git-merge returns with
+> conflicting paths, most of them have already been collapsed into
+> stage0 and git-ls-files --unmerged would not show.  The only
+> case I know of that you may still see higher stage entries in
+> the index these days is merging paths with different mode bits.
+> We used to leave higher stage entries when both sides added new
+> file at the same path, but even that we show as merge from
+> common these days.
 
----
-Junio noticed that my patch didn't work if you use path specifiers.
-This update should fix this problem.
+And pasky reiterated:
+>   From the user POV, the main difference between Cogito and GIT merging
+> is that:
+>
+>  (i) Cogito tries to never leave the index "dirty" (i.e. containing
+> unmerged entries), and instead all conflicts should propagate to the
+> working tree, so that the user can resolve them without any further
+> special tools. (What is lacking here is that Cogito won't proofcheck
+> that you really resolved them all during a commit. That's a big TODO.
+> But core GIT won't you warn about committing the classical << >> ==
+> conflicts either.)
 
-skimo
+This seems odd to me.  There's an alternate implementation that
+I described that makes a lot more sense to me, based on my current
+state of knowledge.  Can someone explain why my idea is silly?
 
- gitk |  176 +++++++++++++++++++++++++++++++++++++++++++++++++++++-------------
- 1 files changed, 142 insertions(+), 34 deletions(-)
 
-applies-to: 4000f8b8d01ad35929972c07d98d89e2280cf3d3
-f24c2e402dd592f5bd5047724da30a8a5e0115eb
-diff --git a/gitk b/gitk
-index 730ffd9..de5c8b1 100755
---- a/gitk
-+++ b/gitk
-@@ -16,8 +16,24 @@ proc gitdir {} {
-     }
- }
- 
-+proc parse_args {rargs} {
-+    global parsed_args
-+
-+    if [catch {
-+	set parse_args [concat --default HEAD $rargs]
-+	set parsed_args [split [eval exec git-rev-parse $parse_args] "\n"]
-+    }] {
-+	# if git-rev-parse failed for some reason...
-+	if {$rargs == {}} {
-+	    set rargs HEAD
-+	}
-+	set parsed_args $rargs
-+    }
-+    return $parsed_args
-+}
-+
- proc getcommits {rargs} {
--    global commits commfd phase canv mainfont env
-+    global oldcommits commits commfd phase canv mainfont env
-     global startmsecs nextupdate ncmupdate
-     global ctext maincursor textcursor leftover gitencoding
- 
-@@ -27,21 +43,13 @@ proc getcommits {rargs} {
- 	error_popup "Cannot find the git directory \"$gitdir\"."
- 	exit 1
-     }
-+    set oldcommits {}
-     set commits {}
-     set phase getcommits
-     set startmsecs [clock clicks -milliseconds]
-     set nextupdate [expr {$startmsecs + 100}]
-     set ncmupdate 1
--    if [catch {
--	set parse_args [concat --default HEAD $rargs]
--	set parsed_args [split [eval exec git-rev-parse $parse_args] "\n"]
--    }] {
--	# if git-rev-parse failed for some reason...
--	if {$rargs == {}} {
--	    set rargs HEAD
--	}
--	set parsed_args $rargs
--    }
-+    set parsed_args [parse_args $rargs]
-     if [catch {
- 	set commfd [open "|git-rev-list --header --topo-order --parents $parsed_args" r]
-     } err] {
-@@ -59,9 +67,10 @@ proc getcommits {rargs} {
- }
- 
- proc getcommitlines {commfd}  {
--    global commits parents cdate children
-+    global oldcommits commits parents cdate children nchildren
-     global commitlisted phase nextupdate
-     global stopped redisplaying leftover
-+    global canv
- 
-     set stuff [read $commfd]
-     if {$stuff == {}} {
-@@ -119,10 +128,18 @@ proc getcommitlines {commfd}  {
- 	set id [lindex $ids 0]
- 	set olds [lrange $ids 1 end]
- 	set cmit [string range $cmit [expr {$j + 1}] end]
-+	if {$phase == "updatecommits"} {
-+	    $canv delete all
-+	    set oldcommits $commits
-+	    set commits {}
-+	    unset children
-+	    unset nchildren
-+	    set phase getcommits
-+	}
- 	lappend commits $id
- 	set commitlisted($id) 1
- 	parsecommit $id $cmit 1 [lrange $ids 1 end]
--	drawcommit $id
-+	drawcommit $id 1
- 	if {[clock clicks -milliseconds] >= $nextupdate} {
- 	    doupdate 1
- 	}
-@@ -132,7 +149,7 @@ proc getcommitlines {commfd}  {
- 		set stopped 0
- 		set phase "getcommits"
- 		foreach id $commits {
--		    drawcommit $id
-+		    drawcommit $id 1
- 		    if {$stopped} break
- 		    if {[clock clicks -milliseconds] >= $nextupdate} {
- 			doupdate 1
-@@ -168,16 +185,9 @@ proc readcommit {id} {
-     parsecommit $id $contents 0 {}
- }
- 
--proc parsecommit {id contents listed olds} {
--    global commitinfo children nchildren parents nparents cdate ncleft
-+proc updatechildren {id olds} {
-+    global children nchildren parents nparents ncleft
- 
--    set inhdr 1
--    set comment {}
--    set headline {}
--    set auname {}
--    set audate {}
--    set comname {}
--    set comdate {}
-     if {![info exists nchildren($id)]} {
- 	set children($id) {}
- 	set nchildren($id) 0
-@@ -196,6 +206,19 @@ proc parsecommit {id contents listed old
- 	    incr ncleft($p)
- 	}
-     }
-+}
-+
-+proc parsecommit {id contents listed olds} {
-+    global commitinfo cdate
-+
-+    set inhdr 1
-+    set comment {}
-+    set headline {}
-+    set auname {}
-+    set audate {}
-+    set comname {}
-+    set comdate {}
-+    updatechildren $id $olds
-     set hdrend [string first "\n\n" $contents]
-     if {$hdrend < 0} {
- 	# should never happen...
-@@ -243,6 +266,9 @@ proc readrefs {} {
-     global tagids idtags headids idheads tagcontents
-     global otherrefids idotherrefs
- 
-+    foreach v {tagids idtags headids idheads otherrefids idotherrefs} {
-+	catch {unset $v}
-+    }
-     set refd [open [list | git-ls-remote [gitdir]] r]
-     while {0 <= [set n [gets $refd line]]} {
- 	if {![regexp {^([0-9a-f]{40})	refs/([^^]*)$} $line \
-@@ -292,7 +318,7 @@ proc error_popup msg {
-     tkwait window $w
- }
- 
--proc makewindow {} {
-+proc makewindow {rargs} {
-     global canv canv2 canv3 linespc charspc ctext cflist textfont
-     global findtype findtypemenu findloc findstring fstring geometry
-     global entries sha1entry sha1string sha1but
-@@ -302,6 +328,7 @@ proc makewindow {} {
-     menu .bar
-     .bar add cascade -label "File" -menu .bar.file
-     menu .bar.file
-+    .bar.file add command -label "Update" -command [list updatecommits $rargs]
-     .bar.file add command -label "Reread references" -command rereadrefs
-     .bar.file add command -label "Quit" -command doquit
-     menu .bar.help
-@@ -1416,8 +1443,9 @@ proc decidenext {{noread 0}} {
-     return $level
- }
- 
--proc drawcommit {id} {
-+proc drawcommit {id reading} {
-     global phase todo nchildren datemode nextupdate revlistorder
-+    global numcommits ncmupdate displayorder todo onscreen
-     global numcommits ncmupdate displayorder todo onscreen parents
- 
-     if {$phase != "incrdraw"} {
-@@ -1455,20 +1483,29 @@ proc drawcommit {id} {
- 	    }
- 	}
-     }
--    drawmore 1
-+    drawmore $reading
- }
- 
- proc finishcommits {} {
--    global phase
-+    global phase oldcommits commits
-     global canv mainfont ctext maincursor textcursor
-+    global parents
- 
--    if {$phase != "incrdraw"} {
-+    if {$phase == "incrdraw" || $phase == "removecommits"} {
-+	foreach id $oldcommits {
-+	    lappend commits $id
-+	    updatechildren $id $parents($id)
-+	    drawcommit $id 0
-+	}
-+	set oldcommits {}
-+	drawrest
-+    } elseif {$phase == "updatecommits"} {
-+	set phase {}
-+    } else {
- 	$canv delete all
- 	$canv create text 3 3 -anchor nw -text "No commits selected" \
- 	    -font $mainfont -tags textitems
- 	set phase {}
--    } else {
--	drawrest
-     }
-     . config -cursor $maincursor
-     settextcursor $textcursor
-@@ -3595,9 +3632,6 @@ proc rereadrefs {} {
- 	    set ref($id) [listrefs $id]
- 	}
-     }
--    foreach v {tagids idtags headids idheads otherrefids idotherrefs} {
--	catch {unset $v}
--    }
-     readrefs
-     set refids [lsort -unique [concat $refids [array names idtags] \
- 			[array names idheads] [array names idotherrefs]]]
-@@ -3609,6 +3643,80 @@ proc rereadrefs {} {
-     }
- }
- 
-+proc updatecommits {rargs} {
-+    global commitlisted commfd phase
-+    global startmsecs nextupdate ncmupdate
-+    global idtags idheads idotherrefs
-+    global leftover
-+    global parsed_args
-+    global canv
-+    global oldcommits commits
-+    global parents nchildren children ncleft
-+
-+    set old_args $parsed_args
-+    parse_args $rargs
-+
-+    foreach id $old_args {
-+	if {![regexp {^[0-9a-f]{40}$} $id]} continue
-+	if {[info exists oldref($id)]} continue
-+	set oldref($id) $id
-+	lappend ignoreold "^$id"
-+    }
-+    foreach id $parsed_args {
-+	if {![regexp {^[0-9a-f]{40}$} $id]} continue
-+	if {[info exists ref($id)]} continue
-+	set ref($id) $id
-+	lappend ignorenew "^$id"
-+    }
-+
-+    foreach a $old_args {
-+	if {![info exists ref($a)]} {
-+	    lappend ignorenew $a
-+	}
-+    }
-+
-+    set phase updatecommits
-+    set removed_commits [split [eval exec git-rev-list $ignorenew] "\n" ]
-+    if {[llength $removed_commits] > 0} {
-+	$canv delete all
-+	set oldcommits {}
-+	foreach c $commits {
-+	    if {[lsearch $c $removed_commits] < 0} {
-+		lappend oldcommits $c
-+	    } else {
-+		unset commitlisted($c)
-+	    }
-+	}
-+	set commits {}
-+	unset children
-+	unset nchildren
-+	set phase removecommits
-+    }
-+
-+    set args {}
-+    foreach a $parsed_args {
-+	if {![info exists oldref($a)]} {
-+	    lappend args $a
-+	}
-+    }
-+
-+    readrefs
-+    if [catch {
-+	set commfd [open "|git-rev-list --header --topo-order --parents $ignoreold $args" r]
-+    } err] {
-+	puts stderr "Error executing git-rev-list: $err"
-+	exit 1
-+    }
-+    set startmsecs [clock clicks -milliseconds]
-+    set nextupdate [expr $startmsecs + 100]
-+    set ncmupdate 1
-+    set leftover {}
-+    fconfigure $commfd -blocking 0 -translation lf
-+    fileevent $commfd readable [list getcommitlines $commfd]
-+    . config -cursor watch
-+    settextcursor watch
-+}
-+
- proc showtag {tag isnew} {
-     global ctext cflist tagcontents tagids linknum
- 
-@@ -3704,6 +3812,6 @@ set redisplaying 0
- set stuffsaved 0
- set patchnum 0
- setcoords
--makewindow
-+makewindow $revtreeargs
- readrefs
- getcommits $revtreeargs
----
-0.99.9.GIT
+I'd imagine you'd consider user editing to be a last-resort merge
+algorithm, but treat it like the other merges, and leave the file
+staged while it's in progress.
+
+Either git-checkout-index or something similar would "check out"
+the staged file with CVS-style merge markers.  And an eventual
+git-update-index would replace the staged file with a stage-0,
+just like git-merge-one-file does automatically.
+
+"git-diff" could default to diffing against the stage-2 file to
+produce the same reults as now, but you could also have an
+option to diff against a different stage, which might be useful.
+
+(This is another reason for my earlier comment that I don't think
+the distinction between stage-0 and stage-2 is actually necessary.)
+
+And git-write-tree would naturally stop you from committing with
+unresolved conflicts.  You could still commit the conflict
+markers, but it would be a two-step process.
+
+You'd have the simple principle that all merges start with git-read-tree
+producing a staged file, and end with git-update-index collapsing
+them when it's been resolved.  (Or something like git-reset throwing
+everything away.)
+
+
+Having said all this, there's presumably a good reason why this is a
+bad idea.  Could someone enlighten me?
+
+Thanks!
