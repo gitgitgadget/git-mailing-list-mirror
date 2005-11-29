@@ -1,61 +1,46 @@
-From: Pavel Roskin <proski@gnu.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] git-clone --shared should imply --local
-Date: Tue, 29 Nov 2005 02:17:31 -0500
-Message-ID: <1133248651.27750.82.camel@dv>
+Date: Mon, 28 Nov 2005 23:08:31 -0800
+Message-ID: <7viruclymo.fsf@assigned-by-dhcp.cox.net>
 References: <1133245249.27750.77.camel@dv>
-	 <7viruclymo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 29 08:58:11 2005
+X-From: git-owner@vger.kernel.org Tue Nov 29 09:11:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgzkO-0000pQ-4Q
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 08:17:54 +0100
+	id 1EgzbR-0007eg-GW
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 08:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751340AbVK2HRh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 02:17:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbVK2HRg
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 02:17:36 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:32932 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751340AbVK2HRf
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2005 02:17:35 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1Egzk6-0001qK-J3
-	for git@vger.kernel.org; Tue, 29 Nov 2005 02:17:34 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1Egzk3-0006FG-VS; Tue, 29 Nov 2005 02:17:31 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7viruclymo.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.4.1 (2.4.1-5) 
+	id S1751334AbVK2HIf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 02:08:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751335AbVK2HIf
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 02:08:35 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:27357 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751334AbVK2HIe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Nov 2005 02:08:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051129070712.ZNGT17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 29 Nov 2005 02:07:12 -0500
+To: Pavel Roskin <proski@gnu.org>
+In-Reply-To: <1133245249.27750.77.camel@dv> (Pavel Roskin's message of "Tue,
+	29 Nov 2005 01:20:49 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12928>
 
-On Mon, 2005-11-28 at 23:08 -0800, Junio C Hamano wrote:
-> Pavel Roskin <proski@gnu.org> writes:
-> 
-> > The "--shared" option to git-clone is silently ignored if "--local" is
-> > not specified.  The manual doesn't mention such dependency.  Make
-> > "--shared" imply "--local".
-> >
-> > Signed-off-by: Pavel Roskin <proski@gnu.org>
-> 
-> Hmph, then probably the manual should say it implies it...
+Pavel Roskin <proski@gnu.org> writes:
 
-Actually, from the user point of view --local and --shared are
-alternatives to each other and to the default behavior.  --local copies
-files, --shared makes a reference.
+> The "--shared" option to git-clone is silently ignored if "--local" is
+> not specified.  The manual doesn't mention such dependency.  Make
+> "--shared" imply "--local".
+>
+> Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-Saying that --shared implies --local could sound like git-clone would
-still copy all objects.
-
-My description was from the implementation point of view.
-
--- 
-Regards,
-Pavel Roskin
+Hmph, then probably the manual should say it implies it...
