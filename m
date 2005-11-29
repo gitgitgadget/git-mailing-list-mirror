@@ -1,157 +1,271 @@
 From: Chuck Lever <cel@netapp.com>
-Subject: [PATCH 6/7] Add a "--clone" option to "stg branch"
-Date: Tue, 29 Nov 2005 17:09:49 -0500
-Message-ID: <20051129220949.9885.51533.stgit@dexter.citi.umich.edu>
+Subject: [PATCH 2/7] Use git-rev-parse to find the local GIT repository
+Date: Tue, 29 Nov 2005 17:09:40 -0500
+Message-ID: <20051129220940.9885.55885.stgit@dexter.citi.umich.edu>
 References: <20051129220552.9885.41086.stgit@dexter.citi.umich.edu>
 Reply-To: Chuck Lever <cel@citi.umich.edu>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 29 23:11:00 2005
+X-From: git-owner@vger.kernel.org Tue Nov 29 23:11:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhDfj-0006zv-Na
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 23:10:01 +0100
+	id 1EhDfo-0006zv-CO
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 23:10:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964775AbVK2WJw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 17:09:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932441AbVK2WJv
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 17:09:51 -0500
-Received: from citi.umich.edu ([141.211.133.111]:5243 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S932440AbVK2WJu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 17:09:50 -0500
+	id S964772AbVK2WJm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 17:09:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932440AbVK2WJm
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 17:09:42 -0500
+Received: from citi.umich.edu ([141.211.133.111]:3477 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S932438AbVK2WJl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 17:09:41 -0500
 Received: from dexter.citi.umich.edu (dexter.citi.umich.edu [141.211.133.33])
-	by citi.umich.edu (Postfix) with ESMTP id B916D1BBDE;
-	Tue, 29 Nov 2005 17:09:49 -0500 (EST)
+	by citi.umich.edu (Postfix) with ESMTP id D0F191BBD7;
+	Tue, 29 Nov 2005 17:09:40 -0500 (EST)
 To: catalin.marinas@gmail.com
 In-Reply-To: <20051129220552.9885.41086.stgit@dexter.citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12959>
 
-Cloning a branch means creating a new branch and copying all of the
-original branch's patches and its base to it.  Like creating a tag,
-but this also preserves all the StGIT patches as well.
+Use the latest git-rev-parse technology to allow some StGIT commands to
+function correctly in subdirectories of the working directory.
+
+Any command that relies on git-read-tree still doesn't work (changes to
+GIT forthcoming).
 
 Signed-off-by: Chuck Lever <cel@netapp.com>
 ---
 
- stgit/commands/branch.py |   28 +++++++++++++++++++++++++---
- stgit/stack.py           |   35 ++++++++++++++++++++++++++++++++++-
- 2 files changed, 59 insertions(+), 4 deletions(-)
+ stgit/commands/branch.py   |    2 +-
+ stgit/commands/common.py   |    4 ++--
+ stgit/commands/export.py   |    2 +-
+ stgit/commands/mail.py     |    4 ++--
+ stgit/commands/resolved.py |    4 ++--
+ stgit/git.py               |   35 ++++++++++++++++++-----------------
+ stgit/stack.py             |    9 +++++----
+ 7 files changed, 31 insertions(+), 29 deletions(-)
 
 diff --git a/stgit/commands/branch.py b/stgit/commands/branch.py
-index ccf1f6b..5bc5e94 100644
+index 9bf6cdb..c3f7944 100644
 --- a/stgit/commands/branch.py
 +++ b/stgit/commands/branch.py
-@@ -18,7 +18,7 @@ along with this program; if not, write t
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- """
+@@ -136,7 +136,7 @@ def func(parser, options, args):
+         if len(args) != 0:
+             parser.error('incorrect number of arguments')
  
--import sys, os
-+import sys, os, time
- from optparse import OptionParser, make_option
+-        branches = os.listdir(os.path.join(git.base_dir, 'refs', 'heads'))
++        branches = os.listdir(os.path.join(git.get_base_dir(), 'refs', 'heads'))
+         branches.sort()
  
- from stgit.commands.common import *
-@@ -29,10 +29,10 @@ from stgit import stack, git
- help = 'manage development branches'
- usage = """%prog [options] branch-name [commit-id]
+         print 'Available branches:'
+diff --git a/stgit/commands/common.py b/stgit/commands/common.py
+index e437111..8084cbd 100644
+--- a/stgit/commands/common.py
++++ b/stgit/commands/common.py
+@@ -96,7 +96,7 @@ def check_head_top_equal():
+               '  are doing, use the "refresh -f" command'
  
--Create, list, switch between, rename, or delete development branches
-+Create, clone, switch between, rename, or delete development branches
- within a git repository.  By default, a single branch called 'master'
- is always created in a new repository.  This subcommand allows you to
--manage several patch series in the same repository.
-+manage several patch series in the same repository via GIT branches.
+ def check_conflicts():
+-    if os.path.exists(os.path.join(git.base_dir, 'conflicts')):
++    if os.path.exists(os.path.join(git.get_base_dir(), 'conflicts')):
+         raise CmdException, 'Unsolved conflicts. Please resolve them first'
  
- When displaying the branches, the names can be prefixed with
- 's' (StGIT managed) or 'p' (protected)."""
-@@ -40,6 +40,9 @@ When displaying the branches, the names 
- options = [make_option('-c', '--create',
-                        help = 'create a new development branch',
-                        action = 'store_true'),
-+           make_option('--clone',
-+                       help = 'copy the contents of a branch',
-+                       action = 'store_true'),
-            make_option('--delete',
-                        help = 'delete an existing development branch',
-                        action = 'store_true'),
-@@ -124,6 +127,25 @@ def func(parser, options, args):
-         print 'Branch "%s" created.' % args[0]
-         return
+ def print_crt_patch(branch = None):
+@@ -130,7 +130,7 @@ def resolved_all(reset = None):
+     if conflicts:
+         for filename in conflicts:
+             resolved(filename, reset)
+-        os.remove(os.path.join(git.base_dir, 'conflicts'))
++        os.remove(os.path.join(git.get_base_dir(), 'conflicts'))
  
-+    elif options.clone:
+ def name_email(address):
+     """Return a tuple consisting of the name and email parsed from a
+diff --git a/stgit/commands/export.py b/stgit/commands/export.py
+index 167a8d3..c93ab6e 100644
+--- a/stgit/commands/export.py
++++ b/stgit/commands/export.py
+@@ -132,7 +132,7 @@ def func(parser, options, args):
+     else:
+         patch_tmpl_list = []
+ 
+-    patch_tmpl_list += [os.path.join(git.base_dir, 'patchexport.tmpl'),
++    patch_tmpl_list += [os.path.join(git.get_base_dir(), 'patchexport.tmpl'),
+                         os.path.join(sys.prefix,
+                                      'share/stgit/templates/patchexport.tmpl')]
+     tmpl = ''
+diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
+index 7cc18bc..b3b7b49 100644
+--- a/stgit/commands/mail.py
++++ b/stgit/commands/mail.py
+@@ -419,7 +419,7 @@ def func(parser, options, args):
+         if options.cover:
+             tfile_list = [options.cover]
+         else:
+-            tfile_list = [os.path.join(git.base_dir, 'covermail.tmpl'),
++            tfile_list = [os.path.join(git.get_base_dir(), 'covermail.tmpl'),
+                           os.path.join(sys.prefix,
+                                        'share/stgit/templates/covermail.tmpl')]
+ 
+@@ -450,7 +450,7 @@ def func(parser, options, args):
+     if options.template:
+         tfile_list = [options.template]
+     else:
+-        tfile_list = [os.path.join(git.base_dir, 'patchmail.tmpl'),
++        tfile_list = [os.path.join(git.get_base_dir(), 'patchmail.tmpl'),
+                       os.path.join(sys.prefix,
+                                    'share/stgit/templates/patchmail.tmpl')]
+     tmpl = None
+diff --git a/stgit/commands/resolved.py b/stgit/commands/resolved.py
+index d21ecc9..585c51b 100644
+--- a/stgit/commands/resolved.py
++++ b/stgit/commands/resolved.py
+@@ -65,8 +65,8 @@ def func(parser, options, args):
+ 
+     # save or remove the conflicts file
+     if conflicts == []:
+-        os.remove(os.path.join(git.base_dir, 'conflicts'))
++        os.remove(os.path.join(git.get_base_dir(), 'conflicts'))
+     else:
+-        f = file(os.path.join(git.base_dir, 'conflicts'), 'w+')
++        f = file(os.path.join(git.get_base_dir(), 'conflicts'), 'w+')
+         f.writelines([line + '\n' for line in conflicts])
+         f.close()
+diff --git a/stgit/git.py b/stgit/git.py
+index b19f75f..2cedeaa 100644
+--- a/stgit/git.py
++++ b/stgit/git.py
+@@ -27,12 +27,6 @@ class GitException(Exception):
+     pass
+ 
+ 
+-# Different start-up variables read from the environment
+-if 'GIT_DIR' in os.environ:
+-    base_dir = os.environ['GIT_DIR']
+-else:
+-    base_dir = '.git'
+-
+ 
+ #
+ # Classes
+@@ -87,6 +81,15 @@ __commits = dict()
+ #
+ # Functions
+ #
 +
-+        if len(args) == 0:
-+            clone = crt_series.get_branch() + \
-+                    time.strftime('-%C%y%m%d-%H%M%S')
-+        elif len(args) == 1:
-+            clone = args[0]
-+        else:
-+            parser.error('incorrect number of arguments')
++def get_base_dir():
++    """Different start-up variables read from the environment
++    """
++    if 'GIT_DIR' in os.environ:
++        return os.environ['GIT_DIR']
++    else:
++        return _output_one_line('git-rev-parse --git-dir')
 +
-+        check_local_changes()
-+        check_conflicts()
-+        check_head_top_equal()
-+
-+        print 'Cloning current branch to "%s"...' % clone
-+        crt_series.clone(clone)
-+        print 'done'
-+        return
-+
-     elif options.delete:
+ def get_commit(id_hash):
+     """Commit objects factory. Save/look-up them in the __commits
+     dictionary
+@@ -103,7 +106,7 @@ def get_commit(id_hash):
+ def get_conflicts():
+     """Return the list of file conflicts
+     """
+-    conflicts_file = os.path.join(base_dir, 'conflicts')
++    conflicts_file = os.path.join(get_base_dir(), 'conflicts')
+     if os.path.isfile(conflicts_file):
+         f = file(conflicts_file)
+         names = [line.strip() for line in f.readlines()]
+@@ -167,9 +170,6 @@ def __run(cmd, args=None):
+         return r
+     return 0
  
-         if len(args) != 1:
+-def __check_base_dir():
+-    return os.path.isdir(base_dir)
+-
+ def __tree_status(files = None, tree_id = 'HEAD', unknown = False,
+                   noexclude = True):
+     """Returns a list of pairs - [status, filename]
+@@ -182,7 +182,7 @@ def __tree_status(files = None, tree_id 
+ 
+     # unknown files
+     if unknown:
+-        exclude_file = os.path.join(base_dir, 'info', 'exclude')
++        exclude_file = os.path.join(get_base_dir(), 'info', 'exclude')
+         base_exclude = ['--exclude=%s' % s for s in
+                         ['*.[ao]', '*.pyc', '.*', '*~', '#*', 'TAGS', 'tags']]
+         base_exclude.append('--exclude-per-directory=.gitignore')
+@@ -296,8 +296,8 @@ def create_branch(new_branch, tree_id = 
+     if tree_id:
+         switch(tree_id)
+ 
+-    if os.path.isfile(os.path.join(base_dir, 'MERGE_HEAD')):
+-        os.remove(os.path.join(base_dir, 'MERGE_HEAD'))
++    if os.path.isfile(os.path.join(get_base_dir(), 'MERGE_HEAD')):
++        os.remove(os.path.join(get_base_dir(), 'MERGE_HEAD'))
+ 
+ def switch_branch(name):
+     """Switch to a git branch
+@@ -316,8 +316,8 @@ def switch_branch(name):
+         __head = tree_id
+     set_head_file(new_head)
+ 
+-    if os.path.isfile(os.path.join(base_dir, 'MERGE_HEAD')):
+-        os.remove(os.path.join(base_dir, 'MERGE_HEAD'))
++    if os.path.isfile(os.path.join(get_base_dir(), 'MERGE_HEAD')):
++        os.remove(os.path.join(get_base_dir(), 'MERGE_HEAD'))
+ 
+ def delete_branch(name):
+     """Delete a git branch
+@@ -325,7 +325,7 @@ def delete_branch(name):
+     branch_head = os.path.join('refs', 'heads', name)
+     if not branch_exists(branch_head):
+         raise GitException, 'Branch "%s" does not exist' % name
+-    os.remove(os.path.join(base_dir, branch_head))
++    os.remove(os.path.join(get_base_dir(), branch_head))
+ 
+ def rename_branch(from_name, to_name):
+     """Rename a git branch
+@@ -339,7 +339,8 @@ def rename_branch(from_name, to_name):
+ 
+     if get_head_file() == from_name:
+         set_head_file(to_head)
+-    os.rename(os.path.join(base_dir, from_head), os.path.join(base_dir, to_head))
++    os.rename(os.path.join(get_base_dir(), from_head), \
++              os.path.join(get_base_dir(), to_head))
+ 
+ def add(names):
+     """Add the files or recursively add the directory contents
 diff --git a/stgit/stack.py b/stgit/stack.py
-index dc7c19f..2866121 100644
+index 18b4c6e..dc7c19f 100644
 --- a/stgit/stack.py
 +++ b/stgit/stack.py
-@@ -18,7 +18,7 @@ along with this program; if not, write t
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- """
+@@ -66,7 +66,7 @@ def __clean_comments(f):
  
--import sys, os
-+import sys, os, shutil
+ def edit_file(series, line, comment, show_patch = True):
+     fname = '.stgit.msg'
+-    tmpl = os.path.join(git.base_dir, 'patchdescr.tmpl')
++    tmpl = os.path.join(git.get_base_dir(), 'patchdescr.tmpl')
  
- from stgit.utils import *
- from stgit import git
-@@ -420,6 +420,39 @@ class Series:
+     f = file(fname, 'w+')
+     if line:
+@@ -263,9 +263,10 @@ class Series:
+             self.__name = git.get_head_file()
  
-         self.__init__(to_name)
- 
-+    def clone(self, target_series):
-+        """Clones a series
-+        """
-+        base = read_string(self.get_base_file())
-+        git.create_branch(target_series, tree_id = base)
-+        Series(target_series).init()
-+
-+        new_series = Series(target_series)
-+
-+        if os.path.exists(self.__descr_file):
-+            shutil.copyfile(self.__descr_file, new_series.__descr_file)
-+
-+        for p in self.get_applied():
-+            patch = self.get_patch(p)
-+            new_series.new_patch(p, message = patch.get_description(),
-+                                 can_edit = False, unapplied = True,
-+                                 bottom = patch.get_bottom(),
-+                                 top = patch.get_top(),
-+                                 author_name = patch.get_authname(),
-+                                 author_email = patch.get_authemail(),
-+                                 author_date = patch.get_authdate())
-+            modified = new_series.push_patch(p)
-+
-+        for p in self.get_unapplied():
-+            patch = self.get_patch(p)
-+            new_series.new_patch(p, message = patch.get_description(),
-+                                 can_edit = False, unapplied = True,
-+                                 bottom = patch.get_bottom(),
-+                                 top = patch.get_top(),
-+                                 author_name = patch.get_authname(),
-+                                 author_email = patch.get_authemail(),
-+                                 author_date = patch.get_authdate())
-+
-     def delete(self, force = False):
-         """Deletes an stgit series
+         if self.__name:
+-            self.__patch_dir = os.path.join(git.base_dir, 'patches',
++            base_dir = git.get_base_dir()
++            self.__patch_dir = os.path.join(base_dir, 'patches',
+                                             self.__name)
+-            self.__base_file = os.path.join(git.base_dir, 'refs', 'bases',
++            self.__base_file = os.path.join(base_dir, 'refs', 'bases',
+                                             self.__name)
+             self.__applied_file = os.path.join(self.__patch_dir, 'applied')
+             self.__unapplied_file = os.path.join(self.__patch_dir, 'unapplied')
+@@ -386,7 +387,7 @@ class Series:
+     def init(self):
+         """Initialises the stgit series
          """
+-        bases_dir = os.path.join(git.base_dir, 'refs', 'bases')
++        bases_dir = os.path.join(git.get_base_dir(), 'refs', 'bases')
+ 
+         if self.is_initialised():
+             raise StackException, self.__patch_dir + ' already exists'
