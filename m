@@ -1,151 +1,100 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-name-rev off-by-one bug
-Date: Mon, 28 Nov 2005 21:54:05 -0800
-Message-ID: <7vhd9wngn6.fsf@assigned-by-dhcp.cox.net>
-References: <20051128234256.1508.qmail@science.horizon.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Re: keeping remote repo checked out?
+Date: Tue, 29 Nov 2005 01:02:07 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0511282337170.25300@iabervon.org>
+References: <m3k6et9rdw.fsf@lugabout.cloos.reno.nv.us>
+ <7vbr051ad1.fsf@assigned-by-dhcp.cox.net> <20051128105736.GO22159@pasky.or.cz>
+ <7vsltgtvk4.fsf@assigned-by-dhcp.cox.net> <20051128212804.GV22159@pasky.or.cz>
+ <Pine.LNX.4.64.0511281420390.3263@g5.osdl.org> <Pine.LNX.4.64.0511281845280.25300@iabervon.org>
+ <Pine.LNX.4.64.0511281637480.3177@g5.osdl.org> <Pine.LNX.4.64.0511282027360.25300@iabervon.org>
+ <Pine.LNX.4.64.0511281837040.3177@g5.osdl.org> <Pine.LNX.4.64.0511282208050.25300@iabervon.org>
+ <Pine.LNX.4.64.0511282029290.3177@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 29 07:03:37 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 29 07:11:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EgyRR-00032I-B7
-	for gcvg-git@gmane.org; Tue, 29 Nov 2005 06:54:16 +0100
+	id 1EgyYg-0004Io-SC
+	for gcvg-git@gmane.org; Tue, 29 Nov 2005 07:01:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbVK2FyI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Nov 2005 00:54:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbVK2FyI
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 00:54:08 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:12206 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751257AbVK2FyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Nov 2005 00:54:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051129055239.YCJU17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 29 Nov 2005 00:52:39 -0500
-To: linux@horizon.com
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751262AbVK2GBk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Nov 2005 01:01:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbVK2GBk
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Nov 2005 01:01:40 -0500
+Received: from iabervon.org ([66.92.72.58]:39432 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751262AbVK2GBj (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Nov 2005 01:01:39 -0500
+Received: (qmail 4682 invoked by uid 1000); 29 Nov 2005 01:02:07 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 29 Nov 2005 01:02:07 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0511282029290.3177@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12920>
 
-linux@horizon.com writes:
+On Mon, 28 Nov 2005, Linus Torvalds wrote:
 
-> (Being able to back up the object database is obviously simple, but what
-> happens if the index holds HEAD+1, the working directory holds HEAD+2,
-> and I try to mere the latest changes from origin?  Are either HEAD+1 or
-> HEAD+2 in danger of being lost, or will checking them in later overwrite
-> the merge, or what?)
+> On Mon, 28 Nov 2005, Daniel Barkalow wrote:
+> > 
+> > I was planning to keep it in .git (instead of .git/refs/...), because it's 
+> > information about the working tree, not properly part of the repository. 
+> > It's like MERGE_HEAD in being about what the user is in the middle of.
+> 
+> That's fine.
+> 
+> However, your patch isn't.
+> 
+> Your patch just creates this eternal confusion of "why is HEAD different 
+> from CHECKED_OUT". 
+> 
+> It's really easy to do what you want to do _without_ any tool changes:
+> 
+> 	git-rev-parse HEAD > .git/CHECKED_OUT
+> 	rm .git/HEAD
+> 	ln -s refs/heads/../../CHECKED_OUT .git/HEAD
+> 
+> and you're done. No tool changes necessary.
+> 
+> Now "HEAD" always points to the checked-out thing, but a "git clone" won't 
+> ever actually clone your CHECKED_OUT branch.
 
-Thanks for the complaints.  No sarcasm intended.  Yours is
-exactly the kind of message we (people who've been around here
-for too long) need to hear.
+But CHECKED_OUT isn't a branch. The whole point of it is that you stay on 
+some real branch, so you can actually use the tools to affect the 
+repository (i.e., the things under refs/). The reason to keep CHECKED_OUT 
+is so that you can tell if the branch you're on changes out from under 
+you.
 
-Although the technical details are hidden in the documentation
-which needs reorganization to make them easier to find [*1*] as
-you point out, the guiding principle for merge is quite simple.
+For example, I want to have a repository where I push into the 
+"production" branch, and I want to be able to get these changes in the 
+working tree that the repository is in. If I have HEAD point to 
+refs/heads/production, git doesn't know any more what's in the working 
+tree, so it can't do the two-way merge. If I have HEAD point to 
+CHECKED_OUT, git doesn't know any more what I want to get, so it can't do 
+the two-way merge. That is, what I want to have work is:
 
-To the git barebone Porcelain layer (things that start with
-git-*, not with cg-*) [*2*], a merge is always between the
-current HEAD and one or more remote branch heads, and the index
-file must exactly match the tree of HEAD commit (i.e. the
-contents of the last commit) when it happens.  In other words,
-"git-diff --cached HEAD" must report no changes [*3*].  So
-HEAD+1 must be HEAD in your above notation, or merge will refuse
-to do any harm to your repository (that is, it may fetch the
-objects from remote, and it may even update the local branch
-used to keep track of the remote branch with "git pull remote
-rbranch:lbranch", but your working tree, .git/HEAD pointer and
-index file are left intact).
+  server$ git checkout production
+  work$ git push server:production
+  server$ git checkout
 
-You may have local modifications in the working tree files.  In
-other words, "git-diff" is allowed to report changes (the
-difference between HEAD+2 and HEAD+1 in your notation).
-However, the merge uses your working tree as the working area,
-and in order to prevent the merge operation from losing such
-changes, it makes sure that they do not interfere with the
-merge. Those complex tables in read-tree documentation define
-what it means for a path to "interfere with the merge".  And if
-your local modifications interfere with the merge, again, it
-stops before touching anything.
+and this should leave the working tree on server with the changes pushed 
+from work. Currently, I have to make sure server *isn't* tracking the 
+branch I care about when the push happens, so that it doesn't lose track 
+of its state, and then switch to the branch to get the changes, and copy 
+the branch to a new branch, and switch to that so the next branch won't 
+mess up the state.
 
-So in the above two "failed merge" case, you do not have to
-worry about lossage of data --- you simply were not ready to do
-a merge, so no merge happened at all.  You may want to finish
-whatever you were in the middle of doing, and retry the same
-pull after you are done and ready.
+HEAD is a symbolic ref to the ref in the repository that is the current 
+branch. CHECKED_OUT is a ref to the hash that's in the working tree. 
+Usually they match, because usually nothing is changing current branch 
+without changing the working tree (or making the current branch match 
+changes in the working tree), but the point of the patch is to respond 
+sensibly to cases where this stops being true, because those can actually 
+be part of desirable usage patterns.
 
-When things cleanly merge, these things happen:
-
- (1) the results are updated both in the index file and in your
-     working tree,
- (2) index file is written out as a tree,
- (3) the tree gets committed, and 
- (4) the HEAD pointer gets advanced.
-
-Because of (2), we require that the original state of the index
-file to match exactly the current HEAD commit; otherwise we will
-write out your local changes already registered in your index
-file (the difference between HEAD+1 and HEAD in your notation)
-along with the merge result, which is not good.  Because (1)
-involves only the paths different between your branch and the
-remote branch you are pulling from during the merge (which is
-typically a fraction of the whole tree), you can have local
-modifications in your working tree as long as they do not
-overlap with what the merge updates.
-
-When there are conflicts, these things happen:
-
- (0) HEAD stays the same.
-
- (1) Cleanly merged paths are updated both in the index file and
-     in your working tree.
-
- (2) For conflicting paths, the index file records the version
-     from HEAD. The working tree files have the result of
-     "merge" program; i.e. 3-way merge result with familiar
-     conflict markers <<< === >>>.
-
- (3) No other changes are done.  In particular, the local
-     modifications you had before you started merge will stay the
-     same and the index entries for them stay as they were,
-     i.e. matching HEAD.
-
-After seeing a conflict, you can do two things:
-
- * Decide not to merge.  The only clean-up you need are to reset
-   the index file to the HEAD commit to reverse (1) and to clean
-   up working tree changes made by (1) and (2); "git-reset" can
-   be used for this.
-
- * Resolve the conflicts.  "git-diff" would report only the
-   conflicting paths because of the above (1) and (2).  Edit the
-   working tree files into a desirable shape, git-update-index
-   them, to make the index file contain what the merge result
-   should be, and run "git-commit" to commit the result.
-
-
-[Footnotes]
-
-*1* It is a shame that the most comprehensive definition of
-3-way read-tree semantics is in t/t1000-read-tree-m-3way.sh test
-script.
-
-*2* Cogito (things that start with cg-*) seems to try to be
-cleverer.  Pasky might want to brag about the rules in Cogito
-land.
-
-*3* This is a bit of lie.  In certain special cases, your index
-are allowed to be different from the tree of HEAD commit;
-basically your index entries are allowed to match the result of
-trivial merge already (e.g. you received the same patch from
-external source to produce the same result as what you are
-merging).  For example, if a path did not exist in the common
-ancestor and your head commit but exists in the tree you are
-merging into your repository, and if you already happen to have
-that path exactly in your index, the merge does not have to
-fail.  This is case #2 in the 3-way read-tree table in t/t1000.
+	-Daniel
+*This .sig left intentionally blank*
