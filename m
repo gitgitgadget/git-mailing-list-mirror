@@ -1,63 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-name-rev off-by-one bug
-Date: Tue, 29 Nov 2005 22:39:36 -0800
-Message-ID: <7vwtiqzljr.fsf@assigned-by-dhcp.cox.net>
-References: <20051130060906.13277.qmail@science.horizon.com>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH] SVN import: Use one log call
+Date: Wed, 30 Nov 2005 07:52:42 +0100
+Message-ID: <20051130065241.GY20418@kiste.smurf.noris.de>
+References: <pan.2005.11.29.07.13.02.145977@smurf.noris.de> <7vhd9vdx1o.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511292247591.3122@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net, torvalds@osdl.org, git@vger.kernel.org,
-	pasky@suse.cz
-X-From: git-owner@vger.kernel.org Wed Nov 30 07:54:36 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 30 08:28:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhLdR-0006qn-L9
-	for gcvg-git@gmane.org; Wed, 30 Nov 2005 07:40:13 +0100
+	id 1EhLrh-0003LR-SI
+	for gcvg-git@gmane.org; Wed, 30 Nov 2005 07:54:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751084AbVK3Gjj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Nov 2005 01:39:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751091AbVK3Gjj
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 01:39:39 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:49089 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751084AbVK3Gji (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2005 01:39:38 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051130063907.LBGX3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 30 Nov 2005 01:39:07 -0500
-To: linux@horizon.com
-In-Reply-To: <20051130060906.13277.qmail@science.horizon.com>
-	(linux@horizon.com's message of "30 Nov 2005 01:09:06 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751074AbVK3Gym (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Nov 2005 01:54:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbVK3Gym
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 01:54:42 -0500
+Received: from run.smurf.noris.de ([192.109.102.41]:25002 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S1751074AbVK3Gyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2005 01:54:41 -0500
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1EhLpb-0001PX-4m; Wed, 30 Nov 2005 07:53:51 +0100
+Received: (nullmailer pid 2906 invoked by uid 501);
+	Wed, 30 Nov 2005 06:52:42 -0000
+To: Nicolas Pitre <nico@cam.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0511292247591.3122@localhost.localdomain>
+User-Agent: Mutt/1.5.9i
+X-Smurf-Spam-Score: -2.6 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12990>
 
-linux@horizon.com writes:
+Hi,
 
->> +-0 -1 -2::
->> +	When an unmerged entry is seen, diff against the base version,
->> +	the "first branch" or the "second branch" respectively.
->> +
->> +	The default is to diff against the first branch.
->> +
->
-> Er... why are these flags zero-based?
+Nicolas Pitre:
+> Same here, with the following public repo: svn://mielke.cc/main/brltty
+> 
+Same thing -- should work with a "-T main/brltty" option.
 
-Because -1 means "first branch" (usually "ours", aka HEAD), and
--2 means "second branch" ("theirs", aka MERGE_HEAD), and -0 is
-for the base (aka merge base)?
+> Thing is the above repository is not _that_ weird.  And with the real 
+> svn it produces a proper source tree of course, without any special 
+> options.  So I would think git-svnimport should be able to do the same.  
+> No?
 
-But I think you are right.  The numeric parameters should match
-stage number for consistency.
+Sure. The problem is that svn doesn't have tags, branches, or different
+projects; it's all just subdirectories with linked files.
 
-How about if I redo the patch to make diff-files accept -1/-2/-3
-instead, and in addition accept "--base", "--ours", and
-"--theirs" as synonyms?
+So you need a good mapping from one to the other. In principle that's
+simple, it's just that nobody has written the code for a more flexible
+mapping from svn paths to tags / branch+subpath yet.
 
-Side note.  diff3 says MINE OLDER YOURS and the way to remember
-the order is they are alphabetical.  We can say the same for
-base, ours and theirs.
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+"Adam may not have been so perfect after the 'fall," but he was
+ not so big a fool."
+      [Lemuel K. Washburn, _Is The Bible Worth Reading
+                             And Other Essays_]
