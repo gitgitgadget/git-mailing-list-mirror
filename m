@@ -1,66 +1,87 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 0/7]
-Date: Wed, 30 Nov 2005 22:27:36 +0000
-Message-ID: <b0943d9e0511301427j28d64dd8j@mail.gmail.com>
-References: <20051129220552.9885.41086.stgit@dexter.citi.umich.edu>
+From: Chuck Lever <cel@citi.umich.edu>
+Subject: Re: [PATCH 7/7] Use a separate directory for patches under each branch
+ subdir
+Date: Wed, 30 Nov 2005 17:28:39 -0500
+Organization: Network Appliance, Inc.
+Message-ID: <438E2797.2020205@citi.umich.edu>
+References: <20051129220552.9885.41086.stgit@dexter.citi.umich.edu>	 <20051129220951.9885.59702.stgit@dexter.citi.umich.edu> <b0943d9e0511301423h2885d442r@mail.gmail.com>
+Reply-To: cel@citi.umich.edu
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: multipart/mixed;
+ boundary="------------080507030707090109080803"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 30 23:29:29 2005
+X-From: git-owner@vger.kernel.org Wed Nov 30 23:32:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhaQN-0006bs-Ts
-	for gcvg-git@gmane.org; Wed, 30 Nov 2005 23:27:40 +0100
+	id 1EhaRO-000773-Q7
+	for gcvg-git@gmane.org; Wed, 30 Nov 2005 23:28:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750976AbVK3W1h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Nov 2005 17:27:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbVK3W1h
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 17:27:37 -0500
-Received: from xproxy.gmail.com ([66.249.82.204]:59471 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750976AbVK3W1g convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2005 17:27:36 -0500
-Received: by xproxy.gmail.com with SMTP id i30so119781wxd
-        for <git@vger.kernel.org>; Wed, 30 Nov 2005 14:27:36 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AUSDgghKcb5/jPTVofQYE/c0QIq4hJHtKg/QhRMpqXM0afHXkBGBSd6Vha9hZSA4IWu2TQrQLRV66pLDmXiFzf/GojV16hFGKyQUNT9PTLycY0Ex1GtSxtTvSFCgE8ysHFJJiXQhWUJkqeN8/kOIwzmqtw4G52UxkRFCtkpm9lM=
-Received: by 10.70.104.5 with SMTP id b5mr872903wxc;
-        Wed, 30 Nov 2005 14:27:36 -0800 (PST)
-Received: by 10.70.27.12 with HTTP; Wed, 30 Nov 2005 14:27:36 -0800 (PST)
-To: Chuck Lever <cel@citi.umich.edu>
-In-Reply-To: <20051129220552.9885.41086.stgit@dexter.citi.umich.edu>
-Content-Disposition: inline
+	id S1751058AbVK3W2k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Nov 2005 17:28:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbVK3W2k
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 17:28:40 -0500
+Received: from citi.umich.edu ([141.211.133.111]:65160 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S1751058AbVK3W2j (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Nov 2005 17:28:39 -0500
+Received: from [141.211.133.33] (dexter.citi.umich.edu [141.211.133.33])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by citi.umich.edu (Postfix) with ESMTP id 5E7E21BB7E;
+	Wed, 30 Nov 2005 17:28:39 -0500 (EST)
+User-Agent: Mozilla Thunderbird 1.0.7-1.4.1 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <b0943d9e0511301423h2885d442r@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13025>
 
-On 29/11/05, Chuck Lever <cel@citi.umich.edu> wrote:
-> + stg-in-subdirectories   | Use git-rev-parse to find the local GIT repository
-> + fix-branch-description  | Align branch descriptions in output of "stg branch -l"
-> + stg-series-description  | "stg series" option to show patch summary descriptions
-> + stg-series-short        | Add facility to print short list of patches around 'top'
+This is a multi-part message in MIME format.
+--------------080507030707090109080803
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-I applied the above patches.
+Catalin Marinas wrote:
+> On 29/11/05, Chuck Lever <cel@netapp.com> wrote:
+> 
+>>Currently you can't specify a patch name that matches the name of one of
+>>the stgit special files under .git/patches/<branch-name>.  Let's use a
+>>new subdirectory under .git/patches/<branch-name> to contain just the
+>>patch directories to remove this limitation.
+> 
+> 
+> This patch doesn't fix the already created branches. It would be
+> useful to upgrade the branch structure automatically if the patches
+> directory is not found.
 
-> + stg-branch-clone        | Add a "--clone" option to "stg branch"
+the reason i didn't do that is because i wanted to allow older versions 
+of StGIT to continue to work on existing repositories.
 
-I'll comment on this tomorrow since I need to look at it in more
-detail. One thing I would prefer is to be able to specify a name for
-the newly cloned branch rather than generating one by default (which
-can stay as well, as long as a 2nd argument with the name is not
-given).
+what if i added a migration tool to allow a user to switch back and forth?
 
-> Before 0.8, you might also consider addressing the patch authorship issues
-> that come up when mailing out patches, as discussed on git@vger last week.
+--------------080507030707090109080803
+Content-Type: text/x-vcard; charset=utf-8;
+ name="cel.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="cel.vcf"
 
-Yes, I will.
+begin:vcard
+fn:Chuck Lever
+n:Lever;Charles
+org:Network Appliance, Incorporated;Linux NFS Client Development
+adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
+email;internet:cel@citi.umich.edu
+title:Member of Technical Staff
+tel;work:+1 734 763 4415
+tel;fax:+1 734 763 4434
+tel;home:+1 734 668 1089
+x-mozilla-html:FALSE
+url:http://www.monkey.org/~cel/
+version:2.1
+end:vcard
 
-Thanks for the patches.
 
---
-Catalin
+--------------080507030707090109080803--
