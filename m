@@ -1,51 +1,43 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: More merge questions
-Date: Wed, 30 Nov 2005 13:37:26 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0511301325580.25300@iabervon.org>
-References: <20051130131045.28149.qmail@science.horizon.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: GIT_OBJECT_DIRECTORY handling broken on master.kernel.org?
+Date: Wed, 30 Nov 2005 10:50:14 -0800
+Message-ID: <7v64qaug0p.fsf@assigned-by-dhcp.cox.net>
+References: <1133359173.4117.68.camel@baythorne.infradead.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Nov 30 19:57:36 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 30 20:12:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhWp9-0007nJ-CE
-	for gcvg-git@gmane.org; Wed, 30 Nov 2005 19:37:00 +0100
+	id 1EhX28-0006TD-A7
+	for gcvg-git@gmane.org; Wed, 30 Nov 2005 19:50:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751504AbVK3Sg4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Nov 2005 13:36:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751508AbVK3Sg4
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 13:36:56 -0500
-Received: from iabervon.org ([66.92.72.58]:40456 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751504AbVK3Sgz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Nov 2005 13:36:55 -0500
-Received: (qmail 30186 invoked by uid 1000); 30 Nov 2005 13:37:26 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 30 Nov 2005 13:37:26 -0500
-To: linux@horizon.com
-In-Reply-To: <20051130131045.28149.qmail@science.horizon.com>
+	id S1751495AbVK3SuT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Nov 2005 13:50:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbVK3SuT
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 13:50:19 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:64184 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751495AbVK3SuS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2005 13:50:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051130184845.DMRL17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 30 Nov 2005 13:48:45 -0500
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1133359173.4117.68.camel@baythorne.infradead.org> (David
+	Woodhouse's message of "Wed, 30 Nov 2005 13:59:33 +0000")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13013>
 
-On Wed, 30 Nov 2005, linux@horizon.com wrote:
+David Woodhouse <dwmw2@infradead.org> writes:
 
-> Given that it all matches up so nicely, I'd like to honestly ask if
-> case 3 of the conditions is correct.  I'd think that if I deleted
-> a file form te index, and the file wasn't changed on the head I'm
-> tracking, the right resolution is to keep it deleted.  Why override
-> my deletion?
+> Daily kernel snapshots broke again. Trying to access, literally, "GIT_OBJECT_DIRECTORY".
 
-You're allowed to do the two-way merge with your index empty, and this 
-means that you just hadn't read the ancestor, not that you want to remove 
-everything. I'm not sure what this is useful for.
-
-You're definitely allowed to do a three-way merge with your index empty, 
-meaning that you don't have any local changes at all, which lets you do a 
-merge in a temporary index that didn't exist before. (The two-way case is 
-less interesting, because it's the same as just reading the new tree.)
-
-	-Daniel
-*This .sig left intentionally blank*
+Sorry about that.
+Tommi Virtanen's patch looks correct.
