@@ -1,99 +1,78 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: git-name-rev off-by-one bug
-Date: Wed, 30 Nov 2005 18:12:57 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0511301707020.25300@iabervon.org>
-References: <20051128234256.1508.qmail@science.horizon.com>
- <7vhd9wngn6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511301235390.25300@iabervon.org>
- <7vsltdsxzb.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511301514500.25300@iabervon.org>
- <7vy835okxs.fsf@assigned-by-dhcp.cox.net>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: [PATCH] Move "-include config.mak" to end of configuration section
+Date: Thu, 01 Dec 2005 01:23:33 +0200
+Message-ID: <20051201012333.44bd81f2.tihirvon@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 01 00:13:48 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Dec 01 00:25:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ehb7l-0004zG-Hk
-	for gcvg-git@gmane.org; Thu, 01 Dec 2005 00:12:30 +0100
+	id 1EhbIa-0002m7-UG
+	for gcvg-git@gmane.org; Thu, 01 Dec 2005 00:23:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201AbVK3XM1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Nov 2005 18:12:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbVK3XM1
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 18:12:27 -0500
-Received: from iabervon.org ([66.92.72.58]:778 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751201AbVK3XM0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Nov 2005 18:12:26 -0500
-Received: (qmail 31399 invoked by uid 1000); 30 Nov 2005 18:12:57 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 30 Nov 2005 18:12:57 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy835okxs.fsf@assigned-by-dhcp.cox.net>
+	id S1751215AbVK3XXi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Nov 2005 18:23:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbVK3XXh
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 18:23:37 -0500
+Received: from marski.suomi.net ([212.50.131.142]:10442 "EHLO marski.suomi.net")
+	by vger.kernel.org with ESMTP id S1751215AbVK3XXh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Nov 2005 18:23:37 -0500
+Received: from spartak.suomi.net (spartak.suomi.net [212.50.140.227])
+ by marski.suomi.net (Sun Java System Messaging Server 6.2 (built Dec  2 2004))
+ with ESMTP id <0IQS00I0TJNCKN40@marski.suomi.net> for git@vger.kernel.org;
+ Thu, 01 Dec 2005 01:23:36 +0200 (EET)
+Received: from spam2.suomi.net (spam2.suomi.net [212.50.131.166])
+ by mailstore.suomi.net
+ (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
+ with ESMTP id <0IQS004WCJSUAV50@mailstore.suomi.net>; Thu,
+ 01 Dec 2005 01:26:54 +0200 (EET)
+Received: from garlic.home.net (addr-82-128-203-211.suomi.net [82.128.203.211])
+	by spam2.suomi.net (Postfix) with SMTP id 9021711B531; Thu,
+ 01 Dec 2005 01:23:33 +0200 (EET)
+To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.7; i686-pc-linux-gnu)
+X-OPOY-MailScanner-Information: Please contact the OPOY for more information
+X-OPOY-MailScanner: Found to be clean
+X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (score=-2.022,	required 5,
+ autolearn=not spam, AWL 0.58, BAYES_00 -2.60)
+X-OPOY-MailScanner-From: tihirvon@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13030>
 
-On Wed, 30 Nov 2005, Junio C Hamano wrote:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > I actually had that problem with the original tables; there isn't a 
-> > canonical order in which to list a table of all of the possible matches 
-> > and non-matches between items so as to be complete.
-> >
-> > Perhaps it ought to list, on each line, which previous cases would match, 
-> > so that you could see that case 2 is really the conditions of 2 minus the 
-> > conditions for 2ALT, which is "all of the ancestors are empty, the head 
-> > has a directory/file conflict, and remote exists."
-> 
-> Sorry, I was not clear about it when I did that table the first
-> time.  2ALT was "alternatives suggested to replace 2" and listed
-> in the same table for comparison purpose.
+This makes it possible to define WITH_SEND_EMAIL etc. in config.mak.
 
-I understood that; actually, when I found it, a number of the ALT cases 
-had been implemented, and some of them supplimented rather than replaced 
-the originals.
+---
 
-> The original table was designed in a way that if you have a
-> match on case N, there would not be any other case M that matches
-> the case, either N<M or M<N.  IOW, the order to read the table
-> did not matter.  At least that was the intention.
-> 
-> If you read "missing" = 0, "exists" = 1, and take OAB as bit2,
-> bit1, and bit0, you can easily see the pattern in the table.  It
-> counts in binary, although bit1 has various subcases so the
-> table has more than 8 rows, and it is easy to see it covers all.
+ Makefile |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-The hard thing is to verify that all the subcases are listed. I switched 
-the orders of matching and non-matching, so that I could make it matching 
-and need-not-match. Your table is actually missing a few cases: what 
-happens if O is missing, 2 has a directory, and 3 has a file? You note 
-that we have to be careful, but don't list the result (which is "no 
-merge").
-
-Perhaps the table would be clearer if the lines were grouped in 
-exists/missing? (With 5ALT repeated in the 011 and 111 groups, since it 
-applies to both) Then you would only need to look at 5 lines with 
-cascading (in the most complex case), rather than having to read the whole 
-top of the table.
-
-(It is actually written like that, with the exception of 5ALT, 2ALT, and 
-3ALT, but it's not visually obvious.)
-
-So case 11 is really: All three exist. Head and remote don't match 
-(-5ALT), no ancestor matches remote (-13), and no ancestor matches head 
-(-14). Case 13 is really: All three exist. Head and remote don't match 
-(-5ALT), there aren't different ancestors which match head and remote 
-(-16), and an ancestor matches remote.
-
-The tricky bit is really cases 2ALT and 3ALT, which can be used in cases 
-where some but not all of the ancestors are empty, and can't be used if 
-there's a directory/file conflict; neither of these conditions matters for 
-anything else in the table, so it's hard to fit this in. My strategy is to 
-have those as special cases, and have the rest of the table cover 
-everything (rather than having case 2 require a directory/file conflict 
-and case 7 require that no ancestor be empty, which would be accurate, but 
-would make it harder to check for missing cases).
-
-	-Daniel
-*This .sig left intentionally blank*
+fe5fece83b2ab0d67a4277d851faf50ad944cff4
+diff --git a/Makefile b/Makefile
+index 984d167..c44f5da 100644
+--- a/Makefile
++++ b/Makefile
+@@ -75,7 +75,7 @@ RPMBUILD = rpmbuild
+ # explicitly what architecture to check for. Fix this up for yours..
+ SPARSE_FLAGS = -D__BIG_ENDIAN__ -D__powerpc__
+ 
+-
++-include config.mak
+ 
+ ### --- END CONFIGURATION SECTION ---
+ 
+@@ -254,8 +254,6 @@ ifneq (,$(findstring arm,$(uname_M)))
+ 	ARM_SHA1 = YesPlease
+ endif
+ 
+--include config.mak
+-
+ ifndef NO_CURL
+ 	ifdef CURLDIR
+ 		# This is still problematic -- gcc does not always want -R.
+-- 
+0.99.9.GIT
