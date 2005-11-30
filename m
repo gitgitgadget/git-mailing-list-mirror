@@ -1,70 +1,80 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-name-rev off-by-one bug
-Date: Wed, 30 Nov 2005 08:12:59 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0511300809300.3099@g5.osdl.org>
-References: <20051130060906.13277.qmail@science.horizon.com>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: Question about handling of heterogeneous repositories
+Date: Wed, 30 Nov 2005 17:49:17 +0100
+Message-ID: <200511301749.18073.Josef.Weidendorfer@gmx.de>
+References: <81b0412b0511220850w429d2f36lafe9de7ce19ce8f@mail.gmail.com> <200511301540.34776.Josef.Weidendorfer@gmx.de> <81b0412b0511300701w71da125am2dcc896b4693f37f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: junkio@cox.net, git@vger.kernel.org, pasky@suse.cz
-X-From: git-owner@vger.kernel.org Wed Nov 30 18:01:05 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 30 18:13:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhUbj-0004iO-Og
-	for gcvg-git@gmane.org; Wed, 30 Nov 2005 17:15:00 +0100
+	id 1EhV92-0007Uu-IK
+	for gcvg-git@gmane.org; Wed, 30 Nov 2005 17:49:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751434AbVK3QOk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Nov 2005 11:14:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751237AbVK3QOk
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 11:14:40 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:15553 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751434AbVK3QOk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Nov 2005 11:14:40 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jAUGD5nO016153
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 30 Nov 2005 08:13:06 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jAUGCxsP027412;
-	Wed, 30 Nov 2005 08:13:02 -0800
-To: linux@horizon.com
-In-Reply-To: <20051130060906.13277.qmail@science.horizon.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.127 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751452AbVK3QtV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Nov 2005 11:49:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbVK3QtV
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 11:49:21 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:6864 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1751452AbVK3QtV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2005 11:49:21 -0500
+Received: from dhcp-3s-61.lrr.in.tum.de (dhcp-3s-61.lrr.in.tum.de [131.159.35.61])
+	by mail.in.tum.de (Postfix) with ESMTP id 0059A23DB;
+	Wed, 30 Nov 2005 17:49:19 +0100 (MET)
+To: Alex Riesen <raa.lkml@gmail.com>
+User-Agent: KMail/1.9
+In-Reply-To: <81b0412b0511300701w71da125am2dcc896b4693f37f@mail.gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13008>
 
-
-
-On Tue, 30 Nov 2005, linux@horizon.com wrote:
->
-> > +-0 -1 -2::
-> > +	When an unmerged entry is seen, diff against the base version,
-> > +	the "first branch" or the "second branch" respectively.
-> > +
-> > +	The default is to diff against the first branch.
+On Wednesday 30 November 2005 16:01, Alex Riesen wrote:
+> On 11/30/05, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> > git-mv could support this. Additional to deleting from
+> > one repository and adding to the new, it could generate a remark for
+> > the commit message, like:
+> >
+> >  Added file xxx is from remote repo '/path/myrepo' with name 'yyy'
+> >  (file SHA1: 123445... from remote commit SHA1: 345667...)
 > 
-> Er... why are these flags zero-based?
+> That's sounds very tempting to special-case for nested repos :)
 
-Because it makes more sense from a "git diff" standpoint to do that.
+If the repo path is an URL, this works quite general. I tried
+to avoid adding local head names to this remark...
 
-The fact that _internally_, git puts the first branch into "stage 2", and 
-the second one into "stage 3", that's very much a internal git 
-implementation issue that makes no sense to expose to a regular user.
+> Maybe use .git/objects/info/alternates in top-level repo?
 
-> git-ls-files -s displays them as "1", "2" and "3".  All the docs talk
-> about "stage1", "stage2" and "stage3".
+Or better the .git/remotes namespace...
+Still, this is misusing repo-local config for multiple repos.
+Seems quite confusing for me.
 
-Yes, but those are _technical_ docs, not docs aimed toward a user. Nobody 
-sane uses "git-ls-files --stage" outside of a script, or unless they 
-really know git and are trying to debug something.
+> It may 
+> have side-effects of the new objects ending up in top-level repo
+> if commited from top-level directory. Even then, the tools can
+> be tought to stop looking for GIT_DIR in the directory closest
+> to the file being commited:
+>   $ pwd
+>   .../top
+>   $ git-commit sub1/dir/file
+>   ... uses repo in .../top/sub1 instead of $(pwd)/../top/.git
+> 
+> Looks very messy, with a potential for lots of corner cases and
+> not that tempting anymore :(
 
->From a user standpoint, it makes a lot more sense to say "primary branch" 
-and "other branch" , and then "-1" and "-2" make sense (and then the "base 
-of the merge" makes sense as "-0").
+git-mv would have to do exactly something like this to detect
+inter-repo renames at all ;-)
+But in general, this is really messy.
 
-		Linus
+See my suggestion in a previous thread with similar topic
+ http://www.gelato.unsw.edu.au/archives/git/0511/12028.html
+
+Josef
