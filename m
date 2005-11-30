@@ -1,58 +1,95 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Question about handling of heterogeneous repositories
-Date: Wed, 30 Nov 2005 14:15:55 +0100
-Message-ID: <81b0412b0511300515u5d2840ccv92be6e374dd795be@mail.gmail.com>
-References: <81b0412b0511220850w429d2f36lafe9de7ce19ce8f@mail.gmail.com>
-	 <20051127131147.GF22159@pasky.or.cz>
-	 <20051129204729.GA3033@steel.home>
-	 <200511301405.19541.Josef.Weidendorfer@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 30 15:39:43 2005
+From: linux@horizon.com
+Subject: More merge questions
+Date: 30 Nov 2005 08:10:45 -0500
+Message-ID: <20051130131045.28149.qmail@science.horizon.com>
+References: <7vwtiqzljr.fsf@assigned-by-dhcp.cox.net>
+Cc: junkio@cox.net, linux@horizon.com
+X-From: git-owner@vger.kernel.org Wed Nov 30 15:55:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhRol-0003ax-Sc
-	for gcvg-git@gmane.org; Wed, 30 Nov 2005 14:16:16 +0100
+	id 1EhRjc-0000Nn-Ny
+	for gcvg-git@gmane.org; Wed, 30 Nov 2005 14:10:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751206AbVK3NP5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Nov 2005 08:15:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbVK3NP5
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 08:15:57 -0500
-Received: from nproxy.gmail.com ([64.233.182.205]:40276 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751206AbVK3NP4 convert rfc822-to-8bit
+	id S1751209AbVK3NKx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Nov 2005 08:10:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbVK3NKx
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 08:10:53 -0500
+Received: from science.horizon.com ([192.35.100.1]:9258 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1751209AbVK3NKx
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2005 08:15:56 -0500
-Received: by nproxy.gmail.com with SMTP id o25so618385nfa
-        for <git@vger.kernel.org>; Wed, 30 Nov 2005 05:15:55 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=aw/3+7AupxxuWJzkfZjeX1cLLyu3ZYJEtFZBTH0sNF2nypU7ROTxemAFGJMYQr1EhJCiRQrGEFT5/pDdB8yc8n8b4GWzDJ+swwbFLmdm6CRFc/LMjXwM59JU4td4CebBwxuxHCuJIYMaTUZBR1j/rYqydUeJnvXVZbVt9Apw2Kk=
-Received: by 10.49.1.16 with SMTP id d16mr19333nfi;
-        Wed, 30 Nov 2005 05:15:55 -0800 (PST)
-Received: by 10.48.248.18 with HTTP; Wed, 30 Nov 2005 05:15:55 -0800 (PST)
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200511301405.19541.Josef.Weidendorfer@gmx.de>
-Content-Disposition: inline
+	Wed, 30 Nov 2005 08:10:53 -0500
+Received: (qmail 28150 invoked by uid 1000); 30 Nov 2005 08:10:45 -0500
+To: git@vger.kernel.org
+In-Reply-To: <7vwtiqzljr.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12998>
 
-On 11/30/05, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
-> > BTW, how does git-mv behave for out-of-tree renaming? How about
-> > inter-repo renaming (remove+add)?
->
-> git-mv will fail. The source has to appear in git-ls-files, and the
-> target simply is given to "git-update-index -add", which will return an
-> 'outside repository' error. Hmmm... git-mv should check this itself.
->
-> To detect inter-repository renaming, one has to see both repositories.
-> Currently, git/cogito etc. commands only work with one repository only.
+I'm working my way through a thorough understanding of merging.
 
-This case is somewhat special: one is _guaranteed_ to see both repositories.
+First I got git-read-tree's 3-way merge down to 6 conditionals, where
+a missing entry is considered equal to a missing entry, and a missing
+index entry is considered clean.
 
-PS: Im'restoring git@vger.kernel.org in cc-list, the discussion could be useful
+a) If stage2 == stage3, use stage2
+b) If stage1 == stage3, use stage2
+c) If the index entry exists and is dirty (working dir changes), FAIL
+d) If stage1 == stage2, use stage3
+e) If trivial-only, FAIL
+f) Return unmerged result for 3-way resolution by git-merge-index.
+
+Case c is needed so you don't change the world out from under
+your working directory changes.  You could move it earlier and
+make things strictire, but that's the minimal restriction.
+
+Then I started thinking about 2-way merge, and how that differed
+from a 3-way merge where stage2 was the previous index contents.
+
+If you apply the same rules (with trivial-only true), the only differences
+to the big 22-case table in the git-read-tree docs are:
+
+3) This says that if stage1 and state3 exist, use stage3.
+   3-way says if they're equal, delete the file, while if they're
+   unequal, it's fail.
+
+If 3-way git-merge-index were allowed, then the conditions that would
+change to do it are cases 8 and 12.
+
+The full list of cases and the conditional that applies, is:
+
+0) a
+1) d
+2) a
+3) see above.  It's b or e by my logic, but d by the table.
+
+4) b
+5) b
+6) a
+7) a
+8) e
+9) c
+
+10) d
+11) c
+12) e
+13) c
+
+14) a or b
+15) a or b
+
+16) e
+17) c
+18) a
+19) a
+20) d
+21) c
+
+Given that it all matches up so nicely, I'd like to honestly ask if
+case 3 of the conditions is correct.  I'd think that if I deleted
+a file form te index, and the file wasn't changed on the head I'm
+tracking, the right resolution is to keep it deleted.  Why override
+my deletion?
+
+Sorry if this is a dumb question, but it's not obvious to me.
