@@ -1,82 +1,51 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: git bisect enhancements?
-Date: Wed, 30 Nov 2005 15:36:26 -0600
-Message-ID: <1133386585.30767.34.camel@cashmere.sps.mot.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [PATCH 1/7] Make "stg export" save the base commit in the output directory
+Date: Wed, 30 Nov 2005 21:53:21 +0000
+Message-ID: <b0943d9e0511301353p5b8a3b82i@mail.gmail.com>
+References: <20051129220552.9885.41086.stgit@dexter.citi.umich.edu>
+	 <20051129220938.9885.37456.stgit@dexter.citi.umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Nov 30 22:37:42 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 30 22:57:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhZct-00073X-1c
-	for gcvg-git@gmane.org; Wed, 30 Nov 2005 22:36:31 +0100
+	id 1EhZtE-0007OG-SK
+	for gcvg-git@gmane.org; Wed, 30 Nov 2005 22:53:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750864AbVK3Vg2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Nov 2005 16:36:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750896AbVK3Vg2
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 16:36:28 -0500
-Received: from az33egw01.freescale.net ([192.88.158.102]:52423 "EHLO
-	az33egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S1750864AbVK3Vg1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2005 16:36:27 -0500
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id jAULnLQ0011841
-	for <git@vger.kernel.org>; Wed, 30 Nov 2005 14:49:21 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id jAULhC4W023053
-	for <git@vger.kernel.org>; Wed, 30 Nov 2005 15:43:12 -0600 (CST)
-To: Git List <git@vger.kernel.org>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+	id S1750857AbVK3VxW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Nov 2005 16:53:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbVK3VxW
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 16:53:22 -0500
+Received: from xproxy.gmail.com ([66.249.82.203]:28469 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750857AbVK3VxV convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2005 16:53:21 -0500
+Received: by xproxy.gmail.com with SMTP id i30so112606wxd
+        for <git@vger.kernel.org>; Wed, 30 Nov 2005 13:53:21 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eIaOcAo8/lk+QldQO7p9EkiF6fn/XJehu4uwkCBGdmtIENJbx4O3GL1VvXW0sPnAGr9V2CDadAVJ0YCr3yG9fxcup3C+TaDDIf21K9J1e0ClPdul4tuh8OBkWVj24Bpf0uGkZUgQr/hfLDK1+qgqxxcnafXgxPXAwcqroaCmzUY=
+Received: by 10.70.118.12 with SMTP id q12mr829886wxc;
+        Wed, 30 Nov 2005 13:53:21 -0800 (PST)
+Received: by 10.70.27.12 with HTTP; Wed, 30 Nov 2005 13:53:21 -0800 (PST)
+To: Chuck Lever <cel@citi.umich.edu>
+In-Reply-To: <20051129220938.9885.37456.stgit@dexter.citi.umich.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13018>
 
-Guys,
+On 29/11/05, Chuck Lever <cel@netapp.com> wrote:
+> When trying to apply a series of diffs that was exported from an StGIT
+> series, it can be convenient to know exactly which base commit the
+> patches apply to.  Save that commit in a file patchdir/base.
 
-So, I'm in the middle of a Git Bisect War.
-It all worked around 2.6.13-rc3 time, and doesn't now.
+I would rather save it as a comment ('#' prefixed) in the series file.
 
-So I launched into some bisecting, and it is all going
-pretty smoothly so far.  But I think there is an obvious
-enhancement that I would like to propose for discussion.
-
-First, the problem I'm seeing is that the current top
-of tree hangs an mpc8555_cds_defconfig build.  Bummer.
-Doesn't get past the traditional "uncompressing image..."
-message.
-
-Two or three "good builds" into things, it proposes a
-new build at a272e24cc8751d125f9582befed0213a2a2b270f.
-Which I build and don't quite boot.  It hangs after
-the IDE probe, and before the i2c probe.  Bummer.
-
-These are not bugs I was looking for.  Move along.
-
-So I lie and claim "git bisect good", making a *scratch* note
-of where the "git bisect log" seems to think I am so that
-I might come back here and claim "git bisect bad" later.
-
-The _next_ proposed split is at
-a272e24cc8751d125f9582befed0213a2a2b270f
-where I can clearly see using "git bisect visualize" that
-a much better, perhaps more quiescent choice is two commits
-later.  The proposed bisect location is in the middle of
-a series of commits from paulus tinkering with the PPC
-merge tree.  Two commits later, though, Linus has merged
-it in totally.  It will be less "in the middle" of things
-and more quiescent.  I want to "bump" the bisect point
-up two commits and _then_ build.
-
-So, I'm proposing something like:
-
-    $ git bisect bump +<n>
-    $ git bisect bump -<n>
-
-To move the bisection point "up" or "down" a commit chain.
-
-Am I off in the weeds?
-
-Thanks,
-jdl
+--
+Catalin
