@@ -1,64 +1,68 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 7/7] Use a separate directory for patches under each branch subdir
-Date: Wed, 30 Nov 2005 22:32:50 +0000
-Message-ID: <b0943d9e0511301432m10b25887r@mail.gmail.com>
-References: <20051129220552.9885.41086.stgit@dexter.citi.umich.edu>
-	 <20051129220951.9885.59702.stgit@dexter.citi.umich.edu>
-	 <b0943d9e0511301423h2885d442r@mail.gmail.com>
-	 <438E2797.2020205@citi.umich.edu>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git bisect enhancements?
+Date: Wed, 30 Nov 2005 14:43:09 -0800
+Message-ID: <7v3bldoiyq.fsf@assigned-by-dhcp.cox.net>
+References: <1133386585.30767.34.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 30 23:36:09 2005
+X-From: git-owner@vger.kernel.org Wed Nov 30 23:46:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhaVT-0000Yw-LB
-	for gcvg-git@gmane.org; Wed, 30 Nov 2005 23:32:56 +0100
+	id 1EhafS-0005yY-FW
+	for gcvg-git@gmane.org; Wed, 30 Nov 2005 23:43:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751114AbVK3Wcv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Nov 2005 17:32:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbVK3Wcv
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 17:32:51 -0500
-Received: from xproxy.gmail.com ([66.249.82.202]:14454 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751114AbVK3Wcv convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2005 17:32:51 -0500
-Received: by xproxy.gmail.com with SMTP id i30so120681wxd
-        for <git@vger.kernel.org>; Wed, 30 Nov 2005 14:32:50 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tJjKpI1sLIkAF0HeH6nlfB41w1txWBXx8aT+RO/DsXVJaxxzYMc25VlpIJWHA+sSfCpUtGFlub4PkSmdh1gpd0gfiHJfdNu8TjwOiWub3/yMgftviMdMtdAqJsneCSVy7ajlLOJwESxXcE26eFrFaiIsuR7XGfelzaYqX8sLjWo=
-Received: by 10.70.116.3 with SMTP id o3mr907785wxc;
-        Wed, 30 Nov 2005 14:32:50 -0800 (PST)
-Received: by 10.70.27.12 with HTTP; Wed, 30 Nov 2005 14:32:50 -0800 (PST)
-To: cel@citi.umich.edu
-In-Reply-To: <438E2797.2020205@citi.umich.edu>
-Content-Disposition: inline
+	id S1751170AbVK3WnL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Nov 2005 17:43:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbVK3WnL
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 17:43:11 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:17071 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751170AbVK3WnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2005 17:43:10 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051130224155.YRZH26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 30 Nov 2005 17:41:55 -0500
+To: Jon Loeliger <jdl@freescale.com>
+In-Reply-To: <1133386585.30767.34.camel@cashmere.sps.mot.com> (Jon Loeliger's
+	message of "Wed, 30 Nov 2005 15:36:26 -0600")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13027>
 
-On 30/11/05, Chuck Lever <cel@citi.umich.edu> wrote:
-> Catalin Marinas wrote:
-> > This patch doesn't fix the already created branches. It would be
-> > useful to upgrade the branch structure automatically if the patches
-> > directory is not found.
+Jon Loeliger <jdl@freescale.com> writes:
+
+>...
+> Two or three "good builds" into things, it proposes a
+> new build at a272e24cc8751d125f9582befed0213a2a2b270f.
+> Which I build and don't quite boot.  It hangs after
+> the IDE probe, and before the i2c probe.  Bummer.
 >
-> the reason i didn't do that is because i wanted to allow older versions
-> of StGIT to continue to work on existing repositories.
+> These are not bugs I was looking for.  Move along.
 
-You are right.
+This is not about your "bump", but one thing that may worthwhile
+to try is bisect enhancements Linus did a couple of days ago, to
+let you limit the number of commits tried by specifying the area
+you are interested in.
 
-> what if i added a migration tool to allow a user to switch back and forth?
+If may not help if only thing you know is that i2c probe is not
+what you are looking for, but if you know what area is suspect,
+say arch/powerpc and include/asm-powerpc (just taken randomly, I
+do not even know if you work in that area), it lets you say:
 
-A separate stg command for this would be useful. Anyway since the
-repository structure might change again in the future, I think it
-would be better to have a version string saved somewhere in
-.git/patches/version for reference.
+	$ git bisect reset
+	$ git bisect start arch/powerpc include/asm-powerpc
+        $ git bisect good v2.6.13-rc3
+        $ git bisect bad master
 
---
-Catalin
+What is interesting is that this cuts down the commits to be
+inspected to only the ones that touch the specified paths.  So
+without the path specifier, you may need to bisect 5000 commits in
+total, but with the commits limited to the ones that touch these
+two example directories, you would need to bisect 247 commits,
+which is only a fraction of the original.
