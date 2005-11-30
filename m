@@ -1,95 +1,57 @@
-From: linux@horizon.com
-Subject: More merge questions
-Date: 30 Nov 2005 08:10:45 -0500
-Message-ID: <20051130131045.28149.qmail@science.horizon.com>
-References: <7vwtiqzljr.fsf@assigned-by-dhcp.cox.net>
-Cc: junkio@cox.net, linux@horizon.com
-X-From: git-owner@vger.kernel.org Wed Nov 30 15:55:07 2005
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: GIT_OBJECT_DIRECTORY handling broken on master.kernel.org?
+Date: Wed, 30 Nov 2005 13:59:33 +0000
+Message-ID: <1133359173.4117.68.camel@baythorne.infradead.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Nov 30 16:07:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhRjc-0000Nn-Ny
-	for gcvg-git@gmane.org; Wed, 30 Nov 2005 14:10:57 +0100
+	id 1EhSVE-0003uC-Eq
+	for gcvg-git@gmane.org; Wed, 30 Nov 2005 15:00:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbVK3NKx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Nov 2005 08:10:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbVK3NKx
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 08:10:53 -0500
-Received: from science.horizon.com ([192.35.100.1]:9258 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1751209AbVK3NKx
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2005 08:10:53 -0500
-Received: (qmail 28150 invoked by uid 1000); 30 Nov 2005 08:10:45 -0500
+	id S1751240AbVK3N7p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Nov 2005 08:59:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbVK3N7o
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 08:59:44 -0500
+Received: from baythorne.infradead.org ([81.187.2.161]:47253 "EHLO
+	baythorne.infradead.org") by vger.kernel.org with ESMTP
+	id S1751235AbVK3N7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2005 08:59:43 -0500
+Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
+	by baythorne.infradead.org with esmtpsa (Exim 4.54 #1 (Red Hat Linux))
+	id 1EhSUf-0004bO-Ks
+	for git@vger.kernel.org; Wed, 30 Nov 2005 13:59:33 +0000
 To: git@vger.kernel.org
-In-Reply-To: <7vwtiqzljr.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/12999>
 
-I'm working my way through a thorough understanding of merging.
+Daily kernel snapshots broke again. Trying to access, literally, "GIT_OBJECT_DIRECTORY".
 
-First I got git-read-tree's 3-way merge down to 6 conditionals, where
-a missing entry is considered equal to a missing entry, and a missing
-index entry is considered clean.
+hera /home/dwmw2 $ export GIT_DIR=/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+hera /home/dwmw2 $ git-rev-parse --revs-only 00d7a7358e3f9f2575501674e604fe4c6700b365
+00d7a7358e3f9f2575501674e604fe4c6700b365
+hera /home/dwmw2 $ export GIT_OBJECT_DIRECTORY=/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/objects
+hera /home/dwmw2 $ git-rev-parse --revs-only 00d7a7358e3f9f2575501674e604fe4c6700b365
+fatal: Not a git repository: '/pub/scm/linux/kernel/git/torvalds/linux-2.6.git'
+hera /home/dwmw2 $ strace git-rev-parse --revs-only 00d7a7358e3f9f2575501674e604fe4c6700b365 2>&1 | tail
+access("/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/refs", X_OK) = 0
+lstat64("/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/HEAD", {st_mode=S_IFLNK|0777, st_size=17, ...}) = 0
+readlink("/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/HEAD", "refs/heads/master", 255) = 17
+access("GIT_OBJECT_DIRECTORY", X_OK)    = -1 ENOENT (No such file or directory)
+write(2, "fatal: ", 7fatal: )                  = 7
+write(2, "Not a git repository: \'/pub/scm/"..., 72Not a git repository: '/pub/scm/linux/kernel/git/torvalds/linux-2.6.git') = 72
+write(2, "\n", 1
+)                       = 1
+exit_group(128)                         = ?
+Process 30646 detached
 
-a) If stage2 == stage3, use stage2
-b) If stage1 == stage3, use stage2
-c) If the index entry exists and is dirty (working dir changes), FAIL
-d) If stage1 == stage2, use stage3
-e) If trivial-only, FAIL
-f) Return unmerged result for 3-way resolution by git-merge-index.
-
-Case c is needed so you don't change the world out from under
-your working directory changes.  You could move it earlier and
-make things strictire, but that's the minimal restriction.
-
-Then I started thinking about 2-way merge, and how that differed
-from a 3-way merge where stage2 was the previous index contents.
-
-If you apply the same rules (with trivial-only true), the only differences
-to the big 22-case table in the git-read-tree docs are:
-
-3) This says that if stage1 and state3 exist, use stage3.
-   3-way says if they're equal, delete the file, while if they're
-   unequal, it's fail.
-
-If 3-way git-merge-index were allowed, then the conditions that would
-change to do it are cases 8 and 12.
-
-The full list of cases and the conditional that applies, is:
-
-0) a
-1) d
-2) a
-3) see above.  It's b or e by my logic, but d by the table.
-
-4) b
-5) b
-6) a
-7) a
-8) e
-9) c
-
-10) d
-11) c
-12) e
-13) c
-
-14) a or b
-15) a or b
-
-16) e
-17) c
-18) a
-19) a
-20) d
-21) c
-
-Given that it all matches up so nicely, I'd like to honestly ask if
-case 3 of the conditions is correct.  I'd think that if I deleted
-a file form te index, and the file wasn't changed on the head I'm
-tracking, the right resolution is to keep it deleted.  Why override
-my deletion?
-
-Sorry if this is a dumb question, but it's not obvious to me.
+-- 
+dwmw2
