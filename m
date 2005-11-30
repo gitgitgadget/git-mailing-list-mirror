@@ -1,104 +1,99 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's new in git.git master branch
-Date: Wed, 30 Nov 2005 14:57:06 -0800
-Message-ID: <7vlkz5n3r1.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git-name-rev off-by-one bug
+Date: Wed, 30 Nov 2005 18:12:57 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0511301707020.25300@iabervon.org>
+References: <20051128234256.1508.qmail@science.horizon.com>
+ <7vhd9wngn6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511301235390.25300@iabervon.org>
+ <7vsltdsxzb.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0511301514500.25300@iabervon.org>
+ <7vy835okxs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Dec 01 00:01:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 01 00:13:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ehasz-0005B3-Qz
-	for gcvg-git@gmane.org; Wed, 30 Nov 2005 23:57:14 +0100
+	id 1Ehb7l-0004zG-Hk
+	for gcvg-git@gmane.org; Thu, 01 Dec 2005 00:12:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751178AbVK3W5J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Nov 2005 17:57:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751200AbVK3W5I
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 17:57:08 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:11762 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751178AbVK3W5I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Nov 2005 17:57:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051130225544.JYKL17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 30 Nov 2005 17:55:44 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751201AbVK3XM1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Nov 2005 18:12:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbVK3XM1
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 18:12:27 -0500
+Received: from iabervon.org ([66.92.72.58]:778 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751201AbVK3XM0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Nov 2005 18:12:26 -0500
+Received: (qmail 31399 invoked by uid 1000); 30 Nov 2005 18:12:57 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 30 Nov 2005 18:12:57 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy835okxs.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13029>
 
-As promised (or warned), most of the things are now graduating
-from proposed updates to the master branch.  The plan is to
-merge this into "maint" by the weekend after field testing
-(sorry, you guys are guinea pigs, but I did human experiments on
-myself first ;-)), and label that 1.0rc4.  After that, hopefully
-no disrupting feature changes until 1.0 final.
+On Wed, 30 Nov 2005, Junio C Hamano wrote:
 
-Among the miscellaneous fixes, notable recent changes are:
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > I actually had that problem with the original tables; there isn't a 
+> > canonical order in which to list a table of all of the possible matches 
+> > and non-matches between items so as to be complete.
+> >
+> > Perhaps it ought to list, on each line, which previous cases would match, 
+> > so that you could see that case 2 is really the conditions of 2 minus the 
+> > conditions for 2ALT, which is "all of the ancestors are empty, the head 
+> > has a directory/file conflict, and remote exists."
+> 
+> Sorry, I was not clear about it when I did that table the first
+> time.  2ALT was "alternatives suggested to replace 2" and listed
+> in the same table for comparison purpose.
 
- - bisect can cut down trials if given pathspec (Linus).
+I understood that; actually, when I found it, a number of the ALT cases 
+had been implemented, and some of them supplimented rather than replaced 
+the originals.
 
- - merge-one-file leaves unmerged entries in index (Linus,
-   linux@horizon.com, me).  The recursive merge strategy has
-   been also updated to match this but only in no-renaming
-   case.
+> The original table was designed in a way that if you have a
+> match on case N, there would not be any other case M that matches
+> the case, either N<M or M<N.  IOW, the order to read the table
+> did not matter.  At least that was the intention.
+> 
+> If you read "missing" = 0, "exists" = 1, and take OAB as bit2,
+> bit1, and bit0, you can easily see the pattern in the table.  It
+> counts in binary, although bit1 has various subcases so the
+> table has more than 8 rows, and it is easy to see it covers all.
 
- - diff-files updated to show diff between a higher stage and
-   working tree (Linus).  I reverted most of the butchering I
-   suggested last night on the list except one obvious bugfix
-   Linus agreed.
+The hard thing is to verify that all the subcases are listed. I switched 
+the orders of matching and non-matching, so that I could make it matching 
+and need-not-match. Your table is actually missing a few cases: what 
+happens if O is missing, 2 has a directory, and 3 has a file? You note 
+that we have to be careful, but don't list the result (which is "no 
+merge").
 
- - ls-tree rewrite (Linus).
+Perhaps the table would be clearer if the lines were grouped in 
+exists/missing? (With 5ALT repeated in the 011 and 111 groups, since it 
+applies to both) Then you would only need to look at 5 lines with 
+cascading (in the most complex case), rather than having to read the whole 
+top of the table.
 
- - making more things work from subdirectories (me).
+(It is actually written like that, with the exception of 5ALT, 2ALT, and 
+3ALT, but it's not visually obvious.)
 
- - repository format version futureproofing (Martin Atukunda and
-   me).  A fix by Tommi Virtanen for the bug reported by David
-   Woodhouse is included here.
+So case 11 is really: All three exist. Head and remote don't match 
+(-5ALT), no ancestor matches remote (-13), and no ancestor matches head 
+(-14). Case 13 is really: All three exist. Head and remote don't match 
+(-5ALT), there aren't different ancestors which match head and remote 
+(-16), and an ancestor matches remote.
 
- - improved gitk (Paulus, Yann Dirson, Pavel Roskin)
+The tricky bit is really cases 2ALT and 3ALT, which can be used in cases 
+where some but not all of the ancestors are empty, and can't be used if 
+there's a directory/file conflict; neither of these conditions matters for 
+anything else in the table, so it's hard to fit this in. My strategy is to 
+have those as special cases, and have the rest of the table cover 
+everything (rather than having case 2 require a directory/file conflict 
+and case 7 require that no ancestor be empty, which would be accurate, but 
+would make it harder to check for missing cases).
 
-I am still holding back "Disable USE_SYMLINK_HEAD" by Pavel
-Roskin in the proposed updates branch.  This makes symref
-everywhere, not only on symbolic-challenged platforms, to
-represent HEAD link.  As far as I know, Cogito and StGIT are
-ready for this change, but this will break gitweb, which
-directly reads from $project/HEAD to find out the object name of
-the HEAD commit (it needs to do `GIT_DIR=$project git-rev-parse
-HEAD` now).  I think we earlier agreed that this patch will go
-in sometime after 1.0; correct me if I am wrong.
-
-One interesting change is ls-tree rewrite by Linus.  The command
-does _not_ show tree nodes when running with -r flag anymore.
-Running "git diff v0.99.9i t/t3100-ls-tree-restrict.sh"
-after updating to the master tells you the summary of changes in
-the behaviour.
-
-I've looked at gitweb, Cogito and StGIT to see if this breaks
-things, and while I think it is safe for these three, authors of
-Porcelains including these three are asked to double check.
-
-Particularly interesting one is cg-log, which only uses
-"git-ls-tree -r" to show the list of things being committed for
-the initial commit, and this change actually fixes a small bug
-there (I think with the ls-tree before this change it would end
-up listing tree entries).  cg-restore guards itself with a sed
-script from ls-tree spitting out entries other than blob, so it
-is not affected, but it could lose that guard now.
-
-Another improvement is around git-merge-one-file and
-git-diff-files to change how the conflicting path information is
-left in the index after a failed automerge.  This change was
-prompted by a question from linux@horizon.com (do you have a
-real name?).  We leave the failed merge result in the working
-tree with conflict markers as before, but unlike the previous
-round which registered the HEAD commit version at stage0 in the
-index file, we now leave the index entries unmerged.  "git diff"
-command can be used to see what the changes from our HEAD commit
-is as before, but you can also say "git diff --base" to see the
-differences from the merge base, and "git diff --theirs" to see
-the differences from the other branch that was merged.
+	-Daniel
+*This .sig left intentionally blank*
