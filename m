@@ -1,96 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-name-rev off-by-one bug
-Date: Wed, 30 Nov 2005 23:46:36 -0800
-Message-ID: <7vu0dtl0o3.fsf@assigned-by-dhcp.cox.net>
-References: <20051128234256.1508.qmail@science.horizon.com>
-	<7vhd9wngn6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511301235390.25300@iabervon.org>
-	<7vsltdsxzb.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511301514500.25300@iabervon.org>
-	<7vy835okxs.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0511301707020.25300@iabervon.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Move couple of ifdefs after "include config.mk"
+Date: Thu, 1 Dec 2005 09:08:27 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512010906400.22709@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051201012333.44bd81f2.tihirvon@gmail.com>
+ <Pine.LNX.4.63.0512010144050.11941@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20051201033201.02b47071.tihirvon@gmail.com> <7vhd9tmw1g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 01 08:47:02 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 01 09:09:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ehj9W-0002n1-07
-	for gcvg-git@gmane.org; Thu, 01 Dec 2005 08:46:50 +0100
+	id 1EhjUc-0000Zk-B8
+	for gcvg-git@gmane.org; Thu, 01 Dec 2005 09:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750749AbVLAHqj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Dec 2005 02:46:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750750AbVLAHqj
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 02:46:39 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:39927 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1750749AbVLAHqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Dec 2005 02:46:38 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051201074559.KIDN20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 1 Dec 2005 02:45:59 -0500
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0511301707020.25300@iabervon.org> (Daniel
-	Barkalow's message of "Wed, 30 Nov 2005 18:12:57 -0500 (EST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750758AbVLAII3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Dec 2005 03:08:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbVLAII3
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 03:08:29 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:60303 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750758AbVLAII2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2005 03:08:28 -0500
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 7888113FA02; Thu,  1 Dec 2005 09:08:27 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 61531B53A4; Thu,  1 Dec 2005 09:08:27 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 441DAB5378; Thu,  1 Dec 2005 09:08:27 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 0622B13FA02; Thu,  1 Dec 2005 09:08:27 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhd9tmw1g.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13040>
 
-Delight in working on free software project is you have so many
-good people with you that you can have many "Aha, lightbulb!"
-moments.  This is one of them for me.  I realized where the
-trouble I felt when reading your table came from; it was that I
-was focused on the old way the table was organized too much.
+Hi,
 
-When one constructs a case table to make sure one covered
-everything, one first lists the variables and the possible
-values they can take, and make NxMxOxPx... grid.  In the
-original table I did, I chose what is in O and A and B as my
-variables (and that's where my comment about O being bit2 etc
-comes from).  I did not realize the semantics and algorithm you
-used can be better described by different set of variables
-(namely, how ancestors match the HEAD, and how the remote
-matches the HEAD, if I understand correctly).  I had trouble
-understanding your version only because I kept thinking in terms
-of (O,A,B).
+On Wed, 30 Nov 2005, Junio C Hamano wrote:
 
-So after thinking about that...
+> Honestly speaking, I'd personally prefer to just get rid of "-include 
+> config.mak" from Makefile.
 
-    Daniel Barkalow <barkalow@iabervon.org> writes:
+But it is only one line, heck only 20 bytes!
 
-    > On Wed, 30 Nov 2005, Junio C Hamano wrote:
-    >
-    > Perhaps the table would be clearer if the lines were grouped
-    > in exists/missing? (With 5ALT repeated in the 011 and 111
-    > groups, since it applies to both) Then you would only need
-    > to look at 5 lines with cascading (in the most complex
-    > case), rather than having to read the whole top of the
-    > table.
+And you can still use your "./Make" method, and it is not widely 
+advertised, and you can override settings from the platform-dependent 
+code, and I feel much better at having my littly config.mak, my precious!
 
-I think the current ordering of cases makes more sense.  If we
-forget about the case labels from the original table (and the
-way the original table classified cases), I suspect we could
-reorganize the cases to describe the semantics even better and
-clearer.  That is, not grouping by exists/missing, but grouping
-by matching/unmatching.
-
-> (It is actually written like that, with the exception of 5ALT, 2ALT, and 
-> 3ALT, but it's not visually obvious.)
-
-Yeah, I now realize that.
-
-> The tricky bit is really cases 2ALT and 3ALT, which can be used in cases 
-> where some but not all of the ancestors are empty, and can't be used if 
-> there's a directory/file conflict; neither of these conditions matters for 
-> anything else in the table, so it's hard to fit this in. My strategy is to 
-> have those as special cases, and have the rest of the table cover 
-> everything (rather than having case 2 require a directory/file conflict 
-> and case 7 require that no ancestor be empty, which would be accurate, but 
-> would make it harder to check for missing cases).
-
-Makes sense.  Thanks for the clarification and lightbulb moment.
+Ciao,
+Dscho
