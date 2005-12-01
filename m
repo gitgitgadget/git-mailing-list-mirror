@@ -1,82 +1,63 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: minor problems in git.c
-Date: Thu, 1 Dec 2005 15:02:16 +0100
-Message-ID: <81b0412b0512010602l63ecev1ba03fb90d06e071@mail.gmail.com>
-References: <72499e3b0512010400i1de76ed2la22cd745f811007f@mail.gmail.com>
-	 <81b0412b0512010448u7fcdddacnd7de5df217ab3ca@mail.gmail.com>
-	 <20051201135113.GW8383MdfPADPa@greensroom.kotnet.org>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFC/PATCH 1/3] git-find-git: a new helper.
+Date: Thu, 1 Dec 2005 15:35:24 +0100
+Message-ID: <200512011535.25022.Josef.Weidendorfer@gmx.de>
+References: <7vmzjuzphl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Robert Watson <robert.oo.watson@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Dec 01 15:05:05 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 01 15:38:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ehp13-0007Dv-Lp
-	for gcvg-git@gmane.org; Thu, 01 Dec 2005 15:02:33 +0100
+	id 1EhpX1-0003BV-Bq
+	for gcvg-git@gmane.org; Thu, 01 Dec 2005 15:35:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750809AbVLAOCS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Dec 2005 09:02:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750824AbVLAOCS
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 09:02:18 -0500
-Received: from nproxy.gmail.com ([64.233.182.193]:31422 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750809AbVLAOCS convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 1 Dec 2005 09:02:18 -0500
-Received: by nproxy.gmail.com with SMTP id x4so89333nfb
-        for <git@vger.kernel.org>; Thu, 01 Dec 2005 06:02:16 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Htj4JAr+l3rVgVdFIi3vLTDHSiF4NUJqmA52ORT02IN7FHqFbg2qvfSDPuAVB7wV/SU66E7uK58XYVG7J7ZQvP6pXi5yfUDGUBfHTYhEOnJNC0wRDOxF+p1UgQbGd2xiEJTYxBJB2UyCGAxr6dKDhJrr0AR3cQuaGLyhw1fzFLg=
-Received: by 10.49.43.13 with SMTP id v13mr278050nfj;
-        Thu, 01 Dec 2005 06:02:16 -0800 (PST)
-Received: by 10.48.248.18 with HTTP; Thu, 1 Dec 2005 06:02:16 -0800 (PST)
-To: skimo@liacs.nl
-In-Reply-To: <20051201135113.GW8383MdfPADPa@greensroom.kotnet.org>
+	id S932244AbVLAOf2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Dec 2005 09:35:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbVLAOf2
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 09:35:28 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:61074 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S932244AbVLAOf1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2005 09:35:27 -0500
+Received: from dhcp-3s-61.lrr.in.tum.de (dhcp-3s-61.lrr.in.tum.de [131.159.35.61])
+	by mail.in.tum.de (Postfix) with ESMTP id 89C5D27E5;
+	Thu,  1 Dec 2005 15:35:26 +0100 (MET)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9
+In-Reply-To: <7vmzjuzphl.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13060>
 
-On 12/1/05, Sven Verdoolaege <skimo@kotnet.org> wrote:
-> On Thu, Dec 01, 2005 at 01:48:35PM +0100, Alex Riesen wrote:
-> > @@ -283,16 +283,15 @@ int main(int argc, char **argv, char **e
-> >       len = strlen(git_command);
-> >       prepend_to_path(git_command, len);
-> >
-> > -     strncat(&git_command[len], "/git-", sizeof(git_command) - len);
-> > -     len += 5;
-> > -     strncat(&git_command[len], argv[i], sizeof(git_command) - len);
-> > +     snprintf(git_command + len, sizeof(git_command) - len, "/git-%s",
-> > +              argv[i]);
->
-> Shouldn't you check the return value of snprintf
+On Thursday 24 November 2005 04:36, you wrote:
+>     GIT_DIR_PREFIX is a string to be prepended to cwd relative
+>     paths to make them repository relative.
+> 
+>     GIT_DIR_UPLEVEL is a string (e.g. "../") for the command to
+>     use to cd to the top-level of repository.
 
-Probably. For the case where length of a git-command-name +
---exec-prefix together are longer than PATH_MAX.
+Hi,
 
-> >       if (access(git_command, X_OK))
-> >               usage(exec_path, "'%s' is not a git-command", argv[i]);
->
-> or use the (possibly) truncated version of the command in the error message ?
+can we revive this idea?
+I thought about how to make work
 
-argv[i] is the command name, already as truncated as it can possibly
-be: ls-files, ls-tree, etc. Besides, the second path removes this
-access check altogether:
+ $top/Documentation> git-mv ../file .
 
--	if (access(git_command, X_OK))
--		usage(exec_path, "'%s' is not a git-command", argv[i]);
--
- 	/* execve() can only ever return if it fails */
- 	execve(git_command, &argv[i], envp);
--	fprintf(stderr, "git: '%s': %s\n", git_command, strerror(errno));
-+        if ( ENOENT == errno )
-+		usage(exec_path, "'%s' is not a git-command", argv[i]);
-+        else
-+		fprintf(stderr, "git: '%s': %s\n", git_command, strerror(errno));
+and also detection of trying to move to the outside.
+Requirements IMHO:
+(1) helper which is also useful from PERL
+(2) git-mv checks against version controlled files via git-ls-files.
+Thus, I need to run git-ls-files from the toplevel, to be able to
+see $top/file. 
+(3) translation of cwd relative into toplevel relative paths.
 
+Or is there already a way to do this with current git?
 
-It still has the call to usage, though.
+Josef
