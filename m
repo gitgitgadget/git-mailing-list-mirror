@@ -1,60 +1,56 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Move couple of ifdefs after "include config.mk"
-Date: Thu, 1 Dec 2005 10:53:09 +0100
-Message-ID: <81b0412b0512010153t3f768a82m8f9a12effa4a715e@mail.gmail.com>
-References: <20051201012333.44bd81f2.tihirvon@gmail.com>
-	 <Pine.LNX.4.63.0512010144050.11941@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <20051201033201.02b47071.tihirvon@gmail.com>
-	 <7vhd9tmw1g.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0512010906400.22709@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vmzjlkx2f.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0512010140m1b96db84x70c7d92f8f644a2a@mail.gmail.com>
-	 <7viru9jgku.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-name-rev off-by-one bug
+Date: Thu, 01 Dec 2005 02:14:19 -0800
+Message-ID: <7vd5khjf9g.fsf@assigned-by-dhcp.cox.net>
+References: <20051128234256.1508.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 01 10:55:16 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Dec 01 11:18:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ehl7r-0007xb-H8
-	for gcvg-git@gmane.org; Thu, 01 Dec 2005 10:53:16 +0100
+	id 1EhlUQ-0007pv-Q6
+	for gcvg-git@gmane.org; Thu, 01 Dec 2005 11:16:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932126AbVLAJxM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Dec 2005 04:53:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932127AbVLAJxM
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 04:53:12 -0500
-Received: from nproxy.gmail.com ([64.233.182.204]:46824 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932126AbVLAJxL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 1 Dec 2005 04:53:11 -0500
-Received: by nproxy.gmail.com with SMTP id x4so67101nfb
-        for <git@vger.kernel.org>; Thu, 01 Dec 2005 01:53:10 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AljTPjvVpthpBgepqLG0NoX06WO5CI4KvdmuNHAmnjhWoytH86BF0HWCY1yzjqDuMlWAWRfN0yh/ZSzTunvlAGyGsRKM6bJ3HgMriptp5Rp4mcUu7tSTVUHmYKmeJXkDgu+ogiqFi2QjQUxpL8L0ej0e8ENoDWoXJF0RroCNdKA=
-Received: by 10.48.223.6 with SMTP id v6mr203992nfg;
-        Thu, 01 Dec 2005 01:53:09 -0800 (PST)
-Received: by 10.48.248.18 with HTTP; Thu, 1 Dec 2005 01:53:09 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7viru9jgku.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932128AbVLAKOs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Dec 2005 05:14:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932130AbVLAKOk
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 05:14:40 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:39846 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932112AbVLAKOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2005 05:14:21 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051201101249.UJVV17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 1 Dec 2005 05:12:49 -0500
+To: linux@horizon.com
+In-Reply-To: <20051128234256.1508.qmail@science.horizon.com>
+	(linux@horizon.com's message of "28 Nov 2005 18:42:56 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13048>
 
-On 12/1/05, Junio C Hamano <junkio@cox.net> wrote:
-> > I have even my specific targets in the config.mak (and would actually
-> > like to have the default target put before including config.mak, so
-> > default call to make is always the same).
->
-> Surely you can do that by having your own "makefile" and include
-> "Makefile" I ship, and run "make", which prefers makefile over
-> Makefile ;-).
+linux@horizon.com writes:
 
-But that is not the same:
- - I can put my targets and variables either before or after Makefile,
-not somewhere inbetween
- - I have to work on an especially brain-damaged filesystems, like FAT
+> Anyway, if it's portable enough, it's faster.  Ah... I just found discussion
+> of this in late September, but it's not clear what the resolution was.
+> http://marc.theaimsgroup.com/?t=112746188000003
+
+Although updating our shell scripts to this century is lower on
+my priority scale, ideally I'd want to see things work with
+dash, not because I do not like bash/ksh, but because it seems
+the smallest minimally POSIXy shell.
+
+Speaking of shell gotchas, I do not know what the resolution was
+on the problem Merlyn was having the other day in "lost again on
+syntax change - local repository?" thread, which seemed that the
+failure described in <868xv86dam.fsf@blue.stonehenge.com> was
+his bash mishandling an if..then..elif..else..fi chain, which
+was sort of unexpected for me.  I was curious but do not
+remember seeing the conclusion.  Pasky, what happened to that
+thread?
