@@ -1,58 +1,56 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: [Possibly OT]  Synchronizing data
-Date: Wed, 30 Nov 2005 16:26:33 -0800
-Organization: none
-Message-ID: <dmlfvq$sud$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Move "-include config.mak" to end of configuration
+ section
+Date: Thu, 1 Dec 2005 01:46:40 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512010144050.11941@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051201012333.44bd81f2.tihirvon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Dec 01 01:30:24 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Dec 01 01:48:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhcJS-0004Nm-Vi
-	for gcvg-git@gmane.org; Thu, 01 Dec 2005 01:28:39 +0100
+	id 1Ehcb0-0001wJ-Fr
+	for gcvg-git@gmane.org; Thu, 01 Dec 2005 01:46:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294AbVLAA2g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Nov 2005 19:28:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbVLAA2f
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 19:28:35 -0500
-Received: from main.gmane.org ([80.91.229.2]:32953 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751294AbVLAA2f (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Nov 2005 19:28:35 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EhcIA-0003sr-1v
-	for git@vger.kernel.org; Thu, 01 Dec 2005 01:27:18 +0100
-Received: from adsl-69-234-198-15.dsl.irvnca.pacbell.net ([69.234.198.15])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Dec 2005 01:27:18 +0100
-Received: from wa1ter by adsl-69-234-198-15.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Dec 2005 01:27:18 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-198-15.dsl.irvnca.pacbell.net
-User-Agent: Mail/News 1.6a1 (X11/20051130)
+	id S1751404AbVLAAqm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Nov 2005 19:46:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbVLAAqm
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Nov 2005 19:46:42 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:16603 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751404AbVLAAqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Nov 2005 19:46:42 -0500
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 5597613F7EA; Thu,  1 Dec 2005 01:46:41 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 302AEB53A3; Thu,  1 Dec 2005 01:46:41 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 11659593E7; Thu,  1 Dec 2005 01:46:41 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id D055313F7EA; Thu,  1 Dec 2005 01:46:40 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Timo Hirvonen <tihirvon@gmail.com>
+In-Reply-To: <20051201012333.44bd81f2.tihirvon@gmail.com>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13033>
 
-If this is truly irrelevant to git, then I apologize.  I'm
-posting this link not because I understand all the issues,
-rather because of a gut feeling that it may (possibly) be
-relevant to people who are trying to share data across a
-network:
+Hi,
 
-http://open.itworld.com/4934/051123msrss/page_1.html
+On Thu, 1 Dec 2005, Timo Hirvonen wrote:
 
-This is a typical e-newsletter which may disappear very
-quickly.  The article concerns extensions to RSS being
-proposed by our friends at M$.
+> This makes it possible to define WITH_SEND_EMAIL etc. in config.mak.
 
-I'm sure I would learn a lot if you code-wizards would
-explain why this concept would be good (or bad) for git.
+... but it breaks setups where config.mak overrides platform 
+dependent settings...
 
-Thanks!
+Hth,
+Dscho
