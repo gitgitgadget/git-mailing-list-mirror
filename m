@@ -1,113 +1,50 @@
-From: linux@horizon.com
-Subject: Re: More merge questions (why doesn't this work?)
-Date: 2 Dec 2005 04:19:46 -0500
-Message-ID: <20051202091946.1631.qmail@science.horizon.com>
-References: <7vek4xsx49.fsf@assigned-by-dhcp.cox.net>
-Cc: junkio@cox.net, linux@horizon.com
-X-From: git-owner@vger.kernel.org Fri Dec 02 10:20:58 2005
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [RFC] Using sticky directories to control access to branches.
+Date: Fri, 02 Dec 2005 10:29:21 +0100
+Message-ID: <439013F1.4070600@op5.se>
+References: <20051117170129.GA14013@hpsvcnb.fc.hp.com>	<7vfypumlu3.fsf@assigned-by-dhcp.cox.net>	<20051121180133.GA28171@hpsvcnb.fc.hp.com>	<20051201154222.GB18993@hpsvcnb.fc.hp.com> <7vwtio9u8f.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Carl Baldwin <cnb@fc.hp.com>
+X-From: git-owner@vger.kernel.org Fri Dec 02 10:31:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ei75G-00063j-VY
-	for gcvg-git@gmane.org; Fri, 02 Dec 2005 10:20:03 +0100
+	id 1Ei7FG-0001K4-R3
+	for gcvg-git@gmane.org; Fri, 02 Dec 2005 10:30:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750966AbVLBJT6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Dec 2005 04:19:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751772AbVLBJT6
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 04:19:58 -0500
-Received: from science.horizon.com ([192.35.100.1]:11313 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1750966AbVLBJT5
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 2 Dec 2005 04:19:57 -0500
-Received: (qmail 1632 invoked by uid 1000); 2 Dec 2005 04:19:46 -0500
-To: git@vger.kernel.org
-In-Reply-To: <7vek4xsx49.fsf@assigned-by-dhcp.cox.net>
+	id S1751769AbVLBJ3X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Dec 2005 04:29:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbVLBJ3X
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 04:29:23 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:46014 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751769AbVLBJ3W
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 2 Dec 2005 04:29:22 -0500
+Received: from [192.168.1.19] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 742DA6BD03; Fri,  2 Dec 2005 10:29:21 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwtio9u8f.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13111>
 
-I was playing with the implications of the "deleted file in the
-index is not a conflict" merge rule, and came up with the following
-octopus test which fails to work.  Note line 2 when choosing a
-directory to run it in!
+Junio C Hamano wrote:
+> 
+> It _might_ make sense to have a contrib/examples subdirectory in
+> git.git project and keep a collection of examples like this.
+> 
+> Anybody else interested?
+> 
 
-#!/bin/bash -xe
-rm -rf .git
-git-init-db
-echo "File A" > a
-echo "File B" > b
-echo "File C" > c
-git-add a b c
-git-commit -a -m "Octopus test repository"
+I am. Ten thousand brains usually do a better job than one in thinking 
+up cool and nifty stuff. :)
 
-git-checkout -b a
-echo "Modifications to a" >> a
-git-commit -a -m "Modified file a"
-
-git-checkout -b b master
-echo "Modifications to b" >> b
-git-commit -a -m "Modified file b"
-
-git-checkout -b c master
-rm c
-git-commit -a -m "Deleted file c"
-
-git-checkout master
-#git merge --no-commit "" master c b a
-#git merge --no-commit "" master a b c
-git-rev-parse a b c > .git/FETCH_HEAD
-git-octopus
-
-(Commented out are the first few things I tried.)
-Can someone tell me why this doesn't work?  It should be a simple
-in-index merge.
-
-Right after the incomplete merge (I hacked this into the
-git-octopus script), git-ls-files -s produces
-
-100644 8fb437b77759c7709c122fbc8ba43f720e1fbc0a 0       a
-100644 b3418f25da4393974aa205e2863f012e5b503369 0       b
-100644 df78d3d51c369e1d2f1eadb73464aadd931d56b4 1       c
-100644 df78d3d51c369e1d2f1eadb73464aadd931d56b4 2       c
-
-Which should be case 10 of the t/t1000-read-tree-m-3way.sh
-table and succeed.
-
-
-
-
-Other things I've discovered...
-
-1) The MAJOR difference between "git checkout" and "git reset --hard"
-   are that git-checkout takes a *head* as an argument and changes the
-   .git/HEAD *symlink* to point to that head (ln -sf refs/heads/<head>
-   .git/HEAD).  "git reset" takes a *commit* (<rev>) as an argument and
-   changes the head that .git/HEAD points to to have that commit as its
-   hew tip (git-rev-parse <rev> > .git/HEAD)
-
-   All the other behavioural differences are relatively minor, and
-   appropriate for this big difference.
-
-2) Don't use "git branch" to create branches, unless you really
-   *don't* want to switch to them.  Use "git checkout -b".
-
-3) Dumb question: why does "git-commit-tree" need "-p" before the
-   parent commit arguments?  Isn't just argv[2]..argv[argc-1]
-   good enough?
-
-4) If the "git-read-tree" docs for "--reset", does "ignored" mean
-   "not overwritten" or "overwritten"?
-
-5) The final "error" message on "git-merge --no-commit" is a bit
-   alarming for a newbie who uses it because they don't quite trust
-   git's enough to enable auto-commit.  And it should be changed
-   from ""Automatic merge failed/prevented; fix up by hand" to
-   "fix up and commit by hand".
-   Or how about:
-   "Automatic commit prevented; edit and commit by hand."
-   which actually tells the truth.
-
-6) The "pickaxe" options are being a bit confusing, and the fact they're
-   only documented in cvs-migration.txt doesn't help.
-
-7) The git-tag man page could use a little better description of -a.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
