@@ -1,102 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
 Subject: Re: resolve (merge) problems
-Date: Thu, 01 Dec 2005 15:58:32 -0800
-Message-ID: <7v3blccqtz.fsf@assigned-by-dhcp.cox.net>
-References: <20051201231844.59450.qmail@web31801.mail.mud.yahoo.com>
+Date: Thu, 1 Dec 2005 16:07:15 -0800 (PST)
+Message-ID: <20051202000715.8100.qmail@web31810.mail.mud.yahoo.com>
+References: <7v3blccqtz.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 02 00:59:47 2005
+X-From: git-owner@vger.kernel.org Fri Dec 02 01:09:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhyJz-0000yQ-1D
-	for gcvg-git@gmane.org; Fri, 02 Dec 2005 00:58:39 +0100
+	id 1EhySO-0003pw-J6
+	for gcvg-git@gmane.org; Fri, 02 Dec 2005 01:07:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932560AbVLAX6g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Dec 2005 18:58:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932565AbVLAX6g
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 18:58:36 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:60033 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932560AbVLAX6f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Dec 2005 18:58:35 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051201235801.COKB15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 1 Dec 2005 18:58:01 -0500
-To: ltuikov@yahoo.com
-In-Reply-To: <20051201231844.59450.qmail@web31801.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Thu, 1 Dec 2005 15:18:44 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932568AbVLBAHR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Dec 2005 19:07:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932571AbVLBAHR
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 19:07:17 -0500
+Received: from web31810.mail.mud.yahoo.com ([68.142.207.73]:14514 "HELO
+	web31810.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932568AbVLBAHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2005 19:07:16 -0500
+Received: (qmail 8102 invoked by uid 60001); 2 Dec 2005 00:07:15 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=uunbX5H7hIT8R1NMjX5sJnnykMH3s2kkYvbioebw+AuiQChTc9W6XBMc0lqNlo0u66GBFw9Nv3qy6skogvM4PimgZP1MOZZr1PkthPPSRAR1ayRUYRkLDbnu0S4snEJuyWuo1a1sCfUPO21yPm0i+rKwsqrbhS7GjjfronBPgHc=  ;
+Received: from [68.221.13.176] by web31810.mail.mud.yahoo.com via HTTP; Thu, 01 Dec 2005 16:07:15 PST
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3blccqtz.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13089>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+--- Junio C Hamano <junkio@cox.net> wrote:
+> Easier to read is:
+> 
+> 	$ git-diff-files --name-status
 
-> $ git resolve HEAD master "merge linus' tree"
-> Trying to merge 5666c0947ede0432ba5148570aa66ffb9febff5b into
-> 32df3299405fb7054b76346899f3db2fa29150fb using 458af5439fe7ae7d95ca14106844e61f0795166c.
-> Simple merge failed, trying Automatic merge
-> Removing arch/arm/configs/poodle_defconfig
-> Removing drivers/atm/atmdev_init.c
-> fatal: merge program failed
-> Automatic merge failed, fix up by hand
->
-> How do I proceed from here?
->
-> The output from git-diff-index is:
->
-> $git-diff-index --name-status HEAD
-> M       Documentation/usb/error-codes.txt
-> M       Makefile
-> M       arch/arm/configs/corgi_defconfig
-> U       arch/arm/configs/poodle_defconfig
-> M       arch/arm/configs/spitz_defconfig
+Ok this is what it shows:
 
-Easier to read is:
-
-	$ git-diff-files --name-status
-
-which would tell you that there two files have conflicting
-changes:
-
+$git-diff-files --name-status
 U       arch/arm/configs/poodle_defconfig
+D       arch/arm/configs/poodle_defconfig
 U       drivers/atm/atmdev_init.c
+D       drivers/atm/atmdev_init.c
 
-and you would hopefully not see anything else (you saw tons of
-paths only because you compared against HEAD, which shows not
-just conflicts but everything the merge brought in).
+Unmerged and deleted?  Is this correct?
 
-	$ git diff arch/arm/configs/poodle_defconfig drivers/atm/atmdev_init.c
-
-would give you the diff between your version (before merging)
-and the half-merged file with conflict markers.  Resolve them
-just like you would resolve conflicting changes.  I would
-usually just open these files in an editor, and pick one of the
-sections between <<< == >>> these markers.
-
-One nifty tool I saw suggested on the list recently was xxdiff:
-
-	$ xxdiff -U arch/arm/configs/poodle_defconfig
-
-No matter how you would resolve, the first goal of yours is to
-get these files in your working tree into a good shape, which
-may involve compiling and testing.  Once you have these files in
-a good enough shape, you tell git that you are done with them:
-
-	$ git update-index \
-        	arch/arm/configs/poodle_defconfig drivers/atm/atmdev_init.c
-
-and commit.
-
-	$ git commit
-
-The commit message editor would loudly warn you that you are
-committing a merge, but that is OK because that is what you are
-doing.  You might want to describe how you resolved (which side
-you picked) the conflicting changes in the log, in addition to
-the standard boilerplate "merged that branch" message.
+    Luben
