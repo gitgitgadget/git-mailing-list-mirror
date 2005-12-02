@@ -1,53 +1,81 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: minor problems in git.c
-Date: Fri, 2 Dec 2005 09:12:05 +0100
-Message-ID: <81b0412b0512020012m3bfbfe9fka1f412d70b2255d0@mail.gmail.com>
-References: <72499e3b0512010400i1de76ed2la22cd745f811007f@mail.gmail.com>
-	 <81b0412b0512010448u7fcdddacnd7de5df217ab3ca@mail.gmail.com>
-	 <20051201135113.GW8383MdfPADPa@greensroom.kotnet.org>
-	 <81b0412b0512010602l63ecev1ba03fb90d06e071@mail.gmail.com>
-	 <7v1x0wb936.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-name-rev off-by-one bug
+Date: Fri, 02 Dec 2005 00:25:00 -0800
+Message-ID: <7v8xv39a8z.fsf@assigned-by-dhcp.cox.net>
+References: <20051130001503.28498.qmail@science.horizon.com>
+	<Pine.LNX.4.64.0511291742000.3135@g5.osdl.org>
+	<7v4q5u50gp.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0511291852530.3099@g5.osdl.org>
+	<Pine.LNX.4.64.0511292031280.3099@g5.osdl.org>
+	<7vslte1y5z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 02 09:12:52 2005
+X-From: git-owner@vger.kernel.org Fri Dec 02 09:26:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ei61c-0000EN-4Y
-	for gcvg-git@gmane.org; Fri, 02 Dec 2005 09:12:12 +0100
+	id 1Ei6E7-00058Y-HT
+	for gcvg-git@gmane.org; Fri, 02 Dec 2005 09:25:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751755AbVLBIMI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Dec 2005 03:12:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbVLBIMI
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 03:12:08 -0500
-Received: from nproxy.gmail.com ([64.233.182.200]:40824 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751755AbVLBIMH convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 2 Dec 2005 03:12:07 -0500
-Received: by nproxy.gmail.com with SMTP id o25so155656nfa
-        for <git@vger.kernel.org>; Fri, 02 Dec 2005 00:12:06 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YeJ4ttAQe+tj7+ww7ZauuuIre1HMQcxLzwx5O940vz+lDm8+XstO9f2xh71TYw0Id2ZbSu/GlBGu0+gZmFU7yzSmFdnQmwDojiUJWJabUOtgIDWFG5AqrUjNt7m3de6kjx72b36rMhXpICfr8pytRbDM4U/M0COOVKTOa6ZDTZ0=
-Received: by 10.48.246.18 with SMTP id t18mr44370nfh;
-        Fri, 02 Dec 2005 00:12:05 -0800 (PST)
-Received: by 10.48.248.18 with HTTP; Fri, 2 Dec 2005 00:12:05 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1x0wb936.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932329AbVLBIZE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Dec 2005 03:25:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932455AbVLBIZE
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 03:25:04 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:13263 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932329AbVLBIZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Dec 2005 03:25:01 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051202082413.MKNY20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 2 Dec 2005 03:24:13 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vslte1y5z.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 29 Nov 2005 21:51:04 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13104>
 
-On 12/2/05, Junio C Hamano <junkio@cox.net> wrote:
-> >> Shouldn't you check the return value of snprintf
-> >
-> > Probably. For the case where length of a git-command-name +
-> > --exec-prefix together are longer than PATH_MAX.
+Junio C Hamano <junkio@cox.net> writes:
+
+>  2. merge-one-file leaves unmerged index entries.
 >
-> Combined, something like this.
+> Regarding #2, in an earlier message you said something about
+> "patch to do that was just broken" which I did not understand; I
+> think your patch I am replying to is doing the right thing.  That
+> case arm is dealing with a path that exists in "our" branch and
+> the working tree blob should be the same as recorded in the
+> HEAD, so I did not have to do the unpack-cat-chmod like I did in
+> mine.  Am I simply confused?
 
-Thanks!
+The only difference is that, from the old tradition, we are
+supposed to allow the merge to happen in an unchecked-out
+working tree [*1*].  The version you did and I merged in the
+master branch breaks that, while the patch I posted keeps that
+premise.
+
+I can throw in my change on top of what is already commited for
+now to "fix" this, but do we still care about the "merge should
+succeed in an unchecked-out working tree" rule, or does it not
+matter anymore these days?
+
+One thing is that the check with "git diff" to show diff between
+half-merged and stage2 after a failed merge does not work very
+well in a sparsely checked out working tree, because the real
+change is buried among tons of deletes ("diff --diff-filter=UM"
+helps, though [*2*]).
+
+[Footnote]
+
+*1* ... and that is why we special case a non-existent working
+tree file as if it is clean with the index.  After a merge, you
+would end up with a sparsely checked-out working tree that
+contains only the files that were involved in the merge.
+
+*2* Maybe --diff-filter should always include U in the output,
+because it is rare and when an unmerged entry exists the user
+would always want to see it.
