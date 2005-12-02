@@ -1,103 +1,103 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: resolve (merge) problems
-Date: Thu, 01 Dec 2005 16:58:01 -0800
-Message-ID: <7vhd9sb9ie.fsf@assigned-by-dhcp.cox.net>
-References: <20051202000715.8100.qmail@web31810.mail.mud.yahoo.com>
+Subject: Re: minor problems in git.c
+Date: Thu, 01 Dec 2005 17:07:09 -0800
+Message-ID: <7v1x0wb936.fsf@assigned-by-dhcp.cox.net>
+References: <72499e3b0512010400i1de76ed2la22cd745f811007f@mail.gmail.com>
+	<81b0412b0512010448u7fcdddacnd7de5df217ab3ca@mail.gmail.com>
+	<20051201135113.GW8383MdfPADPa@greensroom.kotnet.org>
+	<81b0412b0512010602l63ecev1ba03fb90d06e071@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 02 02:00:00 2005
+X-From: git-owner@vger.kernel.org Fri Dec 02 02:08:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhzFl-0003yr-Vp
-	for gcvg-git@gmane.org; Fri, 02 Dec 2005 01:58:22 +0100
+	id 1EhzOX-0006uu-Cw
+	for gcvg-git@gmane.org; Fri, 02 Dec 2005 02:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932589AbVLBA6F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Dec 2005 19:58:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932592AbVLBA6F
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 19:58:05 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:52950 "EHLO
+	id S932685AbVLBBHW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Dec 2005 20:07:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932691AbVLBBHW
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 20:07:22 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:61152 "EHLO
 	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932589AbVLBA6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Dec 2005 19:58:03 -0500
+	id S932685AbVLBBHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2005 20:07:21 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051202005639.LBSH17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 1 Dec 2005 19:56:39 -0500
-To: ltuikov@yahoo.com
-In-Reply-To: <20051202000715.8100.qmail@web31810.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Thu, 1 Dec 2005 16:07:15 -0800 (PST)")
+          id <20051202010600.JIDF17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 1 Dec 2005 20:06:00 -0500
+To: Alex Riesen <raa.lkml@gmail.com>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13094>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-> --- Junio C Hamano <junkio@cox.net> wrote:
->> Easier to read is:
->> 
->> 	$ git-diff-files --name-status
+>> Shouldn't you check the return value of snprintf
 >
-> Ok this is what it shows:
->
-> $git-diff-files --name-status
-> U       arch/arm/configs/poodle_defconfig
-> D       arch/arm/configs/poodle_defconfig
-> U       drivers/atm/atmdev_init.c
-> D       drivers/atm/atmdev_init.c
->
-> Unmerged and deleted?  Is this correct?
+> Probably. For the case where length of a git-command-name +
+> --exec-prefix together are longer than PATH_MAX.
 
-Yes, the first lets you notice it is unmerged, and the second
-says the file does not remain in the working tree.
-
-However, there is a bug recently introduced in the
-merge-one-file script.  
-
-Although the conflict resolution procedure I described applies
-if you really had a real conflicting merge, I suspect your merge
-should not have failed in the first place.
-
-        case "${1:-.}${2:-.}${3:-.}" in
-        #
-        # Deleted in both or deleted in one and unchanged in the other
-        #
-        "$1.." | "$1.$1" | "$1$1.")
-                if [ "$2" ]; then
-                        echo "Removing $4"
-                fi
-                if test -f "$4"; then
-                        rm -f -- "$4" &&
-                        rmdir -p "$(expr "$4" : '\(.*\)/')" 2>/dev/null
-                fi &&
-                        exec git-update-index --remove -- "$4"
-                ;;
-
-The faliure code from "rmdir -p" leaks up and makes
-git-update-index to be skipped.  Here is a fix.
+Combined, something like this.
 
 -- >8 --
-[PATCH] merge-one-file fix
+Subject: git wrapper: more careful argument stuffing
+From: Alex Riesen <raa.lkml@gmail.com>
+Date: Thu, 1 Dec 2005 13:48:35 +0100
 
-9ae2172aed289f2706a0e88288909fa47eddd7e7 used "rmdir -p"
-carelessly, causing the "git-update-index --remove" to be
-skipped.
+ - Use stderr for error output
+ - Build git_command more careful
+ - ENOENT is good enough for check of failed exec to show usage, no
+   access() check needed
+
+[jc: Originally from Alex Riesen with inputs from Sven
+ Verdoolaege mixed in.]
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
 ---
-diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
-index 739a072..9a049f4 100755
---- a/git-merge-one-file.sh
-+++ b/git-merge-one-file.sh
-@@ -26,7 +26,7 @@ case "${1:-.}${2:-.}${3:-.}" in
- 	fi
- 	if test -f "$4"; then
- 		rm -f -- "$4" &&
--		rmdir -p "$(expr "$4" : '\(.*\)/')" 2>/dev/null
-+		rmdir -p "$(expr "$4" : '\(.*\)/')" 2>/dev/null || :
- 	fi &&
- 		exec git-update-index --remove -- "$4"
- 	;;
+
+ git.c |   19 ++++++++++++-------
+ 1 files changed, 12 insertions(+), 7 deletions(-)
+
+6e3f1bf88fdce10ba5c0274e017667d21bb68359
+diff --git a/git.c b/git.c
+index 0b10b6e..878c359 100644
+--- a/git.c
++++ b/git.c
+@@ -283,16 +283,21 @@ int main(int argc, char **argv, char **e
+ 	len = strlen(git_command);
+ 	prepend_to_path(git_command, len);
+ 
+-	strncat(&git_command[len], "/git-", sizeof(git_command) - len);
+-	len += 5;
+-	strncat(&git_command[len], argv[i], sizeof(git_command) - len);
+-
+-	if (access(git_command, X_OK))
+-		usage(exec_path, "'%s' is not a git-command", argv[i]);
++	len += snprintf(git_command + len, sizeof(git_command) - len,
++			"/git-%s", argv[i]);
++	if (sizeof(git_command) <= len) {
++		fprintf(stderr, "git: command name given is too long (%d)\n", len);
++		exit(1);
++	}
+ 
+ 	/* execve() can only ever return if it fails */
+ 	execve(git_command, &argv[i], envp);
+-	printf("Failed to run command '%s': %s\n", git_command, strerror(errno));
++
++	if (errno == ENOENT)
++		usage(exec_path, "'%s' is not a git-command", argv[i]);
++
++	fprintf(stderr, "Failed to run command '%s': %s\n",
++		git_command, strerror(errno));
+ 
+ 	return 1;
+ }
+-- 
+0.99.9.GIT
