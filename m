@@ -1,61 +1,48 @@
-From: Junio C Hamano <junkio@twinsun.com>
-Subject: Re: git pull aborts in 50% of cases
-Date: Fri, 2 Dec 2005 21:41:20 +0000 (UTC)
-Message-ID: <loom.20051202T223152-226@post.gmane.org>
-References: <20051202190412.GA10757@mipter.zuzino.mipt.ru> <43909963.60901@zytor.com> <20051202211250.GA11384@mipter.zuzino.mipt.ru> <4390B64E.20601@zytor.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Dec 02 22:45:36 2005
+From: linux@horizon.com
+Subject: Re: More merge questions
+Date: 2 Dec 2005 16:56:58 -0500
+Message-ID: <20051202215658.1731.qmail@science.horizon.com>
+References: <7vbqzz2qc8.fsf@assigned-by-dhcp.cox.net>
+Cc: junkio@cox.net, linux@horizon.com
+X-From: git-owner@vger.kernel.org Fri Dec 02 22:58:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EiIgq-0003iK-4B
-	for gcvg-git@gmane.org; Fri, 02 Dec 2005 22:43:38 +0100
+	id 1EiItw-0000K6-0a
+	for gcvg-git@gmane.org; Fri, 02 Dec 2005 22:57:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750834AbVLBVnc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Dec 2005 16:43:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823AbVLBVnc
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 16:43:32 -0500
-Received: from main.gmane.org ([80.91.229.2]:9101 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750776AbVLBVnb (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Dec 2005 16:43:31 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EiIfH-00038I-4X
-	for git@vger.kernel.org; Fri, 02 Dec 2005 22:41:59 +0100
-Received: from ip-66-80-53-59.lax.megapath.net ([66.80.53.59])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 Dec 2005 22:41:59 +0100
-Received: from junkio by ip-66-80-53-59.lax.megapath.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 Dec 2005 22:41:59 +0100
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1750925AbVLBV5A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Dec 2005 16:57:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750926AbVLBV5A
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 16:57:00 -0500
+Received: from science.horizon.com ([192.35.100.1]:56380 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1750890AbVLBV47
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 2 Dec 2005 16:56:59 -0500
+Received: (qmail 1732 invoked by uid 1000); 2 Dec 2005 16:56:58 -0500
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 66.80.53.59 (Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.12) Gecko/20050915 Firefox/1.0.7)
+In-Reply-To: <7vbqzz2qc8.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13129>
 
-H. Peter Anvin <hpa <at> zytor.com> writes:
+Just thinking about the difference between 2-way and 3-way merge...
 
-> Actually, it turns out the two servers were running different versions; 
-> one 0.99.9j and one 0.99.9k.  They're both running 0.99.9j now.
-> 
-> 0.99.9k is clearly bad.
+*Mostly* a 2-way merge is just a 3-way merge where one of the ways
+is taken from the index rather than from a tree.  But there
+are some subtle differences.
 
-This is troublesome, since I do not think it is hitting the one that was
-causing trouble for the snapshotting procedure, and I cannot seem to reproduce
-it with random set of flags and parameters myself.
+This diffierence is what forces octopus merge to form intermediate tree
+objects when doing its merges.  If there was a way to merge directly
+into the index, octopus merge wouldn't have to make intermediate tree
+objects that would have to be garbage-collected later.
 
-I know you run it with --inetd, but what other parameters do you run it with,
-and in what kind of environment?  Specifically:
+(Indeed, I originally assumed that Octopus did all its merges in the
+index; it's only when I traced the code that I saw it calls git-write-tree
+multiple times.)
 
- - do you use whitelist, like "git-daemon --inetd --export-all /pub/scm"?
- - if so, are any symlinks involved in /pub area?
- - if so, does adding real path like /mnt/real/pub/scm for /pub/scm help?
- - do you run with --strict-paths?
+Is the time saved, and space not wasted, worth implementing a 2-way merge
+that more exactly matches 3-way?  It should be fairly straightforward
+to share the actual merging code.
+
+Opinions solicited.
