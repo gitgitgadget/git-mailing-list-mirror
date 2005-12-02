@@ -1,54 +1,103 @@
-From: Chuck Lever <cel@netapp.com>
-Subject: [PATCH] Fast-forwarding does a git.switch() even when it forwarded no patches
-Date: Thu, 01 Dec 2005 19:15:13 -0500
-Message-ID: <20051202001513.9140.14792.stgit@dexter.citi.umich.edu>
-References: <20051202001141.9140.23252.stgit@dexter.citi.umich.edu>
-Reply-To: Chuck Lever <cel@citi.umich.edu>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: resolve (merge) problems
+Date: Thu, 01 Dec 2005 16:58:01 -0800
+Message-ID: <7vhd9sb9ie.fsf@assigned-by-dhcp.cox.net>
+References: <20051202000715.8100.qmail@web31810.mail.mud.yahoo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 02 01:18:35 2005
+X-From: git-owner@vger.kernel.org Fri Dec 02 02:00:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EhyaD-0006n9-BG
-	for gcvg-git@gmane.org; Fri, 02 Dec 2005 01:15:25 +0100
+	id 1EhzFl-0003yr-Vp
+	for gcvg-git@gmane.org; Fri, 02 Dec 2005 01:58:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932580AbVLBAPP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Dec 2005 19:15:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932582AbVLBAPP
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 19:15:15 -0500
-Received: from citi.umich.edu ([141.211.133.111]:14674 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S932580AbVLBAPO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Dec 2005 19:15:14 -0500
-Received: from dexter.citi.umich.edu (dexter.citi.umich.edu [141.211.133.33])
-	by citi.umich.edu (Postfix) with ESMTP id A09691BB85;
-	Thu,  1 Dec 2005 19:15:13 -0500 (EST)
-To: catalin.marinas@gmail.com
-In-Reply-To: <20051202001141.9140.23252.stgit@dexter.citi.umich.edu>
+	id S932589AbVLBA6F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Dec 2005 19:58:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932592AbVLBA6F
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Dec 2005 19:58:05 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:52950 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932589AbVLBA6D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Dec 2005 19:58:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051202005639.LBSH17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 1 Dec 2005 19:56:39 -0500
+To: ltuikov@yahoo.com
+In-Reply-To: <20051202000715.8100.qmail@web31810.mail.mud.yahoo.com> (Luben
+	Tuikov's message of "Thu, 1 Dec 2005 16:07:15 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13093>
 
-The git.switch() in forward_patches() is not needed when no patches have
-been fast forwarded.  This is a significant speed up.
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-Signed-off-by: Chuck Lever <cel@netapp.com>
+> --- Junio C Hamano <junkio@cox.net> wrote:
+>> Easier to read is:
+>> 
+>> 	$ git-diff-files --name-status
+>
+> Ok this is what it shows:
+>
+> $git-diff-files --name-status
+> U       arch/arm/configs/poodle_defconfig
+> D       arch/arm/configs/poodle_defconfig
+> U       drivers/atm/atmdev_init.c
+> D       drivers/atm/atmdev_init.c
+>
+> Unmerged and deleted?  Is this correct?
+
+Yes, the first lets you notice it is unmerged, and the second
+says the file does not remain in the working tree.
+
+However, there is a bug recently introduced in the
+merge-one-file script.  
+
+Although the conflict resolution procedure I described applies
+if you really had a real conflicting merge, I suspect your merge
+should not have failed in the first place.
+
+        case "${1:-.}${2:-.}${3:-.}" in
+        #
+        # Deleted in both or deleted in one and unchanged in the other
+        #
+        "$1.." | "$1.$1" | "$1$1.")
+                if [ "$2" ]; then
+                        echo "Removing $4"
+                fi
+                if test -f "$4"; then
+                        rm -f -- "$4" &&
+                        rmdir -p "$(expr "$4" : '\(.*\)/')" 2>/dev/null
+                fi &&
+                        exec git-update-index --remove -- "$4"
+                ;;
+
+The faliure code from "rmdir -p" leaks up and makes
+git-update-index to be skipped.  Here is a fix.
+
+-- >8 --
+[PATCH] merge-one-file fix
+
+9ae2172aed289f2706a0e88288909fa47eddd7e7 used "rmdir -p"
+carelessly, causing the "git-update-index --remove" to be
+skipped.
+
 ---
-
- stgit/stack.py |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/stgit/stack.py b/stgit/stack.py
-index 3fd6a46..3cc37c5 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -735,6 +735,9 @@ class Series:
-             forwarded+=1
-             unapplied.remove(name)
- 
-+        if forwarded == 0:
-+            return 0
-+
-         git.switch(top)
- 
-         append_strings(self.__applied_file, names[0:forwarded])
+diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
+index 739a072..9a049f4 100755
+--- a/git-merge-one-file.sh
++++ b/git-merge-one-file.sh
+@@ -26,7 +26,7 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 	fi
+ 	if test -f "$4"; then
+ 		rm -f -- "$4" &&
+-		rmdir -p "$(expr "$4" : '\(.*\)/')" 2>/dev/null
++		rmdir -p "$(expr "$4" : '\(.*\)/')" 2>/dev/null || :
+ 	fi &&
+ 		exec git-update-index --remove -- "$4"
+ 	;;
