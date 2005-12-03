@@ -1,78 +1,44 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: git pull aborts in 50% of cases
-Date: Fri, 02 Dec 2005 20:22:54 -0800
-Message-ID: <43911D9E.5030803@zytor.com>
-References: <20051202190412.GA10757@mipter.zuzino.mipt.ru>	<43909963.60901@zytor.com>	<20051202211250.GA11384@mipter.zuzino.mipt.ru>	<4390B64E.20601@zytor.com>	<Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de> <7vu0dq29wg.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 03 05:23:58 2005
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Subject: Re: [PATCH] Include Makefile.localdef in Makefile, if it exists.
+Date: Fri, 02 Dec 2005 22:35:17 -0800
+Message-ID: <3061.1133591717@lotus.CS.Berkeley.EDU>
+References: <Pine.LNX.4.63.0512030322410.19086@wbgn013.biozentrum.uni-wuerzburg.de>
+X-From: git-owner@vger.kernel.org Sat Dec 03 07:35:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EiOvh-0003cE-Is
-	for gcvg-git@gmane.org; Sat, 03 Dec 2005 05:23:21 +0100
+	id 1EiQzh-0006Fv-OY
+	for gcvg-git@gmane.org; Sat, 03 Dec 2005 07:35:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751123AbVLCEXH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Dec 2005 23:23:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751175AbVLCEXH
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 23:23:07 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:64730 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751123AbVLCEXG
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 2 Dec 2005 23:23:06 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jB34Ms6Z030143
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 2 Dec 2005 20:22:55 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vu0dq29wg.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1751179AbVLCGfT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Dec 2005 01:35:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751195AbVLCGfT
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Dec 2005 01:35:19 -0500
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:15257 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S1751179AbVLCGfS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Dec 2005 01:35:18 -0500
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8) with ESMTP id jB36ZH6d003064
+	for <git@vger.kernel.org>; Fri, 2 Dec 2005 22:35:17 -0800 (PST)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id jB36ZHAo003063
+	for <git@vger.kernel.org>; Fri, 2 Dec 2005 22:35:17 -0800 (PST)
+To: git@vger.kernel.org
+In-reply-to: <Pine.LNX.4.63.0512030322410.19086@wbgn013.biozentrum.uni-wuerzburg.de> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13146>
 
-Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> 
->>>0.99.9k is clearly bad.
->>
->>Huh? It could be slower, and it could therefore hit the maximum client 
->>count faster, but it should not be bad.
->>
->>All changes to pull were done in a manner so as to be backward compatible. 
->>In both ways.
-> 
-> 
-> I do not think the fetch-pack common computation changes is
-> involved in this problem at all.
-> 
-> What is suspect is the repository validity check code,
-> specifically (quoting from diff between 0.99.9j and 0.99.9k
-> daemon.c::path_ok() function):
-> 
-> +               /* The validation is done on the paths after enter_repo
-> +                * canonicalization, so whitelist should be written in
-> +                * terms of real pathnames (i.e. after ~user is expanded
-> +                * and symlinks resolved).
-> +                */
-> 
-> I suspect (but have not heard back from HPA to confirm) that
-> kernel.org runs git-daemon with /pub/scm as the whitelist, but
-> there is a symbolic link (or bind mount?) involved, and the real
-> path checked based on getcwd() return value is somewhere else.
+And Johannes Schindelin writes:
+ - I wonder why you do not just override them in config.mak, which was 
+ - introduced just for that purpose...
 
-/pub is a symbolic link.  We shouldn't rely on getcwd() for this kind of 
-stuff; it's bad for a whole bunch of reasons.
+'Cause I'm a git and didn't notice it, thanks.  The prefix stuff 
+probably ought to be moved below the -include config.mak so 
+someone need only change $(prefix) and not the rest.  I might
+send along such a patch, along with a note about config.mak in
+INSTALL...
 
-	-hpa
+Jason
