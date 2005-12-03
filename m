@@ -1,111 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Is reserving the branch name "bisect" a good thing?
-Date: Sat, 03 Dec 2005 11:15:07 -0800
-Message-ID: <7vbqzyxa9w.fsf@assigned-by-dhcp.cox.net>
-References: <20051202232555.13082.qmail@science.horizon.com>
-	<20051203134136.31524.qmail@science.horizon.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: git pull aborts in 50% of cases
+Date: Sat, 03 Dec 2005 11:21:50 -0800
+Message-ID: <4391F04E.1050002@zytor.com>
+References: <20051202190412.GA10757@mipter.zuzino.mipt.ru>	<43909963.60901@zytor.com>	<20051202211250.GA11384@mipter.zuzino.mipt.ru>	<4390B64E.20601@zytor.com>	<Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de>	<7vu0dq29wg.fsf@assigned-by-dhcp.cox.net> <43911D9E.5030803@zytor.com> <7vpsoezf6y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 03 20:16:34 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 03 20:23:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eicqn-00041H-1f
-	for gcvg-git@gmane.org; Sat, 03 Dec 2005 20:15:13 +0100
+	id 1EicxW-0005v9-50
+	for gcvg-git@gmane.org; Sat, 03 Dec 2005 20:22:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751114AbVLCTPK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Dec 2005 14:15:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbVLCTPK
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Dec 2005 14:15:10 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:50680 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751114AbVLCTPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Dec 2005 14:15:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051203191420.QMNN20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 3 Dec 2005 14:14:20 -0500
-To: linux@horizon.com
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751251AbVLCTWA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Dec 2005 14:22:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbVLCTWA
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Dec 2005 14:22:00 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:57498 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751251AbVLCTV7
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 3 Dec 2005 14:21:59 -0500
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jB3JLpXK013440
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 3 Dec 2005 11:21:52 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vpsoezf6y.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13161>
 
-linux@horizon.com writes:
+Junio C Hamano wrote:
+> "H. Peter Anvin" <hpa@zytor.com> writes:
+> 
+> 
+>>/pub is a symbolic link.  We shouldn't rely on getcwd() for this kind of 
+>>stuff; it's bad for a whole bunch of reasons.
+> 
+> 
+> Well, if I recall correctly it was done this way because
+> DWIMmery needs to be done before the validation.
+> 
+> Anyway, here is a rewrite of tonight (I resurrected your "belts
+> and suspenders paranoia patch" for this).  Would appreciate it
+> if people can try this out (in the proposed updates branch).
+> 
+> The rules (in 0.99.9k and "master" so far) have been that if you
+> have symlinked public, whitelist should say what the canonical
+> names of them are (and the way canonical names are obtained were
+> getcwd()).  The rule of this patch is different: whitelist says
+> what the remote requestor can ask for.  So if your /pub is a
+> symlink to /mnt/mnt1/pub, you do not have to say /mnt/mnt1/pub
+> to export it.  Instead you whitelist /pub (or /pub/scm).  Also
+> if your ~bob is /home1/bob and ~alice is /home2/alice, you do
+> not say "/home1 /home2" -- instead, you say "~alice ~bob".
+> 
 
-> Without changing this policy in git-checkout, or replicating most
-> of git-checkout's code in git-bisect, I can't get away from using
-> a head name in refs/heads/.  :-(
+Yup, this is the way to do it.  Forcing people to use canonical names is 
+quite a nonstarter.
 
-I tend to think the above "restriction" a conscious design decision.
-
-> Actually, this leads to a question... suppose I want to manually
-> check out some old revision (like "v.2.6.12") for some reason
-> (performance testing, say).  How do I do that?
-> Do I have to create a branch just to do that?
-
-Absolutely, and that is deliberately so.  You do not want to:
-
-	git checkout v2.6.12
-        work work work
-        git commit
-
-and move tag v2.6.12 to something that is not v2.6.12.  As you
-outlined, that "not moving the tag" check can be done in git
-commit and have the user do:
-
-	git checkout v2.6.12
-        work work work
-        git commit ;# fails
-	git checkout -b oops-i-needed-a-branch-after-all
-	git commit
-
-but that feels ugly and wrong.
-
-Branches are cheap (just a single file which is a pointer), so
-if you prefer neatness:
-
-	git checkout -b test-build v2.6.12
-        work work work
-        git checkout master ;# when you are done
-        git branch -d test-build
-
-Or if you are lazy like me, just keep a single throwaway branch
-around, and whenever you feel like:
-
-	git branch -f ta v2.6.12
-        git checkout ta
-        work work work
-        git checkout master ;# when you are done
-
-To test and possibly further develop the git-daemon update topic
-branch, which is two revs before the tip of proposed updates
-branch:
-
-	git branch -f daemon-updates pu~2
-        git checkout daemon-updates
-        make
-	work work work, find problems and do enhancements
-        git commit
-
-then you can say "Hey, Junio I found problem in your daemon
-updates topic branch, and if you want my fixes you can pull from
-my daemon-updates branch".
-
-> It might be nicer to allow such a checkout and do the checking in
-> git-commit, telling you to "git-checkout -b <new_branch>" before
-> you check in your edits.
-
-That may be, but it is too confusing.  Everybody needs to be
-aware HEAD can point at random place, not necessarily on some
-branch.  You happen to have noticed git-commit wants HEAD to be
-pointing at a branch and no other random place, but are you
-absolutely sure no other tools care?  I don't.
-
-> +# Not generally needed, but provide a cleanup function
-> +bisect_stop() {
-
-Why isn't this part of bisect reset?
+	-hpa
