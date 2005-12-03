@@ -1,56 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] daemon whitelist handling (Re: git pull aborts in 50% of cases)
-Date: Sat, 03 Dec 2005 12:20:22 -0800
-Message-ID: <7vvey6vsop.fsf@assigned-by-dhcp.cox.net>
-References: <20051202190412.GA10757@mipter.zuzino.mipt.ru>
-	<43909963.60901@zytor.com>
-	<20051202211250.GA11384@mipter.zuzino.mipt.ru>
-	<4390B64E.20601@zytor.com>
-	<Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vu0dq29wg.fsf@assigned-by-dhcp.cox.net> <43911D9E.5030803@zytor.com>
-	<7vpsoezf6y.fsf@assigned-by-dhcp.cox.net>
-	<7vzmnivuz8.fsf_-_@assigned-by-dhcp.cox.net>
-	<4391F4DD.2060002@zytor.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [RFC] daemon whitelist handling (Re: git pull aborts in 50% of
+ cases)
+Date: Sat, 03 Dec 2005 12:45:42 -0800
+Message-ID: <439203F6.1040505@zytor.com>
+References: <20051202190412.GA10757@mipter.zuzino.mipt.ru>	<43909963.60901@zytor.com>	<20051202211250.GA11384@mipter.zuzino.mipt.ru>	<4390B64E.20601@zytor.com>	<Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de>	<7vu0dq29wg.fsf@assigned-by-dhcp.cox.net> <43911D9E.5030803@zytor.com>	<7vpsoezf6y.fsf@assigned-by-dhcp.cox.net>	<7vzmnivuz8.fsf_-_@assigned-by-dhcp.cox.net>	<4391F4DD.2060002@zytor.com> <7vvey6vsop.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Dec 03 21:21:13 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 03 21:47:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eids0-0003d9-Vx
-	for gcvg-git@gmane.org; Sat, 03 Dec 2005 21:20:33 +0100
+	id 1EieGg-0001RW-35
+	for gcvg-git@gmane.org; Sat, 03 Dec 2005 21:46:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750985AbVLCUUZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Dec 2005 15:20:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbVLCUUZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Dec 2005 15:20:25 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:59104 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1750985AbVLCUUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Dec 2005 15:20:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051203202026.PDXE25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 3 Dec 2005 15:20:26 -0500
-To: git@vger.kernel.org
-In-Reply-To: <4391F4DD.2060002@zytor.com> (H. Peter Anvin's message of "Sat,
-	03 Dec 2005 11:41:17 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751132AbVLCUpt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Dec 2005 15:45:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751165AbVLCUpt
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Dec 2005 15:45:49 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:14040 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751132AbVLCUpt
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 3 Dec 2005 15:45:49 -0500
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jB3Kjgsj014954
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 3 Dec 2005 12:45:43 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvey6vsop.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13167>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+Junio C Hamano wrote:
+> "H. Peter Anvin" <hpa@zytor.com> writes:
+> 
+>>At the very least, if you insist on using getcwd() names, you should 
+>>pre-canonicalize the whitelist, too.
+> 
+> With the current "prefix" rule (and not allowing /ho to match
+> /home) that sounds possible and sensivle, but that is not nice
+> in the long run.  We may later want to say "/pub/git/**/*.git"
+> for example to mean "any subdirectory under /pub/git but the
+> base directory name must be something ending with '.git'".
+> 
+> Hmm...
+> 
 
-> At the very least, if you insist on using getcwd() names, you should 
-> pre-canonicalize the whitelist, too.
+Yep, this stuff is hard.  For example, on kernel.org I'm not concerned 
+about symbolic links; the likelihood of an accidental symbolic link that 
+would violate security is very small.  Other applications might be 
+different.
 
-With the current "prefix" rule (and not allowing /ho to match
-/home) that sounds possible and sensivle, but that is not nice
-in the long run.  We may later want to say "/pub/git/**/*.git"
-for example to mean "any subdirectory under /pub/git but the
-base directory name must be something ending with '.git'".
+Arguably, the correct interface is to modularize it, and have both the 
+user request, the post-DWIM output, and the
 
-Hmm...
+	-hpa
