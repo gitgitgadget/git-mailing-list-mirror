@@ -1,59 +1,56 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] daemon whitelist handling (Re: git pull aborts in 50% of
- cases)
-Date: Sat, 3 Dec 2005 11:56:37 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0512031156070.3099@g5.osdl.org>
-References: <20051202190412.GA10757@mipter.zuzino.mipt.ru> <43909963.60901@zytor.com>
- <20051202211250.GA11384@mipter.zuzino.mipt.ru> <4390B64E.20601@zytor.com>
- <Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vu0dq29wg.fsf@assigned-by-dhcp.cox.net> <43911D9E.5030803@zytor.com>
- <7vpsoezf6y.fsf@assigned-by-dhcp.cox.net> <7vzmnivuz8.fsf_-_@assigned-by-dhcp.cox.net>
- <4391F4DD.2060002@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] daemon whitelist handling (Re: git pull aborts in 50% of cases)
+Date: Sat, 03 Dec 2005 12:20:22 -0800
+Message-ID: <7vvey6vsop.fsf@assigned-by-dhcp.cox.net>
+References: <20051202190412.GA10757@mipter.zuzino.mipt.ru>
+	<43909963.60901@zytor.com>
+	<20051202211250.GA11384@mipter.zuzino.mipt.ru>
+	<4390B64E.20601@zytor.com>
+	<Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vu0dq29wg.fsf@assigned-by-dhcp.cox.net> <43911D9E.5030803@zytor.com>
+	<7vpsoezf6y.fsf@assigned-by-dhcp.cox.net>
+	<7vzmnivuz8.fsf_-_@assigned-by-dhcp.cox.net>
+	<4391F4DD.2060002@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 03 20:58:16 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Dec 03 21:21:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EidVL-0006KO-D8
-	for gcvg-git@gmane.org; Sat, 03 Dec 2005 20:57:07 +0100
+	id 1Eids0-0003d9-Vx
+	for gcvg-git@gmane.org; Sat, 03 Dec 2005 21:20:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750918AbVLCT5E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Dec 2005 14:57:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750902AbVLCT5E
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Dec 2005 14:57:04 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:2712 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750918AbVLCT5D (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Dec 2005 14:57:03 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jB3JucDZ019089
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 3 Dec 2005 11:56:38 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jB3JubFH007416;
-	Sat, 3 Dec 2005 11:56:37 -0800
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <4391F4DD.2060002@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.128 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750985AbVLCUUZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Dec 2005 15:20:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbVLCUUZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Dec 2005 15:20:25 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:59104 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1750985AbVLCUUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Dec 2005 15:20:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051203202026.PDXE25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 3 Dec 2005 15:20:26 -0500
+To: git@vger.kernel.org
+In-Reply-To: <4391F4DD.2060002@zytor.com> (H. Peter Anvin's message of "Sat,
+	03 Dec 2005 11:41:17 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13166>
 
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-
-On Sat, 3 Dec 2005, H. Peter Anvin wrote:
-> 
-> At the very least, if you insist on using getcwd() names, you should
+> At the very least, if you insist on using getcwd() names, you should 
 > pre-canonicalize the whitelist, too.
 
-That would probably solve the problem and sounds like the right 
-user-friendly solution.
+With the current "prefix" rule (and not allowing /ho to match
+/home) that sounds possible and sensivle, but that is not nice
+in the long run.  We may later want to say "/pub/git/**/*.git"
+for example to mean "any subdirectory under /pub/git but the
+base directory name must be something ending with '.git'".
 
-		Linus
+Hmm...
