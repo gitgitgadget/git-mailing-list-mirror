@@ -1,76 +1,59 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [RFC] daemon whitelist handling (Re: git pull aborts in 50% of
  cases)
-Date: Sat, 03 Dec 2005 11:41:17 -0800
-Message-ID: <4391F4DD.2060002@zytor.com>
-References: <20051202190412.GA10757@mipter.zuzino.mipt.ru>	<43909963.60901@zytor.com>	<20051202211250.GA11384@mipter.zuzino.mipt.ru>	<4390B64E.20601@zytor.com>	<Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de>	<7vu0dq29wg.fsf@assigned-by-dhcp.cox.net> <43911D9E.5030803@zytor.com>	<7vpsoezf6y.fsf@assigned-by-dhcp.cox.net> <7vzmnivuz8.fsf_-_@assigned-by-dhcp.cox.net>
+Date: Sat, 3 Dec 2005 11:56:37 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0512031156070.3099@g5.osdl.org>
+References: <20051202190412.GA10757@mipter.zuzino.mipt.ru> <43909963.60901@zytor.com>
+ <20051202211250.GA11384@mipter.zuzino.mipt.ru> <4390B64E.20601@zytor.com>
+ <Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vu0dq29wg.fsf@assigned-by-dhcp.cox.net> <43911D9E.5030803@zytor.com>
+ <7vpsoezf6y.fsf@assigned-by-dhcp.cox.net> <7vzmnivuz8.fsf_-_@assigned-by-dhcp.cox.net>
+ <4391F4DD.2060002@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 03 20:42:41 2005
+X-From: git-owner@vger.kernel.org Sat Dec 03 20:58:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EidGM-0002Mh-3q
-	for gcvg-git@gmane.org; Sat, 03 Dec 2005 20:41:38 +0100
+	id 1EidVL-0006KO-D8
+	for gcvg-git@gmane.org; Sat, 03 Dec 2005 20:57:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750863AbVLCTlf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Dec 2005 14:41:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbVLCTlf
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Dec 2005 14:41:35 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:51102 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750725AbVLCTle
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 3 Dec 2005 14:41:34 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jB3JfHjg013835
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 3 Dec 2005 11:41:18 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmnivuz8.fsf_-_@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1750918AbVLCT5E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Dec 2005 14:57:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750902AbVLCT5E
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Dec 2005 14:57:04 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:2712 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750918AbVLCT5D (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Dec 2005 14:57:03 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jB3JucDZ019089
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 3 Dec 2005 11:56:38 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jB3JubFH007416;
+	Sat, 3 Dec 2005 11:56:37 -0800
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <4391F4DD.2060002@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.128 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13165>
 
-Junio C Hamano wrote:
+
+
+On Sat, 3 Dec 2005, H. Peter Anvin wrote:
 > 
-> For example, I can by mistake create a symbolic link:
-> 
-> 	ln -s /home /pub/scm/git/git.git/oops
-> 
-> now accesses /pub/scm/git/oops/hpa/secret.git/ is not
-> restricted.  We could hand-resolve the each level from the
-> request to see if no "funny" symbolic links are involved, but
-> what is the definition of "funny"?  When we see /pub pointing at
-> somewhere in /mnt/disk47/slice31, we should not complain.  When
-> we see "oops" under git in the above example, we would want to
-> complain.  These things are hard to get right.
-> 
+> At the very least, if you insist on using getcwd() names, you should
+> pre-canonicalize the whitelist, too.
 
-Actually, it's a policy decision whether or not symlinks should be 
-allowed to exit space like that; in Apache, for example, it's a 
-configurable.
+That would probably solve the problem and sounds like the right 
+user-friendly solution.
 
-> I tend to say that the 0.99.9k (and the current master) rule to
-> make validation always work on what getcwd() gives back is
-> easier to understand (which generally means safer).  Can I talk
-> you into adjusting your whitelist on kernel.org machines?
-
-I'm not happy about it, but it's not a huge deal on kernel.org. 
-However, I think it's the wrong thing, especially in the light of 
-allowing user-relative paths.
-
-At the very least, if you insist on using getcwd() names, you should 
-pre-canonicalize the whitelist, too.
-
-	-hpa
+		Linus
