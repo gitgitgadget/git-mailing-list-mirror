@@ -1,49 +1,67 @@
-From: Junio C Hamano <junkio@twinsun.com>
-Subject: Re: Is reserving the branch name "bisect" a good thing?
-Date: Fri, 2 Dec 2005 23:44:07 +0000 (UTC)
-Message-ID: <loom.20051203T004324-557@post.gmane.org>
-References: <20051202232555.13082.qmail@science.horizon.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git pull aborts in 50% of cases
+Date: Sat, 3 Dec 2005 03:18:01 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051202190412.GA10757@mipter.zuzino.mipt.ru> <43909963.60901@zytor.com>
+ <20051202211250.GA11384@mipter.zuzino.mipt.ru> <4390B64E.20601@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Dec 03 00:49:17 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alexey Dobriyan <adobriyan@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 03 03:18:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EiKd3-00037q-0C
-	for gcvg-git@gmane.org; Sat, 03 Dec 2005 00:47:50 +0100
+	id 1EiMya-0001kB-I5
+	for gcvg-git@gmane.org; Sat, 03 Dec 2005 03:18:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751078AbVLBXrX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Dec 2005 18:47:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbVLBXrX
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 18:47:23 -0500
-Received: from main.gmane.org ([80.91.229.2]:5011 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751072AbVLBXrW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Dec 2005 18:47:22 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EiKb3-0002Wu-2L
-	for git@vger.kernel.org; Sat, 03 Dec 2005 00:45:45 +0100
-Received: from ip-66-80-53-59.lax.megapath.net ([66.80.53.59])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 03 Dec 2005 00:45:44 +0100
-Received: from junkio by ip-66-80-53-59.lax.megapath.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 03 Dec 2005 00:45:44 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 66.80.53.59 (Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.12) Gecko/20050915 Firefox/1.0.7)
+	id S1751156AbVLCCSI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Dec 2005 21:18:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751163AbVLCCSH
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 21:18:07 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:45212 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751156AbVLCCSG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Dec 2005 21:18:06 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id B1CA013F8D4; Sat,  3 Dec 2005 03:18:02 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 98F5F9F50E; Sat,  3 Dec 2005 03:18:02 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 85AE19F41D; Sat,  3 Dec 2005 03:18:02 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id F279A13F8D4; Sat,  3 Dec 2005 03:18:01 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <4390B64E.20601@zytor.com>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13139>
 
- <linux <at> horizon.com> writes:
+Hi,
 
-> Would it be better if "git bisect" followed that rule as well?
-> Otherwise, we really should document the reserved word.
+On Fri, 2 Dec 2005, H. Peter Anvin wrote:
 
-I wonder if you broke "git bisect visualize" with that patch.
+> Alexey Dobriyan wrote:
+> > 
+> > Heisenbug :-\. I'll send IP next time.
+> > 
+> 
+> Actually, it turns out the two servers were running different versions; one
+> 0.99.9j and one 0.99.9k.  They're both running 0.99.9j now.
+> 
+> 0.99.9k is clearly bad.
+
+Huh? It could be slower, and it could therefore hit the maximum client 
+count faster, but it should not be bad.
+
+All changes to pull were done in a manner so as to be backward compatible. 
+In both ways.
+
+Hth,
+Dscho
