@@ -1,78 +1,78 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: managing my first project with git, yeay
-Date: 02 Dec 2005 19:24:03 -0800
-Message-ID: <86iru6c17w.fsf@blue.stonehenge.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: git pull aborts in 50% of cases
+Date: Fri, 02 Dec 2005 20:22:54 -0800
+Message-ID: <43911D9E.5030803@zytor.com>
+References: <20051202190412.GA10757@mipter.zuzino.mipt.ru>	<43909963.60901@zytor.com>	<20051202211250.GA11384@mipter.zuzino.mipt.ru>	<4390B64E.20601@zytor.com>	<Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de> <7vu0dq29wg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Dec 03 04:24:44 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 03 05:23:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EiO0d-0006ed-OH
-	for gcvg-git@gmane.org; Sat, 03 Dec 2005 04:24:24 +0100
+	id 1EiOvh-0003cE-Is
+	for gcvg-git@gmane.org; Sat, 03 Dec 2005 05:23:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751174AbVLCDYK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Dec 2005 22:24:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbVLCDYK
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 22:24:10 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:18579 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751177AbVLCDYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Dec 2005 22:24:09 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 04F128F794
-	for <git@vger.kernel.org>; Fri,  2 Dec 2005 19:24:04 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 30347-02 for <git@vger.kernel.org>;
- Fri,  2 Dec 2005 19:24:03 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 590FC8F796; Fri,  2 Dec 2005 19:24:03 -0800 (PST)
-To: git@vger.kernel.org
-x-mayan-date: Long count = 12.19.12.15.4; tzolkin = 2 Kan; haab = 2 Mac
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1751123AbVLCEXH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Dec 2005 23:23:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751175AbVLCEXH
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 23:23:07 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:64730 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751123AbVLCEXG
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 2 Dec 2005 23:23:06 -0500
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jB34Ms6Z030143
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 2 Dec 2005 20:22:55 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vu0dq29wg.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13145>
 
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> 
+>>>0.99.9k is clearly bad.
+>>
+>>Huh? It could be slower, and it could therefore hit the maximum client 
+>>count faster, but it should not be bad.
+>>
+>>All changes to pull were done in a manner so as to be backward compatible. 
+>>In both ways.
+> 
+> 
+> I do not think the fetch-pack common computation changes is
+> involved in this problem at all.
+> 
+> What is suspect is the repository validity check code,
+> specifically (quoting from diff between 0.99.9j and 0.99.9k
+> daemon.c::path_ok() function):
+> 
+> +               /* The validation is done on the paths after enter_repo
+> +                * canonicalization, so whitelist should be written in
+> +                * terms of real pathnames (i.e. after ~user is expanded
+> +                * and symlinks resolved).
+> +                */
+> 
+> I suspect (but have not heard back from HPA to confirm) that
+> kernel.org runs git-daemon with /pub/scm as the whitelist, but
+> there is a symbolic link (or bind mount?) involved, and the real
+> path checked based on getcwd() return value is somewhere else.
 
-So, between yesterday and today, I issued "git-init-db", followed by
-enough commands to have done this:
+/pub is a symbolic link.  We shouldn't rely on getcwd() for this kind of 
+stuff; it's bad for a whole bunch of reasons.
 
-git-diff-tree -p -M 1723 HEAD | git-apply --stat --summary
- lib/GC/App/change_transactions.tt                  |    4 -
- lib/GC/App/edit_snippets.pm                        |    2 
- lib/GC/App/generate_aged_receivables.tt            |    2 
- lib/GC/App/make_manifest.tt                        |    2 
- lib/GC/App/record_adjustment.tt                    |   11 +-
- lib/GC/App/record_payment.pm                       |    7 +
- lib/GC/App/record_payment.tt                       |    7 +
- lib/GC/App/snippet.pm                              |    3 
- lib/GC/App/snippet.tt                              |    2 
- lib/GC/App/welcome.pm                              |    2 
- lib/GC/App/welcome.tt                              |    1 
- lib/GC/DB.pm                                       |   11 ++
- lib/GC/DB/Booking.pm                               |   28 ----
- lib/GC/DB/PersonCruise.pm                          |    3 
- lib/GC/DB/Phone.cfg                                |    1 
- lib/GC/DB/all.pm                                   |   20 ++-
- lib/GC/DB/randal-funcs-4                           |    2 
- lib/GC/DB/randal-funcs-5                           |  132 ++++++++++++++++++++
- lib/GC/DB/randal-funcs-6                           |   14 ++
- lib/GC/ttlib/pcs_to_ar.tt                          |   14 +-
- lib/GC/ttlib/pcs_to_matrix.tt                      |    3 
- lib/GC/ttlib/view/amount_with_button.tt            |   15 ++
- .../view/combo_select_person_ccs_for_payment.tt    |   31 ++++-
- 23 files changed, 251 insertions(+), 66 deletions(-)
- create mode 100644 lib/GC/DB/randal-funcs-5
- create mode 100644 lib/GC/DB/randal-funcs-6
- create mode 100644 lib/GC/ttlib/view/amount_with_button.tt
-
-This was on Darwin.  yeay.
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+	-hpa
