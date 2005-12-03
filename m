@@ -1,69 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 7/9] Add the accurate changeset applyer
-Date: Fri, 2 Dec 2005 18:51:50 -0800
-Message-ID: <20051203025150.GA13179@mail.yhbt.net>
-References: <46a038f90511170126l5f04f4e0ta578fc2cb375db68@mail.gmail.com> <20051124074605.GA4789@mail.yhbt.net> <20051124074739.GB4789@mail.yhbt.net> <20051124074857.GC4789@mail.yhbt.net> <20051124075027.GD4789@mail.yhbt.net> <20051124075133.GE4789@mail.yhbt.net> <20051124075243.GF4789@mail.yhbt.net> <20051124075355.GG4789@mail.yhbt.net> <20051124075504.GH4789@mail.yhbt.net> <46a038f90512010902lb11c326p99af9ff99dacf9b4@mail.gmail.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: managing my first project with git, yeay
+Date: 02 Dec 2005 19:24:03 -0800
+Message-ID: <86iru6c17w.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>,
-	Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Sat Dec 03 03:54:03 2005
+X-From: git-owner@vger.kernel.org Sat Dec 03 04:24:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EiNVC-0004PO-TC
-	for gcvg-git@gmane.org; Sat, 03 Dec 2005 03:51:55 +0100
+	id 1EiO0d-0006ed-OH
+	for gcvg-git@gmane.org; Sat, 03 Dec 2005 04:24:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751170AbVLCCvw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Dec 2005 21:51:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbVLCCvw
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 21:51:52 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:65200 "EHLO mail.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751170AbVLCCvv (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Dec 2005 21:51:51 -0500
-Received: by mail.yhbt.net (Postfix, from userid 500)
-	id 01BCC2DC03A; Fri,  2 Dec 2005 18:51:50 -0800 (PST)
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f90512010902lb11c326p99af9ff99dacf9b4@mail.gmail.com>
-User-Agent: Mutt/1.5.9i
+	id S1751174AbVLCDYK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Dec 2005 22:24:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbVLCDYK
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 22:24:10 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:18579 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1751177AbVLCDYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Dec 2005 22:24:09 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 04F128F794
+	for <git@vger.kernel.org>; Fri,  2 Dec 2005 19:24:04 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 30347-02 for <git@vger.kernel.org>;
+ Fri,  2 Dec 2005 19:24:03 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 590FC8F796; Fri,  2 Dec 2005 19:24:03 -0800 (PST)
+To: git@vger.kernel.org
+x-mayan-date: Long count = 12.19.12.15.4; tzolkin = 2 Kan; haab = 2 Mac
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13144>
 
-Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> Eric,
-> 
-> My test results are a bit of a mixed bag. On one hand, I'm satisfied
-> that both fast and correct imports reach the same tree (minus file
-> modes) for the same commit with the arch repos I imported.
-> 
-> On the other hand, with my "moodle" repo, the 'correct' import seems
-> to have stop importing a lot earlier than it should have. I am
-> re-running it now to try to continue from where it left off, but it's
-> unclear why it abandoned -- I didn't see any error. How widely have
-> you tested this method?
 
-This was from the moodle repo I archive-mirrored locally a few weeks ago
-for testing:
+So, between yesterday and today, I issued "git-init-db", followed by
+enough commands to have done this:
 
-get_new: 6
-get_tag: 0
-import_or_tag: 0
-replay: 356
+git-diff-tree -p -M 1723 HEAD | git-apply --stat --summary
+ lib/GC/App/change_transactions.tt                  |    4 -
+ lib/GC/App/edit_snippets.pm                        |    2 
+ lib/GC/App/generate_aged_receivables.tt            |    2 
+ lib/GC/App/make_manifest.tt                        |    2 
+ lib/GC/App/record_adjustment.tt                    |   11 +-
+ lib/GC/App/record_payment.pm                       |    7 +
+ lib/GC/App/record_payment.tt                       |    7 +
+ lib/GC/App/snippet.pm                              |    3 
+ lib/GC/App/snippet.tt                              |    2 
+ lib/GC/App/welcome.pm                              |    2 
+ lib/GC/App/welcome.tt                              |    1 
+ lib/GC/DB.pm                                       |   11 ++
+ lib/GC/DB/Booking.pm                               |   28 ----
+ lib/GC/DB/PersonCruise.pm                          |    3 
+ lib/GC/DB/Phone.cfg                                |    1 
+ lib/GC/DB/all.pm                                   |   20 ++-
+ lib/GC/DB/randal-funcs-4                           |    2 
+ lib/GC/DB/randal-funcs-5                           |  132 ++++++++++++++++++++
+ lib/GC/DB/randal-funcs-6                           |   14 ++
+ lib/GC/ttlib/pcs_to_ar.tt                          |   14 +-
+ lib/GC/ttlib/pcs_to_matrix.tt                      |    3 
+ lib/GC/ttlib/view/amount_with_button.tt            |   15 ++
+ .../view/combo_select_person_ccs_for_payment.tt    |   31 ++++-
+ 23 files changed, 251 insertions(+), 66 deletions(-)
+ create mode 100644 lib/GC/DB/randal-funcs-5
+ create mode 100644 lib/GC/DB/randal-funcs-6
+ create mode 100644 lib/GC/ttlib/view/amount_with_button.tt
 
-Rerunning it doesn't seem to pull anymore.  IIRC, My previous times
-only imported around ~150 patchsets.  The time it took to run this
-was certainly longer than the last run (~4 hours here, vs ~2 hours
-I mentioned in <20051124074605.GA4789@mail.yhbt.net>, so there may
-be a bug somewhere...  Unfortunately, I no longer have those old
-trees around.
-
-I've imported several trees with >1000 revisions without problems,
-mpd-uclinux is among them:
-
-http://mpd.bogomips.org/mpd-uclinux.git/
+This was on Darwin.  yeay.
 
 -- 
-Eric Wong
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
