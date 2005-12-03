@@ -1,69 +1,96 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git pull aborts in 50% of cases
-Date: Fri, 02 Dec 2005 18:26:39 -0800
-Message-ID: <7vu0dq29wg.fsf@assigned-by-dhcp.cox.net>
-References: <20051202190412.GA10757@mipter.zuzino.mipt.ru>
-	<43909963.60901@zytor.com>
-	<20051202211250.GA11384@mipter.zuzino.mipt.ru>
-	<4390B64E.20601@zytor.com>
-	<Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Move couple of ifdefs after "include config.mk"
+Date: Sat, 3 Dec 2005 03:31:52 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512030323290.19086@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051201012333.44bd81f2.tihirvon@gmail.com>
+ <Pine.LNX.4.63.0512010144050.11941@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20051201033201.02b47071.tihirvon@gmail.com> <7vhd9tmw1g.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0512010906400.22709@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vmzjlkx2f.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sat Dec 03 03:26:58 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 03 03:32:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EiN6q-0004v8-Cp
-	for gcvg-git@gmane.org; Sat, 03 Dec 2005 03:26:44 +0100
+	id 1EiNBt-00077W-M9
+	for gcvg-git@gmane.org; Sat, 03 Dec 2005 03:31:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbVLCC0l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Dec 2005 21:26:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbVLCC0l
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 21:26:41 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:8178 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751164AbVLCC0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Dec 2005 21:26:41 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051203022514.QCYL17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 2 Dec 2005 21:25:14 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0512030316520.19086@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 3 Dec 2005 03:18:01 +0100
-	(CET)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751169AbVLCCby (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Dec 2005 21:31:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbVLCCby
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Dec 2005 21:31:54 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:8349 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751172AbVLCCby (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Dec 2005 21:31:54 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E9BB613FAB4; Sat,  3 Dec 2005 03:31:52 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id D03269F50E; Sat,  3 Dec 2005 03:31:52 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id B3D1B9F41D; Sat,  3 Dec 2005 03:31:52 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8AA7413FAB4; Sat,  3 Dec 2005 03:31:52 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzjlkx2f.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13142>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
->> 0.99.9k is clearly bad.
->
-> Huh? It could be slower, and it could therefore hit the maximum client 
-> count faster, but it should not be bad.
->
-> All changes to pull were done in a manner so as to be backward compatible. 
-> In both ways.
+On Thu, 1 Dec 2005, Junio C Hamano wrote:
 
-I do not think the fetch-pack common computation changes is
-involved in this problem at all.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > But it is only one line, heck only 20 bytes!
+> 
+> Hey, don't get so piped up.  Timo's patch has already been
+> merged (thanks, Timo).
 
-What is suspect is the repository validity check code,
-specifically (quoting from diff between 0.99.9j and 0.99.9k
-daemon.c::path_ok() function):
+In case I did not make it clear: I was not mad or something like that. I 
+only see 3 ways to go about that particular problem:
 
-+               /* The validation is done on the paths after enter_repo
-+                * canonicalization, so whitelist should be written in
-+                * terms of real pathnames (i.e. after ~user is expanded
-+                * and symlinks resolved).
-+                */
+- maintain your private config.mak
+- maintain your private Make (shell script)
+- maintain your private Makefile
 
-I suspect (but have not heard back from HPA to confirm) that
-kernel.org runs git-daemon with /pub/scm as the whitelist, but
-there is a symbolic link (or bind mount?) involved, and the real
-path checked based on getcwd() return value is somewhere else.
+I actually did the third way for a while, always merging the newest 
+version. But all of a sudden -- when I was working on another project, 
+which *has* a config.mak -- I had the idea to do the first way.
+
+Actually, the second way falls a little bit short for some of my 
+applications: I sometimes override settings in the first part of the 
+Makefile. This is not possible with Make.
+
+> If you need an override, you have to write down and maintain
+> those YesPlease _somewhere_ yourself anyway, outside what I
+> ship.  Either "config.mak" or "Make" script.
+
+As mentioned, with the difference that you just can't override some things 
+in Make.
+
+> If we have '-include' in the Makefile, we need to make a
+> decision if what we are adding to the Makefile should be
+> overridable by that config.mak every time, exactly because
+> whatever is included becomes part of the Makefile.  IOW, that
+> "only 20 bytes" adds work for the Makefile maintainer.
+
+... which might have another (desired) effect: the structure of the 
+Makefile is better. More organized.
+
+Besides, if you change things in an organized Makefile, you tend to be a 
+little bit more careful where you put things, so the cost of maintaining 
+is not really high (happened to me...).
+
+Hth,
+Dscho
