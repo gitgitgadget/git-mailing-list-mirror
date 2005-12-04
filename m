@@ -1,88 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 0.99.9l aka 1.0rc4
-Date: Sun, 04 Dec 2005 01:21:13 -0800
-Message-ID: <7vy831p69i.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Warn when send-pack does nothing
+Date: Sun, 4 Dec 2005 11:59:37 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0512041141280.25300@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Dec 04 10:21:32 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Dec 04 18:00:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eiq3l-0006so-Su
-	for gcvg-git@gmane.org; Sun, 04 Dec 2005 10:21:30 +0100
+	id 1EixCb-0000vG-GK
+	for gcvg-git@gmane.org; Sun, 04 Dec 2005 17:59:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751332AbVLDJVP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Dec 2005 04:21:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbVLDJVP
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Dec 2005 04:21:15 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:26579 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751332AbVLDJVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Dec 2005 04:21:15 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051204092039.JUSY15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 4 Dec 2005 04:20:39 -0500
-To: git@vger.kernel.org, linux-kernel@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932294AbVLDQ7A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Dec 2005 11:59:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932301AbVLDQ7A
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Dec 2005 11:59:00 -0500
+Received: from iabervon.org ([66.92.72.58]:25092 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932294AbVLDQ7A (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Dec 2005 11:59:00 -0500
+Received: (qmail 772 invoked by uid 1000); 4 Dec 2005 11:59:37 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 Dec 2005 11:59:37 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13186>
 
-GIT 0.99.9l aka 1.0rc4 is found at a new location.
+If you try to push into an empty repository with no ref arguments to
+git push, it doesn't do anything and doesn't say anything. This adds a
+warning when send-pack isn't going to push anything, so you don't
+assume that it silently did what you wanted.
 
-RPM
-	http://kernel.org:/pub/software/git/RPMS/
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 
-Debian [*1*]
-	http://kernel.org:/pub/software/git/debian/
+---
 
-This is mostly fixes, with some improvements.  As I said on the
-git list earlier, no more major feature/semantics changes after
-this is expected until 1.0.
+ send-pack.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-Highlights are:
-
- - After a conflicting merge, the index file is left unmerged.
-   As before, after such conflicting merge, "git diff" can be
-   used to view the differences between the half-merged file and
-   "our" branch version by default, but now you can say "git
-   diff --base" and "git diff --theirs" to view the differences
-   since the merge-base version and the other branch's version,
-   respectively.
-
- - git-daemon and other git native protocols allow user-relative
-   paths (e.g. git://host/~user/repo).  git-daemon's path
-   whitelist check used to be done with the realpath (i.e. what
-   getcwd() returns) in 0.99.9k and later "master" branch
-   versions, but it was changed back to check against what the
-   requester asked.
-
- - The commands have been future-proofed so that they refuse to
-   operate on repositories from future unknown versions, to
-   avoid corrupting them by mistake.
-
- - Bisect can take pathspec to cut down the number of revisions
-   that need to be tested.
-
- - Many low-level commands have been updated to work better from
-   subdirectories (much of the barebone porcelain wrappers that
-   deal with the whole repository or the whole tree still need
-   to be run from the top level, though).
-
- - Merge used to fail when it removed a file (fixed).
-
- - When only GIT_OBJECT_DIRECTORY was exported things broke
-   since 0.99.9k (fixed).
-
- - Comes with updated gitk.
-
-[Footnote]
-
-*1* It appears Debian finally has an official maintainer, so I
-am inclined to stop building and supplying the debs starting
-from the next version --- one less thing to worry about for me.
-I hope the Debian side splits the packages along the same line
-as we do RPMs.
+applies-to: fe523a4df93cce3e5c5b0266b9d3f1cbea009afa
+5519af6444d6da0ac55343fe48fe7f68fdb593d9
+diff --git a/send-pack.c b/send-pack.c
+index 3eeb18f..589e1f9 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -190,6 +190,12 @@ static int send_pack(int in, int out, in
+ 	if (match_refs(local_refs, remote_refs, &remote_tail,
+ 		       nr_refspec, refspec, send_all))
+ 		return -1;
++
++	if (!remote_refs) {
++		fprintf(stderr, "No refs in common and none specified; doing nothing.\n");
++		return 0;
++	}
++
+ 	/*
+ 	 * Finally, tell the other end!
+ 	 */
+---
+0.99.9.GIT
