@@ -1,76 +1,88 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: git-update-server-info crashes on hera.kernel.org:/pub/scm/libs/klibc/klibc.git
-Date: Sat, 03 Dec 2005 23:12:02 -0800
-Message-ID: <439296C2.8020809@zytor.com>
-References: <43921DAE.7060606@zytor.com>	<7vzmnhtmi1.fsf@assigned-by-dhcp.cox.net> <43928C39.8050105@zytor.com> <7v64q5tkhi.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [ANNOUNCE] GIT 0.99.9l aka 1.0rc4
+Date: Sun, 04 Dec 2005 01:21:13 -0800
+Message-ID: <7vy831p69i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 04 08:12:33 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Dec 04 10:21:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eio2q-0004HY-6T
-	for gcvg-git@gmane.org; Sun, 04 Dec 2005 08:12:24 +0100
+	id 1Eiq3l-0006so-Su
+	for gcvg-git@gmane.org; Sun, 04 Dec 2005 10:21:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751325AbVLDHMK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Dec 2005 02:12:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbVLDHMK
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Dec 2005 02:12:10 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:52672 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751325AbVLDHMJ
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 4 Dec 2005 02:12:09 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jB47C2vp025398
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 3 Dec 2005 23:12:03 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64q5tkhi.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1751332AbVLDJVP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Dec 2005 04:21:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbVLDJVP
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Dec 2005 04:21:15 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:26579 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751332AbVLDJVP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Dec 2005 04:21:15 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051204092039.JUSY15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 4 Dec 2005 04:20:39 -0500
+To: git@vger.kernel.org, linux-kernel@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13185>
 
-Junio C Hamano wrote:
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
-> 
->>FWIW, I invoked this as:
->>
->>hpa@hera:~(0)$ GIT_DIR=/pub/scm/libs/klibc/klibc.git git-update-server-info
->>Segmentation fault
-> 
-> 
-> Trusting that I *won't* be able to write into that repository, I
-> tried to run that and after getting an error ("cannot update
-> info/refs file", which I wanted to see) I seem to be getting the
-> same segfault.  GDB session reveals the binary is heavily
-> optimized or inlined, so it is hard to see what it is doing
-> though.
-> 
-> But there is one thing that is mysterious about your repository,
-> and by mirroring that peculiarity with the copy in my home
-> directory, I managed to reproduce the problem with my copy.  Why
-> does the objects/info/alternates in that repository point at
-> itself?  I suspect if you remove that file you will be OK.
-> 
-> update-server-info simply dying, instead of complaining about
-> it, is a bug nevertheless, and removal of the
-> unnecessary/possibly wrong alternate is only a workaround, but I
-> hope that would unblock you in the meantime..
-> 
+GIT 0.99.9l aka 1.0rc4 is found at a new location.
 
-Removing that file did indeed work.  I have no idea where it comes from, 
-though; although I would guess it comes from another repository that I 
-merged with (which had my original repository set as an alternate.)
+RPM
+	http://kernel.org:/pub/software/git/RPMS/
 
-	-hpa
+Debian [*1*]
+	http://kernel.org:/pub/software/git/debian/
+
+This is mostly fixes, with some improvements.  As I said on the
+git list earlier, no more major feature/semantics changes after
+this is expected until 1.0.
+
+Highlights are:
+
+ - After a conflicting merge, the index file is left unmerged.
+   As before, after such conflicting merge, "git diff" can be
+   used to view the differences between the half-merged file and
+   "our" branch version by default, but now you can say "git
+   diff --base" and "git diff --theirs" to view the differences
+   since the merge-base version and the other branch's version,
+   respectively.
+
+ - git-daemon and other git native protocols allow user-relative
+   paths (e.g. git://host/~user/repo).  git-daemon's path
+   whitelist check used to be done with the realpath (i.e. what
+   getcwd() returns) in 0.99.9k and later "master" branch
+   versions, but it was changed back to check against what the
+   requester asked.
+
+ - The commands have been future-proofed so that they refuse to
+   operate on repositories from future unknown versions, to
+   avoid corrupting them by mistake.
+
+ - Bisect can take pathspec to cut down the number of revisions
+   that need to be tested.
+
+ - Many low-level commands have been updated to work better from
+   subdirectories (much of the barebone porcelain wrappers that
+   deal with the whole repository or the whole tree still need
+   to be run from the top level, though).
+
+ - Merge used to fail when it removed a file (fixed).
+
+ - When only GIT_OBJECT_DIRECTORY was exported things broke
+   since 0.99.9k (fixed).
+
+ - Comes with updated gitk.
+
+[Footnote]
+
+*1* It appears Debian finally has an official maintainer, so I
+am inclined to stop building and supplying the debs starting
+from the next version --- one less thing to worry about for me.
+I hope the Debian side splits the packages along the same line
+as we do RPMs.
