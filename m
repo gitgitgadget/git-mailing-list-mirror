@@ -1,29 +1,29 @@
 From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: git-update-server-info crashes on hera.kernel.org:/pub/scm/libs/klibc/klibc.git
-Date: Sat, 03 Dec 2005 14:35:26 -0800
-Message-ID: <43921DAE.7060606@zytor.com>
+Subject: [PATCH] A few more options for git-cat-file
+Date: Sat, 03 Dec 2005 17:57:48 -0800
+Message-ID: <43924D1C.8070306@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Dec 03 23:35:59 2005
+Content-Type: multipart/mixed;
+ boundary="------------070003070409070109030807"
+X-From: git-owner@vger.kernel.org Sun Dec 04 02:58:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eifye-0002zR-Cj
-	for gcvg-git@gmane.org; Sat, 03 Dec 2005 23:35:32 +0100
+	id 1Eij8m-0004FD-7B
+	for gcvg-git@gmane.org; Sun, 04 Dec 2005 02:58:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932154AbVLCWf3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Dec 2005 17:35:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932156AbVLCWf3
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Dec 2005 17:35:29 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:8647 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932154AbVLCWf2
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 3 Dec 2005 17:35:28 -0500
+	id S1751312AbVLDB56 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Dec 2005 20:57:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbVLDB56
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Dec 2005 20:57:58 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:25280 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751312AbVLDB55
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 3 Dec 2005 20:57:57 -0500
 Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
 	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jB3MZQVO017062
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jB41vnKl020105
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 3 Dec 2005 14:35:26 -0800
+	Sat, 3 Dec 2005 17:57:49 -0800
 User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
 X-Accept-Language: en-us, en
 To: Git Mailing List <git@vger.kernel.org>
@@ -35,38 +35,80 @@ X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13172>
 
-git-core-0.99.9j-1, and the backtrace is as follows:
+This is a multi-part message in MIME format.
+--------------070003070409070109030807
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-: hera 29 ; ls -l /usr/lib/debug/usr/bin/git-update-
-git-update-index.debug*       git-update-ref.debug* 
-git-update-server-info.debug*
-: hera 29 ; gdb -s /usr/lib/debug/usr/bin/git-update-server-info.debug 
-/usr/bin/git-update-server-info
-GNU gdb Red Hat Linux (6.3.0.0-1.63rh)
-Copyright 2004 Free Software Foundation, Inc.
-GDB is free software, covered by the GNU General Public License, and you are
-welcome to change it and/or distribute copies of it under certain 
-conditions.
-Type "show copying" to see the conditions.
-There is absolutely no warranty for GDB.  Type "show warranty" for details.
-This GDB was configured as "i386-redhat-linux-gnu"...Using host 
-libthread_db library "/lib/tls/libthread_db.so.1".
+This adds the following options to git-cat-file:
 
-(gdb) run
-Starting program: /usr/bin/git-update-server-info
+-n, to get the canonical name of a resource.  This is for one thing 
+useful in tagging scripts.
 
-Program received signal SIGSEGV, Segmentation fault.
-0x0804c04c in nth_packed_object_sha1 (p=0x986a1f0, n=0, sha1=0xbfffc9f0 
-"") at sha1_file.c:1017
-1017            memcpy(sha1, (index + 24 * n + 4), 20);
-(gdb) where
-#0  0x0804c04c in nth_packed_object_sha1 (p=0x986a1f0, n=0, 
-sha1=0xbfffc9f0 "") at sha1_file.c:1017
-#1  0x08049a61 in update_server_info (force=0) at server-info.c:248
-#2  0x08049466 in main (ac=1, av=0xbfffeed4) at update-server-info.c:22
-#3  0x00ce1e23 in __libc_start_main () from /lib/tls/libc.so.6
-#4  0x080493a1 in _start ()
+-e, to test for the existence of a file.
 
-	-hpa
+This also cleans up the option-parsing in git-cat-file slightly.
+
+Signed-off-by: H. Peter Anvin <hpa@zytor.com>
+
+
+--------------070003070409070109030807
+Content-Type: text/plain;
+ name="git-cat-enhancements"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="git-cat-enhancements"
+
+ZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0LWNhdC1maWxlLnR4dCBiL0RvY3VtZW50
+YXRpb24vZ2l0LWNhdC1maWxlLnR4dAppbmRleCBhYjRkY2FlLi5hNTllNTEzIDEwMDY0NAot
+LS0gYS9Eb2N1bWVudGF0aW9uL2dpdC1jYXQtZmlsZS50eHQKKysrIGIvRG9jdW1lbnRhdGlv
+bi9naXQtY2F0LWZpbGUudHh0CkBAIC04LDcgKzgsNyBAQCBnaXQtY2F0LWZpbGUgLSBQcm92
+aWRlIGNvbnRlbnQgb3IgdHlwZSBpCiAKIFNZTk9QU0lTCiAtLS0tLS0tLQotJ2dpdC1jYXQt
+ZmlsZScgKC10IHwgLXMgfCA8dHlwZT4pIDxvYmplY3Q+CisnZ2l0LWNhdC1maWxlJyAoLXQg
+fCAtcyB8IC1uIHwgLWUgfCA8dHlwZT4pIDxvYmplY3Q+CiAKIERFU0NSSVBUSU9OCiAtLS0t
+LS0tLS0tLQpAQCAtMjksNiArMjksMTMgQEAgT1BUSU9OUwogCUluc3RlYWQgb2YgdGhlIGNv
+bnRlbnQsIHNob3cgdGhlIG9iamVjdCBzaXplIGlkZW50aWZpZWQgYnkKIAk8b2JqZWN0Pi4K
+IAorLW46OgorCUluc3RlYWQgb2YgdGhlIGNvbnRlbnQsIHNob3cgdGhlIGNhbm9uY2ljYWwg
+bmFtZSBvZiA8b2JqZWN0Pi4KKworLWU6OgorCVN1cHByZXNzIGFsbCBvdXRwdXQ7IGluc3Rl
+YWQgZXhpdCB3aXRoIHplcm8gc3RhdHVzIGlmIDxvYmplY3Q+CisJZXhpc3RzIGFuZCBpcyBh
+IHZhbGlkIG9iamVjdC4KKwogPHR5cGU+OjoKIAlUeXBpY2FsbHkgdGhpcyBtYXRjaGVzIHRo
+ZSByZWFsIHR5cGUgb2YgPG9iamVjdD4gYnV0IGFza2luZwogCWZvciBhIHR5cGUgdGhhdCBj
+YW4gdHJpdmlhbGx5IGJlIGRlcmVmZXJlbmNlZCBmcm9tIHRoZSBnaXZlbgpAQCAtMzksOCAr
+NDYsMTQgQEAgT1BUSU9OUwogCiBPVVRQVVQKIC0tLS0tLQotSWYgJy10JyBpcyBzcGVjaWZp
+ZWQsIG9uZSBvZiB0aGUgPHR5cGU+LiAgSWYgJy1zJyBpcyBzcGVjaWZpZWQsCi10aGUgc2l6
+ZSBvZiB0aGUgPG9iamVjdD4gaW4gYnl0ZXMuCitJZiAnLXQnIGlzIHNwZWNpZmllZCwgb25l
+IG9mIHRoZSA8dHlwZT4uCisKK0lmICctcycgaXMgc3BlY2lmaWVkLCB0aGUgc2l6ZSBvZiB0
+aGUgPG9iamVjdD4gaW4gYnl0ZXMuCisKK0lmICctbicgaXMgc3BlY2lmaWVkLCB0aGUgY2Fu
+b25jaWFsIG5hbWUgKDQwLWNoYXJhY3RlciBTSEExCitoZXhhZGVjaW1hbCBzdHJpbmcpIG9m
+IHRoZSBvYmplY3QuCisKK0lmICctZScgaXMgc3BlY2lmaWVkLCBubyBvdXRwdXQuCiAKIE90
+aGVyd2lzZSB0aGUgcmF3ICh0aG91Z2ggdW5jb21wcmVzc2VkKSBjb250ZW50cyBvZiB0aGUg
+PG9iamVjdD4gd2lsbAogYmUgcmV0dXJuZWQuCmRpZmYgLS1naXQgYS9jYXQtZmlsZS5jIGIv
+Y2F0LWZpbGUuYwppbmRleCBkNzc1YTE1Li4yM2ZiZDI4IDEwMDY0NAotLS0gYS9jYXQtZmls
+ZS5jCisrKyBiL2NhdC1maWxlLmMKQEAgLTExLDI3ICsxMSw0OCBAQCBpbnQgbWFpbihpbnQg
+YXJnYywgY2hhciAqKmFyZ3YpCiAJY2hhciB0eXBlWzIwXTsKIAl2b2lkICpidWY7CiAJdW5z
+aWduZWQgbG9uZyBzaXplOworCWludCBvcHQ7CiAKIAlzZXR1cF9naXRfZGlyZWN0b3J5KCk7
+CiAJaWYgKGFyZ2MgIT0gMyB8fCBnZXRfc2hhMShhcmd2WzJdLCBzaGExKSkKLQkJdXNhZ2Uo
+ImdpdC1jYXQtZmlsZSBbLXQgfCAtcyB8IDx0eXBlPl0gPHNoYTE+Iik7CisJCXVzYWdlKCJn
+aXQtY2F0LWZpbGUgWy10fC1zfC1ufC1lfDx0eXBlPl0gPHNoYTE+Iik7CiAKLQlpZiAoIXN0
+cmNtcCgiLXQiLCBhcmd2WzFdKSB8fCAhc3RyY21wKCItcyIsIGFyZ3ZbMV0pKSB7Ci0JCWlm
+ICghc2hhMV9vYmplY3RfaW5mbyhzaGExLCB0eXBlLAotCQkJCSAgICAgIGFyZ3ZbMV1bMV0g
+PT0gJ3MnID8gJnNpemUgOiBOVUxMKSkgewotCQkJc3dpdGNoIChhcmd2WzFdWzFdKSB7Ci0J
+CQljYXNlICd0JzoKLQkJCQlwcmludGYoIiVzXG4iLCB0eXBlKTsKLQkJCQlicmVhazsKLQkJ
+CWNhc2UgJ3MnOgotCQkJCXByaW50ZigiJWx1XG4iLCBzaXplKTsKLQkJCQlicmVhazsKLQkJ
+CX0KKwlvcHQgPSAwOworCWlmICggYXJndlsxXVswXSA9PSAnLScgKSB7CisJCW9wdCA9IGFy
+Z3ZbMV1bMV07CisJCWlmICggIW9wdCB8fCBhcmd2WzFdWzJdICkKKwkJCW9wdCA9IC0xOyAv
+KiBOb3QgYSBzaW5nbGUgY2hhcmFjdGVyIG9wdGlvbiAqLworCX0KKworCWJ1ZiA9IE5VTEw7
+CisJc3dpdGNoIChvcHQpIHsKKwljYXNlICduJzoKKwkJcHJpbnRmKCIlc1xuIiwgc2hhMV90
+b19oZXgoc2hhMSkpOworCQlyZXR1cm4gMDsKKworCWNhc2UgJ3QnOgorCQlpZiAoIXNoYTFf
+b2JqZWN0X2luZm8oc2hhMSwgdHlwZSwgTlVMTCkpIHsKKwkJCXByaW50ZigiJXNcbiIsIHR5
+cGUpOwogCQkJcmV0dXJuIDA7CiAJCX0KLQkJYnVmID0gTlVMTDsKLQl9IGVsc2UgeworCQli
+cmVhazsKKworCWNhc2UgJ3MnOgorCQlpZiAoIXNoYTFfb2JqZWN0X2luZm8oc2hhMSwgdHlw
+ZSwgJnNpemUpKSB7CisJCQlwcmludGYoIiVsdVxuIiwgc2l6ZSk7CisJCQlyZXR1cm4gMDsK
+KwkJfQorCQlicmVhazsKKworCWNhc2UgJ2UnOgorCQlyZXR1cm4gIWhhc19zaGExX2ZpbGUo
+c2hhMSk7CisKKwljYXNlIDA6CiAJCWJ1ZiA9IHJlYWRfb2JqZWN0X3dpdGhfcmVmZXJlbmNl
+KHNoYTEsIGFyZ3ZbMV0sICZzaXplLCBOVUxMKTsKKwkJYnJlYWs7CisKKwlkZWZhdWx0Ogor
+CQlkaWUoImdpdC1jYXQtZmlsZTogdW5rbm93biBvcHRpb246ICVzXG4iLCBhcmd2WzFdKTsK
+IAl9CiAKIAlpZiAoIWJ1ZikK
+--------------070003070409070109030807--
