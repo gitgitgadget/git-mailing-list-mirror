@@ -1,52 +1,43 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Document the --(no-)edit switch of git-revert and git-cherry-pick
-Date: Mon, 5 Dec 2005 01:25:35 +0100
-Message-ID: <20051205002535.GD22159@pasky.or.cz>
-References: <20051126221244.5131.65509.stgit@machine.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] config.c: remove unnecessary header in minimum configuration file.
+Date: Sun, 04 Dec 2005 16:27:48 -0800
+Message-ID: <7vu0docrqz.fsf@assigned-by-dhcp.cox.net>
+References: <7v7jawmkpo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 05 01:25:27 2005
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Dec 05 01:28:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ej4AY-0001Z9-N6
-	for gcvg-git@gmane.org; Mon, 05 Dec 2005 01:25:27 +0100
+	id 1Ej4Cw-00025A-1Y
+	for gcvg-git@gmane.org; Mon, 05 Dec 2005 01:27:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932316AbVLEAZX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Dec 2005 19:25:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932310AbVLEAZX
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Dec 2005 19:25:23 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:31872 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932316AbVLEAZX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Dec 2005 19:25:23 -0500
-Received: (qmail 17200 invoked by uid 2001); 5 Dec 2005 01:25:35 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20051126221244.5131.65509.stgit@machine.or.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932303AbVLEA1v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Dec 2005 19:27:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932348AbVLEA1v
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Dec 2005 19:27:51 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:18637 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932303AbVLEA1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Dec 2005 19:27:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051205002700.FRIA20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 4 Dec 2005 19:27:00 -0500
+To: git@vger.kernel.org
+In-Reply-To: <7v7jawmkpo.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 25 Nov 2005 14:22:27 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13205>
 
-Dear diary, on Sat, Nov 26, 2005 at 11:12:44PM CET, I got a letter
-where Petr Baudis <pasky@suse.cz> said that...
-> This switch was not documented properly. I decided not to mention
-> the --no-edit switch in the git-cherry-pick documentation since
-> we always default to no editing.
-> 
-> Signed-off-by: Petr Baudis <pasky@suse.cz>
+Junio C Hamano <junkio@cox.net> writes:
 
-All right, please disregard my previous patch question - I'm sorry,
-this is the patch I actually wanted to inquire about. ;-)
+> It is just silly to start the file called "config" with a
+> comment that says "This is the config file."
 
-I'll better go get some proper sleep now before I manage to do some
-worse damage.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Any likes or dislikes?
