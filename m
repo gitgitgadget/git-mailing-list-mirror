@@ -1,81 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Weirdness with port-update hook and local push
-Date: Mon, 05 Dec 2005 14:11:34 -0800
-Message-ID: <7vk6ej9otl.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0512051530560.25300@iabervon.org>
-	<Pine.LNX.4.63.0512052138560.6554@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0512051651050.25300@iabervon.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] config.c: remove unnecessary header in minimum configuration
+ file.
+Date: Mon, 5 Dec 2005 23:16:45 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512052316150.3284@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7v7jawmkpo.fsf@assigned-by-dhcp.cox.net> <7vu0docrqz.fsf@assigned-by-dhcp.cox.net>
+ <4394255D.1030009@op5.se> <Pine.LNX.4.63.0512052124400.4026@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vek4rb6vc.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0512052202300.12016@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vzmnf9px8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Dec 05 23:14:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 05 23:18:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjOYd-0008IM-HD
-	for gcvg-git@gmane.org; Mon, 05 Dec 2005 23:11:39 +0100
+	id 1EjOde-0001Uu-JP
+	for gcvg-git@gmane.org; Mon, 05 Dec 2005 23:16:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964784AbVLEWLg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Dec 2005 17:11:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964837AbVLEWLg
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 17:11:36 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:43494 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S964784AbVLEWLf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Dec 2005 17:11:35 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051205220954.OGPJ20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 5 Dec 2005 17:09:54 -0500
-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0512051651050.25300@iabervon.org> (Daniel
-	Barkalow's message of "Mon, 5 Dec 2005 17:01:04 -0500 (EST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932419AbVLEWQr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Dec 2005 17:16:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932433AbVLEWQr
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 17:16:47 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:6365 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932419AbVLEWQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Dec 2005 17:16:46 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 6722113F9BD; Mon,  5 Dec 2005 23:16:45 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 4B84E9F55C; Mon,  5 Dec 2005 23:16:45 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 32F989DBC8; Mon,  5 Dec 2005 23:16:45 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 0D1D113F9BD; Mon,  5 Dec 2005 23:16:45 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmnf9px8.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13242>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Hi,
 
-> The thing that confuses me is that it works when run from ssh or directly, 
-> but not when run from a local push. I'd expect the two that work to be 
-> most different.
+On Mon, 5 Dec 2005, Junio C Hamano wrote:
 
-One suspicion and one suggestion (without knowing exactly where
-that suggestion might lead us to).
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > However, reading the code I am not satisfied. If there is no template for 
+> > the config file, it does not test the filemode at all.
+> 
+> I have a feeling that you have not tried the code you are
+> arguing against.
 
- - your stdout/stderr might be connected to somewhere that your
-   output gets stuck ("broken pipe"), when your script is run
-   from the hook.
+Got me right there.
 
- - your environment might be different from what you are
-   assuming.
+Sorry.
 
-How about doing something like this?
-
-	  #!/bin/sh
-
-	+ exec >/var/tmp/hook-out.$$ 2>/var/tmp/hook-err.$$
-	+ echo "** env **"
-	+ env
-	+ echo "** vars **"
-	+ i=0
-	+ for v
-	+ do
-	+	 echo "$i: $v"
-	+	 i=$(($i+1))
-	+ done
-	+ echo "** pwd etc **"
-	+ pwd
-	+ id -a
-
-	  unset GIT_DIR
-	  cd /home/barkalow/auto-working/web
-	  if ! git pull /home/barkalow/git/web.git/
-
-and then next replace the whole thing with:
-
-	exec >/dev/null 2>&1
-
-        
+Ciao,
+Dscho
