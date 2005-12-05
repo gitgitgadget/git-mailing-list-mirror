@@ -1,46 +1,52 @@
-From: Artem Khodush <greenkaa@gmail.com>
-Subject: announce: git browser
-Date: Mon, 5 Dec 2005 03:23:24 +0300
-Message-ID: <40b2b7d90512041623g1e22fecai9470ffcb94f40a58@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Document the --(no-)edit switch of git-revert and git-cherry-pick
+Date: Mon, 5 Dec 2005 01:25:35 +0100
+Message-ID: <20051205002535.GD22159@pasky.or.cz>
+References: <20051126221244.5131.65509.stgit@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Dec 05 01:23:57 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 05 01:25:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ej48e-00013I-G6
-	for gcvg-git@gmane.org; Mon, 05 Dec 2005 01:23:28 +0100
+	id 1Ej4AY-0001Z9-N6
+	for gcvg-git@gmane.org; Mon, 05 Dec 2005 01:25:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932308AbVLEAX0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Dec 2005 19:23:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932310AbVLEAXZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Dec 2005 19:23:25 -0500
-Received: from zproxy.gmail.com ([64.233.162.198]:50223 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932308AbVLEAXZ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 4 Dec 2005 19:23:25 -0500
-Received: by zproxy.gmail.com with SMTP id l1so1071605nzf
-        for <git@vger.kernel.org>; Sun, 04 Dec 2005 16:23:24 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=EWLCG1T1QLPVZl9T+adaNj3NrqBQ0csTndQh1PAESimy4TmPiE6zagoEPgA/HyxC5Mxlmhrjqht1RKq5ipq9PM9PllC4dVGbTzh9T/DHz+wfqd2nRF8k8MOSdzWVQPph7hupQwB2YVU4gT0tc4zUQJ73HABHYz2nlz+aH5aSahQ=
-Received: by 10.65.213.10 with SMTP id p10mr2407299qbq;
-        Sun, 04 Dec 2005 16:23:24 -0800 (PST)
-Received: by 10.65.163.9 with HTTP; Sun, 4 Dec 2005 16:23:24 -0800 (PST)
-To: Git Mailing List <git@vger.kernel.org>
+	id S932316AbVLEAZX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Dec 2005 19:25:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932310AbVLEAZX
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Dec 2005 19:25:23 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:31872 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932316AbVLEAZX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Dec 2005 19:25:23 -0500
+Received: (qmail 17200 invoked by uid 2001); 5 Dec 2005 01:25:35 +0100
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <20051126221244.5131.65509.stgit@machine.or.cz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13204>
 
-Hello,
+Dear diary, on Sat, Nov 26, 2005 at 11:12:44PM CET, I got a letter
+where Petr Baudis <pasky@suse.cz> said that...
+> This switch was not documented properly. I decided not to mention
+> the --no-edit switch in the git-cherry-pick documentation since
+> we always default to no editing.
+> 
+> Signed-off-by: Petr Baudis <pasky@suse.cz>
 
-I'd like to announce experimental web interface for git,
-complementary to gitweb. It visualizes commit history graph
-and shows commit diffs.
+All right, please disregard my previous patch question - I'm sorry,
+this is the patch I actually wanted to inquire about. ;-)
 
-See http://straytree.com/git-browser/GitBrowser.html?r=git
+I'll better go get some proper sleep now before I manage to do some
+worse damage.
 
-Artem.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
