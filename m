@@ -1,71 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] config.c: remove unnecessary header in minimum configuration
- file.
-Date: Mon, 5 Dec 2005 22:05:59 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512052202300.12016@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v7jawmkpo.fsf@assigned-by-dhcp.cox.net> <7vu0docrqz.fsf@assigned-by-dhcp.cox.net>
- <4394255D.1030009@op5.se> <Pine.LNX.4.63.0512052124400.4026@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vek4rb6vc.fsf@assigned-by-dhcp.cox.net>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [ANNOUNCE] GIT 0.99.9l aka 1.0rc4
+Date: Mon, 05 Dec 2005 15:10:29 -0600
+Message-ID: <1133817028.8577.52.camel@cashmere.sps.mot.com>
+References: <7vu0dnb8pm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 05 22:10:15 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Gerrit Pape <pape@smarden.org>, Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 05 22:12:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjNXq-0004CR-GR
-	for gcvg-git@gmane.org; Mon, 05 Dec 2005 22:06:46 +0100
+	id 1EjNcA-0005oa-F5
+	for gcvg-git@gmane.org; Mon, 05 Dec 2005 22:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751469AbVLEVGB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Dec 2005 16:06:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751470AbVLEVGB
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 16:06:01 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:1749 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751469AbVLEVGA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Dec 2005 16:06:00 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5925213F748; Mon,  5 Dec 2005 22:05:59 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3EE979F55D; Mon,  5 Dec 2005 22:05:59 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 2BF6C9DBE3; Mon,  5 Dec 2005 22:05:59 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 1F96F13F748; Mon,  5 Dec 2005 22:05:59 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S932489AbVLEVLK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Dec 2005 16:11:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932490AbVLEVLK
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 16:11:10 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:44704 "EHLO
+	az33egw02.freescale.net") by vger.kernel.org with ESMTP
+	id S932489AbVLEVLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Dec 2005 16:11:09 -0500
+Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
+	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id jB5LKwnO012686;
+	Mon, 5 Dec 2005 14:20:58 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
+	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id jB5LICG7010739;
+	Mon, 5 Dec 2005 15:18:12 -0600 (CST)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vek4rb6vc.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+In-Reply-To: <7vu0dnb8pm.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13233>
 
-Hi,
+On Mon, 2005-12-05 at 14:16, Junio C Hamano wrote:
 
-On Mon, 5 Dec 2005, Junio C Hamano wrote:
+> This question is probably relevant only to you and people who
+> want to build deb themselves until you package the updated
+> upstream, but what is your (and others') preference on debian/
+> directory in what _I_ ship?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > However, you should also remove the header which is generated in init-db.c 
-> > when it is determined that the file system does not respect the executable 
-> > flag.
-> 
-> I suspect that code is not there anymore.
+I would like to see it remain and be current, please.
 
-Oops. I missed that one (probably because it did not say anything about 
-the filemode test in the shortlog).
-
-However, reading the code I am not satisfied. If there is no template for 
-the config file, it does not test the filemode at all.
-
-In fact, it reverses my design: I did *not* touch an existing config file, 
-but only created one if none existed. And if the filemode was not set, I 
-threw the config file away.
-
-Ciao,
-Dscho
+Thanks,
+jdl
