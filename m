@@ -1,57 +1,54 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Clean up compatibility definitions.
-Date: Mon, 5 Dec 2005 21:36:05 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512052135260.5944@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <81b0412b0512050519k5ed80035x9eb4907f569e0a4b@mail.gmail.com>
- <81b0412b0512050524w7b632651n93c836fda41a39d@mail.gmail.com>
- <7vfyp7cuii.fsf@assigned-by-dhcp.cox.net> <7voe3vb8fh.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Weirdness with port-update hook and local push
+Date: Mon, 5 Dec 2005 15:36:18 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0512051530560.25300@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 05 21:36:37 2005
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Dec 05 21:36:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjN4I-0002ae-Dp
-	for gcvg-git@gmane.org; Mon, 05 Dec 2005 21:36:14 +0100
+	id 1EjN3l-0002UW-OP
+	for gcvg-git@gmane.org; Mon, 05 Dec 2005 21:35:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751452AbVLEUgI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Dec 2005 15:36:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751454AbVLEUgH
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 15:36:07 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:64460 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751452AbVLEUgG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Dec 2005 15:36:06 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 7C5D113F9BD; Mon,  5 Dec 2005 21:36:05 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 628829F55A; Mon,  5 Dec 2005 21:36:05 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 4055D9DBC8; Mon,  5 Dec 2005 21:36:05 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 1005213F9BD; Mon,  5 Dec 2005 21:36:05 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe3vb8fh.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751440AbVLEUfj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Dec 2005 15:35:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751447AbVLEUfj
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 15:35:39 -0500
+Received: from iabervon.org ([66.92.72.58]:2826 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751440AbVLEUfi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Dec 2005 15:35:38 -0500
+Received: (qmail 30768 invoked by uid 1000); 5 Dec 2005 15:36:18 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Dec 2005 15:36:18 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13227>
 
-Hi,
+I have the following post-update hook:
 
-On Mon, 5 Dec 2005, Junio C Hamano wrote:
+-----
+#!/bin/sh
 
-> This attempts to clean up the way various compatibility
-> functions are defined and used.
+unset GIT_DIR
+cd /home/barkalow/auto-working/web
+if ! git pull /home/barkalow/git/web.git/
+then
+  exit 1  
+fi
+make
+-----
 
-You sure you want that before 1.0?
+>From that "git pull", I'm getting:
 
-Ciao,
-Dscho
+/home/barkalow/bin/git-pull: line 108: 30608 Broken pipe      git-merge $no_summary $no_commit $strategy_args "$merge_name" HEAD $merge_head
+
+It works fine when pushing over ssh, and when I just run the hook 
+directly. (It does a fast forward merge without any trouble.) Any ideas on 
+what's confusing it?
+
+	-Daniel
+*This .sig left intentionally blank*
