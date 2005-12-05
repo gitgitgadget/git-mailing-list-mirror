@@ -1,48 +1,58 @@
 From: Jason Riedy <ejr@EECS.Berkeley.EDU>
-Subject: Re: [PATCH] Add compat/setenv.c, use in git.c.
-Date: Mon, 05 Dec 2005 10:07:17 -0800
-Message-ID: <14404.1133806037@lotus.CS.Berkeley.EDU>
-References: <7vr78sebp8.fsf@assigned-by-dhcp.cox.net>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 05 19:10:13 2005
+Subject: [PATCH] Document config.mak in INSTALL.
+Date: Mon, 05 Dec 2005 10:38:30 -0800
+Message-ID: <20348.1133807910@lotus.CS.Berkeley.EDU>
+X-From: git-owner@vger.kernel.org Mon Dec 05 19:39:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjKkd-0005ti-HN
-	for gcvg-git@gmane.org; Mon, 05 Dec 2005 19:07:47 +0100
+	id 1EjLEb-0007dH-GJ
+	for gcvg-git@gmane.org; Mon, 05 Dec 2005 19:38:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932484AbVLESHo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Dec 2005 13:07:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932491AbVLESHo
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 13:07:44 -0500
-Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:31385 "EHLO
+	id S932511AbVLESic (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Dec 2005 13:38:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932510AbVLESic
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 13:38:32 -0500
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:32409 "EHLO
 	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
-	id S932484AbVLESHn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Dec 2005 13:07:43 -0500
+	id S932509AbVLESib (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Dec 2005 13:38:31 -0500
 Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8) with ESMTP id jB5I7H6d014580;
-	Mon, 5 Dec 2005 10:07:17 -0800 (PST)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8) with ESMTP id jB5IcV6d020354
+	for <git@vger.kernel.org>; Mon, 5 Dec 2005 10:38:31 -0800 (PST)
 Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id jB5I7H15014579;
-	Mon, 5 Dec 2005 10:07:17 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-reply-to: <7vr78sebp8.fsf@assigned-by-dhcp.cox.net> 
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id jB5IcVYG020353
+	for <git@vger.kernel.org>; Mon, 5 Dec 2005 10:38:31 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13220>
 
-And Junio C Hamano writes:
- - putenv(3) says
- - 	The string pointed to by string becomes part of the environment,
- - 	so altering the string changes the environment.
 
-Good catch, thanks.  The Solaris man page first says the 
-string space is "no longer used", but at the very end warns 
-against using an automatic variable.  Chalk one up for lousy 
-docs.
+The existing config.mak should satisfy almost everyone...  You 
+can change the prefix and other vars catch the new setting 
+anyways.  I had forgotten that ?= acts as = (lazy value binding)
+and as not := (immediate value binding).
 
-(And sizeof(char) is just habit; 99% of my mallocs aren't of 
-char...  Sorry.)
+Signed-off-by: E. Jason Riedy <ejr@cs.berkeley.edu>
 
-Jason
+---
+
+ INSTALL |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+f03c45f49ffff74df1699444612ff7b3a75bd653
+diff --git a/INSTALL b/INSTALL
+index 63ccf62..916ddd4 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -87,3 +87,6 @@ Issues of note:
+    have all the libraries/tools needed, or you may have
+    necessary libraries at unusual locations.  Please look at the
+    top of the Makefile to see what can be adjusted for your needs.
++   You can place local settings in config.mak and the Makefile
++   will include them.  Note that config.mak is not distributed;
++   the name is reserved for local settings.
+-- 
+0.99.9.GIT
