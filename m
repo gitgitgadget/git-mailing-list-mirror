@@ -1,67 +1,47 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] config.c: remove unnecessary header in minimum configuration
- file.
-Date: Mon, 5 Dec 2005 23:16:45 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512052316150.3284@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v7jawmkpo.fsf@assigned-by-dhcp.cox.net> <7vu0docrqz.fsf@assigned-by-dhcp.cox.net>
- <4394255D.1030009@op5.se> <Pine.LNX.4.63.0512052124400.4026@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vek4rb6vc.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0512052202300.12016@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzmnf9px8.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Clean up compatibility definitions.
+Date: Tue, 6 Dec 2005 00:12:03 +0100
+Message-ID: <20051205231203.GG22159@pasky.or.cz>
+References: <81b0412b0512050519k5ed80035x9eb4907f569e0a4b@mail.gmail.com> <81b0412b0512050524w7b632651n93c836fda41a39d@mail.gmail.com> <7vfyp7cuii.fsf@assigned-by-dhcp.cox.net> <7voe3vb8fh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 05 23:18:55 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 06 00:13:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjOde-0001Uu-JP
-	for gcvg-git@gmane.org; Mon, 05 Dec 2005 23:16:50 +0100
+	id 1EjPV9-0000aT-Qs
+	for gcvg-git@gmane.org; Tue, 06 Dec 2005 00:12:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932419AbVLEWQr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Dec 2005 17:16:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932433AbVLEWQr
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 17:16:47 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:6365 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932419AbVLEWQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Dec 2005 17:16:46 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 6722113F9BD; Mon,  5 Dec 2005 23:16:45 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 4B84E9F55C; Mon,  5 Dec 2005 23:16:45 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 32F989DBC8; Mon,  5 Dec 2005 23:16:45 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 0D1D113F9BD; Mon,  5 Dec 2005 23:16:45 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S964850AbVLEXLt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Dec 2005 18:11:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964851AbVLEXLt
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 18:11:49 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:24811 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964850AbVLEXLs (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Dec 2005 18:11:48 -0500
+Received: (qmail 10549 invoked by uid 2001); 6 Dec 2005 00:12:03 +0100
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmnf9px8.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+Content-Disposition: inline
+In-Reply-To: <7voe3vb8fh.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13243>
 
-Hi,
+Dear diary, on Mon, Dec 05, 2005 at 09:22:42PM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> new file mode 100644
 
-On Mon, 5 Dec 2005, Junio C Hamano wrote:
+What about compat/util.h or something? Nicer, shorter, and takes
+advantage of this fancy hierarchical namespace "directories" invention.
+;-)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > However, reading the code I am not satisfied. If there is no template for 
-> > the config file, it does not test the filemode at all.
-> 
-> I have a feeling that you have not tried the code you are
-> arguing against.
-
-Got me right there.
-
-Sorry.
-
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
