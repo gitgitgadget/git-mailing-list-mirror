@@ -1,59 +1,61 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] Add compat/setenv.c, use in git.c.
-Date: Sun, 04 Dec 2005 15:34:25 -0800
-Message-ID: <43937D01.8090706@zytor.com>
-References: <28409.1133564908@lotus.CS.Berkeley.EDU>	<43935A9E.2060602@zytor.com> <7vr78sebp8.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH gitweb] Visually indicating patch size with horizontal bars
+Date: Mon, 5 Dec 2005 01:04:42 +0100
+Message-ID: <20051205000442.GB22159@pasky.or.cz>
+References: <20051027203945.GC1622@pe.Belkin> <20051028015642.GA31822@vrfy.org> <20051028023833.GA19939@pe.Belkin> <20051101233035.GB1431@pasky.or.cz> <46a038f90511011533q177328fdrf4b0dd68f188282e@mail.gmail.com> <20051102001206.GA21671@pe.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jason Riedy <ejr@EECS.Berkeley.EDU>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 05 00:36:13 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 05 01:05:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ej3NT-0005w4-VI
-	for gcvg-git@gmane.org; Mon, 05 Dec 2005 00:34:44 +0100
+	id 1Ej3qN-0004cR-Oz
+	for gcvg-git@gmane.org; Mon, 05 Dec 2005 01:04:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932239AbVLDXel (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Dec 2005 18:34:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932274AbVLDXel
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Dec 2005 18:34:41 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:45756 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932239AbVLDXek
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 4 Dec 2005 18:34:40 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jB4NYPAB009772
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 4 Dec 2005 15:34:27 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr78sebp8.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S932294AbVLEAEd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Dec 2005 19:04:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932293AbVLEAEd
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Dec 2005 19:04:33 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:11439 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932294AbVLEAEc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Dec 2005 19:04:32 -0500
+Received: (qmail 12826 invoked by uid 2001); 5 Dec 2005 01:04:42 +0100
+To: Chris Shoemaker <c.shoemaker@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20051102001206.GA21671@pe.Belkin>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13200>
 
-Junio C Hamano wrote:
+Dear diary, on Wed, Nov 02, 2005 at 01:12:06AM CET, I got a letter
+where Chris Shoemaker <c.shoemaker@cox.net> said that...
+> On Wed, Nov 02, 2005 at 12:33:38PM +1300, Martin Langhoff wrote:
+> > On 11/2/05, Petr Baudis <pasky@suse.cz> wrote:
+> > > What about having the color indicate the number of affected files (let's
+> > > say on a blue..red scale) and the width the size of patch?
+> > 
+> > I'm a /little bit/ colour blind on the red scale -- so I vote for 2
+> > bars, each half the heigth of the current bar.  ;-)
 > 
-> Oops.  Isn't the patch itself wrong, so is using alloca()?
-> 
-> putenv(3) says
-> 
-> 	int putenv(char *string);
-> 
-> 	The string pointed to by string becomes part of the environment,
-> 	so altering the string changes the environment.
-> 
-> which tell sme that whatever we pass to putenv() we should *not*
-> free.
+> I was going to use two bars for add vs. delete, but this could work,
+> too.  I'm intending on getting back to this ASAP, but for now my
+> cvsimport problems are higher priority (see other post).
 
-Indeed.
+Is there any progress, by the way?
 
-	-hpa
+If you didn't manage to finish it, no big deal - but it would be great
+to have at least the last version you screenshotted, since IIRC I
+couldn't find that one either, and I would like to play with it a bit.
+
+Thanks,
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
