@@ -1,49 +1,50 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: [ANNOUNCE] GIT 0.99.9l aka 1.0rc4
-Date: Mon, 5 Dec 2005 18:26:01 +0100
-Message-ID: <20051205172601.4980.qmail@67565db8368c55.315fe32.mid.smarden.org>
-References: <7vy831p69i.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: make gitfakemmap standalone to fix linking error in git.c
+Date: Mon, 05 Dec 2005 09:40:21 -0800
+Message-ID: <7vfyp7cuii.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0512050519k5ed80035x9eb4907f569e0a4b@mail.gmail.com>
+	<81b0412b0512050524w7b632651n93c836fda41a39d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Dec 05 18:28:33 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 05 18:43:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjK6A-0000Ml-DM
-	for gcvg-git@gmane.org; Mon, 05 Dec 2005 18:25:58 +0100
+	id 1EjKKG-0005F0-6z
+	for gcvg-git@gmane.org; Mon, 05 Dec 2005 18:40:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932467AbVLERZn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Dec 2005 12:25:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932468AbVLERZn
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 12:25:43 -0500
-Received: from a.mx.smarden.org ([212.21.76.77]:12174 "HELO a.mx.smarden.org")
-	by vger.kernel.org with SMTP id S932467AbVLERZm (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Dec 2005 12:25:42 -0500
-Received: (qmail 4981 invoked by uid 1000); 5 Dec 2005 17:26:01 -0000
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vy831p69i.fsf@assigned-by-dhcp.cox.net>
+	id S932488AbVLERkX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Dec 2005 12:40:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932487AbVLERkX
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 12:40:23 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:55006 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932484AbVLERkW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Dec 2005 12:40:22 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051205173946.QXZB15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 5 Dec 2005 12:39:46 -0500
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0512050524w7b632651n93c836fda41a39d@mail.gmail.com>
+	(Alex Riesen's message of "Mon, 5 Dec 2005 14:24:47 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13218>
 
-On Sun, Dec 04, 2005 at 01:21:13AM -0800, Junio C Hamano wrote:
-> *1* It appears Debian finally has an official maintainer, so I
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-Yes, I've taken over maintainership, and introduced the git-core package
-into Debian/unstable, the git tools previously were included in the
-cogito package.
+> Why does it always happen...
 
-> am inclined to stop building and supplying the debs starting
-> from the next version --- one less thing to worry about for me.
-> I hope the Debian side splits the packages along the same line
-> as we do RPMs.
+Because you touched you did not absolutely have to ;-).
 
-I'll do so and split off git-arch, git-cvs, git-svn, git-email from the
-git-core package, as already done with gitk.  Additionally I have the
-webdocs in a separate git-doc package, maybe that's a good idea for the
-rpms also.
-
-Regards, Gerrit.
+When I took setenv patch for git.c, I was thinking about
+something similar.  It may be cleaner to split out the pieces so
+that the functions like usage(), die(), xmalloc() and friends
+could be linkable in git.c and others that want to link in only
+the minimum set without including "cache.h" which has more
+intimate knowledge of other git internals.
