@@ -1,56 +1,91 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [RFC] Run hooks with a cleaner environment
-Date: Tue, 6 Dec 2005 17:43:28 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0512061716030.25300@iabervon.org>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: Wine + GIT
+Date: Tue, 6 Dec 2005 15:08:44 -0800
+Message-ID: <20051206230844.GA3876@reactrix.com>
+References: <4394CD68.8020500@codeweavers.com> <4394F50E.7030803@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Dec 06 23:44:47 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Mike McCormack <mike@codeweavers.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 07 00:10:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjlWX-0001gW-Lw
-	for gcvg-git@gmane.org; Tue, 06 Dec 2005 23:43:02 +0100
+	id 1EjlwI-0001si-E1
+	for gcvg-git@gmane.org; Wed, 07 Dec 2005 00:09:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932650AbVLFWmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Dec 2005 17:42:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932651AbVLFWmv
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 17:42:51 -0500
-Received: from iabervon.org ([66.92.72.58]:24334 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932650AbVLFWmu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Dec 2005 17:42:50 -0500
-Received: (qmail 10036 invoked by uid 1000); 6 Dec 2005 17:43:28 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 6 Dec 2005 17:43:28 -0500
-To: git@vger.kernel.org
+	id S932652AbVLFXJc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Dec 2005 18:09:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932655AbVLFXJc
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 18:09:32 -0500
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:65320 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S932652AbVLFXJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2005 18:09:31 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jB6N8juh022974;
+	Tue, 6 Dec 2005 15:08:45 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jB6N8iK6022971;
+	Tue, 6 Dec 2005 15:08:44 -0800
+To: Jeff Garzik <jgarzik@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <4394F50E.7030803@pobox.com>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13302>
 
-Currently, hooks/post-update is run in the environment that receive-pack 
-is run. This means that there are a number of things that are 
-unpredictable. I'd like to make it set things up in a more predictable and 
-useful way. The things I know are odd:
+On Mon, Dec 05, 2005 at 09:18:54PM -0500, Jeff Garzik wrote:
 
-stdout and stdin are connected to send-pack, either by broken pipes (for 
-local pushes) or an ignored socket (via ssh). stdin should probably be 
-/dev/null, and stdout should be either a log file or /dev/null. stderr is 
-still the push's stderr, which may or may not be desired.
+> One other comment:  http:// is the slowest of all three transports. 
+> git:// (git daemon) is preferred, followed by rsync.
+> 
+> http:// takes forever, comparatively.
 
-GIT_DIR is set to the repository that got the push, which may surprise 
-people who only use it in "GIT_DIR=foo git ..." form and don't expect it 
-ever to be set from outside. Of course, it's potentially useful to know 
-what repository is running the hook, but that doesn't have to be 
-communicated in such a way that git programs will pick it up directly. 
-Other environment variables could potentially be purged, too, but I don't 
-think that's as important, since the user probably knows about them.
+Has that been the general git user experience?  While there are
+certainly disadvantages to the http transport, I didn't think that
+performance was one of them.
 
-cwd is set to the push's cwd if it's local, maybe $HOME if it's over ssh. 
-It should probably always be $HOME, unless we want it to be $GIT_DIR.
+For comparison, I ran some clones this morning/afternoon with the
+following results:
 
-Is there anything else we want to regularize? Is there some sort of 
-standard behavior we should match, like CVS or cron?
 
-	-Daniel
-*This .sig left intentionally blank*
+Clone of kernel.org/pub/scm/git/git.git
+
+http
+real    0m24.204s       real    0m25.750s       real    0m24.094s
+user    0m5.870s        user    0m5.530s        user    0m5.350s
+sys     0m0.660s        sys     0m0.710s        sys     0m0.600s
+
+rsync
+real    1m3.952s        real    1m3.417s        real    1m4.360s
+user    0m0.090s        user    0m0.130s        user    0m0.120s
+sys     0m0.210s        sys     0m0.230s        sys     0m0.210s
+
+git
+real    0m54.715s       real    0m55.928s       real    0m56.411s
+user    0m0.980s        user    0m0.980s        user    0m1.040s
+sys     0m0.220s        sys     0m0.140s        sys     0m0.160s
+
+
+Clone of kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+
+http
+real    4m59.959s       real    5m28.512s       real    6m9.109s
+user    1m38.400s       user    1m34.350s       user    1m35.700s
+sys     0m7.640s        sys     0m8.180s        sys     0m7.510s
+
+rsync
+real    19m47.218s      real    19m46.739s      real    21m41.875s
+user    0m3.960s        user    0m4.260s        user    0m4.000s
+sys     0m5.060s        sys     0m4.680s        sys     0m4.860s
+
+git
+real    19m43.014s      real    19m36.692s      real    20m43.277s
+user    0m23.180s       user    0m23.070s       user    0m23.230s
+sys     0m8.210s        sys     0m8.590s        sys     0m11.240s
+
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
