@@ -1,67 +1,65 @@
-From: Jeff Garzik <jgarzik@pobox.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Wine + GIT
-Date: Mon, 05 Dec 2005 21:18:54 -0500
-Message-ID: <4394F50E.7030803@pobox.com>
-References: <4394CD68.8020500@codeweavers.com>
+Date: Mon, 05 Dec 2005 18:26:54 -0800
+Message-ID: <7vhd9n7yfl.fsf@assigned-by-dhcp.cox.net>
+References: <4394CD68.8020500@codeweavers.com> <4394F173.6000505@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 06 03:20:51 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Mike McCormack <mike@codeweavers.com>
+X-From: git-owner@vger.kernel.org Tue Dec 06 03:28:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjSQ1-0003wq-Ih
-	for gcvg-git@gmane.org; Tue, 06 Dec 2005 03:19:01 +0100
+	id 1EjSXl-0005lp-Sp
+	for gcvg-git@gmane.org; Tue, 06 Dec 2005 03:27:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964924AbVLFCS6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Dec 2005 21:18:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964925AbVLFCS6
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 21:18:58 -0500
-Received: from mail.dvmed.net ([216.237.124.58]:32144 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S964924AbVLFCS5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Dec 2005 21:18:57 -0500
-Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1EjSPx-0002zc-4G; Tue, 06 Dec 2005 02:18:57 +0000
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Mike McCormack <mike@codeweavers.com>
-In-Reply-To: <4394CD68.8020500@codeweavers.com>
-X-Spam-Score: 0.1 (/)
-X-Spam-Report: Spam detection software, running on the system "srv2.dvmed.net", has
-	identified this incoming email as possible spam.  The original message
-	has been attached to this so you can view it (if it isn't spam) or label
-	similar future email.  If you have any questions, see
-	the administrator of that system for details.
-	Content preview:  Mike McCormack wrote: > Hi All, > > The Wine project
-	has started maintaining a wine.git in parallel to the > Wine CVS. To
-	introduce Wine developers to GIT, we've put together a > short
-	introduction on the Wine Wiki on using GIT to maintain patches. > You
-	can find it at: > > http://wiki.winehq.org/GitWine [...] 
-	Content analysis details:   (0.1 points, 5.0 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.1 RCVD_IN_SORBS_DUL      RBL: SORBS: sent directly from dynamic IP address
-	[69.134.188.146 listed in dnsbl.sorbs.net]
+	id S964936AbVLFC05 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Dec 2005 21:26:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964934AbVLFC05
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Dec 2005 21:26:57 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:3282 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S964936AbVLFC04 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Dec 2005 21:26:56 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051206022615.QPAI20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 5 Dec 2005 21:26:15 -0500
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: <4394F173.6000505@pobox.com> (Jeff Garzik's message of "Mon, 05
+	Dec 2005 21:03:31 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13249>
 
-Mike McCormack wrote:
-> Hi All,
-> 
-> The Wine project has started maintaining a wine.git in parallel to the 
-> Wine CVS.  To introduce Wine developers to GIT, we've put together a 
-> short introduction on the Wine Wiki on using GIT to maintain patches. 
-> You can find it at:
-> 
-> http://wiki.winehq.org/GitWine
+Jeff Garzik <jgarzik@pobox.com> writes:
 
-One other comment:  http:// is the slowest of all three transports. 
-git:// (git daemon) is preferred, followed by rsync.
+> 5) never ever do
+> 	git-checkout -f HEAD
+>
+> HEAD should always be a symlink.  'git checkout -f master' is probably 
+> what you want.
 
-http:// takes forever, comparatively.
+Correct.  "git checkout -f HEAD" is a redundant way to say
+"I screwed up and would want to revert the mess in my working
+tree to my branch head".  You do not need to say HEAD; "git
+checkout -f" (or "git reset --hard" if you really want to clean
+things up) would do.
 
-	Jeff
+> 6) For merges with hand-merged conflicts, I could have sworn that either 
+> a "git commit -a" or 'git-update-index' + 'git commit' was required. 
+> Maybe I'm wrong, or that has changed?
+
+That has not changed.  With the recent 0.99.9l change, I suspect
+that the example on the wiki page (without update-index) would
+fail to commit -- the index is now left unmerged after a failed
+automerge.
+
+The paragraph "Once you have finished editting [sic]..." needs
+to be followed by:
+
+	git-update-index those paths you hand corrected
+        git-commit
