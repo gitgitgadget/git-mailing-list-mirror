@@ -1,64 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: announce: git browser
-Date: Mon, 05 Dec 2005 23:45:42 -0800
-Message-ID: <7vd5ka653t.fsf@assigned-by-dhcp.cox.net>
-References: <40b2b7d90512041623g1e22fecai9470ffcb94f40a58@mail.gmail.com>
-	<20051205004238.GE22159@pasky.or.cz>
-	<40b2b7d90512041720i65f63ee1pcfe32d2c0c3c357b@mail.gmail.com>
-	<20051205232626.GH22159@pasky.or.cz>
-	<40b2b7d90512052240t778f1c8kf182ff065687068c@mail.gmail.com>
-	<7voe3u67ik.fsf@assigned-by-dhcp.cox.net>
-	<40b2b7d90512052331s22adb055y9f99b8cafe20c0c3@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: make gitfakemmap standalone to fix linking error in git.c
+Date: Tue, 6 Dec 2005 08:49:09 +0100
+Message-ID: <81b0412b0512052349u56cba9d9s98d6c8594c54a398@mail.gmail.com>
+References: <81b0412b0512050519k5ed80035x9eb4907f569e0a4b@mail.gmail.com>
+	 <81b0412b0512050524w7b632651n93c836fda41a39d@mail.gmail.com>
+	 <7vfyp7cuii.fsf@assigned-by-dhcp.cox.net>
+	 <20051205213612.GA4443@steel.home>
+	 <7vvey39pto.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 06 08:46:25 2005
+X-From: git-owner@vger.kernel.org Tue Dec 06 08:50:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjXWN-00027N-Aw
-	for gcvg-git@gmane.org; Tue, 06 Dec 2005 08:45:56 +0100
+	id 1EjXZc-0002ow-3m
+	for gcvg-git@gmane.org; Tue, 06 Dec 2005 08:49:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751446AbVLFHpp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Dec 2005 02:45:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751500AbVLFHpp
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 02:45:45 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:58070 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751446AbVLFHpo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2005 02:45:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051206074422.WYGK26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 6 Dec 2005 02:44:22 -0500
-To: Artem Khodush <greenkaa@gmail.com>
-In-Reply-To: <40b2b7d90512052331s22adb055y9f99b8cafe20c0c3@mail.gmail.com>
-	(Artem Khodush's message of "Tue, 6 Dec 2005 10:31:55 +0300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751500AbVLFHtM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Dec 2005 02:49:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbVLFHtM
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 02:49:12 -0500
+Received: from nproxy.gmail.com ([64.233.182.205]:26662 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751500AbVLFHtL convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Dec 2005 02:49:11 -0500
+Received: by nproxy.gmail.com with SMTP id x29so98111nfb
+        for <git@vger.kernel.org>; Mon, 05 Dec 2005 23:49:09 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cqalcUkX5x9LUeKDzzk7JJR1a0Db2ngAZZgGdNcwLRRJC/d7BjlQPkG0CECbtairP3G6k7+W54kZECwmgMQh26PmiHIxH22cJBRxPVl5Vo1DeBlKHCwwnQaU6adSYFgP4V28QRyCoLxB+CWCf4o4SXM926bRQpapBMyu/UdH+cM=
+Received: by 10.48.217.1 with SMTP id p1mr30301nfg;
+        Mon, 05 Dec 2005 23:49:09 -0800 (PST)
+Received: by 10.48.248.18 with HTTP; Mon, 5 Dec 2005 23:49:09 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvey39pto.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13264>
 
-Artem Khodush <greenkaa@gmail.com> writes:
-
->> This is not to discourage yet another web based one, but I wish
->> there were an NNTP interface, that feeds each repository/branch
->> as a newsgroup and each commit as if it is "git-format-patch"
->> output, with References: pointing at its parent commit "articles".
->>
->> A merge commit would probably become a multipart with usually 2
->> attachments (but N attachments for a N-way octopus), showing
->> diff from each branch.
+On 12/5/05, Junio C Hamano <junkio@cox.net> wrote:
+> >> > Why does it always happen...
+> >> Because you touched you did not absolutely have to ;-).
+> >
+> > well, git$(X) didn't link...
 >
-> I'll see if I can do something with Perl and Net::NNTP..
+> I meant your change to the "if ()" expression in gitfakemmap().
+> Does the change have anything to do with git$X linkage?  I think
+> not.
 
-"Ask and it shall be given you" ;-)
-
-In case it was not obvious, I was talking about an NNTP server,
-not a client.
-
-You would probably have to keep a mapping between sequence
-number and commit object name in each "newsgroup", which is the
-only nontrivial part.
+Oh, yes. Sorry. Too much sorries recently :(
