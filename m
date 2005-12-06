@@ -1,46 +1,40 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cygwin test failure in t6021-merge-criss-cross.sh
-Date: Tue, 06 Dec 2005 08:51:36 -0800
-Message-ID: <7v1x0q419j.fsf@assigned-by-dhcp.cox.net>
-References: <20051206124032.GC2364@ELSAMSW37164>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: Wine + GIT
+Date: Tue, 6 Dec 2005 12:08:03 -0500
+Message-ID: <20051206170803.GD17457@fieldses.org>
+References: <4394CD68.8020500@codeweavers.com> <4394F173.6000505@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 06 17:56:39 2005
+Cc: Mike McCormack <mike@codeweavers.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 06 18:08:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ejg2X-00084u-ID
-	for gcvg-git@gmane.org; Tue, 06 Dec 2005 17:51:41 +0100
+	id 1EjgIb-0006ZQ-8v
+	for gcvg-git@gmane.org; Tue, 06 Dec 2005 18:08:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932323AbVLFQvi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Dec 2005 11:51:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932325AbVLFQvi
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 11:51:38 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:47825 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932323AbVLFQvi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2005 11:51:38 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051206165024.IDER17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 6 Dec 2005 11:50:24 -0500
-To: Tim O'Callaghan <timo@dspsrv.com>
-In-Reply-To: <20051206124032.GC2364@ELSAMSW37164> (Tim O'Callaghan's message
-	of "Tue, 6 Dec 2005 13:40:32 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932357AbVLFRIN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Dec 2005 12:08:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932377AbVLFRIN
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 12:08:13 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:52189 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP id S932357AbVLFRIM
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Dec 2005 12:08:12 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
+	(envelope-from <bfields@fieldses.org>)
+	id 1EjgIN-0005Z9-Bj; Tue, 06 Dec 2005 12:08:03 -0500
+To: Jeff Garzik <jgarzik@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <4394F173.6000505@pobox.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13280>
 
-I have this strange feeling that you do not have "merge"
-installed on your cygwin box.  It is part of "rcs".
+On Mon, Dec 05, 2005 at 09:03:31PM -0500, Jeff Garzik wrote:
+> 2) The "git-foo" commands are apparently uncool.  "git foo ..." is 
+> preferred.
 
-When you see a test failure, it sometimes useful to try running:
-
-    $ cd t
-    $ sh ./t6021-*.sh -i -v
-
-manually.
+How does e.g. git-diff differ from git diff?  I thought they were
+equivalent.--b.
