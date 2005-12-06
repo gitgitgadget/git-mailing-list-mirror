@@ -1,76 +1,68 @@
-From: Jon Loeliger <jdl@freescale.com>
+From: Jeff Garzik <jgarzik@pobox.com>
 Subject: Re: Wine + GIT
-Date: Tue, 06 Dec 2005 11:53:09 -0600
-Message-ID: <1133891589.8577.63.camel@cashmere.sps.mot.com>
-References: <20051206173909.GE17457@fieldses.org>
+Date: Tue, 06 Dec 2005 14:01:49 -0500
+Message-ID: <4395E01D.4080107@pobox.com>
+References: <4394CD68.8020500@codeweavers.com> <4394F173.6000505@pobox.com> <20051206170803.GD17457@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 06 18:56:23 2005
+Cc: Mike McCormack <mike@codeweavers.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 06 20:05:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ejh0o-0000iY-D4
-	for gcvg-git@gmane.org; Tue, 06 Dec 2005 18:53:58 +0100
+	id 1Eji5W-0004ch-Kg
+	for gcvg-git@gmane.org; Tue, 06 Dec 2005 20:02:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932615AbVLFRxa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Dec 2005 12:53:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932617AbVLFRxa
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 12:53:30 -0500
-Received: from az33egw01.freescale.net ([192.88.158.102]:8075 "EHLO
-	az33egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S932614AbVLFRx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2005 12:53:27 -0500
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id jB6I6Jt9005217;
-	Tue, 6 Dec 2005 11:06:19 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id jB6I0sbd029549;
-	Tue, 6 Dec 2005 12:00:54 -0600 (CST)
+	id S1030186AbVLFTCG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Dec 2005 14:02:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030191AbVLFTCF
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 14:02:05 -0500
+Received: from mail.dvmed.net ([216.237.124.58]:61847 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S1030187AbVLFTCC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Dec 2005 14:02:02 -0500
+Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
+	id 1Eji4Y-0003uP-9D; Tue, 06 Dec 2005 19:01:56 +0000
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
 To: "J. Bruce Fields" <bfields@fieldses.org>
-In-Reply-To: <20051206173909.GE17457@fieldses.org>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+In-Reply-To: <20051206170803.GD17457@fieldses.org>
+X-Spam-Score: 0.1 (/)
+X-Spam-Report: Spam detection software, running on the system "srv2.dvmed.net", has
+	identified this incoming email as possible spam.  The original message
+	has been attached to this so you can view it (if it isn't spam) or label
+	similar future email.  If you have any questions, see
+	the administrator of that system for details.
+	Content preview:  J. Bruce Fields wrote: > On Mon, Dec 05, 2005 at
+	09:03:31PM -0500, Jeff Garzik wrote: > >>2) The "git-foo" commands are
+	apparently uncool. "git foo ..." is >>preferred. > > > How does e.g.
+	git-diff differ from git diff? I thought they were > equivalent.--b.
+	[...] 
+	Content analysis details:   (0.1 points, 5.0 required)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.1 RCVD_IN_SORBS_DUL      RBL: SORBS: sent directly from dynamic IP address
+	[69.134.188.146 listed in dnsbl.sorbs.net]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13285>
 
-On Tue, 2005-12-06 at 11:39, J. Bruce Fields wrote:
+J. Bruce Fields wrote:
+> On Mon, Dec 05, 2005 at 09:03:31PM -0500, Jeff Garzik wrote:
+> 
+>>2) The "git-foo" commands are apparently uncool.  "git foo ..." is 
+>>preferred.
+> 
+> 
+> How does e.g. git-diff differ from git diff?  I thought they were
+> equivalent.--b.
 
-> I've enjoyed getting tab completions without having to add whatever's
-> required to my .bashrc to teach it about git subcommands.  Oh well,
-> I'll
-> get over it.
+The specific git-diff-XXX command example was longer.
 
-I believe this effort is already well under way.
-Uh, I also thought we were going to place it in
-some "contrib" directory too...?
+In general, there is not much difference, except that I was admonished 
+to avoid the git-XXX in my howto.  I suppose that makes sense if the 
+git-XXX programs are moved out of $prefix/bin, leaving only $prefix/bin/git.
 
-Also, before I learned of that bash completion effort,
-I was contemplating modifying the git.c command recognition
-so that it effectively did this:
-
-   cmd = ... whatever from command line
-   if (exec(cmd)) works then
-       happily clean up and exit
-   else
-       using the existing directory scan as a new function,
-       determine if "cmd" is a proper prefix of some command,
-       if it is unique then
-           exec(unique-cmd-disambiguated)
-       else
-           complain that it is not unique
-       fi
-    fi
-
-That way:
-    "git mer" would fail
-    "git merge" would run "git-merge"
-    "git merge-" would fail
-    "git merge-o" would fail,
-    "git-merge-oc" would run "git-merge-octopus".
-
-Any interest?  Overkill?  Bad idea?
-
-jdl
+	Jeff
