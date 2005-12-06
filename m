@@ -1,55 +1,48 @@
-From: Paul Serice <paul@serice.net>
-Subject: Re: [RFC] Run hooks with a cleaner environment
-Date: Tue, 06 Dec 2005 18:19:58 -0600
-Message-ID: <43962AAE.4040704@serice.net>
-References: <Pine.LNX.4.64.0512061716030.25300@iabervon.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: gitk - ewww
+Date: Wed, 7 Dec 2005 09:54:39 +1100
+Message-ID: <17302.5807.533467.200693@cargo.ozlabs.ibm.com>
+References: <6CC092B0-101F-4D98-9761-B4E24A7CA35A@hawaga.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 07 01:20:50 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 07 01:26:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ejn2N-0002JW-MJ
-	for gcvg-git@gmane.org; Wed, 07 Dec 2005 01:20:00 +0100
+	id 1Ejn7c-0003S6-J2
+	for gcvg-git@gmane.org; Wed, 07 Dec 2005 01:25:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932672AbVLGAT4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Dec 2005 19:19:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932673AbVLGAT4
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 19:19:56 -0500
-Received: from serice.org ([206.123.107.184]:53256 "EHLO serice.org")
-	by vger.kernel.org with ESMTP id S932672AbVLGATz (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Dec 2005 19:19:55 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by serice.org (Postfix) with ESMTP id 10070584EB;
-	Tue,  6 Dec 2005 18:19:55 -0600 (CST)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0512061716030.25300@iabervon.org>
+	id S932597AbVLGAZW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Dec 2005 19:25:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932673AbVLGAZV
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 19:25:21 -0500
+Received: from ozlabs.org ([203.10.76.45]:33210 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S932597AbVLGAZV (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Dec 2005 19:25:21 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id A01A06888B; Wed,  7 Dec 2005 11:25:20 +1100 (EST)
+To: Ben Clifford <benc@hawaga.org.uk>
+In-Reply-To: <6CC092B0-101F-4D98-9761-B4E24A7CA35A@hawaga.org.uk>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13310>
 
-> Currently, hooks/post-update is run in the environment that
-> receive-pack is run. This means that there are a number of things
-> that are unpredictable. I'd like to make it set things up in a more
-> predictable and useful way.
+Ben Clifford writes:
 
-I'd like to second this.  I've been bitten by two of the three issues
-you've raised.
+> The area around where the 'master' green tag is displayed  
+> (specifically the two lines below it) are surprisingly poor.
 
+Yes.
 
-> stdout and stdin are connected to send-pack, either by broken pipes
-> (for local pushes) or an ignored socket (via ssh). stdin should
-> probably be /dev/null, and stdout should be either a log file or
-> /dev/null. stderr is still the push's stderr, which may or may not
-> be desired.
+> I'm not going to learn tcl/tk and how gitk works to investigate,  
+> though, but maybe someone else cares enough and/or can see a trivial  
+> fix...
 
-If there is a controlling terminal and nothing else git-related is
-reading from it, I'd like for stdout and stderr to be reconnected.
+I'm working on changes which should fix this and also speed it up, but
+it's not trivial... :)
 
-
-Paul Serice
+Paul.
