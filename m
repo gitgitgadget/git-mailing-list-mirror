@@ -1,58 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: announce: git browser
-Date: Tue, 06 Dec 2005 12:23:35 -0800
-Message-ID: <7v1x0q2cvs.fsf@assigned-by-dhcp.cox.net>
-References: <40b2b7d90512041623g1e22fecai9470ffcb94f40a58@mail.gmail.com>
-	<20051205004238.GE22159@pasky.or.cz>
-	<40b2b7d90512041720i65f63ee1pcfe32d2c0c3c357b@mail.gmail.com>
-	<20051205232626.GH22159@pasky.or.cz>
-	<40b2b7d90512052240t778f1c8kf182ff065687068c@mail.gmail.com>
-	<7voe3u67ik.fsf@assigned-by-dhcp.cox.net>
-	<40b2b7d90512052331s22adb055y9f99b8cafe20c0c3@mail.gmail.com>
-	<7vd5ka653t.fsf@assigned-by-dhcp.cox.net>
-	<40b2b7d90512060013j23345bf3o2021080edcfbd9c0@mail.gmail.com>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: Re: [PATCH] Add compat/setenv.c, use in git.c.
+Date: Tue, 6 Dec 2005 16:10:56 -0500
+Message-ID: <118833cc0512061310r6398f812ia47a84d3cfad1564@mail.gmail.com>
+References: <7vslt67v9o.fsf@assigned-by-dhcp.cox.net>
+	 <14331.1133899163@lotus.CS.Berkeley.EDU>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 06 21:28:07 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 06 22:14:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjjM6-0004Id-Cr
-	for gcvg-git@gmane.org; Tue, 06 Dec 2005 21:24:06 +0100
+	id 1Ejk5f-0001CX-Rv
+	for gcvg-git@gmane.org; Tue, 06 Dec 2005 22:11:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932635AbVLFUXi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Dec 2005 15:23:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932636AbVLFUXi
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 15:23:38 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:7149 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932635AbVLFUXh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2005 15:23:37 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051206202221.NHOX17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 6 Dec 2005 15:22:21 -0500
-To: Artem Khodush <greenkaa@gmail.com>
-In-Reply-To: <40b2b7d90512060013j23345bf3o2021080edcfbd9c0@mail.gmail.com>
-	(Artem Khodush's message of "Tue, 6 Dec 2005 11:13:29 +0300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030237AbVLFVK6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Dec 2005 16:10:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965040AbVLFVK6
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 16:10:58 -0500
+Received: from wproxy.gmail.com ([64.233.184.194]:21353 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S965039AbVLFVK5 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Dec 2005 16:10:57 -0500
+Received: by wproxy.gmail.com with SMTP id i4so43002wra
+        for <git@vger.kernel.org>; Tue, 06 Dec 2005 13:10:57 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rTiuoa9Vr+DgBVSrdSgxPJYM6CPYKTRM5ayyMtQy2u+8P4p/+6zgO1LQ7dnTiE4Pvsn47stYVxrfLySZnLqQ3fe6sVI9SYt6EyXQ35MeehuBvf1YVZP0sdYbD0Iq2ewSLtudyru7r3gws4Or1PQADaNrXgHievPmG0h8zDqcaQU=
+Received: by 10.64.220.17 with SMTP id s17mr1000083qbg;
+        Tue, 06 Dec 2005 13:10:56 -0800 (PST)
+Received: by 10.65.151.1 with HTTP; Tue, 6 Dec 2005 13:10:56 -0800 (PST)
+To: Jason Riedy <ejr@eecs.berkeley.edu>
+In-Reply-To: <14331.1133899163@lotus.CS.Berkeley.EDU>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13289>
 
-Artem Khodush <greenkaa@gmail.com> writes:
+The code looks wrong.  It assumes that pointers are no larger than ints.
+If pointers are larger than ints, the code does not necessarily compute
+a consistent ordering and qsort is allowed to do whatever it wants.
 
-> And the reason why special NNTP server is needed is, I guess,
-> that plain NNTP server will not be able to cope with all the diffs
-> stored in message database? Well, but then, the newsgroups
-> will not be distributable..
->
-> Or is there any other reason?
+Morten
 
-Actually, the real reason was I was stupid (I am always stupid
-but I was more stupid than I usually am in this case).  We could
-just inject new patches into appropriate newsgroups as they come
-along, either from a cron job or from the post-update hook.
+
+
+static int compare_object_pointers(const void *a, const void *b)
+{
+	const struct object * const *pa = a;
+	const struct object * const *pb = b;
+	return *pa - *pb;
+}
