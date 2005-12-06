@@ -1,56 +1,73 @@
-From: Artem Khodush <greenkaa@gmail.com>
-Subject: Re: announce: git browser
-Date: Tue, 6 Dec 2005 11:56:53 +0300
-Message-ID: <40b2b7d90512060056i5ce75855q31b613d1b2a404dc@mail.gmail.com>
-References: <40b2b7d90512041623g1e22fecai9470ffcb94f40a58@mail.gmail.com>
-	 <20051205004238.GE22159@pasky.or.cz>
-	 <40b2b7d90512041720i65f63ee1pcfe32d2c0c3c357b@mail.gmail.com>
-	 <20051205232626.GH22159@pasky.or.cz>
-	 <40b2b7d90512052240t778f1c8kf182ff065687068c@mail.gmail.com>
-	 <7voe3u67ik.fsf@assigned-by-dhcp.cox.net>
-	 <40b2b7d90512052331s22adb055y9f99b8cafe20c0c3@mail.gmail.com>
-	 <7vd5ka653t.fsf@assigned-by-dhcp.cox.net>
-	 <40b2b7d90512060013j23345bf3o2021080edcfbd9c0@mail.gmail.com>
-	 <7vpsoa4oye.fsf@assigned-by-dhcp.cox.net>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: Wine + GIT
+Date: Tue, 06 Dec 2005 10:02:39 +0100
+Message-ID: <439553AF.6070402@yahoo.it>
+References: <4394CD68.8020500@codeweavers.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 06 09:58:10 2005
+X-From: git-owner@vger.kernel.org Tue Dec 06 10:03:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjYdQ-00021R-7b
-	for gcvg-git@gmane.org; Tue, 06 Dec 2005 09:57:16 +0100
+	id 1EjYiq-0003LT-4w
+	for gcvg-git@gmane.org; Tue, 06 Dec 2005 10:02:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbVLFI44 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Dec 2005 03:56:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751682AbVLFI44
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 03:56:56 -0500
-Received: from nproxy.gmail.com ([64.233.182.202]:45269 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751676AbVLFI44 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Dec 2005 03:56:56 -0500
-Received: by nproxy.gmail.com with SMTP id x29so101819nfb
-        for <git@vger.kernel.org>; Tue, 06 Dec 2005 00:56:53 -0800 (PST)
+	id S932106AbVLFJCr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Dec 2005 04:02:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932107AbVLFJCr
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 04:02:47 -0500
+Received: from smtp106.mail.sc5.yahoo.com ([66.163.169.226]:37463 "HELO
+	smtp106.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
+	id S932106AbVLFJCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Dec 2005 04:02:46 -0500
+Received: (qmail 43640 invoked from network); 6 Dec 2005 09:02:46 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AK/kiLkTfUqgEkNhw8tcOqfQJ5DvvuJ/IitwxR60PMbtxTMbdiucT/STBLajfjg7MkS7/XDBtROiauOatiIhVFhlT0RayXz/lBik35XZ9FUufkl3AXGVrytD5p6aiR+GxUwnZQLLkdaGF1WVlj0CHp0lWHViXM8Gf3Uv57d3yFA=
-Received: by 10.48.220.17 with SMTP id s17mr47175nfg;
-        Tue, 06 Dec 2005 00:56:53 -0800 (PST)
-Received: by 10.48.216.3 with HTTP; Tue, 6 Dec 2005 00:56:53 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vpsoa4oye.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+  s=s1024; d=yahoo.it;
+  h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+  b=5nse+Z0kSpkJJqEA9IxbHV3Yg9JeeQZzhLebGNhHYRJ5872pd+8zBD7CwETnR7F494QaYSJMzzPy7UhYYDz2zYwVQD0SPIv57BddMUAY7tI9mfBoyxuLEAkkhW/iAZ5mW3KFch/uwHjSA1nVDTdjlXX1jSxzqudPTKjXk5mMQkY=  ;
+Received: from unknown (HELO ?10.0.0.13?) (mcostalba@151.56.24.233 with plain)
+  by smtp106.mail.sc5.yahoo.com with SMTP; 6 Dec 2005 09:02:45 -0000
+User-Agent: Mozilla Thunderbird 1.0.6-7.2.20060mdk (X11/20050322)
+X-Accept-Language: it, it-it, en-us, en
+To: Mike McCormack <mike@codeweavers.com>
+In-Reply-To: <4394CD68.8020500@codeweavers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13271>
 
->
-> > Or is there any other reason?
->
-> Just for fun ;-).
+Mike McCormack wrote:
+> Hi All,
+> 
+> The Wine project has started maintaining a wine.git in parallel to the 
+> Wine CVS.  To introduce Wine developers to GIT, we've put together a 
+> short introduction on the Wine Wiki on using GIT to maintain patches. 
+> You can find it at:
+> 
+> http://wiki.winehq.org/GitWine
+> 
+> Comments, flames, corrections and additions welcome :)
+> 
 
-And then, it could be taught to apply posted patches, which could be
-even more fun.. :-)
+about
+
+"Finally, there's a nice (but a bit slow) tool to view your GIT repository named 
+[WWW] gitk. It gives you a view of the repository that looks like this:"
+
+May I sugest also qgit (http://sourceforge.net/projects/qgit).
+
+It's faster then gitk and has some more feature too.
+
+Thanks
+Marco
+
+
+	
+
+	
+		
+___________________________________ 
+Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
+http://mail.yahoo.it
