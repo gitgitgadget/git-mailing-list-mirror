@@ -1,75 +1,71 @@
-From: Zack Brown <zbrown@tumblerings.org>
-Subject: Re: dotfile support
-Date: Wed, 7 Dec 2005 08:11:30 -0800
-Message-ID: <20051207161130.GA10924@tumblerings.org>
-References: <20050416230058.GA10983@ucw.cz> <118833cc05041618017fb32a2@mail.gmail.com> <20050416183023.0b27b3a4.pj@sgi.com> <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org> <42620092.9040402@dwheeler.com> <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org> <42628D1B.3000207@dwheeler.com> <20051207145646.GA9207@tumblerings.org> <4396FFB0.4040203@op5.se>
+From: Gerrit Pape <pape@smarden.org>
+Subject: Re: [ANNOUNCE] GIT 0.99.9l aka 1.0rc4
+Date: Wed, 7 Dec 2005 17:20:30 +0100
+Message-ID: <20051207162030.18532.qmail@c9a97849515963.315fe32.mid.smarden.org>
+References: <7vy831p69i.fsf@assigned-by-dhcp.cox.net> <20051205172601.4980.qmail@67565db8368c55.315fe32.mid.smarden.org> <7vu0dnb8pm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 07 17:16:20 2005
+X-From: git-owner@vger.kernel.org Wed Dec 07 17:21:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ek1tI-000577-9W
-	for gcvg-git@gmane.org; Wed, 07 Dec 2005 17:11:36 +0100
+	id 1Ek21d-0000AJ-NK
+	for gcvg-git@gmane.org; Wed, 07 Dec 2005 17:20:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751171AbVLGQLc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Dec 2005 11:11:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbVLGQLc
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 11:11:32 -0500
-Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:36051 "EHLO
-	tumblerings.org") by vger.kernel.org with ESMTP id S1751171AbVLGQLb
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Dec 2005 11:11:31 -0500
-Received: from zbrown by tumblerings.org with local (Exim 4.54)
-	id 1Ek1tD-000573-0y; Wed, 07 Dec 2005 08:11:31 -0800
-To: Andreas Ericsson <ae@op5.se>
+	id S1751199AbVLGQUE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Dec 2005 11:20:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbVLGQUE
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 11:20:04 -0500
+Received: from a.mx.smarden.org ([212.21.76.77]:4485 "HELO a.mx.smarden.org")
+	by vger.kernel.org with SMTP id S1751198AbVLGQUC (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2005 11:20:02 -0500
+Received: (qmail 18533 invoked by uid 1000); 7 Dec 2005 16:20:30 -0000
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <4396FFB0.4040203@op5.se>
-User-Agent: Mutt/1.5.11
+In-Reply-To: <7vu0dnb8pm.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13330>
 
-OK, I see my mistake.
-
-I should have tested better. I started off with a non-versioned directory
-containing dotfiles and regular files. I did a cg-init, only to discover
-that the dotfiles were not included in the repository at that time. So I
-just assumed they couldn't be added either.
-
-But I just tested, and yes indeed, it is possible to cg-add a dotfile.
-
-So my question is, why does cg-init ignore dotfiles within the directory when it
-first initializes the repository?
-
-Be well,
-Zack
-
-On Wed, Dec 07, 2005 at 04:28:48PM +0100, Andreas Ericsson wrote:
-> Zack Brown wrote:
-> >Hi,
+On Mon, Dec 05, 2005 at 12:16:37PM -0800, Junio C Hamano wrote:
+> Gerrit Pape <pape@smarden.org> writes:
+> > On Sun, Dec 04, 2005 at 01:21:13AM -0800, Junio C Hamano wrote:
+> >> *1* It appears Debian finally has an official maintainer, so I
 > >
-> >What's the status of dotfile support? I can only find one thread that 
-> >really
-> >discusses the issue:
-> >
+> > Yes, I've taken over maintainership, and introduced the git-core package
+> > into Debian/unstable, the git tools previously were included in the
+> > cogito package.
 > 
-> What sort of "dotfile support" are you hinting at? git being able to 
-> handle them, or git being able to ignore them? Both are implemented. The 
-> former by default and the latter through .gitignore.
+> This question is probably relevant only to you and people who
+> want to build deb themselves until you package the updated
+> upstream, but what is your (and others') preference on debian/
+> directory in what _I_ ship?
 > 
-> Files you want to version-control ofcourse has to be added with "git 
-> add", but that's not just dotfiles and it's really the only sane behaviour.
+> I see three possibilities:
 > 
-> -- 
-> Andreas Ericsson                   andreas.ericsson@op5.se
-> OP5 AB                             www.op5.se
-> Tel: +46 8-230225                  Fax: +46 8-230231
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>  - Do not care, and keep them as they are as they bitrot.
+> 
+>  - Remove debian/ from the upstream tree.
+> 
+>  - You feed patches to me, and I promise you not to touch
+>    debian/ area, except adding a new -0 entry at the top of the
+>    changelog when bumping the version number up, and perhaps
+>    adjusting to the main Makefile changes if the solution is
+>    obvious.
+> 
+> I am neutral between the second and the third.
 
--- 
-Zack Brown
+Normally we suggest upstream to not ship a debian/ directory at all, and
+I would prefer that.  But I can understand that people may got used to
+it, and prefer to build the packages on their own.  So I'm also fine
+with feeding you with patches, but need to get 0.99.9l into the Debian
+archive first (already prepared, waiting in a 'new packages' queue), and
+then adapt the build process to use the debian/ directory in the git
+tarball, instead of the current tarball-in-tarball approach.
+
+This may take some days, and there are major changes to the debian/
+directory as I personally don't use the usual debhelper approach.
+
+Thanks, Gerrit.
