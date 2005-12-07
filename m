@@ -1,51 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Initial AIX portability fixes.
-Date: Tue, 06 Dec 2005 16:12:52 -0800
-Message-ID: <7vvey1zrwb.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0512070055430.5888@wbgn013.biozentrum.uni-wuerzburg.de>
-	<21075.1133914036@lotus.CS.Berkeley.EDU>
+From: Paul Serice <paul@serice.net>
+Subject: Re: [RFC] Run hooks with a cleaner environment
+Date: Tue, 06 Dec 2005 18:19:58 -0600
+Message-ID: <43962AAE.4040704@serice.net>
+References: <Pine.LNX.4.64.0512061716030.25300@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 07 01:13:32 2005
+X-From: git-owner@vger.kernel.org Wed Dec 07 01:20:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EjmvZ-0008Bu-3m
-	for gcvg-git@gmane.org; Wed, 07 Dec 2005 01:12:57 +0100
+	id 1Ejn2N-0002JW-MJ
+	for gcvg-git@gmane.org; Wed, 07 Dec 2005 01:20:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932668AbVLGAMy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Dec 2005 19:12:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932672AbVLGAMy
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 19:12:54 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:29338 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932668AbVLGAMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Dec 2005 19:12:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051207001123.OBWG17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 6 Dec 2005 19:11:23 -0500
-To: Jason Riedy <ejr@EECS.Berkeley.EDU>
-In-Reply-To: <21075.1133914036@lotus.CS.Berkeley.EDU> (Jason Riedy's message
-	of "Tue, 06 Dec 2005 16:07:16 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932672AbVLGAT4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Dec 2005 19:19:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932673AbVLGAT4
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Dec 2005 19:19:56 -0500
+Received: from serice.org ([206.123.107.184]:53256 "EHLO serice.org")
+	by vger.kernel.org with ESMTP id S932672AbVLGATz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Dec 2005 19:19:55 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by serice.org (Postfix) with ESMTP id 10070584EB;
+	Tue,  6 Dec 2005 18:19:55 -0600 (CST)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
+X-Accept-Language: en-us, en
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.64.0512061716030.25300@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13309>
 
-Jason Riedy <ejr@EECS.Berkeley.EDU> writes:
+> Currently, hooks/post-update is run in the environment that
+> receive-pack is run. This means that there are a number of things
+> that are unpredictable. I'd like to make it set things up in a more
+> predictable and useful way.
 
-> And Johannes Schindelin writes:
->  - Why not enclose the #define in #ifndef/#endif, and do the real magic in 
->  - the Makefile? Within the AIX clause:
->  - 	ALL_CFLAGS += -D_XOPEN_SOURCE=500 -XOPEN_SOURCE_EXTENDED=1
->
-> Because other files do _not_ compile when given those options.
-> I'm going for minimal changes to the existing structure; the
-> #define for glibc2 has been there a long, long time.  Yes, it
-> probably can be done better, but these are 1.0rc versions...
+I'd like to second this.  I've been bitten by two of the three issues
+you've raised.
 
-I agree with your approach of least impact for now.  Thanks.
+
+> stdout and stdin are connected to send-pack, either by broken pipes
+> (for local pushes) or an ignored socket (via ssh). stdin should
+> probably be /dev/null, and stdout should be either a log file or
+> /dev/null. stderr is still the push's stderr, which may or may not
+> be desired.
+
+If there is a controlling terminal and nothing else git-related is
+reading from it, I'd like for stdout and stderr to be reconnected.
+
+
+Paul Serice
