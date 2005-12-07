@@ -1,60 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Zack Brown <zbrown@tumblerings.org>
 Subject: Re: dotfile support
-Date: Wed, 7 Dec 2005 16:43:50 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512071643110.12524@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20050416230058.GA10983@ucw.cz> <118833cc05041618017fb32a2@mail.gmail.com>
- <20050416183023.0b27b3a4.pj@sgi.com> <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org>
- <42620092.9040402@dwheeler.com> <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org>
- <42628D1B.3000207@dwheeler.com> <20051207145646.GA9207@tumblerings.org>
+Date: Wed, 7 Dec 2005 08:11:30 -0800
+Message-ID: <20051207161130.GA10924@tumblerings.org>
+References: <20050416230058.GA10983@ucw.cz> <118833cc05041618017fb32a2@mail.gmail.com> <20050416183023.0b27b3a4.pj@sgi.com> <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org> <42620092.9040402@dwheeler.com> <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org> <42628D1B.3000207@dwheeler.com> <20051207145646.GA9207@tumblerings.org> <4396FFB0.4040203@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "David A. Wheeler" <dwheeler@dwheeler.com>,
-	Linus Torvalds <torvalds@osdl.org>, Paul Jackson <pj@sgi.com>,
-	Morten Welinder <mwelinder@gmail.com>, mj@ucw.cz,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 07 16:46:43 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 07 17:16:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ek1T2-0001WX-5X
-	for gcvg-git@gmane.org; Wed, 07 Dec 2005 16:44:28 +0100
+	id 1Ek1tI-000577-9W
+	for gcvg-git@gmane.org; Wed, 07 Dec 2005 17:11:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751150AbVLGPnz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Dec 2005 10:43:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbVLGPnz
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 10:43:55 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:16782 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751150AbVLGPny (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2005 10:43:54 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 55CCB13F94D; Wed,  7 Dec 2005 16:43:53 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 39F9A9DC48; Wed,  7 Dec 2005 16:43:53 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 22E6F9DC30; Wed,  7 Dec 2005 16:43:53 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 52E2913F94D; Wed,  7 Dec 2005 16:43:50 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Zack Brown <zbrown@tumblerings.org>
-In-Reply-To: <20051207145646.GA9207@tumblerings.org>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751171AbVLGQLc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Dec 2005 11:11:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbVLGQLc
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 11:11:32 -0500
+Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:36051 "EHLO
+	tumblerings.org") by vger.kernel.org with ESMTP id S1751171AbVLGQLb
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Dec 2005 11:11:31 -0500
+Received: from zbrown by tumblerings.org with local (Exim 4.54)
+	id 1Ek1tD-000573-0y; Wed, 07 Dec 2005 08:11:31 -0800
+To: Andreas Ericsson <ae@op5.se>
+Content-Disposition: inline
+In-Reply-To: <4396FFB0.4040203@op5.se>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13329>
 
-Hi,
+OK, I see my mistake.
 
-On Wed, 7 Dec 2005, Zack Brown wrote:
+I should have tested better. I started off with a non-versioned directory
+containing dotfiles and regular files. I did a cg-init, only to discover
+that the dotfiles were not included in the repository at that time. So I
+just assumed they couldn't be added either.
 
-> What's the status of dotfile support?
+But I just tested, and yes indeed, it is possible to cg-add a dotfile.
 
-In the current git repository, ".gitignore" is a versioned file.
+So my question is, why does cg-init ignore dotfiles within the directory when it
+first initializes the repository?
 
-Hth,
-Dscho
+Be well,
+Zack
+
+On Wed, Dec 07, 2005 at 04:28:48PM +0100, Andreas Ericsson wrote:
+> Zack Brown wrote:
+> >Hi,
+> >
+> >What's the status of dotfile support? I can only find one thread that 
+> >really
+> >discusses the issue:
+> >
+> 
+> What sort of "dotfile support" are you hinting at? git being able to 
+> handle them, or git being able to ignore them? Both are implemented. The 
+> former by default and the latter through .gitignore.
+> 
+> Files you want to version-control ofcourse has to be added with "git 
+> add", but that's not just dotfiles and it's really the only sane behaviour.
+> 
+> -- 
+> Andreas Ericsson                   andreas.ericsson@op5.se
+> OP5 AB                             www.op5.se
+> Tel: +46 8-230225                  Fax: +46 8-230231
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+-- 
+Zack Brown
