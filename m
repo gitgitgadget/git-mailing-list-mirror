@@ -1,42 +1,47 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: server-info dumbing-down
-Date: Wed, 7 Dec 2005 22:58:53 +0100
-Message-ID: <20051207215853.GL22159@pasky.or.cz>
+Subject: Re: [PATCH] cg-object-id: comment the alternate id shortcut parsing
+Date: Wed, 7 Dec 2005 23:05:21 +0100
+Message-ID: <20051207220521.GM22159@pasky.or.cz>
+References: <20051207213943.GC25890@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Dec 07 23:01:04 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 07 23:05:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ek7JA-0003zv-TM
-	for gcvg-git@gmane.org; Wed, 07 Dec 2005 22:58:41 +0100
+	id 1Ek7Pc-0006Wh-FJ
+	for gcvg-git@gmane.org; Wed, 07 Dec 2005 23:05:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030383AbVLGV6i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Dec 2005 16:58:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030385AbVLGV6i
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 16:58:38 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:65418 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1030381AbVLGV6h (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2005 16:58:37 -0500
-Received: (qmail 21488 invoked by uid 2001); 7 Dec 2005 22:58:53 +0100
-To: git@vger.kernel.org
+	id S1751791AbVLGWFH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Dec 2005 17:05:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbVLGWFG
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 17:05:06 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:30345 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751793AbVLGWFF (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2005 17:05:05 -0500
+Received: (qmail 22315 invoked by uid 2001); 7 Dec 2005 23:05:21 +0100
+To: Jonas Fonseca <fonseca@diku.dk>
 Content-Disposition: inline
+In-Reply-To: <20051207213943.GC25890@diku.dk>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13348>
 
-  Hello,
+Dear diary, on Wed, Dec 07, 2005 at 10:39:43PM CET, I got a letter
+where Jonas Fonseca <fonseca@diku.dk> said that...
+> -	# Short id's must be lower case and at least 4 digits.
+> +	# Short id's must be lower case and at least 4 digits. git-rev-parse(1)
+> +	# allows only down to 5 digits and we want to show the list of matched
+> +	# ids.
 
-  I've noticed few commits from Dec 4 landing into the git repository,
-which remove various computations and corresponding lines from the
-server info (3e15c67 and few ancestors). I'm curious about this - were
-the computations that hugely computationally expensive? If not, wouldn't
-it be better to leave it in for future use (since it doesn't cost a lot)
-rather than making the future deployment of anything using this data
-much harder since the server infos won't have it anymore?
+Huh. The code in sha1_name.c speaks differently and it works as well:
+
+	$ git-rev-parse b1fc
+	b1fcca45069d4f6b00a9ac7136be4268d09fd6b9
 
 -- 
 				Petr "Pasky" Baudis
