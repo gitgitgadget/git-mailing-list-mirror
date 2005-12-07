@@ -1,52 +1,60 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: dotfile support
-Date: Wed, 07 Dec 2005 16:28:48 +0100
-Message-ID: <4396FFB0.4040203@op5.se>
-References: <20050416230058.GA10983@ucw.cz> <118833cc05041618017fb32a2@mail.gmail.com> <20050416183023.0b27b3a4.pj@sgi.com> <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org> <42620092.9040402@dwheeler.com> <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org> <42628D1B.3000207@dwheeler.com> <20051207145646.GA9207@tumblerings.org>
+Date: Wed, 7 Dec 2005 16:43:50 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512071643110.12524@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20050416230058.GA10983@ucw.cz> <118833cc05041618017fb32a2@mail.gmail.com>
+ <20050416183023.0b27b3a4.pj@sgi.com> <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org>
+ <42620092.9040402@dwheeler.com> <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org>
+ <42628D1B.3000207@dwheeler.com> <20051207145646.GA9207@tumblerings.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Dec 07 16:31:31 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "David A. Wheeler" <dwheeler@dwheeler.com>,
+	Linus Torvalds <torvalds@osdl.org>, Paul Jackson <pj@sgi.com>,
+	Morten Welinder <mwelinder@gmail.com>, mj@ucw.cz,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 07 16:46:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ek1Dx-00043F-IT
-	for gcvg-git@gmane.org; Wed, 07 Dec 2005 16:28:53 +0100
+	id 1Ek1T2-0001WX-5X
+	for gcvg-git@gmane.org; Wed, 07 Dec 2005 16:44:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751124AbVLGP2u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Dec 2005 10:28:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbVLGP2u
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 10:28:50 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:29669 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751124AbVLGP2u
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Dec 2005 10:28:50 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 251376BCBE
-	for <git@vger.kernel.org>; Wed,  7 Dec 2005 16:28:49 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
+	id S1751150AbVLGPnz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Dec 2005 10:43:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbVLGPnz
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 10:43:55 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:16782 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751150AbVLGPny (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2005 10:43:54 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 55CCB13F94D; Wed,  7 Dec 2005 16:43:53 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 39F9A9DC48; Wed,  7 Dec 2005 16:43:53 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 22E6F9DC30; Wed,  7 Dec 2005 16:43:53 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 52E2913F94D; Wed,  7 Dec 2005 16:43:50 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Zack Brown <zbrown@tumblerings.org>
 In-Reply-To: <20051207145646.GA9207@tumblerings.org>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13328>
 
-Zack Brown wrote:
-> Hi,
-> 
-> What's the status of dotfile support? I can only find one thread that really
-> discusses the issue:
-> 
+Hi,
 
-What sort of "dotfile support" are you hinting at? git being able to 
-handle them, or git being able to ignore them? Both are implemented. The 
-former by default and the latter through .gitignore.
+On Wed, 7 Dec 2005, Zack Brown wrote:
 
-Files you want to version-control ofcourse has to be added with "git 
-add", but that's not just dotfiles and it's really the only sane behaviour.
+> What's the status of dotfile support?
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+In the current git repository, ".gitignore" is a versioned file.
+
+Hth,
+Dscho
