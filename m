@@ -1,71 +1,67 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: [ANNOUNCE] GIT 0.99.9l aka 1.0rc4
-Date: Wed, 7 Dec 2005 17:20:30 +0100
-Message-ID: <20051207162030.18532.qmail@c9a97849515963.315fe32.mid.smarden.org>
-References: <7vy831p69i.fsf@assigned-by-dhcp.cox.net> <20051205172601.4980.qmail@67565db8368c55.315fe32.mid.smarden.org> <7vu0dnb8pm.fsf@assigned-by-dhcp.cox.net>
+From: Mark Allen <mrallen1@yahoo.com>
+Subject: Failure in t6021 on Red Hat Enterprise Linux 4
+Date: Wed, 7 Dec 2005 08:49:09 -0800 (PST)
+Message-ID: <20051207164909.24221.qmail@web34304.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Dec 07 17:21:21 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Dec 07 17:49:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ek21d-0000AJ-NK
-	for gcvg-git@gmane.org; Wed, 07 Dec 2005 17:20:14 +0100
+	id 1Ek2To-0003Or-4D
+	for gcvg-git@gmane.org; Wed, 07 Dec 2005 17:49:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751199AbVLGQUE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Dec 2005 11:20:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbVLGQUE
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 11:20:04 -0500
-Received: from a.mx.smarden.org ([212.21.76.77]:4485 "HELO a.mx.smarden.org")
-	by vger.kernel.org with SMTP id S1751198AbVLGQUC (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2005 11:20:02 -0500
-Received: (qmail 18533 invoked by uid 1000); 7 Dec 2005 16:20:30 -0000
+	id S1750813AbVLGQtL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Dec 2005 11:49:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbVLGQtL
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 11:49:11 -0500
+Received: from web34304.mail.mud.yahoo.com ([66.163.178.136]:32397 "HELO
+	web34304.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1750813AbVLGQtK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Dec 2005 11:49:10 -0500
+Received: (qmail 24223 invoked by uid 60001); 7 Dec 2005 16:49:09 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=uzCvXDPkJYzph9nsAGjQIWKwfwguGJXPUUdP+zgTzK/g7ozkKzfwMLAag+zdBCmoKIzMgaoBG2bZTSpWSbzGGzQUFM/3ylXUMokmzb0ueanmgp9twsQFCChs7tl/bWoFwWnpnRe9IeWgytRC7kx5E+mLhxmYVcMjMIYC1NhWgEw=  ;
+Received: from [65.173.207.2] by web34304.mail.mud.yahoo.com via HTTP; Wed, 07 Dec 2005 08:49:09 PST
 To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vu0dnb8pm.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13331>
 
-On Mon, Dec 05, 2005 at 12:16:37PM -0800, Junio C Hamano wrote:
-> Gerrit Pape <pape@smarden.org> writes:
-> > On Sun, Dec 04, 2005 at 01:21:13AM -0800, Junio C Hamano wrote:
-> >> *1* It appears Debian finally has an official maintainer, so I
-> >
-> > Yes, I've taken over maintainership, and introduced the git-core package
-> > into Debian/unstable, the git tools previously were included in the
-> > cogito package.
-> 
-> This question is probably relevant only to you and people who
-> want to build deb themselves until you package the updated
-> upstream, but what is your (and others') preference on debian/
-> directory in what _I_ ship?
-> 
-> I see three possibilities:
-> 
->  - Do not care, and keep them as they are as they bitrot.
-> 
->  - Remove debian/ from the upstream tree.
-> 
->  - You feed patches to me, and I promise you not to touch
->    debian/ area, except adding a new -0 entry at the top of the
->    changelog when bumping the version number up, and perhaps
->    adjusting to the main Makefile changes if the solution is
->    obvious.
-> 
-> I am neutral between the second and the third.
+Running t/t6021-crisscross-merge.sh -v -i on Red Hat Enterprise Linux 4 Workstation with
+python 2.3.4 installed, I found a fatal error in the test.
 
-Normally we suggest upstream to not ship a debian/ directory at all, and
-I would prefer that.  But I can understand that people may got used to
-it, and prefer to build the packages on their own.  So I'm also fine
-with feeding you with patches, but need to get 0.99.9l into the Debian
-archive first (already prepared, waiting in a 'new packages' queue), and
-then adapt the build process to use the debian/ directory in the git
-tarball, instead of the current tarball-in-tarball approach.
+Apparently, this release of python doesn't have the subprocess module installed. In what
+package is that located? How can I fix this error?
 
-This may take some days, and there are major changes to the debian/
-directory as I personally don't use the usual debhelper approach.
+Thanks!
 
-Thanks, Gerrit.
+--Mark
+
+-- BEGIN --
+
+[mallen@mrhat t]$ rpm -q python
+python-2.3.4-14.1
+
+...SNIP...
+
+git commit -m D8 file
+Committing initial tree ec103796f9a6ca8367bd90cd88edf39c5dd2ae26
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+Traceback (most recent call last):
+  File "/home/mallen/git/git.git/t/../git-merge-recursive", line 13, in ?
+    from gitMergeCommon import *
+  File "/home/mallen/git/git.git/gitMergeCommon.py", line 18, in ?
+    import subprocess
+ImportError: No module named subprocess
+Automatic merge failed/prevented; fix up by hand
+
+...SNIP...
+
+--- END ---
