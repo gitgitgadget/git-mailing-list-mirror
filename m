@@ -1,58 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: dotfile support
-Date: Wed, 07 Dec 2005 09:43:29 -0800
-Message-ID: <7vacfcu7jy.fsf@assigned-by-dhcp.cox.net>
-References: <20050416230058.GA10983@ucw.cz>
-	<118833cc05041618017fb32a2@mail.gmail.com>
-	<20050416183023.0b27b3a4.pj@sgi.com>
-	<Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org>
-	<42620092.9040402@dwheeler.com>
-	<Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org>
-	<42628D1B.3000207@dwheeler.com>
-	<20051207145646.GA9207@tumblerings.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC] Run hooks with a cleaner environment
+Date: Wed, 7 Dec 2005 12:47:39 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0512071236260.25300@iabervon.org>
+References: <Pine.LNX.4.64.0512061716030.25300@iabervon.org>
+ <7voe3tzqn8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 07 18:48:41 2005
+X-From: git-owner@vger.kernel.org Wed Dec 07 18:55:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ek3KJ-0000x0-ED
-	for gcvg-git@gmane.org; Wed, 07 Dec 2005 18:43:35 +0100
+	id 1Ek3Nt-0002LD-SI
+	for gcvg-git@gmane.org; Wed, 07 Dec 2005 18:47:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751428AbVLGRnc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Dec 2005 12:43:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbVLGRnc
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 12:43:32 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:17548 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751428AbVLGRnb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2005 12:43:31 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051207174147.XRWZ20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 7 Dec 2005 12:41:47 -0500
-To: Zack Brown <zbrown@tumblerings.org>
-In-Reply-To: <20051207145646.GA9207@tumblerings.org> (Zack Brown's message of
-	"Wed, 7 Dec 2005 06:56:46 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751464AbVLGRq5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Dec 2005 12:46:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751474AbVLGRq5
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 12:46:57 -0500
+Received: from iabervon.org ([66.92.72.58]:54791 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751464AbVLGRq4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2005 12:46:56 -0500
+Received: (qmail 14653 invoked by uid 1000); 7 Dec 2005 12:47:39 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 7 Dec 2005 12:47:39 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7voe3tzqn8.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13334>
 
-Zack Brown <zbrown@tumblerings.org> writes:
+On Tue, 6 Dec 2005, Junio C Hamano wrote:
 
-> What's the status of dotfile support? I can only find one thread that really
-> discusses the issue:
->...
-> So that's my pitch: Leaving out dotfile support seems like it creates an
-> unnecessary limitation that eliminates some valid uses of git.
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > GIT_DIR is set to the repository that got the push,
+> 
+> That is done by receive-pack; it chdir()s into the repository
+> and does its thing, and the hooks are called from there; I'd
+> expect cwd to be the repository ('.git'), GIT_DIR to be dot
+> ('.').
 
-Valid argument, and resolved thusly quite some time ago, with
-commit 320d3a1b1aa04d75f0aaff3cc7cf582e144a84c6 on May 24th
-2005.
+I thought I was seeing the full path of the repository as GIT_DIR and I 
+didn't check the cwd.
 
-You probably have missed it because unfortunately this commit
-happened after the latest issue of git traffic ;-).
+> I think doing the "unset GIT_DIR" to be the first thing if you
+> want to access some other repository is documented somewhere but
+> if not please send a patch to document it.
+
+I didn't see it in the place "grep post-update Documentation/*" returned, 
+so we need something. (Actually, the main thing is to specify that nothing 
+else special is set, because the GIT_DIR thing was pretty obvious, but I 
+then didn't know if my problems were due to something else undocumented.)
+
+> As to file descriptors, I think duping the output to original
+> stderr might make sense, but I do not know what breaks, so
+> interested parties may want to test it out and submit a tested
+> patch for inclusion.
+
+I'll send a patch tonight which works for me, but it should probably be 
+checked over by people who are good at this sort of stuff. I've got a 
+"/dev/null" patch; I'll look into a version that tries to find a 
+controlling tty (which could be really interesting, since you could then 
+have the hook get input from the user), or at least copy stderr if 
+possible.
+
+For reference, the error I was getting was a broken pipe writing to stdout 
+(as git merge does somewhere) when I've pushed locally.
+
+	-Daniel
+*This .sig left intentionally blank*
