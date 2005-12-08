@@ -1,48 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: [PATCH] Clean up file descriptors when calling hooks.
-Date: Wed, 07 Dec 2005 19:29:47 -0800
-Message-ID: <7vr78omfkk.fsf@assigned-by-dhcp.cox.net>
-References: <20051208032428.8591.qmail@science.horizon.com>
+Date: Thu, 8 Dec 2005 00:33:57 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0512080006460.25300@iabervon.org>
+References: <Pine.LNX.4.64.0512072052560.25300@iabervon.org>
+ <7vvey0mik7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Dec 08 04:30:37 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 08 06:34:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EkCTj-0003vO-VG
-	for gcvg-git@gmane.org; Thu, 08 Dec 2005 04:29:56 +0100
+	id 1EkEPE-0004YA-1F
+	for gcvg-git@gmane.org; Thu, 08 Dec 2005 06:33:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030447AbVLHD3u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Dec 2005 22:29:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030449AbVLHD3u
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 22:29:50 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:40409 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1030447AbVLHD3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Dec 2005 22:29:49 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051208032902.SCNU6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 7 Dec 2005 22:29:02 -0500
-To: git@vger.kernel.org
-In-Reply-To: <20051208032428.8591.qmail@science.horizon.com>
-	(linux@horizon.com's message of "7 Dec 2005 22:24:28 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030463AbVLHFdP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Dec 2005 00:33:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030467AbVLHFdP
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Dec 2005 00:33:15 -0500
+Received: from iabervon.org ([66.92.72.58]:52241 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1030463AbVLHFdN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Dec 2005 00:33:13 -0500
+Received: (qmail 27290 invoked by uid 1000); 8 Dec 2005 00:33:57 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 8 Dec 2005 00:33:57 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvey0mik7.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13357>
 
-linux@horizon.com writes:
+On Wed, 7 Dec 2005, Junio C Hamano wrote:
 
-> E.g. imagine if I ran gcc -c file.c, and it assigned file.c to fd 0,
-> file.h to fd1, and file.o to fd 2.   Then wants to print a warning
-> message... right into the middle of the binary.  (Oversimplified
-> example, because gcc is actually several separate programs, but
-> hopefully you get the idea.)
->
-> It's just safer to leave those fds open to a null device.
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > When calling post-update hook, don't leave stdin and stdout connected to 
+> > the pushing connection.
+> 
+> A quick question.  I understand "not connected to the pushing
+> connection" is desirable, but is there a reason you chose to
+> leave them open to /dev/null, not close()d?
 
-Overdangerous example.  Do people realize hooks run without any
-locking?
+Wouldn't that make programs that assume that stdout (or stdin) is still 
+valid get errors? I particularly want git-merge (which has a habit of 
+saying "Already up-to-date. Yeeah!") to work. Also, something that assumes 
+that fd 1 is somewhere to report stuff will get into trouble if it opens a 
+couple of files for writing and fd 0/1 weren't open before. I seem to 
+recall the standard thing for running with no I/O to be to use /dev/null 
+(e.g., daemon(), if you don't keep your fds, replaces them with /dev/null).
+
+	-Daniel
+*This .sig left intentionally blank*
