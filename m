@@ -1,55 +1,78 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: Wine + GIT
-Date: Thu, 8 Dec 2005 10:29:45 +0100
-Message-ID: <20051208092945.GA4921@c165.ib.student.liu.se>
-References: <20051208073000.7097.qmail@science.horizon.com>
+From: R&D4 <r&d4@dave-tech.it>
+Subject: problem with cvs import and removed files
+Date: Thu, 08 Dec 2005 16:27:27 +0100
+Message-ID: <439850DF.7070407@dave-tech.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Dec 08 10:31:27 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Dec 08 16:30:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EkI69-0003ai-I1
-	for gcvg-git@gmane.org; Thu, 08 Dec 2005 10:29:57 +0100
+	id 1EkNgJ-000229-A9
+	for gcvg-git@gmane.org; Thu, 08 Dec 2005 16:27:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750973AbVLHJ3y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Dec 2005 04:29:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750974AbVLHJ3y
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Dec 2005 04:29:54 -0500
-Received: from [85.8.31.11] ([85.8.31.11]:24520 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S1750966AbVLHJ3y (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Dec 2005 04:29:54 -0500
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id DCEB84117; Thu,  8 Dec 2005 10:39:55 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EkI5x-0001Ja-00; Thu, 08 Dec 2005 10:29:45 +0100
-To: linux@horizon.com
-Content-Disposition: inline
-In-Reply-To: <20051208073000.7097.qmail@science.horizon.com>
-User-Agent: Mutt/1.5.9i
+	id S1750914AbVLHP1g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Dec 2005 10:27:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751194AbVLHP1g
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Dec 2005 10:27:36 -0500
+Received: from host46-203.pool8538.interbusiness.it ([85.38.203.46]:772 "HELO
+	dave-tech.it") by vger.kernel.org with SMTP id S1750914AbVLHP1f
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Dec 2005 10:27:35 -0500
+Received: (qmail 9862 invoked by uid 0); 8 Dec 2005 16:31:25 -0000
+Received: from unknown (HELO ?192.168.0.24?) (192.168.2.253)
+  by 192.168.2.1 with SMTP; 8 Dec 2005 16:31:25 -0000
+User-Agent: Mozilla Thunderbird 1.0.6 (Windows/20050716)
+X-Accept-Language: en-us, en
+To: git mailing list <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13364>
-
-On Thu, Dec 08, 2005 at 02:30:00AM -0500, linux@horizon.com wrote:
-> (Grump... I just noticed that the "recursive" merge stratgy *doesn't*
-> generate a merged file containing conflict markers, at least not in
-> the case I tried.  Instead I get "a~HEAD" and "a~branch" files.
-> Time to fix the docs...)
-
-In the most common case, i.e., when you have a file 'a' in the common
-ancestor and 'a' have been modified in both A and B (where A and B are
-the branches we are going to merge) then the recursive strategy should
-generate a merged file with merge(1), which will produce conflict
-markers if there are conflicts. Any other behaviour is a bug.
-
-However, in some other cases such as rename/rename, file/directory and
-add/add conflicts "a~A" and "a~B" will be created in the working
-directory. The recursive strategy will (or, is supposed to) tell you
-about such things, though.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13365>
 
 
-- Fredrik
+Hi Git gurus!
+
+I'm trying to `git cvs import` this cvs repository
+http://cvs.sourceforge.net/viewcvs.py/compiere
+
+When trying to import module "utils" as follows:
+
+git cvsimport -v -d 
+:pserver:anonymous@cvs.sourceforge.net:/cvsroot/compiere -C utils utils
+
+I have a problem about "non-existent revision" of a file:
+
+cvs_direct initialized to CVSROOT /cvsroot/compiere
+cvs rlog: Logging utils
+request for non-existent rev 1.1 in file .project
+DONE; creating master branch
+cp: cannot stat `/home/cvs/compiere/utils/.git/refs/heads/origin': No
+such file or directory
+usage: git-read-tree (<sha> | -m [-u | -i] <sha1> [<sha2> [<sha3>]])
+checkout failed: 256
+
+In fact rev 1.1 of .project in main branch shows "file removed" 
+(http://cvs.sourceforge.net/viewcvs.py/compiere/utils/.project?rev=1.2&view=log)
+
+The same happen with some other module of this project.
+
+I'm running git --version is:
+0.99.9.GIT
+
+and cvsps --version is:
+2.1
+
+
+Any clue in how to solve this kind of problem?
+Is it possible to skip this file(s) and maybe include them later "manually"?
+
+Thanks in advance and best regards,
+
+
+-- 
+
+Andrea
+
+DAVE Srl - Electronics System House
+e-mail address: r&d4@dave-tech.it
