@@ -1,91 +1,77 @@
 From: Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
-Subject: [PATCH 1/17] Document the --non-empty command-line option to git-pack-objects.
+Subject: [PATCH 8/17] Documentation/git-cherry-pick: Add --replay and --no-commit.
 Date: Fri, 9 Dec 2005 00:28:05 +0100
-Message-ID: <11340844853669-git-send-email-mailing-lists.git@rawuncut.elitemail.org>
-References: <11340844841342-git-send-email-mailing-lists.git@rawuncut.elitemail.org>
+Message-ID: <11340844851758-git-send-email-mailing-lists.git@rawuncut.elitemail.org>
+References: <1134084485683-git-send-email-mailing-lists.git@rawuncut.elitemail.org>
 Reply-To: Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: Nikolai Weibull <nikolai@bitwi.se>
-X-From: git-owner@vger.kernel.org Fri Dec 09 00:30:14 2005
+X-From: git-owner@vger.kernel.org Fri Dec 09 00:30:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EkVBN-0004R3-GV
-	for gcvg-git@gmane.org; Fri, 09 Dec 2005 00:28:13 +0100
+	id 1EkVCQ-0004lM-7a
+	for gcvg-git@gmane.org; Fri, 09 Dec 2005 00:29:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932724AbVLHX2J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Dec 2005 18:28:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932718AbVLHX2I
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Dec 2005 18:28:08 -0500
-Received: from mxfep01.bredband.com ([195.54.107.70]:9124 "EHLO
-	mxfep01.bredband.com") by vger.kernel.org with ESMTP
-	id S932724AbVLHX2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Dec 2005 18:28:06 -0500
-Received: from puritan.petwork ([213.112.43.250] [213.112.43.250])
-          by mxfep01.bredband.com with ESMTP
-          id <20051208232804.VENJ676.mxfep01.bredband.com@puritan.petwork>;
-          Fri, 9 Dec 2005 00:28:04 +0100
+	id S932725AbVLHX2V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Dec 2005 18:28:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932736AbVLHX2V
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Dec 2005 18:28:21 -0500
+Received: from mxfep02.bredband.com ([195.54.107.73]:19406 "EHLO
+	mxfep02.bredband.com") by vger.kernel.org with ESMTP
+	id S932733AbVLHX2P (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Dec 2005 18:28:15 -0500
+Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82])
+          by mxfep02.bredband.com with ESMTP
+          id <20051208232814.VWYS17186.mxfep02.bredband.com@ironport.bredband.com>
+          for <git@vger.kernel.org>; Fri, 9 Dec 2005 00:28:14 +0100
+Received: from c-fa2b70d5.018-10-67626713.cust.bredbandsbolaget.se (HELO puritan.petwork) ([213.112.43.250])
+  by ironport.bredband.com with ESMTP; 09 Dec 2005 00:28:32 +0100
+X-BrightmailFiltered: true
+X-IronPort-AV: i="3.99,232,1131318000"; 
+   d="scan'208"; a="16674750:sNHT148815216"
 Received: from puritan (localhost [127.0.0.1])
-	by puritan.petwork (Postfix) with SMTP id 1E268ADFE8;
+	by puritan.petwork (Postfix) with SMTP id 83FEAADFF0;
 	Fri,  9 Dec 2005 00:28:05 +0100 (CET)
-In-Reply-To: <11340844841342-git-send-email-mailing-lists.git@rawuncut.elitemail.org>
+In-Reply-To: <1134084485683-git-send-email-mailing-lists.git@rawuncut.elitemail.org>
 X-Mailer: git-send-email
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13387>
-
-This provides (minimal) documentation for the --non-empty command-line
-option to the pack-objects command.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13388>
 
 Signed-off-by: Nikolai Weibull <nikolai@bitwi.se>
 
 ---
 
- Documentation/git-pack-objects.txt |    6 +++++-
- pack-objects.c                     |    2 +-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ Documentation/git-cherry-pick.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-50543554f2945443c10434fcfe6689bc7cc5c3e8
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index d1e93db..009ec5a 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -8,7 +8,7 @@ git-pack-objects - Create a packed archi
+e0a7bc3c18f904afade2da6146aeba4c5aa68340
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index a7a883b..744f2c9 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -24,7 +24,7 @@ OPTIONS
+ 	With this option, `git-cherry-pick` will let you edit the commit
+ 	message prior committing.
  
- SYNOPSIS
- --------
--'git-pack-objects' [--local] [--incremental] [--window=N] [--depth=N] {--stdout | base-name} < object-list
-+'git-pack-objects' [--non-empty] [--local] [--incremental] [--window=N] [--depth=N] {--stdout | base-name} < object-list
+--r::
++-r|--replay::
+ 	Usually the command appends which commit was
+ 	cherry-picked after the original commit message when
+ 	making a commit.  This option, '--replay', causes it to
+@@ -32,7 +32,7 @@ OPTIONS
+ 	when you are reordering the patches in your private tree
+ 	before publishing.
  
- 
- DESCRIPTION
-@@ -70,6 +70,10 @@ base-name::
- 	that are packed and not in the local object store
- 	(i.e. borrowed from an alternate).
- 
-+--non-empty::
-+        Only create a packed archive if it would contain at
-+        least one object.
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
-diff --git a/pack-objects.c b/pack-objects.c
-index a62c9f8..caf3b6b 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -4,7 +4,7 @@
- #include "pack.h"
- #include "csum-file.h"
- 
--static const char pack_usage[] = "git-pack-objects [--local] [--incremental] [--window=N] [--depth=N] {--stdout | base-name} < object-list";
-+static const char pack_usage[] = "git-pack-objects [--non-empty] [--local] [--incremental] [--window=N] [--depth=N] {--stdout | base-name} < object-list";
- 
- struct object_entry {
- 	unsigned char sha1[20];
+--n::
++-n|--no-commit::
+ 	Usually the command automatically creates a commit with
+ 	a commit log message stating which commit was
+ 	cherry-picked.  This flag applies the change necessary
 -- 
 0.99.9l
