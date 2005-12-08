@@ -1,53 +1,121 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: dotfile support
-Date: Wed, 07 Dec 2005 16:47:27 -0800
-Message-ID: <4397829F.1020609@zytor.com>
-References: <20050416230058.GA10983@ucw.cz> <118833cc05041618017fb32a2@mail.gmail.com> <20050416183023.0b27b3a4.pj@sgi.com> <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org> <42620092.9040402@dwheeler.com> <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org> <42628D1B.3000207@dwheeler.com> <20051207145646.GA9207@tumblerings.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Clean up file descriptors when calling hooks.
+Date: Wed, 7 Dec 2005 21:04:38 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0512072052560.25300@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "David A. Wheeler" <dwheeler@dwheeler.com>,
-	Linus Torvalds <torvalds@osdl.org>, Paul Jackson <pj@sgi.com>,
-	Morten Welinder <mwelinder@gmail.com>, mj@ucw.cz,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 08 01:50:32 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Dec 08 03:05:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ek9xz-0000Yp-Eb
-	for gcvg-git@gmane.org; Thu, 08 Dec 2005 01:48:59 +0100
+	id 1EkB8Y-0006MK-86
+	for gcvg-git@gmane.org; Thu, 08 Dec 2005 03:03:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965074AbVLHAsq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Dec 2005 19:48:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965076AbVLHAsq
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 19:48:46 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:20380 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S965074AbVLHAsp
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Dec 2005 19:48:45 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jB80lXbf007169
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 7 Dec 2005 16:47:33 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Zack Brown <zbrown@tumblerings.org>
-In-Reply-To: <20051207145646.GA9207@tumblerings.org>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S932462AbVLHCDz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Dec 2005 21:03:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932542AbVLHCDz
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Dec 2005 21:03:55 -0500
+Received: from iabervon.org ([66.92.72.58]:54021 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932462AbVLHCDy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Dec 2005 21:03:54 -0500
+Received: (qmail 26456 invoked by uid 1000); 7 Dec 2005 21:04:38 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 7 Dec 2005 21:04:38 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13353>
 
-Zack Brown wrote:
-> Hi,
-> 
-> What's the status of dotfile support?
+When calling post-update hook, don't leave stdin and stdout connected to 
+the pushing connection.
 
-Works fine for me; I now maintain my shell config files in git.
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 
-	-hpa
+---
+
+Someone who's got a better idea of what they should be instead should 
+revise this to make it not just use /dev/null. This does fix my particular 
+test, though; it doesn't cause a post-update hook to crash if it writes to 
+stdout when pushing locally.
+
+ receive-pack.c |    2 +-
+ run-command.c  |   15 +++++++++++++--
+ run-command.h  |    3 +++
+ 3 files changed, 17 insertions(+), 3 deletions(-)
+
+ca48629563058ba62b97b6d4cd3776ca7b7242d3
+diff --git a/receive-pack.c b/receive-pack.c
+index 1873506..cbe37e7 100644
+--- a/receive-pack.c
++++ b/receive-pack.c
+@@ -173,7 +173,7 @@ static void run_update_post_hook(struct 
+ 		argc++;
+ 	}
+ 	argv[argc] = NULL;
+-	run_command_v(argc, argv);
++	run_command_v_opt(argc, argv, RUN_COMMAND_NO_STDIO);
+ }
+ 
+ /*
+diff --git a/run-command.c b/run-command.c
+index 5787a50..8bf5922 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -2,13 +2,19 @@
+ #include "run-command.h"
+ #include <sys/wait.h>
+ 
+-int run_command_v(int argc, char **argv)
++int run_command_v_opt(int argc, char **argv, int flags)
+ {
+ 	pid_t pid = fork();
+ 
+ 	if (pid < 0)
+ 		return -ERR_RUN_COMMAND_FORK;
+ 	if (!pid) {
++		if (flags & RUN_COMMAND_NO_STDIO) {
++			int fd = open("/dev/null", O_RDWR);
++			dup2(fd, 0);
++			dup2(fd, 1);
++			close(fd);			
++		}
+ 		execvp(argv[0], (char *const*) argv);
+ 		die("exec %s failed.", argv[0]);
+ 	}
+@@ -36,6 +42,11 @@ int run_command_v(int argc, char **argv)
+ 	}
+ }
+ 
++int run_command_v(int argc, char **argv)
++{
++	return run_command_v_opt(argc, argv, 0);
++}
++
+ int run_command(const char *cmd, ...)
+ {
+ 	int argc;
+@@ -54,5 +65,5 @@ int run_command(const char *cmd, ...)
+ 	va_end(param);
+ 	if (MAX_RUN_COMMAND_ARGS <= argc)
+ 		return error("too many args to run %s", cmd);
+-	return run_command_v(argc, argv);
++	return run_command_v_opt(argc, argv, 0);
+ }
+diff --git a/run-command.h b/run-command.h
+index 5ee0972..2469eea 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -11,6 +11,9 @@ enum {
+ 	ERR_RUN_COMMAND_WAITPID_NOEXIT,
+ };
+ 
++#define RUN_COMMAND_NO_STDIO 1
++
++int run_command_v_opt(int argc, char **argv, int opt);
+ int run_command_v(int argc, char **argv);
+ int run_command(const char *cmd, ...);
+ 
+-- 
+0.99.9.GIT
