@@ -1,46 +1,52 @@
-From: linux@horizon.com
-Subject: Re: Wine + GIT
-Date: 8 Dec 2005 02:30:00 -0500
-Message-ID: <20051208073000.7097.qmail@science.horizon.com>
-X-From: git-owner@vger.kernel.org Thu Dec 08 08:31:54 2005
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] gitk: add Update menu item.
+Date: Thu, 8 Dec 2005 08:52:42 +0100
+Message-ID: <81b0412b0512072352q6ceaee16l8599b12b56fa112f@mail.gmail.com>
+References: <20051123222003.GA16290MdfPADPa@greensroom.kotnet.org>
+	 <20051129211551.GF8383MdfPADPa@greensroom.kotnet.org>
+	 <17294.58317.317337.145932@cargo.ozlabs.ibm.com>
+	 <20051201130724.GV8383MdfPADPa@greensroom.kotnet.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Dec 08 08:53:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EkGEV-0007tY-BW
-	for gcvg-git@gmane.org; Thu, 08 Dec 2005 08:30:28 +0100
+	id 1EkGa7-0004YB-Al
+	for gcvg-git@gmane.org; Thu, 08 Dec 2005 08:52:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750710AbVLHHaF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Dec 2005 02:30:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750709AbVLHHaF
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Dec 2005 02:30:05 -0500
-Received: from science.horizon.com ([192.35.100.1]:43306 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1750710AbVLHHaC
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Dec 2005 02:30:02 -0500
-Received: (qmail 7098 invoked by uid 1000); 8 Dec 2005 02:30:00 -0500
-To: git@vger.kernel.org, junkio@cox.net
+	id S1750722AbVLHHwo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Dec 2005 02:52:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750724AbVLHHwo
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Dec 2005 02:52:44 -0500
+Received: from nproxy.gmail.com ([64.233.182.207]:26235 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750722AbVLHHwo convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Dec 2005 02:52:44 -0500
+Received: by nproxy.gmail.com with SMTP id x29so176989nfb
+        for <git@vger.kernel.org>; Wed, 07 Dec 2005 23:52:42 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mJ3yz9lepF1i3i1RJlU+miG0+Bb53TVC3enQBt1DU6TLTh3TMgKU603rRp7EC2olprWzWhMpCHhZMfAPy2uqUke4/CiJSAAKMc8EUVlLHVKQwDqhJs9v+TVvXD8c1RqEu7A4gpr6v3Z/i0LfAoSUAzi62R1COAfizWYNZE4gHsU=
+Received: by 10.49.2.16 with SMTP id e16mr204342nfi;
+        Wed, 07 Dec 2005 23:52:42 -0800 (PST)
+Received: by 10.48.248.18 with HTTP; Wed, 7 Dec 2005 23:52:42 -0800 (PST)
+To: skimo@liacs.nl, Paul Mackerras <paulus@samba.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+In-Reply-To: <20051201130724.GV8383MdfPADPa@greensroom.kotnet.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13362>
 
-> The paragraph "Once you have finished editting [sic]..." needs
-> to be followed by:
-> 
->	git-update-index those paths you hand corrected
->        git-commit
+On 12/1/05, Sven Verdoolaege <skimo@kotnet.org> wrote:
+> > I tried removing some commits (using git reset --hard) and then doing
+> > selecting update from the menu, and it redrew everything, but the
+> > removed commits were still shown.
+>
+> Hmmm...  I'll have look at this over the weekend (unless you beat
+> me to it).
 
-This is what happens when you have people too used to using the
-pre-porcelain plumbing.
-
-How about just
-git-commit <the paths you hand corrected>
-
-If you forget any, the commit will fail, but they will have been
-updated in the index, and you don't need to mention them again in the
-next attempt.
-
-
-(Grump... I just noticed that the "recursive" merge stratgy *doesn't*
-generate a merged file containing conflict markers, at least not in
-the case I tried.  Instead I get "a~HEAD" and "a~branch" files.
-Time to fix the docs...)
+Also the removed references are not removed.
