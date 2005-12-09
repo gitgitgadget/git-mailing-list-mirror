@@ -1,52 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: gitweb.cgi in C
-Date: Thu, 08 Dec 2005 23:33:55 -0800
-Message-ID: <7vhd9i9124.fsf@assigned-by-dhcp.cox.net>
-References: <43988299.4090101@tiscali.cz> <20051208222759.GO22159@pasky.or.cz>
-	<7vfyp3b4ki.fsf@assigned-by-dhcp.cox.net>
-	<20051208224626.GP22159@pasky.or.cz>
-	<7vhd9j9k3e.fsf@assigned-by-dhcp.cox.net>
-	<86irtyank4.fsf@blue.stonehenge.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] use "git init-db" in tests
+Date: Fri, 9 Dec 2005 08:36:33 +0100
+Message-ID: <81b0412b0512082336i674932bapd631d559e80cad79@mail.gmail.com>
+References: <20051208202555.GA3046@steel.home>
+	 <7vu0dje2oi.fsf@assigned-by-dhcp.cox.net>
+	 <20051208210251.GB19423@steel.home>
+	 <7v7jafcmev.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 09 08:34:59 2005
+X-From: git-owner@vger.kernel.org Fri Dec 09 08:37:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EkclU-0006iP-Ms
-	for gcvg-git@gmane.org; Fri, 09 Dec 2005 08:34:01 +0100
+	id 1Ekco9-0007gI-4o
+	for gcvg-git@gmane.org; Fri, 09 Dec 2005 08:36:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932405AbVLIHd5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Dec 2005 02:33:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932404AbVLIHd5
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Dec 2005 02:33:57 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:52440 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932405AbVLIHd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2005 02:33:57 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051209073241.FOEJ17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 9 Dec 2005 02:32:41 -0500
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750977AbVLIHgf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Dec 2005 02:36:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750718AbVLIHgf
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Dec 2005 02:36:35 -0500
+Received: from nproxy.gmail.com ([64.233.182.192]:6289 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932408AbVLIHge convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 9 Dec 2005 02:36:34 -0500
+Received: by nproxy.gmail.com with SMTP id y25so311374nfb
+        for <git@vger.kernel.org>; Thu, 08 Dec 2005 23:36:33 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=R+iS7ijjgq9Fwc0QzZ7vmJ1TxpUN+BZxkJdvDUsRY8kiA5+E7KZGYQ2gOr0Vk2N1NI3aHGmRVR69wiAaujmf9a6BgCCsMsH4OuA53CFj2n5HSd9y9KAESefEruHVsPw5N3MTZuA9bwRLFmbBcUZHYmlyDrNwiXpPCQ8qzK91cUk=
+Received: by 10.49.5.7 with SMTP id h7mr391163nfi;
+        Thu, 08 Dec 2005 23:36:33 -0800 (PST)
+Received: by 10.48.248.18 with HTTP; Thu, 8 Dec 2005 23:36:33 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7jafcmev.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13417>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
-
->>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+On 12/8/05, Junio C Hamano <junkio@cox.net> wrote:
+> > You do miss something. glibc will happily continue lookup if
+> > git-init-db in the top of the build directory is not executable, and
+> > it will take the next one it finds (and people _will_ have git-init-db
+> > in PATH).
 >
-> Junio> Yes, that is exactly what I meant by what Smurf is working on --
-> Junio> libified git with Pyrex.
->
-> Pyrex?  not XS?  I'd like to see Perl "use Git;". :)
+> And the reason git-init-db we just built is not executable
+> is...?
 
-OK, for the record I should mention that I first suggested using
-Swig, to be neutral across perl/python/tcl.  BTW, this list is
-merely alphabetical not suggesting the order of my preference
-;-).
+An accident? Like a filesystem not supporting executable permission?
+What is the reason to report success from the test run in that conditions?
