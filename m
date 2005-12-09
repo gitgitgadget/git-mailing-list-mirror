@@ -1,71 +1,72 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: as promised, docs: git for the confused
-Date: Fri, 9 Dec 2005 00:47:56 +0000
-Message-ID: <200512090047.56754.alan@chandlerfamily.org.uk>
-References: <20051208063409.31967.qmail@science.horizon.com>
+From: Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
+Subject: Re: [PATCH 6/17] Document the [<head>...] and -- arguments to git-prune.
+Date: Fri, 9 Dec 2005 01:50:25 +0100
+Message-ID: <20051209005025.GA8932@puritan.petwork>
+References: <1134084485547-git-send-email-mailing-lists.git@rawuncut.elitemail.org> <1134084485869-git-send-email-mailing-lists.git@rawuncut.elitemail.org> <7v4q5jb149.fsf@assigned-by-dhcp.cox.net> <7vzmnb9m7w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-6"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Dec 09 01:49:47 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Dec 09 01:51:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EkWQR-0007fi-Vm
-	for gcvg-git@gmane.org; Fri, 09 Dec 2005 01:47:53 +0100
+	id 1EkWT1-0008H5-Gv
+	for gcvg-git@gmane.org; Fri, 09 Dec 2005 01:50:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932695AbVLIArt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Dec 2005 19:47:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932745AbVLIArt
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Dec 2005 19:47:49 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:9405
-	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
-	id S932695AbVLIArt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Dec 2005 19:47:49 -0500
-Received: from kanger.home ([192.168.0.21])
-	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
-	id 1EkWQO-0000bT-93
-	for git@vger.kernel.org; Fri, 09 Dec 2005 00:47:48 +0000
+	id S932770AbVLIAu0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Dec 2005 19:50:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932771AbVLIAu0
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Dec 2005 19:50:26 -0500
+Received: from mxfep01.bredband.com ([195.54.107.70]:21984 "EHLO
+	mxfep01.bredband.com") by vger.kernel.org with ESMTP
+	id S932770AbVLIAu0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Dec 2005 19:50:26 -0500
+Received: from puritan.petwork ([213.112.43.250] [213.112.43.250])
+          by mxfep01.bredband.com with ESMTP
+          id <20051209005024.VTAN676.mxfep01.bredband.com@puritan.petwork>
+          for <git@vger.kernel.org>; Fri, 9 Dec 2005 01:50:24 +0100
+Received: by puritan.petwork (Postfix, from userid 1000)
+	id 5D63EADFE5; Fri,  9 Dec 2005 01:50:25 +0100 (CET)
 To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-In-Reply-To: <20051208063409.31967.qmail@science.horizon.com>
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <7vzmnb9m7w.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13408>
 
-On Thursday 08 Dec 2005 06:34, linux@horizon.com wrote:
-> As I mentioned with all my questions, I was writing up the answers
-> I got.  Here's the current status.  If anyone would like to comment on
-> its accuracy or usefulness, feedback is appreciated.
-...
-> * Background material.
->
-> To start with, read "man git".  Or Documentation/git.txt in the git
-> source tree, which is the same thing.  Particularly note the description
-> of the index, which is where all the action in git happens.
->
-> One thing that's confusing is why git allows you to have one version of
-> a file in the current HEAD, a second version in the index, and possibly a
-> third in the working directory.  Why doesn't the index just contain a copy
-> of the current HEAD until you commit a new one?  The answer is merging,
-> which does all its work in the index.  Neither the object database nor
-> the working directory let you have multiple files with the same name.
+Junio C Hamano wrote:
 
+> Junio C Hamano <junkio@cox.net> writes:
 
-If I was a complete newbie, I would be lost right here.  You start refering to 
-the term HEAD without any introduction to what it means and (as far as I 
-could see on a quick glance - which is what a newbie would do - man git 
-doesn't start out here either).
+> > Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org> writes:
 
-If your audience really is a complete new commer, then as a minimum I think 
-you need  to describe to concept of a "branch of development" with a series 
-of snapshots of the state, the current of which is called HEAD.  You might 
-even at this stage hint about there being several such branches.  The next 
-bit, which goes on about the index is great - just put it into context with a 
-simple explanation first.
+> > > The documentation for git-prune was lacking descriptions of the head
+> > > arguments and the -- option.
+> > >
+> > > +<head>...::
+> > > +        The heads to look for unreachable objects in.  This is
+> > > +        relative to $GIT_DIR (e.g., "HEAD", "refs/heads/master").
+> > > +        When unspecified, all heads are updated to match the
+> > > +        remote repository.
+
+> > ? updated to match???
+
+> Come to think of it, why would anybody want to pass heads explicitly?
+> It seems to me that it would allow you to _lose_ objects referenced
+> only from omitted branches...
+ 
+Sorry.  I have no idea why I pasted in that description.  How about:
+
+<head>...::
+        A head to use for an unreachability trace.
+
+(This mimics the description of <object> in git-fsck-objects.)
+
+        nikolai
+
 -- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
-Open Source. It's the difference between trust and antitrust.
+Nikolai Weibull: now available free of charge at http://bitwi.se/!
+Born in Chicago, IL USA; currently residing in Gothenburg, Sweden.
+main(){printf(&linux["\021%six\012\0"],(linux)["have"]+"fun"-97);}
