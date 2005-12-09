@@ -1,64 +1,79 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] use "git init-db" in tests
-Date: Fri, 9 Dec 2005 10:30:24 +0100
-Message-ID: <20051209093024.GR22159@pasky.or.cz>
-References: <20051208202555.GA3046@steel.home> <7vu0dje2oi.fsf@assigned-by-dhcp.cox.net> <20051208210251.GB19423@steel.home> <7v7jafcmev.fsf@assigned-by-dhcp.cox.net> <81b0412b0512082336i674932bapd631d559e80cad79@mail.gmail.com> <7vlkyu7l05.fsf@assigned-by-dhcp.cox.net> <7vvexy4ppw.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: as promised, docs: git for the confused
+Date: Fri, 9 Dec 2005 10:43:28 +0100
+Message-ID: <20051209094328.GT22159@pasky.or.cz>
+References: <7vbqzrcmgr.fsf@assigned-by-dhcp.cox.net> <20051209054304.3908.qmail@science.horizon.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 09 10:31:44 2005
+Cc: alan@chandlerfamily.org.uk, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 09 10:43:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EkeaG-00038s-SJ
-	for gcvg-git@gmane.org; Fri, 09 Dec 2005 10:30:33 +0100
+	id 1Ekema-0007BW-FF
+	for gcvg-git@gmane.org; Fri, 09 Dec 2005 10:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750829AbVLIJaL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Dec 2005 04:30:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750757AbVLIJaL
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Dec 2005 04:30:11 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:469 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750829AbVLIJaK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2005 04:30:10 -0500
-Received: (qmail 23455 invoked by uid 2001); 9 Dec 2005 10:30:24 +0100
-To: Junio C Hamano <junkio@cox.net>
+	id S1751184AbVLIJnN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Dec 2005 04:43:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751232AbVLIJnN
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Dec 2005 04:43:13 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:31694 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751184AbVLIJnN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Dec 2005 04:43:13 -0500
+Received: (qmail 25687 invoked by uid 2001); 9 Dec 2005 10:43:28 +0100
+To: linux@horizon.com
 Content-Disposition: inline
-In-Reply-To: <7vvexy4ppw.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <20051209054304.3908.qmail@science.horizon.com>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13421>
 
-Dear diary, on Fri, Dec 09, 2005 at 09:52:27AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Junio C Hamano <junkio@cox.net> writes:
+  BTW, such a "wide" reply is a bit hard to handle - it might be perhaps
+more practical to make separate replies at least to the mails whose
+contents does not overlap. Also, people would not get Cc's of subthreads
+they are not involved with.
+
+Dear diary, on Fri, Dec 09, 2005 at 06:43:04AM CET, I got a letter
+where linux@horizon.com said that...
+> Finally, pasky@suse.de wrote:
+> > That said, the "git for the confused" contains a lot of nice points, but
+> > I don't think it's a good approach to just have extra document for
+> > clarifying this stuff. It would be much better if the stock
+> > documentation itself would not be confusing in the first place. Same
+> > goes for the "commands overview" (BOUND to get out-of-date over time
+> > since it's detached from the normal per-command documentation; we have
+> > troubles huge enough to keep usage strings in sync, let alone the
+> > manpages).
 > 
-> > Linkage error of git-init-db (or git wrapper) may leave the file
-> > created but leave that in unexecutable form, which could be a
-> > valid concern, but that would signal an error to the make during
-> > the build stage, and "test" target depends on "all" target.
-> 
-> BTW, I sometimes wished if it were easier to disable that "test:
-> all" dependency and run tests without building things first,
-> i.e. deliberately using the already installed binaries, so that
-> I can make sure that updated or new tests reproduce and catch
-> problems with the existing code first and then make sure the
-> binaries built from the updated sources fix the problem.
-> 
-> Of course that is a very specialized application so a makefile
-> variable "make NO_BUILD_BEFORE_TEST=YesPlease test" would not
-> make much sense, but I could have done something like this:
+> I don't think it's the ideal solution either, but the idea of trying to
+> supplant Linus' tutorial is a bit alarming given my current still-novice
+> state.  I've been dabbling with git for a few weeks; many of the people
+> on this list have been using git in earnest for most of its life.
 
-I think having "test-standalone" or "test-nobuild" or whatever rule and
+Now that's precisely what's most precious on you :-) - you have a fresh
+perspective (and you don't seem to appear as a bad writer, at least to
+me), actually much more important that technical correctness especially
+for non-reference documentation like this; we'll catch possible
+inaccuracies while reviewing, that's the least thing.
 
-	test: all test-nobuild
+> Unfortunately, given the number of commands, you can't just document
+> them well individually.  Some overview of how they fit together into
+> a system is required.
 
-	test-nobuild:
-		...
+Hmm. Well, actually... what's the point? If I want to get a really quick
+overview, I do
 
-would be much more elegant.
+	whatis git
+
+and it will DTRT. But when do I need something more detailed but not yet
+the manual page of the given command?
+
+Now, having a task-based structured documentation (also called "user
+manual" ;-) is an entirely different story and yes, that would be
+extremely useful.
 
 -- 
 				Petr "Pasky" Baudis
