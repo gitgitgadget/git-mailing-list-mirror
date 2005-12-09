@@ -1,62 +1,59 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC/PATCH] git-prune: never lose objects reachable from our refs.
-Date: Fri, 09 Dec 2005 12:38:20 -0800
-Message-ID: <7vvexy2egz.fsf@assigned-by-dhcp.cox.net>
-References: <1134084485547-git-send-email-mailing-lists.git@rawuncut.elitemail.org>
-	<1134084485869-git-send-email-mailing-lists.git@rawuncut.elitemail.org>
-	<7v4q5jb149.fsf@assigned-by-dhcp.cox.net>
-	<7vzmnb9m7w.fsf@assigned-by-dhcp.cox.net>
-	<7voe3r9krf.fsf@assigned-by-dhcp.cox.net>
-	<7vmzja91gp.fsf_-_@assigned-by-dhcp.cox.net>
-	<20051209193922.GA31228@ebar091.ebar.dtu.dk>
+Subject: Re: [PATCH] use "git init-db" in tests
+Date: Fri, 09 Dec 2005 12:46:51 -0800
+Message-ID: <7vmzja2e2s.fsf@assigned-by-dhcp.cox.net>
+References: <20051208202555.GA3046@steel.home>
+	<7vu0dje2oi.fsf@assigned-by-dhcp.cox.net>
+	<20051208210251.GB19423@steel.home>
+	<7v7jafcmev.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0512082336i674932bapd631d559e80cad79@mail.gmail.com>
+	<7vlkyu7l05.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0512090259l5f06f6d6n5416e271af36d6a1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 09 21:41:51 2005
+X-From: git-owner@vger.kernel.org Fri Dec 09 21:48:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ekp0b-0004o3-Np
-	for gcvg-git@gmane.org; Fri, 09 Dec 2005 21:38:26 +0100
+	id 1Ekp8s-0007iB-E0
+	for gcvg-git@gmane.org; Fri, 09 Dec 2005 21:46:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932448AbVLIUiX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Dec 2005 15:38:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932450AbVLIUiX
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Dec 2005 15:38:23 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:44197 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932448AbVLIUiW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2005 15:38:22 -0500
+	id S932338AbVLIUqz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Dec 2005 15:46:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932428AbVLIUqz
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Dec 2005 15:46:55 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:62083 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932338AbVLIUqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2005 15:46:54 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051209203633.UVLH20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 9 Dec 2005 15:36:33 -0500
-To: "Peter Eriksen" <s022018@student.dtu.dk>
-In-Reply-To: <20051209193922.GA31228@ebar091.ebar.dtu.dk> (Peter Eriksen's
-	message of "Fri, 9 Dec 2005 20:39:22 +0100")
+          id <20051209204601.BBEM20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 9 Dec 2005 15:46:01 -0500
+To: Alex Riesen <raa.lkml@gmail.com>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13435>
 
-"Peter Eriksen" <s022018@student.dtu.dk> writes:
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-> On Thu, Dec 08, 2005 at 11:25:10PM -0800, Junio C Hamano wrote:
->> Explicit <head> arguments to git-prune replaces, instead of
->> extends, the list of heads used for reachability analysis by
->> fsck-objects.  By giving a subset of heads by mistake, objects
->> reachable only from other heads can be removed, resulting in a
->> corrupted repository.
->> 
->> This commit stops replacing the list of heads, and makes the
->> command line arguments to add to them instead for safety.
->
-> Shouldn't the first sentence be "Explicit <head> arguments to git-prune
-> extends, instead of replaces,...", that is, interchange the words 
-> extends and replaces?  Did I miss something?
+> In my case it was the freshly build directory where a chmod 0666 * was
+> done. This directory wont rebuild (the dates are correct), and the
+> tests run, as if nothing happened.
 
-Sorry, what I meant was: "before this proposed change, it
-replaces instead of extends --- which means DANGER.  This
-proposed change is to make things safer".
+I see.  I appreciate your honesty ;-), it is a pilot error
+alright, but surely it would be nicer if we catch it.
+
+Although your proposed change makes it harder to implement
+my desire to be able to run tests with installed binaries than
+it already is, I'd take the patch for now.  It would catch this
+particular pilot error.
+
+I however would think adding a dependency in t/Makefile to
+make sure the top level is built before starting to run test a
+overkill (I think I've seen some projects to do that), so I'd
+not go there.
