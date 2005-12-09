@@ -1,72 +1,67 @@
-From: Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org>
-Subject: Re: [PATCH 6/17] Document the [<head>...] and -- arguments to git-prune.
-Date: Fri, 9 Dec 2005 01:50:25 +0100
-Message-ID: <20051209005025.GA8932@puritan.petwork>
-References: <1134084485547-git-send-email-mailing-lists.git@rawuncut.elitemail.org> <1134084485869-git-send-email-mailing-lists.git@rawuncut.elitemail.org> <7v4q5jb149.fsf@assigned-by-dhcp.cox.net> <7vzmnb9m7w.fsf@assigned-by-dhcp.cox.net>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: as promised, docs: git for the confused
+Date: Fri, 9 Dec 2005 02:19:38 +0100
+Message-ID: <200512090219.38297.Josef.Weidendorfer@gmx.de>
+References: <20051208063409.31967.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Dec 09 01:51:24 2005
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 09 02:20:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EkWT1-0008H5-Gv
-	for gcvg-git@gmane.org; Fri, 09 Dec 2005 01:50:31 +0100
+	id 1EkWvN-0007Ap-1t
+	for gcvg-git@gmane.org; Fri, 09 Dec 2005 02:19:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932770AbVLIAu0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Dec 2005 19:50:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932771AbVLIAu0
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Dec 2005 19:50:26 -0500
-Received: from mxfep01.bredband.com ([195.54.107.70]:21984 "EHLO
-	mxfep01.bredband.com") by vger.kernel.org with ESMTP
-	id S932770AbVLIAu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Dec 2005 19:50:26 -0500
-Received: from puritan.petwork ([213.112.43.250] [213.112.43.250])
-          by mxfep01.bredband.com with ESMTP
-          id <20051209005024.VTAN676.mxfep01.bredband.com@puritan.petwork>
-          for <git@vger.kernel.org>; Fri, 9 Dec 2005 01:50:24 +0100
-Received: by puritan.petwork (Postfix, from userid 1000)
-	id 5D63EADFE5; Fri,  9 Dec 2005 01:50:25 +0100 (CET)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
+	id S1750728AbVLIBTl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Dec 2005 20:19:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750798AbVLIBTl
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Dec 2005 20:19:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36830 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750728AbVLIBTl (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Dec 2005 20:19:41 -0500
+Received: (qmail invoked by alias); 09 Dec 2005 01:19:39 -0000
+Received: from p5496AA54.dip0.t-ipconnect.de (EHLO [192.168.178.21]) [84.150.170.84]
+  by mail.gmx.net (mp031) with SMTP; 09 Dec 2005 02:19:39 +0100
+X-Authenticated: #352111
+To: linux@horizon.com
+User-Agent: KMail/1.9
+In-Reply-To: <20051208063409.31967.qmail@science.horizon.com>
 Content-Disposition: inline
-In-Reply-To: <7vzmnb9m7w.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13409>
 
-Junio C Hamano wrote:
+On Thursday 08 December 2005 07:34, you wrote:
+> As I mentioned with all my questions, I was writing up the answers
+> I got.  Here's the current status.  If anyone would like to comment on
+> its accuracy or usefulness, feedback is appreciated.
+> ...
 
-> Junio C Hamano <junkio@cox.net> writes:
+> + Oddballs
+> git-mv.perl
+> 	I have to admit, I'm not quite sure what advantages this is
+> 	supposed to have over plain "mv" followed by "git-update-index",
+> 	or why it's complex enough to need perl.
+> 
+> 	Basically, this renames a file, deleting its old name and adding
+> 	its new name to the index.  Otherwise, it's a two-step process
+> 	to rename a file:
+> 	- Rename the file
+> 	- git-add the new name
+> 	Followed by which you must commit both the old and new names
 
-> > Nikolai Weibull <mailing-lists.git@rawuncut.elitemail.org> writes:
+The nice thing about it is that you can move huge directories around,
+or multiple files/dirs at once, and it will do the right thing. E.g.
+	git-mv -k foo* bar/
+will only move files which are version controlled.
 
-> > > The documentation for git-prune was lacking descriptions of the head
-> > > arguments and the -- option.
-> > >
-> > > +<head>...::
-> > > +        The heads to look for unreachable objects in.  This is
-> > > +        relative to $GIT_DIR (e.g., "HEAD", "refs/heads/master").
-> > > +        When unspecified, all heads are updated to match the
-> > > +        remote repository.
+It is actually a 3-step process: rename, delete old, add new.
+Perhaps it should be noted that this has nothing to do with any
+explicit renaming feature like in other SCMs.
 
-> > ? updated to match???
-
-> Come to think of it, why would anybody want to pass heads explicitly?
-> It seems to me that it would allow you to _lose_ objects referenced
-> only from omitted branches...
- 
-Sorry.  I have no idea why I pasted in that description.  How about:
-
-<head>...::
-        A head to use for an unreachability trace.
-
-(This mimics the description of <object> in git-fsck-objects.)
-
-        nikolai
-
--- 
-Nikolai Weibull: now available free of charge at http://bitwi.se/!
-Born in Chicago, IL USA; currently residing in Gothenburg, Sweden.
-main(){printf(&linux["\021%six\012\0"],(linux)["have"]+"fun"-97);}
+Josef
