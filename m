@@ -1,71 +1,59 @@
-From: linux@horizon.com
-Subject: Re: as promised, docs: git for the confused
-Date: 10 Dec 2005 05:56:09 -0500
-Message-ID: <20051210105609.9994.qmail@science.horizon.com>
-References: <7v7jadwfdj.fsf@assigned-by-dhcp.cox.net>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 10 11:57:48 2005
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: Latest cogito broken with bash-3.1
+Date: Sat, 10 Dec 2005 14:18:44 +0100
+Message-ID: <1134220724.15125.4.camel@blade>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Dec 10 14:23:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1El2P5-00055i-DI
-	for gcvg-git@gmane.org; Sat, 10 Dec 2005 11:56:35 +0100
+	id 1El4fU-0000G7-H3
+	for gcvg-git@gmane.org; Sat, 10 Dec 2005 14:21:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965032AbVLJK4U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Dec 2005 05:56:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965044AbVLJK4U
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Dec 2005 05:56:20 -0500
-Received: from science.horizon.com ([192.35.100.1]:39751 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S965032AbVLJK4T
+	id S932343AbVLJNV3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Dec 2005 08:21:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932347AbVLJNV3
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Dec 2005 08:21:29 -0500
+Received: from coyote.holtmann.net ([217.160.111.169]:50841 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S932343AbVLJNV2
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2005 05:56:19 -0500
-Received: (qmail 9995 invoked by uid 1000); 10 Dec 2005 05:56:09 -0500
-To: junkio@cox.net, linux@horizon.com
-In-Reply-To: <7v7jadwfdj.fsf@assigned-by-dhcp.cox.net>
+	Sat, 10 Dec 2005 08:21:28 -0500
+Received: from blade (p5487E506.dip.t-dialin.net [84.135.229.6])
+	by mail.holtmann.net (8.13.4/8.13.4/Debian-3) with ESMTP id jBADImXB015747
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Sat, 10 Dec 2005 14:21:59 +0100
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.5.2 
+X-Spam-Status: No, score=0.3 required=5.0 tests=BAYES_00,DATE_IN_FUTURE_96_XX 
+	autolearn=no version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on coyote.holtmann.net
+X-Virus-Scanned: ClamAV 0.84/1207/Fri Dec  9 23:01:12 2005 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13445>
 
-> I do not necessarily agree with this claim that merging is the
-> whole story about index.  As the steps in the hello/example
-> tutorial demonstrate, index is used to build up what you will
-> commit incrementally, and you can use this facility to view your
-> changes incrementally.
-> 
-> Your workflow could be like this:
+Hi Petr,
 
-(Good example)
+I have a Ubuntu Dapper running and since their update to the latest bash
+version the cg-commit command (and maybe others) is broken. It reports:
 
-> This is sometimes very useful, and I suspect your comment about
-> "commit -a will take care of everything, so you do not need to
-> know about update-index" is coming from your ignoring this
-> aspect of update-index.
+GNU bash, version 3.1.0(1)-release (x86_64-pc-linux-gnu)
+Copyright (C) 2005 Free Software Foundation, Inc.
 
-Well, yes and no.  I'm quite aware that the index can be used that way,
-but I'm less certain it's a good idea.
+The cogito is the latest from kernel.org and when calling cg-commit it
+fails with this message:
 
-I have often wished for a very lightweight "snapshot" feature that I could
-(say) put in a Makefile at the end of every successful compile.  I don't
-want to share those snapshots with the world, and I'll delete them next
-"real" commit, but they'll help me recover if I fumble-finger something.
+cg-commit: line 200: syntax error near unexpected token `('
+cg-commit: line 200: `       eval commitfiles=($(cat $filter | path_xargs git-diff-index -r -m HEAD -- | \'
 
-Think of it as an undo feature.  (With, of course, additional features
-like the ability to see diffs between various stages.)
+I played a little bit with it and it seems all the eval statements are
+broken with this bash version. I have no clue how to fix this, but maybe
+you do.
 
-You can use the index as a one-level undo feature in a similar way.
-Or maybe, since it's manual, its like hitting save from an editor.
-Either way, the fact that it's only one level means that I have to
-think about what I'm throwing away when I use it, which is somewhat
-annoying.
+Regards
 
-
-Add that to the fact that it's unlike other version control systems
-(including cogito) which go straight from the working directory into
-the history, and I thought it better do downplay it.
-
-Certainly I think that people will *usually* just "git-commit -a" to
-commit their current version.  Edit, compile, test, commit.  Except in
-unusual cases, I want the commit to reflect what I just tested.
-
-Using git-update-index in the meantime is an optional extra.
+Marcel
