@@ -1,125 +1,128 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: as promised, docs: git for the confused
-Date: Fri, 09 Dec 2005 15:23:49 -0800
-Message-ID: <7vmzj9zwfu.fsf@assigned-by-dhcp.cox.net>
-References: <20051209215414.14072.qmail@science.horizon.com>
+Date: Fri, 09 Dec 2005 17:22:05 -0800
+Message-ID: <7vk6edycea.fsf@assigned-by-dhcp.cox.net>
+References: <7vbqzrcmgr.fsf@assigned-by-dhcp.cox.net>
+	<20051209054401.4016.qmail@science.horizon.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 10 00:25:55 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 10 02:24:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ekrb8-00062C-5v
-	for gcvg-git@gmane.org; Sat, 10 Dec 2005 00:24:18 +0100
+	id 1EktT7-0000Gj-5M
+	for gcvg-git@gmane.org; Sat, 10 Dec 2005 02:24:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932266AbVLIXXx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Dec 2005 18:23:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932498AbVLIXXw
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Dec 2005 18:23:52 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:4298 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932266AbVLIXXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Dec 2005 18:23:52 -0500
+	id S932507AbVLJBWK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Dec 2005 20:22:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932547AbVLJBWK
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Dec 2005 20:22:10 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:57262 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932507AbVLJBWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Dec 2005 20:22:09 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao06.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051209232224.SQZU26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 9 Dec 2005 18:22:24 -0500
+          id <20051210012018.CAUU20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 9 Dec 2005 20:20:18 -0500
 To: linux@horizon.com
-In-Reply-To: <20051209215414.14072.qmail@science.horizon.com>
-	(linux@horizon.com's message of "9 Dec 2005 16:54:14 -0500")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13439>
 
 linux@horizon.com writes:
 
-> Some users want to track someone else's repository.
-> Others...
+> ....  There has
+> been motion towards putting the git-* commands in their own directory,
+> to be invoked by the /usr/bin/git wrapper.
+>
+> In this case, you'll have to leave out the initial hyphen, or add the
+> git binary directory to your $PATH.
 
-Exactly.  That's why task oriented list would be most useful.
-Here is a starter.
+Misleading, if not incorrect.  git wrapper and a handful others
+such as receive-pack and upload-pack that need to be directly
+invoked via ssh will remain in /usr/bin and the users do not
+need to worry about where the rest went.  The recommended way
+would be to use non-dash form.  If you care about the extra
+indirection done by "git" in your script, run "git --exec-path"
+once to get the git binary directory and prepend the result to
+PATH.  You _could_ do the latter for your interactive shell
+session as well, but it is not actively recommended.
 
+> * Resetting
+>
+> There are actually three kinds of git-reset:
+> git-reset --soft: Only overwrite the reference.  If you need to, you
+> 	can put everything back with a second git-reset --soft OLD_HEAD.
 
-Everyday GIT Cheat Sheet Or Git With 20 Commands
-================================================
+I am not sure what you mean by "second" here.  Did you mean to
+say something like this?
 
-Repository Administration
--------------------------
+    After you did "git-reset --soft somewhereyoudidnotmeantogo"
+    by mistake, you can recover with "git-reset --soft ORIG_HEAD".
 
-  * "init-db" or "clone" to create the initial repository.
-  * hooks.
-    - public accessible via dumb protocols: need
-      update-server-info in hooks/post-update
-    - CVS style shared repository: see howto/update-hook-example
-      for ideas on branch head policy
-  * "fsck-objects", "repack" and "prune".
+> There is an undelete: git-reset stores the previous HEAD commit in
+> OLD_HEAD.
 
+And probably you meant to say ORIG_HEAD (the latter part of the
+documentation you do say ORIG_HEAD).
 
-Individual Developer
---------------------
+Now I finally had a chance to finish the command list part.
 
-Standalone tasks
+> git-prune.sh
+>...
+> 	eliminate the 
 
-  * "show-branch" or "gitk" to see where you are.
-  * "diff" or "status" to see what you are in the middle of.
-  * "log" to see what happened.
-  * "whatchanged" to find out where things come from.
-  * "checkout" and "checkout -b" to switch branches.
-  * "commit" to advance the current branch head.
-  * "reset" to undo unpublished changes.
-  * "checkout -- path" to undo working tree chanegs.
-  * "pull ." to merge between branches.
-  * "rebase" to maintain topic branches.
-  * "fsck-objects", "repack" and "prune".
+Incomplete sentence.
 
-Working as a participant
+> git-pack-objects
+> 	Given a list of objects on stdin, build a pack file.  This is
+> 	a helper used by the various network communication scripts.
 
-  * all the commands useful for standalone individual developer tasks.
-  * "pull origin" to keep up-to-date.
-  * "push upstream" in CVS style shared repository workflow.
-  * "format-patch" in kernel style public forum workflow.
+... and by (obviously) git-repack.
 
-Integrator
-----------
+> + Accepting changes by e-mail
+> git-apply
+> 	Apply a (git-style extended) patch to the current index
+> 	and working directory.
 
-  * all the commands useful for standalone individual developer tasks.
-  * "am" to apply patches.
-  * "pull somewhere-else" to merge from trusted lieutenants.
-  * "format-patch" to send suggested alternative to contributors.
-  * "revert" to undo botched changes.
-  * "push public" to publish the results.
+Actually it can take "patch -p1" format patch, and the input
+does not have to be git-extended patch.  Two extra things you
+can do when the input is git-extended patch is to apply
+rename/copy and filemode changes.
 
+>   git-merge-base
+>...
+> 	somewhat hairy.  The algorithm is not 100% final yet.
 
-It might be surprising that only handful commands are of
-everyday use among 100+, but the ones listed above are the only
-ones I use every day.  The exact number depends on how you count
-multi-purpose commands like "checkout" and "pull", but only
-these need to be learned to play all roles listed above.
+I do not think there is any remaining issues with the current
+algorithm, so you can mark it final now.
 
-	am
-	checkout
-	checkout -- path
-	checkout -b
-	commit
-	diff
-	fetch
-	format-patch
-	fsck-objects
-	gitk
-	init-db
-	log
-	prune
-	pull .
-	pull other
-	push
-	rebase
-	repack
-	reset
-	revert
-	show-branch
-	status
-	whatchanged
+>   git-mktag
+> 	Creates a tag object.  Verifies syntactic correctness of its
+> 	input.  (If you want to cheat, use git-hash-object.)
+
+Is there a particular reason to encourage cheating?  IOW, is
+mktag cumbersome to use, and if so how?
+
+>   git-local-fetch
+> 	Duplicates a git repository from the local system.
+> 	(Er... is this used anywhere???)
+
+Not by git barebone Porcelain, but other Porcelains can use it
+if they want.  Same thing for git-ssh-fetch.
+
+>   git-ssh-pull
+> 	A helper program that pulls over ssh.
+
+git-ssh-pull and git-ssh-fetch are the same program, and the
+former is only for backward compatibility.  Earlier, only
+git-ssh-pull/git-ssh-push pair existed and they continue to
+invoke the other on the other end.  Terminology standardized to
+call downloading phase "-fetch", and its counterpart "-upload";
+so git-ssh-fetch invokes git-ssh-upload on the other end (so
+ssh-pull/ssh-push can be viewed obsolete if you want).
