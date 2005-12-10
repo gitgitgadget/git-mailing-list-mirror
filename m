@@ -1,82 +1,70 @@
-From: "David S. Miller" <davem@davemloft.net>
-Subject: t6021-merge-criss-cross.sh fails on some systems
-Date: Sat, 10 Dec 2005 14:42:35 -0800 (PST)
-Message-ID: <20051210.144235.125914760.davem@davemloft.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/25] Usage message clean-up
+Date: Sat, 10 Dec 2005 23:50:44 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512102349040.3083@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1134243476675-git-send-email-freku045@student.liu.se>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Dec 10 23:42:54 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 10 23:51:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ElDQ1-0000qM-PR
-	for gcvg-git@gmane.org; Sat, 10 Dec 2005 23:42:18 +0100
+	id 1ElDYJ-0002aE-Nn
+	for gcvg-git@gmane.org; Sat, 10 Dec 2005 23:50:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750951AbVLJWmM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Dec 2005 17:42:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbVLJWmM
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Dec 2005 17:42:12 -0500
-Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:9389
-	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
-	id S1750951AbVLJWmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2005 17:42:10 -0500
-Received: from localhost.localdomain
-	([127.0.0.1] helo=localhost ident=davem)
-	by sunset.davemloft.net with esmtp (Exim 4.54)
-	id 1ElDQK-00055x-GG
-	for git@vger.kernel.org; Sat, 10 Dec 2005 14:42:36 -0800
-To: git@vger.kernel.org
-X-Mailer: Mew version 4.2.53 on Emacs 21.4 / Mule 5.0 (SAKAKI)
+	id S1751260AbVLJWut (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Dec 2005 17:50:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932085AbVLJWus
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Dec 2005 17:50:48 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:32915 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751276AbVLJWur (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2005 17:50:47 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id BFAA213F9C0; Sat, 10 Dec 2005 23:50:44 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A58F39DCCB; Sat, 10 Dec 2005 23:50:44 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 93A6E9DCBF; Sat, 10 Dec 2005 23:50:44 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 3F07613F9C0; Sat, 10 Dec 2005 23:50:44 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: freku045@student.liu.se
+In-Reply-To: <1134243476675-git-send-email-freku045@student.liu.se>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13476>
 
+Hi,
 
-This is really weird, so I started to try and get some diagnostics.
+On Sat, 10 Dec 2005, freku045@student.liu.se wrote:
 
-It doesn't fail on my sparc64 box running debian-testing
-but it does fail on my Ubuntu x86 laptop, a sparc64 box
-running debian-unstable, and an Ubuntu sparc64 system as
-well.
+> * Any unrecognised options should make the script die with the usage
+>   message.
 
-This is with the current GIT tree.
+Good.
 
-I ran the test one step at a time to try and get some diagnostics,
-here's what fails:
+> * -h and --help makes the script die with the usage message.
 
-davem@nuts:~/src/GIT/test$ git merge "pre E3 merge" B A
-Trying really trivial in-index merge...
-fatal: Merge requires file-level merging
-Nope.
-Merging B with A
-Merging:
-1f14398f4c69d09ab1a4d53fe096ddec3ea45207 C3
-d1072ae2682fad309c493343c5d77c9897fb6afa B8
-found 1 common ancestor(s):
-926159b75e3d9b240b1eae36eb1977b095ff2e1a Initial commit
-Auto-merging file
-Traceback (most recent call last):
-  File "/home/davem/bin/git-merge-recursive", line 868, in ?
-    firstBranch, secondBranch, graph)
-  File "/home/davem/bin/git-merge-recursive", line 87, in merge
-    branch1Name, branch2Name)
-  File "/home/davem/bin/git-merge-recursive", line 160, in mergeTrees
-    if not processEntry(entry, branch1Name, branch2Name):
-  File "/home/davem/bin/git-merge-recursive", line 821, in processEntry
-    branch1Name, branch2Name)
-  File "/home/davem/bin/git-merge-recursive", line 212, in mergeFile
-    src1, orig, src2], returnCode=True)
-  File "/home/davem/share/git-core/python/gitMergeCommon.py", line 72, in runProgram
-    raise ProgramError(progStr, e.strerror)
-ProgramError: merge -L B/file -L orig/file -L A/file .merge_file_kDtaE3 .merge_file_K30Hgp .merge_file_frqYIs: No such file or directory
-No merge strategy handled the merge.
-davem@nuts:~/src/GIT/test$ ls
+Good.
 
-It looks like maybe some quoting issue?  The call failing above is the
-one in git-merge-recursive which looks like this:
+> * The message is printed to stderr.
 
-    [dummy, clean] = merge(graph.shaMap[h1], graph.shaMap[h2],
-                           firstBranch, secondBranch, graph)
+Arguable.
 
-Any ideas?
+> * The message is of the form "usage: $0 options"
+
+Not good. We are in a transition to "git whatever" from "git-whatever".
+
+Besides, I have to admit that I am a bit annoyed by 25 mini mails for the 
+same purpose.
+
+Hth,
+Dscho
