@@ -1,153 +1,82 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Allow saving an object from a pipe
-Date: Sat, 10 Dec 2005 17:25:24 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0512101724290.25300@iabervon.org>
+From: "David S. Miller" <davem@davemloft.net>
+Subject: t6021-merge-criss-cross.sh fails on some systems
+Date: Sat, 10 Dec 2005 14:42:35 -0800 (PST)
+Message-ID: <20051210.144235.125914760.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Dec 10 23:24:44 2005
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Dec 10 23:42:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ElD8y-0005Uf-Cw
-	for gcvg-git@gmane.org; Sat, 10 Dec 2005 23:24:40 +0100
+	id 1ElDQ1-0000qM-PR
+	for gcvg-git@gmane.org; Sat, 10 Dec 2005 23:42:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750731AbVLJWYh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Dec 2005 17:24:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750738AbVLJWYh
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Dec 2005 17:24:37 -0500
-Received: from iabervon.org ([66.92.72.58]:37637 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1750731AbVLJWYh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Dec 2005 17:24:37 -0500
-Received: (qmail 4245 invoked by uid 1000); 10 Dec 2005 17:25:25 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Dec 2005 17:25:25 -0500
+	id S1750951AbVLJWmM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Dec 2005 17:42:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbVLJWmM
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Dec 2005 17:42:12 -0500
+Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:9389
+	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
+	id S1750951AbVLJWmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Dec 2005 17:42:10 -0500
+Received: from localhost.localdomain
+	([127.0.0.1] helo=localhost ident=davem)
+	by sunset.davemloft.net with esmtp (Exim 4.54)
+	id 1ElDQK-00055x-GG
+	for git@vger.kernel.org; Sat, 10 Dec 2005 14:42:36 -0800
 To: git@vger.kernel.org
+X-Mailer: Mew version 4.2.53 on Emacs 21.4 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13475>
 
-In order to support getting data into git with scripts, this adds a
---stdin option to git-hash-object, which will make it read from stdin.
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+This is really weird, so I started to try and get some diagnostics.
 
----
+It doesn't fail on my sparc64 box running debian-testing
+but it does fail on my Ubuntu x86 laptop, a sparc64 box
+running debian-unstable, and an Ubuntu sparc64 system as
+well.
 
- Documentation/git-hash-object.txt |    3 +++
- cache.h                           |    1 +
- hash-object.c                     |   15 +++++++++++++--
- sha1_file.c                       |   34 ++++++++++++++++++++++++++++++++++
- 4 files changed, 51 insertions(+), 2 deletions(-)
+This is with the current GIT tree.
 
-fac4c3a5c27839006e5d086ef282b252bd5f390e
-diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash-object.txt
-index db12e92..eaac4c9 100644
---- a/Documentation/git-hash-object.txt
-+++ b/Documentation/git-hash-object.txt
-@@ -29,6 +29,9 @@ OPTIONS
- -w::
- 	Actually write the object into the object database.
- 
-+--stdin::
-+	Read the object from standard input instead of from a file.
-+
- Author
- ------
- Written by Junio C Hamano <junkio@cox.net>
-diff --git a/cache.h b/cache.h
-index 86fc250..c78d8ae 100644
---- a/cache.h
-+++ b/cache.h
-@@ -144,6 +144,7 @@ extern int ce_match_stat(struct cache_en
- extern int ce_modified(struct cache_entry *ce, struct stat *st);
- extern int ce_path_match(const struct cache_entry *ce, const char **pathspec);
- extern int index_fd(unsigned char *sha1, int fd, struct stat *st, int write_object, const char *type);
-+extern int index_pipe(unsigned char *sha1, int fd, const char *type, int write_object);
- extern int index_path(unsigned char *sha1, const char *path, struct stat *st, int write_object);
- extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
- 
-diff --git a/hash-object.c b/hash-object.c
-index 6227936..6502b5b 100644
---- a/hash-object.c
-+++ b/hash-object.c
-@@ -21,8 +21,16 @@ static void hash_object(const char *path
- 	printf("%s\n", sha1_to_hex(sha1));
- }
- 
-+static void hash_stdin(const char *type, int write_object)
-+{
-+	unsigned char sha1[20];
-+	if (index_pipe(sha1, 0, type, write_object))
-+		die("Unable to add stdin to database");
-+	printf("%s\n", sha1_to_hex(sha1));
-+}
-+
- static const char hash_object_usage[] =
--"git-hash-object [-t <type>] [-w] <file>...";
-+"git-hash-object [-t <type>] [-w] [--stdin] <file>...";
- 
- int main(int argc, char **argv)
- {
-@@ -53,9 +61,12 @@ int main(int argc, char **argv)
- 			}
- 			else if (!strcmp(argv[i], "--help"))
- 				usage(hash_object_usage);
-+			else if (!strcmp(argv[i], "--stdin")) {
-+				hash_stdin(type, write_object);
-+			}
- 			else
- 				die(hash_object_usage);
--		}
-+		} 
- 		else {
- 			const char *arg = argv[i];
- 			if (0 <= prefix_length)
-diff --git a/sha1_file.c b/sha1_file.c
-index 111a71d..fa22e9c 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1528,6 +1528,40 @@ int has_sha1_file(const unsigned char *s
- 	return find_sha1_file(sha1, &st) ? 1 : 0;
- }
- 
-+int index_pipe(unsigned char *sha1, int fd, const char *type, int write_object)
-+{
-+	unsigned long size = 4096;
-+	char *buf = malloc(size);
-+	int iret, ret;
-+	unsigned long off = 0;
-+	unsigned char hdr[50];
-+	int hdrlen;
-+	do {
-+		iret = read(fd, buf + off, size - off);
-+		if (iret > 0) {
-+			off += iret;
-+			if (off == size) {
-+				size *= 2;
-+				buf = realloc(buf, size);
-+			}
-+		}
-+	} while (iret > 0);
-+	if (iret < 0) {
-+		free(buf);
-+		return -1;
-+	}
-+	if (!type)
-+		type = "blob";
-+	if (write_object)
-+		ret = write_sha1_file(buf, off, type, sha1);
-+	else {
-+		write_sha1_file_prepare(buf, off, type, sha1, hdr, &hdrlen);
-+		ret = 0;
-+	}
-+	free(buf);
-+	return ret;
-+}
-+
- int index_fd(unsigned char *sha1, int fd, struct stat *st, int write_object, const char *type)
- {
- 	unsigned long size = st->st_size;
--- 
-0.99.9.GIT
+I ran the test one step at a time to try and get some diagnostics,
+here's what fails:
+
+davem@nuts:~/src/GIT/test$ git merge "pre E3 merge" B A
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+Merging B with A
+Merging:
+1f14398f4c69d09ab1a4d53fe096ddec3ea45207 C3
+d1072ae2682fad309c493343c5d77c9897fb6afa B8
+found 1 common ancestor(s):
+926159b75e3d9b240b1eae36eb1977b095ff2e1a Initial commit
+Auto-merging file
+Traceback (most recent call last):
+  File "/home/davem/bin/git-merge-recursive", line 868, in ?
+    firstBranch, secondBranch, graph)
+  File "/home/davem/bin/git-merge-recursive", line 87, in merge
+    branch1Name, branch2Name)
+  File "/home/davem/bin/git-merge-recursive", line 160, in mergeTrees
+    if not processEntry(entry, branch1Name, branch2Name):
+  File "/home/davem/bin/git-merge-recursive", line 821, in processEntry
+    branch1Name, branch2Name)
+  File "/home/davem/bin/git-merge-recursive", line 212, in mergeFile
+    src1, orig, src2], returnCode=True)
+  File "/home/davem/share/git-core/python/gitMergeCommon.py", line 72, in runProgram
+    raise ProgramError(progStr, e.strerror)
+ProgramError: merge -L B/file -L orig/file -L A/file .merge_file_kDtaE3 .merge_file_K30Hgp .merge_file_frqYIs: No such file or directory
+No merge strategy handled the merge.
+davem@nuts:~/src/GIT/test$ ls
+
+It looks like maybe some quoting issue?  The call failing above is the
+one in git-merge-recursive which looks like this:
+
+    [dummy, clean] = merge(graph.shaMap[h1], graph.shaMap[h2],
+                           firstBranch, secondBranch, graph)
+
+Any ideas?
