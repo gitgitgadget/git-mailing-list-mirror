@@ -1,48 +1,78 @@
-From: Ben Lau <benlau@ust.hk>
-Subject: Branches merging by only overwrite files
-Date: Sun, 11 Dec 2005 16:30:49 +0800
-Message-ID: <439BE3B9.3040308@ust.hk>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: Re: Latest cogito broken with bash-3.1
+Date: Sun, 11 Dec 2005 09:31:07 +0100
+Message-ID: <1134289867.9541.9.camel@blade>
+References: <1134220724.15125.4.camel@blade>
+	 <20051211001106.GV22159@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Dec 11 09:32:54 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 11 09:34:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ElMc1-0001sf-Bc
+	id 1ElMc0-0001sf-PS
 	for gcvg-git@gmane.org; Sun, 11 Dec 2005 09:31:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751340AbVLKIa6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Dec 2005 03:30:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751343AbVLKIa6
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Dec 2005 03:30:58 -0500
-Received: from mx4.ust.hk ([143.89.13.26]:31237 "EHLO mx4.ust.hk")
-	by vger.kernel.org with ESMTP id S1751340AbVLKIa6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Dec 2005 03:30:58 -0500
-Received: from [221.125.13.158] ([221.125.13.158])
-	(authenticated bits=0)
-	by mx4.ust.hk (8.12.11/8.12.11) with ESMTP id jBB8UoQk019304
-	for <git@vger.kernel.org>; Sun, 11 Dec 2005 16:30:55 +0800 (HKT)
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
+	id S1751341AbVLKIbM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Dec 2005 03:31:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751343AbVLKIbM
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Dec 2005 03:31:12 -0500
+Received: from coyote.holtmann.net ([217.160.111.169]:20381 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S1751341AbVLKIbL
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Dec 2005 03:31:11 -0500
+Received: from blade (p5487D91F.dip.t-dialin.net [84.135.217.31])
+	by mail.holtmann.net (8.13.4/8.13.4/Debian-3) with ESMTP id jBB8Vg9U027844
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
+	Sun, 11 Dec 2005 09:31:42 +0100
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051211001106.GV22159@pasky.or.cz>
+X-Mailer: Evolution 2.5.2 
+X-Spam-Status: No, score=0.3 required=5.0 tests=BAYES_00,DATE_IN_FUTURE_96_XX 
+	autolearn=no version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on coyote.holtmann.net
+X-Virus-Scanned: ClamAV 0.84/1207/Fri Dec  9 23:01:12 2005 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13491>
 
-Hi,
+Hi Petr,
 
-    I am looking for a solution to merge two branches but do not perform 
-file level merge. Instead, I wish the result file is the copy from any 
-one of the branches.
+> > The cogito is the latest from kernel.org and when calling cg-commit it
+> > fails with this message:
+> > 
+> > cg-commit: line 200: syntax error near unexpected token `('
+> > cg-commit: line 200: `       eval commitfiles=($(cat $filter | path_xargs git-diff-index -r -m HEAD -- | \'
+> > 
+> > I played a little bit with it and it seems all the eval statements are
+> > broken with this bash version. I have no clue how to fix this, but maybe
+> > you do.
+> 
+>   it seems like the newer bash is stricter than the older versions in
+> some obscure regards. Quoting the eval arguments (which is the proper
+> thing to do anyway) fixed that particular problem; I've hit another
+> problem during a test commit wrt. whitespace separators - I've fixed
+> that too, and pushed out.
 
-    For example, assumes it has two branches A and B,  some of the files 
-are modified in both of them. In this case, `/usr/bin/merge` could not 
-be execated, it just have to choose the revision from branch A and 
-discards all the changes from B. For the rest of files, it just simply 
-choose the newest copy from A or B.
+it's now working again. Thanks. What do you think about another release?
+I haven't checked the other distributions yet, but I just saw that
+Debian unstable also moved to version 3.1 of bash.
 
-    How can I perform this action?
+There exists also another problem with the new bash. It is the broken
+pipe error from cg-log.
 
-Thanks in advance.
+cg-log: line 141: echo: write error: Broken pipe
+
+The line number varies depending how much you scrolled and when you
+scrolled to the end no broken pipe error comes up. Do you have any idea
+on how to deal with this. I saw your comment about that bash is broken
+and the extra trap command, but it doesn't help. I never saw that
+problem with older versions of bash.
+
+Regards
+
+Marcel
