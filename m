@@ -1,70 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/25] Usage message clean-up
-Date: Sat, 10 Dec 2005 23:50:44 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512102349040.3083@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <1134243476675-git-send-email-freku045@student.liu.se>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Latest cogito broken with bash-3.1
+Date: Sun, 11 Dec 2005 01:11:06 +0100
+Message-ID: <20051211001106.GV22159@pasky.or.cz>
+References: <1134220724.15125.4.camel@blade>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 10 23:51:46 2005
+X-From: git-owner@vger.kernel.org Sun Dec 11 01:12:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ElDYJ-0002aE-Nn
-	for gcvg-git@gmane.org; Sat, 10 Dec 2005 23:50:52 +0100
+	id 1ElEo7-0004q3-Hw
+	for gcvg-git@gmane.org; Sun, 11 Dec 2005 01:11:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260AbVLJWut (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Dec 2005 17:50:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932085AbVLJWus
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Dec 2005 17:50:48 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:32915 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751276AbVLJWur (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Dec 2005 17:50:47 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BFAA213F9C0; Sat, 10 Dec 2005 23:50:44 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A58F39DCCB; Sat, 10 Dec 2005 23:50:44 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 93A6E9DCBF; Sat, 10 Dec 2005 23:50:44 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3F07613F9C0; Sat, 10 Dec 2005 23:50:44 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: freku045@student.liu.se
-In-Reply-To: <1134243476675-git-send-email-freku045@student.liu.se>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1161072AbVLKALK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Dec 2005 19:11:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161073AbVLKALK
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Dec 2005 19:11:10 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:61113 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1161072AbVLKALJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Dec 2005 19:11:09 -0500
+Received: (qmail 8865 invoked by uid 2001); 11 Dec 2005 01:11:06 +0100
+To: Marcel Holtmann <marcel@holtmann.org>
+Content-Disposition: inline
+In-Reply-To: <1134220724.15125.4.camel@blade>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13477>
 
-Hi,
+  Hello,
 
-On Sat, 10 Dec 2005, freku045@student.liu.se wrote:
+Dear diary, on Sat, Dec 10, 2005 at 02:18:44PM CET, I got a letter
+where Marcel Holtmann <marcel@holtmann.org> said that...
+> The cogito is the latest from kernel.org and when calling cg-commit it
+> fails with this message:
+> 
+> cg-commit: line 200: syntax error near unexpected token `('
+> cg-commit: line 200: `       eval commitfiles=($(cat $filter | path_xargs git-diff-index -r -m HEAD -- | \'
+> 
+> I played a little bit with it and it seems all the eval statements are
+> broken with this bash version. I have no clue how to fix this, but maybe
+> you do.
 
-> * Any unrecognised options should make the script die with the usage
->   message.
+  it seems like the newer bash is stricter than the older versions in
+some obscure regards. Quoting the eval arguments (which is the proper
+thing to do anyway) fixed that particular problem; I've hit another
+problem during a test commit wrt. whitespace separators - I've fixed
+that too, and pushed out.
 
-Good.
+  Thanks,
 
-> * -h and --help makes the script die with the usage message.
-
-Good.
-
-> * The message is printed to stderr.
-
-Arguable.
-
-> * The message is of the form "usage: $0 options"
-
-Not good. We are in a transition to "git whatever" from "git-whatever".
-
-Besides, I have to admit that I am a bit annoyed by 25 mini mails for the 
-same purpose.
-
-Hth,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
