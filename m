@@ -1,183 +1,160 @@
-From: Ben Lau <benlau@ust.hk>
-Subject: Re: Branches merging by only overwrite files
-Date: Sun, 11 Dec 2005 19:15:44 +0800
-Message-ID: <439C0A60.6070500@ust.hk>
-References: <439BE3B9.3040308@ust.hk> <7vbqzonfkx.fsf@assigned-by-dhcp.cox.net>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Offload most of cg-object-id to git-rev-parse
+Date: Sun, 11 Dec 2005 19:19:01 +0100
+Message-ID: <20051211181901.GA2960@diku.dk>
+References: <20051207213905.GA25890@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 11 12:16:49 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Dec 11 19:19:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ElPBl-00052l-Dm
-	for gcvg-git@gmane.org; Sun, 11 Dec 2005 12:16:21 +0100
+	id 1ElVmu-0006GX-Vt
+	for gcvg-git@gmane.org; Sun, 11 Dec 2005 19:19:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751344AbVLKLQL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Dec 2005 06:16:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbVLKLQL
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Dec 2005 06:16:11 -0500
-Received: from mx4.ust.hk ([143.89.13.26]:36875 "EHLO mx4.ust.hk")
-	by vger.kernel.org with ESMTP id S1751345AbVLKLQK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Dec 2005 06:16:10 -0500
-Received: from [221.125.13.158] ([221.125.13.158])
-	(authenticated bits=0)
-	by mx4.ust.hk (8.12.11/8.12.11) with ESMTP id jBBBFigT025751;
-	Sun, 11 Dec 2005 19:15:48 +0800 (HKT)
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbqzonfkx.fsf@assigned-by-dhcp.cox.net>
+	id S1750766AbVLKSTE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Dec 2005 13:19:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750767AbVLKSTE
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Dec 2005 13:19:04 -0500
+Received: from nhugin.diku.dk ([130.225.96.140]:38648 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S1750766AbVLKSTD (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Dec 2005 13:19:03 -0500
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 5F8466DFE7E; Sun, 11 Dec 2005 19:18:02 +0100 (CET)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 15B4A6DFE34; Sun, 11 Dec 2005 19:18:02 +0100 (CET)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 6F6ED615B3; Sun, 11 Dec 2005 19:19:01 +0100 (CET)
+To: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20051207213905.GA25890@diku.dk>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13499>
 
-Junio C Hamano wrote:
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+ 
+---
 
->Ben Lau <benlau@ust.hk> writes:
->
->
->>   I am looking for a solution to merge two branches but do not perform 
->>file level merge. Instead, I wish the result file is the copy from any 
->>one of the branches.
->>
->
->It might be better to state why you need this first.  It could
->be that what you really want to solve is not related to merge at
->all.
->
->
-Sorry for not giving the reason to require this merge strategy. I just 
-afraid it need to write too long and discourge people in reading my email.
+ Forget the other 4 patches. Here's one that fixes the thing we
+ discussed on IRC, i.e. ambiguous ID's are handled correctly
+ (unfortunately without giving a proper warning message).
+ 
+ This one also assumes that there is no reason for checking revs
+ returned by git-rev-list with git-rev-parse --revs-only.
 
-Recently, besides to use git for kernel's version control. I used it to 
-manage the change of a content management software called xoops. It is a 
-PHP system. I have maintained several websites based on this engine.
+ TODO         |    2 --
+ cg-object-id |   58 ++++++++++++++++------------------------------------------
+ 2 files changed, 16 insertions(+), 44 deletions(-)
 
-Those website's code was maintained by CVS in the past. But CVS's branch 
-management is quite terrible and therefore each site have their own 
-repository. And now I am going to merge all the sites into a single git 
-repository with multple branches.
-
-Source layout of xoops:
-
-html/class
-html/themes
-html/include
-[[:snipped:]]
-html/modules
-
-As it is module-based CMS system, after install the core system, users 
-may choose to install any module to enchance their site by placing codes 
-under the path of 'html/modules' .
-
-That means every user must have their own changes. To simplify the 
-upgrade process, users just have to replace the old files by newest 
-source , no matter it is the core system or modules.
-
-Consider the following tree:
-
-        v2.0
-       /    \
-    tag1    v2.2  
-    /   \     \
- site1 site2  tag2
-                \
-              site3
-
-Branches site1 and site2 are dervated from v2.0 and have installed 
-several different modules. In the tree, it may have another sites 
-running v2.2 like site3. Now, I am going to upgrade site2 to tag2(based 
-on v2.2) by merge the branches the produce the tree as follow:
-
-        v2.0
-       /    \
-    tag1     v2.2  
-    /   \     \
- site1   \   tag2
-          \  /  \
-        site2   site3
-
-But the merge is not smooth, tag2 may contains some modules that are 
-newer then what site2 has been installed. Replace those conflict files 
-from tag2 should be the simplest method , and that is why I want this 
-merge strategy.
-
->>   For example, assumes it has two branches A and B,  some of the files 
->>are modified in both of them. In this case, `/usr/bin/merge` could not 
->>be execated, it just have to choose the revision from branch A and 
->>discards all the changes from B. For the rest of files, it just simply 
->>choose the newest copy from A or B.
->>
->
->I wonder why you say "could not be executed".  I take it to mean
->you just do not want to even when it could.
->
->
-well... a typo mistake, should be "should not be execated"
-
->Now, it is not clear if you always want copy from branch A and
->not from branch B when both branches have the same path, or you
->want to pick one at random between A and B.  If branch A kept
->the file intact and branch B modified it, what do you want to
->happen?  The default "merge" semantics in git (unless you are
->using "ours" strategy) in such a case is always to take the
->version from branch B.  Is that consistent with what you want?
->
->What do you exactly mean "newest copy from A or B"?  What are
->you basing the "newest" determination on?  The commit date of A
->and B commits, or the author date ot two?
->
->
-If the file is modified in branch A, choose the revision from A.
-If branch A kept the file intact and branch B modified it, It could use 
-the branch B's version.
-
-In fact, It just copy files from branch A to branch B.
-
->Assuming that you can give reasonable and consistent answer to
->the above question to define the semantics of your "new merge
->algorithm", what you would do is to write a new script
->git-merge-benlau to implement whatever semantics you picked.
->You could model it after existing merge strategy, such as
->git-merge-resolve.sh or git-merge-stupid.sh.  Then you give the
->new merge strategy to "git-merge" or "git-pull".
->
->
-hmmm. Do you think my answer make sense? May be I could call it 
-"git-merge-direct-copy".  Although it just copy and overwrite files from 
-a branch to another , it could help to manage web-based CMS like xoops 
-where add-ons are installed by source  within the source tree.
-
->For example, if you want all the usual "trivial merges" to work
->just like the default git merge algorithms, but always take
->"our" version instead of running file-level merge when both
->sides modified a file, then you start from a copy of
->git-merge-stupid.sh, and replace "git-merge-one-file" with
->"git-merge-one-file-benlau'.  Copy "git-merge-one-file.sh" to
->create another new script, "git-merge-one-file-benlau", and
->replace this line:
->
->	merge "$src1" "$orig" "$src"
->
->with
->
->	cat "$orig" >"$src1"
->
->and you are done.
->
->I outlined the above without knowing what you really want to
->achieve, and I do not think the resulting merge strategy makes
->much sense, but that is what I get form hacking without knowing
->what you are really trying to do ;-).
->
->
-Spent some times reading the manual and source code, I found similar way 
-to implement. But I don't want to waste the effort in coding , that is 
-why I sent this email out to see would it have any solutions that don't 
-require to add a new algorithm and changes the source code. If no such 
-method, then I will start coding, at least it will be useful to me.
-
-Thanks!!
+diff --git a/TODO b/TODO
+index 0658b39..26bb4d0 100644
+--- a/TODO
++++ b/TODO
+@@ -27,8 +27,6 @@ cg-*patch should be pre-1.0.)
+ 
+ 	Includes merge-order cg-log and cg-diff checking for renames.
+ 
+-* Offload most of cg-object-id to git-rev-parse
+-
+ * Show only first 12 (or so) nibbles of the hashes everywhere
+ 	Even this might be too much, but more than this is really useless
+ 	for anyone remotely human. And it's less scary, too.
+diff --git a/cg-object-id b/cg-object-id
+index 1628e93..49d6d99 100755
+--- a/cg-object-id
++++ b/cg-object-id
+@@ -40,54 +40,29 @@ deprecated_alias cg-object-id commit-id 
+ normalize_id()
+ {
+ 	local id="$1"
++	local revid=
++	local valid=
+ 
+-	if [ "${id:(-1):1}" = "^" ]; then
+-		# find first parent
+-		normalize_id "${id%^}"
+-		normid=$(git-cat-file commit "$normid" | \
+-			 awk '/^parent/{print $2; exit};/^$/{exit}') || exit 1
+-		type="commit"
+-		return
+-	fi
+-
+-	if [ ! "$id" ] || [ "$id" = "this" ] || [ "$id" = "HEAD" ]; then
+-		read id < "$_git/$(git-symbolic-ref HEAD)"
+-
+-	elif [ -r "$_git/refs/tags/$id" ]; then
+-		read id < "$_git/refs/tags/$id"
+-
+-	elif [ -r "$_git/refs/heads/$id" ]; then
+-		read id < "$_git/refs/heads/$id"
+-
+-	elif [ -r "$_git/refs/$id" ]; then
+-		read id < "$_git/refs/$id"
+-
+-	# Short id's must be lower case and at least 4 digits.
+-	elif [[ "$id" == [0-9a-f][0-9a-f][0-9a-f][0-9a-f]* ]]; then
+-		idpref=${id:0:2}
+-		idpost=${id:2}
+-
+-		# Assign array elements to matching names
+-		idmatch=($_git_objects/$idpref/$idpost*)
+-
+-		if [ ${#idmatch[*]} -eq 1 ] && [ -r "$idmatch" ]; then
+-			exid=$idpref${idmatch#$_git_objects/$idpref/}
+-			[ ${#exid} -eq 40 ] && [ "$(git-rev-parse --revs-only "$exid")" ] && id="$exid"
+-		elif [ ${#idmatch[*]} -gt 1 ]; then
+-			echo "Ambiguous id: $id" >&2
+-			echo "${idmatch[@]}" >&2
+-			exit 1
+-		fi
++	if [ ! "$id" ] || [ "$id" = "this" ]; then
++		id=HEAD;
++	fi
++
++ 	revid="$(git-rev-parse --verify "$id^0" 2>/dev/null)"
++ 	if [ "$revid" ]; then
++ 		id="$revid"
++		valid=1
+ 	fi
+ 
+-	valid=; [ ${#id} -eq 40 ] && [ "$(git-rev-parse --revs-only "$id")" ] && valid=1
+ 	# date does the wrong thing for empty and single-letter ids
+ 	if [ ${#id} -gt 1 ] && [ ! "$valid" ]; then
+ 		reqsecs=$(date --date="$id" +'%s' 2>/dev/null)
+ 
+ 		if [ "$reqsecs" ]; then
+-			id=$(git-rev-list --min-age=$reqsecs --max-count=1 HEAD)
+-			valid=; [ ${#id} -eq 40 ] && [ "$(git-rev-parse --revs-only "$id")" ] && valid=1
++			revid=$(git-rev-list --min-age=$reqsecs --max-count=1 HEAD)
++			if [ ${#revid} -eq 40 ]; then
++				id="$revid"
++				valid=1
++			fi
+ 		fi
+ 	fi
+ 
+@@ -147,7 +122,7 @@ fi
+ 
+ 
+ if [ "$show_parent" ]; then
+-	git-cat-file commit "$normid" | awk '/^parent/{print $2};/^$/{exit}'
++	git-rev-parse "$normid^"
+ 	exit 0
+ fi
+ 
+@@ -170,4 +145,3 @@ else
+ fi
+ 
+ echo $normid
+-
+-- 
+Jonas Fonseca
