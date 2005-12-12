@@ -1,69 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Delitifier broken (Re: diff-core segfault)
-Date: Mon, 12 Dec 2005 15:31:42 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0512121529200.15597@g5.osdl.org>
-References: <1134404990.5928.4.camel@localhost.localdomain>
- <7vmzj6i206.fsf@assigned-by-dhcp.cox.net> <7virtui1kj.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0512121620380.26663@localhost.localdomain>
- <7vek4igevq.fsf@assigned-by-dhcp.cox.net>
+From: Don Zickus <dzickus@gmail.com>
+Subject: Re: branching and supporting a tagged kernel version
+Date: Mon, 12 Dec 2005 18:58:38 -0500
+Message-ID: <68948ca0512121558s6e300103t95fcc0e9573604a7@mail.gmail.com>
+References: <68948ca0512121331x13bfb691t62224d02ced04a27@mail.gmail.com>
+	 <7virtueycd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 13 00:34:02 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 13 01:00:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Elx9y-0007yc-Mb
-	for gcvg-git@gmane.org; Tue, 13 Dec 2005 00:32:47 +0100
+	id 1ElxZ6-00069k-9r
+	for gcvg-git@gmane.org; Tue, 13 Dec 2005 00:58:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932234AbVLLXcm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 18:32:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932236AbVLLXcm
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 18:32:42 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:15558 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932234AbVLLXcl (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 18:32:41 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBCNVmDZ007786
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Dec 2005 15:31:51 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBCNVgQO022990;
-	Mon, 12 Dec 2005 15:31:45 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vek4igevq.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.128 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932263AbVLLX6k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 18:58:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932291AbVLLX6k
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 18:58:40 -0500
+Received: from wproxy.gmail.com ([64.233.184.200]:4368 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932263AbVLLX6i convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2005 18:58:38 -0500
+Received: by wproxy.gmail.com with SMTP id 69so1490249wra
+        for <git@vger.kernel.org>; Mon, 12 Dec 2005 15:58:38 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HdvzP9sszVZtEZPrrfk8t8nSTkjbJB6EeJWQ34QnHGASK/BlennV7O759gETUk5fX0ZswEhWbFinwoAuDEQeLy0A8HqhZjZCtYk0gfjvriFwq5t2+dTmMwz/6AqiXyA+lLvYlm7kiIKf0BG9N8E6/QqCxq0QzKQeh2nl3vlTYCI=
+Received: by 10.65.123.3 with SMTP id a3mr166183qbn;
+        Mon, 12 Dec 2005 15:58:38 -0800 (PST)
+Received: by 10.65.240.20 with HTTP; Mon, 12 Dec 2005 15:58:38 -0800 (PST)
+In-Reply-To: <7virtueycd.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13547>
 
+Thanks for clearing things up.
 
+> I'll refrain from saying that it is not the usual way to work
+> with git, since you seem to know what you are doing.  So let's
 
-On Mon, 12 Dec 2005, Junio C Hamano wrote:
-> Nicolas Pitre <nico@cam.org> writes:
-> >
-> > I would say involving an empty blob with deltas _is_ the bug in the 
-> > first place.  Please don't let that happen.
+Either this or cvs. :)  Anyway my work involves releasing a platform
+to customers who don't want  to constantly upgrade their kernel.  And
+instead of waiting for bugs to be filed, I was just trying to find a
+way to be pro-active and fix certain bugs _before_ our customers hit
+them.
 
-I agree with Nicolas.
-
-> Not all use of delta is to produce a pack.  An empty->empty
-> delta is a valid two byte \0\0 sequence, and I do not see any
-> reason to forbid it.  Although using such delta to represent
-> anything in a pack does *not* make any sense as you say, it
-> makes other callers simpler if they do not have to check if
-> from_len and to_len are empty before calling the delta code.
-
-And you don't need to.
-
-Do what pack-objects.c does: just call "diff_delta()" and check the result 
-for NULL. If the result is NULL, then you have to do some special code, 
-because that means that it's a full create or a full delete (or it's an 
-unchanged empty file). Regardless, it really _is_ a special case, and it 
-would be silly to generate a delta for it.
-
-		Linus
+Cheers,
+Don
