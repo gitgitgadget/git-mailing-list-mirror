@@ -1,113 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: branching and supporting a tagged kernel version
-Date: Mon, 12 Dec 2005 14:37:22 -0800
-Message-ID: <7virtueycd.fsf@assigned-by-dhcp.cox.net>
-References: <68948ca0512121331x13bfb691t62224d02ced04a27@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Delitifier broken (Re: diff-core segfault)
+Date: Mon, 12 Dec 2005 15:31:42 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0512121529200.15597@g5.osdl.org>
+References: <1134404990.5928.4.camel@localhost.localdomain>
+ <7vmzj6i206.fsf@assigned-by-dhcp.cox.net> <7virtui1kj.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0512121620380.26663@localhost.localdomain>
+ <7vek4igevq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 12 23:40:24 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 13 00:34:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ElwIS-0001uo-DI
-	for gcvg-git@gmane.org; Mon, 12 Dec 2005 23:37:28 +0100
+	id 1Elx9y-0007yc-Mb
+	for gcvg-git@gmane.org; Tue, 13 Dec 2005 00:32:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932201AbVLLWhZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 17:37:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932218AbVLLWhY
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 17:37:24 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:63730 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932201AbVLLWhY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2005 17:37:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051212223601.NJPY17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 12 Dec 2005 17:36:01 -0500
-To: Don Zickus <dzickus@gmail.com>
-In-Reply-To: <68948ca0512121331x13bfb691t62224d02ced04a27@mail.gmail.com> (Don
-	Zickus's message of "Mon, 12 Dec 2005 16:31:08 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932234AbVLLXcm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 18:32:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932236AbVLLXcm
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 18:32:42 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:15558 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932234AbVLLXcl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 18:32:41 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBCNVmDZ007786
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 12 Dec 2005 15:31:51 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBCNVgQO022990;
+	Mon, 12 Dec 2005 15:31:45 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vek4igevq.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.128 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13546>
 
-Don Zickus <dzickus@gmail.com> writes:
 
-> So my questions (for now) are:
->
-> 1) what is the easiest way to branch off on a tagged version (in this
-> case 2.6.14)?  I didn't quite understand what <starting point>
-> referred to in the git-branch docs.
 
-Starting point is badly worded, but essentially it means
-"anything that names a particular commit".  That's the commit
-you want to base your branch off of.
+On Mon, 12 Dec 2005, Junio C Hamano wrote:
+> Nicolas Pitre <nico@cam.org> writes:
+> >
+> > I would say involving an empty blob with deltas _is_ the bug in the 
+> > first place.  Please don't let that happen.
 
-In your case, you would run:
+I agree with Nicolas.
 
-------------
-$ git clone git://git.kernel.org/pub/.../torvalds/linux-2.6/ my2.6
-$ cd my2.6
-$ git checkout -b private v2.6.14
-------------
+> Not all use of delta is to produce a pack.  An empty->empty
+> delta is a valid two byte \0\0 sequence, and I do not see any
+> reason to forbid it.  Although using such delta to represent
+> anything in a pack does *not* make any sense as you say, it
+> makes other callers simpler if they do not have to check if
+> from_len and to_len are empty before calling the delta code.
 
-to create and checkout a branch called "private" to house your
-personal changes, based on v2.6.14.  Your working tree is based
-on v2.6.14 and you are on the "private" branch immediately after
-this operation, and you should see no diff from either of these
-commands:
+And you don't need to.
 
-------------
-$ git diff v2.6.14 <1>
-$ git diff private v2.6.14 <2>
+Do what pack-objects.c does: just call "diff_delta()" and check the result 
+for NULL. If the result is NULL, then you have to do some special code, 
+because that means that it's a full create or a full delete (or it's an 
+unchanged empty file). Regardless, it really _is_ a special case, and it 
+would be silly to generate a delta for it.
 
-<1> compare your work tree with v2.6.14 tagged by Linus
-<2> compare "private" branch head with v2.6.14 tagged by Linus
-------------
-
-Then work as usual, the cycle is:
-
-------------
-$ edit
-$ git diff ;# to see how well you are doing
-$ compile
-$ test
-$ git diff HEAD ;# final review before committing
-$ git commit -a ;# commit all changes as you tested
-------------
-
-> 2) is there a way to get a list of commits from upstream that are not
-> in my branch and then selectively apply them?  Yes, I understand the
-> potential merge mess...
-
-I'll refrain from saying that it is not the usual way to work
-with git, since you seem to know what you are doing.  So let's
-assume that you somehow do not ever want to merge from Linus
-head into the "private" branch.
-
-After you have worked there:
-
-------------
-$ git fetch origin
-$ git cherry origin private
-------------
-
-would show the list of commits since you forked from origin, 
-which is Linus head --- when you run "git clone" to set up
-"my2.6" repository, it would have made .git/remotes/origin
-shorthand that has this line in it:
-
-------------
-URL: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-Pull: master:origin
-------------
-
-pick the ones you want, and apply them with:
-
-------------
-$ git cherry-pick 12233445....
-------------
+		Linus
