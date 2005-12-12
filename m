@@ -1,53 +1,70 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Latest cogito broken with bash-3.1
-Date: Mon, 12 Dec 2005 01:59:44 +0100
-Message-ID: <20051212005944.GX22159@pasky.or.cz>
-References: <1134220724.15125.4.camel@blade> <20051211001106.GV22159@pasky.or.cz> <1134289867.9541.9.camel@blade> <20051212002631.GW22159@pasky.or.cz> <46a038f90512111658x5fe3198ey38515fc2745dd42b@mail.gmail.com>
+Subject: [ANNOUNCE] Cogito-0.16.1
+Date: Mon, 12 Dec 2005 02:12:10 +0100
+Message-ID: <20051212011210.GC12373@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marcel Holtmann <marcel@holtmann.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 12 02:01:19 2005
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 12 02:13:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Elc2h-0001Rp-4m
-	for gcvg-git@gmane.org; Mon, 12 Dec 2005 01:59:51 +0100
+	id 1ElcEs-0004y5-Dq
+	for gcvg-git@gmane.org; Mon, 12 Dec 2005 02:12:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750987AbVLLA7t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Dec 2005 19:59:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbVLLA7s
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Dec 2005 19:59:48 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:52655 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750984AbVLLA7s (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Dec 2005 19:59:48 -0500
-Received: (qmail 2949 invoked by uid 2001); 12 Dec 2005 01:59:44 +0100
-To: Martin Langhoff <martin.langhoff@gmail.com>
+	id S1750802AbVLLBMN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Dec 2005 20:12:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750973AbVLLBMN
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Dec 2005 20:12:13 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:5065 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750802AbVLLBMN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Dec 2005 20:12:13 -0500
+Received: (qmail 4730 invoked by uid 2001); 12 Dec 2005 02:12:10 +0100
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <46a038f90512111658x5fe3198ey38515fc2745dd42b@mail.gmail.com>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13512>
 
-Dear diary, on Mon, Dec 12, 2005 at 01:58:00AM CET, I got a letter
-where Martin Langhoff <martin.langhoff@gmail.com> said that...
-> On 12/12/05, Petr Baudis <pasky@suse.cz> wrote:
-> >   Then that's quite funny, one-line broken pipe message has been always
-> > there (in the past it looked much worse, we thankfully managed to bring
-> > it down to this at least).
-> 
-> I assume there's no reasonable workaround to that then?
+  Hello,
 
-The trapping is apparently the best we can do - at least I know of
-nothing better.
+  this is Cogito version 0.16.1, the next stable release of the
+human-friendly version control UI for the Linus' GIT tool. Share
+and enjoy at:
 
-> What would take to get rid of that (say, if I had a boring weekend ;)?
+	http://www.kernel.org/pub/software/scm/cogito/
 
-Fixing bash, IIRC - and more importantly, convincing its maintainers to
-take the patch. ;-) Sometime in the spring someone even posted the exact
-location in bash where this is broken.
+  This crispy new release gives you a few minor to medium bugfixes and
+a significant cg-patch speedup. You can reach it as the "v0.16" branch
+of the Cogito repository. Note that this is just the stable branch, more
+interesting stuff is happenning (and especially going to happen) on the
+master development branch; if everything goes well, I might release
+cogito-0.17rc1 at the end of this week).
+
+  So the new stuff since 0.16 is:
+
+Jonas Fonseca:
+      cg-merge: Improve the hook description
+      cg-status: handle subdirs when listing heads
+
+Petr Baudis:
+      Fix cg-admin-setuprepo warning on missing post-update hook
+      Initial cg-push to a remote branch wouldn't work properly
+      Fix cg-object-id <singleletter>
+      Fix unsafe sed usage in scripts
+      cg-clean -n will just pretend to remove stuff
+      Make cg-clean whitespace-safe
+	If you use filenames with spaces _and_ cg-clean (or cg-clean
+	at all, after all), you should certainly upgrade!
+      bash-3.1-related fixes
+      Fix broken cg-log FILE in subdirectory
+      Drastically speed up cg-patch
+      cogito-0.16.1
+
+  Happy hacking,
 
 -- 
 				Petr "Pasky" Baudis
