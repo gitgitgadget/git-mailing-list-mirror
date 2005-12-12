@@ -1,71 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: patches between commits
-Date: Mon, 12 Dec 2005 09:54:45 -0800
-Message-ID: <7vu0dei4ka.fsf@assigned-by-dhcp.cox.net>
-References: <7ac1e90c0512120731g3eacdcf0s7e9d1226c88dce73@mail.gmail.com>
-	<20051212173352.GA3007@steel.home>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: as promised, docs: git for the confused
+Date: Mon, 12 Dec 2005 19:53:19 +0200
+Message-ID: <20051212195319.11d41269.tihirvon@gmail.com>
+References: <20051209215414.14072.qmail@science.horizon.com>
+ <7vmzj9zwfu.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0512120827440.15597@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 12 18:55:36 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: junkio@cox.net, linux@horizon.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 12 18:55:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Elrt1-0006xK-IZ
-	for gcvg-git@gmane.org; Mon, 12 Dec 2005 18:54:55 +0100
+	id 1Elrrp-0006mQ-CU
+	for gcvg-git@gmane.org; Mon, 12 Dec 2005 18:53:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932086AbVLLRyu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 12:54:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932087AbVLLRyu
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 12:54:50 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:15064 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932086AbVLLRyu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2005 12:54:50 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051212175303.JJV17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 12 Dec 2005 12:53:03 -0500
-To: Alex Riesen <raa.lkml@gmail.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932069AbVLLRxd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 12:53:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932074AbVLLRxd
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 12:53:33 -0500
+Received: from marski.suomi.net ([212.50.131.142]:10700 "EHLO marski.suomi.net")
+	by vger.kernel.org with ESMTP id S932069AbVLLRxd (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 12:53:33 -0500
+Received: from prolisok.suomi.net (prolisok.suomi.net [212.50.140.226])
+ by marski.suomi.net (Sun Java System Messaging Server 6.2 (built Dec  2 2004))
+ with ESMTP id <0IRE00FF8CCZY130@marski.suomi.net> for git@vger.kernel.org;
+ Mon, 12 Dec 2005 19:53:24 +0200 (EET)
+Received: from spam2.suomi.net (spam2.suomi.net [212.50.131.166])
+ by mailstore.suomi.net
+ (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
+ with ESMTP id <0IRE007LPCL04U50@mailstore.suomi.net>; Mon,
+ 12 Dec 2005 19:58:12 +0200 (EET)
+Received: from garlic.home.net (addr-82-128-203-211.suomi.net [82.128.203.211])
+	by spam2.suomi.net (Postfix) with SMTP id AD4C811B560; Mon,
+ 12 Dec 2005 19:53:19 +0200 (EET)
+In-reply-to: <Pine.LNX.4.64.0512120827440.15597@g5.osdl.org>
+To: Linus Torvalds <torvalds@osdl.org>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.8; i686-pc-linux-gnu)
+X-OPOY-MailScanner-Information: Please contact the OPOY for more information
+X-OPOY-MailScanner: Found to be clean
+X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (score=-2.286,	required 5,
+ autolearn=not spam, AWL 0.31, BAYES_00 -2.60)
+X-OPOY-MailScanner-From: tihirvon@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13530>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+On Mon, 12 Dec 2005 08:34:12 -0800 (PST)
+Linus Torvalds <torvalds@osdl.org> wrote:
 
-> Bahadir Balban, Mon, Dec 12, 2005 16:31:12 +0100:
->> Suppose I have a HEAD branch, which is the latest. And I want to
->> generate `individual' patches for each commit I did since the
->> beginning of development for this branch.
->
-> That is what I think "git format-patch <commit>" is for. It will
-> generate patches to bring "<commit>" to HEAD.
+> Or maybe it's just me. But I know _I_ understand things better by seeing 
+> the "context" that they are used in. Then I go to man-pages later on, if I 
+> want to know the details.
 
-Yes, but I think the real question Bahadir wants to know is what
-the <commit> parameter should be, if you want to export the
-whole history (I do not think there is any suitable argument to
-"format-patch" that does this).
+Me too.  BTW, new users very likely read tutorial.txt first.  But it is
+way too low level (git-cat-file, git-write-tree...).  Maybe those low
+level commands should be described in technical/ instead?  The tutorial
+would be logical place for examples.
 
->> Secondly, is the sha1 of a tree what appears next to each commit when
->> I type git-log? Is this the only command that lets us know the sha1's
->> of commits?
-
-Depends on what you have, to ask the question "what are their
-object names?".
-
- - I have this commit, how do I find out its object name?
-   E.g. I want to know the HEAD commit's object name, second to
-   the last commit on "test" branch.
-
-   $ git rev-parse --verify HEAD
-   $ git rev-parse --verify test^
-
- - I have bunch of commits leading to the head of my "test"
-   branch.  What are they?
-
-   $ git rev-list test ;# unadorned list of object names and nothing else
-   $ git rev-list --pretty test ;# this is git-log
-   $ git whatchanged -m -M -p test ;# with patch in full glory
+-- 
+http://onion.dynserv.net/~timo/
