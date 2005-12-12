@@ -1,59 +1,61 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: patches between commits
-Date: Mon, 12 Dec 2005 18:33:52 +0100
-Message-ID: <20051212173352.GA3007@steel.home>
-References: <7ac1e90c0512120731g3eacdcf0s7e9d1226c88dce73@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: make install bug?
+Date: Mon, 12 Dec 2005 09:54:40 -0800
+Message-ID: <7vzmn6i4kf.fsf@assigned-by-dhcp.cox.net>
+References: <2b05065b0512120735v26c8343aged48165f3ccc5892@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 12 18:36:20 2005
+X-From: git-owner@vger.kernel.org Mon Dec 12 18:55:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ElrYx-0001uY-3E
-	for gcvg-git@gmane.org; Mon, 12 Dec 2005 18:34:11 +0100
+	id 1Elrsu-0006xA-68
+	for gcvg-git@gmane.org; Mon, 12 Dec 2005 18:54:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932081AbVLLReF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 12:34:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932078AbVLLReF
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 12:34:05 -0500
-Received: from devrace.com ([198.63.210.113]:20745 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S932081AbVLLReE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 12:34:04 -0500
-Received: from tigra.home (p54A0E2CD.dip.t-dialin.net [84.160.226.205])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id jBCHXvM2061540;
-	Mon, 12 Dec 2005 11:33:59 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1ElrYe-0006Xe-00; Mon, 12 Dec 2005 18:33:52 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1ElrYe-0003SZ-1D; Mon, 12 Dec 2005 18:33:52 +0100
-To: Bahadir Balban <bahadir.balban@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <7ac1e90c0512120731g3eacdcf0s7e9d1226c88dce73@mail.gmail.com>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S932076AbVLLRyn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 12:54:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932086AbVLLRyn
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 12:54:43 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:7381 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932076AbVLLRym (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2005 12:54:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051212175352.LXMV6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 12 Dec 2005 12:53:52 -0500
+To: eschvoca <eschvoca@gmail.com>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13528>
 
-Bahadir Balban, Mon, Dec 12, 2005 16:31:12 +0100:
-> Suppose I have a HEAD branch, which is the latest. And I want to
-> generate `individual' patches for each commit I did since the
-> beginning of development for this branch.
+eschvoca <eschvoca@gmail.com> writes:
 
-That is what I think "git format-patch <commit>" is for. It will
-generate patches to bring "<commit>" to HEAD.
+> I can fix the problem by changing templates/Makefile to the following:
+>
+> install: all
+>     $(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(template_dir))
+>     (cd blt && $(TAR) cf - . > /tmp/a.tar) | \
+>     (cd $(call shellquote,$(DESTDIR)$(template_dir)) && $(TAR) xf /tmp/a.tar)
 
-> Secondly, is the sha1 of a tree what appears next to each commit when
-> I type git-log? Is this the only command that lets us know the sha1's
-> of commits?
+Here is my guess.  Could you try, from your interactive shell:
 
-"git rev-list", I think
+	$ (unset CDPATH; make install)
+
+first without the above "fix" (your "fixed" pipe does not make
+any sense --- what are the data passed between pipe upstream and
+downstream?)?
+
+If that makes the problem go away, then your environment is
+broken --- my guess is that you are exporting CDPATH to
+non-interactive scripts.  Don't do that.
+
+I once googled for "CDPATH" and saw many "guide to unix" type
+webpages talk about "CDPATH environment variable"; they are the
+real culprit to cause this confusion in peoples' .bash_profile.
+CDPATH might be a nice variable for interactive shells, but is a
+horrible one if made environment.
