@@ -1,64 +1,63 @@
-From: Mike McCormack <mike@codeweavers.com>
-Subject: Re: [RFC] Planning a git-cvsdaemon
-Date: Mon, 12 Dec 2005 05:57:11 +0900
-Message-ID: <439C92A7.4030704@codeweavers.com>
-References: <46a038f90512101844q326b3d43nf8b40617bd82c576@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Latest cogito broken with bash-3.1
+Date: Mon, 12 Dec 2005 01:26:31 +0100
+Message-ID: <20051212002631.GW22159@pasky.or.cz>
+References: <1134220724.15125.4.camel@blade> <20051211001106.GV22159@pasky.or.cz> <1134289867.9541.9.camel@blade>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 11 21:58:37 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 12 01:28:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ElYFS-0000or-Sa
-	for gcvg-git@gmane.org; Sun, 11 Dec 2005 21:56:47 +0100
+	id 1ElbWf-0000GH-I3
+	for gcvg-git@gmane.org; Mon, 12 Dec 2005 01:26:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750747AbVLKU4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Dec 2005 15:56:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750748AbVLKU4g
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Dec 2005 15:56:36 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:49353 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S1750747AbVLKU4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Dec 2005 15:56:36 -0500
-Received: from foghorn.codeweavers.com ([216.251.189.130] helo=[127.0.0.1])
-	by mail.codeweavers.com with esmtp (Exim 4.50)
-	id 1ElYF9-0005lw-VU; Sun, 11 Dec 2005 14:56:30 -0600
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.7) Gecko/20050414
-X-Accept-Language: en-us, en
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90512101844q326b3d43nf8b40617bd82c576@mail.gmail.com>
-X-SA-Exim-Connect-IP: 216.251.189.130
-X-SA-Exim-Mail-From: mike@codeweavers.com
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on mail
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.2
-X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
-X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
+	id S1750938AbVLLA0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Dec 2005 19:26:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750939AbVLLA0j
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Dec 2005 19:26:39 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:23445 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750936AbVLLA0j (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Dec 2005 19:26:39 -0500
+Received: (qmail 17074 invoked by uid 2001); 12 Dec 2005 01:26:31 +0100
+To: Marcel Holtmann <marcel@holtmann.org>
+Content-Disposition: inline
+In-Reply-To: <1134289867.9541.9.camel@blade>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13509>
 
-Martin Langhoff wrote:
+  Hello,
 
-> In any case, I am after feedback in general (and any truly
-> insurmountable issues you can think of),  I haven't found yet  a good
-> library implementing the server side of the protocol (other than
-> cvs's). git-cvsdaemon will probably take shape in Perl initially,
-> though if there's a good cvs protocol library in other scripting
-> language, I'm interested...
+Dear diary, on Sun, Dec 11, 2005 at 09:31:07AM CET, I got a letter
+where Marcel Holtmann <marcel@holtmann.org> said that...
+> it's now working again. Thanks. What do you think about another release?
+> I haven't checked the other distributions yet, but I just saw that
+> Debian unstable also moved to version 3.1 of bash.
 
-Hey Martin,
+  yes, I was planning 0.16.1 on Sunday anyway. Going to tag it now.
 
-That's a neat idea, and a great way to get projects to move from CVS to GIT.
+> There exists also another problem with the new bash. It is the broken
+> pipe error from cg-log.
+> 
+> cg-log: line 141: echo: write error: Broken pipe
+> 
+> The line number varies depending how much you scrolled and when you
+> scrolled to the end no broken pipe error comes up. Do you have any idea
+> on how to deal with this. I saw your comment about that bash is broken
+> and the extra trap command, but it doesn't help. I never saw that
+> problem with older versions of bash.
 
-I'd recommend that you avoid providing commit access to a GIT repository 
-via CVS for starters.  Many projects (eg. Wine) would benefit greatly 
-from just having a way for people to get the source via CVS without 
-having to write scripts to maintain a CVS tree in parallel.  Serious 
-developers will use GIT if the master repository is GIT anyway.
+  Then that's quite funny, one-line broken pipe message has been always
+there (in the past it looked much worse, we thankfully managed to bring
+it down to this at least).
 
-Mike
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
