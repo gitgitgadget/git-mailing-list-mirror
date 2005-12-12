@@ -1,62 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: diff-core segfault
-Date: Mon, 12 Dec 2005 17:56:36 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512121754340.6749@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <1134404990.5928.4.camel@localhost.localdomain>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Allow saving an object from a pipe
+Date: Mon, 12 Dec 2005 12:12:12 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0512121210010.25300@iabervon.org>
+References: <Pine.LNX.4.64.0512101724290.25300@iabervon.org>
+ <7v64pwuyny.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 12 17:59:24 2005
+X-From: git-owner@vger.kernel.org Mon Dec 12 18:11:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Elqym-0000W3-1q
-	for gcvg-git@gmane.org; Mon, 12 Dec 2005 17:56:48 +0100
+	id 1ElrDF-0004WV-Kz
+	for gcvg-git@gmane.org; Mon, 12 Dec 2005 18:11:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751272AbVLLQ4j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 11:56:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751275AbVLLQ4j
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 11:56:39 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:15834 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751272AbVLLQ4i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2005 11:56:38 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 47A5B13FAEB; Mon, 12 Dec 2005 17:56:37 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 224F39DD92; Mon, 12 Dec 2005 17:56:37 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 05F569DD64; Mon, 12 Dec 2005 17:56:37 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id C194F13FAE9; Mon, 12 Dec 2005 17:56:36 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Darrin Thompson <darrint@progeny.com>
-In-Reply-To: <1134404990.5928.4.camel@localhost.localdomain>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751177AbVLLRLW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 12:11:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751206AbVLLRLW
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 12:11:22 -0500
+Received: from iabervon.org ([66.92.72.58]:43269 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751177AbVLLRLW (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 12:11:22 -0500
+Received: (qmail 6569 invoked by uid 1000); 12 Dec 2005 12:12:12 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 12 Dec 2005 12:12:12 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64pwuyny.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13526>
 
-Hi,
+On Sat, 10 Dec 2005, Junio C Hamano wrote:
 
-On Mon, 12 Dec 2005, Darrin Thompson wrote:
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > In order to support getting data into git with scripts, this adds a
+> > --stdin option to git-hash-object, which will make it read from stdin.
+> 
+> Thanks, will apply.
+> 
+> To be honest, though, I am still debating myself about the merit
+> of not having to have a temporary file.  Because we need the
+> size of the blob available before starting to hash (i.e. we
+> cannot say "atend"), index_pipe ends up keeping the whole blob
+> data in memory, which is not much better than the caller storing
+> it in a temporary file and driving the normal hash-object from
+> the command line anyway.
 
-> $ git-diff-files -B
-> Segmentation fault
+It's not much better for efficiency, but it's a whole lot easier to write 
+the script without having to worry about a temporary file, what could 
+happen to it while you're trying to use it, and making sure it gets 
+cleaned up afterwards. It can also save on disk writes, depending on where 
+you put it and how the system is configured.
 
-This looks exactly like the problem on cygwin which is fixed by using 
-NO_MMAP=YesPlease.
-
-How about enabling NO_MMAP=YesPlease on cygwin per default? I think there 
-are enough cases where it helps. If it is too slow *and* the user knows 
-what she's doing, she can recompile NO_MMAP=NoNoNo.
-
-Opinions, please?
-
-Ciao,
-Dscho
+	-Daniel
+*This .sig left intentionally blank*
