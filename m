@@ -1,58 +1,59 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Allow saving an object from a pipe
-Date: Mon, 12 Dec 2005 12:12:12 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0512121210010.25300@iabervon.org>
-References: <Pine.LNX.4.64.0512101724290.25300@iabervon.org>
- <7v64pwuyny.fsf@assigned-by-dhcp.cox.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: patches between commits
+Date: Mon, 12 Dec 2005 18:33:52 +0100
+Message-ID: <20051212173352.GA3007@steel.home>
+References: <7ac1e90c0512120731g3eacdcf0s7e9d1226c88dce73@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 12 18:11:47 2005
+X-From: git-owner@vger.kernel.org Mon Dec 12 18:36:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ElrDF-0004WV-Kz
-	for gcvg-git@gmane.org; Mon, 12 Dec 2005 18:11:46 +0100
+	id 1ElrYx-0001uY-3E
+	for gcvg-git@gmane.org; Mon, 12 Dec 2005 18:34:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751177AbVLLRLW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 12:11:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751206AbVLLRLW
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 12:11:22 -0500
-Received: from iabervon.org ([66.92.72.58]:43269 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751177AbVLLRLW (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 12:11:22 -0500
-Received: (qmail 6569 invoked by uid 1000); 12 Dec 2005 12:12:12 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Dec 2005 12:12:12 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64pwuyny.fsf@assigned-by-dhcp.cox.net>
+	id S932081AbVLLReF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 12:34:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932078AbVLLReF
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 12:34:05 -0500
+Received: from devrace.com ([198.63.210.113]:20745 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S932081AbVLLReE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 12:34:04 -0500
+Received: from tigra.home (p54A0E2CD.dip.t-dialin.net [84.160.226.205])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id jBCHXvM2061540;
+	Mon, 12 Dec 2005 11:33:59 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1ElrYe-0006Xe-00; Mon, 12 Dec 2005 18:33:52 +0100
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1ElrYe-0003SZ-1D; Mon, 12 Dec 2005 18:33:52 +0100
+To: Bahadir Balban <bahadir.balban@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <7ac1e90c0512120731g3eacdcf0s7e9d1226c88dce73@mail.gmail.com>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13527>
 
-On Sat, 10 Dec 2005, Junio C Hamano wrote:
+Bahadir Balban, Mon, Dec 12, 2005 16:31:12 +0100:
+> Suppose I have a HEAD branch, which is the latest. And I want to
+> generate `individual' patches for each commit I did since the
+> beginning of development for this branch.
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > In order to support getting data into git with scripts, this adds a
-> > --stdin option to git-hash-object, which will make it read from stdin.
-> 
-> Thanks, will apply.
-> 
-> To be honest, though, I am still debating myself about the merit
-> of not having to have a temporary file.  Because we need the
-> size of the blob available before starting to hash (i.e. we
-> cannot say "atend"), index_pipe ends up keeping the whole blob
-> data in memory, which is not much better than the caller storing
-> it in a temporary file and driving the normal hash-object from
-> the command line anyway.
+That is what I think "git format-patch <commit>" is for. It will
+generate patches to bring "<commit>" to HEAD.
 
-It's not much better for efficiency, but it's a whole lot easier to write 
-the script without having to worry about a temporary file, what could 
-happen to it while you're trying to use it, and making sure it gets 
-cleaned up afterwards. It can also save on disk writes, depending on where 
-you put it and how the system is configured.
+> Secondly, is the sha1 of a tree what appears next to each commit when
+> I type git-log? Is this the only command that lets us know the sha1's
+> of commits?
 
-	-Daniel
-*This .sig left intentionally blank*
+"git rev-list", I think
