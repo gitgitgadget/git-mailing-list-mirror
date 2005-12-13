@@ -1,79 +1,52 @@
-From: Paul Dickson <paul@permanentmail.com>
-Subject: Re: [ANNOUNCE] GIT 0.99.9m aka 1.0rc5
-Date: Mon, 12 Dec 2005 19:54:08 -0700
-Message-ID: <20051212195408.40af06f1.paul@permanentmail.com>
-References: <7vbqznm4b7.fsf@assigned-by-dhcp.cox.net>
-	<20051212183723.c4b09964.paul@permanentmail.com>
-	<7vd5k1dax6.fsf@assigned-by-dhcp.cox.net>
-	<20051212192013.9ef4c8b2.paul@permanentmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Delitifier broken (Re: diff-core segfault)
+Date: Mon, 12 Dec 2005 19:23:48 -0800
+Message-ID: <7v8xupd6ij.fsf@assigned-by-dhcp.cox.net>
+References: <1134404990.5928.4.camel@localhost.localdomain>
+	<7vmzj6i206.fsf@assigned-by-dhcp.cox.net>
+	<7virtui1kj.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0512121620380.26663@localhost.localdomain>
+	<7vek4igevq.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0512121529200.15597@g5.osdl.org>
+	<7vlkypdcsb.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0512121720150.15597@g5.osdl.org>
+	<Pine.LNX.4.64.0512121758410.15597@g5.osdl.org>
+	<Pine.LNX.4.64.0512122114090.26663@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Dec 13 03:57:10 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 13 04:25:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Em0Iy-00044R-2y
-	for gcvg-git@gmane.org; Tue, 13 Dec 2005 03:54:17 +0100
+	id 1Em0le-0001Dc-GZ
+	for gcvg-git@gmane.org; Tue, 13 Dec 2005 04:23:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932337AbVLMCyM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 21:54:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbVLMCyM
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 21:54:12 -0500
-Received: from vds.fauxbox.com ([208.210.124.75]:4005 "EHLO thorn.pobox.com")
-	by vger.kernel.org with ESMTP id S1751256AbVLMCyL (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 21:54:11 -0500
-Received: from thorn (localhost [127.0.0.1])
-	by thorn.pobox.com (Postfix) with ESMTP id A39A8110
-	for <git@vger.kernel.org>; Mon, 12 Dec 2005 21:54:32 -0500 (EST)
-Received: from red.pwd.internal (ip68-230-78-84.ph.ph.cox.net [68.230.78.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by thorn.sasl.smtp.pobox.com (Postfix) with ESMTP id 74E55515A
-	for <git@vger.kernel.org>; Mon, 12 Dec 2005 21:54:32 -0500 (EST)
-Received: from white.pwd.internal ([192.168.1.9])
-	by red.pwd.internal (8.13.5/8.13.4) with SMTP id jBD2s9Ym014403
-	for <git@vger.kernel.org>; Mon, 12 Dec 2005 19:54:09 -0700
-To: git@vger.kernel.org
-In-Reply-To: <20051212192013.9ef4c8b2.paul@permanentmail.com>
-X-Mailer: Sylpheed version 2.1.6 (GTK+ 2.8.8; i686-pc-linux-gnu)
+	id S932401AbVLMDXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 22:23:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932402AbVLMDXv
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 22:23:51 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:46547 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932401AbVLMDXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2005 22:23:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051213032353.RSNA25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 12 Dec 2005 22:23:53 -0500
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0512122114090.26663@localhost.localdomain>
+	(Nicolas Pitre's message of "Mon, 12 Dec 2005 21:45:16 -0500 (EST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13566>
 
-On Mon, 12 Dec 2005 19:20:13 -0700, Paul Dickson wrote:
+Nicolas Pitre <nico@cam.org> writes:
 
->   $ rpm -q xmlto asciidoc man groff
->   xmlto-0.0.18-9
->   asciidoc-7.0.2-1.fc5
->   man-1.6b-1
->   groff-1.18.1.1-5
-> 
-> I would suspect groff (as used by man).
-> 
->   $ zcat /usr/share/man/man1/git-repack.1.gz|grep '^[A-Z][a-z]* by'
-> 
+> However I added the possibility for (1) to use the destination file as 
+> well as the "source" file for block copy in patch_delta().
 
-I think it's up one level to the creator of the man files:
-
-.SH "DESCRIPTION"
-This script is used to combine all objects that do not currently reside in a "pack", into a pack..sp
-A pack is a collection of objects, individually compressed, with delta compression applied, stored in a single file, with
-an associated index file..sp
-Packs are used to reduce the load on mirror systems, backup engines, disk storage, etc..sp
-
-Results in:
-
-DESCRIPTION
-       This script is used to combine all objects that do not currently reside
-       in a "pack", into a pack..sp A pack is a collection of objects,
-       individually compressed, with delta compression applied, stored in a
-       single file, with an associated index file..sp Packs are used to reduce
-       the load on mirror systems, backup engines, disk storage, etc..sp
-
-It's only the .sp function.
-
-So it's likely my version of asciidoc or xmlto.
-
-	-Paul
+Ah, I've been wondering where that one came from.
