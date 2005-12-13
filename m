@@ -1,105 +1,79 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Delitifier broken (Re: diff-core segfault)
-Date: Mon, 12 Dec 2005 21:45:16 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0512122114090.26663@localhost.localdomain>
-References: <1134404990.5928.4.camel@localhost.localdomain>
- <7vmzj6i206.fsf@assigned-by-dhcp.cox.net>
- <7virtui1kj.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0512121620380.26663@localhost.localdomain>
- <7vek4igevq.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0512121529200.15597@g5.osdl.org>
- <7vlkypdcsb.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0512121720150.15597@g5.osdl.org>
- <Pine.LNX.4.64.0512121758410.15597@g5.osdl.org>
+From: Paul Dickson <paul@permanentmail.com>
+Subject: Re: [ANNOUNCE] GIT 0.99.9m aka 1.0rc5
+Date: Mon, 12 Dec 2005 19:54:08 -0700
+Message-ID: <20051212195408.40af06f1.paul@permanentmail.com>
+References: <7vbqznm4b7.fsf@assigned-by-dhcp.cox.net>
+	<20051212183723.c4b09964.paul@permanentmail.com>
+	<7vd5k1dax6.fsf@assigned-by-dhcp.cox.net>
+	<20051212192013.9ef4c8b2.paul@permanentmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 13 03:48:18 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Dec 13 03:57:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Em0B2-0002Wm-RY
-	for gcvg-git@gmane.org; Tue, 13 Dec 2005 03:46:05 +0100
+	id 1Em0Iy-00044R-2y
+	for gcvg-git@gmane.org; Tue, 13 Dec 2005 03:54:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932348AbVLMCpT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 21:45:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbVLMCpT
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 21:45:19 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:49813 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751183AbVLMCpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Dec 2005 21:45:17 -0500
-Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IRF00E4N0ZGEI10@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 12 Dec 2005 21:45:16 -0500 (EST)
-In-reply-to: <Pine.LNX.4.64.0512121758410.15597@g5.osdl.org>
-X-X-Sender: nico@localhost.localdomain
-To: Linus Torvalds <torvalds@osdl.org>
+	id S932337AbVLMCyM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 21:54:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbVLMCyM
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 21:54:12 -0500
+Received: from vds.fauxbox.com ([208.210.124.75]:4005 "EHLO thorn.pobox.com")
+	by vger.kernel.org with ESMTP id S1751256AbVLMCyL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 21:54:11 -0500
+Received: from thorn (localhost [127.0.0.1])
+	by thorn.pobox.com (Postfix) with ESMTP id A39A8110
+	for <git@vger.kernel.org>; Mon, 12 Dec 2005 21:54:32 -0500 (EST)
+Received: from red.pwd.internal (ip68-230-78-84.ph.ph.cox.net [68.230.78.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by thorn.sasl.smtp.pobox.com (Postfix) with ESMTP id 74E55515A
+	for <git@vger.kernel.org>; Mon, 12 Dec 2005 21:54:32 -0500 (EST)
+Received: from white.pwd.internal ([192.168.1.9])
+	by red.pwd.internal (8.13.5/8.13.4) with SMTP id jBD2s9Ym014403
+	for <git@vger.kernel.org>; Mon, 12 Dec 2005 19:54:09 -0700
+To: git@vger.kernel.org
+In-Reply-To: <20051212192013.9ef4c8b2.paul@permanentmail.com>
+X-Mailer: Sylpheed version 2.1.6 (GTK+ 2.8.8; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13565>
 
-On Mon, 12 Dec 2005, Linus Torvalds wrote:
+On Mon, 12 Dec 2005 19:20:13 -0700, Paul Dickson wrote:
 
+>   $ rpm -q xmlto asciidoc man groff
+>   xmlto-0.0.18-9
+>   asciidoc-7.0.2-1.fc5
+>   man-1.6b-1
+>   groff-1.18.1.1-5
 > 
+> I would suspect groff (as used by man).
 > 
-> On Mon, 12 Dec 2005, Linus Torvalds wrote:
-> > 
-> >    As mentioned, pack-objects.c needs to check the size heuristics before 
-> >    doing diff_delta() _anyway_, for performance reasons as well as simply 
-> >    because the secondary use of diff_delta() is to estimate how big the 
-> >    delta is, and it's always pointless to generate a delta that is 
-> >    guaranteed to be bigger than the file (which is always the case with 
-> >    either side being an empty file - the size difference will inevitably 
-> >    be bigger than the size of the resulting file).
+>   $ zcat /usr/share/man/man1/git-repack.1.gz|grep '^[A-Z][a-z]* by'
 > 
-> Side note: this isn't technically entirely true. A binary diff that has a 
-> source file that is empty could in theory be smaller than the destination 
-> file simply because it may involve a certain amount of automatic 
-> compression in the form of "insert 100 spaces" kind of diff encoding. I'm 
-> not sure whether xdelta actually does something like that, but it's 
-> certainly possible at least in theory.
 
-xdelta doesn't.  It only has two functions currently:
+I think it's up one level to the creator of the man files:
 
- 1) copy x bytes from offset y in source file to current position in 
-    destination file;
+.SH "DESCRIPTION"
+This script is used to combine all objects that do not currently reside in a "pack", into a pack..sp
+A pack is a collection of objects, individually compressed, with delta compression applied, stored in a single file, with
+an associated index file..sp
+Packs are used to reduce the load on mirror systems, backup engines, disk storage, etc..sp
 
- 2) paste the x following bytes straight from the delta stream to 
-    current position into the destination file.
+Results in:
 
-Of course in the GIT context files are buffers.
+DESCRIPTION
+       This script is used to combine all objects that do not currently reside
+       in a "pack", into a pack..sp A pack is a collection of objects,
+       individually compressed, with delta compression applied, stored in a
+       single file, with an associated index file..sp Packs are used to reduce
+       the load on mirror systems, backup engines, disk storage, etc..sp
 
-However I added the possibility for (1) to use the destination file as 
-well as the "source" file for block copy in patch_delta().  However 
-diff_delta() currently doesn't use that capability.  But if it did then 
-the "insert 100 spaces" would be:
+It's only the .sp function.
 
-	- paste \x20\x20\x20\x20 to dest
-	  (delta = 5 bytes, dest = 4 bytes)
+So it's likely my version of asciidoc or xmlto.
 
-	- copy 4 bytes from offset 0 of dest to dest
-	  (delta = 7 bytes, dest = 8 bytes)
-
-	- copy 8 bytes from offset 0 of dest to dest
-	  (delta = 9 bytes, dest = 16 bytes)
-
-	- copy 16 bytes from offset 0 of dest to dest
-	  (delta = 11 bytes, dest = 32 bytes)
-
-	- copy 32 bytes from offset 0 of dest to dest
-	  (delta = 13 bytes, dest = 64 bytes)
-
-	- copy 36 bytes from offset 0 of dest to dest
-	  (delta = 15 bytes, dest = 100 bytes)
-
-And yet that could be optimized further with a better size for the 
-initial paste.  However adding that capability to diff_delta() might 
-make it significantly slower for still unknown gain for real life data.  
-But I should write the code some day.
-
-
-Nicolas
+	-Paul
