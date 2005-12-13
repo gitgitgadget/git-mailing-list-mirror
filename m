@@ -1,69 +1,46 @@
-From: Paul Dickson <paul@permanentmail.com>
-Subject: Re: [ANNOUNCE] Cogito-0.16.1
-Date: Tue, 13 Dec 2005 11:02:57 -0700
-Message-ID: <20051213110257.a37be18b.paul@permanentmail.com>
-References: <20051212011210.GC12373@pasky.or.cz>
-	<20051212182636.d3b73900.paul@permanentmail.com>
-	<20051213165645.GC22159@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] [COGITO] make cg-tag use git-check-ref-format
+Date: Tue, 13 Dec 2005 10:41:27 -0800
+Message-ID: <7vu0dcalgo.fsf@assigned-by-dhcp.cox.net>
+References: <11344712912199-git-send-email-matlads@dsmagic.com>
+	<7vy82p9rnb.fsf@assigned-by-dhcp.cox.net>
+	<20051213170015.GD22159@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 13 19:05:14 2005
+X-From: git-owner@vger.kernel.org Tue Dec 13 19:42:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmEV3-0001DD-1T
-	for gcvg-git@gmane.org; Tue, 13 Dec 2005 19:03:41 +0100
+	id 1EmF5k-0005GZ-HG
+	for gcvg-git@gmane.org; Tue, 13 Dec 2005 19:41:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030190AbVLMSDK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Dec 2005 13:03:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030191AbVLMSDK
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 13:03:10 -0500
-Received: from vds.fauxbox.com ([208.210.124.75]:51396 "EHLO thorn.pobox.com")
-	by vger.kernel.org with ESMTP id S1030190AbVLMSDI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Dec 2005 13:03:08 -0500
-Received: from thorn (localhost [127.0.0.1])
-	by thorn.pobox.com (Postfix) with ESMTP id 8E680108;
-	Tue, 13 Dec 2005 13:03:25 -0500 (EST)
-Received: from red.pwd.internal (ip68-230-78-84.ph.ph.cox.net [68.230.78.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by thorn.sasl.smtp.pobox.com (Postfix) with ESMTP id 0F9F81711;
-	Tue, 13 Dec 2005 13:03:23 -0500 (EST)
-Received: from white.pwd.internal ([192.168.1.9])
-	by red.pwd.internal (8.13.5/8.13.4) with SMTP id jBDI2xCQ015353;
-	Tue, 13 Dec 2005 11:03:00 -0700
+	id S1030202AbVLMSld (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Dec 2005 13:41:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030203AbVLMSld
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 13:41:33 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:31470 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1030202AbVLMSld (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2005 13:41:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051213183951.LIXP17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 13 Dec 2005 13:39:51 -0500
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051213165645.GC22159@pasky.or.cz>
-X-Mailer: Sylpheed version 2.1.6 (GTK+ 2.8.8; i686-pc-linux-gnu)
+In-Reply-To: <20051213170015.GD22159@pasky.or.cz> (Petr Baudis's message of
+	"Tue, 13 Dec 2005 18:00:15 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13584>
 
-On Tue, 13 Dec 2005 17:56:45 +0100, Petr Baudis wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> Dear diary, on Tue, Dec 13, 2005 at 02:26:36AM CET, I got a letter
-> where Paul Dickson <paul@permanentmail.com> said that...
-> > Any chance of man files?  I'm more use to type man than cg-help.
-> 
-> You can make the man files by
-> 
-> 	make doc
-> 
-> and install them by
-> 
-> 	make install-doc
-> 
-> 
-> This isn't done by default so that you won't need asciidoc for the
-> build. This is exactly the same way in GIT.
+> Thank you both for the patch, but I'd be much more comfortable if at
+> least quotes (both ' and "), backslashes, ? and * would be prohibited in
+> the names as well.
 
-See my messages about 0.99.9m and xmlto (and asciidoc).  They are
-currently required for building the RPMs.  Perhaps the spec file needs
-updating.
-
-Thanks for the peek into your input queue.
-
-	-Paul
+I second that, and thanks for pointing it out.  Any objections?
