@@ -1,60 +1,68 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: git cole give unexpected error message
-Date: Tue, 13 Dec 2005 22:28:20 +0100
-Message-ID: <20051213212820.GB5232@mars.ravnborg.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Tip of the day: archaeology
+Date: Tue, 13 Dec 2005 13:54:44 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0512131351100.4184@g5.osdl.org>
+References: <20051209215414.14072.qmail@science.horizon.com>
+ <7vmzj9zwfu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0512120827440.15597@g5.osdl.org>
+ <20051212195319.11d41269.tihirvon@gmail.com> <Pine.LNX.4.64.0512121010550.15597@g5.osdl.org>
+ <86y82qyrqs.fsf@blue.stonehenge.com> <20051213035842.GF10371@always.joy.eth.net>
+ <86d5k1y7dp.fsf@blue.stonehenge.com> <7vzmn5bmlk.fsf@assigned-by-dhcp.cox.net>
+ <7vd5k1bf40.fsf@assigned-by-dhcp.cox.net> <861x0hxfn2.fsf@blue.stonehenge.com>
+ <7vpso07l63.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Dec 13 22:30:32 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 13 22:57:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmHgy-00023F-Fg
-	for gcvg-git@gmane.org; Tue, 13 Dec 2005 22:28:12 +0100
+	id 1EmI8R-0003qZ-Vv
+	for gcvg-git@gmane.org; Tue, 13 Dec 2005 22:56:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030237AbVLMV2J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Dec 2005 16:28:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932385AbVLMV2J
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 16:28:09 -0500
-Received: from pfepa.post.tele.dk ([195.41.46.235]:12829 "EHLO
-	pfepa.post.tele.dk") by vger.kernel.org with ESMTP id S932506AbVLMV2I
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2005 16:28:08 -0500
-Received: from mars.ravnborg.org (0x50a0757d.hrnxx9.adsl-dhcp.tele.dk [80.160.117.125])
-	by pfepa.post.tele.dk (Postfix) with ESMTP id 23F1847FEF9
-	for <git@vger.kernel.org>; Tue, 13 Dec 2005 22:28:03 +0100 (CET)
-Received: by mars.ravnborg.org (Postfix, from userid 1000)
-	id 447FD6AC07C; Tue, 13 Dec 2005 22:28:20 +0100 (CET)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+	id S1030250AbVLMV4B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Dec 2005 16:56:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030192AbVLMV4B
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 16:56:01 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:2723 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030250AbVLMV4A (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Dec 2005 16:56:00 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBDLsjDZ007694
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 13 Dec 2005 13:54:45 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBDLsil6011904;
+	Tue, 13 Dec 2005 13:54:44 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vpso07l63.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.128 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13590>
-
-Encountered following minor issue today:
-
-Executed:
-sam@mars ~/work $ git clone git://git.kernel.org/pub/scm/lib/klibc/klibc.git viggo
-defaulting to local storage area
-fatal: unexpected EOF
-
-The errormessage "fatal: unexpected EOF" did not immediately tell me
-that the requested git repository did not exists.
-
-But I corrected the path and tried again:
-sam@mars ~/work $ git clone git://git.kernel.org/pub/scm/libs/klibc/klibc.git viggo
-viggo already exists.
-
-So one can see that git did not clean up after the faulty clone.
-
-It would be nice if git:
-1) Displayed a more meaningfull error message
-2) Cleaned up so I did not have to do a manual rm -rf viggo
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13591>
 
 
-cogito being a nice porcelain gives the git errormessage but manage to
-clean up when the clone fails.
-So also cogito would benefit from a more descriptive errormessage.
 
-	Sam
+On Tue, 13 Dec 2005, Junio C Hamano wrote:
+> 
+> *1* Sometimes I wish we had "cvs co -p" equivalent.
+> 
+> 	$ git cat-blob rev path
+> 
+> Perhaps?
+
+Isn't "git-ls-tree rev path" good enough? Maybe you want to wrap it with
+
+	#!/bin/sh
+	git-ls-tree "$@" |
+		while read mode type sha name
+		do
+			git-cat-file $type $sha
+		done
+
+or something? 
+
+		Linus
