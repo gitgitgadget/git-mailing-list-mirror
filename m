@@ -1,62 +1,75 @@
-From: Paul Dickson <paul@permanentmail.com>
-Subject: Problems with cg-admin-setuprepo
-Date: Mon, 12 Dec 2005 18:02:15 -0700
-Message-ID: <20051212180215.e9b687e4.paul@permanentmail.com>
-References: <20051212011210.GC12373@pasky.or.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: qgit reports errors in the git repository
+Date: Mon, 12 Dec 2005 17:06:47 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0512121700010.15597@g5.osdl.org>
+References: <1134433440.3798.27.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Dec 13 02:03:31 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git <git@vger.kernel.org>, Marco Costalba <mcostalba@yahoo.it>
+X-From: git-owner@vger.kernel.org Tue Dec 13 02:08:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ElyYg-0003IO-4P
-	for gcvg-git@gmane.org; Tue, 13 Dec 2005 02:02:22 +0100
+	id 1Elyd9-0004GN-2c
+	for gcvg-git@gmane.org; Tue, 13 Dec 2005 02:06:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932305AbVLMBCT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 20:02:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932324AbVLMBCT
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 20:02:19 -0500
-Received: from api.pobox.com ([208.210.124.75]:38041 "EHLO thorn.pobox.com")
-	by vger.kernel.org with ESMTP id S932305AbVLMBCT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 20:02:19 -0500
-Received: from thorn (localhost [127.0.0.1])
-	by thorn.pobox.com (Postfix) with ESMTP id 84C55110
-	for <git@vger.kernel.org>; Mon, 12 Dec 2005 20:02:40 -0500 (EST)
-Received: from red.pwd.internal (ip68-230-78-84.ph.ph.cox.net [68.230.78.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by thorn.sasl.smtp.pobox.com (Postfix) with ESMTP id 2148F109C
-	for <git@vger.kernel.org>; Mon, 12 Dec 2005 20:02:39 -0500 (EST)
-Received: from white.pwd.internal ([192.168.1.9])
-	by red.pwd.internal (8.13.5/8.13.4) with SMTP id jBD12G76012960
-	for <git@vger.kernel.org>; Mon, 12 Dec 2005 18:02:16 -0700
-To: git@vger.kernel.org
-In-Reply-To: <20051212011210.GC12373@pasky.or.cz>
-X-Mailer: Sylpheed version 2.1.6 (GTK+ 2.8.8; i686-pc-linux-gnu)
+	id S932318AbVLMBG4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 20:06:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932319AbVLMBGz
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 20:06:55 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:10715 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932318AbVLMBGy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 20:06:54 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBD16nDZ012433
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 12 Dec 2005 17:06:50 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBD16liv027728;
+	Mon, 12 Dec 2005 17:06:48 -0800
+To: Pavel Roskin <proski@gnu.org>
+In-Reply-To: <1134433440.3798.27.camel@dv>
+X-Spam-Status: No, hits=0.16 required=5 tests=HTML_MESSAGE
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.128 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13552>
-
-On Mon, 12 Dec 2005 02:12:10 +0100, Petr Baudis wrote:
-
->   this is Cogito version 0.16.1, the next stable release of the
-> human-friendly version control UI for the Linus' GIT tool.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13553>
 
 
-The help from cg-admin-setuprepo say it will create the repo in the given
-directory, but doesn't say it must create the directory.
 
-  $ mkdir ~/test
-  $ cg-admin-setuprepo ~/test
-  cg-admin-setuprepo: /home/dickson/test already exists
+On Mon, 12 Dec 2005, Pavel Roskin wrote:
+>
+> Git says:
+> fatal: git-cat-file 23ea3e201cea0deea909569e08e950a9ec2345f7: bad file
+> 
+> I believe qgit runs "git-cat-file -t tag" on in, but it's a commit.  If
+> I change the git-cat-file invocation in  src/git_startup.cpp to use
+> "commit" instead of "tag", qgit complains about
+> 0918385dbd9656cab0d1d81ba7453d49bbc16250.
+> 
+> Maybe qgit should check the type of the object first?  Or maybe there
+> should another type for git-cat-file that would match both tag and
+> commit?
 
-There seems to be a missing step in the help instructions:
+Using "git-cat-file commit <object>" already works for both real commits 
+and for tags that point to commits.
 
-  $ cg-admin-setuprepo ~/test/test1
-  $ cg-push
-  cg-push: where to push to?
+However, the "0918385dbd9656cab0d1d81ba7453d49bbc16250" object is a tag 
+that points to a blob (Junios public gpg key), so you can't use that.
 
+Basically, qgit should do either:
 
-	-Paul
+ - check the type of the object by hand first (using "git-cat-file -t" and 
+   then follow any tags it finds by hand)
+
+_or_ 
+
+ - just use "git-cat-file commit" and if an error occurs, just silently 
+   ignore that ref since it doesn't understand them.
+
+which one is the right strategy depends on usage.
+
+		Linus
