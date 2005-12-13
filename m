@@ -1,75 +1,121 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: qgit reports errors in the git repository
-Date: Mon, 12 Dec 2005 17:06:47 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0512121700010.15597@g5.osdl.org>
-References: <1134433440.3798.27.camel@dv>
+From: Petr Baudis <pasky@suse.cz>
+Subject: ([ANNOUNCE] Cogito-0.16)
+Date: Tue, 13 Dec 2005 02:07:42 +0100
+Message-ID: <20051213010742.GD12373@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git <git@vger.kernel.org>, Marco Costalba <mcostalba@yahoo.it>
-X-From: git-owner@vger.kernel.org Tue Dec 13 02:08:15 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Dec 13 02:08:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Elyd9-0004GN-2c
-	for gcvg-git@gmane.org; Tue, 13 Dec 2005 02:06:59 +0100
+	id 1Elydw-0004KM-Ci
+	for gcvg-git@gmane.org; Tue, 13 Dec 2005 02:07:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932318AbVLMBG4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 20:06:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932319AbVLMBGz
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 20:06:55 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:10715 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932318AbVLMBGy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 20:06:54 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBD16nDZ012433
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Dec 2005 17:06:50 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBD16liv027728;
-	Mon, 12 Dec 2005 17:06:48 -0800
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1134433440.3798.27.camel@dv>
-X-Spam-Status: No, hits=0.16 required=5 tests=HTML_MESSAGE
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.128 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932317AbVLMBHq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 20:07:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932319AbVLMBHq
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 20:07:46 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:64706 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932317AbVLMBHp (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 20:07:45 -0500
+Received: (qmail 15144 invoked by uid 2001); 13 Dec 2005 02:07:42 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13554>
+
+  It seems the actual announcement has never really hit the list, for
+some reason. I'm posting this only so that the history can record this
+and people can look it up later. And so that I don't feel silly wasting
+time putting it together. ;-) But the current version is 0.16.1 right
+now, and another release will be coming up soon.
+
+  ============
 
 
+  Hello,
 
-On Mon, 12 Dec 2005, Pavel Roskin wrote:
->
-> Git says:
-> fatal: git-cat-file 23ea3e201cea0deea909569e08e950a9ec2345f7: bad file
-> 
-> I believe qgit runs "git-cat-file -t tag" on in, but it's a commit.  If
-> I change the git-cat-file invocation in  src/git_startup.cpp to use
-> "commit" instead of "tag", qgit complains about
-> 0918385dbd9656cab0d1d81ba7453d49bbc16250.
-> 
-> Maybe qgit should check the type of the object first?  Or maybe there
-> should another type for git-cat-file that would match both tag and
-> commit?
+  here goes Cogito version 0.16, the human-friendly version control UI
+for the Linus' GIT tool. Share and enjoy at:
 
-Using "git-cat-file commit <object>" already works for both real commits 
-and for tags that point to commits.
+	http://www.kernel.org/pub/software/scm/cogito/
 
-However, the "0918385dbd9656cab0d1d81ba7453d49bbc16250" object is a tag 
-that points to a blob (Junios public gpg key), so you can't use that.
+  Plenty of new features and bugfixes. There are only few minor bugfixes
+since rc2, and one major bugfix concerning possible weirdness after
+cg-merge failing with the git-read-tree error - for this reason, it's
+recommended to upgrade.
 
-Basically, qgit should do either:
+  I changed my tactics wrt. the minor versions; 0.16 has now dedicated
+branch and I will try to accumulate at least non-trivial bugfixes there,
+so 0.16.1 will be probably purely bugfix release. The "stable" 0.16
+branch is available in the Cogito repository as "v0.16".
 
- - check the type of the object by hand first (using "git-cat-file -t" and 
-   then follow any tags it finds by hand)
+  The notable new stuff since 0.15.1 includes:
 
-_or_ 
 
- - just use "git-cat-file commit" and if an error occurs, just silently 
-   ignore that ref since it doesn't understand them.
+  * Significant fetching surgery:
+    - host:path location now means git+ssh instead of rsync (but it
+      is deprecated in favour of explicit protocol name - safer and
+      less confusing for you)
+    - git+ssh uses packed transport instead of the dated git-ssh-fetch
+    - Tags fetching is now much more reliable, saner and faster
+    - More robust rsync fetching (for anyone actually still using it)
+    - Local fetching should work even without GNU cp now
+    - curl is used instead of wget for fetching over HTTP
+    - Non-symlink HEADs are now fetched from properly
+    - Speedup of the whole thing (the progressbar was actually slowing
+      the process down so much that I'm almost afraid to say it)
+  * The one-file merging autoresolver covers much more cases now;
+    it still probably doesn't handle file-symlink and file-directory
+    conflicts (actually, I didn't even test anything related to that
+    yet), but otherwise it should handle pretty much any conflict now
+    (except that it yet won't make sure that you resolved the conflict
+    before committing)
+  * New command cg-admin-setuprepo for creating public repositories
+  * Major cg-restore surgery - more pleasant to use, more powerful,
+    more robust
+  * Handle multiple merge bases (leaving the decision on the user)
 
-which one is the right strategy depends on usage.
+  * Fix another bug related to dirty merges - files containing local
+    changes would be left marked as ignored for committing ('m' in
+    cg-status) until after the next commit in case cg-merge failed
+    with git-read-tree error - please upgrade!
+  * Fix a long-standing bug with some stale files not being removed
+    during large fast-forwards
+  * Heaps of other both major and minor bugfixes; I won't name them,
+    you can look at "cg-log -s -r cogito-0.15.1.." - but you should
+    certainly upgrade
 
-		Linus
+  * cg-push -t will push tags
+  * cg-merge -j will join projects with disjoint histories
+  * cg-merge --squash will do the "squash merge" (see docs for details)
+  * cg-log --summary will show the shortlog output
+  * cg-diff -s will show diffstat
+  * cg-reset --adds-removes will reset only index (cancel the
+    adds/removes recorded, from the user perspective)
+  * cg-status DIRNAME will show the status relative to that directory
+  * cg-status -s will filter for only the given status flags
+  * cg-tag always creates the tag object
+  * cg-init -m'msg' support
+  * Deprecated .git/branch-name
+  * First draft of the VCS-neutral interface implemented as
+    contrib/neutral.sh
+
+  * Speedups all around (e.g. per-file cg-log SIXTY times)
+  * Reorganized cg-help output
+  * More new tests in the testsuite
+  * Documentation stuff - the "scripted tutorial", README expanded,
+    tiny stuff all around
+
+
+  Happy hacking,
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
