@@ -1,65 +1,51 @@
-From: Paul Dickson <paul@permanentmail.com>
-Subject: Re: [ANNOUNCE] GIT 0.99.9m aka 1.0rc5
-Date: Mon, 12 Dec 2005 18:37:23 -0700
-Message-ID: <20051212183723.c4b09964.paul@permanentmail.com>
-References: <7vbqznm4b7.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Delitifier broken (Re: diff-core segfault)
+Date: Mon, 12 Dec 2005 17:41:21 -0800
+Message-ID: <7vhd9ddb9a.fsf@assigned-by-dhcp.cox.net>
+References: <1134404990.5928.4.camel@localhost.localdomain>
+	<7vmzj6i206.fsf@assigned-by-dhcp.cox.net>
+	<7virtui1kj.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0512121620380.26663@localhost.localdomain>
+	<7vek4igevq.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0512121529200.15597@g5.osdl.org>
+	<7vlkypdcsb.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0512121720150.15597@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Dec 13 02:38:05 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 13 02:42:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Elz6f-000526-GI
-	for gcvg-git@gmane.org; Tue, 13 Dec 2005 02:37:29 +0100
+	id 1ElzAT-0005fM-PG
+	for gcvg-git@gmane.org; Tue, 13 Dec 2005 02:41:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751162AbVLMBh1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 20:37:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbVLMBh0
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 20:37:26 -0500
-Received: from vds.fauxbox.com ([208.210.124.75]:13501 "EHLO thorn.pobox.com")
-	by vger.kernel.org with ESMTP id S1751162AbVLMBh0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 20:37:26 -0500
-Received: from thorn (localhost [127.0.0.1])
-	by thorn.pobox.com (Postfix) with ESMTP id B6F42104
-	for <git@vger.kernel.org>; Mon, 12 Dec 2005 20:37:47 -0500 (EST)
-Received: from red.pwd.internal (ip68-230-78-84.ph.ph.cox.net [68.230.78.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by thorn.sasl.smtp.pobox.com (Postfix) with ESMTP id 7B9BE109C
-	for <git@vger.kernel.org>; Mon, 12 Dec 2005 20:37:47 -0500 (EST)
-Received: from white.pwd.internal ([192.168.1.9])
-	by red.pwd.internal (8.13.5/8.13.4) with SMTP id jBD1bNW9013412
-	for <git@vger.kernel.org>; Mon, 12 Dec 2005 18:37:23 -0700
-To: git@vger.kernel.org
-In-Reply-To: <7vbqznm4b7.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.1.6 (GTK+ 2.8.8; i686-pc-linux-gnu)
+	id S932291AbVLMBlX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 20:41:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbVLMBlX
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 20:41:23 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:47804 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751185AbVLMBlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Dec 2005 20:41:22 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051213014033.VKKY6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 12 Dec 2005 20:40:33 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0512121720150.15597@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 12 Dec 2005 17:34:28 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13560>
 
-On Sun, 11 Dec 2005 18:34:20 -0800, Junio C Hamano wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> GIT 0.99.9m aka 1.0rc5 is found at usual places:
+> So I think your diffcore-break.c patch is much more appropriate: it also 
+> fixes the bug, but it fixes it by virtue of realizing that the delta 
+> cannot matter and thus should never even be computed.
 
-Is it just me or do most paragraphs (blocks of text) end with a ".sp"?
-
-
->From git-repack man file:
-
-  AUTHOR
-         Written by Linus Torvalds <torvalds@osdl.org>.sp
-
-  DOCUMENTATION
-         Documentation by Ryan Anderson <ryan@michonline.com>.sp
-
-  SEE-ALSO
-         git-pack-objects(1) git-prune-packed(1).sp
-
-  GIT
-         Part of the git(7) suite.sp
-
-
-
-	-Paul
+Agreed, redone and pushed out.
