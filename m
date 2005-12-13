@@ -1,63 +1,75 @@
-From: Martin Atukunda <matlads@dsmagic.com>
-Subject: [PATCH] define MAXPATHLEN for hosts that don't support it
-Date: Tue, 13 Dec 2005 15:21:34 +0300
-Message-ID: <11344764941807-git-send-email-matlads@dsmagic.com>
-Reply-To: Martin Atukunda <matlads@dsmagic.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: as promised, docs: git for the confused
+Date: 13 Dec 2005 05:58:41 -0800
+Message-ID: <861x0hxfn2.fsf@blue.stonehenge.com>
+References: <20051209215414.14072.qmail@science.horizon.com>
+	<7vmzj9zwfu.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0512120827440.15597@g5.osdl.org>
+	<20051212195319.11d41269.tihirvon@gmail.com>
+	<Pine.LNX.4.64.0512121010550.15597@g5.osdl.org>
+	<86y82qyrqs.fsf@blue.stonehenge.com>
+	<20051213035842.GF10371@always.joy.eth.net>
+	<86d5k1y7dp.fsf@blue.stonehenge.com>
+	<7vzmn5bmlk.fsf@assigned-by-dhcp.cox.net>
+	<7vd5k1bf40.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Martin Atukunda <matlads@dsmagic.com>
-X-From: git-owner@vger.kernel.org Tue Dec 13 13:23:24 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 13 14:58:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Em9AL-0005z2-8p
-	for gcvg-git@gmane.org; Tue, 13 Dec 2005 13:21:58 +0100
+	id 1EmAg8-00018h-EQ
+	for gcvg-git@gmane.org; Tue, 13 Dec 2005 14:58:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750801AbVLMMVy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Dec 2005 07:21:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750829AbVLMMVy
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 07:21:54 -0500
-Received: from mail1.starcom.co.ug ([217.113.72.31]:17974 "EHLO
-	mail1.infocom.co.ug") by vger.kernel.org with ESMTP
-	id S1750801AbVLMMVy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2005 07:21:54 -0500
-Received: from entandikwa.ds.co.ug ([::ffff:217.113.73.39])
-  by mail1.infocom.co.ug with esmtp; Tue, 13 Dec 2005 15:21:46 +0300
-  id 000F59F7.439EBCDA.000074F8
-Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
-	by entandikwa.ds.co.ug (Postfix) with ESMTP
-	id D89475251; Tue, 13 Dec 2005 15:23:28 +0300 (EAT)
-Received: from localhost ([127.0.0.1] helo=igloo)
-	by igloo.ds.co.ug with smtp (Exim 4.60)
-	(envelope-from <matlads@dsmagic.com>)
-	id 1Em99y-00056F-15; Tue, 13 Dec 2005 15:21:34 +0300
-In-Reply-To: 
-X-Mailer: git-send-email
-To: git@vger.kernel.org
-X-Mime-Autoconverted: from 8bit to 7bit by courier 0.46
+	id S932261AbVLMN6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Dec 2005 08:58:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932291AbVLMN6s
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 08:58:48 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:29041 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932261AbVLMN6r
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2005 08:58:47 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id B17698F850;
+	Tue, 13 Dec 2005 05:58:42 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 14850-01-52; Tue, 13 Dec 2005 05:58:42 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 2AE648F93E; Tue, 13 Dec 2005 05:58:42 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+x-mayan-date: Long count = 12.19.12.15.15; tzolkin = 13 Men; haab = 13 Mac
+In-Reply-To: <7vd5k1bf40.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13578>
 
----
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
- git-compat-util.h |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+Junio> Junio C Hamano <junkio@cox.net> writes:
+>> The only Plumbing support is that ls-files takes --exclude-from=
+>> and --exclude-per-directory= options.  It is up to the Porcelain
+>> layer what names to use.
+>> 
+>> We agreed upon a convention to use .gitignore as per-directory
+>> and .git/info/exclude (I think this came from existing practice
+>> by Cogito back then) as the tree-wide fallback, when these two
+>> flags were introduced to ls-files, for interoperability across
+>> Porcelains.
 
-e7aa01129989561dcd069db41a2da4a133dcff61
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 4185b12..ead0ede 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -110,4 +110,7 @@ static inline int sane_case(int x, int h
- 	return x;
- }
- 
-+#ifndef MAXPATHLEN
-+#define MAXPATHLEN 256
-+#endif
- #endif
+Junio> ... and as Linus pointed out already, the barebone Porcelain-ish
+Junio> that ship with git follows that convention as well.
+
+I see now that grepping "gitignore" shows git-add.sh and
+git-status.sh.  gitignore is indeed doc'ed in git-add.txt, but not in
+git-status.txt.  Must've snuck in recently.  I'm trying to watch
+"git-whatchanged -p Documentation/*", but I miss things sometimes.
+
 -- 
-0.99.9.GIT
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
