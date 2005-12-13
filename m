@@ -1,55 +1,62 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] cg-clean: fix directory cleaning
-Date: Tue, 13 Dec 2005 01:42:51 +0100
-Message-ID: <20051213004251.GA22159@pasky.or.cz>
-References: <1134420860.4695.14.camel@dv>
+From: Paul Dickson <paul@permanentmail.com>
+Subject: Problems with cg-admin-setuprepo
+Date: Mon, 12 Dec 2005 18:02:15 -0700
+Message-ID: <20051212180215.e9b687e4.paul@permanentmail.com>
+References: <20051212011210.GC12373@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 13 01:44:18 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Dec 13 02:03:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ElyFu-0000A5-26
-	for gcvg-git@gmane.org; Tue, 13 Dec 2005 01:42:58 +0100
+	id 1ElyYg-0003IO-4P
+	for gcvg-git@gmane.org; Tue, 13 Dec 2005 02:02:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932315AbVLMAmz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Dec 2005 19:42:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932312AbVLMAmz
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 19:42:55 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:42377 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932315AbVLMAmy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 19:42:54 -0500
-Received: (qmail 13254 invoked by uid 2001); 13 Dec 2005 01:42:51 +0100
-To: Pavel Roskin <proski@gnu.org>
-Content-Disposition: inline
-In-Reply-To: <1134420860.4695.14.camel@dv>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932305AbVLMBCT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Dec 2005 20:02:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932324AbVLMBCT
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Dec 2005 20:02:19 -0500
+Received: from api.pobox.com ([208.210.124.75]:38041 "EHLO thorn.pobox.com")
+	by vger.kernel.org with ESMTP id S932305AbVLMBCT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Dec 2005 20:02:19 -0500
+Received: from thorn (localhost [127.0.0.1])
+	by thorn.pobox.com (Postfix) with ESMTP id 84C55110
+	for <git@vger.kernel.org>; Mon, 12 Dec 2005 20:02:40 -0500 (EST)
+Received: from red.pwd.internal (ip68-230-78-84.ph.ph.cox.net [68.230.78.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by thorn.sasl.smtp.pobox.com (Postfix) with ESMTP id 2148F109C
+	for <git@vger.kernel.org>; Mon, 12 Dec 2005 20:02:39 -0500 (EST)
+Received: from white.pwd.internal ([192.168.1.9])
+	by red.pwd.internal (8.13.5/8.13.4) with SMTP id jBD12G76012960
+	for <git@vger.kernel.org>; Mon, 12 Dec 2005 18:02:16 -0700
+To: git@vger.kernel.org
+In-Reply-To: <20051212011210.GC12373@pasky.or.cz>
+X-Mailer: Sylpheed version 2.1.6 (GTK+ 2.8.8; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13552>
 
-Dear diary, on Mon, Dec 12, 2005 at 09:54:20PM CET, I got a letter
-where Pavel Roskin <proski@gnu.org> said that...
-> cg-clean is broken by commit 3cddede46dcd24bd7c36827ca564de23b2bb3517 -
-> it removes all subdirectories when run in the top level directory.
-> 
-> Although it's easy to make a one-line fix, I'd prefer a solution that
-> makes cg-clean potentially safer.  Since git-ls-files runs in
-> subdirectories now, it's no longer needed to run anything in the top
-> level directory and filter out the results.  cg-clean now changes to
-> $_git_relpath on startup and never uses $_git_relpath again.
-> 
-> Signed-off-by: Pavel Roskin <proski@gnu.org>
+On Mon, 12 Dec 2005 02:12:10 +0100, Petr Baudis wrote:
 
-Oops! Many thanks to both this and the testcase - I was just about to
-write one, because those cg-clean bugs are really quite ugly. I'll
-release 0.16.2 tomorrow if no other bug will be found.
+>   this is Cogito version 0.16.1, the next stable release of the
+> human-friendly version control UI for the Linus' GIT tool.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+
+The help from cg-admin-setuprepo say it will create the repo in the given
+directory, but doesn't say it must create the directory.
+
+  $ mkdir ~/test
+  $ cg-admin-setuprepo ~/test
+  cg-admin-setuprepo: /home/dickson/test already exists
+
+There seems to be a missing step in the help instructions:
+
+  $ cg-admin-setuprepo ~/test/test1
+  $ cg-push
+  cg-push: where to push to?
+
+
+	-Paul
