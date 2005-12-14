@@ -1,87 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: new file leaked onto release branch
-Date: Wed, 14 Dec 2005 00:37:10 -0800
-Message-ID: <7v3bkw2hxl.fsf@assigned-by-dhcp.cox.net>
-References: <200512140257.03975.len.brown@intel.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] git-am support for naked email messages (take 2)
+Date: Wed, 14 Dec 2005 21:38:54 +1300
+Message-ID: <46a038f90512140038j606642d0x29633be4fa21829f@mail.gmail.com>
+References: <439FBE1B.4050601@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 14 09:39:06 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 14 09:40:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmS8Y-0006Jd-E1
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 09:37:22 +0100
+	id 1EmSA7-0006cG-B5
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 09:38:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932099AbVLNIhO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 03:37:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932111AbVLNIhO
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 03:37:14 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:21997 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932099AbVLNIhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2005 03:37:13 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051214083631.LRTU15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 14 Dec 2005 03:36:31 -0500
-To: Len Brown <len.brown@intel.com>
-In-Reply-To: <200512140257.03975.len.brown@intel.com> (Len Brown's message of
-	"Wed, 14 Dec 2005 02:57:03 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932131AbVLNIi4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 03:38:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932136AbVLNIi4
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 03:38:56 -0500
+Received: from wproxy.gmail.com ([64.233.184.200]:19911 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932131AbVLNIiz convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2005 03:38:55 -0500
+Received: by wproxy.gmail.com with SMTP id 57so56641wri
+        for <git@vger.kernel.org>; Wed, 14 Dec 2005 00:38:55 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DS7U3m91jIzR0O4ZWAzsbrldz/ZqWN4DsWcPARRXB4xoN2mBW8A/sgaQayXoqNd7KGuXiYF9TG1LhIOnPAFHeXQXA4mIRRJY8wBwErWoj9sF1VHJN3odGP+iOlGLLZQbs1Uwmb/RpV731xdAfAonLmh1FP3Ku9UA/ChhM7ejbhI=
+Received: by 10.54.67.19 with SMTP id p19mr390674wra;
+        Wed, 14 Dec 2005 00:38:54 -0800 (PST)
+Received: by 10.54.72.15 with HTTP; Wed, 14 Dec 2005 00:38:54 -0800 (PST)
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <439FBE1B.4050601@zytor.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13622>
 
-Len Brown <len.brown@intel.com> writes:
+On 12/14/05, H. Peter Anvin <hpa@zytor.com> wrote:
+> This allows git-am to accept single-message files as well as mboxes.
+> Unlike the previous version, this one doesn't need to be explicitly told
+> which one it is; rather, it looks to see if the first line is a From
+> line and uses it to select mbox mode or not.
 
-> Somehow a new file leaked from my "acpica" branch onto my "release" branch
-> without me pulling "acpica" into "release".
+Yes, please. These changes to git-am/git-mailsplit are very welcome by
+those that don't use mbox-based MUAs. The whole workflow if git-am is
+really trying if you are IMAP or Gmail/webmail based.
 
-I'll take a look at your "broken" branch later today (but will
-go to bed first ;-), so please leave it around.
+BTW, I recently had a go at using a Perl Gmail library to fetch
+messages with a particular label into an mbox, but the library didn't
+work, and I don't want to be chasing the taillights of gmails internal
+API. If the python Gmail library works better, I may have a go at
+learning python ;-)
 
-> I package up a tar-file for the remote machines with
-> git-tar-tree $BRANCH $REPO | gzip -1 > $TARFILE
-> But I still need to generate a patch containing all the local
-> changes that I haven't checked into git yet.
+cheers,
 
-Let me understand what you have correctly:
 
-    You have the latest commit, changes needed to be tested in
-    working tree, and index is somewhere in-between, because of
-    "git-update-index --add" you did for patch generation; but
-    ideally you would want to keep HEAD and index in sync.
-
-And you need a way to do the above tar-tree + patch equivanent
-to move what you have in your working tree to other machines for
-pre-commit testing.  Some random thoughts on ways to do it.
-
-(1) NFS with "make O=dir/to/store/output/files/"?
-
-(2) Do you have git on other build boxes?  Perhaps
-
-    mainbox$ edit on "acpica" branch
-    mainbox$ git checkout -b build-test ;# branch from it
-    mainbox$ git add some files
-    mainbox$ git commit -a -m "Build test $(date)" ;# take all
-
-    mainbox$ ssh i386box
-    i386box$ git pull mainbox:/home/lnx/.git build-test
-    Fast forward.
-    i386box$ make ;# happy
-
-    mainbox$ git checkout acpica ; git pull . build-test ;# fast forward
-
-(3) Tarball approach, but taking the local modifications along
-    as well:
-
-    mainbox$ git update-index all-changed-paths-not-just-add
-    mainbox$ git-tar-tree $(git-write-tree) $REPO | gzip >$TARFILE
-    mainbox$ git reset ;# unregisters all mods since HEAD from index
-    mainbox$ scp $TARFILE i386box:/home/lnx/
-
-I suspect the last one is the least disruptive to your existing
-workflow.
+martin
