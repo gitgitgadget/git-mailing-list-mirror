@@ -1,71 +1,112 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Tracking files across tree reorganizations
-Date: Wed, 14 Dec 2005 15:12:33 -0800
-Message-ID: <43A0A6E1.9070903@zytor.com>
-References: <43A08B8F.1000901@zytor.com> <20051214223656.GJ22159@pasky.or.cz>
+From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+Subject: [PATCH] Bugfixes for git-rebase
+Date: Thu, 15 Dec 2005 00:36:35 +0100
+Message-ID: <43A0AC83.5050206@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 15 00:14:33 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>,
+	=?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+X-From: git-owner@vger.kernel.org Thu Dec 15 00:36:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Emfnw-0000pa-Rm
-	for gcvg-git@gmane.org; Thu, 15 Dec 2005 00:13:01 +0100
+	id 1Emg9w-0000mX-ON
+	for gcvg-git@gmane.org; Thu, 15 Dec 2005 00:35:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965036AbVLNXM6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 18:12:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965045AbVLNXM6
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 18:12:58 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:5310 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S965036AbVLNXM5
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2005 18:12:57 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBENCiln018764
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 14 Dec 2005 15:12:44 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+	id S965087AbVLNXfm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 14 Dec 2005 18:35:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965089AbVLNXfm
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 18:35:42 -0500
+Received: from pne-smtpout1-sn1.fre.skanova.net ([81.228.11.98]:7575 "EHLO
+	pne-smtpout1-sn1.fre.skanova.net") by vger.kernel.org with ESMTP
+	id S965087AbVLNXfl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2005 18:35:41 -0500
+Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout1-sn1.fre.skanova.net (7.2.069.1)
+        id 43A06357000134C4; Thu, 15 Dec 2005 00:35:40 +0100
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051015)
 X-Accept-Language: en-us, en
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051214223656.GJ22159@pasky.or.cz>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+To: Git Mailing List <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13656>
 
-Petr Baudis wrote:
-> Hah, here we go again. :-)
-> 
-> Dear diary, on Wed, Dec 14, 2005 at 10:15:59PM CET, I got a letter
-> where "H. Peter Anvin" <hpa@zytor.com> said that...
-> 
->>Did anything ever happen with that?
-> 
-> Linus is against it.
-> 
+=46ix bugs in git-rebase wrt rebasing another branch than
+the current HEAD, rebasing with a dirty working dir,
+and rebasing a proper decendant of the target branch.
 
-I don't think so.  Linus is against the user having to explicitly record 
-the moves, but we can detect the moves at the point of reorganization.
+Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
 
-> Cogito will do it anyway ;-), when someone sends me a nice patch or when
-> I get to it (probably not very soon). I imagine it like this:
-> 
-> (a) User can explicitly note file moves / renames. We follow those notes.
-> Probably the most viable for recording the notes is appending them at
-> the tail of the commit message.
-> 
-> (b) If there are no notes for the given commit, we do the rename
-> autodetection already implemented in GIT. If it yields something,
-> we follow it.
+---
+Without this patch git rebase complains about
+"fatal: cannot read mbox" when doing a fast-forward.
 
-I don't see anything in Linus' posts that says (b) is unacceptable.
+ git-rebase.sh |   29 +++++++++++++++++++----------
+ 1 files changed, 19 insertions(+), 10 deletions(-)
 
-	-hpa
+2c0e6289d37461abbadb878b9ca8d2bfe2ca1a1b
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 638ff0d..1e9ddde 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -18,31 +18,30 @@ you still have something valuable there.
+ 	exit 1
+ fi
+=20
+-# The other head is given.  Make sure it is valid.
+-other=3D$(git-rev-parse --verify "$1^0") || exit
+-
+-# Make sure we have HEAD that is valid.
+-head=3D$(git-rev-parse --verify "HEAD^0") || exit
+-
+ # The tree must be really really clean.
+ git-update-index --refresh || exit
+ diff=3D$(git-diff-index --cached --name-status -r HEAD)
+-case "$different" in
++case "$diff" in
+ ?*)	echo "$diff"
+ 	exit 1
+ 	;;
+ esac
+=20
++# The other head is given.  Make sure it is valid.
++other=3D$(git-rev-parse --verify "$1^0") || exit
++
++# Make sure the branch to rebase is valid.
++head=3D$(git-rev-parse --verify "${2:-HEAD^0}") || exit
++
+ # If the branch to rebase is given, first switch to it.
+ case "$#" in
+ 2)
+ 	git-checkout "$2" || exit
+ esac
+=20
+-# If the HEAD is a proper descendant of $other, we do not even need
+-# to rebase.  Make sure we do not do needless rebase.  In such a
+-# case, merge-base should be the same as "$other".
+ mb=3D$(git-merge-base "$other" "$head")
++
++#Check if we're already rebased.
+ if test "$mb" =3D "$other"
+ then
+ 	echo >&2 "Current branch `git-symbolic-ref HEAD` is up to date."
+@@ -51,5 +50,15 @@ fi
+=20
+ # Rewind the head to "$other"
+ git-reset --hard "$other"
++
++# If the previous HEAD was a proper descendant of $other, we do not ev=
+en
++# need to rebase.  Make sure we do not do needless rebase.  In such a
++# case, merge-base should be the same as "$head".
++if test "$mb" =3D "$head"
++then
++	echo >&2 "Fast-forwarded $head to $other."
++	exit 0
++fi
++
+ git-format-patch -k --stdout --full-index "$other" ORIG_HEAD |
+ git am --binary -3 -k
+--=20
+0.99.9.GIT
