@@ -1,136 +1,140 @@
 From: "Brown, Len" <len.brown@intel.com>
 Subject: RE: new file leaked onto release branch
-Date: Wed, 14 Dec 2005 04:41:32 -0500
-Message-ID: <F7DC2337C7631D4386A2DF6E8FB22B300567ED87@hdsmsx401.amr.corp.intel.com>
+Date: Wed, 14 Dec 2005 04:58:51 -0500
+Message-ID: <F7DC2337C7631D4386A2DF6E8FB22B300567ED88@hdsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: multipart/mixed;
+	boundary="----_=_NextPart_001_01C60094.FD6ED259"
 Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 14 10:47:03 2005
+X-From: git-owner@vger.kernel.org Wed Dec 14 11:02:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmT8u-00019c-Eq
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 10:41:50 +0100
+	id 1EmTPv-0008IP-1B
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 10:59:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231AbVLNJlq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 04:41:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932257AbVLNJlq
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 04:41:46 -0500
-Received: from fmr13.intel.com ([192.55.52.67]:9865 "EHLO
+	id S932242AbVLNJ7N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 04:59:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932275AbVLNJ7N
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 04:59:13 -0500
+Received: from fmr13.intel.com ([192.55.52.67]:43151 "EHLO
 	fmsfmr001.fm.intel.com") by vger.kernel.org with ESMTP
-	id S932231AbVLNJlp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 04:41:45 -0500
+	id S932242AbVLNJ7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2005 04:59:13 -0500
 Received: from fmsfmr101.fm.intel.com (fmsfmr101.fm.intel.com [10.253.24.21])
-	by fmsfmr001.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id jBE9fZnB028913;
-	Wed, 14 Dec 2005 09:41:35 GMT
+	by fmsfmr001.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id jBE9wunB007506;
+	Wed, 14 Dec 2005 09:58:56 GMT
 Received: from fmsmsxvs043.fm.intel.com (fmsmsxvs043.fm.intel.com [132.233.42.129])
-	by fmsfmr101.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id jBE9fZBV025517;
-	Wed, 14 Dec 2005 09:41:35 GMT
-Received: from fmsmsx332.amr.corp.intel.com ([132.233.42.148])
- by fmsmsxvs043.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2005121401413511569
- ; Wed, 14 Dec 2005 01:41:35 -0800
-Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx332.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Wed, 14 Dec 2005 01:41:34 -0800
+	by fmsfmr101.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id jBE9wKBp003151;
+	Wed, 14 Dec 2005 09:58:56 GMT
+Received: from fmsmsx331.amr.corp.intel.com ([132.233.42.156])
+ by fmsmsxvs043.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2005121401585613259
+ ; Wed, 14 Dec 2005 01:58:56 -0800
+Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Wed, 14 Dec 2005 01:58:56 -0800
 Received: from hdsmsx401.amr.corp.intel.com ([10.127.2.60]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Wed, 14 Dec 2005 01:41:34 -0800
+	 Wed, 14 Dec 2005 01:58:55 -0800
 X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
 Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
+X-MS-Has-Attach: yes
 X-MS-TNEF-Correlator: 
 Thread-Topic: new file leaked onto release branch
-Thread-Index: AcYAiZa04iaqTPOpTT+Xd9miLY4vXwABjPRw
+Thread-Index: AcYAklHm//oLJTqyS1itVsec0Ma3TwAAF6sA
 To: "Junio C Hamano" <junkio@cox.net>
-X-OriginalArrivalTime: 14 Dec 2005 09:41:34.0669 (UTC) FILETIME=[9251AFD0:01C60092]
+X-OriginalArrivalTime: 14 Dec 2005 09:58:55.0204 (UTC) FILETIME=[FE86BA40:01C60094]
 X-Scanned-By: MIMEDefang 2.52 on 10.253.24.21
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13626>
 
->> I package up a tar-file for the remote machines with
->> git-tar-tree $BRANCH $REPO | gzip -1 > $TARFILE
->> But I still need to generate a patch containing all the local
->> changes that I haven't checked into git yet.
->
->Let me understand what you have correctly:
->
->    You have the latest commit, changes needed to be tested in
->    working tree, and index is somewhere in-between, because of
->    "git-update-index --add" you did for patch generation; but
->    ideally you would want to keep HEAD and index in sync.
+This is a multi-part message in MIME format.
 
-Right, I updated the index so that git diff would work.
+------_=_NextPart_001_01C60094.FD6ED259
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-I guess I don't really have my head around the index concept.
-Yes, it seems perhaps that HEAD and index disagreeing about what is
-in the repo is what caused the problem at hand.
+>What do you use to create these "Auto-update" commits, and how
+>can I help you to fix it?
 
->And you need a way to do the above tar-tree + patch equivanent
->to move what you have in your working tree to other machines for
->pre-commit testing.  Some random thoughts on ways to do it.
->
->(1) NFS with "make O=dir/to/store/output/files/"?
+I use the attached script, which I pasted from
+git/Documentation/howto/using-topic-branches.txt
 
-I think I prefer the build boxes to be more independent.
+git.update linus
 
-They build about a dozen kernels from scratch each,
-so I can't really keep my working repo frozen for
-the duration of the builds.
+to get the latest stuff from Linus onto the linus branch
 
-Also, sometimes I have them building different branches
-and different versions, depending on what is going on.
+git.update release
 
-Also, sometimes I apply a local test patch to the
-build box that isn't (yet) shared with the other boxes.
- 
->(2) Do you have git on other build boxes?  Perhaps
->
->    mainbox$ edit on "acpica" branch
->    mainbox$ git checkout -b build-test ;# branch from it
->    mainbox$ git add some files
->    mainbox$ git commit -a -m "Build test $(date)" ;# take all
->
->    mainbox$ ssh i386box
->    i386box$ git pull mainbox:/home/lnx/.git build-test
->    Fast forward.
->    i386box$ make ;# happy
->
->    mainbox$ git checkout acpica ; git pull . build-test ;# 
->fast forward
+to pull linus branch into my release branch
 
-sure, I have git everwhere.  But check-in is not a lightweight
-process for me -- I like to get the contributor & comments right
-on the check-in as if I'm creating permanent history.  I hate
-checking in a patch just to have to check in a build fix for
-it 20 minutes later.
+git.update release
 
-this is why I use quilt.  I just pop the patches, fix the
-broken one, and push them back.  after build and boot tests,
-that is when I do the git commit.
+to pull linus branch into my test branch
 
->(3) Tarball approach, but taking the local modifications along
->    as well:
->
->    mainbox$ git update-index all-changed-paths-not-just-add
->    mainbox$ git-tar-tree $(git-write-tree) $REPO | gzip >$TARFILE
->    mainbox$ git reset ;# unregisters all mods since HEAD from index
->    mainbox$ scp $TARFILE i386box:/home/lnx/
->
->I suspect the last one is the least disruptive to your existing
->workflow.
+I also use the git.merge script to pull topic branches
+into either release or test, or to pull release into test.
+I used git.merge to pull release into acpica because
+acpica had fallen behind the base at one point, and this
+may be where the issue happened.
 
-yes, this is along the lines of what I do now.
-do these steps capture the changed uncommited source files in
-my repo?
+in the case of the acpica topic branch, it was not pulled
+back into either release or into test after the file in question
+was added.  Indeed, you can pull the acpica branch from the tree
+on kernel.org.
 
-actually, since the mis-hap with the update-index, what I do now
-is a make clean mrproper, move the .git directory out of the source tree
-tar what is left, and then restore the .git directory...
-this has the nice side effect of taking along the quilt patches directory,
-and sometimes I've found it useful to do individual build/test
-between patches in the quilt stack, though I'd probably lose track
-of what I'm doing if I did that all the time.
+I'm trying to remember if there were git error message along the way.
+I do remember an issue with a commit where I had re-named a file
+and git didn't recognize it as such.  so I put this in my git.commit
+wrapper:
+
+git-udpate-index --add --remove `quilt files`
+git commit
+
+dunno if that may be related to the issue at hand.
+I don't really understand this index stuff...
 
 thanks,
 -Len
+
+------_=_NextPart_001_01C60094.FD6ED259
+Content-Type: application/octet-stream;
+	name="git.update"
+Content-Transfer-Encoding: base64
+Content-Description: git.update
+Content-Disposition: attachment;
+	filename="git.update"
+
+IyEvYmluL2Jhc2gKIyBVcGRhdGUgYSBicmFuY2ggaW4gbXkgR0lUIHRyZWUuICBJZiB0aGUgYnJh
+bmNoIHRvIGJlIHVwZGF0ZWQKIyBpcyAibGludXMiLCB0aGVuIHB1bGwgZnJvbSBrZXJuZWwub3Jn
+LiAgT3RoZXJ3aXNlIG1lcmdlIGxvY2FsCiMgbGludXMgYnJhbmNoIGludG8gdGVzdHxyZWxlYXNl
+IGJyYW5jaAoKY2FzZSAiJDEiIGluCnRlc3R8cmVsZWFzZSkKICAgICAgICBnaXQgY2hlY2tvdXQg
+JDEgJiYgZ2l0IG1lcmdlICJBdXRvLXVwZGF0ZSBmcm9tIHVwc3RyZWFtIiAkMSBsaW51cwogICAg
+ICAgIDs7CmxpbnVzKQogICAgICAgIGJlZm9yZT0kKGNhdCAuZ2l0L3JlZnMvaGVhZHMvbGludXMp
+CiAgICAgICAgZ2l0IGZldGNoIGxpbnVzCiAgICAgICAgYWZ0ZXI9JChjYXQgLmdpdC9yZWZzL2hl
+YWRzL2xpbnVzKQogICAgICAgIGlmIFsgJGJlZm9yZSAhPSAkYWZ0ZXIgXQogICAgICAgIHRoZW4K
+ICAgICAgICAgICAgICAgIGdpdC13aGF0Y2hhbmdlZCAkYWZ0ZXIgXiRiZWZvcmUgfCBnaXQtc2hv
+cnRsb2cKICAgICAgICBmaQogICAgICAgIDs7CiopCiAgICAgICAgZWNobyAiVXNhZ2U6ICQwIGxp
+bnVzfHRlc3R8cmVsZWFzZSIgMT4mMgogICAgICAgIGV4aXQgMQogICAgICAgIDs7CmVzYWMK
+
+------_=_NextPart_001_01C60094.FD6ED259
+Content-Type: application/octet-stream;
+	name="git.merge"
+Content-Transfer-Encoding: base64
+Content-Description: git.merge
+Content-Disposition: attachment;
+	filename="git.merge"
+
+IyEvYmluL2Jhc2gKIyBNZXJnZSBhIGJyYW5jaCBpbnRvIGVpdGhlciB0aGUgdGVzdCBvciByZWxl
+YXNlIGJyYW5jaAoKcG5hbWU9JDAKCnVzYWdlKCkKewogICAgICAgIGVjaG8gIlVzYWdlOiAkcG5h
+bWUgYnJhbmNoIHRlc3R8cmVsZWFzZSIgMT4mMgogICAgICAgIGV4aXQgMQp9CgppZiBbICEgLWYg
+LmdpdC9yZWZzL2hlYWRzLyIkMSIgXQp0aGVuCiAgICAgICAgZWNobyAiQ2FuJ3Qgc2VlIGJyYW5j
+aCA8JDE+IiAxPiYyCiAgICAgICAgdXNhZ2UKZmkKCmNhc2UgIiQyIiBpbgp0ZXN0fHJlbGVhc2Up
+CiAgICAgICAgaWYgWyAkKGdpdC1yZXYtbGlzdCAkMSBeJDIgfCB3YyAtYykgLWVxIDAgXQogICAg
+ICAgIHRoZW4KICAgICAgICAgICAgICAgIGVjaG8gJDEgYWxyZWFkeSBtZXJnZWQgaW50byAkMiAx
+PiYyCiAgICAgICAgICAgICAgICBleGl0IDEKICAgICAgICBmaQogICAgICAgIGdpdCBjaGVja291
+dCAkMiAmJiBnaXQgbWVyZ2UgIlB1bGwgJDEgaW50byAkMiBicmFuY2giICQyICQxCiAgICAgICAg
+OzsKKikKICAgICAgICB1c2FnZQogICAgICAgIDs7CmVzYWMK
+
+------_=_NextPart_001_01C60094.FD6ED259--
