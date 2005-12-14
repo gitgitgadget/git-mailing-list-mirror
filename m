@@ -1,123 +1,122 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: RE: new file leaked onto release branch
-Date: Wed, 14 Dec 2005 12:10:47 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0512141150210.3292@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: new file leaked onto release branch
+Date: Wed, 14 Dec 2005 12:45:51 -0800
+Message-ID: <7virtrxv9c.fsf@assigned-by-dhcp.cox.net>
 References: <F7DC2337C7631D4386A2DF6E8FB22B30056B83F2@hdsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 14 21:16:22 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: "Linus Torvalds" <torvalds@osdl.org>,
+	"Junio C Hamano" <junkio@cox.net>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 14 21:48:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmcyF-000733-SB
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 21:11:28 +0100
+	id 1EmdVp-0003QI-FI
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 21:46:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964924AbVLNULI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 15:11:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964923AbVLNULH
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 15:11:07 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:16041 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964924AbVLNULG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 15:11:06 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBEKApDZ003678
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 14 Dec 2005 12:10:52 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBEKAlRP002778;
-	Wed, 14 Dec 2005 12:10:49 -0800
+	id S964918AbVLNUp4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 15:45:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964929AbVLNUpz
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 15:45:55 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:1464 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S964918AbVLNUpz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2005 15:45:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051214204411.BWRO17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 14 Dec 2005 15:44:11 -0500
 To: "Brown, Len" <len.brown@intel.com>
 In-Reply-To: <F7DC2337C7631D4386A2DF6E8FB22B30056B83F2@hdsmsx401.amr.corp.intel.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.128 $
-X-Scanned-By: MIMEDefang 2.36
+	(Len Brown's message of "Wed, 14 Dec 2005 14:20:04 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13640>
 
+"Brown, Len" <len.brown@intel.com> writes:
 
-
-On Wed, 14 Dec 2005, Brown, Len wrote:
->
-> >So Len, since you seem to use "git merge" in your scripts, I 
-> >suspect you have an old version of git lying around. Can you try doing just
-> 
 > Should I be using something different than git merge?
+> is Documentation/howto/using-topic-branches out of date?
 
-No, "git merge" should be fine. It's what "git pull" ends up doing 
-internally, which is why I suspected an old git version: "git merge" 
-should be well-tested, since it's very much what I end up using every day 
-when I pull stuff.
+I reviewed it once again right now.  The document claims to be
+last updated for 0.99.9f, but I do not see anything outdated in
+there for the latest.  Tony's procedure looks valid [*1*], so do
+the scripts you sent in this thread.
 
-> >	git merge-base -a 0a47c906342e2447003e207d23917dfa5c912071 d2149b542382bfc206cb28485108f6470c979566
-> >
-> >to see what the result is for you?
-> 
-> $ git merge-base -a 0a47c906342e2447003e207d23917dfa5c912071 d2149b542382bfc206cb28485108f6470c979566
-> d2149b542382bfc206cb28485108f6470c979566
+Sorry, but I do not seem to be able to spot anything obviously
+wrong with your troubled commits nor scripts.  I'll do some more
+digging, including rewinding to an older git and trying them,
+but I am pessimistic.
 
-Ok, that's correct.
+I pointed out one anomaly which is the commit should never have
+been created because it was not even a fast forward but already
+up-to-date case, and it was followed up with exchange of a few
+messages between Linus and you.  But even if we got that mixed
+up, the resulting merge should not have contained the file
+neither parents had.  That part worries me the most.
 
-git-merge does:
+One question.  You mentioned these in your message, you have
+a "git.commit wrapper" that contains these lines:
 
-	common=$(git-merge-base --all $head "$@")
+    git-update-index --add --remove `quilt files`
+    git commit
 
-and then it _should_ have triggered this case:
+I am not familiar with 'quilt', but is "quilt files" the command
+to show the list of files with patches applied to the working
+tree?
 
-	case "$#,$common,$no_commit" in
-	..
-	1,"$1",*)
-		# If head can reach all the merge then we are up to date.
-		# but first the most common case of merging one remote
-		echo "Already up-to-date."
-		dropsave
-		exit 0
-		;;
-	..
+If so, the above do tell git about the modified (including added
+or removed) files that the applied quilt patches touch, which
+sounds like the correct thing to do.
 
-and thus never have created any merge messages.
+But the resulting commit from that procedure would not be a
+merge commit, and the commit in question that had the rsinfo
+file magically appeared from nowhere is a merge, so this does
+not seem to have much to do with the current problem...
 
-That's what I get when I try this:
+Still puzzlled, sorry.
 
-	git checkout -b test-merge 0a47c906342e2447003e207d23917dfa5c912071
-	git merge "Testing merging" HEAD d2149b542382bfc206cb28485108f6470c979566
 
-results in a very immediate
+[Footnote]
 
-	"Already up-to-date."
+*1* Except that the rsync transport is probably suboptimal for
+people who stay reasonably up-to-date with Linus and I would
+apply the following change if I were Tony, but that shouldn't
+have anything to do with the trouble we are discussing here.
 
-message. Does it do that for you too?
-
-I tested not only with current git, but also the gits that were valid on 
-Nov 29 and Nov 30. All of them did this.
-
-> Doesn't appear to be the case, as I don't have a /usr/bin/git
-> IIR, months ago I tried to install the rpm and
-> it failed due to some incompatibility like not groking
-> a SuSE destination.  I got Dave's git tarball according
-> to Jeff's howto: http://linux.yyz.us/git-howto.html
-> and have been building and installing from a git repo since.
-> (I found git-current tarball dated 7/21/05, so maybe it was then)
-> I did, however a few months ago copy my i386 home directory over to the
-> x86_64 box I use now, re-build and re-install.  Dunno
-> if there may have been a hickup in that process...
-> I found a backup copy of my i386 bin directory from 2005-08-25 --
-> binaries still in i386 format.  But I don't think I ran that b/c
-> it isn't on any PATH.  Git lives in ~/bin which is 1st in my PATH.
-
-Hmm. It really looks like it should have been impossible to generate that 
-commit with current git, which is why I'm still a bit suspicious. 
-
-> I think the lesson I'm taking away from this is that
-> as I continue to stumble forward using git I should
-> immediately report anything that doesn't look quite right
-> while I can still guarantee that all the clues are still
-> at the scene of the crime.
-
-I think this list has been pretty responsive to reports of strange 
-behaviour, so yes. 
-
-			Linus
+---
+diff --git a/Documentation/howto/using-topic-branches.txt b/Documentation/howto/using-topic-branches.txt
+index 4698abe..4944297 100644
+--- a/Documentation/howto/using-topic-branches.txt
++++ b/Documentation/howto/using-topic-branches.txt
+@@ -31,7 +31,7 @@ test tree and then pull to the release t
+ patches blocked in the test tree waiting for complex changes to accumulate
+ enough test time to graduate.
+ 
+-Back in the BitKeeper days I achieved this my creating small forests of
++Back in the BitKeeper days I achieved this by creating small forests of
+ temporary trees, one tree for each logical grouping of patches, and then
+ pulling changes from these trees first to the test tree, and then to the
+ release tree.  At first I replicated this in GIT, but then I realised
+@@ -42,7 +42,8 @@ So here is the step-by-step guide how th
+ 
+ First create your work tree by cloning Linus's public tree:
+ 
+- $ git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git work
++ $ git clone \
++   master.kernel.org:/pub/scm/linux/kernel/git/torvalds/linux-2.6.git work
+ 
+ Change directory into the cloned tree you just created
+ 
+@@ -52,7 +53,7 @@ Set up a remotes file so that you can fe
+ branch into a local branch named "linus":
+ 
+  $ cat > .git/remotes/linus
+- URL: rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
++ URL: master.kernel.org:/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+  Pull: master:linus
+  ^D
+ 
