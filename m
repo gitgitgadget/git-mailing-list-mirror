@@ -1,160 +1,79 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: [PATCH] git-am support for naked email messages (take 2)
-Date: Tue, 13 Dec 2005 22:39:23 -0800
-Message-ID: <439FBE1B.4050601@zytor.com>
+From: Len Brown <len.brown@intel.com>
+Subject: new file leaked onto release branch
+Date: Wed, 14 Dec 2005 02:57:03 -0500
+Organization: Intel Open Source Technology Center
+Message-ID: <200512140257.03975.len.brown@intel.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------060503080806030300010807"
-X-From: git-owner@vger.kernel.org Wed Dec 14 07:41:11 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Dec 14 08:55:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmQIZ-0007TS-2k
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 07:39:35 +0100
+	id 1EmRST-0004sD-1T
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 08:53:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751083AbVLNGjb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 01:39:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751110AbVLNGjb
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 01:39:31 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:18645 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751083AbVLNGja
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2005 01:39:30 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBE6dNJu027124
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 13 Dec 2005 22:39:23 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S932083AbVLNHxt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 02:53:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932089AbVLNHxt
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 02:53:49 -0500
+Received: from rwcrmhc11.comcast.net ([216.148.227.151]:58277 "EHLO
+	rwcrmhc11.comcast.net") by vger.kernel.org with ESMTP
+	id S932083AbVLNHxs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2005 02:53:48 -0500
+Received: from intel.com (c-24-63-232-79.hsd1.ma.comcast.net[24.63.232.79])
+          by comcast.net (rwcrmhc11) with ESMTP
+          id <2005121407534701300c7dobe>; Wed, 14 Dec 2005 07:53:47 +0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13620>
 
-This is a multi-part message in MIME format.
---------------060503080806030300010807
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+I'm suspecting that this issue is technically a pilot error of me issuing
+git-updated-index at the wrong time, but perhaps the list
+should be aware of this type of issue.  And perhaps somebody
+can suggest a better work flow that is immune to this?
 
-This allows git-am to accept single-message files as well as mboxes. 
-Unlike the previous version, this one doesn't need to be explicitly told 
-which one it is; rather, it looks to see if the first line is a From 
-line and uses it to select mbox mode or not.
+Somehow a new file leaked from my "acpica" branch onto my "release" branch
+without me pulling "acpica" into "release".
 
-I moved the logic to do all this into git-mailsplit, which got a new 
-user interface as result, although the old interface is still available 
-for backwards compatibility.
+I use the latest git and I follow Tony's Documentation/howto/using-topic-branches.txt.
 
-Signed-off-by: H. Peter Anvin <hpa@zytor.com>
+The new file, rsinfo.c,  was added in one of the patches in the acpi branch,
+but then was sucked into the release branch in this commit:
+9115a6c787596e687df03010d97fccc5e0762506
+which is on the release.broken branch of this tree:
+git://git.kernel.org/pub/scm/linux/kernel/git/lenb/linux-acpi-2.6.git
 
---------------060503080806030300010807
-Content-Type: text/plain;
- name="diff"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="diff"
+Even though the file didn't exist on either of the parents of the merge.
 
-ZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0LW1haWxzcGxpdC50eHQgYi9Eb2N1bWVu
-dGF0aW9uL2dpdC1tYWlsc3BsaXQudHh0CmluZGV4IDAzYTk0NzcuLmUwNzAzZTkgMTAwNjQ0
-Ci0tLSBhL0RvY3VtZW50YXRpb24vZ2l0LW1haWxzcGxpdC50eHQKKysrIGIvRG9jdW1lbnRh
-dGlvbi9naXQtbWFpbHNwbGl0LnR4dApAQCAtNyw3ICs3LDcgQEAgZ2l0LW1haWxzcGxpdCAt
-IFRvdGFsbHkgYnJhaW5kYW1hZ2VkIG1ibwogCiBTWU5PUFNJUwogLS0tLS0tLS0KLSdnaXQt
-bWFpbHNwbGl0JyBbLWQ8cHJlYz5dIFs8bWJveD5dIDxkaXJlY3Rvcnk+CisnZ2l0LW1haWxz
-cGxpdCcgWy1iXSBbLWY8bm4+XSBbLWQ8cHJlYz5dIC1vPGRpcmVjdG9yeT4gWy0tXSBbPG1i
-b3g+Li4uXQogCiBERVNDUklQVElPTgogLS0tLS0tLS0tLS0KQEAgLTIzLDExICsyMywxOCBA
-QCBPUFRJT05TCiA8ZGlyZWN0b3J5Pjo6CiAJRGlyZWN0b3J5IGluIHdoaWNoIHRvIHBsYWNl
-IHRoZSBpbmRpdmlkdWFsIG1lc3NhZ2VzLgogCistYjo6CisJSWYgYW55IGZpbGUgZG9lc24n
-dCBiZWdpbiB3aXRoIGEgRnJvbSBsaW5lLCBhc3N1bWUgaXQgaXMgYQorCXNpbmdsZSBtYWls
-IG1lc3NhZ2UgaW5zdGVhZCBvZiBzaWduYWxsaW5nIGVycm9yLgorCiAtZDxwcmVjPjo6CiAJ
-SW5zdGVhZCBvZiB0aGUgZGVmYXVsdCA0IGRpZ2l0cyB3aXRoIGxlYWRpbmcgemVyb3MsCiAJ
-ZGlmZmVyZW50IHByZWNpc2lvbiBjYW4gYmUgc3BlY2lmaWVkIGZvciB0aGUgZ2VuZXJhdGVk
-CiAJZmlsZW5hbWVzLgogCistZjxubj46OgorCVNraXAgdGhlIGZpcnN0IDxubj4gbnVtYmVy
-cywgZm9yIGV4YW1wbGUgaWYgLWYzIGlzIHNwZWNpZmllZCwKKwlzdGFydCB0aGUgbnVtYmVy
-aW5nIHdpdGggMDAwNC4KIAogQXV0aG9yCiAtLS0tLS0KZGlmZiAtLWdpdCBhL2dpdC1hbS5z
-aCBiL2dpdC1hbS5zaAppbmRleCA2ZWQ1MjdjLi5mMTQzYjdlIDEwMDc1NQotLS0gYS9naXQt
-YW0uc2gKKysrIGIvZ2l0LWFtLnNoCkBAIC0xNjQsMTAgKzE2NCw3IEBAIGVsc2UKIAkjIFN0
-YXJ0IGFmcmVzaC4KIAlta2RpciAtcCAiJGRvdGVzdCIgfHwgZXhpdAogCi0JIyBjYXQgZG9l
-cyB0aGUgcmlnaHQgdGhpbmcgZm9yIHVzLCBpbmNsdWRpbmcgJy0nIHRvIG1lYW4KLQkjIHN0
-YW5kYXJkIGlucHV0LgotCWNhdCAiJEAiIHwKLQlnaXQtbWFpbHNwbGl0IC1kJHByZWMgIiRk
-b3Rlc3QvIiA+IiRkb3Rlc3QvbGFzdCIgfHwgeworCWdpdC1tYWlsc3BsaXQgLWQiJHByZWMi
-IC1vIiRkb3Rlc3QiIC1iIC0tICIkQCIgPiAiJGRvdGVzdC9sYXN0IiB8fCAgewogCQlybSAt
-ZnIgIiRkb3Rlc3QiCiAJCWV4aXQgMQogCX0KZGlmZiAtLWdpdCBhL21haWxzcGxpdC5jIGIv
-bWFpbHNwbGl0LmMKaW5kZXggMTg5ZjRlZC4uZjQ5Y2JmNyAxMDA2NDQKLS0tIGEvbWFpbHNw
-bGl0LmMKKysrIGIvbWFpbHNwbGl0LmMKQEAgLTE1LDcgKzE1LDcgQEAKICNpbmNsdWRlICJj
-YWNoZS5oIgogCiBzdGF0aWMgY29uc3QgY2hhciBnaXRfbWFpbHNwbGl0X3VzYWdlW10gPQot
-ImdpdC1tYWlsc3BsaXQgWy1kPHByZWM+XSBbPG1ib3g+XSA8ZGlyZWN0b3J5PiI7CisiZ2l0
-LW1haWxzcGxpdCBbLWQ8cHJlYz5dIFstZjxuPl0gWy1iXSAtbzxkaXJlY3Rvcnk+IDxtYm94
-Pi4uLiI7CiAKIHN0YXRpYyBpbnQgaXNfZnJvbV9saW5lKGNvbnN0IGNoYXIgKmxpbmUsIGlu
-dCBsZW4pCiB7CkBAIC01NiwxNCArNTYsMTUgQEAgc3RhdGljIGNoYXIgYnVmWzQwOTZdOwog
-ICogdGhlIFVuaXggIkZyb20gIiBsaW5lLiAgV3JpdGUgaXQgaW50byB0aGUgc3BlY2lmaWVk
-CiAgKiBmaWxlLgogICovCi1zdGF0aWMgaW50IHNwbGl0X29uZShGSUxFICptYm94LCBjb25z
-dCBjaGFyICpuYW1lKQorc3RhdGljIGludCBzcGxpdF9vbmUoRklMRSAqbWJveCwgY29uc3Qg
-Y2hhciAqbmFtZSwgaW50IGFsbG93X2JhcmUpCiB7CiAJRklMRSAqb3V0cHV0ID0gTlVMTDsK
-IAlpbnQgbGVuID0gc3RybGVuKGJ1Zik7CiAJaW50IGZkOwogCWludCBzdGF0dXMgPSAwOwor
-CWludCBpc19iYXJlID0gIWlzX2Zyb21fbGluZShidWYsIGxlbik7CiAKLQlpZiAoIWlzX2Zy
-b21fbGluZShidWYsIGxlbikpCisJaWYgKGlzX2JhcmUgJiYgIWFsbG93X2JhcmUpCiAJCWdv
-dG8gY29ycnVwdDsKIAogCWZkID0gb3BlbihuYW1lLCBPX1dST05MWSB8IE9fQ1JFQVQgfCBP
-X0VYQ0wsIDA2NjYpOwpAQCAtODgsNyArODksNyBAQCBzdGF0aWMgaW50IHNwbGl0X29uZShG
-SUxFICptYm94LCBjb25zdCBjCiAJCQlkaWUoImNhbm5vdCByZWFkIG1ib3giKTsKIAkJfQog
-CQlsZW4gPSBzdHJsZW4oYnVmKTsKLQkJaWYgKCFpc19wYXJ0aWFsICYmIGlzX2Zyb21fbGlu
-ZShidWYsIGxlbikpCisJCWlmICghaXNfcGFydGlhbCAmJiAhaXNfYmFyZSAmJiBpc19mcm9t
-X2xpbmUoYnVmLCBsZW4pKQogCQkJYnJlYWs7IC8qIGRvbmUgd2l0aCBvbmUgbWVzc2FnZSAq
-LwogCX0KIAlmY2xvc2Uob3V0cHV0KTsKQEAgLTEwNCw1NCArMTA1LDg0IEBAIHN0YXRpYyBp
-bnQgc3BsaXRfb25lKEZJTEUgKm1ib3gsIGNvbnN0IGMKIAogaW50IG1haW4oaW50IGFyZ2Ms
-IGNvbnN0IGNoYXIgKiphcmd2KQogewotCWludCBpLCBuciwgbnJfcHJlYyA9IDQ7Ci0JRklM
-RSAqbWJveCA9IE5VTEw7CisJaW50IG5yID0gMCwgbnJfcHJlYyA9IDQ7CisJaW50IGFsbG93
-X2JhcmUgPSAwOworCWNvbnN0IGNoYXIgKmRpciA9IE5VTEw7CisJY29uc3QgY2hhciAqKmFy
-Z3A7CisJc3RhdGljIGNvbnN0IGNoYXIgKnN0ZGluX29ubHlbXSA9IHsgIi0iLCBOVUxMIH07
-CisJY2hhciAqbmFtZTsKIAotCWZvciAoaSA9IDE7IGkgPCBhcmdjOyBpKyspIHsKLQkJY29u
-c3QgY2hhciAqYXJnID0gYXJndltpXTsKKwlmb3IgKGFyZ3AgPSBhcmd2KzE7ICphcmdwOyBh
-cmdwKyspIHsKKwkJY29uc3QgY2hhciAqYXJnID0gKmFyZ3A7CiAKIAkJaWYgKGFyZ1swXSAh
-PSAnLScpCiAJCQlicmVhazsKIAkJLyogZG8gZmxhZ3MgaGVyZSAqLwotCQlpZiAoIXN0cm5j
-bXAoYXJnLCAiLWQiLCAyKSkgewotCQkJbnJfcHJlYyA9IHN0cnRvbChhcmcgKyAyLCBOVUxM
-LCAxMCk7CisJCWlmICggYXJnWzFdID09ICdkJyApIHsKKwkJCW5yX3ByZWMgPSBzdHJ0b2wo
-YXJnKzIsIE5VTEwsIDEwKTsKIAkJCWlmIChucl9wcmVjIDwgMyB8fCAxMCA8PSBucl9wcmVj
-KQogCQkJCXVzYWdlKGdpdF9tYWlsc3BsaXRfdXNhZ2UpOwogCQkJY29udGludWU7CisJCX0g
-ZWxzZSBpZiAoIGFyZ1sxXSA9PSAnZicgKSB7CisJCQluciA9IHN0cnRvbChhcmcrMiwgTlVM
-TCwgMTApOworCQl9IGVsc2UgaWYgKCBhcmdbMV0gPT0gJ2InICYmICFhcmdbMl0gKSB7CisJ
-CQlhbGxvd19iYXJlID0gMTsKKwkJfSBlbHNlIGlmICggYXJnWzFdID09ICdvJyAmJiBhcmdb
-Ml0gKSB7CisJCQlkaXIgPSBhcmcrMjsKKwkJfSBlbHNlIGlmICggYXJnWzFdID09ICctJyAm
-JiAhYXJnWzJdICkgeworCQkJYXJncCsrOwkvKiAtLSBtYXJrcyBlbmQgb2Ygb3B0aW9ucyAq
-LworCQkJYnJlYWs7CisJCX0gZWxzZSB7CisJCQlkaWUoInVua25vd24gb3B0aW9uOiAlcyIs
-IGFyZyk7CiAJCX0KIAl9CiAKLQkvKiBFaXRoZXIgb25lIHJlbWFpbmluZyBhcmcgKGRpciks
-IG9yIHR3byAobWJveCBhbmQgZGlyKSAqLwotCXN3aXRjaCAoYXJnYyAtIGkpIHsKLQljYXNl
-IDE6Ci0JCW1ib3ggPSBzdGRpbjsKLQkJYnJlYWs7Ci0JY2FzZSAyOgotCQlpZiAoKG1ib3gg
-PSBmb3Blbihhcmd2W2ldLCAiciIpKSA9PSBOVUxMKQotCQkJZGllKCJjYW5ub3Qgb3BlbiBt
-Ym94ICVzIGZvciByZWFkaW5nIiwgYXJndltpXSk7Ci0JCWJyZWFrOwotCWRlZmF1bHQ6Ci0J
-CXVzYWdlKGdpdF9tYWlsc3BsaXRfdXNhZ2UpOworCWlmICggIWRpciApIHsKKwkJLyogQmFj
-a3dhcmRzIGNvbXBhdGliaWxpdHk6IGlmIG5vIC1vIHNwZWNpZmllZCwgYWNjZXB0CisJCSAg
-IDxtYm94PiA8ZGlyPiBvciBqdXN0IDxkaXI+ICovCisJCXN3aXRjaCAoYXJnYyAtIChhcmdw
-LWFyZ3YpKSB7CisJCWNhc2UgMToKKwkJCWRpciA9IGFyZ3BbMF07CisJCQlhcmdwID0gc3Rk
-aW5fb25seTsKKwkJCWJyZWFrOworCQljYXNlIDI6CisJCQlzdGRpbl9vbmx5WzBdID0gYXJn
-cFswXTsKKwkJCWRpciA9IGFyZ3BbMV07CisJCQlhcmdwID0gc3RkaW5fb25seTsKKwkJCWJy
-ZWFrOworCQlkZWZhdWx0OgorCQkJdXNhZ2UoZ2l0X21haWxzcGxpdF91c2FnZSk7CisJCX0K
-Kwl9IGVsc2UgeworCQkvKiBOZXcgdXNhZ2U6IGlmIG5vIG1vcmUgYXJndW1lbnQsIHBhcnNl
-IHN0ZGluICovCisJCWlmICggISphcmdwICkKKwkJCWFyZ3AgPSBzdGRpbl9vbmx5OwogCX0K
-LQlpZiAoY2hkaXIoYXJndlthcmdjIC0gMV0pIDwgMCkKLQkJdXNhZ2UoZ2l0X21haWxzcGxp
-dF91c2FnZSk7Ci0KLQluciA9IDA7Ci0JaWYgKGZnZXRzKGJ1Ziwgc2l6ZW9mKGJ1ZiksIG1i
-b3gpID09IE5VTEwpCi0JCWRpZSgiY2Fubm90IHJlYWQgbWJveCIpOwogCi0JZm9yICg7Oykg
-ewotCQljaGFyIG5hbWVbMTBdOworCW5hbWUgPSB4bWFsbG9jKHN0cmxlbihkaXIpKzIrMypz
-aXplb2YgbnIpOwogCi0JCXNwcmludGYobmFtZSwgIiUwKmQiLCBucl9wcmVjLCArK25yKTsK
-LQkJc3dpdGNoIChzcGxpdF9vbmUobWJveCwgbmFtZSkpIHsKLQkJY2FzZSAwOgotCQkJYnJl
-YWs7Ci0JCWNhc2UgMToKLQkJCXByaW50ZigiJWRcbiIsIG5yKTsKLQkJCXJldHVybiAwOwot
-CQlkZWZhdWx0OgotCQkJZXhpdCgxKTsKKwl3aGlsZSAoIGFyZ3AgKSB7CisJCWNvbnN0IGNo
-YXIgKmZpbGUgPSAqYXJncCsrOworCQlGSUxFICpmID0gIXN0cmNtcChmaWxlLCAiLSIpID8g
-c3RkaW4gOiBmb3BlbihmaWxlLCAicnQiKTsKKwkJaW50IGZpbGVfZG9uZSA9IDA7CisKKwkJ
-aWYgKCAhZiApCisJCQlkaWUgKCJjYW5ub3Qgb3BlbiBtYm94ICVzIiwgZmlsZSk7CisKKwkJ
-aWYgKGZnZXRzKGJ1Ziwgc2l6ZW9mKGJ1ZiksIGYpID09IE5VTEwpCisJCQlkaWUoImNhbm5v
-dCByZWFkIG1ib3ggJXMiLCBmaWxlKTsKKworCQl3aGlsZSAoIWZpbGVfZG9uZSkgeworCQkJ
-Y2hhciBuYW1lWzEwXTsKKwkJCQorCQkJc3ByaW50ZihuYW1lLCAiJXMvJTAqZCIsIGRpciwg
-bnJfcHJlYywgKytucik7CisJCQlmaWxlX2RvbmUgPSBzcGxpdF9vbmUoZiwgbmFtZSwgYWxs
-b3dfYmFyZSk7CiAJCX0KKworCQlpZiAoZiAhPSBzdGRpbikKKwkJCWZjbG9zZShmKTsKIAl9
-CisKKwlwcmludGYoIiVkXG4iLCBucik7CisJcmV0dXJuIDA7CiB9Cg==
---------------060503080806030300010807--
+I think I probably did a git-update-index while working on the acpica
+branch, and then git remembered that while I was on the release branch
+doing a routine pull from linus to make sure I was up-to-date before
+doing a push to kernel.org.
+
+why did I do this?
+
+I use quilt to manage a stack of patches in my repo.
+I like to build them on several build machines (i386, x86_64, ia64)
+before doing a git commit.
+
+I package up a tar-file for the remote machines with
+git-tar-tree $BRANCH $REPO | gzip -1 > $TARFILE
+But I still need to generate a patch containing all the local
+changes that I haven't checked into git yet.
+
+git diff > my.patch
+does this for me.  But when it failed to pick up a new file,
+I manually did a git-update-index --add IIR, and that seems
+to be how rsinfo.c got sucked into the subsequent git pull from linus.
+
+perhaps somebody has a better idiom for packaging up a  current
+working tree for a remote build machine to crunch on it?
+
+thanks,
+-Len
