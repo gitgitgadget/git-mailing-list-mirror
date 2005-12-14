@@ -1,49 +1,160 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 5/11] git-applypatch: Usage string clean-up, emit usage string at incorrect invocation
-Date: Tue, 13 Dec 2005 21:20:57 -0800
-Message-ID: <7vfyow45l2.fsf@assigned-by-dhcp.cox.net>
-References: <11345130302438-git-send-email-freku045@student.liu.se>
-	<11345130311492-git-send-email-freku045@student.liu.se>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: [PATCH] git-am support for naked email messages (take 2)
+Date: Tue, 13 Dec 2005 22:39:23 -0800
+Message-ID: <439FBE1B.4050601@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 14 06:22:32 2005
+Content-Type: multipart/mixed;
+ boundary="------------060503080806030300010807"
+X-From: git-owner@vger.kernel.org Wed Dec 14 07:41:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmP5H-0004mB-0h
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 06:21:47 +0100
+	id 1EmQIZ-0007TS-2k
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 07:39:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751270AbVLNFVF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 00:21:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbVLNFVE
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 00:21:04 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:49846 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751270AbVLNFVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2005 00:21:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051214052101.QGFU25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 14 Dec 2005 00:21:01 -0500
-To: Fredrik Kuivinen <freku045@student.liu.se>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751083AbVLNGjb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 01:39:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751110AbVLNGjb
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 01:39:31 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:18645 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751083AbVLNGja
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2005 01:39:30 -0500
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBE6dNJu027124
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 13 Dec 2005 22:39:23 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13619>
 
-freku045@student.liu.se writes:
+This is a multi-part message in MIME format.
+--------------060503080806030300010807
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
->  . git-sh-setup
->  
-> +[[ "$#" = "3" || "$#" = "4" ]] || usage
-> +
+This allows git-am to accept single-message files as well as mboxes. 
+Unlike the previous version, this one doesn't need to be explicitly told 
+which one it is; rather, it looks to see if the first line is a From 
+line and uses it to select mbox mode or not.
 
-I do not see much advantage to use [[...]] construct here.
+I moved the logic to do all this into git-mailsplit, which got a new 
+user interface as result, although the old interface is still available 
+for backwards compatibility.
 
-	http://www.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_04
+Signed-off-by: H. Peter Anvin <hpa@zytor.com>
 
-talks about [[ ... ]] being "some implementations causing
-unspecified results".
+--------------060503080806030300010807
+Content-Type: text/plain;
+ name="diff"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="diff"
+
+ZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0LW1haWxzcGxpdC50eHQgYi9Eb2N1bWVu
+dGF0aW9uL2dpdC1tYWlsc3BsaXQudHh0CmluZGV4IDAzYTk0NzcuLmUwNzAzZTkgMTAwNjQ0
+Ci0tLSBhL0RvY3VtZW50YXRpb24vZ2l0LW1haWxzcGxpdC50eHQKKysrIGIvRG9jdW1lbnRh
+dGlvbi9naXQtbWFpbHNwbGl0LnR4dApAQCAtNyw3ICs3LDcgQEAgZ2l0LW1haWxzcGxpdCAt
+IFRvdGFsbHkgYnJhaW5kYW1hZ2VkIG1ibwogCiBTWU5PUFNJUwogLS0tLS0tLS0KLSdnaXQt
+bWFpbHNwbGl0JyBbLWQ8cHJlYz5dIFs8bWJveD5dIDxkaXJlY3Rvcnk+CisnZ2l0LW1haWxz
+cGxpdCcgWy1iXSBbLWY8bm4+XSBbLWQ8cHJlYz5dIC1vPGRpcmVjdG9yeT4gWy0tXSBbPG1i
+b3g+Li4uXQogCiBERVNDUklQVElPTgogLS0tLS0tLS0tLS0KQEAgLTIzLDExICsyMywxOCBA
+QCBPUFRJT05TCiA8ZGlyZWN0b3J5Pjo6CiAJRGlyZWN0b3J5IGluIHdoaWNoIHRvIHBsYWNl
+IHRoZSBpbmRpdmlkdWFsIG1lc3NhZ2VzLgogCistYjo6CisJSWYgYW55IGZpbGUgZG9lc24n
+dCBiZWdpbiB3aXRoIGEgRnJvbSBsaW5lLCBhc3N1bWUgaXQgaXMgYQorCXNpbmdsZSBtYWls
+IG1lc3NhZ2UgaW5zdGVhZCBvZiBzaWduYWxsaW5nIGVycm9yLgorCiAtZDxwcmVjPjo6CiAJ
+SW5zdGVhZCBvZiB0aGUgZGVmYXVsdCA0IGRpZ2l0cyB3aXRoIGxlYWRpbmcgemVyb3MsCiAJ
+ZGlmZmVyZW50IHByZWNpc2lvbiBjYW4gYmUgc3BlY2lmaWVkIGZvciB0aGUgZ2VuZXJhdGVk
+CiAJZmlsZW5hbWVzLgogCistZjxubj46OgorCVNraXAgdGhlIGZpcnN0IDxubj4gbnVtYmVy
+cywgZm9yIGV4YW1wbGUgaWYgLWYzIGlzIHNwZWNpZmllZCwKKwlzdGFydCB0aGUgbnVtYmVy
+aW5nIHdpdGggMDAwNC4KIAogQXV0aG9yCiAtLS0tLS0KZGlmZiAtLWdpdCBhL2dpdC1hbS5z
+aCBiL2dpdC1hbS5zaAppbmRleCA2ZWQ1MjdjLi5mMTQzYjdlIDEwMDc1NQotLS0gYS9naXQt
+YW0uc2gKKysrIGIvZ2l0LWFtLnNoCkBAIC0xNjQsMTAgKzE2NCw3IEBAIGVsc2UKIAkjIFN0
+YXJ0IGFmcmVzaC4KIAlta2RpciAtcCAiJGRvdGVzdCIgfHwgZXhpdAogCi0JIyBjYXQgZG9l
+cyB0aGUgcmlnaHQgdGhpbmcgZm9yIHVzLCBpbmNsdWRpbmcgJy0nIHRvIG1lYW4KLQkjIHN0
+YW5kYXJkIGlucHV0LgotCWNhdCAiJEAiIHwKLQlnaXQtbWFpbHNwbGl0IC1kJHByZWMgIiRk
+b3Rlc3QvIiA+IiRkb3Rlc3QvbGFzdCIgfHwgeworCWdpdC1tYWlsc3BsaXQgLWQiJHByZWMi
+IC1vIiRkb3Rlc3QiIC1iIC0tICIkQCIgPiAiJGRvdGVzdC9sYXN0IiB8fCAgewogCQlybSAt
+ZnIgIiRkb3Rlc3QiCiAJCWV4aXQgMQogCX0KZGlmZiAtLWdpdCBhL21haWxzcGxpdC5jIGIv
+bWFpbHNwbGl0LmMKaW5kZXggMTg5ZjRlZC4uZjQ5Y2JmNyAxMDA2NDQKLS0tIGEvbWFpbHNw
+bGl0LmMKKysrIGIvbWFpbHNwbGl0LmMKQEAgLTE1LDcgKzE1LDcgQEAKICNpbmNsdWRlICJj
+YWNoZS5oIgogCiBzdGF0aWMgY29uc3QgY2hhciBnaXRfbWFpbHNwbGl0X3VzYWdlW10gPQot
+ImdpdC1tYWlsc3BsaXQgWy1kPHByZWM+XSBbPG1ib3g+XSA8ZGlyZWN0b3J5PiI7CisiZ2l0
+LW1haWxzcGxpdCBbLWQ8cHJlYz5dIFstZjxuPl0gWy1iXSAtbzxkaXJlY3Rvcnk+IDxtYm94
+Pi4uLiI7CiAKIHN0YXRpYyBpbnQgaXNfZnJvbV9saW5lKGNvbnN0IGNoYXIgKmxpbmUsIGlu
+dCBsZW4pCiB7CkBAIC01NiwxNCArNTYsMTUgQEAgc3RhdGljIGNoYXIgYnVmWzQwOTZdOwog
+ICogdGhlIFVuaXggIkZyb20gIiBsaW5lLiAgV3JpdGUgaXQgaW50byB0aGUgc3BlY2lmaWVk
+CiAgKiBmaWxlLgogICovCi1zdGF0aWMgaW50IHNwbGl0X29uZShGSUxFICptYm94LCBjb25z
+dCBjaGFyICpuYW1lKQorc3RhdGljIGludCBzcGxpdF9vbmUoRklMRSAqbWJveCwgY29uc3Qg
+Y2hhciAqbmFtZSwgaW50IGFsbG93X2JhcmUpCiB7CiAJRklMRSAqb3V0cHV0ID0gTlVMTDsK
+IAlpbnQgbGVuID0gc3RybGVuKGJ1Zik7CiAJaW50IGZkOwogCWludCBzdGF0dXMgPSAwOwor
+CWludCBpc19iYXJlID0gIWlzX2Zyb21fbGluZShidWYsIGxlbik7CiAKLQlpZiAoIWlzX2Zy
+b21fbGluZShidWYsIGxlbikpCisJaWYgKGlzX2JhcmUgJiYgIWFsbG93X2JhcmUpCiAJCWdv
+dG8gY29ycnVwdDsKIAogCWZkID0gb3BlbihuYW1lLCBPX1dST05MWSB8IE9fQ1JFQVQgfCBP
+X0VYQ0wsIDA2NjYpOwpAQCAtODgsNyArODksNyBAQCBzdGF0aWMgaW50IHNwbGl0X29uZShG
+SUxFICptYm94LCBjb25zdCBjCiAJCQlkaWUoImNhbm5vdCByZWFkIG1ib3giKTsKIAkJfQog
+CQlsZW4gPSBzdHJsZW4oYnVmKTsKLQkJaWYgKCFpc19wYXJ0aWFsICYmIGlzX2Zyb21fbGlu
+ZShidWYsIGxlbikpCisJCWlmICghaXNfcGFydGlhbCAmJiAhaXNfYmFyZSAmJiBpc19mcm9t
+X2xpbmUoYnVmLCBsZW4pKQogCQkJYnJlYWs7IC8qIGRvbmUgd2l0aCBvbmUgbWVzc2FnZSAq
+LwogCX0KIAlmY2xvc2Uob3V0cHV0KTsKQEAgLTEwNCw1NCArMTA1LDg0IEBAIHN0YXRpYyBp
+bnQgc3BsaXRfb25lKEZJTEUgKm1ib3gsIGNvbnN0IGMKIAogaW50IG1haW4oaW50IGFyZ2Ms
+IGNvbnN0IGNoYXIgKiphcmd2KQogewotCWludCBpLCBuciwgbnJfcHJlYyA9IDQ7Ci0JRklM
+RSAqbWJveCA9IE5VTEw7CisJaW50IG5yID0gMCwgbnJfcHJlYyA9IDQ7CisJaW50IGFsbG93
+X2JhcmUgPSAwOworCWNvbnN0IGNoYXIgKmRpciA9IE5VTEw7CisJY29uc3QgY2hhciAqKmFy
+Z3A7CisJc3RhdGljIGNvbnN0IGNoYXIgKnN0ZGluX29ubHlbXSA9IHsgIi0iLCBOVUxMIH07
+CisJY2hhciAqbmFtZTsKIAotCWZvciAoaSA9IDE7IGkgPCBhcmdjOyBpKyspIHsKLQkJY29u
+c3QgY2hhciAqYXJnID0gYXJndltpXTsKKwlmb3IgKGFyZ3AgPSBhcmd2KzE7ICphcmdwOyBh
+cmdwKyspIHsKKwkJY29uc3QgY2hhciAqYXJnID0gKmFyZ3A7CiAKIAkJaWYgKGFyZ1swXSAh
+PSAnLScpCiAJCQlicmVhazsKIAkJLyogZG8gZmxhZ3MgaGVyZSAqLwotCQlpZiAoIXN0cm5j
+bXAoYXJnLCAiLWQiLCAyKSkgewotCQkJbnJfcHJlYyA9IHN0cnRvbChhcmcgKyAyLCBOVUxM
+LCAxMCk7CisJCWlmICggYXJnWzFdID09ICdkJyApIHsKKwkJCW5yX3ByZWMgPSBzdHJ0b2wo
+YXJnKzIsIE5VTEwsIDEwKTsKIAkJCWlmIChucl9wcmVjIDwgMyB8fCAxMCA8PSBucl9wcmVj
+KQogCQkJCXVzYWdlKGdpdF9tYWlsc3BsaXRfdXNhZ2UpOwogCQkJY29udGludWU7CisJCX0g
+ZWxzZSBpZiAoIGFyZ1sxXSA9PSAnZicgKSB7CisJCQluciA9IHN0cnRvbChhcmcrMiwgTlVM
+TCwgMTApOworCQl9IGVsc2UgaWYgKCBhcmdbMV0gPT0gJ2InICYmICFhcmdbMl0gKSB7CisJ
+CQlhbGxvd19iYXJlID0gMTsKKwkJfSBlbHNlIGlmICggYXJnWzFdID09ICdvJyAmJiBhcmdb
+Ml0gKSB7CisJCQlkaXIgPSBhcmcrMjsKKwkJfSBlbHNlIGlmICggYXJnWzFdID09ICctJyAm
+JiAhYXJnWzJdICkgeworCQkJYXJncCsrOwkvKiAtLSBtYXJrcyBlbmQgb2Ygb3B0aW9ucyAq
+LworCQkJYnJlYWs7CisJCX0gZWxzZSB7CisJCQlkaWUoInVua25vd24gb3B0aW9uOiAlcyIs
+IGFyZyk7CiAJCX0KIAl9CiAKLQkvKiBFaXRoZXIgb25lIHJlbWFpbmluZyBhcmcgKGRpciks
+IG9yIHR3byAobWJveCBhbmQgZGlyKSAqLwotCXN3aXRjaCAoYXJnYyAtIGkpIHsKLQljYXNl
+IDE6Ci0JCW1ib3ggPSBzdGRpbjsKLQkJYnJlYWs7Ci0JY2FzZSAyOgotCQlpZiAoKG1ib3gg
+PSBmb3Blbihhcmd2W2ldLCAiciIpKSA9PSBOVUxMKQotCQkJZGllKCJjYW5ub3Qgb3BlbiBt
+Ym94ICVzIGZvciByZWFkaW5nIiwgYXJndltpXSk7Ci0JCWJyZWFrOwotCWRlZmF1bHQ6Ci0J
+CXVzYWdlKGdpdF9tYWlsc3BsaXRfdXNhZ2UpOworCWlmICggIWRpciApIHsKKwkJLyogQmFj
+a3dhcmRzIGNvbXBhdGliaWxpdHk6IGlmIG5vIC1vIHNwZWNpZmllZCwgYWNjZXB0CisJCSAg
+IDxtYm94PiA8ZGlyPiBvciBqdXN0IDxkaXI+ICovCisJCXN3aXRjaCAoYXJnYyAtIChhcmdw
+LWFyZ3YpKSB7CisJCWNhc2UgMToKKwkJCWRpciA9IGFyZ3BbMF07CisJCQlhcmdwID0gc3Rk
+aW5fb25seTsKKwkJCWJyZWFrOworCQljYXNlIDI6CisJCQlzdGRpbl9vbmx5WzBdID0gYXJn
+cFswXTsKKwkJCWRpciA9IGFyZ3BbMV07CisJCQlhcmdwID0gc3RkaW5fb25seTsKKwkJCWJy
+ZWFrOworCQlkZWZhdWx0OgorCQkJdXNhZ2UoZ2l0X21haWxzcGxpdF91c2FnZSk7CisJCX0K
+Kwl9IGVsc2UgeworCQkvKiBOZXcgdXNhZ2U6IGlmIG5vIG1vcmUgYXJndW1lbnQsIHBhcnNl
+IHN0ZGluICovCisJCWlmICggISphcmdwICkKKwkJCWFyZ3AgPSBzdGRpbl9vbmx5OwogCX0K
+LQlpZiAoY2hkaXIoYXJndlthcmdjIC0gMV0pIDwgMCkKLQkJdXNhZ2UoZ2l0X21haWxzcGxp
+dF91c2FnZSk7Ci0KLQluciA9IDA7Ci0JaWYgKGZnZXRzKGJ1Ziwgc2l6ZW9mKGJ1ZiksIG1i
+b3gpID09IE5VTEwpCi0JCWRpZSgiY2Fubm90IHJlYWQgbWJveCIpOwogCi0JZm9yICg7Oykg
+ewotCQljaGFyIG5hbWVbMTBdOworCW5hbWUgPSB4bWFsbG9jKHN0cmxlbihkaXIpKzIrMypz
+aXplb2YgbnIpOwogCi0JCXNwcmludGYobmFtZSwgIiUwKmQiLCBucl9wcmVjLCArK25yKTsK
+LQkJc3dpdGNoIChzcGxpdF9vbmUobWJveCwgbmFtZSkpIHsKLQkJY2FzZSAwOgotCQkJYnJl
+YWs7Ci0JCWNhc2UgMToKLQkJCXByaW50ZigiJWRcbiIsIG5yKTsKLQkJCXJldHVybiAwOwot
+CQlkZWZhdWx0OgotCQkJZXhpdCgxKTsKKwl3aGlsZSAoIGFyZ3AgKSB7CisJCWNvbnN0IGNo
+YXIgKmZpbGUgPSAqYXJncCsrOworCQlGSUxFICpmID0gIXN0cmNtcChmaWxlLCAiLSIpID8g
+c3RkaW4gOiBmb3BlbihmaWxlLCAicnQiKTsKKwkJaW50IGZpbGVfZG9uZSA9IDA7CisKKwkJ
+aWYgKCAhZiApCisJCQlkaWUgKCJjYW5ub3Qgb3BlbiBtYm94ICVzIiwgZmlsZSk7CisKKwkJ
+aWYgKGZnZXRzKGJ1Ziwgc2l6ZW9mKGJ1ZiksIGYpID09IE5VTEwpCisJCQlkaWUoImNhbm5v
+dCByZWFkIG1ib3ggJXMiLCBmaWxlKTsKKworCQl3aGlsZSAoIWZpbGVfZG9uZSkgeworCQkJ
+Y2hhciBuYW1lWzEwXTsKKwkJCQorCQkJc3ByaW50ZihuYW1lLCAiJXMvJTAqZCIsIGRpciwg
+bnJfcHJlYywgKytucik7CisJCQlmaWxlX2RvbmUgPSBzcGxpdF9vbmUoZiwgbmFtZSwgYWxs
+b3dfYmFyZSk7CiAJCX0KKworCQlpZiAoZiAhPSBzdGRpbikKKwkJCWZjbG9zZShmKTsKIAl9
+CisKKwlwcmludGYoIiVkXG4iLCBucik7CisJcmV0dXJuIDA7CiB9Cg==
+--------------060503080806030300010807--
