@@ -1,64 +1,69 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] git-am --one
-Date: Tue, 13 Dec 2005 17:47:31 -0800
-Message-ID: <439F79B3.6000309@zytor.com>
-References: <439F7105.9050302@zytor.com> <7vy82o5uss.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make git-send-pack exit with error when some refs couldn't be pushed out
+Date: Tue, 13 Dec 2005 17:50:02 -0800
+Message-ID: <7vbqzk5tx1.fsf@assigned-by-dhcp.cox.net>
+References: <20051214004540.15040.93518.stgit@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 14 02:49:03 2005
+X-From: git-owner@vger.kernel.org Wed Dec 14 02:50:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmLkI-0003MB-ER
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 02:47:54 +0100
+	id 1EmLmU-00046J-Fd
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 02:50:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030353AbVLNBrv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Dec 2005 20:47:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030384AbVLNBrv
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 20:47:51 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:57518 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1030353AbVLNBru
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2005 20:47:50 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBE1lgpZ020923
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 13 Dec 2005 17:47:43 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy82o5uss.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1030416AbVLNBuF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Dec 2005 20:50:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030417AbVLNBuF
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 20:50:05 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:4274 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1030416AbVLNBuD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2005 20:50:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051214014912.SUYV6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 13 Dec 2005 20:49:12 -0500
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051214004540.15040.93518.stgit@machine.or.cz> (Petr Baudis's
+	message of "Wed, 14 Dec 2005 01:45:40 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13613>
 
-Junio C Hamano wrote:
-> 
-> I understand the motivation, but I suspect skipping mailsplit
-> might be simpler, like this untested code perhaps?
-> 
-> 	case "$one" in
->         '')
->         	... original code ...
-> 		;;
->         *)
-> 		one=`printf "%${prec}d" 1`
->         	cat "$@" >"$dotest/$one"
->                 echo "$one" >"$dotest/last"
->                 ;;
-> 	esac
-> 
+Petr Baudis <pasky@suse.cz> writes:
 
-If that works, great.  I just implemented it in the "most obviously 
-correct" way, meaning with as few changes as possible.
+> In case some refs couldn't be pushed out due to an error (mostly the
+> not-a-proper-subset error), make git-send-pack exit with non-zero status
+> after the push is over (that is, it still tries to push out the rest
+> of the refs).
 
-	-hpa
+I agree this change to send-pack is a good fix (I haven't looked
+at the code, but the above description describes a good fix).
+
+However, I am not quite sure if the recent change to Cogito to
+update the mirror of remote branch is a good one.  Since I am
+not a Cogito user, I did not question it when I saw the change,
+but I wondered what you are using the cached "remote ref is
+supposed to be pointing at this commit" knowledge for.  If it is
+only "pretending to have fetched the remote branch immediately
+after we pushed into it before anybody else touched the same
+remote branch", then it probably is benign.  But this bit
+puzzles and worries me:
+
+> ... otherwise
+> it gets out of sync, which can lead even to loss of commits on the local
+> side (this happenned to Jonas Fonseca - thanks for the report, BTW).
+
+I do not remember seeing that report so I do not know how that
+lossage happens with unreleased Cogito, but I suspect there is
+something very fishy going on here.  I presume it happens when
+the next fetch/pull from the remote is run, but if the locally
+cached information can affect the next fetch/pull in such a way,
+wouldn't updates by other people to the shared remote repository
+branch also cause things to go out-of-sync and cause the same
+breakage?
