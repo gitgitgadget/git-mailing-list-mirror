@@ -1,91 +1,54 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: new file leaked onto release branch
-Date: Wed, 14 Dec 2005 08:53:38 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0512140837160.3292@g5.osdl.org>
-References: <200512140257.03975.len.brown@intel.com> <7vmzj4yq3l.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0512140822540.3292@g5.osdl.org>
+From: Don Zickus <dzickus@gmail.com>
+Subject: Re: StGIT usage
+Date: Wed, 14 Dec 2005 12:02:13 -0500
+Message-ID: <68948ca0512140902t6b44b2c1icb5dc1435b94ddb@mail.gmail.com>
+References: <68948ca0512140844u677fea36ob94bdf213a6a110@mail.gmail.com>
+	 <20051214165304.GA9272@ferdyx.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Len Brown <len.brown@intel.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 14 18:02:13 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Dec 14 18:05:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmZt8-00051u-Qj
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 17:53:59 +0100
+	id 1Ema1Q-0000ko-1T
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 18:02:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964858AbVLNQx4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 11:53:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964859AbVLNQx4
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 11:53:56 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:49113 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964858AbVLNQxz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 11:53:55 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBEGrdDZ026071
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 14 Dec 2005 08:53:39 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBEGrcmk025307;
-	Wed, 14 Dec 2005 08:53:38 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0512140822540.3292@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.128 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964877AbVLNRCQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 12:02:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964874AbVLNRCQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 12:02:16 -0500
+Received: from wproxy.gmail.com ([64.233.184.206]:44420 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964877AbVLNRCO convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2005 12:02:14 -0500
+Received: by wproxy.gmail.com with SMTP id i27so140474wra
+        for <git@vger.kernel.org>; Wed, 14 Dec 2005 09:02:14 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CsmIilwwNAcxfv8GpMQ3wbe8LDLXVfL/TLYyGVtOm5133P/RjuGC/C4u/Xsh3LIPUmITziWBA5X8Ry/6kbJV8niub1QY2Jq1PpfLBkav13Iwd+8DmMrIupSnp2U56S1C4VC3jCpUwrthzipWqch5PLZykXrb+++Xzbdi21xv02g=
+Received: by 10.65.133.2 with SMTP id k2mr573985qbn;
+        Wed, 14 Dec 2005 09:02:13 -0800 (PST)
+Received: by 10.65.240.20 with HTTP; Wed, 14 Dec 2005 09:02:13 -0800 (PST)
+To: git@vger.kernel.org
+In-Reply-To: <20051214165304.GA9272@ferdyx.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13635>
 
+> If import will do once at a time, and you are sure all of them apply
+> cleanly; why don't you just use a for + import over the patches ?
+>
 
+Patch ordering is important to me. I didn't want re-invent the wheel,
+so to speak.   :)
 
-On Wed, 14 Dec 2005, Linus Torvalds wrote:
-> 
-> Argh. 
-> 
-> Len, how old a git are you using? "git-merge" really should _never_ have 
-> done this, but old (and I mean really old) git merges sometimes got 
-> confused with the base parent and would create a merge even when it was 
-> unnecessary.
+I can easily create my own 'series' file and iterate through that
+while importing patches, but I wanted to see if that was already
+built-in.
 
-Going through the real kernel tree, this has happened before:
-
-	commit 8e9887cc3b8d9f1c88c6f3842346a9478e52718f
-	Merge: 0a47c906342e2447003e207d23917dfa5c912071 d2149b542382bfc206cb28485108f6470c979566
-	Author: Len Brown <len.brown@intel.com>
-	Date:   Wed Nov 30 22:22:52 2005 -0500
-	
-	    Auto-update from upstream
-
-and doing a
-
-	git-merge-base -a 0a47c906342 d2149b542
-
-results in the second parent: d2149b542382bfc206cb28485108f6470c979566.
-
-We also have two old ones:
-
-	commit b129a8ccd53f74c43e4c83c8e0031a4990040830
-	commit 603fff54420a0ccc4c3b48bfef43896fb4e33161
-
-but both of those are from June, and of known causes (Russell King using 
-an old git that didn't clean up after a failed merge, and he ended up 
-committing a perfectly normal change as a bogus merge because git would 
-remember that broken MERGE_HEAD).
-
-So Len, since you seem to use "git merge" in your scripts, I suspect you 
-have an old version of git lying around. Can you try doing just
-
-	git merge-base -a 0a47c906342e2447003e207d23917dfa5c912071 d2149b542382bfc206cb28485108f6470c979566
-
-to see what the result is for you?
-
-Also, maybe the _reason_ you have an old git lying around is that you have 
-two installations - if you have at some point installed both an RPM _and_ 
-recompiled your own git, you may have different git versions in ~/bin and 
-in /usr/bin, and then depending on how you log in to the machine, you may 
-end up with different versions being used..
-
-			Linus
+Cheers,
+Don
