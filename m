@@ -1,85 +1,91 @@
-From: "Fernando J. Pereda" <ferdy@ferdyx.org>
-Subject: Re: StGIT usage
-Date: Wed, 14 Dec 2005 17:53:04 +0100
-Message-ID: <20051214165304.GA9272@ferdyx.org>
-References: <68948ca0512140844u677fea36ob94bdf213a6a110@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: new file leaked onto release branch
+Date: Wed, 14 Dec 2005 08:53:38 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0512140837160.3292@g5.osdl.org>
+References: <200512140257.03975.len.brown@intel.com> <7vmzj4yq3l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0512140822540.3292@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jRHKVT23PllUwdXP"
-X-From: git-owner@vger.kernel.org Wed Dec 14 17:58:35 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Len Brown <len.brown@intel.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 14 18:02:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmZsS-0004q9-6x
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 17:53:16 +0100
+	id 1EmZt8-00051u-Qj
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 17:53:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964857AbVLNQxN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 11:53:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932465AbVLNQxN
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 11:53:13 -0500
-Received: from 170.Red-213-96-222.staticIP.rima-tde.net ([213.96.222.170]:48776
-	"EHLO smtp.ferdyx.org") by vger.kernel.org with ESMTP
-	id S932400AbVLNQxM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2005 11:53:12 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.ferdyx.org (Postfix) with ESMTP id 862568D33E
-	for <git@vger.kernel.org>; Wed, 14 Dec 2005 17:48:28 +0100 (CET)
-Received: from smtp.ferdyx.org ([127.0.0.1])
-	by localhost (tungsteno [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 03542-09 for <git@vger.kernel.org>;
-	Wed, 14 Dec 2005 17:48:25 +0100 (CET)
-Received: from posidon.ferdyx.org (posidon.ferdyx.org [192.168.0.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.ferdyx.org (Postfix) with ESMTP id 005F18D33B
-	for <git@vger.kernel.org>; Wed, 14 Dec 2005 17:48:23 +0100 (CET)
-Received: by posidon.ferdyx.org (nbSMTP-1.01-cvs) for uid 1000
-	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	ferdy@ferdyx.org; Wed, 14 Dec 2005 17:53:05 +0100 (CET)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <68948ca0512140844u677fea36ob94bdf213a6a110@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at ferdyx.org
+	id S964858AbVLNQx4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 11:53:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964859AbVLNQx4
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 11:53:56 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:49113 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964858AbVLNQxz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 11:53:55 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBEGrdDZ026071
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 14 Dec 2005 08:53:39 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBEGrcmk025307;
+	Wed, 14 Dec 2005 08:53:38 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.64.0512140822540.3292@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.128 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13634>
 
 
---jRHKVT23PllUwdXP
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 14, 2005 at 11:44:34AM -0500, Don Zickus wrote:
-| I couldn't find in the StGIT documentation on how to use a 'series'
-| file or to pull a whole bunch of patches from a directory.  It seems
-| the import command could only handle a patch at a time.  Any
-| tips/help?
+On Wed, 14 Dec 2005, Linus Torvalds wrote:
+> 
+> Argh. 
+> 
+> Len, how old a git are you using? "git-merge" really should _never_ have 
+> done this, but old (and I mean really old) git merges sometimes got 
+> confused with the base parent and would create a merge even when it was 
+> unnecessary.
 
-If import will do once at a time, and you are sure all of them apply
-cleanly; why don't you just use a for + import over the patches ?
+Going through the real kernel tree, this has happened before:
 
-Cheers,
-Ferdy
+	commit 8e9887cc3b8d9f1c88c6f3842346a9478e52718f
+	Merge: 0a47c906342e2447003e207d23917dfa5c912071 d2149b542382bfc206cb28485108f6470c979566
+	Author: Len Brown <len.brown@intel.com>
+	Date:   Wed Nov 30 22:22:52 2005 -0500
+	
+	    Auto-update from upstream
 
---=20
-Fernando J. Pereda Garcimart=EDn
-Gentoo Developer (Alpha,net-mail,mutt,git)
-20BB BDC3 761A 4781 E6ED  ED0B 0A48 5B0C 60BD 28D4
+and doing a
 
---jRHKVT23PllUwdXP
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+	git-merge-base -a 0a47c906342 d2149b542
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
+results in the second parent: d2149b542382bfc206cb28485108f6470c979566.
 
-iD8DBQFDoE3wCkhbDGC9KNQRAoimAKCOSiDvl0oo2ltjiYStu53lSufp/QCdGPO8
-e8JE88kMyVfVH52b3rCDDp4=
-=Bu0d
------END PGP SIGNATURE-----
+We also have two old ones:
 
---jRHKVT23PllUwdXP--
+	commit b129a8ccd53f74c43e4c83c8e0031a4990040830
+	commit 603fff54420a0ccc4c3b48bfef43896fb4e33161
+
+but both of those are from June, and of known causes (Russell King using 
+an old git that didn't clean up after a failed merge, and he ended up 
+committing a perfectly normal change as a bogus merge because git would 
+remember that broken MERGE_HEAD).
+
+So Len, since you seem to use "git merge" in your scripts, I suspect you 
+have an old version of git lying around. Can you try doing just
+
+	git merge-base -a 0a47c906342e2447003e207d23917dfa5c912071 d2149b542382bfc206cb28485108f6470c979566
+
+to see what the result is for you?
+
+Also, maybe the _reason_ you have an old git lying around is that you have 
+two installations - if you have at some point installed both an RPM _and_ 
+recompiled your own git, you may have different git versions in ~/bin and 
+in /usr/bin, and then depending on how you log in to the machine, you may 
+end up with different versions being used..
+
+			Linus
