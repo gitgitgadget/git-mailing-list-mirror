@@ -1,72 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-am --one
-Date: Tue, 13 Dec 2005 17:30:59 -0800
-Message-ID: <7vy82o5uss.fsf@assigned-by-dhcp.cox.net>
-References: <439F7105.9050302@zytor.com>
+From: Paul Dickson <paul@permanentmail.com>
+Subject: Re: [ANNOUNCE] Cogito-0.16.1
+Date: Tue, 13 Dec 2005 18:40:29 -0700
+Message-ID: <20051213184029.ca2c5adc.paul@permanentmail.com>
+References: <20051212011210.GC12373@pasky.or.cz>
+	<20051212182636.d3b73900.paul@permanentmail.com>
+	<20051213165645.GC22159@pasky.or.cz>
+	<20051213110257.a37be18b.paul@permanentmail.com>
+	<20051213223114.GF22159@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 14 02:33:19 2005
+X-From: git-owner@vger.kernel.org Wed Dec 14 02:41:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmLU1-0004Os-T5
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 02:31:06 +0100
+	id 1EmLdK-0000p7-KI
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 02:40:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030347AbVLNBbC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Dec 2005 20:31:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030352AbVLNBbC
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 20:31:02 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:35018 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1030347AbVLNBbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2005 20:31:00 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051214012936.YMP17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 13 Dec 2005 20:29:36 -0500
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <439F7105.9050302@zytor.com> (H. Peter Anvin's message of "Tue,
-	13 Dec 2005 17:10:29 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030358AbVLNBkg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Dec 2005 20:40:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030359AbVLNBkf
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 20:40:35 -0500
+Received: from vds.fauxbox.com ([208.210.124.75]:18062 "EHLO thorn.pobox.com")
+	by vger.kernel.org with ESMTP id S1030358AbVLNBkf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Dec 2005 20:40:35 -0500
+Received: from thorn (localhost [127.0.0.1])
+	by thorn.pobox.com (Postfix) with ESMTP id 16DF7107;
+	Tue, 13 Dec 2005 20:40:56 -0500 (EST)
+Received: from red.pwd.internal (ip68-230-78-84.ph.ph.cox.net [68.230.78.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by thorn.sasl.smtp.pobox.com (Postfix) with ESMTP id 83FC32D93;
+	Tue, 13 Dec 2005 20:40:53 -0500 (EST)
+Received: from white.pwd.internal ([192.168.1.9])
+	by red.pwd.internal (8.13.5/8.13.4) with SMTP id jBE1eToZ020141;
+	Tue, 13 Dec 2005 18:40:30 -0700
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20051213223114.GF22159@pasky.or.cz>
+X-Mailer: Sylpheed version 2.1.6 (GTK+ 2.8.8; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13611>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+On Tue, 13 Dec 2005 23:31:14 +0100, Petr Baudis wrote:
 
-> This patch adds the --one (-o) option to git-am, to apply a single 
-> message in RFC 2822 format, as opposed to an mbox.  With some MUAs it's 
-> a lot easier to save individual messages than with mboxes, and either 
-> way the user may want to control the ordering if there are known 
-> interdependencies.
+> But the spec file also makes the 'doc' and 'install-doc' targets. When
+> you act as a packager, asciidoc becomes a reasonable build-time
+> requirement.
 
-> +	# standard input.  To prepend the header, we thus want a
-> +	# second cat, sigh...
-> +	if test "$one" = t
-> +	then
-> +		LANG=C date +'From - %a %b %d %T %Y' > "$dotest"/fakefrom
-> +		fakefrom="$dotest"/fakefrom
-> +	else
-> +		fakefrom=/dev/null
-> +	fi
-> +	cat "$@" | cat "$fakefrom" - |
->  	git-mailsplit -d$prec "$dotest/" >"$dotest/last" || {
->  		rm -fr "$dotest"
->  		exit 1
+My mistake.  They weren't part of the 15.1 RPM and I didn't check after I
+installed 16.1.  They are there now.
 
-I understand the motivation, but I suspect skipping mailsplit
-might be simpler, like this untested code perhaps?
-
-	case "$one" in
-        '')
-        	... original code ...
-		;;
-        *)
-		one=`printf "%${prec}d" 1`
-        	cat "$@" >"$dotest/$one"
-                echo "$one" >"$dotest/last"
-                ;;
-	esac
+	-Paul
