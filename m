@@ -1,56 +1,64 @@
-From: Paul Dickson <paul@permanentmail.com>
-Subject: Re: [ANNOUNCE] Cogito-0.16.1
-Date: Tue, 13 Dec 2005 18:40:29 -0700
-Message-ID: <20051213184029.ca2c5adc.paul@permanentmail.com>
-References: <20051212011210.GC12373@pasky.or.cz>
-	<20051212182636.d3b73900.paul@permanentmail.com>
-	<20051213165645.GC22159@pasky.or.cz>
-	<20051213110257.a37be18b.paul@permanentmail.com>
-	<20051213223114.GF22159@pasky.or.cz>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] git-am --one
+Date: Tue, 13 Dec 2005 17:47:31 -0800
+Message-ID: <439F79B3.6000309@zytor.com>
+References: <439F7105.9050302@zytor.com> <7vy82o5uss.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 14 02:41:32 2005
+X-From: git-owner@vger.kernel.org Wed Dec 14 02:49:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmLdK-0000p7-KI
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 02:40:42 +0100
+	id 1EmLkI-0003MB-ER
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 02:47:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030358AbVLNBkg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Dec 2005 20:40:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030359AbVLNBkf
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 20:40:35 -0500
-Received: from vds.fauxbox.com ([208.210.124.75]:18062 "EHLO thorn.pobox.com")
-	by vger.kernel.org with ESMTP id S1030358AbVLNBkf (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Dec 2005 20:40:35 -0500
-Received: from thorn (localhost [127.0.0.1])
-	by thorn.pobox.com (Postfix) with ESMTP id 16DF7107;
-	Tue, 13 Dec 2005 20:40:56 -0500 (EST)
-Received: from red.pwd.internal (ip68-230-78-84.ph.ph.cox.net [68.230.78.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by thorn.sasl.smtp.pobox.com (Postfix) with ESMTP id 83FC32D93;
-	Tue, 13 Dec 2005 20:40:53 -0500 (EST)
-Received: from white.pwd.internal ([192.168.1.9])
-	by red.pwd.internal (8.13.5/8.13.4) with SMTP id jBE1eToZ020141;
-	Tue, 13 Dec 2005 18:40:30 -0700
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051213223114.GF22159@pasky.or.cz>
-X-Mailer: Sylpheed version 2.1.6 (GTK+ 2.8.8; i686-pc-linux-gnu)
+	id S1030353AbVLNBrv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Dec 2005 20:47:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030384AbVLNBrv
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Dec 2005 20:47:51 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:57518 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1030353AbVLNBru
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2005 20:47:50 -0500
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBE1lgpZ020923
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 13 Dec 2005 17:47:43 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy82o5uss.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13612>
 
-On Tue, 13 Dec 2005 23:31:14 +0100, Petr Baudis wrote:
+Junio C Hamano wrote:
+> 
+> I understand the motivation, but I suspect skipping mailsplit
+> might be simpler, like this untested code perhaps?
+> 
+> 	case "$one" in
+>         '')
+>         	... original code ...
+> 		;;
+>         *)
+> 		one=`printf "%${prec}d" 1`
+>         	cat "$@" >"$dotest/$one"
+>                 echo "$one" >"$dotest/last"
+>                 ;;
+> 	esac
+> 
 
-> But the spec file also makes the 'doc' and 'install-doc' targets. When
-> you act as a packager, asciidoc becomes a reasonable build-time
-> requirement.
+If that works, great.  I just implemented it in the "most obviously 
+correct" way, meaning with as few changes as possible.
 
-My mistake.  They weren't part of the 15.1 RPM and I didn't check after I
-installed 16.1.  They are there now.
-
-	-Paul
+	-hpa
