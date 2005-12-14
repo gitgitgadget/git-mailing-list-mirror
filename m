@@ -1,64 +1,73 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git cole give unexpected error message
-Date: Wed, 14 Dec 2005 12:41:56 +0100
-Message-ID: <20051214114156.GG22159@pasky.or.cz>
-References: <20051213212820.GB5232@mars.ravnborg.org> <20051213222829.GE22159@pasky.or.cz> <439FE7AD.6080602@op5.se>
+From: "KRONSTORFER Horst" <Horst.KRONSTORFER@frequentis.com>
+Subject: RE: [ANNOUNCE] gitkdiff 0.1
+Date: Wed, 14 Dec 2005 13:03:49 +0100
+Message-ID: <C5BA91F04186584EB68FD42BB4993E6B93E188@FRQWOLEX01.frequentis.frq>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 14 12:43:58 2005
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 14 13:05:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmV1I-00036Q-VS
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 12:42:05 +0100
+	id 1EmVMj-0002ft-6u
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 13:04:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932436AbVLNLmA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 06:42:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932450AbVLNLmA
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 06:42:00 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:6623 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932446AbVLNLl7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 06:41:59 -0500
-Received: (qmail 1624 invoked by uid 2001); 14 Dec 2005 12:41:56 +0100
-To: Andreas Ericsson <ae@op5.se>
-Content-Disposition: inline
-In-Reply-To: <439FE7AD.6080602@op5.se>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932444AbVLNMEK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 07:04:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932475AbVLNMEJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 07:04:09 -0500
+Received: from webmail.frequentis.com ([213.47.210.151]:29380 "EHLO
+	webmail.frequentis.com") by vger.kernel.org with ESMTP
+	id S932444AbVLNMEI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 07:04:08 -0500
+Received: from FRQVIEEX01.frequentis.frq ([213.47.210.150]) by webmail.frequentis.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 14 Dec 2005 13:03:52 +0100
+Received: from FRQWOLEX01.frequentis.frq ([172.17.1.50]) by FRQVIEEX01.frequentis.frq with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 14 Dec 2005 13:03:51 +0100
+X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [ANNOUNCE] gitkdiff 0.1
+Thread-Index: AcX80K1Zqy9RH7o4TLyBLM4xGKr8dgD1HLIw
+To: "Tejun Heo" <htejun@gmail.com>
+X-OriginalArrivalTime: 14 Dec 2005 12:03:51.0923 (UTC) FILETIME=[72EB4430:01C600A6]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13628>
 
-Dear diary, on Wed, Dec 14, 2005 at 10:36:45AM CET, I got a letter
-where Andreas Ericsson <ae@op5.se> said that...
-> Petr Baudis wrote:
-> >Dear diary, on Tue, Dec 13, 2005 at 10:28:20PM CET, I got a letter
-> >where Sam Ravnborg <sam@ravnborg.org> said that...
-> >
-> >>cogito being a nice porcelain gives the git errormessage but manage to
-> >>clean up when the clone fails.
-> >>So also cogito would benefit from a more descriptive errormessage.
-> >
-> >
-> >Well, git clone can fail for many reasons and I don't think the "no such
-> >repository" one is completely overwhelming, so hinting that by Cogito
-> >could be quite confusing (theme of the day: usability ;-)).
-> >
-> >The real solution would be proper error reporting by the git daemon.
-> >
-> 
-> But that would open up for an information disclosure. If someone's 
-> hacking on a patch, please make it configurable at least.
+> Tejun Heo wrote:
 
-When it breaks at this stage, it's either some bad internal error (I
-guess memory allocation error might do this), permission problem, or
-repository not being found. We might then report a more generic error
-message "Repository not found or access denied.".
+>Sven Verdoolaege wrote:
+>> On Fri, Dec 09, 2005 at 10:45:33AM +0000, Horst Kronstorfer wrote:
+>> 
+>>>Tejun Heo <htejun <at> gmail.com> writes:
+>>>
+>>>
+>>>> http://home-tj.org/gitui/files/gitui-200504281405.tar.gz
+>>>
+>>>link is dead. any alternatives available?
+>>>
+>> 
+>> Probably not what you meant, but I think dirdiff does something similar.
+>> Some changes again Paul's version are available from
+>> 
+>> http://www.liacs.nl/~sverdool/gitweb.cgi?p=dirdiff.git;a=summary
+>>
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+>http://home-tj.org/wiki/index.php/Mtkdiff
+
+>--
+>tejun
+
+thanx for the link. app is really useful.
+maybe you could state the app's dependencies on your wiki.
+afaict that would be:
+http://www.tcl.tk/ >= 8.4
+http://cyberelk.net/tim/patchutils/
+http://invisible-island.net/diffstat/
+
+-h
