@@ -1,66 +1,81 @@
-From: "Brown, Len" <len.brown@intel.com>
-Subject: RE: new file leaked onto release branch
-Date: Wed, 14 Dec 2005 16:31:58 -0500
-Message-ID: <F7DC2337C7631D4386A2DF6E8FB22B30056B8652@hdsmsx401.amr.corp.intel.com>
+From: Amos Waterland <apw@us.ibm.com>
+Subject: Re: [PATCH] Do not ignore errors during make check
+Date: Wed, 14 Dec 2005 16:44:24 -0500
+Message-ID: <20051214214424.GA3730@kvasir.watson.ibm.com>
+References: <20051214210932.GA2642@kvasir.watson.ibm.com> <7v1x0fxt7b.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Linus Torvalds" <torvalds@osdl.org>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 14 22:36:56 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 14 22:45:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmeFr-0005mb-KN
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 22:33:43 +0100
+	id 1EmeQN-0001R1-Dt
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 22:44:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964989AbVLNVdl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 16:33:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964992AbVLNVdl
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 16:33:41 -0500
-Received: from fmr14.intel.com ([192.55.52.68]:65235 "EHLO
-	fmsfmr002.fm.intel.com") by vger.kernel.org with ESMTP
-	id S964989AbVLNVdk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 16:33:40 -0500
-Received: from fmsfmr101.fm.intel.com (fmsfmr101.fm.intel.com [10.253.24.21])
-	by fmsfmr002.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id jBELW7LN009142;
-	Wed, 14 Dec 2005 21:32:07 GMT
-Received: from fmsmsxvs043.fm.intel.com (fmsmsxvs043.fm.intel.com [132.233.42.129])
-	by fmsfmr101.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id jBELVlBx011096;
-	Wed, 14 Dec 2005 21:32:07 GMT
-Received: from fmsmsx332.amr.corp.intel.com ([132.233.42.148])
- by fmsmsxvs043.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2005121413320613666
- ; Wed, 14 Dec 2005 13:32:06 -0800
-Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx332.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Wed, 14 Dec 2005 13:32:06 -0800
-Received: from hdsmsx401.amr.corp.intel.com ([10.127.2.60]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Wed, 14 Dec 2005 13:32:06 -0800
-X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: new file leaked onto release branch
-Thread-Index: AcYA9PWBRRFlrs2jRTaUBVyOVufV7gAAJR9w
-To: "Tom Prince" <tom.prince@ualberta.net>,
-	"Junio C Hamano" <junkio@cox.net>
-X-OriginalArrivalTime: 14 Dec 2005 21:32:06.0478 (UTC) FILETIME=[D4DB7EE0:01C600F5]
-X-Scanned-By: MIMEDefang 2.52 on 10.253.24.21
+	id S932335AbVLNVoc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 16:44:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932441AbVLNVoc
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 16:44:32 -0500
+Received: from e35.co.us.ibm.com ([32.97.110.153]:50647 "EHLO
+	e35.co.us.ibm.com") by vger.kernel.org with ESMTP id S932335AbVLNVoc
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2005 16:44:32 -0500
+Received: from d03relay04.boulder.ibm.com (d03relay04.boulder.ibm.com [9.17.195.106])
+	by e35.co.us.ibm.com (8.12.11/8.12.11) with ESMTP id jBELiV4c025242
+	for <git@vger.kernel.org>; Wed, 14 Dec 2005 16:44:31 -0500
+Received: from d03av02.boulder.ibm.com (d03av02.boulder.ibm.com [9.17.195.168])
+	by d03relay04.boulder.ibm.com (8.12.10/NCO/VERS6.8) with ESMTP id jBELkBGC106686
+	for <git@vger.kernel.org>; Wed, 14 Dec 2005 14:46:11 -0700
+Received: from d03av02.boulder.ibm.com (loopback [127.0.0.1])
+	by d03av02.boulder.ibm.com (8.12.11/8.13.3) with ESMTP id jBELiU0M006490
+	for <git@vger.kernel.org>; Wed, 14 Dec 2005 14:44:30 -0700
+Received: from kvasir.watson.ibm.com (kvasir.watson.ibm.com [9.2.218.19])
+	by d03av02.boulder.ibm.com (8.12.11/8.12.11) with ESMTP id jBELiUh9006237;
+	Wed, 14 Dec 2005 14:44:30 -0700
+Received: from apw by kvasir.watson.ibm.com with local (Exim 4.52)
+	id 1EmeQC-000108-Fw; Wed, 14 Dec 2005 16:44:24 -0500
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v1x0fxt7b.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13647>
 
->> I pointed out one anomaly which is the commit should never have
->> been created because it was not even a fast forward but already
->> up-to-date case, and it was followed up with exchange of a few
->> messages between Linus and you.
->> 
->
->I don't remember any of the details now, but I remember that an old
->version of git or cogito would create bogus fast-forward 
->merges, if they
->were used without GNU coreutils. The machine it happend on was running
->FreeBSD 4.10, but current versions work fine.
+On Wed, Dec 14, 2005 at 01:30:16PM -0800, Junio C Hamano wrote:
+> Good point but "|| exit" would be more appropriate.  With the
+> above patch, I suspect "make check" merely stops at the first
+> error but resulting return code would still be zero, wouldn't
+> it?
 
-I'm running SuSE Linux 10.0 x86_64 on this box
-# rpm -q coreutils
-coreutils-5.3.0-20
+Yes, here is a patch that uses exit instead of break.
+
+---
+
+Do not let errors pass by unnoticed when running `make check'.
+
+Signed-off-by: Amos Waterland <apw@us.ibm.com>
+
+---
+
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+bc721e2d99487c0240514a848ac1cb84c086e008
+diff --git a/Makefile b/Makefile
+index 01b6643..d494ad4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -449,7 +449,7 @@ test-delta$X: test-delta.c diff-delta.o 
+ 	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $^
+ 
+ check:
+-	for i in *.c; do sparse $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i; done
++	for i in *.c; do sparse $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i || exit; done
+ 
+ 
+ 
+-- 
+0.99.9.GIT
