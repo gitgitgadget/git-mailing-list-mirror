@@ -1,116 +1,123 @@
-From: "Brown, Len" <len.brown@intel.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: RE: new file leaked onto release branch
-Date: Wed, 14 Dec 2005 14:20:04 -0500
-Message-ID: <F7DC2337C7631D4386A2DF6E8FB22B30056B83F2@hdsmsx401.amr.corp.intel.com>
+Date: Wed, 14 Dec 2005 12:10:47 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0512141150210.3292@g5.osdl.org>
+References: <F7DC2337C7631D4386A2DF6E8FB22B30056B83F2@hdsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----_=_NextPart_001_01C600E3.642DDC75"
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 14 20:23:49 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 14 21:16:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmcBG-000457-ME
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 20:20:51 +0100
+	id 1EmcyF-000733-SB
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 21:11:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964903AbVLNTUp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 14:20:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964904AbVLNTUp
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 14:20:45 -0500
-Received: from fmr14.intel.com ([192.55.52.68]:58508 "EHLO
-	fmsfmr002.fm.intel.com") by vger.kernel.org with ESMTP
-	id S964903AbVLNTUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2005 14:20:42 -0500
-Received: from fmsfmr101.fm.intel.com (fmsfmr101.fm.intel.com [10.253.24.21])
-	by fmsfmr002.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id jBEJKALN026343;
-	Wed, 14 Dec 2005 19:20:10 GMT
-Received: from fmsmsxvs040.fm.intel.com (fmsmsxvs040.fm.intel.com [132.233.42.124])
-	by fmsfmr101.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id jBEJJpBl023605;
-	Wed, 14 Dec 2005 19:20:10 GMT
-Received: from fmsmsx332.amr.corp.intel.com ([132.233.42.148])
- by fmsmsxvs040.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2005121411200931828
- ; Wed, 14 Dec 2005 11:20:10 -0800
-Received: from fmsmsx312.amr.corp.intel.com ([132.233.42.227]) by fmsmsx332.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Wed, 14 Dec 2005 11:20:09 -0800
-Received: from hdsmsx401.amr.corp.intel.com ([10.127.2.60]) by fmsmsx312.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Wed, 14 Dec 2005 11:20:09 -0800
-X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-Thread-Topic: new file leaked onto release branch
-Thread-Index: AcYAzwJkk4YopRfiS0Wk3VKoYuRsmgADZQaw
-To: "Linus Torvalds" <torvalds@osdl.org>,
-	"Junio C Hamano" <junkio@cox.net>
-X-OriginalArrivalTime: 14 Dec 2005 19:20:09.0098 (UTC) FILETIME=[65BB2EA0:01C600E3]
-X-Scanned-By: MIMEDefang 2.52 on 10.253.24.21
+	id S964924AbVLNULI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 15:11:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964923AbVLNULH
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 15:11:07 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:16041 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964924AbVLNULG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 15:11:06 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBEKApDZ003678
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 14 Dec 2005 12:10:52 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBEKAlRP002778;
+	Wed, 14 Dec 2005 12:10:49 -0800
+To: "Brown, Len" <len.brown@intel.com>
+In-Reply-To: <F7DC2337C7631D4386A2DF6E8FB22B30056B83F2@hdsmsx401.amr.corp.intel.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.128 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13639>
 
-This is a multi-part message in MIME format.
 
-------_=_NextPart_001_01C600E3.642DDC75
-Content-Type: text/plain;
-	charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
 
-=20
->So Len, since you seem to use "git merge" in your scripts, I=20
->suspect you have an old version of git lying around. Can you try doing =
-just
-
-Should I be using something different than git merge?
-is Documentation/howto/using-topic-branches out of date?
-
->	git merge-base -a=20
->0a47c906342e2447003e207d23917dfa5c912071=20
->d2149b542382bfc206cb28485108f6470c979566
+On Wed, 14 Dec 2005, Brown, Len wrote:
 >
->to see what the result is for you?
+> >So Len, since you seem to use "git merge" in your scripts, I 
+> >suspect you have an old version of git lying around. Can you try doing just
+> 
+> Should I be using something different than git merge?
 
-$ git merge-base -a 0a47c906342e2447003e207d23917dfa5c912071 =
-d2149b542382bfc206cb28485108f6470c979566
-d2149b542382bfc206cb28485108f6470c979566
+No, "git merge" should be fine. It's what "git pull" ends up doing 
+internally, which is why I suspected an old git version: "git merge" 
+should be well-tested, since it's very much what I end up using every day 
+when I pull stuff.
 
->Also, maybe the _reason_ you have an old git lying around is=20
->that you have two installations
+> >	git merge-base -a 0a47c906342e2447003e207d23917dfa5c912071 d2149b542382bfc206cb28485108f6470c979566
+> >
+> >to see what the result is for you?
+> 
+> $ git merge-base -a 0a47c906342e2447003e207d23917dfa5c912071 d2149b542382bfc206cb28485108f6470c979566
+> d2149b542382bfc206cb28485108f6470c979566
 
-Doesn't appear to be the case, as I don't have a /usr/bin/git
-IIR, months ago I tried to install the rpm and
-it failed due to some incompatibility like not groking
-a SuSE destination.  I got Dave's git tarball according
-to Jeff's howto: http://linux.yyz.us/git-howto.html
-and have been building and installing from a git repo since.
-(I found git-current tarball dated 7/21/05, so maybe it was then)
-I did, however a few months ago copy my i386 home directory over to the
-x86_64 box I use now, re-build and re-install.  Dunno
-if there may have been a hickup in that process...
-I found a backup copy of my i386 bin directory from 2005-08-25 --
-binaries still in i386 format.  But I don't think I ran that b/c
-it isn't on any PATH.  Git lives in ~/bin which is 1st in my PATH.
+Ok, that's correct.
 
-I think the lesson I'm taking away from this is that
-as I continue to stumble forward using git I should
-immediately report anything that doesn't look quite right
-while I can still guarantee that all the clues are still
-at the scene of the crime.  I expect that I've re-built
-and re-installed git several times since the merge
-in question was made.
+git-merge does:
 
--Len
+	common=$(git-merge-base --all $head "$@")
 
-------_=_NextPart_001_01C600E3.642DDC75
-Content-Type: application/octet-stream;
-	name="to-linus"
-Content-Transfer-Encoding: base64
-Content-Description: to-linus
-Content-Disposition: attachment;
-	filename="to-linus"
+and then it _should_ have triggered this case:
 
-Z2l0IG1lcmdlLWJhc2UgLWEgMGE0N2M5MDYzNDJlMjQ0NzAwM2UyMDdkMjM5MTdkZmE1YzkxMjA3
-MSBkMjE0OWI1NDIzODJiZmMyMDZjYjI4NDg1MTA4ZjY0NzBjOTc5NTY2CmQyMTQ5YjU0MjM4MmJm
-YzIwNmNiMjg0ODUxMDhmNjQ3MGM5Nzk1NjYK
+	case "$#,$common,$no_commit" in
+	..
+	1,"$1",*)
+		# If head can reach all the merge then we are up to date.
+		# but first the most common case of merging one remote
+		echo "Already up-to-date."
+		dropsave
+		exit 0
+		;;
+	..
 
-------_=_NextPart_001_01C600E3.642DDC75--
+and thus never have created any merge messages.
+
+That's what I get when I try this:
+
+	git checkout -b test-merge 0a47c906342e2447003e207d23917dfa5c912071
+	git merge "Testing merging" HEAD d2149b542382bfc206cb28485108f6470c979566
+
+results in a very immediate
+
+	"Already up-to-date."
+
+message. Does it do that for you too?
+
+I tested not only with current git, but also the gits that were valid on 
+Nov 29 and Nov 30. All of them did this.
+
+> Doesn't appear to be the case, as I don't have a /usr/bin/git
+> IIR, months ago I tried to install the rpm and
+> it failed due to some incompatibility like not groking
+> a SuSE destination.  I got Dave's git tarball according
+> to Jeff's howto: http://linux.yyz.us/git-howto.html
+> and have been building and installing from a git repo since.
+> (I found git-current tarball dated 7/21/05, so maybe it was then)
+> I did, however a few months ago copy my i386 home directory over to the
+> x86_64 box I use now, re-build and re-install.  Dunno
+> if there may have been a hickup in that process...
+> I found a backup copy of my i386 bin directory from 2005-08-25 --
+> binaries still in i386 format.  But I don't think I ran that b/c
+> it isn't on any PATH.  Git lives in ~/bin which is 1st in my PATH.
+
+Hmm. It really looks like it should have been impossible to generate that 
+commit with current git, which is why I'm still a bit suspicious. 
+
+> I think the lesson I'm taking away from this is that
+> as I continue to stumble forward using git I should
+> immediately report anything that doesn't look quite right
+> while I can still guarantee that all the clues are still
+> at the scene of the crime.
+
+I think this list has been pretty responsive to reports of strange 
+behaviour, so yes. 
+
+			Linus
