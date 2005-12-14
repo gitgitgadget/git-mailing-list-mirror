@@ -1,73 +1,73 @@
-From: "KRONSTORFER Horst" <Horst.KRONSTORFER@frequentis.com>
-Subject: RE: [ANNOUNCE] gitkdiff 0.1
-Date: Wed, 14 Dec 2005 13:03:49 +0100
-Message-ID: <C5BA91F04186584EB68FD42BB4993E6B93E188@FRQWOLEX01.frequentis.frq>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: [PATCH 5/11] git-applypatch: Usage string clean-up,
+ emit usage string at incorrect invocation
+Date: Wed, 14 Dec 2005 14:45:42 +0200
+Message-ID: <20051214144542.0a509e3e.tihirvon@gmail.com>
+References: <11345130302438-git-send-email-freku045@student.liu.se>
+ <11345130311492-git-send-email-freku045@student.liu.se>
+ <7vfyow45l2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 14 13:05:56 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: freku045@student.liu.se, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 14 13:46:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmVMj-0002ft-6u
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 13:04:13 +0100
+	id 1EmW1A-0001N8-ST
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 13:46:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932444AbVLNMEK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 07:04:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932475AbVLNMEJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 07:04:09 -0500
-Received: from webmail.frequentis.com ([213.47.210.151]:29380 "EHLO
-	webmail.frequentis.com") by vger.kernel.org with ESMTP
-	id S932444AbVLNMEI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 07:04:08 -0500
-Received: from FRQVIEEX01.frequentis.frq ([213.47.210.150]) by webmail.frequentis.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 14 Dec 2005 13:03:52 +0100
-Received: from FRQWOLEX01.frequentis.frq ([172.17.1.50]) by FRQVIEEX01.frequentis.frq with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 14 Dec 2005 13:03:51 +0100
-X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [ANNOUNCE] gitkdiff 0.1
-Thread-Index: AcX80K1Zqy9RH7o4TLyBLM4xGKr8dgD1HLIw
-To: "Tejun Heo" <htejun@gmail.com>
-X-OriginalArrivalTime: 14 Dec 2005 12:03:51.0923 (UTC) FILETIME=[72EB4430:01C600A6]
+	id S932283AbVLNMpx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 07:45:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932406AbVLNMpx
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 07:45:53 -0500
+Received: from marski.suomi.net ([212.50.131.142]:57234 "EHLO marski.suomi.net")
+	by vger.kernel.org with ESMTP id S932283AbVLNMpx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 07:45:53 -0500
+Received: from spartak.suomi.net (spartak.suomi.net [212.50.140.227])
+ by marski.suomi.net (Sun Java System Messaging Server 6.2 (built Dec  2 2004))
+ with ESMTP id <0IRH00MQENG9XD30@marski.suomi.net> for git@vger.kernel.org;
+ Wed, 14 Dec 2005 14:45:49 +0200 (EET)
+Received: from spam2.suomi.net (spam2.suomi.net [212.50.131.166])
+ by mailstore.suomi.net
+ (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
+ with ESMTP id <0IRH004ZANM3QN50@mailstore.suomi.net>; Wed,
+ 14 Dec 2005 14:49:16 +0200 (EET)
+Received: from garlic.home.net (addr-82-128-203-211.suomi.net [82.128.203.211])
+	by spam2.suomi.net (Postfix) with SMTP id ED68911B6FA; Wed,
+ 14 Dec 2005 14:45:42 +0200 (EET)
+In-reply-to: <7vfyow45l2.fsf@assigned-by-dhcp.cox.net>
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.9; i686-pc-linux-gnu)
+X-OPOY-MailScanner-Information: Please contact the OPOY for more information
+X-OPOY-MailScanner: Found to be clean
+X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (score=-2.354,	required 5,
+ autolearn=not spam, AWL 0.24, BAYES_00 -2.60)
+X-OPOY-MailScanner-From: tihirvon@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13629>
 
-> Tejun Heo wrote:
+On Tue, 13 Dec 2005 21:20:57 -0800
+Junio C Hamano <junkio@cox.net> wrote:
 
->Sven Verdoolaege wrote:
->> On Fri, Dec 09, 2005 at 10:45:33AM +0000, Horst Kronstorfer wrote:
->> 
->>>Tejun Heo <htejun <at> gmail.com> writes:
->>>
->>>
->>>> http://home-tj.org/gitui/files/gitui-200504281405.tar.gz
->>>
->>>link is dead. any alternatives available?
->>>
->> 
->> Probably not what you meant, but I think dirdiff does something similar.
->> Some changes again Paul's version are available from
->> 
->> http://www.liacs.nl/~sverdool/gitweb.cgi?p=dirdiff.git;a=summary
->>
+> freku045@student.liu.se writes:
+> 
+> >  . git-sh-setup
+> >  
+> > +[[ "$#" = "3" || "$#" = "4" ]] || usage
+> > +
+> 
+> I do not see much advantage to use [[...]] construct here.
 
->http://home-tj.org/wiki/index.php/Mtkdiff
+[[ ]] is bashishm. Does not work with ash.
 
->--
->tejun
 
-thanx for the link. app is really useful.
-maybe you could state the app's dependencies on your wiki.
-afaict that would be:
-http://www.tcl.tk/ >= 8.4
-http://cyberelk.net/tim/patchutils/
-http://invisible-island.net/diffstat/
+test $# -ge 3 && test $# -le 4 || usage
 
--h
+You don't need to quote $# because it is always defined (and always
+non-negative integer).  You can't unset or set it.
+
+-- 
+http://onion.dynserv.net/~timo/
