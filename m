@@ -1,101 +1,53 @@
-From: Amos Waterland <apw@us.ibm.com>
-Subject: git rebase loses author name/email if given bad email address
+From: "Brown, Len" <len.brown@intel.com>
+Subject: RE: new file leaked onto release branch
 Date: Wed, 14 Dec 2005 17:48:19 -0500
-Message-ID: <20051214224818.GA5362@kvasir.watson.ibm.com>
+Message-ID: <F7DC2337C7631D4386A2DF6E8FB22B30056B8748@hdsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mostrows@watson.ibm.com
-X-From: git-owner@vger.kernel.org Wed Dec 14 23:50:32 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 14 23:50:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmfQV-0000qX-9Q
-	for gcvg-git@gmane.org; Wed, 14 Dec 2005 23:48:47 +0100
+	id 1EmfQV-0000qX-RT
+	for gcvg-git@gmane.org; Wed, 14 Dec 2005 23:48:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965014AbVLNWs1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 17:48:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965057AbVLNWs0
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 17:48:26 -0500
-Received: from e36.co.us.ibm.com ([32.97.110.154]:62428 "EHLO
-	e36.co.us.ibm.com") by vger.kernel.org with ESMTP id S965014AbVLNWsZ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2005 17:48:25 -0500
-Received: from d03relay04.boulder.ibm.com (d03relay04.boulder.ibm.com [9.17.195.106])
-	by e36.co.us.ibm.com (8.12.11/8.12.11) with ESMTP id jBEMmNWk028312
-	for <git@vger.kernel.org>; Wed, 14 Dec 2005 17:48:23 -0500
-Received: from d03av02.boulder.ibm.com (d03av02.boulder.ibm.com [9.17.195.168])
-	by d03relay04.boulder.ibm.com (8.12.10/NCO/VERS6.8) with ESMTP id jBEMo3GC108850
-	for <git@vger.kernel.org>; Wed, 14 Dec 2005 15:50:03 -0700
-Received: from d03av02.boulder.ibm.com (loopback [127.0.0.1])
-	by d03av02.boulder.ibm.com (8.12.11/8.13.3) with ESMTP id jBEMmMjl007011
-	for <git@vger.kernel.org>; Wed, 14 Dec 2005 15:48:23 -0700
-Received: from kvasir.watson.ibm.com (kvasir.watson.ibm.com [9.2.218.19])
-	by d03av02.boulder.ibm.com (8.12.11/8.12.11) with ESMTP id jBEMmKPF006791;
-	Wed, 14 Dec 2005 15:48:21 -0700
-Received: from apw by kvasir.watson.ibm.com with local (Exim 4.52)
-	id 1EmfQ3-0001TM-69; Wed, 14 Dec 2005 17:48:19 -0500
-To: junkio@cox.net
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S965063AbVLNWsp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 17:48:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965064AbVLNWso
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 17:48:44 -0500
+Received: from fmr16.intel.com ([192.55.52.70]:61903 "EHLO
+	fmsfmr006.fm.intel.com") by vger.kernel.org with ESMTP
+	id S965057AbVLNWsn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 17:48:43 -0500
+Received: from fmsfmr101.fm.intel.com (fmsfmr101.fm.intel.com [10.253.24.21])
+	by fmsfmr006.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id jBEMmMoe030302;
+	Wed, 14 Dec 2005 22:48:22 GMT
+Received: from fmsmsxvs043.fm.intel.com (fmsmsxvs043.fm.intel.com [132.233.42.129])
+	by fmsfmr101.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id jBEMmKBZ015426;
+	Wed, 14 Dec 2005 22:48:22 GMT
+Received: from fmsmsx331.amr.corp.intel.com ([132.233.42.156])
+ by fmsmsxvs043.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2005121414482225733
+ ; Wed, 14 Dec 2005 14:48:22 -0800
+Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Wed, 14 Dec 2005 14:48:22 -0800
+Received: from hdsmsx401.amr.corp.intel.com ([10.127.2.60]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Wed, 14 Dec 2005 14:48:21 -0800
+X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: new file leaked onto release branch
+Thread-Index: AcYA/AEGIDmWdRZUTx2RTgCaAvUDlQABGO9A
+To: "Junio C Hamano" <junkio@cox.net>
+X-OriginalArrivalTime: 14 Dec 2005 22:48:22.0050 (UTC) FILETIME=[7C1C6020:01C60100]
+X-Scanned-By: MIMEDefang 2.52 on 10.253.24.21
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13653>
 
-If GIT_AUTHOR_EMAIL is of a certain form, `git rebase master' will blow
-away the author name and email when fast-forward merging commits.  I
-have not tracked it down, but here is a testcase that demonstrates the
-behavior.
+>BTW, are 5165, 3410, 5452, 5571... topic branch names?
 
-Signed-off-by: Amos Waterland <apw@us.ibm.com>
-Acked-by: Michal Ostrowski <mostrows@watson.ibm.com>
-
----
-
- t/t3400-rebase.sh |   34 ++++++++++++++++++++++++++++++++++
- 1 files changed, 34 insertions(+), 0 deletions(-)
- create mode 100755 t/t3400-rebase.sh
-
-6a31c31a8e6bf4328fab39f39926af6bcc794bf2
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-new file mode 100755
-index 0000000..b9d3131
---- /dev/null
-+++ b/t/t3400-rebase.sh
-@@ -0,0 +1,34 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2005 Amos Waterland
-+#
-+
-+test_description='git rebase should not destroy author information
-+
-+This test runs git rebase and checks that the author information is not lost.
-+'
-+. ./test-lib.sh
-+
-+export GIT_AUTHOR_EMAIL=bogus_email_address
-+
-+test_expect_success \
-+    'prepare repository with topic branch, then rebase against master' \
-+    'echo First > A &&
-+     git-update-index --add A &&
-+     git-commit -m "Add A." &&
-+     git checkout -b my-topic-branch &&
-+     echo Second > B &&
-+     git-update-index --add B &&
-+     git-commit -m "Add B." &&
-+     git checkout -f master &&
-+     echo Third >> A &&
-+     git-update-index A &&
-+     git-commit -m "Modify A." &&
-+     git checkout -f my-topic-branch &&
-+     git rebase master'
-+
-+test_expect_failure \
-+    'the rebase operation should not have destroyed author information' \
-+    'git log | grep "Author:" | grep "<>"'
-+
-+test_done
--- 
-0.99.9.GIT
+yes, the are bugzilla ids
