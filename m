@@ -1,95 +1,52 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] [COGITO] make cg-tag use git-check-ref-format
-Date: Thu, 15 Dec 2005 15:38:07 -0800
-Message-ID: <7vacf2lyn4.fsf@assigned-by-dhcp.cox.net>
-References: <11344712912199-git-send-email-matlads@dsmagic.com>
-	<7vy82p9rnb.fsf@assigned-by-dhcp.cox.net>
-	<20051213170015.GD22159@pasky.or.cz>
-	<7vu0dcalgo.fsf@assigned-by-dhcp.cox.net>
-	<20051215222424.GA3094@steel.home>
+Subject: Re: bad git pull
+Date: Thu, 15 Dec 2005 15:42:06 -0800
+Message-ID: <7vzmn2kjw1.fsf@assigned-by-dhcp.cox.net>
+References: <68948ca0512151537v2d8f22c8x962c55bd507af8cf@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 16 00:39:27 2005
+X-From: git-owner@vger.kernel.org Fri Dec 16 00:43:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1En2fw-0006RE-8j
-	for gcvg-git@gmane.org; Fri, 16 Dec 2005 00:38:16 +0100
+	id 1En2jk-0007T8-Ht
+	for gcvg-git@gmane.org; Fri, 16 Dec 2005 00:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbVLOXiN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Dec 2005 18:38:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbVLOXiN
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Dec 2005 18:38:13 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:10961 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751209AbVLOXiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2005 18:38:12 -0500
+	id S1751196AbVLOXmJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Dec 2005 18:42:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbVLOXmJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Dec 2005 18:42:09 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:25729 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751196AbVLOXmI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2005 18:42:08 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051215233730.SLCS3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 15 Dec 2005 18:37:30 -0500
-To: Alex Riesen <raa.lkml@gmail.com>
+          id <20051215234043.OHKZ17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 15 Dec 2005 18:40:43 -0500
+To: Don Zickus <dzickus@gmail.com>
+In-Reply-To: <68948ca0512151537v2d8f22c8x962c55bd507af8cf@mail.gmail.com> (Don
+	Zickus's message of "Thu, 15 Dec 2005 18:37:47 -0500")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13721>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Don Zickus <dzickus@gmail.com> writes:
 
-> Junio C Hamano, Tue, Dec 13, 2005 19:41:27 +0100:
->> 
->> > Thank you both for the patch, but I'd be much more comfortable if at
->> > least quotes (both ' and "), backslashes, ? and * would be prohibited in
->> > the names as well.
->> 
->> I second that, and thanks for pointing it out.  Any objections?
+> I notice if I create a branch (and switch to it) in the linux kernel
+> off of say version 2.6.14, then later do a git pull, things get ugly. 
+> It seems like all the upstream changes are being merged into the
+> 2.6.14 branch (instead of the latest kernel tag).
 >
-> Just as a warning, perhaps? It's not like git is anywhere limited in
-> this respect...
+> Is this a user error because the tool is still fragile?
 
-Yeah, after thinking about it a bit more, I changed my mind.
+I do not understand the question.
 
-The wildcard letters like ? and * I understand and sympathetic
-about somewhat.  Something like this:
-
-        name="*.sh" ;# this also comes from the end user
-        echo $name
-
-ends up showing every shell script in the current directory,
-and not literal '*.sh'.
-
-However, I do not think covering five characters '"\?* gives us
-anything, and sends a strong message that we do not know our
-shell programming to whoever is reading our code.  For one
-thing, the user can still say "foo[a-z]bar" to confuse you, so
-you also need to forbid [].
-
-The thing is, if you start to care about single and double
-quotes, then what you are doing carelessly is not something
-simple like this:
-
-	name='frotz'\''nitfol"filfre\xyzzy' ;# this comes from the end user.
-	echo $name ;# and this prints just fine.
-
-For quotes to matter, you must be doing an "eval" carelessly,
-and "eval" and careless should never go together.
-
-        # do not try this in your repository without echo
-	name="foo; echo rm -fr ."
-        eval "git-rev-parse $name" 
-
-You end up needing to forbid a lot more than the quoting and
-wildcard, if you want to keep your shell scripts loose and lazy;
-which may be a worthy goal in itself but pretty much defeats the
-initial discussion of "why do we allow only these characters in
-tags".
-
-So in short, I am somewhat negative about the idea of adding
-more "forbidden letters".  Let's make sure our scripts are
-careful where safety matters.
-
-Note that this does not forbid Porcelains to enforce additional
-restrictions on their own.
+The user wanted all the good developments from the mainline into
+the fork he created starting at 2.6.14, and the tool did what
+was asked.  Why would you want to forbid that from happening,
+and what did you want to happen instead?
