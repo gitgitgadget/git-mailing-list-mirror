@@ -1,59 +1,67 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Tracking files across tree reorganizations
-Date: Wed, 14 Dec 2005 17:02:13 -0800
-Message-ID: <43A0C095.20708@zytor.com>
-References: <43A08B8F.1000901@zytor.com> <20051214223656.GJ22159@pasky.or.cz>	<Pine.LNX.4.64.0512141538440.3292@g5.osdl.org>	<43A0AE6B.3040309@zytor.com> <7vd5jzurfi.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: How to clone-pack the HEAD?
+Date: Wed, 14 Dec 2005 17:20:28 -0800
+Message-ID: <7vfyovtaub.fsf@assigned-by-dhcp.cox.net>
+References: <20051215004440.GM22159@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 15 02:03:23 2005
+X-From: git-owner@vger.kernel.org Thu Dec 15 02:21:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmhVw-00021S-9x
-	for gcvg-git@gmane.org; Thu, 15 Dec 2005 02:02:32 +0100
+	id 1EmhnR-0007Rj-Lm
+	for gcvg-git@gmane.org; Thu, 15 Dec 2005 02:20:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965134AbVLOBC3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 20:02:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965137AbVLOBC3
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 20:02:29 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:34968 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S965134AbVLOBC3
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2005 20:02:29 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBF12Iej021396
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 14 Dec 2005 17:02:18 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5jzurfi.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S964965AbVLOBUa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 20:20:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965146AbVLOBUa
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 20:20:30 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:59088 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S964965AbVLOBUa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2005 20:20:30 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051215011905.MXAF17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 14 Dec 2005 20:19:05 -0500
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20051215004440.GM22159@pasky.or.cz> (Petr Baudis's message of
+	"Thu, 15 Dec 2005 01:44:40 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13668>
 
-Junio C Hamano wrote:
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
-> 
->>HOWEVER, I maintain that this is unnecessary (and, as Linus has pointed 
->>out several time, losing) -- we already detect renames without relying 
->>on commit-time metadata.  If it's too expensive to generate the metadata 
->>on every merge, it can be cached.
-> 
-> 
-> I agree; I was wondering why you brought it up again.
-> 
+Petr Baudis <pasky@ucw.cz> writes:
 
-Just because of Petr's comment about adding stuff to commit messages.
+>   (i) git-clone-pack url HEAD doesn't work
 
-	-hpa
+"clone-pack url branchname" might work, but the thing is, nobody
+uses clone-pack with explicit heads arguments so if HEAD does
+not work I am not surprised at all.
+
+>   (ii) git-clone-pack has hardcoded assumptions about refs/heads/master
+
+I've read that part of the code twice in the past, but my
+recollection is it tries hard to "guess" where HEAD points at
+(because the remote side does not tell us, other than which
+commit object HEAD points at).  When more than two branch heads
+point at the same commit as HEAD records, it gives preference to
+"master" branch while guessing, but otherwise there is nothing
+special about the "master" branch.
+
+The problem is, clone-pack is about cloning and not fetching.  I
+am not claiming it is the right design decision --- after all,
+it was the oldest of the git native protocol driver suite ---
+but just stating where it stands with all the history behind its
+(and git-fetch-pack's) evolution.
+
+I think extending git-fetch-pack to optionally keep things
+packed would be somewhat painful but the right approach.  Less
+painful and readily doable would be to run clone-pack as is, and
+reorganize the result of "copy of the remote" yourself.  That
+would be a straightforward thing to do if you are using it for
+the initial cloning.
