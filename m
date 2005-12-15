@@ -1,45 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Tracking files across tree reorganizations
-Date: Wed, 14 Dec 2005 16:36:49 -0800
-Message-ID: <7vd5jzurfi.fsf@assigned-by-dhcp.cox.net>
-References: <43A08B8F.1000901@zytor.com> <20051214223656.GJ22159@pasky.or.cz>
-	<Pine.LNX.4.64.0512141538440.3292@g5.osdl.org>
-	<43A0AE6B.3040309@zytor.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: How to clone-pack the HEAD?
+Date: Thu, 15 Dec 2005 01:44:40 +0100
+Message-ID: <20051215004440.GM22159@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 15 01:39:12 2005
+X-From: git-owner@vger.kernel.org Thu Dec 15 01:46:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Emh7n-0003JT-VC
-	for gcvg-git@gmane.org; Thu, 15 Dec 2005 01:37:36 +0100
+	id 1EmhEs-0005TY-Rf
+	for gcvg-git@gmane.org; Thu, 15 Dec 2005 01:44:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030258AbVLOAhE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 19:37:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030265AbVLOAhB
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 19:37:01 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:10216 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1030258AbVLOAgv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2005 19:36:51 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051215003558.MMKZ6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 14 Dec 2005 19:35:58 -0500
-To: "H. Peter Anvin" <hpa@zytor.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965130AbVLOAow (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 19:44:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965042AbVLOAov
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 19:44:51 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:19688 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S965130AbVLOAov (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 19:44:51 -0500
+Received: (qmail 12332 invoked by uid 2001); 15 Dec 2005 01:44:40 +0100
+To: junkio@cox.net
+Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13666>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+  Hello,
 
-> HOWEVER, I maintain that this is unnecessary (and, as Linus has pointed 
-> out several time, losing) -- we already detect renames without relying 
-> on commit-time metadata.  If it's too expensive to generate the metadata 
-> on every merge, it can be cached.
+  I'd like to make cg-clone use git-clone-pack instead of git-fetch-pack
+so that it gets actually usable on large repositories, but I'm hitting
+problems:
 
-I agree; I was wondering why you brought it up again.
+  (i) git-clone-pack url HEAD doesn't work
+
+	If .git/HEAD already exists, it will panick because of the
+	write_one_ref()'s O_CREAT|O_EXCL. If .git/HEAD doesn't exist,
+	git-clone-pack refuses to do anything since it doesn't run
+	with valid GIT repository.
+
+  (ii) git-clone-pack has hardcoded assumptions about refs/heads/master
+
+	The problem is, git-clone-pack doesn't seem to care about what
+	ref does HEAD point to at the remote side, it just starts to
+	panic and do weird things if it isn't master, which seems
+	"really really wrong". Also, because git-clone-pack ... HEAD
+	doesn't work, I think I have no way to clone the actual HEAD
+	ref of the remote repository.
+
+  Overally, I think what I really need is git-fetch-pack (with it
+outputting the ref info which I can write on my own, DTRT'ing from
+the Cogito POV), just with the option not to unpack the pack.
+
+  I'd be very happy if fixing this would be possible before 1.0 so that
+I can fix Cogito's fetching over git and ssh ASAP - git-clone-pack's
+architecture seems to be way too much hardcoded to carry over head names
+to the cloned repository (which is fine for the GIT porcelainish, but
+not for Cogito philosophy).
+
+  PS: Sorry if this mail is a bit incoherent - I'm already falling
+asleep over the keyboard, but I don't want to see GIT 1.0 fly by during
+the night. ;-) BTW, Junio, do you have any timeline (more precise than
+"in the coming week(s)") for the release, or are you just waiting for
+"n days without big problem" or something like that?
+
+  Thanks,
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
