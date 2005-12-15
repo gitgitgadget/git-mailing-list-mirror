@@ -1,63 +1,53 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: How to clone-pack the HEAD?
-Date: Thu, 15 Dec 2005 02:32:01 +0100
-Message-ID: <20051215013201.GD10680@pasky.or.cz>
-References: <20051215004440.GM22159@pasky.or.cz> <7vfyovtaub.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Tracking files across tree reorganizations
+Date: Thu, 15 Dec 2005 02:44:53 +0100
+Message-ID: <20051215014453.GN22159@pasky.or.cz>
+References: <43A08B8F.1000901@zytor.com> <20051214223656.GJ22159@pasky.or.cz> <Pine.LNX.4.64.0512141538440.3292@g5.osdl.org> <43A0AE6B.3040309@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 15 02:34:06 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 15 02:46:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Emhya-0002KR-4i
-	for gcvg-git@gmane.org; Thu, 15 Dec 2005 02:32:08 +0100
+	id 1EmiB1-0007mm-9C
+	for gcvg-git@gmane.org; Thu, 15 Dec 2005 02:44:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932628AbVLOBcE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 20:32:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932646AbVLOBcE
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 20:32:04 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:60885 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932628AbVLOBcD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 20:32:03 -0500
-Received: (qmail 16106 invoked by uid 2001); 15 Dec 2005 02:32:01 +0100
-To: Junio C Hamano <junkio@cox.net>
+	id S1030287AbVLOBo4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 20:44:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030289AbVLOBoz
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 20:44:55 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:49366 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1030287AbVLOBoz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2005 20:44:55 -0500
+Received: (qmail 17634 invoked by uid 2001); 15 Dec 2005 02:44:53 +0100
+To: "H. Peter Anvin" <hpa@zytor.com>
 Content-Disposition: inline
-In-Reply-To: <7vfyovtaub.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <43A0AE6B.3040309@zytor.com>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13671>
 
-Dear diary, on Thu, Dec 15, 2005 at 02:20:28AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@ucw.cz> writes:
-> 
-> >   (i) git-clone-pack url HEAD doesn't work
-> 
-> "clone-pack url branchname" might work, but the thing is, nobody
-> uses clone-pack with explicit heads arguments so if HEAD does
-> not work I am not surprised at all.
-..snip..
-> I think extending git-fetch-pack to optionally keep things
-> packed would be somewhat painful but the right approach.  Less
-> painful and readily doable would be to run clone-pack as is, and
-> reorganize the result of "copy of the remote" yourself.  That
-> would be a straightforward thing to do if you are using it for
-> the initial cloning.
+Dear diary, on Thu, Dec 15, 2005 at 12:44:43AM CET, I got a letter
+where "H. Peter Anvin" <hpa@zytor.com> said that...
+> HOWEVER, I maintain that this is unnecessary (and, as Linus has pointed 
+> out several time, losing) -- we already detect renames without relying 
+> on commit-time metadata.  If it's too expensive to generate the metadata 
+> on every merge, it can be cached.
 
-Except that I cannot do the guessing git-clone-pack does (without
-fetching all the branches) - so I guess I'll make a patch tomorrow which
-fixes git-clone-pack ... HEAD (probably by checking in write_one_ref()
-whether it is looking at a symlink and following it first if that's the
-case) and then in Cogito do
+Just for the record, I'm not convinced at all (there's probably no
+point in elaborating the reasons again). I give up, though - I don't
+know how to store the explicit rename information "invisibly" so that
+Linus would be willing to merge commits containing it, and that would
+make the whole thing pretty much pointless at least for the kernel.
 
-	git-symbolic-ref HEAD refs/heads/origin
-
-before git-clone-pack (and repoint HEAD back after it's over). That
-should do exactly what I need it to, I think.
+I plan to revive some old patches changing large portions of cg-log
+in the next few days, consequently making it trivial to add the
+on-the-fly automatic renames detection to per-file cg-log.
 
 -- 
 				Petr "Pasky" Baudis
