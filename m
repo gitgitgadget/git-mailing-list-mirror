@@ -1,69 +1,52 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: qgit reports errors in the git repository
-Date: Thu, 15 Dec 2005 00:27:57 -0500
-Message-ID: <1134624477.5360.6.camel@dv>
-References: <1134433440.3798.27.camel@dv>
-	 <Pine.LNX.4.64.0512121700010.15597@g5.osdl.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Tracking files across tree reorganizations
+Date: Thu, 15 Dec 2005 18:38:02 +1300
+Message-ID: <46a038f90512142138x77e57850ib095c1d68ecdfd13@mail.gmail.com>
+References: <43A08B8F.1000901@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, Marco Costalba <mcostalba@yahoo.it>
-X-From: git-owner@vger.kernel.org Thu Dec 15 06:29:51 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 15 06:40:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Emlf4-0007LG-Fh
-	for gcvg-git@gmane.org; Thu, 15 Dec 2005 06:28:14 +0100
+	id 1Emloh-0000vr-EL
+	for gcvg-git@gmane.org; Thu, 15 Dec 2005 06:38:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161122AbVLOF2L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Dec 2005 00:28:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161120AbVLOF2L
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Dec 2005 00:28:11 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:7332 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1161122AbVLOF2K
+	id S1161124AbVLOFiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Dec 2005 00:38:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161126AbVLOFiE
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Dec 2005 00:38:04 -0500
+Received: from wproxy.gmail.com ([64.233.184.204]:62059 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1161124AbVLOFiD convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2005 00:28:10 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1Emldd-0003oi-9j
-	for git@vger.kernel.org; Thu, 15 Dec 2005 00:26:45 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1Emlen-0008Lm-NQ; Thu, 15 Dec 2005 00:27:57 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0512121700010.15597@g5.osdl.org>
-X-Mailer: Evolution 2.4.1 (2.4.1-5) 
+	Thu, 15 Dec 2005 00:38:03 -0500
+Received: by wproxy.gmail.com with SMTP id 57so285770wri
+        for <git@vger.kernel.org>; Wed, 14 Dec 2005 21:38:02 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FGFhdxPojwuAsAmGjUWKN+mLKStKLwUYQPomrtZDZJCGwDagO8GwRZTOHmuIh9h2sPiXD2dPgyvkFHlA2uXIp2qwaJyaD8TtQDEbfJvY0tmzPvgR+y+rJg1PLFb7Ir2OSNJlK741Ow1LM/HPnCfT5S5Twxnmkr/HiEK2Br/jTDM=
+Received: by 10.54.69.8 with SMTP id r8mr865285wra;
+        Wed, 14 Dec 2005 21:38:02 -0800 (PST)
+Received: by 10.54.72.15 with HTTP; Wed, 14 Dec 2005 21:38:02 -0800 (PST)
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <43A08B8F.1000901@zytor.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13679>
 
-On Mon, 2005-12-12 at 17:06 -0800, Linus Torvalds wrote:
-> 
-> Basically, qgit should do either:
-> 
->  - check the type of the object by hand first (using "git-cat-file -t" and 
->    then follow any tags it finds by hand)
+On 12/15/05, H. Peter Anvin <hpa@zytor.com> wrote:
+> Did anything ever happen with that?
 
-I'm a complete Qt newbie, but this patch seems to work for me.
+Perhaps I'm slow today, but git-merge -s recursive was supposed to do
+it transparently (automagically). At least it was merged into git with
+that excuse ;-)
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
-
-diff --git a/src/git_startup.cpp b/src/git_startup.cpp
-index e08d466..1f6e9ad 100644
---- a/src/git_startup.cpp
-+++ b/src/git_startup.cpp
-@@ -111,6 +111,10 @@ bool Git::getRefs() {
- 
- 		if (itNext != rLst.constEnd() && (*itNext).right(3) == "^{}") {
- 			signedTag = true;
-+			if (!run("git-cat-file -t " + refSha, &runOutput))
-+				continue; // invalid SHA1
-+			if (runOutput != "tag\n")
-+				continue; // not a tag
- 			if (run("git-cat-file tag " + refSha, &runOutput)) {
- 				QString msg(runOutput.section("\n\n", 1));
- 				if (!msg.isEmpty())
+Does it not work for you or am I missing something?
 
 
--- 
-Regards,
-Pavel Roskin
+martin
