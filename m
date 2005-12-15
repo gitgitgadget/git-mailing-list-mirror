@@ -1,61 +1,55 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH 3/3] git-whatchanged: Add usage string
-Date: Thu, 15 Dec 2005 23:48:38 +0100
-Message-ID: <20051215224838.GE14388@c165.ib.student.liu.se>
-References: <20051215224350.GB14388@c165.ib.student.liu.se>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] We do not like "HEAD" as a new branch name
+Date: Thu, 15 Dec 2005 15:38:19 -0800
+Message-ID: <7v4q5alyms.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0512151244230.22400@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vacf2p320.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0512152339530.4962@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Dec 15 23:50:59 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 16 00:38:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1En1u7-0006Ug-LM
-	for gcvg-git@gmane.org; Thu, 15 Dec 2005 23:48:52 +0100
+	id 1En2g5-0006S5-6k
+	for gcvg-git@gmane.org; Fri, 16 Dec 2005 00:38:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbVLOWsk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Dec 2005 17:48:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751177AbVLOWsj
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Dec 2005 17:48:39 -0500
-Received: from [85.8.31.11] ([85.8.31.11]:63701 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S1751176AbVLOWsj (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Dec 2005 17:48:39 -0500
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 867C04102; Thu, 15 Dec 2005 23:59:13 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1En1tu-0004A9-00; Thu, 15 Dec 2005 23:48:38 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20051215224350.GB14388@c165.ib.student.liu.se>
-User-Agent: Mutt/1.5.9i
+	id S1751208AbVLOXiW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Dec 2005 18:38:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbVLOXiW
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Dec 2005 18:38:22 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:18129 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751208AbVLOXiV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2005 18:38:21 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051215233743.SLFL3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 15 Dec 2005 18:37:43 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13718>
 
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> Okay, I think this is what *I* would want to be illegal:
+>
+> HEAD,
+> ORIG_HEAD,
+> FETCH_HEAD
+> MERGE_HEAD
+>
+> Others? Or should I really test for just *anything* ending in _HEAD 
+> besides HEAD itself?
 
----
+Just to futureproof ourselves, how about this?
 
- git-whatchanged.sh |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+	/^(?:.*/)?(?:[A-Z0-9]+_)?HEAD$/
 
-1d3bc689dd66918b27432ad868592c9cc557f926
-diff --git a/git-whatchanged.sh b/git-whatchanged.sh
-index 85a49fc..b170f74 100755
---- a/git-whatchanged.sh
-+++ b/git-whatchanged.sh
-@@ -1,4 +1,9 @@
- #!/bin/sh
-+
-+USAGE='[-p] [--max-count=<n>] [<since>..<limit>] [--pretty=<format>] [-m] [git-diff-tree options] [git-rev-list options]'
-+SUBDIRECTORY_OK='Yes'
-+. git-sh-setup
-+
- rev_list_args=$(git-rev-parse --sq --default HEAD --revs-only "$@") &&
- diff_tree_args=$(git-rev-parse --sq --no-revs "$@") &&
- 
--- 
-0.99.9.GIT
+The last path component being "HEAD" or capital-or-digit
+followed by underscore followed by "HEAD".
