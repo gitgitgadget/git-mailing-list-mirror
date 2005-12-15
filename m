@@ -1,75 +1,44 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] We do not like "HEAD" as a new branch name
-Date: Thu, 15 Dec 2005 23:41:26 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512152339530.4962@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0512151244230.22400@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vacf2p320.fsf@assigned-by-dhcp.cox.net>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH 0/3] Usage string clean-up (diff, log and whatchanged)
+Date: Thu, 15 Dec 2005 23:43:50 +0100
+Message-ID: <20051215224350.GB14388@c165.ib.student.liu.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 15 23:44:37 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Dec 15 23:46:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1En1n1-00042K-00
-	for gcvg-git@gmane.org; Thu, 15 Dec 2005 23:41:31 +0100
+	id 1En1ps-00055V-RB
+	for gcvg-git@gmane.org; Thu, 15 Dec 2005 23:44:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750757AbVLOWl2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Dec 2005 17:41:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751142AbVLOWl2
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Dec 2005 17:41:28 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:24525 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750757AbVLOWl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2005 17:41:28 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 2267513C882; Thu, 15 Dec 2005 23:41:27 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 0B05D9DE1B; Thu, 15 Dec 2005 23:41:27 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id EAAB89DDBD; Thu, 15 Dec 2005 23:41:26 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D52DD13C882; Thu, 15 Dec 2005 23:41:26 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vacf2p320.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751164AbVLOWoL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Dec 2005 17:44:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbVLOWoI
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Dec 2005 17:44:08 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:61653 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1751164AbVLOWn5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Dec 2005 17:43:57 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 5A4FB4102; Thu, 15 Dec 2005 23:54:26 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1En1pH-00048h-00; Thu, 15 Dec 2005 23:43:51 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13714>
 
 Hi,
 
-On Thu, 15 Dec 2005, Junio C Hamano wrote:
+Apparently I forgot those commands in the previous patch series.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > +		/* do not allow "HEAD" as ref name */
-> > +		if (ch == 'H' && (!strcmp(cp, "EAD") ||
-> > +					!strncmp(cp, "EAD/", 4)))
-> 
-> Why forbid HEAD in the middle, like "refs/heads/HEAD/frotz"?
-> Confusion avoidance?
+ git-diff.sh        |   14 ++++++--------
+ git-log.sh         |    8 ++++----
+ git-whatchanged.sh |    5 +++++
+ 3 files changed, 15 insertions(+), 12 deletions(-)
 
-Exactly.
-
-> We might want to forbid anything that matches /^.*_?HEAD$/ to catch
-> ORIG_HEAD for example, though.
-
-Okay, I think this is what *I* would want to be illegal:
-
-HEAD,
-ORIG_HEAD,
-FETCH_HEAD
-MERGE_HEAD
-
-Others? Or should I really test for just *anything* ending in _HEAD 
-besides HEAD itself?
-
-Ciao,
-Dscho
+- Fredrik
