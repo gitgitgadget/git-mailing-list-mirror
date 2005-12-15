@@ -1,59 +1,141 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Tracking files across tree reorganizations
-Date: Wed, 14 Dec 2005 15:47:53 -0800
-Message-ID: <43A0AF29.6020009@zytor.com>
-References: <43A08B8F.1000901@zytor.com> <20051214223656.GJ22159@pasky.or.cz> <43A0A6E1.9070903@zytor.com> <20051214234504.GL22159@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git rebase loses author name/email if given bad email address
+Date: Wed, 14 Dec 2005 16:33:01 -0800
+Message-ID: <7virtrurlu.fsf@assigned-by-dhcp.cox.net>
+References: <20051214224818.GA5362@kvasir.watson.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 15 00:50:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mostrows@watson.ibm.com
+X-From: git-owner@vger.kernel.org Thu Dec 15 01:37:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EmgLw-0005DI-Iv
-	for gcvg-git@gmane.org; Thu, 15 Dec 2005 00:48:08 +0100
+	id 1Emh6D-0002nl-2z
+	for gcvg-git@gmane.org; Thu, 15 Dec 2005 01:35:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965118AbVLNXsF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Dec 2005 18:48:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965119AbVLNXsF
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 18:48:05 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:15016 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S965118AbVLNXsE
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2005 18:48:04 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBENlwba019711
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 14 Dec 2005 15:47:59 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20051214234504.GL22159@pasky.or.cz>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S965089AbVLOAef (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Dec 2005 19:34:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932670AbVLOAdU
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Dec 2005 19:33:20 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:47102 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932667AbVLOAdD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2005 19:33:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051215003306.FNPG25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 14 Dec 2005 19:33:06 -0500
+To: Amos Waterland <apw@us.ibm.com>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13663>
 
-Petr Baudis wrote:
->>>
->>>(b) If there are no notes for the given commit, we do the rename
->>>autodetection already implemented in GIT. If it yields something,
->>>we follow it.
->>
->>I don't see anything in Linus' posts that says (b) is unacceptable.
-> 
->   If we do it at the walk time, not commit time - I didn't emphasize
-> that in my previous mail while I should have.
+Amos Waterland <apw@us.ibm.com> writes:
 
-Exactly.  This is the right thing to do, because it means that just 
-because you made the checkin with version foo, you're forever limited to 
-the capabilities of version foo.
+> If GIT_AUTHOR_EMAIL is of a certain form, `git rebase master' will blow
+> away the author name and email when fast-forward merging commits.
 
-	-hpa
+True.
+
+> +export GIT_AUTHOR_EMAIL=bogus_email_address
+
+Do not do that, then ;-).
+
+The rebasing involves extracting the patch as an e-mail form and
+feeding it to the normal e-mail patch acceptance mechanism, and
+mailinfo.c::handle_from() rejects "A U Thor <bogus_address>"
+hence you lose the authorship information.
+
+Having said that, maybe e-mail acceptance machinery should
+reject such patch.
+
+-- >8 --
+Subject: [PATCH] mailinfo and git-am: allow "John Doe <johndoe>"
+
+An isolated developer could have a local-only e-mail, which will
+be stripped out by mailinfo because it lacks '@'.  Define a
+fallback parser to accomodate that.
+
+At the same time, reject authorless patch in git-am.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+---
+
+ git-am.sh  |    7 +++++++
+ mailinfo.c |   32 +++++++++++++++++++++++++++++++-
+ 2 files changed, 38 insertions(+), 1 deletions(-)
+
+e0e3ba208d235ab5623a86204fbd20b449520764
+diff --git a/git-am.sh b/git-am.sh
+index 343bee9..1a114bc 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -249,6 +249,13 @@ do
+ 	GIT_AUTHOR_NAME="$(sed -n '/^Author/ s/Author: //p' "$dotest/info")"
+ 	GIT_AUTHOR_EMAIL="$(sed -n '/^Email/ s/Email: //p' "$dotest/info")"
+ 	GIT_AUTHOR_DATE="$(sed -n '/^Date/ s/Date: //p' "$dotest/info")"
++
++	if test -z "$GIT_AUTHOR_EMAIL"
++	then
++		echo "Patch does not have a valid e-mail address."
++		stop_here $this
++	fi
++
+ 	export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE
+ 
+ 	SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
+diff --git a/mailinfo.c b/mailinfo.c
+index d4b4163..9f95f37 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -40,13 +40,43 @@ static char *sanity_check(char *name, ch
+ 	return name;
+ }
+ 
++static int bogus_from(char *line)
++{
++	/* John Doe <johndoe> */
++	char *bra, *ket, *dst, *cp;
++
++	/* This is fallback, so do not bother if we already have an
++	 * e-mail address.
++	 */ 
++	if (*email)
++		return 0;
++
++	bra = strchr(line, '<');
++	if (!bra)
++		return 0;
++	ket = strchr(bra, '>');
++	if (!ket)
++		return 0;
++
++	for (dst = email, cp = bra+1; cp < ket; )
++		*dst++ = *cp++;
++	*dst = 0;
++	for (cp = line; isspace(*cp); cp++)
++		;
++	for (bra--; isspace(*bra); bra--)
++		*bra = 0;
++	cp = sanity_check(cp, email);
++	strcpy(name, cp);
++	return 1;
++}
++
+ static int handle_from(char *line)
+ {
+ 	char *at = strchr(line, '@');
+ 	char *dst;
+ 
+ 	if (!at)
+-		return 0;
++		return bogus_from(line);
+ 
+ 	/*
+ 	 * If we already have one email, don't take any confusing lines
+-- 
+0.99.9m
