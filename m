@@ -1,52 +1,108 @@
-From: Morten Welinder <mwelinder@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: bad git pull
-Date: Fri, 16 Dec 2005 13:07:16 -0500
-Message-ID: <118833cc0512161007k38fdd15w2dcdf0c93f26d29e@mail.gmail.com>
+Date: Fri, 16 Dec 2005 11:20:32 -0800
+Message-ID: <7vk6e4hmrj.fsf@assigned-by-dhcp.cox.net>
 References: <68948ca0512151537v2d8f22c8x962c55bd507af8cf@mail.gmail.com>
-	 <7vzmn2kjw1.fsf@assigned-by-dhcp.cox.net>
-	 <7vu0d9lxx9.fsf@assigned-by-dhcp.cox.net>
+	<7vzmn2kjw1.fsf@assigned-by-dhcp.cox.net>
+	<7vu0d9lxx9.fsf@assigned-by-dhcp.cox.net>
+	<20051216172535.GA25856@hpsvcnb.fc.hp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Don Zickus <dzickus@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 16 19:09:27 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Don Zickus <dzickus@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 16 20:21:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EnJzH-0002HK-DB
-	for gcvg-git@gmane.org; Fri, 16 Dec 2005 19:07:24 +0100
+	id 1EnL89-0006jD-0i
+	for gcvg-git@gmane.org; Fri, 16 Dec 2005 20:20:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932367AbVLPSHT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Dec 2005 13:07:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932368AbVLPSHT
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Dec 2005 13:07:19 -0500
-Received: from zproxy.gmail.com ([64.233.162.204]:32212 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932367AbVLPSHR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2005 13:07:17 -0500
-Received: by zproxy.gmail.com with SMTP id 14so1416449nzn
-        for <git@vger.kernel.org>; Fri, 16 Dec 2005 10:07:17 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=b5dLj9q+w+CB9mCqciTLMxV+YEGbJgSstWJAf6xMYKFhero0n3yIwu/4Ufo2wX8SwkY39WdQAPd2To5pkyQVvFZklNBijiNjwxCKDaywZCUu5vWmPT0wJuXoGXvYfbo3sNLberzxgecoM56xGCQQCgPccd49BkeyxoGQ69ocUZs=
-Received: by 10.36.31.4 with SMTP id e4mr31457nze;
-        Fri, 16 Dec 2005 10:07:16 -0800 (PST)
-Received: by 10.36.88.14 with HTTP; Fri, 16 Dec 2005 10:07:16 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vu0d9lxx9.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932342AbVLPTUe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Dec 2005 14:20:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932377AbVLPTUe
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Dec 2005 14:20:34 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:1705 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932342AbVLPTUe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2005 14:20:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051216191945.XVFT20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 16 Dec 2005 14:19:45 -0500
+To: Carl Baldwin <cnb@fc.hp.com>
+In-Reply-To: <20051216172535.GA25856@hpsvcnb.fc.hp.com> (Carl Baldwin's
+	message of "Fri, 16 Dec 2005 10:25:35 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13744>
 
-> While I am sympathetic, this "Oops, I said pull when I meant
-> fetch" sounds remotely similar to "oops, I said 'rm -r' when I
-> meant to say 'ls -r'".  Is it that the tool is too fragile?
+Carl Baldwin <cnb@fc.hp.com> writes:
 
-Didn't bk come with some kind of (one-level) undo pull?  It should not
-be too hard to create something similar considering that one could
-just leave new objects in the db orphaned.
+> Whenever I give a colleage an introduction to git I emphatically
+> recommend that they start with using git fetch and git merge
+> independantly of each other and stay away for git pull at least until
+> they know what they're doing.
 
-M.
+You "reduced" this sequence:
+
+	$ git symbolic-ref HEAD ;# to make sure you are on the branch
+                                 # you think you are on
+	$ git pull
+
+to this sequence:
+
+	$ git fetch origin      ;# would not damage the repository
+	$ git symbolic-ref HEAD ;# to make sure you are on the branch
+                                 # you think you are on
+	$ git merge "Merge from frotz branch of git://..." HEAD FETCH_HEAD
+
+The thing is, you need to make sure where you are, in either
+case, before the actual merge happens.  Yours needs extra
+typing, and in addition loses the merge message autogenerated by
+"git pull".  Sorry, I fail to see how that is an improvement.
+
+> I see nothing in the English dictionary to suggest that pull
+> means fetch + merge.
+
+I agree to this.  I have never used BK so this is just a
+speculation, but I suspect what happened is that we inherited
+"pull" terminology from there, needed to name the merge-less
+part something, and we ended up calling it "fetch".  So the
+history behind them might be expressed better by "fetch = pull -
+merge" instead of saying "pull = fetch + merge" ;-).
+
+> ...  I also recommend that some
+> extra care should be taken in the tutorials and documentation to warn
+> about this difference up front and possibly suggest avoiding the use of
+> pull for those new to git.
+
+Yup.  Thanks for the comments.  I am not a good writer, so a
+patch is greatly appreciated.
+
+BTW, I feel that setting Mail-Followup-To: to other people is
+just plain rude.
+
+    Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
+            Don Zickus <dzickus@gmail.com>, git@vger.kernel.org
+
+I suspect you are trying to avoid receiving a duplicate message
+because you subscribe to the list, but when I tell my MUA "I
+want to say something to the author of this message in public" I
+get Don Zickus on the To: line instead of you, and I had to edit
+the To: line to point at you.  Aren't you forcing me (and other
+people who might want to follow-up to your message) to do extra
+work, and making Don's life harder [*1*], just to work around
+the problem on your end, when you could just filter the incoming
+duplicates yourself?
+
+Removing yourself from CC: line when the CC: line already
+contains the mailing list you subscribe to would be fine, but I
+find this use of Mail-Followup-To: somewhat objectionable.
+
+[Footnote]
+
+*1* Don could have a mail sorter that prioritizes messages
+addressed To: over Cc: him, and response meant to *you* goes
+with To: Don --- which messes up such a mail sorting rule.
