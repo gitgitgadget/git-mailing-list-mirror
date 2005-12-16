@@ -1,75 +1,96 @@
-From: eschvoca <eschvoca@gmail.com>
-Subject: Re: make install bug?
-Date: Fri, 16 Dec 2005 10:06:44 -0500
-Message-ID: <2b05065b0512160706o1a6a3fa5kcc34a108f5149a8f@mail.gmail.com>
-References: <2b05065b0512120735v26c8343aged48165f3ccc5892@mail.gmail.com>
-	 <7vzmn6i4kf.fsf@assigned-by-dhcp.cox.net>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [RFC] faking cvs annotate
+Date: Fri, 16 Dec 2005 10:05:59 -0500
+Message-ID: <43A2D7D7.1060506@michonline.com>
+References: <46a038f90512151713i118e58acia466d0f65ff91383@mail.gmail.com> <7vpsnxlsw7.fsf@assigned-by-dhcp.cox.net> <20051216060953.GA22150@mail.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 16 16:09:05 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig9DD4597339B7ABA5E52D0B8D"
+Cc: Junio C Hamano <junkio@cox.net>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 16 16:09:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EnHAY-000348-F7
-	for gcvg-git@gmane.org; Fri, 16 Dec 2005 16:06:50 +0100
+	id 1EnHA7-0002ts-BM
+	for gcvg-git@gmane.org; Fri, 16 Dec 2005 16:06:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932317AbVLPPGs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Dec 2005 10:06:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932324AbVLPPGs
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Dec 2005 10:06:48 -0500
-Received: from wproxy.gmail.com ([64.233.184.196]:36493 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932317AbVLPPGr convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2005 10:06:47 -0500
-Received: by wproxy.gmail.com with SMTP id i13so14557wra
-        for <git@vger.kernel.org>; Fri, 16 Dec 2005 07:06:44 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MvN7WBcr1H9XEZCdvG0QcsvlL3/rNabSP49BkAhqz5BrhTfADYe98zZ395aAjsQoE9gra8Y0jrFBGKtiMFaSjhh/+Th+Mtz+ZGZxI82JLGIO9s9mk+YoQ0hwuBmjXEuLedF3e9KajjSrOpR76IG72EioNUxVHTOiVAwInICYZwU=
-Received: by 10.64.204.3 with SMTP id b3mr2171186qbg;
-        Fri, 16 Dec 2005 07:06:44 -0800 (PST)
-Received: by 10.65.38.9 with HTTP; Fri, 16 Dec 2005 07:06:44 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmn6i4kf.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932307AbVLPPGV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Dec 2005 10:06:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932317AbVLPPGU
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Dec 2005 10:06:20 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:2456 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S932307AbVLPPGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2005 10:06:20 -0500
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1EnH9v-0001xp-8C; Fri, 16 Dec 2005 10:06:12 -0500
+Received: from [10.254.251.12] (helo=mythryan)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1EnH9o-0008DV-9Q; Fri, 16 Dec 2005 10:06:10 -0500
+Received: from localhost ([127.0.0.1])
+	by mythryan with esmtp (Exim 4.54)
+	id 1EnH9n-0006Uf-EE; Fri, 16 Dec 2005 10:06:03 -0500
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
+X-Accept-Language: en-us, en
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <20051216060953.GA22150@mail.yhbt.net>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13737>
 
-You are right, CDPATH is the problem.  I am no longer exporting CDPATH.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig9DD4597339B7ABA5E52D0B8D
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-e
+Eric Wong wrote:
 
-On 12/12/05, Junio C Hamano <junkio@cox.net> wrote:
-> eschvoca <eschvoca@gmail.com> writes:
->
-> > I can fix the problem by changing templates/Makefile to the following:
-> >
-> > install: all
-> >     $(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(template_dir))
-> >     (cd blt && $(TAR) cf - . > /tmp/a.tar) | \
-> >     (cd $(call shellquote,$(DESTDIR)$(template_dir)) && $(TAR) xf /tmp/a.tar)
->
-> Here is my guess.  Could you try, from your interactive shell:
->
->         $ (unset CDPATH; make install)
->
-> first without the above "fix" (your "fixed" pipe does not make
-> any sense --- what are the data passed between pipe upstream and
-> downstream?)?
->
-> If that makes the problem go away, then your environment is
-> broken --- my guess is that you are exporting CDPATH to
-> non-interactive scripts.  Don't do that.
->
-> I once googled for "CDPATH" and saw many "guide to unix" type
-> webpages talk about "CDPATH environment variable"; they are the
-> real culprit to cause this confusion in peoples' .bash_profile.
-> CDPATH might be a nice variable for interactive shells, but is a
-> horrible one if made environment.
->
->
+> #!/usr/bin/env perl
+> # Copyright (c) 2005, Eric Wong <normalperson@yhbt.net>
+> #
+> # This file is licensed under the GPL v2, or a later version
+> # at the discretion of Linus.
+
+Please use full names for this kind of authority delegation.
+
+> # Read git-whatchanged output and let all Algorithm::Annotate do all
+> # the hard work for us.  Thanks to Chia-liang Kao for the awesome 
+> # Algorithm::Annotate module.
+> #
+
+You'll want to add libalgorithm-annotate-perl to the Debian/control
+Depends: line when you submit this as a patch.  (I dont' have an
+RPM-based machine handy, so I can't doublecheck that.)
+
+I was going to comment on the rest, but I don't really have time to play
+with it at the moment.
+
+
+-- 
+
+Ryan Anderson
+  sometimes Pug Majere
+
+--------------enig9DD4597339B7ABA5E52D0B8D
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFDotfbfhVDhkBuUKURAnLlAKCIJLdOHoFt26aOREz8gnWonqACLgCeNqk9
+LT7hW7vqoQ0ZeHQFTcnpkUg=
+=sMc8
+-----END PGP SIGNATURE-----
+
+--------------enig9DD4597339B7ABA5E52D0B8D--
