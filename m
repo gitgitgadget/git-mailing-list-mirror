@@ -1,109 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] [COGITO] make cg-tag use git-check-ref-format
-Date: Thu, 15 Dec 2005 18:17:19 -0800
-Message-ID: <7virtplr9s.fsf@assigned-by-dhcp.cox.net>
-References: <11344712912199-git-send-email-matlads@dsmagic.com>
-	<7vy82p9rnb.fsf@assigned-by-dhcp.cox.net>
-	<20051213170015.GD22159@pasky.or.cz>
-	<7vu0dcalgo.fsf@assigned-by-dhcp.cox.net>
-	<20051215222424.GA3094@steel.home>
-	<7vacf2lyn4.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [RFC] faking cvs annotate
+Date: Fri, 16 Dec 2005 17:37:32 +1300
+Message-ID: <46a038f90512152037u66993aadg566a2a47abd279c9@mail.gmail.com>
+References: <46a038f90512151713i118e58acia466d0f65ff91383@mail.gmail.com>
+	 <Pine.LNX.4.63.0512160229140.6323@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 16 03:18:34 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 16 05:38:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1En59x-0005U3-4U
-	for gcvg-git@gmane.org; Fri, 16 Dec 2005 03:17:25 +0100
+	id 1En7Ld-0008Q8-3U
+	for gcvg-git@gmane.org; Fri, 16 Dec 2005 05:37:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932079AbVLPCRW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Dec 2005 21:17:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932080AbVLPCRW
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Dec 2005 21:17:22 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:24704 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932079AbVLPCRW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2005 21:17:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051216021624.NTHN20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 15 Dec 2005 21:16:24 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <7vacf2lyn4.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 15 Dec 2005 15:38:07 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932117AbVLPEhe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Dec 2005 23:37:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932120AbVLPEhd
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Dec 2005 23:37:33 -0500
+Received: from wproxy.gmail.com ([64.233.184.201]:10904 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932117AbVLPEhd convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2005 23:37:33 -0500
+Received: by wproxy.gmail.com with SMTP id 57so518250wri
+        for <git@vger.kernel.org>; Thu, 15 Dec 2005 20:37:32 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jDhsQiA4/etLIZ7NUDRiUOiQc7/2XAFvzMWR+z6fn375lB6Di//aJ3q35RtlPj8PJQHchQdzBpCR65KcvQCv56KQaGRDHaNvyh6TRGPnjmefzXR8ilAzwHR94pL+6qEY7J20TLHWqF0Nw+M1uPR0W+QJ8Uba2mGZmX4BDUhzHoE=
+Received: by 10.54.67.6 with SMTP id p6mr3227745wra;
+        Thu, 15 Dec 2005 20:37:32 -0800 (PST)
+Received: by 10.54.72.15 with HTTP; Thu, 15 Dec 2005 20:37:32 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.63.0512160229140.6323@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13729>
 
-Junio C Hamano <junkio@cox.net> writes:
+On 12/16/05, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> For starters, you could use my attempt:
+> http://www.gelato.unsw.edu.au/archives/git/0508/7171.html
 
-> The wildcard letters like ? and * I understand and sympathetic
-> about somewhat.  Something like this:
->
->         name="*.sh" ;# this also comes from the end user
->         echo $name
->
-> ends up showing every shell script in the current directory,
-> and not literal '*.sh'.
+Not bad at all! I might simplify it a bit (won't need the commitmsg
+parsing), and see if how fast I can make it.
 
-So why don't we do this?
+> It does not fool any CVS user,
 
--- >8 --
-Subject: [PATCH] Forbid pattern maching characters in refnames.
+Ah, no. Those have been fooled already ;-)
 
-by marking '?', '*', and '[' as bad_ref_char().
+> However, I learnt to use git-whatchanged in the meantime, and I'll
+> probably never go back.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Of course. I'm trying to meet a few the expectations of popular cvs
+clients (cli, TortoiseCVS, Eclipse, etc). If a workable git-annotate
+falls out of this, oh well.
 
----
+OTOH, yours didn't get included. Any particular reasons? (other than
+stressing the point that you should use whatchanged/pickaxe?)
 
- Documentation/git-check-ref-format.txt |    8 +++++---
- refs.c                                 |    4 +++-
- 2 files changed, 8 insertions(+), 4 deletions(-)
+Also! On 12/16/05, Junio C Hamano <junkio@cox.net> wrote:
+> I haven't actively done anything but one of the good things that
+> could happen is to split out the access routines for annotate
+> database qgit build when run the first time in the repository,
+> and make them available to other Porcelains.  There is no need
+> to reinvent the wheel.
 
-d04ec25a77249095b6d2af5a08fe131351f2d86d
-diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index 636e951..f7f84c6 100644
---- a/Documentation/git-check-ref-format.txt
-+++ b/Documentation/git-check-ref-format.txt
-@@ -26,13 +26,15 @@ imposes the following rules on how refs 
- 
- . It cannot have ASCII control character (i.e. bytes whose
-   values are lower than \040, or \177 `DEL`), space, tilde `~`,
--  caret `{caret}`, or colon `:` anywhere;
-+  caret `{caret}`, colon `:`, question-mark `?`, asterisk `*`,
-+  or open bracket `[` anywhere;
- 
- . It cannot end with a slash `/`.
- 
- These rules makes it easy for shell script based tools to parse
--refnames, and also avoids ambiguities in certain refname
--expressions (see gitlink:git-rev-parse[1]).  Namely:
-+refnames, pathname expansion by the shell when a refname is used
-+unquoted (by mistake), and also avoids ambiguities in certain
-+refname expressions (see gitlink:git-rev-parse[1]).  Namely:
- 
- . double-dot `..` are often used as in `ref1..ref2`, and in some
-   context this notation means `{caret}ref1 ref2` (i.e. not in
-diff --git a/refs.c b/refs.c
-index b8fcb98..0d63c1f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -313,7 +313,9 @@ int write_ref_sha1(const char *ref, int 
- static inline int bad_ref_char(int ch)
- {
- 	return (((unsigned) ch) <= ' ' ||
--		ch == '~' || ch == '^' || ch == ':');
-+		ch == '~' || ch == '^' || ch == ':' ||
-+		/* 2.13 Pattern Matching Notation */
-+		ch == '?' || ch == '*' || ch == '[');
- }
- 
- int check_ref_format(const char *ref)
--- 
-0.99.9.GIT
+That would be cool! Though my particular implementation may be a tad
+unconventional in its view of the "file history" as a strictly linear
+thing. Normal git porcelains don't even blink when dealing with
+branching/merging development histories.
+
+cheers,
+
+
+martin
