@@ -1,109 +1,136 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] faking cvs annotate
-Date: Fri, 16 Dec 2005 09:07:42 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0512160843450.3060@g5.osdl.org>
-References: <46a038f90512151713i118e58acia466d0f65ff91383@mail.gmail.com> 
- <Pine.LNX.4.63.0512160229140.6323@wbgn013.biozentrum.uni-wuerzburg.de>
- <46a038f90512152037u66993aadg566a2a47abd279c9@mail.gmail.com>
+From: Carl Baldwin <cnb@fc.hp.com>
+Subject: Re: bad git pull
+Date: Fri, 16 Dec 2005 10:25:35 -0700
+Organization: Hewlett Packard
+Message-ID: <20051216172535.GA25856@hpsvcnb.fc.hp.com>
+References: <68948ca0512151537v2d8f22c8x962c55bd507af8cf@mail.gmail.com> <7vzmn2kjw1.fsf@assigned-by-dhcp.cox.net> <7vu0d9lxx9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 16 18:10:18 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Don Zickus <dzickus@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 16 18:28:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EnJ43-0004nF-7p
-	for gcvg-git@gmane.org; Fri, 16 Dec 2005 18:08:15 +0100
+	id 1EnJKv-00035S-C7
+	for gcvg-git@gmane.org; Fri, 16 Dec 2005 18:25:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932343AbVLPRIL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Dec 2005 12:08:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932355AbVLPRIL
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Dec 2005 12:08:11 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:435 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932343AbVLPRIK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Dec 2005 12:08:10 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBGH7hDZ025018
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 16 Dec 2005 09:07:44 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBGH7gvo001478;
-	Fri, 16 Dec 2005 09:07:42 -0800
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90512152037u66993aadg566a2a47abd279c9@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.128 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932289AbVLPRZj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Dec 2005 12:25:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932361AbVLPRZi
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Dec 2005 12:25:38 -0500
+Received: from atlrel8.hp.com ([156.153.255.206]:31692 "EHLO atlrel8.hp.com")
+	by vger.kernel.org with ESMTP id S932289AbVLPRZi (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Dec 2005 12:25:38 -0500
+Received: from smtp2.fc.hp.com (smtp2b.fc.hp.com [15.15.136.253])
+	by atlrel8.hp.com (Postfix) with ESMTP id 61F96346BB;
+	Fri, 16 Dec 2005 12:25:35 -0500 (EST)
+Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
+	by smtp2.fc.hp.com (Postfix) with ESMTP
+	id 3183341EF10; Fri, 16 Dec 2005 17:25:35 +0000 (UTC)
+Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
+	id 1E66748CB4; Fri, 16 Dec 2005 10:25:35 -0700 (MST)
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
+	Don Zickus <dzickus@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vu0d9lxx9.fsf@assigned-by-dhcp.cox.net>
+X-Origin: hpsvcnb.fc.hp.com
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13740>
 
+Hello,
 
+Here are my two cents.  I'll try my best to make a case for those poor
+souls who get into this sort of mess.
 
-On Fri, 16 Dec 2005, Martin Langhoff wrote:
->
-> On 12/16/05, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > For starters, you could use my attempt:
-> > http://www.gelato.unsw.edu.au/archives/git/0508/7171.html
+Whenever I give a colleage an introduction to git I emphatically
+recommend that they start with using git fetch and git merge
+independantly of each other and stay away for git pull at least until
+they know what they're doing.  This is because I have found that people
+are really surprised at what happens when they type git pull until it
+really sinks in that 'pull = fetch + merge to current branch, whatever
+that may be'.
+
+The difference between the words fetch and pull is much more subtle than
+the difference between remove and list which are the basis for the
+commands rm and ls.  I see nothing in the English dictionary to suggest
+that pull means fetch + merge.  This is a gitism.  Even after reading
+documentation clearly and even using git for a while the difference
+really takes some time to sink in.
+
+I think a great degree of understanding should be shown toward those who
+dig themselves into this kind of thing.  I also recommend that some
+extra care should be taken in the tutorials and documentation to warn
+about this difference up front and possibly suggest avoiding the use of
+pull for those new to git.
+
+Carl
+
+PS The issue was exacerbated when cogito and git were inconsistent on
+their respective usages of pull and fetch.  I think this has gone away,
+hasn't it?  I haven't used cogito in some time so I really don't know.
+
+On Thu, Dec 15, 2005 at 03:53:38PM -0800, Junio C Hamano wrote:
+> Junio C Hamano <junkio@cox.net> writes:
 > 
-> Not bad at all! I might simplify it a bit (won't need the commitmsg
-> parsing), and see if how fast I can make it.
+> > Don Zickus <dzickus@gmail.com> writes:
+> >
+> >> I notice if I create a branch (and switch to it) in the linux kernel
+> >> off of say version 2.6.14, then later do a git pull, things get ugly. 
+> >> It seems like all the upstream changes are being merged into the
+> >> 2.6.14 branch (instead of the latest kernel tag).
+> >>
+> >> Is this a user error because the tool is still fragile?
+> >
+> > I do not understand the question.
+> >
+> > The user wanted all the good developments from the mainline into
+> > the fork he created starting at 2.6.14, and the tool did what
+> > was asked.  Why would you want to forbid that from happening,
+> > and what did you want to happen instead?
+> 
+> Actually I think I do understand the question.  You have a clone
+> of linux-2.6 repository, and your "origin" branch tracks the
+> bleeding edge from Linus.  You also have "myhack" branch that
+> was forked off from 2.6.14, and wanted to see what new things
+> Linus has by updating "origin", and perhaps merge those changes
+> into your "master" which keeps track of your hacks based on
+> Linus tip, but unfortunately you were on "myhack" branch.
+> 
+> Ouch.
+> 
+> So what you wanted to do was probably:
+> 
+> 	$ git fetch ;# this updates "origin" to Linus tip
+> 
+> instead of
+> 
+> 	$ git pull ;# this updates "origin" to Linus tip *and*
+>                     # merges that into the current branch
+> 
+> As you may probably know, you can recover by
+> 
+> 	$ git reset --hard
+> 
+> While I am sympathetic, this "Oops, I said pull when I meant
+> fetch" sounds remotely similar to "oops, I said 'rm -r' when I
+> meant to say 'ls -r'".  Is it that the tool is too fragile?
+> 
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
-NOTE! You can make it a whole lot faster these days by passing the path 
-down to git-rev-list. But as usual, I'm perl-incompatible, so I can't help 
-you with that modification.
-
-> OTOH, yours didn't get included. Any particular reasons? (other than
-> stressing the point that you should use whatchanged/pickaxe?)
-
-I'd love to see a git-annotate, but I want it to be efficient enough that 
-it's not embarrassing.
-
-For example, "git-whatchanged" is certainly efficient enough, and you 
-could just parse that output (possible without using -p and comparing file 
-contents on your own against the current HEAD as you progress backwards)
-
-Or, you could now use "git-rev-list <rev> <filename>", which is even more 
-efficient, but the downside of that is that it computes the _full_ graph 
-before it starts outputting the early ones. 
-
-But, for example:
-
-	[torvalds@g5 linux-history]$ time git-whatchanged drivers/char/Makefile > /dev/null 
-	real    0m37.993s
-	user    0m41.912s
-	sys     0m0.400s
-
-	[torvalds@g5 linux-history]$ time git-rev-list HEAD drivers/char/Makefile > /dev/null 
-	real    0m6.713s
-	user    0m6.656s
-	sys     0m0.056s
-
-that's the old Linux history thing, with 60,000+ commit. The path-based 
-git-rev-list thing cuts it down to just 103 commits you need to look at 
-(so the annotate itself should be really fast, and the cost really is all 
-in that "git-rev-list" thing).
-
-Of course, with the current kernel tree, the git-rev-list takes a lot less 
-time, and only results in six commits, but that's a tree that only has a 
-few months of history, so when looking at performance, you really should 
-look at some bigger tree.
-
-NOTE! You can also decide to cut down on time by saying "annotate back 
-only to a specific date", ie something like
-
-	git-rev-list $(git-rev-parse --since=2.years.ago HEAD) drivers/char/Makefile
-
-which limits the thing by filename _and_ date (a good way to handle really 
-really big projects) where the rev-parse might otherwise be very 
-expensive.
-
-And, of course, a quality implementation will notice when a file 
-disappears, and use "git-diff-tree -M" on that commit to see if it was 
-renamed, and then continuing with the old name...
-
-			Linus
+-- 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Carl Baldwin                        Systems VLSI Laboratory
+ Hewlett Packard Company
+ MS 88                               work: 970 898-1523
+ 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
+ Fort Collins, CO 80525              home: Carl@ecBaldwin.net
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
