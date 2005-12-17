@@ -1,71 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: bad git pull
-Date: Fri, 16 Dec 2005 17:05:41 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0512161701400.3698@g5.osdl.org>
-References: <68948ca0512151537v2d8f22c8x962c55bd507af8cf@mail.gmail.com> 
- <7vzmn2kjw1.fsf@assigned-by-dhcp.cox.net>  <7vu0d9lxx9.fsf@assigned-by-dhcp.cox.net>
-  <118833cc0512161007k38fdd15w2dcdf0c93f26d29e@mail.gmail.com> 
- <7vfyoshmp6.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0512161347490.3698@g5.osdl.org>
- <118833cc0512161637v1d180f9fh66a7dc6d3fe11d2b@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git merge questions
+Date: Fri, 16 Dec 2005 17:32:55 -0800
+Message-ID: <7vd5jwcxtk.fsf@assigned-by-dhcp.cox.net>
+References: <68948ca0512161205x3d5921bfm3bfcaa64f988eb99@mail.gmail.com>
+	<7vacf0g4ga.fsf@assigned-by-dhcp.cox.net>
+	<7vy82keo8p.fsf@assigned-by-dhcp.cox.net>
+	<68948ca0512161335k50a3ec64lee6f73ea4f8ae23f@mail.gmail.com>
+	<7voe3gd6ul.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0512170056380.11000@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Don Zickus <dzickus@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 17 02:06:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Don Zickus <dzickus@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 17 02:34:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EnQWH-0005mg-LX
-	for gcvg-git@gmane.org; Sat, 17 Dec 2005 02:05:54 +0100
+	id 1EnQwf-0006wG-EB
+	for gcvg-git@gmane.org; Sat, 17 Dec 2005 02:33:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750962AbVLQBFu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Dec 2005 20:05:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbVLQBFu
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Dec 2005 20:05:50 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:48829 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750962AbVLQBFu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Dec 2005 20:05:50 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBH15gDZ015293
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 16 Dec 2005 17:05:43 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBH15fZa021064;
-	Fri, 16 Dec 2005 17:05:42 -0800
-To: Morten Welinder <mwelinder@gmail.com>
-In-Reply-To: <118833cc0512161637v1d180f9fh66a7dc6d3fe11d2b@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750980AbVLQBdG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Dec 2005 20:33:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751353AbVLQBdG
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Dec 2005 20:33:06 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:45782 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1750980AbVLQBdF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2005 20:33:05 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051217013305.BRVJ25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 16 Dec 2005 20:33:05 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0512170056380.11000@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 17 Dec 2005 00:58:50 +0100
+	(CET)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13766>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> just a thought: maybe in this case -- git fails to recognize a rename -- 
+> Pasky's idea would have some merit. You could then provide git with some 
+> extra information a la .git/info/grafts: "Even if you, git, do not believe 
+> it: this file *was* renamed from blah to blop".
 
-On Fri, 16 Dec 2005, Morten Welinder wrote:
-> 
-> It would be outright peachy if Documentation/git-commit.txt and
-> Documentation/git-pull.txt mentioned these.  That is certainly
-> where I would look first to answer the "what if I screwed up?"
-> question.
+Yeah, except small details such as: where does it record it, and
+how does the information presented to the user, and how does the
+user tell git that information should be used?
 
-It might be even better to have some of the "safe" versions around. Ie 
-something that refuses to "undo" a merge (you want to "unpull" it or 
-"unmerge" it), and refuses to "undo" when there's a ORIG_HEAD around that 
-implies that the last commit was a "pull" (in which case again "undo" may 
-be the wrong thing to do, since it will only undo _one_ commit, even 
-though the pull might have fast-forwarded a _lot_ of commits).
+What would be interesting would be to extend on this thing I
+just wrote:
 
-Of course, if we do that, we should also make sure that "git commit" 
-removes ORIG_HEAD. 
+    Something like:
 
-Or maybe "git commit" should always _write_ ORIG_HEAD with the old head, 
-so that we can always do an "undo" by doing "git reset --hard ORIG_HEAD" 
-regardless of whether the last thing was a "git commit" or a "git pull".
+        $ git resolve-renamed-path arch/ppc64/ arch/powerpc/
 
-Hmm?
+    to mean "I want the result of this merge to rename ppc64/Kconfig
+    to powerpc/Kconfig", perhaps?
 
-		Linus
+I think this would work very nicely even without rename
+detectino by the recursive strategy.  What would happen with
+resolve strategy is that unchanged paths are removed from
+arch/ppc64 and added to arch/powerpc by the usual read-tree
+merge rules, and all paths (not just unrecognizable renames --
+because resolve would not even try) that have been changed on
+the "test" branch would be in stage1+stage3 state in arch/ppc64,
+while the corresponding ones in arch/powerpc are collapsed
+("only added in test2 branch") to stage0.  The fictional
+resolve-renamed-path command (notice that I removed the explicit
+"Kconfig" from the sample command line) could go through the
+index file, looking for paths that arch/powerpc/ has stage0 and
+arch/ppc64 has stage1+3, and perform the renaming merge at that
+point.
