@@ -1,56 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git merge questions
-Date: Sat, 17 Dec 2005 00:58:50 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512170056380.11000@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <68948ca0512161205x3d5921bfm3bfcaa64f988eb99@mail.gmail.com>
- <7vacf0g4ga.fsf@assigned-by-dhcp.cox.net> <7vy82keo8p.fsf@assigned-by-dhcp.cox.net>
- <68948ca0512161335k50a3ec64lee6f73ea4f8ae23f@mail.gmail.com>
- <7voe3gd6ul.fsf@assigned-by-dhcp.cox.net>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: Re: bad git pull
+Date: Fri, 16 Dec 2005 19:37:18 -0500
+Message-ID: <118833cc0512161637v1d180f9fh66a7dc6d3fe11d2b@mail.gmail.com>
+References: <68948ca0512151537v2d8f22c8x962c55bd507af8cf@mail.gmail.com>
+	 <7vzmn2kjw1.fsf@assigned-by-dhcp.cox.net>
+	 <7vu0d9lxx9.fsf@assigned-by-dhcp.cox.net>
+	 <118833cc0512161007k38fdd15w2dcdf0c93f26d29e@mail.gmail.com>
+	 <7vfyoshmp6.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0512161347490.3698@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Don Zickus <dzickus@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 17 01:00:51 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, Don Zickus <dzickus@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 17 01:38:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EnPTY-0006Uo-3f
-	for gcvg-git@gmane.org; Sat, 17 Dec 2005 00:59:00 +0100
+	id 1EnQ4h-0003nq-B9
+	for gcvg-git@gmane.org; Sat, 17 Dec 2005 01:37:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751342AbVLPX6x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Dec 2005 18:58:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751353AbVLPX6x
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Dec 2005 18:58:53 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:18304 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751342AbVLPX6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2005 18:58:52 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 49C6B13FAF2; Sat, 17 Dec 2005 00:58:51 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 301459DF6B; Sat, 17 Dec 2005 00:58:51 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 1E2FD99561; Sat, 17 Dec 2005 00:58:51 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BBD5513FB51; Sat, 17 Dec 2005 00:58:50 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe3gd6ul.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S964900AbVLQAhU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Dec 2005 19:37:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964901AbVLQAhT
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Dec 2005 19:37:19 -0500
+Received: from zproxy.gmail.com ([64.233.162.203]:53180 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964900AbVLQAhS convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2005 19:37:18 -0500
+Received: by zproxy.gmail.com with SMTP id 14so1484551nzn
+        for <git@vger.kernel.org>; Fri, 16 Dec 2005 16:37:18 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AvGIncZAGfvkjIBTsqPs6JTV7phB4FGHQQTv2Ducbxb9RH18xDvqej4f34dsDz/HMclVp8wH8ydeKQSaQ4LT7sIDyZz1WZSzpJisNOcABuq/kA72g28uXOzITsuvrbDHSkLQ6Zy7KXaklu8fNbWyS/Lr20P0ugTXVl6or1sQLfw=
+Received: by 10.36.84.20 with SMTP id h20mr3630803nzb;
+        Fri, 16 Dec 2005 16:37:18 -0800 (PST)
+Received: by 10.36.88.14 with HTTP; Fri, 16 Dec 2005 16:37:18 -0800 (PST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0512161347490.3698@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13764>
 
-Hi,
+>  - undo the last commit entirely ("hard reset to previous state"):
+>
+>         git reset --hard HEAD^
+>
+>    This was "bk undo"
+>
+>  - undo the last pull ("bk unpull"): "hard reset to ORIG_HEAD":
+>
+>         git reset --hard ORIG_HEAD
+>
+>    This was "bk unpull".
 
-just a thought: maybe in this case -- git fails to recognize a rename -- 
-Pasky's idea would have some merit. You could then provide git with some 
-extra information a la .git/info/grafts: "Even if you, git, do not believe 
-it: this file *was* renamed from blah to blop".
+It would be outright peachy if Documentation/git-commit.txt and
+Documentation/git-pull.txt mentioned these.  That is certainly
+where I would look first to answer the "what if I screwed up?"
+question.
 
-Ciao,
-Dscho
+Morten
