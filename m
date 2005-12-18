@@ -1,55 +1,77 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Remove misguided branch disambiguation.
-Date: Sun, 18 Dec 2005 01:06:36 +0100
-Message-ID: <20051218000636.GA20874@steel.home>
-References: <7virto12u5.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] diff: --abbrev option
+Date: Sun, 18 Dec 2005 01:17:56 +0100
+Message-ID: <20051218001756.GS22159@pasky.or.cz>
+References: <7v3bks12n6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 18 01:08:37 2005
+X-From: git-owner@vger.kernel.org Sun Dec 18 01:19:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Enm4l-0002Qy-3L
-	for gcvg-git@gmane.org; Sun, 18 Dec 2005 01:06:55 +0100
+	id 1EnmFd-0006SX-3I
+	for gcvg-git@gmane.org; Sun, 18 Dec 2005 01:18:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964944AbVLRAGu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Dec 2005 19:06:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965002AbVLRAGu
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Dec 2005 19:06:50 -0500
-Received: from devrace.com ([198.63.210.113]:15366 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S964944AbVLRAGt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Dec 2005 19:06:49 -0500
-Received: from tigra.home (p54A0E6BC.dip.t-dialin.net [84.160.230.188])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id jBI06cPp053057;
-	Sat, 17 Dec 2005 18:06:39 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1Enm4S-00061O-00; Sun, 18 Dec 2005 01:06:36 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1Enm4S-0005Qo-Cc; Sun, 18 Dec 2005 01:06:36 +0100
+	id S964974AbVLRASA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Dec 2005 19:18:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965017AbVLRASA
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Dec 2005 19:18:00 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:29140 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964974AbVLRAR7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Dec 2005 19:17:59 -0500
+Received: (qmail 7502 invoked by uid 2001); 18 Dec 2005 01:17:56 +0100
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7virto12u5.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+In-Reply-To: <7v3bks12n6.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13781>
 
-Junio C Hamano, Sat, Dec 17, 2005 10:37:38 +0100:
-> This removes the misguided attempt to refuse processing a branch
-> name xyzzy and insist it to be given as either heads/xyzzy or
-> tags/xyzzy when a tag xyzzy exists.  There was no reason to do
-> so --- the search order was predictable and well defined, so if
-> the user says xyzzy we should have taken the tag xyzzy in such a
-> case without complaining.
+Dear diary, on Sat, Dec 17, 2005 at 10:41:49AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> When I show transcripts to explain how something works, I often
+> find myself hand-editing the diff-raw output to shorten various
+> object names in the output.
+> 
+> This adds --abbrev option to the diff family, which shortens
+> diff-raw output and diff-tree commit id headers.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> 
+> ---
+> 
+>  * Earlier I announced that I have this toy in proposed updates
+>    without actually showing the code, so here it is.  I have
+>    added code to find unique abbreviation as well.  It is
+>    primarily useful to quote things in e-mail, like this:
+> 
+>       $ git-rev-parse master | git-diff-tree --pretty -r --abbrev --stdin
+>       diff-tree 01385e2... (from 6922471...)
+>       Author: Junio C Hamano <junkio@cox.net>
+>       Date:   Fri Dec 16 23:12:33 2005 -0800
+> 
+>           Comment fixes.
+> 
+>           Signed-off-by: Junio C Hamano <junkio@cox.net>
+> 
+>       :100755 100755 0266f46... b0e54ed... M	git-branch.sh
+>       :100755 100755 f241d4b... 36308d2... M	git-checkout.sh
 
-Right. The test 'Ambiguous' in t0000-basic is redundant now, btw
+  I think the '...' is just distracting. It makes cut'n'paste more
+difficult, and it's usually fairly obvious that this is start of a hash,
+and that the hash might not be complete.
+
+  I was actually thinking to by default trim all the hashes Cogito show
+to 12 or 16 characters. Seven still seems dangerously low to me, though;
+it would be nice if the number of characters to trim would be
+configurable (unless I've missed that).
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
