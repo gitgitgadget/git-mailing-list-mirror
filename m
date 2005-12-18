@@ -1,68 +1,53 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: How to clone-pack the HEAD?
-Date: Sun, 18 Dec 2005 01:53:06 +0100
-Message-ID: <20051218005306.GU22159@pasky.or.cz>
-References: <20051215004440.GM22159@pasky.or.cz> <7vfyovtaub.fsf@assigned-by-dhcp.cox.net> <20051215013201.GD10680@pasky.or.cz> <7vpsnzrv43.fsf@assigned-by-dhcp.cox.net> <7vlkynrurh.fsf@assigned-by-dhcp.cox.net> <7vpsnzq66x.fsf@assigned-by-dhcp.cox.net> <7vfyouricc.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] diff: --abbrev option
+Date: Sat, 17 Dec 2005 18:57:19 -0800
+Message-ID: <7vek4byuwg.fsf@assigned-by-dhcp.cox.net>
+References: <7v3bks12n6.fsf@assigned-by-dhcp.cox.net>
+	<20051218001756.GS22159@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 18 01:55:06 2005
+X-From: git-owner@vger.kernel.org Sun Dec 18 03:59:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Enmno-0004ji-4E
-	for gcvg-git@gmane.org; Sun, 18 Dec 2005 01:53:28 +0100
+	id 1EnokF-000343-14
+	for gcvg-git@gmane.org; Sun, 18 Dec 2005 03:57:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932552AbVLRAxO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Dec 2005 19:53:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932653AbVLRAxO
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Dec 2005 19:53:14 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:9931 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932552AbVLRAxN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Dec 2005 19:53:13 -0500
-Received: (qmail 12648 invoked by uid 2001); 18 Dec 2005 01:53:06 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vfyouricc.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932669AbVLRC5V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Dec 2005 21:57:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932672AbVLRC5V
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Dec 2005 21:57:21 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:21965 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932669AbVLRC5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Dec 2005 21:57:21 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051218025555.CNCR17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 17 Dec 2005 21:55:55 -0500
+To: git@vger.kernel.org
+In-Reply-To: <20051218001756.GS22159@pasky.or.cz> (Petr Baudis's message of
+	"Sun, 18 Dec 2005 01:17:56 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13785>
 
-Dear diary, on Thu, Dec 15, 2005 at 07:21:23AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> > Also I might want to give --keep option to fetch-pack as well;
-> > clone-pack has some static functions that we can extract out to
-> > a common file to link to both.
-> 
-> And this is the second installment, on top of the previous one.
-> I am a bit reluctant about this one only because of its size,
-> but I suspect it may be much easier to use for your purpose.
-> 
-> I'll keep this in the proposed updates branch for now (the other
-> one goes to master tonight), so if you like this one, please
-> holler, test out and ack.
+Petr Baudis <pasky@suse.cz> writes:
 
-Well, I like this one, but you don't need to put this to master just for
-me, I'm perfectly fine with the git-clone-pack fix - both commands are
-now equally simple for me to use in Cogito. (And both seem to work fine
-after some basic testing.)
+>   I was actually thinking to by default trim all the hashes Cogito show
+> to 12 or 16 characters. Seven still seems dangerously low to me, though;
+> it would be nice if the number of characters to trim would be
+> configurable (unless I've missed that).
 
-But you are right that git-clone-pack is basically made obsolete by this
-patch, and I tend to like that fact - that's why I have slight
-preference to this patch anyway, despite its size (and it's mostly
-common code being moved around anyway). It's probably too late to remove
-git-clone-pack altogether, but you might at least deprecate it and print
-a warning when it's being ran (or at least please print a warning when
-it's being ran in a repository which is already populated, which is very
-likely a driver error, and I've actually made it just a minute ago ;).
+Well, I did better than you imagined this time, for a change ;-)
+It trims and adds extra as needed without breaking alignments,
+so you could get something like this:
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+>       :100755 100755 0266f46... b0e54ed... M	git-branch.sh
+>       :100755 100755 f241d4b9.. 36308d2ab. M	git-checkout.sh
+
+That is, ... is not just distraction but are part of the
+design.  Cut and paste is a byproduct.
