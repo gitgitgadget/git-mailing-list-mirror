@@ -1,61 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: bad git pull
-Date: Sat, 17 Dec 2005 23:15:06 -0800
-Message-ID: <7vd5juub9h.fsf@assigned-by-dhcp.cox.net>
-References: <68948ca0512151537v2d8f22c8x962c55bd507af8cf@mail.gmail.com>
-	<7vzmn2kjw1.fsf@assigned-by-dhcp.cox.net>
-	<7vu0d9lxx9.fsf@assigned-by-dhcp.cox.net>
-	<118833cc0512161007k38fdd15w2dcdf0c93f26d29e@mail.gmail.com>
-	<7vfyoshmp6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0512161347490.3698@g5.osdl.org>
-	<118833cc0512161637v1d180f9fh66a7dc6d3fe11d2b@mail.gmail.com>
-	<Pine.LNX.4.64.0512161701400.3698@g5.osdl.org>
-	<7vy82kbiho.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0512162342010.3698@g5.osdl.org>
-	<7v4q582htm.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0512171601430.26663@localhost.localdomain>
-	<7v8xujyuna.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0512172310060.26663@localhost.localdomain>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] diff: --abbrev option
+Date: Sun, 18 Dec 2005 12:45:22 +0100
+Message-ID: <20051218114522.GW22159@pasky.or.cz>
+References: <7v3bks12n6.fsf@assigned-by-dhcp.cox.net> <20051218001756.GS22159@pasky.or.cz> <7vek4byuwg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 18 08:15:49 2005
+X-From: git-owner@vger.kernel.org Sun Dec 18 12:46:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EnslL-0001Uc-D9
-	for gcvg-git@gmane.org; Sun, 18 Dec 2005 08:15:19 +0100
+	id 1EnwzL-0003oZ-CS
+	for gcvg-git@gmane.org; Sun, 18 Dec 2005 12:46:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932689AbVLRHPK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Dec 2005 02:15:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932691AbVLRHPK
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Dec 2005 02:15:10 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:55186 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932689AbVLRHPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Dec 2005 02:15:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051218071418.LOCU20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 18 Dec 2005 02:14:18 -0500
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0512172310060.26663@localhost.localdomain>
-	(Nicolas Pitre's message of "Sat, 17 Dec 2005 23:17:20 -0500 (EST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932448AbVLRLpZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Dec 2005 06:45:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932511AbVLRLpZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Dec 2005 06:45:25 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:59324 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932448AbVLRLpY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Dec 2005 06:45:24 -0500
+Received: (qmail 11845 invoked by uid 2001); 18 Dec 2005 12:45:22 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vek4byuwg.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13792>
 
-Nicolas Pitre <nico@cam.org> writes:
+Dear diary, on Sun, Dec 18, 2005 at 03:57:19AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> >   I was actually thinking to by default trim all the hashes Cogito show
+> > to 12 or 16 characters. Seven still seems dangerously low to me, though;
+> > it would be nice if the number of characters to trim would be
+> > configurable (unless I've missed that).
+> 
+> Well, I did better than you imagined this time, for a change ;-)
+> It trims and adds extra as needed without breaking alignments,
+> so you could get something like this:
+> 
+> >       :100755 100755 0266f46... b0e54ed... M	git-branch.sh
+> >       :100755 100755 f241d4b9.. 36308d2ab. M	git-checkout.sh
+> 
+> That is, ... is not just distraction but are part of the
+> design.  Cut and paste is a byproduct.
 
->> I do not see much difference either way,
->
-> ORIG suggests "origin" to me,...
+Ok, that's nice! :-) And if I'm going to machine-process this later,
+I can just trim the trailing dots anyway. And it seems that I can give
+--abbrev a number argument to specify the minimal abbreviation, even
+cooler! :-)
 
-Hmph.
-
-I always thought it was original-head before the operation
-happened, which is why I said it is no different from
-previous-head.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
+it doesn't.
