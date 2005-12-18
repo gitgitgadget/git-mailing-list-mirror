@@ -1,62 +1,106 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] diff: --abbrev option
-Date: Sun, 18 Dec 2005 12:45:22 +0100
-Message-ID: <20051218114522.GW22159@pasky.or.cz>
-References: <7v3bks12n6.fsf@assigned-by-dhcp.cox.net> <20051218001756.GS22159@pasky.or.cz> <7vek4byuwg.fsf@assigned-by-dhcp.cox.net>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: [PATCH] git-grep: convert from bash to sh
+Date: Sun, 18 Dec 2005 15:26:39 +0200
+Message-ID: <20051218152639.5c14bc26.tihirvon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 18 12:46:36 2005
+X-From: git-owner@vger.kernel.org Sun Dec 18 14:28:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EnwzL-0003oZ-CS
-	for gcvg-git@gmane.org; Sun, 18 Dec 2005 12:46:03 +0100
+	id 1EnyZ7-0001RK-CB
+	for gcvg-git@gmane.org; Sun, 18 Dec 2005 14:27:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932448AbVLRLpZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Dec 2005 06:45:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932511AbVLRLpZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Dec 2005 06:45:25 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:59324 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932448AbVLRLpY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Dec 2005 06:45:24 -0500
-Received: (qmail 11845 invoked by uid 2001); 18 Dec 2005 12:45:22 +0100
+	id S932701AbVLRN0t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Dec 2005 08:26:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932702AbVLRN0t
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Dec 2005 08:26:49 -0500
+Received: from marski.suomi.net ([212.50.131.142]:23957 "EHLO marski.suomi.net")
+	by vger.kernel.org with ESMTP id S932701AbVLRN0t (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Dec 2005 08:26:49 -0500
+Received: from spartak.suomi.net (spartak.suomi.net [212.50.140.227])
+ by marski.suomi.net (Sun Java System Messaging Server 6.2 (built Dec  2 2004))
+ with ESMTP id <0IRP00EDN40IYY30@marski.suomi.net> for git@vger.kernel.org;
+ Sun, 18 Dec 2005 15:26:43 +0200 (EET)
+Received: from spam2.suomi.net (spam2.suomi.net [212.50.131.166])
+ by mailstore.suomi.net
+ (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
+ with ESMTP id <0IRP0076R46ILQ40@mailstore.suomi.net>; Sun,
+ 18 Dec 2005 15:30:19 +0200 (EET)
+Received: from garlic.home.net (addr-82-128-203-211.suomi.net [82.128.203.211])
+	by spam2.suomi.net (Postfix) with SMTP id 0EB877047; Sun,
+ 18 Dec 2005 15:26:39 +0200 (EET)
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vek4byuwg.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.9; i686-pc-linux-gnu)
+X-OPOY-MailScanner-Information: Please contact the OPOY for more information
+X-OPOY-MailScanner: Found to be clean
+X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (score=-2.344,	required 5,
+ autolearn=not spam, AWL 0.26, BAYES_00 -2.60)
+X-OPOY-MailScanner-From: tihirvon@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13793>
 
-Dear diary, on Sun, Dec 18, 2005 at 03:57:19AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> >   I was actually thinking to by default trim all the hashes Cogito show
-> > to 12 or 16 characters. Seven still seems dangerously low to me, though;
-> > it would be nice if the number of characters to trim would be
-> > configurable (unless I've missed that).
-> 
-> Well, I did better than you imagined this time, for a change ;-)
-> It trims and adds extra as needed without breaking alignments,
-> so you could get something like this:
-> 
-> >       :100755 100755 0266f46... b0e54ed... M	git-branch.sh
-> >       :100755 100755 f241d4b9.. 36308d2ab. M	git-checkout.sh
-> 
-> That is, ... is not just distraction but are part of the
-> design.  Cut and paste is a byproduct.
 
-Ok, that's nice! :-) And if I'm going to machine-process this later,
-I can just trim the trailing dots anyway. And it seems that I can give
---abbrev a number argument to specify the minimal abbreviation, even
-cooler! :-)
+sh does not support arrays so we have to use eval instead.
 
+Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
+
+---
+
+ git-grep.sh |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+11c29a066288c5f05a67ff0d46e9ce17cd7a37da
+diff --git a/git-grep.sh b/git-grep.sh
+index 2ed8e95..2f0a297 100755
+--- a/git-grep.sh
++++ b/git-grep.sh
+@@ -8,21 +8,21 @@ SUBDIRECTORY_OK='Yes'
+ . git-sh-setup
+ 
+ pattern=
+-flags=()
+-git_flags=()
++flags=
++git_flags=
+ while : ; do
+ 	case "$1" in
+ 	--cached|--deleted|--others|--killed|\
+ 	--ignored|--exclude=*|\
+ 	--exclude-from=*|\--exclude-per-directory=*)
+-		git_flags=("${git_flags[@]}" "$1")
++		git_flags="$git_flags '$1'"
+ 		;;
+ 	-e)
+ 		pattern="$2"
+ 		shift
+ 		;;
+ 	-A|-B|-C|-D|-d|-f|-m)
+-		flags=("${flags[@]}" "$1" "$2")
++		flags="$flags '$1' '$2'"
+ 		shift
+ 		;;
+ 	--)
+@@ -31,7 +31,7 @@ while : ; do
+ 		break
+ 		;;
+ 	-*)
+-		flags=("${flags[@]}" "$1")
++		flags="$flags '$1'"
+ 		;;
+ 	*)
+ 		if [ -z "$pattern" ]; then
+@@ -46,5 +46,5 @@ done
+ [ "$pattern" ] || {
+ 	usage
+ }
+-git-ls-files -z "${git_flags[@]}" "$@" |
+-	xargs -0 grep "${flags[@]}" -e "$pattern"
++eval git-ls-files -z "$git_flags" '"$@"' |
++	eval xargs -0 grep "$flags" -e '"$pattern"'
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+0.99.9.GIT
