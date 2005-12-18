@@ -1,106 +1,76 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: [PATCH] git-grep: convert from bash to sh
-Date: Sun, 18 Dec 2005 15:26:39 +0200
-Message-ID: <20051218152639.5c14bc26.tihirvon@gmail.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH] cg-completion: improve options and command listing
+Date: Sun, 18 Dec 2005 15:34:39 +0100
+Message-ID: <20051218143439.GA7064@diku.dk>
+References: <20051211190931.GF2960@diku.dk> <EF827EE8-7B7A-4D19-A08D-8C67D6B74195@hawaga.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 18 14:28:06 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Sun Dec 18 15:35:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EnyZ7-0001RK-CB
-	for gcvg-git@gmane.org; Sun, 18 Dec 2005 14:27:05 +0100
+	id 1Enzcr-0007GZ-PZ
+	for gcvg-git@gmane.org; Sun, 18 Dec 2005 15:35:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932701AbVLRN0t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Dec 2005 08:26:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932702AbVLRN0t
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Dec 2005 08:26:49 -0500
-Received: from marski.suomi.net ([212.50.131.142]:23957 "EHLO marski.suomi.net")
-	by vger.kernel.org with ESMTP id S932701AbVLRN0t (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Dec 2005 08:26:49 -0500
-Received: from spartak.suomi.net (spartak.suomi.net [212.50.140.227])
- by marski.suomi.net (Sun Java System Messaging Server 6.2 (built Dec  2 2004))
- with ESMTP id <0IRP00EDN40IYY30@marski.suomi.net> for git@vger.kernel.org;
- Sun, 18 Dec 2005 15:26:43 +0200 (EET)
-Received: from spam2.suomi.net (spam2.suomi.net [212.50.131.166])
- by mailstore.suomi.net
- (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
- with ESMTP id <0IRP0076R46ILQ40@mailstore.suomi.net>; Sun,
- 18 Dec 2005 15:30:19 +0200 (EET)
-Received: from garlic.home.net (addr-82-128-203-211.suomi.net [82.128.203.211])
-	by spam2.suomi.net (Postfix) with SMTP id 0EB877047; Sun,
- 18 Dec 2005 15:26:39 +0200 (EET)
-To: Junio C Hamano <junkio@cox.net>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.9; i686-pc-linux-gnu)
-X-OPOY-MailScanner-Information: Please contact the OPOY for more information
-X-OPOY-MailScanner: Found to be clean
-X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (score=-2.344,	required 5,
- autolearn=not spam, AWL 0.26, BAYES_00 -2.60)
-X-OPOY-MailScanner-From: tihirvon@gmail.com
+	id S932706AbVLROel (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Dec 2005 09:34:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932707AbVLROel
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Dec 2005 09:34:41 -0500
+Received: from nhugin.diku.dk ([130.225.96.140]:57071 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S932706AbVLROek (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Dec 2005 09:34:40 -0500
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 844B66E0036; Sun, 18 Dec 2005 15:34:33 +0100 (CET)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 47DFC6DFF77; Sun, 18 Dec 2005 15:34:33 +0100 (CET)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 53E7961658; Sun, 18 Dec 2005 15:34:39 +0100 (CET)
+To: Ben Clifford <benc@hawaga.org.uk>
+Content-Disposition: inline
+In-Reply-To: <EF827EE8-7B7A-4D19-A08D-8C67D6B74195@hawaga.org.uk>
+User-Agent: Mutt/1.5.6i
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13794>
 
+Ben Clifford <benc@hawaga.org.uk> wrote Sun, Dec 18, 2005:
+> 
+> On 12 Dec 2005, at 04:39, Jonas Fonseca wrote:
+> 
+> >Complete help options and improve filtering for command name  
+> >completion.
+> >
+> >Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+> >
+> 
+> Hi. I've applied this patch to the dev branch cg-compl in my  
+> gitcompletion repo.
+> 
+> I'm interested by what you mean by 'all sorts of garbage' - it seems  
+> ok on my machine.
 
-sh does not support arrays so we have to use eval instead.
+~/src/cogito/cogito > __cg_cmdlist | head
+        cg-add             Add files to the GIT repository.
+        cg-clean           Clean unknown files from the working tree.
+        cg-clone           Clone a remote GIT repository.
+        cg-commit          Commit into a GIT repository.
+        cg-diff            Make a diff between two GIT trees.
+        cg-export          Exports a particular revision from a GIT repository.
+        cg-fetch           Fetch changes from a remote branch to the local GIT repository.
+        cg-help            Show help for Cogito commands.
+        cg-init            Initialize a GIT repository.
+        cg-log             Make a log of changes in a GIT branch.
 
-Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
+Else I was thinking of maybe adding --list parameter to cg-help to have
+it list all known commands.
 
----
-
- git-grep.sh |   14 +++++++-------
- 1 files changed, 7 insertions(+), 7 deletions(-)
-
-11c29a066288c5f05a67ff0d46e9ce17cd7a37da
-diff --git a/git-grep.sh b/git-grep.sh
-index 2ed8e95..2f0a297 100755
---- a/git-grep.sh
-+++ b/git-grep.sh
-@@ -8,21 +8,21 @@ SUBDIRECTORY_OK='Yes'
- . git-sh-setup
- 
- pattern=
--flags=()
--git_flags=()
-+flags=
-+git_flags=
- while : ; do
- 	case "$1" in
- 	--cached|--deleted|--others|--killed|\
- 	--ignored|--exclude=*|\
- 	--exclude-from=*|\--exclude-per-directory=*)
--		git_flags=("${git_flags[@]}" "$1")
-+		git_flags="$git_flags '$1'"
- 		;;
- 	-e)
- 		pattern="$2"
- 		shift
- 		;;
- 	-A|-B|-C|-D|-d|-f|-m)
--		flags=("${flags[@]}" "$1" "$2")
-+		flags="$flags '$1' '$2'"
- 		shift
- 		;;
- 	--)
-@@ -31,7 +31,7 @@ while : ; do
- 		break
- 		;;
- 	-*)
--		flags=("${flags[@]}" "$1")
-+		flags="$flags '$1'"
- 		;;
- 	*)
- 		if [ -z "$pattern" ]; then
-@@ -46,5 +46,5 @@ done
- [ "$pattern" ] || {
- 	usage
- }
--git-ls-files -z "${git_flags[@]}" "$@" |
--	xargs -0 grep "${flags[@]}" -e "$pattern"
-+eval git-ls-files -z "$git_flags" '"$@"' |
-+	eval xargs -0 grep "$flags" -e '"$pattern"'
 -- 
-0.99.9.GIT
+Jonas Fonseca
