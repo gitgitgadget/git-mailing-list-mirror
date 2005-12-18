@@ -1,103 +1,68 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] git-grep: convert from bash to sh
-Date: Sun, 18 Dec 2005 15:56:21 +0100
-Message-ID: <20051218145621.GX22159@pasky.or.cz>
-References: <20051218152639.5c14bc26.tihirvon@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: bad git pull
+Date: Sun, 18 Dec 2005 12:16:02 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0512181215390.26663@localhost.localdomain>
+References: <68948ca0512151537v2d8f22c8x962c55bd507af8cf@mail.gmail.com>
+ <7vzmn2kjw1.fsf@assigned-by-dhcp.cox.net>
+ <7vu0d9lxx9.fsf@assigned-by-dhcp.cox.net>
+ <118833cc0512161007k38fdd15w2dcdf0c93f26d29e@mail.gmail.com>
+ <7vfyoshmp6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0512161347490.3698@g5.osdl.org>
+ <118833cc0512161637v1d180f9fh66a7dc6d3fe11d2b@mail.gmail.com>
+ <Pine.LNX.4.64.0512161701400.3698@g5.osdl.org>
+ <7vy82kbiho.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0512162342010.3698@g5.osdl.org>
+ <7v4q582htm.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0512171601430.26663@localhost.localdomain>
+ <7v8xujyuna.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0512172310060.26663@localhost.localdomain>
+ <7vd5juub9h.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 18 15:57:03 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 18 18:16:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Enzxw-0005td-Jg
-	for gcvg-git@gmane.org; Sun, 18 Dec 2005 15:56:49 +0100
+	id 1Eo290-0001YE-T2
+	for gcvg-git@gmane.org; Sun, 18 Dec 2005 18:16:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965110AbVLRO4X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Dec 2005 09:56:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965114AbVLRO4X
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Dec 2005 09:56:23 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:10949 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S965110AbVLRO4X (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Dec 2005 09:56:23 -0500
-Received: (qmail 22154 invoked by uid 2001); 18 Dec 2005 15:56:21 +0100
-To: Timo Hirvonen <tihirvon@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <20051218152639.5c14bc26.tihirvon@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S965232AbVLRRQG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Dec 2005 12:16:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965231AbVLRRQG
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Dec 2005 12:16:06 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:22585 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S965233AbVLRRQF
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Dec 2005 12:16:05 -0500
+Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IRP00K14EMQPXC0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 18 Dec 2005 12:16:02 -0500 (EST)
+In-reply-to: <7vd5juub9h.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13796>
 
-Dear diary, on Sun, Dec 18, 2005 at 02:26:39PM CET, I got a letter
-where Timo Hirvonen <tihirvon@gmail.com> said that...
-> sh does not support arrays so we have to use eval instead.
+On Sat, 17 Dec 2005, Junio C Hamano wrote:
+
+> Nicolas Pitre <nico@cam.org> writes:
 > 
-> Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
+> >> I do not see much difference either way,
+> >
+> > ORIG suggests "origin" to me,...
+> 
+> Hmph.
+> 
+> I always thought it was original-head before the operation
+> happened, which is why I said it is no different from
+> previous-head.
 
-This version also makes it work properly with patterns containing quotes
-and backslashes (not so unusual when you grep for C strings).
+OK I agree.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
 
----
-
-I'm kind of sensitive to this stuff. I still passionately hate scp
-making me to double-quote remote filenames. It's just evil.
-
-diff --git a/git-grep.sh b/git-grep.sh
-index 2ed8e95..7e9e5bf 100755
---- a/git-grep.sh
-+++ b/git-grep.sh
-@@ -8,21 +8,21 @@ SUBDIRECTORY_OK='Yes'
- . git-sh-setup
- 
- pattern=
--flags=()
--git_flags=()
-+flags=
-+git_flags=
- while : ; do
- 	case "$1" in
- 	--cached|--deleted|--others|--killed|\
- 	--ignored|--exclude=*|\
- 	--exclude-from=*|\--exclude-per-directory=*)
--		git_flags=("${git_flags[@]}" "$1")
-+		git_flags="$git_flags '$1'"
- 		;;
- 	-e)
- 		pattern="$2"
- 		shift
- 		;;
- 	-A|-B|-C|-D|-d|-f|-m)
--		flags=("${flags[@]}" "$1" "$2")
-+		flags="$flags '$1' '$2'"
- 		shift
- 		;;
- 	--)
-@@ -31,7 +31,7 @@ while : ; do
- 		break
- 		;;
- 	-*)
--		flags=("${flags[@]}" "$1")
-+		flags="$flags '$1'"
- 		;;
- 	*)
- 		if [ -z "$pattern" ]; then
-@@ -46,5 +46,6 @@ done
- [ "$pattern" ] || {
- 	usage
- }
--git-ls-files -z "${git_flags[@]}" "$@" |
--	xargs -0 grep "${flags[@]}" -e "$pattern"
-+pattern="$(echo "$pattern" | sed 's/[\\"]/\\&/g')"
-+eval git-ls-files -z "$git_flags" '"$@"' |
-+	eval xargs -0 grep "$flags" -e '"$pattern"'
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
-it doesn't.
+Nicolas
