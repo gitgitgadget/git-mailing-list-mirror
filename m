@@ -1,65 +1,76 @@
-From: Tero Roponen <teanropo@cc.jyu.fi>
-Subject: [PATCH] cg-update quotes too much
-Date: Mon, 19 Dec 2005 14:19:12 +0200 (EET)
-Message-ID: <Pine.GSO.4.58.0512191417180.3752@kanto>
+From: Romano Giannetti <romano@dea.icai.upcomillas.es>
+Subject: Best way to use gitweb with a non-utf8 git repository
+Date: Mon, 19 Dec 2005 14:55:14 +0100
+Message-ID: <20051219135514.GA22388@pern.dea.icai.upcomillas.es>
+Reply-To: Romano Giannetti <romano@dea.icai.upcomillas.es>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Dec 19 13:22:55 2005
+Content-Type: text/plain; charset=iso-8859-15
+X-From: git-owner@vger.kernel.org Mon Dec 19 14:55:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EoJzb-0006Af-2A
-	for gcvg-git@gmane.org; Mon, 19 Dec 2005 13:19:51 +0100
+	id 1EoLU5-0004eH-Pj
+	for gcvg-git@gmane.org; Mon, 19 Dec 2005 14:55:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932211AbVLSMTd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Dec 2005 07:19:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932444AbVLSMTd
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Dec 2005 07:19:33 -0500
-Received: from posti5.jyu.fi ([130.234.4.34]:14799 "EHLO posti5.jyu.fi")
-	by vger.kernel.org with ESMTP id S932211AbVLSMTc (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Dec 2005 07:19:32 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by posti5.jyu.fi (8.13.4/8.13.4) with ESMTP id jBJCJUto026599
-	for <git@vger.kernel.org>; Mon, 19 Dec 2005 14:19:30 +0200
-Received: from kanto (kanto.cc.jyu.fi [130.234.4.101])
-	by posti5.jyu.fi (8.13.4/8.13.4) with ESMTP id jBJCJCGj026511
-	for <git@vger.kernel.org>; Mon, 19 Dec 2005 14:19:12 +0200
-X-X-Sender: teanropo@kanto
+	id S1751055AbVLSNyr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Dec 2005 08:54:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751083AbVLSNyr
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Dec 2005 08:54:47 -0500
+Received: from upco.es ([130.206.70.227]:48347 "EHLO mail1.upco.es")
+	by vger.kernel.org with ESMTP id S1751055AbVLSNyq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Dec 2005 08:54:46 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail1.upco.es (Postfix) with ESMTP id 9EBB145290
+	for <git@vger.kernel.org>; Mon, 19 Dec 2005 14:54:43 +0100 (CET)
+Received: from mail1.upco.es ([127.0.0.1])
+	by localhost (mail1 [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+	id 01048-09 for <git@vger.kernel.org>;
+	Mon, 19 Dec 2005 14:54:42 +0100 (CET)
+Received: from pern.dea.icai.upcomillas.es (pern.dea.icai.upco.es [130.206.71.186])
+	by mail1.upco.es (Postfix) with ESMTP id 7A10745344
+	for <git@vger.kernel.org>; Mon, 19 Dec 2005 14:54:42 +0100 (CET)
+Received: by pern.dea.icai.upcomillas.es (Postfix, from userid 1153)
+	id CFE5A102D9; Mon, 19 Dec 2005 14:55:14 +0100 (CET)
 To: git@vger.kernel.org
-X-Virus-Scanned: amavisd-new at cc.jyu.fi
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: by amavisd-new-20030616-p7 (Debian) at upco.es
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13822>
 
 Hi,
 
-It seems that cogito commit e5ca051c1d3900f7fbc1592d018ab3aab6a9573a
-broke cg-update, as expected ("Such a large patch is bound to introduce
-some (probably mostly trivial) bugs").
+    I am trying to start using git for a little project I have here. I
+    stumbled with a small difficulty with gitweb. 
 
-Quoting $force and $squash gives cg-fetch and cg-merge an empty argument
-if they are not set. If they are not quoted they will be omitted if they
-are empty, which is the right thing.
+    For historical reasons the 3 or 4 files in my project that are not ascii
+    or binary blobs are encoded in iso-8859-1. I know that utf8 is better,
+    but I cannot do anything to enforce it... Well, git obviously has no
+    problem, "all-is-a-byte-stream" is a great thing. The only problem is in
+    "tree" view of gitweb, were the files with iso-8859-1 are filled with
+    "invalid unicode sequence" symbols. I horribly hacked gitweb like this: 
 
-Signed-off-by: Tero Roponen <teanropo@cc.jyu.fi>
 
----
+--- /home/romano/software/downloads/gitweb.cgi  2005-12-16 12:10:46.000000000 +0100
++++ /var/www/cgi-bin/gitweb.cgi 2005-12-19 12:20:25.000000000 +0100
+@@ -221,6 +221,7 @@
+ # replace invalid utf8 character with SUBSTITUTION sequence
+ sub esc_html {
+        my $str = shift;
++       Encode::from_to($str, "iso-8859-1", "utf8");
+        $str = decode("utf8", $str, Encode::FB_DEFAULT);
+        $str = escapeHTML($str);
+        return $str;
 
-diff --git a/cg-update b/cg-update
-index d586631..1d6e0a0 100755
---- a/cg-update
-+++ b/cg-update
-@@ -55,10 +55,10 @@ name="${ARGS[0]}"
- [ -s "$_git/refs/heads/$name" ] && export _cg_orig_head="$(cat "$_git/refs/heads/$name")"
+     but I wonder, is there a way to say gitweb "if invalid utf-8 is found,
+     assume whatever-encoding-is encoding"? 
 
- if [ -s "$_git/branches/$name" ]; then
--	cg-fetch "$force" "$name" || exit 1
-+	cg-fetch $force "$name" || exit 1
- else
- 	echo "Updating from a local branch."
- fi
- echo
- echo "Applying changes..."
--cg-merge "$squash" "$name"
-+cg-merge $squash "$name"
+     Thanks,
+            Romano      
+        
+-- 
+Romano Giannetti             -  Univ. Pontificia Comillas (Madrid, Spain)
+Electronic Engineer - phone +34 915 422 800 ext 2416  fax +34 915 596 569
+http://www.dea.icai.upcomillas.es/romano/
