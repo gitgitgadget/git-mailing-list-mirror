@@ -1,58 +1,51 @@
-From: Jon Nelson <jnelson-git@jamponi.net>
-Subject: Branches and all commits
-Date: Mon, 19 Dec 2005 09:15:31 -0600 (CST)
-Message-ID: <Pine.LNX.4.63.0512190908140.6812@gheavc.wnzcbav.cig>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: using-topic-branches.txt
+Date: Mon, 19 Dec 2005 10:55:23 -0500
+Message-ID: <20051219155523.GC4147@fieldses.org>
+References: <F7DC2337C7631D4386A2DF6E8FB22B30056F93AC@hdsmsx401.amr.corp.intel.com> <43A63C9B.7080306@pobox.com> <7v64plmz1e.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Dec 19 16:18:07 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff Garzik <jgarzik@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 19 16:58:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EoMjk-0005Ll-V7
-	for gcvg-git@gmane.org; Mon, 19 Dec 2005 16:15:41 +0100
+	id 1EoNMI-0006XS-HZ
+	for gcvg-git@gmane.org; Mon, 19 Dec 2005 16:55:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964770AbVLSPPi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Dec 2005 10:15:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbVLSPPi
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Dec 2005 10:15:38 -0500
-Received: from mxsf03.cluster1.charter.net ([209.225.28.203]:60639 "EHLO
-	mxsf03.cluster1.charter.net") by vger.kernel.org with ESMTP
-	id S932199AbVLSPPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2005 10:15:38 -0500
-Received: from mxip28a.cluster1.charter.net (mxip28a.cluster1.charter.net [209.225.28.187])
-	by mxsf03.cluster1.charter.net (8.12.11/8.12.11) with ESMTP id jBJFFbt8004485
-	for <git@vger.kernel.org>; Mon, 19 Dec 2005 10:15:37 -0500
-Received: from 24-183-46-83.dhcp.mdsn.wi.charter.com (HELO turnip.jamponi.pvt) ([24.183.46.83])
-  by mxip28a.cluster1.charter.net with ESMTP; 19 Dec 2005 10:15:37 -0500
-X-IronPort-AV: i="3.99,268,1131339600"; 
-   d="scan'208"; a="585813613:sNHT18871942"
-Received: by turnip.jamponi.pvt (Postfix, from userid 1000)
-	id 7C6BDC092; Mon, 19 Dec 2005 09:15:31 -0600 (CST)
-Received: from localhost (localhost [127.0.0.1])
-	by turnip.jamponi.pvt (Postfix) with ESMTP id 6D726C091
-	for <git@vger.kernel.org>; Mon, 19 Dec 2005 09:15:31 -0600 (CST)
-To: git@vger.kernel.org
+	id S964786AbVLSPz2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Dec 2005 10:55:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964787AbVLSPz2
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Dec 2005 10:55:28 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:46572 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP id S964786AbVLSPz1
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2005 10:55:27 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
+	(envelope-from <bfields@fieldses.org>)
+	id 1EoNMB-0001RZ-Pr; Mon, 19 Dec 2005 10:55:23 -0500
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v64plmz1e.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13824>
 
+On Sun, Dec 18, 2005 at 09:33:17PM -0800, Junio C Hamano wrote:
+> Jeff Garzik <jgarzik@pobox.com> writes:
+> 
+> > master.kernel.org is non-public, so it shouldn't be mentioned in 
+> > documentation...
+> 
+> I'm willing to be persuaded otherwise, but the reason I changed
+> this part was twofold:
+> 
+>  - The documentation is meant to be an example for subsystem
+>    maintainers, who are "non-public" people anyway.
 
-Should *all* commits be reachable via at least one branch? I ran into a 
-situation this weekend that has me a little confused. I had performed a 
-number of commits and such and I noticed that the author and committer 
-info had suboptimal values. A bit of searching led me to a comment made 
-by Linus that basically said "go hack git-convert-objects", which I did. 
-After performing git-convert-objects on every commit object in 
-.git/refs/heads and the requisite pruning, etc... just about everything 
-looked fine. However, I still had a long series of commits that 
-contained the wrong information. Further inspection makes it appear as 
-though these commits are not reachable via any branch, although they are 
-/all/ reachable via a series of tags. I worked around the problem by 
-further modifying git-convert-objects to also understand tags (at least 
-the basic ones I've got) and that's all taken care of, but the question 
-remains: should *all* commit objects be reachable by at least one 
-branch?
+There are people without kernel.org accounts who do similar sorts of
+work.
 
---
-Jon Nelson <jnelson-git@jamponi.net>
+--b.
