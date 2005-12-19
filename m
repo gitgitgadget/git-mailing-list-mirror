@@ -1,51 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: EAGAIN?
-Date: Mon, 19 Dec 2005 02:07:27 -0800
-Message-ID: <7vhd95h02o.fsf@assigned-by-dhcp.cox.net>
+From: Tero Roponen <teanropo@cc.jyu.fi>
+Subject: [PATCH] cg-update quotes too much
+Date: Mon, 19 Dec 2005 14:19:12 +0200 (EET)
+Message-ID: <Pine.GSO.4.58.0512191417180.3752@kanto>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Mon Dec 19 11:10:01 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Dec 19 13:22:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EoHvm-00023a-9I
-	for gcvg-git@gmane.org; Mon, 19 Dec 2005 11:07:46 +0100
+	id 1EoJzb-0006Af-2A
+	for gcvg-git@gmane.org; Mon, 19 Dec 2005 13:19:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932714AbVLSKH3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Dec 2005 05:07:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932715AbVLSKH3
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Dec 2005 05:07:29 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:44516 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932714AbVLSKH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2005 05:07:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051219100542.VRLN17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 19 Dec 2005 05:05:42 -0500
+	id S932211AbVLSMTd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Dec 2005 07:19:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932444AbVLSMTd
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Dec 2005 07:19:33 -0500
+Received: from posti5.jyu.fi ([130.234.4.34]:14799 "EHLO posti5.jyu.fi")
+	by vger.kernel.org with ESMTP id S932211AbVLSMTc (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Dec 2005 07:19:32 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by posti5.jyu.fi (8.13.4/8.13.4) with ESMTP id jBJCJUto026599
+	for <git@vger.kernel.org>; Mon, 19 Dec 2005 14:19:30 +0200
+Received: from kanto (kanto.cc.jyu.fi [130.234.4.101])
+	by posti5.jyu.fi (8.13.4/8.13.4) with ESMTP id jBJCJCGj026511
+	for <git@vger.kernel.org>; Mon, 19 Dec 2005 14:19:12 +0200
+X-X-Sender: teanropo@kanto
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+X-Virus-Scanned: amavisd-new at cc.jyu.fi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13821>
 
-I am embarrassed to ask this in public, but anyway.
+Hi,
 
-I was looking at "git grep -n EAGAIN" output and found that many
-places check "errno == EAGAIN" without checking "errno ==
-EINTR", both for read(2) and write(2).  I feel that EAGAIN is
-probably not that useful (it probably would not hurt us, though)
-because we do not set up nonblocking ourselves, but I am
-wondering if there is particular reason to only check EAGAIN but
-not EINTR, or if they are just cut and paste errors.
+It seems that cogito commit e5ca051c1d3900f7fbc1592d018ab3aab6a9573a
+broke cg-update, as expected ("Such a large patch is bound to introduce
+some (probably mostly trivial) bugs").
 
-	apply.c:: read checks EAGAIN only, write checks both.
-        cat-file.c: write checks EAGAIN only.
-        copy.c:: read checks EAGAIN only, write checks both.
-        mktag.c::  read checks EAGAIN only.
-        pkt-line.c:: both read and write checks both.
-	tar-tree.c:: write checks EAGAIN only.
-        unpack-objects.c:: both read and write checks both.
+Quoting $force and $squash gives cg-fetch and cg-merge an empty argument
+if they are not set. If they are not quoted they will be omitted if they
+are empty, which is the right thing.
+
+Signed-off-by: Tero Roponen <teanropo@cc.jyu.fi>
+
+---
+
+diff --git a/cg-update b/cg-update
+index d586631..1d6e0a0 100755
+--- a/cg-update
++++ b/cg-update
+@@ -55,10 +55,10 @@ name="${ARGS[0]}"
+ [ -s "$_git/refs/heads/$name" ] && export _cg_orig_head="$(cat "$_git/refs/heads/$name")"
+
+ if [ -s "$_git/branches/$name" ]; then
+-	cg-fetch "$force" "$name" || exit 1
++	cg-fetch $force "$name" || exit 1
+ else
+ 	echo "Updating from a local branch."
+ fi
+ echo
+ echo "Applying changes..."
+-cg-merge "$squash" "$name"
++cg-merge $squash "$name"
