@@ -1,67 +1,135 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Fix race and deadlock when sending pack
-Date: Mon, 19 Dec 2005 13:40:37 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0512191236290.25300@iabervon.org>
-References: <43A628F6.1060807@serice.net> <7vzmmxlkbq.fsf@assigned-by-dhcp.cox.net>
+From: Jon Nelson <jnelson-git@jamponi.net>
+Subject: Re: Branches and all commits
+Date: Mon, 19 Dec 2005 12:59:55 -0600 (CST)
+Message-ID: <Pine.LNX.4.63.0512191257240.6812@gheavc.wnzcbav.cig>
+References: <Pine.LNX.4.63.0512190908140.6812@gheavc.wnzcbav.cig>
+ <43A6DC90.3040403@op5.se> <Pine.LNX.4.63.0512191104080.6812@gheavc.wnzcbav.cig>
+ <43A6F378.6010503@op5.se>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paul Serice <paul@serice.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 19 19:48:43 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 19 20:08:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EoPwJ-0004bR-9c
-	for gcvg-git@gmane.org; Mon, 19 Dec 2005 19:40:52 +0100
+	id 1EoQKk-0006x6-W9
+	for gcvg-git@gmane.org; Mon, 19 Dec 2005 20:06:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964884AbVLSSje (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Dec 2005 13:39:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964883AbVLSSje
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Dec 2005 13:39:34 -0500
-Received: from iabervon.org ([66.92.72.58]:6151 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S964879AbVLSSje (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Dec 2005 13:39:34 -0500
-Received: (qmail 3020 invoked by uid 1000); 19 Dec 2005 13:40:37 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 19 Dec 2005 13:40:37 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmmxlkbq.fsf@assigned-by-dhcp.cox.net>
+	id S932367AbVLSTGB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Dec 2005 14:06:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932373AbVLSTGB
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Dec 2005 14:06:01 -0500
+Received: from mxsf12.cluster1.charter.net ([209.225.28.212]:43705 "EHLO
+	mxsf12.cluster1.charter.net") by vger.kernel.org with ESMTP
+	id S932367AbVLSTGB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2005 14:06:01 -0500
+Received: from mxip04a.cluster1.charter.net (mxip04a.cluster1.charter.net [209.225.28.134])
+	by mxsf12.cluster1.charter.net (8.12.11/8.12.11) with ESMTP id jBJJ5uqx025172
+	for <git@vger.kernel.org>; Mon, 19 Dec 2005 14:05:58 -0500
+Received: from 24-183-46-83.dhcp.mdsn.wi.charter.com (HELO turnip.jamponi.pvt) ([24.183.46.83])
+  by mxip04a.cluster1.charter.net with ESMTP; 19 Dec 2005 13:59:56 -0500
+X-IronPort-AV: i="3.99,268,1131339600"; 
+   d="scan'208"; a="1091952848:sNHT35809060"
+Received: by turnip.jamponi.pvt (Postfix, from userid 1000)
+	id B7AE5C092; Mon, 19 Dec 2005 12:59:55 -0600 (CST)
+Received: from localhost (localhost [127.0.0.1])
+	by turnip.jamponi.pvt (Postfix) with ESMTP id A0A6FC091
+	for <git@vger.kernel.org>; Mon, 19 Dec 2005 12:59:55 -0600 (CST)
+In-Reply-To: <43A6F378.6010503@op5.se>
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13832>
 
-On Sun, 18 Dec 2005, Junio C Hamano wrote:
+On Mon, 19 Dec 2005, Andreas Ericsson wrote:
 
-> Paul Serice <paul@serice.net> writes:
+> Jon Nelson wrote:
+> > On Mon, 19 Dec 2005, Andreas Ericsson wrote:
+> > 
+> > 
+> > >Jon Nelson wrote:
+> > >
+> > > >Should *all* commits be reachable via at least one branch? I ran into a
+> > > >situation this weekend that has me a little confused. I had performed a
+> > > >number of commits and such and I noticed that the author and committer
+> > > >info
+> > > >had suboptimal values. A bit of searching led me to a comment made by
+> > > >Linus
+> > > >that basically said "go hack git-convert-objects", which I did. After
+> > > >performing git-convert-objects on every commit object in .git/refs/heads
+> > > >and
+> > > >the requisite pruning, etc... just about everything looked fine. However,
+> > > >I
+> > > >still had a long series of commits that contained the wrong information.
+> > > >Further inspection makes it appear as though these commits are not
+> > > >reachable
+> > > >via any branch, although they are /all/ reachable via a series of tags. I
+> > > >worked around the problem by further modifying git-convert-objects to
+> > > >also
+> > > >understand tags (at least the basic ones I've got) and that's all taken
+> > > >care
+> > > >of, but the question remains: should *all* commit objects be reachable by
+> > > >at
+> > > >least one branch?
+> > > >
+> > >
+> > >AFAIU, yes.
+> > >
+> > >For future reference, what you should have done is this;
+> > >
+> > >$ git format-patch --mbox <first-unscrewed-commit-ish>
+> > ># edit commit-messages in generated patches
+> > >$ git reset --hard <first-unscrewed-commit-ish>
+> > >$ for i in 00*.txt; do git apply < $i; done
+> > >$ git prune;# to get rid of the unreachable objects AFTER you've checked
+> > >everything's all right
+> > >
+> > >If things fail, do
+> > >
+> > >$ git reset --hard ORIG_HEAD
+> > >
+> > >and ask again.
+> > >
+> > >I'm afraid I can't help you fix up your repository from the state it's in
+> > >now. AFAIK, there's no tool to do it automagically.
+> > 
+> > 
+> > The repository seems just fine with this single exception - no branch
+> > contains a reference to the commit that forms the chain of commits that
+> > would otherwise be described as a branch. As I understand it, then, the only
+> > thing that is missing is an entry in .git/refs/heads.
+> > 
+> > Experimentally, I added that entry by determining the first commit in that
+> > chain and echoing that sha1 into .git/refs/heads/some_name and that works as
+> > expected.
+> > 
 > 
-> > The best way to reproduce the problem is to locally clone your
-> > repository.  When you perform a push, git-send-pack will directly set
-> > up pipes connected to stdin and stdout of git-receive-pack.  You
-> > should then set up hook/post-update or hook/update to try to write
-> > lots of text to stdout.  (You want to use the local protocol because
-> > ssh is robust enough to mask the worst behavior.)
+> Lucky thing. I expect you still had all the objects required for the tree to
+> do this. If you had run 'git prune' on the repo they would have been lost for
+> good though.
+
+That's the thing. I *had* run 'git prune' numerous times.
+
+> > I suspect that the root cause was a 'git branch -D' I issued a while back.
+> > My question is this: if deleting a branch in that manner caused me to enter
+> > this situation, is that a bug or no?
 > 
-> My immediate reaction was "do not do it then", but you are
-> right.  Hooks are run after all the protocol exchanges are done,
-> so they should be free to throw any garbage at the other end.
+> It's not a bug. You probably meant to do
+> 
+> 	$ git branch -d
+> 
+> -D forces removal even if there are objects reachable only through that
+> branch. The man-page says so, but in git'ish, which isn't always intuitive
+> until you've grown familiar with the glossary.txt doc.
 
-If we extend it to transfer multiple things, wouldn't we want to run hooks 
-after each of them, rather than all at the end?
+I tried 'git branch -d' initially and it refused to delete the branch.
+So I tried 'git branch -D'.
 
-As for the policy:
+Re-reading your last paragraph makes it clear what happened, then.
+I'll note that I ran 'git branch -D' *days* ago and I've run git-prune 
+literally a couple dozen times since then. Is it possible the objects 
+weren't removed because they were still referenced by tags?
 
-We definitely want to let hooks write to stdout, because git programs that 
-you might want to run in hooks write to stdout. I can't figure out what 
-"cvs" does with trigger script output and "at" and "cron" email the output 
-to the owners. I'd sort of like to avoid making people expect that there 
-is necessarily a path for text going back to the user directly. We may, 
-for example, want to support these hooks with pushes over HTTP(/WebDAV). I 
-also think that messages are likely to be at least as useful to the owner 
-of the target repository as the person pushing, which is why I'd prefer a 
-log file. E.g., if you've got a group central repository that different 
-people push to, it may be other group members who want to know what 
-happened with the output from a post-update hook, not the group member who 
-pushed.
-
-	-Daniel
-*This .sig left intentionally blank*
+--
+Jon Nelson <jnelson-git@jamponi.net>
