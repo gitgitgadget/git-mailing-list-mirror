@@ -1,76 +1,80 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Fix race and deadlock when sending pack
-Date: Mon, 19 Dec 2005 01:49:44 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0512190130450.25300@iabervon.org>
+Date: Mon, 19 Dec 2005 01:02:53 -0800
+Message-ID: <7vvexlihmq.fsf@assigned-by-dhcp.cox.net>
 References: <43A628F6.1060807@serice.net>
+	<Pine.LNX.4.64.0512190130450.25300@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 19 07:49:20 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Serice <paul@serice.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 19 10:05:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EoEpD-0001ae-Fs
-	for gcvg-git@gmane.org; Mon, 19 Dec 2005 07:48:48 +0100
+	id 1EoGv6-0000GK-3f
+	for gcvg-git@gmane.org; Mon, 19 Dec 2005 10:03:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030232AbVLSGsm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Dec 2005 01:48:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030235AbVLSGsm
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Dec 2005 01:48:42 -0500
-Received: from iabervon.org ([66.92.72.58]:2311 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1030232AbVLSGsm (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Dec 2005 01:48:42 -0500
-Received: (qmail 31829 invoked by uid 1000); 19 Dec 2005 01:49:44 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 19 Dec 2005 01:49:44 -0500
-To: Paul Serice <paul@serice.net>
-In-Reply-To: <43A628F6.1060807@serice.net>
+	id S932206AbVLSJC4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Dec 2005 04:02:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932584AbVLSJC4
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Dec 2005 04:02:56 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:32719 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932206AbVLSJCz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2005 04:02:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051219090126.DVBX17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 19 Dec 2005 04:01:26 -0500
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.64.0512190130450.25300@iabervon.org> (Daniel
+	Barkalow's message of "Mon, 19 Dec 2005 01:49:44 -0500 (EST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13818>
 
-On Sun, 18 Dec 2005, Paul Serice wrote:
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> Fix race and deadlock when sending pack.
-> 
-> The best way to reproduce the problem is to locally clone your
-> repository.  When you perform a push, git-send-pack will directly set
-> up pipes connected to stdin and stdout of git-receive-pack.  You
-> should then set up hook/post-update or hook/update to try to write
-> lots of text to stdout.  (You want to use the local protocol because
-> ssh is robust enough to mask the worst behavior.)
-> 
-> The first problem is that git-send-pack closes git-receive-pack's
-> stdout (which is inherited by the hooks) immediately after sending the
-> pack.  This almost always causes the hooks to receive SIGPIPE when
-> they try to write to stdout.
-> 
-> After fixing the SIGPIPE problem, you then run into a deadlock because
-> git-send-pack is blocked trying to reap git-receive-pack and
-> git-receive-pack (or one of its hooks) is blocked waiting for
-> git-send-pack to read its output.
-> 
-> I've also added an example a one-liner to both hooks demonstrating how
-> to redirect all subsequent output to stderr.  Because
-> git-receive-pack's stderr is not redirected, it has always been safe
-> to write to stderr.  Thus, all current status related output appears
-> on stderr.  This can lead to confusing ordering of messages if only
-> the hooks are using stdout.  The patch has the one-liner commented
-> out, but perhaps it should be enabled by default.
-> 
-> In addition, this commit reverts the work-around provided by
-> 128aed684d0b3099092b7597c8644599b45b7503 which redirected both stdout
-> and stderr for the hooks to /dev/null.
+> ... I don't think that it's actually a 
+> good idea to have output to stdout from hooks go to git-send-pack's 
+> stdout, since we may want to have git-send-pack report some sort of 
+> information of its own to stdout,...
 
-Actually, that was stdin and stdout. If, for some reason, a hook looked at 
-stdin, it could get surprising results. I don't think that it's actually a 
-good idea to have output to stdout from hooks go to git-send-pack's 
-stdout, since we may want to have git-send-pack report some sort of 
-information of its own to stdout, which would then get confused with 
-output from hooks. I think /dev/null, a log file, and stderr are the 
-reasonable choices for what happens to output (and input pretty much has 
-to be /dev/null).
+I admit that I haven't thought things through yet, but I do not
+offhand think of an argument against Paul's patch (a scenario
+that may be broken by the patch, that is), so I am inclined to
+take it, perhaps after hearing about the cpfd() thing I
+mentioned in the previous response to Paul.
 
-	-Daniel
-*This .sig left intentionally blank*
+It is conceivable that we may want to later extend the protocol
+so that the receiver can tell the sender the result of what
+happened to each of the ref-update request.  Right now, the
+sender refuses to listen to what receiver says after it learns
+the current object names, but after pack transfer finishes and
+receiver decides what to do with each ref update request, we
+might want to add status, like this:
+
+	# Tell the pusher what commits we have and what their names are
+	R: SHA1 name
+	R: ...
+	R: SHA1 name
+	R: # flush -- it's your turn
+	# Tell the puller what the pusher wants to happen
+	S: old-SHA1 new-SHA1 name
+	S: old-SHA1 new-SHA1 name
+	S: ...
+	S: # flush -- done with the list
+	S: XXXXXXX --- packfile contents.
+	# current protocol exchange ends here, but we could add...
+
+        # ... what happened to each ref-update request.
+	R: name OK
+        R: name FAIL
+        R: ...
+
+If we do something like this, we might want to say why things
+failed on "FAIL" line, and the output from hooks/update that
+prevented the ref-update would probably belong there.
