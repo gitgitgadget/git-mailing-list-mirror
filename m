@@ -1,55 +1,53 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: git /objects directory created 755 by default?
-Date: Wed, 21 Dec 2005 12:25:07 +1300
-Message-ID: <46a038f90512201525k5eb7cf62u65de2cd51424df37@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git /objects directory created 755 by default?
+Date: Tue, 20 Dec 2005 15:43:56 -0800
+Message-ID: <7vacevgwqr.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90512201525k5eb7cf62u65de2cd51424df37@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Dec 21 00:25:49 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 21 00:45:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eoqr5-0002wi-VW
-	for gcvg-git@gmane.org; Wed, 21 Dec 2005 00:25:16 +0100
+	id 1Eor9F-00019c-Pq
+	for gcvg-git@gmane.org; Wed, 21 Dec 2005 00:44:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932210AbVLTXZK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Dec 2005 18:25:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932213AbVLTXZK
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Dec 2005 18:25:10 -0500
-Received: from wproxy.gmail.com ([64.233.184.203]:30436 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932210AbVLTXZI convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Dec 2005 18:25:08 -0500
-Received: by wproxy.gmail.com with SMTP id 57so14515wri
-        for <git@vger.kernel.org>; Tue, 20 Dec 2005 15:25:08 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=qlCpx9GhZFdFPZeCzdlyv1j7bRWvUEUJfl8ZsfFTZ9eizSZntwX9XsjuNjFHzjiUbdth9hfovP+n+R1mqR2pqSzJUPRjB52y0f+FJzgUDD842q6mTbkwk0M/Qo4/WUZPID75Uk1M0ie5++EvsdBsdIz9nowpae2vQs6+4fhSOb4=
-Received: by 10.54.115.15 with SMTP id n15mr92098wrc;
-        Tue, 20 Dec 2005 15:25:07 -0800 (PST)
-Received: by 10.54.72.15 with HTTP; Tue, 20 Dec 2005 15:25:07 -0800 (PST)
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
+	id S932204AbVLTXn6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Dec 2005 18:43:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932218AbVLTXn6
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Dec 2005 18:43:58 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:972 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932204AbVLTXn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Dec 2005 18:43:58 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051220234153.BFQS20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 20 Dec 2005 18:41:53 -0500
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90512201525k5eb7cf62u65de2cd51424df37@mail.gmail.com>
+	(Martin Langhoff's message of "Wed, 21 Dec 2005 12:25:07 +1300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13857>
 
-Junio,
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-Since git changed to creating the objects subdirectories "on demand",
-these are created 755 regardless of the user's umask. This is quite
-inconvenient in ("cvs style") team-shared repositories, which work
-great otherwise.
+> Since git changed to creating the objects subdirectories "on demand",
+> these are created 755 regardless of the user's umask. This is quite
+> inconvenient in ("cvs style") team-shared repositories, which work
+> great otherwise.
 
-Didn't find any relevant discussion in the archives... I am not sure
-if this is by design. In any case it is something we could work around
-with a post-update hook on the server side (and I'd be happy to
-document).
+Hmph.
 
-cheers,
+I have 002 as umask. .git/objects or .git/objects/[0-9a-f]{2}
+directories are created 0775 for me.
 
-
-martin
+Do we have hardcoded 0755 that we need to change to 0777
+somewhere?  sha1_file.c::safe_create_leading_directories() is
+the primary code that creates directories lazily, and we mkdir
+with 0777 there.
