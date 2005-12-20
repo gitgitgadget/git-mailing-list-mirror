@@ -1,58 +1,72 @@
-From: "David S. Miller" <davem@davemloft.net>
-Subject: Re: [PATCH] GIT: Support [address] in URLs
-Date: Wed, 21 Dec 2005 16:08:11 -0800 (PST)
-Message-ID: <20051221.160811.129593851.davem@davemloft.net>
-References: <20051222.080828.28117009.yoshfuji@linux-ipv6.org>
-	<20051221.152648.122640664.davem@davemloft.net>
-	<20051222.085917.60400643.yoshfuji@linux-ipv6.org>
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: junkio@cox.net, git@vger.kernel.org, matti.aarnio@zmailer.org
-X-From: git-owner@vger.kernel.org Thu Dec 22 01:08:31 2005
+From: Ben Clifford <benc@hawaga.org.uk>
+Subject: Re: [PATCH] cg-completion: improve options and command listing
+Date: Tue, 20 Dec 2005 11:43:52 +0930
+Message-ID: <FB1B98E9-58B8-44BE-AC08-606C30A5F61A@hawaga.org.uk>
+References: <20051211190931.GF2960@diku.dk> <EF827EE8-7B7A-4D19-A08D-8C67D6B74195@hawaga.org.uk> <20051218143439.GA7064@diku.dk>
+Mime-Version: 1.0 (Apple Message framework v746.2)
+Content-Type: text/plain; charset=UTF-8;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 22 01:27:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpE0Q-0005Nc-At
-	for gcvg-git@gmane.org; Thu, 22 Dec 2005 01:08:27 +0100
+	id 1EpEIe-0000qR-AE
+	for gcvg-git@gmane.org; Thu, 22 Dec 2005 01:27:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965015AbVLVAIK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 19:08:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965018AbVLVAIK
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 19:08:10 -0500
-Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:5584
-	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
-	id S965015AbVLVAIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 19:08:09 -0500
-Received: from localhost.localdomain
-	([127.0.0.1] helo=localhost ident=davem)
-	by sunset.davemloft.net with esmtp (Exim 4.60)
-	(envelope-from <davem@davemloft.net>)
-	id 1EpE0B-0006Oh-Mz; Wed, 21 Dec 2005 16:08:11 -0800
-To: yoshfuji@linux-ipv6.org
-In-Reply-To: <20051222.085917.60400643.yoshfuji@linux-ipv6.org>
-X-Mailer: Mew version 4.2.53 on Emacs 21.4 / Mule 5.0 (SAKAKI)
+	id S965020AbVLVA0O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 21 Dec 2005 19:26:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965022AbVLVA0O
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 19:26:14 -0500
+Received: from mundungus.clifford.ac ([81.187.211.39]:5648 "EHLO
+	mundungus.clifford.ac") by vger.kernel.org with ESMTP
+	id S965020AbVLVA0N convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Dec 2005 19:26:13 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by mundungus.clifford.ac (8.13.3/8.13.3) with ESMTP id jBM0Olrw012586;
+	Thu, 22 Dec 2005 00:25:40 GMT
+In-Reply-To: <20051218143439.GA7064@diku.dk>
+To: Jonas Fonseca <fonseca@diku.dk>
+X-Mailer: Apple Mail (2.746.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13924>
 
-From: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
-Date: Thu, 22 Dec 2005 08:59:17 +0900 (JST)
 
-> Can I help you somehow?
-> E.g. if you give me an account on vger, I happily try to find the way to
-> setup bayesian filter(s) on them.
+On 19 Dec 2005, at 00:04, Jonas Fonseca wrote:
+>>
+>> I'm interested by what you mean by 'all sorts of garbage' - it seems
+>> ok on my machine.
+>
+> ~/src/cogito/cogito > __cg_cmdlist | head
+>         cg-add             Add files to the GIT repository.
+>         cg-clean           Clean unknown files from the working tree.
+>         cg-clone           Clone a remote GIT repository.
 
-You are expert with Zmailer+Majordomo? :-)
+I definitely don't get that here. Bleugh!
 
-Sure, it is no problem to setup Bayesian filter with sendmail, qmail,
-Exim et al. with standard mailing list software.  But doing it with
-the Zmailer and Majordomo setup we have is non-trivial.
+> Else I was thinking of maybe adding --list parameter to cg-help to =20
+> have
+> it list all known commands.
 
-Matti, non-ascii filtering really becomes big enough pain enough to
-fix.  I can do the leg work if you can provide some pointers and
-what you know so far.
+One thing that seemed kinda neat that I saw somewhere (perhaps in =20
+darcs?) is that it will tab complete only commands that would make =20
+sense in the present location (so cg <tab> would perhaps only bring =20
+up 'init' and 'help' in a non-git directory) - that would be rather =20
+more invasive to implement, I expect.
 
-Thanks.
+Another thing that has been mooted is autogenerating the completion =20
+code based on USAGE info - I've had a hack about in the past with =20
+that (its in the autogen branch in the gitcompletion repo on =20
+hawaga.org.uk) but then I reached the point where it seemed too icky =20
+for my tastes...
+
+--=20
+Ben =E2=80=A2 =E3=83=99=E3=83=B3 =E2=80=A2 =D0=91=D1=8D=D0=BD =E2=80=A2=
+ =EB=B2=A4 =E2=80=A2 =E7=8F=AD=E6=98=8E
+http://www.hawaga.org.uk/ben/
+My email is high latency but best way to contact me. Alternatively, =20
+SMS number(s) at above URL.
