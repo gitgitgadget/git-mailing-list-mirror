@@ -1,56 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] xread/xwrite: do not worry about EINTR at calling sites.
-Date: Tue, 20 Dec 2005 10:59:41 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0512201058570.4827@g5.osdl.org>
-References: <7vhd95h02o.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0512191142410.4827@g5.osdl.org> <43A732C9.2060509@zytor.com>
- <7vvexkpoxf.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0512201136430.29711@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Racy GIT
+Date: Tue, 20 Dec 2005 11:28:17 -0800
+Message-ID: <7vr787h8ku.fsf@assigned-by-dhcp.cox.net>
+References: <7vwti0go2w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, "H. Peter Anvin" <hpa@zytor.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 20 20:02:23 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: pasky@suse.cz, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Tue Dec 20 20:29:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eomio-0004sg-7L
-	for gcvg-git@gmane.org; Tue, 20 Dec 2005 20:00:26 +0100
+	id 1Eon9q-0005ep-24
+	for gcvg-git@gmane.org; Tue, 20 Dec 2005 20:28:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751007AbVLTTAU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Dec 2005 14:00:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751026AbVLTTAT
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Dec 2005 14:00:19 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:41349 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751007AbVLTTAR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Dec 2005 14:00:17 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBKIxhDZ025034
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 20 Dec 2005 10:59:43 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBKIxfBo024849;
-	Tue, 20 Dec 2005 10:59:42 -0800
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0512201136430.29711@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750861AbVLTT2T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Dec 2005 14:28:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750967AbVLTT2T
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Dec 2005 14:28:19 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:32202 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1750850AbVLTT2S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Dec 2005 14:28:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051220192651.GLMI17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 20 Dec 2005 14:26:51 -0500
+To: git@vger.kernel.org
+In-Reply-To: <7vwti0go2w.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 20 Dec 2005 00:38:47 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13852>
 
+Junio C Hamano <junkio@cox.net> writes:
 
+> This fixes the longstanding "Racy GIT" problem,...
 
-On Tue, 20 Dec 2005, Johannes Schindelin wrote:
-> 
-> In another project I'm working on, a user insisted that on Solaris 2.7, 
-> write(2) sometimes returns ENOENT when it really means "try again". I 
-> cannot verify, since I don't have Solaris 2.7.
+Sorry, it does not really.
 
-That would be either a very confused user or a terminally sick Solaris 
-kernel. In either case, not worth fixing. 
+> If you run the following sequence of commands:
+>
+>         echo frotz >infocom
+>         git update-index --add infocom
+>         echo xyzzy >infocom
 
-		Linus
+The patch deals with the above sequence correctly, but it breaks
+down with:
+
+	echo frotz >infocom
+        git update-index --add infocom
+        echo xyzzy >infocom
+        sleep 3 ;# a little while later
+        echo nitfol >activision
+        git update-index --add activision
+        git diff-files infocom
+
+We need to detect the false clean entries just before we write
+out index in the second update-index and mark them out of date.
