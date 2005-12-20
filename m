@@ -1,80 +1,63 @@
-From: Blaisorblade <blaisorblade@yahoo.it>
-Subject: Re: [PATCH] Fix unconditional early exit in cg-fetch
-Date: Tue, 20 Dec 2005 16:25:07 +0100
-Message-ID: <200512201625.09767.blaisorblade@yahoo.it>
-References: <20051219161736.18245.98591.stgit@zion.home.lan> <7vpsnso9g8.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 20 16:29:42 2005
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+Subject: [PATCH] Fix unconditional early exit in cg-fetch v2
+Date: Tue, 20 Dec 2005 16:24:58 +0100
+Message-ID: <20051220152458.1302.84228.stgit@zion.home.lan>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 20 19:35:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EojMy-000433-2e
-	for gcvg-git@gmane.org; Tue, 20 Dec 2005 16:25:40 +0100
+	id 1EomHv-0004Ba-73
+	for gcvg-git@gmane.org; Tue, 20 Dec 2005 19:32:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751094AbVLTPZg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Dec 2005 10:25:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751095AbVLTPZg
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Dec 2005 10:25:36 -0500
-Received: from smtp005.mail.ukl.yahoo.com ([217.12.11.36]:19882 "HELO
-	smtp005.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1751094AbVLTPZg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Dec 2005 10:25:36 -0500
-Received: (qmail 26113 invoked from network); 20 Dec 2005 15:25:25 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Received:From:To:Subject:Date:User-Agent:Cc:References:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-Disposition:Message-Id;
-  b=Z39KdenCQe+EbGKgvQuGChkIy6U/vQp9p8xkMPvy8HJHgVWmIgIXE5eVt60fksVtArAL3UzWuAaYSf+iqpGNhK1LJMLAWgJB609A9vQlcILu4oMj66V8uET8gV78HYx7TJAS4l00K1MpZrPt5/QE7a6DxxoegGuvsWF72QGzy7Y=  ;
-Received: from unknown (HELO zion.home.lan) (blaisorblade@82.55.100.234 with login)
-  by smtp005.mail.ukl.yahoo.com with SMTP; 20 Dec 2005 15:25:24 -0000
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.8.3
-In-Reply-To: <7vpsnso9g8.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1750905AbVLTScg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Dec 2005 13:32:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750912AbVLTScg
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Dec 2005 13:32:36 -0500
+Received: from host234-100.pool8255.interbusiness.it ([82.55.100.234]:62393
+	"EHLO zion.home.lan") by vger.kernel.org with ESMTP
+	id S1750886AbVLTScf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Dec 2005 13:32:35 -0500
+Received: from zion.home.lan (localhost [127.0.0.1])
+	by zion.home.lan (Postfix) with ESMTP id 6134C22170;
+	Tue, 20 Dec 2005 16:24:59 +0100 (CET)
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13850>
 
-On Tuesday 20 December 2005 02:15, Junio C Hamano wrote:
-> Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it> writes:
-> >  	if [ "$get" = "get_rsync" ]; then
-> >  		$get -i -s -u -d "$uri/refs/tags" "$_git/refs/tags" ||
-> > -			echo "unable to get tags list (non-fatal)" >&2
-> > -		exit $?
-> > +			(echo "unable to get tags list (non-fatal)" >&2;
-> > +			exit $?)
-> >  	fi
 
-> Why would you want a subshell that exits with a non-zero status
-> when nobody is checking that status anyway?
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
 
-Argh, I should have used a proper conditional statement... I always forget 
-bash is not Perl.
+When invoking cg-fetch, after fetching tags it exits here, for an overlooked
+error handling. Replace the exit with an early return.
 
-> I suspect removing "exit $?" would suffice, if that condition is
-> non-fatal as the message says...
+This means, for instance, we exit without reporting the tag updates and without
+removing the "fetch in progress" marker - leading to unconditional "Recovering
+from interrupted fetch" at the very beginning with rsync transport. Indeed, this
+is fixed by this patch.
 
-Likely you need to skip git-ls-remote (not sure however, but it's an 
-exceptional condition).
+Signed-off-by: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+---
 
-return $? would be IMHO also fine - the caller is then free to ignore the 
-return code.
+ cg-fetch |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-I'm then resending the patch done the second way - feel free to merge any 
-version.
--- 
-Inform me of my mistakes, so I can keep imitating Homer Simpson's "Doh!".
-Paolo Giarrusso, aka Blaisorblade (Skype ID "PaoloGiarrusso", ICQ 215621894)
-http://www.user-mode-linux.org/~blaisorblade
-
-	
-
-	
-		
-___________________________________ 
-Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
-http://mail.yahoo.it
+diff --git a/cg-fetch b/cg-fetch
+index a2865ae..074aa14 100755
+--- a/cg-fetch
++++ b/cg-fetch
+@@ -189,9 +189,10 @@ fetch_tags()
+ 	[ -d "$_git/refs/tags" ] || mkdir -p "$_git/refs/tags"
+ 
+ 	if [ "$get" = "get_rsync" ]; then
+-		$get -i -s -u -d "$uri/refs/tags" "$_git/refs/tags" ||
++		if ! $get -i -s -u -d "$uri/refs/tags" "$_git/refs/tags"; then
+ 			echo "unable to get tags list (non-fatal)" >&2
+-		exit $?
++			return $?
++		fi
+ 	fi
+ 
+ 	git-ls-remote --tags "$uri" |
