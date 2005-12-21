@@ -1,59 +1,53 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] off-by-one bugs found by valgrind
-Date: Wed, 21 Dec 2005 16:47:21 -0500
-Message-ID: <1135201641.15567.7.camel@dv>
-References: <1135197348.3046.7.camel@dv>
-	 <7vr7865fq5.fsf@assigned-by-dhcp.cox.net>  <43A9C654.2010009@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git /objects directory created 755 by default?
+Date: Wed, 21 Dec 2005 14:10:48 -0800
+Message-ID: <7vek465cev.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90512201525k5eb7cf62u65de2cd51424df37@mail.gmail.com>
+	<7vacevgwqr.fsf@assigned-by-dhcp.cox.net>
+	<7vlkyffcxp.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0512211502130.25834@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 21 22:49:55 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 21 23:14:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpBoL-00026o-Og
-	for gcvg-git@gmane.org; Wed, 21 Dec 2005 22:47:50 +0100
+	id 1EpCAg-0000Q4-SP
+	for gcvg-git@gmane.org; Wed, 21 Dec 2005 23:10:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932195AbVLUVrr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 16:47:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751166AbVLUVrr
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 16:47:47 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:35494 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751136AbVLUVrq
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 16:47:46 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EpBm7-0000rx-4r
-	for git@vger.kernel.org; Wed, 21 Dec 2005 16:45:38 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1EpBnt-0004f1-87; Wed, 21 Dec 2005 16:47:21 -0500
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <43A9C654.2010009@zytor.com>
-X-Mailer: Evolution 2.4.1 (2.4.1-5) 
+	id S932294AbVLUWKv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 17:10:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932302AbVLUWKv
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 17:10:51 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:64668 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932294AbVLUWKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 17:10:51 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051221220950.VBD20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 21 Dec 2005 17:09:50 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13904>
 
-On Wed, 2005-12-21 at 13:17 -0800, H. Peter Anvin wrote:
-> >>quote_c_style_counted() in quote.c uses a dangerous construct, when a
-> >>variable is incremented once and used twice in the same expression.
-> > 
-> > Sorry, I do not follow you.  Isn't && a sequence point?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-The patch is right, but my comment was wrong, sorry.
+> If you don't use git-shell, because the same machine is used for other 
+> purposes, it makes sense to introduce
+>
+> 	[core]
+> 		umask = 0002
 
-The actual problem detected by valgrind is that sp is dereferenced
-before it's checked for the upper boundary.  So, if e.g. namelen is 6,
-the code reads name[6] into ch and then leaves the loop.
-
-> && is a sequence point.  The code is techically fine, but it's harder 
-> than necessary to read.
-
-That alone should be a good reason to apply this patch.
-
--- 
-Regards,
-Pavel Roskin
+I agree the setting should not be limited to git-shell, but I do
+not think setting "umask" from git configuration is the right
+way either.  For files and directories under $GIT_DIR, maybe
+imposing the policy git configuration file has is OK, but I
+think honoring the user's umask is the right thing for working
+tree files.
