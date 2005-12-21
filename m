@@ -1,53 +1,66 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git /objects directory created 755 by default?
-Date: Wed, 21 Dec 2005 14:10:48 -0800
-Message-ID: <7vek465cev.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f90512201525k5eb7cf62u65de2cd51424df37@mail.gmail.com>
-	<7vacevgwqr.fsf@assigned-by-dhcp.cox.net>
-	<7vlkyffcxp.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0512211502130.25834@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: [PATCH] GIT: Support [address] in URLs
+Date: Wed, 21 Dec 2005 14:16:50 -0800
+Message-ID: <7v64pi5c4t.fsf@assigned-by-dhcp.cox.net>
+References: <20051221.192342.132228413.yoshfuji@linux-ipv6.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 21 23:14:23 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 21 23:17:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpCAg-0000Q4-SP
-	for gcvg-git@gmane.org; Wed, 21 Dec 2005 23:10:56 +0100
+	id 1EpCGj-00024B-T4
+	for gcvg-git@gmane.org; Wed, 21 Dec 2005 23:17:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932294AbVLUWKv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 17:10:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932302AbVLUWKv
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 17:10:51 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:64668 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932294AbVLUWKv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 17:10:51 -0500
+	id S964823AbVLUWQy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 17:16:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964831AbVLUWQx
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 17:16:53 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:31998 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S964823AbVLUWQw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 17:16:52 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051221220950.VBD20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 21 Dec 2005 17:09:50 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+          id <20051221221452.BHSO17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 21 Dec 2005 17:14:52 -0500
+To: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
+In-Reply-To: <20051221.192342.132228413.yoshfuji@linux-ipv6.org> (YOSHIFUJI
+	Hideaki's message of "Wed, 21 Dec 2005 19:23:42 +0900 (JST)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13905>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+[somehow the first reply seems to have been lost]
 
-> If you don't use git-shell, because the same machine is used for other 
-> purposes, it makes sense to introduce
->
-> 	[core]
-> 		umask = 0002
+YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org> writes:
 
-I agree the setting should not be limited to git-shell, but I do
-not think setting "umask" from git configuration is the right
-way either.  For files and directories under $GIT_DIR, maybe
-imposing the policy git configuration file has is OK, but I
-think honoring the user's umask is the right thing for working
-tree files.
+> Allow address enclosed by [] in URLs, like:
+>    git push '[3ffe:ffff:...:1]:GIT/git'
+> or
+>    git push 'ssh://[3ffe:ffff:...:1]/GIT/git'
+
+I am not familiar with how things are done in ipv6 land, but I
+wonder if the former is consistent with the existing practice.
+
+That is, how does one do something like this, with an ipv6
+literal address?
+
+	telnet 127.0.0.1 80
+
+Is it done like this
+
+	telnet '[::1]' 80
+
+or
+	telnet '::1' 80
+
+Your patch suggests the former, but I just wanted to make sure.
+
+The latter "ssh://[...]" looks like RFC 3986, and I do not have
+problems with.
