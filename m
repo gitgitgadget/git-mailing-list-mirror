@@ -1,67 +1,66 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Am I doing something wrong?
-Date: 21 Dec 2005 10:17:54 -0800
-Message-ID: <86zmmuwbzh.fsf@blue.stonehenge.com>
+Date: Wed, 21 Dec 2005 10:27:27 -0800
+Message-ID: <7vhd92b90w.fsf@assigned-by-dhcp.cox.net>
 References: <86k6dyxuke.fsf@blue.stonehenge.com>
 	<7v3bkmcp83.fsf@assigned-by-dhcp.cox.net>
 	<864q52xrm6.fsf@blue.stonehenge.com>
 	<7vmziub9yw.fsf@assigned-by-dhcp.cox.net>
+	<86zmmuwbzh.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 21 19:21:53 2005
+X-From: git-owner@vger.kernel.org Wed Dec 21 19:29:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ep8Xq-0001mb-A6
-	for gcvg-git@gmane.org; Wed, 21 Dec 2005 19:18:34 +0100
+	id 1Ep8gc-0005A8-5Z
+	for gcvg-git@gmane.org; Wed, 21 Dec 2005 19:27:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964778AbVLUSR5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 13:17:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964779AbVLUSR4
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 13:17:56 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:33657 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S964776AbVLUSRz
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 13:17:55 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 5B2578D511;
-	Wed, 21 Dec 2005 10:17:55 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 19689-02-98; Wed, 21 Dec 2005 10:17:54 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id BD27E8D4E7; Wed, 21 Dec 2005 10:17:54 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-x-mayan-date: Long count = 12.19.12.16.3; tzolkin = 8 Akbal; haab = 1 Kankin
-In-Reply-To: <7vmziub9yw.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S964788AbVLUS1f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 13:27:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964791AbVLUS1e
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 13:27:34 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:25076 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S964788AbVLUS1d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 13:27:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051221182638.PMS20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 21 Dec 2005 13:26:38 -0500
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+In-Reply-To: <86zmmuwbzh.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "21 Dec 2005 10:17:54 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13888>
 
->>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-Junio> I said I tried cloning from scratch and fetching into an old one
-Junio> over HTTP and succeeded, did I not?  So it does not seem to be
-Junio> the case either.
+>>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+>
+> Junio> I said I tried cloning from scratch and fetching into an old one
+> Junio> over HTTP and succeeded, did I not?  So it does not seem to be
+> Junio> the case either.
+>
+> Cloning from scratch probably worked differently than starting
+> from wherever I was.
 
-Cloning from scratch probably worked differently than starting
-from wherever I was.
+Yup, that's why I tried both.
 
-Sorry, I didn't preserve the exact state from where I started... I
-think my last update was yesterday afternoon.  Would have been a good
-test case.  However, I'm very clear on the symptoms... trying to start
-from wherever I had last updated, to update to the current release,
-failed when sucking from HTTP, but worked when sucking from GIT.
+> ... However, I'm very clear on the symptoms... trying to start
+> from wherever I had last updated, to update to the current release,
+> failed when sucking from HTTP, but worked when sucking from GIT.
 
-In fact, I got the same exact behavior both on my Darwin laptop and my
-OpenBSD box, so I had to edit them both to get away from HTTP
-protocol.
+I do not doubt you got a failure.  I just couldn't reproduce it
+easily by fetching into a copy of a stale repository.  Earlier I
+was suspecting mirroring lags (my successful trial was done
+within the last hour) but I do not think that is the case
+because your failure was also way after the mirroring should
+have happened.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Will dig a bit more when able.
