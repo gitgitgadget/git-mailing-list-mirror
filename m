@@ -1,66 +1,136 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Am I doing something wrong?
-Date: Wed, 21 Dec 2005 10:27:27 -0800
-Message-ID: <7vhd92b90w.fsf@assigned-by-dhcp.cox.net>
-References: <86k6dyxuke.fsf@blue.stonehenge.com>
-	<7v3bkmcp83.fsf@assigned-by-dhcp.cox.net>
-	<864q52xrm6.fsf@blue.stonehenge.com>
-	<7vmziub9yw.fsf@assigned-by-dhcp.cox.net>
-	<86zmmuwbzh.fsf@blue.stonehenge.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: How to set up a shared repository
+Date: Wed, 21 Dec 2005 19:27:19 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512211919040.16640@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 21 19:29:22 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Wed Dec 21 19:29:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ep8gc-0005A8-5Z
-	for gcvg-git@gmane.org; Wed, 21 Dec 2005 19:27:38 +0100
+	id 1Ep8gc-0005A8-Ow
+	for gcvg-git@gmane.org; Wed, 21 Dec 2005 19:27:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964788AbVLUS1f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 13:27:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964791AbVLUS1e
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 13:27:34 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:25076 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S964788AbVLUS1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 13:27:33 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051221182638.PMS20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 21 Dec 2005 13:26:38 -0500
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-In-Reply-To: <86zmmuwbzh.fsf@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "21 Dec 2005 10:17:54 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932492AbVLUS1W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 13:27:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932493AbVLUS1V
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 13:27:21 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:56204 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932492AbVLUS1V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 13:27:21 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 2BF9813FBA6
+	for <git@vger.kernel.org>; Wed, 21 Dec 2005 19:27:20 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 10B2E9E26B
+	for <git@vger.kernel.org>; Wed, 21 Dec 2005 19:27:20 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id F0C8B9E230
+	for <git@vger.kernel.org>; Wed, 21 Dec 2005 19:27:19 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id E21F113FBA6
+	for <git@vger.kernel.org>; Wed, 21 Dec 2005 19:27:19 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13889>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
+Hi,
 
->>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
->
-> Junio> I said I tried cloning from scratch and fetching into an old one
-> Junio> over HTTP and succeeded, did I not?  So it does not seem to be
-> Junio> the case either.
->
-> Cloning from scratch probably worked differently than starting
-> from wherever I was.
+I installed a shared git repository in the last few days and this is the 
+result. May it be useful!
 
-Yup, that's why I tried both.
+Ciao,
+Dscho
 
-> ... However, I'm very clear on the symptoms... trying to start
-> from wherever I had last updated, to update to the current release,
-> failed when sucking from HTTP, but worked when sucking from GIT.
+---
 
-I do not doubt you got a failure.  I just couldn't reproduce it
-easily by fetching into a copy of a stale repository.  Earlier I
-was suspecting mirroring lags (my successful trial was done
-within the last hour) but I do not think that is the case
-because your failure was also way after the mirroring should
-have happened.
+[Note: this text assumes you have applied the core.umask patch]
 
-Will dig a bit more when able.
+So, there you are. You know CVS (or at least its concepts), and you want 
+to set up a shared repository.
+
+A. Setting up the umask
+
+1. Separate repository box
+
+If you are lucky enough that you can afford a separate machine for the 
+shared repository: Good. Just make sure that the umask is set group 
+friendly, either by ensuring that (assuming the login shell is bash) 
+$HOME/.bash_profile contains the line
+
+	umask 0002
+
+or by using git-shell, which you have modified by inserting
+
+	umask(0002);
+
+at the start of main().
+
+2. Some server accessible by ssh
+
+If there are valid reasons not to set umask (maybe you want to allow other 
+uses of that machine), or if you just do not want to go through the hassle 
+to find out which scripts your login shell executes at startup, you just 
+have to
+
+	git-repo-config core.umask 0002
+
+
+B. Making sure the index is not corrupted by a push
+
+1. No checkout!
+
+You can use the shared repository just like you use CVS: no working 
+directory. To disallow a checkout, just do
+
+	touch .git/index
+	chmod a-rwx .git/index
+
+Every attempt to modify the index (which is invalid), will now result in 
+an error.
+
+2. Ensure index and working directory consistency (no locking)
+
+If you want to be able to work on the project in the shared repository, 
+create hooks, as follows:
+
+	test -d .git/hooks || mkdir .git/hooks
+
+	cat > .git/hooks/update << EOF
+	#!/bin/sh
+	
+	# if the working directory contains modifications, do not allow push
+	HEAD=$(git-symbolic-ref HEAD)
+	case "$1" in
+	$HEAD)
+	        unset GIT_DIR
+	        cd .. && test -z "$(git-diff-index --name-only HEAD)";;
+	esac
+	EOF
+
+	chmod a+x .git/hooks/update
+
+	cat > .git/hooks/post-update << EOF
+	#!/bin/sh
+	
+	# checkout HEAD, and build
+	HEAD=$(git-symbolic-ref HEAD)
+	case "$1" in
+	$HEAD)
+	        unset GIT_DIR
+		umask 0002
+		cd .. && git checkout -f HEAD && make;;
+	esac
+	EOF
+
+	chmod a+x .git/hooks/post-update
+
+This assumes that your project contains a Makefile, and that the tools
+necessary to build are installed on the repository server.
+
+Note that I did not check if a push locks another push.
