@@ -1,65 +1,60 @@
 From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git /objects directory created 755 by default?
-Date: Wed, 21 Dec 2005 18:23:57 +1300
-Message-ID: <46a038f90512202123p5c7fbbe7qbf930abd8965a88c@mail.gmail.com>
-References: <46a038f90512201525k5eb7cf62u65de2cd51424df37@mail.gmail.com>
-	 <7vacevgwqr.fsf@assigned-by-dhcp.cox.net>
-	 <7vlkyffcxp.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f90512201828w618a64dexc22a64b8b6bc2b70@mail.gmail.com>
-	 <7vacevdoti.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f90512202115o652d8e00v86182302513d1319@mail.gmail.com>
-	 <7vzmmvc9l1.fsf@assigned-by-dhcp.cox.net>
+Subject: Pushing git patches to a subversion project
+Date: Wed, 21 Dec 2005 18:37:26 +1300
+Message-ID: <46a038f90512202137w772a3fe9p8e9e68345e39654a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 21 06:25:31 2005
+X-From: git-owner@vger.kernel.org Wed Dec 21 06:40:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EowSJ-0005nW-UD
-	for gcvg-git@gmane.org; Wed, 21 Dec 2005 06:24:04 +0100
+	id 1EowgX-00025E-9O
+	for gcvg-git@gmane.org; Wed, 21 Dec 2005 06:38:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751132AbVLUFYA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 00:24:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbVLUFYA
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 00:24:00 -0500
-Received: from wproxy.gmail.com ([64.233.184.207]:9789 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751132AbVLUFX7 convert rfc822-to-8bit
+	id S932128AbVLUFh2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 00:37:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932129AbVLUFh2
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 00:37:28 -0500
+Received: from wproxy.gmail.com ([64.233.184.193]:24157 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932128AbVLUFh1 convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 00:23:59 -0500
-Received: by wproxy.gmail.com with SMTP id 57so60402wri
-        for <git@vger.kernel.org>; Tue, 20 Dec 2005 21:23:58 -0800 (PST)
+	Wed, 21 Dec 2005 00:37:27 -0500
+Received: by wproxy.gmail.com with SMTP id 57so61999wri
+        for <git@vger.kernel.org>; Tue, 20 Dec 2005 21:37:26 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=C793eqxh8DgMflmJm61iy7rAnO7u6+s/CqDmlauT9qAPWYOHjfotvVDggR+xXEuZK+ODHSAYQrnlCZtLu3VB4b8ZvdfQ+fIZBpyIH05om4jMQNcXRCszuHb6gYNBlvWufXPQ/HHN/zwFSu/C9mwoPEwjt5+hRGppj8VmG/+W1rQ=
-Received: by 10.54.102.14 with SMTP id z14mr436525wrb;
-        Tue, 20 Dec 2005 21:23:58 -0800 (PST)
-Received: by 10.54.72.15 with HTTP; Tue, 20 Dec 2005 21:23:57 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmmvc9l1.fsf@assigned-by-dhcp.cox.net>
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=d5ermuRblNjgz3lrEhelLrNtiKUPkI26z573CcGqKEK5Cale5E0HJztVKyGhQpO741vWhlS0EZ0fQn4tS1bFt4uDuLQ4TRcz7QZ/+GDELPK6ADt4mgWzgOLcgJ8cdX5BNkmkbm8fvhlUuxa0U2bAlt8JVI3e1i5TzGPNCNoUzV8=
+Received: by 10.54.123.3 with SMTP id v3mr460183wrc;
+        Tue, 20 Dec 2005 21:37:26 -0800 (PST)
+Received: by 10.54.72.15 with HTTP; Tue, 20 Dec 2005 21:37:26 -0800 (PST)
+To: Git Mailing List <git@vger.kernel.org>,
+	Matthias Urlichs <smurf@smurf.noris.de>,
+	Kalle Valo <Kalle.Valo@iki.fi>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13869>
 
-On 12/21/05, Junio C Hamano <junkio@cox.net> wrote:
-> Martin Langhoff <martin.langhoff@gmail.com> writes:
->
-> > Could git-shell also be used by a SourceForge-like project, offering
-> > per-developer git repositories? If they are using the (BSDish?)
-> > convention of not having a group per user this could backfire.
->
-> Fair enough.  And I realize that the initial umask should be
-> configurable by the administrator who prepares ssh accounts
-> somehow (I do not know exactly how though).
+I am starting to work an svn-based upstream. In order to make life
+easy for me and for them I am trying to figure out a way for them to
+be able to merge my (emailed) patches atomically and preserving my
+comments.
 
-Something like rssh, which supports rsync, cvs and sftp (and should
-support git!), can set the umask based on a config. I think
-/etc/bashrc would work too. In Eduforge, I think we have /etc/skel
-with a group-friendly umask.
+Something like git-am for svn.
+
+Ideally, it should keep the patch as free of corruption as possible,
+as the results will be echoed back into my branches via git-svnimport
+and later "cg-update upstream" and I want git-cherry to have a fair go
+at matching them.
+
+There doesn't seem to be much. SVN-based projects ask for unified
+diffs mostly, and I can't find indication of patch trading that
+includes commit messages.
+
+Any hints?
 
 cheers,
 
