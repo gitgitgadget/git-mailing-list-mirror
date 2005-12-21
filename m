@@ -1,56 +1,68 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Am I doing something wrong?
-Date: 21 Dec 2005 08:51:13 -0800
-Message-ID: <86k6dyxuke.fsf@blue.stonehenge.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Avoid misleading success message on error
+Date: Wed, 21 Dec 2005 17:53:29 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512211752340.16125@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Dec 21 17:53:33 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Wed Dec 21 17:55:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ep7BR-0007ns-Ia
-	for gcvg-git@gmane.org; Wed, 21 Dec 2005 17:51:21 +0100
+	id 1Ep7Da-0000JW-08
+	for gcvg-git@gmane.org; Wed, 21 Dec 2005 17:53:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751138AbVLUQvT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 11:51:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751139AbVLUQvT
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 11:51:19 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:45928 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751138AbVLUQvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 11:51:18 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id C06DF8F8DB
-	for <git@vger.kernel.org>; Wed, 21 Dec 2005 08:51:13 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 06812-01-54 for <git@vger.kernel.org>;
- Wed, 21 Dec 2005 08:51:13 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 25B938F8F9; Wed, 21 Dec 2005 08:51:13 -0800 (PST)
-To: git <git@vger.kernel.org>
-x-mayan-date: Long count = 12.19.12.16.3; tzolkin = 8 Akbal; haab = 1 Kankin
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S932471AbVLUQxb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 11:53:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932451AbVLUQxb
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 11:53:31 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:43754 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751141AbVLUQxb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 11:53:31 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 3AF4913FAC1; Wed, 21 Dec 2005 17:53:30 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 1F0129E223; Wed, 21 Dec 2005 17:53:30 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 09E159E20A; Wed, 21 Dec 2005 17:53:30 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C878E13FAC1; Wed, 21 Dec 2005 17:53:29 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13880>
 
 
-localhost:~/MIRROR/git-GIT % cg-fetch
-Recovering from a previously interrupted fetch...
-Fetching head...
-Fetching objects...
-Getting alternates list for http://www.kernel.org/pub/scm/git/git.git/
-Getting pack list for http://www.kernel.org/pub/scm/git/git.git/
-error: Unable to find c2f3bf071ee90b01f2d629921bb04c4f798f02fa under http://www.kernel.org/pub/scm/git/git.git/
+When a push fails (for example when the remote head does not fast forward 
+to the desired ref) it is not correct to print "Everything up-to-date".
 
-Cannot obtain needed object c2f3bf071ee90b01f2d629921bb04c4f798f02fa
-while processing commit 0000000000000000000000000000000000000000.
-cg-fetch: objects fetch failed
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
+---
+
+ send-pack.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+67819bb187daa5a976bc3d721d5c9f920f52e4ba
+diff --git a/send-pack.c b/send-pack.c
+index a41bbe5..5bc2f01 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -272,7 +272,7 @@ static int send_pack(int in, int out, in
+ 	packet_flush(out);
+ 	if (new_refs)
+ 		pack_objects(out, remote_refs);
+-	else
++	else if (ret == 0)
+ 		fprintf(stderr, "Everything up-to-date\n");
+ 	close(out);
+ 	return ret;
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+0.99.9.GIT
