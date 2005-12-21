@@ -1,59 +1,73 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] sanity check in add_packed_git()
-Date: Wed, 21 Dec 2005 18:47:09 -0500
-Message-ID: <1135208829.15567.18.camel@dv>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Add suggestion to hard-to-understand error message
+Date: Thu, 22 Dec 2005 00:49:02 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512220048360.13453@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Dec 22 00:47:18 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Dec 22 00:49:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpDfw-0000cX-Qy
-	for gcvg-git@gmane.org; Thu, 22 Dec 2005 00:47:17 +0100
+	id 1EpDhx-0001An-Tl
+	for gcvg-git@gmane.org; Thu, 22 Dec 2005 00:49:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964994AbVLUXrM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 18:47:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964998AbVLUXrM
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 18:47:12 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:54446 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S964994AbVLUXrM
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 18:47:12 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EpDfq-0002Br-LW
-	for git@vger.kernel.org; Wed, 21 Dec 2005 18:47:10 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.54)
-	id 1EpDfp-00025W-RC
-	for git@vger.kernel.org; Wed, 21 Dec 2005 18:47:09 -0500
-To: git <git@vger.kernel.org>
-X-Mailer: Evolution 2.4.1 (2.4.1-5) 
+	id S965001AbVLUXtF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 18:49:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964998AbVLUXtF
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 18:49:05 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:56501 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964999AbVLUXtD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 18:49:03 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 92E9313FC80; Thu, 22 Dec 2005 00:49:02 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 79B439E2B4; Thu, 22 Dec 2005 00:49:02 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 657BD9E231; Thu, 22 Dec 2005 00:49:02 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 513D913FC80; Thu, 22 Dec 2005 00:49:02 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13919>
-
-add_packed_git() tries to get the pack SHA1 by parsing its name.  It may
-access uninitialized memory for packs with short names.
-
-Signed-off-by: Pavel Roskin <proski@gnu.org>
-
-diff --git a/sha1_file.c b/sha1_file.c
-index fa22e9c..d83d824 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -464,7 +464,7 @@ struct packed_git *add_packed_git(char *
- 	p->pack_last_used = 0;
- 	p->pack_use_cnt = 0;
- 	p->pack_local = local;
--	if (!get_sha1_hex(path + path_len - 40 - 4, sha1))
-+	if ((path_len > 44) && !get_sha1_hex(path + path_len - 44, sha1))
- 		memcpy(p->sha1, sha1, 20);
- 	return p;
- }
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13920>
 
 
+Dummies like me do not understand readily that "remote object abcdef...
+does not exist on local" means: "Hey, you did not pull this, did you?".
+So, add "(pull first?)" to that message.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+	Wow, my commit messages get longer, while the patches get shorter.
+	Odd.
+
+ send-pack.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+af2d86726fe961043d0c69c4fb727689a5903b63
+diff --git a/send-pack.c b/send-pack.c
+index 5bc2f01..643662a 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -233,7 +233,7 @@ static int send_pack(int in, int out, in
+ 		    !ref->force) {
+ 			if (!has_sha1_file(ref->old_sha1)) {
+ 				error("remote '%s' object %s does not "
+-				      "exist on local",
++				      "exist on local (pull first?)",
+ 				      ref->name, sha1_to_hex(ref->old_sha1));
+ 				ret = -2;
+ 				continue;
 -- 
-Regards,
-Pavel Roskin
+0.99.9.GIT
