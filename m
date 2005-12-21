@@ -1,147 +1,96 @@
-From: Chuck Lever <cel@citi.umich.edu>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Am I doing something wrong?
-Date: Wed, 21 Dec 2005 16:03:58 -0500
-Organization: Network Appliance, Inc.
-Message-ID: <43A9C33E.2070807@citi.umich.edu>
-References: <86k6dyxuke.fsf@blue.stonehenge.com>	<7v3bkmcp83.fsf@assigned-by-dhcp.cox.net>	<864q52xrm6.fsf@blue.stonehenge.com>	<7vmziub9yw.fsf@assigned-by-dhcp.cox.net>	<86zmmuwbzh.fsf@blue.stonehenge.com>	<7vhd92b90w.fsf@assigned-by-dhcp.cox.net> <7vvexi8bo9.fsf@assigned-by-dhcp.cox.net>
-Reply-To: cel@citi.umich.edu
+Date: Wed, 21 Dec 2005 13:13:33 -0800
+Message-ID: <7vk6dy5f2a.fsf@assigned-by-dhcp.cox.net>
+References: <86k6dyxuke.fsf@blue.stonehenge.com>
+	<7v3bkmcp83.fsf@assigned-by-dhcp.cox.net>
+	<864q52xrm6.fsf@blue.stonehenge.com>
+	<7vmziub9yw.fsf@assigned-by-dhcp.cox.net>
+	<86zmmuwbzh.fsf@blue.stonehenge.com>
+	<7vhd92b90w.fsf@assigned-by-dhcp.cox.net>
+	<7vvexi8bo9.fsf@assigned-by-dhcp.cox.net>
+	<43A9C33E.2070807@citi.umich.edu>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------040208090000070800090201"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 21 22:04:04 2005
+X-From: git-owner@vger.kernel.org Wed Dec 21 22:13:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpB7y-0003VA-At
-	for gcvg-git@gmane.org; Wed, 21 Dec 2005 22:04:02 +0100
+	id 1EpBHR-0008QV-5Y
+	for gcvg-git@gmane.org; Wed, 21 Dec 2005 22:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213AbVLUVD7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 16:03:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751216AbVLUVD7
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 16:03:59 -0500
-Received: from citi.umich.edu ([141.211.133.111]:10308 "EHLO citi.umich.edu")
-	by vger.kernel.org with ESMTP id S1751213AbVLUVD7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Dec 2005 16:03:59 -0500
-Received: from [141.211.133.33] (dexter.citi.umich.edu [141.211.133.33])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by citi.umich.edu (Postfix) with ESMTP id 978731BC6A;
-	Wed, 21 Dec 2005 16:03:58 -0500 (EST)
-User-Agent: Mozilla Thunderbird 1.0.7-1.4.1 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vvexi8bo9.fsf@assigned-by-dhcp.cox.net>
+	id S1750995AbVLUVNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 16:13:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751107AbVLUVNq
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 16:13:46 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:36305 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1750995AbVLUVNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 16:13:45 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051221211135.HIL17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 21 Dec 2005 16:11:35 -0500
+To: cel@citi.umich.edu, torvalds@osdl.org
+In-Reply-To: <43A9C33E.2070807@citi.umich.edu> (Chuck Lever's message of "Wed,
+	21 Dec 2005 16:03:58 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13900>
 
-This is a multi-part message in MIME format.
---------------040208090000070800090201
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
+Chuck Lever <cel@citi.umich.edu> writes:
 
-maybe the Linux kernel repository needs the same treatment.  i'm getting 
-the "all zeros" commit error message when trying to pull from it.
+> maybe the Linux kernel repository needs the same treatment.  i'm getting 
+> the "all zeros" commit error message when trying to pull from it.
 
+Indeed.
 
-Junio C Hamano wrote:
-> It turns out to be a stupid off-by-one error in http-fetch.c.
-> The objects/info/packs file has the following:
-> 
->         $ cat objects/info/packs
->         P pack-46ff81b11ed16ed38caa4aada913cb08c00185b2.pack
->         P pack-05f611b3b8198b262acdf678584d365f8e879aec.pack
->         P pack-740c99c0be6734adbd130737dec2608dc4682761.pack
->         $
-> 
-> The code that parses this in http-fetch had an off-by-one, and
-> incorrectly thought that the last entry was incomplete.  This
-> problem did not surface earlier, because objects/info/packs file
-> used to have other information after all the P lines, but
-> http-fetch was not interested in was skipping them.  The latest
-> update-server-info stopped producing those extra lines.
-> 
-> As a band-aid, I just ran this command at the server that public
-> ones mirror from:
-> 
-> 	$ echo >>objects/info/packs
-> 
-> The change seems to have mirrored out already, and my "broken"
-> client before the attached patch successfully fetches from
-> there, so hopefully things would work OK for you as well.
-> 
-> I also have to add some code to server-info.c, to append an
-> empty after objects/info/packs file to work around this bug in
-> the deployed http clients.
-> 
-> Thanks for your help in diagnosing and fixing this problem.
-> 
-> -- >8 --
-> [PATCH] http-fetch.c: fix objects/info/pack parsing.
-> 
-> It failed to register the last pack mentioned in the
-> objects/info/packs file.  Also it had an independent overrun
-> error.
-> 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-> 
-> ---
-> git diff
-> diff --git a/http-fetch.c b/http-fetch.c
-> index ad59f1c..3cd6ef9 100644
-> --- a/http-fetch.c
-> +++ b/http-fetch.c
-> @@ -658,7 +658,7 @@ static int fetch_indices(struct alt_base
->  		switch (data[i]) {
->  		case 'P':
->  			i++;
-> -			if (i + 52 < buffer.posn &&
-> +			if (i + 52 <= buffer.posn &&
->  			    !strncmp(data + i, " pack-", 6) &&
->  			    !strncmp(data + i + 46, ".pack\n", 6)) {
->  				get_sha1_hex(data + i + 6, sha1);
-> @@ -667,7 +667,7 @@ static int fetch_indices(struct alt_base
->  				break;
->  			}
->  		default:
-> -			while (data[i] != '\n')
-> +			while (i < buffer.posn && data[i] != '\n')
->  				i++;
->  		}
->  		i++;
-> 
-> Compilation finished at Wed Dec 21 11:40:06
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Linus, sorry about bothering you, but could you do the same
+band-aid for now and also apply the attached to your
+server-info.c, please?
 
+> Junio C Hamano wrote:
+>>
+>> As a band-aid, I just ran this command at the server that public
+>> ones mirror from:
+>>
+>> 	$ echo >>objects/info/packs
+>>
 
---------------040208090000070800090201
-Content-Type: text/x-vcard; charset=utf-8;
- name="cel.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="cel.vcf"
+GIT 1.0.0a needs to follow soonish X-<.
 
-begin:vcard
-fn:Chuck Lever
-n:Lever;Charles
-org:Network Appliance, Incorporated;Open Source NFS Client Development
-adr:535 West William Street, Suite 3100;;Center for Information Technology Integration;Ann Arbor;MI;48103-4943;USA
-email;internet:cel@citi.umich.edu
-title:Member of Technical Staff
-tel;work:+1 734 763 4415
-tel;fax:+1 734 763 4434
-tel;home:+1 734 668 1089
-x-mozilla-html:FALSE
-url:http://troy.citi.umich.edu/u/cel/
-version:2.1
-end:vcard
+-- >8 --
+[PATCH] objects/info/packs: work around bug in http-fetch.c::fetch_indices()
 
+The code to fetch pack index files in deployed clients have a
+bug that causes it to ignore the pack file on the last line of
+objects/info/packs file, so append an empty line to work it
+around.
 
---------------040208090000070800090201--
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+---
+
+ server-info.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+21b1aced83195af50fd8bc9a88e7734c8ee77c0e
+diff --git a/server-info.c b/server-info.c
+index df19e49..6089765 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -200,6 +200,7 @@ static void write_pack_info_file(FILE *f
+ 	int i;
+ 	for (i = 0; i < num_pack; i++)
+ 		fprintf(fp, "P %s\n", info[i]->p->pack_name + objdirlen + 6);
++	fputc('\n', fp);
+ }
+ 
+ static int update_info_packs(int force)
+-- 
+1.0.0
