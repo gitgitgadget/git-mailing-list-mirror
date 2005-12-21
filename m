@@ -1,256 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [RFC] Add "write-index" hook
-Date: Thu, 22 Dec 2005 00:56:14 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512220055050.13515@wbgn013.biozentrum.uni-wuerzburg.de>
+From: YOSHIFUJI Hideaki / =?iso-2022-jp?B?GyRCNUhGIzFRTEAbKEI=?= 
+	<yoshfuji@linux-ipv6.org>
+Subject: Re: [PATCH] GIT: Support [address] in URLs
+Date: Thu, 22 Dec 2005 08:59:17 +0900 (JST)
+Organization: USAGI/WIDE Project
+Message-ID: <20051222.085917.60400643.yoshfuji@linux-ipv6.org>
+References: <7v3bkm3vw4.fsf@assigned-by-dhcp.cox.net>
+	<20051222.080828.28117009.yoshfuji@linux-ipv6.org>
+	<20051221.152648.122640664.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Dec 22 00:56:20 2005
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: junkio@cox.net, git@vger.kernel.org, yoshfuji@linux-ipv6.org
+X-From: git-owner@vger.kernel.org Thu Dec 22 00:58:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpDoh-0002c0-EJ
-	for gcvg-git@gmane.org; Thu, 22 Dec 2005 00:56:19 +0100
+	id 1EpDrC-00038y-Kw
+	for gcvg-git@gmane.org; Thu, 22 Dec 2005 00:58:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965002AbVLUX4R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 18:56:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965005AbVLUX4R
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 18:56:17 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:10166 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S965002AbVLUX4Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 18:56:16 -0500
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 4E0B313FC80
-	for <git@vger.kernel.org>; Thu, 22 Dec 2005 00:56:15 +0100 (CET)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 32AEA9E2B4
-	for <git@vger.kernel.org>; Thu, 22 Dec 2005 00:56:15 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id ECB299C324
-	for <git@vger.kernel.org>; Thu, 22 Dec 2005 00:56:14 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id D9D3913FC80
-	for <git@vger.kernel.org>; Thu, 22 Dec 2005 00:56:14 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S965005AbVLUX6w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 18:58:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965006AbVLUX6w
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 18:58:52 -0500
+Received: from yue.linux-ipv6.org ([203.178.140.15]:12296 "EHLO
+	yue.st-paulia.net") by vger.kernel.org with ESMTP id S965005AbVLUX6v
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 18:58:51 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by yue.st-paulia.net (Postfix) with ESMTP
+	id 5CE8633CC2; Thu, 22 Dec 2005 08:59:18 +0900 (JST)
+To: davem@davemloft.net
+In-Reply-To: <20051221.152648.122640664.davem@davemloft.net>
+X-URL: http://www.yoshifuji.org/%7Ehideaki/
+X-Fingerprint: 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
+X-PGP-Key-URL: http://www.yoshifuji.org/%7Ehideaki/hideaki@yoshifuji.org.asc
+X-Face: "5$Al-.M>NJ%a'@hhZdQm:."qn~PA^gq4o*>iCFToq*bAi#4FRtx}enhuQKz7fNqQz\BYU]
+ $~O_5m-9'}MIs`XGwIEscw;e5b>n"B_?j/AkL~i/MEa<!5P`&C$@oP>ZBLP
+X-Mailer: Mew version 2.2 on Emacs 20.7 / Mule 4.1 (AOI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13922>
+
+In article <20051221.152648.122640664.davem@davemloft.net> (at Wed, 21 Dec 2005 15:26:48 -0800 (PST)), "David S. Miller" <davem@davemloft.net> says:
+
+> The vger.kernel.org spam filter filters out all non-ascii character
+> sets.  We have to do this because Matti and myself do all of the
+> filtering by hand, and we do not understand so many languages as to be
+> able to make sensible filters for spam in languages such as Japanese,
+> Korean, Chinese, Russian, etc. so we just filter them all.
+
+Too bad...
+
+Well, I know some Japanese people kill all messages with non-Japanese
+(usually English) subject... It is too bad, too...
 
 
-This is a less hacky way to prevent index access than what I suggested
-earlier. It has the additional benefit that you can control access to
-the index writing now.
+> This is a pain, but no better solutions have been suggested.  Before
+> anyone responds: 1) making the lists subscriber-only is not an option
+> 2) Bayesian filters are hard to integrate into our setup but we are
+> exploring ways to make that a reality at some point nevertheless.
 
-Oh, and the code to run hooks (which die() on errors) has been refactored.
+Can I help you somehow?
+E.g. if you give me an account on vger, I happily try to find the way to
+setup bayesian filter(s) on them.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Regards,
 
----
-
-	While the use of this hook is questionable, I actually like the
-	refactoring of the hooks, since it makes it so much easier
-	to add new ones.
-
- index.c        |    7 ++++++
- receive-pack.c |   61 ++------------------------------------------------------
- run-command.c  |   49 +++++++++++++++++++++++++++++++++++++++++++++
- run-command.h  |    2 ++
- 4 files changed, 60 insertions(+), 59 deletions(-)
-
-d567efd0ccfb60ae03a81f02f819283767d69011
-diff --git a/index.c b/index.c
-index ad0eafe..3f6ca1e 100644
---- a/index.c
-+++ b/index.c
-@@ -3,6 +3,7 @@
-  */
- #include <signal.h>
- #include "cache.h"
-+#include "run-command.h"
- 
- static struct cache_file *cache_file_list;
- 
-@@ -20,9 +21,15 @@ static void remove_lock_file_on_signal(i
- 	remove_lock_file();
- }
- 
-+static char write_index_hook[] = "hooks/write-index";
-+
- int hold_index_file_for_update(struct cache_file *cf, const char *path)
- {
- 	int fd;
-+
-+	if (run_hook(write_index_hook))
-+		return error("hook declined to write index\n");
-+
- 	sprintf(cf->lockfile, "%s.lock", path);
- 	fd = open(cf->lockfile, O_RDWR | O_CREAT | O_EXCL, 0666);
- 	if (fd >=0 && !cf->next) {
-diff --git a/receive-pack.c b/receive-pack.c
-index cbe37e7..d52d793 100644
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -59,36 +59,6 @@ static int verify_old_ref(const char *na
- 
- static char update_hook[] = "hooks/update";
- 
--static int run_update_hook(const char *refname,
--			   char *old_hex, char *new_hex)
--{
--	int code;
--
--	if (access(update_hook, X_OK) < 0)
--		return 0;
--	code = run_command(update_hook, refname, old_hex, new_hex, NULL);
--	switch (code) {
--	case 0:
--		return 0;
--	case -ERR_RUN_COMMAND_FORK:
--		die("hook fork failed");
--	case -ERR_RUN_COMMAND_EXEC:
--		die("hook execute failed");
--	case -ERR_RUN_COMMAND_WAITPID:
--		die("waitpid failed");
--	case -ERR_RUN_COMMAND_WAITPID_WRONG_PID:
--		die("waitpid is confused");
--	case -ERR_RUN_COMMAND_WAITPID_SIGNAL:
--		fprintf(stderr, "%s died of signal", update_hook);
--		return -1;
--	case -ERR_RUN_COMMAND_WAITPID_NOEXIT:
--		die("%s died strangely", update_hook);
--	default:
--		error("%s exited with error code %d", update_hook, -code);
--		return -code;
--	}
--}
--
- static int update(const char *name,
- 		  unsigned char *old_sha1, unsigned char *new_sha1)
- {
-@@ -133,7 +103,7 @@ static int update(const char *name,
- 		unlink(lock_name);
- 		return error("%s changed during push", name);
- 	}
--	if (run_update_hook(name, old_hex, new_hex)) {
-+	if (run_hook(update_hook, name, old_hex, new_hex)) {
- 		unlink(lock_name);
- 		return error("hook declined to update %s\n", name);
- 	}
-@@ -149,33 +119,6 @@ static int update(const char *name,
- 
- static char update_post_hook[] = "hooks/post-update";
- 
--static void run_update_post_hook(struct command *cmd)
--{
--	struct command *cmd_p;
--	int argc;
--	char **argv;
--
--	if (access(update_post_hook, X_OK) < 0)
--		return;
--	for (argc = 1, cmd_p = cmd; cmd_p; cmd_p = cmd_p->next) {
--		if (!cmd_p->updated)
--			continue;
--		argc++;
--	}
--	argv = xmalloc(sizeof(*argv) * (1 + argc));
--	argv[0] = update_post_hook;
--
--	for (argc = 1, cmd_p = cmd; cmd_p; cmd_p = cmd_p->next) {
--		if (!cmd_p->updated)
--			continue;
--		argv[argc] = xmalloc(strlen(cmd_p->ref_name) + 1);
--		strcpy(argv[argc], cmd_p->ref_name);
--		argc++;
--	}
--	argv[argc] = NULL;
--	run_command_v_opt(argc, argv, RUN_COMMAND_NO_STDIO);
--}
--
- /*
-  * This gets called after(if) we've successfully
-  * unpacked the data payload.
-@@ -189,7 +132,7 @@ static void execute_commands(void)
- 				       cmd->old_sha1, cmd->new_sha1);
- 		cmd = cmd->next;
- 	}
--	run_update_post_hook(commands);
-+	run_hook(update_post_hook, commands);
- }
- 
- static void read_head_info(void)
-diff --git a/run-command.c b/run-command.c
-index 8bf5922..95455ef 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -67,3 +67,52 @@ int run_command(const char *cmd, ...)
- 		return error("too many args to run %s", cmd);
- 	return run_command_v_opt(argc, argv, 0);
- }
-+
-+int run_hook(const char* hook, ...)
-+{
-+	int argc;
-+	char *argv[MAX_RUN_COMMAND_ARGS];
-+	const char *arg;
-+	va_list param;
-+	int code;
-+
-+	if (access(hook, X_OK) < 0)
-+		return 0;
-+
-+	va_start(param, hook);
-+	argv[0] = (char*) hook;
-+	argc = 1;
-+	while (argc < MAX_RUN_COMMAND_ARGS) {
-+		arg = argv[argc++] = va_arg(param, char *);
-+		if (!arg)
-+			break;
-+	}
-+	va_end(param);
-+	if (MAX_RUN_COMMAND_ARGS <= argc)
-+		return error("too many args to run %s", hook);
-+
-+	code = run_command_v_opt(argc, argv, 0);
-+
-+	switch (code) {
-+	case 0:
-+		return 0;
-+	case -ERR_RUN_COMMAND_FORK:
-+		die("hook fork failed");
-+	case -ERR_RUN_COMMAND_EXEC:
-+		die("hook execute failed");
-+	case -ERR_RUN_COMMAND_WAITPID:
-+		die("waitpid failed");
-+	case -ERR_RUN_COMMAND_WAITPID_WRONG_PID:
-+		die("waitpid is confused");
-+	case -ERR_RUN_COMMAND_WAITPID_SIGNAL:
-+		fprintf(stderr, "%s died of signal", hook);
-+		return -1;
-+	case -ERR_RUN_COMMAND_WAITPID_NOEXIT:
-+		die("%s died strangely", hook);
-+	default:
-+		error("%s exited with error code %d", hook, -code);
-+		return -code;
-+	}
-+}
-+
-+
-diff --git a/run-command.h b/run-command.h
-index 2469eea..604176f 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -16,5 +16,7 @@ enum {
- int run_command_v_opt(int argc, char **argv, int opt);
- int run_command_v(int argc, char **argv);
- int run_command(const char *cmd, ...);
-+/* unlike run_command(), run_hook die()s on errors */
-+int run_hook(const char *hook, ...);
- 
- #endif
--- 
-1.0.0
+--yoshfuji
