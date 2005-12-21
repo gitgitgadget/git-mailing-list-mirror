@@ -1,96 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Am I doing something wrong?
-Date: Wed, 21 Dec 2005 13:13:33 -0800
-Message-ID: <7vk6dy5f2a.fsf@assigned-by-dhcp.cox.net>
-References: <86k6dyxuke.fsf@blue.stonehenge.com>
-	<7v3bkmcp83.fsf@assigned-by-dhcp.cox.net>
-	<864q52xrm6.fsf@blue.stonehenge.com>
-	<7vmziub9yw.fsf@assigned-by-dhcp.cox.net>
-	<86zmmuwbzh.fsf@blue.stonehenge.com>
-	<7vhd92b90w.fsf@assigned-by-dhcp.cox.net>
-	<7vvexi8bo9.fsf@assigned-by-dhcp.cox.net>
-	<43A9C33E.2070807@citi.umich.edu>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] off-by-one bugs found by valgrind
+Date: Wed, 21 Dec 2005 13:17:08 -0800
+Message-ID: <43A9C654.2010009@zytor.com>
+References: <1135197348.3046.7.camel@dv> <7vr7865fq5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 21 22:13:52 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 21 22:18:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpBHR-0008QV-5Y
-	for gcvg-git@gmane.org; Wed, 21 Dec 2005 22:13:49 +0100
+	id 1EpBLY-0001iK-3R
+	for gcvg-git@gmane.org; Wed, 21 Dec 2005 22:18:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbVLUVNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 16:13:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751107AbVLUVNq
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 16:13:46 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:36305 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1750995AbVLUVNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 16:13:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051221211135.HIL17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 21 Dec 2005 16:11:35 -0500
-To: cel@citi.umich.edu, torvalds@osdl.org
-In-Reply-To: <43A9C33E.2070807@citi.umich.edu> (Chuck Lever's message of "Wed,
-	21 Dec 2005 16:03:58 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751107AbVLUVRz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 16:17:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbVLUVRz
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 16:17:55 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:19616 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750745AbVLUVRy
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 16:17:54 -0500
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBLLHDsZ020593
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 21 Dec 2005 13:17:14 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vr7865fq5.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13901>
 
-Chuck Lever <cel@citi.umich.edu> writes:
+Junio C Hamano wrote:
+> Pavel Roskin <proski@gnu.org> writes:
+> 
+> 
+>>Insufficient memory is allocated in index-pack.c to hold the *.idx name.
+>>One more byte should be allocated to hold the terminating 0.
+> 
+> Thanks.
+> 
+> 
+>>quote_c_style_counted() in quote.c uses a dangerous construct, when a
+>>variable is incremented once and used twice in the same expression.
+> 
+> Sorry, I do not follow you.  Isn't && a sequence point?
+> 
 
-> maybe the Linux kernel repository needs the same treatment.  i'm getting 
-> the "all zeros" commit error message when trying to pull from it.
+&& is a sequence point.  The code is techically fine, but it's harder 
+than necessary to read.
 
-Indeed.
-
-Linus, sorry about bothering you, but could you do the same
-band-aid for now and also apply the attached to your
-server-info.c, please?
-
-> Junio C Hamano wrote:
->>
->> As a band-aid, I just ran this command at the server that public
->> ones mirror from:
->>
->> 	$ echo >>objects/info/packs
->>
-
-GIT 1.0.0a needs to follow soonish X-<.
-
--- >8 --
-[PATCH] objects/info/packs: work around bug in http-fetch.c::fetch_indices()
-
-The code to fetch pack index files in deployed clients have a
-bug that causes it to ignore the pack file on the last line of
-objects/info/packs file, so append an empty line to work it
-around.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- server-info.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-21b1aced83195af50fd8bc9a88e7734c8ee77c0e
-diff --git a/server-info.c b/server-info.c
-index df19e49..6089765 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -200,6 +200,7 @@ static void write_pack_info_file(FILE *f
- 	int i;
- 	for (i = 0; i < num_pack; i++)
- 		fprintf(fp, "P %s\n", info[i]->p->pack_name + objdirlen + 6);
-+	fputc('\n', fp);
- }
- 
- static int update_info_packs(int force)
--- 
-1.0.0
+	-hpa
