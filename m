@@ -1,56 +1,77 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: [PATCH] gqit: enable compiler warnings
-Date: Wed, 21 Dec 2005 08:11:54 +0100
-Message-ID: <43A9003A.8010408@yahoo.it>
-References: <1135131068.1183.6.camel@dv>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Pushing git patches to a subversion project
+Date: Tue, 20 Dec 2005 23:25:19 -0800
+Message-ID: <7vpsnqdi8w.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90512202137w772a3fe9p8e9e68345e39654a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Marco Costalba <mcostalba@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 21 08:13:09 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Matthias Urlichs <smurf@smurf.noris.de>,
+	Kalle Valo <Kalle.Valo@iki.fi>
+X-From: git-owner@vger.kernel.org Wed Dec 21 08:26:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eoy8x-00024z-TQ
-	for gcvg-git@gmane.org; Wed, 21 Dec 2005 08:12:12 +0100
+	id 1EoyLp-0007Wv-Vv
+	for gcvg-git@gmane.org; Wed, 21 Dec 2005 08:25:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932299AbVLUHMI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 02:12:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932300AbVLUHMI
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 02:12:08 -0500
-Received: from smtp100.mail.sc5.yahoo.com ([216.136.174.138]:38260 "HELO
-	smtp100.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
-	id S932299AbVLUHMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 02:12:07 -0500
-Received: (qmail 85006 invoked from network); 21 Dec 2005 07:12:04 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-  b=XtawNiEy5/yV0GmWxYnvNq5gbTDAHkInx5GJvE26DpDdeeAx1mdRvW9vs0HYbfPrvssAZ1pM20N53qBVnHEm05YaTf5bYIk/UwieFYmVFg9ADalyPs6VQ0SdBKJJwqZfXGEzwgIDIDVfYJHd6gjiarFvfVlpM0jDR5hMGBmJViM=  ;
-Received: from unknown (HELO ?10.0.0.13?) (mcostalba@151.44.24.188 with plain)
-  by smtp100.mail.sc5.yahoo.com with SMTP; 21 Dec 2005 07:12:03 -0000
-User-Agent: Mozilla Thunderbird 1.0.6-7.2.20060mdk (X11/20050322)
-X-Accept-Language: it, it-it, en-us, en
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1135131068.1183.6.camel@dv>
+	id S932305AbVLUHZ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 02:25:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932306AbVLUHZ1
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 02:25:27 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:54484 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932305AbVLUHZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 02:25:26 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051221072437.PIMP15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 21 Dec 2005 02:24:37 -0500
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90512202137w772a3fe9p8e9e68345e39654a@mail.gmail.com>
+	(Martin Langhoff's message of "Wed, 21 Dec 2005 18:37:26 +1300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13871>
 
-Pavel Roskin wrote:
-> The "-O2" flag should be separated from the threading support.  Besides,
-> it belongs to CCFLAGS (compile flags common to C and C++), not to
-> CPPFLAGS (preprocessor flags).  While at that, enable all warnings by
-> -Wall, except those about non-virtual destructors, which are "inherited"
-> from Qt.  Portability is not affected since -O2 was already
-> gcc-specific.
-> 
-> Signed-off-by: Pavel Roskin <proski@gnu.org>
-> 
-Thanks applied.
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-		
-___________________________________ 
-Yahoo! Messenger: chiamate gratuite in tutto il mondo 
-http://it.messenger.yahoo.com
+> I am starting to work an svn-based upstream. In order to make life
+> easy for me and for them I am trying to figure out a way for them to
+> be able to merge my (emailed) patches atomically and preserving my
+> comments.
+>
+> Something like git-am for svn.
+
+Many building blocks git-am uses should be usable for this.
+
+ * git-mailsplit you already know about due to earlier "non UNIX
+   mbox" discussion.
+
+ * git-mailinfo can be used to parse out commit message, title
+   and authorship information, and actual patch.
+
+ * git-apply without --index option can be used to apply patch
+   to the working tree, but normal "patch -p1" would do the same
+   unless it is a git renaming patch.  git-apply would also be
+   useful for its --summary option to find out mode changes
+   (if it is a git patch) and file creation and deletion.
+
+So probably you could script something like this:
+
+	$ git mailinfo .msg .patch <e-mail-file >.info
+        $ (sed -ne 's/^Subject: //p' .info ; echo ; cat .msg) >.final-msg
+	$ git apply --summary <.patch |
+        while read cd mo de file
+        do
+        	case "$cd" in
+                create)
+                	svn add "$file" ;;
+		delete)
+                	svn rm "$file" ;;
+		esac
+	done
+	$ svn commit -F .final-msg
