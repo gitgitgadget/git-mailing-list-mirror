@@ -1,79 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: git /objects directory created 755 by default?
-Date: Tue, 20 Dec 2005 21:03:21 -0800
-Message-ID: <7vacevdoti.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 21 Dec 2005 18:10:16 +1300
+Message-ID: <46a038f90512202110i5f4a4d6fu16981f5801798717@mail.gmail.com>
 References: <46a038f90512201525k5eb7cf62u65de2cd51424df37@mail.gmail.com>
-	<7vacevgwqr.fsf@assigned-by-dhcp.cox.net>
-	<7vlkyffcxp.fsf@assigned-by-dhcp.cox.net>
-	<46a038f90512201828w618a64dexc22a64b8b6bc2b70@mail.gmail.com>
+	 <7vacevgwqr.fsf@assigned-by-dhcp.cox.net>
+	 <7vlkyffcxp.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f90512201828w618a64dexc22a64b8b6bc2b70@mail.gmail.com>
+	 <7vr787dp9r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 21 06:04:47 2005
+X-From: git-owner@vger.kernel.org Wed Dec 21 06:11:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eow8N-00074E-7Z
-	for gcvg-git@gmane.org; Wed, 21 Dec 2005 06:03:27 +0100
+	id 1EowF7-0000qB-9a
+	for gcvg-git@gmane.org; Wed, 21 Dec 2005 06:10:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751082AbVLUFDX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Dec 2005 00:03:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751084AbVLUFDX
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 00:03:23 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:13449 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751082AbVLUFDX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2005 00:03:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051221050232.GBKW20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 21 Dec 2005 00:02:32 -0500
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90512201828w618a64dexc22a64b8b6bc2b70@mail.gmail.com>
-	(Martin Langhoff's message of "Wed, 21 Dec 2005 15:28:46 +1300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932279AbVLUFKS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 00:10:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751093AbVLUFKS
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 00:10:18 -0500
+Received: from wproxy.gmail.com ([64.233.184.193]:49701 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751092AbVLUFKR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 00:10:17 -0500
+Received: by wproxy.gmail.com with SMTP id 57so58856wri
+        for <git@vger.kernel.org>; Tue, 20 Dec 2005 21:10:16 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Wa7Sh4zYGsFi9shMIKNOHxI8IHFSR1EjeJla4TdX6clAB1nvPeIBE4XHTlcv7ALOF3SbIjbAryBjVmMIpY330vZGcRH/2wGacQmo/knkMLCR9dT2Ki7YxUXDZVQnlBqgYb9vQ5NySy0Xirlk3dd5nHPjdcahznw8rOFe6cvY8eU=
+Received: by 10.54.114.7 with SMTP id m7mr432921wrc;
+        Tue, 20 Dec 2005 21:10:16 -0800 (PST)
+Received: by 10.54.72.15 with HTTP; Tue, 20 Dec 2005 21:10:16 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vr787dp9r.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13865>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
-
->> If so, do your developers use git-shell?
+On 12/21/05, Junio C Hamano <junkio@cox.net> wrote:
+> Martin Langhoff <martin.langhoff@gmail.com> writes:
 >
-> no...
+> > I think I owe you an apology and a couple of beers...
+>
+> Nah, you do not owe me anything.  Does something like this look
+> good?
 
-While we established that your problem did not have anything to
-do with git-shell, I am tempted to do something like this.
+Yup, makes sense to me. I often explain it as "same file permissions
+and access model as you'd use with CVS".
 
-Thoughts?
+cheers,
 
--- >8 --
-[PATCH] Force group writable umask in git-shell
 
-Usually I do not like hardcoded policy in programs, but use of
-git-shell is already a policy decision by the repository
-administrator to use the shared repository style of development,
-and I cannot think of a reason to forbid group (and self, but
-that is obvious) writability in such use scenario.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
-diff --git a/shell.c b/shell.c
-index cd31618..40a2a97 100644
---- a/shell.c
-+++ b/shell.c
-@@ -52,6 +52,10 @@ int main(int argc, char **argv)
- 		default:
- 			continue;
- 		}
-+		/* Make sure myself and my group members can write
-+		 * into what I create.
-+		 */
-+		umask(umask(0) & ~0770);
- 		exit(cmd->exec(cmd->name, arg));
- 	}
- 	die("unrecognized command '%s'", prog);
+martin
