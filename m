@@ -1,86 +1,100 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git /objects directory created 755 by default?
-Date: Thu, 22 Dec 2005 17:52:39 +0100
-Message-ID: <43AAD9D7.1070503@op5.se>
-References: <46a038f90512201525k5eb7cf62u65de2cd51424df37@mail.gmail.com> <7vacevgwqr.fsf@assigned-by-dhcp.cox.net> <7vlkyffcxp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0512211502130.25834@wbgn013.biozentrum.uni-wuerzburg.de> <7vek465cev.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0512212317400.18684@wbgn013.biozentrum.uni-wuerzburg.de> <43AA75D1.7040009@op5.se> <Pine.LNX.4.63.0512221220220.7112@wbgn013.biozentrum.uni-wuerzburg.de> <43AA9BE6.7000601@op5.se> <Pine.LNX.4.63.0512221530570.18551@wbgn013.biozentrum.uni-wuerzburg.de> <43AACBE9.7060201@op5.se> <Pine.LNX.4.63.0512221700310.18982@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: [PATCH] Fix for http-fetch from file:// URLs
+Date: Thu, 22 Dec 2005 09:09:05 -0800
+Message-ID: <20051222170905.GB3876@reactrix.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 22 17:52:51 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Dec 22 18:09:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpTgJ-0006Tz-T7
-	for gcvg-git@gmane.org; Thu, 22 Dec 2005 17:52:44 +0100
+	id 1EpTwI-0003rj-Pw
+	for gcvg-git@gmane.org; Thu, 22 Dec 2005 18:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030180AbVLVQwl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Dec 2005 11:52:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030190AbVLVQwl
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Dec 2005 11:52:41 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:20612 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030180AbVLVQwl
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Dec 2005 11:52:41 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id EB0146BD02; Thu, 22 Dec 2005 17:52:39 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0512221700310.18982@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1030202AbVLVRJL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Dec 2005 12:09:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030205AbVLVRJL
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Dec 2005 12:09:11 -0500
+Received: from 194.37.26.69.virtela.com ([69.26.37.194]:15985 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1030202AbVLVRJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Dec 2005 12:09:10 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id jBMH952b004423
+	for <git@vger.kernel.org>; Thu, 22 Dec 2005 09:09:05 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id jBMH95S4004421
+	for git@vger.kernel.org; Thu, 22 Dec 2005 09:09:05 -0800
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13956>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> this is getting silly. The problem is: how to setup a shared repository, 
-> i.e. a repository into which different users can push their updates.
-> 
+Recognize missing files when using http-fetch with file:// URLs
 
-You're simplifying. Your question was
-"How can I set up a repository for multiple users to write to without 
-setting a global umask for non-interactive shells?"
+Signed-off-by: Nick Hengeveld <nickh@reactrix.com>
 
-Junio said:
-"I agree the setting should not be limited to git-shell, but I do
-not think setting "umask" from git configuration is the right
-way either.  For files and directories under $GIT_DIR, maybe
-imposing the policy git configuration file has is OK, but I
-think honoring the user's umask is the right thing for working
-tree files."
 
-which I whole-heartedly agree with. I'd be completely furious if a tool 
-ignored the umask I use for checking out files of a local repository 
-just because I happen to do some work at the machine where the repo is 
-stored (I imagine this couldn't possibly affect repositories cloned 
-remotely, although that would surely have me going ballistic).
+---
 
-You answered that it would be good for hooks as well, although those can 
-set their own umask easily enough (if you forget it there, you'll be 
-hastily reminded the first time it breaks, so no real harm done).
+By way of explanation, our content distribution clients use a
+self-referential file:// URL when fetching updates, and all actual
+content servers are listed in http-alternates.  This removes the
+dependency on a single external primary server so updates will
+continue to work as long as any one server is available.
 
-The problem as I see it is to update only the $GIT_DIR files with the 
-proper umask (or rather, just the objects/ and refs/ directories, since 
-$GIT_DIR/. is never touched after being created and the other are for 
-repo maintainers only).
+ http-fetch.c |   12 ++++++++----
+ 1 files changed, 8 insertions(+), 4 deletions(-)
 
-Enter the nifty git-receive-pack, which does all the writing when a repo 
-is being pushed to, unless bypassed from the /git/foo working tree for 
-the /git/foo/.git repository. The latter is already discouraged, so we 
-might as well ignore that. It's also nice because it will never mess 
-with files that are for the repo maintainer only, although hooks can 
-ofcourse do whatever they like to those files provided the repo 
-maintainer allows it.
-
-Now it's time to go home, but I'll have a patch by tonight unless you 
-beat me to it. :)
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+applies-to: 3ca81810fe174dec38fa6ccec874559a39d8893f
+92865a7cc1ea511f88d1ab8aa4c0faa50e05566b
+diff --git a/http-fetch.c b/http-fetch.c
+index 3cd6ef9..61b2188 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -267,7 +267,8 @@ static void process_object_response(void
+ 	obj_req->state = COMPLETE;
+ 
+ 	/* Use alternates if necessary */
+-	if (obj_req->http_code == 404) {
++	if (obj_req->http_code == 404 ||
++	    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE) {
+ 		fetch_alternates(alt->base);
+ 		if (obj_req->repo->next != NULL) {
+ 			obj_req->repo =
+@@ -475,7 +476,8 @@ static void process_alternates_response(
+ 			}
+ 		}
+ 	} else if (slot->curl_result != CURLE_OK) {
+-		if (slot->http_code != 404) {
++		if (slot->http_code != 404 &&
++		    slot->curl_result != CURLE_FILE_COULDNT_READ_FILE) {
+ 			got_alternates = -1;
+ 			return;
+ 		}
+@@ -637,7 +639,8 @@ static int fetch_indices(struct alt_base
+ 	if (start_active_slot(slot)) {
+ 		run_active_slot(slot);
+ 		if (slot->curl_result != CURLE_OK) {
+-			if (slot->http_code == 404) {
++			if (slot->http_code == 404 ||
++			    slot->curl_result == CURLE_FILE_COULDNT_READ_FILE) {
+ 				repo->got_indices = 1;
+ 				free(buffer.buffer);
+ 				return 0;
+@@ -802,7 +805,8 @@ static int fetch_object(struct alt_base 
+ 		ret = error("Request for %s aborted", hex);
+ 	} else if (obj_req->curl_result != CURLE_OK &&
+ 		   obj_req->http_code != 416) {
+-		if (obj_req->http_code == 404)
++		if (obj_req->http_code == 404 ||
++		    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE)
+ 			ret = -1; /* Be silent, it is probably in a pack. */
+ 		else
+ 			ret = error("%s (curl_result = %d, http_code = %ld, sha1 = %s)",
+---
+0.99.9.GIT
