@@ -1,68 +1,71 @@
-From: Mauro Carvalho Chehab <mchehab@infradead.org>
-Subject: Re: problems when pushing to a master repository
-Date: Thu, 22 Dec 2005 08:56:03 -0200
-Message-ID: <1135248963.17758.18.camel@localhost>
-References: <1135246723.17758.14.camel@localhost>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] whatchanged: customize diff-tree output
+Date: Thu, 22 Dec 2005 12:16:00 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512221200190.7112@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0512212336230.18908@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vvexhr6rc.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0512212245440.4827@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Dec 22 11:56:19 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 22 12:16:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpO7K-0003gv-H2
-	for gcvg-git@gmane.org; Thu, 22 Dec 2005 11:56:14 +0100
+	id 1EpOQp-0001gI-Eu
+	for gcvg-git@gmane.org; Thu, 22 Dec 2005 12:16:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932195AbVLVK4K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 22 Dec 2005 05:56:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932159AbVLVK4K
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Dec 2005 05:56:10 -0500
-Received: from pentafluge.infradead.org ([213.146.154.40]:50081 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S932125AbVLVK4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Dec 2005 05:56:09 -0500
-Received: from [200.103.119.234] (helo=[192.168.1.112])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.54 #1 (Red Hat Linux))
-	id 1EpO7D-0007oe-48
-	for git@vger.kernel.org; Thu, 22 Dec 2005 10:56:08 +0000
-To: git@vger.kernel.org
-In-Reply-To: <1135246723.17758.14.camel@localhost>
-X-Mailer: Evolution 2.4.2.1-1mdk 
-X-Spam-Score: 1.8 (+)
-X-Spam-Report: SpamAssassin version 3.0.4 on pentafluge.infradead.org summary:
-	Content analysis details:   (1.8 points, 5.0 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.1 RCVD_IN_SORBS_DUL      RBL: SORBS: sent directly from dynamic IP address
-	[200.103.119.234 listed in dnsbl.sorbs.net]
-	1.7 RCVD_IN_NJABL_DUL      RBL: NJABL: dialup sender did non-local SMTP
-	[200.103.119.234 listed in combined.njabl.org]
-X-SRS-Rewrite: SMTP reverse-path rewritten from <mchehab@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S932195AbVLVLQJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Dec 2005 06:16:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932210AbVLVLQJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Dec 2005 06:16:09 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:50848 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932195AbVLVLQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Dec 2005 06:16:06 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C722113FD4C; Thu, 22 Dec 2005 12:16:02 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id AC4669E38A; Thu, 22 Dec 2005 12:16:02 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 995E09E231; Thu, 22 Dec 2005 12:16:02 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 02D4913FD4C; Thu, 22 Dec 2005 12:16:00 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0512212245440.4827@g5.osdl.org>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13942>
 
-Em Qui, 2005-12-22 =E0s 08:18 -0200, Mauro Carvalho Chehab escreveu:
-> 	I've started working recently with git, and I'm suffering problems t=
-o
-> update a master repository. Sometimes, git refuses to update a master
-> repository:
->=20
-> git push
-> ssh://master.kernel.org/pub/scm/linux/kernel/git/mchehab/v4l-dvb.git
-> master
-> error: src refspec master matches more than one.
-> fatal: unexpected EOF
->=20
-> 	Even removing the branch, git-prune and reimporting doesn't work. I
-> have to reimport the tree from master repository.
->=20
-> 	Any sugestions?
-	I found the problem. git created a refs/bases dir, with old references
-with the same names. Removing it fixed the problem.
+Hi,
 
-Cheers,
-Mauro.
+On Wed, 21 Dec 2005, Linus Torvalds wrote:
+
+> On Wed, 21 Dec 2005, Junio C Hamano wrote:
+> > 
+> > How about doing something like this patch first, and then decide
+> > what the default should be?
+
+I see you already applied it, with a sane default. That's great!
+
+> I'm certainly ok with the short format by default. And making it 
+> configurable per repo sounds fine, although at the same time I wonder if 
+> that perhaps confuses people more (something that works in one project one 
+> way works subtly differently in another project..)
+
+I cannot think of a saner way to have an overridable policy. Just provide 
+a template config, and you're done. Everyone gets those flags per default, 
+and if someone does not like it: go ahead, change it yourself!
+
+Besides, you are usually calling git-whatchanged in your private working 
+tree, where not many people can change the config.
+
+Ciao,
+Dscho
