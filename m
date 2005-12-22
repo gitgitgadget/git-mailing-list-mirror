@@ -1,72 +1,55 @@
-From: Ben Clifford <benc@hawaga.org.uk>
-Subject: Re: [PATCH] cg-completion: improve options and command listing
-Date: Tue, 20 Dec 2005 11:43:52 +0930
-Message-ID: <FB1B98E9-58B8-44BE-AC08-606C30A5F61A@hawaga.org.uk>
-References: <20051211190931.GF2960@diku.dk> <EF827EE8-7B7A-4D19-A08D-8C67D6B74195@hawaga.org.uk> <20051218143439.GA7064@diku.dk>
-Mime-Version: 1.0 (Apple Message framework v746.2)
-Content-Type: text/plain; charset=UTF-8;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 22 01:27:17 2005
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] Add "write-index" hook
+Date: Thu, 22 Dec 2005 01:35:59 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512220134170.14582@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0512220055050.13515@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Dec 22 01:36:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpEIe-0000qR-AE
-	for gcvg-git@gmane.org; Thu, 22 Dec 2005 01:27:16 +0100
+	id 1EpERA-00033g-Qb
+	for gcvg-git@gmane.org; Thu, 22 Dec 2005 01:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965020AbVLVA0O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 21 Dec 2005 19:26:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965022AbVLVA0O
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 19:26:14 -0500
-Received: from mundungus.clifford.ac ([81.187.211.39]:5648 "EHLO
-	mundungus.clifford.ac") by vger.kernel.org with ESMTP
-	id S965020AbVLVA0N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Dec 2005 19:26:13 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by mundungus.clifford.ac (8.13.3/8.13.3) with ESMTP id jBM0Olrw012586;
-	Thu, 22 Dec 2005 00:25:40 GMT
-In-Reply-To: <20051218143439.GA7064@diku.dk>
-To: Jonas Fonseca <fonseca@diku.dk>
-X-Mailer: Apple Mail (2.746.2)
+	id S964831AbVLVAgB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Dec 2005 19:36:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965034AbVLVAgB
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Dec 2005 19:36:01 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:27576 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964831AbVLVAgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2005 19:36:00 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 79C7413F8CB
+	for <git@vger.kernel.org>; Thu, 22 Dec 2005 01:35:59 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 60C029E2C1
+	for <git@vger.kernel.org>; Thu, 22 Dec 2005 01:35:59 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 4C85D9E2B3
+	for <git@vger.kernel.org>; Thu, 22 Dec 2005 01:35:59 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 3143D13F8CB
+	for <git@vger.kernel.org>; Thu, 22 Dec 2005 01:35:59 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.63.0512220055050.13515@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13925>
 
+Hi,
 
-On 19 Dec 2005, at 00:04, Jonas Fonseca wrote:
->>
->> I'm interested by what you mean by 'all sorts of garbage' - it seems
->> ok on my machine.
->
-> ~/src/cogito/cogito > __cg_cmdlist | head
->         cg-add             Add files to the GIT repository.
->         cg-clean           Clean unknown files from the working tree.
->         cg-clone           Clone a remote GIT repository.
+there is an obvious bug in this patch: both calls to run_hook() have to 
+have a final NULL argument.
 
-I definitely don't get that here. Bleugh!
+Ciao,
+Dscho
 
-> Else I was thinking of maybe adding --list parameter to cg-help to =20
-> have
-> it list all known commands.
-
-One thing that seemed kinda neat that I saw somewhere (perhaps in =20
-darcs?) is that it will tab complete only commands that would make =20
-sense in the present location (so cg <tab> would perhaps only bring =20
-up 'init' and 'help' in a non-git directory) - that would be rather =20
-more invasive to implement, I expect.
-
-Another thing that has been mooted is autogenerating the completion =20
-code based on USAGE info - I've had a hack about in the past with =20
-that (its in the autogen branch in the gitcompletion repo on =20
-hawaga.org.uk) but then I reached the point where it seemed too icky =20
-for my tastes...
-
---=20
-Ben =E2=80=A2 =E3=83=99=E3=83=B3 =E2=80=A2 =D0=91=D1=8D=D0=BD =E2=80=A2=
- =EB=B2=A4 =E2=80=A2 =E7=8F=AD=E6=98=8E
-http://www.hawaga.org.uk/ben/
-My email is high latency but best way to contact me. Alternatively, =20
-SMS number(s) at above URL.
+P.S.: The reason I did not find this earlier was that I had hooks 
+installed, but they were not executable, and thus did not get executed. 
+D'oh!
