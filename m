@@ -1,57 +1,62 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: git /objects directory created 755 by default?
-Date: Thu, 22 Dec 2005 11:11:25 +0100
-Message-ID: <81b0412b0512220211o74f7f533j11b8e48311b61ec2@mail.gmail.com>
-References: <46a038f90512201525k5eb7cf62u65de2cd51424df37@mail.gmail.com>
-	 <7vacevgwqr.fsf@assigned-by-dhcp.cox.net>
-	 <7vlkyffcxp.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0512211502130.25834@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vek465cev.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0512212317400.18684@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Mauro Carvalho Chehab <mchehab@infradead.org>
+Subject: problems when pushing to a master repository
+Date: Thu, 22 Dec 2005 08:18:42 -0200
+Message-ID: <1135246723.17758.14.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 22 11:11:37 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Dec 22 11:18:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpNQ2-0006ed-0k
-	for gcvg-git@gmane.org; Thu, 22 Dec 2005 11:11:30 +0100
+	id 1EpNXF-0000jd-9v
+	for gcvg-git@gmane.org; Thu, 22 Dec 2005 11:18:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750731AbVLVKL1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Dec 2005 05:11:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750734AbVLVKL1
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Dec 2005 05:11:27 -0500
-Received: from nproxy.gmail.com ([64.233.182.203]:56788 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750731AbVLVKL0 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Dec 2005 05:11:26 -0500
-Received: by nproxy.gmail.com with SMTP id x29so114333nfb
-        for <git@vger.kernel.org>; Thu, 22 Dec 2005 02:11:25 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YzsC2kV0im54cA727YPZZXkTJGw5NnAeyVtghuLb19OGCEYhiNQtGxSjVV3048fxaGDJ74IdHy78F8deJLyoctWyV+gQ2WXO70zD1RSE9uALV4zRoC7RCp9QKgcu+ehkEaA137ITqF7hIRsM/sk9rtnUDD0BtvTQFec9F5NaSqg=
-Received: by 10.49.68.6 with SMTP id v6mr18719nfk;
-        Thu, 22 Dec 2005 02:11:25 -0800 (PST)
-Received: by 10.48.247.10 with HTTP; Thu, 22 Dec 2005 02:11:25 -0800 (PST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0512212317400.18684@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1750762AbVLVKSy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Dec 2005 05:18:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750774AbVLVKSy
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Dec 2005 05:18:54 -0500
+Received: from pentafluge.infradead.org ([213.146.154.40]:19861 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S1750762AbVLVKSy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Dec 2005 05:18:54 -0500
+Received: from [200.103.119.234] (helo=[192.168.1.112])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.54 #1 (Red Hat Linux))
+	id 1EpNXA-0007gx-7H
+	for git@vger.kernel.org; Thu, 22 Dec 2005 10:18:53 +0000
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.4.2.1-1mdk 
+X-Spam-Score: 1.8 (+)
+X-Spam-Report: SpamAssassin version 3.0.4 on pentafluge.infradead.org summary:
+	Content analysis details:   (1.8 points, 5.0 required)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.1 RCVD_IN_SORBS_DUL      RBL: SORBS: sent directly from dynamic IP address
+	[200.103.119.234 listed in dnsbl.sorbs.net]
+	1.7 RCVD_IN_NJABL_DUL      RBL: NJABL: dialup sender did non-local SMTP
+	[200.103.119.234 listed in combined.njabl.org]
+X-SRS-Rewrite: SMTP reverse-path rewritten from <mchehab@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13940>
 
-On 12/21/05, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > >
-> > >     [core]
-> > >             umask = 0002
-> So, I tend to say: use core.umask only in shared setups (in which you
-> should not checkout files unless you know exactly what you are doing).
+	I've started working recently with git, and I'm suffering problems to
+update a master repository. Sometimes, git refuses to update a master
+repository:
 
-May be "shell.umask" or "shared.umask" ?
+git push
+ssh://master.kernel.org/pub/scm/linux/kernel/git/mchehab/v4l-dvb.git
+master
+error: src refspec master matches more than one.
+fatal: unexpected EOF
+
+	Even removing the branch, git-prune and reimporting doesn't work. I
+have to reimport the tree from master repository.
+
+	Any sugestions?
+
+Cheers, 
+Mauro.
