@@ -1,97 +1,158 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-clone-pack: do not silently overwrite an existing branch 'origin'
-Date: Thu, 22 Dec 2005 13:12:08 -0800
-Message-ID: <7vu0d0hm53.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0512221859110.20025@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Introduce core.sharedrepository
+Date: Thu, 22 Dec 2005 23:13:56 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512222313070.12044@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Dec 22 22:12:24 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Dec 22 23:14:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpXjS-0004L8-GO
-	for gcvg-git@gmane.org; Thu, 22 Dec 2005 22:12:14 +0100
+	id 1EpYhG-00015S-Mb
+	for gcvg-git@gmane.org; Thu, 22 Dec 2005 23:14:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965179AbVLVVML (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Dec 2005 16:12:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965180AbVLVVML
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Dec 2005 16:12:11 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:52975 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S965179AbVLVVMK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Dec 2005 16:12:10 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051222211118.DZYT20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 22 Dec 2005 16:11:18 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0512221859110.20025@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 22 Dec 2005 18:59:30 +0100
-	(CET)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030346AbVLVWN6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Dec 2005 17:13:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030348AbVLVWN6
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Dec 2005 17:13:58 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:32443 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1030346AbVLVWN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Dec 2005 17:13:57 -0500
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 7231613F976; Thu, 22 Dec 2005 23:13:56 +0100 (CET)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 57ED79E3E1; Thu, 22 Dec 2005 23:13:56 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 41E149E3A1; Thu, 22 Dec 2005 23:13:56 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 3082113F976; Thu, 22 Dec 2005 23:13:56 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13973>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> When cloning a repository which already contains a branch called 'origin',
-> do not silently overwrite it with the remote 'master' ref.
+This is the second attempt, after Junio convinced me that my simple approach
+to set umask was misguided.
 
-If we consider the "origin is special and is used to track
-upstream" convention pretty much ingrained, then unconditionally
-overwriting origin without saying anything is the right
-approach.  After all, you do not care what upstream your
-upstream is keeping track of, and you would want to use 'origin'
-for the usual purpose of keeping track of upstream.
+If the config variable 'core.sharedrepository' is set, the directories
 
-Otherwise, if we do not treat "origin" specially, we could
-do something like this.  If "origin" exists, then we do not
-overwrite upon clone, nor subsequent fetch.
+	$GIT_DIR/objects/
+	$GIT_DIR/objects/??
+	$GIT_DIR/objects/pack
+	$GIT_DIR/refs
+	$GIT_DIR/refs/heads
+	$GIT_DIR/refs/heads/tags
 
-I have a mild aversion to this change, though.  I'd much prefer
-the third approach I am too lazy to code, which lets you say
-what local branch name instead of 'origin' to keep track of
-upstream from 'git clone' command line.
+are set group writable (and g+s, since the git group may be not the primary
+group of all users).
+
+Since all files are written as lock files first,
+and then moved to their destination, they do not have to be group writable.
+Indeed, if this leads to problems you found a bug.
+
+Note that -- as in my first attempt -- the config variable is set in the
+function which checks the repository format. If this were done in
+git_default_config instead, a lot of programs would need to be modified
+to call git_config(git_default_config) first.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
 ---
 
-diff --git a/git-clone.sh b/git-clone.sh
-index 280cc2e..edebee7 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -206,17 +206,22 @@ then
- 	refs/heads/*)
- 		head_points_at=`expr "$head_points_at" : 'refs/heads/\(.*\)'`
- 		mkdir -p .git/remotes &&
--		echo >.git/remotes/origin \
--		"URL: $repo
--Pull: $head_points_at:origin" &&
--		cp ".git/refs/heads/$head_points_at" .git/refs/heads/origin &&
-+		echo "URL: $repo" >.git/remotes/origin &&
-+		if test -f ".git/refs/heads/origin"
-+		then
-+		    echo "Pull: $head_points_at:"
-+		else
-+		    echo "Pull: $head_points_at:origin"
-+		    cp ".git/refs/heads/$head_points_at" \
-+		        .git/refs/heads/origin &&
-+		fi >>.git/remotes/origin &&
- 		find .git/refs/heads -type f -print |
- 		while read ref
- 		do
--			head=`expr "$ref" : '.git/refs/heads/\(.*\)'` &&
--			test "$head_points_at" = "$head" ||
--			test "origin" = "$head" ||
--			echo "Pull: ${head}:${head}"
-+		    head=`expr "$ref" : '.git/refs/heads/\(.*\)'` &&
-+		    test "$head_points_at" = "$head" ||
-+		    test "origin" = "$head" ||
-+		    echo "Pull: ${head}:${head}"
- 		done >>.git/remotes/origin
- 	esac
+ cache.h     |    1 +
+ setup.c     |    4 ++++
+ sha1_file.c |   21 +++++++++++++++++++++
+ 3 files changed, 26 insertions(+), 0 deletions(-)
+
+1a164f16e90378ba66e70e6082266645d3b45c57
+diff --git a/cache.h b/cache.h
+index cb87bec..0f875dd 100644
+--- a/cache.h
++++ b/cache.h
+@@ -159,6 +159,7 @@ extern void rollback_index_file(struct c
+ extern int trust_executable_bit;
+ extern int only_use_symrefs;
+ extern int diff_rename_limit_default;
++extern int shared_repository;
  
+ #define GIT_REPO_VERSION 0
+ extern int repository_format_version;
+diff --git a/setup.c b/setup.c
+index d3556ed..3de372e 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1,5 +1,7 @@
+ #include "cache.h"
+ 
++int shared_repository = 0;
++
+ const char *prefix_path(const char *prefix, int len, const char *path)
+ {
+ 	const char *orig = path;
+@@ -180,6 +182,8 @@ int check_repository_format_version(cons
+ {
+        if (strcmp(var, "core.repositoryformatversion") == 0)
+                repository_format_version = git_config_int(var, value);
++	else if (strcmp(var, "core.sharedrepository") == 0)
++		shared_repository = git_config_bool(var, value);
+        return 0;
+ }
+ 
+diff --git a/sha1_file.c b/sha1_file.c
+index d451a94..e109a07 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -48,6 +48,21 @@ int get_sha1_hex(const char *hex, unsign
+ 	return 0;
+ }
+ 
++static int make_group_writable(const char *path)
++{
++	struct stat st;
++
++	if (lstat(path, &st) < 0)
++		return -1;
++	if (st.st_mode & S_IWUSR)
++		st.st_mode |= S_IWGRP;
++	if (S_ISDIR(st.st_mode))
++		st.st_mode |= S_ISGID;
++	if (chmod(path, st.st_mode) < 0)
++		return -2;
++	return 0;
++}
++
+ int safe_create_leading_directories(char *path)
+ {
+ 	char *pos = path;
+@@ -64,6 +79,10 @@ int safe_create_leading_directories(char
+ 				*pos = '/';
+ 				return -1;
+ 			}
++		if (shared_repository && make_group_writable(path)) {
++			*pos = '/';
++			return -2;
++		}
+ 		*pos++ = '/';
+ 	}
+ 	return 0;
+@@ -1241,6 +1260,8 @@ static int link_temp_to_file(const char 
+ 		if (dir) {
+ 			*dir = 0;
+ 			mkdir(filename, 0777);
++			if (shared_repository && make_group_writable(filename))
++				return -2;
+ 			*dir = '/';
+ 			if (!link(tmpfile, filename))
+ 				return 0;
+-- 
+1.0.GIT
