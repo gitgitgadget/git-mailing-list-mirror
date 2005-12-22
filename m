@@ -1,74 +1,75 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] sha1_to_hex: properly terminate the SHA1
-Date: Thu, 22 Dec 2005 18:55:59 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512221854550.20025@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [PATCH] git-clone-pack: do not silently overwrite an existing branch
+ 'origin'
+Date: Thu, 22 Dec 2005 18:59:30 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512221859110.20025@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Dec 22 18:56:23 2005
+X-From: git-owner@vger.kernel.org Thu Dec 22 18:59:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpUfr-0003Ym-TY
-	for gcvg-git@gmane.org; Thu, 22 Dec 2005 18:56:20 +0100
+	id 1EpUj1-0004gB-In
+	for gcvg-git@gmane.org; Thu, 22 Dec 2005 18:59:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030243AbVLVR4F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Dec 2005 12:56:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030240AbVLVR4B
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Dec 2005 12:56:01 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:11933 "EHLO
+	id S1030233AbVLVR7d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Dec 2005 12:59:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030240AbVLVR7c
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Dec 2005 12:59:32 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:51613 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1030242AbVLVR4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Dec 2005 12:56:00 -0500
+	id S1030233AbVLVR7c (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Dec 2005 12:59:32 -0500
 Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 86A1313FCE6; Thu, 22 Dec 2005 18:55:59 +0100 (CET)
+	id 2ACFE13C144; Thu, 22 Dec 2005 18:59:31 +0100 (CET)
 Received: from virusscan (localhost [127.0.0.1])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 6C99D9E3A1; Thu, 22 Dec 2005 18:55:59 +0100 (CET)
+	id EF3D49E3A1; Thu, 22 Dec 2005 18:59:30 +0100 (CET)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
 	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 54B0C9E231; Thu, 22 Dec 2005 18:55:59 +0100 (CET)
+	id B76F99E231; Thu, 22 Dec 2005 18:59:30 +0100 (CET)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3794713FCE6; Thu, 22 Dec 2005 18:55:59 +0100 (CET)
+	id A2D7813C144; Thu, 22 Dec 2005 18:59:30 +0100 (CET)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: git@vger.kernel.org, junkio@cox.net
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13960>
 
 
-sha1_to_hex() returns a pointer to a static buffer. Some of its users
-modify that buffer by appending a newline character. Other users rely
-on the fact that you can call
-
-	printf("%s", sha1_to_hex(sha1));
-
-Just to be on the safe side, terminate the SHA1 in sha1_to_hex().
+When cloning a repository which already contains a branch called 'origin',
+do not silently overwrite it with the remote 'master' ref.
 
 Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
 ---
 
- sha1_file.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+	This happened to me with a project I track via git-cvsimport.
+	The clone strangely suffered a time warp ;-)
 
-3a743c154546e4937b4afdc7848d9943ec2f4148
-diff --git a/sha1_file.c b/sha1_file.c
-index 6011473..d451a94 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -81,6 +81,8 @@ char * sha1_to_hex(const unsigned char *
- 		*buf++ = hex[val >> 4];
- 		*buf++ = hex[val & 0xf];
- 	}
-+	*buf = '\0';
-+
- 	return buffer;
- }
- 
+ git-clone.sh |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+f0d4ef72573488410a1e8eb0198e347630d6e2c9
+diff --git a/git-clone.sh b/git-clone.sh
+index 280cc2e..e988964 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -204,6 +204,10 @@ then
+ 	head_points_at=`git-symbolic-ref HEAD`
+ 	case "$head_points_at" in
+ 	refs/heads/*)
++		if test -e .git/refs/heads/origin; then
++			chmod a-w .git/refs/heads/origin
++			echo "Warning: branch 'origin' exists already"
++		fi
+ 		head_points_at=`expr "$head_points_at" : 'refs/heads/\(.*\)'`
+ 		mkdir -p .git/remotes &&
+ 		echo >.git/remotes/origin \
 -- 
 1.0.0
