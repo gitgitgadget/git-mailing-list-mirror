@@ -1,66 +1,56 @@
-From: Ingo Oeser <ioe-lkml@rameria.de>
-Subject: Re: [ANNOUNCE] GIT 1.0.0b quickfix
-Date: Fri, 23 Dec 2005 17:12:38 +0100
-Message-ID: <200512231712.40621.ioe-lkml@rameria.de>
-References: <7vpsnq3wrg.fsf@assigned-by-dhcp.cox.net> <1135244363.10035.185.camel@gaston> <Pine.LNX.4.64.0512220945450.4827@g5.osdl.org>
+From: M_ <barra_cuda@katamail.com>
+Subject: [PATCH] git-show-branch: show the right things when "--heads" or "--tags" is specified
+Date: Fri, 23 Dec 2005 17:35:35 +0100
+Message-ID: <200512231735.36092.barra_cuda@katamail.com>
+Reply-To: barra_cuda@katamail.com
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	"H. Peter Anvin" <hpa@zytor.com>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1030564AbVLWQMx@vger.kernel.org Fri Dec 23 17:13:15 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1030564AbVLWQMx@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+X-From: git-owner@vger.kernel.org Fri Dec 23 17:30:00 2005
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EppXe-0006AC-PQ
-	for glk-linux-kernel-3@gmane.org; Fri, 23 Dec 2005 17:13:15 +0100
+	id 1Eppnm-0003sm-UR
+	for gcvg-git@gmane.org; Fri, 23 Dec 2005 17:29:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030564AbVLWQMx (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 23 Dec 2005 11:12:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932503AbVLWQMw
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Fri, 23 Dec 2005 11:12:52 -0500
-Received: from smtprelay02.ispgateway.de ([80.67.18.14]:34773 "EHLO
-	smtprelay02.ispgateway.de") by vger.kernel.org with ESMTP
-	id S932499AbVLWQMw (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 23 Dec 2005 11:12:52 -0500
-Received: (qmail 11562 invoked from network); 23 Dec 2005 16:12:46 -0000
-Received: from unknown (HELO p5483d71e.dip.t-dialin.net) (696817@[84.131.215.30])
-          (envelope-sender <ioe-lkml@rameria.de>)
-          by smtprelay02.ispgateway.de (qmail-ldap-1.03) with RC4-MD5 encrypted SMTP
-          for <linux-kernel@vger.kernel.org>; 23 Dec 2005 16:12:46 -0000
-To: linux-kernel@vger.kernel.org
-User-Agent: KMail/1.7.2
-In-Reply-To: <Pine.LNX.4.64.0512220945450.4827@g5.osdl.org>
+	id S1030572AbVLWQ3u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Dec 2005 11:29:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030579AbVLWQ3u
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Dec 2005 11:29:50 -0500
+Received: from fe-3a.inet.it ([213.92.5.105]:45522 "EHLO fe-3a.inet.it")
+	by vger.kernel.org with ESMTP id S1030572AbVLWQ3u (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Dec 2005 11:29:50 -0500
+Received: from dial-up-mi-205.lombardiacom.it ([::ffff:212.34.225.205]) by fe-3a.inet.it via I-SMTP-5.2.3-521
+	id ::ffff:212.34.225.205+NNM5qiu40t; Fri, 23 Dec 2005 17:29:48 +0100
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
 Content-Disposition: inline
-Sender: linux-kernel-owner@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13994>
-
-On Thursday 22 December 2005 18:46, Linus Torvalds wrote:
-> On Thu, 22 Dec 2005, Benjamin Herrenschmidt wrote:
-> > > Wouldn't it make more sense for the maintenance release to be 1.0.1?
-> > Seconded. letters in versions are bad. With my MacOS background, for me,
-> > "b" means "beta" :)
-> FWIW, thirded. The kernel used to use letters too, and it's cute, but just 
-> using multiple levels of release numbers is much more common.
-
-Also sucks because letters after numbers a read as "units".
-
-Just compare 5h, 3kg, 20cm, 9in, 1.3h
-
-Also putting letters after version numbers usally gives me
-a feeling that the author is not sure about what he does.
-But this is just me, I guess
-
-I hope util-linux is going to learn all that one day :-)
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13995>
 
 
-Regards
+---
 
-Ingo Oeser
+ show-branch.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+26c0f04b8a370ac9943bb409b8cd5e7370263f41
+diff --git a/show-branch.c b/show-branch.c
+index c742246..2aeabd9 100644
+--- a/show-branch.c
++++ b/show-branch.c
+@@ -515,7 +515,7 @@ int main(int ac, char **av)
+        if (all_heads + all_tags)
+                snarf_refs(all_heads, all_tags);
+
+-       if (ac) {
++       if (ac + all_heads + all_tags) {
+                while (0 < ac) {
+                        append_one_rev(*av);
+                        ac--; av++;
+--
+1.0.0b
