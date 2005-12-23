@@ -1,54 +1,62 @@
 From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git /objects directory created 755 by default?
-Date: Fri, 23 Dec 2005 13:07:53 +0100
-Message-ID: <43ABE899.6030002@op5.se>
-References: <46a038f90512201525k5eb7cf62u65de2cd51424df37@mail.gmail.com>	<7vacevgwqr.fsf@assigned-by-dhcp.cox.net>	<7vlkyffcxp.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0512211502130.25834@wbgn013.biozentrum.uni-wuerzburg.de>	<7vek465cev.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0512212317400.18684@wbgn013.biozentrum.uni-wuerzburg.de>	<43AA75D1.7040009@op5.se>	<Pine.LNX.4.63.0512221220220.7112@wbgn013.biozentrum.uni-wuerzburg.de>	<43AA9BE6.7000601@op5.se> <7vslsllz17.fsf@totally-fudged-out-message-id>
+Subject: Re: [PATCH] send-pack: reword non-fast-forward error message.
+Date: Fri, 23 Dec 2005 13:13:46 +0100
+Message-ID: <43ABE9FA.4010604@op5.se>
+References: <Pine.LNX.4.63.0512220048360.13453@wbgn013.biozentrum.uni-wuerzburg.de>	<7vd5jqvsn1.fsf@assigned-by-dhcp.cox.net> <43AA79EB.6040800@op5.se>	<7vek45lyor.fsf@assigned-by-dhcp.cox.net> <7vu0d0j24z.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 23 13:08:17 2005
+X-From: git-owner@vger.kernel.org Fri Dec 23 13:13:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EpliX-0004pu-LF
-	for gcvg-git@gmane.org; Fri, 23 Dec 2005 13:08:14 +0100
+	id 1Eplo0-0006MP-BT
+	for gcvg-git@gmane.org; Fri, 23 Dec 2005 13:13:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030493AbVLWMHz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Dec 2005 07:07:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030509AbVLWMHz
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Dec 2005 07:07:55 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:8332 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S1030493AbVLWMHz (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Dec 2005 07:07:55 -0500
+	id S1030509AbVLWMNs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Dec 2005 07:13:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030511AbVLWMNs
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Dec 2005 07:13:48 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:24204 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030509AbVLWMNr
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Dec 2005 07:13:47 -0500
 Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 2A1956BD22; Fri, 23 Dec 2005 13:07:54 +0100 (CET)
+	by smtp-gw1.op5.se (Postfix) with ESMTP id D56D96BD22
+	for <git@vger.kernel.org>; Fri, 23 Dec 2005 13:13:46 +0100 (CET)
 User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
 X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslsllz17.fsf@totally-fudged-out-message-id>
+To: git@vger.kernel.org
+In-Reply-To: <7vu0d0j24z.fsf_-_@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13992>
 
 Junio C Hamano wrote:
-> Andreas Ericsson <ae@op5.se> writes:
+> Junio C Hamano <junkio@cox.net> writes:
 > 
 > 
->>Ahh. Sorry. We use this method a lot, really, but always only for 
->>running gitk and archaeology tools to check newly pushed changes, so the 
->>write-shared repo is only write-shared for remote users, and the local 
->>one never does a commit.
+>>Andreas Ericsson <ae@op5.se> writes:
+>>
+>>
+>>>Junio C Hamano wrote:
+>>>
+>>>>In a sense, both are "pull first?" situation, and it probably is
+>>>>more confusing to give different messages to the user in these
+>>>>two cases.  From the end-user point of view they are the same
+>>>>"remote is not strict subset.".
+>>>
+>>>In non-git'ish, does this mean "you're not up to date, so pull before 
+>>>pushing" ? If so, why not say so? I'm sure it could prevent a fair few 
+>>>problems for users (not least those new to scm's).
 > 
 > 
-> Do you need a working tree to run gitk?
+> That is reasonable.  How about this?
 > 
 
-No, but it makes for a nice shorthand, especially since most of our 
-projects are riddled with sub-repos.
+Me likes.
 
 -- 
 Andreas Ericsson                   andreas.ericsson@op5.se
