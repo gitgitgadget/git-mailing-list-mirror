@@ -1,75 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-checkout and SUBDIRECTORY_OK='Yes'
-Date: Fri, 23 Dec 2005 09:56:16 -0800
-Message-ID: <7vwthv7l4v.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0512222217040.6812@gheavc.wnzcbav.cig>
-	<7virtge7fb.fsf@assigned-by-dhcp.cox.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] whatchanged: customize diff-tree output
+Date: Fri, 23 Dec 2005 19:12:49 +0100
+Message-ID: <20051223181249.GA3165@steel.home>
+References: <Pine.LNX.4.63.0512212336230.18908@wbgn013.biozentrum.uni-wuerzburg.de> <7vvexhr6rc.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0512212245440.4827@g5.osdl.org> <Pine.LNX.4.63.0512221200190.7112@wbgn013.biozentrum.uni-wuerzburg.de> <20051222210620.GA4679@steel.home> <Pine.LNX.4.63.0512222323110.12241@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jon Nelson <jnelson-git@jamponi.net>
-X-From: git-owner@vger.kernel.org Fri Dec 23 18:56:37 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 23 19:13:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Epr9c-0008UV-NS
-	for gcvg-git@gmane.org; Fri, 23 Dec 2005 18:56:33 +0100
+	id 1EprPY-0005uY-5y
+	for gcvg-git@gmane.org; Fri, 23 Dec 2005 19:13:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030581AbVLWR4T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Dec 2005 12:56:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030591AbVLWR4T
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Dec 2005 12:56:19 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:23965 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1030581AbVLWR4S (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Dec 2005 12:56:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051223175532.WPRQ15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 23 Dec 2005 12:55:32 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030595AbVLWSM5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Dec 2005 13:12:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030596AbVLWSM5
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Dec 2005 13:12:57 -0500
+Received: from devrace.com ([198.63.210.113]:16 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S1030595AbVLWSM4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Dec 2005 13:12:56 -0500
+Received: from tigra.home (p5081616F.dip.t-dialin.net [80.129.97.111])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id jBNICoNY064372;
+	Fri, 23 Dec 2005 12:12:52 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1EprPN-0006hw-00; Fri, 23 Dec 2005 19:12:49 +0100
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1EprPN-0003jC-FE; Fri, 23 Dec 2005 19:12:49 +0100
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0512222323110.12241@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=3.9 required=4.5 tests=RCVD_IN_DSBL,
+	RCVD_IN_NJABL_DUL autolearn=no version=3.0.2
+X-Spam-Level: ***
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13997>
 
-Junio C Hamano <junkio@cox.net> writes:
+Johannes Schindelin, Thu, Dec 22, 2005 23:24:48 +0100:
+> > A script from ~user1/bin, which calls git-whatchanged suddenly stops 
+> > working in ~user2/repo.
+> > [...]
+> > 
+> > Maybe such configuration better left to environment variables?
+> 
+> And that makes the script not stop how?
+> 
 
-> Jon Nelson <jnelson-git@jamponi.net> writes:
->
->> Is it safe to set SUBDIRECTORY_OK='Yes' in git-checkout.sh?
-
-> This patch *might* work, or it may not...
-
-I've done some tests and it seems to work (it is in the
-proposed updates branch).
-
-In git.git working tree, here is what happens:
-
-	$ git checkout pu			;# start from pu
-        $ cd Documentation
-        $ echo >>git-daemon.txt			;# smudge
-        $ git checkout -- git-daemon.txt	;# restore
-	$ git diff -r --name-status		;# no change
-        $ git checkout master git-daemon.txt	;# pick from tree
-	$ git diff master -r --name-status	;# (1)
-	$ git diff -r --name-status		;# (2)
-	$ git diff pu -r --name-status          ;# (3)
-        M	Documentation/git-daemon.txt
-
-    (1) does not show any because it did take the file out of master
-        branch, and git-daemon.txt is the only file different under
-        Documentation/ between master and pu.
-
-    (2) does not show any because "checkout master git-daemon.txt"
-        updated the path both in index and working tree.
-
-    (3) shows the path indeed is different between master and pu.
-
-The change relies on ls-tree showing full paths regardless of
-where it gets started (because the output is fed to --index-info
-form of git-update-index).  If we are going to take the "ls-tree
-prefix truncation" patch from Linus, either we also need to
-update "git-update-index --index-info" to match this.
+It is another user, who does not have the variable set, or just unsets
+the variable in his scripts (now he _can_ rely upon git-whatchanged
+always doing the same)
