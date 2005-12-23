@@ -1,60 +1,66 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] whatchanged: customize diff-tree output
-Date: Fri, 23 Dec 2005 19:12:49 +0100
-Message-ID: <20051223181249.GA3165@steel.home>
-References: <Pine.LNX.4.63.0512212336230.18908@wbgn013.biozentrum.uni-wuerzburg.de> <7vvexhr6rc.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0512212245440.4827@g5.osdl.org> <Pine.LNX.4.63.0512221200190.7112@wbgn013.biozentrum.uni-wuerzburg.de> <20051222210620.GA4679@steel.home> <Pine.LNX.4.63.0512222323110.12241@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] qgit: allow overriding CCFLAGS
+Date: Fri, 23 Dec 2005 18:23:46 -0500
+Message-ID: <1135380226.18431.21.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 23 19:13:06 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 24 00:24:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EprPY-0005uY-5y
-	for gcvg-git@gmane.org; Fri, 23 Dec 2005 19:13:00 +0100
+	id 1EpwGT-0007bF-63
+	for gcvg-git@gmane.org; Sat, 24 Dec 2005 00:23:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030595AbVLWSM5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Dec 2005 13:12:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030596AbVLWSM5
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Dec 2005 13:12:57 -0500
-Received: from devrace.com ([198.63.210.113]:16 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1030595AbVLWSM4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Dec 2005 13:12:56 -0500
-Received: from tigra.home (p5081616F.dip.t-dialin.net [80.129.97.111])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id jBNICoNY064372;
-	Fri, 23 Dec 2005 12:12:52 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1EprPN-0006hw-00; Fri, 23 Dec 2005 19:12:49 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1EprPN-0003jC-FE; Fri, 23 Dec 2005 19:12:49 +0100
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0512222323110.12241@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=3.9 required=4.5 tests=RCVD_IN_DSBL,
-	RCVD_IN_NJABL_DUL autolearn=no version=3.0.2
-X-Spam-Level: ***
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S1161129AbVLWXXy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Dec 2005 18:23:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161132AbVLWXXy
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Dec 2005 18:23:54 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:8075 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1161129AbVLWXXx
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Dec 2005 18:23:53 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EpwG8-0000jB-JT
+	for git@vger.kernel.org; Fri, 23 Dec 2005 18:23:36 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.54)
+	id 1EpwGI-00056m-9f; Fri, 23 Dec 2005 18:23:46 -0500
+To: Marco Costalba <mcostalba@yahoo.it>
+X-Mailer: Evolution 2.4.1 (2.4.1-5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/13998>
 
-Johannes Schindelin, Thu, Dec 22, 2005 23:24:48 +0100:
-> > A script from ~user1/bin, which calls git-whatchanged suddenly stops 
-> > working in ~user2/repo.
-> > [...]
-> > 
-> > Maybe such configuration better left to environment variables?
-> 
-> And that makes the script not stop how?
-> 
+This patch allows overriding CCFLAGS by setting an environment variable
+or an argument to make.
 
-It is another user, who does not have the variable set, or just unsets
-the variable in his scripts (now he _can_ rely upon git-whatchanged
-always doing the same)
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+
+---
+If anyone knows Python and scons well, it would be great to have a more
+generic solution that would use both environment and scons (not make)
+command line to override several variables that users may want to
+override, in particular CXX and installDir.  I cannot believe I'll need
+any non-trivial coding to do something as common as this.
+
+diff --git a/SConstruct b/SConstruct
+index b0b5d0f..8ed151b 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -27,7 +27,7 @@ env['ENV']['HOME'] = os.environ['HOME'] 
+ 
+ installDir = env['HOME']+'/bin'
+ 
+-env.Append( CCFLAGS = ['-O2', '-Wall' ,'-Wno-non-virtual-dtor'] )
++env.Append( CCFLAGS = os.environ.get('CCFLAGS', ['-O2', '-Wall', '-Wno-non-virtual-dtor']) )
+ 
+ ## Uncomment the following if you need threading support threading
+ env.Append( CPPFLAGS = ['-DQT_THREAD_SUPPORT', '-D_REENTRANT', '-I/usr/include/qt3'] )
+
+
+-- 
+Regards,
+Pavel Roskin
