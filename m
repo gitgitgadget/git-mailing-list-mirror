@@ -1,46 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/4] add xmktime() function that always accounts for the TZ env
-Date: Sat, 24 Dec 2005 11:18:56 -0800
-Message-ID: <7vy82aqp5r.fsf@assigned-by-dhcp.cox.net>
-References: <20051224121007.GA19136@mail.yhbt.net>
-	<20051224121339.GB3963@mail.yhbt.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] add strcpy_user_path() and use it in init-db.c and git.c
+Date: Sat, 24 Dec 2005 11:50:33 -0800
+Message-ID: <20051224195033.GE3963@mail.yhbt.net>
+References: <20051224122016.GD3963@mail.yhbt.net> <7virtes6zd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 24 20:19:27 2005
+Cc: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 24 20:50:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EqEvN-00077v-3w
-	for gcvg-git@gmane.org; Sat, 24 Dec 2005 20:19:25 +0100
+	id 1EqFPf-000671-HB
+	for gcvg-git@gmane.org; Sat, 24 Dec 2005 20:50:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932289AbVLXTS7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Dec 2005 14:18:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932317AbVLXTS6
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Dec 2005 14:18:58 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:3456 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932289AbVLXTS6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Dec 2005 14:18:58 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051224191705.FJFY17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 24 Dec 2005 14:17:05 -0500
-To: Eric Wong <normalperson@yhbt.net>
-In-Reply-To: <20051224121339.GB3963@mail.yhbt.net> (Eric Wong's message of
-	"Sat, 24 Dec 2005 04:13:39 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932342AbVLXTue (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Dec 2005 14:50:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932343AbVLXTue
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Dec 2005 14:50:34 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:42115 "EHLO mail.yhbt.net")
+	by vger.kernel.org with ESMTP id S932342AbVLXTue (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Dec 2005 14:50:34 -0500
+Received: by mail.yhbt.net (Postfix, from userid 500)
+	id C51B87DC005; Sat, 24 Dec 2005 11:50:33 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7virtes6zd.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14032>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+> 
+> > Hint: build git with: make 'prefix=~'
+> 
+> Sorry, I do not see why you would want to do this.  I understand
+> "make prefix=~" or "make prefix=$HOME", but "make prefix='~'"
+> and expanding tilde and friends at runtime you need to justify
+> why it helps in which situation.
+> 
+> We are not DOS and do not do argument expansion shell should
+> have done for us ourselves.
 
-> This function was added because mktime in dietlibc doesn't seem to
-> account for the TZ env.  Also, xmktime() now shares the same
-> always-summer bug TZ parsing elsewhere,
+My home directories have different names on different machines I'm
+on, and I want to avoid having to recompile git for each one.
+I don't have root access to some of them, so installing globally in /usr
+or /usr/local isn't an option, either.
 
-Where elsewhere?
+-- 
+Eric Wong
