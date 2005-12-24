@@ -1,60 +1,55 @@
-From: Duncan Mac Leod <duncan@excelsior-online.org>
-Subject: git repack throws -> error: unrecognized: ??
-Date: Sat, 24 Dec 2005 03:11:21 +0100
-Organization: EXCELSIOR developers Team
-Message-ID: <43ACAE49.4000902@excelsior-online.org>
-Reply-To: duncan@excelsior-online.org
+From: "Rob McDonald" <robm@asdl.gatech.edu>
+Subject: Possibility of a MinGW version?
+Date: Fri, 23 Dec 2005 21:34:12 -0500
+Message-ID: <006c01c60832$86f92620$6900a8c0@sps>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+	charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Dec 24 03:14:55 2005
+X-From: git-owner@vger.kernel.org Sat Dec 24 03:31:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Epyvn-0000HP-Dg
-	for gcvg-git@gmane.org; Sat, 24 Dec 2005 03:14:47 +0100
+	id 1EpzBj-0006Gb-Fm
+	for gcvg-git@gmane.org; Sat, 24 Dec 2005 03:31:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030228AbVLXCO3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Dec 2005 21:14:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030603AbVLXCO3
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Dec 2005 21:14:29 -0500
-Received: from rocksdale.excelsior-online.org ([213.202.239.5]:37893 "EHLO
-	rocksdale.excelsior-online.org") by vger.kernel.org with ESMTP
-	id S1030228AbVLXCO2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Dec 2005 21:14:28 -0500
-Received: from [192.168.2.2] (p549546CF.dip.t-dialin.net [84.149.70.207])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by rocksdale.excelsior-online.org (Postfix) with ESMTP id A86BF28356
-	for <git@vger.kernel.org>; Sat, 24 Dec 2005 03:37:04 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051205)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
+	id S1030613AbVLXCa4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Dec 2005 21:30:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030614AbVLXCa4
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Dec 2005 21:30:56 -0500
+Received: from rwcrmhc12.comcast.net ([216.148.227.152]:65239 "EHLO
+	rwcrmhc12.comcast.net") by vger.kernel.org with ESMTP
+	id S1030613AbVLXCa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Dec 2005 21:30:56 -0500
+Received: from sps (c-24-98-112-64.hsd1.ga.comcast.net[24.98.112.64])
+          by comcast.net (rwcrmhc12) with SMTP
+          id <20051224023055014008g61oe>; Sat, 24 Dec 2005 02:30:55 +0000
+To: <git@vger.kernel.org>
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2800.1506
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1506
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14005>
 
-Hi!
+1.0 is out the door, with support (to some degree or another) for Cygwin,
+BSD, MacOS X, Solaris, and who knows what else, good job all.
 
-I have done the following operations on my git repository...
+What possibility is there of getting git (& assorted tools) to run natively
+on Windows (sacrilege I know) using MinGW?  What truly Unixy-only things
+does the code do?  Unfortunately, Windows is a reality for many of us.
 
-duncan@firebird /var/git $ GIT_DIR=/var/git/myproject.git git fsck-objects
-duncan@firebird /var/git $ GIT_DIR=/var/git/myproject.git git prune
-duncan@firebird /var/git $ GIT_DIR=/var/git/myproject.git git count-objects
-42 objects, 616 kilobytes
-duncan@firebird /var/git $ GIT_DIR=/var/git/myproject.git git repack
-Packing 42 objects
-Pack pack-d715ebdf63391b054d9f058d59d3d3a4f6f2a12c created.
-error: unrecognized:
+I'd like to begin experimenting using git to track all of my data files
+acting as a synchronization mechanism.  Have all your files up-to-date
+everywhere, revision tracking, & redundancy too...  Dedicated Linux
+repository at home, dual boot laptop on the road, Windows machine at work,
+etc...
 
-The last one throws 'error: unrecognized:' - what does this mean?
+Thoughts?  Suggestions?
 
-Under which circumstances is this error message fired?
+            Rob
 
-Did my git repository get corrupted?
-
-...and 'HAPPY HOLIDAYS' to all of you!
-
-Duncan
+Please CC me, I track the archive closely, but am not subscribed.
