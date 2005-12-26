@@ -1,161 +1,204 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Handle symlinks graciously
-Date: Mon, 26 Dec 2005 22:31:42 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512262231350.21076@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] avoid asking ?alloc() for zero bytes.
+Date: Mon, 26 Dec 2005 14:03:17 -0800
+Message-ID: <7vslsfikii.fsf_-_@assigned-by-dhcp.cox.net>
+References: <20051224121007.GA19136@mail.yhbt.net>
+	<20051224121454.GC3963@mail.yhbt.net>
+	<7v3bkis631.fsf@assigned-by-dhcp.cox.net>
+	<20051224211546.GG3963@mail.yhbt.net>
+	<Pine.LNX.4.63.0512261916440.8435@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vzmmnisix.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0512262134290.19331@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Dec 26 22:31:54 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 26 23:03:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eqzwe-00015w-9D
-	for gcvg-git@gmane.org; Mon, 26 Dec 2005 22:31:52 +0100
+	id 1Er0RG-0002Kq-Nl
+	for gcvg-git@gmane.org; Mon, 26 Dec 2005 23:03:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750813AbVLZVbs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Dec 2005 16:31:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbVLZVbs
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Dec 2005 16:31:48 -0500
-Received: from mail.gmx.net ([213.165.64.21]:35264 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750813AbVLZVbs (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Dec 2005 16:31:48 -0500
-Received: (qmail invoked by alias); 26 Dec 2005 21:31:46 -0000
-Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
-  by mail.gmx.net (mp001) with SMTP; 26 Dec 2005 22:31:46 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Y-GMX-Trusted: 0
+	id S1751084AbVLZWDU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Dec 2005 17:03:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751086AbVLZWDU
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Dec 2005 17:03:20 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:15770 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751084AbVLZWDU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Dec 2005 17:03:20 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20051226220106.FND20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 26 Dec 2005 17:01:06 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0512262134290.19331@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Mon, 26 Dec 2005 21:34:41 +0100
+	(CET)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14061>
 
+Avoid asking for zero bytes when that change simplifies overall
+logic.  Later we would change the wrapper to ask for 1 byte on
+platforms that return NULL for zero byte request.
 
-This patch converts a stat() to an lstat() call, thereby fixing the case
-when the date of a symlink was not the same as the one recorded in the
-index. The included test case demonstrates this.
-
-This is for the case that the symlink points to a non-existing file. If
-the file exists, worse things than just an error message happen.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
 ---
 
-	A few weeks ago I hunted a bug in t4004 on OS X, just to discover
-	that it only occurred rarely. The problem is when the atime or mtime
-	differ: in this case, diff-index would try to stat() the symlink,
-	not lstat() it.
+ * Here is what I have now that roughly corresponds to your
+   patch, which has been somewhat tested.
 
- diff.c                  |    2 +
- t/t4011-diff-symlink.sh |   84 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 85 insertions(+), 1 deletions(-)
- create mode 100755 t/t4011-diff-symlink.sh
+   The final phase of making sure we return something from
+   x*alloc() is not done yet.
 
-bd43cfdf69d99c3552fab5a375d9a72657d3bcad
+ diff.c              |    6 +++---
+ diffcore-order.c    |    6 +++++-
+ diffcore-pathspec.c |    3 +++
+ index-pack.c        |   22 ++++++++++++++--------
+ read-tree.c         |   17 ++++++++++-------
+ tree-diff.c         |    4 ++++
+ 6 files changed, 39 insertions(+), 19 deletions(-)
+
+da95c79803d90ce8eaf82b0c04dbde11c096ad87
 diff --git a/diff.c b/diff.c
-index c815918..6f064df 100644
+index c815918..bfc864d 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -650,7 +650,7 @@ static void diff_fill_sha1_info(struct d
- 	if (DIFF_FILE_VALID(one)) {
- 		if (!one->sha1_valid) {
- 			struct stat st;
--			if (stat(one->path, &st) < 0)
-+			if (lstat(one->path, &st) < 0)
- 				die("stat %s", one->path);
- 			if (index_path(one->sha1, one->path, &st, 0))
- 				die("cannot hash %s\n", one->path);
-diff --git a/t/t4011-diff-symlink.sh b/t/t4011-diff-symlink.sh
-new file mode 100755
-index 0000000..9e70063
---- /dev/null
-+++ b/t/t4011-diff-symlink.sh
-@@ -0,0 +1,84 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2005 Johannes Schindelin
-+#
+@@ -504,9 +504,9 @@ static void prepare_temp_file(const char
+ 		}
+ 		if (S_ISLNK(st.st_mode)) {
+ 			int ret;
+-			char *buf, buf_[1024];
+-			buf = ((sizeof(buf_) < st.st_size) ?
+-			       xmalloc(st.st_size) : buf_);
++			char buf[PATH_MAX + 1]; /* ought to be SYMLINK_MAX */
++			if (sizeof(buf) <= st.st_size)
++				die("symlink too long: %s", name);
+ 			ret = readlink(name, buf, st.st_size);
+ 			if (ret < 0)
+ 				die("readlink(%s)", name);
+diff --git a/diffcore-order.c b/diffcore-order.c
+index b381223..0bc2b22 100644
+--- a/diffcore-order.c
++++ b/diffcore-order.c
+@@ -105,9 +105,13 @@ static int compare_pair_order(const void
+ void diffcore_order(const char *orderfile)
+ {
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+-	struct pair_order *o = xmalloc(sizeof(*o) * q->nr);
++	struct pair_order *o;
+ 	int i;
+ 
++	if (!q->nr)
++		return;
 +
-+test_description='Test diff of symlinks.
++	o = xmalloc(sizeof(*o) * q->nr);
+ 	prepare_order(orderfile);
+ 	for (i = 0; i < q->nr; i++) {
+ 		o[i].pair = q->queue[i];
+diff --git a/diffcore-pathspec.c b/diffcore-pathspec.c
+index 68fe009..139fe88 100644
+--- a/diffcore-pathspec.c
++++ b/diffcore-pathspec.c
+@@ -48,6 +48,9 @@ void diffcore_pathspec(const char **path
+ 	for (i = 0; pathspec[i]; i++)
+ 		;
+ 	speccnt = i;
++	if (!speccnt)
++		return;
 +
-+'
-+. ./test-lib.sh
-+. ../diff-lib.sh
+ 	spec = xmalloc(sizeof(*spec) * speccnt);
+ 	for (i = 0; pathspec[i]; i++) {
+ 		spec[i].spec = pathspec[i];
+diff --git a/index-pack.c b/index-pack.c
+index d4ce3af..541d7bc 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -352,18 +352,24 @@ static int sha1_compare(const void *_a, 
+ static void write_index_file(const char *index_name, unsigned char *sha1)
+ {
+ 	struct sha1file *f;
+-	struct object_entry **sorted_by_sha =
+-		xcalloc(nr_objects, sizeof(struct object_entry *));
+-	struct object_entry **list = sorted_by_sha;
+-	struct object_entry **last = sorted_by_sha + nr_objects;
++	struct object_entry **sorted_by_sha, **list, **last;
+ 	unsigned int array[256];
+ 	int i;
+ 	SHA_CTX ctx;
+ 
+-	for (i = 0; i < nr_objects; ++i)
+-		sorted_by_sha[i] = &objects[i];
+-	qsort(sorted_by_sha, nr_objects, sizeof(sorted_by_sha[0]),
+-	      sha1_compare);
++	if (nr_objects) {
++		sorted_by_sha =
++			xcalloc(nr_objects, sizeof(struct object_entry *));
++		list = sorted_by_sha;
++		last = sorted_by_sha + nr_objects;
++		for (i = 0; i < nr_objects; ++i)
++			sorted_by_sha[i] = &objects[i];
++		qsort(sorted_by_sha, nr_objects, sizeof(sorted_by_sha[0]),
++		      sha1_compare);
 +
-+cat > expected << EOF
-+diff --git a/frotz b/frotz
-+new file mode 120000
-+index 0000000..7c465af
-+--- /dev/null
-++++ b/frotz
-+@@ -0,0 +1 @@
-++xyzzy
-+\ No newline at end of file
-+EOF
++	}
++	else
++		sorted_by_sha = list = last = NULL;
+ 
+ 	unlink(index_name);
+ 	f = sha1create("%s", index_name);
+diff --git a/read-tree.c b/read-tree.c
+index e3b9c0d..a46c6fe 100644
+--- a/read-tree.c
++++ b/read-tree.c
+@@ -294,17 +294,20 @@ static int unpack_trees(merge_fn_t fn)
+ {
+ 	int indpos = 0;
+ 	unsigned len = object_list_length(trees);
+-	struct tree_entry_list **posns = 
+-		xmalloc(len * sizeof(struct tree_entry_list *));
++	struct tree_entry_list **posns;
+ 	int i;
+ 	struct object_list *posn = trees;
+ 	merge_size = len;
+-	for (i = 0; i < len; i++) {
+-		posns[i] = ((struct tree *) posn->item)->entries;
+-		posn = posn->next;
 +
-+test_expect_success \
-+    'diff new symlink' \
-+    'ln -s xyzzy frotz &&
-+    git-update-index &&
-+    tree=$(git-write-tree) &&
-+    git-update-index --add frotz &&
-+    GIT_DIFF_OPTS=--unified=0 git-diff-index -M -p $tree > current &&
-+    compare_diff_patch current expected'
-+
-+test_expect_success \
-+    'diff unchanged symlink' \
-+    'tree=$(git-write-tree) &&
-+    test -z "$(git-diff-index --name-only $tree)"'
-+
-+cat > expected << EOF
-+diff --git a/frotz b/frotz
-+deleted file mode 120000
-+index 7c465af..0000000
-+--- a/frotz
-++++ /dev/null
-+@@ -1 +0,0 @@
-+-xyzzy
-+\ No newline at end of file
-+EOF
-+
-+test_expect_success \
-+    'diff removed symlink' \
-+    'rm frotz &&
-+    git-diff-index -M -p $tree > current &&
-+    compare_diff_patch current expected'
-+
-+cat > expected << EOF
-+diff --git a/frotz b/frotz
-+EOF
-+
-+test_expect_success \
-+    'diff identical, but newly created symlink' \
-+    'sleep 1 &&
-+    ln -s xyzzy frotz &&
-+    git-diff-index -M -p $tree > current &&
-+    compare_diff_patch current expected'
-+
-+cat > expected << EOF
-+diff --git a/frotz b/frotz
-+index 7c465af..df1db54 120000
-+--- a/frotz
-++++ b/frotz
-+@@ -1 +1 @@
-+-xyzzy
-+\ No newline at end of file
-++yxyyz
-+\ No newline at end of file
-+EOF
-+
-+test_expect_success \
-+    'diff different symlink' \
-+    'rm frotz &&
-+    ln -s yxyyz frotz &&
-+    git-diff-index -M -p $tree > current &&
-+    compare_diff_patch current expected'
-+
-+test_done
++	if (len) {
++		posns = xmalloc(len * sizeof(struct tree_entry_list *));
++		for (i = 0; i < len; i++) {
++			posns[i] = ((struct tree *) posn->item)->entries;
++			posn = posn->next;
++		}
++		if (unpack_trees_rec(posns, len, "", fn, &indpos))
++			return -1;
+ 	}
+-	if (unpack_trees_rec(posns, len, "", fn, &indpos))
+-		return -1;
+ 
+ 	if (trivial_merges_only && nontrivial_merge)
+ 		die("Merge requires file-level merging");
+diff --git a/tree-diff.c b/tree-diff.c
+index 0ef06a9..382092b 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -263,6 +263,10 @@ void diff_tree_setup_paths(const char **
+ 
+ 		paths = p;
+ 		nr_paths = count_paths(paths);
++		if (nr_paths == 0) {
++			pathlens = NULL;
++			return;
++		}
+ 		pathlens = xmalloc(nr_paths * sizeof(int));
+ 		for (i=0; i<nr_paths; i++)
+ 			pathlens[i] = strlen(paths[i]);
 -- 
 1.0.GIT
