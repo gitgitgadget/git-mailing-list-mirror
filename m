@@ -1,76 +1,102 @@
-From: Alexey Nezhdanov <snake@penza-gsm.ru>
-Subject: [PATCH]Fix cg-export to not specify excess argument to compressor
-Date: Mon, 26 Dec 2005 17:20:09 +0300
-Message-ID: <200512261720.10136.snake@penza-gsm.ru>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] add strcpy_user_path() and use it in init-db.c and git.c
+Date: Mon, 26 Dec 2005 17:40:09 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512261730170.7716@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051224122016.GD3963@mail.yhbt.net> <7virtes6zd.fsf@assigned-by-dhcp.cox.net>
+ <20051224195033.GE3963@mail.yhbt.net> <7vu0cyqk5d.fsf@assigned-by-dhcp.cox.net>
+ <20051224211925.GH3963@mail.yhbt.net>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_aw/rDvEipRR2Xg+"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 26 15:20:30 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 26 17:40:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EqtD6-0007We-6j
-	for gcvg-git@gmane.org; Mon, 26 Dec 2005 15:20:24 +0100
+	id 1EqvOX-0000PW-MK
+	for gcvg-git@gmane.org; Mon, 26 Dec 2005 17:40:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750772AbVLZOUP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Dec 2005 09:20:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750740AbVLZOUP
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Dec 2005 09:20:15 -0500
-Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:8328 "HELO
-	penza-gsm.ru") by vger.kernel.org with SMTP id S1750758AbVLZOUO
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Dec 2005 09:20:14 -0500
-Received: (qmail 18085 invoked from network); 26 Dec 2005 14:20:12 -0000
-Received: from unknown (HELO snake) (192.168.0.20)
-  by fileserver.penza-gsm.ru with SMTP; 26 Dec 2005 14:20:11 -0000
-To: Petr Baudis <pasky@suse.cz>
-User-Agent: KMail/1.7.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
+	id S932066AbVLZQkP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Dec 2005 11:40:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932067AbVLZQkP
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Dec 2005 11:40:15 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:18328 "EHLO
+	wrzx35.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932066AbVLZQkN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Dec 2005 11:40:13 -0500
+Received: from amavis.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 5769EE3C42; Mon, 26 Dec 2005 17:40:10 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by amavis.mail (Postfix) with ESMTP id 4A0FD297A;
+	Mon, 26 Dec 2005 17:40:10 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by amavis.mail (Postfix) with ESMTP id 2AAF28F1;
+	Mon, 26 Dec 2005 17:40:10 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id BBA341412D8; Mon, 26 Dec 2005 17:40:09 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <20051224211925.GH3963@mail.yhbt.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
 X-Spam-Level: 
-X-Spam-Status: No, score=-102.8 required=5.0 tests=ALL_TRUSTED,AWL,
-	USER_IN_WHITELIST autolearn=unavailable version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14054>
 
---Boundary-00=_aw/rDvEipRR2Xg+
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Hi,
 
-When gzip or bzip2 provided with empty string as argument
-they failing to use stdin as the source of data.
+On Sat, 24 Dec 2005, Eric Wong wrote:
 
+> Junio C Hamano <junkio@cox.net> wrote:
+> > Eric Wong <normalperson@yhbt.net> writes:
+> > 
+> > > My home directories have different names on different machines I'm
+> > > on, and I want to avoid having to recompile git for each one.
+> > > I don't have root access to some of them, so installing globally in /usr
+> > > or /usr/local isn't an option, either.
+> > 
+> > Then you probably need to use GIT_EXEC_PATH environment
+> > variable.
+> 
+> That works with git.c but not init-db.  But then again I don't use
+> git-init-db that often.  I'll just write a shell script wrapper for the
+> latter if I do.
+
+How about something like this?
+
+---
+[PATCH] Introduce environment variable for the path to the templates
+
+The environment variable GIT_TEMPLATE_PATH can override the compiled-in
+setting, and can be overridden with the '--template=' argument to init-db.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+	Eric said that GIT_EXEC_PATH is enough for most things, but not for
+	init-db. I guess he wanted something like this.
+
+ init-db.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+5d95ce750b09a14bcb86e07ba23077ab0825089c
+diff --git a/init-db.c b/init-db.c
+index 863ec1a..774a91f 100644
+--- a/init-db.c
++++ b/init-db.c
+@@ -238,7 +238,7 @@ int main(int argc, char **argv)
+ {
+ 	const char *git_dir;
+ 	const char *sha1_dir;
+-	char *path, *template_dir = NULL;
++	char *path, *template_dir = getenv("GIT_TEMPLATE_PATH");
+ 	int len, i;
+ 
+ 	for (i = 1; i < argc; i++, argv++) {
 -- 
-Respectfully
-Alexey Nezhdanov
-
---Boundary-00=_aw/rDvEipRR2Xg+
-Content-Type: text/x-diff;
-  charset="us-ascii";
-  name="cg-export.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename="cg-export.patch"
-
---- /home/snake/scm/cogito/cg-export	2005-12-26 17:14:49.000000000 +0300
-+++ cg-export	2005-12-26 17:16:17.000000000 +0300
-@@ -44,10 +44,10 @@
- 		base="${base##*/}"
- 		case "$ext" in
- 		.tar.gz|.tgz)
--			git-tar-tree "$id" "$base" | gzip -c9 "$tar" >"$dest"
-+			git-tar-tree "$id" "$base" | gzip -c9 >"$dest"
- 			;;
- 		.tar.bz2)
--			git-tar-tree "$id" "$base" | bzip2 -c "$tar" >"$dest"
-+			git-tar-tree "$id" "$base" | bzip2 -c >"$dest"
- 			;;
- 		.tar)
- 			git-tar-tree "$id" "$base" >"$dest"
-
---Boundary-00=_aw/rDvEipRR2Xg+--
+1.0.GIT
