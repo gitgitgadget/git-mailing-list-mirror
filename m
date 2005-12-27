@@ -1,76 +1,73 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Do not allow git-init-db to be called twice in the same
- directory
-Date: Tue, 27 Dec 2005 15:01:40 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512271457200.17086@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0512270053030.14928@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vbqz3ibhn.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [RFC] t5300 considered dangerous
+Date: Tue, 27 Dec 2005 15:08:30 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512271507490.318@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0512270018310.3067@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vd5jjffxu.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0512271452470.17086@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 27 15:01:50 2005
+X-From: git-owner@vger.kernel.org Tue Dec 27 15:08:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ErFOa-0001tK-Kx
-	for gcvg-git@gmane.org; Tue, 27 Dec 2005 15:01:45 +0100
+	id 1ErFVC-0004pK-Md
+	for gcvg-git@gmane.org; Tue, 27 Dec 2005 15:08:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932309AbVL0OBl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Dec 2005 09:01:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932314AbVL0OBl
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Dec 2005 09:01:41 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:32723 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932309AbVL0OBl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Dec 2005 09:01:41 -0500
+	id S932318AbVL0OIc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Dec 2005 09:08:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932320AbVL0OIc
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Dec 2005 09:08:32 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:37821 "EHLO
+	wrzx35.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932318AbVL0OIb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Dec 2005 09:08:31 -0500
 Received: from amavis.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.46])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 44DAB1415B2; Tue, 27 Dec 2005 15:01:40 +0100 (CET)
+	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 6BF67E3EFE; Tue, 27 Dec 2005 15:08:30 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by amavis.mail (Postfix) with ESMTP id 38F2D3430;
-	Tue, 27 Dec 2005 15:01:40 +0100 (CET)
+	by amavis.mail (Postfix) with ESMTP id 5FEC4344F;
+	Tue, 27 Dec 2005 15:08:30 +0100 (CET)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by amavis.mail (Postfix) with ESMTP id 1CF5387A;
-	Tue, 27 Dec 2005 15:01:40 +0100 (CET)
+	by amavis.mail (Postfix) with ESMTP id 43E70861;
+	Tue, 27 Dec 2005 15:08:30 +0100 (CET)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 0787E1415B6; Tue, 27 Dec 2005 15:01:40 +0100 (CET)
+	id 17E421415B2; Tue, 27 Dec 2005 15:08:30 +0100 (CET)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbqz3ibhn.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <Pine.LNX.4.63.0512271452470.17086@wbgn013.biozentrum.uni-wuerzburg.de>
 X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
 X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14076>
 
 Hi,
 
-On Mon, 26 Dec 2005, Junio C Hamano wrote:
+On Tue, 27 Dec 2005, Johannes Schindelin wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Mon, 26 Dec 2005, Junio C Hamano wrote:
 > 
-> > t5300 is also adapted, since it relies heavily on init-db not complaining 
-> > when $GIT_DIR already exists.
+> >       cp test-1-${packname_1}.pack test-3.pack &&
+> > -     dd if=/dev/zero of=test-3.idx count=1 bs=1 conv=notrunc seek=1200 &&
+> > +     dd if=/dev/zero of=test-3.idx count=20 bs=1 conv=notrunc seek=$l &&
+> >       if git-verify-pack test-3.pack
+> >       then false
+> >       else :;
 > 
-> I think it tries not to overwrite things that are already there
-> and is meant to be safe to run in an already populated
-> repository; e.g. you should be able to use it to pick up newly
-> added templates.
+> When the commit is not skipped, I fail to see why this should not fail in 
+> one out of 256 cases: the input is (partially) pseudo-random. The last 20 
+> bytes are the SHA-1 which should inherit this pseudo-randomness. So, the 
+> first byte should be pseudo-random, too.
+> 
+> Something I missed?
 
-Ah, that is a use case I missed. I don't work too much with templates 
-(only on the shared repositories' machine)...
+Yes, I missed the "count=20".
 
-> Is there a particular reason running the current init-db twice
-> is undesirable?
-
-In my case, yes. When I do that, it means that I did not correctly 
-change directories. I fscked up my private git repository twice that way.
-
-I like your point, though.
-
-Ciao,
+Sorry,
 Dscho
