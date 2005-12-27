@@ -1,70 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Do not allow git-init-db to be called twice in the same
- directory
-Date: Tue, 27 Dec 2005 19:01:00 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0512271859250.1618@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0512270053030.14928@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vbqz3ibhn.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0512271457200.17086@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vlky6bi6f.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: cannot handle more than 29 refs
+Date: Tue, 27 Dec 2005 11:18:58 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0512271113290.14098@g5.osdl.org>
+References: <Pine.LNX.4.63.0512270840410.6812@gheavc.wnzcbav.cig>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 27 19:01:12 2005
+X-From: git-owner@vger.kernel.org Tue Dec 27 20:19:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ErJ8G-0003CV-QS
-	for gcvg-git@gmane.org; Tue, 27 Dec 2005 19:01:09 +0100
+	id 1ErKLz-0001XI-Uq
+	for gcvg-git@gmane.org; Tue, 27 Dec 2005 20:19:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932369AbVL0SBF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Dec 2005 13:01:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932375AbVL0SBF
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Dec 2005 13:01:05 -0500
-Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:27593 "EHLO
-	wrzx35.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932369AbVL0SBE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Dec 2005 13:01:04 -0500
-Received: from amavis.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.46])
-	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E6848E3F05; Tue, 27 Dec 2005 19:01:00 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by amavis.mail (Postfix) with ESMTP id DA930250D;
-	Tue, 27 Dec 2005 19:01:00 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by amavis.mail (Postfix) with ESMTP id BF4318E7;
-	Tue, 27 Dec 2005 19:01:00 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A12C0141228; Tue, 27 Dec 2005 19:01:00 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vlky6bi6f.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
-X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
-X-Spam-Level: 
+	id S1751133AbVL0TTH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Dec 2005 14:19:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751135AbVL0TTH
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Dec 2005 14:19:07 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:25241 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751133AbVL0TTF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Dec 2005 14:19:05 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBRJIxDZ006813
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Dec 2005 11:19:00 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBRJIwxS028143;
+	Tue, 27 Dec 2005 11:18:59 -0800
+To: Jon Nelson <jnelson-git@jamponi.net>
+In-Reply-To: <Pine.LNX.4.63.0512270840410.6812@gheavc.wnzcbav.cig>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14081>
 
-Hi,
 
-On Tue, 27 Dec 2005, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, 27 Dec 2005, Jon Nelson wrote:
 > 
-> >> Is there a particular reason running the current init-db twice
-> >> is undesirable?
-> >
-> > In my case, yes. When I do that, it means that I did not correctly 
-> > change directories. I fscked up my private git repository twice that way.
-> 
-> Maybe a warning (e.g. "rerunning in an already set up
-> repository") is in order?
+> I get this message whenever I use --tags with git-pull with certain 
+> repositories.
 
-Yeah. Or a command line parameter "--exists" without which it fails?
+You shouldn't "pull" tags. You should just "fetch" them.
 
-Ciao,
-Dscho
+The error message comes from the fact that the pull is a "fetch + merge", 
+and the merge logic tries to figure out what the common parent is with 
+"git-show-branch". And the common parent finding is limited to 29 commits.
+
+(Which is a very reasonable limit: the normal case is 2, and doing an 
+octopus-merge with more than four or five parents is already insane. Much 
+less 30 parents).
+
+> The git repository is one, and so is my local repository. 
+> I googled and got nothing. I grepped the git archive and got only 
+> show-branch.c.  Can this be safely ignored? Is it a known shortcoming, 
+> or something else entirely?
+
+Well, it's a known shortcoming, but it really ends up being a sign of you 
+doing the wrong thing and trying to merge all the tags together. The merge 
+would almost certainly fail, btw, regardless of anything else.
+
+Junio - I think we should make "git pull" refuse to merge more than one 
+head. If somebody wants to do an octopus merge, they can use "git merge" 
+instead. Hmm?
+
+		Linus
