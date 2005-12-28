@@ -1,60 +1,59 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH 2/4] short circuit out of a few places where we would
  allocate zero bytes
-Date: Tue, 27 Dec 2005 20:22:42 -0800
-Message-ID: <43B21312.50603@zytor.com>
+Date: Tue, 27 Dec 2005 20:38:10 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0512272036380.14098@g5.osdl.org>
 References: <20051224121007.GA19136@mail.yhbt.net> <20051224121243.GA3963@mail.yhbt.net>
+ <43B21312.50603@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 28 05:23:07 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Eric Wong <normalperson@yhbt.net>, git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 28 05:39:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ErSq9-0005a6-UV
-	for gcvg-git@gmane.org; Wed, 28 Dec 2005 05:23:06 +0100
+	id 1ErT51-0002nH-Ia
+	for gcvg-git@gmane.org; Wed, 28 Dec 2005 05:38:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932466AbVL1EWq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Dec 2005 23:22:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932467AbVL1EWq
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Dec 2005 23:22:46 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:59835 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932466AbVL1EWp
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Dec 2005 23:22:45 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBS4MgC3006994
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 27 Dec 2005 20:22:43 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Eric Wong <normalperson@yhbt.net>
-In-Reply-To: <20051224121243.GA3963@mail.yhbt.net>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,RCVD_IN_SORBS_DUL 
-	autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S932471AbVL1EiO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Dec 2005 23:38:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932472AbVL1EiO
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Dec 2005 23:38:14 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:5869 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932471AbVL1EiN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Dec 2005 23:38:13 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBS4cBDZ026645
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Dec 2005 20:38:12 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBS4cAUi013710;
+	Tue, 27 Dec 2005 20:38:11 -0800
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <43B21312.50603@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14093>
 
-Eric Wong wrote:
-> dietlibc versions of malloc, calloc and realloc all return NULL if
-> they're told to allocate 0 bytes, causes the x* wrappers to die().
-> 
-> There are several more places where these calls could end up asking
-> for 0 bytes, too...
-> 
-> Maybe simply not die()-ing in the x* wrappers if 0/NULL is returned
-> when the requested size is zero is a safer and easier way to go.
-> 
 
-Better yet, either always return NULL or allocate 1 byte in that case, 
-to get consistent behaviour.
 
-	-hpa
+On Tue, 27 Dec 2005, H. Peter Anvin wrote:
+> 
+> Better yet, either always return NULL or allocate 1 byte in that case, to get
+> consistent behaviour.
+
+Yes. However, if you do the "return NULL" case (which is nicest), you'll 
+have to wrap "free()" too. There are some libraries where passing "free()" 
+a NULL pointer causes a SIGSEGV.
+
+That said, I think that would be preferable to changing the source code to 
+unnecessarily avoid zero-sized allocations. Having a "xfree()" to match 
+"xmalloc()" makes sense. 
+
+		Linus
