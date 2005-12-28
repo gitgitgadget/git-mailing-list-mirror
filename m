@@ -1,68 +1,86 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH 2/4] short circuit out of a few places where we would
- allocate zero bytes
-Date: Wed, 28 Dec 2005 08:58:51 -0800
-Message-ID: <43B2C44B.1070102@zytor.com>
-References: <20051224121007.GA19136@mail.yhbt.net> <20051224121243.GA3963@mail.yhbt.net> <43B21312.50603@zytor.com> <Pine.LNX.4.64.0512272036380.14098@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Avoid allocating 0 bytes, was Re: [PATCH 4/4]
+ git-compat-util.h: dietlibc-friendly x{malloc,realloc,calloc}
+Date: Wed, 28 Dec 2005 21:38:32 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512282134380.2236@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20051224121007.GA19136@mail.yhbt.net> <20051224121454.GC3963@mail.yhbt.net>
+ <7v3bkis631.fsf@assigned-by-dhcp.cox.net> <20051224211546.GG3963@mail.yhbt.net>
+ <Pine.LNX.4.63.0512261916440.8435@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vzmmnisix.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0512262134290.19331@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>, git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 28 17:59:27 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 28 21:38:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eredx-0004PN-Js
-	for gcvg-git@gmane.org; Wed, 28 Dec 2005 17:59:17 +0100
+	id 1Eri4F-0006tE-VP
+	for gcvg-git@gmane.org; Wed, 28 Dec 2005 21:38:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964856AbVL1Q7G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Dec 2005 11:59:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932540AbVL1Q7G
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Dec 2005 11:59:06 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:20142 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932538AbVL1Q7F
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Dec 2005 11:59:05 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBSGwpPT027219
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 28 Dec 2005 08:58:51 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0512272036380.14098@g5.osdl.org>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S964905AbVL1Uii (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Dec 2005 15:38:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964907AbVL1Uii
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Dec 2005 15:38:38 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:29076 "EHLO
+	wrzx35.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964905AbVL1Uih (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Dec 2005 15:38:37 -0500
+Received: from amavis.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 04E85E1077; Wed, 28 Dec 2005 21:38:34 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by amavis.mail (Postfix) with ESMTP id ED17C2D48;
+	Wed, 28 Dec 2005 21:38:33 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by amavis.mail (Postfix) with ESMTP id D0A4D2750;
+	Wed, 28 Dec 2005 21:38:33 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id D7CCB1415C5; Wed, 28 Dec 2005 21:38:32 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.63.0512262134290.19331@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14104>
 
-Linus Torvalds wrote:
-> 
-> On Tue, 27 Dec 2005, H. Peter Anvin wrote:
-> 
->>Better yet, either always return NULL or allocate 1 byte in that case, to get
->>consistent behaviour.
-> 
-> Yes. However, if you do the "return NULL" case (which is nicest), you'll 
-> have to wrap "free()" too. There are some libraries where passing "free()" 
-> a NULL pointer causes a SIGSEGV.
-> 
-> That said, I think that would be preferable to changing the source code to 
-> unnecessarily avoid zero-sized allocations. Having a "xfree()" to match 
-> "xmalloc()" makes sense. 
-> 
+Hi,
 
-Yeah, although that might break GNU code which uses xmalloc that is 
-included (GNU doesn't have xfree.)  The easiest is just to allocate 1 
-byte when the user asks for 0.
+On Mon, 26 Dec 2005, Johannes Schindelin wrote:
 
-Anyone knows what GNU xmalloc does?
+> On Mon, 26 Dec 2005, Junio C Hamano wrote:
+> 
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > > diff --git a/csum-file.c b/csum-file.c
+> > > index 5f9249a..2c0f097 100644
+> > > --- a/csum-file.c
+> > > +++ b/csum-file.c
+> > > @@ -121,6 +121,9 @@ int sha1write_compressed(struct sha1file
+> > >  	unsigned long maxsize;
+> > >  	void *out;
+> > >  
+> > > +	if (size == 0)
+> > > +		return 0;
+> > > +
+> > >  	memset(&stream, 0, sizeof(stream));
+> > >  	deflateInit(&stream, Z_DEFAULT_COMPRESSION);
+> > >  	maxsize = deflateBound(&stream, size);
+> > 
+> > I think this and the one in sha1_file.c::write_sha1_file() are
+> > wrong; 0-size input would not result in 0-size output.  Have you
+> > tested them by actually exercising the codepaths you touched?
+> 
+> No, I did not test them.
 
-	-hpa
+Now I did. To make a long story short: this patch is wrong, wrong, wrong. 
+Further, I think it is safe to assume that deflateBound() returns > 0.
+
+Ciao,
+Dscho
