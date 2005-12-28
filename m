@@ -1,82 +1,85 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] fix skipping merge-order test with NO_OPENSSL=1.
-Date: Wed, 28 Dec 2005 12:25:38 +0100
-Message-ID: <20051228112538.20197.qmail@0e359e924d9d3e.315fe32.mid.smarden.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-inject-tarball
+Date: Wed, 28 Dec 2005 12:42:26 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0512281230070.15184@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <pan.2005.12.28.02.40.14.577883@progsoc.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Dec 28 12:25:30 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 28 12:42:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ErZQp-0001UC-HR
-	for gcvg-git@gmane.org; Wed, 28 Dec 2005 12:25:23 +0100
+	id 1ErZhR-0007h0-NO
+	for gcvg-git@gmane.org; Wed, 28 Dec 2005 12:42:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964788AbVL1LZU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Dec 2005 06:25:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964791AbVL1LZU
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Dec 2005 06:25:20 -0500
-Received: from a.mx.smarden.org ([212.21.76.77]:45490 "HELO a.mx.smarden.org")
-	by vger.kernel.org with SMTP id S964788AbVL1LZT (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Dec 2005 06:25:19 -0500
-Received: (qmail 20198 invoked by uid 1000); 28 Dec 2005 11:25:38 -0000
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S964792AbVL1Lmb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Dec 2005 06:42:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964794AbVL1Lmb
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Dec 2005 06:42:31 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:32164 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964792AbVL1Lma (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Dec 2005 06:42:30 -0500
+Received: from amavis.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.46])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 220421415D9; Wed, 28 Dec 2005 12:42:27 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by amavis.mail (Postfix) with ESMTP id 1310415DA;
+	Wed, 28 Dec 2005 12:42:27 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by amavis.mail (Postfix) with ESMTP id E9D8A1547;
+	Wed, 28 Dec 2005 12:42:26 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 688451415D9; Wed, 28 Dec 2005 12:42:26 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Anand Kumria <wildfire@progsoc.org>
+In-Reply-To: <pan.2005.12.28.02.40.14.577883@progsoc.org>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14098>
 
-Hi, when building git with NO_OPENSSL=1, the rev-list-merge-order
-selftests fail.  Moving the check for 'OpenSSL not linked' in the usage
-output to after test no 1 and fixing the syntax works for me.
+Hi,
 
-Regards, Gerrit.
+On Wed, 28 Dec 2005, Anand Kumria wrote:
 
+> 
+> Hi,
+> 
+> In the Everyday commands[1], there is an example of of extracting a
+> tarball and then working with it.  I'm finding that I'm doing this fairly
+> often -- I was just wondering if anyone had anything like a
+> 'git-inject-tarball' script they'd written up.
 
-* move git-rev-list --merge-order usage check for 'OpenSSL not linked' after
-  test 1.
+Something like this?
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
+-- snip --
+#!/bin/sh
 
----
+TARFILE="$1"
+test -z "$TARFILE" && TARFILE=-
 
- t/t6001-rev-list-merge-order.sh |   14 +++++++-------
- 1 files changed, 7 insertions(+), 7 deletions(-)
+git-ls-files -z | xargs -0 rm
+tar xvf "$TARFILE" | xargs git add
+git-update-index --remove $(git-ls-files)
+-- snap --
 
-635cc4875b6bd8b6afb80742c7927ef4233ec562
-diff --git a/t/t6001-rev-list-merge-order.sh b/t/t6001-rev-list-merge-order.sh
-index 8ec9ebb..2f3c6f8 100755
---- a/t/t6001-rev-list-merge-order.sh
-+++ b/t/t6001-rev-list-merge-order.sh
-@@ -8,13 +8,6 @@ test_description='Tests git-rev-list --m
- . ./test-lib.sh
- . ../t6000lib.sh # t6xxx specific functions
- 
--if git-rev-list --merge-order 2>&1 | grep 'OpenSSL not linked' >/dev/null
--then
--    test_expect_success 'skipping merge-order test' :
--    test_done
--    exit
--fi    
--
- # test-case specific test function
- check_adjacency()
- {
-@@ -114,6 +107,13 @@ test_expect_success 'rev-list has correc
- 19
- EOF
- 
-+if git-rev-list --merge-order HEAD 2>&1 | grep 'OpenSSL not linked' >/dev/null
-+then
-+    test_expect_success 'skipping merge-order test' :
-+    test_done
-+    exit
-+fi
-+
- normal_adjacency_count=$(git-rev-list HEAD | check_adjacency | grep -c "\^" | tr -d ' ')
- merge_order_adjacency_count=$(git-rev-list --merge-order HEAD | check_adjacency | grep -c "\^" | tr -d ' ')
- test_expect_success '--merge-order produces as many or fewer discontinuities' '[ $merge_order_adjacency_count -le $normal_adjacency_count ]'
--- 
-1.0.3
+Notes:
+	- this updates the index to match the given tarfile, you still 
+	  have to commit yourself
+	- it does not handle compressed tarfiles (you have to do something
+	  like "cat bla.tar.gz | gzip -d | sh git-untar.sh")
+	- it does not remove empty directories (i.e. if the current index 
+	  contains a file "a/b", and the tarfile does not, and the
+	  directory "a" is now empty, this is not handled)
+	- usually, tarfiles contain files inside a subdirectory. There is
+	  no facility to strip the subdirectory
+
+Hth,
+Dscho
