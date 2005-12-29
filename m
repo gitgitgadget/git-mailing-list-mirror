@@ -1,70 +1,49 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git today
-Date: Wed, 28 Dec 2005 15:32:14 -0800
-Message-ID: <7vbqz0ajcx.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Cogito: cg-push doesn't push tags?
+Date: Thu, 29 Dec 2005 13:59:21 -0800
+Message-ID: <43B45C39.8040501@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Dec 29 00:32:41 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Dec 29 23:00:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ErkmV-000643-4O
-	for gcvg-git@gmane.org; Thu, 29 Dec 2005 00:32:31 +0100
+	id 1Es5o5-0003nC-U1
+	for gcvg-git@gmane.org; Thu, 29 Dec 2005 22:59:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932553AbVL1XcS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Dec 2005 18:32:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932554AbVL1XcS
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Dec 2005 18:32:18 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:58599 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932553AbVL1XcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Dec 2005 18:32:17 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20051228233115.TVKL6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 28 Dec 2005 18:31:15 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751041AbVL2V73 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Dec 2005 16:59:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042AbVL2V73
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Dec 2005 16:59:29 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:10905 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751039AbVL2V72
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Dec 2005 16:59:28 -0500
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBTLxQfC001971
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 29 Dec 2005 13:59:26 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14106>
 
-GIT 1.0.6 was silently pushed out.  Again, it has one notable
-fix among minor test fixes.
+It seems that cg-push in cogito 0.16.2 doesn't push new tags when used 
+over git+ssh transport?  Am I completely wet behind the ears, or is that 
+a bug?
 
- - Do not mark tags fetched via --tags flag as mergeable.
+In particular, it seems to manifest itself when the *only* thing that 
+has changed is tags.
 
-   This is to fix "git pull --tags"; it tried to merge all of
-   the tags by mistake --- it should not merge any of them.
-
-I have verified that the patch by Gerrit to fix merge-order test
-is correct, but have not got around to apply it yet.
-
-The master branch has the following enhancements in addition to
-what is in 1.0.6.  I intend to have 1.1 release with them early
-next year, when I come back from the new year break.
-
- - "git clone -o branchname" to specify name of the branch used
-   to keep track of the upstream (Johannes).
- 
- - "core.sharedrepository" and "git init-db --shared" to help
-   group writable repositories (Johannes).
-
- - IPV6 literal address in git networking protocol (Hideaki).
-
- - "git pack-redundant" is more efficient (Lukas).
-
- - "git describe" and associated Makefile changes to give GIT
-   releases a bit more descriptive names (Linus and me).
-
- - "git checkout <treeish> <path>..." and "git checkout -- <path>..."
-   can be used to restore named paths even from a subdirectory.
-
- - git-receive-pack propagates hooks' refusal to update back to
-   git-send-pack.
-
-I'll be away from the network and will be back on the second
-week of January.  I wish everybody a happy new year.
+	-hpa
