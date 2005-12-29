@@ -1,56 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Cogito: cg-push doesn't push tags?
-Date: Thu, 29 Dec 2005 14:10:13 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0512291409140.3298@g5.osdl.org>
-References: <43B45C39.8040501@zytor.com> <Pine.LNX.4.64.0512291404240.3298@g5.osdl.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [ANNOUNCE] GIT 1.0.0b quickfix
+Date: Thu, 29 Dec 2005 15:14:04 -0800
+Message-ID: <43B46DBC.2050107@zytor.com>
+References: <7vpsnq3wrg.fsf@assigned-by-dhcp.cox.net>	<1135244363.10035.185.camel@gaston>	<Pine.LNX.4.64.0512220945450.4827@g5.osdl.org>	<200512231712.40621.ioe-lkml@rameria.de>	<7vu0cyu8vj.fsf@assigned-by-dhcp.cox.net> <43AD2003.3060609@op5.se> <m3lkyaptwt.fsf@defiant.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 29 23:10:28 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
+	Ingo Oeser <ioe-lkml@rameria.de>, linux-kernel@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 30 00:16:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Es5yW-0007Zg-EW
-	for gcvg-git@gmane.org; Thu, 29 Dec 2005 23:10:20 +0100
+	id 1Es70B-0005ps-AT
+	for gcvg-git@gmane.org; Fri, 30 Dec 2005 00:16:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751049AbVL2WKR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Dec 2005 17:10:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbVL2WKQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Dec 2005 17:10:16 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:38350 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751049AbVL2WKP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Dec 2005 17:10:15 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBTMAEDZ021217
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 29 Dec 2005 14:10:14 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBTMADGv023268;
-	Thu, 29 Dec 2005 14:10:14 -0800
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <Pine.LNX.4.64.0512291404240.3298@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751106AbVL2XP4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Dec 2005 18:15:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbVL2XP4
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Dec 2005 18:15:56 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:44215 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751106AbVL2XPz
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Dec 2005 18:15:55 -0500
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBTNE966003768
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 29 Dec 2005 15:14:10 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Krzysztof Halasa <khc@pm.waw.pl>
+In-Reply-To: <m3lkyaptwt.fsf@defiant.localdomain>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14109>
 
-
-
-On Thu, 29 Dec 2005, Linus Torvalds wrote:
->
-> But in the meantime you can hack around it with something like
+Krzysztof Halasa wrote:
 > 
-> 	git send-pack <destination> $(cd .git/refs/ ; echo tags/*)
-> 
-> which is a silly way to list all tags ;)
+> This is uncertain. If the time is quantified 5 hrs might as well contain
+> much less quanta than 3 kg, let alone 20 cm :-)
 
-Actually, I guess it should use "find tags/ -type f" or something like 
-that instead of "echo tags/*". Otherwise you don't get tags with slashes 
-right.
+You're forgetting that if time is quantized, it's as part of a general 
+quantization of space-time.  Thus, there would be as many quanta in 5 
+hrs as in 539,626,442,400,000 cm.
 
-		Linus
+	-hpa
