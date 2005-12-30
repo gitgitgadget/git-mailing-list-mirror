@@ -1,75 +1,59 @@
 From: John Ellson <ellson@research.att.com>
 Subject: Re: [PATCH] Make GIT-VERSION-GEN tolerate missing git describe command
-Date: Fri, 30 Dec 2005 14:12:52 -0500
-Message-ID: <43B586B4.5030001@research.att.com>
-References: <dp3mtp$rfm$1@sea.gmane.org> <Pine.LNX.4.64.0512301046230.3249@g5.osdl.org>
+Date: Fri, 30 Dec 2005 14:31:56 -0500
+Message-ID: <dp41ve$v7r$1@sea.gmane.org>
+References: <dp3mtp$rfm$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 30 20:13:03 2005
+X-From: git-owner@vger.kernel.org Fri Dec 30 20:32:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EsPgT-0006Md-RM
-	for gcvg-git@gmane.org; Fri, 30 Dec 2005 20:13:02 +0100
+	id 1EsPzU-0001jc-Tr
+	for gcvg-git@gmane.org; Fri, 30 Dec 2005 20:32:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751283AbVL3TM7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Dec 2005 14:12:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbVL3TM7
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Dec 2005 14:12:59 -0500
-Received: from [192.20.225.110] ([192.20.225.110]:27808 "EHLO
-	mail-white.research.att.com") by vger.kernel.org with ESMTP
-	id S1751283AbVL3TM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Dec 2005 14:12:58 -0500
-Received: from [135.207.24.103] (ellson.research.att.com [135.207.24.103])
-	by bigmail.research.att.com (8.13.3+Sun/8.11.6) with ESMTP id jBUJHfge019451;
-	Fri, 30 Dec 2005 14:17:41 -0500 (EST)
+	id S1751295AbVL3Tcb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Dec 2005 14:32:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751301AbVL3Tcb
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Dec 2005 14:32:31 -0500
+Received: from main.gmane.org ([80.91.229.2]:36046 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751295AbVL3TcO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Dec 2005 14:32:14 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EsPz0-0001bQ-HJ
+	for git@vger.kernel.org; Fri, 30 Dec 2005 20:32:11 +0100
+Received: from h-135-207-24-103.research.att.com ([135.207.24.103])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Dec 2005 20:32:10 +0100
+Received: from ellson by h-135-207-24-103.research.att.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Dec 2005 20:32:10 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: h-135-207-24-103.research.att.com
 User-Agent: Mail/News 1.5 (X11/20051129)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0512301046230.3249@g5.osdl.org>
+In-Reply-To: <dp3mtp$rfm$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14117>
 
-Linus Torvalds wrote:
-> On Fri, 30 Dec 2005, John Ellson wrote:
->   
->> I think it is probably a bug that "git non_existent_command"
->> returns its error message to stdout without an error, where
->> "git-non_existent_command" behaves differently and does return an
->> error.
->>
->> Older versions of git did not implement "git describe"  and
->> GIT-VERSION-GEN produces an empty version string if run on
->> a system with such a git installed.  The consequence
->> is that "make rpm" fails.
->>
->> This patch fixes GIT-VERSION-GEN so that it works in the
->> absence of a working "git describe"
->>     
->
-> Shouldn't you make "git.c" return an error too, so that "git-describe" and 
-> "git describe" both fail properly?
->
-> I realize that you'd want to do your patch _too_ (in case somebody has an 
-> old version of "git" installed), but I just think it would be sensible to 
-> fix the problem that causes this in the first place..
->
-> Continuing to output to stdout rather than stderr is probably a good idea 
-> (so that it's easy to do "git help | less" or something), but yeah, I 
-> think an unrecognized command should at least return an error.
->
-> 		Linus
->   
+John Ellson wrote:
+> I think it is probably a bug that "git non_existent_command"
+> returns its error message to stdout without an error, where
+> "git-non_existent_command" behaves differently and does return an
+> error.
 
-I checked and that bug has been fixed since the older version of git that
-was causing me problems. "git non_existent_command" now returns 1.
-However, the error message was also changed to
-goto stderr, which it sounds like you disagree with?   Personally
-I don't have a problem with it, although a real "git-help" command
-might be a good idea too.
+BTW.  Its the old shell-script version of "git" that fails to return an error on 
+non_existent_commands.    The newer C version of "git" correctly returns an 
+error code.
+
+The reason that this is a sufficiently serious problem to require a fix is that 
+the broken version of "git" is in the git-core-0.99.9a-2.fc5.i386.rpm that is 
+currently in Fedora Core Extras development.
 
 John
