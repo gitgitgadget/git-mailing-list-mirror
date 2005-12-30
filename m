@@ -1,94 +1,71 @@
-From: Blaisorblade <blaisorblade@yahoo.it>
-Subject: Re: [PATCH] Stgit - gitmergeonefile.py: handle removal vs. changes
-Date: Fri, 30 Dec 2005 18:59:50 +0100
-Message-ID: <200512301859.51000.blaisorblade@yahoo.it>
-References: <20051113194225.20447.57910.stgit@zion.home.lan> <b0943d9e0511150154y2d2af24ck@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Make GIT-VERSION-GEN tolerate missing git describe
+ command
+Date: Fri, 30 Dec 2005 10:49:13 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0512301046230.3249@g5.osdl.org>
+References: <dp3mtp$rfm$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 30 19:00:18 2005
+X-From: git-owner@vger.kernel.org Fri Dec 30 19:49:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EsOXo-0006qn-RF
-	for gcvg-git@gmane.org; Fri, 30 Dec 2005 19:00:01 +0100
+	id 1EsPJc-0000oz-Je
+	for gcvg-git@gmane.org; Fri, 30 Dec 2005 19:49:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750852AbVL3R75 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Dec 2005 12:59:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbVL3R75
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Dec 2005 12:59:57 -0500
-Received: from smtp010.mail.ukl.yahoo.com ([217.12.11.79]:31614 "HELO
-	smtp010.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1750852AbVL3R74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Dec 2005 12:59:56 -0500
-Received: (qmail 81529 invoked from network); 30 Dec 2005 17:59:55 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Received:From:To:Subject:Date:User-Agent:Cc:References:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-Disposition:Message-Id;
-  b=40LjAjVvt6lRb3gx1+3entb63bhLrw9MnWDCsECtSanTMXsGke5gVL2nAq5E6QiIYbRcUspuYAuDALcReUVnWFr9RQrDuMvUyMVZ2ZR7NzEPQ4RH0w7zljpJ5HeJNnc/X28vNSPuMt470d1FNhi9qpMRQtGI2MWeO6CaoIspjGs=  ;
-Received: from unknown (HELO host214-43.pool8259.interbusiness.it) (blaisorblade@82.59.43.214 with login)
-  by smtp010.mail.ukl.yahoo.com with SMTP; 30 Dec 2005 17:59:55 -0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
-User-Agent: KMail/1.8.3
-In-Reply-To: <b0943d9e0511150154y2d2af24ck@mail.gmail.com>
-Content-Disposition: inline
+	id S1751278AbVL3StT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Dec 2005 13:49:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbVL3StT
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Dec 2005 13:49:19 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:24023 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751278AbVL3StS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Dec 2005 13:49:18 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id jBUInEDZ001246
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 30 Dec 2005 10:49:14 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id jBUInDgg023259;
+	Fri, 30 Dec 2005 10:49:13 -0800
+To: John Ellson <ellson@research.att.com>
+In-Reply-To: <dp3mtp$rfm$1@sea.gmane.org>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14115>
 
-On Tuesday 15 November 2005 10:54, Catalin Marinas wrote:
-> On 13/11/05, Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it> wrote:
-> > I just got a "removal vs. changed" conflict, which is unhandled by StGit.
-> > That is taken from git-merge-one-file resolver, but is bad, as stg
-> > resolved does not handle unmerged entries (and probably it should be
-> > fixed too).
+
+
+On Fri, 30 Dec 2005, John Ellson wrote:
 >
-> I think it 'stg resolved' should be fixed as well (in case there are
-> unmerged entries for other reasons). My initial idea was to make
-> gitmergeonefile not to leave any unmerged entries in the index. As you
-> could see, there are cases where it failed.
+> I think it is probably a bug that "git non_existent_command"
+> returns its error message to stdout without an error, where
+> "git-non_existent_command" behaves differently and does return an
+> error.
+> 
+> Older versions of git did not implement "git describe"  and
+> GIT-VERSION-GEN produces an empty version string if run on
+> a system with such a git installed.  The consequence
+> is that "make rpm" fails.
+> 
+> This patch fixes GIT-VERSION-GEN so that it works in the
+> absence of a working "git describe"
 
-The original patch hasn't been merged, nor (for what I see) anything else to 
-fix this problem has been done.
+Shouldn't you make "git.c" return an error too, so that "git-describe" and 
+"git describe" both fail properly?
 
-I assume the patch was lost waiting for the discussion to settle down, but the 
-patch can be merged, even changing the default choices in any way (see 
-below).
+I realize that you'd want to do your patch _too_ (in case somebody has an 
+old version of "git" installed), but I just think it would be sensible to 
+fix the problem that causes this in the first place..
 
-Also, another note: I just found Bruce Eckel mentioning pychecker, which is a 
-static code checker for Python (to perform the checks a compiler would 
-normally do). I've not the time to investigate more myself, but I hope it can 
-be useful to you.
+Continuing to output to stdout rather than stderr is probably a good idea 
+(so that it's easy to do "git help | less" or something), but yeah, I 
+think an unrecognized command should at least return an error.
 
-> I can see the following scenarios for a file:
-
-> 1. deleted in the base and modified by the patch. It should leave the
-> file in the tree together with file.older. Another option would be to
-> remove the file and leave both file.older and file.remote in the tree
-> (here .remote means the version in the patch) but I would prefer the
-> first one.
->
-> 2. changed in the base but deleted by the patch. It should remove the
-> file from the tree but leave file.older and file.local. The other
-> option is to leave the file in the tree but, as above, I prefer the
-> first one.
->
-> Maybe StGIT should try to track the renaming as well but I haven't
-> played with this feature in GIT at all.
-
--- 
-Inform me of my mistakes, so I can keep imitating Homer Simpson's "Doh!".
-Paolo Giarrusso, aka Blaisorblade (Skype ID "PaoloGiarrusso", ICQ 215621894)
-http://www.user-mode-linux.org/~blaisorblade
-
-	
-
-	
-		
-___________________________________ 
-Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
-http://mail.yahoo.it
+		Linus
