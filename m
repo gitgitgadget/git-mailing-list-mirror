@@ -1,97 +1,67 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] add strcpy_user_path() and use it in init-db.c and git.c
-Date: Fri, 30 Dec 2005 15:10:17 -0800
-Message-ID: <20051230231017.GB7165@mail.yhbt.net>
-References: <20051224122016.GD3963@mail.yhbt.net> <7virtes6zd.fsf@assigned-by-dhcp.cox.net> <20051224195033.GE3963@mail.yhbt.net> <7vu0cyqk5d.fsf@assigned-by-dhcp.cox.net> <20051224211925.GH3963@mail.yhbt.net> <Pine.LNX.4.63.0512261730170.7716@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] Make GIT-VERSION-GEN tolerate missing git describe command
+Date: Fri, 30 Dec 2005 16:15:30 -0800
+Message-ID: <43B5CDA2.5050408@zytor.com>
+References: <dp3mtp$rfm$1@sea.gmane.org> <dp41ve$v7r$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Dec 31 00:10:34 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 31 01:16:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EsTOE-0000gJ-P6
-	for gcvg-git@gmane.org; Sat, 31 Dec 2005 00:10:27 +0100
+	id 1EsUQC-0002PP-3o
+	for gcvg-git@gmane.org; Sat, 31 Dec 2005 01:16:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964934AbVL3XKU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Dec 2005 18:10:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964935AbVL3XKT
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Dec 2005 18:10:19 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:22412 "EHLO mail.yhbt.net")
-	by vger.kernel.org with ESMTP id S964934AbVL3XKS (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Dec 2005 18:10:18 -0500
-Received: by mail.yhbt.net (Postfix, from userid 500)
-	id 48B6E7DC005; Fri, 30 Dec 2005 15:10:18 -0800 (PST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0512261730170.7716@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.9i
+	id S964976AbVLaAPs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Dec 2005 19:15:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964977AbVLaAPs
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Dec 2005 19:15:48 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:54754 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S964976AbVLaAPr
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Dec 2005 19:15:47 -0500
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id jBV0FfuX001792
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 30 Dec 2005 16:15:41 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: John Ellson <ellson@research.att.com>
+In-Reply-To: <dp41ve$v7r$1@sea.gmane.org>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14121>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
+John Ellson wrote:
+> John Ellson wrote:
 > 
-> On Sat, 24 Dec 2005, Eric Wong wrote:
+>> I think it is probably a bug that "git non_existent_command"
+>> returns its error message to stdout without an error, where
+>> "git-non_existent_command" behaves differently and does return an
+>> error.
 > 
-> > Junio C Hamano <junkio@cox.net> wrote:
-> > > Eric Wong <normalperson@yhbt.net> writes:
-> > > 
-> > > > My home directories have different names on different machines I'm
-> > > > on, and I want to avoid having to recompile git for each one.
-> > > > I don't have root access to some of them, so installing globally in /usr
-> > > > or /usr/local isn't an option, either.
-> > > 
-> > > Then you probably need to use GIT_EXEC_PATH environment
-> > > variable.
-> > 
-> > That works with git.c but not init-db.  But then again I don't use
-> > git-init-db that often.  I'll just write a shell script wrapper for the
-> > latter if I do.
 > 
-> How about something like this?
+> BTW.  Its the old shell-script version of "git" that fails to return an 
+> error on non_existent_commands.    The newer C version of "git" 
+> correctly returns an error code.
+> 
+> The reason that this is a sufficiently serious problem to require a fix 
+> is that the broken version of "git" is in the 
+> git-core-0.99.9a-2.fc5.i386.rpm that is currently in Fedora Core Extras 
+> development.
+> 
 
-Sure, seems reasonable, but I don't feel that strongly towards
-making my env getting bigger and bigger all the time.
+It has been fixed.  What's broken is that Fedora Extras still contains 
+0.99.9a which is totally ancient.
 
-I've also been comtemplating just using my own wrapper instead of the
-default 'git' wrapper (which being in C, is more difficult to customize
-on-the-fly than sh or perl).  Or have git read a config file from a
-user's home directory.
-
-> ---
-> [PATCH] Introduce environment variable for the path to the templates
-> 
-> The environment variable GIT_TEMPLATE_PATH can override the compiled-in
-> setting, and can be overridden with the '--template=' argument to init-db.
-> 
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> 
-> ---
-> 
-> 	Eric said that GIT_EXEC_PATH is enough for most things, but not for
-> 	init-db. I guess he wanted something like this.
-> 
->  init-db.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> 5d95ce750b09a14bcb86e07ba23077ab0825089c
-> diff --git a/init-db.c b/init-db.c
-> index 863ec1a..774a91f 100644
-> --- a/init-db.c
-> +++ b/init-db.c
-> @@ -238,7 +238,7 @@ int main(int argc, char **argv)
->  {
->  	const char *git_dir;
->  	const char *sha1_dir;
-> -	char *path, *template_dir = NULL;
-> +	char *path, *template_dir = getenv("GIT_TEMPLATE_PATH");
->  	int len, i;
->  
->  	for (i = 1; i < argc; i++, argv++) {
-
--- 
-Eric Wong
+	-hpa
