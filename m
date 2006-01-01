@@ -1,63 +1,65 @@
-From: Olaf Hering <olh@suse.de>
-Subject: Re: how to find outstanding patches in non-linux-2.6 repositories?
-Date: Sun, 1 Jan 2006 22:04:39 +0100
-Message-ID: <20060101210429.GA22033@suse.de>
-References: <20060101200121.GA20633@suse.de> <43B83EBC.9070905@didntduck.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] svnimport: support repositories requiring SSL authentication
+Date: Sun, 1 Jan 2006 13:25:47 -0800
+Message-ID: <20060101212546.GI3963@mail.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 01 22:05:13 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Jan 01 22:26:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EtAO8-00005q-2L
-	for gcvg-git@gmane.org; Sun, 01 Jan 2006 22:05:12 +0100
+	id 1EtAiE-0003Wu-R6
+	for gcvg-git@gmane.org; Sun, 01 Jan 2006 22:25:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932195AbWAAVEv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Jan 2006 16:04:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932210AbWAAVEv
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jan 2006 16:04:51 -0500
-Received: from cantor2.suse.de ([195.135.220.15]:28555 "EHLO mx2.suse.de")
-	by vger.kernel.org with ESMTP id S932195AbWAAVEv (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Jan 2006 16:04:51 -0500
-Received: from Relay2.suse.de (mail2.suse.de [195.135.221.8])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx2.suse.de (Postfix) with ESMTP id 80D591C649;
-	Sun,  1 Jan 2006 22:04:39 +0100 (CET)
-To: Brian Gerst <bgerst@didntduck.org>
+	id S932266AbWAAVZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Jan 2006 16:25:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932269AbWAAVZs
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jan 2006 16:25:48 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:8593 "EHLO mail.yhbt.net")
+	by vger.kernel.org with ESMTP id S932266AbWAAVZs (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Jan 2006 16:25:48 -0500
+Received: by mail.yhbt.net (Postfix, from userid 500)
+	id 412DB7DC005; Sun,  1 Jan 2006 13:25:47 -0800 (PST)
+To: git list <git@vger.kernel.org>,
+	Matthias Urlichs <smurf@smurf.noris.de>
 Content-Disposition: inline
-In-Reply-To: <43B83EBC.9070905@didntduck.org>
-X-DOS: I got your 640K Real Mode Right Here Buddy!
-X-Homeland-Security: You are not supposed to read this line! You are a terrorist!
-User-Agent: Mutt und vi sind doch schneller als Notes (und GroupWise)
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14131>
 
- On Sun, Jan 01, Brian Gerst wrote:
+I looked at svn-mirror to see how it did this, seems about right.
+"It works for me" when using it against https://svn.musicpd.org
 
-> Pull the powerpc tree into your local repo, then do something like:
-> git-whatchanged master..powerpc
-> or
-> gitk master..powerpc
+tested command-line: git-svnimport -C mpc -i -m -v  \
+	-T mpc/trunk -b mpc/branches -t mpc/tags https://svn.musicpd.org
 
-This worked for me:
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
-mkdir /dev/shm/x
-cd /dev/shm/x
-rsync -Ha --delete ~/kernel/git/{powerpc,linux-2.6} .
-cd linux-2.6/
-cat .git/HEAD  > ../start
-git-pull /dev/shm/x/powerpc
-cat .git/HEAD  > ../end
-git-format-patch `cat ../start` `cat ../end`
-view ????-*
+---
 
+ git-svnimport.perl |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-
+926c84c0c96e43ca0341b541ed23e0f3874b8171
+diff --git a/git-svnimport.perl b/git-svnimport.perl
+index cb241d1..6e3a44a 100755
+--- a/git-svnimport.perl
++++ b/git-svnimport.perl
+@@ -96,8 +96,10 @@ sub new {
+ sub conn {
+ 	my $self = shift;
+ 	my $repo = $self->{'fullrep'};
+-	my $s = SVN::Ra->new($repo);
+-
++	my $auth = SVN::Core::auth_open ([SVN::Client::get_simple_provider,
++			  SVN::Client::get_ssl_server_trust_file_provider,
++			  SVN::Client::get_username_provider]);
++	my $s = SVN::Ra->new(url => $repo, auth => $auth);
+ 	die "SVN connection to $repo: $!\n" unless defined $s;
+ 	$self->{'svn'} = $s;
+ 	$self->{'repo'} = $repo;
 -- 
-short story of a lazy sysadmin:
- alias appserv=wotan
+1.0.GIT
