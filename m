@@ -1,81 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: how to find outstanding patches in non-linux-2.6 repositories?
-Date: Sun, 1 Jan 2006 22:32:27 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0601012228470.32311@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060101200121.GA20633@suse.de> <43B83EBC.9070905@didntduck.org>
- <20060101210429.GA22033@suse.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] Documentation/git-svnimport: document -T and -t switches correctly
+Date: Sun, 1 Jan 2006 13:32:53 -0800
+Message-ID: <20060101213253.GJ3963@mail.yhbt.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brian Gerst <bgerst@didntduck.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 01 22:32:37 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Jan 01 22:33:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EtAod-0004K1-MZ
-	for gcvg-git@gmane.org; Sun, 01 Jan 2006 22:32:36 +0100
+	id 1EtAoz-0004MH-9j
+	for gcvg-git@gmane.org; Sun, 01 Jan 2006 22:32:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932269AbWAAVcb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Jan 2006 16:32:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932270AbWAAVcb
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jan 2006 16:32:31 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:19929 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932269AbWAAVcb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jan 2006 16:32:31 -0500
-Received: from amavis.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.46])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id CC284140584; Sun,  1 Jan 2006 22:32:27 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by amavis.mail (Postfix) with ESMTP id BE005355F;
-	Sun,  1 Jan 2006 22:32:27 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by amavis.mail (Postfix) with ESMTP id A1A511561;
-	Sun,  1 Jan 2006 22:32:27 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 37461140584; Sun,  1 Jan 2006 22:32:27 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Olaf Hering <olh@suse.de>
-In-Reply-To: <20060101210429.GA22033@suse.de>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
-X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
-X-Spam-Level: 
+	id S932270AbWAAVcy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Jan 2006 16:32:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932272AbWAAVcy
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jan 2006 16:32:54 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:9617 "EHLO mail.yhbt.net")
+	by vger.kernel.org with ESMTP id S932270AbWAAVcy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Jan 2006 16:32:54 -0500
+Received: by mail.yhbt.net (Postfix, from userid 500)
+	id D1B6C7DC005; Sun,  1 Jan 2006 13:32:53 -0800 (PST)
+To: git list <git@vger.kernel.org>,
+	Matthias Urlichs <smurf@smurf.noris.de>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14133>
 
-Hi,
+The -T and -t switches are swapped in the documentation and actual
+code.  I've made the documentation match the code.
 
-On Sun, 1 Jan 2006, Olaf Hering wrote:
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
->  On Sun, Jan 01, Brian Gerst wrote:
-> 
-> > Pull the powerpc tree into your local repo, then do something like:
-> > git-whatchanged master..powerpc
-> > or
-> > gitk master..powerpc
-> 
-> This worked for me:
-> 
-> mkdir /dev/shm/x
-> cd /dev/shm/x
-> rsync -Ha --delete ~/kernel/git/{powerpc,linux-2.6} .
-> cd linux-2.6/
-> cat .git/HEAD  > ../start
-> git-pull /dev/shm/x/powerpc
-> cat .git/HEAD  > ../end
-> git-format-patch `cat ../start` `cat ../end`
-> view ????-*
+---
 
-Preferrable is the following:
+ Documentation/git-svnimport.txt |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-cd /existing/clone/of/ppc-linux # OP said he had this already
-git fetch \
-  git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git \
-  master:refs/heads/linus
-git-whatchanged linus..HEAD
-
-Hth,
-Dscho
+dedc4d56fc4ad95158d9de0f3c7b46cda2746659
+diff --git a/Documentation/git-svnimport.txt b/Documentation/git-svnimport.txt
+index f8dbee7..7583d78 100644
+--- a/Documentation/git-svnimport.txt
++++ b/Documentation/git-svnimport.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ --------
+ 'git-svnimport' [ -o <branch-for-HEAD> ] [ -h ] [ -v ] [ -d | -D ]
+ 			[ -C <GIT_repository> ] [ -i ] [ -u ] [-l limit_rev]
+-			[ -b branch_subdir ] [ -t trunk_subdir ] [ -T tag_subdir ]
++			[ -b branch_subdir ] [ -T trunk_subdir ] [ -t tag_subdir ]
+ 			[ -s start_chg ] [ -m ] [ -M regex ]
+ 			<SVN_repository_URL> [ <path> ]
+ 
+@@ -47,10 +47,10 @@ When importing incementally, you might n
+ 	ensures the working directory and index remain untouched and will
+ 	not create them if they do not exist.
+ 
+--t <trunk_subdir>::
++-T <trunk_subdir>::
+ 	Name the SVN trunk. Default "trunk".
+ 
+--T <tag_subdir>::
++-t <tag_subdir>::
+ 	Name the SVN subdirectory for tags. Default "tags".
+ 
+ -b <branch_subdir>::
+-- 
+1.0.GIT
