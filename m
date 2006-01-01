@@ -1,71 +1,73 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] Documentation/git-svnimport: document -T and -t switches correctly
-Date: Sun, 1 Jan 2006 13:32:53 -0800
-Message-ID: <20060101213253.GJ3963@mail.yhbt.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: how to find outstanding patches in non-linux-2.6 repositories?
+Date: Sun, 1 Jan 2006 15:09:54 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601011452230.3668@g5.osdl.org>
+References: <20060101200121.GA20633@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Jan 01 22:33:05 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 02 00:10:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EtAoz-0004MH-9j
-	for gcvg-git@gmane.org; Sun, 01 Jan 2006 22:32:57 +0100
+	id 1EtCLA-00013u-LL
+	for gcvg-git@gmane.org; Mon, 02 Jan 2006 00:10:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932270AbWAAVcy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Jan 2006 16:32:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932272AbWAAVcy
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jan 2006 16:32:54 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:9617 "EHLO mail.yhbt.net")
-	by vger.kernel.org with ESMTP id S932270AbWAAVcy (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Jan 2006 16:32:54 -0500
-Received: by mail.yhbt.net (Postfix, from userid 500)
-	id D1B6C7DC005; Sun,  1 Jan 2006 13:32:53 -0800 (PST)
-To: git list <git@vger.kernel.org>,
-	Matthias Urlichs <smurf@smurf.noris.de>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S932101AbWAAXJ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Jan 2006 18:09:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932280AbWAAXJ7
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jan 2006 18:09:59 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:51617 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932101AbWAAXJ7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Jan 2006 18:09:59 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k01N9tDZ019397
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 1 Jan 2006 15:09:55 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k01N9s32007317;
+	Sun, 1 Jan 2006 15:09:54 -0800
+To: Olaf Hering <olh@suse.de>
+In-Reply-To: <20060101200121.GA20633@suse.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14134>
 
-The -T and -t switches are swapped in the documentation and actual
-code.  I've made the documentation match the code.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
----
+On Sun, 1 Jan 2006, Olaf Hering wrote:
+> 
+> How do I get a list of commits in the 'powerpc' tree, which are not part
+> of the 'linux-2.6' tree? The git tutorial has a section 'Working with
+> Others', but the examples dont work for me. Probably because
+> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git has
+> no info that it is not the "mainline tree".
+> All I need is a list of individual commits in that tree, which are not
+> (yet) in "mainline".
 
- Documentation/git-svnimport.txt |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+First, get a kernel tree, let's say that you just get the standard one 
+and thus my head will be in "origin" (and perhaps HEAD too, unless you 
+decide to do some stuff of your own). Then just do something like
 
-dedc4d56fc4ad95158d9de0f3c7b46cda2746659
-diff --git a/Documentation/git-svnimport.txt b/Documentation/git-svnimport.txt
-index f8dbee7..7583d78 100644
---- a/Documentation/git-svnimport.txt
-+++ b/Documentation/git-svnimport.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- --------
- 'git-svnimport' [ -o <branch-for-HEAD> ] [ -h ] [ -v ] [ -d | -D ]
- 			[ -C <GIT_repository> ] [ -i ] [ -u ] [-l limit_rev]
--			[ -b branch_subdir ] [ -t trunk_subdir ] [ -T tag_subdir ]
-+			[ -b branch_subdir ] [ -T trunk_subdir ] [ -t tag_subdir ]
- 			[ -s start_chg ] [ -m ] [ -M regex ]
- 			<SVN_repository_URL> [ <path> ]
- 
-@@ -47,10 +47,10 @@ When importing incementally, you might n
- 	ensures the working directory and index remain untouched and will
- 	not create them if they do not exist.
- 
---t <trunk_subdir>::
-+-T <trunk_subdir>::
- 	Name the SVN trunk. Default "trunk".
- 
---T <tag_subdir>::
-+-t <tag_subdir>::
- 	Name the SVN subdirectory for tags. Default "tags".
- 
- -b <branch_subdir>::
--- 
-1.0.GIT
+   git fetch \
+	git://git.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git \
+	master:powerpc
+
+which gets the master branch from the powerpc.git tree into your "powerpc" 
+branch (or set up a .git/remotes/powerpc thing if you expect to do more of 
+this).
+
+Then you can just do
+
+	gitk origin..powerpc
+
+(or "git log" or "git-whatchanged -p" instead of "gitk") to see the 
+commits that are in powerpc but not in "origin".
+
+		Linus
