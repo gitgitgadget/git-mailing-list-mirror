@@ -1,51 +1,45 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] diff-tree: stop on broken output pipe
-Date: Mon, 02 Jan 2006 02:21:23 +0100
-Message-ID: <43B88013.3020904@op5.se>
-References: <Pine.LNX.4.63.0601020116020.11331@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Gerrit Pape <pape@smarden.org>
+Subject: Re: [PATCH] debian/ directory
+Date: Mon, 2 Jan 2006 11:31:38 +0100
+Message-ID: <20060102103138.3414.qmail@e631ec7a6a8b9a.315fe32.mid.smarden.org>
+References: <7v64pbc4fh.fsf@assigned-by-dhcp.cox.net> <20051228112018.19646.qmail@c226d15586b0bf.315fe32.mid.smarden.org> <87oe31urge.kvalo.fsf@purkki.valo.iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 02 02:21:40 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Jan 02 11:32:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EtEOF-0003Mw-GL
-	for gcvg-git@gmane.org; Mon, 02 Jan 2006 02:21:35 +0100
+	id 1EtMyp-00034O-Vg
+	for gcvg-git@gmane.org; Mon, 02 Jan 2006 11:31:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932304AbWABBV0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Jan 2006 20:21:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932306AbWABBV0
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jan 2006 20:21:26 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:63434 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932304AbWABBVZ
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 1 Jan 2006 20:21:25 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 25CD46BCFE; Mon,  2 Jan 2006 02:21:24 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0601020116020.11331@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S932250AbWABKbb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jan 2006 05:31:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbWABKbb
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jan 2006 05:31:31 -0500
+Received: from a.mx.smarden.org ([212.21.76.77]:51889 "HELO a.mx.smarden.org")
+	by vger.kernel.org with SMTP id S932250AbWABKba (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Jan 2006 05:31:30 -0500
+Received: (qmail 3415 invoked by uid 1000); 2 Jan 2006 10:31:38 -0000
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <87oe31urge.kvalo.fsf@purkki.valo.iki.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14137>
 
-Johannes Schindelin wrote:
-> ---
+On Wed, Dec 28, 2005 at 06:17:05PM +0200, Kalle Valo wrote:
+> Gerrit Pape <pape@smarden.org> writes:
+> > Below is the diff for reference, I think though it might be better if
+> > you don't include the debian/ directory in the upstream package at all.
 > 
-> 	Without this, on my iBook git-whatchanged keeps running when I 
-> 	quit "less". I have to interrupt the process a second time. No
-> 	idea why it works on Linux.
-> 
+> One upside in Junio's debian packages is that they[1] work also in
+> sarge[2]. If he stops building them, we sarge users will miss them.
+> Any volunteers to maintain them, for example, through backports.org?
 
-On Linux the sending end dies when it catches SIGPIPE. I would have 
-thought that should happen on OSX too. What shell are you running?
+Thanks to Norbert Tretkowski, the git* and cogito packages are now
+available for Debian sarge through http://backports.org/.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Regards, Gerrit.
