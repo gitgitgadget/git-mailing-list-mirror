@@ -1,73 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: how to find outstanding patches in non-linux-2.6 repositories?
-Date: Sun, 1 Jan 2006 15:09:54 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601011452230.3668@g5.osdl.org>
-References: <20060101200121.GA20633@suse.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] diff-tree: stop on broken output pipe
+Date: Mon, 2 Jan 2006 01:17:48 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0601020116020.11331@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 02 00:10:17 2006
+X-From: git-owner@vger.kernel.org Mon Jan 02 01:18:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EtCLA-00013u-LL
-	for gcvg-git@gmane.org; Mon, 02 Jan 2006 00:10:17 +0100
+	id 1EtDOj-0001QU-Lb
+	for gcvg-git@gmane.org; Mon, 02 Jan 2006 01:18:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932101AbWAAXJ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Jan 2006 18:09:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932280AbWAAXJ7
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jan 2006 18:09:59 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:51617 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932101AbWAAXJ7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Jan 2006 18:09:59 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k01N9tDZ019397
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 1 Jan 2006 15:09:55 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k01N9s32007317;
-	Sun, 1 Jan 2006 15:09:54 -0800
-To: Olaf Hering <olh@suse.de>
-In-Reply-To: <20060101200121.GA20633@suse.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932295AbWABARw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Jan 2006 19:17:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932297AbWABARw
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jan 2006 19:17:52 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:1760 "EHLO
+	wrzx35.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932295AbWABARv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jan 2006 19:17:51 -0500
+Received: from amavis.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id BCF18E3EEF; Mon,  2 Jan 2006 01:17:48 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by amavis.mail (Postfix) with ESMTP id AFE092AB4;
+	Mon,  2 Jan 2006 01:17:48 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by amavis.mail (Postfix) with ESMTP id 952D4715;
+	Mon,  2 Jan 2006 01:17:48 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 6D2F4140124; Mon,  2 Jan 2006 01:17:48 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14135>
 
 
+---
 
-On Sun, 1 Jan 2006, Olaf Hering wrote:
-> 
-> How do I get a list of commits in the 'powerpc' tree, which are not part
-> of the 'linux-2.6' tree? The git tutorial has a section 'Working with
-> Others', but the examples dont work for me. Probably because
-> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git has
-> no info that it is not the "mainline tree".
-> All I need is a list of individual commits in that tree, which are not
-> (yet) in "mainline".
+	Without this, on my iBook git-whatchanged keeps running when I 
+	quit "less". I have to interrupt the process a second time. No
+	idea why it works on Linux.
 
-First, get a kernel tree, let's say that you just get the standard one 
-and thus my head will be in "origin" (and perhaps HEAD too, unless you 
-decide to do some stuff of your own). Then just do something like
+ diff-tree.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-   git fetch \
-	git://git.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git \
-	master:powerpc
-
-which gets the master branch from the powerpc.git tree into your "powerpc" 
-branch (or set up a .git/remotes/powerpc thing if you expect to do more of 
-this).
-
-Then you can just do
-
-	gitk origin..powerpc
-
-(or "git log" or "git-whatchanged -p" instead of "gitk") to see the 
-commits that are in powerpc but not in "origin".
-
-		Linus
+a3ff3aa99f1cc7d1e59563fbf22fed8a4f3f2d24
+diff --git a/diff-tree.c b/diff-tree.c
+index efa2b94..c06ccd3 100644
+--- a/diff-tree.c
++++ b/diff-tree.c
+@@ -25,8 +25,9 @@ static int call_diff_flush(void)
+ 		return 0;
+ 	}
+ 	if (header) {
+-		if (!no_commit_id)
+-			printf("%s%c", header, diff_options.line_termination);
++		if (!no_commit_id && printf("%s%c", header,
++				diff_options.line_termination) < 0)
++			die("broken output pipe");
+ 		header = NULL;
+ 	}
+ 	diff_flush(&diff_options);
+-- 
+1.0.GIT
