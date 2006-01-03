@@ -1,59 +1,58 @@
-From: Theodore Ts'o <tytso@mit.edu>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [OT]  Shameless troll ;o)
-Date: Tue, 3 Jan 2006 09:56:39 -0500
-Message-ID: <20060103145639.GC20353@thunk.org>
-References: <dpcjk7$9tp$1@sea.gmane.org>
+Date: Tue, 3 Jan 2006 16:10:27 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0601031608490.11427@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <dpcjk7$9tp$1@sea.gmane.org> <20060103145639.GC20353@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 03 15:58:55 2006
+X-From: git-owner@vger.kernel.org Tue Jan 03 16:10:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EtncM-0001Ug-Ti
-	for gcvg-git@gmane.org; Tue, 03 Jan 2006 15:58:31 +0100
+	id 1Etno2-0006hp-Bg
+	for gcvg-git@gmane.org; Tue, 03 Jan 2006 16:10:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751438AbWACO6Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jan 2006 09:58:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751414AbWACO6Q
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 09:58:16 -0500
-Received: from thunk.org ([69.25.196.29]:12423 "EHLO thunker.thunk.org")
-	by vger.kernel.org with ESMTP id S1751438AbWACO6P (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 09:58:15 -0500
-Received: from root (helo=think.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1Etnc6-0003WB-Fu; Tue, 03 Jan 2006 09:58:14 -0500
-Received: from tytso by think.thunk.org with local (Exim 4.60)
-	(envelope-from <tytso@thunk.org>)
-	id 1EtnaZ-00070S-2R; Tue, 03 Jan 2006 09:56:39 -0500
-To: walt <wa1ter@myrealbox.com>
-Content-Disposition: inline
-In-Reply-To: <dpcjk7$9tp$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1751439AbWACPKc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jan 2006 10:10:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbWACPKc
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 10:10:32 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:50587 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751439AbWACPKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2006 10:10:31 -0500
+Received: from amavis.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 37D60140B75; Tue,  3 Jan 2006 16:10:28 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by amavis.mail (Postfix) with ESMTP id 2B5FE1C45;
+	Tue,  3 Jan 2006 16:10:28 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by amavis.mail (Postfix) with ESMTP id 10CFA15FE;
+	Tue,  3 Jan 2006 16:10:28 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id CE523140B75; Tue,  3 Jan 2006 16:10:27 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Theodore Ts'o <tytso@mit.edu>
+In-Reply-To: <20060103145639.GC20353@thunk.org>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14150>
 
-On Mon, Jan 02, 2006 at 05:22:18PM -0800, walt wrote:
-> Forbes magazine just published an interview with OpenBSD's
-> leader, Theo-The-Rat, who managed to insult almost everyone
-> in the open-source community -- including our own Linus, of
-> course.
+Hi,
 
-If by "Just Published" you mean over six months ago, maybe.
-Basically, the troll is Daniel Lyons, a Forbes writer who at every
-opportunity tries to trash Linux.  Just ignore him; or better yet,
-cancel your Forbes subscription, and a send a note to the Forbes
-publishers saying why.  I've completely lost any respect I've had for
-the Forbes magazine, partially as a result of the multiple dreck
-masquerading as articles published by Dan Lyons.  Speaking personally,
-I believe there are much better places for me to get my business news,
-including Business Week and the Economist.
+On Tue, 3 Jan 2006, Theodore Ts'o wrote:
 
-					- Ted
+> Basically, the troll is Daniel Lyons, [...]
+
+Oooh, I almost started to take this article serious enough to actually 
+read it.
+
+Thanks,
+Dscho
