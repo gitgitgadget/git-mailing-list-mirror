@@ -1,71 +1,106 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: how to find outstanding patches in non-linux-2.6 repositories
  ?
-Date: Tue, 03 Jan 2006 20:35:14 +0100
-Message-ID: <43BAD1F2.8040209@op5.se>
-References: <Pine.LNX.4.63.0601012228470.32311@wbgn013.biozentrum.uni-wuerzburg.de> <1136315518.11946.28.camel@cashmere.sps.mot.com>
+Date: Tue, 3 Jan 2006 11:41:15 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601031123150.3668@g5.osdl.org>
+References: <Pine.LNX.4.63.0601012228470.32311@wbgn013.biozentrum.uni-wuerzburg.de>
+ <1136315518.11946.28.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 03 20:35:22 2006
+X-From: git-owner@vger.kernel.org Tue Jan 03 20:41:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EtrwH-0006iz-M9
-	for gcvg-git@gmane.org; Tue, 03 Jan 2006 20:35:22 +0100
+	id 1Ets26-0008Gd-BR
+	for gcvg-git@gmane.org; Tue, 03 Jan 2006 20:41:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932394AbWACTfS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jan 2006 14:35:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932498AbWACTfS
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 14:35:18 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:1240 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S932410AbWACTfQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 14:35:16 -0500
-Received: from [192.168.1.19] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 442F46BD08; Tue,  3 Jan 2006 20:35:15 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
+	id S932501AbWACTlT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jan 2006 14:41:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932505AbWACTlT
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 14:41:19 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:33249 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932501AbWACTlS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 14:41:18 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k03JfGDZ019577
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 Jan 2006 11:41:16 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k03JfF3o019764;
+	Tue, 3 Jan 2006 11:41:16 -0800
 To: Jon Loeliger <jdl@freescale.com>
 In-Reply-To: <1136315518.11946.28.camel@cashmere.sps.mot.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14158>
 
-Jon Loeliger wrote:
+
+
+On Tue, 3 Jan 2006, Jon Loeliger wrote:
 > 
 > Could someone remind me where the <ref>..<ref> syntax
 > is documented, please?  I went digging, but I am lame
 > and couldn't find it.
-> 
 
-'man git-rev-parse' gets you the <committish> explanation. A ref is tag 
-or a branch, and those are committish. A range such as 
-<committish1>..<committish2> means "include all commits since and 
-including <committish1>, leading up to (and including) <committish2>".
+Hmm. It probably isn't. Technically, "start..end" is exactly the same 
+thing as "end" + "^start", with an empty "end" being the same as HEAD (an 
+empty "start" is largely meaningless and isn't supported - we _could_ make 
+it mean the same as just specifying "end").
 
-When Linus generates patches for the kernel he uses tags as <committish> 
-and does something like this:
-git diff v2.6.14..v2.6.15 | gzip -9f > linux-2.6.14-2.6.15.patch.gz
+You can see this with "git-rev-parse":
 
-You can mix tags, commits and branches any way you like, so long as you 
-get the commitological order right. That is, <committish2> should refer 
-to a descendant of <committish1>.
+	[torvalds@g5 linux]$ git-rev-parse v2.6.12..v2.6.15
+	88026842b0a760145aa71d69e74fbc9ec118ca44
+	^26791a8bcf0e6d33f43aef7682bdb555236d56de
 
-"origin..HEAD" is a valid and fairly common range.
-"HEAD..origin" is not (well, it is, but it doesn't include any commits 
-since it's going backwards).
+ie it really does literally that transformation.
 
-I don't know where to find a more complete explanation, but at least 
-google should provide this one once it has gotten round to indexing this 
-mail.
+NOTE! Normally the "a" + "^b" format just means "everything that is 
+reachable through "a", but not reachable through "b". In other words, it 
+almost always ends up being a "commit set operation", and you can combine 
+it with other "set" operations (like "--before=<date>" or other limiters).
 
-Now lets just have to hope I didn't get it all wrong. :)
+But there is one special case: "git diff" will consider that to be a range 
+of end-points, and will generate a diff from "b" to "a". It will do this 
+regardless of whether "a" and "b" are even related, and it will _not_ care 
+about set differences.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+So there's a very fundamental difference between two things that 
+_syntactically_ look very similar:
+
+	git log a..b
+
+and 
+
+	git diff a..b
+
+may look like they are related, but they really really are not. They are 
+very very different.
+
+The "git log" thing will show the commit log for every commit that is in 
+"b" but not in "a". HOWEVER, if there's something in "a" that is not in 
+"b" it will totally ignore it - it _literally_ means "show everything that 
+is reachable from "b" but not reachable from "a". 
+
+So doing "git log a..b" and "git log b..a" are _not_ "reverse" operations. 
+They show totally disjunct sets. If one is a superset of the other, one of 
+those will be empty. But if they have different development, the two "git 
+log" commands will show what happened on one side but not the other.
+
+In contrast, "git diff a..b" will show the raw differences between two 
+heads. So doing "git diff a..b" and "git diff b..a" is exactly the same 
+thing, the diff will just be "reversed". It's not an operation on a set of 
+commits: it's purely an operation on the two end-points.
+
+So keep this in mind: the meaning of "a..b" actually depends on the 
+operation you do, although in all cases it will be exactly equivalent to 
+"a" and "^b" (with the special case for an empty "a" meaning HEAD).
+
+			Linus
