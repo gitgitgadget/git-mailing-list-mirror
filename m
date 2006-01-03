@@ -1,94 +1,119 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [OT]  Shameless troll ;o)
-Date: Tue, 3 Jan 2006 12:09:22 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601031152430.3668@g5.osdl.org>
-References: <dpcjk7$9tp$1@sea.gmane.org> <20060103145639.GC20353@thunk.org>
- <43BAD395.5090801@zytor.com>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: [PATCH] qgit: increase the space between the lanes.
+Date: Tue, 03 Jan 2006 23:17:22 +0100
+Message-ID: <43BAF7F2.6060906@yahoo.it>
+References: <200601031415.19309.matlads@dsmagic.com> <43BA9CFA.8050208@yahoo.it> <200601031949.59822.matlads@dsmagic.com> <200601032007.09081.matlads@dsmagic.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Theodore Ts'o" <tytso@mit.edu>, walt <wa1ter@myrealbox.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 03 21:09:52 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 03 23:17:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EtsTV-0006nW-PD
-	for gcvg-git@gmane.org; Tue, 03 Jan 2006 21:09:42 +0100
+	id 1EtuTH-0003pL-BV
+	for gcvg-git@gmane.org; Tue, 03 Jan 2006 23:17:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932513AbWACUJj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jan 2006 15:09:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932517AbWACUJi
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 15:09:38 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:39402 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932513AbWACUJi (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 15:09:38 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k03K9NDZ021394
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 Jan 2006 12:09:24 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k03K9MWk020912;
-	Tue, 3 Jan 2006 12:09:23 -0800
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <43BAD395.5090801@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964816AbWACWRc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jan 2006 17:17:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751484AbWACWRc
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 17:17:32 -0500
+Received: from smtp102.mail.sc5.yahoo.com ([216.136.174.140]:29312 "HELO
+	smtp102.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
+	id S1751483AbWACWRb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2006 17:17:31 -0500
+Received: (qmail 94166 invoked from network); 3 Jan 2006 22:17:28 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+  b=iJxWFjWJVs7KXtjVnJCPTg/XAItyViI9ayKIvqT1Cu1B/J14pn4TPTQjWLZMhy8sc+O4ZoU8wHv7iwPk/g2S30dFK+wpXLouZfGh67VeMKpbyhrrOyLOLZHNtXY7azfTjofaOTHAXi6hU90N8yZtyBk4a+vuc+6pzcT4Wyr938s=  ;
+Received: from unknown (HELO ?10.0.0.13?) (mcostalba@151.56.54.71 with plain)
+  by smtp102.mail.sc5.yahoo.com with SMTP; 3 Jan 2006 22:17:27 -0000
+User-Agent: Mozilla Thunderbird 1.0.6-7.2.20060mdk (X11/20050322)
+X-Accept-Language: it, it-it, en-us, en
+To: Martin Atukunda <matlads@dsmagic.com>
+In-Reply-To: <200601032007.09081.matlads@dsmagic.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14161>
 
-
-
-On Tue, 3 Jan 2006, H. Peter Anvin wrote:
+Martin Atukunda wrote:
 > 
-> Look on Groklaw if you want to know more about Mr. Lyons and the stuff he's
-> published.
+> Hmm, I need to re-think how to do this properly. Any ideas?
+> 
 
-Well, in the defense of Dan Lyons, I think he's been somewhat vilified, 
-and has had a perfectly human reaction of striking back. 
+Hi Martin,
 
-He tends to look for problems, but not every piece he has written has been 
-negative. In fact, some of them haven't been _nearly_ as negative as they 
-have then been purported to be in groklaw. I think groklaw has had a 
-somewhat unfortunate "either you're with us, or you're against us" herd 
-mentality.
 
-The fact that Lyons then has been negative towards groklaw has just 
-cemented that bad situation further.
+What about this?
 
-It's interesting that Ted piped up, because I know that IBM has had the 
-exact same problem with Lyons. He wrote some negative article, at which 
-point IBM told its engineers not to talk to him any more, which caused 
-subsequent articles to be negative too.
+If it is Ok for you I will push the change.
 
-Yes, Forbes is pretty bad. It's a "rah rah" magazine for people who wished 
-they were rich. It's a small step up from the check-out counter magazines 
-that alternately glorify and vilify Jessica Simpson or whoever is the 
-celebrity of the week.
 
-There's no question that you're better off with the Wall Street Journal 
-(who has some of the best journalists in the business, as far as I can 
-tell, and while I don't know crud about business, I _do_ know journalistm) 
-or the Economist if you actually care about business and economy. But 
-that's not what Forbes is about.
 
-Quite frankly, I've seen Dan Lyons work, and my opinion is that he's a 
-better journalist than many. He may be opinionated and swayed by negative 
-feelings, but I've seen at least two stories that he actually did research 
-himself, and followed up on. The end result can be skewed by his feelings, 
-but that's still a hell of a lot more than some people will do.
+Marco
 
-So give people their due, even when you disagree with them occasionally. 
 
-And understand that journalists are very much people too, and react badly 
-to the kind of totally uncalled for name-calling that Dan Lyons has gotten 
-on groklaw over the last year or two (yeah, he got things wrong for one of 
-his first pieces on the SCO saga. And he doesn't like IBM, and I can 
-pretty much guarantee you that he _detests_ groklaw by now. And it will 
-show in his reporting.).
+diff --git a/src/mainimpl.cpp b/src/mainimpl.cpp
+index 2f26b01..40a22e8 100644
+--- a/src/mainimpl.cpp
++++ b/src/mainimpl.cpp
+@@ -1451,7 +1451,7 @@ void MainImpl::setupPixmaps() {
+  	// little hack to read items height
+  	new QListViewItem(listViewLog);
+  	ph = listViewLog->firstChild()->height();
+-	pw = ph / 2;
++	pw = 3 * ph / 4;
+  	listViewLog->clear(); // remove and deletes items
+  	QPixmap cm(pw, ph);
+  	cm.fill();
+@@ -1470,12 +1470,13 @@ void MainImpl::setupPixmaps() {
+  		p.begin(pm);
+  		p.setPen(QPen(colors[i % COLORS_NUM], 2));
+  		int type = (i / COLORS_NUM) + 1;
++		QBrush myBrush(QBrush(colors[i % COLORS_NUM], Qt::SolidPattern));
+  		switch(type) {
+  		case ACTIVE:
+  			p.drawLine(P_90, P_270);
+  			p.save();
+  			p.setPen(QPen(colors[i % COLORS_NUM], 1));
+-			p.setBrush(QBrush(colors[i % COLORS_NUM], Qt::SolidPattern));
++			p.setBrush(myBrush);
+  			p.drawEllipse(pw/8, ph/8, 6*pw/8, 3*ph/8);
+  			p.restore();
+  			break;
+@@ -1485,17 +1486,20 @@ void MainImpl::setupPixmaps() {
+  		case MERGE_FORK:
+  			p.drawLine(P_90, P_270);
+  			p.drawLine(P_180, P_0);
+-			p.drawRect(pw/4, ph/4, pw/2, ph/2);
++			p.fillRect (pw/4, ph/4, pw/2, ph/2, myBrush);
++			p.drawRoundRect(pw/4, ph/4, pw/2, ph/2, 25, 25);
+  			break;
+  		case MERGE_FORK_R:
+  			p.drawLine(P_90, P_270);
+  			p.drawLine(P_180, P_OR);
+-			p.drawRect(pw/4, ph/4, pw/2, ph/2);
++			p.fillRect (pw/4, ph/4, pw/2, ph/2, myBrush);
++			p.drawRoundRect(pw/4, ph/4, pw/2, ph/2, 25, 25);
+  			break;
+  		case MERGE_FORK_L:
+  			p.drawLine(P_90, P_270);
+  			p.drawLine(P_OR, P_0);
+-			p.drawRect(pw/4, ph/4, pw/2, ph/2);
++			p.fillRect (pw/4, ph/4, pw/2, ph/2, myBrush);
++			p.drawRoundRect(pw/4, ph/4, pw/2, ph/2, 25, 25);
+  			break;
+  		case JOIN:
+  			p.drawLine(P_90, P_270);
 
-			Linus
+
+	
+
+	
+		
+___________________________________ 
+Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
+http://mail.yahoo.it
