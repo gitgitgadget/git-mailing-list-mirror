@@ -1,64 +1,100 @@
-From: Martin Atukunda <matlads@dsmagic.com>
-Subject: Re: [PATCH] qgit: increase the space between the lanes.
-Date: Tue, 3 Jan 2006 20:07:08 +0300
-Organization: digital Solutions
-Message-ID: <200601032007.09081.matlads@dsmagic.com>
-References: <200601031415.19309.matlads@dsmagic.com> <43BA9CFA.8050208@yahoo.it> <200601031949.59822.matlads@dsmagic.com>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: Howto send many commits as mail-patches?
+Date: Tue, 3 Jan 2006 12:24:17 -0500
+Message-ID: <20060103172416.GA23896@mythryan2.michonline.com>
+References: <20060103113859.GA15832@mars.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jan 03 18:07:38 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 03 18:24:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Etpd9-0001kx-BP
-	for gcvg-git@gmane.org; Tue, 03 Jan 2006 18:07:28 +0100
+	id 1Etptr-0006Sf-S2
+	for gcvg-git@gmane.org; Tue, 03 Jan 2006 18:24:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751471AbWACRHX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jan 2006 12:07:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751475AbWACRHX
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 12:07:23 -0500
-Received: from mail1.starcom.co.ug ([217.113.72.31]:46172 "EHLO
-	mail1.infocom.co.ug") by vger.kernel.org with ESMTP
-	id S1751473AbWACRHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jan 2006 12:07:21 -0500
-Received: from entandikwa.ds.co.ug ([::ffff:217.113.73.39])
-  by mail1.infocom.co.ug with esmtp; Tue, 03 Jan 2006 20:07:14 +0300
-  id 000F5B3C.43BAAF42.00004CC7
-Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
-	by entandikwa.ds.co.ug (Postfix) with ESMTP id 7F0AF5287
-	for <git@vger.kernel.org>; Tue,  3 Jan 2006 20:09:07 +0300 (EAT)
-Received: from matlads by igloo.ds.co.ug with local (Exim 4.60)
-	(envelope-from <matlads@dsmagic.com>)
-	id 1Etpcr-0003GE-5D
-	for git@vger.kernel.org; Tue, 03 Jan 2006 20:07:09 +0300
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.3
-In-Reply-To: <200601031949.59822.matlads@dsmagic.com>
+	id S932456AbWACRYh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jan 2006 12:24:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932459AbWACRYh
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 12:24:37 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:31155 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S932456AbWACRYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2006 12:24:36 -0500
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1Etpth-0008R0-Od; Tue, 03 Jan 2006 12:24:35 -0500
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1Etptb-0005iu-Cv; Tue, 03 Jan 2006 12:24:33 -0500
+Received: from ryan by mythical with local (Exim 4.60)
+	(envelope-from <ryan@mythryan2.michonline.com>)
+	id 1EtptW-0006GU-34; Tue, 03 Jan 2006 12:24:22 -0500
+To: Sam Ravnborg <sam@ravnborg.org>
 Content-Disposition: inline
+In-Reply-To: <20060103113859.GA15832@mars.ravnborg.org>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14154>
 
-On Tuesday 03 January 2006 19:49, Martin Atukunda wrote:
-> On Tuesday 03 January 2006 18:49, Marco Costalba wrote:
-> > If it _could_ be possible to fill with color the merge symbols it would
-> > be great.
-> >
-> > Do you mind to do it yourself? if not I will do that.
->
-> Something like this?
+On Tue, Jan 03, 2006 at 12:38:59PM +0100, Sam Ravnborg wrote:
+> Hi all.
+> 
+> I have a collection of commits in my GIT repository that I like to send
+> out to linux-kernel.
+> But my initial experiments with git-send-emails.perl fall out bad.
+> 
+> I did the following:
+> 
+> 1) First I created a mbox with the patches:
+> git format-patch -n --mbox --stdout -M -B b286e39207237e2f6929959372bf66d9a8d05a82 > mbox
 
-Sorry, but it appears that the patches i've been sending out work only for 
-certain font sizes! Hmmm.
 
-see these 3 screenshots (with the previous patch):
+> The mbox looked OK. -M -B were from the man page and since the patchset
+> includes a number of renames it made the mbox considerably smaller.
+> 
+> So I went on an tried to send the mails:
+> 
+> It just send out two huge mails containing all of the mbox.
+> Also it cc:ed all people included in "Signed-off-by". That is sometimes
+> a nice feature but for testing I like it to be optional.
+> 
+> Can someone give me a nice howto so I can see how to send out the mails.
 
-http://mail.ds.co.ug/~matlads/qgit/
+Try:
+	mkdir ../pending/
+	git format-patch -n --mbox -o ../pending/ -M -B b286e39207237e2f6929959372bf66d9a8d05a82
+	git-send-email.perl --from "Sam Ravnborg <sam@ravnborg.org>" --to "sam@ravnborg.org" --chain-reply-to "" ../pending/
 
-Hmm, I need to re-think how to do this properly. Any ideas?
+With this method, you can examine the files in ../pending/, edit patch
+comments if you want, add an "introductory" mail, etc.
 
-- Martin -
+The Signed-off-by: cc:ing is currently not something that can be
+disabled, but you can do something like this to stop it temporarily:
+
+(cut and pasted, so it probably won't directly apply)
+diff --git a/git-send-email.perl b/git-send-email.perl
+index ec1428d..9c7d0b8 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -322,7 +322,7 @@ foreach my $t (@files) {
+                        }
+                } else {
+                        $message .=  $_;
+-                       if (/^Signed-off-by: (.*)$/i) {
++                       if (/^XSigned-off-by: (.*)$/i) {
+                                my $c = $1;
+                                chomp $c;
+                                push @cc, $c;
+
+Hope that helped,
+
+-- 
+
+Ryan Anderson
+  sometimes Pug Majere
