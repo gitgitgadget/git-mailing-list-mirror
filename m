@@ -1,67 +1,94 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [OT]  Shameless troll ;o)
-Date: Tue, 03 Jan 2006 11:42:13 -0800
-Message-ID: <43BAD395.5090801@zytor.com>
+Date: Tue, 3 Jan 2006 12:09:22 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601031152430.3668@g5.osdl.org>
 References: <dpcjk7$9tp$1@sea.gmane.org> <20060103145639.GC20353@thunk.org>
+ <43BAD395.5090801@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: walt <wa1ter@myrealbox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 03 20:42:53 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Theodore Ts'o" <tytso@mit.edu>, walt <wa1ter@myrealbox.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 03 21:09:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ets3J-00008k-T1
-	for gcvg-git@gmane.org; Tue, 03 Jan 2006 20:42:38 +0100
+	id 1EtsTV-0006nW-PD
+	for gcvg-git@gmane.org; Tue, 03 Jan 2006 21:09:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932467AbWACTmd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jan 2006 14:42:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932508AbWACTmd
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 14:42:33 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:9911 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932467AbWACTmc
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 14:42:32 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k03JgIer015598
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 3 Jan 2006 11:42:18 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: "Theodore Ts'o" <tytso@mit.edu>
-In-Reply-To: <20060103145639.GC20353@thunk.org>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S932513AbWACUJj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jan 2006 15:09:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932517AbWACUJi
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 15:09:38 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:39402 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932513AbWACUJi (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 15:09:38 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k03K9NDZ021394
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 Jan 2006 12:09:24 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k03K9MWk020912;
+	Tue, 3 Jan 2006 12:09:23 -0800
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <43BAD395.5090801@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.57__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14160>
 
-Theodore Ts'o wrote:
-> On Mon, Jan 02, 2006 at 05:22:18PM -0800, walt wrote:
-> 
->>Forbes magazine just published an interview with OpenBSD's
->>leader, Theo-The-Rat, who managed to insult almost everyone
->>in the open-source community -- including our own Linus, of
->>course.
-> 
-> 
-> If by "Just Published" you mean over six months ago, maybe.
-> Basically, the troll is Daniel Lyons, a Forbes writer who at every
-> opportunity tries to trash Linux.  Just ignore him; or better yet,
-> cancel your Forbes subscription, and a send a note to the Forbes
-> publishers saying why.  I've completely lost any respect I've had for
-> the Forbes magazine, partially as a result of the multiple dreck
-> masquerading as articles published by Dan Lyons.  Speaking personally,
-> I believe there are much better places for me to get my business news,
-> including Business Week and the Economist.
-> 
 
-Look on Groklaw if you want to know more about Mr. Lyons and the stuff 
-he's published.
 
-	-hpa
+On Tue, 3 Jan 2006, H. Peter Anvin wrote:
+> 
+> Look on Groklaw if you want to know more about Mr. Lyons and the stuff he's
+> published.
+
+Well, in the defense of Dan Lyons, I think he's been somewhat vilified, 
+and has had a perfectly human reaction of striking back. 
+
+He tends to look for problems, but not every piece he has written has been 
+negative. In fact, some of them haven't been _nearly_ as negative as they 
+have then been purported to be in groklaw. I think groklaw has had a 
+somewhat unfortunate "either you're with us, or you're against us" herd 
+mentality.
+
+The fact that Lyons then has been negative towards groklaw has just 
+cemented that bad situation further.
+
+It's interesting that Ted piped up, because I know that IBM has had the 
+exact same problem with Lyons. He wrote some negative article, at which 
+point IBM told its engineers not to talk to him any more, which caused 
+subsequent articles to be negative too.
+
+Yes, Forbes is pretty bad. It's a "rah rah" magazine for people who wished 
+they were rich. It's a small step up from the check-out counter magazines 
+that alternately glorify and vilify Jessica Simpson or whoever is the 
+celebrity of the week.
+
+There's no question that you're better off with the Wall Street Journal 
+(who has some of the best journalists in the business, as far as I can 
+tell, and while I don't know crud about business, I _do_ know journalistm) 
+or the Economist if you actually care about business and economy. But 
+that's not what Forbes is about.
+
+Quite frankly, I've seen Dan Lyons work, and my opinion is that he's a 
+better journalist than many. He may be opinionated and swayed by negative 
+feelings, but I've seen at least two stories that he actually did research 
+himself, and followed up on. The end result can be skewed by his feelings, 
+but that's still a hell of a lot more than some people will do.
+
+So give people their due, even when you disagree with them occasionally. 
+
+And understand that journalists are very much people too, and react badly 
+to the kind of totally uncalled for name-calling that Dan Lyons has gotten 
+on groklaw over the last year or two (yeah, he got things wrong for one of 
+his first pieces on the SCO saga. And he doesn't like IBM, and I can 
+pretty much guarantee you that he _detests_ groklaw by now. And it will 
+show in his reporting.).
+
+			Linus
