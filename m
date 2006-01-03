@@ -1,119 +1,92 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: [PATCH] qgit: increase the space between the lanes.
-Date: Tue, 03 Jan 2006 23:17:22 +0100
-Message-ID: <43BAF7F2.6060906@yahoo.it>
-References: <200601031415.19309.matlads@dsmagic.com> <43BA9CFA.8050208@yahoo.it> <200601031949.59822.matlads@dsmagic.com> <200601032007.09081.matlads@dsmagic.com>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: [OT]  Shameless troll ;o)
+Date: Tue, 3 Jan 2006 17:28:02 -0500
+Message-ID: <20060103222802.GA29610@thunk.org>
+References: <dpcjk7$9tp$1@sea.gmane.org> <20060103145639.GC20353@thunk.org> <43BAD395.5090801@zytor.com> <Pine.LNX.4.64.0601031152430.3668@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 03 23:17:36 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: "H. Peter Anvin" <hpa@zytor.com>, walt <wa1ter@myrealbox.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 03 23:30:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EtuTH-0003pL-BV
-	for gcvg-git@gmane.org; Tue, 03 Jan 2006 23:17:35 +0100
+	id 1EtufT-0006fU-Bg
+	for gcvg-git@gmane.org; Tue, 03 Jan 2006 23:30:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964816AbWACWRc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jan 2006 17:17:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751484AbWACWRc
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 17:17:32 -0500
-Received: from smtp102.mail.sc5.yahoo.com ([216.136.174.140]:29312 "HELO
-	smtp102.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
-	id S1751483AbWACWRb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jan 2006 17:17:31 -0500
-Received: (qmail 94166 invoked from network); 3 Jan 2006 22:17:28 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-  b=iJxWFjWJVs7KXtjVnJCPTg/XAItyViI9ayKIvqT1Cu1B/J14pn4TPTQjWLZMhy8sc+O4ZoU8wHv7iwPk/g2S30dFK+wpXLouZfGh67VeMKpbyhrrOyLOLZHNtXY7azfTjofaOTHAXi6hU90N8yZtyBk4a+vuc+6pzcT4Wyr938s=  ;
-Received: from unknown (HELO ?10.0.0.13?) (mcostalba@151.56.54.71 with plain)
-  by smtp102.mail.sc5.yahoo.com with SMTP; 3 Jan 2006 22:17:27 -0000
-User-Agent: Mozilla Thunderbird 1.0.6-7.2.20060mdk (X11/20050322)
-X-Accept-Language: it, it-it, en-us, en
-To: Martin Atukunda <matlads@dsmagic.com>
-In-Reply-To: <200601032007.09081.matlads@dsmagic.com>
+	id S932509AbWACWaG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jan 2006 17:30:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932510AbWACWaG
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 17:30:06 -0500
+Received: from THUNK.ORG ([69.25.196.29]:24976 "EHLO thunker.thunk.org")
+	by vger.kernel.org with ESMTP id S932509AbWACWaB (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 17:30:01 -0500
+Received: from root (helo=think.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1EtufC-0004v6-Cr; Tue, 03 Jan 2006 17:29:55 -0500
+Received: from tytso by think.thunk.org with local (Exim 4.60)
+	(envelope-from <tytso@thunk.org>)
+	id 1EtudO-0007lM-H9; Tue, 03 Jan 2006 17:28:02 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0601031152430.3668@g5.osdl.org>
+User-Agent: Mutt/1.5.11
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14162>
 
-Martin Atukunda wrote:
-> 
-> Hmm, I need to re-think how to do this properly. Any ideas?
-> 
+On Tue, Jan 03, 2006 at 12:09:22PM -0800, Linus Torvalds wrote:
+> He tends to look for problems, but not every piece he has written has been 
+> negative. In fact, some of them haven't been _nearly_ as negative as they 
+> have then been purported to be in groklaw. I think groklaw has had a 
+> somewhat unfortunate "either you're with us, or you're against us" herd 
+> mentality.
 
-Hi Martin,
+I'm not aware of any positive articles ever written from Dan Lyons; if
+you know of any, feel free to send me the URL.  And it's certainly
+true that Linux is not the only thing that Mr. Lyons like to trash.
+For example, his article in the November 2005 Forbes' cover story
+began:
 
+	Web logs are the prized platform of an online lynch mob
+	spouting liberty but spewing lies, libel and invective. Their
+	potent allies in this pursuit include Google and Yahoo.
 
-What about this?
+People can make their own decision whether they would consider this
+"balanced journalism".
 
-If it is Ok for you I will push the change.
+I'm not actually aware of any bad experience IBM had with Mr. Lyons,
+and I'm not aware of any "don't talk to Dan Lyons" warning from
+management, other than the standard rules requesting IBM engineers not
+talk with _any_ journalist or analyst without first clearing things
+with press or analyst relations --- but that's pretty standard for any
+large corporation.
 
+The only reason why I piped up was because (a) I didn't think six
+months ago counted as "just published", and (b) it's not worth wasting
+time or helping reward Forbes with ad clicks by reading an article
+from someone who has far as I know, has always published nasty
+articles about Linux and anything related to Open Source.
 
+> And understand that journalists are very much people too, and react badly 
+> to the kind of totally uncalled for name-calling that Dan Lyons has gotten 
+> on groklaw over the last year or two (yeah, he got things wrong for one of 
+> his first pieces on the SCO saga. And he doesn't like IBM, and I can 
+> pretty much guarantee you that he _detests_ groklaw by now. And it will 
+> show in his reporting.).
 
-Marco
+Certainly, journalists are people; but they are supposed to check
+their biases at the door when they start writing (except on the
+editorials page); that's part of the stated advantages of
+"professional journalists" over the undiscplined bloggers which Dan
+Lyons so gleefully trashed in most recent cover article.  Given that
+he makes no effort hide his biases, at least in my book that makes him
+a lousy journalist.
 
-
-diff --git a/src/mainimpl.cpp b/src/mainimpl.cpp
-index 2f26b01..40a22e8 100644
---- a/src/mainimpl.cpp
-+++ b/src/mainimpl.cpp
-@@ -1451,7 +1451,7 @@ void MainImpl::setupPixmaps() {
-  	// little hack to read items height
-  	new QListViewItem(listViewLog);
-  	ph = listViewLog->firstChild()->height();
--	pw = ph / 2;
-+	pw = 3 * ph / 4;
-  	listViewLog->clear(); // remove and deletes items
-  	QPixmap cm(pw, ph);
-  	cm.fill();
-@@ -1470,12 +1470,13 @@ void MainImpl::setupPixmaps() {
-  		p.begin(pm);
-  		p.setPen(QPen(colors[i % COLORS_NUM], 2));
-  		int type = (i / COLORS_NUM) + 1;
-+		QBrush myBrush(QBrush(colors[i % COLORS_NUM], Qt::SolidPattern));
-  		switch(type) {
-  		case ACTIVE:
-  			p.drawLine(P_90, P_270);
-  			p.save();
-  			p.setPen(QPen(colors[i % COLORS_NUM], 1));
--			p.setBrush(QBrush(colors[i % COLORS_NUM], Qt::SolidPattern));
-+			p.setBrush(myBrush);
-  			p.drawEllipse(pw/8, ph/8, 6*pw/8, 3*ph/8);
-  			p.restore();
-  			break;
-@@ -1485,17 +1486,20 @@ void MainImpl::setupPixmaps() {
-  		case MERGE_FORK:
-  			p.drawLine(P_90, P_270);
-  			p.drawLine(P_180, P_0);
--			p.drawRect(pw/4, ph/4, pw/2, ph/2);
-+			p.fillRect (pw/4, ph/4, pw/2, ph/2, myBrush);
-+			p.drawRoundRect(pw/4, ph/4, pw/2, ph/2, 25, 25);
-  			break;
-  		case MERGE_FORK_R:
-  			p.drawLine(P_90, P_270);
-  			p.drawLine(P_180, P_OR);
--			p.drawRect(pw/4, ph/4, pw/2, ph/2);
-+			p.fillRect (pw/4, ph/4, pw/2, ph/2, myBrush);
-+			p.drawRoundRect(pw/4, ph/4, pw/2, ph/2, 25, 25);
-  			break;
-  		case MERGE_FORK_L:
-  			p.drawLine(P_90, P_270);
-  			p.drawLine(P_OR, P_0);
--			p.drawRect(pw/4, ph/4, pw/2, ph/2);
-+			p.fillRect (pw/4, ph/4, pw/2, ph/2, myBrush);
-+			p.drawRoundRect(pw/4, ph/4, pw/2, ph/2, 25, 25);
-  			break;
-  		case JOIN:
-  			p.drawLine(P_90, P_270);
-
-
-	
-
-	
-		
-___________________________________ 
-Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
-http://mail.yahoo.it
+						- Ted
