@@ -1,61 +1,72 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: [OT]  Shameless troll ;o)
-Date: Tue, 3 Jan 2006 19:45:16 -0800
-Message-ID: <20060104034515.GA30049@kroah.com>
-References: <dpcjk7$9tp$1@sea.gmane.org> <20060103145639.GC20353@thunk.org> <43BAD395.5090801@zytor.com> <Pine.LNX.4.64.0601031152430.3668@g5.osdl.org> <20060103222802.GA29610@thunk.org> <Pine.LNX.4.64.0601031546430.3668@g5.osdl.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Strange unable to unlink error with git-prune-packed
+Date: Wed, 4 Jan 2006 17:46:26 +1300
+Message-ID: <46a038f90601032046l31f51742k93f3f9f5a826bef1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Ts'o <tytso@mit.edu>, "H. Peter Anvin" <hpa@zytor.com>,
-	walt <wa1ter@myrealbox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 04 04:46:00 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Jan 04 05:46:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Etzau-0003Fr-6g
-	for gcvg-git@gmane.org; Wed, 04 Jan 2006 04:45:48 +0100
+	id 1Eu0Xf-0006QP-Ee
+	for gcvg-git@gmane.org; Wed, 04 Jan 2006 05:46:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965181AbWADDpp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jan 2006 22:45:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965183AbWADDpp
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 22:45:45 -0500
-Received: from c-24-22-115-24.hsd1.or.comcast.net ([24.22.115.24]:44520 "EHLO
-	aria.kroah.org") by vger.kernel.org with ESMTP id S965181AbWADDpo
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 22:45:44 -0500
-Received: from echidna.kroah.org ([192.168.0.10] helo=localhost)
-	by aria.kroah.org with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.54)
-	id 1Etzag-0001lA-Lt; Tue, 03 Jan 2006 19:45:34 -0800
-To: Linus Torvalds <torvalds@osdl.org>
+	id S965165AbWADEq1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jan 2006 23:46:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965215AbWADEq1
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 23:46:27 -0500
+Received: from wproxy.gmail.com ([64.233.184.200]:49897 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S965165AbWADEq0 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 23:46:26 -0500
+Received: by wproxy.gmail.com with SMTP id 57so2296174wri
+        for <git@vger.kernel.org>; Tue, 03 Jan 2006 20:46:26 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=FJt+8uoObf4ICCbEshw7ZInaQlgktXTVralsGDMkaokP0XWcdISS1SHg5uyx62INOeTxrgi4vrRh6FKRHnJA4dJ+y3whucSHfD46cmThVS2pu/IOJhloqSFPMx40qZPm8juIi8pjlQ4rBFVSFRQ6PQFHX8z45iMgU3zBmgSex/s=
+Received: by 10.54.114.7 with SMTP id m7mr2117693wrc;
+        Tue, 03 Jan 2006 20:46:26 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Tue, 3 Jan 2006 20:46:26 -0800 (PST)
+To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0601031546430.3668@g5.osdl.org>
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14172>
 
-On Tue, Jan 03, 2006 at 03:55:11PM -0800, Linus Torvalds wrote:
-> On Tue, 3 Jan 2006, Theodore Ts'o wrote:
-> > I'm not actually aware of any bad experience IBM had with Mr. Lyons,
-> > and I'm not aware of any "don't talk to Dan Lyons" warning from
-> > management, other than the standard rules requesting IBM engineers not
-> > talk with _any_ journalist or analyst without first clearing things
-> > with press or analyst relations --- but that's pretty standard for any
-> > large corporation.
+Weilding a recent git version 1.0.6-g58e3 it turns out I cannot run
+git-prune-packed on a simple repo on my OSX (Panther 10.3.9). The
+local repo looks fine in my eyes, and permissions are similar to those
+on Linux. Relaxing permissions doesn't help either, so there may be
+something else afoot.
 
-If you ask IBM PR, I'm sure they will be able to give you the reasons
-they don't allow IBM employees to talk to Dan.
+When I invoke git-prune-packed I am greeted by (3-line sample):
 
-> Yes. And when trying to clear it with IBM legal, Greg KH was told not to 
-> talk to Dan Lyons. 
+error: unable to unlink .git/objects/43/2251e8488dc3c72d94d698ed69003137c47244
+error: unable to unlink .git/objects/43/6bc8b274ab96944a6f8c3cf5e3fbeef422042b
+error: unable to unlink .git/objects/43/fe47e9508289ad4eca71613a9f20d7f3323602
 
-Yeah, and because I wasn't allowed to talk to him, he wrote a funny
-(well, funny to me at least) article about how IBM was muzzling their
-Linux developers.  It was quite accurate, and I've not had any problems
-in dealing with him since I left IBM (probably due to my current
-employer allowing me to talk to him...)
+File modes after I ran chmod -R u+w .git/objects to see if
+prune-packed was taking the mode too seriously on OSX
 
-thanks,
+$ ls -la .git/objects/43
+total 24
+drwxr-xr-x    5 martin  martin   170  4 Jan 17:37 .
+drwxr-xr-x  229 martin  martin  7786  4 Jan 17:37 ..
+-rw-r--r--    1 martin  martin   211 30 Dec 11:21
+2251e8488dc3c72d94d698ed69003137c47244
+-rw-r--r--    1 martin  martin    53 30 Dec 11:21
+6bc8b274ab96944a6f8c3cf5e3fbeef422042b
+-rw-r--r--    1 martin  martin   152 30 Dec 11:21
+fe47e9508289ad4eca71613a9f20d7f3323602
 
-greg k-h
+This is low priority for me, and so weird that it has to be a pilot
+error -- OTOH I may do a bisect to try and figure out whether it's a
+recent change...
+
+cheers,
+
+
+martin
