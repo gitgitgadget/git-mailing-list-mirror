@@ -1,93 +1,64 @@
-From: Chuck Lever <cel@citi.umich.edu>
-Subject: Re: [OT]  Shameless troll ;o)
-Date: Tue, 03 Jan 2006 20:10:48 -0500
-Organization: Network Appliance, Incorporated
-Message-ID: <43BB2098.6060309@citi.umich.edu>
-References: <dpcjk7$9tp$1@sea.gmane.org> <20060103145639.GC20353@thunk.org> <43BAD395.5090801@zytor.com> <Pine.LNX.4.64.0601031152430.3668@g5.osdl.org> <20060103222802.GA29610@thunk.org> <Pine.LNX.4.64.0601031546430.3668@g5.osdl.org>
-Reply-To: cel@citi.umich.edu
+From: Tom Prince <tom.prince@ualberta.net>
+Subject: Re: how to find outstanding patches in non-linux-2.6 repositories ?
+Date: Tue, 03 Jan 2006 18:26:59 -0700
+Message-ID: <20060104012659.GA2353@socrates>
+References: <Pine.LNX.4.63.0601012228470.32311@wbgn013.biozentrum.uni-wuerzburg.de>
+ <1136315518.11946.28.camel@cashmere.sps.mot.com> <43BAD1F2.8040209@op5.se>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------000602030504020600070600"
-Cc: "Theodore Ts'o" <tytso@mit.edu>, "H. Peter Anvin" <hpa@zytor.com>,
-	walt <wa1ter@myrealbox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 04 02:11:30 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Jan 04 02:27:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EtxB0-0007Bz-AO
-	for gcvg-git@gmane.org; Wed, 04 Jan 2006 02:10:55 +0100
+	id 1EtxQm-0001ms-OV
+	for gcvg-git@gmane.org; Wed, 04 Jan 2006 02:27:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965090AbWADBKv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jan 2006 20:10:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965096AbWADBKv
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 20:10:51 -0500
-Received: from ylpvm15-ext.prodigy.net ([207.115.57.46]:30433 "EHLO
-	ylpvm15.prodigy.net") by vger.kernel.org with ESMTP id S965090AbWADBKu
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 20:10:50 -0500
-Received: from pimout6-ext.prodigy.net (pimout6-int.prodigy.net [207.115.4.22])
-	by ylpvm15.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id k041AsEd022544
-	for <git@vger.kernel.org>; Tue, 3 Jan 2006 20:10:55 -0500
-X-ORBL: [68.255.233.114]
-Received: from [192.168.0.103] (adsl-68-255-233-114.dsl.sfldmi.ameritech.net [68.255.233.114])
-	by pimout6-ext.prodigy.net (8.13.4 outbound domainkey aix/8.13.4) with ESMTP id k041AgRi015514;
-	Tue, 3 Jan 2006 20:10:43 -0500
-User-Agent: Mozilla Thunderbird 1.0.7 (Windows/20050923)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0601031546430.3668@g5.osdl.org>
+	id S965109AbWADB1K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jan 2006 20:27:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751522AbWADB1J
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 20:27:09 -0500
+Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:11127 "EHLO
+	pd3mo2so.prod.shaw.ca") by vger.kernel.org with ESMTP
+	id S1751017AbWADB1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2006 20:27:09 -0500
+Received: from pd2mr7so.prod.shaw.ca (pd2mr7so-qfe3.prod.shaw.ca [10.0.141.10])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0ISJ00MF9NZDJT70@l-daemon> for git@vger.kernel.org; Tue,
+ 03 Jan 2006 18:26:01 -0700 (MST)
+Received: from pn2ml9so.prod.shaw.ca ([10.0.121.7])
+ by pd2mr7so.prod.shaw.ca (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar
+ 15 2004)) with ESMTP id <0ISJ005NINZDMZF0@pd2mr7so.prod.shaw.ca> for
+ git@vger.kernel.org; Tue, 03 Jan 2006 18:26:01 -0700 (MST)
+Received: from socrates ([68.148.44.80])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0ISJ00B41NZDV710@l-daemon> for git@vger.kernel.org; Tue,
+ 03 Jan 2006 18:26:01 -0700 (MST)
+Received: from socrates (localhost [127.0.0.1])	by socrates (8.13.4/8.13.4)
+ with ESMTP id k041QxJi023185	for <git@vger.kernel.org>; Tue,
+ 03 Jan 2006 18:26:59 -0700
+Received: (from cougar@localhost)	by socrates (8.13.4/8.13.4/Submit)
+ id k041QxU2023184	for git@vger.kernel.org; Tue, 03 Jan 2006 18:26:59 -0700
+In-reply-to: <43BAD1F2.8040209@op5.se>
+To: git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14168>
 
-This is a multi-part message in MIME format.
---------------000602030504020600070600
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On Tue, Jan 03, 2006 at 08:35:14PM +0100, Andreas Ericsson wrote:
+> "origin..HEAD" is a valid and fairly common range.
+> "HEAD..origin" is not (well, it is, but it doesn't include any commits 
+> since it's going backwards).
+> 
 
-Linus Torvalds wrote:
-> 
-> On Tue, 3 Jan 2006, Theodore Ts'o wrote:
-> 
->>I'm not aware of any positive articles ever written from Dan Lyons; if
->>you know of any, feel free to send me the URL.
-> 
-> 
-> Well, here's one I know Dan researched..
-> 
-> 	http://www.forbes.com/forbes/2004/0920/180_print.html
-> 
-> The fact that you don't like the man, and that he's more critical than 
-> over-the-top enthusiastic, hey. That doesn't make him unprofessional or 
-> mean that he has no journalistic integrity. Being critical is way too 
-> seldom seen, and as you admit, Lyons is by no means one-sidedly critical. 
-> 
-> So maybe his glass is half full. Still no reason to dismiss him.
+It depends on what you are doing. When I update my git repository, I do
 
-as one of the people featured in the "peace love and paychecks" article, 
-i found the reporting to be surprisingly accurate (ie it could have been 
-much much worse).  i often tell people who ask me "what do you do" to 
-read a copy of it.  i haven't read any of his other pieces, though, so i 
-can't really comment on bias or accuracy over the body of his work.
+git fetch
+git-whatchanged master..origin
+git pull
 
---------------000602030504020600070600
-Content-Type: text/x-vcard; charset=utf-8;
- name="cel.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="cel.vcf"
-
-begin:vcard
-fn:Chuck Lever
-n:Lever;Chuck
-org:Network Appliance, Incorporated;Open Source NFS Client Engineering
-email;internet:cel@citi.umich.edu
-title:Member of Technical Staff
-x-mozilla-html:FALSE
-url:http://www.monkey.org/~cel/
-version:2.1
-end:vcard
-
-
---------------000602030504020600070600--
+to find out what changed since I last updated.
