@@ -1,62 +1,85 @@
-From: Martin Atukunda <matlads@dsmagic.com>
-Subject: Re: [PATCH] qgit: increase the space between the lanes.
-Date: Wed, 4 Jan 2006 11:24:43 +0300
-Organization: digital Solutions
-Message-ID: <200601041124.43749.matlads@dsmagic.com>
-References: <200601031415.19309.matlads@dsmagic.com> <200601032007.09081.matlads@dsmagic.com> <43BAF7F2.6060906@yahoo.it>
+From: Simon Richter <Simon.Richter@kleinhenz.de>
+Subject: [PATCH] Ignore tags that contain colons in their names
+Date: Wed, 04 Jan 2006 14:13:46 +0100
+Message-ID: <43BBCA0A.6020906@kleinhenz.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jan 04 09:25:28 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig4E0912AF765A09BE75B66D9F"
+X-From: git-owner@vger.kernel.org Wed Jan 04 14:14:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eu3xV-0000jq-NB
-	for gcvg-git@gmane.org; Wed, 04 Jan 2006 09:25:27 +0100
+	id 1Eu8TK-0003AR-TT
+	for gcvg-git@gmane.org; Wed, 04 Jan 2006 14:14:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751206AbWADIZO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jan 2006 03:25:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751209AbWADIZO
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jan 2006 03:25:14 -0500
-Received: from mail1.imul.com ([217.113.72.31]:54874 "EHLO mail1.infocom.co.ug")
-	by vger.kernel.org with ESMTP id S1751206AbWADIZM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jan 2006 03:25:12 -0500
-Received: from entandikwa.ds.co.ug ([::ffff:217.113.73.39])
-  by mail1.infocom.co.ug with esmtp; Wed, 04 Jan 2006 11:25:06 +0300
-  id 000F5ACB.43BB8662.000056A1
-Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
-	by entandikwa.ds.co.ug (Postfix) with ESMTP id 7ABC85290
-	for <git@vger.kernel.org>; Wed,  4 Jan 2006 11:26:53 +0300 (EAT)
-Received: from matlads by igloo.ds.co.ug with local (Exim 4.60)
-	(envelope-from <matlads@dsmagic.com>)
-	id 1Eu3wp-0001k9-S2
-	for git@vger.kernel.org; Wed, 04 Jan 2006 11:24:44 +0300
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.3
-In-Reply-To: <43BAF7F2.6060906@yahoo.it>
-Content-Disposition: inline
+	id S1751256AbWADNOO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jan 2006 08:14:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbWADNOO
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jan 2006 08:14:14 -0500
+Received: from kleinhenz.com ([213.239.205.196]:14795 "EHLO kleinhenz.com")
+	by vger.kernel.org with ESMTP id S1751256AbWADNON (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jan 2006 08:14:13 -0500
+Received: from [192.168.115.35] (p54994D62.dip.t-dialin.net [84.153.77.98])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "Simon Richter", Issuer "Kleinhenz Elektronik CA" (verified OK))
+	by kleinhenz.com (Postfix) with ESMTP id DCD6A4A8045
+	for <git@vger.kernel.org>; Wed,  4 Jan 2006 14:13:55 +0100 (CET)
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051019)
+X-Accept-Language: en-us, en
+To: git <git@vger.kernel.org>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14176>
 
-On Wednesday 04 January 2006 01:17, Marco Costalba wrote:
-> Martin Atukunda wrote:
-> > Hmm, I need to re-think how to do this properly. Any ideas?
->
-> Hi Martin,
->
->
-> What about this?
->
-> If it is Ok for you I will push the change.
->
-Looks Good. Please apply.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig4E0912AF765A09BE75B66D9F
+Content-Type: multipart/mixed;
+ boundary="------------030608090202070902000405"
 
-- Martin -
+This is a multi-part message in MIME format.
+--------------030608090202070902000405
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
--- 
-Due to a shortage of devoted followers, the production of great leaders has 
-been discontinued.
+Hi,
+
+a repo I was trying to clone contained a tag that somehow had a colon in 
+its name, which is illegal. The attached patch makes git-fetch ignore 
+these tags rather than barf.
+
+    Simon
+
+--------------030608090202070902000405
+Content-Type: text/plain;
+ name="ignore-colon-tags.diff"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="ignore-colon-tags.diff"
+
+ZGlmZiAtLWdpdCBhL2dpdC1mZXRjaC5zaCBiL2dpdC1mZXRjaC5zaAppbmRleCAxMjViY2Vh
+Li42ZDkzMGIyIDEwMDc1NQotLS0gYS9naXQtZmV0Y2guc2gKKysrIGIvZ2l0LWZldGNoLnNo
+CkBAIC0xOTEsNiArMTkxLDcgQEAgdGhlbgogCXRhZ2xpc3Q9JChnaXQtbHMtcmVtb3RlIC0t
+dGFncyAiJHJlbW90ZSIgfAogCQlzZWQgLWUgJwogCQkJL1xeL2QKKwkJCS86L2QKIAkJCXMv
+XlteCV0qCS8vCiAJCQlzLy4qLy4mOiYvJykKIAlpZiB0ZXN0ICIkIyIgLWd0IDEK
+--------------030608090202070902000405--
+
+--------------enig4E0912AF765A09BE75B66D9F
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iQCVAwUBQ7vKClYr4CN7gCINAQIbNAP/SjT+wQc0qwgO3yR8pbaJIXjYeflyydsU
+JHx7UPifoFi3XT1kIaW2Zx0MUTSTeQsb4zUirnv72WCIoF09uj0a4dVBV4jOBK6o
+bciTeKpI6nJ14aFRtFDYD30YyyX2FOOkzuh7bjrNO/ZjeLvE6hoxzB0WRUhZxjhO
++qmqi/p6bCM=
+=fpmx
+-----END PGP SIGNATURE-----
+
+--------------enig4E0912AF765A09BE75B66D9F--
