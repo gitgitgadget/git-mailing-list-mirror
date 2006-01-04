@@ -1,72 +1,54 @@
-From: Kyle McMartin <kyle@mcmartin.ca>
-Subject: git format-patch shell quoting bug
-Date: Tue, 3 Jan 2006 23:55:19 -0500
-Message-ID: <20060104045519.GB29515@quicksilver.road.mcmartin.ca>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: RE: [OT]  Shameless troll ;o)
+Date: Tue, 3 Jan 2006 20:56:31 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601032055570.3668@g5.osdl.org>
+References: <F7DC2337C7631D4386A2DF6E8FB22B300596583E@hdsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Jan 04 05:55:54 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "H. Peter Anvin" <hpa@zytor.com>, "Theodore Ts'o" <tytso@mit.edu>,
+	walt <wa1ter@myrealbox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 04 05:56:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eu0gi-00082C-1f
-	for gcvg-git@gmane.org; Wed, 04 Jan 2006 05:55:52 +0100
+	id 1Eu0ha-0008Cm-E9
+	for gcvg-git@gmane.org; Wed, 04 Jan 2006 05:56:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932506AbWADEzm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jan 2006 23:55:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932385AbWADEzm
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 23:55:42 -0500
-Received: from cabal.ca ([134.117.69.58]:37516 "EHLO fattire.cabal.ca")
-	by vger.kernel.org with ESMTP id S932506AbWADEzm (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 23:55:42 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by fattire.cabal.ca (Postfix) with ESMTP id D591B23E83
-	for <git@vger.kernel.org>; Tue,  3 Jan 2006 23:55:38 -0500 (EST)
-Received: from fattire.cabal.ca ([127.0.0.1])
-	by localhost (fattire [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 07438-05 for <git@vger.kernel.org>;
-	Tue, 3 Jan 2006 23:55:38 -0500 (EST)
-Received: from quicksilver.road.mcmartin.ca (CPE0030ab0b413b-CM0012c9a9a56e.cpe.net.cable.rogers.com [70.28.1.105])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "quicksilver.road.mcmartin.ca", Issuer "There Is No Cabal Certificate Authority" (verified OK))
-	by fattire.cabal.ca (Postfix) with ESMTP id 8EAFD23E82
-	for <git@vger.kernel.org>; Tue,  3 Jan 2006 23:55:38 -0500 (EST)
-Received: by quicksilver.road.mcmartin.ca (Postfix, from userid 1000)
-	id 107603B059; Tue,  3 Jan 2006 23:55:19 -0500 (EST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at cabal.ca
+	id S965162AbWADE4j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jan 2006 23:56:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965195AbWADE4j
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 23:56:39 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:58511 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965162AbWADE4i (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 23:56:38 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k044uWDZ014172
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 Jan 2006 20:56:32 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k044uVfV010330;
+	Tue, 3 Jan 2006 20:56:31 -0800
+To: "Brown, Len" <len.brown@intel.com>
+In-Reply-To: <F7DC2337C7631D4386A2DF6E8FB22B300596583E@hdsmsx401.amr.corp.intel.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.58__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14174>
 
-Hi,
 
-There's apparently a quoting bug in git-format-patch. When I import
-a patch with apply-mbox, for example
 
-From: Carlos O'Donell <carlos@parisc-linux.org>
+On Tue, 3 Jan 2006, Brown, Len wrote:
+> 
+> While not the WSJ (which I actually read) or the Economist (which I haven't
+> had time to read since parenthood), I think that Business Week is also
+> a step up -- as evidenced by its classy cover!:-)
 
-The author field is correctly set, including the "'" in Carlos' name.
+I prefer the Jessica Simpson covers personally, but hey, I can't fault 
+your taste.
 
-So when I go to rebase my tree, or send out patches, I 
-"git-format-patch origin" and get...
-
-/usr/bin/git-format-patch: eval: line 200: unexpected EOF while looking for 
-matching `''
-/usr/bin/git-format-patch: eval: line 201: syntax error: unexpected end of file
-
-Which produces a bogus output patch with a blank From and Date,
-
-Subject: [PATCH] ...
-From:
-Date:
-
-[...]
-
-I believe this recently crept in, as I don't recall seeing it before.
-
-Cheers,
-	Kyle
+		Linus
