@@ -1,72 +1,72 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Strange unable to unlink error with git-prune-packed
-Date: Wed, 4 Jan 2006 17:46:26 +1300
-Message-ID: <46a038f90601032046l31f51742k93f3f9f5a826bef1@mail.gmail.com>
+From: Kyle McMartin <kyle@mcmartin.ca>
+Subject: git format-patch shell quoting bug
+Date: Tue, 3 Jan 2006 23:55:19 -0500
+Message-ID: <20060104045519.GB29515@quicksilver.road.mcmartin.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Jan 04 05:46:34 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Jan 04 05:55:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eu0Xf-0006QP-Ee
-	for gcvg-git@gmane.org; Wed, 04 Jan 2006 05:46:31 +0100
+	id 1Eu0gi-00082C-1f
+	for gcvg-git@gmane.org; Wed, 04 Jan 2006 05:55:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965165AbWADEq1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jan 2006 23:46:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965215AbWADEq1
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 23:46:27 -0500
-Received: from wproxy.gmail.com ([64.233.184.200]:49897 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965165AbWADEq0 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 23:46:26 -0500
-Received: by wproxy.gmail.com with SMTP id 57so2296174wri
-        for <git@vger.kernel.org>; Tue, 03 Jan 2006 20:46:26 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=FJt+8uoObf4ICCbEshw7ZInaQlgktXTVralsGDMkaokP0XWcdISS1SHg5uyx62INOeTxrgi4vrRh6FKRHnJA4dJ+y3whucSHfD46cmThVS2pu/IOJhloqSFPMx40qZPm8juIi8pjlQ4rBFVSFRQ6PQFHX8z45iMgU3zBmgSex/s=
-Received: by 10.54.114.7 with SMTP id m7mr2117693wrc;
-        Tue, 03 Jan 2006 20:46:26 -0800 (PST)
-Received: by 10.54.71.5 with HTTP; Tue, 3 Jan 2006 20:46:26 -0800 (PST)
-To: Git Mailing List <git@vger.kernel.org>
+	id S932506AbWADEzm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jan 2006 23:55:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932385AbWADEzm
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 23:55:42 -0500
+Received: from cabal.ca ([134.117.69.58]:37516 "EHLO fattire.cabal.ca")
+	by vger.kernel.org with ESMTP id S932506AbWADEzm (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 23:55:42 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by fattire.cabal.ca (Postfix) with ESMTP id D591B23E83
+	for <git@vger.kernel.org>; Tue,  3 Jan 2006 23:55:38 -0500 (EST)
+Received: from fattire.cabal.ca ([127.0.0.1])
+	by localhost (fattire [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 07438-05 for <git@vger.kernel.org>;
+	Tue, 3 Jan 2006 23:55:38 -0500 (EST)
+Received: from quicksilver.road.mcmartin.ca (CPE0030ab0b413b-CM0012c9a9a56e.cpe.net.cable.rogers.com [70.28.1.105])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "quicksilver.road.mcmartin.ca", Issuer "There Is No Cabal Certificate Authority" (verified OK))
+	by fattire.cabal.ca (Postfix) with ESMTP id 8EAFD23E82
+	for <git@vger.kernel.org>; Tue,  3 Jan 2006 23:55:38 -0500 (EST)
+Received: by quicksilver.road.mcmartin.ca (Postfix, from userid 1000)
+	id 107603B059; Tue,  3 Jan 2006 23:55:19 -0500 (EST)
+To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at cabal.ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14173>
 
-Weilding a recent git version 1.0.6-g58e3 it turns out I cannot run
-git-prune-packed on a simple repo on my OSX (Panther 10.3.9). The
-local repo looks fine in my eyes, and permissions are similar to those
-on Linux. Relaxing permissions doesn't help either, so there may be
-something else afoot.
+Hi,
 
-When I invoke git-prune-packed I am greeted by (3-line sample):
+There's apparently a quoting bug in git-format-patch. When I import
+a patch with apply-mbox, for example
 
-error: unable to unlink .git/objects/43/2251e8488dc3c72d94d698ed69003137c47244
-error: unable to unlink .git/objects/43/6bc8b274ab96944a6f8c3cf5e3fbeef422042b
-error: unable to unlink .git/objects/43/fe47e9508289ad4eca71613a9f20d7f3323602
+From: Carlos O'Donell <carlos@parisc-linux.org>
 
-File modes after I ran chmod -R u+w .git/objects to see if
-prune-packed was taking the mode too seriously on OSX
+The author field is correctly set, including the "'" in Carlos' name.
 
-$ ls -la .git/objects/43
-total 24
-drwxr-xr-x    5 martin  martin   170  4 Jan 17:37 .
-drwxr-xr-x  229 martin  martin  7786  4 Jan 17:37 ..
--rw-r--r--    1 martin  martin   211 30 Dec 11:21
-2251e8488dc3c72d94d698ed69003137c47244
--rw-r--r--    1 martin  martin    53 30 Dec 11:21
-6bc8b274ab96944a6f8c3cf5e3fbeef422042b
--rw-r--r--    1 martin  martin   152 30 Dec 11:21
-fe47e9508289ad4eca71613a9f20d7f3323602
+So when I go to rebase my tree, or send out patches, I 
+"git-format-patch origin" and get...
 
-This is low priority for me, and so weird that it has to be a pilot
-error -- OTOH I may do a bisect to try and figure out whether it's a
-recent change...
+/usr/bin/git-format-patch: eval: line 200: unexpected EOF while looking for 
+matching `''
+/usr/bin/git-format-patch: eval: line 201: syntax error: unexpected end of file
 
-cheers,
+Which produces a bogus output patch with a blank From and Date,
 
+Subject: [PATCH] ...
+From:
+Date:
 
-martin
+[...]
+
+I believe this recently crept in, as I don't recall seeing it before.
+
+Cheers,
+	Kyle
