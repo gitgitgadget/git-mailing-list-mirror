@@ -1,64 +1,64 @@
-From: Tom Prince <tom.prince@ualberta.net>
-Subject: Re: how to find outstanding patches in non-linux-2.6 repositories ?
-Date: Tue, 03 Jan 2006 18:26:59 -0700
-Message-ID: <20060104012659.GA2353@socrates>
-References: <Pine.LNX.4.63.0601012228470.32311@wbgn013.biozentrum.uni-wuerzburg.de>
- <1136315518.11946.28.camel@cashmere.sps.mot.com> <43BAD1F2.8040209@op5.se>
-Reply-To: git@vger.kernel.org
+From: "Brown, Len" <len.brown@intel.com>
+Subject: RE: [OT]  Shameless troll ;o)
+Date: Tue, 3 Jan 2006 20:49:46 -0500
+Message-ID: <F7DC2337C7631D4386A2DF6E8FB22B300596583E@hdsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Jan 04 02:27:26 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Theodore Ts'o" <tytso@mit.edu>, "walt" <wa1ter@myrealbox.com>,
+	<git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 04 02:50:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EtxQm-0001ms-OV
-	for gcvg-git@gmane.org; Wed, 04 Jan 2006 02:27:13 +0100
+	id 1Etxmz-0007AW-H8
+	for gcvg-git@gmane.org; Wed, 04 Jan 2006 02:50:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965109AbWADB1K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jan 2006 20:27:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751522AbWADB1J
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 20:27:09 -0500
-Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:11127 "EHLO
-	pd3mo2so.prod.shaw.ca") by vger.kernel.org with ESMTP
-	id S1751017AbWADB1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jan 2006 20:27:09 -0500
-Received: from pd2mr7so.prod.shaw.ca (pd2mr7so-qfe3.prod.shaw.ca [10.0.141.10])
- by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0ISJ00MF9NZDJT70@l-daemon> for git@vger.kernel.org; Tue,
- 03 Jan 2006 18:26:01 -0700 (MST)
-Received: from pn2ml9so.prod.shaw.ca ([10.0.121.7])
- by pd2mr7so.prod.shaw.ca (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar
- 15 2004)) with ESMTP id <0ISJ005NINZDMZF0@pd2mr7so.prod.shaw.ca> for
- git@vger.kernel.org; Tue, 03 Jan 2006 18:26:01 -0700 (MST)
-Received: from socrates ([68.148.44.80])
- by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0ISJ00B41NZDV710@l-daemon> for git@vger.kernel.org; Tue,
- 03 Jan 2006 18:26:01 -0700 (MST)
-Received: from socrates (localhost [127.0.0.1])	by socrates (8.13.4/8.13.4)
- with ESMTP id k041QxJi023185	for <git@vger.kernel.org>; Tue,
- 03 Jan 2006 18:26:59 -0700
-Received: (from cougar@localhost)	by socrates (8.13.4/8.13.4/Submit)
- id k041QxU2023184	for git@vger.kernel.org; Tue, 03 Jan 2006 18:26:59 -0700
-In-reply-to: <43BAD1F2.8040209@op5.se>
-To: git@vger.kernel.org
-Content-disposition: inline
-User-Agent: Mutt/1.4.2.1i
+	id S965152AbWADBuF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jan 2006 20:50:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965153AbWADBuF
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jan 2006 20:50:05 -0500
+Received: from fmr13.intel.com ([192.55.52.67]:28376 "EHLO
+	fmsfmr001.fm.intel.com") by vger.kernel.org with ESMTP
+	id S965152AbWADBuD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jan 2006 20:50:03 -0500
+Received: from fmsfmr100.fm.intel.com (fmsfmr100.fm.intel.com [10.253.24.20])
+	by fmsfmr001.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id k041noiG015100;
+	Wed, 4 Jan 2006 01:49:50 GMT
+Received: from fmsmsxvs040.fm.intel.com (fmsmsxvs040.fm.intel.com [132.233.42.124])
+	by fmsfmr100.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id k041nn9g018086;
+	Wed, 4 Jan 2006 01:49:50 GMT
+Received: from fmsmsx331.amr.corp.intel.com ([132.233.42.156])
+ by fmsmsxvs040.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2006010317494932671
+ ; Tue, 03 Jan 2006 17:49:49 -0800
+Received: from fmsmsx312.amr.corp.intel.com ([132.233.42.227]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Tue, 3 Jan 2006 17:49:49 -0800
+Received: from hdsmsx401.amr.corp.intel.com ([10.127.2.60]) by fmsmsx312.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Tue, 3 Jan 2006 17:49:49 -0800
+X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [OT]  Shameless troll ;o)
+Thread-Index: AcYQoczqljm1YP3xTl2FBl1HJJRrlwAInIdg
+To: "Linus Torvalds" <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>
+X-OriginalArrivalTime: 04 Jan 2006 01:49:49.0373 (UTC) FILETIME=[25B906D0:01C610D1]
+X-Scanned-By: MIMEDefang 2.52 on 10.253.24.20
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14169>
 
-On Tue, Jan 03, 2006 at 08:35:14PM +0100, Andreas Ericsson wrote:
-> "origin..HEAD" is a valid and fairly common range.
-> "HEAD..origin" is not (well, it is, but it doesn't include any commits 
-> since it's going backwards).
-> 
+ 
+>Yes, Forbes is...
+>... a small step up from the check-out counter magazines 
+>that alternately glorify and vilify Jessica Simpson or whoever is the 
+>celebrity of the week.
 
-It depends on what you are doing. When I update my git repository, I do
+While not the WSJ (which I actually read) or the Economist (which I haven't
+had time to read since parenthood), I think that Business Week is also
+a step up -- as evidenced by its classy cover!:-)
 
-git fetch
-git-whatchanged master..origin
-git pull
-
-to find out what changed since I last updated.
+http://www.businessweek.com/magazine/content/05_05/b3918002_mz001.htm
