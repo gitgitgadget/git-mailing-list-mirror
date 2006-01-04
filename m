@@ -1,105 +1,90 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-ls-files -o no recurse?
-Date: Wed, 4 Jan 2006 13:31:25 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601041330550.3668@g5.osdl.org>
-References: <1136400692.5919.11.camel@localhost.localdomain>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Strange unable to unlink error with git-prune-packed
+Date: Thu, 5 Jan 2006 11:10:20 +1300
+Message-ID: <46a038f90601041410m7628adfdr3ec81015d80d0f8e@mail.gmail.com>
+References: <46a038f90601032046l31f51742k93f3f9f5a826bef1@mail.gmail.com>
+	 <Pine.LNX.4.64.0601040828590.3668@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 04 22:31:44 2006
+X-From: git-owner@vger.kernel.org Wed Jan 04 23:10:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EuGEM-00070s-8E
-	for gcvg-git@gmane.org; Wed, 04 Jan 2006 22:31:38 +0100
+	id 1EuGpu-0000LT-7S
+	for gcvg-git@gmane.org; Wed, 04 Jan 2006 23:10:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750871AbWADVbg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jan 2006 16:31:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751790AbWADVbf
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jan 2006 16:31:35 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:65445 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750871AbWADVbf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jan 2006 16:31:35 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k04LVTDZ027388
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 4 Jan 2006 13:31:30 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k04LVPEt016541;
-	Wed, 4 Jan 2006 13:31:28 -0800
-To: Darrin Thompson <darrint@progeny.com>
-In-Reply-To: <1136400692.5919.11.camel@localhost.localdomain>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964788AbWADWKX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jan 2006 17:10:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964789AbWADWKW
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jan 2006 17:10:22 -0500
+Received: from wproxy.gmail.com ([64.233.184.201]:40492 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964788AbWADWKU convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 Jan 2006 17:10:20 -0500
+Received: by wproxy.gmail.com with SMTP id 57so2453126wri
+        for <git@vger.kernel.org>; Wed, 04 Jan 2006 14:10:20 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mdIcQJtuO5JxHHeiVsWU7K+fjs2PzH2/bhiGjViopnlqtQBLpNxyqu8Qyu2ymsLfsM0vFcorGYEx1PJz0XUUzUWPrT6RSsEHQMimYj6OJ9FqS4WT+jFIYEoZNzVuHtlmVIke0OaHgpCTeYSIj9I0uoJLDFDOCiKCqoPrXTAfyeo=
+Received: by 10.54.126.20 with SMTP id y20mr3061310wrc;
+        Wed, 04 Jan 2006 14:10:20 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Wed, 4 Jan 2006 14:10:20 -0800 (PST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0601040828590.3668@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14181>
+
+On 1/5/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> Does it happen for all your files? All your repositories? Or just one
+> repo?
+
+Good questions -- should have sorted those basic things out before
+posting. Apologies. In any case, I haven't seen that before, but I
+don't run git-prune-packed that often on the OSX commandline. My main
+dev host is a linux machine, and I have a weekly cron that does repack
+and prune packed on all my repos.
+
+> Or just one subdirectory in that repo?
+
+It refused to unlink _any_ files within .git/objects
+
+> The code is _literally_ just doing a
+>
+>         if (unlink(pathname) < 0)
+>                 error("unable to unlink %s", pathname);
+>
+> but maybe you could just make it print out the reason too. So add a "(%s)"
+> and a "strerror(errno)" to that error line..
+
+This morning, after a reboot, I patched prune-packed.c as suggested
+and ran it... and it all worked.
+
+Initially I suspected the files were locked somehow, but I just did a
+new clone && git-repack && git-prune-packed and it just worked...
+Grrr.
+
+> I don't see why you couldn't unlink those files. Maybe it's some strange
+> HFS issue and you can't just unlink() things that have attributes or
+> something? Maybe some crazy file manager has added a default icon
+> attribute to your files if you happened to look at the .git objects
+> directory?
+
+It is indeed HFS but I'm pretty sure things should be transparent to
+the unix side of things. In any case, the (crazy filemanager) Finder
+wasn't involved, as this is a newish repo, I haven't looked at any
+directory around it with Finder, and it's known to leave hidden files
+all over the place.
+
+In any case, I've got my git-prune-packed patched now, and will be
+trying to repro the bug.
+
+cheers,
 
 
-
-On Wed, 4 Jan 2006, Darrin Thompson wrote:
-> 
-> Would it be hard to make git-ls-files optionally do this?
-
-Something like the appended may or may not be what you're looking for..
-
-		Linus
----
-diff --git a/ls-files.c b/ls-files.c
-index 5e9ac71..2e3e2e8 100644
---- a/ls-files.c
-+++ b/ls-files.c
-@@ -19,6 +19,7 @@ static int show_stage = 0;
- static int show_unmerged = 0;
- static int show_modified = 0;
- static int show_killed = 0;
-+static int show_ignored_directories = 0;
- static int line_terminator = '\n';
- 
- static int prefix_len = 0, prefix_offset = 0;
-@@ -233,6 +234,19 @@ static void add_name(const char *pathnam
- 	dir[nr_dir++] = ent;
- }
- 
-+static int dir_exists(const char *dirname, int len)
-+{
-+	int pos = cache_name_pos(dirname, len);
-+	if (pos >= 0)
-+		return 1;
-+	pos = -pos-1;
-+	if (pos >= active_nr)
-+		return 0;
-+	if (strncmp(active_cache[pos]->name, dirname, len))
-+		return 0;
-+	return active_cache[pos]->name[len] == '/';
-+}
-+
- /*
-  * Read a directory tree. We currently ignore anything but
-  * directories, regular files and symlinks. That's because git
-@@ -280,6 +294,10 @@ static void read_directory(const char *p
- 					continue;
- 				/* fallthrough */
- 			case DT_DIR:
-+				if (show_ignored_directories) {
-+					if (!dir_exists(fullname, baselen + len))
-+						break;
-+				}
- 				memcpy(fullname + baselen + len, "/", 2);
- 				read_directory(fullname, fullname,
- 					       baselen + len + 1);
-@@ -622,6 +640,10 @@ int main(int argc, const char **argv)
- 			show_killed = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--directory")) {
-+			show_ignored_directories = 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "-u") || !strcmp(arg, "--unmerged")) {
- 			/* There's no point in showing unmerged unless
- 			 * you also show the stage information.
+martin
