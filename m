@@ -1,73 +1,114 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: trivial: remove the dots at the end of file names
-Date: Thu, 5 Jan 2006 12:46:16 +0100
-Message-ID: <81b0412b0601050346v43dc1e58k7e0b51c6d6817d1e@mail.gmail.com>
+Subject: [PATCH] git-mv.perl: use stderr for error output and cleanup
+Date: Thu, 5 Jan 2006 12:49:45 +0100
+Message-ID: <81b0412b0601050349s6bec1a36jc410fd315fbbc4c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed; 
-	boundary="----=_Part_11245_23549136.1136461576119"
-X-From: git-owner@vger.kernel.org Thu Jan 05 12:48:47 2006
+	boundary="----=_Part_11281_15204955.1136461785677"
+X-From: git-owner@vger.kernel.org Thu Jan 05 12:49:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EuTbp-0000N0-9m
-	for gcvg-git@gmane.org; Thu, 05 Jan 2006 12:48:45 +0100
+	id 1EuTcu-0000g2-R8
+	for gcvg-git@gmane.org; Thu, 05 Jan 2006 12:49:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752164AbWAELsU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jan 2006 06:48:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752165AbWAELsU
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jan 2006 06:48:20 -0500
-Received: from zeus2.kernel.org ([204.152.191.36]:4758 "EHLO zeus2.kernel.org")
-	by vger.kernel.org with ESMTP id S1752164AbWAELsT (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jan 2006 06:48:19 -0500
-Received: from nproxy.gmail.com (nproxy.gmail.com [64.233.182.201])
-	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k05BmHuE012115
-	for <git@vger.kernel.org>; Thu, 5 Jan 2006 03:48:18 -0800
-Received: by nproxy.gmail.com with SMTP id x37so103061nfc
-        for <git@vger.kernel.org>; Thu, 05 Jan 2006 03:46:17 -0800 (PST)
+	id S932426AbWAELts (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jan 2006 06:49:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752168AbWAELts
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jan 2006 06:49:48 -0500
+Received: from nproxy.gmail.com ([64.233.182.199]:21290 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1752167AbWAELtr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Jan 2006 06:49:47 -0500
+Received: by nproxy.gmail.com with SMTP id x37so103417nfc
+        for <git@vger.kernel.org>; Thu, 05 Jan 2006 03:49:46 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:mime-version:content-type;
-        b=D5VVuSAUZHL7Z57z1Fs2fz9iQM+SQtGKr2nUj9Dm+Lr0eoP4HHVDkKgjn5z7NMadDqFy/gMxkxXvOo8r8WPPb29UIQ4LbU9BlqGn+LwKv+PwUnQOXWoQnyL+tcYI3Us3eEIi6Lg3DL9Ah2+6F8+ZZA3V76JoSaLA4VVBYIifTJk=
-Received: by 10.48.49.20 with SMTP id w20mr683491nfw;
-        Thu, 05 Jan 2006 03:46:16 -0800 (PST)
-Received: by 10.48.248.4 with HTTP; Thu, 5 Jan 2006 03:46:16 -0800 (PST)
+        b=JwphBuMXDFIQD8/WcioHNjuImyzKSTH8aFPIW64Ce4KF2ekTFdyRSwyAm7HvBtqAClt/Jq/VrdZVmUdX7cqZGJ6sxvMLQEKZ03Fo5h/7ZoA7kz2FJ0g63EEw4ncfiqW1IMM3O7GbAUk7klU7vusmPckgQ4sc+bTW3nhOQSwSJVg=
+Received: by 10.49.5.11 with SMTP id h11mr682468nfi;
+        Thu, 05 Jan 2006 03:49:45 -0800 (PST)
+Received: by 10.48.248.4 with HTTP; Thu, 5 Jan 2006 03:49:45 -0800 (PST)
 To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus2
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14191>
 
-------=_Part_11245_23549136.1136461576119
+------=_Part_11281_15204955.1136461785677
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: quoted-printable
 Content-Disposition: inline
 
-to make the output more friendly to mouse copy-paste.
-
 Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+It is cleaned up in the "Perl' meaning" of process: trivial loops
+replaced with map{}
 
-------=_Part_11245_23549136.1136461576119
-Content-Type: text/plain; name="0004-Remove-the-dots-at-the-end-of-file-names-to-make-the-output-more-mouse-copy-paste-friendly.txt"
+------=_Part_11281_15204955.1136461785677
+Content-Type: text/plain; name="0005-use-stderr-for-error-output-and-cleanup.txt"
 Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="0004-Remove-the-dots-at-the-end-of-file-names-to-make-the-output-more-mouse-copy-paste-friendly.txt"
+Content-Disposition: attachment; filename="0005-use-stderr-for-error-output-and-cleanup.txt"
 
-U3ViamVjdDogW1BBVENIXSBSZW1vdmUgdGhlIGRvdHMgYXQgdGhlIGVuZCBvZiBmaWxlIG5hbWVz
-Cgp0byBtYWtlIHRoZSBvdXRwdXQgbW9yZSBtb3VzZSBjb3B5LXBhc3RlIGZyaWVuZGx5LgoKU2ln
-bmVkLW9mZi1ieTogQWxleCBSaWVzZW4gPHJhYS5sa21sQGdtYWlsLmNvbT4KCgotLS0KCiBnaXQt
-bWVyZ2Utb25lLWZpbGUuc2ggfCAgICA0ICsrLS0KIDEgZmlsZXMgY2hhbmdlZCwgMiBpbnNlcnRp
-b25zKCspLCAyIGRlbGV0aW9ucygtKQoKZmEwNzM5YzMyMTI2NTU4MmJhOGE5MTRhY2VkY2I2NmY5
-ODk4MGE4NgpkaWZmIC0tZ2l0IGEvZ2l0LW1lcmdlLW9uZS1maWxlLnNoIGIvZ2l0LW1lcmdlLW9u
-ZS1maWxlLnNoCmluZGV4IDdkZWU4OGEuLjUzNDlhMWMgMTAwNzU1Ci0tLSBhL2dpdC1tZXJnZS1v
-bmUtZmlsZS5zaAorKysgYi9naXQtbWVyZ2Utb25lLWZpbGUuc2gKQEAgLTgyLDcgKzgyLDcgQEAg
-Y2FzZSAiJHsxOi0ufSR7MjotLn0kezM6LS59IiBpbgogCQlleHByICIkc3owIiBcPCAiJHN6MSIg
-XCogMiA+L2Rldi9udWxsIHx8IDogPiRvcmlnCiAJCTs7CiAJKikKLQkJZWNobyAiQXV0by1tZXJn
-aW5nICQ0LiIKKwkJZWNobyAiQXV0by1tZXJnaW5nICQ0IgogCQlvcmlnPWBnaXQtdW5wYWNrLWZp
-bGUgJDFgCiAJCTs7CiAJZXNhYwpAQCAtMTA3LDcgKzEwNyw3IEBAIGNhc2UgIiR7MTotLn0kezI6
-LS59JHszOi0ufSIgaW4KIAlmaQogCiAJaWYgWyAkcmV0IC1uZSAwIF07IHRoZW4KLQkJZWNobyAi
-RVJST1I6IE1lcmdlIGNvbmZsaWN0IGluICQ0LiIKKwkJZWNobyAiRVJST1I6IE1lcmdlIGNvbmZs
-aWN0IGluICQ0IgogCQlleGl0IDEKIAlmaQogCWV4ZWMgZ2l0LXVwZGF0ZS1pbmRleCAtLSAiJDQi
-Ci0tIAoxLjAuR0lUCg==
-------=_Part_11245_23549136.1136461576119--
+U3ViamVjdDogW1BBVENIXSB1c2Ugc3RkZXJyIGZvciBlcnJvciBvdXRwdXQgYW5kIGNsZWFudXAK
+ClNpZ25lZC1vZmYtYnk6IEFsZXggUmllc2VuIDxyYWEubGttbEBnbWFpbC5jb20+CgoKLS0tCgog
+Z2l0LW12LnBlcmwgfCAgIDM4ICsrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+CiAxIGZpbGVzIGNoYW5nZWQsIDE0IGluc2VydGlvbnMoKyksIDI0IGRlbGV0aW9ucygtKQoKNDg3
+NDg0Zjg1ZGY5OTlhZDk0OTEyMzgwMGUxYWI0YTI0NDU4MzcwYgpkaWZmIC0tZ2l0IGEvZ2l0LW12
+LnBlcmwgYi9naXQtbXYucGVybAppbmRleCA4M2RjN2U0Li41ZTdhZGRmIDEwMDc1NQotLS0gYS9n
+aXQtbXYucGVybAorKysgYi9naXQtbXYucGVybApAQCAtMzcsNyArMzcsNyBAQCBpZiAoLWQgJEFS
+R1ZbJGFyZ0NvdW50LTFdKSB7CiAJIyByZW1vdmUgYW55IHRyYWlsaW5nIHNsYXNoCiAJJGRzdERp
+ciA9fiBzL1wvJC8vOwogCUBzcmNBcmdzID0gQEFSR1ZbMC4uJGFyZ0NvdW50LTJdOwotCQorCiAJ
+Zm9yZWFjaCAkc3JjIChAc3JjQXJncykgewogCQkkYmFzZSA9ICRzcmM7CiAJCSRiYXNlID1+IHMv
+Xi4qXC8vLzsKQEAgLTQ3LDEwICs0Nyw5IEBAIGlmICgtZCAkQVJHVlskYXJnQ291bnQtMV0pIHsK
+IH0KIGVsc2UgewogICAgIGlmICgkYXJnQ291bnQgIT0gMikgewotCXByaW50ICJFcnJvcjogbW92
+aW5nIHRvIGRpcmVjdG9yeSAnIgorCWRpZSAiRXJyb3I6IG1vdmluZyB0byBkaXJlY3RvcnkgJyIK
+IAkgICAgLiAkQVJHVlskYXJnQ291bnQtMV0KLQkgICAgLiAiJyBub3QgcG9zc2libGU7IG5vdCBl
+eGlzaXRpbmdcbiI7Ci0JZXhpdCgxKTsKKwkgICAgLiAiJyBub3QgcG9zc2libGU7IG5vdCBleGlz
+dGluZ1xuIjsKICAgICB9CiAgICAgQHNyY0FyZ3MgPSAoJEFSR1ZbMF0pOwogICAgIEBkc3RBcmdz
+ID0gKCRBUkdWWzFdKTsKQEAgLTYzLDcgKzYyLDcgQEAgbXkgKCVvdmVyd3JpdHRlbiwgJXNyY0Zv
+ckRzdCk7CiAKICQvID0gIlwwIjsKIG9wZW4oRiwgJ2dpdC1scy1maWxlcyAteiB8JykKLSAgICAg
+ICAgb3IgZGllICJGYWlsZWQgdG8gb3BlbiBwaXBlIGZyb20gZ2l0LWxzLWZpbGVzOiAiIC4gJCE7
+CisgICAgICAgIG9yIGRpZSAiRmFpbGVkIHRvIG9wZW4gcGlwZSBmcm9tIGdpdC1scy1maWxlczog
+JCFcbiI7CiAKIEBhbGxmaWxlcyA9IG1hcCB7IGNob21wOyAkXzsgfSA8Rj47CiBjbG9zZShGKTsK
+QEAgLTkyLDcgKzkxLDcgQEAgd2hpbGUoc2NhbGFyIEBzcmNBcmdzID4gMCkgewogCWlmICgkb3B0
+X2YpIHsKIAkgICAgIyBvbmx5IGZpbGVzIGNhbiBvdmVyd3JpdGUgZWFjaCBvdGhlcjogY2hlY2sg
+Ym90aCBzb3VyY2UgYW5kIGRlc3RpbmF0aW9uCiAJICAgIGlmICgtZiAkZHN0ICYmIChzY2FsYXIg
+QHNyY2ZpbGVzID09IDEpKSB7Ci0JCXByaW50ICJXYXJuaW5nOiAkYmFkOyB3aWxsIG92ZXJ3cml0
+ZSFcbiI7CisJCXdhcm4gIldhcm5pbmc6ICRiYWQ7IHdpbGwgb3ZlcndyaXRlIVxuIjsKIAkJJGJh
+ZCA9ICIiOwogCQkkb3ZlcndyaXR0ZW57JGRzdH0gPSAxOwogCSAgICB9CkBAIC0xMDEsNyArMTAw
+LDcgQEAgd2hpbGUoc2NhbGFyIEBzcmNBcmdzID4gMCkgewogCSAgICB9CiAJfQogICAgIH0KLSAg
+ICAKKwogICAgIGlmICgoJGJhZCBlcSAiIikgJiYgKCRkc3QgPX4gL14kc2FmZXNyY1wvLykpIHsK
+IAkkYmFkID0gImNhbiBub3QgbW92ZSBkaXJlY3RvcnkgJyRzcmMnIGludG8gaXRzZWxmIjsKICAg
+ICB9CkBAIC0xMjQsMTEgKzEyMywxMCBAQCB3aGlsZShzY2FsYXIgQHNyY0FyZ3MgPiAwKSB7CiAK
+ICAgICBpZiAoJGJhZCBuZSAiIikgewogCWlmICgkb3B0X2spIHsKLQkgICAgcHJpbnQgIldhcm5p
+bmc6ICRiYWQ7IHNraXBwaW5nXG4iOworCSAgICB3YXJuICJXYXJuaW5nOiAkYmFkOyBza2lwcGlu
+Z1xuIjsKIAkgICAgbmV4dDsKIAl9Ci0JcHJpbnQgIkVycm9yOiAkYmFkXG4iOwotCWV4aXQoMSk7
+CisJZGllICJFcnJvcjogJGJhZFxuIjsKICAgICB9CiAgICAgcHVzaCBAc3JjcywgJHNyYzsKICAg
+ICBwdXNoIEBkc3RzLCAkZHN0OwpAQCAtMTQ2LDcgKzE0NCw3IEBAIHdoaWxlKHNjYWxhciBAc3Jj
+cyA+IDApIHsKIAlpZiAoIXJlbmFtZSgkc3JjLCRkc3QpKSB7CiAJICAgICRiYWQgPSAicmVuYW1p
+bmcgJyRzcmMnIGZhaWxlZDogJCEiOwogCSAgICBpZiAoJG9wdF9rKSB7Ci0JCXByaW50ICJXYXJu
+aW5nOiBza2lwcGVkOiAkYmFkXG4iOworCQl3YXJuICJXYXJuaW5nOiBza2lwcGVkOiAkYmFkXG4i
+OwogCQkkYmFkID0gIiI7CiAJCW5leHQ7CiAJICAgIH0KQEAgLTE2Miw2ICsxNjAsNyBAQCB3aGls
+ZShzY2FsYXIgQHNyY3MgPiAwKSB7CiAgICAgcHVzaCBAZGVsZXRlZGZpbGVzLCBAc3JjZmlsZXM7
+CiAgICAgaWYgKHNjYWxhciBAc3JjZmlsZXMgPT0gMSkgewogCSMgJGRzdCBjYW4gYmUgYSBkaXJl
+Y3Rvcnkgd2l0aCAxIGZpbGUgaW5zaWRlCisKIAlpZiAoJG92ZXJ3cml0dGVueyRkc3R9ID09MSkg
+ewogCSAgICBwdXNoIEBjaGFuZ2VkZmlsZXMsICRkc3RmaWxlc1swXTsKIApAQCAtMTg5LDMwICsx
+ODgsMjEgQEAgZWxzZSB7CiAgICAgaWYgKEBjaGFuZ2VkZmlsZXMpIHsKIAlvcGVuKEgsICJ8IGdp
+dC11cGRhdGUtaW5kZXggLXogLS1zdGRpbiIpCiAJCW9yIGRpZSAiZ2l0LXVwZGF0ZS1pbmRleCBm
+YWlsZWQgdG8gdXBkYXRlIGNoYW5nZWQgZmlsZXMgd2l0aCBjb2RlICQhXG4iOwotCWZvcmVhY2gg
+bXkgJGZpbGVOYW1lIChAY2hhbmdlZGZpbGVzKSB7Ci0JCXByaW50IEggIiRmaWxlTmFtZVwwIjsK
+LQl9CisJcHJpbnQgSCBtYXAgeyIkX1wwIn0gQGNoYW5nZWRmaWxlczsKIAljbG9zZShIKTsKICAg
+ICB9CiAgICAgaWYgKEBhZGRlZGZpbGVzKSB7CiAJb3BlbihILCAifCBnaXQtdXBkYXRlLWluZGV4
+IC0tYWRkIC16IC0tc3RkaW4iKQogCQlvciBkaWUgImdpdC11cGRhdGUtaW5kZXggZmFpbGVkIHRv
+IGFkZCBuZXcgbmFtZXMgd2l0aCBjb2RlICQhXG4iOwotCWZvcmVhY2ggbXkgJGZpbGVOYW1lIChA
+YWRkZWRmaWxlcykgewotCQlwcmludCBIICIkZmlsZU5hbWVcMCI7Ci0JfQorCXByaW50IEggbWFw
+IHsiJF9cMCJ9IEBhZGRlZGZpbGVzOwogCWNsb3NlKEgpOwogICAgIH0KICAgICBpZiAoQGRlbGV0
+ZWRmaWxlcykgewogCW9wZW4oSCwgInwgZ2l0LXVwZGF0ZS1pbmRleCAtLXJlbW92ZSAteiAtLXN0
+ZGluIikKIAkJb3IgZGllICJnaXQtdXBkYXRlLWluZGV4IGZhaWxlZCB0byByZW1vdmUgb2xkIG5h
+bWVzIHdpdGggY29kZSAkIVxuIjsKLQlmb3JlYWNoIG15ICRmaWxlTmFtZSAoQGRlbGV0ZWRmaWxl
+cykgewotCQlwcmludCBIICIkZmlsZU5hbWVcMCI7Ci0JfQorCXByaW50IEggbWFwIHsiJF9cMCJ9
+IEBkZWxldGVkZmlsZXM7CiAJY2xvc2UoSCk7CiAgICAgfQogfQogCi1pZiAoJGJhZCBuZSAiIikg
+ewotICAgIHByaW50ICJFcnJvcjogJGJhZFxuIjsKLSAgICBleGl0KDEpOwotfQorZGllICJFcnJv
+cjogJGJhZFxuIiBpZiAkYmFkIG5lICIiOwotLSAKMS4wLkdJVAo=
+------=_Part_11281_15204955.1136461785677--
