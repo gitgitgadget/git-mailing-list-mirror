@@ -1,106 +1,71 @@
-From: Amos Waterland <apw@us.ibm.com>
-Subject: [PATCH] AIX compile fix for repo-config.c
-Date: Wed, 4 Jan 2006 19:31:02 -0500
-Message-ID: <20060105003102.GA21251@kvasir.watson.ibm.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Fix nasty approxidate bug
+Date: Wed, 4 Jan 2006 19:33:55 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601041930510.3169@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 05 01:31:26 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Jan 05 04:34:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EuJ2D-0007ML-CA
-	for gcvg-git@gmane.org; Thu, 05 Jan 2006 01:31:17 +0100
+	id 1EuLt9-0003RE-Kp
+	for gcvg-git@gmane.org; Thu, 05 Jan 2006 04:34:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750884AbWAEAbN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jan 2006 19:31:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750888AbWAEAbN
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jan 2006 19:31:13 -0500
-Received: from e5.ny.us.ibm.com ([32.97.182.145]:43666 "EHLO e5.ny.us.ibm.com")
-	by vger.kernel.org with ESMTP id S1750855AbWAEAbM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jan 2006 19:31:12 -0500
-Received: from d01relay04.pok.ibm.com (d01relay04.pok.ibm.com [9.56.227.236])
-	by e5.ny.us.ibm.com (8.12.11/8.12.11) with ESMTP id k050VBHq013473
-	for <git@vger.kernel.org>; Wed, 4 Jan 2006 19:31:11 -0500
-Received: from d01av02.pok.ibm.com (d01av02.pok.ibm.com [9.56.224.216])
-	by d01relay04.pok.ibm.com (8.12.10/NCO/VERS6.8) with ESMTP id k050VBpu094840
-	for <git@vger.kernel.org>; Wed, 4 Jan 2006 19:31:11 -0500
-Received: from d01av02.pok.ibm.com (loopback [127.0.0.1])
-	by d01av02.pok.ibm.com (8.12.11/8.13.3) with ESMTP id k050VBD5022805
-	for <git@vger.kernel.org>; Wed, 4 Jan 2006 19:31:11 -0500
-Received: from kvasir.watson.ibm.com (kvasir.watson.ibm.com [9.2.218.19])
-	by d01av02.pok.ibm.com (8.12.11/8.12.11) with ESMTP id k050VBN8022782;
-	Wed, 4 Jan 2006 19:31:11 -0500
-Received: from apw by kvasir.watson.ibm.com with local (Exim 4.52)
-	id 1EuJ1y-0005ct-Au; Wed, 04 Jan 2006 19:31:02 -0500
-To: junkio@cox.net
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S1751891AbWAEDeD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jan 2006 22:34:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbWAEDeD
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jan 2006 22:34:03 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:17823 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751891AbWAEDeC (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jan 2006 22:34:02 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k053XuDZ017565
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 4 Jan 2006 19:33:56 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k053Xtd1010266;
+	Wed, 4 Jan 2006 19:33:56 -0800
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14183>
 
-AIX 5 has a /usr/include/regex.h containing this code:
 
- #ifdef  _NO_PROTO
- extern  char    *regex();
- extern  char    *regcmp();
- #else /* _NO_PROTO */
- extern  char    *regex(const char *, const char *, ...);
- extern  char    *regcmp(const char *, ...);
- #endif  /* _NO_PROTO */
+Stupid me.
 
-This means that repo-config.c is trying to redefine the `regex' symbol.
-Here is a simple patch that just uses `regexp' as the symbol name instead.
+If approxidate ends up with a month that is ahead of the current month, it 
+decrements the year to last year.
 
-Signed-off-by: Amos Waterland <apw@us.ibm.com>
+Which is correct, and means that "last december" does the right thing.
 
---- repo-config.c.orig	Wed Jan  4 18:58:21 2006
-+++ repo-config.c	Wed Jan  4 18:59:15 2006
-@@ -6,7 +6,7 @@
- 
- static char* key = NULL;
- static char* value = NULL;
--static regex_t* regex = NULL;
-+static regex_t* regexp = NULL;
- static int do_all = 0;
- static int do_not_match = 0;
- static int seen = 0;
-@@ -14,9 +14,9 @@
- static int show_config(const char* key_, const char* value_)
- {
- 	if (!strcmp(key_, key) &&
--			(regex == NULL ||
-+			(regexp == NULL ||
- 			 (do_not_match ^
--			  !regexec(regex, value_, 0, NULL, 0)))) {
-+			  !regexec(regexp, value_, 0, NULL, 0)))) {
- 		if (do_all) {
- 			printf("%s\n", value_);
- 			return 0;
-@@ -46,8 +46,8 @@
- 			regex_++;
- 		}
- 
--		regex = (regex_t*)malloc(sizeof(regex_t));
--		if (regcomp(regex, regex_, REG_EXTENDED)) {
-+		regexp = (regex_t*)malloc(sizeof(regex_t));
-+		if (regcomp(regexp, regex_, REG_EXTENDED)) {
- 			fprintf(stderr, "Invalid pattern: %s\n", regex_);
- 			return -1;
- 		}
-@@ -59,9 +59,9 @@
- 		free(value);
+HOWEVER. It should only do so if the year is the same as the current year.
+
+Without this fix, "5 days ago" ends up being in 2004, because it first 
+decrements five days, getting us to December 2005 (correct), but then it 
+also ends up decrementing the year once more to turn that December into 
+"last year" (incorrect, since it already _was_ last year).
+
+Duh. Pass me a donut.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+diff --git a/date.c b/date.c
+index 3e11500..73037c7 100644
+--- a/date.c
++++ b/date.c
+@@ -640,7 +640,7 @@ unsigned long approxidate(const char *da
  	}
- 	free(key);
--	if (regex) {
--		regfree(regex);
--		free(regex);
-+	if (regexp) {
-+		regfree(regexp);
-+		free(regexp);
- 	}
- 
- 	if (do_all)
+ 	if (number > 0 && number < 32)
+ 		tm.tm_mday = number;
+-	if (tm.tm_mon > now.tm_mon)
++	if (tm.tm_mon > now.tm_mon && tm.tm_year == now.tm_year)
+ 		tm.tm_year--;
+ 	return mktime(&tm);
+ }
