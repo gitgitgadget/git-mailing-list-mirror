@@ -1,51 +1,55 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: use result of open(2) to check for presence
-Date: Thu, 5 Jan 2006 16:12:22 +0100
-Message-ID: <81b0412b0601050712q4c2123f7i8e9190c3b75b6fda@mail.gmail.com>
-References: <81b0412b0601050343w4c00ac86y30569c3babbf6728@mail.gmail.com>
-	 <118833cc0601050648t17f68bcch8fd7c541585e965c@mail.gmail.com>
+From: Jon Nelson <jnelson-git@jamponi.net>
+Subject: Re: trivial: .gitignore precompiled pyhton modules
+Date: Thu, 5 Jan 2006 09:44:43 -0600 (CST)
+Message-ID: <Pine.LNX.4.63.0601050944200.667@gheavc.wnzcbav.cig>
+References: <81b0412b0601050358q6163ef1bqa8696d5881feb657@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 05 16:12:28 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 05 16:55:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EuWmx-0001eS-No
-	for gcvg-git@gmane.org; Thu, 05 Jan 2006 16:12:28 +0100
+	id 1EuXSs-0005L4-D2
+	for gcvg-git@gmane.org; Thu, 05 Jan 2006 16:55:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750724AbWAEPMZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jan 2006 10:12:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042AbWAEPMZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jan 2006 10:12:25 -0500
-Received: from nproxy.gmail.com ([64.233.182.196]:17633 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750724AbWAEPMY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 5 Jan 2006 10:12:24 -0500
-Received: by nproxy.gmail.com with SMTP id x37so128437nfc
-        for <git@vger.kernel.org>; Thu, 05 Jan 2006 07:12:22 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GT4UD5R4e0iqXjjQQDjw+yWoiC3a2B3zDY4vI+aLTGPy0sTAkWZ+MzN1nLRIk4TQl9iMcCs3rZjRw39QXD5d8znbfwkRhvyvIkhTCcWHkAngDvJZprSNi8pgJIQCkcCM20qMCagTiv9y7d19B5YwMhUpd+IXuDZGVnz4ip7lkHY=
-Received: by 10.49.42.7 with SMTP id u7mr695529nfj;
-        Thu, 05 Jan 2006 07:12:22 -0800 (PST)
-Received: by 10.48.248.4 with HTTP; Thu, 5 Jan 2006 07:12:22 -0800 (PST)
-To: Morten Welinder <mwelinder@gmail.com>
-In-Reply-To: <118833cc0601050648t17f68bcch8fd7c541585e965c@mail.gmail.com>
-Content-Disposition: inline
+	id S1750828AbWAEPzn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jan 2006 10:55:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbWAEPzn
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jan 2006 10:55:43 -0500
+Received: from mtao02.charter.net ([209.225.8.187]:28369 "EHLO
+	mtao02.charter.net") by vger.kernel.org with ESMTP id S1750828AbWAEPzm
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 5 Jan 2006 10:55:42 -0500
+Received: from mxip35-10.charter.net ([10.20.203.75]) by mtao02.charter.net
+          (InterMail vM.6.01.05.04 201-2131-123-105-20051025) with ESMTP
+          id <20060105154538.IKKU18815.mtao02.charter.net@mxip35-10.charter.net>
+          for <git@vger.kernel.org>; Thu, 5 Jan 2006 10:45:38 -0500
+Received: from 24-183-46-83.dhcp.mdsn.wi.charter.com (HELO turnip.jamponi.pvt) ([24.183.46.83])
+  by mxip35-10.charter.net with ESMTP; 05 Jan 2006 10:44:46 -0500
+X-BrightmailFiltered: true
+X-Brightmail-Tracker: AAAAAQAAA+k=
+Received: by turnip.jamponi.pvt (Postfix, from userid 1000)
+	id 91511C0A8; Thu,  5 Jan 2006 09:44:43 -0600 (CST)
+Received: from localhost (localhost [127.0.0.1])
+	by turnip.jamponi.pvt (Postfix) with ESMTP id 7E3DDC0A7
+	for <git@vger.kernel.org>; Thu,  5 Jan 2006 09:44:43 -0600 (CST)
+In-Reply-To: <81b0412b0601050358q6163ef1bqa8696d5881feb657@mail.gmail.com>
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14200>
 
-On 1/5/06, Morten Welinder <mwelinder@gmail.com> wrote:
-> Neat, but perhaps you should check the fstat return code.
-> It actually can fail, for example if the filesize cannot be represented in the
-> structure because it is too big.
 
-Yes, of course. It will be added along with the missing test for mmap
-returning MAP_FAILED. Sometime.
+Don't forget about .pyo
+You also spelled python as 'pyhton'
 
-Sarcasm aside, how do you get such a situation?
+
+On Thu, 5 Jan 2006, Alex Riesen wrote:
+
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> 
+
+--
+Jon Nelson <jnelson-git@jamponi.net>
