@@ -1,60 +1,54 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] update-hook: Major overhaul (handling tags, mainly).
-Date: Fri, 06 Jan 2006 14:37:48 -0800
-Message-ID: <7vd5j5rnib.fsf@assigned-by-dhcp.cox.net>
-References: <20060104161729.7FD9C5BE85@nox.op5.se>
+Subject: Re: local git push bug wrt GIT_OBJECT_DIRECTORY
+Date: Fri, 06 Jan 2006 14:36:58 -0800
+Message-ID: <7vbqypt245.fsf@assigned-by-dhcp.cox.net>
+References: <1135922900.2103.37.camel@della.draisey.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 06 23:38:22 2006
+X-From: git-owner@vger.kernel.org Fri Jan 06 23:38:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ev0Dl-0007b1-BB
-	for gcvg-git@gmane.org; Fri, 06 Jan 2006 23:38:05 +0100
+	id 1Ev0Df-0007b1-HG
+	for gcvg-git@gmane.org; Fri, 06 Jan 2006 23:38:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964867AbWAFWh7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jan 2006 17:37:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964864AbWAFWh7
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jan 2006 17:37:59 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:21380 "EHLO
+	id S1752573AbWAFWhL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jan 2006 17:37:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752569AbWAFWhK
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jan 2006 17:37:10 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:131 "EHLO
 	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S964867AbWAFWhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2006 17:37:51 -0500
+	id S1752573AbWAFWhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2006 17:37:05 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
           by fed1rmmtao10.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060106223640.SCIY20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 6 Jan 2006 17:36:40 -0500
-To: Andreas Ericsson <ae@op5.se>
+          id <20060106223549.SBYY20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 6 Jan 2006 17:35:49 -0500
+To: Matt Draisey <matt@draisey.ca>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14219>
 
-Andreas Ericsson <ae@op5.se> writes:
+Matt Draisey <matt@draisey.ca> writes:
 
-> This is the update hook we use in all our git-repos.
->
-> It has some improvements over the original version, namely:
-> * Don't send every commit since dawn of time when adding a new tag.
-> * When updating an annotated tag, just send the diffs since the last tag.
-> * Add diffstat output for 'normal' commits (top) and annotated tags (bottom).
-> * Block un-annotated tags in shared repos.
->
-> I'm a bit uncertain about that last one, but it demonstrates how to
-> disallow updates of a ref which we use, so I kept it.
->
-> Note that git-describe is needed for the "changes since last annotated tag"
-> thing to work.
->
-> Signed-off-by: Andreas Ericsson <ae@op5.se>
+> Using git-send-pack to push to a local repository will propagate the
+> environment variable GIT_OBJECT_DIRECTORY to git-receive-pack.
+> git-receive-pack correctly ignores GIT_DIR (as opposed to what the
+> documentation says) but, unfortunately, honours GIT_OBJECT_DIRECTORY.
 
-templates/hooks--* is a good place to showcase these "best
-current practices", but unfortunately we can have only one BCP
-per script there.  If nobody objects I'd take this patch.
+Thanks for noticing.
 
-I have been wondering if we would want to have an "examples/"
-directory in the source tree.
+True; receive-pack does not "ignore", but is explicitly told to
+use the other repository by invoking send-pack.  
+
+> It's not clear to me whether the correct behaviour is for git-send-pack
+> to clean up its environment before it execs or for git-receive-pack to
+> ignore most GIT variables.
+
+Probably GIT_OBJECT_DIRECTORY should not be propagated;
+GIT_ALTERNATE_OBJECT_DIRECTORIES neither.
