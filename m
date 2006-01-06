@@ -1,53 +1,70 @@
-From: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: use GIT_DIR instead of /var/tmp
-Date: Fri, 6 Jan 2006 10:32:13 +0100
-Message-ID: <20060106093213.GA4268@steel.home>
-References: <81b0412b0601050352n386505bfjd40e515809e3c862@mail.gmail.com> <Pine.LNX.4.64.0601050840010.3169@g5.osdl.org> <Pine.LNX.4.63.0601051048490.667@gheavc.wnzcbav.cig>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Date: Fri, 6 Jan 2006 11:00:48 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0601061057470.19735@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <81b0412b0601050352n386505bfjd40e515809e3c862@mail.gmail.com>
+ <Pine.LNX.4.64.0601050840010.3169@g5.osdl.org> <Pine.LNX.4.63.0601051048490.667@gheavc.wnzcbav.cig>
+ <20060106093213.GA4268@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, junio@steel.home,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 06 10:33:01 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 06 11:01:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eunxz-0007Vc-Hc
-	for gcvg-git@gmane.org; Fri, 06 Jan 2006 10:32:59 +0100
+	id 1EuoP2-0005He-0G
+	for gcvg-git@gmane.org; Fri, 06 Jan 2006 11:00:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752293AbWAFJcn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jan 2006 04:32:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752442AbWAFJcm
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jan 2006 04:32:42 -0500
-Received: from devrace.com ([198.63.210.113]:25867 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1752293AbWAFJcm (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Jan 2006 04:32:42 -0500
-Received: from tigra.home (p54A0609A.dip.t-dialin.net [84.160.96.154])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k069WJa1026157;
-	Fri, 6 Jan 2006 03:32:30 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1EunxF-0001xG-00; Fri, 06 Jan 2006 10:32:13 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1EunxF-00017R-Fi; Fri, 06 Jan 2006 10:32:13 +0100
-To: Jon Nelson <jnelson-git@jamponi.net>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0601051048490.667@gheavc.wnzcbav.cig>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S932219AbWAFKAw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jan 2006 05:00:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752261AbWAFKAw
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jan 2006 05:00:52 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:49353 "EHLO
+	wrzx35.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1752155AbWAFKAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2006 05:00:51 -0500
+Received: from amavis.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.46])
+	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 546DCE3E3A; Fri,  6 Jan 2006 11:00:48 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by amavis.mail (Postfix) with ESMTP id 44B699A5;
+	Fri,  6 Jan 2006 11:00:48 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by amavis.mail (Postfix) with ESMTP id 283B69B;
+	Fri,  6 Jan 2006 11:00:48 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 056FD13FC87; Fri,  6 Jan 2006 11:00:48 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20060106093213.GA4268@steel.home>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14212>
 
-Jon Nelson, Thu, Jan 05, 2006 17:49:36 +0100:
-> Do you still need write access to $GIT_DIR if $GIT_INDEX_FILE is set to 
-> some place outside of $GIT_DIR?
+Hi,
 
-yes, $GIT_DIR/refs/heads/ref-pointed-by-HEAD is updated by git-reset.
+On Fri, 6 Jan 2006, Alex Riesen wrote:
+
+> Jon Nelson, Thu, Jan 05, 2006 17:49:36 +0100:
+> > Do you still need write access to $GIT_DIR if $GIT_INDEX_FILE is set to 
+> > some place outside of $GIT_DIR?
+> 
+> yes, $GIT_DIR/refs/heads/ref-pointed-by-HEAD is updated by git-reset.
+
+In a strict sense, this means write access to $GIT_DIR/refs/heads/. In a 
+shared setup, I have repositories where all developers are allowed to 
+write to that folder, but only the repo maintainer (yours truly) is 
+allowed to write to $GIT_DIR (which effectively means: nobody can write 
+an index).
+
+Maybe the safe method would be to introduce $GIT_TMP_DIR, with "/tmp/" 
+being the default?
+
+Ciao,
+Dscho
