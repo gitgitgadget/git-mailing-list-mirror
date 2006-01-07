@@ -1,75 +1,181 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-mv.perl: use stderr for error output and cleanup
-Date: Sat, 07 Jan 2006 13:04:46 -0800
-Message-ID: <7v7j9bg369.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0601050349s6bec1a36jc410fd315fbbc4c@mail.gmail.com>
-	<7vek3lq8wu.fsf@assigned-by-dhcp.cox.net>
-	<86wthd7ypx.fsf@blue.stonehenge.com>
-	<20060107102820.GB5536@steel.home>
-	<86sls0498w.fsf@blue.stonehenge.com>
+Subject: Re: needs merge
+Date: Sat, 07 Jan 2006 13:06:49 -0800
+Message-ID: <7vy81reoie.fsf@assigned-by-dhcp.cox.net>
+References: <F7DC2337C7631D4386A2DF6E8FB22B3005A1336F@hdsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 07 22:04:56 2006
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sat Jan 07 22:07:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvLF6-0000pK-K9
-	for gcvg-git@gmane.org; Sat, 07 Jan 2006 22:04:53 +0100
+	id 1EvLHJ-0001MY-S6
+	for gcvg-git@gmane.org; Sat, 07 Jan 2006 22:07:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030574AbWAGVEu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 16:04:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030575AbWAGVEt
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 16:04:49 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:55506 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1030574AbWAGVEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jan 2006 16:04:49 -0500
+	id S1030582AbWAGVGz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jan 2006 16:06:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030581AbWAGVGx
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 16:06:53 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:64762 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1030578AbWAGVGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jan 2006 16:06:52 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao09.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060107210336.EFPL20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 7 Jan 2006 16:03:36 -0500
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-In-Reply-To: <86sls0498w.fsf@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "07 Jan 2006 02:34:23 -0800")
+          id <20060107210656.JYBT25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 7 Jan 2006 16:06:56 -0500
+To: "Brown, Len" <len.brown@intel.com>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14276>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
+"Brown, Len" <len.brown@intel.com> writes:
 
->>> Being as I'm a *bit* familiar with Perl, I'd write that as:
->>> 
->>> print H "$_\0" for @deletedfiles;
+> yes, it did the right thing to the source.
 >
-> ...  It was added for Perl 5.5, first released on 22 July 1998.
+> as a user, "cute" isn't the first word that comes to mind:-)
 
-BTW, I never understood the usefulness of Statement Modifiers.
-Even reading the examples in perlsyn.pod:
+Fair enough.  I agree that it is rather unnerving from the
+user's point of view, especially because the "recursive merging
+of the ancestors" part is not trivially obvious why it works.
 
-    print "Basset hounds got long ears" if length $ear >= 10;
-    go_outside() and play() unless $is_raining;
+The issue it tries to address (and the other merge strategy,
+"resolve", addresses a bit differently) is to detect when two
+sides of criss-cross merged branches resolved the same conflicts
+differently in the past.  When merging E and F in this ancestry
+graph:
 
-seeing "do these things" upfront and then realize "ah, but that
-is done only when this holds true", interrupts the flow of
-understanding while reading a program by somebody else [*1*].
-It is worse if the Statement Modifier is a loop control.
+             A----C---E----?
+            / \  /        /
+           /   \/        /
+          /    /\       /
+         /    /  \     /
+        O----B----D---F
 
-(flamebait) Compound Statements take BLOCK and people who want
-to do a one-liner could not do so without braces.  I've always
-thought Statement Modifies as a lame workaround for that
-problem.
+suppose that A and B made conflicting modifications on path P, C
+and D resolved the conflicts by taking its own side, and E and F
+further made independent changes to the path.  
+
+When we try to merge E and F, if we happen to pick B as the
+merge base, normal three-way merge between E and F using B as
+base would say that E has change between B and C while F's
+version stayed the same in the area that change touches, and you
+would end up with merge result that is diff(D,F) on top of E.
+If we used A, then the result would be diff(C,E) on top of F.
+Doing either of these silently is not desirable [*1*].
+
+When we use a tree that is an automerge (with conflict markers)
+between A and B as the merge base for E and F, what happens is
+that the three-way merge notices the part with conflict markers
+as a whole is rewritten to one version in E and to another in F,
+removes the original (which is the conflicting merge between A
+and B) and replaces that with conflicts between E and F with its
+own conflict markers, so decision to resolve the conflicting
+merge between A and B which C and D resolved differently is
+given to the user who tries to merge E and F.
+
+If C and D resolved the conflicting merge the same way, the
+"phantom conflict" you observed still happens while merging A
+and B to come up with the merge base tree, but the part will be
+rewritten the same way in both E and F, so the result will merge
+cleanly.
 
 [Footnote]
 
-*1* This is true even for me; my mother language is Japanese,
-which tends to hang negation at the tail of the sentence, and
-double negation is not unusual.  This makes it impossible to
-know what a sentence states before reading it to the end, so I
-am used to that "coming back to the main part after reading
-through the sentence", but I do not welcome that when I am
-reading programs.
+*1* While I was trying out the above scenario, I noticed that
+resolve strategy does not notice this and ended up picking one
+ancestor at random.  I think this is because case #16 covers
+only the case where the path P is not changed between C and E
+and D and F, and case #11 must pick an ancestor and picks one at
+random.  Daniel, any thoughts on this?
+
+-- >8 --
+#!/bin/sh
+
+unset GIT_DIR GIT_OBJECT_DIRECTORY
+test -d .git || {
+	echo Run this in a newly created empty directory please.
+	exit 1
+}
+
+: <<\EOF
+
+	Criss Cross Merge
+
+             A----C---E----?
+            / \  /        /
+           /   \/        /
+          /    /\       /
+         /    /  \     /
+        O----B----D---F
+
+EOF
+
+git init-db
+
+for l in a b c d e f g h i j k l m n o p q r s t u v w x y z
+do
+	echo $l
+done >testfile
+git add testfile
+git commit -m 'Initial'
+git tag O
+git branch bottom
+git checkout -b top
+cp testfile testfile.orig
+tr 'm-p' 'M-P' <testfile.orig >testfile
+git update-index testfile
+git commit -m A
+git tag A
+git checkout bottom
+tr 'm-p' 'A-D' <testfile.orig >testfile
+git update-index testfile
+git commit -m B
+git tag B
+git merge -s ours 'D=A+B=B' HEAD A
+git tag D
+git checkout top
+git merge -s ours 'C=A+B=A' HEAD B
+git tag C
+mv testfile j; tr 'a' 'A' <j >testfile; rm -f j
+git update-index testfile
+git commit -m E
+git tag E
+git checkout bottom
+mv testfile j; tr 'z' 'Z' <j >testfile; rm -f j
+git update-index testfile
+git commit -m F
+git tag F
+
+rm -f testfile.orig
+
+git checkout master
+git reset --hard A
+git merge -s resolve V HEAD B
+git update-index testfile
+git commit -m 'V'
+git tag V
+
+git show-branch
+
+git checkout top
+echo "** RECURSIVE **"
+git merge -s recursive recursive HEAD F
+echo theirs
+git diff --theirs
+echo ours
+git diff --ours
+
+git reset --hard
+echo "** RESOLVE **"
+git merge -s resolve resolve HEAD F
+
+echo theirs
+git diff HEAD^2
+echo ours
+git diff HEAD^
