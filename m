@@ -1,60 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-mv.perl: use stderr for error output and cleanup
-Date: Fri, 06 Jan 2006 16:46:25 -0800
-Message-ID: <7v4q4grhjy.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0601050349s6bec1a36jc410fd315fbbc4c@mail.gmail.com>
-	<7vek3lq8wu.fsf@assigned-by-dhcp.cox.net>
-	<86wthd7ypx.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0601061525100.3169@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rpmbuild doesn't like '-' in version strings
+Date: Sat, 7 Jan 2006 01:47:13 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0601070142570.30029@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <dp3qpb$7uk$1@sea.gmane.org> <7voe2prniw.fsf@assigned-by-dhcp.cox.net>
+ <43BF05A3.8060407@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 07 01:46:44 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sat Jan 07 01:47:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ev2E3-0004cM-Kr
-	for gcvg-git@gmane.org; Sat, 07 Jan 2006 01:46:32 +0100
+	id 1Ev2Eo-0004mn-7m
+	for gcvg-git@gmane.org; Sat, 07 Jan 2006 01:47:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965381AbWAGAq3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jan 2006 19:46:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965383AbWAGAq3
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jan 2006 19:46:29 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:49640 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S965381AbWAGAq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2006 19:46:28 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060107004430.TMUT26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 6 Jan 2006 19:44:30 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0601061525100.3169@g5.osdl.org> (Linus Torvalds's
-	message of "Fri, 6 Jan 2006 15:28:53 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030256AbWAGArP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jan 2006 19:47:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030257AbWAGArP
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jan 2006 19:47:15 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:4263 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1030256AbWAGArO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2006 19:47:14 -0500
+Received: from amavis.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.46])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id C9E1A13FF72
+	for <git@vger.kernel.org>; Sat,  7 Jan 2006 01:47:13 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by amavis.mail (Postfix) with ESMTP id BD0189E5
+	for <git@vger.kernel.org>; Sat,  7 Jan 2006 01:47:13 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by amavis.mail (Postfix) with ESMTP id A30528EF
+	for <git@vger.kernel.org>; Sat,  7 Jan 2006 01:47:13 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 86F2F13FF72
+	for <git@vger.kernel.org>; Sat,  7 Jan 2006 01:47:13 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+In-Reply-To: <43BF05A3.8060407@op5.se>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14234>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Hi,
 
->> After all, that's spelled "f o r", but pronounced "foreach". :)
->
-> It is official: perl people are crazy.
+we still could go back to \d.\d.\d.GIT, you know?
 
-I sometimes pronounce "foreach" when I see "ef oh ar" in Perl
-programs, but I do not do that aloud around other people.
+Using the output of git-describe only helps if you use git from the 
+official repository. But when you have a private branch, they are only 
+misleading. And if you use git from the official repository, you are more 
+likely to take official versions anyway.
 
-My point was that things like this:
-
->>   print H "$_\0" for @deletedfiles;
-
-is perfectly fine among Perl people (and I would probably even
-encourage rewriting git-*.perl scripts in more Perlish style if
-the project were about an SCM primarily targetted for Perl
-people --- it is not), but look obfuscated without merit to
-people who do not talk Perl.
+Ciao,
+Dscho
