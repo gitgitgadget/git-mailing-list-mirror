@@ -1,71 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: needs merge
-Date: Sat, 07 Jan 2006 02:28:47 -0800
-Message-ID: <7voe2ol4bk.fsf@assigned-by-dhcp.cox.net>
-References: <200601070332.36654.len.brown@intel.com>
-	<200601070357.13954.len.brown@intel.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] git-mv.perl: use stderr for error output and cleanup
+Date: Sat, 7 Jan 2006 11:28:20 +0100
+Message-ID: <20060107102820.GB5536@steel.home>
+References: <81b0412b0601050349s6bec1a36jc410fd315fbbc4c@mail.gmail.com> <7vek3lq8wu.fsf@assigned-by-dhcp.cox.net> <86wthd7ypx.fsf@blue.stonehenge.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 07 11:28:53 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 07 11:28:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvBJb-00056w-PE
+	id 1EvBJc-00056w-Af
 	for gcvg-git@gmane.org; Sat, 07 Jan 2006 11:28:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030395AbWAGK2t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 05:28:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932711AbWAGK2t
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 05:28:49 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:52948 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932343AbWAGK2s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jan 2006 05:28:48 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060107102638.VZHF17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 7 Jan 2006 05:26:38 -0500
-To: Len Brown <len.brown@intel.com>
-In-Reply-To: <200601070357.13954.len.brown@intel.com> (Len Brown's message of
-	"Sat, 7 Jan 2006 03:57:13 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030396AbWAGK2v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jan 2006 05:28:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932711AbWAGK2u
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 05:28:50 -0500
+Received: from devrace.com ([198.63.210.113]:44553 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S932343AbWAGK2u (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Jan 2006 05:28:50 -0500
+Received: from tigra.home (p54A073FD.dip.t-dialin.net [84.160.115.253])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id k07ASQb6045289;
+	Sat, 7 Jan 2006 04:28:27 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1EvBJ6-0000Cl-00; Sat, 07 Jan 2006 11:28:20 +0100
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1EvBJ6-0001WO-PI; Sat, 07 Jan 2006 11:28:20 +0100
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+Content-Disposition: inline
+In-Reply-To: <86wthd7ypx.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14251>
 
-Len Brown <len.brown@intel.com> writes:
+Randal L. Schwartz, Fri, Jan 06, 2006 23:55:54 +0100:
+> >>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+> 
+> Junio> So I'd prefer not touching for (@df) { print H "$_\n" } loops.
+> 
+> Being as I'm a *bit* familiar with Perl, I'd write that as:
+> 
+>   print H "$_\0" for @deletedfiles;
+> 
 
-> however, when i then merged that branch into another there seem to
-> be some phantom conflicts on the very same files.
-
-First of all, does the final merge result look correct, without
-conflict markers?  I've slurped from your tree and tried the
-merge myself and it seems that both branches and the merge
-result of these branches have the conflicting path the same way,
-so I think it did the right thing for you, but I am just trying
-to make sure.
-
-> Do I understand all this output to mean that git attempted two
-> different merges, and discarded the 1st attempt in favor of the second?
-
-Not really.  This is Fredrik's "recursive" merge in action.
-
-acpica (ed03f4) is merged into test (e3627f), but these two
-branches have criss-cross merge history and there are two
-equally valid common ancestors, 0aec63 and ed349a.
-
-What it did was first to find a merge between these two common
-ancestors, during which it found conflicting merge on those
-paths.
-
-It then used this merge result (with conflict markers still in
-them!) as the "virtual common ancestor" to merge the ed03f4 and
-e3627f commits; because both branches have resolved the
-conflicting part the same way earlier, this three-way merge
-cancels out the part that are marked with conflict markers in
-the virtual common ancestor (this is the cutest part of Fredrik
-merge algorithm).
+Does not work for old Perl
