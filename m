@@ -1,58 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Ryan Anderson <ryan@michonline.com>
 Subject: Re: [PATCH] rpmbuild doesn't like '-' in version strings
-Date: Sat, 7 Jan 2006 01:47:13 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0601070142570.30029@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Fri, 6 Jan 2006 20:22:21 -0500
+Message-ID: <20060107012221.GA7730@mythryan2.michonline.com>
 References: <dp3qpb$7uk$1@sea.gmane.org> <7voe2prniw.fsf@assigned-by-dhcp.cox.net>
- <43BF05A3.8060407@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat Jan 07 01:47:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: John Ellson <ellson@research.att.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sat Jan 07 02:22:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ev2Eo-0004mn-7m
-	for gcvg-git@gmane.org; Sat, 07 Jan 2006 01:47:18 +0100
+	id 1Ev2nD-0001je-D3
+	for gcvg-git@gmane.org; Sat, 07 Jan 2006 02:22:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030256AbWAGArP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jan 2006 19:47:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030257AbWAGArP
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jan 2006 19:47:15 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:4263 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1030256AbWAGArO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2006 19:47:14 -0500
-Received: from amavis.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.46])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id C9E1A13FF72
-	for <git@vger.kernel.org>; Sat,  7 Jan 2006 01:47:13 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by amavis.mail (Postfix) with ESMTP id BD0189E5
-	for <git@vger.kernel.org>; Sat,  7 Jan 2006 01:47:13 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by amavis.mail (Postfix) with ESMTP id A30528EF
-	for <git@vger.kernel.org>; Sat,  7 Jan 2006 01:47:13 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 86F2F13FF72
-	for <git@vger.kernel.org>; Sat,  7 Jan 2006 01:47:13 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
-In-Reply-To: <43BF05A3.8060407@op5.se>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
-X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
-X-Spam-Level: 
+	id S932632AbWAGBWs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jan 2006 20:22:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932669AbWAGBWs
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jan 2006 20:22:48 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:63129 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S932632AbWAGBWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2006 20:22:47 -0500
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1Ev2n6-00058r-EI; Fri, 06 Jan 2006 20:22:45 -0500
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1Ev2n5-0004db-00; Fri, 06 Jan 2006 20:22:43 -0500
+Received: from ryan by mythical with local (Exim 4.60)
+	(envelope-from <ryan@mythryan2.michonline.com>)
+	id 1Ev2mu-0002gP-1m; Fri, 06 Jan 2006 20:22:32 -0500
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7voe2prniw.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14235>
 
-Hi,
+On Fri, Jan 06, 2006 at 02:37:27PM -0800, Junio C Hamano wrote:
+>
+> Since I do not understand what that "g"
+> stands for anyway, how about doing something like this instead?
 
-we still could go back to \d.\d.\d.GIT, you know?
+I'm pretty sure the "g" is my fault, indirectly.  When I submitted the
+"AUTO_LOCALVERSION" patch to Linux, I prepended a -g to it, so it would
+be possible to tell versions based off of a git tree apart from versions
+based off of a CVS tree that used md5 to make a short, semi-unique
+indicator.  Presumably, a CVS variant would've done something like
+-c012345678, etc.
 
-Using the output of git-describe only helps if you use git from the 
-official repository. But when you have a private branch, they are only 
-misleading. And if you use git from the official repository, you are more 
-likely to take official versions anyway.
+So, it's just a little mnemonic to hint that the extra version string
+came from a git tree, as opposed to some other semi-random source. It's
+value is rather dubious, overall, though.
 
-Ciao,
-Dscho
+-- 
+
+Ryan Anderson
+  sometimes Pug Majere
