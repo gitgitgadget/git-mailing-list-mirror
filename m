@@ -1,68 +1,77 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] Stgit - gitmergeonefile.py: handle removal vs. changes
-Date: Sat, 07 Jan 2006 11:23:05 +0000
-Message-ID: <43BFA499.3020202@gmail.com>
-References: <20051113194225.20447.57910.stgit@zion.home.lan> <b0943d9e0511150154y2d2af24ck@mail.gmail.com> <200512301859.51000.blaisorblade@yahoo.it>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: [ANNOUNCE] GIT 1.0.7
+Date: Sat, 7 Jan 2006 15:12:44 +0300
+Message-ID: <20060107151244.762e628f.vsu@altlinux.ru>
+References: <7vhd8go71t.fsf@assigned-by-dhcp.cox.net>
+	<20060107.021614.94523887.yoshfuji@linux-ipv6.org>
+	<7vsls0mns8.fsf@assigned-by-dhcp.cox.net>
+	<7vmzi8mkdi.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 07 12:23:17 2006
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Sat__7_Jan_2006_15_12_44_+0300_lav8RxWjCC8z1xbh"
+Cc: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 07 14:16:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvCAC-000439-Gy
-	for gcvg-git@gmane.org; Sat, 07 Jan 2006 12:23:12 +0100
+	id 1EvDvd-0003bI-17
+	for gcvg-git@gmane.org; Sat, 07 Jan 2006 14:16:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030413AbWAGLXJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 06:23:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030414AbWAGLXJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 06:23:09 -0500
-Received: from mta08-winn.ispmail.ntl.com ([81.103.221.48]:37822 "EHLO
-	mta08-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S1030413AbWAGLXI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jan 2006 06:23:08 -0500
-Received: from aamta09-winn.ispmail.ntl.com ([81.103.221.35])
-          by mta08-winn.ispmail.ntl.com with ESMTP
-          id <20060107112307.UGCV17804.mta08-winn.ispmail.ntl.com@aamta09-winn.ispmail.ntl.com>;
-          Sat, 7 Jan 2006 11:23:07 +0000
-Received: from [192.168.1.101] (really [81.104.194.137])
-          by aamta09-winn.ispmail.ntl.com with ESMTP
-          id <20060107112307.FHLN10196.aamta09-winn.ispmail.ntl.com@[192.168.1.101]>;
-          Sat, 7 Jan 2006 11:23:07 +0000
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Blaisorblade <blaisorblade@yahoo.it>
-In-Reply-To: <200512301859.51000.blaisorblade@yahoo.it>
+	id S932724AbWAGNQN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jan 2006 08:16:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932725AbWAGNQN
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 08:16:13 -0500
+Received: from master.altlinux.org ([62.118.250.235]:16144 "EHLO
+	master.altlinux.org") by vger.kernel.org with ESMTP id S932724AbWAGNQN
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Jan 2006 08:16:13 -0500
+Received: from procyon.home (localhost.localdomain [127.0.0.1])
+	by master.altlinux.org (Postfix) with ESMTP
+	id 78C55E3251; Sat,  7 Jan 2006 16:15:56 +0300 (MSK)
+Received: by procyon.home (Postfix, from userid 500)
+	id 937E6E385CB; Sat,  7 Jan 2006 15:12:48 +0300 (MSK)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzi8mkdi.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; i586-alt-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14260>
 
-Blaisorblade wrote:
+--Signature=_Sat__7_Jan_2006_15_12_44_+0300_lav8RxWjCC8z1xbh
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->The original patch hasn't been merged, nor (for what I see) anything else to 
->fix this problem has been done.
->  
->
-Indeed, I forgot about it.
+On Sat, 07 Jan 2006 01:56:41 -0800 Junio C Hamano wrote:
 
->I assume the patch was lost waiting for the discussion to settle down, but the 
->patch can be merged, even changing the default choices in any way (see 
->below).
->  
->
-I merged it as it is. I will think about the default options once I get
-some time to fix the .local, .older and .remote extensions (give them
-some meaningful names).
+> +#if (__GNUC__ =3D=3D 2) && (__GNUC_MINOR__ =3D=3D 95)
+> +#define FLEX_ARRAY 0
+> +#else
+> +#define FLEX_ARRAY /* empty */
+> +#endif
 
->Also, another note: I just found Bruce Eckel mentioning pychecker, which is a 
->static code checker for Python (to perform the checks a compiler would 
->normally do). I've not the time to investigate more myself, but I hope it can 
->be useful to you.
->  
->
-Thanks. I'll give it a try.
+There is also gcc 2.96, which also does not understand the C99 syntax.
+So we should use something like this instead:
 
-Catalin
+#if defined(__GNUC__) && (__GNUC__ < 3)
+#define FLEX_ARRAY 0
+#else
+#define FLEX_ARRAY /* empty */
+#endif
+
+(and be prepared to get complaints from users of other compilers).
+
+--Signature=_Sat__7_Jan_2006_15_12_44_+0300_lav8RxWjCC8z1xbh
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.9.17 (GNU/Linux)
+
+iD8DBQFDv7BAW82GfkQfsqIRAijLAJ9Bd1ZQP2pFAzrfXd3UIOTWODc6LwCfYmfL
+b2ByYCgyH0L4rF2fgEPse2s=
+=GAXQ
+-----END PGP SIGNATURE-----
+
+--Signature=_Sat__7_Jan_2006_15_12_44_+0300_lav8RxWjCC8z1xbh--
