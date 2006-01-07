@@ -1,65 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] tar-tree: finish honoring extractor's umask in git-tar-tree.
-Date: Sat, 07 Jan 2006 15:21:46 -0800
-Message-ID: <7vace7aak5.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 2/3] ls-files --others --directory: give trailing slash
+Date: Sat, 7 Jan 2006 15:35:08 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601071533060.3169@g5.osdl.org>
+References: <7vy81racv7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Jan 08 00:21:55 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Darrin Thompson <darrint@progeny.com>
+X-From: git-owner@vger.kernel.org Sun Jan 08 00:35:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvNNg-0002Wf-UW
-	for gcvg-git@gmane.org; Sun, 08 Jan 2006 00:21:53 +0100
+	id 1EvNap-00050A-2k
+	for gcvg-git@gmane.org; Sun, 08 Jan 2006 00:35:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161050AbWAGXVu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 18:21:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161052AbWAGXVu
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 18:21:50 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:3731 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1161050AbWAGXVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jan 2006 18:21:50 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060107231919.IHMP20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 7 Jan 2006 18:19:19 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1161056AbWAGXfY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jan 2006 18:35:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161057AbWAGXfY
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 18:35:24 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:9424 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1161056AbWAGXfX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Jan 2006 18:35:23 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k07NZBDZ003590
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 7 Jan 2006 15:35:12 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k07NZ8RI029578;
+	Sat, 7 Jan 2006 15:35:09 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy81racv7.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14286>
 
-Earlier commit 38ec15a973a1f075f0d94d130b0ef279562921cd forgot
-to apply the same principle of not forcing go-w to the base
-directory when specified.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
 
----
- * This will be in fixes branch to be slurped into both maint
-   and master.  Please do not extract the kernel tarball as root
-   user, especially if you do not know how tar command works for
-   root user by default (hint: --no-same-permissions).
+On Sat, 7 Jan 2006, Junio C Hamano wrote:
+> 
+>  * Likes, dislikes?  This suits better for *my* purpose of
+>    calling this from git-status, but it might be undesirable for
+>    your Porcelain.
 
- tar-tree.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Likes.
 
-3ac0ebbba4d2d47ca2f4a674afead830f76ca256
-diff --git a/tar-tree.c b/tar-tree.c
-index 96bd143..f749d4b 100644
---- a/tar-tree.c
-+++ b/tar-tree.c
-@@ -433,7 +433,7 @@ int main(int argc, char **argv)
- 		archive_time = time(NULL);
- 	if (basedir)
- 		write_header((unsigned char *)"0", TYPEFLAG_DIR, NULL, NULL,
--			basedir, 040755, NULL, 0);
-+			basedir, 040777, NULL, 0);
- 	traverse_tree(buffer, size, NULL);
- 	free(buffer);
- 	write_trailer();
--- 
-1.0.7-g0263
+However, I'd re-write it as just
+
+	memcpy(fullname + baselen + len, "/", 2);
+	len++;
+	if (show_other_directories &&
+	    !dir_exists(fullname, baselen + len))
+		break;
+	read_directory(fullname, fullname, baselen + len);
+
+because let's face it, every user wants the "+1", so just do it once 
+up-front instead of adding one in three different places.
+
+		Linus
