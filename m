@@ -1,105 +1,69 @@
-From: "Brown, Len" <len.brown@intel.com>
-Subject: RE: needs merge
-Date: Sat, 7 Jan 2006 05:33:06 -0500
-Message-ID: <F7DC2337C7631D4386A2DF6E8FB22B3005A1336F@hdsmsx401.amr.corp.intel.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] git-mv.perl: use stderr for error output and cleanup
+Date: 07 Jan 2006 02:34:23 -0800
+Message-ID: <86sls0498w.fsf@blue.stonehenge.com>
+References: <81b0412b0601050349s6bec1a36jc410fd315fbbc4c@mail.gmail.com>
+	<7vek3lq8wu.fsf@assigned-by-dhcp.cox.net>
+	<86wthd7ypx.fsf@blue.stonehenge.com>
+	<20060107102820.GB5536@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 07 11:33:17 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 07 11:34:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvBNr-0005it-C4
-	for gcvg-git@gmane.org; Sat, 07 Jan 2006 11:33:15 +0100
+	id 1EvBP1-0005rw-EF
+	for gcvg-git@gmane.org; Sat, 07 Jan 2006 11:34:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030398AbWAGKdN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 05:33:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030399AbWAGKdN
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 05:33:13 -0500
-Received: from fmr14.intel.com ([192.55.52.68]:10397 "EHLO
-	fmsfmr002.fm.intel.com") by vger.kernel.org with ESMTP
-	id S1030398AbWAGKdM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Jan 2006 05:33:12 -0500
-Received: from fmsfmr101.fm.intel.com (fmsfmr101.fm.intel.com [10.253.24.21])
-	by fmsfmr002.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id k07AX8UK024811;
-	Sat, 7 Jan 2006 10:33:08 GMT
-Received: from fmsmsxvs043.fm.intel.com (fmsmsxvs043.fm.intel.com [132.233.42.129])
-	by fmsfmr101.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id k07AX47Q026568;
-	Sat, 7 Jan 2006 10:33:08 GMT
-Received: from fmsmsx331.amr.corp.intel.com ([132.233.42.156])
- by fmsmsxvs043.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2006010702330816487
- ; Sat, 07 Jan 2006 02:33:08 -0800
-Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Sat, 7 Jan 2006 02:33:08 -0800
-Received: from hdsmsx401.amr.corp.intel.com ([10.127.2.60]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Sat, 7 Jan 2006 02:33:08 -0800
-X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: needs merge
-Thread-Index: AcYTdWqbURxdIkCXQ9KqWSJQW73gbwAADmLg
-To: "Junio C Hamano" <junkio@cox.net>
-X-OriginalArrivalTime: 07 Jan 2006 10:33:08.0424 (UTC) FILETIME=[C0413C80:01C61375]
-X-Scanned-By: MIMEDefang 2.52 on 10.253.24.21
+	id S1030401AbWAGKeZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jan 2006 05:34:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030402AbWAGKeZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 05:34:25 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:22842 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1030401AbWAGKeY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jan 2006 05:34:24 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 3BD1C8F2D2;
+	Sat,  7 Jan 2006 02:34:24 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 20571-01-9; Sat,  7 Jan 2006 02:34:23 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id B582E8F2D7; Sat,  7 Jan 2006 02:34:23 -0800 (PST)
+To: Alex Riesen <raa.lkml@gmail.com>
+x-mayan-date: Long count = 12.19.12.17.0; tzolkin = 12 Ahau; haab = 18 Kankin
+In-Reply-To: <20060107102820.GB5536@steel.home>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14255>
 
-yes, it did the right thing to the source.
+>>>>> "Alex" == Alex Riesen <raa.lkml@gmail.com> writes:
 
-as a user, "cute" isn't the first word that comes to mind:-)
+Alex> Randal L. Schwartz, Fri, Jan 06, 2006 23:55:54 +0100:
+>> >>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+>> 
+Junio> So I'd prefer not touching for (@df) { print H "$_\n" } loops.
+>> 
+>> Being as I'm a *bit* familiar with Perl, I'd write that as:
+>> 
+>> print H "$_\0" for @deletedfiles;
+>> 
 
-thanks,
--Len 
+Alex> Does not work for old Perl
 
->-----Original Message-----
->From: git-owner@vger.kernel.org 
->[mailto:git-owner@vger.kernel.org] On Behalf Of Junio C Hamano
->Sent: Saturday, January 07, 2006 5:29 AM
->To: Brown, Len
->Cc: git@vger.kernel.org
->Subject: Re: needs merge
->
->Len Brown <len.brown@intel.com> writes:
->
->> however, when i then merged that branch into another there seem to
->> be some phantom conflicts on the very same files.
->
->First of all, does the final merge result look correct, without
->conflict markers?  I've slurped from your tree and tried the
->merge myself and it seems that both branches and the merge
->result of these branches have the conflicting path the same way,
->so I think it did the right thing for you, but I am just trying
->to make sure.
->
->> Do I understand all this output to mean that git attempted two
->> different merges, and discarded the 1st attempt in favor of 
->the second?
->
->Not really.  This is Fredrik's "recursive" merge in action.
->
->acpica (ed03f4) is merged into test (e3627f), but these two
->branches have criss-cross merge history and there are two
->equally valid common ancestors, 0aec63 and ed349a.
->
->What it did was first to find a merge between these two common
->ancestors, during which it found conflicting merge on those
->paths.
->
->It then used this merge result (with conflict markers still in
->them!) as the "virtual common ancestor" to merge the ed03f4 and
->e3627f commits; because both branches have resolved the
->conflicting part the same way earlier, this three-way merge
->cancels out the part that are marked with conflict markers in
->the virtual common ancestor (this is the cutest part of Fredrik
->merge algorithm).
->
->-
->To unsubscribe from this list: send the line "unsubscribe git" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Correct.  It was added for Perl 5.5, first released on 22 July 1998.
+
+Are you really saying you need this code to run on Perl 5.4?  There
+are a number of other things that would have to be fixed as well.
+(We had this conversation a while back.)
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
