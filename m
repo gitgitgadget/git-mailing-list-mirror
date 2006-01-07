@@ -1,58 +1,56 @@
-From: "David S. Miller" <davem@davemloft.net>
-Subject: Re: [ANNOUNCE] GIT 1.0.7
-Date: Sat, 07 Jan 2006 00:29:04 -0800 (PST)
-Message-ID: <20060107.002904.87767885.davem@davemloft.net>
-References: <7vhd8go71t.fsf@assigned-by-dhcp.cox.net>
-	<20060107.021614.94523887.yoshfuji@linux-ipv6.org>
+From: Len Brown <len.brown@intel.com>
+Subject: needs merge
+Date: Sat, 7 Jan 2006 03:32:36 -0500
+Organization: Intel Open Source Technology Center
+Message-ID: <200601070332.36654.len.brown@intel.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 07 09:29:11 2006
+X-From: git-owner@vger.kernel.org Sat Jan 07 09:32:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ev9Rm-00065X-E6
-	for gcvg-git@gmane.org; Sat, 07 Jan 2006 09:29:10 +0100
+	id 1Ev9VD-0006Yi-GT
+	for gcvg-git@gmane.org; Sat, 07 Jan 2006 09:32:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932700AbWAGI3H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 03:29:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932701AbWAGI3G
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 03:29:06 -0500
-Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:33211
-	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
-	id S932700AbWAGI3F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jan 2006 03:29:05 -0500
-Received: from localhost ([127.0.0.1] ident=davem)
-	by sunset.davemloft.net with esmtp (Exim 4.60)
-	(envelope-from <davem@davemloft.net>)
-	id 1Ev9Rg-0000xa-RN; Sat, 07 Jan 2006 00:29:04 -0800
-To: yoshfuji@linux-ipv6.org
-In-Reply-To: <20060107.021614.94523887.yoshfuji@linux-ipv6.org>
-X-Mailer: Mew version 4.2.53 on Emacs 21.4 / Mule 5.0 (SAKAKI)
+	id S1030356AbWAGIcl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jan 2006 03:32:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030357AbWAGIcl
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 03:32:41 -0500
+Received: from rwcrmhc12.comcast.net ([216.148.227.152]:42661 "EHLO
+	rwcrmhc12.comcast.net") by vger.kernel.org with ESMTP
+	id S1030356AbWAGIck (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jan 2006 03:32:40 -0500
+Received: from intel.com (c-24-63-232-79.hsd1.ma.comcast.net[24.63.232.79])
+          by comcast.net (rwcrmhc12) with ESMTP
+          id <2006010708324001400q8msge>; Sat, 7 Jan 2006 08:32:40 +0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14242>
 
-From: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
-Date: Sat, 07 Jan 2006 02:16:14 -0600 (CST)
+a merge results in multiple conflict files.
 
-> @@ -43,6 +43,7 @@ static void add_to_known_names(const cha
->  	struct commit_name *name = xmalloc(sizeof(struct commit_name) + len);
->  
->  	name->commit = commit;
-> +	name->path = sizeof(*name);
->  	name->prio = prio; 
->  	memcpy(name->path, path, len);
->  	idx = names;
+some of the files are resolved by editing and picking changes from both branches.
 
-Why are you assigning an integer to a pointer? :-)
-Probably you meant something like:
+but some files I want to ignore the new changes and keep what was originally there.
+However, if I restore what was originally in the destination
+either by editing the destination and ending up with what i started with,
+or via git checkout on the file, i get
 
-	struct commit_name *name = xmalloc(sizeof(struct commit_name) + len);
+$ git commit
+my-file needs merge
 
-	...
-	name->path = xmalloc(len);
-	...
+how do i tell git that there is no merge to do and the (unchanged) working file is what
+i want to keep as the result of the merge?
+
+i recall running into this a long time ago and i added blank line to the destination file
+and that made git happy, but maybe i shouldn't have to resort to that, yes?
+
+thanks,
+-Len
