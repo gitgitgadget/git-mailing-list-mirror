@@ -1,77 +1,49 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [ANNOUNCE] GIT 1.0.7
-Date: Sat, 7 Jan 2006 15:12:44 +0300
-Message-ID: <20060107151244.762e628f.vsu@altlinux.ru>
-References: <7vhd8go71t.fsf@assigned-by-dhcp.cox.net>
-	<20060107.021614.94523887.yoshfuji@linux-ipv6.org>
-	<7vsls0mns8.fsf@assigned-by-dhcp.cox.net>
-	<7vmzi8mkdi.fsf@assigned-by-dhcp.cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: manual merge/fixup question
+Date: Sat, 7 Jan 2006 08:55:06 -0800 (PST)
+Message-ID: <20060107165506.67640.qmail@web31812.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Sat__7_Jan_2006_15_12_44_+0300_lav8RxWjCC8z1xbh"
-Cc: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 07 14:16:20 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sat Jan 07 17:55:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvDvd-0003bI-17
-	for gcvg-git@gmane.org; Sat, 07 Jan 2006 14:16:18 +0100
+	id 1EvHLU-0001HW-8J
+	for gcvg-git@gmane.org; Sat, 07 Jan 2006 17:55:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932724AbWAGNQN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 08:16:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932725AbWAGNQN
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 08:16:13 -0500
-Received: from master.altlinux.org ([62.118.250.235]:16144 "EHLO
-	master.altlinux.org") by vger.kernel.org with ESMTP id S932724AbWAGNQN
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Jan 2006 08:16:13 -0500
-Received: from procyon.home (localhost.localdomain [127.0.0.1])
-	by master.altlinux.org (Postfix) with ESMTP
-	id 78C55E3251; Sat,  7 Jan 2006 16:15:56 +0300 (MSK)
-Received: by procyon.home (Postfix, from userid 500)
-	id 937E6E385CB; Sat,  7 Jan 2006 15:12:48 +0300 (MSK)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzi8mkdi.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; i586-alt-linux-gnu)
+	id S1030508AbWAGQzI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jan 2006 11:55:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030507AbWAGQzH
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 11:55:07 -0500
+Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:40613 "HELO
+	web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1030508AbWAGQzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jan 2006 11:55:06 -0500
+Received: (qmail 67642 invoked by uid 60001); 7 Jan 2006 16:55:06 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=R6bS8m5aeyc+NAHW5G8fJPW2amvzKNSdA66Wb8PDANBihhLkib+P60IoaWYBlP8kmlzp9QT5S+7L9hVKbFM5gI7Y8+zxGk3Keu2qv+vk+9chSve9BAlOd/+8MfN5HGOoQzfbTV/Sq68eN8BDiA4+GFgWokpDyGnAy36emlD63EA=  ;
+Received: from [68.221.7.47] by web31812.mail.mud.yahoo.com via HTTP; Sat, 07 Jan 2006 08:55:06 PST
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14261>
 
---Signature=_Sat__7_Jan_2006_15_12_44_+0300_lav8RxWjCC8z1xbh
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+git resolve or git merge fails, complaining
+about file(s) having conflicts. I go ahead and fix up
+those files and then update the index.
 
-On Sat, 07 Jan 2006 01:56:41 -0800 Junio C Hamano wrote:
+Can I assume now that I can go ahead and do git commit,
+or is there any more/other files which need fixing?
 
-> +#if (__GNUC__ =3D=3D 2) && (__GNUC_MINOR__ =3D=3D 95)
-> +#define FLEX_ARRAY 0
-> +#else
-> +#define FLEX_ARRAY /* empty */
-> +#endif
+I.e. does git resolve/merge fail on the first file
+which needs fixing or would it go through all of them,
+and then report the ones which need fixing?
 
-There is also gcc 2.96, which also does not understand the C99 syntax.
-So we should use something like this instead:
-
-#if defined(__GNUC__) && (__GNUC__ < 3)
-#define FLEX_ARRAY 0
-#else
-#define FLEX_ARRAY /* empty */
-#endif
-
-(and be prepared to get complaints from users of other compilers).
-
---Signature=_Sat__7_Jan_2006_15_12_44_+0300_lav8RxWjCC8z1xbh
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.9.17 (GNU/Linux)
-
-iD8DBQFDv7BAW82GfkQfsqIRAijLAJ9Bd1ZQP2pFAzrfXd3UIOTWODc6LwCfYmfL
-b2ByYCgyH0L4rF2fgEPse2s=
-=GAXQ
------END PGP SIGNATURE-----
-
---Signature=_Sat__7_Jan_2006_15_12_44_+0300_lav8RxWjCC8z1xbh--
+Thanks,
+   Luben
