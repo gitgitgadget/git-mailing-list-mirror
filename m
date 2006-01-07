@@ -1,77 +1,60 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] rpmbuild doesn't like '-' in version strings
-Date: Sat, 07 Jan 2006 01:04:51 +0100
-Message-ID: <43BF05A3.8060407@op5.se>
-References: <dp3qpb$7uk$1@sea.gmane.org> <7voe2prniw.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] git-mv.perl: use stderr for error output and cleanup
+Date: Fri, 6 Jan 2006 16:10:16 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601061603330.3169@g5.osdl.org>
+References: <81b0412b0601050349s6bec1a36jc410fd315fbbc4c@mail.gmail.com>
+ <7vek3lq8wu.fsf@assigned-by-dhcp.cox.net> <86wthd7ypx.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.64.0601061525100.3169@g5.osdl.org> <86psn49alm.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jan 07 01:04:58 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Alex Riesen <raa.lkml@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 07 01:10:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ev1Zo-000696-As
-	for gcvg-git@gmane.org; Sat, 07 Jan 2006 01:04:57 +0100
+	id 1Ev1fL-0006yh-L0
+	for gcvg-git@gmane.org; Sat, 07 Jan 2006 01:10:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965364AbWAGAEx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jan 2006 19:04:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965363AbWAGAEx
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jan 2006 19:04:53 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:9198 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S965364AbWAGAEx (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Jan 2006 19:04:53 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 382986BCBE
-	for <git@vger.kernel.org>; Sat,  7 Jan 2006 01:04:52 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <7voe2prniw.fsf@assigned-by-dhcp.cox.net>
+	id S965365AbWAGAKg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jan 2006 19:10:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965366AbWAGAKg
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jan 2006 19:10:36 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:24036 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965365AbWAGAKg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Jan 2006 19:10:36 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k070AJDZ016301
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 6 Jan 2006 16:10:19 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k070AGqY020396;
+	Fri, 6 Jan 2006 16:10:16 -0800
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+In-Reply-To: <86psn49alm.fsf@blue.stonehenge.com>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14231>
 
-Junio C Hamano wrote:
-> John Ellson <ellson@research.att.com> writes:
+
+
+On Fri, 6 Jan 2006, Randal L. Schwartz wrote:
 > 
+> Linus> I just hope you don't cross-breed. Shudder.
 > 
->>Suggested fix:  Use '_' instead of '-'
-> 
-> 
-> I wonder if the right fix is to change the git-describe output
-> before the current output becomes too widespread.
+> Don't worry.  So far, I haven't had any offers.
 
+I was more worried about the "collective" of perl people, not any 
+particular individual developer.
 
-I don't think there's any major risk of the current output being very 
-widespread. It's not very useful for scripting.
+If it was just you, I could just poison you over lunch some time..
 
+Which reminds me - you owe me lunch. A non-poisoned one.
 
->  To really
-> fix this problem, I think the rpm target of the main Makefile
-> needs to be modified to include something monotonicly increasing
-> (e.g. number of seconds since the base commit encoded in base26,
-> or something silly like that)
-
-
-Why not keep it super-simple and just print the number of commits since 
-whatever tag is found? It only counts commits on the current branch, so 
-a merge shows up as a single commit. That should more or less be ok 
-though and goes well with the topic branch model.
-
-
->  If I cut a binary package out of my
-> master and then one of my topic branches, it is very likely they
-> will get confused time ordering when they happen to find the
-> same base revision.
-
-
-I suppose this could happen when counting commits as well. People who 
-build packages from different branches should be shot on sight though, 
-so I wouldn't worry about it.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+		Linus
