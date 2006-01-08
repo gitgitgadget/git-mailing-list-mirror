@@ -1,64 +1,126 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Does git belong in root's $PATH?
-Date: Sun, 08 Jan 2006 01:37:41 +0100
-Message-ID: <43C05ED5.1090603@op5.se>
-References: <Pine.LNX.4.64.0601070838470.6317@x2.ybpnyarg> <43C0025A.9080406@op5.se> <43C02725.2020702@zytor.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH 5/7] Add an optional limit to git-cherry
+Date: Sun, 8 Jan 2006 01:40:33 +0100
+Message-ID: <20060108004033.GM1113@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: walt <wa1ter@myrealbox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 08 01:37:57 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Jan 08 01:38:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvOZ8-0007Yd-6k
-	for gcvg-git@gmane.org; Sun, 08 Jan 2006 01:37:46 +0100
+	id 1EvOZX-0007eK-8H
+	for gcvg-git@gmane.org; Sun, 08 Jan 2006 01:38:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161101AbWAHAho (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 19:37:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161102AbWAHAho
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 19:37:44 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:26754 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161101AbWAHAhn
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Jan 2006 19:37:43 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 2E2DD6BCBE; Sun,  8 Jan 2006 01:37:42 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <43C02725.2020702@zytor.com>
+	id S1161102AbWAHAh5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jan 2006 19:37:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161103AbWAHAh4
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 19:37:56 -0500
+Received: from smtp6-g19.free.fr ([212.27.42.36]:4815 "EHLO smtp6-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1161102AbWAHAhz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Jan 2006 19:37:55 -0500
+Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id E3F1E17B2E
+	for <git@vger.kernel.org>; Sun,  8 Jan 2006 01:37:54 +0100 (CET)
+Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.60)
+	(envelope-from <ydirson@altern.org>)
+	id 1EvObq-0003T8-5n
+	for git@vger.kernel.org; Sun, 08 Jan 2006 01:40:34 +0100
+To: GIT list <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14294>
 
-H. Peter Anvin wrote:
-> Andreas Ericsson wrote:
-> 
->>
->> Not including /usr/local/{bin,sbin} in root's path is considered wise, 
->> since, historically, that's where users would install their own 
->> versions of programs that the system doesn't provide. This use has 
->> largely been obsoleted by $HOME/bin as the default for user-specific 
->> programs, mainly because of disks getting larger and cheaper.
->>
-> 
-> Hmmm... I think that was /usr/bin (hence the eventual migration of the 
-> meaning of /usr from what was originally the equivalent of /home.)
-> 
+This allows to use another commit than the merge base as a limit for
+scanning patches.
+
+Signed-off-by: Yann Dirson <ydirson@altern.org>
 
 
-I've been told that it's '/usr' simply because that's where user 
-interface tools that have nothing to do with boot-strapping resides. A 
-point emphasized by the fact that /bin, /sbin and /lib must not reside 
-on network-mounted media, while /usr may.
+---
 
-It seems so logical I never bothered to look in to find out for myself 
-though, so I may well be wrong, or at least younger. ;)
+ git-cherry.sh     |   20 +++++++++++++-------
+ t/t3500-cherry.sh |    5 +++++
+ 2 files changed, 18 insertions(+), 7 deletions(-)
+
+b1e23bf60c069a1f6bd4b8d04afd1fb80005e4ee
+diff --git a/git-cherry.sh b/git-cherry.sh
+index 5e9bd0c..1a62320 100755
+--- a/git-cherry.sh
++++ b/git-cherry.sh
+@@ -3,17 +3,17 @@
+ # Copyright (c) 2005 Junio C Hamano.
+ #
+ 
+-USAGE='[-v] <upstream> [<head>]'
++USAGE='[-v] <upstream> [<head>] [<limit>]'
+ LONG_USAGE='             __*__*__*__*__> <upstream>
+             /
+   fork-point
+             \__+__+__+__+__+__+__+__> <head>
+ 
+-Each commit between the fork-point and <head> is examined, and
+-compared against the change each commit between the fork-point and
+-<upstream> introduces.  If the change seems to be in the upstream,
+-it is shown on the standard output with prefix "+".  Otherwise
+-it is shown with prefix "-".'
++Each commit between the fork-point (or <limit> if given) and <head> is
++examined, and compared against the change each commit between the
++fork-point and <upstream> introduces.  If the change seems to be in
++the upstream, it is shown on the standard output with prefix "+".
++Otherwise it is shown with prefix "-".'
+ . git-sh-setup
+ 
+ case "$1" in -v) verbose=t; shift ;; esac 
+@@ -28,9 +28,15 @@ esac
+ case "$#" in
+ 1) upstream=`git-rev-parse --verify "$1"` &&
+    ours=`git-rev-parse --verify HEAD` || exit
++   limit="$upstream"
+    ;;
+ 2) upstream=`git-rev-parse --verify "$1"` &&
+    ours=`git-rev-parse --verify "$2"` || exit
++   limit="$upstream"
++   ;;
++3) upstream=`git-rev-parse --verify "$1"` &&
++   ours=`git-rev-parse --verify "$2"` &&
++   limit=`git-rev-parse --verify "$3"` || exit
+    ;;
+ *) usage ;;
+ esac
+@@ -38,7 +44,7 @@ esac
+ # Note that these list commits in reverse order;
+ # not that the order in inup matters...
+ inup=`git-rev-list ^$ours $upstream` &&
+-ours=`git-rev-list $ours ^$upstream` || exit
++ours=`git-rev-list $ours ^$limit` || exit
+ 
+ tmp=.cherry-tmp$$
+ patch=$tmp-patch
+diff --git a/t/t3500-cherry.sh b/t/t3500-cherry.sh
+index f2f9109..7b81377 100755
+--- a/t/t3500-cherry.sh
++++ b/t/t3500-cherry.sh
+@@ -38,6 +38,11 @@ test_expect_success \
+ '
+ 
+ test_expect_success \
++    'check that cherry with limit returns only the top patch'\
++    'expr "$(echo $(git-cherry master my-topic-branch my-topic-branch^1) )" : "+ [^ ]*"
++'
++
++test_expect_success \
+     'cherry-pick one of the 2 patches, and check cherry recognized one and only one as new' \
+     'git-cherry-pick my-topic-branch^0 &&
+      echo $(git-cherry master my-topic-branch) &&
+-- 
+1.0.6-g8ecb
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
