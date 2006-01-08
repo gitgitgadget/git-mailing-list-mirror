@@ -1,83 +1,54 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: git pull on Linux/ACPI release tree
-Date: Sun, 8 Jan 2006 13:20:57 -0800 (PST)
-Message-ID: <20060108212057.79825.qmail@web31815.mail.mud.yahoo.com>
-References: <Pine.LNX.4.64.0601081141450.3169@g5.osdl.org>
-Reply-To: ltuikov@yahoo.com
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: git-format-patch Date header
+Date: Sun, 08 Jan 2006 14:05:59 -0800
+Message-ID: <43C18CC7.3050509@zytor.com>
+References: <20060108141457.8C4E85BE8F@nox.op5.se>	<20060108164038.89e4439f.tihirvon@gmail.com>	<43C12DE9.8010906@op5.se> <20060108173736.199df297.tihirvon@gmail.com> <43C13369.4090809@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Brown, Len" <len.brown@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
-	akpm@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 08 22:21:12 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 08 23:06:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvhyN-0001pB-Nh
-	for gcvg-git@gmane.org; Sun, 08 Jan 2006 22:21:08 +0100
+	id 1Evig3-0001IB-7V
+	for gcvg-git@gmane.org; Sun, 08 Jan 2006 23:06:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161203AbWAHVVD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jan 2006 16:21:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161206AbWAHVVB
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jan 2006 16:21:01 -0500
-Received: from web31815.mail.mud.yahoo.com ([68.142.206.168]:55971 "HELO
-	web31815.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1161203AbWAHVVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jan 2006 16:21:00 -0500
-Received: (qmail 79827 invoked by uid 60001); 8 Jan 2006 21:20:57 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=YKo7OshAB3SFS2M9+kEMqIpSmYviFSU+XFZnyU4lcAMZSrQnBQ7e8PZY5zcyBLR0hBWLkjaAsj1ZhhVMkFQ0qeJa3R8VkrLjCwdsZSF8DTvb8NmLZj3K1Bs+/YAq3Mi4sxb6XkALJKtP0dnqUJgVpABfooVBMRFUNPHZPzRw8z8=  ;
-Received: from [68.221.39.133] by web31815.mail.mud.yahoo.com via HTTP; Sun, 08 Jan 2006 13:20:57 PST
-To: Linus Torvalds <torvalds@osdl.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <Pine.LNX.4.64.0601081141450.3169@g5.osdl.org>
+	id S1161192AbWAHWGM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jan 2006 17:06:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161169AbWAHWGM
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jan 2006 17:06:12 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:15271 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1161192AbWAHWGL
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 8 Jan 2006 17:06:11 -0500
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k08M5xgr004342
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 8 Jan 2006 14:06:00 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <43C13369.4090809@op5.se>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14336>
 
---- Linus Torvalds <torvalds@osdl.org> wrote:
-> So trying out git-rebase and git-cherry-pick just in case you decide to 
-> want to use them might be worthwhile. Making it part of your daily routine 
-> like David has done? Somewhat questionable, but hey, it seems to be 
-> working for David, and it does make some things much easier, so..
+Andreas Ericsson wrote:
+> 
+> Nopes. In this case fixing my home-hacked git-send-patch script is the 
+> right thing to do. git-format-patch has always printed that format, 
+> though, so the error lies with me and the patch I sent. I shall have to 
+> re-visit it after reading rfc 822 a bit more closely.
+> 
 
-How about this usage (branch == tree):
+RFC 2822, please.
 
-Tree A    (your tree)
-  Tree B     (project B, dependent on Tree A)
-     Tree C     (project C, dependent on project B)
-
-(i.e. diff(C-A) = diff(C-B) + diff(B-A))
-
-Your tree is pulled into Tree A as often as your tree
-changes and it just fast forwards.
-
-If I want to run project B with your latest tree, then
-I resolve/merge from tree A to tree B, compile B
-and run it.
-
-If I want to run project C and project B with your
-latest tree, I resolve/merge from tree A to tree B
-and from tree B to tree C, compile C and run it.
-
-In such cases, are you saying that you'd prefer to
-pull from Tree B and Tree C (depending on your needs)?
-
-Another question:
-Sometimes, a fix for project B finds its way into
-tree C (project C) (since C depended on that fix in B).
-Now I'd like to pull that particular fix, identified by
-its SHA, into project B, and nothing else, for this I can
-use git-cherry-pick, right?
-
-And lastly, is there a tool whereby I can "see" changes
-between repos, kind of like git-diff but being able to
-give URLs too?
-
-    Luben
+	-hpa
