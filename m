@@ -1,83 +1,89 @@
-From: "Brown, Len" <len.brown-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+From: Linus Torvalds <torvalds-3NddpPZAyC0@public.gmane.org>
 Subject: RE: git pull on Linux/ACPI release tree
-Date: Sun, 8 Jan 2006 13:28:50 -0500
-Message-ID: <F7DC2337C7631D4386A2DF6E8FB22B3005A13505@hdsmsx401.amr.corp.intel.com>
+Date: Sun, 8 Jan 2006 11:10:20 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601081100220.3169@g5.osdl.org>
+References: <F7DC2337C7631D4386A2DF6E8FB22B3005A13489@hdsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: <torvalds-3NddpPZAyC0@public.gmane.org>, <linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>,
-	<linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, <akpm-3NddpPZAyC0@public.gmane.org>,
-	<git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-X-From: linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org Sun Jan 08 19:29:46 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
+	akpm-3NddpPZAyC0@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+X-From: linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org Sun Jan 08 20:10:33 2006
 Return-path: <linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
 Envelope-to: glad-acpi-devel-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvfIY-0004dK-0R
-	for glad-acpi-devel-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Sun, 08 Jan 2006 19:29:46 +0100
+	id 1Evfvx-0003AM-A5
+	for glad-acpi-devel-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Sun, 08 Jan 2006 20:10:29 +0100
 Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org via listexpand
-	id S932746AbWAHS3o (ORCPT <rfc822;glad-acpi-devel@m.gmane.org>);
-	Sun, 8 Jan 2006 13:29:44 -0500
-Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org id S932741AbWAHS3o
-	(ORCPT <rfc822;linux-acpi-outgoing>); Sun, 8 Jan 2006 13:29:44 -0500
-Received: from fmr15.intel.com ([192.55.52.69]:3767 "EHLO
-	fmsfmr005.fm.intel.com") by vger.kernel.org with ESMTP
-	id S932444AbWAHS3m convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>); Sun, 8 Jan 2006 13:29:42 -0500
-Received: from fmsfmr100.fm.intel.com (fmsfmr100.fm.intel.com [10.253.24.20])
-	by fmsfmr005.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id k08ISqjF010398;
-	Sun, 8 Jan 2006 18:28:52 GMT
-Received: from fmsmsxvs042.fm.intel.com (fmsmsxvs042.fm.intel.com [132.233.42.128])
-	by fmsfmr100.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id k08ISq3J026338;
-	Sun, 8 Jan 2006 18:28:52 GMT
-Received: from fmsmsx331.amr.corp.intel.com ([132.233.42.156])
- by fmsmsxvs042.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2006010810285219156
- ; Sun, 08 Jan 2006 10:28:52 -0800
-Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Sun, 8 Jan 2006 10:28:52 -0800
-Received: from hdsmsx401.amr.corp.intel.com ([10.127.2.60]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Sun, 8 Jan 2006 10:28:52 -0800
-X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git pull on Linux/ACPI release tree
-Thread-Index: AcYUK/UNNsAUD0mMS+Kj7v2U+S08rgAUVQ5w
-To: "David S. Miller" <davem-fT/PcQaiUtIeIZ0/mPfg9Q@public.gmane.org>
-X-OriginalArrivalTime: 08 Jan 2006 18:28:52.0097 (UTC) FILETIME=[6005D710:01C61481]
-X-Scanned-By: MIMEDefang 2.52 on 10.253.24.20
+	id S1161077AbWAHTKZ (ORCPT <rfc822;glad-acpi-devel@m.gmane.org>);
+	Sun, 8 Jan 2006 14:10:25 -0500
+Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org id S1161084AbWAHTKY
+	(ORCPT <rfc822;linux-acpi-outgoing>); Sun, 8 Jan 2006 14:10:24 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:21656 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1161081AbWAHTKX (ORCPT
+	<rfc822;linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>); Sun, 8 Jan 2006 14:10:23 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k08JALDZ025192
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 8 Jan 2006 11:10:22 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k08JAKc8032155;
+	Sun, 8 Jan 2006 11:10:21 -0800
+To: "Brown, Len" <len.brown-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+In-Reply-To: <F7DC2337C7631D4386A2DF6E8FB22B3005A13489-N2PTB0HCzHKkrb+BlOpmy7fspsVTdybXVpNB7YpNyf8@public.gmane.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 Precedence: bulk
 X-Mailing-List: linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 
- 
->I know a lot of people react to this kind of usage with "what's the
->point of the source control system if you're just messing with patches
->in and out of the tree all the time" But as a subsystem maintainer,
->you deal with a lot of changes and it's important to get a pristine
->clean history when you push things to Linus.
->
->In fact, I do this so much that Linus's tree HEAD often equals my
->origin when he pulls.
->
->Merges really suck and I also hate it when the tree gets cluttered
->up with them, and Linus is right, ACPI is the worst offender here.
->
->Yes, we can grep the merges out of the shortlog or whatever, but that
->merging crap is still physically in the tree.
->
->Just don't do it.  Merge into a private branch for testing if you
->don't want to rebuild trees like I do, but push the clean tree to
->Linus.
 
-Perhaps the tools should try to support what "a lot of people"
-expect, rather than making "a lot of people" do extra work
-because of the tools?
 
-Call me old fashioned, but I believe that tools are supposed to
-make work easier, not harder.
+On Sun, 8 Jan 2006, Brown, Len wrote:
+> 
+> Is it possible for it git, like bk, to simply ignore merge commits in its summary output?
 
--Len
+That's not the point. It does: "git log --no-merges" does exactly that.
+
+But fire up "gitk" to watch the history, and see the difference.
+
+> Note that "Auto-update from upstream" is just the place-holder comment
+> embedded in the wrapper script in git/Documentation/howto/using-topic-branches.txt
+
+That has absolutely nothing to do with anything. It's not the comment 
+(which admittedly gives absolutely no information - but why should it, 
+since the _commit_ itself has no information in it?)
+
+It's like you have empty commits that don't do anything at all, except 
+that they are worse, because they have two parents.
+
+> I think that Tony's howto above captures two key requirements
+> from all kernel maintainers -- which the exception of you --
+
+No. Your commits make it harder for _everybody_ to track the history. 
+
+A merge by definition "couples" the history of two branches. That's what a 
+merge very fundamentally is. It ties two things together. But two things 
+that don't have any connection to each other _shouldn't_ be tied together.
+
+Just as an example: because of the extra merges, you've made all your 
+commits dependent on what happened in my tree, with no real reason. So 
+let's say that somebody reports that something broke in ACPI. Now you 
+can't just go to the top of the ACPI history and work backwards - you'll 
+have tied up the two histories so that they are intertwined.
+
+And yes, you can always work around it, but there's just no point. And 
+none of the other developers seem to need to do it. They do their 
+development, and then they say "please pull". At that point the two 
+histories are tied together, but now they are tied together for a 
+_reason_. It was an intentional synchronization point.
+
+An "automated pull" by definition has no reason. If it works automated, 
+then the merge has zero semantic meaning. 
+
+			Linus
 -
 To unsubscribe from this list: send the line "unsubscribe linux-acpi" in
 the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
