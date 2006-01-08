@@ -1,81 +1,124 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Does git belong in root's $PATH?
-Date: Sat, 07 Jan 2006 19:00:23 -0800
-Message-ID: <43C08047.6090701@zytor.com>
-References: <Pine.LNX.4.64.0601070838470.6317@x2.ybpnyarg> <43C0025A.9080406@op5.se> <43C02725.2020702@zytor.com> <43C05ED5.1090603@op5.se> <43C05F4C.8050908@zytor.com> <dpppg4$qkd$1@sea.gmane.org>
+From: "Brown, Len" <len.brown-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+Subject: RE: git pull on Linux/ACPI release tree
+Date: Sun, 8 Jan 2006 02:47:30 -0500
+Message-ID: <F7DC2337C7631D4386A2DF6E8FB22B3005A13489@hdsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 08 04:00:57 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, <linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>,
+	<akpm-3NddpPZAyC0@public.gmane.org>, <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+X-From: linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org Sun Jan 08 08:47:45 2006
+Return-path: <linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+Envelope-to: glad-acpi-devel-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvQnf-0004Io-Vo
-	for gcvg-git@gmane.org; Sun, 08 Jan 2006 04:00:57 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161154AbWAHDA3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 22:00:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161155AbWAHDA3
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 22:00:29 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:32717 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1161154AbWAHDA3
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Jan 2006 22:00:29 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k0830N7V016449
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 7 Jan 2006 19:00:24 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: walt <wa1ter@myrealbox.com>
-In-Reply-To: <dpppg4$qkd$1@sea.gmane.org>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
-Sender: git-owner@vger.kernel.org
+	id 1EvVHD-0000ri-UF
+	for glad-acpi-devel-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Sun, 08 Jan 2006 08:47:44 +0100
+Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org via listexpand
+	id S1030491AbWAHHrm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glad-acpi-devel@m.gmane.org>); Sun, 8 Jan 2006 02:47:42 -0500
+Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org id S1030501AbWAHHrm
+	(ORCPT <rfc822;linux-acpi-outgoing>); Sun, 8 Jan 2006 02:47:42 -0500
+Received: from fmr15.intel.com ([192.55.52.69]:18820 "EHLO
+	fmsfmr005.fm.intel.com") by vger.kernel.org with ESMTP
+	id S1030491AbWAHHrk convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>); Sun, 8 Jan 2006 02:47:40 -0500
+Received: from fmsfmr101.fm.intel.com (fmsfmr101.fm.intel.com [10.253.24.21])
+	by fmsfmr005.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id k087lXjF019166;
+	Sun, 8 Jan 2006 07:47:33 GMT
+Received: from fmsmsxvs040.fm.intel.com (fmsmsxvs040.fm.intel.com [132.233.42.124])
+	by fmsfmr101.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id k087lXsi016944;
+	Sun, 8 Jan 2006 07:47:33 GMT
+Received: from fmsmsx331.amr.corp.intel.com ([132.233.42.156])
+ by fmsmsxvs040.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2006010723473225384
+ ; Sat, 07 Jan 2006 23:47:32 -0800
+Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Sat, 7 Jan 2006 23:47:33 -0800
+Received: from hdsmsx401.amr.corp.intel.com ([10.127.2.60]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Sat, 7 Jan 2006 23:47:32 -0800
+X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git pull on Linux/ACPI release tree
+Thread-Index: AcYTt3od2y3F+1eER6SV8QyC6bgpNQAZPKLQ
+To: "Linus Torvalds" <torvalds-3NddpPZAyC0@public.gmane.org>
+X-OriginalArrivalTime: 08 Jan 2006 07:47:32.0861 (UTC) FILETIME=[C89C62D0:01C61427]
+X-Scanned-By: MIMEDefang 2.52 on 10.253.24.21
+Sender: linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14307>
+X-Mailing-List: linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 
-walt wrote:
-> H. Peter Anvin wrote:
-> 
->>/usr used to be what is now called /home.  What you're describing above
->>is the current usage.
-> 
-> History lessons are valuable for us youngsters ;o)  Can you give us a
-> brief description of what motivated such a change?  (Just as important,
-> of course, is whether the original motives have changed or disappeared.)
-> 
+Hi Linus,
 
-This is the history as far as I understand it.  Keep in mind I was only 
-8 years old in 1980, and I think I first learned about how Unix worked 
-in 1985 or 1986, so not all of this is first-hand.
+adding git-u79uwXL29TaiAVqoAR/hOK1cXZ9k6wlg@public.gmane.org
 
-/usr was initially used for home directories (user directories.)  Both 
-fore reasons as have been previously discussed (remember, most easy 
-multi-user systems were a lot friendlier than one would expect today), 
-and because the root disk often filled up, it became common for users to 
-put binaries in /usr/bin, and often the sysadmin, too.
+>> please pull this batch of trivial patches from:=20
+>>=20
+>>=20
+>git://git.kernel.org/pub/scm/linux/kernel/git/lenb/linux-acpi-2.6.git =
+release
+>
+>Len,
+>
+>I _really_ wish you wouldn't have those automatic merges.
+>
+>Why do you do them? They add nothing but ugly and unnecessary=20
+>history, and in this pull, I think almost exactly half of the
+>commits were just these empty merges.
 
-As the need for system security tightened, by the 80's this was a pretty 
-unusable configuration.  Since home directories were specified in 
-/etc/passwd, those could, and often were, located elsewhere -- much 
-easier than trying to change the now-established conventions of /usr/bin 
-et al.  A lot of systems in the 80's were massively multiuser anyway 
-(workstations were coming in but were rare), and so you'd frequently see 
-paths like /u2/h/hpa for example (my actual home directory location on 
-our college server.)
+Is it possible for it git, like bk, to simply ignore merge commits in i=
+ts summary output?
 
-The convention of using /home for home directories seems to have evolved 
-out of necessity when networking came in use on a large scale (NFS, 
-automounter, etc), probably in the late 80's-early 90's.  By the time 
-Linux emerged in 1991 it was pretty well-established on smaller systems; 
-larger systems still tended to use local conventions inherited from 
-previous generation systems.
+Note that "Auto-update from upstream" is just the place-holder comment
+embedded in the wrapper script in git/Documentation/howto/using-topic-b=
+ranches.txt
+All instances of it here are from me manually updating --
+the only "auto" happening here is the automatic insertion of that comme=
+nt:-)
 
-	-hpa
+I think that Tony's howto above captures two key requirements
+from all kernel maintainers -- which the exception of you --
+who hang out  in the middle of the process rather than
+at the top of the tree.
+
+1. It is important that we be able (and encouraged, not discouraged)
+to track the top of tree as closely as we have time to handle.
+Divergence and conflicts are best handled as soon as they are noticed
+and can be a huge pain if left to fester and discovered
+only when it is time to push patches upstream.
+Plus, tracking the top of tree means we force more folks to
+track the top of tree, and so it gets more testing.  This is goodness.
+
+Earlier in your release cycle when changes are appearing faster,
+my need/desire to sync is greater than later in the cycle when changes
+are smaller and infrequent.  On average, I think that one sync/day
+from upstream is an entirely reasonable frequency.
+
+2. It is also important that we be able to cherry pick individual patch=
+es
+in our trees so that they don't block each other from going upstream.
+Tony's using-topic-branches.txt above is the best way I know of doing t=
+hat.
+I think it is a big improvement over the bk model since I can have a si=
+mple
+branch for each patch or group of patches rather than an entire reposit=
+ory
+dedicatd to each.  But for this to work, I need to be able to update
+any and all of the topic branches from upstream, and to merge them with
+each other -- just like I could with BK.  Otherwise they become "dated"
+in the time they were first integrated, and it is not convenient to do
+simple apples/apples comparisons that are needed to debug and test.
+
+I'm probably a na=EFve git user -- but I expect I have a lot of company=
+=2E
+If there is a better way of using the tool to get the job done,
+I'm certainly a willing customer with open ears.
+
+thanks,
+-Len
+-
+To unsubscribe from this list: send the line "unsubscribe linux-acpi" i=
+n
+the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
