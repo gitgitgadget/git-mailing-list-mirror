@@ -1,55 +1,40 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: How do I apply a single "change"
-Date: Sat, 7 Jan 2006 18:24:31 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601071823550.3169@g5.osdl.org>
-References: <20060108005152.46315.qmail@web31813.mail.mud.yahoo.com>
- <43C06892.2030709@op5.se>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 7/7] Add an optional limit to git-rebase
+Date: Sat, 07 Jan 2006 18:25:46 -0800
+Message-ID: <7vu0cf5uc5.fsf@assigned-by-dhcp.cox.net>
+References: <20060108004120.GO1113@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: ltuikov@yahoo.com, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 08 03:24:47 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 08 03:25:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvQEg-0006PT-5w
-	for gcvg-git@gmane.org; Sun, 08 Jan 2006 03:24:46 +0100
+	id 1EvQFi-0006V3-Ty
+	for gcvg-git@gmane.org; Sun, 08 Jan 2006 03:25:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161143AbWAHCYn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 21:24:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161145AbWAHCYn
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 21:24:43 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:14311 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161143AbWAHCYm (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Jan 2006 21:24:42 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k082OYDZ009539
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 7 Jan 2006 18:24:34 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k082OVAi004528;
-	Sat, 7 Jan 2006 18:24:33 -0800
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <43C06892.2030709@op5.se>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1161145AbWAHCZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jan 2006 21:25:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161146AbWAHCZs
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 21:25:48 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:14819 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1161145AbWAHCZs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jan 2006 21:25:48 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060108022459.CBTJ3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 7 Jan 2006 21:24:59 -0500
+To: Yann Dirson <ydirson@altern.org>
+In-Reply-To: <20060108004120.GO1113@nowhere.earth> (Yann Dirson's message of
+	"Sun, 8 Jan 2006 01:41:20 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14306>
 
-
-
-On Sun, 8 Jan 2006, Andreas Ericsson wrote:
-> 
-> You can't. cherry-pick doesn't work on remote repos, so you need to pull that
-> branch to a local one first.
-
-"fetch", not "pull".
-
-It's easy enough to get confused anyway, so we should be careful.
-
-		Linus
+Patches 5, 6, and 7 in the series sound useful, but could they
+come with documentation updates please?
