@@ -1,64 +1,91 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 2/3] ls-files --others --directory: give trailing slash
-Date: Sat, 7 Jan 2006 15:35:08 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601071533060.3169@g5.osdl.org>
-References: <7vy81racv7.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] git-mv.perl: use stderr for error output and cleanup
+Date: Sun, 08 Jan 2006 01:07:25 +0100
+Message-ID: <43C057BD.7010201@op5.se>
+References: <81b0412b0601050349s6bec1a36jc410fd315fbbc4c@mail.gmail.com>	<7vek3lq8wu.fsf@assigned-by-dhcp.cox.net>	<86wthd7ypx.fsf@blue.stonehenge.com>	<20060107102820.GB5536@steel.home>	<86sls0498w.fsf@blue.stonehenge.com> <7v7j9bg369.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Darrin Thompson <darrint@progeny.com>
-X-From: git-owner@vger.kernel.org Sun Jan 08 00:35:28 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 08 01:07:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvNap-00050A-2k
-	for gcvg-git@gmane.org; Sun, 08 Jan 2006 00:35:27 +0100
+	id 1EvO5t-000281-SJ
+	for gcvg-git@gmane.org; Sun, 08 Jan 2006 01:07:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161056AbWAGXfY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 18:35:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161057AbWAGXfY
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 18:35:24 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:9424 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161056AbWAGXfX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Jan 2006 18:35:23 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k07NZBDZ003590
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 7 Jan 2006 15:35:12 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k07NZ8RI029578;
-	Sat, 7 Jan 2006 15:35:09 -0800
+	id S1161077AbWAHAH3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jan 2006 19:07:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161078AbWAHAH3
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 19:07:29 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:21890 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161077AbWAHAH3
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Jan 2006 19:07:29 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 575CB6BD01; Sun,  8 Jan 2006 01:07:26 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy81racv7.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <7v7j9bg369.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14287>
 
-
-
-On Sat, 7 Jan 2006, Junio C Hamano wrote:
+Junio C Hamano wrote:
 > 
->  * Likes, dislikes?  This suits better for *my* purpose of
->    calling this from git-status, but it might be undesirable for
->    your Porcelain.
+> BTW, I never understood the usefulness of Statement Modifiers.
+> Even reading the examples in perlsyn.pod:
+> 
+>     print "Basset hounds got long ears" if length $ear >= 10;
+>     go_outside() and play() unless $is_raining;
+> 
+> seeing "do these things" upfront and then realize "ah, but that
+> is done only when this holds true", interrupts the flow of
+> understanding while reading a program by somebody else [*1*].
 
-Likes.
 
-However, I'd re-write it as just
+Here's what "Programming Perl" by O'Reilly (third edition, somewhere 
+around page 604) has to say about it:
+---%<---%<---%<---
+*) Do things the most readable way. For instance:
 
-	memcpy(fullname + baselen + len, "/", 2);
-	len++;
-	if (show_other_directories &&
-	    !dir_exists(fullname, baselen + len))
-		break;
-	read_directory(fullname, fullname, baselen + len);
+     open(FOO, $foo) or die "Can't open $foo: $!";
 
-because let's face it, every user wants the "+1", so just do it once 
-up-front instead of adding one in three different places.
+is  better than
 
-		Linus
+     die "Can't open $foo: $!" unless open(FOO, $foo);
+
+because the second way hides the main point of the statement in a modifier.
+---%<---%<---%<---
+
+Considering the book was co-authored by Larry Wall, I'd say that's as 
+good as an apology.
+
+
+> It is worse if the Statement Modifier is a loop control.
+> 
+> (flamebait) Compound Statements take BLOCK and people who want
+> to do a one-liner could not do so without braces.  I've always
+> thought Statement Modifies as a lame workaround for that
+> problem.
+> 
+
+Most things can be done without braces, so long as one doesn't spell out 
+the 'if'.
+
+	$opt_h and usage();
+	-d $directory or mkdir($directory);
+
+is perfectly valid perl. This way of writing it is familiar enough for 
+shell-scripters. Hardcore C-programmers will look twice when they see a 
+line that so obviously looks completely wrong and will almost certainly, 
+with some revulsion, understand it.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
