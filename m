@@ -1,52 +1,54 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 4/7] Add a test for rebase when a change was picked upstream
-Date: Sat, 07 Jan 2006 18:22:29 -0800
-Message-ID: <7v7j9b7922.fsf@assigned-by-dhcp.cox.net>
-References: <20060108003948.GL1113@nowhere.earth>
+Subject: Re: [PATCH 1/7] Add a minimal test for git-cherry
+Date: Sat, 07 Jan 2006 18:22:54 -0800
+Message-ID: <7vy81r5ugx.fsf@assigned-by-dhcp.cox.net>
+References: <20060108003815.GI1113@nowhere.earth>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 08 03:22:42 2006
+X-From: git-owner@vger.kernel.org Sun Jan 08 03:23:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvQCY-000614-OT
-	for gcvg-git@gmane.org; Sun, 08 Jan 2006 03:22:35 +0100
+	id 1EvQCw-00067B-Tz
+	for gcvg-git@gmane.org; Sun, 08 Jan 2006 03:22:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161141AbWAHCWc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jan 2006 21:22:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161142AbWAHCWc
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 21:22:32 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:36586 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1161141AbWAHCWb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jan 2006 21:22:31 -0500
+	id S1161142AbWAHCW4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jan 2006 21:22:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161143AbWAHCW4
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jan 2006 21:22:56 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:510 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1161142AbWAHCW4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jan 2006 21:22:56 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao03.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060108022003.NDUG20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 7 Jan 2006 21:20:03 -0500
+          id <20060108022156.ZCBS20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 7 Jan 2006 21:21:56 -0500
 To: Yann Dirson <ydirson@altern.org>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14304>
 
 Yann Dirson <ydirson@altern.org> writes:
 
-> +export GIT_AUTHOR_EMAIL=bogus_email_address
-
-This is probably not needed for this test, although it would not
-hurt.
-
+> This test checks that git-cherry finds the expected number of patches
+> in two simple cases.
+>
+> Signed-off-by: Yann Dirson <ydirson@altern.org>
+>
 > +test_expect_success \
-> +    'rebase topic branch against new master and check git-am did not get halted' \
-> +    'sh -x git-rebase master &&
-> +     test ! -d .dotest
+> +    'cherry-pick one of the 2 patches, and check cherry recognized one and only one as new' \
+> +    'git-cherry-pick my-topic-branch^0 &&
+> +     echo $(git-cherry master my-topic-branch) &&
+> +     expr "$(echo $(git-cherry master my-topic-branch) )" : "+ [^ ]* - .*"
 > +'
 
-Some people build git with SHELL_PATH=/bin/bash because their
-/bin/sh is not POSIX enough (e.g. Solaris).  Perhaps emulate
-what t5501 does?
+I wonder if "+ followed by -" order is stable here.  If you make
+commits in the my-topic-branch fast enough, they would get the
+same timestamp and I suspect the order from rev-list would be
+left to chance.
