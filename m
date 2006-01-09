@@ -1,75 +1,64 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git pull on Linux/ACPI release tree
-Date: Mon, 9 Jan 2006 19:08:44 +1300
-Message-ID: <46a038f90601082208i95cd19fmda542da0da8cc9ef@mail.gmail.com>
-References: <F7DC2337C7631D4386A2DF6E8FB22B3005A136DD@hdsmsx401.amr.corp.intel.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-format-patch Date header
+Date: Sun, 8 Jan 2006 22:11:19 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601082207510.3169@g5.osdl.org>
+References: <20060108141457.8C4E85BE8F@nox.op5.se> <20060108164038.89e4439f.tihirvon@gmail.com>
+ <43C12DE9.8010906@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "David S. Miller" <davem@davemloft.net>, torvalds@osdl.org,
-	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
-	akpm@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 09 07:08:49 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 09 07:11:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EvqD2-0006RL-R0
-	for gcvg-git@gmane.org; Mon, 09 Jan 2006 07:08:49 +0100
+	id 1EvqFk-0006m5-Ls
+	for gcvg-git@gmane.org; Mon, 09 Jan 2006 07:11:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932495AbWAIGIq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jan 2006 01:08:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbWAIGIp
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jan 2006 01:08:45 -0500
-Received: from wproxy.gmail.com ([64.233.184.192]:17036 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751476AbWAIGIp convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 Jan 2006 01:08:45 -0500
-Received: by wproxy.gmail.com with SMTP id i30so1487272wra
-        for <git@vger.kernel.org>; Sun, 08 Jan 2006 22:08:44 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kP2iYVoU9qPONHr5194xtN6yJjzXvJey9TkFi0c6xp3JDGDDBtZgQPBjkta58jo/CowCJ3KSn582pyObiXuBB8ZqKwWEpQRBTYeoA/4pPutjQpNQf+kd4ROMoBz936XAstIortwkuNM6UHPOoRCkOY400Ee+U6tEPl06SAaH2x8=
-Received: by 10.54.123.12 with SMTP id v12mr2761198wrc;
-        Sun, 08 Jan 2006 22:08:44 -0800 (PST)
-Received: by 10.54.71.5 with HTTP; Sun, 8 Jan 2006 22:08:44 -0800 (PST)
-To: "Brown, Len" <len.brown@intel.com>
-In-Reply-To: <F7DC2337C7631D4386A2DF6E8FB22B3005A136DD@hdsmsx401.amr.corp.intel.com>
-Content-Disposition: inline
+	id S932546AbWAIGLd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jan 2006 01:11:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932529AbWAIGLc
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jan 2006 01:11:32 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:37019 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932546AbWAIGLc (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jan 2006 01:11:32 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k096BKDZ018374
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 8 Jan 2006 22:11:20 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k096BJUe021026;
+	Sun, 8 Jan 2006 22:11:19 -0800
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <43C12DE9.8010906@op5.se>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14353>
-
-On 1/9/06, Brown, Len <len.brown@intel.com> wrote:
-> This is completely insane.
-> Do you have any idea what "sometimes has problems merging" means
-> in practice?  It means the tools are really nifty in the trivial
-> case but worse than worthless when you need them the most.
-
-Len,
-
-all I meant was that you will sometimes see conflicts. And in that
-case, you are far better off cancelling the rebase and doing a merge,
-where you will have to resolve the conflicts by hand.
-
-git-rebase is for when the potential merge is clearly trivial. In any
-other case, you do want a proper merge. But in any case, it is easy to
-do
-
-    git-fetch <upstream> && git-rebase <upstream>
-
-and if it does anything but a very trivial merge, backtrack and do a merge.
-
-In any case, if I have any suspicion that the merge may not be trivial, I do
-
-   git-fetch <upstream> && gitk --since=" 1 month ago" upstream master
-
-before deciding on a course of action. Of course, you can merge all
-the time. It's whether people care about a readable/useful history
-afterwards.
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14354>
 
 
-martin
+
+On Sun, 8 Jan 2006, Andreas Ericsson wrote:
+> 
+> Actually, that's what's printed in the commit message, so any change 
+> would have to be put there and that would break backwards compatibility 
+> for new tools that might want to use it.
+
+No, git should always take the date in any of a million different formats, 
+and always turn it into "seconds + timezone" internally.
+
+The fact that git-format-patch also prints it out in the internal format 
+is unambiguous (nice) but human-unreadable (bad). 
+
+There are other unambiguous formats it could use, notably standard rfc2822 
+format ("date -R").
+
+The git "show_date()" function hopefully does exactly that rfc2822 format, 
+but you'd have to make a helper program to do the conversion in 
+git-format-patch.sh.
+
+		Linus
