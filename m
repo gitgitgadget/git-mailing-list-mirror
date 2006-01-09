@@ -1,56 +1,79 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [ANNOUCNE] GIT 1.1.0
-Date: Mon, 09 Jan 2006 23:22:40 +0100
-Message-ID: <43C2E230.1000107@op5.se>
-References: <7v4q4eurgu.fsf@assigned-by-dhcp.cox.net> <43C2CAED.8030304@cc.jyu.fi>
+From: lamikr <lamikr@cc.jyu.fi>
+Subject: Re: undoing changes with git-checkout -f
+Date: Tue, 10 Jan 2006 00:36:22 +0200
+Message-ID: <43C2E566.2060006@cc.jyu.fi>
+References: <43C2D2C4.2010904@cc.jyu.fi> <Pine.LNX.4.64.0601091321390.5588@g5.osdl.org>
+Reply-To: lamikr@cc.jyu.fi
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 09 23:23:37 2006
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 09 23:31:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ew5Ps-0003pG-J3
-	for gcvg-git@gmane.org; Mon, 09 Jan 2006 23:23:05 +0100
+	id 1Ew5Xj-0005ih-AZ
+	for gcvg-git@gmane.org; Mon, 09 Jan 2006 23:31:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751571AbWAIWWn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jan 2006 17:22:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751570AbWAIWWn
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jan 2006 17:22:43 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:49805 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751571AbWAIWWm
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 Jan 2006 17:22:42 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 4CA516BD09; Mon,  9 Jan 2006 23:22:41 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+	id S1751574AbWAIWbI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jan 2006 17:31:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751580AbWAIWbI
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jan 2006 17:31:08 -0500
+Received: from posti5.jyu.fi ([130.234.4.34]:32942 "EHLO posti5.jyu.fi")
+	by vger.kernel.org with ESMTP id S1751574AbWAIWbH (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jan 2006 17:31:07 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by posti5.jyu.fi (8.13.4/8.13.4) with ESMTP id k09MUoSo004997;
+	Tue, 10 Jan 2006 00:30:50 +0200
+Received: from aragorn.kortex.jyu.fi (aragorn.kortex.jyu.fi [130.234.182.44])
+	by posti5.jyu.fi (8.13.4/8.13.4) with ESMTP id k09MUl1q004992;
+	Tue, 10 Jan 2006 00:30:48 +0200
+Received: from [127.0.0.1] (aragorn.kortex.jyu.fi [127.0.0.1])
+	by aragorn.kortex.jyu.fi (Postfix) with ESMTP id 44977468169;
+	Tue, 10 Jan 2006 00:36:22 +0200 (EET)
+User-Agent: Mozilla Thunderbird 1.0.6-7.2.20060mdk (X11/20050322)
 X-Accept-Language: en-us, en
-To: lamikr@cc.jyu.fi
-In-Reply-To: <43C2CAED.8030304@cc.jyu.fi>
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0601091321390.5588@g5.osdl.org>
+X-Virus-Scanned: amavisd-new at cc.jyu.fi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14378>
 
-lamikr wrote:
->>- "git --version" from an interim snapshot gives a more
->>  descriptive version name than "1.0-GIT" (Linus).
->> 
->>
-> 
-> I installed 1.1.0 today and it shows me
-> 
-> $ git --version
-> git version 1.0.GIT
-> 
+Linus Torvalds wrote:
 
-You did not have git-describe installed prior to building 1.1.0. If you 
-re-install right on top the one you did today the version-file will be 
-generated correctly.
+>You should realize that git _does_not_know_ about your file. You never 
+>even told git about it. So git won't ever evenlook at it, much less delete 
+>it.
+>
+>So when you do a "git checkout -f", what that does is to rewrite all the 
+>files that git KNOWS about. Any files git doesn't know about will not ever 
+>be touched. Your "1.txt" file might as well be an object file, for all git 
+>knows. And git won't remove your object files or any other files that it 
+>doesn't know.
+>
+>(Now, in all fairness, even if you had done "git add", I don't think git 
+>will remove the file. If you committed the file and then checked out the 
+>previous version, _then_ it would remove the committed file).
+>  
+>
+Now that you say it, I got it, thanks. I expected earlier that git would
+perform also the
+remove of non-added files as other commands like "git-commit" are anyway
+aware
+if you have files in your working dir that have not yet added.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+>If what you want to do is to clean the git directory of all files that git 
+>doesn't know about, you can do that with
+>
+>	git-ls-files -z --others | xargs -0 rm --
+>  
+>
+Thanks for the tip. I have now added alias git-reset-ff='git-ls-files -z
+--others | xargs -0 rm --'
+And git-reset-fff (forte fortissimo) would probably blow the whole hd
+away :-)
+
+Mika
