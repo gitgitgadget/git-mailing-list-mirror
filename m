@@ -1,134 +1,165 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git pull on Linux/ACPI release tree
-Date: Tue, 10 Jan 2006 11:01:18 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601101048440.4939@g5.osdl.org>
-References: <20060109225143.60520.qmail@web31807.mail.mud.yahoo.com>
- <Pine.LNX.4.64.0601091845160.5588@g5.osdl.org> <99D82C29-4F19-4DD3-A961-698C3FC0631D@mac.com>
- <46a038f90601092238r3476556apf948bfe5247da484@mail.gmail.com>
- <252A408D-0B42-49F3-92BC-B80F94F19F40@mac.com> <Pine.LNX.4.64.0601101015260.4939@g5.osdl.org>
- <Pine.LNX.4.63.0601101938420.26999@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 2/2] Remember and use GIT_EXEC_PATH on exec()'s
+Date: Tue, 10 Jan 2006 20:13:34 +0100
+Message-ID: <43C4075E.4070407@op5.se>
+References: <1136849678.11717.514.camel@brick.watson.ibm.com>	 <1136849810.11717.518.camel@brick.watson.ibm.com>	 <7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>	 <1136900174.11717.537.camel@brick.watson.ibm.com> <43C3CC4A.4030805@op5.se> <1136910406.11717.579.camel@brick.watson.ibm.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kyle Moffett <mrmacman_g4@mac.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Luben Tuikov <ltuikov@yahoo.com>,
-	"Brown, Len" <len.brown@intel.com>,
-	"Luck, Tony" <tony.luck@intel.com>,
-	Junio C Hamano <junkio@cox.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	linux-acpi@vger.kernel.org,
-	LKML Kernel <linux-kernel@vger.kernel.org>,
-	Andrew Morton <akpm@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 10 20:04:20 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 10 20:13:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwOmt-0005Sn-7X
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 20:04:07 +0100
+	id 1EwOw6-0007uF-Th
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 20:13:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932309AbWAJTEE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 14:04:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932237AbWAJTED
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 14:04:03 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:2957 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751288AbWAJTEA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 14:04:00 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0AJ1XDZ027014
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 10 Jan 2006 11:01:34 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0AJ1IjC008885;
-	Tue, 10 Jan 2006 11:01:22 -0800
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0601101938420.26999@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751291AbWAJTNg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 14:13:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751302AbWAJTNg
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 14:13:36 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:46739 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751291AbWAJTNf
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2006 14:13:35 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 68DD46BD03; Tue, 10 Jan 2006 20:13:34 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Michal Ostrowski <mostrows@watson.ibm.com>
+In-Reply-To: <1136910406.11717.579.camel@brick.watson.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14436>
 
-
-
-On Tue, 10 Jan 2006, Johannes Schindelin wrote:
-> > 
-> > Think of it as doing a binary search in a 2-dimensional surface - you 
-> > can't linearize the plane, but you can decide to test first one half of 
-> > the surface, and then depending on whether it was there, you can halve 
-> > that surface etc.. 
+Michal Ostrowski wrote:
+> On Tue, 2006-01-10 at 16:01 +0100, Andreas Ericsson wrote:
 > 
-> How?
 > 
-> If you bisect, you test a commit. If the commit is bad, you assume *all* 
-> commits before that as bad. If it is good, you assume *all* commits after 
-> that as good.
+>>This is the case in the git potty already. git.c must prepend 
+>>--exec-path to $PATH, or the whole idea of being able to move scripts 
+>>out of the $PATH fails (at least it fails without changing quite a few 
+>>of the scripts).
+> 
+> 
+> One could make all the scripts depend on GIT_EXEC_PATH instead of PATH.
+> At build time one could generate wrapper functions in git-sh-setup:
+> 
+> function git-foo () {
+> 	$(GIT_EXEC_PATH)/git-foo $*;
+> }
+> 
+> Presuming that all scripts include git-sh-setup, no other shell script
+> changes would be needed.
+> 
 
-No, that's not how bisect works at all.
+Yuck, for two reasons.
 
-It's true that if a commit is bad, then all the commits _reachable_ from 
-that commit are considered bad. 
+* Not all scripts include git-sh-setup, and for good reasons. If this is 
+what you intend please make sure you don't break anything in the process.
 
-And it's true that if a commit is good, then all commits that _reach_ that 
-commit are considered good.
+* This will spawn a sub-shell for each git-foo process called. Shells 
+are way more expensive than the git potty, so the performance hit in 
+iterations might be considerable. Think StGit and Cogito as well.
 
-But that doesn't mean that there is an ordering. The commits that fall 
-into the camp of being "neither good nor bad" are _not_ ordered. There are 
-commits in there that are not directly reachable from the good commit.
 
-> Now, if you have a 2-dimensional surface, you don't have a *point*, but 
-> typically a *line* separating good from bad.
+On a side-note, $* will break quoting (you should use "$@" instead, with 
+double-quotes attached), and
 
-Exactly. 
+	$(GIT_EXEC_PATH)/git-foo $*
 
-And a git graph is not really a two-dimensional surface, but exactly was 
-with a 2-dimensional surface, it is _not_ enough to have a *point* to 
-separate the good from bad.
+will try to execute GIT_EXEC_PATH and prepend its output to the rest of 
+the command, which is quite obviously wrong.
 
-You need to have a _set of points_ to separate the good from the bad. You 
-can think of it as a line that bisects the surface: if you were to print 
-out the development graph, the set of points literally _do_ form a virtual 
-line across the development surface.
 
-(Actually, you can't in general print out the development graph on a 
-2-dimensional paper without having development lines that cross each 
-other, but you could actually do it in three dimensions, where the 
-"boundary" between good and bad is actually a 2-dimensional surface in 
-3-dimensional space).
+> 
+>>Since it's already in place in the potty and that's required to be in 
+>>the $PATH, I think Junio's suggestion of running execlp("git", "git", 
+>>...) is a good one. It will add one extra fork() and execve() for each 
+>>clone/pull/push, but that isn't much of an issue, really.
+>>
+> 
+> 
+> The patch I posted most recently does something comparable; all exec's
+> by C git programs go through exec_git_cmd, which actually implements the
+> "git potty" logic (and git.c itself uses exec_git_cmd).  If there is to
+> be a consistent rule for how to exec a git program from a git C program,
+> I think that it's reasonable that there be an API to enforce it.  
+> 
 
-But to describe the surface of "known good", you actually just need a list 
-of known good commits, and the "commits reachable from those commits" 
-_becomes_ the surface.
+True. Perhaps I misread your patch or your reasoning.
 
-> Further, the comparison with 2 dimensions is particularly bad.
 
-No it is not. It's a very good comparison.
+> Note that the creation and use of such a function simply means that we
+> hide the logic that handles PATH/GIT_EXEC_PATH; how git_exec_cmd()
+> actually calls execve() and how PATH and GIT_EXEC_PATH are used is a
+> separate issue.  When it comes to the former, I think it is best to have
+> all exec's of git programs go through an interface that imposes the same
+> PATH/GIT_EXEC_PATH logics.  As to the latter, my only concern is that we
+> should never do 'setenv("PATH",....)'.
+> 
 
-In a linearized model (one-dimensional, fully ordered set), the only thing 
-you need for bisection is two points: the beginning and the end.
+setenv("PATH", ..) is way preferrable over the git-setup.sh hackery 
+suggested above, so long as it's only ever done in the git potty. That's 
+what the potty is there for, after all.
 
-In the git model, you need _many_ points to describe the area being 
-bisected. Exactly the same way as if you were to bisect a 2-dimensional 
-surface.
+> 
+>>>An approach that I think is better is to require all exec's of git
+>>>programs from within git programs to use a specific git interface,
+>>>rather than letting each one set up it's own exec parameters.
+>>>
+>>
+>>A better idea would be to teach {send,upload}-pack about $GIT_EXEX_PATH 
+>>and export it from your shells rc-file.
+>>
+> 
+> 
+> My shell's rc-file doesn't get invoked when using ssh as a transport;
+> that's part of the problem.
+> 
 
-Now, the git history is _not_ really a two-dimensional surface, so it's 
-just an analogy, not an exact identity. But from a visualization 
-standpoint, it's a good way to think of each "git bisect" as adding a 
-_line_ on the surface rather than a point on a linear line.
+It does for me and everybody else. $HOME/.bashrc is read even for 
+non-interactive shells. $HOME/.bash_profile isn't. If you're using 
+git-shell you're in to a whole different situation, but you didn't say 
+so so I don't think you are.
 
-> So, how is bisect supposed to work if you don't have one straight 
-> development line from bad to good?
+>>
+>>If a user invokes "/home/user/bin/git-foo" rather than 
+>>"/home/user/bin/git foo" he/she will have to have the rest of the 
+>>git-suite in the $PATH. Prepending whatever directory any git-* program 
+>>happens to reside in to $PATH is not a good idea. 
+> 
+> 
+> Isn't this exactly what git.c is doing currently via prepend_to_path()?
+> 
 
-Read the code.
+No. git prepends whatever was passed in --exec-path=/some/path, what's 
+found in $GIT_EXEC_PATH or the GIT_EXEC_PATH pre-processor macro set at 
+compile-time, in that order of preference. There's a very big difference.
 
-I'm pretty proud of it. It's simple, and it's obvious once you think about 
-it, but it is pretty novel as far as I know. BK certainly had nothing 
-similar, not have I heard of anythign else that does it. Git _might_ be 
-the first thing that has ever done it, although it's simple enough that I 
-wouldn't be surprised if others have too.
 
-			Linus
+> git programs exec other git programs, but they also exec non-git
+> programs.  I think it is not appropriate to change PATH (via
+> prepend_to_path) because this may result in unexpected behavior when
+> exec'ing non-git programs:
+> 
+> Suppose git is installed in /usr/bin, where a "diff" resided.
+> I've got my own version of "diff" in /home/user/bin.
+> PATH=/home/user/bin:/usr/bin.
+> 
+> If git now tries to execute "diff", after having run
+> prepend_to_path(), /usr/bin/diff gets executed, not /home/user/bin/diff.
+> The user has set up PATH to ensure that /home/user/bin/diff is the diff,
+> but by mucking with PATH we subvert their intentions.
+> 
+
+Good point. Perhaps we should only prepend to path when the directory 
+isn't already in $PATH, or append rather than prepend.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
