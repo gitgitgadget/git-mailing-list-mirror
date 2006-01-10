@@ -1,60 +1,88 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git pull on Linux/ACPI release tree
-Date: Tue, 10 Jan 2006 21:47:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0601102122001.30609@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060109225143.60520.qmail@web31807.mail.mud.yahoo.com>
- <Pine.LNX.4.64.0601091845160.5588@g5.osdl.org> <99D82C29-4F19-4DD3-A961-698C3FC0631D@mac.com>
- <46a038f90601092238r3476556apf948bfe5247da484@mail.gmail.com>
- <252A408D-0B42-49F3-92BC-B80F94F19F40@mac.com> <Pine.LNX.4.64.0601101015260.4939@g5.osdl.org>
- <Pine.LNX.4.63.0601101938420.26999@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0601101048440.4939@g5.osdl.org>
- <Pine.LNX.4.63.0601102010100.27199@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0601101151090.4939@g5.osdl.org>
+Subject: Re: [PATCH 2/2] Remember and use GIT_EXEC_PATH on exec()'s
+Date: Tue, 10 Jan 2006 22:03:22 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0601102200040.31923@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1136849678.11717.514.camel@brick.watson.ibm.com> 
+ <1136849810.11717.518.camel@brick.watson.ibm.com>  <7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>
+  <1136900174.11717.537.camel@brick.watson.ibm.com> <43C3CC4A.4030805@op5.se>
+  <1136910406.11717.579.camel@brick.watson.ibm.com>  <7vzmm36f1x.fsf@assigned-by-dhcp.cox.net>
+  <Pine.LNX.4.63.0601102054200.27363@wbgn013.biozentrum.uni-wuerzburg.de>
+ <1136925066.11717.605.camel@brick.watson.ibm.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 10 21:47:44 2006
+Cc: Junio C Hamano <junkio@cox.net>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 10 22:03:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwQOy-0005e7-4p
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 21:47:32 +0100
+	id 1EwQeS-0000uv-Bz
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 22:03:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932622AbWAJUrV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 15:47:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932632AbWAJUrV
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 15:47:21 -0500
-Received: from mail.gmx.de ([213.165.64.21]:60848 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932622AbWAJUrJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 15:47:09 -0500
-Received: (qmail invoked by alias); 10 Jan 2006 20:47:08 -0000
-Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
-  by mail.gmx.net (mp034) with SMTP; 10 Jan 2006 21:47:08 +0100
-X-Authenticated: #1490710
+	id S932636AbWAJVD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 16:03:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932663AbWAJVDZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 16:03:25 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:40408 "EHLO
+	wrzx35.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932636AbWAJVDX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2006 16:03:23 -0500
+Received: from amavis.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.46])
+	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id AE16CE6024; Tue, 10 Jan 2006 22:03:22 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by amavis.mail (Postfix) with ESMTP id 9EE3D955;
+	Tue, 10 Jan 2006 22:03:22 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by amavis.mail (Postfix) with ESMTP id 8026897D;
+	Tue, 10 Jan 2006 22:03:22 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 29120141374; Tue, 10 Jan 2006 22:03:22 +0100 (CET)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0601101151090.4939@g5.osdl.org>
-X-Y-GMX-Trusted: 0
+To: Michal Ostrowski <mostrows@watson.ibm.com>
+In-Reply-To: <1136925066.11717.605.camel@brick.watson.ibm.com>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14455>
 
 Hi,
 
-On Tue, 10 Jan 2006, Linus Torvalds wrote:
+On Tue, 10 Jan 2006, Michal Ostrowski wrote:
 
-> So having multiple bad commits is _never_ interesting.
+> On Tue, 2006-01-10 at 20:55 +0100, Johannes Schindelin wrote:
+> > Hi,
+> > 
+> > On Tue, 10 Jan 2006, Junio C Hamano wrote:
+> > 
+> > > Michal Ostrowski <mostrows@watson.ibm.com> writes:
+> > > 
+> > > > git programs exec other git programs, but they also exec non-git
+> > > > programs.  I think it is not appropriate to change PATH (via
+> > > > prepend_to_path) because this may result in unexpected behavior when
+> > > > exec'ing non-git programs:
+> > > 
+> > > This is a valid concern.
+> > 
+> > Why? If what is prepended to PATH only contains git programs?
+> > 
+> 
+> 
+> If git is installed with prefix=/usr, then that won't be the case.
 
-Okay, I got it. A bug is supposed to be inherited by *all* its 
-descendants. Good.
+Okay, so here we have the problem: Two completely different setups. One 
+into a standard location on the PATH (which used to be the default), the 
+other with a libexec/ directory (which some want in the future). And a git 
+wrapper which makes no difference between both.
 
-I have to keep in mind that a commit is not actually a patch set, but can 
-be two or more (in case of a merge). So, a bug can be present in a 
-development line for a long, long time, but be visible only after a merge. 
-Since that commit can be compared to at least two trees, one of these 
-diffs must show the bug.
+Wouldn't it make much more sense to have a switch in the Makefile, which 
+says *if* we have a libexec/ directory? This switch would decide if we 
+ever prepend the path with the libexec/ directory or not.
 
-Thanks,
+Ciao,
 Dscho
