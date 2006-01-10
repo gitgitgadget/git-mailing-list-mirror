@@ -1,54 +1,58 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] stgit: typo fixes
-Date: Tue, 10 Jan 2006 21:48:56 +0000
-Message-ID: <b0943d9e0601101348s7f94303dl@mail.gmail.com>
-References: <1136913240.2444.1.camel@dv>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] git-mv.perl: use stderr for error output and cleanup
+Date: Tue, 10 Jan 2006 23:24:08 +0100
+Message-ID: <20060110222408.GB3155@steel.home>
+References: <81b0412b0601050349s6bec1a36jc410fd315fbbc4c@mail.gmail.com> <7vek3lq8wu.fsf@assigned-by-dhcp.cox.net> <86wthd7ypx.fsf@blue.stonehenge.com> <20060107102820.GB5536@steel.home> <7vk6dcl49x.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 10 22:49:29 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 10 23:24:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwRMT-0004SL-Ih
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 22:49:01 +0100
+	id 1EwRug-0004uG-SZ
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 23:24:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932367AbWAJVs7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 16:48:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932442AbWAJVs7
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 16:48:59 -0500
-Received: from xproxy.gmail.com ([66.249.82.192]:11764 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932367AbWAJVs6 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2006 16:48:58 -0500
-Received: by xproxy.gmail.com with SMTP id i30so5440wxd
-        for <git@vger.kernel.org>; Tue, 10 Jan 2006 13:48:56 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lTz7Ky2S5AWwlHdiHzGlyzZvz+ISnjo7HOOA8sh3f/HxCFl4Bdf6zc9MmUkvc/neRJ4ZrFRz8iibQpZ0HbV1BgDAUSS/uoXWp1tJJSQYia9EMv3Bdn7iu6KGcWDyVGr6ariQ85d44+lQuCvp6QG0cOgxbevvNtYaSqmImU8s48o=
-Received: by 10.70.76.6 with SMTP id y6mr4924312wxa;
-        Tue, 10 Jan 2006 13:48:56 -0800 (PST)
-Received: by 10.70.27.12 with HTTP; Tue, 10 Jan 2006 13:48:56 -0800 (PST)
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1136913240.2444.1.camel@dv>
+	id S932355AbWAJWYU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 17:24:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932575AbWAJWYT
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 17:24:19 -0500
+Received: from devrace.com ([198.63.210.113]:46609 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S932355AbWAJWYS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 17:24:18 -0500
+Received: from tigra.home (p54A070EB.dip.t-dialin.net [84.160.112.235])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id k0AMOCTT022568;
+	Tue, 10 Jan 2006 16:24:13 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1EwRuS-0000b8-00; Tue, 10 Jan 2006 23:24:08 +0100
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1EwRuS-0007Kw-6t; Tue, 10 Jan 2006 23:24:08 +0100
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7vk6dcl49x.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,BAYES_50,
+	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14462>
 
-On 10/01/06, Pavel Roskin <proski@gnu.org> wrote:
-> Signed-off-by: Pavel Roskin <proski@gnu.org>
+Junio C Hamano, Sat, Jan 07, 2006 11:29:46 +0100:
+> >>
+> >>   print H "$_\0" for @deletedfiles;
+> >
+> > Does not work for old Perl
+> 
+> How old may I ask?
+> 
 
-Applied, thanks.
-
-> -        # if modes are the same (git-read-tree probably dealed with it)
-> +        # if modes are the same (git-read-tree probably dealt with it)
-
-I think both are correct (at least in the UK).
-
---
-Catalin
+5.4, probably. I never seen it anymore. Was a standard installation of
+some Solaris box.
