@@ -1,74 +1,68 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: undoing changes with git-checkout -f
-Date: Mon, 9 Jan 2006 20:55:33 -0800
-Message-ID: <20060110045533.GO18439@ca-server1.us.oracle.com>
-References: <43C2D2C4.2010904@cc.jyu.fi> <7vmzi5hy69.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: needs merge
+Date: Tue, 10 Jan 2006 00:21:08 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0601092356400.25300@iabervon.org>
+References: <F7DC2337C7631D4386A2DF6E8FB22B3005A1336F@hdsmsx401.amr.corp.intel.com>
+ <7vy81reoie.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: lamikr <lamikr@cc.jyu.fi>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 05:57:13 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Brown, Len" <len.brown@intel.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 10 06:20:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwBYE-0005Iu-2g
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 05:56:06 +0100
+	id 1EwBvj-0002W9-LE
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 06:20:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750702AbWAJEzn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jan 2006 23:55:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbWAJEzn
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jan 2006 23:55:43 -0500
-Received: from rgminet01.oracle.com ([148.87.122.30]:45465 "EHLO
-	rgminet01.oracle.com") by vger.kernel.org with ESMTP
-	id S1750702AbWAJEzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jan 2006 23:55:42 -0500
-Received: from rgmsgw01.us.oracle.com (rgmsgw01.us.oracle.com [138.1.186.51])
-	by rgminet01.oracle.com (Switch-3.1.6/Switch-3.1.6) with ESMTP id k0A4tXHx022194;
-	Mon, 9 Jan 2006 21:55:33 -0700
-Received: from rgmsgw01.us.oracle.com (localhost.localdomain [127.0.0.1])
-	by rgmsgw01.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0A4tWti004511;
-	Mon, 9 Jan 2006 21:55:32 -0700
-Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.48.5])
-	by rgmsgw01.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0A4tW23004503
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 9 Jan 2006 21:55:32 -0700
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.60)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1EwBXh-000783-7x; Mon, 09 Jan 2006 20:55:33 -0800
+	id S1750793AbWAJFT3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 00:19:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbWAJFT3
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 00:19:29 -0500
+Received: from iabervon.org ([66.92.72.58]:10507 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1750793AbWAJFT2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 00:19:28 -0500
+Received: (qmail 9302 invoked by uid 1000); 10 Jan 2006 00:21:08 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 10 Jan 2006 00:21:08 -0500
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vmzi5hy69.fsf@assigned-by-dhcp.cox.net>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
-User-Agent: Mutt/1.5.11
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
+In-Reply-To: <7vy81reoie.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14406>
 
-On Mon, Jan 09, 2006 at 01:46:38PM -0800, Junio C Hamano wrote:
-> Please do not use rsync:// transport if possible (mvista might
-> only pubilsh via rsync:// and not git://, so it may not be your
-> fault).
+On Sat, 7 Jan 2006, Junio C Hamano wrote:
 
-	Can we teach the git:// fetch program to use CONNECT over HTTP
-proxies?  rsync can do this, but git:// cannot, so firewalls that block
-9418 mean we use rsync://
-	I'm mostly offline this week or I'd take a stab at it.
+> *1* While I was trying out the above scenario, I noticed that
+> resolve strategy does not notice this and ended up picking one
+> ancestor at random.  I think this is because case #16 covers
+> only the case where the path P is not changed between C and E
+> and D and F, and case #11 must pick an ancestor and picks one at
+> random.  Daniel, any thoughts on this?
 
-Joel
+Right; in this case, we really want to use a merge program that takes 
+multiple ancestors and handles the equivalent to case #16 at the hunk 
+level, but we don't have such a program available. Such a program would be 
+able to identify whether case #16 ever actually occurs for a hunk, which 
+is important because there will generally be a bunch of case #11s at the 
+file level, even if there aren't any reverts (if the common ancestors 
+disagreed before, and the two branches both changed the file to something 
+entirely new, with no reverts, either ancestor is correct to use and the 
+merge result will be useful; we only need to be careful if there were 
+reverts somewhere, which leads to the possibility of false sharing between 
+a branch and an ancestor, and thereby to ignoring the revert, and my 
+feeling is that rejecting case #11 with divergant ancestors would lead to 
+too many conflicts to make crossing merges useable).
 
--- 
+One possibility, actually, is to steal a trick from the recursive 
+strategy, and have a multi-ancestor merge program which merges all of the 
+ancestors with a merge-style diff (i.e., merge output, but on diff instead 
+of diff3, with all differences being conflicts), and then uses the result 
+as the ancestor for the three-way merge. It seems to me that this would 
+capture the central advantage of the recursive strategy without quite so 
+much work. Or I might be completely wrong; I'm kind of worn out, and may 
+not be thinking clearly.
 
-"We will have to repent in this generation not merely for the
- vitriolic words and actions of the bad people, but for the 
- appalling silence of the good people."
-	- Rev. Dr. Martin Luther King, Jr.
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+	-Daniel
+*This .sig left intentionally blank*
