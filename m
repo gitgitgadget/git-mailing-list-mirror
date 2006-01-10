@@ -1,63 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-bisect is magical
-Date: Tue, 10 Jan 2006 11:45:23 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601101143180.4939@g5.osdl.org>
-References: <dpuoqf$3rp$1@sea.gmane.org> <Pine.LNX.4.64.0601091516460.5588@g5.osdl.org>
- <dq11c6$g15$1@sea.gmane.org> <Pine.LNX.4.64.0601101131540.4939@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] Remember and use GIT_EXEC_PATH on exec()'s
+Date: Tue, 10 Jan 2006 11:47:22 -0800
+Message-ID: <7vzmm36f1x.fsf@assigned-by-dhcp.cox.net>
+References: <1136849678.11717.514.camel@brick.watson.ibm.com>
+	<1136849810.11717.518.camel@brick.watson.ibm.com>
+	<7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>
+	<1136900174.11717.537.camel@brick.watson.ibm.com>
+	<43C3CC4A.4030805@op5.se>
+	<1136910406.11717.579.camel@brick.watson.ibm.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 20:45:38 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 10 20:47:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwPQz-0007lj-AP
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 20:45:33 +0100
+	id 1EwPSp-0008Fa-V5
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 20:47:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932495AbWAJTpa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 14:45:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932524AbWAJTpa
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 14:45:30 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:32663 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932495AbWAJTp3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 14:45:29 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0AJjRDZ029305
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 10 Jan 2006 11:45:28 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0AJjNXp010974;
-	Tue, 10 Jan 2006 11:45:25 -0800
-To: walt <wa1ter@myrealbox.com>
-In-Reply-To: <Pine.LNX.4.64.0601101131540.4939@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750805AbWAJTrZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 14:47:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751090AbWAJTrZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 14:47:25 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:18936 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1750805AbWAJTrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2006 14:47:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060110194533.EFVO17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 10 Jan 2006 14:45:33 -0500
+To: Michal Ostrowski <mostrows@watson.ibm.com>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14442>
 
+Michal Ostrowski <mostrows@watson.ibm.com> writes:
 
+> One could make all the scripts depend on GIT_EXEC_PATH instead of PATH.
+> At build time one could generate wrapper functions in git-sh-setup:
+>
+> function git-foo () {
+> 	$(GIT_EXEC_PATH)/git-foo $*;
+> }
+>
+> Presuming that all scripts include git-sh-setup, no other shell script
+> changes would be needed.
 
-On Tue, 10 Jan 2006, Linus Torvalds wrote:
-> 
-> You can _undo_ the revert, so it's not permanent in that sense. Just do
-> 
-> 	git reset --hard origin
-> 
-> and your "master" branch will be forced back to the state that "origin" 
-> was in.
+Is "git-foo" a valid name to define shell function as?
 
-Btw, you can try this (careful - it will also undo any dirty state you 
-have in your working tree), and then do the "pull" again (which should now 
-be a trivial fast-forward) and then just try to do the "git revert" on the 
-new state.
+> My shell's rc-file doesn't get invoked when using ssh as a transport;
+> that's part of the problem.
 
-An even better option is obviously to figure out _why_ that commit broke 
-for you in the first place, and get it fixed up-stream, so that you don't 
-even need to revert it any more, and the "pull" just fixes it for you ;)
+Not any rc, or are you bitten by bash/ssh misfeature that
+noninteractive sessions do not start with .bash_profile?
 
-			Linus
+>> > Once you have that implemented, we can have a separate discussion of how
+>> > the executable is to be found; 
+>> >  - should we use PATH?
+>> >  - should we change PATH?
+>> >  - should we always exec using an absolute file name? (my preference)
+
+The goal here is to make sure we exec the program from the same
+release (unless user overrides it with GIT_EXEC_PATH to say "I
+want to try 0.99.9k, not the latest one"), but how?  The last
+one feels the most correct way if done right.
+
+> git programs exec other git programs, but they also exec non-git
+> programs.  I think it is not appropriate to change PATH (via
+> prepend_to_path) because this may result in unexpected behavior when
+> exec'ing non-git programs:
+
+This is a valid concern.
