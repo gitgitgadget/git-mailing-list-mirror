@@ -1,78 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 2/2] Remember and use GIT_EXEC_PATH on exec()'s
-Date: Tue, 10 Jan 2006 11:47:22 -0800
-Message-ID: <7vzmm36f1x.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 10 Jan 2006 20:55:01 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0601102054200.27363@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <1136849678.11717.514.camel@brick.watson.ibm.com>
-	<1136849810.11717.518.camel@brick.watson.ibm.com>
-	<7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>
-	<1136900174.11717.537.camel@brick.watson.ibm.com>
-	<43C3CC4A.4030805@op5.se>
-	<1136910406.11717.579.camel@brick.watson.ibm.com>
+ <1136849810.11717.518.camel@brick.watson.ibm.com> <7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>
+ <1136900174.11717.537.camel@brick.watson.ibm.com> <43C3CC4A.4030805@op5.se>
+ <1136910406.11717.579.camel@brick.watson.ibm.com> <7vzmm36f1x.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 20:47:49 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michal Ostrowski <mostrows@watson.ibm.com>,
+	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 10 20:55:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwPSp-0008Fa-V5
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 20:47:29 +0100
+	id 1EwPaX-0001gQ-He
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 20:55:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750805AbWAJTrZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 14:47:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751090AbWAJTrZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 14:47:25 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:18936 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1750805AbWAJTrY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2006 14:47:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060110194533.EFVO17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 10 Jan 2006 14:45:33 -0500
-To: Michal Ostrowski <mostrows@watson.ibm.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932545AbWAJTzF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 14:55:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932544AbWAJTzF
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 14:55:05 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:64978 "EHLO
+	wrzx35.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932540AbWAJTzC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2006 14:55:02 -0500
+Received: from amavis.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id ED6B2E4261; Tue, 10 Jan 2006 20:55:01 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by amavis.mail (Postfix) with ESMTP id DEB931893;
+	Tue, 10 Jan 2006 20:55:01 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by amavis.mail (Postfix) with ESMTP id C3946188B;
+	Tue, 10 Jan 2006 20:55:01 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 0E63D14135E; Tue, 10 Jan 2006 20:55:01 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmm36f1x.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14443>
 
-Michal Ostrowski <mostrows@watson.ibm.com> writes:
+Hi,
 
-> One could make all the scripts depend on GIT_EXEC_PATH instead of PATH.
-> At build time one could generate wrapper functions in git-sh-setup:
->
-> function git-foo () {
-> 	$(GIT_EXEC_PATH)/git-foo $*;
-> }
->
-> Presuming that all scripts include git-sh-setup, no other shell script
-> changes would be needed.
+On Tue, 10 Jan 2006, Junio C Hamano wrote:
 
-Is "git-foo" a valid name to define shell function as?
+> Michal Ostrowski <mostrows@watson.ibm.com> writes:
+> 
+> > git programs exec other git programs, but they also exec non-git
+> > programs.  I think it is not appropriate to change PATH (via
+> > prepend_to_path) because this may result in unexpected behavior when
+> > exec'ing non-git programs:
+> 
+> This is a valid concern.
 
-> My shell's rc-file doesn't get invoked when using ssh as a transport;
-> that's part of the problem.
+Why? If what is prepended to PATH only contains git programs?
 
-Not any rc, or are you bitten by bash/ssh misfeature that
-noninteractive sessions do not start with .bash_profile?
-
->> > Once you have that implemented, we can have a separate discussion of how
->> > the executable is to be found; 
->> >  - should we use PATH?
->> >  - should we change PATH?
->> >  - should we always exec using an absolute file name? (my preference)
-
-The goal here is to make sure we exec the program from the same
-release (unless user overrides it with GIT_EXEC_PATH to say "I
-want to try 0.99.9k, not the latest one"), but how?  The last
-one feels the most correct way if done right.
-
-> git programs exec other git programs, but they also exec non-git
-> programs.  I think it is not appropriate to change PATH (via
-> prepend_to_path) because this may result in unexpected behavior when
-> exec'ing non-git programs:
-
-This is a valid concern.
+Ciao,
+Dscho
