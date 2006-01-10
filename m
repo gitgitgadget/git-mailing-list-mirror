@@ -1,48 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: [ANNOUCNE] GIT 1.1.0
-Date: Mon, 09 Jan 2006 17:21:33 -0800
-Message-ID: <7v1wzgg9nm.fsf@assigned-by-dhcp.cox.net>
-References: <7v4q4eurgu.fsf@assigned-by-dhcp.cox.net>
-	<43C2CAED.8030304@cc.jyu.fi> <7vwth9f1nk.fsf@assigned-by-dhcp.cox.net>
-	<43C2F7E2.4090909@cc.jyu.fi> <43C2FE4A.50203@op5.se>
+Date: Mon, 09 Jan 2006 18:00:49 -0800
+Message-ID: <43C31551.5010202@zytor.com>
+References: <7v4q4eurgu.fsf@assigned-by-dhcp.cox.net>	<43C2CAED.8030304@cc.jyu.fi> <7vwth9f1nk.fsf@assigned-by-dhcp.cox.net>	<43C2F7E2.4090909@cc.jyu.fi> <7v7j99exkc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 02:21:43 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: lamikr@cc.jyu.fi, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 10 03:01:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ew8Ci-0005D0-Oe
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 02:21:41 +0100
+	id 1Ew8p3-0005vf-7C
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 03:01:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbWAJBVi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jan 2006 20:21:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750853AbWAJBVi
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jan 2006 20:21:38 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:48834 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1750783AbWAJBVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jan 2006 20:21:37 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060110011904.LVJY20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 9 Jan 2006 20:19:04 -0500
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <43C2FE4A.50203@op5.se> (Andreas Ericsson's message of "Tue, 10
-	Jan 2006 01:22:34 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932138AbWAJCBO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jan 2006 21:01:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932140AbWAJCBO
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jan 2006 21:01:14 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:39867 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932138AbWAJCBN
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 Jan 2006 21:01:13 -0500
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k0A20r9E017434
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 9 Jan 2006 18:00:54 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7j99exkc.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14395>
 
-Andreas Ericsson <ae@op5.se> writes:
+Junio C Hamano wrote:
+> lamikr <lamikr@cc.jyu.fi> writes:
+> 
+>>Did you mean that things should work after 1.1.1 is released?
+>>I tried to fresh build and install of 1.1.0 on top of the previous
+>>1.1.0 build but "git --version" is still displaying me "git version 1.0.GIT"
+> 
+> You need to build from a git repository for these automated
+> version numbers to work, and this will *not* change post 1.1.1.
+> 
 
-> I have no solution to this, apart from rewriting the Makefile on the
-> fly whenever a release tarball is created.
+Tarballs really should work as-is... the easy way to deal with that is 
+to have the tarball make script generate a version file which isn't part 
+of the git tree.
 
-Well, there is always an option to update the fallback version
-number hardcoded in GIT-VERSION-GEN script, but that kind fo
-defeats the whole idea of the current setup, so...
+I'll send a patch under a separate cover.
+
+	-hpa
