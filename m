@@ -1,72 +1,75 @@
-From: Michal Ostrowski <mostrows@watson.ibm.com>
-Subject: Re: [PATCH 2/2] Remember and use GIT_EXEC_PATH on exec()'s
-Date: Tue, 10 Jan 2006 15:32:47 -0500
-Message-ID: <1136925167.11717.607.camel@brick.watson.ibm.com>
-References: <1136849678.11717.514.camel@brick.watson.ibm.com>
-	 <1136849810.11717.518.camel@brick.watson.ibm.com>
-	 <7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>
-	 <1136900174.11717.537.camel@brick.watson.ibm.com> <43C3CC4A.4030805@op5.se>
-	 <1136910406.11717.579.camel@brick.watson.ibm.com> <43C4075E.4070407@op5.se>
-	 <20060110201536.GA3155@steel.home>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: git pull on Linux/ACPI release tree
+Date: Wed, 11 Jan 2006 09:33:11 +1300
+Message-ID: <46a038f90601101233h5def4840k315be9520796b5e@mail.gmail.com>
+References: <F7DC2337C7631D4386A2DF6E8FB22B3005A13505@hdsmsx401.amr.corp.intel.com>
+	 <Pine.LNX.4.64.0601081111190.3169@g5.osdl.org>
+	 <20060108230611.GP3774@stusta.de>
+	 <Pine.LNX.4.64.0601081909250.3169@g5.osdl.org>
+	 <20060110201909.GB3911@stusta.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 21:31:54 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	"Brown, Len" <len.brown@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
+	akpm@osdl.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 10 21:33:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwQ9R-0001nF-0b
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 21:31:29 +0100
+	id 1EwQBB-0002GM-Se
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 21:33:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932604AbWAJUb0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 15:31:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932597AbWAJUbZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 15:31:25 -0500
-Received: from igw2.watson.ibm.com ([129.34.20.6]:34733 "EHLO
-	igw2.watson.ibm.com") by vger.kernel.org with ESMTP id S932604AbWAJUbY
+	id S932612AbWAJUdO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 15:33:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932615AbWAJUdO
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 15:33:14 -0500
+Received: from wproxy.gmail.com ([64.233.184.196]:7534 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932612AbWAJUdN convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2006 15:31:24 -0500
-Received: from sp1n293en1.watson.ibm.com (sp1n293en1.watson.ibm.com [129.34.20.41])
-	by igw2.watson.ibm.com (8.12.11/8.13.1/8.13.1-2005-04-25 igw) with ESMTP id k0AKXRfM014662;
-	Tue, 10 Jan 2006 15:33:27 -0500
-Received: from sp1n293en1.watson.ibm.com (localhost [127.0.0.1])
-	by sp1n293en1.watson.ibm.com (8.11.7-20030924/8.11.7/01-14-2004_2) with ESMTP id k0AKVDk396666;
-	Tue, 10 Jan 2006 15:31:14 -0500
-Received: from mgsmtp00.watson.ibm.com (mgsmtp00.watson.ibm.com [9.2.40.58])
-	by sp1n293en1.watson.ibm.com (8.11.7-20030924/8.11.7/01-14-2004_1) with ESMTP id k0AKVCu306348;
-	Tue, 10 Jan 2006 15:31:13 -0500
-Received: from kitch0.watson.ibm.com (kitch0.watson.ibm.com [9.2.224.107])
-	by mgsmtp00.watson.ibm.com (8.12.11/8.12.11/2005/09/01) with ESMTP id k0ALRvng032394;
-	Tue, 10 Jan 2006 16:27:57 -0500
-Received: from brick (brick.watson.ibm.com [9.2.216.48])
-	by kitch0.watson.ibm.com (AIX5.1/8.11.6p2/8.11.0/03-06-2002) with ESMTP id k0AKV9m31444;
-	Tue, 10 Jan 2006 15:31:09 -0500
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <20060110201536.GA3155@steel.home>
-X-Mailer: Evolution 2.4.1 
+	Tue, 10 Jan 2006 15:33:13 -0500
+Received: by wproxy.gmail.com with SMTP id 71so3478578wra
+        for <git@vger.kernel.org>; Tue, 10 Jan 2006 12:33:12 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jieoAXgq96YPFX++bqeswZHKmgmOlSlFOTsXDc9p9BIQQY0Btk3F1CFxdHymbGPBcYiRviaADepn4LrLFAjytiMk77L459+DCrQcT/r0/7RE2RpjGE0H6yIZV1y+XIz9897x5OGkpgGPgjkpmFU9Pkm7NxI6ULzag7q0qHy2NKQ=
+Received: by 10.54.115.5 with SMTP id n5mr5751765wrc;
+        Tue, 10 Jan 2006 12:33:11 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Tue, 10 Jan 2006 12:33:11 -0800 (PST)
+To: Adrian Bunk <bunk@stusta.de>
+In-Reply-To: <20060110201909.GB3911@stusta.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14451>
 
-On Tue, 2006-01-10 at 21:15 +0100, Alex Riesen wrote:
-> Andreas Ericsson, Tue, Jan 10, 2006 20:13:34 +0100:
-> > >My shell's rc-file doesn't get invoked when using ssh as a transport;
-> > >that's part of the problem.
-> > 
-> > It does for me and everybody else. $HOME/.bashrc is read even for 
-> > non-interactive shells. ...
+On 1/11/06, Adrian Bunk <bunk@stusta.de> wrote:
+> I am using the workaround of carrying the patches in a mail folder,
+> applying them in a batch, and not pulling from your tree between
+> applying a batch of patches and you pulling from my tree.
 
-On the system I'm dealing with, ssh does not invoke bash if a command is
-specified.
+In that case, there's a mostly automated way of doing that if you read
+the last couple lines of git-rebase, using something along the lines
+of
 
-If I do ssh user@system /home/user/bin/foo,  ssh performs an exec
-of /home/user/bin/foo; my shell is never invoked.  This isn't up to me;
-I don't have root on this system.
+      git-format-patch <yours> <linus> | git-am -3 -k
+
+> I'd say the main problem is that git with several other projects like
+> cogito and stg on top of it allow many different workflows. But finding
+> the one that suits one's needs without doing something in a wrong way
+> is non-trivial.
+
+You are right about that, but much of the space (of what workflows are
+interesting) is still being explored, and git and the porcelains
+reacting to people's interests. So it's still a moving target. A fast
+moving target.
+
+cheers,
 
 
--- 
-Michal Ostrowski <mostrows@watson.ibm.com>
+martin
