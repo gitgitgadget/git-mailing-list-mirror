@@ -1,73 +1,81 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Alex Riesen <raa.lkml-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
 Subject: Re: git pull on Linux/ACPI release tree
-Date: Sun, 08 Jan 2006 00:16:51 -0800 (PST)
-Message-ID: <tnx64os3xri.fsf@arm.com>
-References: <F7DC2337C7631D4386A2DF6E8FB22B3005A13489@hdsmsx401.amr.corp.intel.com>
+Date: Tue, 10 Jan 2006 16:31:19 +0100
+Message-ID: <81b0412b0601100731p46ec276btfe04382a9e53bd5c@mail.gmail.com>
+References: <F7DC2337C7631D4386A2DF6E8FB22B3005A13706@hdsmsx401.amr.corp.intel.com>
+	 <Pine.LNX.4.64.0601090835580.3169@g5.osdl.org>
+	 <7vu0cdjhd1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: torvalds@osdl.org, linux-acpi@vger.kernel.org,
-	linux-kernel@vger.kernel.org, akpm@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 16:32:12 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds-3NddpPZAyC0@public.gmane.org>,
+	"Brown, Len" <len.brown-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>,
+	"Luck, Tony" <tony.luck-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>,
+	Martin Langhoff <martin.langhoff-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
+	"David S. Miller" <davem-fT/PcQaiUtIeIZ0/mPfg9Q@public.gmane.org>,
+	linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
+	akpm-3NddpPZAyC0@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+X-From: linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org Tue Jan 10 16:32:38 2006
+Return-path: <linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+Envelope-to: glad-acpi-devel-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwLTk-0007fW-QS
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 16:32:09 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932230AbWAJPcB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 10:32:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932231AbWAJPcB
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 10:32:01 -0500
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:44699 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S932187AbWAJPb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2006 10:31:59 -0500
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k0AFVW6s022098;
-	Tue, 10 Jan 2006 15:31:32 GMT
-Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
-	 Tue, 10 Jan 2006 15:31:31 +0000
-To: len.brown@intel.com
-In-Reply-To: <F7DC2337C7631D4386A2DF6E8FB22B3005A13489@hdsmsx401.amr.corp.intel.com> (Len
- Brown's message of "Sun, 8 Jan 2006 02:47:30 -0500")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 10 Jan 2006 15:31:31.0996 (UTC) FILETIME=[EEDAC5C0:01C615FA]
-Sender: git-owner@vger.kernel.org
+	id 1EwLUC-0007mf-Kq
+	for glad-acpi-devel-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Tue, 10 Jan 2006 16:32:37 +0100
+Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org via listexpand
+	id S932227AbWAJPc3 (ORCPT <rfc822;glad-acpi-devel@m.gmane.org>);
+	Tue, 10 Jan 2006 10:32:29 -0500
+Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org id S932238AbWAJPc3
+	(ORCPT <rfc822;linux-acpi-outgoing>);
+	Tue, 10 Jan 2006 10:32:29 -0500
+Received: from zeus1.kernel.org ([204.152.191.4]:40119 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S932227AbWAJPc2 convert rfc822-to-8bit
+	(ORCPT <rfc822;linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>);
+	Tue, 10 Jan 2006 10:32:28 -0500
+Received: from nproxy.gmail.com (nproxy.gmail.com [64.233.182.204])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k0AFWP0R014923
+	for <linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>; Tue, 10 Jan 2006 07:32:27 -0800
+Received: by nproxy.gmail.com with SMTP id k26so1361185nfc
+        for <linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>; Tue, 10 Jan 2006 07:31:20 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Gzli5oBRgOOnv4K+jNRmI1P4rg1qYw7uP0yJJSZhd81SAT5GbpAytLri4bih2unFkj4NPf+M0S0c+Qi4/7u4gJTPj/YzPSe7MLVJ0UH/UPrQRre2uo88THnIjr7qvUvMGR6MU+kKhCmYkxKmF3C3lWx4deMgeoFtsS1n2P9vcHo=
+Received: by 10.48.248.11 with SMTP id v11mr81870nfh;
+        Tue, 10 Jan 2006 07:31:19 -0800 (PST)
+Received: by 10.48.248.4 with HTTP; Tue, 10 Jan 2006 07:31:19 -0800 (PST)
+To: Junio C Hamano <junkio-j9pdmedNgrk@public.gmane.org>
+In-Reply-To: <7vu0cdjhd1.fsf-u5dp/1a/izZijMVVUgEtmwqrb7wDvxM8@public.gmane.org>
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus1
+X-Virus-Status: Clean
+Sender: linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14423>
+X-Mailing-List: linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 
-"Brown, Len" wrote:
->>I _really_ wish you wouldn't have those automatic merges.
->>
->>Why do you do them? They add nothing but ugly and unnecessary 
->>history, and in this pull, I think almost exactly half of the
->>commits were just these empty merges.
+On 1/9/06, Junio C Hamano <junkio-j9pdmedNgrk@public.gmane.org> wrote:
+> 2. Fix "git checkout <branch>" so that it does a reasonable thing
+>    even when a dirty path is different in current HEAD and
+>    destination branch.  Then I could:
 >
-> Is it possible for it git, like bk, to simply ignore merge commits
-> in its summary output?
+>         $ git checkout symref ;# this would not work in the current git
+>             # it would die like this:
+>             # $ git checkout symref
+>             # fatal: Entry 'gitweb.cgi' not uptodate. Cannot merge.
 
-As Junio suggested, you can have a look at StGIT
-(http://www.procode.org/stgit/) for a different workflow. There is a
-tutorial both on the web and in the doc/ directory but, anyway, it is
-pretty similar to Quilt only that the patches are GIT commits.
+That is actually very interesting. I already wished sometimes to be
+able to switch branches with a dirty working directory (and usually
+ended up with git diff+checkout+apply).
+Even if it results in a merge and conflict markers in files it looks
+like a very practical idea!
 
-In principle, you keep all the patches in a stack whose base is the
-HEAD of Linus' kernel. You can indefinitely modify/push/pop the
-patches and, once you are happy with the state of the stack, ask Linus
-to pull using standard GIT commands (or mail them with 'stg
-mail'). You can afterwards pull the latest changes from Linus using
-'stg pull'. This operation pops the patches you have, advances the
-base of the stack (so no "merge" message) and pushes your patches
-back. Since pushing is done with a three-way merge, it detects whether
-there are any upstream modifications to your patches (if not, all the
-patches should become empty and safely removed from the stack).
-
-You can also have a branch for upstream merges only and you can easily
-cherry-pick patches or commits from other branches. This is quite
-useful if you want to continue the work on your development branch
-until Linus merges your patches.
-
--- 
-Catalin
+>         $ git diff ;# just to make sure inevitable automated merge
+>                     # did the right thing
+>         $ git commit -a -m "Fix symref fix"
+>             # I could collapse them into one instead, like this:
+>             # $ git reset --soft HEAD^
+>             # $ git commit -a -C ORIG_HEAD
+-
+To unsubscribe from this list: send the line "unsubscribe linux-acpi" in
+the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
