@@ -1,77 +1,90 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 2/2] Remember and use GIT_EXEC_PATH on exec()'s
-Date: Tue, 10 Jan 2006 21:15:36 +0100
-Message-ID: <20060110201536.GA3155@steel.home>
-References: <1136849678.11717.514.camel@brick.watson.ibm.com> <1136849810.11717.518.camel@brick.watson.ibm.com> <7vwth8bxqd.fsf@assigned-by-dhcp.cox.net> <1136900174.11717.537.camel@brick.watson.ibm.com> <43C3CC4A.4030805@op5.se> <1136910406.11717.579.camel@brick.watson.ibm.com> <43C4075E.4070407@op5.se>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Adrian Bunk <bunk@stusta.de>
+Subject: Re: git pull on Linux/ACPI release tree
+Date: Tue, 10 Jan 2006 21:19:09 +0100
+Message-ID: <20060110201909.GB3911@stusta.de>
+References: <F7DC2337C7631D4386A2DF6E8FB22B3005A13505@hdsmsx401.amr.corp.intel.com> <Pine.LNX.4.64.0601081111190.3169@g5.osdl.org> <20060108230611.GP3774@stusta.de> <Pine.LNX.4.64.0601081909250.3169@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michal Ostrowski <mostrows@watson.ibm.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 21:15:58 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Cc: "Brown, Len" <len.brown@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
+	akpm@osdl.org, git@vger.kernel.org
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932574AbWAJUT1@vger.kernel.org Tue Jan 10 21:20:42 2006
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932574AbWAJUT1@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwPuM-0006LK-Ik
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 21:15:54 +0100
+	id 1EwPyc-0007WE-8p
+	for glk-linux-kernel-3@gmane.org; Tue, 10 Jan 2006 21:20:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932555AbWAJUPw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 15:15:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932557AbWAJUPv
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 15:15:51 -0500
-Received: from devrace.com ([198.63.210.113]:43791 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S932555AbWAJUPv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 15:15:51 -0500
-Received: from tigra.home (p54A06FF2.dip.t-dialin.net [84.160.111.242])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k0AKFc32021226;
-	Tue, 10 Jan 2006 14:15:39 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1EwPu5-0005Om-00; Tue, 10 Jan 2006 21:15:37 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1EwPu4-00052J-Tz; Tue, 10 Jan 2006 21:15:36 +0100
-To: Andreas Ericsson <ae@op5.se>
+	id S932574AbWAJUT1 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 10 Jan 2006 15:19:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932576AbWAJUT0
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Tue, 10 Jan 2006 15:19:26 -0500
+Received: from mailout.stusta.mhn.de ([141.84.69.5]:38153 "HELO
+	mailout.stusta.mhn.de") by vger.kernel.org with SMTP
+	id S932574AbWAJUTM (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 10 Jan 2006 15:19:12 -0500
+Received: (qmail 9286 invoked from network); 10 Jan 2006 20:19:10 -0000
+Received: from r063144.stusta.swh.mhn.de (10.150.63.144)
+  by mailout.stusta.mhn.de with SMTP; 10 Jan 2006 20:19:10 -0000
+Received: by r063144.stusta.swh.mhn.de (Postfix, from userid 1000)
+	id 6E0C519736C; Tue, 10 Jan 2006 21:19:10 +0100 (CET)
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <43C4075E.4070407@op5.se>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,BAYES_50,
-	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0601081909250.3169@g5.osdl.org>
+User-Agent: Mutt/1.5.11
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14445>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14446>
 
-Andreas Ericsson, Tue, Jan 10, 2006 20:13:34 +0100:
-> >My shell's rc-file doesn't get invoked when using ssh as a transport;
-> >that's part of the problem.
-> 
-> It does for me and everybody else. $HOME/.bashrc is read even for 
-> non-interactive shells. ...
+On Sun, Jan 08, 2006 at 07:26:50PM -0800, Linus Torvalds wrote:
+>...
+> THIS is what "rebase" is for. It sounds like what you really want to do is 
+> not have a development branch at all, but you just want to track my tree 
+> and then keep track of a few branches of your own. In other words, you 
+> don't really have a "real" branch - you've got an odd collection of 
+> patches that you really want to carry around on top of _my_ branch. No?
 
-Not really:
+Yes.
 
-$ man bash
+> Now, in this model, you're not really using git as a distributed system. 
+> In this model, you're using git to track somebody elses tree, and track a 
+> few patches on top of it, and then "git rebase" is a way to move the base 
+> that you're tracking your patches against forwards..
 
-       When bash is started non-interactively, to  run  a  shell  script,  for
-       example, it looks for the variable BASH_ENV in the environment, expands
-       its value if it appears there, and uses the expanded value as the  name
-       of  a  file to read and execute.  Bash behaves as if the following com-
-       mand were executed:
-              if [ -n "$BASH_ENV" ]; then . "$BASH_ENV"; fi
-       but the value of the PATH variable is not used to search for  the  file
-       name.
+I am using the workaround of carrying the patches in a mail folder, 
+applying them in a batch, and not pulling from your tree between 
+applying a batch of patches and you pulling from my tree.
 
-$ ssh host2 strace -e open bash -c :
-open("/etc/ld.so.cache", O_RDONLY)      = 3
-open("/lib/libncurses.so.5", O_RDONLY)  = 3
-open("/lib/tls/libdl.so.2", O_RDONLY)   = 3
-open("/lib/tls/libc.so.6", O_RDONLY)    = 3
-open("/dev/tty", O_RDWR|O_NONBLOCK|O_LARGEFILE) = -1 ENXIO (No such device or address)
-open("/etc/mtab", O_RDONLY)             = 3
-open("/proc/meminfo", O_RDONLY)         = 3
-open("/proc/sys/kernel/ngroups_max", O_RDONLY) = 3
+> It's also entirely possible that you may want to look at "stacked git"
+> (stg), which is really more about a "quilt on top of git" approach. Which
+> again, may or may not suit your needs better.
+>...
+
+After a quick look, stg seems to be an interesting project that might 
+suit my needs.
+
+I'd say the main problem is that git with several other projects like 
+cogito and stg on top of it allow many different workflows. But finding 
+the one that suits one's needs without doing something in a wrong way
+is non-trivial.
+
+It might help if someone could write some kind of "Git for dummies" that 
+focusses only on the usage and advantages/disadvantages of user 
+interfaces like cogito, stg and (H)GCT and restricts the discussion of 
+git internals to a short paragraph in the introduction.
+
+> 		Linus
+
+cu
+Adrian
+
+-- 
+
+       "Is there not promise of rain?" Ling Tan asked suddenly out
+        of the darkness. There had been need of rain for many days.
+       "Only a promise," Lao Er said.
+                                       Pearl S. Buck - Dragon Seed
