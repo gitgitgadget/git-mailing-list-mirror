@@ -1,165 +1,77 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 2/2] Remember and use GIT_EXEC_PATH on exec()'s
-Date: Tue, 10 Jan 2006 20:13:34 +0100
-Message-ID: <43C4075E.4070407@op5.se>
-References: <1136849678.11717.514.camel@brick.watson.ibm.com>	 <1136849810.11717.518.camel@brick.watson.ibm.com>	 <7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>	 <1136900174.11717.537.camel@brick.watson.ibm.com> <43C3CC4A.4030805@op5.se> <1136910406.11717.579.camel@brick.watson.ibm.com>
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: git-bisect is magical
+Date: Tue, 10 Jan 2006 11:19:33 -0800
+Organization: none
+Message-ID: <dq11c6$g15$1@sea.gmane.org>
+References: <dpuoqf$3rp$1@sea.gmane.org> <Pine.LNX.4.64.0601091516460.5588@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 20:13:45 2006
+X-From: git-owner@vger.kernel.org Tue Jan 10 20:20:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwOw6-0007uF-Th
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 20:13:39 +0100
+	id 1EwP2N-0000zG-PS
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 20:20:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291AbWAJTNg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 14:13:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751302AbWAJTNg
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 14:13:36 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:46739 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751291AbWAJTNf
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2006 14:13:35 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 68DD46BD03; Tue, 10 Jan 2006 20:13:34 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Michal Ostrowski <mostrows@watson.ibm.com>
-In-Reply-To: <1136910406.11717.579.camel@brick.watson.ibm.com>
+	id S932237AbWAJTUE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 14:20:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751311AbWAJTUE
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 14:20:04 -0500
+Received: from main.gmane.org ([80.91.229.2]:27078 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751305AbWAJTUB (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 14:20:01 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EwP25-0000uP-5n
+	for git@vger.kernel.org; Tue, 10 Jan 2006 20:19:49 +0100
+Received: from adsl-69-234-210-171.dsl.irvnca.pacbell.net ([69.234.210.171])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Jan 2006 20:19:49 +0100
+Received: from wa1ter by adsl-69-234-210-171.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Jan 2006 20:19:49 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-210-171.dsl.irvnca.pacbell.net
+User-Agent: Mail/News 1.6a1 (X11/20060110)
+In-Reply-To: <Pine.LNX.4.64.0601091516460.5588@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14437>
 
-Michal Ostrowski wrote:
-> On Tue, 2006-01-10 at 16:01 +0100, Andreas Ericsson wrote:
-> 
-> 
->>This is the case in the git potty already. git.c must prepend 
->>--exec-path to $PATH, or the whole idea of being able to move scripts 
->>out of the $PATH fails (at least it fails without changing quite a few 
->>of the scripts).
-> 
-> 
-> One could make all the scripts depend on GIT_EXEC_PATH instead of PATH.
-> At build time one could generate wrapper functions in git-sh-setup:
-> 
-> function git-foo () {
-> 	$(GIT_EXEC_PATH)/git-foo $*;
-> }
-> 
-> Presuming that all scripts include git-sh-setup, no other shell script
-> changes would be needed.
-> 
+Linus Torvalds wrote:
+[...]
+> but the fact is, whenever you leave off the version specifier, it will 
+> just assume that "current HEAD" is it...
 
-Yuck, for two reasons.
+I'm still very much struggling with nomenclature, and trying to
+deduce what is a synonym for what, and which words cannot be used
+synonymously.
 
-* Not all scripts include git-sh-setup, and for good reasons. If this is 
-what you intend please make sure you don't break anything in the process.
+Yesterday (while reading the bisect HOWTO) I did a git-revert on the
+'bad' commit, which indeed fixed my bug.  But this caused a problem
+this morning when I did my daily 'cg-update' for the kernel.
 
-* This will spawn a sub-shell for each git-foo process called. Shells 
-are way more expensive than the git potty, so the performance hit in 
-iterations might be considerable. Think StGit and Cogito as well.
+I got a merge conflict (of course) because of yesterday's git-revert.
 
+My question (I think) is:  exactly what did I change when I did the
+git-revert?  I notice in retrospect that (in refs/heads) master is
+no longer identical to origin.  I think (but I'm not certain) that
+the two used to be the same.  (For example, in my 'git' repository
+the 'master' and 'origin' files are identical.)
 
-On a side-note, $* will break quoting (you should use "$@" instead, with 
-double-quotes attached), and
+Did the git-revert change my local kernel repository permanently?
+Did the merge-conflict prevent today's cg-update from updating my
+local repository with your commits from the last 24 hours?  Or is
+the merge conflict only with my currently checked-out-and-modified
+copy of the repository?
 
-	$(GIT_EXEC_PATH)/git-foo $*
+Is it clear to you why I'm confused? :o)  Most of my muddle is
+because I don't know the definitions of some important words, I
+suspect.
 
-will try to execute GIT_EXEC_PATH and prepend its output to the rest of 
-the command, which is quite obviously wrong.
-
-
-> 
->>Since it's already in place in the potty and that's required to be in 
->>the $PATH, I think Junio's suggestion of running execlp("git", "git", 
->>...) is a good one. It will add one extra fork() and execve() for each 
->>clone/pull/push, but that isn't much of an issue, really.
->>
-> 
-> 
-> The patch I posted most recently does something comparable; all exec's
-> by C git programs go through exec_git_cmd, which actually implements the
-> "git potty" logic (and git.c itself uses exec_git_cmd).  If there is to
-> be a consistent rule for how to exec a git program from a git C program,
-> I think that it's reasonable that there be an API to enforce it.  
-> 
-
-True. Perhaps I misread your patch or your reasoning.
-
-
-> Note that the creation and use of such a function simply means that we
-> hide the logic that handles PATH/GIT_EXEC_PATH; how git_exec_cmd()
-> actually calls execve() and how PATH and GIT_EXEC_PATH are used is a
-> separate issue.  When it comes to the former, I think it is best to have
-> all exec's of git programs go through an interface that imposes the same
-> PATH/GIT_EXEC_PATH logics.  As to the latter, my only concern is that we
-> should never do 'setenv("PATH",....)'.
-> 
-
-setenv("PATH", ..) is way preferrable over the git-setup.sh hackery 
-suggested above, so long as it's only ever done in the git potty. That's 
-what the potty is there for, after all.
-
-> 
->>>An approach that I think is better is to require all exec's of git
->>>programs from within git programs to use a specific git interface,
->>>rather than letting each one set up it's own exec parameters.
->>>
->>
->>A better idea would be to teach {send,upload}-pack about $GIT_EXEX_PATH 
->>and export it from your shells rc-file.
->>
-> 
-> 
-> My shell's rc-file doesn't get invoked when using ssh as a transport;
-> that's part of the problem.
-> 
-
-It does for me and everybody else. $HOME/.bashrc is read even for 
-non-interactive shells. $HOME/.bash_profile isn't. If you're using 
-git-shell you're in to a whole different situation, but you didn't say 
-so so I don't think you are.
-
->>
->>If a user invokes "/home/user/bin/git-foo" rather than 
->>"/home/user/bin/git foo" he/she will have to have the rest of the 
->>git-suite in the $PATH. Prepending whatever directory any git-* program 
->>happens to reside in to $PATH is not a good idea. 
-> 
-> 
-> Isn't this exactly what git.c is doing currently via prepend_to_path()?
-> 
-
-No. git prepends whatever was passed in --exec-path=/some/path, what's 
-found in $GIT_EXEC_PATH or the GIT_EXEC_PATH pre-processor macro set at 
-compile-time, in that order of preference. There's a very big difference.
-
-
-> git programs exec other git programs, but they also exec non-git
-> programs.  I think it is not appropriate to change PATH (via
-> prepend_to_path) because this may result in unexpected behavior when
-> exec'ing non-git programs:
-> 
-> Suppose git is installed in /usr/bin, where a "diff" resided.
-> I've got my own version of "diff" in /home/user/bin.
-> PATH=/home/user/bin:/usr/bin.
-> 
-> If git now tries to execute "diff", after having run
-> prepend_to_path(), /usr/bin/diff gets executed, not /home/user/bin/diff.
-> The user has set up PATH to ensure that /home/user/bin/diff is the diff,
-> but by mucking with PATH we subvert their intentions.
-> 
-
-Good point. Perhaps we should only prepend to path when the directory 
-isn't already in $PATH, or append rather than prepend.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Thanks!
