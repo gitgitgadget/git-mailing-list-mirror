@@ -1,68 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: needs merge
-Date: Tue, 10 Jan 2006 00:21:08 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0601092356400.25300@iabervon.org>
-References: <F7DC2337C7631D4386A2DF6E8FB22B3005A1336F@hdsmsx401.amr.corp.intel.com>
- <7vy81reoie.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: undoing changes with git-checkout -f
+Date: Mon, 09 Jan 2006 21:57:40 -0800
+Message-ID: <7vk6d8aaln.fsf@assigned-by-dhcp.cox.net>
+References: <43C2D2C4.2010904@cc.jyu.fi>
+	<7vmzi5hy69.fsf@assigned-by-dhcp.cox.net>
+	<20060110045533.GO18439@ca-server1.us.oracle.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Brown, Len" <len.brown@intel.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 06:20:25 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: lamikr <lamikr@cc.jyu.fi>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 10 06:57:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwBvj-0002W9-LE
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 06:20:24 +0100
+	id 1EwCVv-0000KF-Q0
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 06:57:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750793AbWAJFT3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 00:19:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbWAJFT3
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 00:19:29 -0500
-Received: from iabervon.org ([66.92.72.58]:10507 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1750793AbWAJFT2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 00:19:28 -0500
-Received: (qmail 9302 invoked by uid 1000); 10 Jan 2006 00:21:08 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Jan 2006 00:21:08 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy81reoie.fsf@assigned-by-dhcp.cox.net>
+	id S1750868AbWAJF5p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 00:57:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750857AbWAJF5o
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 00:57:44 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:62175 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1750727AbWAJF5o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2006 00:57:44 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060110055541.PVII26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 10 Jan 2006 00:55:41 -0500
+To: Joel Becker <Joel.Becker@oracle.com>
+In-Reply-To: <20060110045533.GO18439@ca-server1.us.oracle.com> (Joel Becker's
+	message of "Mon, 9 Jan 2006 20:55:33 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14407>
 
-On Sat, 7 Jan 2006, Junio C Hamano wrote:
+Joel Becker <Joel.Becker@oracle.com> writes:
 
-> *1* While I was trying out the above scenario, I noticed that
-> resolve strategy does not notice this and ended up picking one
-> ancestor at random.  I think this is because case #16 covers
-> only the case where the path P is not changed between C and E
-> and D and F, and case #11 must pick an ancestor and picks one at
-> random.  Daniel, any thoughts on this?
+> 	Can we teach the git:// fetch program to use CONNECT over HTTP
+> proxies?  rsync can do this, but git:// cannot, so firewalls that block
+> 9418 mean we use rsync://
+> 	I'm mostly offline this week or I'd take a stab at it.
 
-Right; in this case, we really want to use a merge program that takes 
-multiple ancestors and handles the equivalent to case #16 at the hunk 
-level, but we don't have such a program available. Such a program would be 
-able to identify whether case #16 ever actually occurs for a hunk, which 
-is important because there will generally be a bunch of case #11s at the 
-file level, even if there aren't any reverts (if the common ancestors 
-disagreed before, and the two branches both changed the file to something 
-entirely new, with no reverts, either ancestor is correct to use and the 
-merge result will be useful; we only need to be careful if there were 
-reverts somewhere, which leads to the possibility of false sharing between 
-a branch and an ancestor, and thereby to ignoring the revert, and my 
-feeling is that rejecting case #11 with divergant ancestors would lead to 
-too many conflicts to make crossing merges useable).
+It's been there for quite some time, although I never liked the
+way it interfaces with the outside world.
 
-One possibility, actually, is to steal a trick from the recursive 
-strategy, and have a multi-ancestor merge program which merges all of the 
-ancestors with a merge-style diff (i.e., merge output, but on diff instead 
-of diff3, with all differences being conflicts), and then uses the result 
-as the ancestor for the three-way merge. It seems to me that this would 
-capture the central advantage of the recursive strategy without quite so 
-much work. Or I might be completely wrong; I'm kind of worn out, and may 
-not be thinking clearly.
+	$ cat .git/config
+        [core]
+                repositoryformatversion = 0
+                filemode = true
+                gitproxy = /usr/local/bin/tn-gw-nav-local
+	$ cat /usr/local/bin/tn-gw-nav-local
+        #!/bin/sh
+	# Use squid running at localhost
+        exec tn-gw-nav -H -h 127.0.0.1 -p 3128 "$1" "$2"
+	$ grep SSL /etc/squid/squid.conf
+        acl SSL_ports 443 563 9418 # https snntp git
+        http_access deny CONNECT !SSL_ports
+	$ git fetch --tags git://git.kernel.org/pub/scm/git/git.git/
 
-	-Daniel
-*This .sig left intentionally blank*
+It is a bit inconvenient that "git clone" wrapper cannot be used
+on an existing repository, and without an existing repository
+you cannot have .git/config. You could have the config file in
+your site-wide template area, but admittably it is a bit
+awkward.
