@@ -1,79 +1,74 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: undoing changes with git-checkout -f
-Date: Tue, 10 Jan 2006 18:32:20 +0100
-Message-ID: <81b0412b0601100932v2466151epe44f4c09b18dcc1c@mail.gmail.com>
-References: <43C2D2C4.2010904@cc.jyu.fi>
-	 <7vmzi5hy69.fsf@assigned-by-dhcp.cox.net>
-	 <20060110045533.GO18439@ca-server1.us.oracle.com>
-	 <Pine.LNX.4.63.0601101549360.26054@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <81b0412b0601100817h2a288a4ag337c749857f2c7fc@mail.gmail.com>
-	 <Pine.LNX.4.63.0601101743180.26542@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 18:36:49 2006
+From: Kyle Moffett <mrmacman_g4@mac.com>
+Subject: Re: git pull on Linux/ACPI release tree
+Date: Tue, 10 Jan 2006 13:05:56 -0500
+Message-ID: <252A408D-0B42-49F3-92BC-B80F94F19F40@mac.com>
+References: <20060109225143.60520.qmail@web31807.mail.mud.yahoo.com> <Pine.LNX.4.64.0601091845160.5588@g5.osdl.org> <99D82C29-4F19-4DD3-A961-698C3FC0631D@mac.com> <46a038f90601092238r3476556apf948bfe5247da484@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v746.2)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Luben Tuikov <ltuikov@yahoo.com>,
+	"Brown, Len" <len.brown@intel.com>,
+	"Luck, Tony" <tony.luck@intel.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	linux-acpi@vger.kernel.org,
+	LKML Kernel <linux-kernel@vger.kernel.org>,
+	Andrew Morton <akpm@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 10 19:07:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwNNp-0005m1-Ty
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 18:34:11 +0100
+	id 1EwNta-0007O9-KX
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 19:06:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932800AbWAJRdZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 12:33:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932803AbWAJRdZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 12:33:25 -0500
-Received: from zeus1.kernel.org ([204.152.191.4]:64186 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S932800AbWAJRdY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2006 12:33:24 -0500
-Received: from nproxy.gmail.com (nproxy.gmail.com [64.233.182.200])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k0AHXMuR028007
-	for <git@vger.kernel.org>; Tue, 10 Jan 2006 09:33:23 -0800
-Received: by nproxy.gmail.com with SMTP id x29so174295nfb
-        for <git@vger.kernel.org>; Tue, 10 Jan 2006 09:32:21 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fIPMvVEGgyjZ43LjAmhoK3vGuVosJkI1xbga3OXXsgVlAK6BnEFZk+goBrXG71TUdfJwh/PWgGqICYKlnDINlkBO1l/DySwhEsySyxshihXzH8BnoN3E7+iLK9DP5vI1OZId2z04Y6Cvms7l7CAWVHOkOC3wlhZhAsa23//vYs0=
-Received: by 10.48.30.19 with SMTP id d19mr1012659nfd;
-        Tue, 10 Jan 2006 09:32:21 -0800 (PST)
-Received: by 10.48.248.4 with HTTP; Tue, 10 Jan 2006 09:32:20 -0800 (PST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0601101743180.26542@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus1
-X-Virus-Status: Clean
+	id S932303AbWAJSGz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 13:06:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932308AbWAJSGz
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 13:06:55 -0500
+Received: from smtpout.mac.com ([17.250.248.83]:12782 "EHLO smtpout.mac.com")
+	by vger.kernel.org with ESMTP id S932299AbWAJSGx (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 13:06:53 -0500
+Received: from mac.com (smtpin07-en2 [10.13.10.152])
+	by smtpout.mac.com (Xserve/8.12.11/smtpout07/MantshX 4.0) with ESMTP id k0AI63Ke023671;
+	Tue, 10 Jan 2006 10:06:03 -0800 (PST)
+Received: from [10.0.0.2] (ip70-187-212-71.dc.dc.cox.net [70.187.212.71])
+	(authenticated bits=0)
+	by mac.com (Xserve/smtpin07/MantshX 4.0) with ESMTP id k0AI5x6V010254
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Tue, 10 Jan 2006 10:06:01 -0800 (PST)
+In-Reply-To: <46a038f90601092238r3476556apf948bfe5247da484@mail.gmail.com>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-Mailer: Apple Mail (2.746.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14431>
 
-On 1/10/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > >       Can we teach the git:// fetch program to use CONNECT over HTTP
-> > > > proxies?  rsync can do this, but git:// cannot, so firewalls that block
-> > > > 9418 mean we use rsync://
-> > >
-> > > I think it is good and well with the proxy command support. Everybody can
-> > > write a little script.
-> > >
-> > > Otherwise, where would it end? If you include http_proxy functionality in
-> > > git, why not also https_proxy functionality? And if that, why not
-> >
-> > And, BTW, why not? It may as well stop here.
+On Jan 10, 2006, at 01:38, Martin Langhoff wrote:
+> On 1/10/06, Kyle Moffett <mrmacman_g4@mac.com> wrote:
+>> If they all work, then we know precisely that it's the  
+>> interactions between them, which also makes debugging a lot easier.
 >
-> Because it's not the purpose of git. It is the purpose of a tunnel. Let's
-> not make the mistake of Microsoft here: integrate everything until
-> everything breaks.
+> The more complex your tree structure is, the more the interactions  
+> are likely to be part of the problem. Is git-bisect not useful in  
+> this scenario?
 
-Of course, I do not propose to put the code into connect.c! Let it be
-ip-tunnel.pl,
-or something like that (which btw is really awkward to handle under a well-known
-disabled OS).
+IIRC git-bisect just does an outright linearization of the whole tree  
+anyways, which makes git-bisect work everywhere, even in the presence  
+of difficult cross-merges.  On the other hand, if you are git- 
+bisecting ACPI changes (perhaps due to some ACPI breakage), and ACPI  
+has 10 pulls from mainline, you _also_ have to wade through the  
+bisection of any other changes that occurred in mainline, even if  
+they're totally irrelevant.  This is why it's useful to only pull  
+mainline into your tree (EX: ACPI) when you functionally depend on  
+changes there (as Linus so eloquently expounded upon).
 
-But, it is not exactly standard tunnel, is it? I mean, can you use it
-for something
-else? If not, is there really a point _not_ to put it in the git
-repository? As tunnel
-script or program, or as an instruction file on how to setup a firewall?
+Cheers,
+Kyle Moffett
+
+--
+Q: Why do programmers confuse Halloween and Christmas?
+A: Because OCT 31 == DEC 25.
