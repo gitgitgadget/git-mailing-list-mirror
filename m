@@ -1,65 +1,63 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] git-mv.perl: use stderr for error output and cleanup
-Date: Tue, 10 Jan 2006 23:26:04 +0100
-Message-ID: <20060110222604.GC3155@steel.home>
-References: <81b0412b0601050349s6bec1a36jc410fd315fbbc4c@mail.gmail.com> <7vek3lq8wu.fsf@assigned-by-dhcp.cox.net> <86wthd7ypx.fsf@blue.stonehenge.com> <20060107102820.GB5536@steel.home> <86sls0498w.fsf@blue.stonehenge.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: [PATCH] glossary: explain "master" and "origin"
+Date: Tue, 10 Jan 2006 15:33:12 -0800
+Organization: none
+Message-ID: <dq1g7o$aqh$1@sea.gmane.org>
+References: <Pine.LNX.4.63.0601102226130.649@wbgn013.biozentrum.uni-wuerzburg.de> <20060110213645.GF13450@fieldses.org> <dq1cdd$rob$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 23:29:10 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Jan 11 00:33:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwRzA-00068q-Sg
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 23:29:01 +0100
+	id 1EwSze-0003dl-MD
+	for gcvg-git@gmane.org; Wed, 11 Jan 2006 00:33:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932575AbWAJW26 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 17:28:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbWAJW26
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 17:28:58 -0500
-Received: from devrace.com ([198.63.210.113]:42244 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S932575AbWAJW25 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 17:28:57 -0500
-Received: from tigra.home (p54A070EB.dip.t-dialin.net [84.160.112.235])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k0AMQ8Nx022585;
-	Tue, 10 Jan 2006 16:26:17 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1EwRwK-0000bu-00; Tue, 10 Jan 2006 23:26:04 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1EwRwK-0007L3-4x; Tue, 10 Jan 2006 23:26:04 +0100
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-Content-Disposition: inline
-In-Reply-To: <86sls0498w.fsf@blue.stonehenge.com>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,BAYES_50,
-	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S932705AbWAJXdc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 18:33:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932707AbWAJXdc
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 18:33:32 -0500
+Received: from main.gmane.org ([80.91.229.2]:51398 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932705AbWAJXdb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 18:33:31 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1EwSzR-0003bE-DR
+	for git@vger.kernel.org; Wed, 11 Jan 2006 00:33:21 +0100
+Received: from adsl-69-234-210-171.dsl.irvnca.pacbell.net ([69.234.210.171])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jan 2006 00:33:21 +0100
+Received: from wa1ter by adsl-69-234-210-171.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jan 2006 00:33:21 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-210-171.dsl.irvnca.pacbell.net
+User-Agent: Mail/News 1.6a1 (X11/20060110)
+In-Reply-To: <dq1cdd$rob$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14465>
 
-Randal L. Schwartz, Sat, Jan 07, 2006 11:34:23 +0100:
-> >> >>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
-> Junio> So I'd prefer not touching for (@df) { print H "$_\n" } loops.
-> >> 
-> >> Being as I'm a *bit* familiar with Perl, I'd write that as:
-> >> 
-> >> print H "$_\0" for @deletedfiles;
-> >> 
+walt wrote:
+> J. Bruce Fields wrote:
+> [...]
+>> 	Most projects have one upstream
+>> 	project which they track.  This is is the branch used for
+>> 	tracking that project...
 > 
-> Alex> Does not work for old Perl
+> s/This/'origin'/
 > 
-> Correct.  It was added for Perl 5.5, first released on 22 July 1998.
-> 
-> Are you really saying you need this code to run on Perl 5.4?
+> Lordy, I think many of the world's problems could be solved just
+> by forbidding the use of pronouns entirely!
 
-No, probably not. I definitely don't care, just wanted to point it
-out as another one kind of a strange setup (as if activestat perl +
-cygwin isn't enough...)
+Now that I've had another beer, it occurs to me that a 'pronoun'
+is nothing more or less than a 'pointer' to a noun.
+
+Well!  We all know that pointers are a major source of bugs in
+C code.  Is it possible that lint could be taught to detect
+ambiguous pronouns in everyday speech?
