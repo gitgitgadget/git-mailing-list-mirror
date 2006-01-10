@@ -1,116 +1,105 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
 Subject: Re: git pull on Linux/ACPI release tree
-Date: Tue, 10 Jan 2006 10:27:02 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601101015260.4939@g5.osdl.org>
+Date: Tue, 10 Jan 2006 19:45:11 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0601101938420.26999@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <20060109225143.60520.qmail@web31807.mail.mud.yahoo.com>
  <Pine.LNX.4.64.0601091845160.5588@g5.osdl.org> <99D82C29-4F19-4DD3-A961-698C3FC0631D@mac.com>
  <46a038f90601092238r3476556apf948bfe5247da484@mail.gmail.com>
- <252A408D-0B42-49F3-92BC-B80F94F19F40@mac.com>
+ <252A408D-0B42-49F3-92BC-B80F94F19F40@mac.com> <Pine.LNX.4.64.0601101015260.4939@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Luben Tuikov <ltuikov@yahoo.com>,
-	"Brown, Len" <len.brown@intel.com>,
-	"Luck, Tony" <tony.luck@intel.com>,
-	Junio C Hamano <junkio@cox.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	linux-acpi@vger.kernel.org,
-	LKML Kernel <linux-kernel@vger.kernel.org>,
-	Andrew Morton <akpm@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 10 19:28:49 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Cc: Kyle Moffett <mrmacman_g4-ee4meeAH724@public.gmane.org>,
+	Martin Langhoff <martin.langhoff-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
+	Luben Tuikov <ltuikov-/E1597aS9LQAvxtiuMwx3w@public.gmane.org>,
+	"Brown, Len" <len.brown-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>,
+	"Luck, Tony" <tony.luck-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>,
+	Junio C Hamano <junkio-j9pdmedNgrk@public.gmane.org>,
+	"David S. Miller" <davem-fT/PcQaiUtIeIZ0/mPfg9Q@public.gmane.org>,
+	linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
+	LKML Kernel <linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>,
+	Andrew Morton <akpm-3NddpPZAyC0@public.gmane.org>,
+	Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+X-From: linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org Tue Jan 10 19:45:44 2006
+Return-path: <linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+Envelope-to: glad-acpi-devel-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwOEL-0004VQ-4B
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 19:28:26 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932532AbWAJS2V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 13:28:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932524AbWAJS2V
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 13:28:21 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:57730 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932256AbWAJS2U (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 13:28:20 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0AIRBDZ025195
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 10 Jan 2006 10:27:12 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0AIR3RN007181;
-	Tue, 10 Jan 2006 10:27:04 -0800
-To: Kyle Moffett <mrmacman_g4@mac.com>
-In-Reply-To: <252A408D-0B42-49F3-92BC-B80F94F19F40@mac.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
-Sender: git-owner@vger.kernel.org
+	id 1EwOUl-0000C4-F5
+	for glad-acpi-devel-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Tue, 10 Jan 2006 19:45:23 +0100
+Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org via listexpand
+	id S1751131AbWAJSpW (ORCPT <rfc822;glad-acpi-devel@m.gmane.org>);
+	Tue, 10 Jan 2006 13:45:22 -0500
+Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org id S1751174AbWAJSpW
+	(ORCPT <rfc822;linux-acpi-outgoing>);
+	Tue, 10 Jan 2006 13:45:22 -0500
+Received: from mail.gmx.net ([213.165.64.21]:5298 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751131AbWAJSpU (ORCPT
+	<rfc822;linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>);
+	Tue, 10 Jan 2006 13:45:20 -0500
+Received: (qmail invoked by alias); 10 Jan 2006 18:45:18 -0000
+Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
+  by mail.gmx.net (mp028) with SMTP; 10 Jan 2006 19:45:18 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099-0FSg3roeNkip/NMfPcZd5MorA1QR8sqKCSifqQdEqSIb1SvskN2V4Q@public.gmane.org
+To: Linus Torvalds <torvalds-3NddpPZAyC0@public.gmane.org>
+In-Reply-To: <Pine.LNX.4.64.0601101015260.4939-hNm40g4Ew95AfugRpC6u6w@public.gmane.org>
+X-Y-GMX-Trusted: 0
+Sender: linux-acpi-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14432>
+X-Mailing-List: linux-acpi-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 
+Hi,
 
-On Tue, 10 Jan 2006, Kyle Moffett wrote:
->
-> On Jan 10, 2006, at 01:38, Martin Langhoff wrote:
-> > 
-> > The more complex your tree structure is, the more the interactions are
-> > likely to be part of the problem. Is git-bisect not useful in this scenario?
+On Tue, 10 Jan 2006, Linus Torvalds wrote:
+
 > 
-> IIRC git-bisect just does an outright linearization of the whole tree anyways,
-> which makes git-bisect work everywhere, even in the presence of difficult
-> cross-merges.
+> On Tue, 10 Jan 2006, Kyle Moffett wrote:
+> >
+> > On Jan 10, 2006, at 01:38, Martin Langhoff wrote:
+> > > 
+> > > The more complex your tree structure is, the more the interactions are
+> > > likely to be part of the problem. Is git-bisect not useful in this scenario?
+> > 
+> > IIRC git-bisect just does an outright linearization of the whole tree anyways,
+> > which makes git-bisect work everywhere, even in the presence of difficult
+> > cross-merges.
+> 
+> It's not really a linearization - at no time does git-bisect _order_ the 
+> commits. After all, no linear order actually exists. 
+> 
+> Instead, it really cuts the tree up into successively smaller parts. 
+> 
+> Think of it as doing a binary search in a 2-dimensional surface - you 
+> can't linearize the plane, but you can decide to test first one half of 
+> the surface, and then depending on whether it was there, you can halve 
+> that surface etc.. 
 
-It's not really a linearization - at no time does git-bisect _order_ the 
-commits. After all, no linear order actually exists. 
+How?
 
-Instead, it really cuts the tree up into successively smaller parts. 
+If you bisect, you test a commit. If the commit is bad, you assume *all* 
+commits before that as bad. If it is good, you assume *all* commits after 
+that as good.
 
-Think of it as doing a binary search in a 2-dimensional surface - you 
-can't linearize the plane, but you can decide to test first one half of 
-the surface, and then depending on whether it was there, you can halve 
-that surface etc.. 
+Now, if you have a 2-dimensional surface, you don't have a *point*, but 
+typically a *line* separating good from bad.
 
-> On the other hand, if you are git-bisecting ACPI changes
-> (perhaps due to some ACPI breakage), and ACPI has 10 pulls from mainline, you
-> _also_ have to wade through the bisection of any other changes that occurred
-> in mainline, even if they're totally irrelevant.
+Further, the comparison with 2 dimensions is particularly bad. You 
+*have* partially linear development lines, it got *nothing* to do with 
+an area. The commits still make up a *list*, and it depends how you 
+*order* that list for bisect. (And don't tell me they are not ordered: 
+they are.)
 
-Yes. Although if you _know_ that the problem happened in a specific file 
-or specific subdirectory, you can actually tell "git bisect" to only 
-bother with changes to that file/directory/set-of-directories to speed up 
-the search.
+If you order the commits by date, you don't get anything meaningful point 
+before which it is bad, and after which it is good.
 
-IOW, if you absolutely know that it's ACPI-related, you can do something 
-like
+So, how is bisect supposed to work if you don't have one straight 
+development line from bad to good?
 
-	git bisect start drivers/acpi arch/i386/kernel/acpi
+Ciao,
+Dscho
 
-to tell the bisect code that it should totally ignore anything that 
-doesn't touch those two directories.
 
-However, if it turns out that you were wrong (and the ACPI breakage was 
-brought on by something that changed something else), "git bisect" will 
-just get confused and report the wrong commit, so this is really something 
-you should be careful with (and verify the end result by checking that 
-undoing that _particular_ commit really fixes things).
-
-And yes, "git bisect" _will_ work with bugs that depend on two branches of 
-a merge: it will point to the merge commit itself as being the problem. 
-Now, at that point you really are screwed, and you'll have to figure out 
-why both branches work, but the combination of them do not.
-
-Maybe it's as simple as just a merge done wrong (bad manual fixups), but 
-maybe it's a perfectly executed merge that just happens to have one branch 
-changing the assumptions that the other branch depended on.
-
-Happily, that is not very common. I know people are using "git bisect", 
-and I don't think anybody has ever reported it so far. It will happen 
-eventually, but I'd actually expect it to be much more common that "git 
-bisect" will hit other - worse - problems, like bugs that "come and go", 
-and that a simple bisection simply cannot find because they aren't 
-totally repeatable.
-
-			Linus
+-
+To unsubscribe from this list: send the line "unsubscribe linux-acpi" in
+the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
