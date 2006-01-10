@@ -1,77 +1,53 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: undoing changes with git-checkout -f
-Date: Tue, 10 Jan 2006 00:16:35 -0800
-Message-ID: <20060110081635.GS18439@ca-server1.us.oracle.com>
-References: <43C2D2C4.2010904@cc.jyu.fi> <7vmzi5hy69.fsf@assigned-by-dhcp.cox.net> <20060110045533.GO18439@ca-server1.us.oracle.com> <7vk6d8aaln.fsf@assigned-by-dhcp.cox.net> <20060110063247.GP18439@ca-server1.us.oracle.com> <7vy81o8r6n.fsf@assigned-by-dhcp.cox.net>
+From: Jens Axboe <axboe@suse.de>
+Subject: killing a branch
+Date: Tue, 10 Jan 2006 11:22:07 +0100
+Message-ID: <20060110102207.GP3389@suse.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 09:16:56 2006
+X-From: git-owner@vger.kernel.org Tue Jan 10 11:20:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwEgN-0001zn-RA
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 09:16:44 +0100
+	id 1EwGbu-0002hp-4O
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 11:20:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932095AbWAJIQl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 03:16:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932092AbWAJIQl
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 03:16:41 -0500
-Received: from rgminet01.oracle.com ([148.87.122.30]:42959 "EHLO
-	rgminet01.oracle.com") by vger.kernel.org with ESMTP
-	id S932095AbWAJIQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2006 03:16:41 -0500
-Received: from rgmsgw02.us.oracle.com (rgmsgw02.us.oracle.com [138.1.186.52])
-	by rgminet01.oracle.com (Switch-3.1.6/Switch-3.1.6) with ESMTP id k0A8GZHB028454;
-	Tue, 10 Jan 2006 01:16:35 -0700
-Received: from rgmsgw02.us.oracle.com (localhost.localdomain [127.0.0.1])
-	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0A8GYxf013685;
-	Tue, 10 Jan 2006 01:16:35 -0700
-Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.48.5])
-	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0A8GYRZ013673
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 10 Jan 2006 01:16:34 -0700
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.60)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1EwEgF-0001Ji-4A; Tue, 10 Jan 2006 00:16:35 -0800
-To: Junio C Hamano <junkio@cox.net>
+	id S1750959AbWAJKUK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 05:20:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751039AbWAJKUK
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 05:20:10 -0500
+Received: from ns.virtualhost.dk ([195.184.98.160]:27251 "EHLO virtualhost.dk")
+	by vger.kernel.org with ESMTP id S1750959AbWAJKUJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 05:20:09 -0500
+Received: from [62.242.22.158] (helo=router.home.kernel.dk)
+	by virtualhost.dk with esmtp (Exim 3.36 #1)
+	id 1EwGbq-00041b-00
+	for git@vger.kernel.org; Tue, 10 Jan 2006 11:20:10 +0100
+Received: from nelson.home.kernel.dk ([192.168.0.33] helo=kernel.dk)
+	by router.home.kernel.dk with esmtp (Exim 4.51)
+	id 1EwGbo-0008QA-JQ
+	for git@vger.kernel.org; Tue, 10 Jan 2006 11:20:08 +0100
+Received: by kernel.dk (Postfix, from userid 1000)
+	id 04B5B1D95AE; Tue, 10 Jan 2006 11:22:07 +0100 (CET)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vy81o8r6n.fsf@assigned-by-dhcp.cox.net>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
-User-Agent: Mutt/1.5.11
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14414>
 
-On Mon, Jan 09, 2006 at 11:42:24PM -0800, Junio C Hamano wrote:
-> Joel Becker <Joel.Becker@oracle.com> writes:
-> > ...  I'd really rather have the tunneling
-> > code be part of connect.c,...
-> 
-> For the record, I was pushing for that, but that approach was
-> interrupted primarily by what this message implies:
-> 
->     http://article.gmane.org/gmane.comp.version-control.git/10985
+Hi,
 
-	Yeah, we want to handle multiple things.  Well, I've got it
-working with git-tunnel.pl, so I'm happy enough not to be using rsync://
-:-)
+When I need to delete a branch from my git tree, I'm currently using
+this (slooow) approach:
 
-Joel
+$ rm .git/refs/heads/branch-name
+$ git prune
+
+to rid myself of the branch and associated objects. Is there a faster
+approach?
+
+(please cc me, not on the list)
 
 -- 
-
-Life's Little Instruction Book #139
-
-	"Never deprive someone of hope; it might be all they have."
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+Jens Axboe
