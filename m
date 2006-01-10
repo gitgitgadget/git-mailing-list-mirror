@@ -1,54 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jens Axboe <axboe@suse.de>
 Subject: Re: killing a branch
-Date: Tue, 10 Jan 2006 02:25:55 -0800
-Message-ID: <7vr77g8jm4.fsf@assigned-by-dhcp.cox.net>
-References: <20060110102207.GP3389@suse.de>
+Date: Tue, 10 Jan 2006 11:35:33 +0100
+Message-ID: <20060110103533.GT3389@suse.de>
+References: <20060110102207.GP3389@suse.de> <7vr77g8jm4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 11:26:02 2006
+X-From: git-owner@vger.kernel.org Tue Jan 10 11:33:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwGhT-00045R-OR
-	for gcvg-git@gmane.org; Tue, 10 Jan 2006 11:26:00 +0100
+	id 1EwGp0-0005h5-Pj
+	for gcvg-git@gmane.org; Tue, 10 Jan 2006 11:33:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751048AbWAJKZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 05:25:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751051AbWAJKZ5
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 05:25:57 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:29439 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751040AbWAJKZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2006 05:25:56 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060110102323.CPFK20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 10 Jan 2006 05:23:23 -0500
-To: Jens Axboe <axboe@suse.de>
-In-Reply-To: <20060110102207.GP3389@suse.de> (Jens Axboe's message of "Tue, 10
-	Jan 2006 11:22:07 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750875AbWAJKdj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 05:33:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751003AbWAJKdj
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 05:33:39 -0500
+Received: from ns.virtualhost.dk ([195.184.98.160]:6156 "EHLO virtualhost.dk")
+	by vger.kernel.org with ESMTP id S1750873AbWAJKdi (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 05:33:38 -0500
+Received: from [62.242.22.158] (helo=router.home.kernel.dk)
+	by virtualhost.dk with esmtp (Exim 3.36 #1)
+	id 1EwGop-0004tP-00; Tue, 10 Jan 2006 11:33:35 +0100
+Received: from nelson.home.kernel.dk ([192.168.0.33] helo=kernel.dk)
+	by router.home.kernel.dk with esmtp (Exim 4.51)
+	id 1EwGoo-0000AV-Ey; Tue, 10 Jan 2006 11:33:34 +0100
+Received: by kernel.dk (Postfix, from userid 1000)
+	id E9A611D95CA; Tue, 10 Jan 2006 11:35:33 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vr77g8jm4.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14416>
 
-Jens Axboe <axboe@suse.de> writes:
+On Tue, Jan 10 2006, Junio C Hamano wrote:
+> Jens Axboe <axboe@suse.de> writes:
+> 
+> > $ rm .git/refs/heads/branch-name
+> > $ git prune
+> >
+> > to rid myself of the branch and associated objects. Is there a faster
+> > approach?
+> 
+> Perhaps the "official" way is
+> 
+> 	$ git branch -d branch-name ;# you may need -D
+>         $ git prune
+> 
+> but that essentially is the same as what you are doing.  Note
 
-> $ rm .git/refs/heads/branch-name
-> $ git prune
->
-> to rid myself of the branch and associated objects. Is there a faster
-> approach?
+So no time saved there :-)
 
-Perhaps the "official" way is
+> that having dangling objects in your repository is not a crime,
+> and you do not have to religiously do "git prune" every time.
 
-	$ git branch -d branch-name ;# you may need -D
-        $ git prune
+I know, it just doesn't feel nice!
 
-but that essentially is the same as what you are doing.  Note
-that having dangling objects in your repository is not a crime,
-and you do not have to religiously do "git prune" every time.
+-- 
+Jens Axboe
