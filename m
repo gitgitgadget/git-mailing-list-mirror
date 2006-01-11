@@ -1,98 +1,59 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Problem resolving an octopus merge conflict
-Date: Wed, 11 Jan 2006 01:51:11 -0500 (EST)
-Message-ID: <BAYC1-PASMTP1241F00474C3FC5C32F7A6AE240@CEZ.ICE>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Problem resolving an octopus merge conflict
+Date: Wed, 11 Jan 2006 00:33:32 -0800
+Message-ID: <7virsrupsz.fsf@assigned-by-dhcp.cox.net>
+References: <BAYC1-PASMTP1241F00474C3FC5C32F7A6AE240@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain;charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Wed Jan 11 08:22:53 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 11 09:33:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwaJl-0003Ss-MA
-	for gcvg-git@gmane.org; Wed, 11 Jan 2006 08:22:50 +0100
+	id 1EwbQG-0000NM-RG
+	for gcvg-git@gmane.org; Wed, 11 Jan 2006 09:33:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750864AbWAKHWU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jan 2006 02:22:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932644AbWAKHWU
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 02:22:20 -0500
-Received: from bayc1-pasmtp12.bayc1.hotmail.com ([65.54.191.172]:42683 "EHLO
-	BAYC1-PASMTP12.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1750864AbWAKHWT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2006 02:22:19 -0500
-X-Originating-IP: [69.156.6.171]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.6.171]) by BAYC1-PASMTP12.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 10 Jan 2006 23:24:39 -0800
-Received: by linux1.attic.local (Postfix, from userid 48)
-	id 33B03644C23; Wed, 11 Jan 2006 01:51:11 -0500 (EST)
-Received: from 10.10.10.28
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Wed, 11 Jan 2006 01:51:11 -0500 (EST)
-Message-ID: <57422.10.10.10.28.1136962271.squirrel@linux1>
-To: git@vger.kernel.org
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
-X-OriginalArrivalTime: 11 Jan 2006 07:24:39.0562 (UTC) FILETIME=[154CD6A0:01C61680]
+	id S1751373AbWAKIde (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jan 2006 03:33:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbWAKIde
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 03:33:34 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:19423 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751373AbWAKIdd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2006 03:33:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060111083140.FCXF17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 11 Jan 2006 03:31:40 -0500
+To: "Sean" <seanlkml@sympatico.ca>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14482>
 
+"Sean" <seanlkml@sympatico.ca> writes:
 
-Hi folks,
+> After fixing this up though, git-commit won't see this as a merge commit
+> and won't add the proper parent linkages.   I'm not sure at this point
+> what the proper fix should be or if this is just pilot error.
 
-After a failed regular merge you can fix up the conflicts by hand and then
-do a commit; the proper parents for the merge will be picked up from
-MERGE_HEADS.  However, after a failed octopus merge this file doesn't
-exist even though conflict markers _do_ exist in the appropriate files.  A
-little test case is given below:
+Not a pilot error, and we do not make it explicit enough, but
+git-merge-octopus has this comment:
 
-mkdir otest
-cd otest
+	echo "Simple merge did not work, trying automatic merge."
+	git-merge-index -o git-merge-one-file -a ||
+	exit 2 ; # Automatic merge failed; should not be doing Octopus
 
-git init-db
-echo A > file
-git add file
-git commit -m "new file"
+If you need to manually fix up such a merge, that is a sure sign
+that the branches you merged into an Octopus was not independent
+bunches after all.  Letting such a commit to be made defeats the
+point of an Octopus, which is to bundle independent tracks of
+development.
 
-git checkout -b linus
-echo B > file
-git commit -a -m "B file"
-
-git checkout -b torvalds master
-echo C > file
-git commit -a -m "C file"
-
-git checkout master
-git pull . linus torvalds
-
-At which point you'll get back:
-
-defaulting to local storage area
-Committing initial tree a9e3325a07117aa5381e044a8d96c26eb30d729d
-Trying simple merge with 87915efc19fb0a71f88c1da6f7da0e4454f32a68
-Trying simple merge with ec835c64be51803fb46f82c97b266cc60a0b04b7
-Simple merge did not work, trying automatic merge.
-Auto-merging file
-merge: warning: conflicts during merge
-ERROR: Merge conflict in file
-fatal: merge program failed
-No merge strategy handled the merge.
-
-The "file" will contain:
-
-<<<<<<< .merge_file_e7oHn1
-C
-=======
-B
->>>>>>> .merge_file_6Z4LD0
-
-After fixing this up though, git-commit won't see this as a merge commit
-and won't add the proper parent linkages.   I'm not sure at this point
-what the proper fix should be or if this is just pilot error.
-
-Thanks,
-Sean
+This is more philosophical rather than technical, and may look
+being unhelpful to you (who wanted to create an Octopus), but is
+done to help people who later needs to deal with such a merge
+history.
