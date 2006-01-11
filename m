@@ -1,64 +1,63 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: git binary size...
-Date: Wed, 11 Jan 2006 11:58:37 -0800
-Message-ID: <43C5636D.505@zytor.com>
-References: <Pine.LNX.4.64.0601111021450.5073@g5.osdl.org> <43C558FB.3030102@op5.se> <Pine.LNX.4.64.0601111134560.5073@g5.osdl.org>
+Date: Wed, 11 Jan 2006 21:00:25 +0100
+Message-ID: <43C563D9.9000105@op5.se>
+References: <Pine.LNX.4.64.0601111021450.5073@g5.osdl.org> <43C558FB.3030102@op5.se> <43C55EE4.9010103@zytor.com> <43C56278.6090105@op5.se> <43C562F7.1090000@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 11 20:59:30 2006
+X-From: git-owner@vger.kernel.org Wed Jan 11 21:01:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ewm7h-0001jO-RQ
-	for gcvg-git@gmane.org; Wed, 11 Jan 2006 20:59:10 +0100
+	id 1Ewm8z-0002DU-Il
+	for gcvg-git@gmane.org; Wed, 11 Jan 2006 21:00:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932483AbWAKT64 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jan 2006 14:58:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932485AbWAKT64
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 14:58:56 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:44763 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932484AbWAKT6z
+	id S932484AbWAKUA1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jan 2006 15:00:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932485AbWAKUA1
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 15:00:27 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:20640 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932484AbWAKUA0
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2006 14:58:55 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k0BJwhwr003867
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 11 Jan 2006 11:58:43 -0800
+	Wed, 11 Jan 2006 15:00:26 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 77D246BD03
+	for <git@vger.kernel.org>; Wed, 11 Jan 2006 21:00:25 +0100 (CET)
 User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
 X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0601111134560.5073@g5.osdl.org>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <43C562F7.1090000@zytor.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14509>
 
-Linus Torvalds wrote:
+H. Peter Anvin wrote:
+> Andreas Ericsson wrote:
+>>
+>> strip:
+>>     strip $(STRIP_OPTS) $(PROGRAMS)
+>>
+>> so Linus can set STRIP_OPTS=--strip-debug and everybody's happy.
+>>
 > 
-> Well, that ends up shaving some more from the binaries, but at a much 
-> bigger cost than just removing "-g".
+> The proper way to do this is:
 > 
-> With stripped binaries, you can't really do _anything_. You get a 
-> core-file, and you're screwed. 
+> strip:
+>     $(STRIP) $(STRIP_OPTS) $(PROGRAMS)
 > 
-> With non-stripped binaries you can at least see the function the SIGSEGV 
-> happened in, and you usually even get a half-way decent backtrace etc.
+> For "strip", this is frequently omitted, though.  Since "strip" is 
+> architecture-dependent, though, this is necessary for cross-compilation.
 > 
 
-That's the really nice bit with the way e.g. RPM does it.  You don't 
-have to have the debug information around most of the time, but you can 
-do "yum install git-debuginfo" and suddenly you have it all -- and yet 
-the binary is unchanged, so your random core file actually matches the 
-debuginfo.
+Damn! I almost made it through the entire day without learning anything, 
+and now you come along and spoil it all.
 
-	-hpa
+Oh well, new game tomorrow. ;)
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
