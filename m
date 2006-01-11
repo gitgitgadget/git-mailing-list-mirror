@@ -1,85 +1,133 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git pull on Linux/ACPI release tree
-Date: Wed, 11 Jan 2006 01:26:55 +0100
-Message-ID: <43C450CF.8070102@op5.se>
-References: <F7DC2337C7631D4386A2DF6E8FB22B3005A13505@hdsmsx401.amr.corp.intel.com>	 <Pine.LNX.4.64.0601081111190.3169@g5.osdl.org>	 <20060108230611.GP3774@stusta.de>	 <Pine.LNX.4.64.0601081909250.3169@g5.osdl.org>	 <20060110201909.GB3911@stusta.de> <46a038f90601101233h5def4840k315be9520796b5e@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] Remember and use GIT_EXEC_PATH on exec()'s
+Date: Tue, 10 Jan 2006 16:42:44 -0800
+Message-ID: <7vd5iz4mt7.fsf@assigned-by-dhcp.cox.net>
+References: <1136849678.11717.514.camel@brick.watson.ibm.com>
+	<1136849810.11717.518.camel@brick.watson.ibm.com>
+	<7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>
+	<1136900174.11717.537.camel@brick.watson.ibm.com>
+	<43C3CC4A.4030805@op5.se>
+	<1136910406.11717.579.camel@brick.watson.ibm.com>
+	<43C4075E.4070407@op5.se> <7vu0cb6f1n.fsf@assigned-by-dhcp.cox.net>
+	<1136924980.11717.603.camel@brick.watson.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jan 11 01:27:08 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 11 01:42:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwTpP-0006gc-IC
-	for gcvg-git@gmane.org; Wed, 11 Jan 2006 01:27:06 +0100
+	id 1EwU4f-0001D9-Gh
+	for gcvg-git@gmane.org; Wed, 11 Jan 2006 01:42:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932367AbWAKA05 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 19:26:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932459AbWAKA05
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 19:26:57 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:17045 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932367AbWAKA04
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2006 19:26:56 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 779086BD03
-	for <git@vger.kernel.org>; Wed, 11 Jan 2006 01:26:55 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <46a038f90601101233h5def4840k315be9520796b5e@mail.gmail.com>
+	id S1030201AbWAKAmq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 19:42:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030202AbWAKAmq
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 19:42:46 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:46589 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1030201AbWAKAmq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2006 19:42:46 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060111004250.KBYD25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 10 Jan 2006 19:42:50 -0500
+To: Michal Ostrowski <mostrows@watson.ibm.com>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14469>
 
-Martin Langhoff wrote:
-> On 1/11/06, Adrian Bunk <bunk@stusta.de> wrote:
-> 
->>I am using the workaround of carrying the patches in a mail folder,
->>applying them in a batch, and not pulling from your tree between
->>applying a batch of patches and you pulling from my tree.
-> 
-> 
-> In that case, there's a mostly automated way of doing that if you read
-> the last couple lines of git-rebase, using something along the lines
-> of
-> 
->       git-format-patch <yours> <linus> | git-am -3 -k
-> 
+Michal Ostrowski <mostrows@watson.ibm.com> writes:
 
-Isn't this rebase in a nutshell ?
+> How about searching for executables in the following places, and in this
+> order:
+>
+> 1. --exec-path setting, if any
+> 2. GIT_EXEC_PATH env var, if set
+> 3. PATH (never modified)
+> 4. Value of ${bindir} at build time
 
-> 
->>I'd say the main problem is that git with several other projects like
->>cogito and stg on top of it allow many different workflows. But finding
->>the one that suits one's needs without doing something in a wrong way
->>is non-trivial.
-> 
-> 
-> You are right about that, but much of the space (of what workflows are
-> interesting) is still being explored, and git and the porcelains
-> reacting to people's interests. So it's still a moving target. A fast
-> moving target.
-> 
+My preference is to first do this to the Makefile:
 
-Good thing there are competent people around to snipe those targets in 
-mid-stride. :)
+-- >8 --
+diff --git a/Makefile b/Makefile
+index 5817e86..b1e3055 100644
+--- a/Makefile
++++ b/Makefile
+@@ -71,6 +71,7 @@ ALL_LDFLAGS = $(LDFLAGS)
+ 
+ prefix = $(HOME)
+ bindir = $(prefix)/bin
++gitexecdir = $(prefix)/bin
+ template_dir = $(prefix)/share/git-core/templates/
+ GIT_PYTHON_DIR = $(prefix)/share/git-core/python
+ # DESTDIR=
+@@ -144,7 +145,7 @@ PROGRAMS = \
+ 	git-describe$X
+ 
+ # what 'all' will build and 'install' will install.
+-ALL_PROGRAMS = $(PROGRAMS) $(SIMPLE_PROGRAMS) $(SCRIPTS) git$X
++ALL_PROGRAMS = $(PROGRAMS) $(SIMPLE_PROGRAMS) $(SCRIPTS)
+ 
+ # Backward compatibility -- to be removed after 1.0
+ PROGRAMS += git-ssh-pull$X git-ssh-push$X
+@@ -368,13 +369,13 @@ LIB_OBJS += $(COMPAT_OBJS)
+ export prefix TAR INSTALL DESTDIR SHELL_PATH template_dir
+ ### Build rules
+ 
+-all: $(ALL_PROGRAMS)
++all: $(ALL_PROGRAMS) git$X
+ 
+ all:
+ 	$(MAKE) -C templates
+ 
+ git$X: git.c $(LIB_FILE)
+-	$(CC) -DGIT_EXEC_PATH='"$(bindir)"' -DGIT_VERSION='"$(GIT_VERSION)"' \
++	$(CC) -DGIT_EXEC_PATH='"$(gitexecdir)"' -DGIT_VERSION='"$(GIT_VERSION)"' \
+ 		$(CFLAGS) $(COMPAT_CFLAGS) -o $@ $(filter %.c,$^) $(LIB_FILE)
+ 
+ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+@@ -470,7 +471,9 @@ check:
+ 
+ install: all
+ 	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(bindir))
+-	$(INSTALL) $(ALL_PROGRAMS) $(call shellquote,$(DESTDIR)$(bindir))
++	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(gitexecdir))
++	$(INSTALL) $(ALL_PROGRAMS) $(call shellquote,$(DESTDIR)$(gitexecdir))
++	$(INSTALL) git$X $(call shellquote,$(DESTDIR)$(bindir))
+ 	$(MAKE) -C templates install
+ 	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(GIT_PYTHON_DIR))
+ 	$(INSTALL) $(PYMODULES) $(call shellquote,$(DESTDIR)$(GIT_PYTHON_DIR))
 
-I for one was amazed at how much easier git was to work with than any of 
-the other scm's I've tried (quite a few, I never really liked any of 
-them), and I really like the fact that it's flexible enough to suit 
-(almost) all our needs. The only thing I haven't really found it to be 
-satisfactory for is our collection of RPM spec-files and their 
-respective patches, where we not so much change files as continuously 
-replace them completely. Perhaps that's changed now that most 
-git-commands can be run from subdirs.
+-- 8< --
 
-So, kudos to Linus for inventing it, Junio for nursing it, and the other 
-129 developers that have so far contributed to the current release.
+and then make the rule for git things:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+ 1. --exec-path
+ 2. GIT_EXEC_PATH environment
+ 3. $(gitexecdir)
+
+in this order.  Non git things should just use $PATH without
+looking at anything else --- as long as a hook script calls a git
+wrapper (i.e. "git foo" not "git-foo") I think things should
+work fine.
+
+> ...  The patch I sent out this morning
+> attempts to do this.  (I'll append again to avoid confusion with
+> previous patches)...
+
+> +		if (flags & RUN_GIT_CMD) {
+> +			execv_git_cmd(argv);
+> +		} else {
+> +			execvp(argv[0], (char *const*) argv);
+>  		}
+
+This bit sounds good, but if you were to go this route I'd
+suggest to rename your exec_git_cmd() to execl_git_cmd() (and
+terminate the vararg list with NULL) for naming consistency.
+execv_git_cmd() is good---we do not *want* execvp_git_cmd(),
+because we do not run git subcommand using PATH.
