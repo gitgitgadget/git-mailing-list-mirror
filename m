@@ -1,63 +1,110 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: Re: [PATCH] glossary: explain "master" and "origin"
-Date: Tue, 10 Jan 2006 15:33:12 -0800
-Organization: none
-Message-ID: <dq1g7o$aqh$1@sea.gmane.org>
-References: <Pine.LNX.4.63.0601102226130.649@wbgn013.biozentrum.uni-wuerzburg.de> <20060110213645.GF13450@fieldses.org> <dq1cdd$rob$1@sea.gmane.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 2/2] Remember and use GIT_EXEC_PATH on exec()'s
+Date: Wed, 11 Jan 2006 01:06:42 +0100
+Message-ID: <43C44C12.3050609@op5.se>
+References: <1136849678.11717.514.camel@brick.watson.ibm.com>	 <1136849810.11717.518.camel@brick.watson.ibm.com>	 <7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>	 <1136900174.11717.537.camel@brick.watson.ibm.com> <43C3CC4A.4030805@op5.se>	 <1136910406.11717.579.camel@brick.watson.ibm.com> <43C4075E.4070407@op5.se>	 <7vu0cb6f1n.fsf@assigned-by-dhcp.cox.net> <1136924980.11717.603.camel@brick.watson.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jan 11 00:33:43 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 11 01:07:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwSze-0003dl-MD
-	for gcvg-git@gmane.org; Wed, 11 Jan 2006 00:33:36 +0100
+	id 1EwTVp-0002Ii-U8
+	for gcvg-git@gmane.org; Wed, 11 Jan 2006 01:06:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932705AbWAJXdc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 18:33:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932707AbWAJXdc
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 18:33:32 -0500
-Received: from main.gmane.org ([80.91.229.2]:51398 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932705AbWAJXdb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2006 18:33:31 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1EwSzR-0003bE-DR
-	for git@vger.kernel.org; Wed, 11 Jan 2006 00:33:21 +0100
-Received: from adsl-69-234-210-171.dsl.irvnca.pacbell.net ([69.234.210.171])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Jan 2006 00:33:21 +0100
-Received: from wa1ter by adsl-69-234-210-171.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Jan 2006 00:33:21 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-210-171.dsl.irvnca.pacbell.net
-User-Agent: Mail/News 1.6a1 (X11/20060110)
-In-Reply-To: <dq1cdd$rob$1@sea.gmane.org>
+	id S1030699AbWAKAGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 19:06:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030702AbWAKAGr
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 19:06:47 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:14229 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030699AbWAKAGq
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2006 19:06:46 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id C40656BD03; Wed, 11 Jan 2006 01:06:43 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Michal Ostrowski <mostrows@watson.ibm.com>
+In-Reply-To: <1136924980.11717.603.camel@brick.watson.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14466>
 
-walt wrote:
-> J. Bruce Fields wrote:
-> [...]
->> 	Most projects have one upstream
->> 	project which they track.  This is is the branch used for
->> 	tracking that project...
+Michal Ostrowski wrote:
+> On Tue, 2006-01-10 at 11:47 -0800, Junio C Hamano wrote:
 > 
-> s/This/'origin'/
+>>
+>>>Good point. Perhaps we should only prepend to path when the directory
+>>>isn't already in $PATH, or append rather than prepend.
+>>
+>>I think appending not prepending would stop letting me say
+>>
+>> $ GIT_EXEC_PATH=/usr/libexec/git-core/0.99.9k git foo
+>>
+>>to try out older version, if I have more recent git in my PATH.
+>>But I agree with Michal it is not nice to affect invocations of
+>>"diff" (and things spawned from hooks, which would inherit PATH
+>>from receive-pack).
+>>
+
+So how about prepending only when the directory isn't already in the 
+PATH? That can be done with a two-line patch to git.c only.
+
+It will break the "diff in another dir" scenario in the highly unlikely 
+event that the other diff is located in the same dir as the git suite, 
+isn't supposed to be used, and the directory in question isn't in $PATH 
+already. People who have such a setup will be too ashamed to admit it, 
+so we're not likely to be blamed for it either. ;)
+
+>>
 > 
-> Lordy, I think many of the world's problems could be solved just
-> by forbidding the use of pronouns entirely!
+> 
+> How about searching for executables in the following places, and in this
+> order:
+> 
+> 1. --exec-path setting, if any
+> 2. GIT_EXEC_PATH env var, if set
+> 3. PATH (never modified)
+> 4. Value of ${bindir} at build time
+> 
 
-Now that I've had another beer, it occurs to me that a 'pronoun'
-is nothing more or less than a 'pointer' to a noun.
+This is more or less what's done today, with the exception that $PATH 
+isn't searched and it throws an error immediately no matter where 
+exec_path (the git.c variable) came from.
 
-Well!  We all know that pointers are a major source of bugs in
-C code.  Is it possible that lint could be taught to detect
-ambiguous pronouns in everyday speech?
+Adding $PATH to the search-pattern would be a simple matter of falling 
+back to execvp() if execve(), but then we could end up with running 
+programs from a different release while the user thinks he/she's 
+specifically running 1.0.3... Tricky problem, really.
+
+> 
+> Secondly, the shell scripts as is cannot utilize this search order as
+> long as they don't religiously use the git potty internally.  If we were
+> to "sed -e 's/git-/git /g' -i git*.sh" (grotesquely simplified of
+> course) then they would. 
+> 
+
+I think this has been done, but as it happened to be convenient. I'd 
+prefer if the git potty could keep prepending the GIT_EXEC_PATH to the 
+path, really. We're bound to run into setup-related problems otherwise, 
+such as;
+
+Alice writes a script that works fine for her and her friends, so she 
+shares it freely with Bob and whoever else might be listening. Bob's 
+git-tools aren't in the $PATH but he keeps the potty handy at all times. 
+He can't always run it through the potty because in some code-paths 
+Alice's script uses git-tools without going through the potty. Bob 
+thinks Alice puts entropy in her programs on purpose, so Alice flees, 
+sobbing and shaking in anger and betrayed trust. The two never speak again.
+
+Luckily, Bruce Schneier shows up and saves the day.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
