@@ -1,73 +1,71 @@
 From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git binary size...
-Date: Wed, 11 Jan 2006 20:14:03 +0100
-Message-ID: <43C558FB.3030102@op5.se>
-References: <Pine.LNX.4.64.0601111021450.5073@g5.osdl.org>
+Subject: Re: reverting back both working copy and commits
+Date: Wed, 11 Jan 2006 20:28:17 +0100
+Message-ID: <43C55C51.90305@op5.se>
+References: <7ac1e90c0601110832u6fc3a3bcwb7e584445610e53f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 11 20:14:23 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 11 20:34:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwlQA-0004si-2X
-	for gcvg-git@gmane.org; Wed, 11 Jan 2006 20:14:12 +0100
+	id 1Ewldu-000820-EQ
+	for gcvg-git@gmane.org; Wed, 11 Jan 2006 20:28:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750773AbWAKTOG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jan 2006 14:14:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751724AbWAKTOG
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 14:14:06 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:24223 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750773AbWAKTOF
+	id S932356AbWAKT2T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jan 2006 14:28:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932438AbWAKT2T
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 14:28:19 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:56735 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932356AbWAKT2S
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2006 14:14:05 -0500
+	Wed, 11 Jan 2006 14:28:18 -0500
 Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
 	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 2812C6BD03; Wed, 11 Jan 2006 20:14:04 +0100 (CET)
+	id 6C0076BD03; Wed, 11 Jan 2006 20:28:17 +0100 (CET)
 User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
 X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0601111021450.5073@g5.osdl.org>
+To: Bahadir Balban <bahadir.balban@gmail.com>
+In-Reply-To: <7ac1e90c0601110832u6fc3a3bcwb7e584445610e53f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14499>
 
-Linus Torvalds wrote:
-> Guess what the difference is here?
+Bahadir Balban wrote:
+> Hi,
 > 
-> 	[torvalds@g5 ~]$ du -sh bin/
-> 	14M     bin/
-> 	[torvalds@g5 ~]$ du -sh bin/
-> 	5.8M    bin/
+> I made some commits that later on I wanted to cancel. I did:
 > 
-> Give up?
+> % git-branch master-2006-get-rid-of-commits
 > 
-> In one case, "git" was compiled with the default options in the git 
-> Makefile. In the other one, the "-g" was removed.
+> % git-reset --hard [sha1id]
 > 
-> Now, maybe this is extra visible with PowerPC (32-bit) binaries, and it's 
-> not as bad on x86, but it's still a bit distressing.
-> 
-> That "-g" doesn't buy users much of anything, and I doubt most developers 
-> care that deeply most of the time either (and can easily add it when they 
-> do care). It's left-over from long ago when it was much more useful.
-> 
-> So I'd suggest just removing it.
+> where sha1id is the id of commit I want to revert back to. After this,
+> git-log points at the right commit (the one with [sha1id]) as the last
+> commit made. However, the working copy is left in the original state,
+> i.e with the unwanted changes.. How do I also revert the working
+> sources into an earlier state.
 > 
 
-I'd suggest adding
+The branch where you do the reset is the one being reset, so you should 
+have simply done the reset in the original branch without creating a new 
+one. If you're nervous you're gonna screw up you can do this;
 
-strip:
-	strip $(PROGRAMS)
+git checkout <branch-with-unwanted-commit>
+git tag anchor
+git reset --hard <commit-ish>
 
-install: strip
+If you find you've landed on the wrong commit you can undo the change with
 
-to Makefile instead. That way people working on various git-tools won't 
-have to remember to override the CFLAGS when debugging new stuff.
+git reset --hard anchor
+
+which will restore the branch to wherever you were prior to the first 
+reset. Making an anchor tag is useful if you do several resets. You can 
+use ORIG_HEAD to undo a single reset.
 
 -- 
 Andreas Ericsson                   andreas.ericsson@op5.se
