@@ -1,604 +1,242 @@
-From: Michal Ostrowski <mostrows@watson.ibm.com>
-Subject: [PATCH] Exec git programs without using PATH.
-Date: Tue, 10 Jan 2006 21:12:17 -0500
-Message-ID: <1136945538.11717.643.camel@brick.watson.ibm.com>
-References: <1136849678.11717.514.camel@brick.watson.ibm.com>
-	 <1136849810.11717.518.camel@brick.watson.ibm.com>
-	 <7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>
-	 <1136900174.11717.537.camel@brick.watson.ibm.com> <43C3CC4A.4030805@op5.se>
-	 <1136910406.11717.579.camel@brick.watson.ibm.com> <43C4075E.4070407@op5.se>
-	 <7vu0cb6f1n.fsf@assigned-by-dhcp.cox.net>
-	 <1136924980.11717.603.camel@brick.watson.ibm.com>
-	 <7vd5iz4mt7.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-bisect is magical
+Date: Tue, 10 Jan 2006 18:47:36 -0800
+Message-ID: <7vhd8b1nw7.fsf@assigned-by-dhcp.cox.net>
+References: <dpuoqf$3rp$1@sea.gmane.org>
+	<Pine.LNX.4.64.0601091516460.5588@g5.osdl.org>
+	<dq11c6$g15$1@sea.gmane.org>
+	<Pine.LNX.4.64.0601101131540.4939@g5.osdl.org>
+	<Pine.LNX.4.64.0601101143180.4939@g5.osdl.org>
+	<dq168p$3kt$1@sea.gmane.org>
+	<Pine.LNX.4.64.0601101308540.4939@g5.osdl.org>
+	<dq1o88$1bm$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 11 03:11:04 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 11 03:47:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwVRr-0003P3-Mc
-	for gcvg-git@gmane.org; Wed, 11 Jan 2006 03:10:52 +0100
+	id 1EwW1Y-0001gZ-0s
+	for gcvg-git@gmane.org; Wed, 11 Jan 2006 03:47:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030685AbWAKCKt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jan 2006 21:10:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030705AbWAKCKt
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 21:10:49 -0500
-Received: from igw2.watson.ibm.com ([129.34.20.6]:26578 "EHLO
-	igw2.watson.ibm.com") by vger.kernel.org with ESMTP
-	id S1030685AbWAKCKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2006 21:10:48 -0500
-Received: from sp1n293en1.watson.ibm.com (sp1n293en1.watson.ibm.com [129.34.20.41])
-	by igw2.watson.ibm.com (8.12.11/8.13.1/8.13.1-2005-04-25 igw) with ESMTP id k0B2CufA028029;
-	Tue, 10 Jan 2006 21:12:56 -0500
-Received: from sp1n293en1.watson.ibm.com (localhost [127.0.0.1])
-	by sp1n293en1.watson.ibm.com (8.11.7-20030924/8.11.7/01-14-2004_2) with ESMTP id k0B2Agk395630;
-	Tue, 10 Jan 2006 21:10:42 -0500
-Received: from mgsmtp00.watson.ibm.com (mgsmtp00.watson.ibm.com [9.2.40.58])
-	by sp1n293en1.watson.ibm.com (8.11.7-20030924/8.11.7/01-14-2004_1) with ESMTP id k0B2Afu403284;
-	Tue, 10 Jan 2006 21:10:41 -0500
-Received: from kitch0.watson.ibm.com (kitch0.watson.ibm.com [9.2.224.107])
-	by mgsmtp00.watson.ibm.com (8.12.11/8.12.11/2005/09/01) with ESMTP id k0B37RYj015761;
-	Tue, 10 Jan 2006 22:07:27 -0500
-Received: from brick (brick.watson.ibm.com [9.2.216.48])
-	by kitch0.watson.ibm.com (AIX5.1/8.11.6p2/8.11.0/03-06-2002) with ESMTP id k0B2Aem28412;
-	Tue, 10 Jan 2006 21:10:40 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5iz4mt7.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.4.1 
+	id S932699AbWAKCrl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jan 2006 21:47:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932705AbWAKCrl
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jan 2006 21:47:41 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:736 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932699AbWAKCrk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2006 21:47:40 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060111024534.GNSQ26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 10 Jan 2006 21:45:34 -0500
+To: walt <wa1ter@myrealbox.com>
+In-Reply-To: <dq1o88$1bm$1@sea.gmane.org> (wa1ter@myrealbox.com's message of
+	"Tue, 10 Jan 2006 17:50:00 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14475>
 
+walt <wa1ter@myrealbox.com> writes:
 
-The git suite may not be in PATH (and thus programs such as
-git-send-pack could not exec git-rev-list).  Thus there is a need for
-logic that will locate these programs.  Modifying PATH is not
-desirable as it result in behavior differing from the user's
-intentions, as we may end up prepending "/usr/bin" to PATH.
+> Linus Torvalds wrote:
+> [...]
+>> So when you say "git checkout origin", it actually _switches_ to the
+>> origin branch (which is just my state) and checks that out.
+>
+> Please --> what am I switching *from* when I switch to 'origin'?
 
-- git C programs will use exec*_git_cmd() APIs to exec sub-commands.
-- exec*_git_cmd() will execute a git program by searching for it in
-  the following directories:
-	1. --exec-path (as used by "git")
-	2. The GIT_EXEC_PATH environment variable.
-	3. $(gitexecdir) as set in Makefile (default value $(bindir)).
-- git potty will modify PATH as before to enable shell scripts to  
-  invoke "git-foo" commands.
+Short version: if you have only two branches "master" and
+"origin", then obviously there is only one "the other one" ;-).
 
-Ideally, shell scripts should use the git potty to become independent of
-PATH, and then modifying PATH will not be necessary.
+Longer version:
 
-Signed-off-by: Michal Ostrowski <mostrows@watson.ibm.com>
+At the very beginning, you started your repository like this:
 
----
+        $ git clone git://git.kernel.org/some/where mine
+        $ cd mine
 
- Makefile       |   21 ++++++++--
- daemon.c       |    3 +
- exec_cmd.c     |  118
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- exec_cmd.h     |   10 +++++
- fetch-clone.c  |    7 +--
- git.c          |   54 ++++++--------------------
- receive-pack.c |    2 -
- run-command.c  |    9 +++-
- run-command.h  |    2 -
- send-pack.c    |    8 ++--
- shell.c        |    2 -
- upload-pack.c  |    7 ++-
- 12 files changed, 181 insertions(+), 62 deletions(-)
- create mode 100644 exec_cmd.c
- create mode 100644 exec_cmd.h
+You can say:
 
-d6dbbb5b9b47c37f44c3494962b9fa534677729f
-diff --git a/Makefile b/Makefile
-index c9c15b5..912c223 100644
---- a/Makefile
-+++ b/Makefile
-@@ -68,6 +68,7 @@ ALL_LDFLAGS = $(LDFLAGS)
- 
- prefix = $(HOME)
- bindir = $(prefix)/bin
-+gitexecdir = $(prefix)/bin
- template_dir = $(prefix)/share/git-core/templates/
- GIT_PYTHON_DIR = $(prefix)/share/git-core/python
- # DESTDIR=
-@@ -141,7 +142,7 @@ PROGRAMS = \
- 	git-describe$X
- 
- # what 'all' will build and 'install' will install.
--ALL_PROGRAMS = $(PROGRAMS) $(SIMPLE_PROGRAMS) $(SCRIPTS) git$X
-+ALL_PROGRAMS = $(PROGRAMS) $(SIMPLE_PROGRAMS) $(SCRIPTS)
- 
- # Backward compatibility -- to be removed after 1.0
- PROGRAMS += git-ssh-pull$X git-ssh-push$X
-@@ -173,7 +174,7 @@ DIFF_OBJS = \
- 
- LIB_OBJS = \
- 	blob.o commit.o connect.o count-delta.o csum-file.o \
--	date.o diff-delta.o entry.o ident.o index.o \
-+	date.o diff-delta.o entry.o exec_cmd.o ident.o index.o \
- 	object.o pack-check.o patch-delta.o path.o pkt-line.o \
- 	quote.o read-cache.o refs.o run-command.o \
- 	server-info.o setup.o sha1_file.o sha1_name.o strbuf.o \
-@@ -184,6 +185,16 @@ LIB_OBJS = \
- LIBS = $(LIB_FILE)
- LIBS += -lz
- 
-+
-+# .exec_cmd.gitexecdir stores $(gitexecir) used to compile exec_cmd.o
-+# If it has changed, store the new value and force exec_cmd.o to be
-rebuilt
-+ifneq ($(shell cat .exec_cmd.gitexecdir 2>/dev/null),$(gitexecdir))
-+.PHONY: exec_cmd.c
-+$(shell echo $(gitexecdir) > .exec_cmd.gitexecdir)
-+endif
-+
-+exec_cmd.o: CFLAGS+=-DGIT_EXEC_PATH=\"$(gitexecdir)\"
-+
- # Shell quote;
- # Result of this needs to be placed inside ''
- shq = $(subst ','\'',$(1))
-@@ -366,13 +377,13 @@ LIB_OBJS += $(COMPAT_OBJS)
- export prefix TAR INSTALL DESTDIR SHELL_PATH template_dir
- ### Build rules
- 
--all: $(ALL_PROGRAMS)
-+all: $(ALL_PROGRAMS) git$X
- 
- all:
- 	$(MAKE) -C templates
- 
- git$X: git.c $(LIB_FILE)
--	$(CC) -DGIT_EXEC_PATH='"$(bindir)"' -DGIT_VERSION='"$(GIT_VERSION)"' \
-+	$(CC) -DGIT_VERSION='"$(GIT_VERSION)"' \
- 		$(CFLAGS) $(COMPAT_CFLAGS) -o $@ $(filter %.c,$^) $(LIB_FILE)
- 
- $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
-@@ -468,7 +479,9 @@ check:
- 
- install: all
- 	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(bindir))
-+	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(gitexecdir))
- 	$(INSTALL) $(ALL_PROGRAMS) $(call shellquote,$(DESTDIR)$(bindir))
-+	$(INSTALL) git$X $(call shellquote,$(DESTDIR)$(gitexecdir))
- 	$(MAKE) -C templates install
- 	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(GIT_PYTHON_DIR))
- 	$(INSTALL) $(PYMODULES) $(call shellquote,$(DESTDIR)$(GIT_PYTHON_DIR))
-diff --git a/daemon.c b/daemon.c
-index 3bd1426..bb014fa 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -9,6 +9,7 @@
- #include <syslog.h>
- #include "pkt-line.h"
- #include "cache.h"
-+#include "exec_cmd.h"
- 
- static int log_syslog;
- static int verbose;
-@@ -227,7 +228,7 @@ static int upload(char *dir)
- 	snprintf(timeout_buf, sizeof timeout_buf, "--timeout=%u", timeout);
- 
- 	/* git-upload-pack only ever reads stuff, so this is safe */
--	execlp("git-upload-pack", "git-upload-pack", "--strict", timeout_buf,
-".", NULL);
-+	execl_git_cmd("upload-pack", "--strict", timeout_buf, ".", NULL);
- 	return -1;
- }
- 
-diff --git a/exec_cmd.c b/exec_cmd.c
-new file mode 100644
-index 0000000..a3bd40a
---- /dev/null
-+++ b/exec_cmd.c
-@@ -0,0 +1,118 @@
-+#include "cache.h"
-+#include "exec_cmd.h"
-+#define MAX_ARGS	32
-+
-+extern char **environ;
-+static const char *builtin_exec_path = GIT_EXEC_PATH;
-+static const char *current_exec_path = NULL;
-+
-+void git_set_exec_path(const char *exec_path)
-+{
-+	current_exec_path = exec_path;
-+}
-+
-+
-+/* Returns the highest-priority, location to look for git programs. */
-+const char *git_exec_path()
-+{
-+	const char *env;
-+
-+	if (current_exec_path)
-+		return current_exec_path;
-+
-+	env = getenv("GIT_EXEC_PATH");
-+	if (env) {
-+		return env;
-+	}
-+
-+	return builtin_exec_path;
-+}
-+
-+
-+int execv_git_cmd(char **argv)
-+{
-+	char git_command[PATH_MAX + 1];
-+	char *tmp;
-+	int len, err, i;
-+	const char *paths[] = { current_exec_path,
-+				getenv("GIT_EXEC_PATH"),
-+				builtin_exec_path,
-+				NULL };
-+
-+	for (i = 0; i < 4; ++i) {
-+		const char *exec_dir = paths[i];
-+		if (!exec_dir) continue;
-+
-+		if (*exec_dir != '/') {
-+			if (!getcwd(git_command, sizeof(git_command))) {
-+				fprintf(stderr, "git: cannot determine "
-+					"current directory\n");
-+				exit(1);
-+			}
-+			len = strlen(git_command);
-+
-+			/* Trivial cleanup */
-+			while (!strncmp(exec_dir, "./", 2)) {
-+				exec_dir += 2;
-+				while (*exec_dir == '/')
-+					exec_dir++;
-+			}
-+			snprintf(git_command + len, sizeof(git_command) - len,
-+				 "/%s", exec_dir);
-+		} else {
-+			strcpy(git_command, exec_dir);
-+		}
-+
-+		len = strlen(git_command);
-+		len += snprintf(git_command + len, sizeof(git_command) - len,
-+				"/git-%s", argv[0]);
-+
-+		if (sizeof(git_command) <= len) {
-+			fprintf(stderr,
-+				"git: command name given is too long.\n");
-+			break;
-+		}
-+
-+		/* argv[0] must be the git command, but the argv array
-+		 * belongs to the caller, and my be reused in
-+		 * subsequent loop iterations. Save argv[0] and
-+		 * restore it on error.
-+		 */
-+
-+		tmp = argv[0];
-+		argv[0] = git_command;
-+
-+		/* execve() can only ever return if it fails */
-+		execve(git_command, argv, environ);
-+
-+		err = errno;
-+
-+		argv[0] = tmp;
-+	}
-+	return -1;
-+
-+}
-+
-+
-+int execl_git_cmd(char *cmd,...)
-+{
-+	int argc;
-+	char *argv[MAX_ARGS + 1];
-+	char *arg;
-+	va_list param;
-+
-+	va_start(param, cmd);
-+	argv[0] = cmd;
-+	argc = 1;
-+	while (argc < MAX_ARGS) {
-+		arg = argv[argc++] = va_arg(param, char *);
-+		if (!arg)
-+			break;
-+	}
-+	va_end(param);
-+	if (MAX_ARGS <= argc)
-+		return error("too many args to run %s", cmd);
-+
-+	argv[argc] = NULL;
-+	return execv_git_cmd(argv);
-+}
-diff --git a/exec_cmd.h b/exec_cmd.h
-new file mode 100644
-index 0000000..06d5ec3
---- /dev/null
-+++ b/exec_cmd.h
-@@ -0,0 +1,10 @@
-+#ifndef __GIT_EXEC_CMD_H_
-+#define __GIT_EXEC_CMD_H_
-+
-+extern void git_set_exec_path(const char *exec_path);
-+extern const char* git_exec_path();
-+extern int execv_git_cmd(char **argv); /* NULL terminated */
-+extern int execl_git_cmd(char *cmd, ...);
-+
-+
-+#endif /* __GIT_EXEC_CMD_H_ */
-diff --git a/fetch-clone.c b/fetch-clone.c
-index f46fe6e..859f400 100644
---- a/fetch-clone.c
-+++ b/fetch-clone.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "exec_cmd.h"
- #include <sys/wait.h>
- 
- static int finish_pack(const char *pack_tmp_name, const char *me)
-@@ -27,8 +28,7 @@ static int finish_pack(const char *pack_
- 		dup2(pipe_fd[1], 1);
- 		close(pipe_fd[0]);
- 		close(pipe_fd[1]);
--		execlp("git-index-pack","git-index-pack",
--		       "-o", idx, pack_tmp_name, NULL);
-+		execl_git_cmd("index-pack", "-o", idx, pack_tmp_name, NULL);
- 		error("cannot exec git-index-pack <%s> <%s>",
- 		      idx, pack_tmp_name);
- 		exit(1);
-@@ -105,8 +105,7 @@ int receive_unpack_pack(int fd[2], const
- 		dup2(fd[0], 0);
- 		close(fd[0]);
- 		close(fd[1]);
--		execlp("git-unpack-objects", "git-unpack-objects",
--		       quiet ? "-q" : NULL, NULL);
-+		execl_git_cmd("unpack-objects", quiet ? "-q" : NULL, NULL);
- 		die("git-unpack-objects exec failed");
- 	}
- 	close(fd[0]);
-diff --git a/git.c b/git.c
-index 5e7da74..fdd02ed 100644
---- a/git.c
-+++ b/git.c
-@@ -10,6 +10,7 @@
- #include <stdarg.h>
- #include <sys/ioctl.h>
- #include "git-compat-util.h"
-+#include "exec_cmd.h"
- 
- #ifndef PATH_MAX
- # define PATH_MAX 4096
-@@ -233,14 +234,11 @@ int main(int argc, char **argv, char **e
- {
- 	char git_command[PATH_MAX + 1];
- 	char wd[PATH_MAX + 1];
--	int i, len, show_help = 0;
--	char *exec_path = getenv("GIT_EXEC_PATH");
-+	int i, show_help = 0;
-+	char *exec_path;
- 
- 	getcwd(wd, PATH_MAX);
- 
--	if (!exec_path)
--		exec_path = GIT_EXEC_PATH;
--
- 	for (i = 1; i < argc; i++) {
- 		char *arg = argv[i];
- 
-@@ -256,10 +254,11 @@ int main(int argc, char **argv, char **e
- 
- 		if (!strncmp(arg, "exec-path", 9)) {
- 			arg += 9;
--			if (*arg == '=')
-+			if (*arg == '=') {
- 				exec_path = arg + 1;
--			else {
--				puts(exec_path);
-+				git_set_exec_path(exec_path);
-+			} else {
-+				puts(git_exec_path());
- 				exit(0);
- 			}
- 		}
-@@ -275,48 +274,21 @@ int main(int argc, char **argv, char **e
- 
- 	if (i >= argc || show_help) {
- 		if (i >= argc)
--			cmd_usage(exec_path, NULL);
-+			cmd_usage(git_exec_path(), NULL);
- 
- 		show_man_page(argv[i]);
- 	}
- 
--	if (*exec_path != '/') {
--		if (!getcwd(git_command, sizeof(git_command))) {
--			fprintf(stderr,
--				"git: cannot determine current directory\n");
--			exit(1);
--		}
--		len = strlen(git_command);
-+	exec_path = git_exec_path();
-+	prepend_to_path(exec_path, strlen(exec_path));
- 
--		/* Trivial cleanup */
--		while (!strncmp(exec_path, "./", 2)) {
--			exec_path += 2;
--			while (*exec_path == '/')
--				exec_path++;
--		}
--		snprintf(git_command + len, sizeof(git_command) - len,
--			 "/%s", exec_path);
--	}
--	else
--		strcpy(git_command, exec_path);
--	len = strlen(git_command);
--	prepend_to_path(git_command, len);
--
--	len += snprintf(git_command + len, sizeof(git_command) - len,
--			"/git-%s", argv[i]);
--	if (sizeof(git_command) <= len) {
--		fprintf(stderr, "git: command name given is too long.\n");
--		exit(1);
--	}
--
--	/* execve() can only ever return if it fails */
--	execve(git_command, &argv[i], envp);
-+	execv_git_cmd(argv + i);
- 
- 	if (errno == ENOENT)
--		cmd_usage(exec_path, "'%s' is not a git-command", argv[i]);
-+		cmd_usage(git_exec_path(), "'%s' is not a git-command",
-+			  argv[i]);
- 
- 	fprintf(stderr, "Failed to run command '%s': %s\n",
- 		git_command, strerror(errno));
--
- 	return 1;
- }
-diff --git a/receive-pack.c b/receive-pack.c
-index f847ec2..8e78e32 100644
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -257,7 +257,7 @@ static void read_head_info(void)
- 
- static const char *unpack(int *error_code)
- {
--	int code = run_command(unpacker, NULL);
-+	int code = run_command_v_opt(1, &unpacker, RUN_GIT_CMD);
- 
- 	*error_code = 0;
- 	switch (code) {
-diff --git a/run-command.c b/run-command.c
-index 8bf5922..b3d287e 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "run-command.h"
- #include <sys/wait.h>
-+#include "exec_cmd.h"
- 
- int run_command_v_opt(int argc, char **argv, int flags)
- {
-@@ -13,9 +14,13 @@ int run_command_v_opt(int argc, char **a
- 			int fd = open("/dev/null", O_RDWR);
- 			dup2(fd, 0);
- 			dup2(fd, 1);
--			close(fd);			
-+			close(fd);
-+		}
-+		if (flags & RUN_GIT_CMD) {
-+			execv_git_cmd(argv);
-+		} else {
-+			execvp(argv[0], (char *const*) argv);
- 		}
--		execvp(argv[0], (char *const*) argv);
- 		die("exec %s failed.", argv[0]);
- 	}
- 	for (;;) {
-diff --git a/run-command.h b/run-command.h
-index 2469eea..ef3ee05 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -12,7 +12,7 @@ enum {
- };
- 
- #define RUN_COMMAND_NO_STDIO 1
--
-+#define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
- int run_command_v_opt(int argc, char **argv, int opt);
- int run_command_v(int argc, char **argv);
- int run_command(const char *cmd, ...);
-diff --git a/send-pack.c b/send-pack.c
-index cd36193..4a420a6 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -26,11 +26,11 @@ static int is_zero_sha1(const unsigned c
- static void exec_pack_objects(void)
- {
- 	static char *args[] = {
--		"git-pack-objects",
-+		"pack-objects",
- 		"--stdout",
- 		NULL
- 	};
--	execvp("git-pack-objects", args);
-+	execv_git_cmd(args);
- 	die("git-pack-objects exec failed (%s)", strerror(errno));
- }
- 
-@@ -39,7 +39,7 @@ static void exec_rev_list(struct ref *re
- 	static char *args[1000];
- 	int i = 0;
- 
--	args[i++] = "git-rev-list";	/* 0 */
-+	args[i++] = "rev-list";	/* 0 */
- 	args[i++] = "--objects";	/* 1 */
- 	while (refs) {
- 		char *buf = malloc(100);
-@@ -58,7 +58,7 @@ static void exec_rev_list(struct ref *re
- 		refs = refs->next;
- 	}
- 	args[i] = NULL;
--	execvp("git-rev-list", args);
-+	execv_git_cmd(args);
- 	die("git-rev-list exec failed (%s)", strerror(errno));
- }
- 
-diff --git a/shell.c b/shell.c
-index cd31618..0d4891f 100644
---- a/shell.c
-+++ b/shell.c
-@@ -12,7 +12,7 @@ static int do_generic_cmd(const char *me
- 	my_argv[1] = arg;
- 	my_argv[2] = NULL;
- 
--	return execvp(me, (char**) my_argv);
-+	return execv_git_cmd((char**) my_argv);
- }
- 
- static struct commands {
-diff --git a/upload-pack.c b/upload-pack.c
-index 1834b6b..d198055 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -4,6 +4,7 @@
- #include "tag.h"
- #include "object.h"
- #include "commit.h"
-+#include "exec_cmd.h"
- 
- static const char upload_pack_usage[] = "git-upload-pack [--strict]
-[--timeout=nn] <dir>";
- 
-@@ -60,7 +61,7 @@ static void create_pack_file(void)
- 		close(0);
- 		close(fd[0]);
- 		close(fd[1]);
--		*p++ = "git-rev-list";
-+		*p++ = "rev-list";
- 		*p++ = "--objects";
- 		if (create_full_pack || MAX_NEEDS <= nr_needs)
- 			*p++ = "--all";
-@@ -79,13 +80,13 @@ static void create_pack_file(void)
- 				buf += 41;
- 			}
- 		*p++ = NULL;
--		execvp("git-rev-list", argv);
-+		execv_git_cmd(argv);
- 		die("git-upload-pack: unable to exec git-rev-list");
- 	}
- 	dup2(fd[0], 0);
- 	close(fd[0]);
- 	close(fd[1]);
--	execlp("git-pack-objects", "git-pack-objects", "--stdout", NULL);
-+	execl_git_cmd("pack-objects", "--stdout", NULL);
- 	die("git-upload-pack: unable to exec git-pack-objects");
- }
- 
--- 
-0.99.9m-g5a22
+	$ git branch
+
+And you would see:
+
+	$ git branch
+        * master
+          origin
+
+So you have two branches, and you are on "master" right now.
+
+Your working tree files are associated with one branch at any
+moment, and "git branch" shows you which branch you are on.
+That branch is "the current branch".  When you make your
+commits, you will commit into that branch.  The commit-producing
+commands include "git commit", "git am", "git pull", "git
+merge", "git revert" and "git cherry-pick".  They all create a
+new commit on your "current branch".  The difference among them
+is where the commit you create takes the modifications from
+(commit from the index file and the working tree, am from a
+mailbox, pull and merge from a different branch, and revert and
+cherry-pick from an existing commit).
+
+You usually work in your "master" branch.  But you do not have
+to.  Suppose you are working on maintaining some product, and
+you have a couple of trivial bugfixes you can make and one
+rather involved enhancement.  What you could do is to have more
+than one branches, and use "master" for what are ready to be
+consumed by other people, and another branch for your
+developments.
+
+Your repository at one point might look like this:
+
+        $ git show-branch
+        *  [master] trivial fix #2
+         ! [devel] work in progress #3
+        --
+         + [devel] work in progress #3
+         + [devel^] work in progress #2
+         + [devel~2] work in progress #1
+        +  [master] trivial fix #2
+        +  [master^] trivial fix #1
+        ++ [master~2] released frotz gadget
+
+You are on the "master" branch, and committed two trivial fixes
+on top of it since your last release.  But in the meantime you
+found time to do independent enhancements, not yet finished but
+slowly progressing.  You hope to be able to complete the
+development and include that in the master branch eventually,
+but not yet.
+
+How you would end up to something like above would go like this:
+
+ 1. You have just released frotz gadget.  Your "master" branch
+    is at that commit, and you do not have the "devel" branch
+    yet.
+
+ 2. You are inspired by somebody to enhance frotz in a novel
+    way.  You start hacking and accumulate some changes in the
+    working tree files, but now you realize it will be a bigger
+    task than you initially thought.  In the meantime, you got a
+    couple of bug reports and you think you know how to fix them
+    trivially.  But unfortunately, your working tree files are
+    currently in a great mess.  Then:
+
+        $ git checkout -b devel
+
+    This creates a new branch ("devel") based on the current
+    branch head (remember, you were on "master" branch), and
+    switches to that new branch.  It is a short-hand for the two
+    command sequence:
+
+	$ git branch devel
+        $ git checkout devel
+
+    This takes your working tree changes with you, so at this
+    point if you do "git diff", you will see your changes.  You
+    commit this mess (do not worry about "presentable history"
+    yet; you will be cleaning up the mess later anyway before
+    you merge).
+
+	$ git add new-files-you-created
+	$ git commit -a -m 'work in progress #1'
+
+ 3. Now you can switch mood and can work on the trivial fixes.
+    Go back to the "master" branch:
+
+	$ git checkout master
+
+    you'll notice that all the mess you made while working on
+    devel has been cleaned up --- WIP edits are gone, and if you
+    made new files for "devel" they are gone too.  You start
+    from the state immediately after release, and work on fixes,
+    and commit:
+
+	$ edit for trivial fix number 1
+	$ git commit -a -m 'trivial fix #1'
+	$ edit for trivial fix number 2
+	$ git commit -a -m 'trivial fix #2'
+
+ 4. Now fixes are out of your way, you can go back to work on
+    the enhancements.  The same thing as step 3.
+
+	$ git checkout devel
+	$ edit / test / commit
+
+Eventually what you do in your devel branch comes to maturity
+and ready for public consumption.  How would you make sure when?
+For that, you would create a throw-away test branch and try
+things out:
+
+	$ git branch -f test master
+        $ git checkout test
+        $ git merge 'development trial' test devel
+
+This would create something like this:
+
+        $ git show-branch
+        !   [master] trivial fix #2
+         !  [devel] work in progress #3
+          * [test] development trial
+        ---
+	  + [test] development trial
+         ++ [devel] work in progress #3
+         ++ [devel^] work in progress #2
+         ++ [devel~2] work in progress #1
+        + + [master] trivial fix #2
+        + + [master^] trivial fix #1
+        +++ [master~2] released frotz gadget
+
+You merged "devel" and "master" in "test" branch, so that you
+can test your development along with the other fixes you had in
+the "master" branch since your "devel" branch forked.  Try
+things out and if you find the result satisfactory, then you
+know what you have in "devel" is good for public consumption.
+
+There are three ways to bring the "devel" into "master" at this
+moment.  It depends on how much you care about clean history.
+
+ A) just merge.
+
+	$ git checkout master
+        $ git pull . devel
+
+    This is the simplest, but you would see all the real history
+    in "devel" branch, things like "work in progress #n" commit
+    log messages.
+
+ B) refactor and linearize.
+
+	$ git format-patch -k -m -o ./+redo master..devel
+
+    This leaves a patchfile per commit in devel branch in +redo/
+    directory.  You can edit the commit log message and patch
+    just as if you are preparing them for e-mail submission to
+    another project maintainer.  Once you are done editing:
+
+	$ git checkout master
+        $ git am -k -3 ./+redo/0*.txt
+
+    to apply them on top of the master branch.
+
+ C) linearize without refactoring.
+
+	$ git checkout devel
+        $ git rebase master
+        $ git checkout master
+        $ git pull . devel
+
+    This "rebases" the development branch (the first two steps),
+    and then pulls the result into the "master" branch (the
+    rest).  It should give you the same result as approach B) if
+    you do not edit your +redo/ files at all.
+
+Once you are done, you can clean up by
+
+	$ git branch -D test devel
