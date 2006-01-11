@@ -1,85 +1,117 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: RFC: Subprojects
-Date: Wed, 11 Jan 2006 17:44:53 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0601111740220.17966@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <43C52B1F.8020706@hogyros.de>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Checking git-cherry-pick Use Case
+Date: Wed, 11 Jan 2006 10:46:07 -0600
+Message-ID: <1136997967.29751.198.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 11 17:45:18 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Jan 11 17:46:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ewj5o-0005zg-EH
-	for gcvg-git@gmane.org; Wed, 11 Jan 2006 17:45:00 +0100
+	id 1Ewj6z-0006JU-OH
+	for gcvg-git@gmane.org; Wed, 11 Jan 2006 17:46:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbWAKQo6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jan 2006 11:44:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751674AbWAKQo6
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 11:44:58 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:48358 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751581AbWAKQo5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2006 11:44:57 -0500
-Received: from amavis.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BD191140C7A; Wed, 11 Jan 2006 17:44:53 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by amavis.mail (Postfix) with ESMTP id ADD501C52;
-	Wed, 11 Jan 2006 17:44:53 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by amavis.mail (Postfix) with ESMTP id 8FB14187D;
-	Wed, 11 Jan 2006 17:44:53 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 69536140C7A; Wed, 11 Jan 2006 17:44:53 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Simon Richter <Simon.Richter@hogyros.de>
-In-Reply-To: <43C52B1F.8020706@hogyros.de>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
-X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
-X-Spam-Level: 
+	id S1751641AbWAKQqL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jan 2006 11:46:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751674AbWAKQqL
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 11:46:11 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:39819 "EHLO
+	az33egw02.freescale.net") by vger.kernel.org with ESMTP
+	id S1751670AbWAKQqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2006 11:46:10 -0500
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id k0BGvqdE004201
+	for <git@vger.kernel.org>; Wed, 11 Jan 2006 09:57:52 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id k0BGs8xt002377
+	for <git@vger.kernel.org>; Wed, 11 Jan 2006 10:54:08 -0600 (CST)
+To: Git List <git@vger.kernel.org>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14488>
 
-Hi,
+Guys,
 
-On Wed, 11 Jan 2006, Simon Richter wrote:
+Could you sanity check me on two issues with
+my "work flow" here, please?  Maybe I could do
+something better/easier?
 
-> one thing that I have been missing so far in all SCM systems apart from CVS
-> (and there it's just coincidence) is the ability to include a project as part
-> of a bigger project. Developing software for embedded systems, I need that
-> feature fairly often, for example the source tree for a particular device
-> almost always contains one or more Linux trees, some binutils, gcc and gdb
-> stuff and so on.
+I have a repo with a bunch of commits coming from
+several different places (me, co-worker, remote repo, etc).
+I'm applying co-worker's patches into "cow" branch.
+I'm applying my changes directly to "jdl" branch"
+I'm pulling in "origin" crude.
 
-What I do: I call it a branch. While this might seem technically 
-incorrect, it is not.
+Ultimately, I want to do development against the "sum total
+set of all known patches supplied by anyone".  Oh yeah.
+So I make a "dev" branch that has "cow" + "jdl" + "origin".
 
-And since the subprojects are really independent, you can connect them by 
-an octopus.
+However, at the end of the development day, I want to send
+just _my_ patches upstream.  Thus, I need to have my changes
+sitting around neatly on the "jdl" branch.
 
-> The changes necessary here would be fairly simple: "tree" objects would point
-> to a "commit" or a "tag" object when a subproject is used.
+I don't want to develop in the "jdl" branch, as it doesn't
+have everything needed to test stuff properly (missing "cow"
+code, eg.).  So I actually edit and commit in the "dev"
+branch where everything is unioned.
 
-Sorry, we discussed similar things already. It is not necessary to change 
-the structure. Even more: it makes no sense. Why would you want to have 
-two or more commit messages for the same revision?
+To isolate just my changes out of the "dev" branch into 
+the "jdl" branch, I cherry pick them like this:
 
-Remember: trees, commits and tags (objects in general) are immutable. You 
-may think that you just commit a new revision of the subproject, and it is 
-picked up by the overall project, but that is not the case!
+    $ git checkout dev
+    $     <do edit-compile-test cycle until all is well>
+    $ git commit -m "Stuff jdl made up and committed"
 
-> In the working directory, this would be represented by a .git directory that
-> contains a symref to the embedding project instead of the objects directory.
-> Head pointers are only required if you intend to push changes upstream to the
-> maintainer of the embedded project. Each subproject has its own index.
+Now, things look, in part, like this:
 
-You can do this like I said: use branches (and possibly a common 
-GIT_OBJECT_DIRECTORY to save on disk space).
+        ! [dev] Stuff jdl made up and committed
+         * [jdl] Early stuff jdl made up
+          ! [origin] Original stuff
+        ---
+        +   [dev] Stuff jdl made up and committed
+        +   [dev^] Merge branch 'jdl'
+        ++  [jdl] Early stuff jdl made up
+        +++ [origin] Original stuff
 
-Hth,
-Dscho
+Then I pull that last "dev" commit over to "jdl":
+
+    $ git checkout jdl
+    $ git cherry-pick -r dev
+
+Now it looks like this:
+
+        ! [dev] Stuff jdl made up and committed
+         * [jdl] Early stuff jdl made up
+          ! [origin] Original stuff
+        ---
+         +  [jdl] Stuff jdl made up and committed
+        +   [dev] Stuff jdl made up and committed
+        +   [dev^] Merge branch 'jdl'
+        ++  [jdl^] Early stuff jdl made up
+        +++ [origin] Original stuff
+
+My first question is that I expected to see 
+something more like this (hand edited):
+
+	! [dev] Stuff jdl made up and committed
+         * [jdl] Early stuff jdl made up
+          ! [origin] Original stuff
+        ---
+        ++  [dev] Stuff jdl made up and committed
+        +   [dev^] Merge branch 'jdl'
+        ++  [jdl^] Early stuff jdl made up
+        +++ [origin] Original stuff
+
+That is, the _same_ commit is now in both the "dev"
+and "jdl" branches, so why does it have two lines here?
+
+And finally, the "general" question:  Is this a sane
+work-flow used by anyone else?  Or is there a different
+perhaps even better way to do what I described above?
+
+Thanks,
+jdl
