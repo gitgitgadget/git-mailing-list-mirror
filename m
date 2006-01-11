@@ -1,48 +1,66 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: merging initial part of a branch?
-Date: Wed, 11 Jan 2006 18:04:51 -0500
-Message-ID: <20060111230451.GH8618@fieldses.org>
+From: Beber <beber.lkml@gmail.com>
+Subject: Re: Proxy and authentication
+Date: Thu, 12 Jan 2006 00:08:49 +0100
+Message-ID: <4615f4910601111508x3c31fbddmd4caa140f2602991@mail.gmail.com>
+References: <4615f4910601110653k5e2e8ffapb962a8b0829eeb11@mail.gmail.com>
+	 <46a038f90601111026j1fd6f8e2pcafb4437c4b458fe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jan 12 00:05:07 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 12 00:09:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ewp1T-00020f-9D
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 00:04:55 +0100
+	id 1Ewp5R-0003Cs-6F
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 00:09:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932512AbWAKXEw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jan 2006 18:04:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932515AbWAKXEw
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 18:04:52 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:46217 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP id S932512AbWAKXEw
+	id S932502AbWAKXIx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jan 2006 18:08:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932526AbWAKXIw
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 18:08:52 -0500
+Received: from uproxy.gmail.com ([66.249.92.198]:35302 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932502AbWAKXIv convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2006 18:04:52 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
-	(envelope-from <bfields@fieldses.org>)
-	id 1Ewp1P-00031x-5r
-	for git@vger.kernel.org; Wed, 11 Jan 2006 18:04:51 -0500
-To: Git Mailing List <git@vger.kernel.org>
+	Wed, 11 Jan 2006 18:08:51 -0500
+Received: by uproxy.gmail.com with SMTP id s2so77110uge
+        for <git@vger.kernel.org>; Wed, 11 Jan 2006 15:08:49 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=L+ip6wDrVfCBeiQXzOW2I8MK+Jx26dX9DbD6Z13FrSfQtY+WniJnGxt6ZO4YwvfpSr+7g4vboDZi3yCvFXJw0pjLkDEkaIhKTsoK09WI8qthi/R1It7BqJbevtsU9VSn5Cls8Po3QPDWtdRRqf8nGQYret5e5aVjurXLuGi7vk0=
+Received: by 10.66.254.12 with SMTP id b12mr480508ugi;
+        Wed, 11 Jan 2006 15:08:49 -0800 (PST)
+Received: by 10.66.242.15 with HTTP; Wed, 11 Jan 2006 15:08:49 -0800 (PST)
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90601111026j1fd6f8e2pcafb4437c4b458fe@mail.gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14523>
 
-External kernel projects sometimes work only against major
-releases--it's easier for their users/testers to find a major release
-than a random git version, and at least in the early prototype stage, it
-isn't critical to be working on the tip all the time.
+On 1/11/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> On 1/12/06, Beber <beber.lkml@gmail.com> wrote:
+> > Is there plan to allow proxy authentication and http/webdav remote
+> > repository authentication ?
+> > It seem that's it's quiet non-working for now.
+>
+> search the list archives for more detail, but
+>
+>   export http_proxy=http://my.proxy.tld:8080/
+>   git foo
+>
+> should work. Have you tried embedding auth details in the url? Try
+> http://user:pass@my.proxy.tld:8080/
 
-Is there a simple way to say, for example, "merge in all the upstream
-changes up to v2.6.15"?
+Yes it works if you have a password without any strange characters
+like @ : and so
 
-It looks like git pull will only update me to the very tip of a branch.
-I could create a new local branch that stops at v2.6.15, then pull from
-that.  Can I accomplish the same thing somehow with just one git pull?
-Or is there some other convenient shorthand that I've missed?
-
---b.
+>
+> cheers,
+>
+>
+> martin
+>
