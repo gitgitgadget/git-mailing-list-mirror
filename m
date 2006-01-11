@@ -1,83 +1,85 @@
-From: Simon Richter <Simon.Richter@hogyros.de>
-Subject: RFC: Subprojects
-Date: Wed, 11 Jan 2006 16:58:23 +0100
-Message-ID: <43C52B1F.8020706@hogyros.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: RFC: Subprojects
+Date: Wed, 11 Jan 2006 17:44:53 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0601111740220.17966@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <43C52B1F.8020706@hogyros.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig05092532A64B2FAF07FAC83A"
-X-From: git-owner@vger.kernel.org Wed Jan 11 16:59:59 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 11 17:45:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwiN7-0000wT-L1
-	for gcvg-git@gmane.org; Wed, 11 Jan 2006 16:58:50 +0100
+	id 1Ewj5o-0005zg-EH
+	for gcvg-git@gmane.org; Wed, 11 Jan 2006 17:45:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750721AbWAKP6r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jan 2006 10:58:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbWAKP6r
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 10:58:47 -0500
-Received: from kleinhenz.com ([213.239.205.196]:35532 "EHLO kleinhenz.com")
-	by vger.kernel.org with ESMTP id S1750864AbWAKP6q (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2006 10:58:46 -0500
-Received: from [192.168.115.35] (p5499772B.dip.t-dialin.net [84.153.119.43])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "Simon Richter", Issuer "Kleinhenz Elektronik CA" (verified OK))
-	by kleinhenz.com (Postfix) with ESMTP id 59EED4A8045
-	for <git@vger.kernel.org>; Wed, 11 Jan 2006 16:58:31 +0100 (CET)
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051019)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-X-Enigmail-Version: 0.93.0.0
-OpenPGP: url=http://www.hogyros.de/simon.asc
+	id S1751581AbWAKQo6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jan 2006 11:44:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751674AbWAKQo6
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 11:44:58 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:48358 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751581AbWAKQo5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2006 11:44:57 -0500
+Received: from amavis.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id BD191140C7A; Wed, 11 Jan 2006 17:44:53 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by amavis.mail (Postfix) with ESMTP id ADD501C52;
+	Wed, 11 Jan 2006 17:44:53 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by amavis.mail (Postfix) with ESMTP id 8FB14187D;
+	Wed, 11 Jan 2006 17:44:53 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 69536140C7A; Wed, 11 Jan 2006 17:44:53 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Simon Richter <Simon.Richter@hogyros.de>
+In-Reply-To: <43C52B1F.8020706@hogyros.de>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14487>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig05092532A64B2FAF07FAC83A
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi,
 
-Hello,
+On Wed, 11 Jan 2006, Simon Richter wrote:
 
-one thing that I have been missing so far in all SCM systems apart from 
-CVS (and there it's just coincidence) is the ability to include a 
-project as part of a bigger project. Developing software for embedded 
-systems, I need that feature fairly often, for example the source tree 
-for a particular device almost always contains one or more Linux trees, 
-some binutils, gcc and gdb stuff and so on.
+> one thing that I have been missing so far in all SCM systems apart from CVS
+> (and there it's just coincidence) is the ability to include a project as part
+> of a bigger project. Developing software for embedded systems, I need that
+> feature fairly often, for example the source tree for a particular device
+> almost always contains one or more Linux trees, some binutils, gcc and gdb
+> stuff and so on.
 
-The changes necessary here would be fairly simple: "tree" objects would 
-point to a "commit" or a "tag" object when a subproject is used.
+What I do: I call it a branch. While this might seem technically 
+incorrect, it is not.
 
-In the working directory, this would be represented by a .git directory 
-that contains a symref to the embedding project instead of the objects 
-directory. Head pointers are only required if you intend to push changes 
-upstream to the maintainer of the embedded project. Each subproject has 
-its own index.
+And since the subprojects are really independent, you can connect them by 
+an octopus.
 
-Would such a feature make sense, and what behaviour would make the most 
-sense for the various operations (e.g. shall commits in the inner 
-project propagate to the outer?)?
+> The changes necessary here would be fairly simple: "tree" objects would point
+> to a "commit" or a "tag" object when a subproject is used.
 
-    Simon
+Sorry, we discussed similar things already. It is not necessary to change 
+the structure. Even more: it makes no sense. Why would you want to have 
+two or more commit messages for the same revision?
 
---------------enig05092532A64B2FAF07FAC83A
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Remember: trees, commits and tags (objects in general) are immutable. You 
+may think that you just commit a new revision of the subproject, and it is 
+picked up by the overall project, but that is not the case!
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
+> In the working directory, this would be represented by a .git directory that
+> contains a symref to the embedding project instead of the objects directory.
+> Head pointers are only required if you intend to push changes upstream to the
+> maintainer of the embedded project. Each subproject has its own index.
 
-iQCVAwUBQ8UrIVYr4CN7gCINAQLF0AP/QG4l/dR3rNJMBQI8tEgRrlxWu9dUbs8Y
-zTo2UjF0TAgxRx2lHV9p5wa/jbec4LlG6kMYaPqIz3FUUpsFtzVNBvc8WrqyV2s2
-JqQthPJ0hMPU1t6NRYGIwmrZKdIZGX+8CkixqR844OVSKBrkdMulH+KcPRlB88Zv
-5iX57DsDPJI=
-=v8C/
------END PGP SIGNATURE-----
+You can do this like I said: use branches (and possibly a common 
+GIT_OBJECT_DIRECTORY to save on disk space).
 
---------------enig05092532A64B2FAF07FAC83A--
+Hth,
+Dscho
