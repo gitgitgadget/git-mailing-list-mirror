@@ -1,66 +1,66 @@
-From: Beber <beber.lkml@gmail.com>
-Subject: Re: Proxy and authentication
-Date: Thu, 12 Jan 2006 00:08:49 +0100
-Message-ID: <4615f4910601111508x3c31fbddmd4caa140f2602991@mail.gmail.com>
-References: <4615f4910601110653k5e2e8ffapb962a8b0829eeb11@mail.gmail.com>
-	 <46a038f90601111026j1fd6f8e2pcafb4437c4b458fe@mail.gmail.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: qgit shows wrong popup
+Date: Wed, 11 Jan 2006 18:21:30 -0500
+Message-ID: <1137021690.10975.22.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 12 00:09:10 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 12 00:21:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ewp5R-0003Cs-6F
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 00:09:01 +0100
+	id 1EwpHf-0006iJ-HD
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 00:21:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932502AbWAKXIx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jan 2006 18:08:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932526AbWAKXIw
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 18:08:52 -0500
-Received: from uproxy.gmail.com ([66.249.92.198]:35302 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932502AbWAKXIv convert rfc822-to-8bit
+	id S932526AbWAKXVf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jan 2006 18:21:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932528AbWAKXVf
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 18:21:35 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:29893 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932526AbWAKXVe
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2006 18:08:51 -0500
-Received: by uproxy.gmail.com with SMTP id s2so77110uge
-        for <git@vger.kernel.org>; Wed, 11 Jan 2006 15:08:49 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=L+ip6wDrVfCBeiQXzOW2I8MK+Jx26dX9DbD6Z13FrSfQtY+WniJnGxt6ZO4YwvfpSr+7g4vboDZi3yCvFXJw0pjLkDEkaIhKTsoK09WI8qthi/R1It7BqJbevtsU9VSn5Cls8Po3QPDWtdRRqf8nGQYret5e5aVjurXLuGi7vk0=
-Received: by 10.66.254.12 with SMTP id b12mr480508ugi;
-        Wed, 11 Jan 2006 15:08:49 -0800 (PST)
-Received: by 10.66.242.15 with HTTP; Wed, 11 Jan 2006 15:08:49 -0800 (PST)
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90601111026j1fd6f8e2pcafb4437c4b458fe@mail.gmail.com>
-Content-Disposition: inline
+	Wed, 11 Jan 2006 18:21:34 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EwpFN-00084w-JI
+	for git@vger.kernel.org; Wed, 11 Jan 2006 18:19:17 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1EwpHW-0003Uz-R4; Wed, 11 Jan 2006 18:21:30 -0500
+To: Marco Costalba <mcostalba@yahoo.it>
+X-Mailer: Evolution 2.5.4 (2.5.4-2) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14524>
 
-On 1/11/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> On 1/12/06, Beber <beber.lkml@gmail.com> wrote:
-> > Is there plan to allow proxy authentication and http/webdav remote
-> > repository authentication ?
-> > It seem that's it's quiet non-working for now.
->
-> search the list archives for more detail, but
->
->   export http_proxy=http://my.proxy.tld:8080/
->   git foo
->
-> should work. Have you tried embedding auth details in the url? Try
-> http://user:pass@my.proxy.tld:8080/
+Hello, Marco!
 
-Yes it works if you have a password without any strange characters
-like @ : and so
+Current qgit has a bug that manifests itself on stgit repositories.
+Suppose I have two patches known to stgit, one is applied and the other
+is not.
 
->
-> cheers,
->
->
-> martin
->
+If the unapplied patch is selected and I right-click on the applied
+patch below, I get a popup with "Push patch" disabled.  If I select the
+applied patch by the left click, then "Pop patch" appears in that place,
+and it's enabled.  Also, "Make Tag" appears in the menu.
+
+Going from the applied patch to the unapplied one by the right click
+results in having disabled "Pop patch" instead of the correct enabled
+"Push patch".
+
+Screenshots can be found at
+http://red-bean.com/proski/qgit/
+
+I found this comment in mainimpl.cpp:
+  // call an async context popup, DO NOT filter out event
+  // we append the event to main event loop queue so Qt can send
+  // currentChanged() signal to listViewLog before our popup is
+populated
+
+I guess the code doesn't work the way the comment says.
+
+-- 
+Regards,
+Pavel Roskin
