@@ -1,79 +1,49 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: git-commit: allow From: line to be entered in commit message
-Date: Thu, 12 Jan 2006 11:00:31 -0800
-Message-ID: <20060112190031.GH14196@ca-server1.us.oracle.com>
-References: <20060112093700.1d3d25db.seanlkml@sympatico.ca>
+From: Joan Ripoll Balaguer <joan.ripsa@gmail.com>
+Subject: git in HP-UX PA-RISC
+Date: Thu, 12 Jan 2006 20:05:26 +0100
+Message-ID: <5c08a49c0601121105u519fe02fq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 12 20:00:50 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Jan 12 20:06:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ex7gd-0007Cd-O3
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 20:00:40 +0100
+	id 1Ex7lM-00008S-2F
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 20:05:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030302AbWALTAg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 14:00:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964790AbWALTAg
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 14:00:36 -0500
-Received: from agminet01.oracle.com ([141.146.126.228]:32453 "EHLO
-	agminet01.oracle.com") by vger.kernel.org with ESMTP
-	id S964775AbWALTAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2006 14:00:35 -0500
-Received: from rgmsgw02.us.oracle.com (rgmsgw02.us.oracle.com [138.1.186.52])
-	by agminet01.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0CJ0VDN025135;
-	Thu, 12 Jan 2006 13:00:32 -0600
-Received: from rgmsgw02.us.oracle.com (localhost.localdomain [127.0.0.1])
-	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0CJ0VLw007596;
-	Thu, 12 Jan 2006 12:00:31 -0700
-Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.48.5])
-	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0CJ0VYI007582
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 12 Jan 2006 12:00:31 -0700
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.60)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1Ex7gV-0007lN-3W; Thu, 12 Jan 2006 11:00:31 -0800
-To: sean <seanlkml@sympatico.ca>
+	id S1030343AbWALTF3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 14:05:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030437AbWALTF3
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 14:05:29 -0500
+Received: from uproxy.gmail.com ([66.249.92.195]:21522 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1030343AbWALTF2 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2006 14:05:28 -0500
+Received: by uproxy.gmail.com with SMTP id s2so162697uge
+        for <git@vger.kernel.org>; Thu, 12 Jan 2006 11:05:27 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=R7yD4vfipCdoUYjA6oTBKiw/mNezTK8s0MkG835qnQZCY/ArY8Y08jGiotm7gcCcmkqDjNynlIJH0qxuhiKukU2f0eiRQ97T0kNrESCiK3+DzfiQJ+r20r7uqpA3L9saNc9pwWq9fcPQVdpHsXBaVaeW+a0un9YvtL/4AWkqmr8=
+Received: by 10.48.202.9 with SMTP id z9mr8080nff;
+        Thu, 12 Jan 2006 11:05:26 -0800 (PST)
+Received: by 10.48.42.16 with HTTP; Thu, 12 Jan 2006 11:05:26 -0800 (PST)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20060112093700.1d3d25db.seanlkml@sympatico.ca>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
-User-Agent: Mutt/1.5.11
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14580>
 
-On Thu, Jan 12, 2006 at 09:37:00AM -0500, sean wrote:
-> Use the author name and email information given as the 
-> first line of the commit message in the form of:
-> 
-> From: name <email>
-> 
-> as the author's name and email address in the resulting
-> commit object.  This makes committing foreign patches
-> a little less cumbersome to handle for some workflows.
+How I can build git on HP-UX 11.11 (PA-RISC)?
 
-	If we do this, can we have it populated up front?  That is, when
-the edit opens, the current idea of author is in the comments as "From:"
-so I can see what the author would be if I changed nothing.  This would
-catch surprises where I'd forgotten to set AUTHOR_*, etc.
+I have build openSSL and zlib libraries, plus GNU make utility, but I
+haven't gcc compiler. I have native ANSI C compiler.
 
-Joel
- 
+I search in the archives of that mail list, but I find nothing.
 
--- 
+Thank.
 
-Life's Little Instruction Book #182
-
-	"Be romantic."
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+(Sorry for my english).
