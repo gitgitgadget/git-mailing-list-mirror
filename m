@@ -1,97 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Alex Riesen <raa.lkml@gmail.com>
 Subject: Re: git-commit: allow From: line to be entered in commit message
-Date: Thu, 12 Jan 2006 12:13:52 -0800
-Message-ID: <7vzmm1mcfz.fsf@assigned-by-dhcp.cox.net>
-References: <BAYC1-PASMTP117A18814EAAFACFE0F31DAE270@CEZ.ICE>
+Date: Thu, 12 Jan 2006 21:16:46 +0100
+Message-ID: <20060112201646.GA3179@steel.home>
+References: <20060112093700.1d3d25db.seanlkml@sympatico.ca>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 12 21:14:11 2006
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 12 21:17:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ex8pb-0001IR-2n
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 21:13:59 +0100
+	id 1Ex8sV-00020H-RY
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 21:17:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161241AbWALUNz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 15:13:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161242AbWALUNz
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 15:13:55 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:32679 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1161241AbWALUNy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2006 15:13:54 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060112201125.KBRC17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 12 Jan 2006 15:11:25 -0500
+	id S1161238AbWALUQ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 15:16:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161237AbWALUQ5
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 15:16:57 -0500
+Received: from devrace.com ([198.63.210.113]:64268 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S1161238AbWALUQ4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2006 15:16:56 -0500
+Received: from tigra.home (p54A07A2B.dip.t-dialin.net [84.160.122.43])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id k0CKGmhH058458;
+	Thu, 12 Jan 2006 14:16:49 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1Ex8sI-0000Tn-00; Thu, 12 Jan 2006 21:16:46 +0100
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1Ex8sI-0001Y1-4i; Thu, 12 Jan 2006 21:16:46 +0100
 To: sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP117A18814EAAFACFE0F31DAE270@CEZ.ICE>
-	(seanlkml@sympatico.ca's message of "Thu, 12 Jan 2006 09:37:00 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <20060112093700.1d3d25db.seanlkml@sympatico.ca>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,BAYES_50,
+	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14584>
 
-sean <seanlkml@sympatico.ca> writes:
-
+sean, Thu, Jan 12, 2006 15:37:00 +0100:
+> 
 > Mostly just for comment to see if there is any support
 > for this feature....
->
+> 
 > Sean
->
+> 
 > ---
 > Use the author name and email information given as the 
 > first line of the commit message in the form of:
->
+> 
 > From: name <email>
->
-> as the author's name and email address in the resulting
-> commit object.  This makes committing foreign patches
-> a little less cumbersome to handle for some workflows.
+> 
 
-Actually, I've considered this a couple of times in the past,
-but I ended up saying no.
-
-If the workflow is driving "git commit" from a script (i.e. your
-own Porcelain), the script can set GIT_AUTHOR_* environment
-variables, so this is a non issue.
-
-Which means that this 'From: ' thing is coming from the end
-user.  Either you as the end user pasted it from some text file,
-or typed that line because you knew that the change was made by
-that person, not by you.
-
-If you pasted that line from somewhere else, I wonder what that
-"somewhere else" file is -- and what else that file contained.
-If the change came in an e-mail message, we already have tools
-for that (am/applymbox), and they do not lose the author-date
-information as your change to git-commit does, so I think it is
-a non issue.
-
-And I do not think of anything else that would have author name
-but does not have a patch text that you can feed git-apply with.
-Pasting from your address book just to save typing does not
-count as "pasting" --- that is still typing in this context.
-
-If you typed that line, why somebody else's change ended up in
-your working tree is a mystery to me, but let's say an
-office-mate edited things for you and said "this should work.
-test it out and if it is OK commit it for me."  I have seen this
-kind of thing done in real life.
-
-If that is what happened, then what you are adding is a more
-convenient way than setting two GIT_AUTHOR_* environment
-variables.  Maybe you forgot about preserving author date, in
-which case you would add 'Date: ' as well to your patch, and
-that would save your user from setting three environment
-variables.
-
-So the matter really is how much this patch is better than
-setting GIT_AUTHOR_* environment variables, unless it simplifies
-things for other programs (one possibility I have not looked
-into is that we _might_ be able to use "git commit" with this
-modification from "git am/applimbox/revert/cherry-pick").
+Isn't this what git-am expect (as a part of mbox) and handle?
