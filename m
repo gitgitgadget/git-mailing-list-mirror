@@ -1,64 +1,55 @@
-From: Kyle McMartin <kyle@mcmartin.ca>
-Subject: Re: git in HP-UX PA-RISC
-Date: Thu, 12 Jan 2006 15:35:33 -0500
-Message-ID: <20060112203533.GB4701@quicksilver.road.mcmartin.ca>
-References: <5c08a49c0601121105u519fe02fq@mail.gmail.com> <7v1wzdmbrd.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: [wish] Auto-generate gitk's pretty pictures
+Date: Fri, 13 Jan 2006 10:02:01 +1300
+Message-ID: <46a038f90601121302x3d06898dk3f9a0ab7114ef70a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joan Ripoll Balaguer <joan.ripsa@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 12 21:37:13 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Jan 12 22:02:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ex9Bq-00075n-PE
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 21:36:59 +0100
+	id 1Ex9al-0004xT-T3
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 22:02:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161245AbWALUgs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 15:36:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161250AbWALUgs
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 15:36:48 -0500
-Received: from cabal.ca ([134.117.69.58]:28839 "EHLO fattire.cabal.ca")
-	by vger.kernel.org with ESMTP id S1161245AbWALUgr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2006 15:36:47 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by fattire.cabal.ca (Postfix) with ESMTP id D13FF23E88;
-	Thu, 12 Jan 2006 15:36:32 -0500 (EST)
-Received: from fattire.cabal.ca ([127.0.0.1])
-	by localhost (fattire [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 31463-09; Thu, 12 Jan 2006 15:36:32 -0500 (EST)
-Received: from quicksilver.road.mcmartin.ca (quicksilver.road.mcmartin.ca [134.117.69.56])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "quicksilver.road.mcmartin.ca", Issuer "There Is No Cabal Certificate Authority" (verified OK))
-	by fattire.cabal.ca (Postfix) with ESMTP id 989BB23E85;
-	Thu, 12 Jan 2006 15:36:32 -0500 (EST)
-Received: by quicksilver.road.mcmartin.ca (Postfix, from userid 1000)
-	id 3275C3B05E; Thu, 12 Jan 2006 15:35:33 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+	id S1161270AbWALVCk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 16:02:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161269AbWALVCk
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 16:02:40 -0500
+Received: from wproxy.gmail.com ([64.233.184.198]:14168 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1161270AbWALVCj convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2006 16:02:39 -0500
+Received: by wproxy.gmail.com with SMTP id i34so470839wra
+        for <git@vger.kernel.org>; Thu, 12 Jan 2006 13:02:37 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=BpzxyKxUkK1NyxPrJ0QMUHo/gCyrcD3NyxuET7dfjfxNYg1DWvTZyfBsRo+6N74MYtmkZtROM6xfX0epwG+Y2C8U6XT9QRWShAKeOUCuui5UNUH/lqUUwFyfEDFU1weDey396RrnlFHIJpu49yh/TWJ0CiRYEJtF4MEd51Ah2H4=
+Received: by 10.54.83.7 with SMTP id g7mr3070847wrb;
+        Thu, 12 Jan 2006 13:02:02 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Thu, 12 Jan 2006 13:02:01 -0800 (PST)
+To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <7v1wzdmbrd.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at cabal.ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14588>
 
-On Thu, Jan 12, 2006 at 12:28:38PM -0800, Junio C Hamano wrote:
-> 
-> I do not think we had a thread on bootstrapping GCC on HP-UX on
-> this list ;-).
-> 
-> Your build log that shows compilation error messages, or if you
-> can identify what GCC extension we use that HP-UX C compiler
-> does not like then a short summary of the problem, would be
-> helpful (of course the latter is preferred).
-> 
-> One thing I know we deliberately use GCC extension is flex
-> array.  "make CFLAGS=-DFLEX_ARRAY=1" might help.  Maybe not.
->
+Being an ignorant in matters Tk, I am wondering whether it'd be
+possible to hack gitk so that it renders the top canvas into a file.
+gitweb doesn't give people any hints of how the heads are related, so
+I am working on the idea of running an hourly cron on the server that
+does
 
-An HP-UX user can fairly trivially install GCC... HP provides
-the packages.
+ gitk -d --all --max-count=1000 --prettypic=foo.png
 
-http://h21007.www2.hp.com/dspp/tech/tech_TechSoftwareDetailPage_IDX/1,1703,547,00.html 
+and link to the png from gitweb. Is it easier to trick gitk to do it,
+or should I be thinking of porting the logic to some other script?
+(Possibly in Perl using GD).
+
+cheers,
+
+
+martin
