@@ -1,74 +1,53 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: git binary size...
-Date: Thu, 12 Jan 2006 11:16:27 -0800
-Message-ID: <43C6AB0B.4030408@zytor.com>
-References: <Pine.LNX.4.64.0601111021450.5073@g5.osdl.org>  <43C558FB.3030102@op5.se>  <Pine.LNX.4.64.0601111134560.5073@g5.osdl.org> <2cd57c900601120215pdb5da27l@mail.gmail.com> <43C65E70.7090702@op5.se> <Pine.LNX.4.64.0601121013030.3535@g5.osdl.org> <Pine.LNX.4.64.0601121033020.3535@g5.osdl.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git in HP-UX PA-RISC
+Date: Thu, 12 Jan 2006 20:18:45 +0100
+Message-ID: <43C6AB95.2020507@op5.se>
+References: <5c08a49c0601121105u519fe02fq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 12 20:17:26 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 12 20:19:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ex7wQ-0002sU-JR
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 20:16:59 +0100
+	id 1Ex7yu-0003db-8v
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 20:19:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161196AbWALTQz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 14:16:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161195AbWALTQx
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 14:16:53 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:25538 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1161194AbWALTQw
+	id S1161201AbWALTSs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 14:18:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161197AbWALTSs
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 14:18:48 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:11948 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161201AbWALTSr
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2006 14:16:52 -0500
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k0CJGW7C006000
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 12 Jan 2006 11:16:32 -0800
+	Thu, 12 Jan 2006 14:18:47 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 0C85E6BD00; Thu, 12 Jan 2006 20:18:46 +0100 (CET)
 User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
 X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0601121033020.3535@g5.osdl.org>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 
-	autolearn=unavailable version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+To: Joan Ripoll Balaguer <joan.ripsa@gmail.com>
+In-Reply-To: <5c08a49c0601121105u519fe02fq@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14582>
 
-Linus Torvalds wrote:
+Joan Ripoll Balaguer wrote:
+> How I can build git on HP-UX 11.11 (PA-RISC)?
 > 
->>Repeat after me: "autoconf is crap".
+> I have build openSSL and zlib libraries, plus GNU make utility, but I
+> haven't gcc compiler. I have native ANSI C compiler.
 > 
-> .. which is not to say that some _other_ autoconf-like thing might not be 
-> good.
-> 
-> The problem I have with autoconf is that it adds absolutely horrendous 
-> #ifdef's etc all over the place, and the resulting makefile (and the 
-> config file itself) is just completely unreadable.
-> 
-> The reason autoconf sucks *ss is that it doesn't try to abstract out any 
-> of the differences between systems, it tries to basically "fix up" the 
-> differences.
-> 
-> A real abstraction library would be a lot more preferable than autoconf. 
-> It's kind of the way the git stuff works (ie using things like 
-> "gitstrcasestr()" and "gitfakemmap()"), but for many of the same reasons 
-> that autoconf never did a good job, git itself doesn't do a good job (it 
-> uses "#if" hackery to then do things like "#define mmap gitfakemmap").
-> 
-> But I think the git kind of hackish #ifdef thing is better than the 
-> _insitutionalized_ horrible autoconf hackery.
+> I search in the archives of that mail list, but I find nothing.
 > 
 
-You can use autoconf in this way, though.  See my previous post on the 
-matter.
+If you could tell us what particular problems you're experiencing you 
+would increase your own chance of getting help.
 
-	-hpa
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
