@@ -1,51 +1,72 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: [RFD] what should "git push remote.host:path" do?
-Date: Thu, 12 Jan 2006 08:31:57 -0800
-Message-ID: <20060112163157.GB3873@reactrix.com>
-References: <7vslrtq05h.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: git binary size...
+Date: Thu, 12 Jan 2006 09:37:19 -0800
+Message-ID: <43C693CF.3020800@zytor.com>
+References: <Pine.LNX.4.64.0601111021450.5073@g5.osdl.org>	 <43C558FB.3030102@op5.se>	 <Pine.LNX.4.64.0601111134560.5073@g5.osdl.org> <2cd57c900601120215pdb5da27l@mail.gmail.com> <43C65E70.7090702@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 12 17:32:17 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 12 18:39:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ex5My-00061B-0Y
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 17:32:12 +0100
+	id 1Ex6OG-0000zH-Gl
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 18:37:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030464AbWALQcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 11:32:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030461AbWALQcH
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 11:32:07 -0500
-Received: from 194.37.26.69.virtela.com ([69.26.37.194]:49105 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1030464AbWALQcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2006 11:32:05 -0500
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k0CGVvci007562;
-	Thu, 12 Jan 2006 08:31:57 -0800
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k0CGVvPe007560;
-	Thu, 12 Jan 2006 08:31:57 -0800
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vslrtq05h.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.1i
+	id S932387AbWALRh0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 12:37:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932440AbWALRh0
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 12:37:26 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:47243 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932387AbWALRhY
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2006 12:37:24 -0500
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k0CHbJJK003780
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 12 Jan 2006 09:37:20 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <43C65E70.7090702@op5.se>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14570>
 
-On Thu, Jan 12, 2006 at 01:13:30AM -0800, Junio C Hamano wrote:
+Andreas Ericsson wrote:
+>>
+>> To make git not tight to Linux, but cross platform, consider autoconf.
+> 
+> git is already fairly portable without the autoconf hackery. It's easy 
+> enough to move some of the conditional stuff out of the Makefile without 
+> autoconf, but it would still require GNU Make, so there's no real point 
+> in doing so.
+> 
 
-> BTW, Nick, what does http-push do with "git push http://foo"
-> without refspecs?
+The problem is that one really at some point end up reinventing a whole 
+lot of autoconf.
 
-It won't push anything unless refspecs are specified.  If there are
-none, it will still verify remote DAV locking is available and then
-exit quietly.
+Now, a lot of autoconf ugliness comes from two sources:
 
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+  - Not abstracting appropriately (#ifdef mess)
+  - Not using GNU make features
+
+Once you require GNU make, you can have a top-level Makefile and have 
+configure generating MCONFIG and config.h, and have conventional 
+dependencies on those rules.  Pretty much the whole autoconstipation 
+should be confined to those two files.
+
+I might eventually try to make a clean patch for autoconf with git, and 
+hopefully show that when done correctly, it's probably cleaner than the 
+increasing Makefile mess, plus it's automatic.
+
+	-hpa
