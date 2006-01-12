@@ -1,186 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] show-branch: always include the current branch.
-Date: Wed, 11 Jan 2006 16:05:50 -0800
-Message-ID: <7vace2joo1.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] (Updated) Exec git programs without using PATH.
+Date: Thu, 12 Jan 2006 01:11:50 +0100
+Message-ID: <43C59EC6.6070905@op5.se>
+References: <1136849678.11717.514.camel@brick.watson.ibm.com>	<1136849810.11717.518.camel@brick.watson.ibm.com>	<7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>	<1136900174.11717.537.camel@brick.watson.ibm.com>	<43C3CC4A.4030805@op5.se>	<1136910406.11717.579.camel@brick.watson.ibm.com>	<43C4075E.4070407@op5.se> <7vu0cb6f1n.fsf@assigned-by-dhcp.cox.net>	<1136924980.11717.603.camel@brick.watson.ibm.com>	<7vd5iz4mt7.fsf@assigned-by-dhcp.cox.net>	<1136945538.11717.643.camel@brick.watson.ibm.com>	<7v4q4bwavi.fsf@assigned-by-dhcp.cox.net>	<1136999157.11717.658.camel@brick.watson.ibm.com>	<7vek3esdw0.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0601111238550.5073@g5.osdl.org>	<1137014812.11717.669.camel@brick.watson.ibm.com> <7vk6d6qwmn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jan 12 01:06:44 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Jan 12 01:12:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ewpz7-0002S8-CP
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 01:06:33 +0100
+	id 1Ewq4J-0003zE-6f
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 01:11:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964819AbWALAFy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jan 2006 19:05:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964825AbWALAFx
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 19:05:53 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:31370 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S964819AbWALAFw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2006 19:05:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060112000348.YEHH26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 11 Jan 2006 19:03:48 -0500
+	id S932649AbWALALw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jan 2006 19:11:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932655AbWALALw
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 19:11:52 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:28066 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932649AbWALALv
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2006 19:11:51 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 5FEDC6BD03
+	for <git@vger.kernel.org>; Thu, 12 Jan 2006 01:11:50 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+In-Reply-To: <7vk6d6qwmn.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14536>
 
-By default, the command includes the current branch to the list
-of revs to be shown, even when it is not given on the command
-line.  A new flag, --no-current, disables it.
+Junio C Hamano wrote:
+> Michal Ostrowski <mostrows@watson.ibm.com> writes:
+> 
+> 
+>>I briefly tried to consider if I could hide the various fork()+exec()
+>>sequences behind something like the run_command*() interfaces (which
+>>would move us down the direction of something "spawn()"-like).  I found
+>>that there's a lot of variation between the various paths in terms of
+>>what happens between fork() and exec() on the various paths that does
+>>not lend itself to such consolidation.
+>>
+>>I'd love to be convinced otherwise.
+> 
+> 
+> Unfortunately I am with Michal on this one (both "eh, I do not
+> think that is feasible" and "I'd love to be...").
+> 
+> The run_command*() interfaces and its users were the best I
+> could come up with as far as such consolidations could go when I
+> did it.
+> 
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Not being entirely knowledgeable on what spawn() actually does and how 
+its semantics differ from fork() and exec*() style API's (Google was 
+depressingly unhelpful and wikipedia dredged up froglings...), I've got 
+a decent "clone-lots-of-processes-and-multiplex-between-them" kind of 
+library lying around. Would it be of any use?
 
----
- * Currently in "pu".
+ From the prototypes I've seen on spawn it doesn't seem to be much more 
+than a fork() + execve(), either closing or dup2'ing all the 
+file-descriptors, so I don't understand why that couldn't be implemented 
+for git. Some pointers, anyone?
 
- Documentation/git-show-branch.txt |   13 ++++++++--
- show-branch.c                     |   49 ++++++++++++++++++++++++++-----------
- 2 files changed, 46 insertions(+), 16 deletions(-)
-
-95a7c01ab91b71f72b6d5d60da7659b2b625fa6d
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index 9cc44a8..90e2a5c 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -7,7 +7,10 @@ git-show-branch - Show branches and thei
- 
- SYNOPSIS
- --------
--'git-show-branch [--all] [--heads] [--tags] [--topo-order] [--more=<n> | --list | --independent | --merge-base] [--no-name | --sha1-name] [<rev> | <glob>]...'
-+[verse]
-+git-show-branch [--all] [--heads] [--tags] [--topo-order] [--no-current]
-+	[--more=<n> | --list | --independent | --merge-base]
-+	[--no-name | --sha1-name] [<rev> | <glob>]...
- 
- DESCRIPTION
- -----------
-@@ -38,6 +41,11 @@ OPTIONS
- 	Show all refs under $GIT_DIR/refs, $GIT_DIR/refs/heads,
- 	and $GIT_DIR/refs/tags, respectively.
- 
-+--no-current::
-+	By default, the command includes the current branch to
-+	the list of revs to be shown even when it is not given
-+	on the command line.  This flag disables it.
-+
- --topo-order::
-         By default, the branches and their commits are shown in
-         reverse chronological order.  This option makes them
-@@ -133,7 +141,8 @@ it, having the following in the configur
- ------------
- 
- With this,`git show-branch` without extra parameters would show
--only the primary branches.
-+only the primary branches.  In addition, if you happen to be on
-+your topic branch, it is shown as well.
- 
- 
- 
-diff --git a/show-branch.c b/show-branch.c
-index f43c406..9f7e188 100644
---- a/show-branch.c
-+++ b/show-branch.c
-@@ -5,7 +5,7 @@
- #include "refs.h"
- 
- static const char show_branch_usage[] =
--"git-show-branch [--all] [--heads] [--tags] [--topo-order] [--more=count | --list | --independent | --merge-base ] [<refs>...]";
-+"git-show-branch [--no-current] [--all] [--heads] [--tags] [--topo-order] [--more=count | --list | --independent | --merge-base ] [<refs>...]";
- 
- static int default_num = 0;
- static int default_alloc = 0;
-@@ -435,12 +435,12 @@ static void snarf_refs(int head, int tag
- 	}
- }
- 
--static int rev_is_head(char *head_path, int headlen,
--		       char *name,
-+static int rev_is_head(char *head_path, int headlen, char *name,
- 		       unsigned char *head_sha1, unsigned char *sha1)
- {
- 	int namelen;
--	if ((!head_path[0]) || memcmp(head_sha1, sha1, 20))
-+	if ((!head_path[0]) ||
-+	    (head_sha1 && sha1 && memcmp(head_sha1, sha1, 20)))
- 		return 0;
- 	namelen = strlen(name);
- 	if ((headlen < namelen) ||
-@@ -545,6 +545,7 @@ int main(int ac, char **av)
- 	int sha1_name = 0;
- 	int shown_merge_point = 0;
- 	int topo_order = 0;
-+	int no_current_branch = 0;
- 
- 	git_config(git_show_branch_config);
- 	setup_git_directory();
-@@ -573,6 +574,8 @@ int main(int ac, char **av)
- 			extra = -1;
- 		else if (!strcmp(arg, "--no-name"))
- 			no_name = 1;
-+		else if (!strcmp(arg, "--no-current"))
-+			no_current_branch = 1;
- 		else if (!strcmp(arg, "--sha1-name"))
- 			sha1_name = 1;
- 		else if (!strncmp(arg, "--more=", 7))
-@@ -604,6 +607,34 @@ int main(int ac, char **av)
- 		ac--; av++;
- 	}
- 
-+	head_path_p = resolve_ref(git_path("HEAD"), head_sha1, 1);
-+	if (head_path_p) {
-+		head_path_len = strlen(head_path_p);
-+		memcpy(head_path, head_path_p, head_path_len + 1);
-+	}
-+	else {
-+		head_path_len = 0;
-+		head_path[0] = 0;
-+	}
-+
-+	if (!merge_base && !no_current_branch && head_path_p) {
-+		int has_head = 0;
-+		for (i = 0; !has_head && i < ref_name_cnt; i++) {
-+			/* We are only interested in adding the branch
-+			 * HEAD points at.
-+			 */
-+			if (rev_is_head(head_path,
-+					head_path_len,
-+					ref_name[i],
-+					head_sha1, NULL))
-+				has_head++;
-+		}
-+		if (!has_head) {
-+			int pfxlen = strlen(git_path("refs/heads/"));
-+			append_one_rev(head_path + pfxlen);
-+		}
-+	}
-+
- 	if (!ref_name_cnt) {
- 		fprintf(stderr, "No revs to be shown.\n");
- 		exit(0);
-@@ -639,16 +670,6 @@ int main(int ac, char **av)
- 	if (0 <= extra)
- 		join_revs(&list, &seen, num_rev, extra);
- 
--	head_path_p = resolve_ref(git_path("HEAD"), head_sha1, 1);
--	if (head_path_p) {
--		head_path_len = strlen(head_path_p);
--		memcpy(head_path, head_path_p, head_path_len + 1);
--	}
--	else {
--		head_path_len = 0;
--		head_path[0] = 0;
--	}
--
- 	if (merge_base)
- 		return show_merge_base(seen, num_rev);
- 
 -- 
-1.1.1-g8ecb
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
