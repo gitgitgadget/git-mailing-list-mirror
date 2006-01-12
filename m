@@ -1,61 +1,75 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] (Updated) Exec git programs without using PATH.
-Date: Wed, 11 Jan 2006 21:38:39 -0800
-Message-ID: <43C5EB5F.6000402@zytor.com>
-References: <1136849678.11717.514.camel@brick.watson.ibm.com>	<1136849810.11717.518.camel@brick.watson.ibm.com>	<7vwth8bxqd.fsf@assigned-by-dhcp.cox.net>	<1136900174.11717.537.camel@brick.watson.ibm.com>	<43C3CC4A.4030805@op5.se>	<1136910406.11717.579.camel@brick.watson.ibm.com>	<43C4075E.4070407@op5.se> <7vu0cb6f1n.fsf@assigned-by-dhcp.cox.net>	<1136924980.11717.603.camel@brick.watson.ibm.com>	<7vd5iz4mt7.fsf@assigned-by-dhcp.cox.net>	<1136945538.11717.643.camel@brick.watson.ibm.com>	<7v4q4bwavi.fsf@assigned-by-dhcp.cox.net>	<1136999157.11717.658.camel@brick.watson.ibm.com>	<7vek3esdw0.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0601111238550.5073@g5.osdl.org>	<1137014812.11717.669.camel@brick.watson.ibm.com> <7vk6d6qwmn.fsf@assigned-by-dhcp.cox.net> <43C59EC6.6070905@op5.se>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: RFC: Subprojects
+Date: Thu, 12 Jan 2006 18:39:10 +1300
+Message-ID: <46a038f90601112139l2f2bde5bx15102a1afcf4ec25@mail.gmail.com>
+References: <43C52B1F.8020706@hogyros.de> <200601120919.08354.lan@ac-sw.com>
+	 <46a038f90601112046u13d7075dsc2108111e2462152@mail.gmail.com>
+	 <200601121125.33696.lan@ac-sw.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 12 06:38:50 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Simon Richter <Simon.Richter@hogyros.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 12 06:39:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwvAe-0002ST-L6
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 06:38:49 +0100
+	id 1EwvB5-0002ZG-9I
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 06:39:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964774AbWALFip (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 00:38:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964781AbWALFip
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 00:38:45 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:38112 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S964774AbWALFio
+	id S964782AbWALFjM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 00:39:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964781AbWALFjM
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 00:39:12 -0500
+Received: from wproxy.gmail.com ([64.233.184.202]:425 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964782AbWALFjL convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2006 00:38:44 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k0C5cdc7018335
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 11 Jan 2006 21:38:40 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <43C59EC6.6070905@op5.se>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-1.2 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	Thu, 12 Jan 2006 00:39:11 -0500
+Received: by wproxy.gmail.com with SMTP id i34so310498wra
+        for <git@vger.kernel.org>; Wed, 11 Jan 2006 21:39:10 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nOKV1TfJogNTzUyxBMvAH907C0CP6aTuxXhcLAcqQS6RqzDPTGMTJNx52E1RFx9gDq6W2BiU51v9cmGO69jLq++CtrVhLUi6xyuJ7rXmgLeYZiMMPbrn7s26nPH144sqEam5VaZ+Q1r6rql2rMuH4d73LJwGprA+LmFEoHzCE0k=
+Received: by 10.54.112.5 with SMTP id k5mr2015205wrc;
+        Wed, 11 Jan 2006 21:39:10 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Wed, 11 Jan 2006 21:39:10 -0800 (PST)
+To: Alexander Litvinov <lan@ac-sw.com>
+In-Reply-To: <200601121125.33696.lan@ac-sw.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14547>
 
-Andreas Ericsson wrote:
-> 
-> Not being entirely knowledgeable on what spawn() actually does and how 
-> its semantics differ from fork() and exec*() style API's (Google was 
-> depressingly unhelpful and wikipedia dredged up froglings...), I've got 
-> a decent "clone-lots-of-processes-and-multiplex-between-them" kind of 
-> library lying around. Would it be of any use?
-> 
->  From the prototypes I've seen on spawn it doesn't seem to be much more 
-> than a fork() + execve(), either closing or dup2'ing all the 
-> file-descriptors, so I don't understand why that couldn't be implemented 
-> for git. Some pointers, anyone?
-> 
+On 1/12/06, Alexander Litvinov <lan@ac-sw.com> wrote:
+> > What is your show stopper?
+>
+> I would agree to make separate commits for each sub project.
+>
+> 1. I need to have ability to make tags, branches thru all subprojects.
 
-RTFM(posix_spawn)...
+I suspect that this is a bad idea -- for the same reason as committing
+to a subproject is a bad idea. The subprojects most likely have their
+own external repositories -- and lifecycles of their own. The same
+headname/branchname won't do.
 
-	-hpa
+> 2. Update (pull) sould update each subproject, it is hard to update them by
+> hands.
+
+A simple shellscript can help you here.
+
+> 3. The need of some sort of checkout script (can be solved by storing this
+> script in base project, but it would be much nicer allow git fetch all
+> subprojects)
+
+As you say, a bootstrapping shellscript can sort this out.
+
+Sounds quite doable ;-)
+
+(have to warn you though -- git is quite addictive. there's no going back...)
+
+cheers,
+
+
+martin
