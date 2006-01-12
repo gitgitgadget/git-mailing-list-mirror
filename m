@@ -1,61 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: merging initial part of a branch?
-Date: Wed, 11 Jan 2006 17:47:05 -0800
-Message-ID: <7vmzi2i5eu.fsf@assigned-by-dhcp.cox.net>
-References: <20060111230451.GH8618@fieldses.org>
-	<7vek3epbs9.fsf@assigned-by-dhcp.cox.net>
-	<20060112005531.GB14599@fieldses.org>
+From: Alexander Litvinov <lan@ac-sw.com>
+Subject: Re: RFC: Subprojects
+Date: Thu, 12 Jan 2006 09:19:08 +0600
+Organization: AcademSoft Ltd.
+Message-ID: <200601120919.08354.lan@ac-sw.com>
+References: <43C52B1F.8020706@hogyros.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 12 02:47:13 2006
+X-From: git-owner@vger.kernel.org Thu Jan 12 04:20:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EwrYV-0005w4-Hy
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 02:47:12 +0100
+	id 1Ewt0h-0005ED-Ue
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 04:20:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964965AbWALBrI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jan 2006 20:47:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964966AbWALBrI
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 20:47:08 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:26862 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S964965AbWALBrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2006 20:47:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060112014433.WBQV20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 11 Jan 2006 20:44:33 -0500
-To: "J. Bruce Fields" <bfields@fieldses.org>
-In-Reply-To: <20060112005531.GB14599@fieldses.org> (J. Bruce Fields's message
-	of "Wed, 11 Jan 2006 19:55:32 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965008AbWALDTQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jan 2006 22:19:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965010AbWALDTQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jan 2006 22:19:16 -0500
+Received: from gw.ac-sw.com ([81.1.223.2]:5563 "EHLO gw.ac-sw.com")
+	by vger.kernel.org with ESMTP id S965008AbWALDTQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2006 22:19:16 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by gw.ac-sw.com (Postfix) with ESMTP id A6236BD2A;
+	Thu, 12 Jan 2006 09:19:14 +0600 (NOVT)
+Received: from gw.ac-sw.com ([127.0.0.1])
+ by localhost (gw.ac-sw.com [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 03121-06; Thu, 12 Jan 2006 09:19:12 +0600 (NOVT)
+Received: from lan.ac-sw.lcl (lan.ac-sw.lcl [192.168.0.69])
+	by gw.ac-sw.com (Postfix) with ESMTP id 893D9BD24;
+	Thu, 12 Jan 2006 09:19:12 +0600 (NOVT)
+Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
+	id 83BF78E330F1; Thu, 12 Jan 2006 09:19:12 +0600 (NOVT)
+Received: from localhost (localhost [127.0.0.1])
+	by lan.ac-sw.lcl (Postfix) with ESMTP id 163C48E330F0;
+	Thu, 12 Jan 2006 09:19:09 +0600 (NOVT)
+To: Simon Richter <Simon.Richter@hogyros.de>
+User-Agent: KMail/1.8
+In-Reply-To: <43C52B1F.8020706@hogyros.de>
+Content-Disposition: inline
+X-Virus-Scanned: amavisd-new at gw.ac-sw.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14543>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
-
->> I haven't tried this for some time, but I presume
->> 
->> 	$ git pull linus tag v2.6.15
->> 
->> would do what you want.
+On Wednesday 11 January 2006 21:58, Simon Richter wrote:
+> Hello,
 >
-> Yep!  Thanks.  The only documentation I can find for this is a slightly
-> obscure bit in the git-pull man page which lists this as a "short-cut"
-> notation.  What is it a shortcut for?  Is it possible to specify an
-> arbitrary commit in place of the "tag v2.6.15" somehow?
+> one thing that I have been missing so far in all SCM systems apart from
+> CVS (and there it's just coincidence) is the ability to include a
+> project as part of a bigger project. 
 
-The phrase "short-hand" refers to "linus" in the above example.
-I.e. the name of the file in $GIT_DIR/remotes that records the
-URL (among other things).
-
-You can only say either "branchname" or "tag tagname" for pull,
-because of the way underlying git native protocol works (it may
-not be too hard to extend it, but I haven't looked into it nor
-particularly interested in looking into it at the moment).
+I really miss this feature. This is the last stopper for moving from CVS to 
+git for out project.
