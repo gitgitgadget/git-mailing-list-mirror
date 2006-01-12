@@ -1,65 +1,63 @@
-From: Eric Sandall <eric@sandall.us>
-Subject: Re: [ANNOUNCE] GIT 1.1.1
-Date: Thu, 12 Jan 2006 10:36:57 -0800 (PST)
-Message-ID: <Pine.LNX.4.63.0601121036400.26988@cerberus>
-References: <7v64or1ii9.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git binary size...
+Date: Thu, 12 Jan 2006 19:32:52 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0601121931060.24880@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0601111021450.5073@g5.osdl.org>  <43C558FB.3030102@op5.se>
+  <Pine.LNX.4.64.0601111134560.5073@g5.osdl.org> <2cd57c900601120215pdb5da27l@mail.gmail.com>
+ <43C65E70.7090702@op5.se> <Pine.LNX.4.64.0601121013030.3535@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 12 19:24:04 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 12 19:33:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ex74x-0004i7-4o
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 19:21:43 +0100
+	id 1Ex7Fs-0007yy-5S
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 19:33:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932560AbWALSVj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 13:21:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932633AbWALSVj
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 13:21:39 -0500
-Received: from dslb138.fsr.net ([12.7.7.138]:23484 "EHLO sandall.us")
-	by vger.kernel.org with ESMTP id S932560AbWALSVj (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2006 13:21:39 -0500
-Received: from cerberus ([192.168.0.254])
-	by sandall.us with esmtp (Exim 4.50)
-	id 1Ex7Jk-0007QY-I3; Thu, 12 Jan 2006 10:37:00 -0800
-X-X-Sender: sandalle@cerberus
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64or1ii9.fsf@assigned-by-dhcp.cox.net>
+	id S1030392AbWALSc5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 13:32:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932650AbWALSc4
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 13:32:56 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:52370 "EHLO
+	wrzx35.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932641AbWALSc4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2006 13:32:56 -0500
+Received: from amavis.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.46])
+	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 1366CE71B4; Thu, 12 Jan 2006 19:32:53 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by amavis.mail (Postfix) with ESMTP id 04015FD8;
+	Thu, 12 Jan 2006 19:32:53 +0100 (CET)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by amavis.mail (Postfix) with ESMTP id DE2AC96B;
+	Thu, 12 Jan 2006 19:32:52 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8C5F3141E46; Thu, 12 Jan 2006 19:32:52 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0601121013030.3535@g5.osdl.org>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14575>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On Tue, 10 Jan 2006, Junio C Hamano wrote:
-> The latest maintenance release GIT 1.1.1 is available at the usual places:
->
-> 	http://www.kernel.org/pub/software/scm/git/
->
-> 	git-1.1.1.tar.{gz,bz2}			(tarball)
-> 	RPMS/$arch/git-*-1.1.1-1.$arch.rpm	(RPM)
->
-> This is primarily to fix the build problems with RPM and tarball
-> releases.  I owe a big thanks to Peter Anvin for the fix.
-<snip>
+On Thu, 12 Jan 2006, Linus Torvalds wrote:
 
-Updated the Source Mage GNU/Linux package.
+> Repeat after me: "autoconf is crap".
 
-- -sandalle
+I tried to hold my breath for that mail, but you disappointed me. What 
+took you so long?
 
-- --
-Eric Sandall                     |  Source Mage GNU/Linux Developer
-eric@sandall.us                  |  http://www.sourcemage.org/
-http://eric.sandall.us/          |  SysAdmin @ Inst. Shock Physics @ WSU
-http://counter.li.org/  #196285  |  http://www.shock.wsu.edu/
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+Ciao,
+Dscho
 
-iD8DBQFDxqHMHXt9dKjv3WERAku5AJ48fxnKU8hdtFzWkARrU3fvzwlDXQCgj9xu
-eNEYSaYtJfaSGWXLPRpbEnw=
-=lrwn
------END PGP SIGNATURE-----
+P.S.: Note that I am not at all detesting autoconf, but I know Linus does.
