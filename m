@@ -1,84 +1,69 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: git-commit: allow From: line to be entered in commit message
-Date: Thu, 12 Jan 2006 10:21:23 -0500
-Message-ID: <BAYC1-PASMTP07EE5172C7652A5DD3131DAE270@CEZ.ICE>
-References: <BAYC1-PASMTP117A18814EAAFACFE0F31DAE270@CEZ.ICE>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Linus repository at git.kernel.org???
+Date: Thu, 12 Jan 2006 07:58:06 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601120754490.3535@g5.osdl.org>
+References: <2cd57c900601112153t2d85895bg@mail.gmail.com>
+ <7vr77dud41.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jan 12 16:27:06 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Coywolf Qi Hunt <coywolf@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 12 16:58:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ex4Ki-0002tu-4t
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 16:25:48 +0100
+	id 1Ex4qG-0004Gr-2y
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 16:58:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030447AbWALPZo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 10:25:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030450AbWALPZo
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 10:25:44 -0500
-Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:14357 "EHLO
-	BAYC1-PASMTP07.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1030447AbWALPZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2006 10:25:43 -0500
-X-Originating-IP: [69.156.6.171]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.6.171]) by BAYC1-PASMTP07.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 12 Jan 2006 07:26:49 -0800
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 38E8D644C23
-	for <git@vger.kernel.org>; Thu, 12 Jan 2006 10:25:42 -0500 (EST)
-To: git@vger.kernel.org
-Message-Id: <20060112102123.581e373e.seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP117A18814EAAFACFE0F31DAE270@CEZ.ICE>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.9; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 12 Jan 2006 15:26:50.0140 (UTC) FILETIME=[9BAE75C0:01C6178C]
+	id S1751428AbWALP6R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 10:58:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751426AbWALP6R
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 10:58:17 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:37025 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751423AbWALP6Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2006 10:58:16 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0CFw7DZ025569
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 12 Jan 2006 07:58:08 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0CFw6Ap023577;
+	Thu, 12 Jan 2006 07:58:07 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vr77dud41.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14566>
 
-On Thu, 12 Jan 2006 09:37:00 -0500
-sean <seanlkml@sympatico.ca> wrote:
 
-> Mostly just for comment to see if there is any support
-> for this feature....
 
-Sorry.  Slightly better version of the patch below:
+On Wed, 11 Jan 2006, Junio C Hamano wrote:
 
----
-Use the author name and email information given as the 
-first line of the commit message in the form of:
- 
-From: name <email>
- 
-as the author's name and email address in the resulting
-commit object.  This makes committing foreign patches
-a little less cumbersome to handle for some workflows.
+> Coywolf Qi Hunt <coywolf@gmail.com> writes:
+> 
+> > gemini:~/linux/linux-2.6> git-pull
+> > fatal: unexpected EOF
+> > Fetch failure: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> 
+> The failure does not seem to happen on all repositories, but
+> just is with Linus repository, so I doubt "git update" on either
+> your end or kernel.org public machines have anything to do with
+> this.  And Linus repository from gitweb is also missing.
 
-diff --git a/git-commit.sh b/git-commit.sh
-index 193feeb..163e2d7 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -219,14 +219,19 @@ t)
- 	fi
- esac
- 
--grep -v '^#' < "$GIT_DIR"/COMMIT_EDITMSG |
--git-stripspace > "$GIT_DIR"/COMMIT_MSG
-+grep -v '^#' < "$GIT_DIR"/COMMIT_EDITMSG | git-stripspace | 
-+sed -e '1s/^[ \t]*from:.*//I' | git-stripspace > "$GIT_DIR"/COMMIT_MSG
- 
- if cnt=`grep -v -i '^Signed-off-by' "$GIT_DIR"/COMMIT_MSG |
- 	git-stripspace |
- 	wc -l` &&
-    test 0 -lt $cnt
- then
-+	FROM=$(sed -ne '/^#/d;/^[ \t]*$/d;s/from:[ \t]*\(.*\)/\1/Ip;q' "$GIT_DIR"/COMMIT_EDITMSG)
-+	if test -n "$FROM"; then
-+		export GIT_AUTHOR_NAME=$(echo "$FROM" | sed -e 's/[ \t]*<.*//')
-+		export GIT_AUTHOR_EMAIL=$(echo "$FROM" | sed -e 's/.*<\(.*\)>.*/\1/')
-+	fi
- 	tree=$(git-write-tree) &&
- 	commit=$(cat "$GIT_DIR"/COMMIT_MSG | git-commit-tree $tree $PARENTS) &&
- 	git-update-ref HEAD $commit $current &&
+The mirroring was delayed for a while, but seems to be ok now.
+
+I repacked my archive (exactly because mirroring was so slow) and while 
+the result was always a valid archive on the master site, if you pulled 
+when mirroring was starting to delete the unpacked objects but had not yet 
+mirrored the new pack, you'd get something like the above - git-daemon 
+would exit because of a "missing" object).
+
+I think it should be ok now (at least it seems to have mirrored out things 
+over-night, and gitweb now matches my local head again).
+
+		Linus
