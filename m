@@ -1,72 +1,76 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: git binary size...
-Date: Thu, 12 Jan 2006 09:37:19 -0800
-Message-ID: <43C693CF.3020800@zytor.com>
-References: <Pine.LNX.4.64.0601111021450.5073@g5.osdl.org>	 <43C558FB.3030102@op5.se>	 <Pine.LNX.4.64.0601111134560.5073@g5.osdl.org> <2cd57c900601120215pdb5da27l@mail.gmail.com> <43C65E70.7090702@op5.se>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFD] what should "git push remote.host:path" do?
+Date: Thu, 12 Jan 2006 10:10:31 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601121006040.3535@g5.osdl.org>
+References: <7vslrtq05h.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 12 18:39:21 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Nick Hengeveld <nickh@reactrix.com>
+X-From: git-owner@vger.kernel.org Thu Jan 12 19:11:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ex6OG-0000zH-Gl
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 18:37:37 +0100
+	id 1Ex6uL-0001h7-T8
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 19:10:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932387AbWALRh0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 12:37:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932440AbWALRh0
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 12:37:26 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:47243 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932387AbWALRhY
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2006 12:37:24 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k0CHbJJK003780
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 12 Jan 2006 09:37:20 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <43C65E70.7090702@op5.se>
-X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S932530AbWALSKn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 13:10:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932549AbWALSKn
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 13:10:43 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:39882 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932530AbWALSKm (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2006 13:10:42 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0CIAaDZ001342
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 12 Jan 2006 10:10:37 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0CIAW3V029865;
+	Thu, 12 Jan 2006 10:10:34 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslrtq05h.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14571>
 
-Andreas Ericsson wrote:
->>
->> To make git not tight to Linux, but cross platform, consider autoconf.
+
+
+On Thu, 12 Jan 2006, Junio C Hamano wrote:
 > 
-> git is already fairly portable without the autoconf hackery. It's easy 
-> enough to move some of the conditional stuff out of the Makefile without 
-> autoconf, but it would still require GNU Make, so there's no real point 
-> in doing so.
-> 
+> Nevertheless, exposing the default behaviour of "git send-pack"
+> to "git push" was probably a mistake.  I'd propose to require at
+> least one refspec to be specified, either on the command line or
+> via $GIT_DIR/remotes mechanism.  So my answer to the "Subject: "
+> line question is "Barf".
 
-The problem is that one really at some point end up reinventing a whole 
-lot of autoconf.
+Well, I don't have objections, but from ym usage schenario, I'd at least 
+then want flags for "all tags" (--tags - like "pull") and "all branches" 
+(--all).
 
-Now, a lot of autoconf ugliness comes from two sources:
+Having to list all tags/branches is slightly painful. I currently push out 
+all my tags with
 
-  - Not abstracting appropriately (#ifdef mess)
-  - Not using GNU make features
+	./push-all $(cd .git/refs ; find -type f tags)
 
-Once you require GNU make, you can have a top-level Makefile and have 
-configure generating MCONFIG and config.h, and have conventional 
-dependencies on those rules.  Pretty much the whole autoconstipation 
-should be confined to those two files.
+which works but isn't exactly user-friendly ("push-all" is just a script 
+that uses "git push" to push to multiple repositories).
 
-I might eventually try to make a clean patch for autoconf with git, and 
-hopefully show that when done correctly, it's probably cleaner than the 
-increasing Makefile mess, plus it's automatic.
+> Unlike pull that can happen pretty much promiscuously, people
+> will push into the same set of a limited number of remote
+> repositories repeatedly over the life of the project, so it is
+> reasonable to assume they would want to keep a $GIT_DIR/remotes/
+> entry for those repositories to save typing.  Then always
+> requiring one or more refspecs for push is not too much to ask
+> for.
 
-	-hpa
+Well, especially if you want to use "git push" to basically back up your 
+own repo, you do want the "--all" flag. Otherwise you will then forget to 
+add a branch name to every remotes file whenyou create a new branch.
+
+		Linus
