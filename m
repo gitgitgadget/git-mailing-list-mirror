@@ -1,69 +1,54 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Linus repository at git.kernel.org???
-Date: Thu, 12 Jan 2006 07:58:06 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601120754490.3535@g5.osdl.org>
-References: <2cd57c900601112153t2d85895bg@mail.gmail.com>
- <7vr77dud41.fsf@assigned-by-dhcp.cox.net>
+From: Greg KH <greg@kroah.com>
+Subject: Re: git pull on Linux/ACPI release tree
+Date: Wed, 11 Jan 2006 17:37:06 -0800
+Message-ID: <20060112013706.GA3339@kroah.com>
+References: <F7DC2337C7631D4386A2DF6E8FB22B3005A13505@hdsmsx401.amr.corp.intel.com> <Pine.LNX.4.64.0601081111190.3169@g5.osdl.org> <20060108230611.GP3774@stusta.de> <Pine.LNX.4.64.0601081909250.3169@g5.osdl.org> <20060110201909.GB3911@stusta.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Coywolf Qi Hunt <coywolf@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 12 16:58:43 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	"Brown, Len" <len.brown@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
+	akpm@osdl.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 12 17:02:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ex4qG-0004Gr-2y
-	for gcvg-git@gmane.org; Thu, 12 Jan 2006 16:58:24 +0100
+	id 1Ex4sV-0004rp-MO
+	for gcvg-git@gmane.org; Thu, 12 Jan 2006 17:00:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751428AbWALP6R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 10:58:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751426AbWALP6R
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 10:58:17 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:37025 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751423AbWALP6Q (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2006 10:58:16 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0CFw7DZ025569
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 12 Jan 2006 07:58:08 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0CFw6Ap023577;
-	Thu, 12 Jan 2006 07:58:07 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr77dud41.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030444AbWALQAh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 11:00:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030453AbWALQAg
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 11:00:36 -0500
+Received: from mail.kroah.org ([69.55.234.183]:52945 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S1030451AbWALQAd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2006 11:00:33 -0500
+Received: from [192.168.0.25] (c-24-22-115-24.hsd1.or.comcast.net [24.22.115.24])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id k0CFx2L02762;
+	Thu, 12 Jan 2006 07:59:02 -0800
+Received: from greg by press.kroah.org with local (masqmail 0.2.20) id
+ 1EwrOk-0rw-00; Wed, 11 Jan 2006 17:37:06 -0800
+To: Adrian Bunk <bunk@stusta.de>
+Content-Disposition: inline
+In-Reply-To: <20060110201909.GB3911@stusta.de>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14567>
 
-
-
-On Wed, 11 Jan 2006, Junio C Hamano wrote:
-
-> Coywolf Qi Hunt <coywolf@gmail.com> writes:
+On Tue, Jan 10, 2006 at 09:19:09PM +0100, Adrian Bunk wrote:
 > 
-> > gemini:~/linux/linux-2.6> git-pull
-> > fatal: unexpected EOF
-> > Fetch failure: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-> 
-> The failure does not seem to happen on all repositories, but
-> just is with Linus repository, so I doubt "git update" on either
-> your end or kernel.org public machines have anything to do with
-> this.  And Linus repository from gitweb is also missing.
+> I am using the workaround of carrying the patches in a mail folder, 
+> applying them in a batch, and not pulling from your tree between 
+> applying a batch of patches and you pulling from my tree.
 
-The mirroring was delayed for a while, but seems to be ok now.
+Ick, I'd strongly recommend using quilt for this.  It works great for
+just this kind of workflow.
 
-I repacked my archive (exactly because mirroring was so slow) and while 
-the result was always a valid archive on the master site, if you pulled 
-when mirroring was starting to delete the unpacked objects but had not yet 
-mirrored the new pack, you'd get something like the above - git-daemon 
-would exit because of a "missing" object).
+thanks,
 
-I think it should be ok now (at least it seems to have mirrored out things 
-over-night, and gitweb now matches my local head again).
-
-		Linus
+greg k-h
