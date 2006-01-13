@@ -1,73 +1,53 @@
-From: sean <seanlkml@sympatico.ca>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: git-commit: allow From: line to be entered in commit message
-Date: Thu, 12 Jan 2006 22:58:00 -0500
-Message-ID: <BAYC1-PASMTP1281924C5151CEB4DECC7CAE260@CEZ.ICE>
-References: <20060112093700.1d3d25db.seanlkml@sympatico.ca>
-	<20060112201646.GA3179@steel.home>
-	<BAYC1-PASMTP1298D73139F4BE57D59B97AE260@CEZ.ICE>
-	<7vek3chj8j.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 12 Jan 2006 20:03:36 -0800
+Message-ID: <7v4q48hizr.fsf@assigned-by-dhcp.cox.net>
+References: <BAYC1-PASMTP117A18814EAAFACFE0F31DAE270@CEZ.ICE>
+	<7vzmm1mcfz.fsf@assigned-by-dhcp.cox.net>
+	<BAYC1-PASMTP102ED7B30D2B48BEE601F5AE260@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 13 05:02:37 2006
+X-From: git-owner@vger.kernel.org Fri Jan 13 05:04:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExG8w-0001p8-Hx
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 05:02:27 +0100
+	id 1ExGAM-00026A-VN
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 05:03:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161315AbWAMECX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 23:02:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964937AbWAMECX
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 23:02:23 -0500
-Received: from bayc1-pasmtp12.bayc1.hotmail.com ([65.54.191.172]:28139 "EHLO
-	BAYC1-PASMTP12.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S964901AbWAMECX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2006 23:02:23 -0500
-X-Originating-IP: [69.156.6.171]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.6.171]) by BAYC1-PASMTP12.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 12 Jan 2006 20:04:47 -0800
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 81081644C23;
-	Thu, 12 Jan 2006 23:02:21 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
-Message-Id: <20060112225800.411a04c1.seanlkml@sympatico.ca>
-In-Reply-To: <7vek3chj8j.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.9; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 13 Jan 2006 04:04:47.0609 (UTC) FILETIME=[7E5D8690:01C617F6]
+	id S1161325AbWAMEDj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 23:03:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964937AbWAMEDi
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 23:03:38 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:27265 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S964799AbWAMEDh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2006 23:03:37 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060113040122.QCWW17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 12 Jan 2006 23:01:22 -0500
+To: sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP102ED7B30D2B48BEE601F5AE260@CEZ.ICE>
+	(seanlkml@sympatico.ca's message of "Thu, 12 Jan 2006 21:32:07 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14609>
 
-On Thu, 12 Jan 2006 19:58:20 -0800
-Junio C Hamano <junkio@cox.net> wrote:
+sean <seanlkml@sympatico.ca> writes:
 
-> sean <seanlkml@sympatico.ca> writes:
-> 
-> > ...   In fact, it would seem more
-> > consistent to tell someone that a From: line will be handled properly
-> > whether they use git-am or git-commit. 
-> 
-> Yuck.
-> 
-> Somebody using am/applymbox is not writing that "From: " line
-> himself.  The person who writes that "From: " line writes that
-> into his MUA when sending a patch --- that is "editing an
-> email", so there is a consistency between that activity and use
-> of word "From: ".
-> 
-> The editor for commit message does not have anything to do with
-> e-mail.  What you are talking about is not consistency, but
-> confusion.
-> 
+> ...   Apparently he is more or less
+> hand munging mutliple cvs branches into a nice git package for 
+> Linus to pull.  He said that many of the patches don't apply as-is
+> and need some manual tweaking before committing.
 
-I don't imagine that the person "editing" the commit message is
-doing so in this case either, rather copy-n-pasting.  If you're
-really dead-set against this method, you should at least consider
-adding it as a command line option, because having to set this
-via environment variables is a much bigger Yuck.
-
-Sean
+Then what is needed is an exporter from those cvs branches into
+git.  Well, don't we have one already?  If it does not work for
+dirty changes, wouldn't it be better to fix it so it is
+restartable, just like when rebase stops it lets you fix up and
+go on, without having you to write "From: " or GIT_AUTHOR_*
+yourself and just does the right thing?
