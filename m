@@ -1,54 +1,55 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: merging initial part of a branch?
-Date: Fri, 13 Jan 2006 10:10:05 -0500
-Message-ID: <20060113151005.GA29804@fieldses.org>
-References: <20060111230451.GH8618@fieldses.org> <7vek3epbs9.fsf@assigned-by-dhcp.cox.net> <20060112005531.GB14599@fieldses.org> <7vmzi2i5eu.fsf@assigned-by-dhcp.cox.net> <20060113030837.GD27214@fieldses.org> <7v8xtkhj5l.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: My first git success
+Date: Fri, 13 Jan 2006 09:11:19 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601130909290.3535@g5.osdl.org>
+References: <dq8epd$k28$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 13 16:10:31 2006
+X-From: git-owner@vger.kernel.org Fri Jan 13 18:11:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExQZA-0005u1-VI
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 16:10:13 +0100
+	id 1ExSSU-0004vY-Cr
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 18:11:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422713AbWAMPKJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jan 2006 10:10:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422714AbWAMPKJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 10:10:09 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:17608 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP
-	id S1422713AbWAMPKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2006 10:10:07 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
-	(envelope-from <bfields@fieldses.org>)
-	id 1ExQZ4-00081A-0F; Fri, 13 Jan 2006 10:10:06 -0500
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v8xtkhj5l.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
+	id S1161566AbWAMRLX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jan 2006 12:11:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161567AbWAMRLX
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 12:11:23 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:4827 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1161566AbWAMRLW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jan 2006 12:11:22 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0DHBKDZ008218
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 13 Jan 2006 09:11:20 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0DHBJ9C019674;
+	Fri, 13 Jan 2006 09:11:19 -0800
+To: walt <wa1ter@myrealbox.com>
+In-Reply-To: <dq8epd$k28$1@sea.gmane.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.64__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14630>
 
-On Thu, Jan 12, 2006 at 08:00:06PM -0800, Junio C Hamano wrote:
-> Backward compatibility is that it was only either "<branch>" or
-> "tag <tag>".  When heads/branch or tags/tag came later,
-> supporting the separate word form "tag <tag>" was a bit
-> cumbersome but was done for b/c.
 
-Thanks for the explanation, makes sense.
 
-I might try to put together some more extensive documentation patches
-over the next couple weeks if you're willing to take them.  Plain git
-actually seems to have pretty usable interfaces at this point, but it's
-not always obvious where to find them....
+On Fri, 13 Jan 2006, walt wrote:
+> 
+> And it was all so easy I never broke a sweat.  Amazing!
 
-I also have Yet Another Git Tutorial, at
-http://www.fieldses.org/~bfields/kernel/git.html.  (Corrections and
-suggestions welcomed.)
+Heh. You're the "good tester" kind of person. Most people don't bother to 
+explain their problems well, and don't even bother to listen. And they 
+never call it "easy" if they had to get explanations.
 
---b.
+I still hope the exchanges will result in more docs, or at least other 
+lurkers on the list also learning a new trick or two..
+
+			Linus
