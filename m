@@ -1,62 +1,51 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] git-cvsimport: Add -A <author-conv-file> option
-Date: Fri, 13 Jan 2006 03:14:27 +0100
-Message-ID: <43C70D03.4040609@op5.se>
-References: <20060112233859.3438F5BED0@nox.op5.se> <7vvewohoy0.fsf@assigned-by-dhcp.cox.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH] show-branch: make --topo-order noop and default.
+Date: Thu, 12 Jan 2006 18:24:41 -0800
+Message-ID: <43C70F69.7010103@gmail.com>
+References: <7v4q4ajonx.fsf@assigned-by-dhcp.cox.net>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jan 13 03:14:42 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 13 03:24:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExESg-0007O1-9N
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 03:14:42 +0100
+	id 1ExEcc-0000Yh-N1
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 03:24:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932641AbWAMCO3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 21:14:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932669AbWAMCO3
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 21:14:29 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:4525 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S932641AbWAMCO2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2006 21:14:28 -0500
-Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id C1DA96BCFE
-	for <git@vger.kernel.org>; Fri, 13 Jan 2006 03:14:27 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+	id S1161433AbWAMCYq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 21:24:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932681AbWAMCYq
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 21:24:46 -0500
+Received: from zproxy.gmail.com ([64.233.162.195]:43385 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932669AbWAMCYq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2006 21:24:46 -0500
+Received: by zproxy.gmail.com with SMTP id l1so495490nzf
+        for <git@vger.kernel.org>; Thu, 12 Jan 2006 18:24:45 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=pRoZUbSCcVfc2InOUhaCgsEO4ROnAOUTub/vywrI/vxgimYJkEfaXS0oDD1bTRT0D8Qy7fPM2Wn8ih/c9/Hv55TQFvo9F7z4drnLcEC7d0ihsLgNL4a7Q+l5h1bUIHOH1HkR2NDtyWWJ15UD/WzFg4RKldu3GctAZi4sGCv9bNU=
+Received: by 10.65.218.4 with SMTP id v4mr1483491qbq;
+        Thu, 12 Jan 2006 18:24:44 -0800 (PST)
+Received: from ?10.0.0.6? ( [68.234.172.144])
+        by mx.gmail.com with ESMTP id q18sm480784qbq.2006.01.12.18.24.43;
+        Thu, 12 Jan 2006 18:24:43 -0800 (PST)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
 X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <7vvewohoy0.fsf@assigned-by-dhcp.cox.net>
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v4q4ajonx.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14600>
 
 Junio C Hamano wrote:
-> ISTR there was a thread that suggested using CVSROOT/users file
-> for this purpose.
-> 
-> 	http://thread.gmane.org/gmane.comp.version-control.git/8167
+> It really does not make sense not doing --topo-order.
 > 
 
-ISTR?
-
-That patch doesn't work when importing from sourceforge (among others), 
-because no-one uses their devname@users.sourceforge.net address (and 
-often just filter them out because they attract so much spam). It also 
-does nothing for when the username isn't the leading part of the 
-email-addres, or for GIT_AUTHOR_NAME, which is the most disturbing since 
-it ruffles the shortlog output. We use that shortlog to get a gisted 
-changelog for the sales and marketing people. I can recommend this. 
-They're absolutely thrilled to see things like "Only use vararg macros 
-#ifdef __GNUC__" and "declare **envp const throughout mplex api". ;)
-
-Anyways, I can keep this separate if you don't want to accept it. I'll 
-most likely implement some config-reading to it too though so I don't 
-have to type the repository name and such each time I run it.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I disagree. I do like to see the chronological commit history of some 
+repositories.
