@@ -1,56 +1,54 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: My first git success
-Date: Fri, 13 Jan 2006 06:51:24 -0800
-Organization: none
-Message-ID: <dq8epd$k28$1@sea.gmane.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: merging initial part of a branch?
+Date: Fri, 13 Jan 2006 10:10:05 -0500
+Message-ID: <20060113151005.GA29804@fieldses.org>
+References: <20060111230451.GH8618@fieldses.org> <7vek3epbs9.fsf@assigned-by-dhcp.cox.net> <20060112005531.GB14599@fieldses.org> <7vmzi2i5eu.fsf@assigned-by-dhcp.cox.net> <20060113030837.GD27214@fieldses.org> <7v8xtkhj5l.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jan 13 15:52:22 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 13 16:10:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExQHV-0000tT-5v
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 15:51:57 +0100
+	id 1ExQZA-0005u1-VI
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 16:10:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422702AbWAMOvv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jan 2006 09:51:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422706AbWAMOvv
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 09:51:51 -0500
-Received: from main.gmane.org ([80.91.229.2]:36014 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1422702AbWAMOvu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Jan 2006 09:51:50 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ExQH6-0000nh-Ga
-	for git@vger.kernel.org; Fri, 13 Jan 2006 15:51:32 +0100
-Received: from adsl-69-234-210-171.dsl.irvnca.pacbell.net ([69.234.210.171])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 13 Jan 2006 15:51:32 +0100
-Received: from wa1ter by adsl-69-234-210-171.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 13 Jan 2006 15:51:32 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-210-171.dsl.irvnca.pacbell.net
-User-Agent: Mail/News 1.6a1 (X11/20060113)
+	id S1422713AbWAMPKJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jan 2006 10:10:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422714AbWAMPKJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 10:10:09 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:17608 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP
+	id S1422713AbWAMPKH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2006 10:10:07 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
+	(envelope-from <bfields@fieldses.org>)
+	id 1ExQZ4-00081A-0F; Fri, 13 Jan 2006 10:10:06 -0500
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v8xtkhj5l.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14629>
 
-All the help you guys have given me lately has at least
-fixed one kernel bug :o)
+On Thu, Jan 12, 2006 at 08:00:06PM -0800, Junio C Hamano wrote:
+> Backward compatibility is that it was only either "<branch>" or
+> "tag <tag>".  When heads/branch or tags/tag came later,
+> supporting the separate word form "tag <tag>" was a bit
+> cumbersome but was done for b/c.
 
-After using git-bisect to find the responsible commit,
-I emailed the maintainer who sent me back a patch to try.
+Thanks for the explanation, makes sense.
 
-I used git-checkout to make a new test branch, applied
-and tested the patch (which fixed the bug) and I just
-sent off an email to the maintainer to confirm.
+I might try to put together some more extensive documentation patches
+over the next couple weeks if you're willing to take them.  Plain git
+actually seems to have pretty usable interfaces at this point, but it's
+not always obvious where to find them....
 
-And it was all so easy I never broke a sweat.  Amazing!
+I also have Yet Another Git Tutorial, at
+http://www.fieldses.org/~bfields/kernel/git.html.  (Corrections and
+suggestions welcomed.)
 
-So thank you all again for the help and your great work.
+--b.
