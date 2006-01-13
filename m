@@ -1,88 +1,96 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: qgit shows wrong popup
-Date: Fri, 13 Jan 2006 18:41:25 +0100
-Message-ID: <43C7E645.2050702@yahoo.it>
-References: <1137021690.10975.22.camel@dv> <e5bfff550601120455p1b1654cx43beb684a3fd5dc7@mail.gmail.com>
+From: sean <seanlkml@sympatico.ca>
+Subject: Re: git-commit: allow From: line to be entered in commit message
+Date: Fri, 13 Jan 2006 12:54:04 -0500
+Message-ID: <BAYC1-PASMTP0918AE856AD34E35597CA4AE260@CEZ.ICE>
+References: <BAYC1-PASMTP117A18814EAAFACFE0F31DAE270@CEZ.ICE>
+	<7vzmm1mcfz.fsf@assigned-by-dhcp.cox.net>
+	<BAYC1-PASMTP102ED7B30D2B48BEE601F5AE260@CEZ.ICE>
+	<7v4q48hizr.fsf@assigned-by-dhcp.cox.net>
+	<BAYC1-PASMTP067B249A8110916F036FB3AE260@CEZ.ICE>
+	<7vzmm0eod1.fsf@assigned-by-dhcp.cox.net>
+	<BAYC1-PASMTP01A07DAA61F181E9D9679EAE260@CEZ.ICE>
+	<40b2b7d90601130311v78db741dx7c5eaa57ad300850@mail.gmail.com>
+	<7v64oo9gc7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 13 18:42:44 2006
+Cc: greenkaa@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 13 18:58:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExSvo-0004fD-9A
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 18:41:44 +0100
+	id 1ExTC4-0000Vh-QA
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 18:58:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422739AbWAMRlm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jan 2006 12:41:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422740AbWAMRll
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 12:41:41 -0500
-Received: from smtp107.mail.sc5.yahoo.com ([66.163.169.227]:21889 "HELO
-	smtp107.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
-	id S1422739AbWAMRll (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2006 12:41:41 -0500
-Received: (qmail 64425 invoked from network); 13 Jan 2006 17:41:39 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-  b=yOEPnharUn6Clj1ofsZw0/4TbkB2bdoHSsPod7BDNOhY6LATtGVGi9Bpo1MSLE5NYovJINSrLzkduuJNjnXOED9wO6UdHXVBPlnAQOz0AroBEOyIO9BMDm/HIMD3zbsGps5ffYDUF1UPSsRrtVYBTvlN0U5TQARONj4wnWTSk3g=  ;
-Received: from unknown (HELO ?10.0.0.13?) (mcostalba@151.56.59.246 with plain)
-  by smtp107.mail.sc5.yahoo.com with SMTP; 13 Jan 2006 17:41:38 -0000
-User-Agent: Mozilla Thunderbird 1.0.6-7.2.20060mdk (X11/20050322)
-X-Accept-Language: it, it-it, en-us, en
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <e5bfff550601120455p1b1654cx43beb684a3fd5dc7@mail.gmail.com>
+	id S1422758AbWAMR63 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jan 2006 12:58:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422754AbWAMR63
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 12:58:29 -0500
+Received: from bayc1-pasmtp09.bayc1.hotmail.com ([65.54.191.169]:35047 "EHLO
+	BAYC1-PASMTP09.bayc1.hotmail.com") by vger.kernel.org with ESMTP
+	id S1422750AbWAMR62 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2006 12:58:28 -0500
+X-Originating-IP: [69.156.6.171]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.6.171]) by BAYC1-PASMTP09.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 13 Jan 2006 09:59:04 -0800
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 10541644C23;
+	Fri, 13 Jan 2006 12:58:27 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
+Message-Id: <20060113125404.58c4ce30.seanlkml@sympatico.ca>
+In-Reply-To: <7v64oo9gc7.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.9; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 13 Jan 2006 17:59:04.0593 (UTC) FILETIME=[0AA72010:01C6186B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14633>
+
+On Fri, 13 Jan 2006 09:40:24 -0800
+Junio C Hamano <junkio@cox.net> wrote:
+
+> Have you two known that more than one environment variables can
+> be set for one-shot command execution?
+> 
+> 	$ GIT_AUTHOR_NAME="$author" \
+> 	  GIT_AUTHOR_EMAIL="$email" git commit -F .msgfile
+> 
+> would give these environment variables for this "git commit"
+> without affecting the later commands.
+
+No, I didn't know that; thanks for the lesson.
+
+> 
+> Not that this really matters, since the above example was an
+> excerpt of my suggestion about how to do this in a script,
+> somehow made to look as if it was a suggestion about running
+> things by hand from the command line...
+> 
+
+I said quite a few times now this has nothing to do with running
+git-commit from a script.   This is just a simple request
+to not require the use of environment variables to pass useful
+parameters.
+
+I really don't understand your gripe on this one, when someone 
+else suggested using a command line parameter for author
+information you said:
+
+<quote>
+
+> 	--from="Some User <some.user@theoffice.org>"
+>
+
+I agree this would be more useful, direct, easy to understand
+and explain way to do it.
+
+</quote>
 
 
->>I found this comment in mainimpl.cpp:
->>  // call an async context popup, DO NOT filter out event
->>  // we append the event to main event loop queue so Qt can send
->>  // currentChanged() signal to listViewLog before our popup is
->>populated
->>
->>I guess the code doesn't work the way the comment says.
->>
-Hi Pavel,
+So do you still agree with that, would you accept a patch?  Or do you have
+some fundamental reason to think that environment variables are a better
+way to pass information in this case?
 
-please test the following an let me know if it is ok for you.
-
-@@ -1378,9 +1378,21 @@ void MainImpl::customEvent(QCustomEvent*
-  	if (e->type() == STATS_EV) // archive loading complete
-  		loadComplete(((ThreadStatsEvent*)e)->data());
-
--	if (e->type() == POPUP_EV) // deferred popup
--		doContexPopup(listViewLog->currentItem());
--
-+	if (e->type() == POPUP_EV) { // deferred popup
-+		QListViewItem* item = listViewLog->currentItem();
-+		if (item) {
-+			// if mainview is already updated pop-up
-+			// context menu, otherwise it means dispatch()
-+			// has not been called til now, so resend the event,
-+			// it will be queued up after dispatch.
-+			if (item->text(COMMIT_COL) == mainViewSha)
-+				doContexPopup(listViewLog->currentItem());
-+			else {
-+				DeferredPopupEvent* e = new DeferredPopupEvent();
-+				QApplication::postEvent(this, e);
-+			}
-+		}
-+	}
-  	if (e->type() == POPUP_TREE_EV) // deferred tree popup
-  		doTreeContexPopup(treeView->currentItem());
-
-
-
-	
-
-	
-		
-___________________________________ 
-Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
-http://mail.yahoo.it
+Cheers,
+Sean
