@@ -1,69 +1,247 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: git pull on Linux/ACPI release tree
-Date: Sat, 14 Jan 2006 00:35:01 +0100
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2006.01.13.23.34.58.269921@smurf.noris.de>
-References: <20060109225143.60520.qmail@web31807.mail.mud.yahoo.com> <Pine.LNX.4.64.0601091845160.5588@g5.osdl.org> <99D82C29-4F19-4DD3-A961-698C3FC0631D@mac.com> <46a038f90601092238r3476556apf948bfe5247da484@mail.gmail.com> <252A408D-0B42-49F3-92BC-B80F94F19F40@mac.com> <Pine.LNX.4.64.0601101015260.4939@g5.osdl.org> <Pine.LNX.4.63.0601101938420.26999@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0601101048440.4939@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] format-patch: always --mbox and show sane Date:
+Date: Fri, 13 Jan 2006 15:56:44 -0800
+Message-ID: <7v1wzb1y2r.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0601082207510.3169@g5.osdl.org>
+	<20060108140109.909925BE8D@nox.op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 14 00:35:48 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sat Jan 14 00:57:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExYSD-00015D-FT
-	for gcvg-git@gmane.org; Sat, 14 Jan 2006 00:35:34 +0100
+	id 1ExYmo-0005dS-PF
+	for gcvg-git@gmane.org; Sat, 14 Jan 2006 00:56:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423108AbWAMXf3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jan 2006 18:35:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423112AbWAMXf3
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 18:35:29 -0500
-Received: from main.gmane.org ([80.91.229.2]:48290 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1423108AbWAMXf3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Jan 2006 18:35:29 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ExYRr-000115-AS
-	for git@vger.kernel.org; Sat, 14 Jan 2006 00:35:11 +0100
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 14 Jan 2006 00:35:11 +0100
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 14 Jan 2006 00:35:11 +0100
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1423125AbWAMX4r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jan 2006 18:56:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423126AbWAMX4r
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 18:56:47 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:35792 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1423125AbWAMX4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2006 18:56:46 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060113235650.WWHA25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 13 Jan 2006 18:56:50 -0500
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14657>
 
-Hi, Linus Torvalds wrote:
+Make --mbox, --author, and --date options a no-op, and always
+use --mbox output, and rewrite the commit log formatting in
+Perl.  This makes it easier to output Date: header in RFC 2822
+format, so do that as well.
 
-> I'm pretty proud of it. It's simple, and it's obvious once you think about 
-> it, but it is pretty novel as far as I know. BK certainly had nothing 
-> similar, not have I heard of anythign else that does it.
+Inspiration for this patch came from Andreas Ericsson's earlier
+patch.
 
-Actually, I've written a hackish script that tries to do simple-minded
-bisection (read: it searched for the 50% point on the shortest path
-between any-of-GOOD and any-of-BAD, instead of considering the whole
-graph) on BK trees. I haven't exactly published the thing anyplace though,
-because, well, it was ugly. :-/
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-Besides, actually working with the current bisection point is no problem
-at all for git. Doing the same thing in BK's world view is *painful*,
-esp. given the size of the kernel tree.
+---
 
+ * I admit that trying to avoid Perl and sticking to multiple
+   sed invocations in this script was a lost battle.  This patch
+   is still minimalistic and it does not go all the way to
+   rewrite the main loop of the program, which probably should
+   happen someday.
+
+   I would not mind if someday somebody rewrote most of the
+   barebone Porcelainish in Python or Perl, but the rewrite
+   should not be for the sake of using that language.  It should
+   have other justifications: "there is too much text processing
+   there it would not make sense to do that in shell".  I think
+   this patch is borderline to qualify to be in that camp.
+
+   As the version string at the end shows, this was prepared
+   with the script source itself before building, as a test
+   case.
+
+ git-format-patch.sh |  143 +++++++++++++++++++++++++++------------------------
+ 1 files changed, 75 insertions(+), 68 deletions(-)
+
+8b4271ef24818e6d52926bc615e5ce78ba0ed01b
+diff --git a/git-format-patch.sh b/git-format-patch.sh
+index d3979d7..7e67c4e 100755
+--- a/git-format-patch.sh
++++ b/git-format-patch.sh
+@@ -34,14 +34,12 @@ outdir=./
+ while case "$#" in 0) break;; esac
+ do
+     case "$1" in
+-    -a|--a|--au|--aut|--auth|--autho|--author)
+-    author=t ;;
+     -c|--c|--ch|--che|--chec|--check)
+     check=t ;;
+-    -d|--d|--da|--dat|--date)
+-    date=t ;;
+-    -m|--m|--mb|--mbo|--mbox)
+-    date=t author=t mbox=t ;;
++    -a|--a|--au|--aut|--auth|--autho|--author|\
++    -d|--d|--da|--dat|--date|\
++    -m|--m|--mb|--mbo|--mbox) # now noop
++    ;;
+     -k|--k|--ke|--kee|--keep|--keep-|--keep-s|--keep-su|--keep-sub|\
+     --keep-subj|--keep-subje|--keep-subjec|--keep-subject)
+     keep_subject=t ;;
+@@ -173,80 +171,89 @@ titleScript='
+ 	q
+ '
+ 
+-whosepatchScript='
+-/^author /{
+-	s/'\''/'\''\\'\'\''/g
+-	s/author \(.*>\) \(.*\)$/au='\''\1'\'' ad='\''\2'\''/p
+-	q
+-}'
+-
+ process_one () {
+-	mailScript='
+-	/./d
+-	/^$/n'
+-	case "$keep_subject" in
+-	t)  ;;
+-	*)
+-	    mailScript="$mailScript"'
+-	    s|^\[PATCH[^]]*\] *||
+-	    s|^|[PATCH'"$num"'] |'
+-	    ;;
+-	esac
+-	mailScript="$mailScript"'
+-	s|^|Subject: |'
+-	case "$mbox" in
+-	t)
+-	    echo 'From nobody Mon Sep 17 00:00:00 2001' ;# UNIX "From" line
+-	    ;;
+-	esac
++	perl -w -e '
++my ($keep_subject, $num, $signoff, $commsg) = @ARGV;
++my ($signoff_pattern, $done_header, $done_subject, $signoff_seen,
++    $last_was_signoff);
++
++if ($signoff) {
++	$signoff = `git-var GIT_COMMITTER_IDENT`;
++	$signoff =~ s/>.*/>/;
++	$signoff_pattern = quotemeta($signoff);
++}
+ 
+-	eval "$(sed -ne "$whosepatchScript" $commsg)"
+-	test "$author,$au" = ",$me" || {
+-		mailScript="$mailScript"'
+-	a\
+-From: '"$au"
+-	}
+-	test "$date,$au" = ",$me" || {
+-		mailScript="$mailScript"'
+-	a\
+-Date: '"$ad"
+-	}
++my @weekday_names = qw(Sun Mon Tue Wed Thu Fri Sat);
++my @month_names = qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec);
+ 
+-	mailScript="$mailScript"'
+-	a\
++sub show_date {
++    my ($time, $tz) = @_;
++    my $minutes = abs($tz);
++    $minutes = ($minutes / 100) * 60 + ($minutes % 100);
++    if ($tz < 0) {
++        $minutes = -$minutes;
++    }
++    my $t = $time + $minutes * 60;
++    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday) = gmtime($t);
++    return sprintf("%s %s %d %02d:%02d:%02d %d %+05d",
++		   $weekday_names[$wday],
++		   $month_names[$mon],
++		   $mday, $hour, $min, $sec,
++		   $year+1900, $tz);
++}
+ 
+-	: body
+-	p
+-	n
+-	b body'
++print "From nobody Mon Sep 17 00:00:00 2001\n";
++open FH, "git stripspace <$commsg |" or die "open $commsg pipe";
++while (<FH>) {
++    unless ($done_header) {
++	if (/^$/) {
++	    $done_header = 1;
++	}
++	elsif (/^author (.*>) (.*)$/) {
++	    my ($author_ident, $author_date) = ($1, $2);
++	    my ($utc, $off) = ($author_date =~ /^(\d+) ([-+]?\d+)$/);
++	    $author_date = show_date($utc, $off);
+ 
+-	(cat $commsg ; echo; echo) |
+-	sed -ne "$mailScript" |
+-	git-stripspace
+-
+-	test "$signoff" = "t" && {
+-		offsigner=`git-var GIT_COMMITTER_IDENT | sed -e 's/>.*/>/'`
+-		line="Signed-off-by: $offsigner"
+-		grep -q "^$line\$" $commsg || {
+-			echo
+-			echo "$line"
+-			echo
+-		}
++	    print "From: $author_ident\n";
++	    print "Date: $author_date\n";
+ 	}
+-	echo
+-	echo '---'
+-	echo
++	next;
++    }
++    unless ($done_subject) {
++	unless ($keep_subject) {
++	    s/^\[PATCH[^]]*\]\s*//;
++	    s/^/[PATCH$num] /;
++	}
++        print "Subject: $_";
++	$done_subject = 1;
++	next;
++    }
++
++    $last_was_signoff = 0;
++    if (/Signed-off-by:/i) {
++        if ($signoff ne "" && /Signed-off-by:\s*$signoff_pattern$/i) {
++	    $signoff_seen = 1;
++	}
++    }
++    print $_;
++}
++if (!$signoff_seen && $signoff ne "") {
++    if (!$last_was_signoff) {
++        print "\n";
++    }
++    print "$signoff\n";
++}
++print "\n---\n\n";
++close FH or die "close $commsg pipe";
++' "$keep_subject" "$num" "$signoff" $commsg
++
+ 	git-diff-tree -p $diff_opts "$commit" | git-apply --stat --summary
+ 	echo
+ 	git-diff-tree -p $diff_opts "$commit"
+ 	echo "-- "
+ 	echo "@@GIT_VERSION@@"
+ 
+-	case "$mbox" in
+-	t)
+-		echo
+-		;;
+-	esac
++	echo
+ }
+ 
+ total=`wc -l <$series | tr -dc "[0-9]"`
 -- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Arthur felt at a bit of a loss. There was a whole Galaxy
-of stuff out there for him, and he wondered if it was
-churlish of him to complain to himself that it lacked just
-two things: the world he was born on and the woman he loved.
+@@GIT_VERSION@@
