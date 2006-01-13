@@ -1,76 +1,54 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: StGIT: "stg new" vs "stg new --force"
-Date: Fri, 13 Jan 2006 04:24:51 -0500
-Message-ID: <1137144291.20073.104.camel@dv>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: StGIT: "stg new" vs "stg new --force"
+Date: Fri, 13 Jan 2006 10:34:20 +0100
+Message-ID: <20060113093420.GA25242@diana.vm.bytemark.co.uk>
+References: <1137144291.20073.104.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jan 13 10:25:02 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Jan 13 10:34:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExLB4-0007s2-QX
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 10:24:59 +0100
+	id 1ExLKP-0001oH-FH
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 10:34:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161508AbWAMJYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jan 2006 04:24:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161509AbWAMJYz
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 04:24:55 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:25261 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1161508AbWAMJYz
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2006 04:24:55 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1ExL8e-0000mY-TQ
-	for git@vger.kernel.org; Fri, 13 Jan 2006 04:22:29 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.60)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1ExLAy-0001TV-2N; Fri, 13 Jan 2006 04:24:52 -0500
-To: Catalin Marinas <catalin.marinas@gmail.com>,
-	git <git@vger.kernel.org>
-X-Mailer: Evolution 2.5.4 (2.5.4-2) 
+	id S1161512AbWAMJe0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 13 Jan 2006 04:34:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161513AbWAMJe0
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 04:34:26 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:40457 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S1161512AbWAMJeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2006 04:34:25 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1ExLK8-0006nJ-00
+	for <git@vger.kernel.org>; Fri, 13 Jan 2006 09:34:20 +0000
+To: git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <1137144291.20073.104.camel@dv>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14622>
 
-Hello, Catalin!
+On 2006-01-13 04:24:51 -0500, Pavel Roskin wrote:
 
-Maybe I don't understand something in StGIT, but it seems strange that
-"stg new" creates empty patch by default and requires "--force" to
-create a non-empty patch.
+> 1) "stg new --force" becomes "stg new" and "stg new" becomes "stg new
+>    --empty", i.e. empty files can only be created with the "--empty"
+>    switch.
+> 2) "stg new --force" becomes "stg record" or something.
+> 3) "stg new --force" becomes "stg new --record" or something.
+> 4) "stg new" works both with and without modified files.
 
-It's much easier to give a patch a name once I know what it does.  Most
-times I don't even intend to make a patch.  Suppose, I compile
-something, then I find that some quick hack is needed to compile, then
-the hack becomes a reasonable general solution.  When does it make sense
-to run "stg new"?  Obviously, at the point when I know the patch is good
-enough to be kept and sent upstream.  It happens after I change some
-files, not before.
+I agree with Pavel. I like option 4 the most, and 3 the least; since
+creating a new patch from existing edits is more common (for me) than
+creating an empty patch, it's awkward to make that command much
+longer.
 
-It's actually very rare that I decide to fix something like "bug #42
-from the tracker" before having changed a single line.  It's also rare
-that I follow through without getting distracted or realizing that I'm
-fixing some other bug instead.
-
-Also, "--force" is a strong word for a switch.  It's normally used for
-options that could trigger information loss or unintended consequences
-that are hard to undo.  Telling StGIT to record my changes hardly
-qualifies as anything dangerous.
-
-I know of "stg rename", but I don't want to be forced to name a patch
-before it's ready.
-
-Possible solutions:
-
-1) "stg new --force" becomes "stg new" and "stg new" becomes "stg new
---empty", i.e. empty files can only be created with the "--empty"
-switch.
-2) "stg new --force" becomes "stg record" or something.
-3) "stg new --force" becomes "stg new --record" or something.
-4) "stg new" works both with and without modified files.
-
--- 
-Regards,
-Pavel Roskin
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
