@@ -1,54 +1,64 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: Recursive remove
-Date: Fri, 13 Jan 2006 12:56:04 -0500
-Message-ID: <BAYC1-PASMTP08F3875A7636E18401E7B3AE260@CEZ.ICE>
-References: <20060113132119.GB23655@ebar091.ebar.dtu.dk>
-	<7virso9ggd.fsf@assigned-by-dhcp.cox.net>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: My first git success
+Date: 13 Jan 2006 10:57:04 -0800
+Message-ID: <86y81kvtvj.fsf@blue.stonehenge.com>
+References: <dq8epd$k28$1@sea.gmane.org>
+	<Pine.LNX.4.64.0601130909290.3535@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: s022018@student.dtu.dk, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 13 19:01:04 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: walt <wa1ter@myrealbox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 13 19:57:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExTE0-0000v6-QG
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 19:00:33 +0100
+	id 1ExU7J-0006Vz-0t
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 19:57:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422754AbWAMSAa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jan 2006 13:00:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422759AbWAMSAa
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 13:00:30 -0500
-Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]:28513 "EHLO
-	BAYC1-PASMTP08.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1422754AbWAMSA3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2006 13:00:29 -0500
-X-Originating-IP: [69.156.6.171]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.6.171]) by BAYC1-PASMTP08.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 13 Jan 2006 10:02:06 -0800
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 94379644C23;
-	Fri, 13 Jan 2006 13:00:27 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
-Message-Id: <20060113125604.4ec91466.seanlkml@sympatico.ca>
-In-Reply-To: <7virso9ggd.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.9; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 13 Jan 2006 18:02:07.0031 (UTC) FILETIME=[7764F470:01C6186B]
+	id S1422826AbWAMS5L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jan 2006 13:57:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422824AbWAMS5L
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 13:57:11 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:57709 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1422826AbWAMS5J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2006 13:57:09 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id A7A378F2CC;
+	Fri, 13 Jan 2006 10:57:04 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 22769-01-31; Fri, 13 Jan 2006 10:57:04 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 3BF108F2F8; Fri, 13 Jan 2006 10:57:04 -0800 (PST)
+To: Linus Torvalds <torvalds@osdl.org>
+x-mayan-date: Long count = 12.19.12.17.6; tzolkin = 5 Cimi; haab = 4 Muan
+In-Reply-To: <Pine.LNX.4.64.0601130909290.3535@g5.osdl.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14636>
 
-On Fri, 13 Jan 2006 09:37:54 -0800
-Junio C Hamano <junkio@cox.net> wrote:
+>>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
 
-> 
-> 	$ rm -fr Some/Dir; git commit -a -m 'Remove'
-> 
-> perhaps?
-> 
+Linus> I still hope the exchanges will result in more docs, or at least other 
+Linus> lurkers on the list also learning a new trick or two..
 
-Sigh, its been a humbling morning all around; can't get easier than that.
+I've also enjoyed a bit of success putting a website under git.  I started
+working on AJAX-ing some of the code, but I needed to do maintainence on the
+live site, so I've just simply done "git-checkout master" to work on that, and
+"git-checkout ajax; git-pull . master" when I want to continue work on the
+ajax upgrades.
 
-Sean
+However, before I bug-fix, I have to "snapshot" any working changes in the
+ajax branch or I would lose them on "git-checkout master", which gives me
+commits that look like "snapshot".  Am I doing that wrong?  Is there a better
+way to do parallel development of a "live vs upgrade" branch, and make commits
+only when I make progress?
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
