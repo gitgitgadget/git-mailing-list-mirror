@@ -1,71 +1,183 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-cvsimport: Add -A <author-conv-file> option
-Date: Fri, 13 Jan 2006 00:45:51 -0800
-Message-ID: <7v8xtkbjnk.fsf@assigned-by-dhcp.cox.net>
-References: <20060112233859.3438F5BED0@nox.op5.se>
-	<7vvewohoy0.fsf@assigned-by-dhcp.cox.net> <43C70D03.4040609@op5.se>
-	<7vzmm0g45a.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] stgit: make tutorial a valid asciidoc article
+Date: Fri, 13 Jan 2006 03:54:46 -0500
+Message-ID: <1137142486.20073.77.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 13 09:46:05 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Jan 13 09:54:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExKZJ-0007dh-30
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 09:45:57 +0100
+	id 1ExKhx-0001B7-US
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 09:54:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161501AbWAMIpy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jan 2006 03:45:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161505AbWAMIpy
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 03:45:54 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:11680 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1161501AbWAMIpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2006 03:45:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060113084335.TQRR17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 13 Jan 2006 03:43:35 -0500
-To: Andreas Ericsson <ae@op5.se>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030299AbWAMIyv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jan 2006 03:54:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030321AbWAMIyv
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 03:54:51 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:11691 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1030299AbWAMIyu
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2006 03:54:50 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1ExKfY-0000Az-1X
+	for git@vger.kernel.org; Fri, 13 Jan 2006 03:52:24 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1ExKhq-00014k-H8; Fri, 13 Jan 2006 03:54:46 -0500
+To: Catalin Marinas <catalin.marinas@gmail.com>,
+	git <git@vger.kernel.org>
+X-Mailer: Evolution 2.5.4 (2.5.4-2) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14620>
 
-Junio C Hamano <junkio@cox.net> writes:
+There should be only one level 0 title in an article, so lower ranks of
+all headers by one.  Make capitalization uniform in the headers - level
+1 is capitalized, but level 2 is not.  Create a new level 1 part
+"Technical Information".
 
-> Andreas Ericsson <ae@op5.se> writes:
->
->> Anyways, I can keep this separate if you don't want to accept it.
->
-> Oh, I haven't formed an opinion on accept/reject yet.  I was
-> just trying to see if you are aware of that (especially Pasky's
-> message in that thread) and thought about issues like "if in
-> some repositories CVSROOT/users is in usable form then perhaps
-> making sure -A file has the same format and suggest its use in
-> the documentation would be nicer".
+Make ".git/ Directory Structure" a level 2 header and rephrase.
+asciidoc doesn't like headers starting with a dot.
 
-OK, after a little googling around, I have formed an opinion.  I
-agree to the patch in principle, but at least it would be nicer
-to use "CVSROOT/users" compatible format before giving it to the
-general public.
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+---
 
-	http://computing.ee.ethz.ch/sepp/cvs-1.10-to/cvsbook/main_70.html
+ doc/tutorial.txt |   34 +++++++++++++++++++---------------
+ 1 files changed, 19 insertions(+), 15 deletions(-)
 
-seems to indicate that:
+diff --git a/doc/tutorial.txt b/doc/tutorial.txt
+index 7183e41..eae26f4 100644
+--- a/doc/tutorial.txt
++++ b/doc/tutorial.txt
+@@ -16,10 +16,10 @@ information on GIT, see the GIT_tutorial
+ 
+ 
+ Basic Operation
+-===============
++---------------
+ 
+ Help
+-----
++~~~~
+ 
+ For a full list of StGIT commands:
+ 
+@@ -31,7 +31,7 @@ For help on individual subcommands:
+ 
+ 
+ Repository initialisation
+--------------------------
++~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ In stand-alone mode, StGIT is used in conjunction with a GIT repository
+ that is already initialised (using 'git-init-db'). StGIT cannot be used
+@@ -59,7 +59,7 @@ will automatically prepare them for use 
+ 
+ 
+ Working with remote repositories
+---------------------------------
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ With a single command, StGIT can create and initialize a GIT repository
+ which mirrors a remote GIT repository. This is known as cloning. All GIT
+@@ -97,7 +97,7 @@ separated into its own branch to make it
+ just your patches.
+ 
+ Getting started: creating a patch
+----------------------------------
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ Changes to your working directory are saved in a patch. An StGIT patch
+ is simply a saved set of modifications to your working directory, plus a
+@@ -140,7 +140,7 @@ commands:
+ 
+ 
+ Stack manipulation: managing multiple patches
+----------------------------------------------
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ StGIT can manage more than one patch at a time. A series of StGIT
+ patches in a GIT branch are known collectively as a stack. The new patch
+@@ -200,7 +200,7 @@ you want to permanently store the applie
+ them with StGIT.
+ 
+ Converting between StGIT patches and text diffs
+------------------------------------------------
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ As mentioned in the introduction, StGIT stores modifications to your
+ working tree in the form of GIT commits. This means if you want to apply
+@@ -270,10 +270,10 @@ the bottom of the topmost one and perfor
+ 
+ 
+ Advanced Usage
+-==============
++--------------
+ 
+ Handling merge conflicts
+-------------------------
++~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ Pushing a patch on the stack can fail if the patch cannot be applied
+ cleanly. This usually happens if there are overlapping changes in the
+@@ -293,7 +293,7 @@ resolve the conflict.
+ 
+ 
+ Configuration file
+-------------------
++~~~~~~~~~~~~~~~~~~
+ 
+ StGIT tries to read the configuration options from the following files:
+ /etc/stgitrc, ~/.stgitrc and .git/stgitrc. The latter overrides the
+@@ -307,7 +307,7 @@ specify a smarter tool to be used.
+ 
+ 
+ Templates
+----------
++~~~~~~~~~
+ 
+ The 'export' and 'mail' commands use templates for generating the patch
+ files or e-mails. The default templates are installed under <prefix>/
+@@ -324,7 +324,7 @@ lines.
+ 
+ 
+ Merging two patches into one
+-----------------------------
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ There is no command to do this directly at the moment but one can export
+ the patch to be merged and use the 'stg fold' command on the generated
+@@ -334,8 +334,11 @@ result in an empty patch (StGIT notifyin
+ deleted.
+ 
+ 
+-A Bit of StGIT Patch Theory
+-===========================
++Technical Information
++---------------------
++
++A bit of StGIT patch theory
++~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ We assume that a patch is a diff between two nodes - bottom and top. A
+ node is a commit SHA1 id or tree SHA1 id in the GIT terminology:
+@@ -374,8 +377,9 @@ The above operation allows easy patch re
+ Removing (popping) a patch from the stack is done by simply setting the
+ Nst to Nb.
+ 
+-.git/ Directory Structure
+ 
++Layout of the .git directory
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+   HEAD			-> refs/heads/<something>
+   objects/
 
- - colon ':' is used instead of your '='.
 
- - RHS, if it contains a whitespace, is quoted either with
-   single or double quote.
-
-It was a bit unclear to me how quote characters are to be
-quoted, so the patch needs a bit of research, quoting (when
-writing out new records) and unquoting (when reading) in the
-script, but otherwise I think it is a welcome change.
-
-Opinions from other heavy CVS users?
+-- 
+Regards,
+Pavel Roskin
