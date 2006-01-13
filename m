@@ -1,64 +1,82 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: My first git success
-Date: 13 Jan 2006 10:57:04 -0800
-Message-ID: <86y81kvtvj.fsf@blue.stonehenge.com>
-References: <dq8epd$k28$1@sea.gmane.org>
-	<Pine.LNX.4.64.0601130909290.3535@g5.osdl.org>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: git-commit: allow From: line to be entered in commit message
+Date: Fri, 13 Jan 2006 11:12:31 -0800
+Message-ID: <20060113191231.GM14196@ca-server1.us.oracle.com>
+References: <20060112093700.1d3d25db.seanlkml@sympatico.ca> <20060112190031.GH14196@ca-server1.us.oracle.com> <7vhd89mc0y.fsf@assigned-by-dhcp.cox.net> <20060113065855.GJ14196@ca-server1.us.oracle.com> <7vpsmwbo9s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: walt <wa1ter@myrealbox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 13 19:57:44 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 13 20:12:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExU7J-0006Vz-0t
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 19:57:41 +0100
+	id 1ExULo-0001VC-HM
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 20:12:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422826AbWAMS5L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jan 2006 13:57:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422824AbWAMS5L
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 13:57:11 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:57709 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1422826AbWAMS5J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2006 13:57:09 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id A7A378F2CC;
-	Fri, 13 Jan 2006 10:57:04 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 22769-01-31; Fri, 13 Jan 2006 10:57:04 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 3BF108F2F8; Fri, 13 Jan 2006 10:57:04 -0800 (PST)
-To: Linus Torvalds <torvalds@osdl.org>
-x-mayan-date: Long count = 12.19.12.17.6; tzolkin = 5 Cimi; haab = 4 Muan
-In-Reply-To: <Pine.LNX.4.64.0601130909290.3535@g5.osdl.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1422819AbWAMTMh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jan 2006 14:12:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422834AbWAMTMh
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 14:12:37 -0500
+Received: from rgminet01.oracle.com ([148.87.122.30]:33416 "EHLO
+	rgminet01.oracle.com") by vger.kernel.org with ESMTP
+	id S1422819AbWAMTMh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2006 14:12:37 -0500
+Received: from rgmsgw02.us.oracle.com (rgmsgw02.us.oracle.com [138.1.186.52])
+	by rgminet01.oracle.com (Switch-3.1.6/Switch-3.1.6) with ESMTP id k0DJCW5R009065;
+	Fri, 13 Jan 2006 12:12:32 -0700
+Received: from rgmsgw02.us.oracle.com (localhost.localdomain [127.0.0.1])
+	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0DJCVjx013514;
+	Fri, 13 Jan 2006 12:12:31 -0700
+Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.48.5])
+	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0DJCUi9013489
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 13 Jan 2006 12:12:31 -0700
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.60)
+	(envelope-from <joel.becker@oracle.com>)
+	id 1ExULf-0002Eu-Kz; Fri, 13 Jan 2006 11:12:31 -0800
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vpsmwbo9s.fsf@assigned-by-dhcp.cox.net>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
+User-Agent: Mutt/1.5.11
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14637>
 
->>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
+On Thu, Jan 12, 2006 at 11:06:07PM -0800, Junio C Hamano wrote:
+> Joel Becker <Joel.Becker@oracle.com> writes:
+> 
+> > Well, I'm wary of putting
+> > GIT_AUTHOR_EMAIL=joel.becker@oracle.com as a permanent part of my
+> > environment, for fear of overriding some other authors at some point.
+> 
+> The weakest default comes from .git/config so you could have
+> this in your .git/config:
+> 
+> 	[user]
+>         	name = Joel Becker 
+>                 email = Joel.Becker@oracle.com
 
-Linus> I still hope the exchanges will result in more docs, or at least other 
-Linus> lurkers on the list also learning a new trick or two..
+	This configuration is something I have the opportunity to forget
+every time I call git-clone.  So I still need to leave it in the
+environment permanently.
+	Am I correct in assuming that "From:" lines will override the
+environment when using git-applymbox?  If so, I guess leaving
+GIT_AUTHOR_* in my environment permanently will be ok.
 
-I've also enjoyed a bit of success putting a website under git.  I started
-working on AJAX-ing some of the code, but I needed to do maintainence on the
-live site, so I've just simply done "git-checkout master" to work on that, and
-"git-checkout ajax; git-pull . master" when I want to continue work on the
-ajax upgrades.
-
-However, before I bug-fix, I have to "snapshot" any working changes in the
-ajax branch or I would lose them on "git-checkout master", which gives me
-commits that look like "snapshot".  Am I doing that wrong?  Is there a better
-way to do parallel development of a "live vs upgrade" branch, and make commits
-only when I make progress?
+Joel
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+
+"War doesn't determine who's right; war determines who's left."
+
+Joel Becker
+Principal Software Developer
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
