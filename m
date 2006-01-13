@@ -1,40 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: [PATCH] git-cvsimport: Add -A <author-conv-file> option
-Date: Thu, 12 Jan 2006 17:55:03 -0800
-Message-ID: <7vvewohoy0.fsf@assigned-by-dhcp.cox.net>
-References: <20060112233859.3438F5BED0@nox.op5.se>
+Date: Fri, 13 Jan 2006 03:14:27 +0100
+Message-ID: <43C70D03.4040609@op5.se>
+References: <20060112233859.3438F5BED0@nox.op5.se> <7vvewohoy0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 13 02:55:24 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Jan 13 03:14:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExE9q-0004Uj-70
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 02:55:14 +0100
+	id 1ExESg-0007O1-9N
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 03:14:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161635AbWAMBzH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 20:55:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161636AbWAMBzH
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 20:55:07 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:58101 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1161635AbWAMBzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2006 20:55:05 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060113015509.BFUH25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 12 Jan 2006 20:55:09 -0500
-To: exon@op5.se (Andreas Ericsson)
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932641AbWAMCO3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 21:14:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932669AbWAMCO3
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 21:14:29 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:4525 "EHLO smtp-gw1.op5.se")
+	by vger.kernel.org with ESMTP id S932641AbWAMCO2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2006 21:14:28 -0500
+Received: from [192.168.1.19] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id C1DA96BCFE
+	for <git@vger.kernel.org>; Fri, 13 Jan 2006 03:14:27 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <7vvewohoy0.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14599>
 
-ISTR there was a thread that suggested using CVSROOT/users file
-for this purpose.
+Junio C Hamano wrote:
+> ISTR there was a thread that suggested using CVSROOT/users file
+> for this purpose.
+> 
+> 	http://thread.gmane.org/gmane.comp.version-control.git/8167
+> 
 
-	http://thread.gmane.org/gmane.comp.version-control.git/8167
+ISTR?
+
+That patch doesn't work when importing from sourceforge (among others), 
+because no-one uses their devname@users.sourceforge.net address (and 
+often just filter them out because they attract so much spam). It also 
+does nothing for when the username isn't the leading part of the 
+email-addres, or for GIT_AUTHOR_NAME, which is the most disturbing since 
+it ruffles the shortlog output. We use that shortlog to get a gisted 
+changelog for the sales and marketing people. I can recommend this. 
+They're absolutely thrilled to see things like "Only use vararg macros 
+#ifdef __GNUC__" and "declare **envp const throughout mplex api". ;)
+
+Anyways, I can keep this separate if you don't want to accept it. I'll 
+most likely implement some config-reading to it too though so I don't 
+have to type the repository name and such each time I run it.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
