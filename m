@@ -1,58 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [wish] Auto-generate gitk's pretty pictures
-Date: Fri, 13 Jan 2006 23:19:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0601132318170.7025@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Fri, 13 Jan 2006 14:21:10 -0800
+Message-ID: <7v1wzb3h2h.fsf@assigned-by-dhcp.cox.net>
 References: <46a038f90601121302x3d06898dk3f9a0ab7114ef70a@mail.gmail.com>
- <40b2b7d90601131414o20eae573r23256ff2dfbeffa5@mail.gmail.com>
+	<40b2b7d90601131414o20eae573r23256ff2dfbeffa5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 13 23:19:14 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 13 23:22:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExXGK-0002NO-HV
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 23:19:12 +0100
+	id 1ExXIn-0002xY-1c
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 23:21:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423007AbWAMWTH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jan 2006 17:19:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423015AbWAMWTH
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 17:19:07 -0500
-Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:4775 "EHLO
-	wrzx35.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1423007AbWAMWTF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2006 17:19:05 -0500
-Received: from amavis.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
-	by wrzx35.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E706BE8E58; Fri, 13 Jan 2006 23:19:04 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by amavis.mail (Postfix) with ESMTP id D8B1D1CCF;
-	Fri, 13 Jan 2006 23:19:04 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by amavis.mail (Postfix) with ESMTP id BA6FF188B;
-	Fri, 13 Jan 2006 23:19:04 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A32AF146220; Fri, 13 Jan 2006 23:19:04 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1423020AbWAMWVP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jan 2006 17:21:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423024AbWAMWVO
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 17:21:14 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:3245 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1423021AbWAMWVM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2006 17:21:12 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060113221957.NGMY20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 13 Jan 2006 17:19:57 -0500
 To: Artem Khodush <greenkaa@gmail.com>
 In-Reply-To: <40b2b7d90601131414o20eae573r23256ff2dfbeffa5@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
-X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
-X-Spam-Level: 
+	(Artem Khodush's message of "Sat, 14 Jan 2006 01:14:19 +0300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14653>
 
-Hi,
+Artem Khodush <greenkaa@gmail.com> writes:
 
-On Sat, 14 Jan 2006, Artem Khodush wrote:
-
+> I'm working on a web interface that will look similar to gitk.
+> It's far from being usable, the only thing it does now is to "draw"
+> gitk-like "picture". But if the picture is all you want, you may
+> find it useful. Please look at
+>
 > http://straytree.com/git-browser/by-commit.html?r=git
 
-Wow! Great work...
-
-Ciao,
-Dscho
+Looks nice, although octopi look very ugly ;-).
