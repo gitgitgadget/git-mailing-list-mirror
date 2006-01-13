@@ -1,85 +1,59 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: merging initial part of a branch?
-Date: Thu, 12 Jan 2006 22:08:37 -0500
-Message-ID: <20060113030837.GD27214@fieldses.org>
-References: <20060111230451.GH8618@fieldses.org> <7vek3epbs9.fsf@assigned-by-dhcp.cox.net> <20060112005531.GB14599@fieldses.org> <7vmzi2i5eu.fsf@assigned-by-dhcp.cox.net>
+From: Alexander Litvinov <lan@ac-sw.com>
+Subject: Re: [PATCH] git-cvsimport: Add -A <author-conv-file> option
+Date: Fri, 13 Jan 2006 09:19:00 +0600
+Organization: AcademSoft Ltd.
+Message-ID: <200601130919.00928.lan@ac-sw.com>
+References: <20060112233859.3438F5BED0@nox.op5.se> <7vvewohoy0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 13 04:09:00 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Ericsson <exon@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 13 04:19:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExFJ1-0008Tm-Ul
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 04:08:48 +0100
+	id 1ExFTA-0001nf-S6
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 04:19:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161155AbWAMDIj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jan 2006 22:08:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161638AbWAMDIj
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 22:08:39 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:19616 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP
-	id S1161155AbWAMDIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2006 22:08:38 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
-	(envelope-from <bfields@fieldses.org>)
-	id 1ExFIr-0001io-A7; Thu, 12 Jan 2006 22:08:37 -0500
+	id S1161646AbWAMDTM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jan 2006 22:19:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161647AbWAMDTL
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jan 2006 22:19:11 -0500
+Received: from gw.ac-sw.com ([81.1.223.2]:9120 "EHLO gw.ac-sw.com")
+	by vger.kernel.org with ESMTP id S1161646AbWAMDTJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2006 22:19:09 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by gw.ac-sw.com (Postfix) with ESMTP id 079E4BD78;
+	Fri, 13 Jan 2006 09:19:08 +0600 (NOVT)
+Received: from gw.ac-sw.com ([127.0.0.1])
+ by localhost (gw.ac-sw.com [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 22160-05; Fri, 13 Jan 2006 09:19:05 +0600 (NOVT)
+Received: from lan.ac-sw.lcl (lan.ac-sw.lcl [192.168.0.69])
+	by gw.ac-sw.com (Postfix) with ESMTP id D4117BD1B;
+	Fri, 13 Jan 2006 09:19:05 +0600 (NOVT)
+Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
+	id D04CC94F7AC9; Fri, 13 Jan 2006 09:19:05 +0600 (NOVT)
+Received: from localhost (localhost [127.0.0.1])
+	by lan.ac-sw.lcl (Postfix) with ESMTP id 767718CFDB0D;
+	Fri, 13 Jan 2006 09:19:01 +0600 (NOVT)
 To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.8
+In-Reply-To: <7vvewohoy0.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vmzi2i5eu.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
+X-Virus-Scanned: amavisd-new at gw.ac-sw.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14605>
 
-On Wed, Jan 11, 2006 at 05:47:05PM -0800, Junio C Hamano wrote:
-> "J. Bruce Fields" <bfields@fieldses.org> writes:
-> 
-> >> I haven't tried this for some time, but I presume
-> >> 
-> >> 	$ git pull linus tag v2.6.15
-> >> 
-> >> would do what you want.
-> >
-> > Yep!  Thanks.  The only documentation I can find for this is a slightly
-> > obscure bit in the git-pull man page which lists this as a "short-cut"
-> > notation.  What is it a shortcut for?  Is it possible to specify an
-> > arbitrary commit in place of the "tag v2.6.15" somehow?
-> 
-> The phrase "short-hand" refers to "linus" in the above example.
-> I.e. the name of the file in $GIT_DIR/remotes that records the
-> URL (among other things).
+On Friday 13 January 2006 07:55, Junio C Hamano wrote:
+> ISTR there was a thread that suggested using CVSROOT/users file
+> for this purpose.
+>
+> 	http://thread.gmane.org/gmane.comp.version-control.git/8167
 
-No, I'm referring to the following language:
-
-	"Some short-cut notations are also supported.
-
-	"For backward compatibility, tag is almost ignored; it just
-	makes the following parameter <tag> to mean a refspec
-	refs/tags/<tag>:refs/tags/<tag>."
-
-That's the only reference I can find to the "tag <tag>" notation, and
-it's a bit unhelpful as written.  (What backward compatibility?)
-
-How about the following?--b.
-
-
-diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-index b5b9792..4524fee 100644
---- a/Documentation/pull-fetch-param.txt
-+++ b/Documentation/pull-fetch-param.txt
-@@ -134,9 +134,9 @@ is often useful.
- +
- Some short-cut notations are also supported.
- +
--* For backward compatibility, `tag` is almost ignored;
--  it just makes the following parameter <tag> to mean a
--  refspec `refs/tags/<tag>:refs/tags/<tag>`.
-+* `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`; 
-+  used with pull or fetch, it requests fetching everything up to
-+  the given tag.
- * A parameter <ref> without a colon is equivalent to
-   <ref>: when pulling/fetching, and <ref>`:`<ref> when
-   pushing.  That is, do not store it locally if
+This should went into docs for cvsimport. Before now I knew there is a way to 
+import authors but I did not find anything in cvsimport script. This patch 
+shows not only me lost this feature.
