@@ -1,54 +1,73 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: StGIT: "stg new" vs "stg new --force"
-Date: Fri, 13 Jan 2006 10:34:20 +0100
-Message-ID: <20060113093420.GA25242@diana.vm.bytemark.co.uk>
-References: <1137144291.20073.104.camel@dv>
+From: Artem Khodush <greenkaa@gmail.com>
+Subject: Re: git-commit: allow From: line to be entered in commit message
+Date: Fri, 13 Jan 2006 14:11:33 +0300
+Message-ID: <40b2b7d90601130311v78db741dx7c5eaa57ad300850@mail.gmail.com>
+References: <BAYC1-PASMTP117A18814EAAFACFE0F31DAE270@CEZ.ICE>
+	 <7vzmm1mcfz.fsf@assigned-by-dhcp.cox.net>
+	 <BAYC1-PASMTP102ED7B30D2B48BEE601F5AE260@CEZ.ICE>
+	 <7v4q48hizr.fsf@assigned-by-dhcp.cox.net>
+	 <BAYC1-PASMTP067B249A8110916F036FB3AE260@CEZ.ICE>
+	 <7vzmm0eod1.fsf@assigned-by-dhcp.cox.net>
+	 <BAYC1-PASMTP01A07DAA61F181E9D9679EAE260@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri Jan 13 10:34:55 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: sean <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Fri Jan 13 12:12:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExLKP-0001oH-FH
-	for gcvg-git@gmane.org; Fri, 13 Jan 2006 10:34:38 +0100
+	id 1ExMqJ-0006lD-5w
+	for gcvg-git@gmane.org; Fri, 13 Jan 2006 12:11:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161512AbWAMJe0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 13 Jan 2006 04:34:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161513AbWAMJe0
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 04:34:26 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:40457 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S1161512AbWAMJeZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2006 04:34:25 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1ExLK8-0006nJ-00
-	for <git@vger.kernel.org>; Fri, 13 Jan 2006 09:34:20 +0000
-To: git <git@vger.kernel.org>
+	id S1030341AbWAMLLg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jan 2006 06:11:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030352AbWAMLLg
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 06:11:36 -0500
+Received: from uproxy.gmail.com ([66.249.92.200]:61761 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1030341AbWAMLLf convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2006 06:11:35 -0500
+Received: by uproxy.gmail.com with SMTP id s2so38167uge
+        for <git@vger.kernel.org>; Fri, 13 Jan 2006 03:11:34 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FxW3XX8/Rmrp7oXwFQtyH/N1i4/lB3HDFBJ9XEmcJd5ePb8o6cdfrc6YRApueLKkD8vnuY5B0jOM3PPuajA+wYFxiiVmW21dBqqFbk8IbCk+y7Fggw4N7Y2Hk6FmqH9Vse4fpBhb81zWmFfvhY1NY7QpnRwyh9k1Gch9NcxKlI0=
+Received: by 10.48.202.20 with SMTP id z20mr59029nff;
+        Fri, 13 Jan 2006 03:11:33 -0800 (PST)
+Received: by 10.48.216.3 with HTTP; Fri, 13 Jan 2006 03:11:33 -0800 (PST)
+To: git@vger.kernel.org
+In-Reply-To: <BAYC1-PASMTP01A07DAA61F181E9D9679EAE260@CEZ.ICE>
 Content-Disposition: inline
-In-Reply-To: <1137144291.20073.104.camel@dv>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14624>
 
-On 2006-01-13 04:24:51 -0500, Pavel Roskin wrote:
+> $ export GIT_AUTHOR_NAME="$author"
+> $ GIT_AUTHOR_EMAIL="$email" git commit -F .msgfile
 
-> 1) "stg new --force" becomes "stg new" and "stg new" becomes "stg new
->    --empty", i.e. empty files can only be created with the "--empty"
->    switch.
-> 2) "stg new --force" becomes "stg record" or something.
-> 3) "stg new --force" becomes "stg new --record" or something.
-> 4) "stg new" works both with and without modified files.
+> Which is cumbersome and also ends up destroying your defaults if you happen
+> to use that method, so afterward you have to unset them or reset them back
+> to your own author info.
 
-I agree with Pavel. I like option 4 the most, and 3 the least; since
-creating a new patch from existing edits is more common (for me) than
-creating an empty patch, it's awkward to make that command much
-longer.
+Hello,
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+I had a similar problem on cygwin. I agree that setting environment
+variables by hand
+is cumbersome, and modifying global environment is undesirable. I ended up with
+writing shell script, named git-env.sh, that sets all variables
+requred for git to work,
+and got used to habit of typing
+
+. git-env.sh
+
+every time I intend to do some work in git.
+When that environment is not needed any more,
+I just close that particular shell window.
+
+
+hope this helps,
+Artem.
