@@ -1,88 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: My first git success [not quite]
-Date: Sat, 14 Jan 2006 12:49:43 -0800
-Message-ID: <7vbqyefsbc.fsf@assigned-by-dhcp.cox.net>
-References: <dq8epd$k28$1@sea.gmane.org>
-	<Pine.LNX.4.64.0601130909290.3535@g5.osdl.org>
-	<dqb5vg$a09$1@sea.gmane.org>
-	<Pine.LNX.4.64.0601141117120.13339@g5.osdl.org>
-	<dqbnl1$3si$1@sea.gmane.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: www.kernel.org/git is slow...
+Date: Sat, 14 Jan 2006 13:47:05 -0800
+Message-ID: <43C97159.5050907@zytor.com>
+References: <20060114203654.GA10314@mars.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 14 21:50:12 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: ftpadmin@kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 14 22:47:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExsLY-0001Mz-9S
-	for gcvg-git@gmane.org; Sat, 14 Jan 2006 21:50:00 +0100
+	id 1ExtF3-0004k2-MJ
+	for gcvg-git@gmane.org; Sat, 14 Jan 2006 22:47:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751108AbWANUtr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jan 2006 15:49:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbWANUtr
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 15:49:47 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:6604 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751108AbWANUtq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jan 2006 15:49:46 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060114204752.ZJRC17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 14 Jan 2006 15:47:52 -0500
-To: walt <wa1ter@myrealbox.com>
-In-Reply-To: <dqbnl1$3si$1@sea.gmane.org> (wa1ter@myrealbox.com's message of
-	"Sat, 14 Jan 2006 12:41:04 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751302AbWANVrR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jan 2006 16:47:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbWANVrR
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 16:47:17 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:22930 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751302AbWANVrR
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jan 2006 16:47:17 -0500
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k0ELl5ne007873
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 14 Jan 2006 13:47:07 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Sam Ravnborg <sam@ravnborg.org>
+In-Reply-To: <20060114203654.GA10314@mars.ravnborg.org>
+X-Virus-Scanned: ClamAV version 0.87.1, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14686>
 
-walt <wa1ter@myrealbox.com> writes:
+Sam Ravnborg wrote:
+> During the last couple of days http://www.kernel.org/git has
+> been very slow.
+> 
+> The www.kernel.org frontpage is quick, so it looks like a gitweb
+> problem, but ftpadmin put on cc: just in case.
+> 
 
-> Linus Torvalds wrote:
-> [...]
->> Now, what happens is that when you change branches with a dirty tree, the 
->> "git checkout" will do one of two things:
->> 
->>  - if the dirty files are _identical_ in both branches...
->
-> I'm sorry to be quibbling over semantics, truly I am!  But here
-> is my confusion:  if modified-but-uncommitted (hence dirty) files
-> are not associated with *any* branch, then how could 'dirty' files
-> be 'in' both branches (or 'in' any branch at all)?
+Wonder if the caching is broken, or if it's gitweb itself...
 
-"If the paths that you have dirty are the same in both
-branches".
-
-That is:
-
-* "master" branch has Makefile file, as taken from git.git
-
-* "my-work" branch was made out of "master" branch, but
-  has not modified Makefile file.
-
-	git-diff-tree master my-work Makefile
-
-  would yield nothing.
-
-* You are on "master" branch.  You have added a new target to
-  your Makefile in the working tree and the path is dirty.
-
-Then:
-
-	git checkout my-work
-
-would notice that the path "Makefile" are identical between two
-branches "master" you are switching from and "my-work" you are
-switching to.  The "Makefile" in your working tree does not
-match either tree, but that difference is carried over while
-switching branches.
-
-As Linus mentioned, with '-m' flag to "git checkout", it can
-merge your local modifications even when "master" and "my-work"
-disagrees on "Makefile" in this example.
-
-        
+	-hpa
