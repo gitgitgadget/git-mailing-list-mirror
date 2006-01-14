@@ -1,85 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: My first git success [not quite]
-Date: Sat, 14 Jan 2006 13:57:07 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601141350590.13339@g5.osdl.org>
-References: <dq8epd$k28$1@sea.gmane.org> <Pine.LNX.4.64.0601130909290.3535@g5.osdl.org>
- <dqb5vg$a09$1@sea.gmane.org> <Pine.LNX.4.64.0601141117120.13339@g5.osdl.org>
- <dqbnl1$3si$1@sea.gmane.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] cg-seek should not complain if run twice
+Date: Sun, 15 Jan 2006 00:30:38 +0100
+Message-ID: <20060114233037.GA28365@pasky.or.cz>
+References: <1135054536.3815.14.camel@dv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 14 22:57:21 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 15 00:29:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExtOg-0006UV-KS
-	for gcvg-git@gmane.org; Sat, 14 Jan 2006 22:57:19 +0100
+	id 1ExuqA-0006aR-R2
+	for gcvg-git@gmane.org; Sun, 15 Jan 2006 00:29:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751312AbWANV5L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jan 2006 16:57:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbWANV5L
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 16:57:11 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:42630 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751312AbWANV5L (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Jan 2006 16:57:11 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0ELv8DZ019471
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 14 Jan 2006 13:57:09 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0ELv7GM017597;
-	Sat, 14 Jan 2006 13:57:08 -0800
-To: walt <wa1ter@myrealbox.com>
-In-Reply-To: <dqbnl1$3si$1@sea.gmane.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.65__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750716AbWANX3m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jan 2006 18:29:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbWANX3m
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 18:29:42 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:64146 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750716AbWANX3m (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Jan 2006 18:29:42 -0500
+Received: (qmail 8788 invoked by uid 2001); 15 Jan 2006 00:30:38 +0100
+To: Pavel Roskin <proski@gnu.org>
+Content-Disposition: inline
+In-Reply-To: <1135054536.3815.14.camel@dv>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14688>
 
-
-
-On Sat, 14 Jan 2006, walt wrote:
->
-> Linus Torvalds wrote:
-> [...]
-> > Now, what happens is that when you change branches with a dirty tree, the 
-> > "git checkout" will do one of two things:
-> > 
-> >  - if the dirty files are _identical_ in both branches...
+Dear diary, on Tue, Dec 20, 2005 at 05:55:36AM CET, I got a letter
+where Pavel Roskin <proski@gnu.org> said that...
+> cg-seek complains if run without arguments in a non-seeked repository:
 > 
-> I'm sorry to be quibbling over semantics, truly I am!  But here
-> is my confusion:  if modified-but-uncommitted (hence dirty) files
-> are not associated with *any* branch, then how could 'dirty' files
-> be 'in' both branches (or 'in' any branch at all)?
+> rm: cannot remove `.git/refs/heads/cg-seek-point': No such file or directory
+> rm: cannot remove `.git/head-name': No such file or directory
+> 
+> In fact, it's OK for those files not to exist, so they should be removed
+> silently.
+> 
+> Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-The file itself is associated with the branch. It's just that the _dirty_ 
-part isn't.
+It seems cleaner to just make cg-seek fail with a sensible error message
+if it's already unseeked.
 
-Of course, you can also truly have files that aren't associated with 
-either branch at all: files that haven't gotten committed at all. They're 
-also "dirty state", and exactly like modifications to known files, they 
-are carried along with the switch, so they'll exist in the directory tree 
-after a "git checkout".
-
-Anyway, in git, a "branch" is technically really nothing more than "top of 
-a commit chain". If you look into the files that describe a branch, you'll 
-literally just find the name of the top commit. Do a
-
-	cat .git/refs/heads/master
-
-to see. 
-
-So anything that isn't described by that commit is by definition "dirty 
-state", whether it's because you've edited something (but not checked it 
-in) or because there's some random generated file in the working tree.
-
-So when you switch branches, you really should think of it as "ok, the 
-committed state was switched around", and everything else was just "moved 
-along".
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
