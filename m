@@ -1,65 +1,62 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: My first git success [not quite]
-Date: 14 Jan 2006 09:48:24 -0800
-Message-ID: <86acdyu2dz.fsf@blue.stonehenge.com>
-References: <dq8epd$k28$1@sea.gmane.org>
-	<Pine.LNX.4.64.0601130909290.3535@g5.osdl.org>
-	<dqb5vg$a09$1@sea.gmane.org>
-	<BAYC1-PASMTP10B423DC1B2FC1F8C9992BAE190@CEZ.ICE>
-	<dqbbo9$s49$1@sea.gmane.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] rpmbuild doesn't like '-' in version strings
+Date: Sat, 14 Jan 2006 09:53:19 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601140951230.13339@g5.osdl.org>
+References: <dp3qpb$7uk$1@sea.gmane.org> <7voe2prniw.fsf@assigned-by-dhcp.cox.net>
+ <43C91B25.9030707@research.att.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 14 18:48:37 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 14 18:54:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExpVx-0001w2-RE
-	for gcvg-git@gmane.org; Sat, 14 Jan 2006 18:48:34 +0100
+	id 1ExpbO-0002yg-1A
+	for gcvg-git@gmane.org; Sat, 14 Jan 2006 18:54:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750725AbWANRsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jan 2006 12:48:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbWANRsa
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 12:48:30 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:49446 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1750725AbWANRs3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jan 2006 12:48:29 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 016028EBC4;
-	Sat, 14 Jan 2006 09:48:25 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 23230-01-5; Sat, 14 Jan 2006 09:48:24 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 792ED8EBD4; Sat, 14 Jan 2006 09:48:24 -0800 (PST)
-To: walt <wa1ter@myrealbox.com>
-x-mayan-date: Long count = 12.19.12.17.7; tzolkin = 6 Manik; haab = 5 Muan
-In-Reply-To: <dqbbo9$s49$1@sea.gmane.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1750735AbWANRyH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jan 2006 12:54:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbWANRyH
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 12:54:07 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:19399 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750735AbWANRyG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Jan 2006 12:54:06 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0EHrKDZ008959
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 14 Jan 2006 09:53:21 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0EHrJZm009131;
+	Sat, 14 Jan 2006 09:53:20 -0800
+To: John Ellson <ellson@research.att.com>
+In-Reply-To: <43C91B25.9030707@research.att.com>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.65__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14671>
 
->>>>> "walt" == walt  <wa1ter@myrealbox.com> writes:
 
-walt> I suppose the underlying problem is that I don't think like
-walt> a developer.
 
-Well, I'm a developer and *I* also had that problem while working
-on my "ajax" branch.
+On Sat, 14 Jan 2006, John Ellson wrote:
+> 
+> What happened to this?   I don't particularly like my fix either, but
+> some kind of fix is needed for the "make rpm" target to work.  Its still
+> broken because of the '-' in the version string.
 
-Maybe git-checkout should by default *warn* when it is leaving
-things in the tree that are indexed but not updated in the index
-(committed?).  And you'd have to add a --no-warn thingy to turn
-that off.  Then beginners wouldn't be quite as confused.  I'm not
-talking about things that are .gitignore'd... just things like
-walt's example.
+Do a "sed" for rpmbuild.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+There's absolutely no point in trying to make git-describe use "_" instead 
+of "-", since having a "-" in a tag-name is very common ("my-version"), 
+and it would be a horrible mistake to munge the tag-names. So even if we 
+changed "-g" into "_g" it wouldn't help anything, and just make things 
+uglier.
+
+This is an RPM versioning problem, and nothing more. So it should be 
+handled by rpmbuild.
+
+		Linus
