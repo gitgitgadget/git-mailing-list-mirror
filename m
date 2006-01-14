@@ -1,84 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.1.2
-Date: Fri, 13 Jan 2006 20:53:29 -0800
-Message-ID: <7vd5ivwgty.fsf@assigned-by-dhcp.cox.net>
+From: "Tweets D. Guesswork" <Stok@golfshotz.com>
+Subject: Software
+Date: Sat, 14 Jan 2006 01:41:44 -0500
+Message-ID: <7139645248.20060114014144@golfshotz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Jan 14 05:53:42 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Jan 14 07:38:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExdQ1-0000MP-2g
-	for gcvg-git@gmane.org; Sat, 14 Jan 2006 05:53:38 +0100
+	id 1Exf3A-0005hU-I6
+	for gcvg-git@gmane.org; Sat, 14 Jan 2006 07:38:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423035AbWANExd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jan 2006 23:53:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423061AbWANExd
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 23:53:33 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:43427 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1423035AbWANExc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2006 23:53:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060114045113.MGGP17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 13 Jan 2006 23:51:13 -0500
-To: git@vger.kernel.org, linux-kernel@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932771AbWANGiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jan 2006 01:38:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932772AbWANGiD
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 01:38:03 -0500
+Received: from zeus2.kernel.org ([204.152.191.36]:22928 "EHLO zeus2.kernel.org")
+	by vger.kernel.org with ESMTP id S932771AbWANGiC (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Jan 2006 01:38:02 -0500
+Received: from -1209541720 ([220.91.36.106])
+	by zeus2.kernel.org (8.13.1/8.13.1) with SMTP id k0E6ZqRu028496
+	for <git@vger.kernel.org>; Fri, 13 Jan 2006 22:37:53 -0800
+Received: from golfshotz.com (-1209924656 [-1210898792])
+	by goldtech.com (Qmailv1) with ESMTP id 838CB8EA73
+	for <git@vger.kernel.org>; Sat, 14 Jan 2006 01:41:44 -0500
+X-Mailer: The Bat! (v2.00.5) Personal
+X-Priority: 3
+To: Git <git@vger.kernel.org>
+X-RAV-Antivirus: This e-mail has been scanned for viruses on host: goldtech.com
+X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus2
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14661>
+X-Spam-Report: 11.1 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5041]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: riddamna.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: riddamna.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: riddamna.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: riddamna.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14662>
 
-The latest maintenance release GIT 1.1.2 is available at the
-usual places:
+Why pay big bucks? Create your OWN website now! 
+some software u need!
 
-	http://www.kernel.org/pub/software/scm/git/
+New software on our site:
 
-	git-1.1.2.tar.{gz,bz2}			(tarball)
-	RPMS/$arch/git-*-1.1.2-1.$arch.rpm	(RPM)
+Encarta Encyclopedia Delux 2004 (3CD) - $89.95
+Acrobat 6 Professional - $79.95
+Studio MX 2004 with Director MX 2004 - $139.95
+SQL Server 2000 Enterprise Edition - $69.95
+Office 2000 Premium Edition PE (2CD) - $59.95
+Windows 98 - $49.95
+Painter 8 - $59.95
+InDesign CS - $69.95
+Premiere 7 - $69.95
+WordPerfect Office 10 - $69.95
+Flash MX 2004 - $69.95
+Visual Studio .NET Architect Edition (8CD) - $139.95
+Office 97 SR2 - $49.95
+InDesign CS PageMaker Edition (2CD) - $69.95
 
-----------------------------------------------------------------
-
-Changes since v1.1.1 are as follows:
-
-J. Bruce Fields:
-      Documentation: clarify fetch parameter descriptions.
-
-Junio C Hamano:
-      update-index: work with c-quoted name
-      describe: do not silently ignore indescribable commits
-      name-rev: do not omit leading components of ref name.
-      show-branch: handle [] globs as well.
-      Documentation: git-commit -a
-      Documentation: git-reset - interrupted workflow.
-
-Tom Prince:
-      Add git-describe to .gitignore.
-
-----------------------------------------------------------------
-
-These have been added to the "master" branch lately, in addition
-to all of the above fixes:
-
-      Makefile: add 'strip' target.
-      octopus: allow criss-cross and clarify the message when it rejects.
-      checkout: automerge local changes while switching branches.
-      checkout: merge local modifications while switching branches.
-      git-push: avoid falling back on pushing "matching" refs.
-      Exec git programs without using PATH (Michal Ostrowski)
-      Fix the installation location.
-
-These are still waiting their turn in the proposed updates
-("pu") branch:
-
-      git-cvsimport: Add -A <author-conv-file> option (Andreas Ericsson)
-      convert-packs: futureproofing.
-      Require packfiles to follow the naming convention (preparation).
-      format-patch: always --mbox and show sane Date:
-      octopus: allow manual resolve on the last round.
-      Documentation: show-branch.
-      show-branch: make the current branch and merge commits stand out.
-      Disable USE_SYMLINK_HEAD by default (Pavel Roskin)
+Our site:
+http://riddamna.com
