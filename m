@@ -1,55 +1,98 @@
-From: Artem Khodush <greenkaa@gmail.com>
-Subject: Re: [wish] Auto-generate gitk's pretty pictures
-Date: Sat, 14 Jan 2006 06:05:42 +0300
-Message-ID: <40b2b7d90601131905s6bb9954fk8e359e3f066ce0c2@mail.gmail.com>
-References: <46a038f90601121302x3d06898dk3f9a0ab7114ef70a@mail.gmail.com>
-	 <40b2b7d90601131414o20eae573r23256ff2dfbeffa5@mail.gmail.com>
-	 <46a038f90601131444m32a1a8b8w7ab16617f15ab93b@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's cooking in git.git
+Date: Fri, 13 Jan 2006 19:45:05 -0800
+Message-ID: <7vvewnwjzy.fsf@assigned-by-dhcp.cox.net>
+References: <7vhd8al3ae.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 14 04:05:57 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Jan 14 04:45:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Exbjf-0007vq-KP
-	for gcvg-git@gmane.org; Sat, 14 Jan 2006 04:05:48 +0100
+	id 1ExcM0-0005kW-Cx
+	for gcvg-git@gmane.org; Sat, 14 Jan 2006 04:45:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945986AbWANDFo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jan 2006 22:05:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945988AbWANDFo
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 22:05:44 -0500
-Received: from uproxy.gmail.com ([66.249.92.207]:3077 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1945986AbWANDFn convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2006 22:05:43 -0500
-Received: by uproxy.gmail.com with SMTP id m3so102826uge
-        for <git@vger.kernel.org>; Fri, 13 Jan 2006 19:05:42 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=W0MScH5Sq52LZm22VH0QWcbp4c2qWJpOaEDDd62H/Yisqk5tsQYmP2vQ/770POUb7i0TVIpvUdzz4iHxt7fVXh3hvZT9MWoyI+9pvoYbso48JqT2A32vfT+K+1k8G4GmWqb/1wLAjofmvA+ndrIWmQTTOgYmpvqoLJme13g4eTI=
-Received: by 10.48.220.12 with SMTP id s12mr118801nfg;
-        Fri, 13 Jan 2006 19:05:42 -0800 (PST)
-Received: by 10.48.216.3 with HTTP; Fri, 13 Jan 2006 19:05:42 -0800 (PST)
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90601131444m32a1a8b8w7ab16617f15ab93b@mail.gmail.com>
-Content-Disposition: inline
+	id S1945987AbWANDpJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jan 2006 22:45:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945992AbWANDpJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jan 2006 22:45:09 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:50420 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1945987AbWANDpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2006 22:45:07 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060114034312.TWVT17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 13 Jan 2006 22:43:12 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14660>
 
-On 1/14/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+Junio C Hamano <junkio@cox.net> writes:
+
+>  - Exec git programs without using PATH (Michal Ostrowski).
 >
-> That looks *great* -- How hard would it be to run it alongside gitweb,
-> with links back to gitweb for showing commits? And... what is it
-> written in?
+>    This has been discussed for the last couple of days on the
+>    list.  I think C side is ready to go in, but I'd like to
+>    decide what to do on the scripting side before merging it
+>    into the master branch.
 
-It's written mainly in HTML+javascript, so linking to and from it should
-be simple - just add an <a> tag. But, the next feature I plan to add
-is to show commits in the same window in a way like gitk does.
+I've done a minor fix in the Makefile (things were installed in
+the wrong way around --- $bindir should hold git and gitk and
+$gitexecdir should hold the rest), and ran a brief test after
+installing things with gitexecdir set to /usr/lib/git-core/x.
+gitk needs to be taught to use git --exec-path upfront to set
+its own PATH, but other than that, everything looks peachy.
 
-Artem
+About prepending to/appending to/not touching PATH, my current
+thinking is that prepending is the way to go.  The best
+rationale so far I have heard against mucking with PATH was
+"/home/mo/bin/diff vs /usr/bin/diff" issue, but I do not find
+this to be so convincing in practice.  This "use my diff not
+system diff" is done most often when system diff is not GNU
+enough, but on such a machine git will not be installed under
+/usr/bin anyway (after all git prefers GNU diff).
+
+And this becomes truly a non-issue when you point $gitexecdir at
+a separate location that holds *only* git stuff.  Everybody will
+find the matching version of git that way, and when looking for
+"diff", it will be found from one of the directories in the rest
+of the PATH, not from $gitexecdir.
+
+So unless there is an objection, this will graduate into the
+"master" branch over the weekend.
+
+What happens if gitexecdir != bindir?
+
+As long as the user invokes "git foo" from the command line, not
+"git-foo", everything should work fine, and once gitk is
+updated, binary distributions could ship git with only git and
+gitk in /usr/bin and others in /usr/lib/git-core/tools, or
+something like that.
+
+I will _not_ change the default gitexecdir in my Makefile nor
+change the spec file, so RPM binary from kernel.org will still
+have everything in /usr/bin for now.
+
+Somebody needs to audit how ready popular Porcelains are, for at
+least Cogito, stgit, gitweb and qgit and feed patches to
+respective authors as necessary.  I haven't looked into any of
+them about this issue.  The rules are:
+
+    (1) you can assume "git" is available on PATH;
+
+    (2) you should be safe if you do not use "git-foo" form;
+
+    (3) you can run
+
+        PATH="$(git --exec-path):$PATH"; export PATH
+
+        once at the beginning of your program and use "git-foo"
+        form.
+
+Volunteers?
