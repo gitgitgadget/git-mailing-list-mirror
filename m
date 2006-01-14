@@ -1,80 +1,97 @@
-From: John Ellson <ellson@research.att.com>
-Subject: Re: [PATCH] rpmbuild doesn't like '-' in version strings
-Date: Sat, 14 Jan 2006 15:25:09 -0500
-Message-ID: <43C95E25.3070006@research.att.com>
-References: <dp3qpb$7uk$1@sea.gmane.org>	<7voe2prniw.fsf@assigned-by-dhcp.cox.net>	<43C91B25.9030707@research.att.com> <7v1wzaliv0.fsf@assigned-by-dhcp.cox.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: RFC: Subprojects
+Date: Sat, 14 Jan 2006 12:30:33 -0800
+Message-ID: <43C95F69.7090200@gmail.com>
+References: <43C52B1F.8020706@hogyros.de> <Pine.LNX.4.63.0601111740220.17966@wbgn013.biozentrum.uni-wuerzburg.de> <43C537C9.4090206@hogyros.de> <Pine.LNX.4.64.0601110928350.5073@g5.osdl.org> <7vacdzkww3.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org> <43C951B6.5030607@gmail.com> <Pine.LNX.4.64.0601141154590.13339@g5.osdl.org>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat Jan 14 21:25:37 2006
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Simon Richter <Simon.Richter@hogyros.de>
+X-From: git-owner@vger.kernel.org Sat Jan 14 21:30:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Exrxr-000415-91
-	for gcvg-git@gmane.org; Sat, 14 Jan 2006 21:25:31 +0100
+	id 1Exs2w-0005aI-NE
+	for gcvg-git@gmane.org; Sat, 14 Jan 2006 21:30:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751079AbWANUZT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jan 2006 15:25:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbWANUZT
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 15:25:19 -0500
-Received: from [192.20.225.110] ([192.20.225.110]:31169 "EHLO
-	mail-white.research.att.com") by vger.kernel.org with ESMTP
-	id S1751079AbWANUZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jan 2006 15:25:18 -0500
-Received: from [135.207.24.103] (ellson.research.att.com [135.207.24.103])
-	by bigmail.research.att.com (8.13.3+Sun/8.11.6) with ESMTP id k0EKUPnw007736;
-	Sat, 14 Jan 2006 15:30:28 -0500 (EST)
-User-Agent: Thunderbird 1.5 (X11/20060112)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1wzaliv0.fsf@assigned-by-dhcp.cox.net>
+	id S1751080AbWANUao (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jan 2006 15:30:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751081AbWANUao
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 15:30:44 -0500
+Received: from wproxy.gmail.com ([64.233.184.193]:14211 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751080AbWANUan (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Jan 2006 15:30:43 -0500
+Received: by wproxy.gmail.com with SMTP id i3so818124wra
+        for <git@vger.kernel.org>; Sat, 14 Jan 2006 12:30:40 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=hQQ88XbuHIp8TAsR/6N8g3fCcOzFNw9Y+Apf3ZqGusjC7qXxddKazsmrUfCYMkKnrVMj9VCChZY+ElwqseHOrnWgJYl4m83uH/SXn3aydk2CxHGvd00GPcKhRoHoETaLsO8uOmiGsW7I45ghnV4IAoqEkLVyd+afdOx8Aw7cb7s=
+Received: by 10.54.149.7 with SMTP id w7mr1281491wrd;
+        Sat, 14 Jan 2006 12:30:40 -0800 (PST)
+Received: from ?10.0.0.6? ( [68.234.172.144])
+        by mx.gmail.com with ESMTP id 11sm6837054wrl.2006.01.14.12.30.39;
+        Sat, 14 Jan 2006 12:30:40 -0800 (PST)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0601141154590.13339@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14679>
 
-Junio C Hamano wrote:
-> John Ellson <ellson@research.att.com> writes:
->   
-> I consider leaving the interim version unbuildable for binary packaging
-> consider a feature.
->   
-Not a very helpful feature IMO.    Who is protected by this?
-> If you want to build your own version, I think you could locally
-> tag that head and build, like:
->
-> 	$ git tag -a "John's GIT 1.1.2+frotz patch" v1.1.2.John0114
-> 	$ make rpmbuild
->
-> Of course you can keep a patch with the sed -e 's/-/_/' in
-> GIT-VERSION-GEN as Linus suggested in your development branch.
->   
-Thats basically all I'm looking for.   I agree that is only necessary to 
-fix the "make rpm" target.
-Further changes are not strictly necessary.   I don't understand why it 
-would only be useful to me?
+Linus Torvalds wrote:
+> 
+> On Sat, 14 Jan 2006, A Large Angry SCM wrote:
+>>So far I've not seen any convincing arguments why the sub-projects can not be
+>>managed by the Makefile, or equivalent, of the super-project. Particularly
+>>when the sub-projects have a life of their own.
+> 
+> Now, from a developer standpoint I actually agree with you. I find 
+> sub-projects totally useless - I'm much happier just having separate 
+> trees.
+> 
+> The advantage (as far as I can tell) of sub-projects is not that they are 
+> easier to develop in, but that it's a total nightmare for the technical 
+> _user_ to download ten different projects from ten different sites, and 
+> configure them properly and install them in the right order, and keep them 
+> up-to-date.
+> 
+> There are projects that I simply gave up even trying to track: I wasn't 
+> interested in being a developer per se, but I _was_ interested in trying 
+> to test and give feedback to the current development tree - but it was 
+> just too damn confusing to get it working.
+> 
+> If I could have just done a "git clone <top-level>" to get it all, I'd 
+> have been a much more productive user.
 
-> I am not yet convinced being able to build a random
-> unidentifiable binary package is a good thing, and "the number
-> of minutes/seconds monotonicity" would not work in multiple
-> branches case (i.e. still leaves the result unordered).
->   
-Since disparate branches are intrinsically unordered I was suggesting 
-that the
-hash field would be used to ensure uniqueness only.   The timestamp 
-field is only for ordering within a branch.
+$ make get_sub_components
 
-So if someone builds rpms from two different branches, they might still 
-have to force the particular
-selection they want with "rpm -Uvh --oldpackage ...", but I think this 
-is the best that can be done
-in the absence of any intrinsic ordering.
+This can work with most any SCM (depending on your environment), is 
+amazingly flexible, and does not require special support in the SCM.
 
-Anyway, this is above and beyond doing something with sed to fix the '-' 
-issue.
+The "get" rule for each sub-project could be something like:
 
-John
->
->
->   
+	git_sub-project:
+		mkdir sub-project
+		cd sub-project
+		git-init-db
+		git-fetch <fetch-options> <repository> <refspec>
+		git-checkout <branch>
+		$(MAKE) get_sub_components
+
+> 
+> This is why I think sub-projects are more about "git checkout" and an 
+> automated "git fetch" than anything else. Doing actual development etc you 
+> can easily do one project at a time. "git diff" and "git commit" wouldn't 
+> need any real ability to recurse into subprojects and try to make it 
+> seamless. And if you do a "git pull" that needs to do anything but 
+> fast-forward, you might as well resolve the sub-projects one by one.
+
+And all of this can be done today, without changing git, with more 
+flexibility, with Make rules.
