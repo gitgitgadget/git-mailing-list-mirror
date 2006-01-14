@@ -1,67 +1,81 @@
-From: Artem Khodush <greenkaa@gmail.com>
-Subject: Re: [wish] Auto-generate gitk's pretty pictures
-Date: Sat, 14 Jan 2006 19:26:04 +0300
-Message-ID: <40b2b7d90601140826k7c30ce7bk3a259061cb333133@mail.gmail.com>
-References: <46a038f90601121302x3d06898dk3f9a0ab7114ef70a@mail.gmail.com>
-	 <40b2b7d90601131414o20eae573r23256ff2dfbeffa5@mail.gmail.com>
-	 <46a038f90601131444m32a1a8b8w7ab16617f15ab93b@mail.gmail.com>
-	 <40b2b7d90601131905s6bb9954fk8e359e3f066ce0c2@mail.gmail.com>
-	 <43C8FE6F.4050206@op5.se>
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: My first git success [not quite]
+Date: Sat, 14 Jan 2006 09:18:01 -0800
+Organization: none
+Message-ID: <dqbbo9$s49$1@sea.gmane.org>
+References: <dq8epd$k28$1@sea.gmane.org>	<Pine.LNX.4.64.0601130909290.3535@g5.osdl.org>	<dqb5vg$a09$1@sea.gmane.org> <BAYC1-PASMTP10B423DC1B2FC1F8C9992BAE190@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 14 17:26:22 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Jan 14 18:18:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExoEH-0001Vv-6v
-	for gcvg-git@gmane.org; Sat, 14 Jan 2006 17:26:14 +0100
+	id 1Exp2k-0003dj-J4
+	for gcvg-git@gmane.org; Sat, 14 Jan 2006 18:18:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964805AbWANQ0I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jan 2006 11:26:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964812AbWANQ0H
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 11:26:07 -0500
-Received: from uproxy.gmail.com ([66.249.92.192]:57065 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964805AbWANQ0F convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jan 2006 11:26:05 -0500
-Received: by uproxy.gmail.com with SMTP id s2so216147uge
-        for <git@vger.kernel.org>; Sat, 14 Jan 2006 08:26:04 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dOK2neJi7mvdXGqz/ujoruWJD55kWXBmHs08r/7V3FRLT/W/TqQ7Rje3D79OquHJ7DqsaRZxH7LBu1zCZ0SjWRh2RL2ueme4XsElOmpLInjVkEmluWjrXBN+agAo/Tu5/sCdvydwIPJ+lRf1790xLqG9UY7pEkvNBOsCpriguSE=
-Received: by 10.49.28.3 with SMTP id f3mr132495nfj;
-        Sat, 14 Jan 2006 08:26:04 -0800 (PST)
-Received: by 10.48.216.3 with HTTP; Sat, 14 Jan 2006 08:26:04 -0800 (PST)
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <43C8FE6F.4050206@op5.se>
-Content-Disposition: inline
+	id S1750703AbWANRST (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jan 2006 12:18:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750704AbWANRST
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 12:18:19 -0500
+Received: from main.gmane.org ([80.91.229.2]:58777 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750703AbWANRST (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Jan 2006 12:18:19 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Exp2V-0003aq-3a
+	for git@vger.kernel.org; Sat, 14 Jan 2006 18:18:07 +0100
+Received: from adsl-69-234-229-41.dsl.irvnca.pacbell.net ([69.234.229.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 14 Jan 2006 18:18:07 +0100
+Received: from wa1ter by adsl-69-234-229-41.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 14 Jan 2006 18:18:07 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-229-41.dsl.irvnca.pacbell.net
+User-Agent: Mail/News 1.6a1 (X11/20060114)
+In-Reply-To: <BAYC1-PASMTP10B423DC1B2FC1F8C9992BAE190@CEZ.ICE>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14669>
 
-On 1/14/06, Andreas Ericsson <ae@op5.se> wrote:
-> Artem Khodush wrote:
-> But, the next feature I plan to add
-> > is to show commits in the same window in a way like gitk does.
+sean wrote:
+> > On Sat, 14 Jan 2006 07:39:28 -0800
+> > walt <wa1ter@myrealbox.com> wrote:
+[...]
+>> >> So, I clearly don't understand what git-checkout does.  It
+>> >> doesn't seem to touch the already-checked-out sources at
+>> >> all, which is what I would expect it to do.
+
+> > Hi Walt,
 > >
->
-> Why not just have a separate frame for the commits and load gitweb.cgi
-> there?
+> > When you switch branches _uncommitted_ changes will stay in
+> > your working directory.   This lets you change to a different
+> > branch before committing something you're working on for
+> > instance.
 
-Mainly because gitweb can't show the commit in most
-convenient (IMHO) way, with everything on one screen.
-I like the way gitk does it, when you can see all at once -
-list of changed files in the lower right pane and commit message
-with links to parent and child commits and diff in the left.
+Ah!  The underlying reason is what I was missing.
 
-And with gitweb, those links to related commits must allow somehow
-to highlight those commits on the diagram, wich means that gitweb
-must be made aware of the frame that it's embedded in, and must
-be able to call some javascript there. Eventually I will add interaction
-with gitweb in some way or another, but for now, it's easier for me
-to just show the commit.
+> >   So likely, even though you had switched to your
+> > test branch to apply the patch, you didn't actually commit
+> > it into that branch before switching back to master.
+
+Right.  And *my* reasoning (FWIW) is that I was intending
+to throw the entire branch away so I didn't see any need to
+commit.  (But men always have that problem ;o)
+
+I suppose the underlying problem is that I don't think like
+a developer.  My wish for a future improvement for git would
+be a bonehead<-->expert switch that would turn on some basic
+warning messages.  In this particular example, I would have
+welcomed a warning message that said:  "You have uncommitted
+changes!  Hit 'D' to discard them or <Enter> to keep them without
+committing".  An experienced git user would want to turn that off,
+most likely.
+
+Thanks for the clue-stick, and I very much appreciate your
+patience.
