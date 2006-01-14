@@ -1,99 +1,79 @@
-From: John Ellson <ellson@research.att.com>
-Subject: Re: [PATCH] rpmbuild doesn't like '-' in version strings
-Date: Sat, 14 Jan 2006 10:39:17 -0500
-Message-ID: <43C91B25.9030707@research.att.com>
-References: <dp3qpb$7uk$1@sea.gmane.org> <7voe2prniw.fsf@assigned-by-dhcp.cox.net>
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: My first git success [not quite]
+Date: Sat, 14 Jan 2006 07:39:28 -0800
+Organization: none
+Message-ID: <dqb5vg$a09$1@sea.gmane.org>
+References: <dq8epd$k28$1@sea.gmane.org> <Pine.LNX.4.64.0601130909290.3535@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat Jan 14 16:39:46 2006
+X-From: git-owner@vger.kernel.org Sat Jan 14 16:39:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExnVG-0000NT-JW
-	for gcvg-git@gmane.org; Sat, 14 Jan 2006 16:39:42 +0100
+	id 1ExnVP-0000PI-Ri
+	for gcvg-git@gmane.org; Sat, 14 Jan 2006 16:39:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751045AbWANPjj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jan 2006 10:39:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbWANPjj
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 10:39:39 -0500
-Received: from main.gmane.org ([80.91.229.2]:33486 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751045AbWANPjj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Jan 2006 10:39:39 -0500
+	id S932106AbWANPjn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jan 2006 10:39:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932143AbWANPjn
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 10:39:43 -0500
+Received: from main.gmane.org ([80.91.229.2]:35534 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932106AbWANPjm (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Jan 2006 10:39:42 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ExnV6-0000L1-GG
-	for git@vger.kernel.org; Sat, 14 Jan 2006 16:39:32 +0100
-Received: from h-135-207-24-103.research.att.com ([135.207.24.103])
+	id 1ExnVE-0000NE-5f
+	for git@vger.kernel.org; Sat, 14 Jan 2006 16:39:40 +0100
+Received: from adsl-69-234-211-25.dsl.irvnca.pacbell.net ([69.234.211.25])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 14 Jan 2006 16:39:32 +0100
-Received: from ellson by h-135-207-24-103.research.att.com with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Sat, 14 Jan 2006 16:39:40 +0100
+Received: from wa1ter by adsl-69-234-211-25.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 14 Jan 2006 16:39:32 +0100
+        for <git@vger.kernel.org>; Sat, 14 Jan 2006 16:39:40 +0100
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: h-135-207-24-103.research.att.com
-User-Agent: Thunderbird 1.5 (X11/20060112)
-In-Reply-To: <7voe2prniw.fsf@assigned-by-dhcp.cox.net>
+X-Gmane-NNTP-Posting-Host: adsl-69-234-211-25.dsl.irvnca.pacbell.net
+User-Agent: Mail/News 1.6a1 (X11/20060114)
+In-Reply-To: <Pine.LNX.4.64.0601130909290.3535@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14666>
 
-Junio C Hamano wrote:
-> John Ellson <ellson@research.att.com> writes:
+Linus Torvalds wrote:
 > 
->> Suggested fix:  Use '_' instead of '-'
-> 
-> I wonder if the right fix is to change the git-describe output
-> before the current output becomes too widespread.  After all,
-> somebody might be tempted to use 1.0.6-g58e3 as a tagname ;-).
-> For example, if we say "1.0.6:58e3" there is no ambiguity, but
-> probably binary packagers would not like colon either X-<.
-> 
-> More seriously, I do not think git-describe based versioning
-> scheme meshes well with binary packagers.  There is no guaranee
-> 1.0.6-g58e3 comes before 1.0.6-g4e7a2 (it does not).  To really
-> fix this problem, I think the rpm target of the main Makefile
-> needs to be modified to include something monotonicly increasing
-> (e.g. number of seconds since the base commit encoded in base26,
-> or something silly like that) between the base version and the
-> abbreviated object name, but the development being distributed,
-> my today's version on top of 1.0.6 may be way behind your
-> yesterday's version, so some centralized coordination (read:
-> manual version assignment by the maintainer, or automated
-> assignment but only reserved for the maintainer and unavailable
-> to mere mortals) might be needed to truly solve this.  In that
-> sense, maybe leaving the interim version unbuildable for binary
-> packaging might be considered a feature.
+> On Fri, 13 Jan 2006, walt wrote:
+>> And it was all so easy I never broke a sweat.  Amazing!
 
+>  ...Most people don't bother to 
+> explain their problems well...
 
-What happened to this?   I don't particularly like my fix either, but
-some kind of fix is needed for the "make rpm" target to work.  Its still broken 
-because of the '-' in the version string.
+I see I still have a problem:  my mental model of how git
+works is still wrong.
 
+I used 'git-checkout -b test' to create a disposable place
+to test the patch I was given.
 
-The need in rpm versioning is to be able to distinguish and monotonically
-order, locally built rpms.   There is no particular need to disambiguate against
-somebody else's rpms since if you are merging someone else's changes you
-would be doing it in git and not by intermixing rpms.
+Okay, making sure I'm now sitting in 'test', I apply the
+patch to foo.c and do my testing.
 
-I think that distinguishing between local branches is not likely to be a prolem. 
-  Most developers are likely to use only one for rpm construction, or if there 
-is a second experimental branch, then it is likely to contain more-recent 
-changes anyway.
+Now, intending to delete my 'test' branch, I do git-checkout
+master.  My mental model predicts that 'master' should still
+be identical to 'origin' because I did the patching in 'test'.
+Am I right so far?
 
-So a count of minutes since last tag is probably sufficient.
+The problem I see is that, after switching back to 'master',
+foo.c is the patched version, not your original version.  I
+figured that the git-checkout would overwrite any changes I
+made to foo.c, but that doesn't seem to be the case.  To get
+your original version back I had to delete foo.c and do a
+git-checkout foo.c (or git-checkout -f master).
 
-This could have a hash appended if it is essential to make the rpm version 
-unique without losing the ordering of the timestamp.
+So, I clearly don't understand what git-checkout does.  It
+doesn't seem to touch the already-checked-out sources at
+all, which is what I would expect it to do.
 
-Something like:
-
-	1.1.2_123456_g9e9b
-
-
-John
+Can someone hit me with the clue-stick here?  Thanks!
