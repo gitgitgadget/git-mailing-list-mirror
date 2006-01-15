@@ -1,77 +1,49 @@
-From: Tom Prince <tom.prince@ualberta.net>
-Subject: Re: RFC: Subprojects
-Date: Sat, 14 Jan 2006 18:55:50 -0700
-Message-ID: <20060115015550.GD9672@socrates>
-References: <43C537C9.4090206@hogyros.de>
- <Pine.LNX.4.64.0601110928350.5073@g5.osdl.org>
- <7vacdzkww3.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org> <43C951B6.5030607@gmail.com>
- <Pine.LNX.4.64.0601141154590.13339@g5.osdl.org> <43C95F69.7090200@gmail.com>
- <7vk6d2fsu6.fsf@assigned-by-dhcp.cox.net>
- <46a038f90601141628n2ec32e8fy7fc23d8d7884c0f2@mail.gmail.com>
- <7v4q4671tg.fsf@assigned-by-dhcp.cox.net>
+From: Josh Boyer <jwboyer@gmail.com>
+Subject: Re: www.kernel.org/git is slow...
+Date: Sat, 14 Jan 2006 19:57:02 -0600
+Message-ID: <625fc13d0601141757h18b65cdai458ba75849b1efa7@mail.gmail.com>
+References: <20060114203654.GA10314@mars.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Jan 15 02:54:50 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: ftpadmin@kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 15 02:57:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Exx6W-00088o-04
-	for gcvg-git@gmane.org; Sun, 15 Jan 2006 02:54:48 +0100
+	id 1Exx8l-0008Rl-Sn
+	for gcvg-git@gmane.org; Sun, 15 Jan 2006 02:57:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750841AbWAOByp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jan 2006 20:54:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750842AbWAOByp
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 20:54:45 -0500
-Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:14640 "EHLO
-	pd4mo1so.prod.shaw.ca") by vger.kernel.org with ESMTP
-	id S1750840AbWAOByo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jan 2006 20:54:44 -0500
-Received: from pd4mr7so.prod.shaw.ca (pd4mr7so-qfe3.prod.shaw.ca [10.0.141.84])
- by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0IT400DTI2N8ZK30@l-daemon> for git@vger.kernel.org; Sat,
- 14 Jan 2006 18:54:44 -0700 (MST)
-Received: from pn2ml6so.prod.shaw.ca ([10.0.121.150])
- by pd4mr7so.prod.shaw.ca (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar
- 15 2004)) with ESMTP id <0IT400JTD2N8RC80@pd4mr7so.prod.shaw.ca> for
- git@vger.kernel.org; Sat, 14 Jan 2006 18:54:44 -0700 (MST)
-Received: from socrates ([68.148.44.80])
- by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0IT4004QD2N7LEA0@l-daemon> for git@vger.kernel.org; Sat,
- 14 Jan 2006 18:54:44 -0700 (MST)
-Received: from socrates (localhost [127.0.0.1])	by socrates (8.13.4/8.13.4)
- with ESMTP id k0F1to3H008101	for <git@vger.kernel.org>; Sat,
- 14 Jan 2006 18:55:50 -0700
-Received: (from cougar@localhost)	by socrates (8.13.4/8.13.4/Submit)
- id k0F1toh2008100	for git@vger.kernel.org; Sat, 14 Jan 2006 18:55:50 -0700
-In-reply-to: <7v4q4671tg.fsf@assigned-by-dhcp.cox.net>
-To: git@vger.kernel.org
-Content-disposition: inline
-User-Agent: Mutt/1.4.2.1i
+	id S1751610AbWAOB5E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jan 2006 20:57:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbWAOB5E
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 20:57:04 -0500
+Received: from zproxy.gmail.com ([64.233.162.199]:21237 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751622AbWAOB5D convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jan 2006 20:57:03 -0500
+Received: by zproxy.gmail.com with SMTP id 14so898017nzn
+        for <git@vger.kernel.org>; Sat, 14 Jan 2006 17:57:02 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kDj3Xi68+cOTEH50wyPi9wYRuM2mykcCUv0xXzcwzwKbzYeR4MAmydJgQP2K0Z91+vWdCpCxS9MNKD2msqBlg9H1D+gZmtyroj6lTFE3Z1JB2VqM5e+8bA0XWwCp1UpJVmNOvIVLdk43Y8mLQ35H8h7eVXKes0trOiZcxmMy9EY=
+Received: by 10.36.81.14 with SMTP id e14mr3774800nzb;
+        Sat, 14 Jan 2006 17:57:02 -0800 (PST)
+Received: by 10.36.55.20 with HTTP; Sat, 14 Jan 2006 17:57:02 -0800 (PST)
+To: Sam Ravnborg <sam@ravnborg.org>
+In-Reply-To: <20060114203654.GA10314@mars.ravnborg.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14693>
 
-On Sat, Jan 14, 2006 at 04:49:15PM -0800, Junio C Hamano wrote:
-> Martin Langhoff <martin.langhoff@gmail.com> writes:
-> 
-> > I am with gitzilla on this one. Let the projects have their own
-> > bootstraping mechanisms, using make, ant or whatever catches their
-> > fancy. One of the great things about git is that it doesn't assume
-> > that it's being used by all the projects in the world -- thanks to
-> > Linus' disregard for arbitrary metadata and to your git-cherry
-> > implementation, it's all about the content -- and so it interoperates
-> > great with Arch, SVN, CVS, etc.
-> 
-> 
-> I hope this settles this issue and nobody would bring up "Wee
-> want subprojects" ever again ;-).
-> 
+On 1/14/06, Sam Ravnborg <sam@ravnborg.org> wrote:
+> During the last couple of days http://www.kernel.org/git has
+> been very slow.
 
-But since we can import everything into a GIT repository, and have
-(some) tools for pushing changes back, we can pretend that it is being
-used for every project in the world.
+I've noticed this too, so it's not just you.  Just another data point.
 
-  Tom
+josh
