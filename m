@@ -1,59 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Wolfgang Denk <wd@denx.de>
 Subject: Re: dangling commits
-Date: Sun, 15 Jan 2006 13:15:59 -0800
-Message-ID: <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net>
-References: <dqebk9$75f$1@sea.gmane.org> <43CAB6ED.3010703@op5.se>
-	<dqedel$d0q$1@sea.gmane.org>
+Date: Sun, 15 Jan 2006 23:11:08 +0100
+Message-ID: <20060115221108.3ED2E352659@atlas.denx.de>
+References: <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Jan 15 22:16:17 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 15 23:11:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyFEP-0005Fw-Ss
-	for gcvg-git@gmane.org; Sun, 15 Jan 2006 22:16:10 +0100
+	id 1EyG5q-0008JB-44
+	for gcvg-git@gmane.org; Sun, 15 Jan 2006 23:11:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750887AbWAOVQE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jan 2006 16:16:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750889AbWAOVQE
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 16:16:04 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:48002 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1750887AbWAOVQC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jan 2006 16:16:02 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060115211405.YHEP17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 15 Jan 2006 16:14:05 -0500
-To: git@vger.kernel.org
-In-Reply-To: <dqedel$d0q$1@sea.gmane.org> (Nick Williams's message of "Sun, 15
-	Jan 2006 21:37:00 +0000")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750924AbWAOWLT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jan 2006 17:11:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750925AbWAOWLT
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 17:11:19 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:50832 "EHLO
+	mail-out.m-online.net") by vger.kernel.org with ESMTP
+	id S1750907AbWAOWLS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jan 2006 17:11:18 -0500
+Received: from mail01.m-online.net (svr21.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id D292071357;
+	Sun, 15 Jan 2006 23:11:08 +0100 (CET)
+X-Auth-Info: uFt9+ITlo5oky+9tvOJno7ljFpB4DikvY/cTD6YGMRw=
+X-Auth-Info: uFt9+ITlo5oky+9tvOJno7ljFpB4DikvY/cTD6YGMRw=
+Received: from mail.denx.de (p54966EA7.dip.t-dialin.net [84.150.110.167])
+	by smtp-auth.mnet-online.de (Postfix) with ESMTP id BF2F3B8C10;
+	Sun, 15 Jan 2006 23:11:08 +0100 (CET)
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by mail.denx.de (Postfix) with ESMTP id 4AD736D00A8;
+	Sun, 15 Jan 2006 23:11:08 +0100 (MET)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id 3ED2E352659;
+	Sun, 15 Jan 2006 23:11:08 +0100 (MET)
+To: Junio C Hamano <junkio@cox.net>
+In-reply-to: Your message of "Sun, 15 Jan 2006 13:15:59 PST."
+             <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14713>
 
-Nick Williams <njw@jarb.freeserve.co.uk> writes:
+In message <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net> you wrote:
+>
+> Note that only because that is these dangling objects are packed
+> in the past, and when fetching over http, packs are fetched as a
+> whole.
 
-> Andreas Ericsson wrote:
->..
->> Nopes. One clones over http, so you'll get all objects in the object
->> database. The other clones over the far more clever git protocol
->> which calculates which objects you need. Obviously you don't need
->> dangling commits (and their related blobs), so there will be no such
->> items.
+Is ther eany way to clean up such a situation and really get  rid  of
+the  dangling  commits?  I understand that I'd first need some way to
+"unpack" the packs, but how to do this? 
 
-Note that only because that is these dangling objects are packed
-in the past, and when fetching over http, packs are fetched as a
-whole.
+Best regards,
 
-> So, is there any advantage of using http? Seems like git:// makes more
-> sense.
+Wolfgang Denk
 
-As long as you can go native git:// protocol, I do not see much
-reason to use http:// commit walkers.  OTOH, if you are
-firewalled and your sysadmins do not let you pass 9418/tcp
-outgoing, HTTP might be your only choice.
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+Heavier than air flying machines are impossible.
+                    -- Lord Kelvin, President, Royal Society, c. 1895
