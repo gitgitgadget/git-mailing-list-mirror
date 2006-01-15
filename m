@@ -1,172 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Tom Prince <tom.prince@ualberta.net>
 Subject: Re: RFC: Subprojects
-Date: Sat, 14 Jan 2006 17:01:24 -0800
-Message-ID: <7vfynq484b.fsf@assigned-by-dhcp.cox.net>
-References: <43C52B1F.8020706@hogyros.de>
-	<Pine.LNX.4.63.0601111740220.17966@wbgn013.biozentrum.uni-wuerzburg.de>
-	<43C537C9.4090206@hogyros.de>
-	<Pine.LNX.4.64.0601110928350.5073@g5.osdl.org>
-	<7vacdzkww3.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0601141055210.13339@g5.osdl.org>
-	<7vek3ah8f9.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 14 Jan 2006 18:55:50 -0700
+Message-ID: <20060115015550.GD9672@socrates>
+References: <43C537C9.4090206@hogyros.de>
+ <Pine.LNX.4.64.0601110928350.5073@g5.osdl.org>
+ <7vacdzkww3.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org> <43C951B6.5030607@gmail.com>
+ <Pine.LNX.4.64.0601141154590.13339@g5.osdl.org> <43C95F69.7090200@gmail.com>
+ <7vk6d2fsu6.fsf@assigned-by-dhcp.cox.net>
+ <46a038f90601141628n2ec32e8fy7fc23d8d7884c0f2@mail.gmail.com>
+ <7v4q4671tg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 15 02:01:39 2006
+X-From: git-owner@vger.kernel.org Sun Jan 15 02:54:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ExwGv-0005zF-LP
-	for gcvg-git@gmane.org; Sun, 15 Jan 2006 02:01:31 +0100
+	id 1Exx6W-00088o-04
+	for gcvg-git@gmane.org; Sun, 15 Jan 2006 02:54:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751595AbWAOBB0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jan 2006 20:01:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbWAOBB0
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 20:01:26 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:26523 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751594AbWAOBB0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jan 2006 20:01:26 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060115010015.HPPD6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 14 Jan 2006 20:00:15 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750841AbWAOByp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jan 2006 20:54:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750842AbWAOByp
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 20:54:45 -0500
+Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:14640 "EHLO
+	pd4mo1so.prod.shaw.ca") by vger.kernel.org with ESMTP
+	id S1750840AbWAOByo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jan 2006 20:54:44 -0500
+Received: from pd4mr7so.prod.shaw.ca (pd4mr7so-qfe3.prod.shaw.ca [10.0.141.84])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0IT400DTI2N8ZK30@l-daemon> for git@vger.kernel.org; Sat,
+ 14 Jan 2006 18:54:44 -0700 (MST)
+Received: from pn2ml6so.prod.shaw.ca ([10.0.121.150])
+ by pd4mr7so.prod.shaw.ca (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar
+ 15 2004)) with ESMTP id <0IT400JTD2N8RC80@pd4mr7so.prod.shaw.ca> for
+ git@vger.kernel.org; Sat, 14 Jan 2006 18:54:44 -0700 (MST)
+Received: from socrates ([68.148.44.80])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0IT4004QD2N7LEA0@l-daemon> for git@vger.kernel.org; Sat,
+ 14 Jan 2006 18:54:44 -0700 (MST)
+Received: from socrates (localhost [127.0.0.1])	by socrates (8.13.4/8.13.4)
+ with ESMTP id k0F1to3H008101	for <git@vger.kernel.org>; Sat,
+ 14 Jan 2006 18:55:50 -0700
+Received: (from cougar@localhost)	by socrates (8.13.4/8.13.4/Submit)
+ id k0F1toh2008100	for git@vger.kernel.org; Sat, 14 Jan 2006 18:55:50 -0700
+In-reply-to: <7v4q4671tg.fsf@assigned-by-dhcp.cox.net>
+To: git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14692>
 
-Continuing with the "union" approach...
+On Sat, Jan 14, 2006 at 04:49:15PM -0800, Junio C Hamano wrote:
+> Martin Langhoff <martin.langhoff@gmail.com> writes:
+> 
+> > I am with gitzilla on this one. Let the projects have their own
+> > bootstraping mechanisms, using make, ant or whatever catches their
+> > fancy. One of the great things about git is that it doesn't assume
+> > that it's being used by all the projects in the world -- thanks to
+> > Linus' disregard for arbitrary metadata and to your git-cherry
+> > implementation, it's all about the content -- and so it interoperates
+> > great with Arch, SVN, CVS, etc.
+> 
+> 
+> I hope this settles this issue and nobody would bring up "Wee
+> want subprojects" ever again ;-).
+> 
 
-Junio C Hamano <junkio@cox.net> writes:
+But since we can import everything into a GIT repository, and have
+(some) tools for pushing changes back, we can pretend that it is being
+used for every project in the world.
 
->  - append the tree object in "kernel" commit object to the
->    current index, rerooted at linux-2.6/; similar for "gcc" at
->    gcc-4.0/. We may need a new mode and option for read-tree for
->    this, or we may not.  Internally this step would be scripted
->    in "git bind" wrapper like this:
->
-> 	git read-tree --bind --prefix=linux-2.6 kernel
-> 	git read-tree --bind --prefix=gcc-4.0 gcc
->
->    and would result in an index file that has these trees
->    "mounted" at specified places...
-
-Clarification.  By "mounted", I mean 'without affecting existing
-index entries, create index entries from the tree, with all the
-paths have "linux-2.6/" prefixed to them'.
-
->  - record the branch name vs subproject directory binding in
->    $GIT_DIR/ somewhere, say $GIT_DIR/mtab ;-).
->
-> 	$ cat .git/mtab
-> 	kernel	linux-2.6
->       gcc	gcc-4.0
-
-I now realize this needs to be something like:
-
-	master	kernel=linux-2.6/ gcc=gcc-4.0/
-
-that is, "when on branch master, bind these two heads at these
-directories", to allow switching to another branch and switching
-back to this branch.  And the file should probably be called
-$GIT_DIR/modules, to parallel CVSROOT/modules file.
-
->	$ git cat-file commit HEAD
->       tree e9de76f2e141824439caa00a65e3b91d05d125c9
->       parent bfca932434cc65e7aa90794e7c4d66f75d00b16a
->       bind a8fe7257b8427d31cfcca0aa336335bb43689fc9 linux-2.6
->       bind b3b2df23226634f42c9646bd7961fbea8b00f914 gcc-4.0
->       author Junio C Hamano <junkio@cox.net> 1137205528 -0800
->       committer Junio C Hamano <junkio@cox.net> 1137205528 -0800
->
->	Bind kernel and gcc into us.
->...
-> Now I have to think about clones and merges but this is getting
-> too long so I'll leave it to a separate message.
-
-The core-level cloning would just "clone" the objects, treating
-"bind" line in the commit just like "parent" to pull necessary
-objects.
-
-Checkout would involve the usual read-tree -u which extracts the
-tree (which is the whole tree, with files of the subprojects in
-it), and notices "bind" lines are there but there are no
-matching $GIT_DIR/modules entries for those directories.
-Probably it would create $GIT_DIR/refs/heads/bind/a8fe725 for
-the linux-2.6 subproject (what the original committer called
-"kernel" branch), and similarly for the gcc-4.0 subproject, add
-an appropriate entry to $GIT_DIR/modules file.  The user would
-then rename the branch names and optionally arrange remotes/
-files to update the bound branches appropriately:
-
-	$ mv .git/refs/heads/bind/a8fe725 .git/refs/heads/kernel
-
-Now, let's say this "master" branch is checked out, and somehow
-the "kernel" branch gets updated.  That is, the commit recorded
-on the "bind" line of the HEAD commit does not match the branch
-head that can be found out via $GIT_DIR/modules file.  This will
-not happen if you are committing into the "master" branch using
-the "commit to subprojects and then to the toplevel project"
-mechanism yourself, but it would happen if the "kernel" branch
-was moved by "git fetch" fast-forwarding, or if you switched to
-the "kernel" branch (which would essentially remove everything
-from your tree, and checkout the kernel source at the root
-level, not in linux-2.6/ subdirectory), did an upstream merge
-yourself, and switched back to the "master" branch.
-
-To keep the problem simpler, let's say we only deal with the
-case where "kernel" branch head is a fast-forward of what is on
-"bind" in the HEAD commit of "master" branch.  Then "checkout"
-needs to notice it, and check out the subdirectory from the
-"kernel" branch head (*not* using the object name on "bind"
-line).
-
-So the outline of the "checkout" would be like this:
-
- * Read commit object from new HEAD.
-
- * For each "bind" line:
-
-   If the subdirectory does not have a corresponding branch,
-   create one in $GIT_DIR/refs/heads/bind/; record it in
-   $GIT_DIR/modules for the new branch (otherwise leave branch
-   as is).
-
-   Make sure the commit recorded on "bind" line is an ancestor
-   of the branch head.  Otherwise it is an error and checkout is
-   prevented until the "kernel" branch is resolved to be a
-   descendant of it.
-
-   Run "read-tree -u --prefix=" to merge in the subtree into the
-   index, and update the working tree.
-
-At this point, there may be mismatch between the tree in the
-HEAD and the working tree files and index, when subproject
-commit recorded on the "bind" line is different from the
-corresponding subproject branch head, and "git diff" would show
-it.  When making a commit here, the "subproject and then
-toplevel" commit scheme I described earlier would record the
-current "kernel" branch head on the "bind" line in the new
-commit, along with the tree object that contains the tree from
-"kernel" branch head commit as a subtree.
-
-
-About "merge", we should be able to do this:
-
-	$ git checkout master ;# the whole mess
-        $ git pull -b kernel git://..torvalds/linux-2.6.git/
-
-that is, 'pull from this URL but into "kernel" branch not to the
-current branch'.  Independent of this "subprojects" topic,
-merging in a separate temporary directory into non-current
-branch is something we have talked about some time ago, and in
-this particular case, instead of using a throw-away temporary
-directory, we have a pre-made directory to do the merge already,
-so let's say that is solved elsewhere first.  Once we have that,
-the above "checkout" would be able to integrate the result into
-the "master" project.
+  Tom
