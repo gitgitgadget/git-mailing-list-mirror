@@ -1,49 +1,64 @@
-From: Josh Boyer <jwboyer@gmail.com>
-Subject: Re: www.kernel.org/git is slow...
-Date: Sat, 14 Jan 2006 19:57:02 -0600
-Message-ID: <625fc13d0601141757h18b65cdai458ba75849b1efa7@mail.gmail.com>
-References: <20060114203654.GA10314@mars.ravnborg.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] cg-seek should not complain if run twice
+Date: Sun, 15 Jan 2006 01:03:35 -0500
+Message-ID: <20060115010335.dj4swocs000k008o@webmail.spamcop.net>
+References: <1135054536.3815.14.camel@dv>
+	<20060114233037.GA28365@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: ftpadmin@kernel.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 15 02:57:10 2006
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 15 07:04:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Exx8l-0008Rl-Sn
-	for gcvg-git@gmane.org; Sun, 15 Jan 2006 02:57:08 +0100
+	id 1Ey0zj-00027W-4l
+	for gcvg-git@gmane.org; Sun, 15 Jan 2006 07:04:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751610AbWAOB5E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jan 2006 20:57:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbWAOB5E
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jan 2006 20:57:04 -0500
-Received: from zproxy.gmail.com ([64.233.162.199]:21237 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751622AbWAOB5D convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jan 2006 20:57:03 -0500
-Received: by zproxy.gmail.com with SMTP id 14so898017nzn
-        for <git@vger.kernel.org>; Sat, 14 Jan 2006 17:57:02 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kDj3Xi68+cOTEH50wyPi9wYRuM2mykcCUv0xXzcwzwKbzYeR4MAmydJgQP2K0Z91+vWdCpCxS9MNKD2msqBlg9H1D+gZmtyroj6lTFE3Z1JB2VqM5e+8bA0XWwCp1UpJVmNOvIVLdk43Y8mLQ35H8h7eVXKes0trOiZcxmMy9EY=
-Received: by 10.36.81.14 with SMTP id e14mr3774800nzb;
-        Sat, 14 Jan 2006 17:57:02 -0800 (PST)
-Received: by 10.36.55.20 with HTTP; Sat, 14 Jan 2006 17:57:02 -0800 (PST)
-To: Sam Ravnborg <sam@ravnborg.org>
-In-Reply-To: <20060114203654.GA10314@mars.ravnborg.org>
+	id S1751744AbWAOGDm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jan 2006 01:03:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbWAOGDm
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 01:03:42 -0500
+Received: from mailgate.cesmail.net ([216.154.195.36]:11489 "HELO
+	mailgate.cesmail.net") by vger.kernel.org with SMTP
+	id S1751744AbWAOGDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jan 2006 01:03:42 -0500
+Received: (qmail 17101 invoked from network); 15 Jan 2006 06:03:35 -0000
+Received: from unknown (HELO delta.cesmail.net) (192.168.1.30)
+  by mailgate.cesmail.net with SMTP; 15 Jan 2006 06:03:35 -0000
+Received: (qmail 15108 invoked by uid 99); 15 Jan 2006 06:03:35 -0000
+Received: from static-68-161-241-229.ny325.east.verizon.net
+	(static-68-161-241-229.ny325.east.verizon.net [68.161.241.229]) by
+	webmail.spamcop.net (Horde) with HTTP for <proski@spamcop.net@cesmail.net>;
+	Sun, 15 Jan 2006 01:03:35 -0500
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060114233037.GA28365@pasky.or.cz>
 Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) 4.0-cvs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14694>
 
-On 1/14/06, Sam Ravnborg <sam@ravnborg.org> wrote:
-> During the last couple of days http://www.kernel.org/git has
-> been very slow.
+Hello, Petr!
 
-I've noticed this too, so it's not just you.  Just another data point.
+Quoting Petr Baudis <pasky@suse.cz>:
 
-josh
+> It seems cleaner to just make cg-seek fail with a sensible error message
+> if it's already unseeked.
+
+I don't like this.  What if "cvs up -A" would fail if run twice?  What if
+cg-clean would fail if there was nothing to clean?  What if sync would fail if
+it didn't cause a single disk write?  Idempotent operations are easier to work
+with.  Please see http://en.wikipedia.org/wiki/Idempotent_(software)
+
+I could make an exception for the case when the command invocation indicates
+that the user is unaware of something, and that it would endanger the user's
+data.  But it's not the case for cg-seek without arguments on non-seeked
+repository.  The intention is clear, and the knowledge of the current state of
+the repository doesn't matter, since there will be no merge or something.
+
+--
+Regards,
+Pavel Roskin
