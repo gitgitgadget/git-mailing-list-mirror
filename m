@@ -1,66 +1,58 @@
-From: Wolfgang Denk <wd@denx.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: dangling commits
-Date: Sun, 15 Jan 2006 23:11:08 +0100
-Message-ID: <20060115221108.3ED2E352659@atlas.denx.de>
-References: <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 15 Jan 2006 14:55:39 -0800
+Message-ID: <7v8xth14pg.fsf@assigned-by-dhcp.cox.net>
+References: <20060115221108.3ED2E352659@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 15 23:11:25 2006
+X-From: git-owner@vger.kernel.org Sun Jan 15 23:55:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyG5q-0008JB-44
-	for gcvg-git@gmane.org; Sun, 15 Jan 2006 23:11:22 +0100
+	id 1EyGmn-00015C-Ga
+	for gcvg-git@gmane.org; Sun, 15 Jan 2006 23:55:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750924AbWAOWLT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jan 2006 17:11:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750925AbWAOWLT
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 17:11:19 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:50832 "EHLO
-	mail-out.m-online.net") by vger.kernel.org with ESMTP
-	id S1750907AbWAOWLS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jan 2006 17:11:18 -0500
-Received: from mail01.m-online.net (svr21.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id D292071357;
-	Sun, 15 Jan 2006 23:11:08 +0100 (CET)
-X-Auth-Info: uFt9+ITlo5oky+9tvOJno7ljFpB4DikvY/cTD6YGMRw=
-X-Auth-Info: uFt9+ITlo5oky+9tvOJno7ljFpB4DikvY/cTD6YGMRw=
-Received: from mail.denx.de (p54966EA7.dip.t-dialin.net [84.150.110.167])
-	by smtp-auth.mnet-online.de (Postfix) with ESMTP id BF2F3B8C10;
-	Sun, 15 Jan 2006 23:11:08 +0100 (CET)
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by mail.denx.de (Postfix) with ESMTP id 4AD736D00A8;
-	Sun, 15 Jan 2006 23:11:08 +0100 (MET)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id 3ED2E352659;
-	Sun, 15 Jan 2006 23:11:08 +0100 (MET)
-To: Junio C Hamano <junkio@cox.net>
-In-reply-to: Your message of "Sun, 15 Jan 2006 13:15:59 PST."
-             <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net> 
+	id S1750957AbWAOWzm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jan 2006 17:55:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750960AbWAOWzm
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 17:55:42 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:31944 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1750957AbWAOWzl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jan 2006 17:55:41 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060115225332.YJLO26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 15 Jan 2006 17:53:32 -0500
+To: Wolfgang Denk <wd@denx.de>
+In-Reply-To: <20060115221108.3ED2E352659@atlas.denx.de> (Wolfgang Denk's
+	message of "Sun, 15 Jan 2006 23:11:08 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14714>
 
-In message <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net> you wrote:
->
-> Note that only because that is these dangling objects are packed
-> in the past, and when fetching over http, packs are fetched as a
-> whole.
+Wolfgang Denk <wd@denx.de> writes:
 
-Is ther eany way to clean up such a situation and really get  rid  of
-the  dangling  commits?  I understand that I'd first need some way to
-"unpack" the packs, but how to do this? 
+> Is ther eany way to clean up such a situation and really get  rid  of
+> the  dangling  commits?  I understand that I'd first need some way to
+> "unpack" the packs, but how to do this? 
 
-Best regards,
+The easiest is to repack into a single big ball of wax:
 
-Wolfgang Denk
+	$ git repack -a -d
 
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-Heavier than air flying machines are impossible.
-                    -- Lord Kelvin, President, Royal Society, c. 1895
+If you know the pack the stale object is in, you can move it out
+of objects/pack/ and repack only that one.
+
+	$ mv .git/objects/packs/pack-$badone.{idx,pack} .
+	$ git unpack-objects <pack-$badone.pack
+        $ git repack
+
+After you are done:
+
+	$ git prune
