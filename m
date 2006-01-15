@@ -1,74 +1,74 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Starting a new project remotely
-Date: Sun, 15 Jan 2006 15:01:58 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0601151437240.25300@iabervon.org>
-References: <Pine.LNX.4.64.0601151323320.25300@iabervon.org>
- <7vd5it47lr.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: what exactly is git-tag looking for when you try to sign a tag?
+Date: Sun, 15 Jan 2006 12:02:27 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601151155520.13339@g5.osdl.org>
+References: <200601151932.05342.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 15 21:00:29 2006
+X-From: git-owner@vger.kernel.org Sun Jan 15 21:02:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyE35-0004Ux-BI
-	for gcvg-git@gmane.org; Sun, 15 Jan 2006 21:00:23 +0100
+	id 1EyE5F-0004wP-Sq
+	for gcvg-git@gmane.org; Sun, 15 Jan 2006 21:02:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932130AbWAOUAK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jan 2006 15:00:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932128AbWAOUAK
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 15:00:10 -0500
-Received: from iabervon.org ([66.92.72.58]:54795 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932127AbWAOUAJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jan 2006 15:00:09 -0500
-Received: (qmail 3001 invoked by uid 1000); 15 Jan 2006 15:01:58 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 15 Jan 2006 15:01:58 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5it47lr.fsf@assigned-by-dhcp.cox.net>
+	id S932128AbWAOUCe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jan 2006 15:02:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932133AbWAOUCe
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 15:02:34 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:64170 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932128AbWAOUCe (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Jan 2006 15:02:34 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0FK2SDZ016040
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 15 Jan 2006 12:02:28 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0FK2Rd8021503;
+	Sun, 15 Jan 2006 12:02:27 -0800
+To: Alan Chandler <alan@chandlerfamily.org.uk>
+In-Reply-To: <200601151932.05342.alan@chandlerfamily.org.uk>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.65__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14706>
 
-On Sun, 15 Jan 2006, Junio C Hamano wrote:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
+
+On Sun, 15 Jan 2006, Alan Chandler wrote:
 > 
-> > Is there something currently that acts like git-clone, except that it sets 
-> > up automatic connections in the opposite direction? That is, you run it in 
-> > a repository with no origin, and it pushes the data to the specified 
-> > location (which probably needs to be set up already as an empty 
-> > repository) and sets the local side's origin remote to the location given.
+> git-tag -s v1.0
 > 
-> The "git push" command allows you to push into an empty or even
-> unrelated destination, but I do think there no wrapper that
-> creates remotes/ file.  BTW, calling that "origin" is probably
-> confusing.  In the scenario you outlined, your local side is the
-> source and the remote is the sink.
+> and it complained that I don't have any secret key available.
+> 
+> What exactly is the process of making one available?
 
-My general pattern is that I have an "origin" repository, which is public 
-and central. I do work in various other repositories, and push the results 
-to origin when I finish them. I create these with "git clone", so the 
-central point is called "origin" in each clone.
+Do 
 
-The odd case is when I start out; I have a repository with the initial 
-commit, and "origin" is blank. The desired result is that the central 
-location gets this commit, and the repository I'm starting from becomes 
-identical to any clone of the central location.
+	gpg --list-secret-keys
 
-I don't create the initial commit in the central location because there's 
-no working tree there, and it's a pain to prepare a commit without one. I 
-suppose the alternative is to support cloning a blank repository, so I 
-could prepare the initial commit just like any later one.
+to check what keys you have available to sign with.
 
-Incidentally, I think it would be useful to have a script that creates a 
-remotes/ file given a command line like push or pull. Then you could use 
-"git pull" with a long command line until you were happy with the 
-behavior, and then make a shortcut out of it. It'd also be nice to have 
-the command list the remotes for you as well. If anyone's in the mood for 
-scripting and wants something to work on...
+Then, use
 
-	-Daniel
-*This .sig left intentionally blank*
+	git tag -u "key user name" v1.0
+
+because what has _probably_ happened is that if you just use "-s" it will 
+pick your "committer name" as the key identifier, and you probably made 
+your keys using your real email or other identifier.
+
+So "-u <username>" means the same thing as "-s", but with additionally 
+specifying _which_ key it should use.
+
+Alternatively, you should be able to just use "gpg --edit-key <keyname>" 
+and then using "adduid" to add your git committer ID as a user of the key. 
+At which point "git tag -s <tagname>" should just work, since gpg will be 
+able to match up the keys automatically.
+
+		Linus
