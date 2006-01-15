@@ -1,64 +1,56 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] cg-seek should not complain if run twice
-Date: Sun, 15 Jan 2006 01:03:35 -0500
-Message-ID: <20060115010335.dj4swocs000k008o@webmail.spamcop.net>
-References: <1135054536.3815.14.camel@dv>
-	<20060114233037.GA28365@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Question on empty commit
+Date: Sun, 15 Jan 2006 01:48:56 -0800
+Message-ID: <7vmzhx7ref.fsf@assigned-by-dhcp.cox.net>
+References: <20060114021800.4688.qmail@web31803.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 15 07:04:11 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 15 10:49:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ey0zj-00027W-4l
-	for gcvg-git@gmane.org; Sun, 15 Jan 2006 07:04:03 +0100
+	id 1Ey4VT-0007rR-DP
+	for gcvg-git@gmane.org; Sun, 15 Jan 2006 10:49:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751744AbWAOGDm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jan 2006 01:03:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbWAOGDm
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 01:03:42 -0500
-Received: from mailgate.cesmail.net ([216.154.195.36]:11489 "HELO
-	mailgate.cesmail.net") by vger.kernel.org with SMTP
-	id S1751744AbWAOGDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jan 2006 01:03:42 -0500
-Received: (qmail 17101 invoked from network); 15 Jan 2006 06:03:35 -0000
-Received: from unknown (HELO delta.cesmail.net) (192.168.1.30)
-  by mailgate.cesmail.net with SMTP; 15 Jan 2006 06:03:35 -0000
-Received: (qmail 15108 invoked by uid 99); 15 Jan 2006 06:03:35 -0000
-Received: from static-68-161-241-229.ny325.east.verizon.net
-	(static-68-161-241-229.ny325.east.verizon.net [68.161.241.229]) by
-	webmail.spamcop.net (Horde) with HTTP for <proski@spamcop.net@cesmail.net>;
-	Sun, 15 Jan 2006 01:03:35 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060114233037.GA28365@pasky.or.cz>
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.0-cvs
+	id S1751885AbWAOJs7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jan 2006 04:48:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751886AbWAOJs6
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 04:48:58 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:58778 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751885AbWAOJs6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jan 2006 04:48:58 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060115094740.OROB20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 15 Jan 2006 04:47:40 -0500
+To: ltuikov@yahoo.com
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14695>
 
-Hello, Petr!
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-Quoting Petr Baudis <pasky@suse.cz>:
+> Now the last merge introduced an empty commit, since
+> tree A and tree B had been in sync (only local and
+> remote trunk had been out of sync).  While it was expected
+> that no commit would be introduced since they were in sync.
+>
+> Was the empty commit correct behavior?
 
-> It seems cleaner to just make cg-seek fail with a sensible error message
-> if it's already unseeked.
+I do not quite follow you, but immediately before the "empty
+commit" (I presume you mean the last "git merge" that merges
+treeA head in treeB), you say "the treeA and treeB had been in
+sync".  What do you exactly mean?  The tree object in the head
+commits in treeA branch and treeB branch were identical?
 
-I don't like this.  What if "cvs up -A" would fail if run twice?  What if
-cg-clean would fail if there was nothing to clean?  What if sync would fail if
-it didn't cause a single disk write?  Idempotent operations are easier to work
-with.  Please see http://en.wikipedia.org/wiki/Idempotent_(software)
-
-I could make an exception for the case when the command invocation indicates
-that the user is unaware of something, and that it would endanger the user's
-data.  But it's not the case for cg-seek without arguments on non-seeked
-repository.  The intention is clear, and the knowledge of the current state of
-the repository doesn't matter, since there will be no merge or something.
-
---
-Regards,
-Pavel Roskin
+If that is the case, the commit being empty is the correct
+behaviour, because there is no difference in the set of files
+introduced by that commit.  And the commit being made is also
+the correct behaviour, because those two branches have different
+development history, and the commit is what binds them together.
