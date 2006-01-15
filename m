@@ -1,59 +1,59 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cvs-migration.txt
-Date: Sun, 15 Jan 2006 13:11:37 -0800
-Message-ID: <7vy81h2o3a.fsf@assigned-by-dhcp.cox.net>
-References: <20060115195804.GD3985@fieldses.org>
+Subject: Re: dangling commits
+Date: Sun, 15 Jan 2006 13:15:59 -0800
+Message-ID: <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net>
+References: <dqebk9$75f$1@sea.gmane.org> <43CAB6ED.3010703@op5.se>
+	<dqedel$d0q$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 15 22:11:58 2006
+X-From: git-owner@vger.kernel.org Sun Jan 15 22:16:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyFAI-0004JG-8c
-	for gcvg-git@gmane.org; Sun, 15 Jan 2006 22:11:54 +0100
+	id 1EyFEP-0005Fw-Ss
+	for gcvg-git@gmane.org; Sun, 15 Jan 2006 22:16:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750802AbWAOVLl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jan 2006 16:11:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbWAOVLl
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 16:11:41 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:31991 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750802AbWAOVLk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jan 2006 16:11:40 -0500
+	id S1750887AbWAOVQE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jan 2006 16:16:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750889AbWAOVQE
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 16:16:04 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:48002 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1750887AbWAOVQC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jan 2006 16:16:02 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060115210930.WXUL26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 15 Jan 2006 16:09:30 -0500
-To: "J. Bruce Fields" <bfields@fieldses.org>
-In-Reply-To: <20060115195804.GD3985@fieldses.org> (J. Bruce Fields's message
-	of "Sun, 15 Jan 2006 14:58:04 -0500")
+          id <20060115211405.YHEP17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 15 Jan 2006 16:14:05 -0500
+To: git@vger.kernel.org
+In-Reply-To: <dqedel$d0q$1@sea.gmane.org> (Nick Williams's message of "Sun, 15
+	Jan 2006 21:37:00 +0000")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14712>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+Nick Williams <njw@jarb.freeserve.co.uk> writes:
 
-> I find the following sentence from cvs-migration.txt slightly confusing:
->
-> 	"The cut-off is date-based, so don't change the branches that
-> 	were imported from CVS."
->
-> I assume the branches referrred to are the target git branches, not the
-> source CVS branches?  (And are date-based cut-offs really the essential
-> reason for this restriction?)
+> Andreas Ericsson wrote:
+>..
+>> Nopes. One clones over http, so you'll get all objects in the object
+>> database. The other clones over the far more clever git protocol
+>> which calculates which objects you need. Obviously you don't need
+>> dangling commits (and their related blobs), so there will be no such
+>> items.
 
-Sorry, I cannot answer this one immediately without researching
-myself; I do not use cvsimport.
+Note that only because that is these dangling objects are packed
+in the past, and when fetching over http, packs are fetched as a
+whole.
 
-The way I read the code agrees with you.  The date from the
-topmost commit from each git branch is read, and used to limit
-the changes we read from CVS into them.  The code reads from
-"author date", which is technically incorrect, but what we are
-saying here is that you should never commit into these branches
-yourself and let cvsimport be the only one that touch them, so
-using commiter date and author date would not make a difference.
+> So, is there any advantage of using http? Seems like git:// makes more
+> sense.
+
+As long as you can go native git:// protocol, I do not see much
+reason to use http:// commit walkers.  OTOH, if you are
+firewalled and your sysadmins do not let you pass 9418/tcp
+outgoing, HTTP might be your only choice.
