@@ -1,58 +1,58 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] stgit: make tutorial a valid asciidoc article
-Date: Mon, 16 Jan 2006 08:21:54 +0000
-Message-ID: <b0943d9e0601160021t3b40ba3fp@mail.gmail.com>
-References: <1137142486.20073.77.camel@dv>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: Re: dangling commits
+Date: Mon, 16 Jan 2006 09:52:38 +0100
+Message-ID: <20060116085238.GA3768@fiberbit.xs4all.nl>
+References: <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net> <20060115221108.3ED2E352659@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 16 09:22:02 2006
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 16 09:52:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyPck-0007Ob-9f
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 09:21:58 +0100
+	id 1EyQ6Y-0005HV-AJ
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 09:52:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932242AbWAPIVz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 03:21:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932247AbWAPIVz
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 03:21:55 -0500
-Received: from xproxy.gmail.com ([66.249.82.195]:33367 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932242AbWAPIVz convert rfc822-to-8bit
+	id S1751070AbWAPIwo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 03:52:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbWAPIwo
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 03:52:44 -0500
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:22473 "EHLO
+	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1751039AbWAPIwn
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2006 03:21:55 -0500
-Received: by xproxy.gmail.com with SMTP id i30so858887wxd
-        for <git@vger.kernel.org>; Mon, 16 Jan 2006 00:21:54 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mlGU0ryHungOSdHBZxYtE0WXWkcogWXZfgbTSnf2WzyMdMnno7oNax4KgDw0tWIWrgRP1PMPyyid5l8RhB4gcTWoMNS9QLtJrFGJ2hjgrvysx/YoB+uvv41a1YsjYsPJewH0fYx6BwpSxARfMM+lvH0rLi3qtaEx0YPECTn/7hU=
-Received: by 10.70.62.19 with SMTP id k19mr7481285wxa;
-        Mon, 16 Jan 2006 00:21:54 -0800 (PST)
-Received: by 10.70.53.11 with HTTP; Mon, 16 Jan 2006 00:21:54 -0800 (PST)
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1137142486.20073.77.camel@dv>
+	Mon, 16 Jan 2006 03:52:43 -0500
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.54)
+	id 1EyQ6Q-00017e-Oh; Mon, 16 Jan 2006 09:52:38 +0100
+To: Wolfgang Denk <wd@denx.de>
 Content-Disposition: inline
+In-Reply-To: <20060115221108.3ED2E352659@atlas.denx.de>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14730>
 
-On 13/01/06, Pavel Roskin <proski@gnu.org> wrote:
-> There should be only one level 0 title in an article, so lower ranks of
-> all headers by one.  Make capitalization uniform in the headers - level
-> 1 is capitalized, but level 2 is not.  Create a new level 1 part
-> "Technical Information".
->
-> Make ".git/ Directory Structure" a level 2 header and rephrase.
-> asciidoc doesn't like headers starting with a dot.
+On Sunday January 15th 2006 Wolfgang Denk wrote:
 
-I agree with most of this but what's the difference when adding "~~~~"
-instead of "----"?
+> Is ther eany way to clean up such a situation and really get  rid  of
+> the  dangling  commits?  I understand that I'd first need some way to
+> "unpack" the packs, but how to do this? 
 
-Thanks.
+Note that apart from the disk space they use up, dangling commits don't
+do any harm.
 
---
-Catalin
+However you can easily get rid of them by using "git prune".
+
+As far as I know although packs are used in transferring the commits to
+your local repository they are stored there as separate objects, so you
+certainly don't have to unpack things yourself for using "git prune".
+Git is quite smart, fast and safe on its own I find each time! It really
+is a wonderful tool by giving you every possibility to work with it
+without inflicting policy on you.
+
+If wanted you can use "git repack -a -d" followed by "git prune-packed"
+to create a tight packed repository (all commits and blobs in one pack)
+but there is no specific need to.
+-- 
+Marco Roeland
