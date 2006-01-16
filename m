@@ -1,59 +1,58 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: RFC: Subprojects
-Date: Mon, 16 Jan 2006 11:44:48 +0100
-Message-ID: <200601161144.48245.Josef.Weidendorfer@gmx.de>
-References: <43C52B1F.8020706@hogyros.de> <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org> <7vek3ah8f9.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: What's cooking in git.git
+Date: Mon, 16 Jan 2006 11:53:56 +0100
+Message-ID: <20060116105356.GH28365@pasky.or.cz>
+References: <7vhd8al3ae.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jan 16 11:45:14 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 16 11:53:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyRrF-00033u-4z
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 11:45:05 +0100
+	id 1EyRyu-0004nY-TI
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 11:53:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751116AbWAPKox (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 05:44:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbWAPKox
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 05:44:53 -0500
-Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:53928 "EHLO
-	tuminfo2.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S1751116AbWAPKow (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2006 05:44:52 -0500
-Received: from dhcp-3s-57.lrr.in.tum.de (dhcp-3s-57.lrr.in.tum.de [131.159.35.57])
-	by mail.in.tum.de (Postfix) with ESMTP id A72462162;
-	Mon, 16 Jan 2006 11:44:49 +0100 (MET)
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9
-In-Reply-To: <7vek3ah8f9.fsf@assigned-by-dhcp.cox.net>
+	id S1751122AbWAPKww (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 05:52:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751124AbWAPKww
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 05:52:52 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:12229 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751122AbWAPKww (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2006 05:52:52 -0500
+Received: (qmail 24599 invoked by uid 2001); 16 Jan 2006 11:53:56 +0100
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+In-Reply-To: <7vhd8al3ae.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14740>
 
-On Saturday 14 January 2006 21:16, you wrote:
-> Yes, I agree to the above 100%; the serious disadvantages come
-> from the fact that we do not have clear separation between
-> subprojects -- which new files belong to what subproject.  I
-> ...
->  - Extend "commit" objects for the toplevel project to record
->    what subprojects with what head commits are contained at
->    which subdirectory.
+Dear diary, on Thu, Jan 12, 2006 at 01:04:41AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+>  - Disable USE_SYMLINK_HEAD by default (Pavel Roskin).
+> 
+>    This has been on hold for almost two months -- forever in git
+>    timescale.
+> 
+>    One offender that could have been broken by this change was
+>    fixed recently (gitweb), so this can go in anytime now.  Do
+>    people still care about it?  The argument for the change when
+>    it was proposed was "then we only have to worry about one
+>    format of .git/HEAD, not two", and it still is a valid
+>    argument from Porcelain writers' point of view.  To be
+>    honest, since I do not do Porcelain, I am neutral about it.
 
-The suggested "bind" info in commit objects has the same problem
-as the original overlay: if the superproject already has a
-subdirectory kernel/, and there is an additional "bind" specification
-in commits also for kernel/, what should be done?
+Yes, I'd still be pleased to see this. Cogito should be ready for this
+for long enough, as far as I'm concerned.
 
-So the gitlink object seems to be the only solution if we want to
-bind git versions of subprojects into a superproject.
-
-But as this seems to make everything quite complex and not-obvious for
-a user, I am with Paskys simple subproject idea.
-
-Josef
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
