@@ -1,72 +1,59 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: dangling commits
-Date: Mon, 16 Jan 2006 11:28:13 +0100
-Message-ID: <43CB753D.2030706@op5.se>
-References: <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net> <20060115221108.3ED2E352659@atlas.denx.de> <20060116085238.GA3768@fiberbit.xs4all.nl> <7vr778wmj3.fsf@assigned-by-dhcp.cox.net> <20060116101722.GB5196@fiberbit.xs4all.nl>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: RFC: Subprojects
+Date: Mon, 16 Jan 2006 11:44:48 +0100
+Message-ID: <200601161144.48245.Josef.Weidendorfer@gmx.de>
+References: <43C52B1F.8020706@hogyros.de> <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org> <7vek3ah8f9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 11:28:23 2006
+X-From: git-owner@vger.kernel.org Mon Jan 16 11:45:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyRb3-00083c-C9
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 11:28:21 +0100
+	id 1EyRrF-00033u-4z
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 11:45:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932323AbWAPK2Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 05:28:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932322AbWAPK2Q
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 05:28:16 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:14275 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932320AbWAPK2P
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2006 05:28:15 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id AC2D76BCBE; Mon, 16 Jan 2006 11:28:13 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Marco Roeland <marco.roeland@xs4all.nl>
-In-Reply-To: <20060116101722.GB5196@fiberbit.xs4all.nl>
+	id S1751116AbWAPKox (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 05:44:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbWAPKox
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 05:44:53 -0500
+Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:53928 "EHLO
+	tuminfo2.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1751116AbWAPKow (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2006 05:44:52 -0500
+Received: from dhcp-3s-57.lrr.in.tum.de (dhcp-3s-57.lrr.in.tum.de [131.159.35.57])
+	by mail.in.tum.de (Postfix) with ESMTP id A72462162;
+	Mon, 16 Jan 2006 11:44:49 +0100 (MET)
+To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9
+In-Reply-To: <7vek3ah8f9.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14739>
 
-Marco Roeland wrote:
-> On Monday January 16th Junio C Hamano wrote:
-> 
-> 
->>Even when you use git native protocol, the objects the initial
->>clone gives you are kept packed, so when I rewind and rebuild
->>"pu" to make some of these objects orphaned, they will stay in
->>the pack the initial clone gave you.  Unpack+repack is needed to
->>get rid of them.
-> 
-> 
-> Thanks very much for explaining. It makes sense now.
-> 
-> Does it bring many advantages for you to keep rebasing "pu"?
+On Saturday 14 January 2006 21:16, you wrote:
+> Yes, I agree to the above 100%; the serious disadvantages come
+> from the fact that we do not have clear separation between
+> subprojects -- which new files belong to what subproject.  I
+> ...
+>  - Extend "commit" objects for the toplevel project to record
+>    what subprojects with what head commits are contained at
+>    which subdirectory.
 
+The suggested "bind" info in commit objects has the same problem
+as the original overlay: if the superproject already has a
+subdirectory kernel/, and there is an additional "bind" specification
+in commits also for kernel/, what should be done?
 
-Since "pu" = "proposed updates" it only makes sense to keep it on top of 
-the current master, otherwise the effort required for anyone to test it 
-in conjunction with the latest master branch would simply be too great.
+So the gitlink object seems to be the only solution if we want to
+bind git versions of subprojects into a superproject.
 
+But as this seems to make everything quite complex and not-obvious for
+a user, I am with Paskys simple subproject idea.
 
-> I started
-> out following that branch long ago (well in git reckoning anyway) but
-> got very scared each time I got a bunch of "errors" on that one.
-> I since removed it from the "Pull" list, but understand that "+pu"
-> should do the trick. I'll retry using it one of these days.
-
-
-It does. I also remember seeing lots of errors on that one when I first 
-started with git (around 0.99b), but that was fixed quite some time ago.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Josef
