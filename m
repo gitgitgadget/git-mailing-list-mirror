@@ -1,114 +1,89 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: gitweb on kernel.org broken
-Date: Mon, 16 Jan 2006 12:02:05 -0800
-Message-ID: <7vwth0rlfm.fsf@assigned-by-dhcp.cox.net>
-References: <43CBE993.9060701@zytor.com> <20060116185342.GA14088@vrfy.org>
-	<20060116190556.GA14184@vrfy.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: RFC: Subprojects
+Date: Mon, 16 Jan 2006 15:20:39 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0601161414080.25300@iabervon.org>
+References: <43C52B1F.8020706@hogyros.de> 
+ <Pine.LNX.4.63.0601111740220.17966@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <43C537C9.4090206@hogyros.de>  <Pine.LNX.4.64.0601110928350.5073@g5.osdl.org>
+  <7vacdzkww3.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org>
+  <43C951B6.5030607@gmail.com>  <Pine.LNX.4.64.0601141154590.13339@g5.osdl.org>
+  <43C95F69.7090200@gmail.com> <7vk6d2fsu6.fsf@assigned-by-dhcp.cox.net>
+ <46a038f90601141628n2ec32e8fy7fc23d8d7884c0f2@mail.gmail.com>
+ <Pine.LNX.4.64.0601152248030.25300@iabervon.org> <43CBEF47.7050607@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
-	gregkh@kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 21:02:34 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Simon Richter <Simon.Richter@hogyros.de>
+X-From: git-owner@vger.kernel.org Mon Jan 16 21:19:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyaYc-0001zr-R7
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 21:02:27 +0100
+	id 1EyaoV-0006GE-DK
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 21:18:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751161AbWAPUCK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 15:02:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbWAPUCI
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 15:02:08 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:7328 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751161AbWAPUCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2006 15:02:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060116200212.EIZY25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 16 Jan 2006 15:02:12 -0500
-To: Kay Sievers <kay.sievers@vrfy.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751175AbWAPUSt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 15:18:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751183AbWAPUSs
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 15:18:48 -0500
+Received: from iabervon.org ([66.92.72.58]:59915 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751175AbWAPUSs (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2006 15:18:48 -0500
+Received: (qmail 13063 invoked by uid 1000); 16 Jan 2006 15:20:39 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 16 Jan 2006 15:20:39 -0500
+To: A Large Angry SCM <gitzilla@gmail.com>
+In-Reply-To: <43CBEF47.7050607@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14758>
 
-Kay Sievers <kay.sievers@vrfy.org> writes:
+On Mon, 16 Jan 2006, A Large Angry SCM wrote:
 
->> Junio, seems your "textual symref HEAD" change is causing this?
+> Daniel Barkalow wrote:
+> [...]
+> > 
+> > So the problem with handling subprojects with the build system is that it is
+> > too tempting to use the revision control system directly on the subproject,
+> > at which point the thing you're developing and testing isn't at all what
+> > other people will get if they check out your commit. You want "git status"
+> > to report it as an uncommitted change if you have a different revision of
+> > the subproject than your previous commit had, and it can't tell if this
+> > information is buried in the build system.
+> 
+> Using "git-status" is the wrong tool to use there. What you should be using is
+> "make project_status". Claiming "that it is too tempting to use the revision
+> control system on the subproject" is wrong; you should use the SCM (of the
+> subproject) to manage the subproject. You use the build system to manage the
+> _entire_ project.
 
-Yeah, I assumed git_read_head() is called only on a repository
-that was verified to be valid, and the subroutine did not check
-the case where HEAD does not verify.  My bad.  The attached
-patch should solve this.
+I'm talking about using "git status" on the main project, in case you're 
+misunderstanding me. If you can manage the entire project with the build 
+system, then you don't need git or any version control at all, aside from 
+your build system. But you'd also lose the ability to use webgit, bisect, 
+gitk, git log, and so forth on the project as a whole.
 
-The error log says hotplug-ng.git is triggering it.  I wonder what
-is so special about that repository.  I hope it is transient
-during mirroring that mirrored HEAD before objects, not a
-corrupt repository at the mirroring source.
+> > The tricky question is whether we should permit the "subproject" objects to
+> > specify a revision that isn't a hash, for use in identifying revisions of
+> > subprojects in other systems.
+> 
+> Why would you want to limit how required versions of subprojects are
+> specified? Your project policies and procedures may require that subprojects
+> be specified by a subproject SCM specific immutable revision but the policies
+> and procedures of other projects may not be so restrictive and could accept a
+> tag identifying the latest "stable" (or something) revision.
 
-	... goes to kernel.org mirroring source machine ...
+If you accept a tag identifying the latest stable revision, then you might 
+as well not bother. The point of revision controlling a project is to be 
+able to reconstruct previous states. If you allow any event, especially 
+outside, unrelated, events to change the reconstructed state for a 
+revision, then this is not the case. Your normal debugging situation will 
+be "It's broken, and I didn't change anything." because someone somewhere 
+else changed something, and you have no record of what last worked. And 
+you can obviously forget any hope of "git bisect" working.
 
-Ugh.  It is _not_ a valid git repository.  HEAD should be either a symlink
-or a symref pointing somewhere under refs/heads/, but in that
-directory, it instead is a regular file that contains an object
-name.  There is nothing under refs/ either:
-
-        $ ls -l /pub/scm/linux/hotplug/hotplug-ng.git/HEAD
-        -rw-r--r--  2 gregkh users 41 May  6  2005 /pub/s...ug-ng.git/HEAD
-	$ cat /pub/scm/linux/hotplug/hotplug-ng.git/HEAD
-        b26bec9f620a969fe5238e8666ab698f197df488
-	$ ls -l /pub/scm/linux/hotplug/hotplug-ng.git/refs
-	total 0
-	$ exit
-
-Greg, could you let me know what is going on with this
-repository, please?
-
-First of all, I am wondering if this repository is still used
-(maintained); a regular file HEAD that contains an object name
-would have stopped working on Aug 27 2005 with this commit at the
-latest, maybe even before that:
-
-    diff-tree 5f5608b... (from 9740d28...
-    Author: Linus Torvalds <torvalds@osdl.org>
-    Date:   Sat Aug 27 13:54:42 2005 -0700
-
-    [PATCH] Make .git directory validation code test HEAD
-
-    Inspired by a report by Kalle Valo, this changes git-sh-setup-script and
-    the "setup_git_directory()" function to test that $GIT_DIR/HEAD is a
-    symlink, since a number of core git features depend on that these days.
-    ...
-
-The way I expected to see that part of the directory laid out in
-a valid git repository would be:
-
-	$ cd /pub/scm/linux/hotplug/hotplug-ng.git/
-	$ mkdir -p refs/heads
-	$ cat HEAD >refs/heads/master
-	$ rm -f HEAD
-	$ ln -s refs/heads/master HEAD
-
-Anyhow, here is a gitweb patch to skip this.
-
----
-diff --git a/gitweb.cgi b/gitweb.cgi
-index 986d7da..f3853e7 100755
---- a/gitweb.cgi
-+++ b/gitweb.cgi
-@@ -404,9 +404,8 @@ sub git_read_head {
- 	if (open my $fd, "-|", "$gitbin/git-rev-parse", "--verify", "HEAD") {
- 		my $head = <$fd>;
- 		close $fd;
--		chomp $head;
--		if ($head =~ m/^[0-9a-fA-F]{40}$/) {
--			$retval = $head;
-+		if (defined $head && $head =~ /^([0-9a-fA-F]{40})$/) {
-+			$retval = $1;
- 		}
- 	}
- 	$ENV{'GIT_DIR'} = $oENV;
+	-Daniel
+*This .sig left intentionally blank*
