@@ -1,66 +1,43 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] cg-seek should not complain if run twice
-Date: Mon, 16 Jan 2006 00:59:19 +0100
-Message-ID: <20060115235919.GF28365@pasky.or.cz>
-References: <1135054536.3815.14.camel@dv> <20060114233037.GA28365@pasky.or.cz> <20060115010335.dj4swocs000k008o@webmail.spamcop.net>
+From: "Randy.Dunlap" <rdunlap@xenotime.net>
+Subject: latest blob date (request)
+Date: Sun, 15 Jan 2006 17:31:00 -0800
+Organization: YPO4
+Message-ID: <20060115173100.1134256b.rdunlap@xenotime.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 16 00:58:35 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 16 02:31:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyHlP-0006bg-FR
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 00:58:24 +0100
+	id 1EyJDN-0007JX-Vv
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 02:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751005AbWAOX6U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jan 2006 18:58:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751003AbWAOX6U
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 18:58:20 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:33178 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751002AbWAOX6U (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jan 2006 18:58:20 -0500
-Received: (qmail 12432 invoked by uid 2001); 16 Jan 2006 00:59:19 +0100
-To: Pavel Roskin <proski@gnu.org>
-Content-Disposition: inline
-In-Reply-To: <20060115010335.dj4swocs000k008o@webmail.spamcop.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932152AbWAPBbI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jan 2006 20:31:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932154AbWAPBbI
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 20:31:08 -0500
+Received: from xenotime.net ([66.160.160.81]:16770 "HELO xenotime.net")
+	by vger.kernel.org with SMTP id S932152AbWAPBbI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Jan 2006 20:31:08 -0500
+Received: from zx64.site ([71.111.157.99]) by xenotime.net for <git@vger.kernel.org>; Sun, 15 Jan 2006 17:31:07 -0800
+To: paulus@samba.org
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.3; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14717>
 
-  Hello,
+Hi,
 
-Dear diary, on Sun, Jan 15, 2006 at 07:03:35AM CET, I got a letter
-where Pavel Roskin <proski@gnu.org> said that...
-> Quoting Petr Baudis <pasky@suse.cz>:
-> 
-> > It seems cleaner to just make cg-seek fail with a sensible error message
-> > if it's already unseeked.
-> 
-> I don't like this.  What if "cvs up -A" would fail if run twice?  What if
-> cg-clean would fail if there was nothing to clean?  What if sync would fail if
-> it didn't cause a single disk write?  Idempotent operations are easier to work
-> with.  Please see http://en.wikipedia.org/wiki/Idempotent_(software)
-> 
-> I could make an exception for the case when the command invocation indicates
-> that the user is unaware of something, and that it would endanger the user's
-> data.  But it's not the case for cg-seek without arguments on non-seeked
-> repository.  The intention is clear, and the knowledge of the current state of
-> the repository doesn't matter, since there will be no merge or something.
+I would find it helpful (a user optimization) if each tree list
+contained a date-last-modified/updated.  This could be used
+to help decide if I (someone) wanted to click on a particular
+blob or history (OK, blobs are quick, but history can be
+very time-consuming, so being able to shortcut or skip
+history would be very helpful IMO).
 
-  I have my reservations to this argumentation in the specific cg-seek
-case, but it's very subjective, unclear, and I personally really don't
-care. So let it be your way. ;-)
-
-  Thanks for your opinion,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+---
+~Randy
