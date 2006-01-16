@@ -1,61 +1,57 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] rpmbuild doesn't like '-' in version strings
-Date: Mon, 16 Jan 2006 01:15:54 -0800
-Message-ID: <7vwth0wn1x.fsf@assigned-by-dhcp.cox.net>
-References: <dp3qpb$7uk$1@sea.gmane.org>
-	<7voe2prniw.fsf@assigned-by-dhcp.cox.net>
-	<43C91B25.9030707@research.att.com>
-	<7v1wzaliv0.fsf@assigned-by-dhcp.cox.net>
-	<43C95E25.3070006@research.att.com>
+Subject: Re: dangling commits
+Date: Mon, 16 Jan 2006 01:27:12 -0800
+Message-ID: <7vr778wmj3.fsf@assigned-by-dhcp.cox.net>
+References: <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net>
+	<20060115221108.3ED2E352659@atlas.denx.de>
+	<20060116085238.GA3768@fiberbit.xs4all.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 10:16:04 2006
+X-From: git-owner@vger.kernel.org Mon Jan 16 10:28:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyQT2-0001J6-IJ
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 10:16:01 +0100
+	id 1EyQev-0003le-9Y
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 10:28:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932255AbWAPJP5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 04:15:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932256AbWAPJP5
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 04:15:57 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:48894 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932255AbWAPJP4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2006 04:15:56 -0500
+	id S932279AbWAPJ1U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 04:27:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932301AbWAPJ1T
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 04:27:19 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:64450 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932283AbWAPJ1O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2006 04:27:14 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060116091452.CJRZ20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 16 Jan 2006 04:14:52 -0500
-To: John Ellson <ellson@research.att.com>
-In-Reply-To: <43C95E25.3070006@research.att.com> (John Ellson's message of
-	"Sat, 14 Jan 2006 15:25:09 -0500")
+          id <20060116092556.GJKV20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 16 Jan 2006 04:25:56 -0500
+To: Marco Roeland <marco.roeland@xs4all.nl>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14733>
 
-John Ellson <ellson@research.att.com> writes:
+Marco Roeland <marco.roeland@xs4all.nl> writes:
 
->> Of course you can keep a patch with the sed -e 's/-/_/' in
->> GIT-VERSION-GEN as Linus suggested in your development branch.
->>
-> Thats basically all I'm looking for.   I agree that is only necessary
-> to fix the "make rpm" target.
-> Further changes are not strictly necessary.   I don't understand why
-> it would only be useful to me?
+> As far as I know although packs are used in transferring the commits to
+> your local repository they are stored there as separate objects,...
 
-OK, if somebody is RPM savvy enough to do his own binary RPM and
-install it, he would know how to override the downgrade guard
-the binary package manager would give him, so it probably is not
-such a big deal.  A patch to do "sed -e 's/-/./g'" will be
-pushed out in the "master" branch shortly.
+That is true only when you are using git native protocols
+(i.e. git:// and git over ssh).  Some people pull over dumb
+transport (http -- some others still use rsync which is even
+dumber and has serious limitations), and when you need objects
+that are contained in a pack at the upstream, the packfile is
+downloaded as a whole, and it is left packed on your end.
 
-I hope if we later see complains on the list that some RPM cut
-from an interim snapshot would not install, somebody would take
-time to answer such complaints, pretty please?
+Even when you use git native protocol, the objects the initial
+clone gives you are kept packed, so when I rewind and rebuild
+"pu" to make some of these objects orphaned, they will stay in
+the pack the initial clone gave you.  Unpack+repack is needed to
+get rid of them.
+
+As you said, they should not hurt much in practice, though.
