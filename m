@@ -1,67 +1,61 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Marco Roeland <marco.roeland@xs4all.nl>
 Subject: Re: dangling commits
-Date: Mon, 16 Jan 2006 13:05:16 +0100
-Message-ID: <43CB8BFC.8050900@op5.se>
-References: <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net> <20060115221108.3ED2E352659@atlas.denx.de> <20060116085238.GA3768@fiberbit.xs4all.nl> <7vr778wmj3.fsf@assigned-by-dhcp.cox.net> <20060116101722.GB5196@fiberbit.xs4all.nl> <43CB753D.2030706@op5.se> <20060116113332.GA5356@fiberbit.xs4all.nl>
+Date: Mon, 16 Jan 2006 13:40:20 +0100
+Message-ID: <20060116124020.GB5356@fiberbit.xs4all.nl>
+References: <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net> <20060115221108.3ED2E352659@atlas.denx.de> <20060116085238.GA3768@fiberbit.xs4all.nl> <7vr778wmj3.fsf@assigned-by-dhcp.cox.net> <20060116101722.GB5196@fiberbit.xs4all.nl> <43CB753D.2030706@op5.se> <20060116113332.GA5356@fiberbit.xs4all.nl> <43CB8BFC.8050900@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 13:05:32 2006
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Marco Roeland <marco.roeland@xs4all.nl>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 16 13:40:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyT6v-0002UX-Sh
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 13:05:22 +0100
+	id 1EyTet-0001Sl-2T
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 13:40:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750722AbWAPMFT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 07:05:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750724AbWAPMFS
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 07:05:18 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:41156 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750722AbWAPMFS
+	id S1750740AbWAPMkY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 07:40:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbWAPMkY
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 07:40:24 -0500
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:18123 "EHLO
+	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1750740AbWAPMkX
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2006 07:05:18 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id DDAFE6BCBE; Mon, 16 Jan 2006 13:05:16 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Marco Roeland <marco.roeland@xs4all.nl>
-In-Reply-To: <20060116113332.GA5356@fiberbit.xs4all.nl>
+	Mon, 16 Jan 2006 07:40:23 -0500
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.54)
+	id 1EyTem-0001XW-OI; Mon, 16 Jan 2006 13:40:20 +0100
+To: Andreas Ericsson <ae@op5.se>
+Content-Disposition: inline
+In-Reply-To: <43CB8BFC.8050900@op5.se>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14743>
 
-Marco Roeland wrote:
-> On Monday January 16th 2006 Andreas Ericsson wrote:
-> 
-> 
->>Since "pu" = "proposed updates" it only makes sense to keep it on top of 
->>the current master, otherwise the effort required for anyone to test it 
->>in conjunction with the latest master branch would simply be too great.
-> 
-> 
-> But couldn't (in theory) the new "rebased" versions of blobs in the "pu"
-> branch be first committed as the old not yet rebased version and then
-> as the new version.
+On Monday January 16th 2006 Andreas Ericsson wrote:
 
+> The blobs are immutable and never change for a rebase, unless the 
+> file(s) it applies to is changed in master as well. It's the commits 
+> that do because they get new parents.
 
-The blobs are immutable and never change for a rebase, unless the 
-file(s) it applies to is changed in master as well. It's the commits 
-that do because they get new parents.
+Ah, I need to rebase my mental picture of what a "rebase" is. ;-) And
+the fact that each commit _does_ have sort of a blob (well in my mind I
+called it so, the file under .git/objects, although its proper name is
+indeed "commit") in the repository doesn't make it any easier!
 
-Remember that the blob object is just the (deltified?) file that's the 
-result of the commit operation. The commit object is an object in its 
-own rights, holding author info and commit-time and such. Do
+Current documentation about git-rebase(1) is technically correct of
+course then: "rebases local commits to the new head of the upstream
+tree" but rather sparse for the less initiated. In Dutch we have an
+expression for this, to "not be able to see the wood because of the
+trees", which is rather appropriate here. Perhaps we can introduce
+"liana" as an alternative for commit.
 
-	$ git cat-file commit HEAD
+<Nice young men in clean white coats come in to take me away>
 
-and you'll see what a commit-object looks like.
-
+Seriously, yours and other peoples comments make the picture much
+clearer to me and help out enormously to me and hopefully other lurkers
+in working with git and more advanced SCM in general. Thanks,
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Marco Roeland
