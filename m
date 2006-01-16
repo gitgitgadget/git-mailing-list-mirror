@@ -1,56 +1,59 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Question on empty commit
-Date: Mon, 16 Jan 2006 14:58:53 -0800
-Message-ID: <7vy81fok42.fsf@assigned-by-dhcp.cox.net>
-References: <7vmzhx7ref.fsf@assigned-by-dhcp.cox.net>
-	<20060116215856.6618.qmail@web31805.mail.mud.yahoo.com>
+Date: Mon, 16 Jan 2006 15:32:07 -0800
+Message-ID: <7v8xtfn408.fsf@assigned-by-dhcp.cox.net>
+References: <20060116215856.6618.qmail@web31805.mail.mud.yahoo.com>
+	<20060116225749.90052.qmail@web31812.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 23:59:27 2006
+X-From: git-owner@vger.kernel.org Tue Jan 17 00:32:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EydJR-0003n3-G6
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 23:58:57 +0100
+	id 1Eydpp-0003XQ-ET
+	for gcvg-git@gmane.org; Tue, 17 Jan 2006 00:32:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751251AbWAPW6z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 17:58:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbWAPW6z
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 17:58:55 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:61092 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751251AbWAPW6y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2006 17:58:54 -0500
+	id S1751288AbWAPXcM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 18:32:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbWAPXcM
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 18:32:12 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:40624 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751286AbWAPXcK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2006 18:32:10 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060116225659.VVOY17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 16 Jan 2006 17:56:59 -0500
+          id <20060116232934.GGGP17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 16 Jan 2006 18:29:34 -0500
 To: ltuikov@yahoo.com
-In-Reply-To: <20060116215856.6618.qmail@web31805.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Mon, 16 Jan 2006 13:58:56 -0800 (PST)")
+In-Reply-To: <20060116225749.90052.qmail@web31812.mail.mud.yahoo.com> (Luben
+	Tuikov's message of "Mon, 16 Jan 2006 14:57:49 -0800 (PST)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14766>
 
 Luben Tuikov <ltuikov@yahoo.com> writes:
 
->> I do not quite follow you, but immediately before the "empty
->> commit" (I presume you mean the last "git merge" that merges
->> treeA head in treeB), you say "the treeA and treeB had been in
->> sync".
+> Ok, so what I'm seeing is that git history records what the _user did_
+> as opposed to _what happened to the code_.
 >
-> Meaning that merging Tree A into Tree B would introduce 0 changes
-> to Tree B.
+> Is it possible to have an env var to control this "feature".  I.e. if
+> the result is 0 lines 0 files changed, then do not update the index and/or
+> the git database.
 
-You had two separate development tracks treeA and treeB, and the
-entire merge result is taken from treeB because it had all the
-changes from the common upstream already and there was no
-development in treeA on its own:
+Good question.  We could go stronger than that, and say it would
+make more sense not to make that commit by default, except when
+the merge was done with "ours" strategy (it explicitly asks for
+an empty commit to make it stand out that trees were in sync at
+that point), or the merge was manually resolved and the result
+happens to match what treeB already had.
+
+Why?
 
           treeB ---------o--o--o--*--o--o---*--o..?
                                  /         /     .
@@ -65,38 +68,45 @@ development in treeA on its own:
 
                 o are commits, * are merge commits.
 
-and we are trying to merge the last commit on treeA line into
-the tip of treeB.  The last merge commit on the treeB line of
-development would introduce zero change from treeB's point of
-view, because there is nothing new treeB would get by merging
-with treeA.
+At point '?' we can choose not to make a merge.  You could,
+after seeing such an empty merge, emulate this behaviour by
+doing "git reset --hard HEAD^" yourself.  Then some time later,
+when treeA truly has something new to offer treeB, the next
+merge attempt will create a true merge commit at '!':
 
-Before the '?' mergepoint, what is known about treeA and treeB
-was that treeB contained everything up to the third from the
-left 'o' commit on treeA line.  We now noticed that treeA has
-some changes since then (i.e. all the good stuff from the common
-upstream), and merge even has noticed that these changes happen
-to be already what treeB already had and you did not have to
-hand resolve (or you might have had to; I dunno).  Making a
-commit for '?' merge records the fact that these two tips are in
-sync.  IOW, earlier treeB did not know about the merge commit at
-the tip of treeA; now it does.
+          treeB ---------o--o--o--*--o--o---*--o--?--o--o--!
+                                 /         /     .        /
+                                /         /     .        /
+          common upstream ---- / --o--o--o--o  .        /
+                              /           \   .        /
+                             /             \ .        / 
+          treeA ------o--o--o---------------*--o--o--o
 
-After this sync, if you try to merge again with treeA, no merge
-commit would be made, of course.  Now you are truly up-to-date.
+When we have the last two 'o' commits on treeB development
+track, creating '?' merge _might_ have some value, because we
+can clearly see that those two new 'o' commits on treeB are
+compatible with the '*' merge commit on treeA track.  Without
+the merge at '?' we would not be able to tell that, so in that
+sense it is a small plus to have '?' merge commit, and it may
+even help bisection bug hunting.  But in practice it may not
+matter and just clutter your history.
 
-When git talks about a branch being up-to-date wrt another
-branch, it is not about "all of the patches that the other line
-has have been applied to our tree" (we are not a patchset based
-system like darcs).  It is about commit ancestry, IOW, "in the
-past we have merged with them, and all the commits that line has
-right now are what we have already examined when we made that
-merge" is what we mean by us being up-to-date wrt them.
+Especially if we did not have the last two 'o' commits on treeB
+line, making an empty merge commit at '?' would mostly be
+pointless.
 
-Fast-forward is the other way around but the principle is the
-same.  We are fast-forward to them not because we have applied
-all the patches they have and we have more.  We are fast-forward
-because we have seen all of their commits in the past and
-recorded in our commit ancestry chain that fact as a merge, and
-in addition we have one or more commits on top of that merge
-commit.  That is when we are fast-forward wrt to them.
+
+          treeB ---------o--o--o--*--o--o---*--o--?--------!
+                                 /         /     .        /
+                                /         /     .        /
+          common upstream ---- / --o--o--o--o  .        /
+                              /           \   .        /
+                             /             \ .        / 
+          treeA ------o--o--o---------------*--o--o--o
+
+But unfortunately we cannot tell if we are going to build on top
+of '?' before we merge with treeA again next time at '!', when
+we are at point '?', so we could have an option or environment
+variable to control this "feature", but unless you can predict
+the future at point '?', deciding whether to use that option
+would be rather difficult.
