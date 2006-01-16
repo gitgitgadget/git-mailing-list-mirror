@@ -1,69 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cancelling certain commits
-Date: Mon, 16 Jan 2006 15:43:39 -0800
-Message-ID: <7vvewjlowk.fsf@assigned-by-dhcp.cox.net>
-References: <7ac1e90c0601160557r78599886nca9be9b6672a1bd7@mail.gmail.com>
-	<43CBAC0B.3020104@op5.se>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-mailinfo: cut lines at ^M
+Date: Mon, 16 Jan 2006 15:49:35 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601161548560.13339@g5.osdl.org>
+References: <Pine.LNX.4.64.0601161104070.13339@g5.osdl.org>
+ <7v1wz7n3oz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bahadir Balban <bahadir.balban@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 17 00:43:47 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 17 00:49:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eye0m-0005ng-52
-	for gcvg-git@gmane.org; Tue, 17 Jan 2006 00:43:46 +0100
+	id 1Eye6c-0006sk-Hd
+	for gcvg-git@gmane.org; Tue, 17 Jan 2006 00:49:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751227AbWAPXnl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 18:43:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbWAPXnl
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 18:43:41 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:5602 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751227AbWAPXnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2006 18:43:41 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060116234131.VYIU26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 16 Jan 2006 18:41:31 -0500
-To: Andreas Ericsson <ae@op5.se>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751269AbWAPXto (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 18:49:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbWAPXto
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 18:49:44 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:64207 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751269AbWAPXtn (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2006 18:49:43 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0GNnaDZ022598
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 16 Jan 2006 15:49:36 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0GNnZxT015304;
+	Mon, 16 Jan 2006 15:49:35 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1wz7n3oz.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.65__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14769>
 
-Andreas Ericsson <ae@op5.se> writes:
 
- ... (all the good stuff not repeated).
 
-As a general rule, first of all, make sure that this kind of
-"cleaning up the history" can be done only before you make your
-history available to others, and not after.
+On Mon, 16 Jan 2006, Junio C Hamano wrote:
+> 
+> I've briefly wondered if a better alternative is to split lines
+> at "\r\n", "\n", or "\r", which would make the next line begin
+> with ")" in your example.
 
-> # make sure "git status" doesn't show any changes
->
-> $ git branch anchor # to make a safe point to reset to if things go bad
-> $ git reset --hard HEAD~7 # undo commits 3 - 10
-> # replay commits 4, 5, 6, 8, 9
-> $ for i in 6 5 4 2 1; do git cherry-pick -r anchor~$i || break; done
-> # replay commit 10
-> $ git cherry-pick -r anchor
+In which case the patch does nothing good for me. I want to either drop 
+the bogus line, or have applymbox refuse to apply such an email..
 
-I think "6 5 4 2 1 0" would be sweeter.  rev~0 == rev
-
-> ..., and never *ever*
-> do
->
-> $ git prune
->
-> on a repo where you're juggling loose commits like this (although that
-> should actually be safe when you create 'anchor' as a branch rather
-> than as a tag, which Junio usually recommends).
-
-Sorry, I do not understand this part.  tags and branch heads are
-used in the same way to determine what objects to protect from
-"prune", so I thought there was no difference from the safety
-point of view between the anchor being a branch or a tag.
+		Linus
