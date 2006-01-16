@@ -1,58 +1,64 @@
-From: Marco Roeland <marco.roeland@xs4all.nl>
-Subject: Re: dangling commits
-Date: Mon, 16 Jan 2006 09:52:38 +0100
-Message-ID: <20060116085238.GA3768@fiberbit.xs4all.nl>
-References: <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net> <20060115221108.3ED2E352659@atlas.denx.de>
+From: Arjan van de Ven <arjan@infradead.org>
+Subject: Re: [kernel.org users] [RFC] "clone --naked"?
+Date: Mon, 16 Jan 2006 10:06:05 +0100
+Message-ID: <1137402365.3034.5.camel@laptopd505.fenrus.org>
+References: <Pine.LNX.4.64.0601121556240.3535@g5.osdl.org>
+	 <43CB57A0.29999.F89D30F@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	 <7vfynoy5p5.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 09:52:52 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
+	git@vger.kernel.org, users@kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 16 10:06:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyQ6Y-0005HV-AJ
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 09:52:46 +0100
+	id 1EyQJs-0007rG-5a
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 10:06:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751070AbWAPIwo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 03:52:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbWAPIwo
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 03:52:44 -0500
-Received: from fiberbit.xs4all.nl ([213.84.224.214]:22473 "EHLO
-	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1751039AbWAPIwn
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2006 03:52:43 -0500
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.54)
-	id 1EyQ6Q-00017e-Oh; Mon, 16 Jan 2006 09:52:38 +0100
-To: Wolfgang Denk <wd@denx.de>
-Content-Disposition: inline
-In-Reply-To: <20060115221108.3ED2E352659@atlas.denx.de>
-User-Agent: Mutt/1.5.11
+	id S932251AbWAPJGN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 04:06:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751116AbWAPJGM
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 04:06:12 -0500
+Received: from pentafluge.infradead.org ([213.146.154.40]:38371 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S1751107AbWAPJGL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2006 04:06:11 -0500
+Received: from [2002:d55d:ead:110:20e:35ff:fea5:7eb2] (helo=[IPv6:2002:d55d:ead:110:20e:35ff:fea5:7eb2])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.54 #1 (Red Hat Linux))
+	id 1EyQJS-0002L4-RB; Mon, 16 Jan 2006 09:06:07 +0000
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfynoy5p5.fsf_-_@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <arjan@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14731>
 
-On Sunday January 15th 2006 Wolfgang Denk wrote:
+On Sun, 2006-01-15 at 23:47 -0800, Junio C Hamano wrote:
+> "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.DE> writes:
+> 
+> > On 14 Jan 2006 at 15:39, Junio C Hamano wrote:
+> >
+> > [...]
+> >> BTW, I have been meaning to make this easier, by introducing a
+> >> new option to "git clone", like this:
+> > ...
+> > You must be over 21 to use --naked, however ;-)
+> > Maybe you find a better word.
+> 
+> Linus seems to use word "bare" sometimes.  Checking the git-core
+> documentation, repository-layout documentation first used the
+> word naked on Sep 1 2005, while there is no mention of "bare"
+> repository anywhere.  Maybe "bare" is preferred?
+> 
+> I hope you do not mind my sending this message out to git list
+> to take a quick poll.
 
-> Is ther eany way to clean up such a situation and really get  rid  of
-> the  dangling  commits?  I understand that I'd first need some way to
-> "unpack" the packs, but how to do this? 
-
-Note that apart from the disk space they use up, dangling commits don't
-do any harm.
-
-However you can easily get rid of them by using "git prune".
-
-As far as I know although packs are used in transferring the commits to
-your local repository they are stored there as separate objects, so you
-certainly don't have to unpack things yourself for using "git prune".
-Git is quite smart, fast and safe on its own I find each time! It really
-is a wonderful tool by giving you every possibility to work with it
-without inflicting policy on you.
-
-If wanted you can use "git repack -a -d" followed by "git prune-packed"
-to create a tight packed repository (all commits and blobs in one pack)
-but there is no specific need to.
--- 
-Marco Roeland
+While I don't give a rats bottom about the "21"-ness of naked, "naked"
+is more likely to trigger spam traps than "bare" though... just a side
+consideration but unfortunately needed nowadays ;(
