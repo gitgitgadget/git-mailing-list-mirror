@@ -1,73 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] new tutorial
-Date: Sun, 15 Jan 2006 21:32:16 -0800
-Message-ID: <7vmzhwybz3.fsf@assigned-by-dhcp.cox.net>
-References: <7vek3epbs9.fsf@assigned-by-dhcp.cox.net>
-	<20060112005531.GB14599@fieldses.org>
-	<7vmzi2i5eu.fsf@assigned-by-dhcp.cox.net>
-	<20060113030837.GD27214@fieldses.org>
-	<7v8xtkhj5l.fsf@assigned-by-dhcp.cox.net>
-	<20060113151005.GA29804@fieldses.org>
-	<7v4q477vqj.fsf@assigned-by-dhcp.cox.net>
-	<20060113200152.GI4369@fieldses.org>
-	<20060115185458.GA3985@fieldses.org>
-	<7v64olysw2.fsf@assigned-by-dhcp.cox.net>
-	<20060116035731.GA14849@fieldses.org>
+From: Alexander Litvinov <lan@ac-sw.com>
+Subject: Re: RFC: Subprojects
+Date: Mon, 16 Jan 2006 13:28:04 +0600
+Organization: AcademSoft Ltd.
+Message-ID: <200601161328.04985.lan@ac-sw.com>
+References: <43C52B1F.8020706@hogyros.de> <Pine.LNX.4.64.0601110928350.5073@g5.osdl.org> <7vacdzkww3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 06:32:34 2006
+X-From: git-owner@vger.kernel.org Mon Jan 16 08:28:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyMyl-0006jf-FY
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 06:32:32 +0100
+	id 1EyOmt-0006j3-Op
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 08:28:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751034AbWAPFcU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 00:32:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751037AbWAPFcU
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 00:32:20 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:27083 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1750927AbWAPFcT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2006 00:32:19 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060116052957.PWZ17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 16 Jan 2006 00:29:57 -0500
-To: "J. Bruce Fields" <bfields@fieldses.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932188AbWAPH2M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 16 Jan 2006 02:28:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932207AbWAPH2M
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 02:28:12 -0500
+Received: from gw.ac-sw.com ([81.1.223.2]:57804 "EHLO gw.ac-sw.com")
+	by vger.kernel.org with ESMTP id S932188AbWAPH2L convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2006 02:28:11 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by gw.ac-sw.com (Postfix) with ESMTP id B2892BD5D;
+	Mon, 16 Jan 2006 13:28:09 +0600 (NOVT)
+Received: from gw.ac-sw.com ([127.0.0.1])
+ by localhost (gw.ac-sw.com [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 18131-08; Mon, 16 Jan 2006 13:28:07 +0600 (NOVT)
+Received: from lan.ac-sw.lcl (lan.ac-sw.lcl [192.168.0.69])
+	by gw.ac-sw.com (Postfix) with ESMTP id 9A7C7BD41;
+	Mon, 16 Jan 2006 13:28:07 +0600 (NOVT)
+Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
+	id 96E358F11709; Mon, 16 Jan 2006 13:28:07 +0600 (NOVT)
+Received: from localhost (localhost [127.0.0.1])
+	by lan.ac-sw.lcl (Postfix) with ESMTP id 39DE78CE9BC2;
+	Mon, 16 Jan 2006 13:28:05 +0600 (NOVT)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.8
+In-Reply-To: <7vacdzkww3.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Virus-Scanned: amavisd-new at gw.ac-sw.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14725>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
-
->> Empirically the first 7 hexdigits are enough (even 5 for small
->> projects such as git itself).  In fact, in the linux-2.6
->> repository itself, it appears 5 hexdigits are enough to identify
->> all 171902 objects (not just commits) uniquely currently
+On Saturday 14 January 2006 14:59, Junio C Hamano wrote:
+> Now I'll think aloud about a completely different design.
 >
-> Five hex digits is only 20 bits, and 171902/2^20 > 1/10, so each
-> additional object has a better than 1-in-10 chance of colliding with an
-> existing object.  The chances there hasn't been a collision in the first
-> 5 digits by now must be practically zero.  Maybe you're thinking bytes,
-> not hex digits?  Unless my math is wrong.
-
-Your math is right and my script was wrong.
-
-For linux-2.6 repository:
-
-	$ git rev-list --objects HEAD | sort >/var/tmp/objnames
-        $ wc -l </var/tmp/objnames
-        171902
-        $ sed -e 's/^\(........\).*/\1/' </var/tmp/objnames | uniq | wc -l
-        171899
-        $ sed -e 's/^\(.........\).*/\1/' </var/tmp/objnames | uniq | wc -l
-        171902
-
-So 8 is enough for most but not all objects; you need 9 to
-uniquely cover everybody.
+> We could simply overlay the projects. =A0I think this is what
+> Johannes suggested earlier.
+>
+> You keep one branch for each "subproject", and make commits into
+> each branch (i.e. if you modified files for the upstream kernel,
+> the change is committed to the branch for linux-2.6 subproject),
+> but when checking things out, you do an equivalent of octopus
+> merge across subprojects.
+If I cleary understand this idea it is NOT that I dreaming about. Almos=
+t all=20
+our sub-projects are used in more than one project (imaging network lay=
+er=20
+library). So variant with gitlink is that I willing.
