@@ -1,61 +1,56 @@
-From: Marco Roeland <marco.roeland@xs4all.nl>
-Subject: Re: dangling commits
-Date: Mon, 16 Jan 2006 13:40:20 +0100
-Message-ID: <20060116124020.GB5356@fiberbit.xs4all.nl>
-References: <7vslrp2nw0.fsf@assigned-by-dhcp.cox.net> <20060115221108.3ED2E352659@atlas.denx.de> <20060116085238.GA3768@fiberbit.xs4all.nl> <7vr778wmj3.fsf@assigned-by-dhcp.cox.net> <20060116101722.GB5196@fiberbit.xs4all.nl> <43CB753D.2030706@op5.se> <20060116113332.GA5356@fiberbit.xs4all.nl> <43CB8BFC.8050900@op5.se>
+From: Bahadir Balban <bahadir.balban@gmail.com>
+Subject: Cancelling certain commits
+Date: Mon, 16 Jan 2006 13:57:03 +0000
+Message-ID: <7ac1e90c0601160557r78599886nca9be9b6672a1bd7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: Marco Roeland <marco.roeland@xs4all.nl>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 13:40:28 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Jan 16 14:57:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyTet-0001Sl-2T
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 13:40:27 +0100
+	id 1EyUr9-0002pA-BU
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 14:57:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750740AbWAPMkY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 07:40:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbWAPMkY
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 07:40:24 -0500
-Received: from fiberbit.xs4all.nl ([213.84.224.214]:18123 "EHLO
-	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1750740AbWAPMkX
+	id S1750765AbWAPN5G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 08:57:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750764AbWAPN5G
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 08:57:06 -0500
+Received: from uproxy.gmail.com ([66.249.92.205]:12886 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750765AbWAPN5F convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2006 07:40:23 -0500
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.54)
-	id 1EyTem-0001XW-OI; Mon, 16 Jan 2006 13:40:20 +0100
-To: Andreas Ericsson <ae@op5.se>
+	Mon, 16 Jan 2006 08:57:05 -0500
+Received: by uproxy.gmail.com with SMTP id s2so658748uge
+        for <git@vger.kernel.org>; Mon, 16 Jan 2006 05:57:03 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=pxZ94jFviN1Blk/GSPVn9exL2CR5CbN+J2teGpviYCS3G7c9Q/jPHR8nFMzUXMl0QFf0qLv9EPRLzO1Tpy2A3uzNF6EXwThv/Ny+IqXu1Z6t8Q5jyPRz0oc7wfEf1XzhIu6/AgP+CvRz66904XUR7SA14AgM+r3icNgg3rjhuJs=
+Received: by 10.48.247.7 with SMTP id u7mr246364nfh;
+        Mon, 16 Jan 2006 05:57:03 -0800 (PST)
+Received: by 10.48.30.15 with HTTP; Mon, 16 Jan 2006 05:57:03 -0800 (PST)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <43CB8BFC.8050900@op5.se>
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14744>
 
-On Monday January 16th 2006 Andreas Ericsson wrote:
+Hi,
 
-> The blobs are immutable and never change for a rebase, unless the 
-> file(s) it applies to is changed in master as well. It's the commits 
-> that do because they get new parents.
+If I'm not happy with the changes I made in certain commits during
+development, how do I cancel those commits and remove them from git
+records most cleanly?
 
-Ah, I need to rebase my mental picture of what a "rebase" is. ;-) And
-the fact that each commit _does_ have sort of a blob (well in my mind I
-called it so, the file under .git/objects, although its proper name is
-indeed "commit") in the repository doesn't make it any easier!
+For example if I did commits 1 to 10, and want to get rid of commit 3
+and 7, such that, the other commits are irrelevant to changes made in
+3 and 7, but may involve changes in the same file as 3 and 7 changed,
+how do I handle it?
 
-Current documentation about git-rebase(1) is technically correct of
-course then: "rebases local commits to the new head of the upstream
-tree" but rather sparse for the less initiated. In Dutch we have an
-expression for this, to "not be able to see the wood because of the
-trees", which is rather appropriate here. Perhaps we can introduce
-"liana" as an alternative for commit.
+Furthermore, how would I handle it if there was a commit 4, that
+depended partially on commit 3? (For example if it uses a type that
+was changed in commit 3?) Would I hand-edit commit 4 to fix it?
 
-<Nice young men in clean white coats come in to take me away>
-
-Seriously, yours and other peoples comments make the picture much
-clearer to me and help out enormously to me and hopefully other lurkers
-in working with git and more advanced SCM in general. Thanks,
--- 
-Marco Roeland
+Many thanks,
+Bahadir
