@@ -1,93 +1,103 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] new tutorial
-Date: Sun, 15 Jan 2006 22:57:31 -0500
-Message-ID: <20060116035731.GA14849@fieldses.org>
-References: <7vek3epbs9.fsf@assigned-by-dhcp.cox.net> <20060112005531.GB14599@fieldses.org> <7vmzi2i5eu.fsf@assigned-by-dhcp.cox.net> <20060113030837.GD27214@fieldses.org> <7v8xtkhj5l.fsf@assigned-by-dhcp.cox.net> <20060113151005.GA29804@fieldses.org> <7v4q477vqj.fsf@assigned-by-dhcp.cox.net> <20060113200152.GI4369@fieldses.org> <20060115185458.GA3985@fieldses.org> <7v64olysw2.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: RFC: Subprojects
+Date: Mon, 16 Jan 2006 00:06:18 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0601152248030.25300@iabervon.org>
+References: <43C52B1F.8020706@hogyros.de> 
+ <Pine.LNX.4.63.0601111740220.17966@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <43C537C9.4090206@hogyros.de>  <Pine.LNX.4.64.0601110928350.5073@g5.osdl.org>
+  <7vacdzkww3.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org>
+  <43C951B6.5030607@gmail.com>  <Pine.LNX.4.64.0601141154590.13339@g5.osdl.org>
+  <43C95F69.7090200@gmail.com> <7vk6d2fsu6.fsf@assigned-by-dhcp.cox.net>
+ <46a038f90601141628n2ec32e8fy7fc23d8d7884c0f2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 04:57:48 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, gitzilla@gmail.com,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Simon Richter <Simon.Richter@hogyros.de>
+X-From: git-owner@vger.kernel.org Mon Jan 16 06:04:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyLV2-0007ND-0D
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 04:57:44 +0100
+	id 1EyMXm-0002k7-Jm
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 06:04:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751009AbWAPD5e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jan 2006 22:57:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750988AbWAPD5d
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jan 2006 22:57:33 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:46505 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP
-	id S1750976AbWAPD5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jan 2006 22:57:33 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
-	(envelope-from <bfields@fieldses.org>)
-	id 1EyLUp-0006Fq-Sp; Sun, 15 Jan 2006 22:57:31 -0500
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v64olysw2.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
+	id S932182AbWAPFE3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 00:04:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932183AbWAPFE3
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 00:04:29 -0500
+Received: from iabervon.org ([66.92.72.58]:55819 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932182AbWAPFE2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2006 00:04:28 -0500
+Received: (qmail 5229 invoked by uid 1000); 16 Jan 2006 00:06:18 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 16 Jan 2006 00:06:18 -0500
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90601141628n2ec32e8fy7fc23d8d7884c0f2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14721>
 
-On Sun, Jan 15, 2006 at 03:26:53PM -0800, Junio C Hamano wrote:
-> We may want to mention that the canonical commit log message
-> format is a single line "summary phrase", an empty line, and the
-> body of the message.
+On Sun, 15 Jan 2006, Martin Langhoff wrote:
 
-Sounds reasonable.  After the second mention of "commit -a" I've added:
-
-	A note on commit messages: though not required, it's a good idea
-	to begin the commit message with a single short (less than 50
-	character) line summarizing the change, followed by a blank line
-	and then a more thorough description.  Tools that turn commits
-	into email, for example, use the first line on the Subject line
-	and the rest of the commit in the body.
-
-(Alternatively, if we had more of this sort of thing we could collect
-them into a "best practices" document to reference at the end.)
-
-> A bit narrower fill-column settings, please.
-
-Does 70 characters work for you?
-
-And thanks for the rest of the comments; I'll work through them and then
-send an update.  (May be a few days.)  I'll assume you want a
-replacement unless you tell me you'd prefer an incremental diff.
-
-This caught my eye:
-
-> Empirically the first 7 hexdigits are enough (even 5 for small
-> projects such as git itself).  In fact, in the linux-2.6
-> repository itself, it appears 5 hexdigits are enough to identify
-> all 171902 objects (not just commits) uniquely currently
-
-Five hex digits is only 20 bits, and 171902/2^20 > 1/10, so each
-additional object has a better than 1-in-10 chance of colliding with an
-existing object.  The chances there hasn't been a collision in the first
-5 digits by now must be practically zero.  Maybe you're thinking bytes,
-not hex digits?  Unless my math is wrong.
-
-But for these purposes we're just worried about the chance of a
-particular string having a collision, which should be more like
-(number of objects) / 2^(4*number of digits), so yeah, 16 digits is
-overkill, good point.
-
-> BTW, I do not see the CC'ed copy on list archives and am wondering why
-> even though I see CC: header in the copy I received...
-
-Maybe the list software didn't like the big patch?
-
-> BTW^2, it might be interesting to do
+> On 1/15/06, Junio C Hamano <junkio@cox.net> wrote:
+> > > The "get" rule for each sub-project could be something like:
+> > >
+> > >       git_sub-project:
+> > >               mkdir sub-project
+> > >               cd sub-project
+> > >               git-init-db
+> > >               git-fetch <fetch-options> <repository> <refspec>
+> > >               git-checkout <branch>
+> > >               $(MAKE) get_sub_components
+> >
+> > There lies a drake here --- <repository> is not the same for
+> > everybody.  It is not a big showstopper dragon, though.
 > 
-> 	$ git format-patch -C origin..master
+> Well, that /little complication/ applies to doing it in git too ;-)
+> There's no way to tell how the dev doing the top level checkout has
+> access to the subproject repos.
 > 
-> the next time around.
+> I am with gitzilla on this one. Let the projects have their own
+> bootstraping mechanisms, using make, ant or whatever catches their
+> fancy. One of the great things about git is that it doesn't assume
+> that it's being used by all the projects in the world -- thanks to
+> Linus' disregard for arbitrary metadata and to your git-cherry
+> implementation, it's all about the content -- and so it interoperates
+> great with Arch, SVN, CVS, etc.
 
-Oh, I see, it catches the rename then.  Neat.
+But most of the content of the project that started this thread is the 
+revisions of the subprojects. Sure, it could all be done in the build 
+system, but then it becomes impractical to manage. Git could refuse to 
+support tracking the executable bit on files, or what directories things 
+are in, and we could tell people to use their build systems to set these 
+things, but it would make the tool impractical to use. We want to track 
+some metadata, because it's actually important; what we don't want to 
+track is the metadata that is local to the particular working tree. That's 
+why we track only one executable bit, not a full set of permissions; it's 
+a matter of local policy who can interact with the files in a working 
+tree, but it's part of the content whether a file is executable.
 
---b.
+So the problem with handling subprojects with the build system is that it 
+is too tempting to use the revision control system directly on the 
+subproject, at which point the thing you're developing and testing isn't 
+at all what other people will get if they check out your commit. You want 
+"git status" to report it as an uncommitted change if you have a different 
+revision of the subproject than your previous commit had, and it can't 
+tell if this information is buried in the build system.
+
+I like Linus's proposal: which revision of which project goes where is 
+part of the content, while how you manipulate data for that project is a 
+matter of local policy, and is not tracked, although it might be a good 
+idea to let project provide overridable defaults (so that, if you're a 
+random member of the general public and don't have a special method for 
+accessing the repository, you don't have to track it down yourself).
+
+The tricky question is whether we should permit the "subproject" objects 
+to specify a revision that isn't a hash, for use in identifying revisions 
+of subprojects in other systems.
+
+	-Daniel
+*This .sig left intentionally blank*
