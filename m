@@ -1,74 +1,57 @@
-From: "Shard J. Housekeeper" <mori@gesposgroup.com>
-Subject: Software
-Date: Mon, 16 Jan 2006 10:32:51 -0600
-Message-ID: <5294497734.20060116103251@gesposgroup.com>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: gitweb: latest blob date (request)
+Date: Mon, 16 Jan 2006 18:44:44 +0100
+Message-ID: <20060116174444.GA13512@vrfy.org>
+References: <20060115173100.1134256b.rdunlap@xenotime.net> <17355.10749.834774.642712@cargo.ozlabs.ibm.com> <20060115211011.17b18f60.rdunlap@xenotime.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jan 16 15:51:44 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 16 18:45:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyVhg-0007vQ-M6
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 15:51:29 +0100
+	id 1EyYPc-0001Qm-T9
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 18:45:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750843AbWAPOv0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 09:51:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750840AbWAPOv0
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 09:51:26 -0500
-Received: from zeus2.kernel.org ([204.152.191.36]:38307 "EHLO zeus2.kernel.org")
-	by vger.kernel.org with ESMTP id S1750838AbWAPOvZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2006 09:51:25 -0500
-Received: from 146535520 (ZO177132.ppp.dion.ne.jp [222.11.177.132])
-	by zeus2.kernel.org (8.13.1/8.13.1) with SMTP id k0GEnVqm014659
-	for <git@vger.kernel.org>; Mon, 16 Jan 2006 06:51:10 -0800
-Received: from gesposgroup.com (144870896 [144335744])
-	by zo177132.ppp.dion.ne.jp (Qmailv1) with ESMTP id 5F21C32384
-	for <git@vger.kernel.org>; Mon, 16 Jan 2006 10:32:51 -0600
-X-Mailer: The Bat! (v2.00.8) Personal
-X-Priority: 3
-To: Git <git@vger.kernel.org>
-X-AntiVirus: checked by AntiVir MailGate (version: 2.0.1.5; AVE: 6.17.0.2; VDF: 6.17.0.5; host: zo177132.ppp.dion.ne.jp)
-X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus2
-X-Virus-Status: Clean
+	id S1750744AbWAPRoz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 12:44:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750834AbWAPRoz
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 12:44:55 -0500
+Received: from soundwarez.org ([217.160.171.123]:48021 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S1750744AbWAPRoy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2006 12:44:54 -0500
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id B0F4D7BFEF; Mon, 16 Jan 2006 18:44:44 +0100 (CET)
+To: "Randy.Dunlap" <rdunlap@xenotime.net>
+Content-Disposition: inline
+In-Reply-To: <20060115211011.17b18f60.rdunlap@xenotime.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 15.1 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5047]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: worldyli.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: worldyli.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: worldyli.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: worldyli.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: worldyli.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14747>
 
-Looking for cheap high-quality software? 
-Software taking a bite out of your budget? Try 0EM!
+On Sun, Jan 15, 2006 at 09:10:11PM -0800, Randy.Dunlap wrote:
+> On Mon, 16 Jan 2006 16:07:09 +1100 Paul Mackerras wrote:
+> 
+> > Randy,
+> > 
+> > > I would find it helpful (a user optimization) if each tree list
+> > > contained a date-last-modified/updated.  This could be used
+> > > to help decide if I (someone) wanted to click on a particular
+> > > blob or history (OK, blobs are quick, but history can be
+> > > very time-consuming, so being able to shortcut or skip
+> > > history would be very helpful IMO).
+> > 
+> > Are you talking about gitk or gitweb?  If you mean gitweb on
+> > kernel.org, Kay Sievers is who you need to talk to.
+> 
+> Sheesh, you are correct.  Sorry.
 
-New software on our site:
+Hmm, where do I find this information? It is recorded in last commit,
+that changed the file, right? I'm not sure, if we can get this out of
+the git tools?
 
-Quark Xpress 6 Passport Multilanguage - $69.95
-After Effects 6 - $69.95
-Creative Suite Standard (3 CD) - $129.95
-Painter 8 - $59.95
-Windows NT 4.0 Server - $49.95
-FileMaker 7.0 Professional - $69.95
-Visio 2003 Professional - $69.95
-Plus! XP - $59.95
-Visio 2003 Professional - $69.95
-Streets and Trips 2004 North America (2CD) - $69.95
-Picture It Premium 9 - $59.95
-Photoshop CS $99.95
-Windows NT 4.0 Terminal Server - $49.95
-Dreamweaver MX 2004 $69.95
-
-Our site:
-http://worldyli.com
+Thanks,
+Kay
