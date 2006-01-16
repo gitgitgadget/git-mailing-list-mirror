@@ -1,61 +1,114 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [kernel.org users] [RFC] "clone --naked"?
-Date: Mon, 16 Jan 2006 11:17:18 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601161114080.13339@g5.osdl.org>
-References: <Pine.LNX.4.64.0601121556240.3535@g5.osdl.org>
- <43CB57A0.29999.F89D30F@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
- <7vfynoy5p5.fsf_-_@assigned-by-dhcp.cox.net> <1137402365.3034.5.camel@laptopd505.fenrus.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: gitweb on kernel.org broken
+Date: Mon, 16 Jan 2006 12:02:05 -0800
+Message-ID: <7vwth0rlfm.fsf@assigned-by-dhcp.cox.net>
+References: <43CBE993.9060701@zytor.com> <20060116185342.GA14088@vrfy.org>
+	<20060116190556.GA14184@vrfy.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
-	git@vger.kernel.org, users@kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 20:18:35 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
+	gregkh@kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 16 21:02:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyZrI-00057s-B9
-	for gcvg-git@gmane.org; Mon, 16 Jan 2006 20:17:42 +0100
+	id 1EyaYc-0001zr-R7
+	for gcvg-git@gmane.org; Mon, 16 Jan 2006 21:02:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751165AbWAPTRh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jan 2006 14:17:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751166AbWAPTRh
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 14:17:37 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:19846 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751165AbWAPTRg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2006 14:17:36 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0GJHNDZ009003
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 16 Jan 2006 11:17:23 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0GJHIZi002018;
-	Mon, 16 Jan 2006 11:17:20 -0800
-To: Arjan van de Ven <arjan@infradead.org>
-In-Reply-To: <1137402365.3034.5.camel@laptopd505.fenrus.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.65__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751161AbWAPUCK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jan 2006 15:02:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbWAPUCI
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jan 2006 15:02:08 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:7328 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1751161AbWAPUCH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2006 15:02:07 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060116200212.EIZY25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 16 Jan 2006 15:02:12 -0500
+To: Kay Sievers <kay.sievers@vrfy.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14757>
 
+Kay Sievers <kay.sievers@vrfy.org> writes:
 
+>> Junio, seems your "textual symref HEAD" change is causing this?
 
-On Mon, 16 Jan 2006, Arjan van de Ven wrote:
-> 
-> While I don't give a rats bottom about the "21"-ness of naked, "naked"
-> is more likely to trigger spam traps than "bare" though... just a side
-> consideration but unfortunately needed nowadays ;(
+Yeah, I assumed git_read_head() is called only on a repository
+that was verified to be valid, and the subroutine did not check
+the case where HEAD does not verify.  My bad.  The attached
+patch should solve this.
 
-Yeah. I've had spamassassin kill patches to the aic7xxx driver because the 
-subject said "aic7xxx", and the "xxx" triggered as being a bad word.
+The error log says hotplug-ng.git is triggering it.  I wonder what
+is so special about that repository.  I hope it is transient
+during mirroring that mirrored HEAD before objects, not a
+corrupt repository at the mirroring source.
 
-Now, "naked" doesn't seem to trigger anything for spamassassin, but I 
-wouldn't be entirely surprised if some web-content blocker were to be 
-over-eager at times. So "bare" might be safer.
+	... goes to kernel.org mirroring source machine ...
 
-		Linus
+Ugh.  It is _not_ a valid git repository.  HEAD should be either a symlink
+or a symref pointing somewhere under refs/heads/, but in that
+directory, it instead is a regular file that contains an object
+name.  There is nothing under refs/ either:
+
+        $ ls -l /pub/scm/linux/hotplug/hotplug-ng.git/HEAD
+        -rw-r--r--  2 gregkh users 41 May  6  2005 /pub/s...ug-ng.git/HEAD
+	$ cat /pub/scm/linux/hotplug/hotplug-ng.git/HEAD
+        b26bec9f620a969fe5238e8666ab698f197df488
+	$ ls -l /pub/scm/linux/hotplug/hotplug-ng.git/refs
+	total 0
+	$ exit
+
+Greg, could you let me know what is going on with this
+repository, please?
+
+First of all, I am wondering if this repository is still used
+(maintained); a regular file HEAD that contains an object name
+would have stopped working on Aug 27 2005 with this commit at the
+latest, maybe even before that:
+
+    diff-tree 5f5608b... (from 9740d28...
+    Author: Linus Torvalds <torvalds@osdl.org>
+    Date:   Sat Aug 27 13:54:42 2005 -0700
+
+    [PATCH] Make .git directory validation code test HEAD
+
+    Inspired by a report by Kalle Valo, this changes git-sh-setup-script and
+    the "setup_git_directory()" function to test that $GIT_DIR/HEAD is a
+    symlink, since a number of core git features depend on that these days.
+    ...
+
+The way I expected to see that part of the directory laid out in
+a valid git repository would be:
+
+	$ cd /pub/scm/linux/hotplug/hotplug-ng.git/
+	$ mkdir -p refs/heads
+	$ cat HEAD >refs/heads/master
+	$ rm -f HEAD
+	$ ln -s refs/heads/master HEAD
+
+Anyhow, here is a gitweb patch to skip this.
+
+---
+diff --git a/gitweb.cgi b/gitweb.cgi
+index 986d7da..f3853e7 100755
+--- a/gitweb.cgi
++++ b/gitweb.cgi
+@@ -404,9 +404,8 @@ sub git_read_head {
+ 	if (open my $fd, "-|", "$gitbin/git-rev-parse", "--verify", "HEAD") {
+ 		my $head = <$fd>;
+ 		close $fd;
+-		chomp $head;
+-		if ($head =~ m/^[0-9a-fA-F]{40}$/) {
+-			$retval = $head;
++		if (defined $head && $head =~ /^([0-9a-fA-F]{40})$/) {
++			$retval = $1;
+ 		}
+ 	}
+ 	$ENV{'GIT_DIR'} = $oENV;
