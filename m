@@ -1,72 +1,77 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] "sleep 1" sleeps too little on cygwin
-Date: Tue, 17 Jan 2006 12:25:37 +0100
-Message-ID: <81b0412b0601170325y60094b4w693ac37490c67410@mail.gmail.com>
+From: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
+Subject: Re: [kernel.org users] [RFC] "clone --naked"?
+Date: Tue, 17 Jan 2006 14:23:39 +0100
+Organization: Universitaet Regensburg, Klinikum
+Message-ID: <43CCFDEA.2997.15EA2FA@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+References: <43CCB1D3.10309.35645D@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de> (Ulrich Windl's message of "Tue, 17 Jan 2006 08:58:59 +0100")
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_3612_15594453.1137497137687"
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Jan 17 12:25:46 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 17 14:24:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eyoy9-0005uj-JX
-	for gcvg-git@gmane.org; Tue, 17 Jan 2006 12:25:45 +0100
+	id 1Eyqoq-0007Fi-3z
+	for gcvg-git@gmane.org; Tue, 17 Jan 2006 14:24:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932361AbWAQLZn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jan 2006 06:25:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932395AbWAQLZm
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 06:25:42 -0500
-Received: from uproxy.gmail.com ([66.249.92.202]:55975 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932361AbWAQLZm (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2006 06:25:42 -0500
-Received: by uproxy.gmail.com with SMTP id s2so1023431uge
-        for <git@vger.kernel.org>; Tue, 17 Jan 2006 03:25:40 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=N6Ekji3A/tDozarY+DgwoOKmObiLpQw3GPCQrnhp+xf8lVDsmv0FLdS3PZ1oW3JU4JkLhp04981JYmG6IvuUWXcY/yfN9pe8FlFwbekSkaZmsQkYYTjI5ABOqX+fc6EBokPiHauTCOiDG2GVd0hK1rBmVa5ENhAfWFLNTeXMoVg=
-Received: by 10.49.1.20 with SMTP id d20mr328649nfi;
-        Tue, 17 Jan 2006 03:25:40 -0800 (PST)
-Received: by 10.48.248.4 with HTTP; Tue, 17 Jan 2006 03:25:37 -0800 (PST)
-To: git@vger.kernel.org
+	id S932372AbWAQNYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jan 2006 08:24:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932472AbWAQNYM
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 08:24:12 -0500
+Received: from rrzmta2.rz.uni-regensburg.de ([132.199.1.17]:12721 "EHLO
+	rrzmta2.rz.uni-regensburg.de") by vger.kernel.org with ESMTP
+	id S932372AbWAQNYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2006 08:24:11 -0500
+Received: from rrzmta2.rz.uni-regensburg.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id A70A1173D9;
+	Tue, 17 Jan 2006 14:24:15 +0100 (CET)
+Received: from kgate1.dvm.klinik.uni-regensburg.de (kgate1.klinik.uni-regensburg.de [132.199.176.18])
+	by rrzmta2.rz.uni-regensburg.de (Postfix) with ESMTP id 9FC44173D5;
+	Tue, 17 Jan 2006 14:24:15 +0100 (CET)
+Received: from rkdvmks1.ngate.uni-regensburg.de (rkdvmks1.dvm.klinik.uni-regensburg.de [132.199.176.1])
+	by kgate1.dvm.klinik.uni-regensburg.de (8.12.10/8.12.10/20051031MT-1) with ESMTP id k0HDO9F9014197;
+	Tue, 17 Jan 2006 14:24:09 +0100
+Received: from RKDVMKS1/SpoolDir by rkdvmks1.ngate.uni-regensburg.de (Mercury 1.48);
+    17 Jan 06 14:24:09 +0100
+Received: from SpoolDir by RKDVMKS1 (Mercury 1.48); 17 Jan 06 14:23:44 +0100
+To: Junio C Hamano <junkio@cox.net>
+In-reply-to: <7v1wz7clps.fsf@assigned-by-dhcp.cox.net>
+X-mailer: Pegasus Mail for Windows (4.30 public beta 1)
+Content-description: Mail message body
+X-Content-Conformance: HerringScan-0.25/Sophos-P=3.98.0+V=3.98+U=2.07.112+R=03 October 2005+T=114369@20060117.131628Z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14793>
 
-------=_Part_3612_15594453.1137497137687
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On 17 Jan 2006 at 0:17, Junio C Hamano wrote:
 
-Probably another one windows quirk, or just the moon phases,
-but I have to make damn sure it sleeps long enough.
+> "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de> writes:
+> 
+> > ...  My original intention was that I
+> > thought them to be little descriptive regarding their
+> > function.  You seem to have "--bare" and "--naked". Hard to
+> > guess what they really do.
+> 
+> True.  "A repository without an associated working tree".  I do
 
-------=_Part_3612_15594453.1137497137687
-Content-Type: text/x-patch; name=cygwin-sleeps-too-little.patch; 
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="cygwin-sleeps-too-little.patch"
+--rmo --repository-metadata-only?
+--sdf --sans-data-files?
+--rwwt (Repository Without Working Tree)?
+--qdr (Quick-and-Dirty Repository)?
 
-diff --git a/t/t4011-diff-symlink.sh b/t/t4011-diff-symlink.sh
-index e3ebf38..8c5b614 100755
---- a/t/t4011-diff-symlink.sh
-+++ b/t/t4011-diff-symlink.sh
-@@ -56,10 +56,11 @@ cat > expected << EOF
- diff --git a/frotz b/frotz
- EOF
- 
-+secs="$SECONDS"
-+while [ "$SECONDS" = "$secs" ]; do sleep 1; done
- test_expect_success \
-     'diff identical, but newly created symlink' \
--    'sleep 1 &&
--    ln -s xyzzy frotz &&
-+    'ln -s xyzzy frotz &&
-     git-diff-index -M -p $tree > current &&
-     compare_diff_patch current expected'
- 
+...
 
-------=_Part_3612_15594453.1137497137687--
+I think you have your own ideas...
+
+Ulrich
+
+
+> not know a short and sweet phrase to describe that (well, except
+> "bare" and "naked", which I kind of already got used to).
+> 
+> Whatever word we choose to describe that, it should go to the
+> glossary document.
+> 
