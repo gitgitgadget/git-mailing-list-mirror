@@ -1,77 +1,77 @@
-From: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
-Subject: Re: [kernel.org users] [RFC] "clone --naked"?
-Date: Tue, 17 Jan 2006 14:23:39 +0100
-Organization: Universitaet Regensburg, Klinikum
-Message-ID: <43CCFDEA.2997.15EA2FA@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
-References: <43CCB1D3.10309.35645D@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de> (Ulrich Windl's message of "Tue, 17 Jan 2006 08:58:59 +0100")
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: RFC: Subprojects
+Date: Tue, 17 Jan 2006 15:09:37 +0100
+Message-ID: <20060117140937.GI28365@pasky.or.cz>
+References: <43C52B1F.8020706@hogyros.de> <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org> <7vek3ah8f9.fsf@assigned-by-dhcp.cox.net> <200601161144.48245.Josef.Weidendorfer@gmx.de> <7vek37rj83.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0601170001130.25300@iabervon.org> <7vfynnfkc8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 17 14:24:45 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 17 15:08:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eyqoq-0007Fi-3z
-	for gcvg-git@gmane.org; Tue, 17 Jan 2006 14:24:16 +0100
+	id 1EyrVg-0000dc-0U
+	for gcvg-git@gmane.org; Tue, 17 Jan 2006 15:08:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932372AbWAQNYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jan 2006 08:24:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932472AbWAQNYM
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 08:24:12 -0500
-Received: from rrzmta2.rz.uni-regensburg.de ([132.199.1.17]:12721 "EHLO
-	rrzmta2.rz.uni-regensburg.de") by vger.kernel.org with ESMTP
-	id S932372AbWAQNYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2006 08:24:11 -0500
-Received: from rrzmta2.rz.uni-regensburg.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id A70A1173D9;
-	Tue, 17 Jan 2006 14:24:15 +0100 (CET)
-Received: from kgate1.dvm.klinik.uni-regensburg.de (kgate1.klinik.uni-regensburg.de [132.199.176.18])
-	by rrzmta2.rz.uni-regensburg.de (Postfix) with ESMTP id 9FC44173D5;
-	Tue, 17 Jan 2006 14:24:15 +0100 (CET)
-Received: from rkdvmks1.ngate.uni-regensburg.de (rkdvmks1.dvm.klinik.uni-regensburg.de [132.199.176.1])
-	by kgate1.dvm.klinik.uni-regensburg.de (8.12.10/8.12.10/20051031MT-1) with ESMTP id k0HDO9F9014197;
-	Tue, 17 Jan 2006 14:24:09 +0100
-Received: from RKDVMKS1/SpoolDir by rkdvmks1.ngate.uni-regensburg.de (Mercury 1.48);
-    17 Jan 06 14:24:09 +0100
-Received: from SpoolDir by RKDVMKS1 (Mercury 1.48); 17 Jan 06 14:23:44 +0100
+	id S932500AbWAQOI3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jan 2006 09:08:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932503AbWAQOI3
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 09:08:29 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:4834 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932500AbWAQOI2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2006 09:08:28 -0500
+Received: (qmail 407 invoked by uid 2001); 17 Jan 2006 15:09:37 +0100
 To: Junio C Hamano <junkio@cox.net>
-In-reply-to: <7v1wz7clps.fsf@assigned-by-dhcp.cox.net>
-X-mailer: Pegasus Mail for Windows (4.30 public beta 1)
-Content-description: Mail message body
-X-Content-Conformance: HerringScan-0.25/Sophos-P=3.98.0+V=3.98+U=2.07.112+R=03 October 2005+T=114369@20060117.131628Z
+Content-Disposition: inline
+In-Reply-To: <7vfynnfkc8.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14794>
 
-On 17 Jan 2006 at 0:17, Junio C Hamano wrote:
-
-> "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de> writes:
+Dear diary, on Tue, Jan 17, 2006 at 07:18:47AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Here again I am thinking aloud, remembering the earlier example
+> of an embedded linux project that ships with linux-2.6 and
+> gcc-4.0, along with its own README and Makefile at the toplevel
+> and src/ for its own sources.  The tools at the tip of "pu"
+> should be able to let you do the following:
 > 
-> > ...  My original intention was that I
-> > thought them to be little descriptive regarding their
-> > function.  You seem to have "--bare" and "--naked". Hard to
-> > guess what they really do.
+> 	$ git cat-file commit $such_toplevel_commit
+> 	tree $tree
+>         parent $parent
+>         bind $primarysub /
+>         bind $linuxsub linux-2.6/
+>         bind $gccsub gcc-4.0/
+> 	author A U Thor <author@example.com> 1137392543 -0800
+> 	commmitter A U Thor <author@example.com> 1137392543 -0800
 > 
-> True.  "A repository without an associated working tree".  I do
-
---rmo --repository-metadata-only?
---sdf --sans-data-files?
---rwwt (Repository Without Working Tree)?
---qdr (Quick-and-Dirty Repository)?
-
-...
-
-I think you have your own ideas...
-
-Ulrich
-
-
-> not know a short and sweet phrase to describe that (well, except
-> "bare" and "naked", which I kind of already got used to).
+>         An example.
 > 
-> Whatever word we choose to describe that, it should go to the
-> glossary document.
-> 
+> where $tree is the object name of the whole tree (no "gitlink"
+> object), $primarysub and $linuxsub are the object names of
+> commit objects for the primary subproject (which sits at the
+> rootlevel) and another subproject (which sits at linux-2.6/
+> subdirectory).
+
+I perhaps missed this in the thread, but is it really so useful to bind
+the subprojects to specific commits? If you care about reproducing
+specific configuration, all you have to do is tag and seek recursively -
+and even having a separate tiny git branch tracking just a single file
+listing the commit ids of subprojects seems more elegant to me than just
+forcing the specific commit ids. In the general case, I think it most
+usually goes "this project#branch, the latest commit you can get", so
+I'm not really convinced that you are optimizing for the right case at
+all.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
