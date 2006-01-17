@@ -1,81 +1,74 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: StGIT: "stg new" vs "stg new --force"
-Date: Tue, 17 Jan 2006 22:57:52 +0100
-Message-ID: <20060117215752.GH32585@nowhere.earth>
-References: <1137144291.20073.104.camel@dv> <b0943d9e0601160018x206faf9ck@mail.gmail.com> <1137517300.20556.26.camel@dv>
+From: Alex Bennee <kernel-hacker@bennee.com>
+Subject: [QUESTION] What is a tag for?
+Date: Tue, 17 Jan 2006 22:52:24 +0000
+Message-ID: <1137538344.9104.34.camel@malory>
+Reply-To: kernel-hacker@bennee.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	git <git@vger.kernel.org>, Charles Lever <cel@citi.umich.edu>
-X-From: git-owner@vger.kernel.org Tue Jan 17 22:54:48 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Jan 17 23:52:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eyymo-0003IJ-T4
-	for gcvg-git@gmane.org; Tue, 17 Jan 2006 22:54:43 +0100
+	id 1Eyzgd-0007Ka-RZ
+	for gcvg-git@gmane.org; Tue, 17 Jan 2006 23:52:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932285AbWAQVyj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jan 2006 16:54:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932438AbWAQVyj
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 16:54:39 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:46285 "EHLO smtp1-g19.free.fr")
-	by vger.kernel.org with ESMTP id S932285AbWAQVyj (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2006 16:54:39 -0500
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 6EC316E8E0;
-	Tue, 17 Jan 2006 22:54:32 +0100 (CET)
-Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.60)
-	(envelope-from <ydirson@altern.org>)
-	id 1Eyypt-0006OI-An; Tue, 17 Jan 2006 22:57:53 +0100
-To: Pavel Roskin <proski@gnu.org>
-Content-Disposition: inline
-In-Reply-To: <1137517300.20556.26.camel@dv>
-User-Agent: Mutt/1.5.11
+	id S932483AbWAQWwV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jan 2006 17:52:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932484AbWAQWwV
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 17:52:21 -0500
+Received: from mta07-winn.ispmail.ntl.com ([81.103.221.47]:59764 "EHLO
+	mta07-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S932483AbWAQWwU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2006 17:52:20 -0500
+Received: from aamta12-winn.ispmail.ntl.com ([81.103.221.35])
+          by mta07-winn.ispmail.ntl.com with ESMTP
+          id <20060117225216.PBX11753.mta07-winn.ispmail.ntl.com@aamta12-winn.ispmail.ntl.com>
+          for <git@vger.kernel.org>; Tue, 17 Jan 2006 22:52:16 +0000
+Received: from jack.nin ([81.97.154.68]) by aamta12-winn.ispmail.ntl.com
+          with ESMTP
+          id <20060117225216.ZPNJ20369.aamta12-winn.ispmail.ntl.com@jack.nin>
+          for <git@vger.kernel.org>; Tue, 17 Jan 2006 22:52:16 +0000
+Received: from [192.168.1.3] (helo=malory)
+	by jack.nin with esmtp (Exim 3.36 #1 (Debian))
+	id 1EyzgT-0004mU-00
+	for <git@vger.kernel.org>; Tue, 17 Jan 2006 22:52:13 +0000
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14804>
 
-On Tue, Jan 17, 2006 at 12:01:40PM -0500, Pavel Roskin wrote:
-> Hello, Catalin!
-> 
-> On Mon, 2006-01-16 at 08:18 +0000, Catalin Marinas wrote:
-> > On 13/01/06, Pavel Roskin <proski@gnu.org> wrote:
-> > > 1) "stg new --force" becomes "stg new" and "stg new" becomes "stg new
-> > > --empty", i.e. empty files can only be created with the "--empty"
-> > > switch.
-> > > 2) "stg new --force" becomes "stg record" or something.
-> > > 3) "stg new --force" becomes "stg new --record" or something.
-> > > 4) "stg new" works both with and without modified files.
-> > 
-> > Regarding (1), the newly created patch is empty anyway, you would need
-> > to run 'refresh' to add the modified patches to it ('stg series -e'
-> > would show the empty patches prefixed with a 0).
-> 
-> I was going to suggest that would be logical to run "stg refresh"
-> implicitly if "stg new" is used on modified files.  But then I realized
-> that it would be even better if future versions of StGIT allowed to
-> refresh (i.e. add changes to) patches other that the current one.  In
-> this case, indeed, you don't want the newly created patch to suck in all
-> the changes in the local repository.
+Hi,
 
-I commonly also feel the need to "stg refresh" only part of the
-current changes.  Allowing to limit the files to be impacted by a
-refresh could be a good addition.
+So I want to track Linus's 2.6 git tree as well as do a little small
+time hacking. I'm not brave enough to sit on the very bleeding edge and
+build what ever happens to be at the "HEAD" of the tree. However when a
+kernel releases I'd like to build *that* kernel.
 
-It would even be useful sometimes to dispatch changes to a single file
-into several patches.  When they are distinct enough to be in
-different diff hunks, it is pretty easy to split an existing patch,
-but it could also be useful to only refresh a patch with specific diff
-hunks.  A possibility would be to add a filterdiff-like "-#<n>" flag,
-in addition to the above-suggested "refresh <file>" (and possibly only
-allow to specify a single file together with this flag).
+I keep thinking of tags like labels in the old convetional SCM case. Is
+this correct? I can see once I've done my update (fetch/cogito what
+ever) that these tags apear in my local tree:
+
+22:42 alex@malory [linux-2.6] >cat .git/refs/tags/v2.6.16-rc1
+f3bcf72eb85aba88a7bd0a6116dd0b5418590dbe
+
+So what do I do with them now? Are they only for branch points? Is the
+only way to know I'm building 2.6.16-rc1 to branch from it as described
+in git-branch, even if I'm not planning on doing any development?
+
+Is this part of the concept that branches are cheap and you should feel
+free to create and throw them away at will?
+
+I look forward to your elucidation and the ah! moment that finally gets
+my head around git ;-)
+
+Cheers,
 
 
-Best regards,
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+--
+Alex, homepage: http://www.bennee.com/~alex/
+Zoe: "So.. Trap?" Mal: "Trap." Zoe: "We goin' in?" Mal: "Ain't nothin'
+but a few hours out." Wash: "But, remember the part where it's a trap?"
