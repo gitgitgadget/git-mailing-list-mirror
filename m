@@ -1,59 +1,87 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git rebase behaviour changed?
-Date: Tue, 17 Jan 2006 00:56:21 -0800
-Message-ID: <7vhd83b5ca.fsf@assigned-by-dhcp.cox.net>
-References: <43CC695E.2020506@codeweavers.com>
-	<7vslrnh080.fsf@assigned-by-dhcp.cox.net>
-	<43CC89DC.5060201@codeweavers.com>
-	<46a038f90601162252y7e2d9227p4eb4091b653d5c6d@mail.gmail.com>
-	<7v8xtfclyx.fsf@assigned-by-dhcp.cox.net>
-	<46a038f90601170033y334d111fjed277fc787a2e523@mail.gmail.com>
-	<7vvewjb5xz.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Cancelling certain commits
+Date: Tue, 17 Jan 2006 11:03:52 +0100
+Message-ID: <43CCC108.5000404@op5.se>
+References: <7ac1e90c0601160557r78599886nca9be9b6672a1bd7@mail.gmail.com>	<43CBAC0B.3020104@op5.se> <7vvewjlowk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mike McCormack <mike@codeweavers.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 17 09:56:37 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Bahadir Balban <bahadir.balban@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 17 11:04:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eymdj-0007Qo-As
-	for gcvg-git@gmane.org; Tue, 17 Jan 2006 09:56:31 +0100
+	id 1EynhC-0004uP-GO
+	for gcvg-git@gmane.org; Tue, 17 Jan 2006 11:04:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932351AbWAQI4X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jan 2006 03:56:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932352AbWAQI4X
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 03:56:23 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:48590 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932351AbWAQI4X (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2006 03:56:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060117085511.GDYB6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 17 Jan 2006 03:55:11 -0500
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <7vvewjb5xz.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 17 Jan 2006 00:43:20 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932361AbWAQKDy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jan 2006 05:03:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932371AbWAQKDy
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 05:03:54 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:3278 "EHLO smtp-gw1.op5.se")
+	by vger.kernel.org with ESMTP id S932361AbWAQKDx (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2006 05:03:53 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id AB01F6BCBE; Tue, 17 Jan 2006 11:03:52 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvewjlowk.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14791>
 
-Junio C Hamano <junkio@cox.net> writes:
+Junio C Hamano wrote:
+> Andreas Ericsson <ae@op5.se> writes:
+> 
+>># make sure "git status" doesn't show any changes
+>>
+>>$ git branch anchor # to make a safe point to reset to if things go bad
+>>$ git reset --hard HEAD~7 # undo commits 3 - 10
+>># replay commits 4, 5, 6, 8, 9
+>>$ for i in 6 5 4 2 1; do git cherry-pick -r anchor~$i || break; done
+>># replay commit 10
+>>$ git cherry-pick -r anchor
+> 
+> 
+> I think "6 5 4 2 1 0" would be sweeter.  rev~0 == rev
+> 
 
-> You are right.  We will lose #1 and #2, (although the "already
-> up to date" might catch some cases) and this _is_ dangerous.  I
-> need to do something about this soon.
+Didn't know that. The day isn't a complete loss already. :)
 
-Actually, I think we are OK; I do not think we would lose any
-commits.  git-format-patch (actually, git-cherry called from
-there) does the right thing.  It does not use the merge base
-done in git-rebase in any way.
+> 
+>>..., and never *ever*
+>>do
+>>
+>>$ git prune
+>>
+>>on a repo where you're juggling loose commits like this (although that
+>>should actually be safe when you create 'anchor' as a branch rather
+>>than as a tag, which Junio usually recommends).
+> 
+> 
+> Sorry, I do not understand this part.  tags and branch heads are
+> used in the same way to determine what objects to protect from
+> "prune", so I thought there was no difference from the safety
+> point of view between the anchor being a branch or a tag.
+> 
 
-In any case, we _do_ need an explanation and error-out upon
-finding a merge, as we discussed.  If somebody really wants to
-rebase a merge, he can do that by hand, as Mike easily
-demonstrated.
+You're right. That's weird though, because I distinctly remember being 
+bitten by this when I was very new to git. OTOH, I probably did 
+something stupid that broke the repo before, and my girlfriend provided 
+plenty distraction so I didn't do the pruning and the reset'ing on the 
+same day.
+
+Would a tag with the same name in a central repo overwrite a local one 
+when "git fetch --tags" is used? I think I did this over http, but I'm 
+not sure. I know I had to clean up un-annotated tags that got pushed by 
+accident after I had restored the lost commits though, so this could be 
+a cause (there was an 'anchor' tag in the shared repo as well).
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
