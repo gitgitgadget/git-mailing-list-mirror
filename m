@@ -1,94 +1,49 @@
-From: Franck <vagabon.xyz@gmail.com>
-Subject: [QUESTION] about .git/info/grafts file
-Date: Tue, 17 Jan 2006 18:32:01 +0100
-Message-ID: <cda58cb80601170932o6f955469y@mail.gmail.com>
-References: <cda58cb80601170928r252a6e34y@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Jan 17 18:32:44 2006
+From: Craig Schlenter <craig.schlenter@gmail.com>
+Subject: Re: RFC: Subprojects
+Date: Tue, 17 Jan 2006 19:33:30 +0200
+Message-ID: <AD13D35F-7085-4F92-8BE6-B00C6056EA7A@gmail.com>
+References: <43C52B1F.8020706@hogyros.de> <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org> <7vek3ah8f9.fsf@assigned-by-dhcp.cox.net> <200601161144.48245.Josef.Weidendorfer@gmx.de> <7vek37rj83.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0601170001130.25300@iabervon.org> <7vfynnfkc8.fsf@assigned-by-dhcp.cox.net> <20060117140937.GI28365@pasky.or.cz> <Pine.LNX.4.64.0601171122270.25300@iabervon.org>
+Mime-Version: 1.0 (Apple Message framework v746.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Jan 17 18:34:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eyugm-00061e-Bd
-	for gcvg-git@gmane.org; Tue, 17 Jan 2006 18:32:13 +0100
+	id 1EyujF-0006lo-SU
+	for gcvg-git@gmane.org; Tue, 17 Jan 2006 18:34:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231AbWAQRcF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jan 2006 12:32:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932232AbWAQRcE
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 12:32:04 -0500
-Received: from zproxy.gmail.com ([64.233.162.201]:13944 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932231AbWAQRcC convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2006 12:32:02 -0500
-Received: by zproxy.gmail.com with SMTP id 14so1403413nzn
-        for <git@vger.kernel.org>; Tue, 17 Jan 2006 09:32:02 -0800 (PST)
+	id S932236AbWAQRen (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jan 2006 12:34:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932233AbWAQRen
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 12:34:43 -0500
+Received: from wproxy.gmail.com ([64.233.184.203]:23624 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932236AbWAQRem (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2006 12:34:42 -0500
+Received: by wproxy.gmail.com with SMTP id 36so1465430wra
+        for <git@vger.kernel.org>; Tue, 17 Jan 2006 09:34:42 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JNtFp8UW8XsieixYcKuyTpc6B54O06yAcS9Szbuy8jIGHwD1w+QW96qYkeooiYjg5OY6Jx/JX0RMAGqG/E1IxK12NoQSElQJx8NR4LkWpxq7Uiz76p5sYGCsxlE8Fjl/pv1FPpeCWSXNpzQoV6/ZuG2HvBx0ouNsTLpkn0IzhWE=
-Received: by 10.36.196.6 with SMTP id t6mr5769772nzf;
-        Tue, 17 Jan 2006 09:32:01 -0800 (PST)
-Received: by 10.36.50.18 with HTTP; Tue, 17 Jan 2006 09:32:01 -0800 (PST)
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <cda58cb80601170928r252a6e34y@mail.gmail.com>
-Content-Disposition: inline
+        h=received:mime-version:in-reply-to:references:content-type:message-id:content-transfer-encoding:from:subject:date:to:x-mailer;
+        b=KK9Nh01nNFPLb+HuL6jvvFR15GNn8hApuYWPigRS/48/p00flsxiLNcZttO2ayda4ga8fo1VXxtGW7gELbuKXJv+D+Sn68aJlUKdtkYGTAJYUQwFI4RJ9ob9/p9SeohAH/vR9QgmkDuj0L/44p4akxQMEmK1GTu5Kn2Wq8MVpIk=
+Received: by 10.65.188.12 with SMTP id q12mr3948643qbp;
+        Tue, 17 Jan 2006 09:34:41 -0800 (PST)
+Received: from ?172.17.17.2? ( [196.2.104.182])
+        by mx.gmail.com with ESMTP id z21sm3106205qbc.2006.01.17.09.34.38;
+        Tue, 17 Jan 2006 09:34:41 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0601171122270.25300@iabervon.org>
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.746.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14799>
 
-Hi,
+Hi
 
-I'm wondering why the "grafts" files is not involved during
-push/pull/clone operations ?
+For reference, here is what subversion does:
 
-Another question regarding grafting use case. Let's say I have my
-origin branch looks like:
+http://svnbook.red-bean.com/nightly/en/svn.advanced.externals.html
 
-               origin ---0---1---<snip>---300 000---300 001---300 002
-
-Let's say that the 300 000th commit is where I started my work by using:
-
-               $ git-checkout -b master <300 000 shaid>
-
-I do some work on master branch and get the following
-
-                                                 a---b---c---d master
-                                                /
-               origin ---0---1---...---300,000---300,001---300,002
-
-Now, I would like to make my own public repository based on my work
-but before pushing master branch in that repo I would like to get rid
-of all unused commits [0 299,999]. Indeed each of these commits do not
-have useful history for my work. So I used grafts things to have:
-
-                              a---b---c---d master
-                             /
-               origin 300,000---300,001---300,002
-
-But now if I ask to git for:
-
-               $ git-merge-base master origin
-               # nothing
-
-So git failed to found the common commit object which should be 300,000. Why ?
-
-In other the hand, if I use grafting to get:
-
-                                               a---b---c---d master
-                                              /
-               origin 2999,999---300,000---300,001---300,002
-
-              $ git-merge-base master origin
-              2dcaaf2decd31ac9a21d616604c0a7c1fa65d5a4
-
-So now git found the common commit. Can anybody explain me why ?
-
-Do you think it's a good usage of git ? Or should I do otherwise to
-setup my public repository ?
-
-Thanks
---
-               Franck
+--Craig
