@@ -1,73 +1,75 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: RFC: Subprojects
-Date: Tue, 17 Jan 2006 11:45:36 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0601171122270.25300@iabervon.org>
-References: <43C52B1F.8020706@hogyros.de> <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org>
- <7vek3ah8f9.fsf@assigned-by-dhcp.cox.net> <200601161144.48245.Josef.Weidendorfer@gmx.de>
- <7vek37rj83.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0601170001130.25300@iabervon.org>
- <7vfynnfkc8.fsf@assigned-by-dhcp.cox.net> <20060117140937.GI28365@pasky.or.cz>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: StGIT: "stg new" vs "stg new --force"
+Date: Tue, 17 Jan 2006 12:01:40 -0500
+Message-ID: <1137517300.20556.26.camel@dv>
+References: <1137144291.20073.104.camel@dv>
+	 <b0943d9e0601160018x206faf9ck@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 17 17:43:52 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, Charles Lever <cel@citi.umich.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 17 18:04:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eytvt-00008r-Pq
-	for gcvg-git@gmane.org; Tue, 17 Jan 2006 17:43:46 +0100
+	id 1EyuDk-00060x-Ui
+	for gcvg-git@gmane.org; Tue, 17 Jan 2006 18:02:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932142AbWAQQno (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jan 2006 11:43:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932147AbWAQQno
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 11:43:44 -0500
-Received: from iabervon.org ([66.92.72.58]:4108 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932142AbWAQQnn (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2006 11:43:43 -0500
-Received: (qmail 19205 invoked by uid 1000); 17 Jan 2006 11:45:36 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Jan 2006 11:45:36 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060117140937.GI28365@pasky.or.cz>
+	id S932200AbWAQRBr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jan 2006 12:01:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932199AbWAQRBr
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 12:01:47 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:44959 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932200AbWAQRBq
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2006 12:01:46 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1EyuAV-0006BT-2Y
+	for git@vger.kernel.org; Tue, 17 Jan 2006 11:58:51 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1EyuDE-0008Pu-Du; Tue, 17 Jan 2006 12:01:40 -0500
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <b0943d9e0601160018x206faf9ck@mail.gmail.com>
+X-Mailer: Evolution 2.5.4 (2.5.4-6) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14797>
 
-On Tue, 17 Jan 2006, Petr Baudis wrote:
+Hello, Catalin!
 
-> I perhaps missed this in the thread, but is it really so useful to bind
-> the subprojects to specific commits? If you care about reproducing
-> specific configuration, all you have to do is tag and seek recursively -
-> and even having a separate tiny git branch tracking just a single file
-> listing the commit ids of subprojects seems more elegant to me than just
-> forcing the specific commit ids. In the general case, I think it most
-> usually goes "this project#branch, the latest commit you can get", so
-> I'm not really convinced that you are optimizing for the right case at
-> all.
+On Mon, 2006-01-16 at 08:18 +0000, Catalin Marinas wrote:
+> On 13/01/06, Pavel Roskin <proski@gnu.org> wrote:
+> > 1) "stg new --force" becomes "stg new" and "stg new" becomes "stg new
+> > --empty", i.e. empty files can only be created with the "--empty"
+> > switch.
+> > 2) "stg new --force" becomes "stg record" or something.
+> > 3) "stg new --force" becomes "stg new --record" or something.
+> > 4) "stg new" works both with and without modified files.
+> 
+> Regarding (1), the newly created patch is empty anyway, you would need
+> to run 'refresh' to add the modified patches to it ('stg series -e'
+> would show the empty patches prefixed with a 0).
 
-Think from a debugging standpoint. You know that the main project worked 
-with a particular commit of the superproject. The bug you've found is 
-related to the behavior of one of the subprojects in the the context of 
-your superproject, but you don't know this. In order to reproduce the 
-working version and search for the change that broken things, you need to 
-be able to identify which commits of subprojects were used in each commit 
-of the superproject; these are almost certainly not the latest commits on 
-any branch of the subproject. And if you're going to want to debug things 
-later, no commit of the superproject can just say to use the latest in the 
-subproject. You don't know what you make a commit whether it will turn out 
-to be a configuration that you'll want to recreate later.
+I was going to suggest that would be logical to run "stg refresh"
+implicitly if "stg new" is used on modified files.  But then I realized
+that it would be even better if future versions of StGIT allowed to
+refresh (i.e. add changes to) patches other that the current one.  In
+this case, indeed, you don't want the newly created patch to suck in all
+the changes in the local repository.
 
-Now it may be useful to have a tool to update all of the subprojects to 
-the latest versions, similar in end-user usage to pulling repositories, 
-but you still need to generate new commits when you do this, rather than 
-reinterpreting the old commits with new content, so that you keep the 
-history immutable. You also want to know when you've done this, so that 
-you don't clone a tree that's working fine and build it only to find that 
-the clone has fetched a new kernel version with different behavior without 
-letting you know that anything has changed.
+> Anyway, I would also prefer option 4. If there are no objections, I'll
+> modify StGIT accordingly. It would also be useful to have a wiki page
+> about StGIT vs. Quilt to show the main differences.
 
-	-Daniel
-*This .sig left intentionally blank*
+That would be great!
+
+I'm trying to make StGIT my primary development tool, and I think it has
+a great potential the could be realized if StGIT is freed from the need
+to emulate older tools.
+
+-- 
+Regards,
+Pavel Roskin
