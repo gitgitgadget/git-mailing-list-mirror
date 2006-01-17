@@ -1,77 +1,67 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [QUESTION] What is a tag for?
-Date: Wed, 18 Jan 2006 00:05:37 +0100
-Message-ID: <20060117230537.GK28365@pasky.or.cz>
-References: <1137538344.9104.34.camel@malory>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: StGIT: "stg new" vs "stg new --force"
+Date: Tue, 17 Jan 2006 18:16:02 -0500
+Message-ID: <1137539762.12454.11.camel@dv>
+References: <1137144291.20073.104.camel@dv>
+	 <b0943d9e0601160018x206faf9ck@mail.gmail.com>
+	 <1137517300.20556.26.camel@dv>  <20060117215752.GH32585@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 18 00:04:41 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Catalin Marinas <catalin.marinas@gmail.com>,
+	git <git@vger.kernel.org>, Charles Lever <cel@citi.umich.edu>
+X-From: git-owner@vger.kernel.org Wed Jan 18 00:16:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyzsQ-0001XK-PL
-	for gcvg-git@gmane.org; Wed, 18 Jan 2006 00:04:35 +0100
+	id 1Ez04O-0003mG-5B
+	for gcvg-git@gmane.org; Wed, 18 Jan 2006 00:16:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964876AbWAQXE2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jan 2006 18:04:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932500AbWAQXE2
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 18:04:28 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:41116 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932497AbWAQXE2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2006 18:04:28 -0500
-Received: (qmail 27519 invoked by uid 2001); 18 Jan 2006 00:05:37 +0100
-To: Alex Bennee <kernel-hacker@bennee.com>
-Content-Disposition: inline
-In-Reply-To: <1137538344.9104.34.camel@malory>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S964888AbWAQXQb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jan 2006 18:16:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964886AbWAQXQb
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 18:16:31 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:3532 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S964888AbWAQXQa
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2006 18:16:30 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1Ez016-0004c5-Hr
+	for git@vger.kernel.org; Tue, 17 Jan 2006 18:13:33 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1Ez03W-0006Yj-Gr; Tue, 17 Jan 2006 18:16:02 -0500
+To: Yann Dirson <ydirson@altern.org>
+In-Reply-To: <20060117215752.GH32585@nowhere.earth>
+X-Mailer: Evolution 2.5.4 (2.5.4-6) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14806>
 
-  Hi,
+On Tue, 2006-01-17 at 22:57 +0100, Yann Dirson wrote:
+> I commonly also feel the need to "stg refresh" only part of the
+> current changes.  Allowing to limit the files to be impacted by a
+> refresh could be a good addition.
 
-Dear diary, on Tue, Jan 17, 2006 at 11:52:24PM CET, I got a letter
-where Alex Bennee <kernel-hacker@bennee.com> said that...
-> So I want to track Linus's 2.6 git tree as well as do a little small
-> time hacking. I'm not brave enough to sit on the very bleeding edge and
-> build what ever happens to be at the "HEAD" of the tree. However when a
-> kernel releases I'd like to build *that* kernel.
-> 
-> I keep thinking of tags like labels in the old convetional SCM case. Is
-> this correct? I can see once I've done my update (fetch/cogito what
-> ever) that these tags apear in my local tree:
-> 
-> 22:42 alex@malory [linux-2.6] >cat .git/refs/tags/v2.6.16-rc1
-> f3bcf72eb85aba88a7bd0a6116dd0b5418590dbe
-> 
-> So what do I do with them now? Are they only for branch points? Is the
-> only way to know I'm building 2.6.16-rc1 to branch from it as described
-> in git-branch, even if I'm not planning on doing any development?
+Absolutely.
 
-  the simplest thing to do in Cogito if you just want to follow tags
-around is to cg-fetch periodically (that will get the changes to your
-local database, but will not check them out), and cg-seek around to
-whatever tag you want:
+> It would even be useful sometimes to dispatch changes to a single file
+> into several patches.  When they are distinct enough to be in
+> different diff hunks, it is pretty easy to split an existing patch,
+> but it could also be useful to only refresh a patch with specific diff
+> hunks.  A possibility would be to add a filterdiff-like "-#<n>" flag,
+> in addition to the above-suggested "refresh <file>" (and possibly only
+> allow to specify a single file together with this flag).
 
-	$ cg-fetch
-	$ cg-seek v2.6.16-rc1
-	$ cg-fetch
-	... no new tag ...
-	$ cg-fetch
-	... still no new tag ...
-	$ cg-fetch
-	... Linus, are you sleeping? ...
-	$ cg-fetch
-	$ cg-seek v2.6.16-rc2
-	...
+I think if would be better to improve "stg fold" to work on arbitrary
+patches.  This way, you prepare the patch in the editor (which would not
+be harder than finding hunk numbers) and fold it into the patch of your
+choice.  stg should check that the stack remains valid, possibly doing
+trivial adjustments to the higher patches.  The current tree should not
+be impacted.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+Regards,
+Pavel Roskin
