@@ -1,73 +1,131 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: RFC: Subprojects
-Date: Tue, 17 Jan 2006 00:46:40 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0601170001130.25300@iabervon.org>
-References: <43C52B1F.8020706@hogyros.de> <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org>
- <7vek3ah8f9.fsf@assigned-by-dhcp.cox.net> <200601161144.48245.Josef.Weidendorfer@gmx.de>
- <7vek37rj83.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git rebase behaviour changed?
+Date: Mon, 16 Jan 2006 21:50:23 -0800
+Message-ID: <7vslrnh080.fsf@assigned-by-dhcp.cox.net>
+References: <43CC695E.2020506@codeweavers.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 17 06:44:53 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 17 06:50:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyjeG-0003Zw-Mo
-	for gcvg-git@gmane.org; Tue, 17 Jan 2006 06:44:53 +0100
+	id 1Eyjjg-0004WV-LB
+	for gcvg-git@gmane.org; Tue, 17 Jan 2006 06:50:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750996AbWAQFot (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jan 2006 00:44:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751005AbWAQFot
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 00:44:49 -0500
-Received: from iabervon.org ([66.92.72.58]:64267 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1750996AbWAQFot (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2006 00:44:49 -0500
-Received: (qmail 15536 invoked by uid 1000); 17 Jan 2006 00:46:40 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Jan 2006 00:46:40 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vek37rj83.fsf@assigned-by-dhcp.cox.net>
+	id S1751090AbWAQFu0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jan 2006 00:50:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbWAQFu0
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 00:50:26 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:713 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751090AbWAQFuZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2006 00:50:25 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060117054933.SHVP3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 17 Jan 2006 00:49:33 -0500
+To: Mike McCormack <mike@codeweavers.com>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14777>
 
-On Mon, 16 Jan 2006, Junio C Hamano wrote:
+Mike McCormack <mike@codeweavers.com> writes:
 
->    We could introduce "bind the rest" to make write-tree write
->    out a tree that contains only the containing project part and
->    not any of the subproject part (e.g. Makefile, README and
->    src/ but not linux-2.6/ nor gcc-4.0/ in the earlier example).
->    Essentially the contents of such a tree object would be the
->    same as what "gitlink" approach would have had for the
->    containing project in the index file, minus "gitlink" entries
->    themselves).  This is not so surprising, because the missing
->    information "gitlink" approach recorded in the tree object
->    itself is expressed on "bind" lines in the commit object with
->    this approach.
+> git-rebase origin
+> -> Current branch refs/heads/master is up to date.
+>
+> However, I can do the "rebase" manually with:
+>
+> git branch master-20060117
+> git reset --hard origin
+> git-format-patch -k --stdout --full-index origin master-20060117 | \
+> 	git am --binary -3 -k
+>
+> Is this broken, or am I meant to be doing something different now?
 
-So why not use the "bind" approach for the "index vs working tree" part, 
-but write out "gitlink"-style tree objects? I think putting the info in 
-the tree objects in the location the subproject would appear is nicer than 
-having tree objects that tell only part of the story, and you don't have 
-to worry about commits that stick a subproject on top of something in the 
-tree.
+What does "git-merge-base master-20060117 origin" give you?  If
+it is the same as "origin", then the master-20060117 has been
+merged with origin, and rebase does not run in this case.
 
-In any case, I think it would be good to track where the subprojects are 
-in some core state, and probably the right solution is to have special 
-index entries for them, in addition to having their contents in the index. 
-I'm not seeing a clear way to get from commit objects with "bind" lines to 
-an index with the appropriate things read and back otherwise.
+Here is the simplest example:
 
-One idea I toyed with a while ago for the index/working tree 
-implementation is having an index file per bound project, such that each 
-project has a completely ordinary index file, and you just need to tell 
-checkout-index where to write. This is especially cute because the index 
-file for the superproject doesn't need to know about the subprojects at 
-all; they're not in that index, and the working tree is just directories 
-of untracked files. Not sure if this is a useful idea at this point or 
-not.
+                  1---2---3---4 master
+                 /
+        origin  0
 
-	-Daniel
-*This .sig left intentionally blank*
+Of course, you _could_ extract patches #1, #2, #3, and #4
+between origin and master, and apply them on top of #0 to
+reconstruct "master" as you found out, but there is not much
+point doing so.
+
+Rebase changes the "master" branch when the development track
+between you (master) and upstream (origin) have forked:
+
+                  1---2---3---4 master
+                 /
+        origin' 0---5---6 origin
+
+In this case, things are rearranged by rebase:
+
+                        1'--2'--3'--4' master
+                       /
+        origin' 0--5--6 origin
+
+
+End of on-topic answers.
+
+
+BTW, what this means is that it would not rearrange something
+like this:
+
+                    2---3
+                   /     \
+                  1---4---5---6 master
+                 / 
+        origin  0
+
+But a structure like this could be rebased:
+
+                    2---3
+                   /     \
+                  1---4---5---6 master
+                 / 
+        origin' 0---7---8 origin
+
+to produce something like this:
+
+                          1'--2'--3'--4'--6' master
+                         / 
+        origin' 0---7---8 origin
+
+The ordering of patches may turn out to be wrong; #4 might
+conflict with already applied #2 and #3.  In general, rebasing
+such a merged structure is highly discouraged.  I think there
+was a discussion on this topic on the list recently, and a short
+summary was: "if you do a merge, do not rebase; if you are going
+to rebase, do not merge".  The thread is this one:
+
+	http://thread.gmane.org/gmane.comp.version-control.git/14308
+
+Especially please look at a couple of message from Linus:
+
+	http://article.gmane.org/gmane.linux.kernel/365410
+        http://article.gmane.org/gmane.linux.kernel/365409
+        http://article.gmane.org/gmane.linux.kernel/365501
+
+I guess we could decompose the commit ancestry chain in such a
+case, and reproduce something like this:
+
+                            2'--3'
+                           /     \
+                          1'--4'--5'--6' master
+                         / 
+        origin' 0---7---8 origin
+
+Rebase has never done this, though.  It is left as an exercise
+for the reader ;-).
