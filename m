@@ -1,75 +1,94 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: StGIT: "stg new" vs "stg new --force"
-Date: Tue, 17 Jan 2006 12:01:40 -0500
-Message-ID: <1137517300.20556.26.camel@dv>
-References: <1137144291.20073.104.camel@dv>
-	 <b0943d9e0601160018x206faf9ck@mail.gmail.com>
+From: Franck <vagabon.xyz@gmail.com>
+Subject: [QUESTION] about .git/info/grafts file
+Date: Tue, 17 Jan 2006 18:32:01 +0100
+Message-ID: <cda58cb80601170932o6f955469y@mail.gmail.com>
+References: <cda58cb80601170928r252a6e34y@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, Charles Lever <cel@citi.umich.edu>
-X-From: git-owner@vger.kernel.org Tue Jan 17 18:04:00 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Jan 17 18:32:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EyuDk-00060x-Ui
-	for gcvg-git@gmane.org; Tue, 17 Jan 2006 18:02:13 +0100
+	id 1Eyugm-00061e-Bd
+	for gcvg-git@gmane.org; Tue, 17 Jan 2006 18:32:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932200AbWAQRBr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jan 2006 12:01:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932199AbWAQRBr
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 12:01:47 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:44959 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932200AbWAQRBq
+	id S932231AbWAQRcF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jan 2006 12:32:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932232AbWAQRcE
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 12:32:04 -0500
+Received: from zproxy.gmail.com ([64.233.162.201]:13944 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932231AbWAQRcC convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2006 12:01:46 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EyuAV-0006BT-2Y
-	for git@vger.kernel.org; Tue, 17 Jan 2006 11:58:51 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.60)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1EyuDE-0008Pu-Du; Tue, 17 Jan 2006 12:01:40 -0500
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <b0943d9e0601160018x206faf9ck@mail.gmail.com>
-X-Mailer: Evolution 2.5.4 (2.5.4-6) 
+	Tue, 17 Jan 2006 12:32:02 -0500
+Received: by zproxy.gmail.com with SMTP id 14so1403413nzn
+        for <git@vger.kernel.org>; Tue, 17 Jan 2006 09:32:02 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JNtFp8UW8XsieixYcKuyTpc6B54O06yAcS9Szbuy8jIGHwD1w+QW96qYkeooiYjg5OY6Jx/JX0RMAGqG/E1IxK12NoQSElQJx8NR4LkWpxq7Uiz76p5sYGCsxlE8Fjl/pv1FPpeCWSXNpzQoV6/ZuG2HvBx0ouNsTLpkn0IzhWE=
+Received: by 10.36.196.6 with SMTP id t6mr5769772nzf;
+        Tue, 17 Jan 2006 09:32:01 -0800 (PST)
+Received: by 10.36.50.18 with HTTP; Tue, 17 Jan 2006 09:32:01 -0800 (PST)
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <cda58cb80601170928r252a6e34y@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14798>
 
-Hello, Catalin!
+Hi,
 
-On Mon, 2006-01-16 at 08:18 +0000, Catalin Marinas wrote:
-> On 13/01/06, Pavel Roskin <proski@gnu.org> wrote:
-> > 1) "stg new --force" becomes "stg new" and "stg new" becomes "stg new
-> > --empty", i.e. empty files can only be created with the "--empty"
-> > switch.
-> > 2) "stg new --force" becomes "stg record" or something.
-> > 3) "stg new --force" becomes "stg new --record" or something.
-> > 4) "stg new" works both with and without modified files.
-> 
-> Regarding (1), the newly created patch is empty anyway, you would need
-> to run 'refresh' to add the modified patches to it ('stg series -e'
-> would show the empty patches prefixed with a 0).
+I'm wondering why the "grafts" files is not involved during
+push/pull/clone operations ?
 
-I was going to suggest that would be logical to run "stg refresh"
-implicitly if "stg new" is used on modified files.  But then I realized
-that it would be even better if future versions of StGIT allowed to
-refresh (i.e. add changes to) patches other that the current one.  In
-this case, indeed, you don't want the newly created patch to suck in all
-the changes in the local repository.
+Another question regarding grafting use case. Let's say I have my
+origin branch looks like:
 
-> Anyway, I would also prefer option 4. If there are no objections, I'll
-> modify StGIT accordingly. It would also be useful to have a wiki page
-> about StGIT vs. Quilt to show the main differences.
+               origin ---0---1---<snip>---300 000---300 001---300 002
 
-That would be great!
+Let's say that the 300 000th commit is where I started my work by using:
 
-I'm trying to make StGIT my primary development tool, and I think it has
-a great potential the could be realized if StGIT is freed from the need
-to emulate older tools.
+               $ git-checkout -b master <300 000 shaid>
 
--- 
-Regards,
-Pavel Roskin
+I do some work on master branch and get the following
+
+                                                 a---b---c---d master
+                                                /
+               origin ---0---1---...---300,000---300,001---300,002
+
+Now, I would like to make my own public repository based on my work
+but before pushing master branch in that repo I would like to get rid
+of all unused commits [0 299,999]. Indeed each of these commits do not
+have useful history for my work. So I used grafts things to have:
+
+                              a---b---c---d master
+                             /
+               origin 300,000---300,001---300,002
+
+But now if I ask to git for:
+
+               $ git-merge-base master origin
+               # nothing
+
+So git failed to found the common commit object which should be 300,000. Why ?
+
+In other the hand, if I use grafting to get:
+
+                                               a---b---c---d master
+                                              /
+               origin 2999,999---300,000---300,001---300,002
+
+              $ git-merge-base master origin
+              2dcaaf2decd31ac9a21d616604c0a7c1fa65d5a4
+
+So now git found the common commit. Can anybody explain me why ?
+
+Do you think it's a good usage of git ? Or should I do otherwise to
+setup my public repository ?
+
+Thanks
+--
+               Franck
