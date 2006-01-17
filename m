@@ -1,131 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git rebase behaviour changed?
-Date: Mon, 16 Jan 2006 21:50:23 -0800
-Message-ID: <7vslrnh080.fsf@assigned-by-dhcp.cox.net>
-References: <43CC695E.2020506@codeweavers.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 17 06:50:33 2006
+From: Kyle Moffett <mrmacman_g4@mac.com>
+Subject: Re: git-diff-files and fakeroot
+Date: Tue, 17 Jan 2006 00:59:24 -0500
+Message-ID: <95E085A7-B910-4C01-BA6E-43971A6F5F97@mac.com>
+References: <43CC5231.3090005@michonline.com> <7vzmlvk2bs.fsf@assigned-by-dhcp.cox.net> <20060117052758.GA22839@mythryan2.michonline.com>
+Mime-Version: 1.0 (Apple Message framework v746.2)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 17 06:59:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eyjjg-0004WV-LB
-	for gcvg-git@gmane.org; Tue, 17 Jan 2006 06:50:29 +0100
+	id 1Eyjsc-00065v-QN
+	for gcvg-git@gmane.org; Tue, 17 Jan 2006 06:59:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751090AbWAQFu0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jan 2006 00:50:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbWAQFu0
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 00:50:26 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:713 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751090AbWAQFuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2006 00:50:25 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060117054933.SHVP3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 17 Jan 2006 00:49:33 -0500
-To: Mike McCormack <mike@codeweavers.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751116AbWAQF7i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jan 2006 00:59:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbWAQF7i
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 00:59:38 -0500
+Received: from smtpout.mac.com ([17.250.248.44]:47581 "EHLO smtpout.mac.com")
+	by vger.kernel.org with ESMTP id S1751116AbWAQF7h (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2006 00:59:37 -0500
+Received: from mac.com (smtpin03-en2 [10.13.10.148])
+	by smtpout.mac.com (Xserve/8.12.11/smtpout12/MantshX 4.0) with ESMTP id k0H5xVDr021216;
+	Mon, 16 Jan 2006 21:59:31 -0800 (PST)
+Received: from [198.82.78.50] (hc6524e32.dhcp.vt.edu [198.82.78.50])
+	(authenticated bits=0)
+	by mac.com (Xserve/smtpin01/MantshX 4.0) with ESMTP id k0H5xRuR022380
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Mon, 16 Jan 2006 21:59:30 -0800 (PST)
+In-Reply-To: <20060117052758.GA22839@mythryan2.michonline.com>
+To: Ryan Anderson <ryan@michonline.com>
+X-Mailer: Apple Mail (2.746.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14778>
 
-Mike McCormack <mike@codeweavers.com> writes:
-
-> git-rebase origin
-> -> Current branch refs/heads/master is up to date.
+On Jan 17, 2006, at 00:27, Ryan Anderson wrote:
+> On Mon, Jan 16, 2006 at 06:36:39PM -0800, Junio C Hamano wrote:
+>> BTW, Ryan, I suspect this is where you try to append "-dirty" to  
+>> the version number.  But I wonder why you are doing the build  
+>> under fakeroot to begin with?  Wasn't the SOP "build as
+>> yourself, install as root"?
 >
-> However, I can do the "rebase" manually with:
+> That's exactly what started this search, because I was running  
+> "make deb-pkg". (Effectively.)  dpkg-buildpackage wants to think it  
+> is running as root, either via sudo or via fakeroot.  I had my  
+> build environment switched over entirely to fakeroot, as it just  
+> seems to be a better practice, but I've temporarily switched back  
+> to sudo.
 >
-> git branch master-20060117
-> git reset --hard origin
-> git-format-patch -k --stdout --full-index origin master-20060117 | \
-> 	git am --binary -3 -k
->
-> Is this broken, or am I meant to be doing something different now?
+> However, your explanation has pointed out to me how I can solve  
+> this - run "fakeroot -u" instead of "fakeroot", and I think it will  
+> be fixed.
 
-What does "git-merge-base master-20060117 origin" give you?  If
-it is the same as "origin", then the master-20060117 has been
-merged with origin, and rebase does not run in this case.
+You should run "make" first, then after that completes run "fakeroot  
+make deb-pkg".  I think this is similar to what the Debian package  
+"kernel-package" does, except it substitutes an alternate "debian/"  
+directory.  IIRC, it just runs "make install" as a normal user to a  
+staging directory, then runs "$(ROOTCMD) dpkg-deb -b [...]" to build  
+the package.  IMHO it's somewhat of a cleaner solution, and I've used  
+it for several years now with no issues.
 
-Here is the simplest example:
+Cheers,
+Kyle Moffett
 
-                  1---2---3---4 master
-                 /
-        origin  0
-
-Of course, you _could_ extract patches #1, #2, #3, and #4
-between origin and master, and apply them on top of #0 to
-reconstruct "master" as you found out, but there is not much
-point doing so.
-
-Rebase changes the "master" branch when the development track
-between you (master) and upstream (origin) have forked:
-
-                  1---2---3---4 master
-                 /
-        origin' 0---5---6 origin
-
-In this case, things are rearranged by rebase:
-
-                        1'--2'--3'--4' master
-                       /
-        origin' 0--5--6 origin
-
-
-End of on-topic answers.
-
-
-BTW, what this means is that it would not rearrange something
-like this:
-
-                    2---3
-                   /     \
-                  1---4---5---6 master
-                 / 
-        origin  0
-
-But a structure like this could be rebased:
-
-                    2---3
-                   /     \
-                  1---4---5---6 master
-                 / 
-        origin' 0---7---8 origin
-
-to produce something like this:
-
-                          1'--2'--3'--4'--6' master
-                         / 
-        origin' 0---7---8 origin
-
-The ordering of patches may turn out to be wrong; #4 might
-conflict with already applied #2 and #3.  In general, rebasing
-such a merged structure is highly discouraged.  I think there
-was a discussion on this topic on the list recently, and a short
-summary was: "if you do a merge, do not rebase; if you are going
-to rebase, do not merge".  The thread is this one:
-
-	http://thread.gmane.org/gmane.comp.version-control.git/14308
-
-Especially please look at a couple of message from Linus:
-
-	http://article.gmane.org/gmane.linux.kernel/365410
-        http://article.gmane.org/gmane.linux.kernel/365409
-        http://article.gmane.org/gmane.linux.kernel/365501
-
-I guess we could decompose the commit ancestry chain in such a
-case, and reproduce something like this:
-
-                            2'--3'
-                           /     \
-                          1'--4'--5'--6' master
-                         / 
-        origin' 0---7---8 origin
-
-Rebase has never done this, though.  It is left as an exercise
-for the reader ;-).
+--
+I have yet to see any problem, however complicated, which, when you  
+looked at it in the right way, did not become still more complicated.
+   -- Poul Anderson
