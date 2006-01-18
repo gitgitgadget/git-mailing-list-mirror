@@ -1,114 +1,78 @@
-From: Ryan Anderson <ryan@michonline.com>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: Joining Repositories
-Date: Wed, 18 Jan 2006 09:09:17 -0500
-Message-ID: <20060118140917.GA15438@mythryan2.michonline.com>
-References: <200601181325.59832.Mathias.Waack@rantzau.de> <20060118125158.GN28365@pasky.or.cz>
+Date: Wed, 18 Jan 2006 15:14:43 +0100
+Message-ID: <20060118141442.GP28365@pasky.or.cz>
+References: <200601181325.59832.Mathias.Waack@rantzau.de> <20060118125158.GN28365@pasky.or.cz> <20060118125857.GO28365@pasky.or.cz> <200601181501.38791.Mathias.Waack@rantzau.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Mathias Waack <Mathias.Waack@rantzau.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 18 15:09:41 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 18 15:14:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzE0B-0000Dn-3x
-	for gcvg-git@gmane.org; Wed, 18 Jan 2006 15:09:31 +0100
+	id 1EzE44-0001BR-0l
+	for gcvg-git@gmane.org; Wed, 18 Jan 2006 15:13:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030311AbWAROJ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jan 2006 09:09:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030317AbWAROJ2
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 09:09:28 -0500
-Received: from mail.autoweb.net ([198.172.237.26]:51926 "EHLO
-	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
-	id S1030311AbWAROJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2006 09:09:27 -0500
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
-	by mail.internal.autoweb.net with esmtp (Exim 4.50)
-	id 1EzDzz-0006mP-IG; Wed, 18 Jan 2006 09:09:20 -0500
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.60)
-	(envelope-from <ryan@michonline.com>)
-	id 1EzDzy-0007zN-7h; Wed, 18 Jan 2006 09:09:19 -0500
-Received: from ryan by mythical with local (Exim 4.60)
-	(envelope-from <ryan@mythryan2.michonline.com>)
-	id 1EzDzx-0004yb-IG; Wed, 18 Jan 2006 09:09:17 -0500
-To: Petr Baudis <pasky@suse.cz>
+	id S1030322AbWARON3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jan 2006 09:13:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030321AbWARON3
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 09:13:29 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:30413 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1030322AbWARON2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2006 09:13:28 -0500
+Received: (qmail 32249 invoked by uid 2001); 18 Jan 2006 15:14:43 +0100
+To: Mathias Waack <Mathias.Waack@rantzau.de>
 Content-Disposition: inline
-In-Reply-To: <20060118125158.GN28365@pasky.or.cz>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <200601181501.38791.Mathias.Waack@rantzau.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14828>
 
-On Wed, Jan 18, 2006 at 01:51:58PM +0100, Petr Baudis wrote:
->   Hello,
+  Hello,
+
+Dear diary, on Wed, Jan 18, 2006 at 03:01:38PM CET, I got a letter
+where Mathias Waack <Mathias.Waack@rantzau.de> said that...
+> On Wednesday 18 January 2006 01:58 pm, Petr Baudis wrote:
+> > Dear diary, on Wed, Jan 18, 2006 at 01:51:58PM CET, I got a letter
+> > where Petr Baudis <pasky@suse.cz> said that...
+> >
+> > >   But if you want r1/a, r2/b to turn to r/r1/a, r/r2/b, you will have
+> > > to rewrite the history of each (and then do the above). One rough
+> > > and untested sketch...
+> > >
+> > > 	mkdir r1-rewritten
+> > > 	cd r1-rewritten
+> > > 	cp -a ../r1/.git .
+> >
+> > 	mkdir commitmap
+> >
+> > > 	for commit in $(git-rev-list --topo-order HEAD | tac); do
+> > > 		git-read-tree --prefix=r1/ $commit
 > 
-> Dear diary, on Wed, Jan 18, 2006 at 01:25:59PM CET, I got a letter
-> where Mathias Waack <Mathias.Waack@rantzau.de> said that...
-> > we're using git with cogito as a frontend. For some reasons I forgot we have 
-> > some repositories which belong to the same project. To simplify the whole 
-> > thing I would like to join these repositories. It mainly means to move some 
-> > directories. So lets say I have: 
-> > 
-> > 	/r1/.git
-> > 	/r2/.git
-> > 
-> > and what I would like to have is
-> > 
-> > 	/r/.git
-> > 	   r1
-> >            r2
-> > 
-> > Of course the history should remain (otherwise it would be to easy). 
-> > 
-> > How should I do this?
-> 
->   The crucial question is what the joined repository's directory
-> structure should be. If from r1/a, r2/b you want r/a, r/b then it's
-> easy:
-> 
-> 	cd r1
-> 	cg-branch-add r2 ../r2/.git
-> 	cg-fetch r2
-> 	cg-merge -j r2
-> 
->   But if you want r1/a, r2/b to turn to r/r1/a, r/r2/b, you will have
-> to rewrite the history of each (and then do the above). One rough
-> and untested sketch...
+> ...git-read-tree doesn't know the parameter --prefix (just downloaded and 
+> tried it on 0.99.9i). What version shall I use?
 
-... Why would that be the optimal method?
+  oops, it seems this is only in the latest pu branch of git. If you are
+not brave enough for that, you will need to use the prefix facility of
+checkout-index instead, and it'll take much longer:
 
-Assuming both repositories are clean, no extraneous files, and without
-testing, of course:
+	git-read-tree $commit
+	git-checkout-index -a --prefix=r1/
+	rm .git/index
+	cg-add -r r1/
+	rm -rf r1
+	.. then proceed with git-cat-file etc ..
 
-In r1:
-	mkdir r1
-	# move everything into the subdirectory called r1.
-	git mv $(ls -a | grep -v -e ^.git$ -e ^r1$) r1/
-	git commit -a "Restructure directory"
-
-In r2:
-	mkdir r2
-	# move all files into r2/
-	git mv $(ls -a | grep -v -e ^.git$ -e ^r2$) r2/
-	git commit -a "Restructure directory"
-
-	git fetch ../r1/
-	GIT_INDEX_FILE=.git/tmp-index git-read-tree FETCH_HEAD
-	GIT_INDEX_FILE=.git/tmp-index git-checkout-cache -a -u
-	git-update-cache --add -- $(GIT_INDEX_FILE=.git/tmp-index git-ls-files)
-	cp .git/FETCH_HEAD .git/MERGE_HEAD
-	git commit
-
-No history rewritten, merging with the old repositories should, at least
-theoretically, work, etc.
-
-(This is just a restatement of Linus's "Coolest merge ever" / union
-merge)
+  Note that I'm not sure when which feature was introduced. Your best
+bet is to just use the latest stable GIT/Cogito versions.
 
 -- 
-
-Ryan Anderson
-  sometimes Pug Majere
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
