@@ -1,71 +1,74 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Cogito wishlist: ability to set merge strategy
-Date: Thu, 19 Jan 2006 09:14:24 +1300
-Message-ID: <46a038f90601181214m54318d89we505c130e4f397e2@mail.gmail.com>
-References: <43CE5666.90502@itaapy.com> <43CE75F0.4060009@op5.se>
-	 <7vlkxdwhs6.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f90601181006u40a1f8e1n47c27651a4cab3d@mail.gmail.com>
-	 <43CC64AD.30606@zytor.com> <20060118193201.GV28365@pasky.or.cz>
+From: "Stiflings G. Talker" <boll@gor-world.com>
+Subject: Software
+Date: Wed, 18 Jan 2006 16:11:37 -0600
+Message-ID: <9381464027.20060118161137@gor-world.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Jan 18 21:15:13 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Jan 18 21:27:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzJhe-0006w2-2l
-	for gcvg-git@gmane.org; Wed, 18 Jan 2006 21:14:47 +0100
+	id 1EzJtm-0001Yy-Cr
+	for gcvg-git@gmane.org; Wed, 18 Jan 2006 21:27:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030410AbWARUO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jan 2006 15:14:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030413AbWARUO2
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 15:14:28 -0500
-Received: from wproxy.gmail.com ([64.233.184.196]:55468 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1030410AbWARUO1 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2006 15:14:27 -0500
-Received: by wproxy.gmail.com with SMTP id 70so28839wra
-        for <git@vger.kernel.org>; Wed, 18 Jan 2006 12:14:26 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dSB/Za+n9ePdt6/SMS8UL43QCzk7+NtGf92qUlJIuhTaoCBMrfylznsWYPRUmwo5tbW8HexHwpIQSg7wcCoMCZR+fSOBSKeXDTTM8qGRTqKAvTXFIy5LguxqlaJvU1LIiEP6AQvF1NbxaiyBaZWFS1AHjDxsyOSCPSkpfRt8iAY=
-Received: by 10.54.98.15 with SMTP id v15mr9711577wrb;
-        Wed, 18 Jan 2006 12:14:25 -0800 (PST)
-Received: by 10.54.127.13 with HTTP; Wed, 18 Jan 2006 12:14:24 -0800 (PST)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060118193201.GV28365@pasky.or.cz>
-Content-Disposition: inline
+	id S1030416AbWARU1E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jan 2006 15:27:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030425AbWARU1D
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 15:27:03 -0500
+Received: from zeus2.kernel.org ([204.152.191.36]:19862 "EHLO zeus2.kernel.org")
+	by vger.kernel.org with ESMTP id S1030416AbWARU1B (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2006 15:27:01 -0500
+Received: from -1210854392 ([195.158.84.167])
+	by zeus2.kernel.org (8.13.1/8.13.1) with SMTP id k0IKNVM4002165
+	for <git@vger.kernel.org>; Wed, 18 Jan 2006 12:26:51 -0800
+Received: from gor-world.com (-1210869056 [-1210956600])
+	by gpzdsqlpj.shankscape.com (Qmailv1) with ESMTP id 428F98CC89
+	for <git@vger.kernel.org>; Wed, 18 Jan 2006 16:11:37 -0600
+X-Mailer: The Bat! (v2.00.1) Personal
+X-Priority: 3
+To: Git <git@vger.kernel.org>
+X-AntiVirus: OK! AntiVir MailGate Version 2.0.1; AVE: 6.15.0.0; VDF: 6.15.0.6
+X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus2
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14865>
+X-Spam-Report: 15.1 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5013]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: haughtlyam.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: haughtlyam.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: haughtlyam.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: haughtlyam.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: haughtlyam.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14866>
 
-On 1/19/06, Petr Baudis <pasky@suse.cz> wrote:
-> though. From the Git merge strategies, I guess only recursive is
-> useful for Cogito...
+You know how it? to work with stable software! 
+Corel draw! just at best price 
 
-I haven't had time to figure out where the problem is, I do have some
-cases where git-merge does the right thing, and cg-merge gets it
-wrong. And without renames.
+New software on our site:
 
-An example from yesterday:
-http://locke.catalyst.net.nz/gitweb?p=moodle.git;a=commit;h=b69d60a5141dfe22a073dd9931e6c8ff5dded0b9
+Office 2003 Professional (1 CD Edition) - $89.95
+Acrobat 6 Professional - $79.95
+Acrobat 6 Professional - $79.95
+Picture It Premium 9 - $59.95
+InDesign CS PageMaker Edition (2CD) - $69.95
+Borland Delphi 7 Enterprise Edition (2CD) - $69.95
+Visio 2003 Professional - $69.95
+Encarta Encyclopedia Delux 2004 (3CD) - $89.95
+Plus! XP - $59.95
+Office XP Professional - $79.95
+FileMaker 7.0 Professional - $69.95
+InDesign CS PageMaker Edition (2CD) - $69.95
+Creative Suite Standard (3 CD) - $129.95
+Streets and Trips 2004 North America (2CD) - $69.95
 
-(the repo is accessble via http://locke.catalyst.net.nz/git/moodle.org
-if anyone is interested)
-
-> Patches welcome.  ;-)
-
-I know I promised patches in that direction, but I haven't had the
-time to look into it. Sorry! (and, as a user, I just cheat and fall
-back to git-merge)
-
-cheers,
-
-
-martin
+Our site:
+http://haughtlyam.com
