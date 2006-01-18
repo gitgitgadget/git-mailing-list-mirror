@@ -1,138 +1,65 @@
-From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-Subject: "git cat" and "git ls"
-Date: Wed, 18 Jan 2006 16:10:16 +0100
-Message-ID: <87irsh6087.fsf@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: New ref generates 8MB mail message
+Date: Wed, 18 Jan 2006 08:12:16 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601180810330.3240@g5.osdl.org>
+References: <20060118140907.GV19769@parisc-linux.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
-X-From: git-owner@vger.kernel.org Wed Jan 18 16:09:24 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 18 17:13:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzEuj-00080f-SQ
-	for gcvg-git@gmane.org; Wed, 18 Jan 2006 16:07:58 +0100
+	id 1EzFvc-0001Ik-M0
+	for gcvg-git@gmane.org; Wed, 18 Jan 2006 17:12:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030340AbWARPHz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jan 2006 10:07:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030337AbWARPHz
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 10:07:55 -0500
-Received: from ifae-s0.ifae.es ([192.101.162.68]:39328 "EHLO ifae-s0.ifae.es")
-	by vger.kernel.org with ESMTP id S1030336AbWARPHy (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2006 10:07:54 -0500
-Received: from bela (l9.ifae.es [192.101.162.199])
-	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id k0IF7oB16204
-	for <git@vger.kernel.org>; Wed, 18 Jan 2006 16:07:50 +0100
-To: Git Mailing List <git@vger.kernel.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/22.0.50 (gnu/linux)
+	id S1030318AbWARQMU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jan 2006 11:12:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030365AbWARQMU
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 11:12:20 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:1966 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030318AbWARQMT (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2006 11:12:19 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0IGCHDZ009898
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 18 Jan 2006 08:12:18 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0IGCGRB007664;
+	Wed, 18 Jan 2006 08:12:17 -0800
+To: Matthew Wilcox <matthew@wil.cx>
+In-Reply-To: <20060118140907.GV19769@parisc-linux.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.66__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14833>
-
---=-=-=
-
-Hello,
-
-        following the "git diff" wrapper I've done two new wrappers:
-
-git cat: USAGE='<tag|commit|blob> | [<ent>|-1|-2|-3] -- <file>'
-
-    It shows the content of the giventag/commit/blob.
-
-    You can also ask for a file in a tree or in the index (stage
-    optional).
-
-git ls: USAGE='[<ent>] [--] <path>'
-
-    It lists the files in <path> in the <ent> or in the index.
-
-  Santi
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14834>
 
 
---=-=-=
-Content-Type: text/x-sh
-Content-Disposition: inline; filename=git-cat.sh
 
-#!/bin/sh
-#
+On Wed, 18 Jan 2006, Matthew Wilcox wrote:
+> 
+> Based on the idea that a new branch is probably a branch off master, and
+> if it isn't, then at least sending a log vs master is better than a log
+> vs the beginning of time, I propose this patch:
 
-USAGE='<tag|commit|blob> | [<ent>|-1|-2|-3] -- <file>'
-SUBDIRECTORY_OK='Yes'
-. git-sh-setup
+Actually, since the update hook _should_ be called before the ref has 
+actually been updated, it's probably much better to instead of this:
 
-rev=$(git-rev-parse --revs-only --no-flags --sq "$@") || exit
-flags=$(git-rev-parse --no-revs --flags "$@")
-files=$(git-rev-parse --no-revs --no-flags --sq "$@")
+> -	git-rev-list --pretty "$3"
+> +	git-rev-list --pretty "$3" ^master
 
-case "$rev,$files" in
-?*' '?*,*|*,?*' '?*)
-	usage
-	;;
-?*,?*)
-	sha1=$(eval "git-ls-tree $rev $files" | cut -f 1 | cut -d " " -f 3)
-	;;
-?*,)
-	sha1=$rev
-	;;
-,?*)
-	# Only one file
-	[ $(eval "git-ls-files $files | wc -l") != 1 ] && usage
-	stg=0
-	flag=${flags#-}
-	case $flag in
-	    1|2|3) stg=$flag;;
-	esac
-	sha1=$(eval "git-ls-files -s $files" | while read -r mode sha stage name ; do
-		[ $stage -eq $stg ] && echo $sha && break ; done)
-	;;
-*)
-	usage
-	;;
-esac
+do something like this:
 
-[ -z $sha1 ] && echo "$(basename $0): $files: Not found" && exit 1
-type=$(eval "git-cat-file -t $sha1")
+	git-rev-list --pretty "$3" $(git-rev-parse --not --all)
 
-case $type in
-    tree)
-	usage
-	;;
-    tag|blob)
-	cmd="git-cat-file $type $sha1"
-	;;
-    commit)
-	cmd="git-rev-list --max-count=1 $sha1 --pretty=fuller"
-	;;
-esac
+which basically says: show any commits that are in the new ref, but are 
+not in _any_ other ref.
 
-eval "$cmd"
-exit
+Untested, of course.
 
---=-=-=
-Content-Type: text/x-sh
-Content-Disposition: inline; filename=git-ls.sh
-
-#!/bin/sh
-#
-
-USAGE='[<ent>] [--] <path>'
-SUBDIRECTORY_OK='Yes'
-. git-sh-setup
-
-tree=$(git-rev-parse --verify $1^{tree} 2>/dev/null)
-[ -n "$tree" ] && shift
-files=$(git-rev-parse --no-revs --no-flags --sq "$@")
-
-case "$tree" in
-"")
-        cmd="git-ls-files -s $files"
-	;;
-?*)
-	cmd="git-ls-tree $tree $files"
-	;;
-esac
-
-eval "$cmd"
-exit
-
---=-=-=--
+		Linus
