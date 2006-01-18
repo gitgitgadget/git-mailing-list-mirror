@@ -1,73 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] "sleep 1" sleeps too little on cygwin
-Date: Wed, 18 Jan 2006 12:35:08 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0601181233460.8678@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <81b0412b0601170325y60094b4w693ac37490c67410@mail.gmail.com>
- <7vmzhtzzlf.fsf@assigned-by-dhcp.cox.net>
+From: Alexander Litvinov <lan@ac-sw.com>
+Subject: Re: RFC: Subprojects
+Date: Wed, 18 Jan 2006 17:47:15 +0600
+Organization: AcademSoft Ltd.
+Message-ID: <200601181747.15609.lan@ac-sw.com>
+References: <43C52B1F.8020706@hogyros.de> <7vpsmq2tyb.fsf@assigned-by-dhcp.cox.net> <7vy81eyz47.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 18 12:35:25 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 18 12:47:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzBaw-0002Ri-FB
-	for gcvg-git@gmane.org; Wed, 18 Jan 2006 12:35:18 +0100
+	id 1EzBmg-0005AY-Je
+	for gcvg-git@gmane.org; Wed, 18 Jan 2006 12:47:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030230AbWARLfO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jan 2006 06:35:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030231AbWARLfN
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 06:35:13 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:3797 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1030230AbWARLfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2006 06:35:11 -0500
-Received: from amavis.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.46])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BD8A91464FA; Wed, 18 Jan 2006 12:35:08 +0100 (CET)
+	id S1030236AbWARLrX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jan 2006 06:47:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030237AbWARLrX
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 06:47:23 -0500
+Received: from gw.ac-sw.com ([81.1.223.2]:40620 "EHLO gw.ac-sw.com")
+	by vger.kernel.org with ESMTP id S1030236AbWARLrW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2006 06:47:22 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by amavis.mail (Postfix) with ESMTP id B0258988;
-	Wed, 18 Jan 2006 12:35:08 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by amavis.mail (Postfix) with ESMTP id 94957555;
-	Wed, 18 Jan 2006 12:35:08 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 677951464FA; Wed, 18 Jan 2006 12:35:08 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	by gw.ac-sw.com (Postfix) with ESMTP id 2BADFBD23;
+	Wed, 18 Jan 2006 17:47:21 +0600 (NOVT)
+Received: from gw.ac-sw.com ([127.0.0.1])
+ by localhost (gw.ac-sw.com [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 29107-03; Wed, 18 Jan 2006 17:47:19 +0600 (NOVT)
+Received: from lan.ac-sw.lcl (lan.ac-sw.lcl [192.168.0.69])
+	by gw.ac-sw.com (Postfix) with ESMTP id 33925BD1B;
+	Wed, 18 Jan 2006 17:47:19 +0600 (NOVT)
+Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
+	id 246758D993D6; Wed, 18 Jan 2006 17:47:19 +0600 (NOVT)
+Received: from localhost (localhost [127.0.0.1])
+	by lan.ac-sw.lcl (Postfix) with ESMTP id 4BE988D993D5;
+	Wed, 18 Jan 2006 17:47:16 +0600 (NOVT)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzhtzzlf.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
-X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
-X-Spam-Level: 
+User-Agent: KMail/1.8
+In-Reply-To: <7vy81eyz47.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Virus-Scanned: amavisd-new at gw.ac-sw.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14818>
 
-Hi,
+> I started this "bind" design as a thought experiment, but I
+> started to like it more and more.
+>
 
-On Wed, 18 Jan 2006, Junio C Hamano wrote:
-
-> @@ -48,7 +48,7 @@ EOF
->  
->  test_expect_success \
->      'diff removed symlink' \
-> -    'rm frotz &&
-> +    'mv frotz nitfol &&
->      git-diff-index -M -p $tree > current &&
->      compare_diff_patch current expected'
->  
-> @@ -58,8 +58,7 @@ EOF
->  
->  test_expect_success \
->      'diff identical, but newly created symlink' \
-> -    'sleep 1 &&
-> -    ln -s xyzzy frotz &&
-> +    'ln -s xyzzy frotz &&
-
-And where does the time lag (required for the test) come from now?
-
-Ciao,
-Dscho
+Is there a version of git with this to try it ?
