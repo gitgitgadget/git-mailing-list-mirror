@@ -1,72 +1,51 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Joining Repositories
-Date: Wed, 18 Jan 2006 08:38:45 -0800
-Message-ID: <43CE6F15.2050801@zytor.com>
-References: <200601181325.59832.Mathias.Waack@rantzau.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] "sleep 1" sleeps too little on cygwin
+Date: Wed, 18 Jan 2006 08:55:48 -0800
+Message-ID: <7vd5ipzd9n.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0601170325y60094b4w693ac37490c67410@mail.gmail.com>
+	<7vvewi2typ.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0601180550k4df9b89fwf73af7966095ffc7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 18 17:43:23 2006
+X-From: git-owner@vger.kernel.org Wed Jan 18 18:00:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzGMR-0000S9-R6
-	for gcvg-git@gmane.org; Wed, 18 Jan 2006 17:40:40 +0100
+	id 1EzGbE-0004mp-1g
+	for gcvg-git@gmane.org; Wed, 18 Jan 2006 17:55:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030400AbWARQja (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jan 2006 11:39:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030403AbWARQja
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 11:39:30 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:26770 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1030395AbWARQi4
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2006 11:38:56 -0500
-Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k0IGcjFc009192
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 18 Jan 2006 08:38:46 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Mathias Waack <Mathias.Waack@rantzau.de>
-In-Reply-To: <200601181325.59832.Mathias.Waack@rantzau.de>
-X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.8 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1751356AbWARQzw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jan 2006 11:55:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbWARQzw
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 11:55:52 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:28096 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751367AbWARQzv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jan 2006 11:55:51 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060118165305.JUBT20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 18 Jan 2006 11:53:05 -0500
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0601180550k4df9b89fwf73af7966095ffc7@mail.gmail.com>
+	(Alex Riesen's message of "Wed, 18 Jan 2006 14:50:04 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14837>
 
-Mathias Waack wrote:
-> Hello everybody, 
-> 
-> we're using git with cogito as a frontend. For some reasons I forgot we have 
-> some repositories which belong to the same project. To simplify the whole 
-> thing I would like to join these repositories. It mainly means to move some 
-> directories. So lets say I have: 
-> 
-> 	/r1/.git
-> 	/r2/.git
-> 
-> and what I would like to have is
-> 
-> 	/r/.git
-> 	   r1
->            r2
-> 
-> Of course the history should remain (otherwise it would be to easy). 
-> 
-> How should I do this?
-> 
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-Rename the files in each repository independently (with a checkin), then 
-merge the repositories.
+> On 1/18/06, Junio C Hamano <junkio@cox.net> wrote:
+>> Instead of depending on $SECONDS (isn't it a bashism?), how
+>> about doing something like this?
+>
+> Probably not, even QNX6 ksh has it, and being the most broken shell
+> I ever met, I'd consider $SECONDS safe 8-)
 
-Git *should* track across the rename, as long as it's "obvious".
-
-	-hpa
+When I have to answer these questions myself, I mostly do so by
+checking http://www.opengroup.org/onlinepubs/009695399/.
