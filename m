@@ -1,119 +1,91 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: RFC: Subprojects
-Date: Tue, 17 Jan 2006 19:49:12 -0800
-Message-ID: <7vy81eyz47.fsf@assigned-by-dhcp.cox.net>
-References: <43C52B1F.8020706@hogyros.de>
-	<Pine.LNX.4.64.0601141055210.13339@g5.osdl.org>
-	<7vek3ah8f9.fsf@assigned-by-dhcp.cox.net>
-	<200601161144.48245.Josef.Weidendorfer@gmx.de>
-	<7vek37rj83.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0601170001130.25300@iabervon.org>
-	<7vfynnfkc8.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0601171150050.25300@iabervon.org>
-	<7vpsmq2tyb.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [QUESTION] What is a tag for?
+Date: Tue, 17 Jan 2006 20:00:21 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601171949430.3240@g5.osdl.org>
+References: <1137538344.9104.34.camel@malory> <7v1wz648jc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 18 04:50:42 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 18 05:00:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ez4LJ-00040z-7n
-	for gcvg-git@gmane.org; Wed, 18 Jan 2006 04:50:42 +0100
+	id 1Ez4Us-0005op-4c
+	for gcvg-git@gmane.org; Wed, 18 Jan 2006 05:00:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964896AbWARDtT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jan 2006 22:49:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964903AbWARDtT
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 22:49:19 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:53133 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S964896AbWARDtS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2006 22:49:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060118034918.JVWM25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 17 Jan 2006 22:49:18 -0500
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <7vpsmq2tyb.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 17 Jan 2006 17:41:48 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964906AbWAREAb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jan 2006 23:00:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964912AbWAREAb
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jan 2006 23:00:31 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:3792 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964906AbWAREAb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2006 23:00:31 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0I40QDZ008131
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 17 Jan 2006 20:00:26 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0I40Mfk017215;
+	Tue, 17 Jan 2006 20:00:23 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1wz648jc.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.66__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14810>
-
-Junio C Hamano <junkio@cox.net> writes:
-
-> Daniel Barkalow <barkalow@iabervon.org> writes:
->
->>> Reading such a commit is easy:
->>> 
->>> 	$ git-read-tree $tree ;# ;-)
->>> 
->>> But that is cheating.  
->>
->> This is for backwards compatibility, I assume?
->
-> This is done more for not having to touch *anything* that does
-> "index vs working file", "tree vs index" and "tree vs working
-> file via index".  It also is the easiest way to keep the "a
-> commit object name can be used in place of the tree object name
-> of the tree it contains" invariant.  Also I suspect this
-> organization might help recursive subprojects, but if it is the
-> case, that is just a byproduct, not a design goal.
-
-I started this "bind" design as a thought experiment, but I
-started to like it more and more.
-
-One interesting outcome of keeping the whole tree in the index
-and the tree object recorded in the commit object of the
-toplevel project is that a merge in the toplevel project "just
-works".
-
-To preserve our sanity, let's say we refuse to merge two commits
-that have different sets of subprojects.  That is, they must
-have the "bind" lines for the same set of subdirectories.  The
-commits bound at these subdirectories do not need to match.
-
-Before starting a merge, we require that the index is in sync
-with the tree object recorded in the top commit, just like we do
-for a normal merge[*1*].  Then we use the current merge
-machinery that does not know anything about "bind" to perform
-the merge, using the merge base of the toplevel project and
-usual three-way merge.  From the mechanism point of view, there
-is no need to look at commits on "bind" line of either side to
-come up with the resulting tree.
-
-We could notice that the commit bound at linux-2.6/ subdirectory
-of one side is v2.6.15 and the other side is v2.6.16-rc1, and
-because one is a fast-forward of the other, choose to pick the
-tree associated with v2.6.16-rc1 commit without actually doing
-the 3-way resolve of linux-2.6/ subtree part, but that is purely
-a performance optimization [*2*].
-
-When writing out the merge result as a commit, we would create
-(this is the fun part) a commit for linux-2.6/ part that has two
-parents: the commits bound to linux-2.6/ tree from the two
-toplevel commits being merged are the parents of such a
-subproject commit.  And the resulting toplevel merge commit
-would have that commit object name on its "bind" line.
-Obviously, when the bound subproject head of one side is a
-fast-forwad of the other, we do not create such a merge commit
-for the subproject; instead, we just record the one that is
-ahead on the "bind" line of the resulting toplevel merge commit.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14811>
 
 
-[Footnote]
 
-*1* As a side effect, this also ensures the index is in sync
-with the bound commits of the subprojects.  As an additional
-requirement, we may want to enforce that the bound commits must
-match the branch heads that keep track of subprojects.
+On Tue, 17 Jan 2006, Junio C Hamano wrote:
+> 
+> <offtopic>
+> Does anybody know where to obtain the public key to verify
+> v2.6.16-rc1 tag?
+> </offtopic>
 
-*2* Of course, from the usability, safety and confusion
-avoidance point of view, it _might_ make sense to require that
-bound commits are in such fast-forward relationship.  But that
-is a policy issue; at the mechanism level, there is no need to
-impose such a requirement.
+Do a google search for "torvalds" and "tag signing key", and you'll find 
+the thread that has the original key in it.
+
+In fact, if you search for "torvalds" "tag" and "BEGIN PGP PUBLIC KEY 
+BLOCK", it will be the first hit.
+
+Anyway, here it is again. Linus' tag signing key. I could do what you do, 
+but I feel that it's kind of pointless to put the public key with the 
+project, since if you don't trust the project, you shouldn't trust the key 
+it contains as being from me.
+
+You fundamentally want to have some _other_ reason to trust the key, like 
+the fact that you can find it independently with google ;)
+
+		Linus
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+mQGiBEJqZ4sRBADKttqQOCAxRzz5qGmo5QnSR5GTkSlPTm4lCuaVUon0qQPNrasr
+cSBAOJ1MlXjhbRPrN3pAhI+taLgrWQ231zUNHxCTmWJZV3Yzxr8xJQGlfHlVOxXB
+LI42tAfCjHOF7z8pPj6AGhtE2+fzq1U3mOlA/fUG4uYDOwIoPK+qgbM6SwCgulqs
+DGlQKFFtFgW8HVnDftFmyZMD+wc0E9jRa9HJ3b1U3vY1jrxpoVw5QeeIZdSRnRFy
+sknOHca5mlJvTidu1cs7xCuvpufw1VIVvgf4tPwXcTDEKthYEhoty+DFOqZ9R7pg
+EMhjYbq+Q8yLT3OWQtUKV4B10FRYIWidnJ8y2CjLduTmB+cyj976oxEY/llLBbQM
+yuDrBADDLw/3KZL5D75icA0l/uebQ6/73j8jcRoVu0gTqAdQBYL6Zv7Y0G7xHUCo
+Eqgo+p2LXAeU9IoeA5/h8SNVDw4fYoqo6VQTkr+ydegHkjwlbrhOL/gxzlY1Pde1
+TBi6+QCUssk0FCPMALt7M+OgFpSKx7pP2xSsDsMvvNNAmLl0JrQ0TGludXMgVG9y
+dmFsZHMgKHRhZyBzaWduaW5nIGtleSkgPHRvcnZhbGRzQG9zZGwub3JnPoheBBMR
+AgAeBQJCameLAhsDBgsJCAcDAgMVAgMDFgIBAh4BAheAAAoJEBd2LEZ24hy7I84A
+nROHRYes4RU8btdleR0TgwJG7jMvAKCF2CingjxaC4sTL7BkFfNacTkBYLkBDQRC
+ameMEAQAlJiw0IBltu5ihEXE4mFYiWHuVAoeufVJ9fONv67y6fu3efJ10PJ7AQdG
+Ufez+8yxkrahyIVC77NuQLDrRfvgmrJ8sbP8xb6QEbY1bnwLeuciTolGjL+kYi17
+J74iG2cQDyimnLWJm5lNqeUOz3nTW429SyLCRhXpR1lUjijiVi8AAwcD/1f4VEql
+u9HHTA4S+1aoOQV5guZCr6JbYdWkAZeeFRpFSXfCae6uO8DhpD7o/8kiK3O8qP1O
+yjQF0bG26iLCm8MdJCO0WQ2xsVlwrrvnNPpgRgbirOgoxHM4ESq/YV+MqXo41Hm0
+ilHRM7OIbmm7uvFSlUJmUasuJRsrhibilbvNiEkEGBECAAkFAkJqZ4wCGwwACgkQ
+F3YsRnbiHLsolQCfRVImDkgijhPGmwyI7T19bWltXwsAniMi9gakkN+9DT8E5kli
+e8uTEk8f
+=PRrZ
+-----END PGP PUBLIC KEY BLOCK-----
