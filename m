@@ -1,79 +1,51 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Joining Repositories
-Date: Wed, 18 Jan 2006 13:58:57 +0100
-Message-ID: <20060118125857.GO28365@pasky.or.cz>
-References: <200601181325.59832.Mathias.Waack@rantzau.de> <20060118125158.GN28365@pasky.or.cz>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: RFC: Subprojects
+Date: Wed, 18 Jan 2006 14:29:04 +0100
+Message-ID: <43CE42A0.9040302@op5.se>
+References: <43C52B1F.8020706@hogyros.de> <7vpsmq2tyb.fsf@assigned-by-dhcp.cox.net> <7vy81eyz47.fsf@assigned-by-dhcp.cox.net> <200601181747.15609.lan@ac-sw.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 18 13:57:51 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 18 14:29:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzCsk-00072X-FY
-	for gcvg-git@gmane.org; Wed, 18 Jan 2006 13:57:46 +0100
+	id 1EzDN9-0006eX-CP
+	for gcvg-git@gmane.org; Wed, 18 Jan 2006 14:29:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932521AbWARM5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jan 2006 07:57:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932522AbWARM5n
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 07:57:43 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:44518 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932521AbWARM5n (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2006 07:57:43 -0500
-Received: (qmail 25949 invoked by uid 2001); 18 Jan 2006 13:58:57 +0100
-To: Mathias Waack <Mathias.Waack@rantzau.de>
-Content-Disposition: inline
-In-Reply-To: <20060118125158.GN28365@pasky.or.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932539AbWARN3H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jan 2006 08:29:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932540AbWARN3H
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 08:29:07 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:53212 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932539AbWARN3G
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jan 2006 08:29:06 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 26BF66BCBE; Wed, 18 Jan 2006 14:29:05 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Alexander Litvinov <lan@ac-sw.com>
+In-Reply-To: <200601181747.15609.lan@ac-sw.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14822>
 
-Dear diary, on Wed, Jan 18, 2006 at 01:51:58PM CET, I got a letter
-where Petr Baudis <pasky@suse.cz> said that...
->   But if you want r1/a, r2/b to turn to r/r1/a, r/r2/b, you will have
-> to rewrite the history of each (and then do the above). One rough
-> and untested sketch...
+Alexander Litvinov wrote:
+>>I started this "bind" design as a thought experiment, but I
+>>started to like it more and more.
+>>
 > 
-> 	mkdir r1-rewritten
-> 	cd r1-rewritten
-> 	cp -a ../r1/.git .
+> 
+> Is there a version of git with this to try it ?
 
-	mkdir commitmap
-
-> 	for commit in $(git-rev-list --topo-order HEAD | tac); do
-> 		git-read-tree --prefix=r1/ $commit
-> 		# here, setup the AUTHOR/COMMITTER variables
-> 		# appropriately (you can look at cg-commit's
-> 		# $copy_commit handler)
-> 		git-cat-file commit "$commit" | sed -e '1,/^$/d' | \
-> 			git-commit-tree $(git-write-tree) \
-> 				$(for parent in $(cg-object-id -p $commit); do
-
-					echo -p
-
-> 					cat commitmap/$parent
-> 				  done) >commitmap/$commit
-> 		last_commit=$commit
-> 	done
-> 	git-update-ref HEAD $(cat commitmap/$last_commit)
-
-	rm -rf commitmap
-	cg-reset
-
-  And at this point, git-prune will have plenty of work to do (many of
-your tree and commit objects will be outdated - you just rewrote them).
-
-  It's quite beautiful that you can do this all without checkouting a
-single thing - you just load the tree to the index, prepend "r1/" to all
-the paths, and commit it back.
+The pu branch of the official git repo.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
