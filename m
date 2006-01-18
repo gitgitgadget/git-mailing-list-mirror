@@ -1,62 +1,69 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Cogito wishlist: ability to set merge strategy
-Date: Wed, 18 Jan 2006 20:32:01 +0100
-Message-ID: <20060118193201.GV28365@pasky.or.cz>
-References: <43CE5666.90502@itaapy.com> <43CE75F0.4060009@op5.se> <7vlkxdwhs6.fsf@assigned-by-dhcp.cox.net> <46a038f90601181006u40a1f8e1n47c27651a4cab3d@mail.gmail.com> <43CC64AD.30606@zytor.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: StGIT: "stg new" vs "stg new --force"
+Date: Wed, 18 Jan 2006 20:37:17 +0100
+Message-ID: <20060118193717.GI32585@nowhere.earth>
+References: <1137144291.20073.104.camel@dv> <b0943d9e0601160018x206faf9ck@mail.gmail.com> <1137517300.20556.26.camel@dv> <20060117215752.GH32585@nowhere.earth> <1137539762.12454.11.camel@dv>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Jan 18 20:31:04 2006
+Cc: Catalin Marinas <catalin.marinas@gmail.com>,
+	git <git@vger.kernel.org>, Charles Lever <cel@citi.umich.edu>
+X-From: git-owner@vger.kernel.org Wed Jan 18 20:34:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzJ1B-0003lD-92
-	for gcvg-git@gmane.org; Wed, 18 Jan 2006 20:30:53 +0100
+	id 1EzJ49-0004W8-Ov
+	for gcvg-git@gmane.org; Wed, 18 Jan 2006 20:34:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964916AbWARTav (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jan 2006 14:30:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964931AbWARTav
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 14:30:51 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:56200 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964916AbWARTau (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2006 14:30:50 -0500
-Received: (qmail 28546 invoked by uid 2001); 18 Jan 2006 20:32:01 +0100
-To: "H. Peter Anvin" <hpa@zytor.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>
+	id S1030275AbWARTdz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jan 2006 14:33:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030389AbWARTdz
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 14:33:55 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:34529 "EHLO smtp3-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1030275AbWARTdy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2006 14:33:54 -0500
+Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 50BE14408E;
+	Wed, 18 Jan 2006 20:33:53 +0100 (CET)
+Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.60)
+	(envelope-from <ydirson@altern.org>)
+	id 1EzJ7N-00076x-HW; Wed, 18 Jan 2006 20:37:17 +0100
+To: Pavel Roskin <proski@gnu.org>
 Content-Disposition: inline
-In-Reply-To: <46a038f90601181006u40a1f8e1n47c27651a4cab3d@mail.gmail.com> <43CC64AD.30606@zytor.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <1137539762.12454.11.camel@dv>
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14863>
 
-Dear diary, on Tue, Jan 17, 2006 at 04:29:49AM CET, I got a letter
-where "H. Peter Anvin" <hpa@zytor.com> said that...
-> It would be nice if Cogito would let one override the default merge 
-> strategy, i.e. to use the recursive merge strategy.  I've had some 
-> moderate luck with using recursive merge for the klibc trees recently.
+On Tue, Jan 17, 2006 at 06:16:02PM -0500, Pavel Roskin wrote:
+> > It would even be useful sometimes to dispatch changes to a single file
+> > into several patches.  When they are distinct enough to be in
+> > different diff hunks, it is pretty easy to split an existing patch,
+> > but it could also be useful to only refresh a patch with specific diff
+> > hunks.  A possibility would be to add a filterdiff-like "-#<n>" flag,
+> > in addition to the above-suggested "refresh <file>" (and possibly only
+> > allow to specify a single file together with this flag).
+> 
+> I think if would be better to improve "stg fold" to work on arbitrary
+> patches.  This way, you prepare the patch in the editor (which would not
+> be harder than finding hunk numbers) and fold it into the patch of your
+> choice.  stg should check that the stack remains valid, possibly doing
+> trivial adjustments to the higher patches.  The current tree should not
+> be impacted.
 
-Dear diary, on Wed, Jan 18, 2006 at 07:06:07PM CET, I got a letter
-where Martin Langhoff <martin.langhoff@gmail.com> said that...
-> One of these days I'll convince Pasky to use git-merge for
-> cg-merge's internals.
+This sounds like a good idea as well (and I would use it on a near
+daily basis as well ;).  Obviously such a request can also fail,
+eg. when requesting to fold a change into a patch, where a subsequent
+patch modifies the same lines.
 
-For the record, I acknowledge that the merge strategies are useful and I
-plan to make cg-merge use them, but I'm unable to tell when that will
-happen. I would still like to keep the current Cogito merging the
-default merge strategy at least for a while until the dust settles down,
-though. From the Git merge strategies, I guess only recursive is
-useful for Cogito...
+But it would not be a replacement to selecting changes with a
+granularity finer than file-level, which is what I wanted to suggest.
 
-Patches welcome.  ;-)
-
+Best regards,
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
