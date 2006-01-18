@@ -1,73 +1,103 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] git-fetch-pack: really do not ask for funny refs
-Date: Thu, 19 Jan 2006 00:24:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0601190023390.15298@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Something wrong with pickaxe?
+Date: Wed, 18 Jan 2006 15:55:13 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601181541150.3240@g5.osdl.org>
+References: <Pine.LNX.4.63.0601190004130.15298@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Jan 19 00:24:19 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 19 00:55:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzMev-00048J-Ec
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 00:24:09 +0100
+	id 1EzN98-0002dC-CA
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 00:55:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161049AbWARXYG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jan 2006 18:24:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161051AbWARXYG
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 18:24:06 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:16361 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1161049AbWARXYF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2006 18:24:05 -0500
-Received: from amavis.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A06341412FC; Thu, 19 Jan 2006 00:24:04 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by amavis.mail (Postfix) with ESMTP id 939191C9D;
-	Thu, 19 Jan 2006 00:24:04 +0100 (CET)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by amavis.mail (Postfix) with ESMTP id 784D61874;
-	Thu, 19 Jan 2006 00:24:04 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5FCFC1412FC; Thu, 19 Jan 2006 00:24:04 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
-X-Spam-Status: No, hits=0.0 tagged_above=0.0 required=8.0 tests=
-X-Spam-Level: 
+	id S1030466AbWARXzT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jan 2006 18:55:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030467AbWARXzS
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 18:55:18 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:12755 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030466AbWARXzR (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2006 18:55:17 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0INtEDZ004827
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 18 Jan 2006 15:55:14 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0INtDNB006988;
+	Wed, 18 Jan 2006 15:55:14 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0601190004130.15298@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.66__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14871>
 
 
-If git-fetch-pack was called with out any refspec, it would ask the server
-for funny refs. That cannot work, since the funny refs are not marked
-as OUR_REF by upload-pack, which just exits with an error.
+On Thu, 19 Jan 2006, Johannes Schindelin wrote:
+> 
+> it is a fact that I'm stupid, but in this case it might be a bug, too. 
+> When I call
+> 
+> 	git-whatchanged -Sget_remote_heads 1baaae5e fetch-pack.c
+> 
+> the first shown commit is d1c133f5. However, if I substitute the 
+> "-Sget_remote_heads" by "-p" I see that the diff of commit 1baaae5e *does* 
+> change a line containing that text.
+> 
+> What am I doing wrong?
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Nothing. But pickaxe really has very strange semantics, which imho makes 
+it much less useful than it could be.
 
----
+What pickaxe ends up doing is to literally see if the original has that 
+string, and the result does not. I think it _counts_ the number of 
+occurrences of a string in the before/after situation, and if the count 
+differs, it's considered interesting.
 
- fetch-pack.c |    3 ---
- 1 files changed, 0 insertions(+), 3 deletions(-)
+So yes, there's a commit that has "get_remote_heads" as part of the 
+change, but that particular string did not actually change in that commit: 
+_other_ stuff on the same line did change. That particular string existed 
+both before and after.
 
-718ad2d76a6c7d350d63c0660aeb69518b765310
-diff --git a/fetch-pack.c b/fetch-pack.c
-index d34f322..27f5d2a 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -262,9 +262,6 @@ static void filter_refs(struct ref **ref
- {
- 	struct ref *prev, *current, *next;
- 
--	if (!nr_match)
--		return;
--
- 	for (prev = NULL, current = *refs; current; current = next) {
- 		next = current->next;
- 		if ((!memcmp(current->name, "refs/", 5) &&
--- 
-1.1.3.g0bf8-dirty
+So when you use pickaxe, you really want to match the whole line you're 
+looking for - otherwise you'll only see when people add or remove a 
+particular string, not when they change things around it. Even then, if 
+that particular line gets _moved_ (but otherwise is unchanged) pickaxe 
+won't pick it up.
+
+So you could have done a more exact search:
+
+    git-whatchanged -p \
+	-S"get_remote_heads(fd[0], &ref, nr_match, match, 1);" \
+	1baaae5e fetch-pack.c
+
+would have found where that particular line was introduced (and deleted).
+
+Me, I find the pickaxe semantics so non-intuitive that I never use it 
+(that said, the counting begaviour is better than what it _used_ to be, 
+which, if I recall correctly, was just "it existed before, doesn't exist 
+now").
+
+I at one point suggested to Junio that the semantics be something else 
+("mark the source and destination within 'x' characters of an occurrence 
+of that string, and then if the _delta_ touches any of the marked areas, 
+consider it to be a hit") but I think the problem was simply that it's 
+more complex. You have to look at the ranges that the delta actually 
+touches, which is more work than just looking at the original and final 
+file contents themselves.
+
+I suspect (but can't speak for him, obviously) that Junio would be open to 
+more friendly pickaxe semantics if the suggested semantics change was 
+accompanied by an actual diff to implement them.
+
+In the meantime, you really need to think carefully about what you're 
+doing when you use "-S". 
+
+		Linus
