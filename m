@@ -1,104 +1,71 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: "tla missing -s" equivalent with git/cogito
-Date: Thu, 19 Jan 2006 06:56:38 +1300
-Message-ID: <46a038f90601180956r69ba5dffl2106f697a6be4750@mail.gmail.com>
-References: <43CE5666.90502@itaapy.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Joining Repositories
+Date: Wed, 18 Jan 2006 10:03:22 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601180957460.3240@g5.osdl.org>
+References: <200601181325.59832.Mathias.Waack@rantzau.de>
+ <20060118125158.GN28365@pasky.or.cz> <20060118140917.GA15438@mythryan2.michonline.com>
+ <Pine.LNX.4.64.0601180813170.3240@g5.osdl.org> <20060118170536.GS28365@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 18 18:56:53 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Ryan Anderson <ryan@michonline.com>,
+	Mathias Waack <Mathias.Waack@rantzau.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 18 19:04:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzHY3-0004dw-Rg
-	for gcvg-git@gmane.org; Wed, 18 Jan 2006 18:56:44 +0100
+	id 1EzHev-0006Gw-LE
+	for gcvg-git@gmane.org; Wed, 18 Jan 2006 19:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932492AbWARR4k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jan 2006 12:56:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932496AbWARR4k
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 12:56:40 -0500
-Received: from wproxy.gmail.com ([64.233.184.195]:9010 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932492AbWARR4j convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2006 12:56:39 -0500
-Received: by wproxy.gmail.com with SMTP id 70so1628006wra
-        for <git@vger.kernel.org>; Wed, 18 Jan 2006 09:56:38 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NCmIAkat16GcseamOTP9nV0oCoHuzNLq6ggBXcpndIum9gh0nQyybQ+aV0TrrqTPfANhEq4WejB9J+onaHeBa4TTHlEwPl9dP4P7PT9o7fZLTfqRZ7zdkUSvLncyRfdwtXCiArgLT8bb3Ocp2OP8epHxeVNFDgUer7spzkScI6U=
-Received: by 10.54.152.13 with SMTP id z13mr7922800wrd;
-        Wed, 18 Jan 2006 09:56:38 -0800 (PST)
-Received: by 10.54.127.13 with HTTP; Wed, 18 Jan 2006 09:56:38 -0800 (PST)
-To: luis@itaapy.com
-In-Reply-To: <43CE5666.90502@itaapy.com>
-Content-Disposition: inline
+	id S964798AbWARSDi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jan 2006 13:03:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964831AbWARSDi
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 13:03:38 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:26325 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964798AbWARSDh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2006 13:03:37 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0II3NDZ016790
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 18 Jan 2006 10:03:24 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0II3M0H013531;
+	Wed, 18 Jan 2006 10:03:23 -0800
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060118170536.GS28365@pasky.or.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.66__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14847>
-
-Andreas' response is good is you're into pure git. Let me add some
-cogito tricks ;-)
-
-On 1/19/06, Belmar-Letelier <luis@itaapy.com> wrote:
-> arch-tla equivalent of
->
-> $ cd project--luis--0.1
-> $ tla missing -sD paul@mail.com--public/project--paul--0.1
-
- $ cd project-luis
- # only if have to do cg-branch-add the first time!
- $ cg-branch-add paul http://server/git/project.git
- $ cg-fetch paul
- # show what paul has that we don't
- $ cg-log -r master:paul
- $ cg-diff -r master:paul
- # show what we have that paul doesn't
- $ cg-log -r paul:master
- $ cg-diff -r master:paul
-
-You can also do
-
- $ cg-diff -r master:paul
-
-> so I get the information like what are the interesting patch to get
->
-> and then I take all of them with
->
-> $ tla star-merge -t paul@mail.com--public/project--paul--0.1
-
- # if you've done cg-fetch paul and reviewed it what you're about to
-merge, just do
- cg-merge paul
-
- # otherwise, for a shortcut of cg-fetch <branch> && cg-merge <branch> do
- $ cg-update paul
-
-> or I cherry pick only one of them (here patch-6) with
->
-> $ tla replay  somefriend@mail.com--public/project--branchA--0.1--patch-6
-
-  # export the patches paul has that we don't
-  $ mkdir .patchesfrompaul
-  $ git-format-patch --mbox --signoff -o .patchesfrompaul master paul
-  # review the contents of .patchesfrompaul and decide what patches you want
-  $ git-am -3 .patchesfrompaul/0006-fix-frob-invocation.txt
-
-Note that git does not track patch application _explicitly_ like Arch
-does, it tracks them only indirectly. Merges (tla star-merge type of
-merges) are recorded explicitly. This work surprisingly well. If you
-do a cg-update, cg-merge or git-merge, git will keep a good record of
-what points of the history have been merged.
-
-When you cherry pick patches, if the patch applies cleanly, the next
-time you do a merge from that branch it will be skipped automagically.
-If the patch needs serious editing, there's a good chance that git
-will try to apply it again.
-
-cheers.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14848>
 
 
-martin
+
+On Wed, 18 Jan 2006, Petr Baudis wrote:
+> 
+> Well, the recursive merge strategy is at least advertised to be able to
+> merge across renames (as long as they are autodetected).
+
+Yes. It can. However, the git merge approach fundamentally expects that 
+the merged trees _converge_. 
+
+So what happens is that if two trees continue to be developed as separate 
+trees, and the merges never converge (ie they happen just one way, with 
+the other way seldom or never merging back), the merge strategy will get 
+increasingly bad.
+
+That's pretty unavoidable, btw. I can pretty much guarantee that nobody 
+else will really do it any better, although any particular strategy will 
+always handle one particular case perfectly (*).
+
+			Linus
+
+(*) I think merging is like scheduling: you can always find a perfect 
+scheduling algorithm _after_the_fact_ when you know the load, but finding 
+one that works for all loads inevitably means that some cases won't work 
+well. You also find scheduling getting an inordinate amount of time in CS 
+literature, while in real life it's one of the least important problems of 
+a kernel.
