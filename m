@@ -1,55 +1,49 @@
-From: Franck <vagabon.xyz@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: [QUESTION] about .git/info/grafts file
-Date: Thu, 19 Jan 2006 11:51:22 +0100
-Message-ID: <cda58cb80601190251v5251c8bdh@mail.gmail.com>
-References: <cda58cb80601170928r252a6e34y@mail.gmail.com>
-	 <cda58cb80601170932o6f955469y@mail.gmail.com>
-	 <7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 19 Jan 2006 12:10:23 +0100
+Message-ID: <43CF739F.2030204@op5.se>
+References: <cda58cb80601170928r252a6e34y@mail.gmail.com>	<cda58cb80601170932o6f955469y@mail.gmail.com> <7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 19 11:51:30 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Franck <vagabon.xyz@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 19 12:10:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzXO2-0000lT-2X
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 11:51:27 +0100
+	id 1EzXgV-0004qT-8k
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 12:10:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161243AbWASKvX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 05:51:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161302AbWASKvX
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 05:51:23 -0500
-Received: from zproxy.gmail.com ([64.233.162.207]:25126 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1161243AbWASKvX convert rfc822-to-8bit
+	id S1161103AbWASLK0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 06:10:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161083AbWASLKZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 06:10:25 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:54500 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161103AbWASLKY
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2006 05:51:23 -0500
-Received: by zproxy.gmail.com with SMTP id 14so171843nzn
-        for <git@vger.kernel.org>; Thu, 19 Jan 2006 02:51:22 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=S+EHSPPPdeg0JgMAqd3KdyR0PcvLhA6A+O7Q8jN+vej/Jyq+Tc+B3Nu5YrOYf/7RrWdqfQtFU/+M/tS1ojlt6FudDOAf1v/IQaBoXh+ylAjarnTtbNROOCTDJ/L9gRlKkd+GC0njib4WJQ4yj98gGvyAmkr8qw22owThTtdcboY=
-Received: by 10.36.31.8 with SMTP id e8mr390985nze;
-        Thu, 19 Jan 2006 02:51:22 -0800 (PST)
-Received: by 10.36.47.7 with HTTP; Thu, 19 Jan 2006 02:51:22 -0800 (PST)
+	Thu, 19 Jan 2006 06:10:24 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 7F0886BD03; Thu, 19 Jan 2006 12:10:23 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>
 In-Reply-To: <7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14898>
 
-Thanks Junio for answering
-
-2006/1/19, Junio C Hamano <junkio@cox.net>:
+Junio C Hamano wrote:
 > Franck <vagabon.xyz@gmail.com> writes:
->
-> > I'm wondering why the "grafts" files is not involved during
-> > push/pull/clone operations ?
->
+> 
+> 
+>>I'm wondering why the "grafts" files is not involved during
+>>push/pull/clone operations ?
+> 
+> 
 > Commit ancestry grafting is a local repository issue and even if
 > you manage to lie to your local git that 300,000th commit is the
 > epoch, the commit object you send out to the downloader would
@@ -58,55 +52,14 @@ Thanks Junio for answering
 > that commit and feeding a parentless commit to the downloader is
 > not an option, because such a commit object would have different
 > object name and unpack-objects would be unhappy.
->
-> If you choose not to have full history in your public repository
-> for whatever reason (ISP server diskquota comes to mind)
+> 
 
-well, dealing with a repo that has more than 300,000 objects becomes a
-burden. A lots of git commands are slow, and cloning it take a while !
 
-> that is
-> OK, but be honest about it to your downloaders.  Tell them that
-> you do not have the full history, and they first need to clone
-> from some other repository you started your development upon, in
-> order to use what you added upon.  "This repository does not
-> have all the history -- please first clone from XX repository
-> (you need at least xxx commit), and then do another 'git pull'
-> from here", or something like that.
->
+I'm a bit curious about how this was done for the public kernel repo. 
+I'd like to import glibc to git, but keeping history since 1972 seems a 
+bloody waste, really.
 
-I don't try to hide or lie to my downloaders. I just want them to
-avoid to deal with totaly pointless history. My work have been started
-recently and is based on current XX repository. IMHO storing, dealing
-with objects which are more than 10 years old is useless.
-
-I don't see why it is so bad to create a "grafted" repository ? I want
-it to be small but still want to merge by using git-resolve with XX
-repository.
-
->
-> >                $ git-merge-base master origin
-> >                # nothing
->
-> Maybe you did not use grafts properly to cauterize?
-
-Well in my graft file I did:
-
-                    $ cat > .git/info/grafts
-                    <shaid> <shaid>
-
-                    $
-
-By reading "Documentation/repository-layout.txt", I thought it would
-have been the right thing to do. If I did the same like you did ie:
-
-                    $ cat > .git/info/grafts
-                    <shaid>
-
-                    $
-
-It works.
-
-Thanks
---
-               Franck
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
