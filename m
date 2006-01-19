@@ -1,79 +1,54 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Joining Repositories
-Date: Thu, 19 Jan 2006 10:24:39 -0800
-Message-ID: <7vlkxcdqjc.fsf@assigned-by-dhcp.cox.net>
-References: <200601181325.59832.Mathias.Waack@rantzau.de>
-	<20060118125158.GN28365@pasky.or.cz>
-	<20060118125857.GO28365@pasky.or.cz>
-	<200601181501.38791.Mathias.Waack@rantzau.de>
-	<20060118141442.GP28365@pasky.or.cz>
+Subject: Re: Something wrong with pickaxe?
+Date: Thu, 19 Jan 2006 10:24:50 -0800
+Message-ID: <7vfynkdqj1.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0601190004130.15298@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0601181541150.3240@g5.osdl.org>
+	<7v3bjlt66q.fsf@assigned-by-dhcp.cox.net> <43CF5816.1010004@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Mathias Waack <Mathias.Waack@rantzau.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 19 19:28:40 2006
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu Jan 19 19:28:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzeSo-0001iM-H9
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 19:24:51 +0100
+	id 1EzeSx-0001kX-IW
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 19:24:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030285AbWASSYm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 13:24:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030300AbWASSYm
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 13:24:42 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:49029 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1030285AbWASSYl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2006 13:24:41 -0500
+	id S1161157AbWASSYy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 13:24:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030281AbWASSYy
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 13:24:54 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:11212 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1030275AbWASSYx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2006 13:24:53 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060119182227.GBUL26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 19 Jan 2006 13:22:27 -0500
-To: Petr Baudis <pasky@suse.cz>
+          id <20060119182253.LHKC17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 19 Jan 2006 13:22:53 -0500
+To: Andreas Ericsson <ae@op5.se>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14922>
 
-Petr Baudis <pasky@suse.cz> writes:
+Andreas Ericsson <ae@op5.se> writes:
 
->   oops, it seems this is only in the latest pu branch of git. If you are
-> not brave enough for that, you will need to use the prefix facility of
-> checkout-index instead, and it'll take much longer:
->...
->   Note that I'm not sure when which feature was introduced. Your best
-> bet is to just use the latest stable GIT/Cogito versions.
+>> True again.  It is hard to be "more friendly" without actually
+>> generating a diff ;-).
+>
+> I thought generating diffs was fairly cheap...
 
-The "read-tree --prefix" and friends were only talked about
-during the "bind" commit discussion, and with some experimental
-code in "pu".  Here is my thought on their readiness:
+Probably.  But we currently do not do diff generation
+internally, so the comparison is "now doing diff with N lines of
+code" vs "having 0 lines of code to do diff".
 
- - "read-tree --prefix=<prefix>/" may independently be useful
-   even if we choose not to go "bind" commit approach.  However
-   what it does when the index already has something at
-   <prefix>/ has room for improvement.  I think it should have
-   an option to do an equivalent of either one-way merge or
-   two-way merge for that part of subtree.  Currently it always
-   rejects if the current index has anything there.
+> ... I give it a function name to search for and want to
+> know when the calling semantics changed for that function.
 
- - "write-tree --prefix=<prefix>/" is redundant for the purpose
-   of "bind" commit, because we would write the whole tree to be
-   recorded in the enclosing project and it is easy to pick the
-   subproject part with ls-tree from such a tree.  So it needs
-   an independent advocate / rationale before graduating from
-   "pu".
-
- - "write-tree --bound=<prefix>/ --bound=<prefix>/ ..." cannot
-   be emulated by any other way and may be independently useful
-   outside "bind" commit context.  Maybe the option should be
-   renamed to --exclude=<prefix>/ or somesuch before going to
-   "master".
-
- - "commit-tree --bind" should stay in "pu" until other pieces
-   to correctly deal with commit objects with "bind" lines are
-   ready, including fsck-objects and rev-list.  It _might_ be
-   safer to bump the core.repositoryformatversion automatically
-   once you have such a commit object in your repo.
+"Calling semantics" meaning "function signature"?
