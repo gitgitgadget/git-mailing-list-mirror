@@ -1,65 +1,71 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [QUESTION] about .git/info/grafts file
-Date: Thu, 19 Jan 2006 12:10:23 +0100
-Message-ID: <43CF739F.2030204@op5.se>
-References: <cda58cb80601170928r252a6e34y@mail.gmail.com>	<cda58cb80601170932o6f955469y@mail.gmail.com> <7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net>
+From: Mathias Waack <Mathias.Waack@rantzau.de>
+Subject: Re: Joining Repositories
+Date: Thu, 19 Jan 2006 12:36:58 +0100
+Organization: IFU
+Message-ID: <200601191236.58725.Mathias.Waack@rantzau.de>
+References: <200601181325.59832.Mathias.Waack@rantzau.de> <200601181501.38791.Mathias.Waack@rantzau.de> <20060118141442.GP28365@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Franck <vagabon.xyz@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 19 12:10:36 2006
+X-From: git-owner@vger.kernel.org Thu Jan 19 12:38:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzXgV-0004qT-8k
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 12:10:31 +0100
+	id 1EzY7M-0002yh-Im
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 12:38:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161103AbWASLK0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 06:10:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161083AbWASLKZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 06:10:25 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:54500 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161103AbWASLKY
+	id S1161166AbWASLiN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 06:38:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161187AbWASLiN
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 06:38:13 -0500
+Received: from mail1.Rantzau.de ([193.100.124.142]:52953 "EHLO
+	mail1.Rantzau.de") by vger.kernel.org with ESMTP id S1161166AbWASLiN
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2006 06:10:24 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 7F0886BD03; Thu, 19 Jan 2006 12:10:23 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net>
+	Thu, 19 Jan 2006 06:38:13 -0500
+Received: from [172.28.19.207] (helo=[192.168.48.128])
+	by mail1.Rantzau.de with asmtp (TLSv1:RC4-MD5:128)
+	(some SMTP-Gateway)
+	id 1EzY74-0000gm-00
+	for git@vger.kernel.org; Thu, 19 Jan 2006 12:37:59 +0100
+To: git@vger.kernel.org
+User-Agent: KMail/1.7.2
+In-Reply-To: <20060118141442.GP28365@pasky.or.cz>
+Content-Disposition: inline
+X-Scanner: exiscan *1EzY74-0000gm-00*opmz9xU.GVg* (Rantzau ///// Gruppe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14899>
 
-Junio C Hamano wrote:
-> Franck <vagabon.xyz@gmail.com> writes:
-> 
-> 
->>I'm wondering why the "grafts" files is not involved during
->>push/pull/clone operations ?
-> 
-> 
-> Commit ancestry grafting is a local repository issue and even if
-> you manage to lie to your local git that 300,000th commit is the
-> epoch, the commit object you send out to the downloader would
-> record its true parent (or parents, if it is a merge), so the
-> downloader would want to go further back.  And no, rewriting
-> that commit and feeding a parentless commit to the downloader is
-> not an option, because such a commit object would have different
-> object name and unpack-objects would be unhappy.
-> 
+Hello Petr, 
 
+On Wednesday 18 January 2006 03:14 pm, Petr Baudis wrote:
+> > ...git-read-tree doesn't know the parameter --prefix (just downloaded and
+> > tried it on 0.99.9i). What version shall I use?
+>
+>   oops, it seems this is only in the latest pu branch of git. If you are
+> not brave enough for that, 
 
-I'm a bit curious about how this was done for the public kernel repo. 
-I'd like to import glibc to git, but keeping history since 1972 seems a 
-bloody waste, really.
+I think I am;) 
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> you will need to use the prefix facility of 
+> checkout-index instead, and it'll take much longer:
+>
+> 	git-read-tree $commit
+> 	git-checkout-index -a --prefix=r1/
+> 	rm .git/index
+> 	cg-add -r r1/
+> 	rm -rf r1
+> 	.. then proceed with git-cat-file etc ..
+
+Time doesn't matter (in this case). This solution seems to work. 
+
+>   Note that I'm not sure when which feature was introduced. Your best
+> bet is to just use the latest stable GIT/Cogito versions.
+
+Thanks for your suggestions, I've got a working solution. Now I'm going to 
+spend the remaining days of this week by trying to understand why it works. 
+
+Mathias
