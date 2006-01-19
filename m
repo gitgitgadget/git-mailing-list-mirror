@@ -1,62 +1,111 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: cygwin-latest: compile errors related to sockaddr_storage, dirent->d_type and dirent->d_ino
-Date: Thu, 19 Jan 2006 00:29:14 -0500
-Message-ID: <20060119052914.GC8121@trixie.casa.cgf.cx>
-References: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: /etc in git?
+Date: Thu, 19 Jan 2006 01:23:29 -0500
+Message-ID: <43CF3061.2030504@michonline.com>
+References: <b476569a0601181943y6a14e703k1b521a7edb9e2e2@mail.gmail.com>	<7vlkxckf7o.fsf@assigned-by-dhcp.cox.net>	<b476569a0601182040w581b72b7xbb99845da4085646@mail.gmail.com> <7v64ogkdtu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jan 19 06:29:22 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig6E0736FAF79C51C8A79F49BF"
+Cc: Adam Hunt <kinema@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 19 07:23:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzSMI-0008Bk-LP
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 06:29:19 +0100
+	id 1EzTCz-0000jp-HW
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 07:23:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161116AbWASF3P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 00:29:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161115AbWASF3P
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 00:29:15 -0500
-Received: from c-24-61-23-223.hsd1.ma.comcast.net ([24.61.23.223]:37856 "EHLO
-	cgf.cx") by vger.kernel.org with ESMTP id S1161116AbWASF3O (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2006 00:29:14 -0500
-Received: by cgf.cx (Postfix, from userid 201)
-	id 822C54A84B8; Thu, 19 Jan 2006 00:29:14 -0500 (EST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com>
-User-Agent: Mutt/1.5.11
+	id S932560AbWASGXn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 01:23:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932561AbWASGXn
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 01:23:43 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:51930 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S932560AbWASGXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2006 01:23:42 -0500
+Received: from ryan-uml-tap1.internal.autoweb.net ([10.37.1.33])
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1EzTCs-0004t3-1Z; Thu, 19 Jan 2006 01:23:40 -0500
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64ogkdtu.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14890>
 
-On Wed, Jan 18, 2006 at 02:47:00PM +0100, Alex Riesen wrote:
->For reasons unknown, cygwin decided to use our sockaddr_storage.
->As it is redefined to sockaddr_in it'd cause compilation errors in
->cygwin headers. Fixed by first patch, which uses a more git-related
->name (can we claim rights for the symbol, being first to use it? :-)
->
->For the other, probably unrelated, reasons, they decided to leave
->declarations of DT_* macros in dirent.h without providing dirent->d_type.
->This is what NO_DTYPE in the 0002-patch is all about.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig6E0736FAF79C51C8A79F49BF
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-"They" probably would like to hear about any irregularities that are found.
-"They" probably don't like it when people treat an open source project as
-if it was some unresponsive proprietary enterprise which does not listen
-to or accept patches.
+Junio C Hamano wrote:
+> Adam Hunt <kinema@gmail.com> writes:
+> 
+> 
+>>Do you have any more details by chance?  Does it work?  Does it work
+>>well?  How does one do it?
+> 
+> 
+> I personally feel it is a horrible and stupid thing to do, if by
+> "version control /etc" you mean to have /.git which controls
+> /etc/hosts and stuff in place.  It would work (git does not
+> refuse to run as root).  But being a *source* control system, we
+> deliberately refuse to store the full permission bits, so if
+> your /etc/shadow is mode 0600 while /etc/hosts is mode 0644, you
+> have to make sure they stay that way after checking things out.
 
->And on top of that, they removed dirent->d_ino (or probably replaced it
->by __ino32, if at all).  BTW, can we somehow avoid using d_ino?  It is
->referenced only in fsck-objects.c Anyway, to workaround this I put
->
->COMPAT_CFLAGS += -Dd_ino=__ino32
->
->It helps, but surely is not the solution.
+This is, admittedly, a major problem.
 
-I don't see how it could help since __ino32 is not actually filled in
-with anything.  In fact, I'll rename the field to __invalid_ino32 to
-make that clear.
+If you instead take the viewpoint that the /etc/.git/ repository is for
+tracking textual diffs and not for serving as a backup, it should be an
+acceptable tool however.  In my opinion, to be truly useful, it would
+need to also automatically commit changes during package installation,
+upgrade, and removal.  (To be incredibly useful, it would 3-way merge
+changes.  That, I think, is a fantasy at this time.)
 
-cgf
-(cygwin project lead)
+> 
+> You are much better off to keep /usr/src/rootstuff/.git (and
+> working tree files are /usr/src/rootstuff/etc/hosts and
+> friends), have a build procedure (read: Makefile) there, and
+> version control that source directory.  I usually have 'install'
+> and 'diff' target in that Makefile, so that I can do this:
+> 
+> 	$ cd /usr/src/rootstuff
+>         $ make diff ;# to see if somebody edited any targets by hand
+> 	$ edit etc/hosts
+> 	$ git diff ;# to see the source change
+>         $ make diff ;# to see the change I am going to install
+>         $ su
+>         # make install; exit
+>         $ git commit -a -m 'Add a new host.'
+> 
+> Being able to run "diff" before actually doing it is very handy
+> and useful safety/sanity measure.
+> 
+> Obviously, /usr/src/rootstuff/ should be mode 0770 or stricter,
+> owned by the operator group; it would contain some sensitive
+> information.
+
+If you're doing this, especially if you're doing this on multiple
+machines, creating a package is probably a worthwhile thing to
+contemplate as well.
+
+
+--------------enig6E0736FAF79C51C8A79F49BF
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQFDzzBlfhVDhkBuUKURApfOAJ91A7fW/hlPQnLkSS8+53yMDTZDcwCgrsJu
+qhgKdQMuxpj7KV7d56jEVrM=
+=TA1x
+-----END PGP SIGNATURE-----
+
+--------------enig6E0736FAF79C51C8A79F49BF--
