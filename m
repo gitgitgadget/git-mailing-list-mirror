@@ -1,82 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cygwin-latest: compile errors related to sockaddr_storage, dirent->d_type and dirent->d_ino
-Date: Thu, 19 Jan 2006 00:59:57 -0800
-Message-ID: <7vlkxciodu.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com>
-	<20060119052914.GC8121@trixie.casa.cgf.cx>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Joining Repositories
+Date: Thu, 19 Jan 2006 10:03:48 +0100
+Message-ID: <20060119090348.GX28365@pasky.or.cz>
+References: <200601181325.59832.Mathias.Waack@rantzau.de> <20060118125158.GN28365@pasky.or.cz> <20060118140917.GA15438@mythryan2.michonline.com> <Pine.LNX.4.64.0601180813170.3240@g5.osdl.org> <7vbqy9xx2r.fsf@assigned-by-dhcp.cox.net> <7v64ohotjj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 19 10:00:07 2006
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Ryan Anderson <ryan@michonline.com>,
+	Mathias Waack <Mathias.Waack@rantzau.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 19 10:02:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzVeH-0000UA-Q8
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 10:00:06 +0100
+	id 1EzVgh-0001EE-QR
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 10:02:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161285AbWASJAA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 04:00:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161288AbWASJAA
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 04:00:00 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:44437 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1161285AbWASI77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2006 03:59:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060119085852.WHJF20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 19 Jan 2006 03:58:52 -0500
-To: Christopher Faylor <me@cgf.cx>
-In-Reply-To: <20060119052914.GC8121@trixie.casa.cgf.cx> (Christopher Faylor's
-	message of "Thu, 19 Jan 2006 00:29:14 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1161286AbWASJCc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 04:02:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161288AbWASJCc
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 04:02:32 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:25568 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1161286AbWASJCb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2006 04:02:31 -0500
+Received: (qmail 25115 invoked by uid 2001); 19 Jan 2006 10:03:48 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v64ohotjj.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14893>
 
-Christopher Faylor <me@cgf.cx> writes:
+Dear diary, on Thu, Jan 19, 2006 at 03:12:00AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> (2) letting a subproject keep its own independent history that
+> does not know about other subprojects even after combination
+> happens (as opposed to the coolest merge, after which there is
+> no git history that does not have gitk as its part).
 
-> "They" probably would like to hear about any irregularities that are found.
-> "They" probably don't like it when people treat an open source project as
-> if it was some unresponsive proprietary enterprise which does not listen
-> to or accept patches.
+Which can be an advantage or disadvantage depending on the situation,
+but I suspect that it would be rather a disadvantage here.
 
-First of all, thanks for joining our discussion.  Being able to
-hear from somebody from other project firsthand (not just listen
-to somebody talking in his own changelogs and code comments, but
-in actual e-mail exchange discussion) lets us put faces and
-names to the entity "so far just one of the external projects to
-us".
+> So would Cogito subprojects support (will it be in the 0.17?),
 
->>For reasons unknown, cygwin decided to use our sockaddr_storage.
+Probably in 0.18. I would have the subprojects support complete when
+it's already in, and it will be some work, while I don't want to
+postpone 0.17 much anymore. But we'll see. ;)
 
-I haven't looked at the proposed patch by Alex, so would not
-comment on this part, but I'd appreciate your input.
+> but it might look less powerful when compared with the "bind" or
+> "gitlink", if it comes in the form of the patch Pasky sent to
+> the list, since it does not attempt to tie the versions of two
+> projects together.  Certainly that makes it the easiest to use
+> and understand what is going on, though.
 
->>For the other, probably unrelated, reasons, they decided to leave
->>declarations of DT_* macros in dirent.h without providing dirent->d_type.
+By now (I wanted to note that in the original thread when I get to make
+a new patch), I've decided to extend the format to allow extra
+information stored for the subprojects:
 
-I was wondering what the justification for keeping DT_* without
-d_type myself.  What is the preferred resolution on this one
-from your point of view?  I suspect removing d_type while
-leaving DT_* was just a transient error and you would want to
-remove DT_* as well, in which case the patch on this issue by
-Alex would become unnecessary.
+	path\t...
 
->>And on top of that, they removed dirent->d_ino (or probably replaced it
->>by __ino32, if at all).  BTW, can we somehow avoid using d_ino?  It is
->>referenced only in fsck-objects.c Anyway, to workaround this I put
->>
->>COMPAT_CFLAGS += -Dd_ino=__ino32
->>
->>It helps, but surely is not the solution.
->
-> I don't see how it could help since __ino32 is not actually filled in
-> with anything.  In fact, I'll rename the field to __invalid_ino32 to
-> make that clear.
+This means that I will have to do preprocessing when using this as an
+exclude file, but it will let me do the stuff like read-only
+subprojects. I could also tie it to a specific version here, but if
+gitlink/binds are after all going to get included in Git, I'd rather use
+that when it is ready (although the single-git-directory approach does
+not make sense to me; but I didn't read part of the thread very
+carefully yet).
 
-I think renaming __invalid_* makes sense.  I'll see how we would
-work this around on the git side to make things more portable.
+I think the approaches might be complementary, Cogito subprojects are
+just designed for different scenarios than gitlinks.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
