@@ -1,78 +1,99 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: /etc in git?
-Date: Thu, 19 Jan 2006 08:54:58 -0800
-Message-ID: <20060119165458.GF4380@ca-server1.us.oracle.com>
-References: <b476569a0601181943y6a14e703k1b521a7edb9e2e2@mail.gmail.com> <7vlkxckf7o.fsf@assigned-by-dhcp.cox.net> <b476569a0601182040w581b72b7xbb99845da4085646@mail.gmail.com> <7v64ogkdtu.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [QUESTION] about .git/info/grafts file
+Date: Thu, 19 Jan 2006 08:58:09 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601190842270.3240@g5.osdl.org>
+References: <cda58cb80601170928r252a6e34y@mail.gmail.com>
+ <cda58cb80601170932o6f955469y@mail.gmail.com> <7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net>
+ <cda58cb80601190251v5251c8bdh@mail.gmail.com> <20060119130940.GC28365@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Adam Hunt <kinema@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 19 17:55:39 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Franck <vagabon.xyz@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 19 17:59:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ezd41-00017L-7r
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 17:55:09 +0100
+	id 1Ezd7I-000252-6o
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 17:58:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932487AbWASQzF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 11:55:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932483AbWASQzF
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 11:55:05 -0500
-Received: from agminet01.oracle.com ([141.146.126.228]:56125 "EHLO
-	agminet01.oracle.com") by vger.kernel.org with ESMTP
-	id S932572AbWASQzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2006 11:55:03 -0500
-Received: from rgmsgw02.us.oracle.com (rgmsgw02.us.oracle.com [138.1.186.52])
-	by agminet01.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0JGswaF000809;
-	Thu, 19 Jan 2006 10:54:59 -0600
-Received: from rgmsgw02.us.oracle.com (localhost.localdomain [127.0.0.1])
-	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0JGswxq007939;
-	Thu, 19 Jan 2006 09:54:58 -0700
-Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.48.5])
-	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k0JGsvvk007924
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 19 Jan 2006 09:54:57 -0700
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.60)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1Ezd3q-0005oC-7j; Thu, 19 Jan 2006 08:54:58 -0800
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v64ogkdtu.fsf@assigned-by-dhcp.cox.net>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
-User-Agent: Mutt/1.5.11
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
+	id S932389AbWASQ62 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 11:58:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932285AbWASQ62
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 11:58:28 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:6035 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932389AbWASQ61 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2006 11:58:27 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0JGwADZ027183
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 19 Jan 2006 08:58:10 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0JGw90O013939;
+	Thu, 19 Jan 2006 08:58:09 -0800
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060119130940.GC28365@pasky.or.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.66__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14915>
 
-On Wed, Jan 18, 2006 at 09:05:01PM -0800, Junio C Hamano wrote:
-> You are much better off to keep /usr/src/rootstuff/.git (and
-> working tree files are /usr/src/rootstuff/etc/hosts and
-> friends), have a build procedure (read: Makefile) there, and
-> version control that source directory.  I usually have 'install'
-> and 'diff' target in that Makefile, so that I can do this:
 
-	A while back I wrote CVSMan, which tries to be berkeley sup(8)
-with CVS as the transport.  I think git would work well here, but I
-haven't yet generalized the code to support non-CVS SCMs (I certainly
-have wanted to, it's the only thing I use CVS for anymore).
-	Like GIT, CVS doesn't do perms well.  However, CVSMan handles
-the perms via .cvsperms files.
 
-Joel
+On Thu, 19 Jan 2006, Petr Baudis wrote:
+>
+> Dear diary, on Thu, Jan 19, 2006 at 11:51:22AM CET, I got a letter
+> where Franck <vagabon.xyz@gmail.com> said that...
+> > well, dealing with a repo that has more than 300,000 objects becomes a
+> > burden. A lots of git commands are slow, and cloning it take a while !
+> 
+> Were the objects packed? It would be interesting to have some data about
+> how GIT performs with that much objects...
 
--- 
+The historical linux archive has a lot more than 300,000 objects. In fact, 
+even the _current_ kernel archive has almost 200,000 objects.
 
-"What does it say about a society's priorities when the time you
- spend in meetings on Monday is greater than the total number of
- hours you spent sleeping over the weekend?"
-	- Nat Friedman
+Maybe somebody was thinking "commits", not "objects". Something with 
+300,000 commits is indeed a pretty big project.
 
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+Anyway, from a scalability standpoint, git should have no problem at all 
+with tons of objects, as long as you pack the old history. There are a few 
+things that get slower:
+
+ - if you end up doing things that look at history, they are obviously at 
+   least linear is history size. Often there are other downsides too 
+   (using lots of memory).
+
+   Example: try even just a simple "gitk" on the (regular, new) kernel 
+   archive, and it will take a while before the whole thing has been done. 
+   Of course, you'll see the top entries interactively, so mostly you 
+   won't care, but I routinely limit it some way just to make it not make 
+   the CPU fans come on. So I do something like
+
+	gitk --since=1.week.ago
+	gitk v2.6.15..
+
+   instead of plain gitk, just because it makes operations cheaper.
+
+ - a full clone takes a long time. Git _could_ fairly easily have an 
+   extension to add a date specifier to clone too:
+
+	git clone --since=1.month.ago <source> <dst>
+
+   and just leave any older stuff (you could always fetch it later), but 
+   we've just never done it. Maybe we should. It _should_ be pretty simple 
+   to do from a conceptual standpoint.
+
+but "everyday" operations shouldn't slow down from having a long history. 
+I can still apply 4-5 patches a second to the kernel archive, for example, 
+as you can see from
+
+	git log --pretty=fuller | grep CommitDate | less -S
+
+and looking for one of the patch series I've applied from Andrew..
+
+		Linus
