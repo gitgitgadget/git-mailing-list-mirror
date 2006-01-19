@@ -1,71 +1,53 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Lower priority of Cogito's default exclude patterns
-Date: Thu, 19 Jan 2006 13:42:44 +0100
-Message-ID: <20060119124244.GJ27976@pasky.or.cz>
-References: <20060107221931.10616.25897.stgit@backpacker.hemma.treskal.com> <20060119100712.GA12154@diana.vm.bytemark.co.uk>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: cygwin-latest: compile errors related to sockaddr_storage, dirent->d_type and dirent->d_ino
+Date: Thu, 19 Jan 2006 13:51:55 +0100
+Message-ID: <20060119125155.GZ28365@pasky.or.cz>
+References: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 19 13:41:36 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Jan 19 13:50:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzZ6X-0001B7-2O
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 13:41:29 +0100
+	id 1EzZFR-0003Fp-Up
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 13:50:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161062AbWASMl0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 19 Jan 2006 07:41:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbWASMl0
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 07:41:26 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:23444 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751408AbWASMl0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2006 07:41:26 -0500
-Received: (qmail 20430 invoked by uid 2001); 19 Jan 2006 13:42:44 +0100
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+	id S1161173AbWASMug (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 07:50:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161186AbWASMug
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 07:50:36 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:40838 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1161173AbWASMug (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2006 07:50:36 -0500
+Received: (qmail 21133 invoked by uid 2001); 19 Jan 2006 13:51:55 +0100
+To: Alex Riesen <raa.lkml@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20060119100712.GA12154@diana.vm.bytemark.co.uk>
+In-Reply-To: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14902>
 
-Dear diary, on Thu, Jan 19, 2006 at 11:07:12AM CET, I got a letter
-where Karl Hasselstr=F6m <kha@treskal.com> said that...
-> On 2006-01-07 23:19:31 +0100, Karl Hasselstr=F6m wrote:
->=20
-> > Put the default exclude patterns in a file referenced with
-> > --exclude-from, instead of on the command line with --exclude. (The
-> > existing behavior was bad since --exclude has higher priority than
-> > --exclude-from and --exclude-per-directory, which made it impossibl=
-e
-> > for the user to override the default patterns.)
-> >
-> > Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
-> >
-> > ---
-> >
-> >  Makefile           |   15 +++++++++++++--
-> >  cg-Xlib            |    6 +++++-
-> >  cg-default-exclude |    6 ++++++
-> >  3 files changed, 24 insertions(+), 3 deletions(-)
->=20
-> Did you miss this patch, or just not like it?
+Dear diary, on Wed, Jan 18, 2006 at 02:47:00PM CET, I got a letter
+where Alex Riesen <raa.lkml@gmail.com> said that...
+> For reasons unknown, cygwin decided to use our sockaddr_storage.
+> As it is redefined to sockaddr_in it'd cause compilation errors in
+> cygwin headers. Fixed by first patch, which uses a more git-related
+> name (can we claim rights for the symbol, being first to use it? :-)
 
-Just postponed for next sweep through my patch queue, due today or
-tomorrow. ;) I will rename cg-default-exclude to default-exclude,
-though.
+Huh? "Our"? See RFC 2553 and e.g.:
 
-Oh, now I remember - one my major concern is that now Cogito will not
-work if not make install'd, which is how I actually primarily use it on
-my machine.
+	http://www.opengroup.org/onlinepubs/009695399/basedefs/sys/socket.h.html
 
-Sorry for the delay,
+You have no business meddling with this identifier except working around
+platforms which do not support it, but then do not complain that things
+break when the platforms actually start supporting it. ;-)
 
---=20
+-- 
 				Petr "Pasky" Baudis
 Stuff: http://pasky.or.cz/
 Of the 3 great composers Mozart tells us what it's like to be human,
