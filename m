@@ -1,87 +1,71 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: StGIT: "stg new" vs "stg new --force"
-Date: Wed, 18 Jan 2006 19:49:09 -0500
-Message-ID: <1137631749.13853.22.camel@dv>
-References: <1137144291.20073.104.camel@dv>
-	 <b0943d9e0601160018x206faf9ck@mail.gmail.com>
-	 <1137517300.20556.26.camel@dv> <20060117215752.GH32585@nowhere.earth>
-	 <1137539762.12454.11.camel@dv>  <20060118193717.GI32585@nowhere.earth>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] "sleep 1" sleeps too little on cygwin
+Date: Wed, 18 Jan 2006 17:18:50 -0800
+Message-ID: <7vmzhtqakl.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0601170325y60094b4w693ac37490c67410@mail.gmail.com>
+	<7vmzhtzzlf.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0601181233460.8678@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v4q41zd1t.fsf@assigned-by-dhcp.cox.net>
+	<20060118185229.GA3001@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	git <git@vger.kernel.org>, Charles Lever <cel@citi.umich.edu>
-X-From: git-owner@vger.kernel.org Thu Jan 19 01:50:13 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 19 02:19:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzNzw-0007MG-1m
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 01:49:56 +0100
+	id 1EzORz-0004rJ-OC
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 02:18:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161122AbWASAt0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jan 2006 19:49:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161119AbWASAt0
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 19:49:26 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:59318 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1161122AbWASAtQ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2006 19:49:16 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EzNwK-0003Xo-JO
-	for git@vger.kernel.org; Wed, 18 Jan 2006 19:46:12 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.60)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1EzNzB-00048F-Ar; Wed, 18 Jan 2006 19:49:09 -0500
-To: Yann Dirson <ydirson@altern.org>
-In-Reply-To: <20060118193717.GI32585@nowhere.earth>
-X-Mailer: Evolution 2.5.4 (2.5.4-6) 
+	id S1030491AbWASBSx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jan 2006 20:18:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030488AbWASBSx
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jan 2006 20:18:53 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:49543 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1030277AbWASBSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jan 2006 20:18:52 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060119011651.POFL17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 18 Jan 2006 20:16:51 -0500
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20060118185229.GA3001@steel.home> (Alex Riesen's message of
+	"Wed, 18 Jan 2006 19:52:29 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14876>
 
-On Wed, 2006-01-18 at 20:37 +0100, Yann Dirson wrote:
-> > > It would even be useful sometimes to dispatch changes to a single file
-> > > into several patches.  When they are distinct enough to be in
-> > > different diff hunks, it is pretty easy to split an existing patch,
-> > > but it could also be useful to only refresh a patch with specific diff
-> > > hunks.  A possibility would be to add a filterdiff-like "-#<n>" flag,
-> > > in addition to the above-suggested "refresh <file>" (and possibly only
-> > > allow to specify a single file together with this flag).
-> > 
-> > I think if would be better to improve "stg fold" to work on arbitrary
-> > patches.  This way, you prepare the patch in the editor (which would not
-> > be harder than finding hunk numbers) and fold it into the patch of your
-> > choice.  stg should check that the stack remains valid, possibly doing
-> > trivial adjustments to the higher patches.  The current tree should not
-> > be impacted.
-> 
-> This sounds like a good idea as well (and I would use it on a near
-> daily basis as well ;).  Obviously such a request can also fail,
-> eg. when requesting to fold a change into a patch, where a subsequent
-> patch modifies the same lines.
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-Definitely.  Hard cases should be handled by hand.
+> this is probable unsafe too: not all systems export inodes
+> (the recent cygwin breakage comes to mind).
 
-> But it would not be a replacement to selecting changes with a
-> granularity finer than file-level, which is what I wanted to suggest.
+Hmph.  I thought that breakage was about struct dirent, not what
+we read from struct stat; d_ino is XSI extension so that may
+have been the reason cygwin folks removed it, but st_ino is in
+BASE --- did they remove that as well?
 
-Why?  Maybe you got confused by two meanings of the word "patch"?  I
-think StGIT should use some other term, e.g. changeset.  I meant that
-the diff file (e.g. made by "stg diff") could be edited and folded into
-one of the StGIT patches (changesets).  Unless you want non-interactive
-separation of the hunks, using an editor should be a reasonable
-approach.
+But you are right.  Among "struct stat" members, only S_IFMT
+part from st_mode and st_size are meaningful for symlinks after
+lstat() and other members are unspecified.  Which means that, in
+the strictest sense, the original test that tried to see if the
+timestamp change makes the entry for the symlink cache-dirty,
+was pointless.
 
-I believe StGIT should be primarily designed to be used interactively.
-Your approach looks like a usability disaster to me.  The user is
-supposed to find numbers of the hunks, although s/he is working on the
-whole file (since it's "stg refresh").
+HOWEVER.
 
-My approach suggests that the user work with the diff from the
-beginning, and separates the changes by looking at them.
+We live in the real world, not in a strict POSIX world.  We (the
+index file) relies on lstat() to update st_mtime and/or st_ino,
+and I think it is OK (IOW, we declare that platforms on which we
+cannot rely on these members are not worth supporting).
 
--- 
-Regards,
-Pavel Roskin
+
+By the way, if you have an access to git on cygwin with FAT,
+could you test your patch ($SECONDS) and then i-num patch (the
+machine with cygwin I can borrow has only NTFS) please?
