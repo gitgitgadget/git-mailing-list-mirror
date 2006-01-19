@@ -1,70 +1,99 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [QUESTION] about .git/info/grafts file
-Date: Thu, 19 Jan 2006 18:45:36 +0100
-Message-ID: <20060119174536.GF28365@pasky.or.cz>
-References: <cda58cb80601170928r252a6e34y@mail.gmail.com> <cda58cb80601170932o6f955469y@mail.gmail.com> <7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net> <43CF739F.2030204@op5.se> <cda58cb80601190531q238a8f40r@mail.gmail.com> <43CF97AF.9060300@op5.se>
+Date: Thu, 19 Jan 2006 09:49:35 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601190938110.3240@g5.osdl.org>
+References: <cda58cb80601170928r252a6e34y@mail.gmail.com> 
+ <cda58cb80601170932o6f955469y@mail.gmail.com>  <7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net>
+  <cda58cb80601190251v5251c8bdh@mail.gmail.com>  <20060119130940.GC28365@pasky.or.cz>
+  <Pine.LNX.4.64.0601190842270.3240@g5.osdl.org> <cda58cb80601190933o4cedde92x@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 19 18:45:27 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 19 18:50:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ezdpc-0007cD-8I
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 18:44:20 +0100
+	id 1Ezdvq-0000Zo-17
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 18:50:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161018AbWASRoQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 12:44:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbWASRoQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 12:44:16 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:61927 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750826AbWASRoP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2006 12:44:15 -0500
-Received: (qmail 13128 invoked by uid 2001); 19 Jan 2006 18:45:36 +0100
-To: Andreas Ericsson <ae@op5.se>, torvalds@osdl.org
-Content-Disposition: inline
-In-Reply-To: <43CF97AF.9060300@op5.se>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1161058AbWASRuh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 12:50:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161049AbWASRuh
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 12:50:37 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:18849 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1161046AbWASRug (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2006 12:50:36 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0JHnaDZ030206
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 19 Jan 2006 09:50:17 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0JHnZRF016276;
+	Thu, 19 Jan 2006 09:49:36 -0800
+To: Franck <vagabon.xyz@gmail.com>
+In-Reply-To: <cda58cb80601190933o4cedde92x@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.66__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14919>
 
-Dear diary, on Thu, Jan 19, 2006 at 02:44:15PM CET, I got a letter
-where Andreas Ericsson <ae@op5.se> said that...
-> Ach, no. The current kernel repo only has history since April 17 (around 
-> 155 MB of objects, with less than optimal packing), when it started 
-> using git for versioning. The kernel repo also sees a lot of very rapid 
-> development.
+
+
+On Thu, 19 Jan 2006, Franck wrote:
 > 
-> The full kernel tree, with history since 1991 or some such, is about 3.2 
-> GB.
+> that would be great ! something like:
+> 
+>         git clone --since=v2.6.15 <src> <dst>
+> 
+> would be very useful for me. How would it work ? Does it automatically
+> set up a graft file for me ?
 
-There is some "accurate" history only from the moment the kernel got
-tracked in BK, and it is certainly far less.
+I think we'd have to set up the grafts file, yes. However, it's actually 
+less of an advantage than you'd think: especially for long development 
+histories, the incremental packing is very very efficient. In contrast, if 
+you only get recent versions, there's nothing to be incremental against, 
+so the size of the pack will not be that much smaller.
 
-The question is, what is the "official" kernel history repository?
-There is at least
+So getting just a tenth of the development history will _not_ cause the 
+pack to be just a tenth in size. It's probably closer to half the size of 
+the full history.
 
-	http://www.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
+Anyway, it's _conceptually_ something that git wouldn't have any problems 
+with, but that doesn't mean that it's totally trivial either. The easiest 
+way to do it (by far) would be to expand the native git protocol with a 
+"get all objects of this one version" or something like that, and then 
+you'd just do a "pull and mark all unknown commits in the grafts file".
 
-with a 251M pack and
+So in effect, instead of getting the whole history pack, you'd get a pack 
+that contains _one_ version (no history at all), and then (if you want to) 
+you can get a pack that gets all stuff that isn't reachable from that one 
+(ie "newer").
 
-	http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/old-2.6-bkcvs.git
+That would have the advantage that it's quite possible that many users 
+might want to do just
 
-with a 165M pack - IIRC the latter is obsoleted by the former and
-perhaps should be blasted to prevent confusion?
+	git clone --only=v2.6.15 <source> <target>
 
-Getting a little offtopic here... Linus, would it be deemed useful to
-have the script I've pasted in <20060119130519.GB28365@pasky.or.cz>
-(earlier in this thread) in the kernel's scripts/ directory, pointing at
-the canonical history repository?
+which would do that "one single version" variant of the clone. Then, later 
+on, you could just do
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+	git pull --graft-unknown <source> <target>
+
+to update the history.
+
+Anybody want to try that? It would be a new command to "git-daemon" 
+(instead of "git-upoload-pack", you'd do a new "git-upload-version" 
+command internally: it would look a lot like upload-pack, and use the same 
+unpacking protocol).
+
+> but it's really a pain to run for example git-repack or git-prune commands.
+
+Well, you really don't need to do that very often.
+
+		Linus
