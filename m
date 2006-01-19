@@ -1,71 +1,70 @@
-From: Mathias Waack <Mathias.Waack@rantzau.de>
-Subject: Re: Joining Repositories
-Date: Thu, 19 Jan 2006 12:36:58 +0100
-Organization: IFU
-Message-ID: <200601191236.58725.Mathias.Waack@rantzau.de>
-References: <200601181325.59832.Mathias.Waack@rantzau.de> <200601181501.38791.Mathias.Waack@rantzau.de> <20060118141442.GP28365@pasky.or.cz>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: New ref generates 8MB mail message
+Date: Thu, 19 Jan 2006 13:35:29 +0100
+Message-ID: <43CF8791.6050705@op5.se>
+References: <20060118140907.GV19769@parisc-linux.org> <Pine.LNX.4.64.0601180810330.3240@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jan 19 12:38:33 2006
+Cc: Matthew Wilcox <matthew@wil.cx>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 19 13:35:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzY7M-0002yh-Im
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 12:38:21 +0100
+	id 1EzZ0o-0008JV-CM
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 13:35:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161166AbWASLiN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 06:38:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161187AbWASLiN
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 06:38:13 -0500
-Received: from mail1.Rantzau.de ([193.100.124.142]:52953 "EHLO
-	mail1.Rantzau.de") by vger.kernel.org with ESMTP id S1161166AbWASLiN
+	id S1161073AbWASMfc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 07:35:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbWASMfb
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 07:35:31 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:26853 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751402AbWASMfb
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2006 06:38:13 -0500
-Received: from [172.28.19.207] (helo=[192.168.48.128])
-	by mail1.Rantzau.de with asmtp (TLSv1:RC4-MD5:128)
-	(some SMTP-Gateway)
-	id 1EzY74-0000gm-00
-	for git@vger.kernel.org; Thu, 19 Jan 2006 12:37:59 +0100
-To: git@vger.kernel.org
-User-Agent: KMail/1.7.2
-In-Reply-To: <20060118141442.GP28365@pasky.or.cz>
-Content-Disposition: inline
-X-Scanner: exiscan *1EzY74-0000gm-00*opmz9xU.GVg* (Rantzau ///// Gruppe)
+	Thu, 19 Jan 2006 07:35:31 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id DD27A6BD03; Thu, 19 Jan 2006 13:35:29 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0601180810330.3240@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14900>
 
-Hello Petr, 
+Linus Torvalds wrote:
+> 
+> On Wed, 18 Jan 2006, Matthew Wilcox wrote:
+> 
+>>Based on the idea that a new branch is probably a branch off master, and
+>>if it isn't, then at least sending a log vs master is better than a log
+>>vs the beginning of time, I propose this patch:
+> 
+> 
+> Actually, since the update hook _should_ be called before the ref has 
+> actually been updated, it's probably much better to instead of this:
+> 
+> 
+>>-	git-rev-list --pretty "$3"
+>>+	git-rev-list --pretty "$3" ^master
+> 
+> 
+> do something like this:
+> 
+> 	git-rev-list --pretty "$3" $(git-rev-parse --not --all)
+> 
+> which basically says: show any commits that are in the new ref, but are 
+> not in _any_ other ref.
+> 
+> Untested, of course.
+> 
 
-On Wednesday 18 January 2006 03:14 pm, Petr Baudis wrote:
-> > ...git-read-tree doesn't know the parameter --prefix (just downloaded and
-> > tried it on 0.99.9i). What version shall I use?
->
->   oops, it seems this is only in the latest pu branch of git. If you are
-> not brave enough for that, 
+Tested. It works fine and is, surprisingly, insanely fast.
 
-I think I am;) 
-
-> you will need to use the prefix facility of 
-> checkout-index instead, and it'll take much longer:
->
-> 	git-read-tree $commit
-> 	git-checkout-index -a --prefix=r1/
-> 	rm .git/index
-> 	cg-add -r r1/
-> 	rm -rf r1
-> 	.. then proceed with git-cat-file etc ..
-
-Time doesn't matter (in this case). This solution seems to work. 
-
->   Note that I'm not sure when which feature was introduced. Your best
-> bet is to just use the latest stable GIT/Cogito versions.
-
-Thanks for your suggestions, I've got a working solution. Now I'm going to 
-spend the remaining days of this week by trying to understand why it works. 
-
-Mathias
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
