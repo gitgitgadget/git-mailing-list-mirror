@@ -1,80 +1,89 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: cygwin-latest: compile errors related to sockaddr_storage, dirent->d_type and dirent->d_ino
-Date: Thu, 19 Jan 2006 16:28:56 -0500
-Message-ID: <20060119212856.GA6317@trixie.casa.cgf.cx>
-References: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com> <20060119052914.GC8121@trixie.casa.cgf.cx> <7vlkxciodu.fsf@assigned-by-dhcp.cox.net> <20060119161000.GA27888@trixie.casa.cgf.cx> <20060119203428.GA5090@trixie.casa.cgf.cx> <Pine.LNX.4.64.0601191309130.3240@g5.osdl.org>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: StGIT: "stg new" vs "stg new --force"
+Date: Thu, 19 Jan 2006 22:38:39 +0100
+Message-ID: <20060119213838.GA27397@nowhere.earth>
+References: <1137144291.20073.104.camel@dv> <b0943d9e0601160018x206faf9ck@mail.gmail.com> <1137517300.20556.26.camel@dv> <20060117215752.GH32585@nowhere.earth> <1137539762.12454.11.camel@dv> <20060118193717.GI32585@nowhere.earth> <1137631749.13853.22.camel@dv>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jan 19 22:29:17 2006
+Cc: Catalin Marinas <catalin.marinas@gmail.com>,
+	git <git@vger.kernel.org>, Charles Lever <cel@citi.umich.edu>
+X-From: git-owner@vger.kernel.org Thu Jan 19 22:36:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzhL2-0008BT-W6
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 22:29:01 +0100
+	id 1EzhR8-0001Kf-Pi
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 22:35:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161312AbWASV26 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 16:28:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161434AbWASV26
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 16:28:58 -0500
-Received: from c-24-61-23-223.hsd1.ma.comcast.net ([24.61.23.223]:7373 "EHLO
-	cgf.cx") by vger.kernel.org with ESMTP id S1161312AbWASV25 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2006 16:28:57 -0500
-Received: by cgf.cx (Postfix, from userid 201)
-	id 0E8444A84D5; Thu, 19 Jan 2006 16:28:57 -0500 (EST)
-To: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+	id S1422659AbWASVfN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 16:35:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422657AbWASVfN
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 16:35:13 -0500
+Received: from smtp6-g19.free.fr ([212.27.42.36]:24795 "EHLO smtp6-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1422661AbWASVfL (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2006 16:35:11 -0500
+Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 4B61A1832F;
+	Thu, 19 Jan 2006 22:35:10 +0100 (CET)
+Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.60)
+	(envelope-from <ydirson@altern.org>)
+	id 1EzhUN-0003ws-Ip; Thu, 19 Jan 2006 22:38:39 +0100
+To: Pavel Roskin <proski@gnu.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0601191309130.3240@g5.osdl.org>
+In-Reply-To: <1137631749.13853.22.camel@dv>
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14935>
 
-On Thu, Jan 19, 2006 at 01:16:17PM -0800, Linus Torvalds wrote:
->On Thu, 19 Jan 2006, Christopher Faylor wrote:
->>Btw, we're looking to roll out a new release of cygwin which fixes the
->>embarrassing typo in sockaddr_storage.  It is fixed in cygwin
->>snapshots:
->>
->>http://cygwin.com/snapshots/
->
->Quick question for cygwin people (I asked this at an earlier point, but
->I don't think there was any reply): would cygwin prefer using "vfork()"
->over "fork()", or is there no advantage?  With vfork(), I could imagine
->that you might avoid a lot of strange VM games..
+On Wed, Jan 18, 2006 at 07:49:09PM -0500, Pavel Roskin wrote:
+> > But it would not be a replacement to selecting changes with a
+> > granularity finer than file-level, which is what I wanted to suggest.
+> 
+> Why?  Maybe you got confused by two meanings of the word "patch"?  I
+> think StGIT should use some other term, e.g. changeset.  I meant that
+> the diff file (e.g. made by "stg diff") could be edited and folded into
+> one of the StGIT patches (changesets).  Unless you want non-interactive
+> separation of the hunks, using an editor should be a reasonable
+> approach.
 
-Sorry, I missed the earlier question.  I have to get in the habit of
-scanning this list more regularly for this type of thing.
+> My approach suggests that the user work with the diff from the
+> beginning, and separates the changes by looking at them.
 
-Cygwin's vfork implementation currently defaults to fork so it doesn't
-matter which is used.
+Oh, I think I now see what you meant.  I'm not sure it would be a good
+idea to let the user edit the diff, although running an editor on it
+is not much different from feeding it through filterdiff, or a
+even through a graphical equivalent allowing to point at the hunks.
 
-We used to have a vfork which tried to cut down on some of the
-substantial overhead that comes with cygwin's fork() but the vfork
-implementation eventually grew so complicated that there was eventually
-no performance gain and I decided to just yank it and revisit it at
-a later point.
 
-So, for now, there is no difference, but, eventually, there might be if
-someone masters courage to revisit vfork-on-cygwin.
+> I believe StGIT should be primarily designed to be used interactively.
 
-So, I guess that means that it would be a good idea to switch to vfork
-if you were planning for the nebulous future when this made a difference
-to cygwin.  Otherwise, I wouldn't bother.
+I tend to disagree.  3rd-party apps like qgit should be able to let
+the user do the selection, and tell the command-line tool what they
+want to act upon.  It may be useful as well if stg gains
+interactivity, but should not become the only way to work with it
+(unix way of life).
 
->Alternatively, is there anything else we can do that makes things easier?
 
-I'm really committed to making cygwin as much like linux as possible so
-that you won't have to make things easier.  The last release added some
-stuff which should make building linux easier, in fact.  Also, the
-mmap() implementation should be a littler closer to linux.  It is, of
-course, a work in progress, though.
+> Your approach looks like a usability disaster to me.  The user is
+> supposed to find numbers of the hunks, although s/he is working on the
+> whole file (since it's "stg refresh").
 
-The only thing that would speed up process creation in cygwin now is
-the use of the windows spawn* family of function calls.  Those could be
-used instead of fork/exec but I have a personal aversion to using them
-since they are so non-UNIX.  If performance is an issue, however, that
-could be something to investigate.
+That's what I'm currently doing to feed the hunk numbers to
+filterdiff.  Any improvement in the process would be welcomed :)
 
-cgf
+
+Maybe we could have a "fold" or "refresh" variant that takes its
+output from the output of "stg diff" (or any arbitrary diff on stdin,
+to be friendly with GUI wrappers) filtered by an arbitrary command.
+That command could be "cat" to get the current "refresh" behaviour, or
+an editor wrapper acting on stdin/out, or a wrapper to filterdiff, or
+whatever clever filter one would want to use.
+
+Does it sound better ?
+-- 
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
