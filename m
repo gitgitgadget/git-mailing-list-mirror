@@ -1,80 +1,81 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [QUESTION] about .git/info/grafts file
-Date: Thu, 19 Jan 2006 14:44:15 +0100
-Message-ID: <43CF97AF.9060300@op5.se>
-References: <cda58cb80601170928r252a6e34y@mail.gmail.com>	 <cda58cb80601170932o6f955469y@mail.gmail.com>	 <7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net> <43CF739F.2030204@op5.se> <cda58cb80601190531q238a8f40r@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Lower priority of Cogito's default exclude patterns
+Date: Thu, 19 Jan 2006 15:07:28 +0100
+Message-ID: <20060119140728.GA14998@diana.vm.bytemark.co.uk>
+References: <20060107221931.10616.25897.stgit@backpacker.hemma.treskal.com> <20060119100712.GA12154@diana.vm.bytemark.co.uk> <20060119124244.GJ27976@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jan 19 14:44:37 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 19 15:09:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Eza5Y-0000Q6-Ij
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 14:44:33 +0100
+	id 1EzaS2-0006cI-9W
+	for gcvg-git@gmane.org; Thu, 19 Jan 2006 15:07:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161199AbWASNoR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 08:44:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161201AbWASNoQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 08:44:16 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:60133 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161199AbWASNoQ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2006 08:44:16 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 5877E6BD03
-	for <git@vger.kernel.org>; Thu, 19 Jan 2006 14:44:15 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <cda58cb80601190531q238a8f40r@mail.gmail.com>
+	id S1161210AbWASOHn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 19 Jan 2006 09:07:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161221AbWASOHn
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 09:07:43 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:41999 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S1161210AbWASOHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2006 09:07:43 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1EzaRk-0003wG-00; Thu, 19 Jan 2006 14:07:28 +0000
+To: Petr Baudis <pasky@ucw.cz>
+Content-Disposition: inline
+In-Reply-To: <20060119124244.GJ27976@pasky.or.cz>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14908>
 
-Franck wrote:
-> 2006/1/19, Andreas Ericsson <ae@op5.se>:
->>
->>I'm a bit curious about how this was done for the public kernel repo.
->>I'd like to import glibc to git, but keeping history since 1972 seems a
->>bloody waste, really.
->>
-> 
-> 
-> That's exactly my point. Futhermore make your downloaders import that
-> useless history spread this waste.
-> 
-> I guess kernel repo will encounter this problem in short term. It's
-> being bigger and bigger and developpers may be borred to deal with so
-> many useless objects.
+On 2006-01-19 13:42:44 +0100, Petr Baudis wrote:
 
+> Dear diary, on Thu, Jan 19, 2006 at 11:07:12AM CET, I got a letter
+> where Karl Hasselstr=F6m <kha@treskal.com> said that...
+>
+> > On 2006-01-07 23:19:31 +0100, Karl Hasselstr=F6m wrote:
+> >
+> > > Put the default exclude patterns in a file referenced with
+> > > --exclude-from, instead of on the command line with --exclude.
+> > > (The existing behavior was bad since --exclude has higher
+> > > priority than --exclude-from and --exclude-per-directory, which
+> > > made it impossible for the user to override the default
+> > > patterns.)
+> > >
+> > > Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
+> > >
+> > > ---
+> > >
+> > >  Makefile           |   15 +++++++++++++--
+> > >  cg-Xlib            |    6 +++++-
+> > >  cg-default-exclude |    6 ++++++
+> > >  3 files changed, 24 insertions(+), 3 deletions(-)
+> >
+> > Did you miss this patch, or just not like it?
+>
+> Just postponed for next sweep through my patch queue, due today or
+> tomorrow. ;) I will rename cg-default-exclude to default-exclude,
+> though.
 
-Ach, no. The current kernel repo only has history since April 17 (around 
-155 MB of objects, with less than optimal packing), when it started 
-using git for versioning. The kernel repo also sees a lot of very rapid 
-development.
+Good point.
 
-The full kernel tree, with history since 1991 or some such, is about 3.2 
-GB. It was for this reason that the early history was dropped. I don't 
-think another drop will be necessary any time soon, since incremental 
-updates are fairly cheap over git and git+ssh. Only gitk suffers, but 
-that's just for a short while.
+> Oh, now I remember - one my major concern is that now Cogito will
+> not work if not make install'd, which is how I actually primarily
+> use it on my machine.
 
+The not-installed case could easily be worked around by users if
+cogito looked at /etc/cogito/exclude and ~/.cogito/exclude as well.
+(Or maybe that should be /etc/git/exclude and ~/.gitexclude, so that
+e.g. stgit can use the same files.) Would you accept a patch that did
+this?
 
-> But I'm not saying that it's bad thing to keep
-> that history. It just would be nice to allow developpers that don't
-> care about old history to get rid of it.
-> 
-
-You could ofcourse create a new repository with the files from the 
-version you want, but then you'd have a hard time merging the two repos 
-if you ever want to import the old history.
-
-Linus; Is this what you did with the public kernel repo?
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
