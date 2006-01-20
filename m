@@ -1,66 +1,84 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: [PATCH] "sleep 1" sleeps too little on cygwin
-Date: Fri, 20 Jan 2006 10:40:55 -0500
-Message-ID: <20060120154054.GA3392@trixie.casa.cgf.cx>
-References: <7v4q41zd1t.fsf@assigned-by-dhcp.cox.net> <20060118185229.GA3001@steel.home> <7vmzhtqakl.fsf@assigned-by-dhcp.cox.net> <81b0412b0601190701g2696b1a9l14f3d288875e11ab@mail.gmail.com> <20060119182822.GA32022@trixie.casa.cgf.cx> <20060119221227.GB3601@steel.home> <20060119222553.GB7567@trixie.casa.cgf.cx> <7vbqy78zwy.fsf@assigned-by-dhcp.cox.net> <20060120033548.GE5090@trixie.casa.cgf.cx> <81b0412b0601200723k1a271046u9c310d9c9b7d83f0@mail.gmail.com>
+From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] fix generation of "humanish" part of source repo
+Date: Fri, 20 Jan 2006 17:16:19 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20060120161619.GA13469@informatik.uni-freiburg.de>
+References: <20060120064739.GA2306@informatik.uni-freiburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Jan 20 16:41:34 2006
+X-From: git-owner@vger.kernel.org Fri Jan 20 17:17:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzyNt-0002G4-1W
-	for gcvg-git@gmane.org; Fri, 20 Jan 2006 16:41:05 +0100
+	id 1Ezywb-0003Aq-Ok
+	for gcvg-git@gmane.org; Fri, 20 Jan 2006 17:16:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750788AbWATPk7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jan 2006 10:40:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbWATPk7
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 10:40:59 -0500
-Received: from c-24-61-23-223.hsd1.ma.comcast.net ([24.61.23.223]:62396 "EHLO
-	cgf.cx") by vger.kernel.org with ESMTP id S1750788AbWATPk6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Jan 2006 10:40:58 -0500
-Received: by cgf.cx (Postfix, from userid 201)
-	id 3C2AE5A8006; Fri, 20 Jan 2006 10:40:55 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>, Alex Riesen <raa.lkml@gmail.com>,
-	git@vger.kernel.org
+	id S1751049AbWATQQX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jan 2006 11:16:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbWATQQX
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 11:16:23 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:16559 "EHLO
+	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
+	id S1751054AbWATQQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2006 11:16:22 -0500
+Received: from juno.informatik.uni-freiburg.de ([132.230.151.45])
+	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1Ezyw1-0001Yg-3F
+	for git@vger.kernel.org; Fri, 20 Jan 2006 17:16:21 +0100
+Received: from juno.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by juno.informatik.uni-freiburg.de (8.12.11/8.12.11) with ESMTP id k0KGGJxJ013576
+	for <git@vger.kernel.org>; Fri, 20 Jan 2006 17:16:20 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by juno.informatik.uni-freiburg.de (8.12.11/8.12.11/Submit) id k0KGGJe3013575
+	for git@vger.kernel.org; Fri, 20 Jan 2006 17:16:19 +0100 (MET)
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <81b0412b0601200723k1a271046u9c310d9c9b7d83f0@mail.gmail.com>
-User-Agent: Mutt/1.5.11
+In-Reply-To: <20060120064739.GA2306@informatik.uni-freiburg.de>
+User-Agent: Mutt/1.5.6+20040523i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14968>
 
-On Fri, Jan 20, 2006 at 04:23:10PM +0100, Alex Riesen wrote:
->On 1/20/06, Christopher Faylor <me@cgf.cx> wrote:
->> On Thu, Jan 19, 2006 at 05:13:17PM -0800, Junio C Hamano wrote:
->> >Christopher Faylor <me@cgf.cx> writes:
->> >>Inodes are only calculated by hashing the path name when the OS lacks
->> >>the support to provide a "real" inode and in that case there is no hard
->> >>link support available so it's a non-issue.
->> >
->> >Does that mean on such filesystems "mv foo bar" would change the i-num
->> >of the moved entity?
->
->It is just a rename. It will not change inode by definition (the file is the
->same, it is the name which was changed). To get inode change you
->have to create it, like "cp foo bar; rm foo". And now, if a filesystem
->has (or exports) inodes, would the inode change. If it does not, you
->really can't say anything about the inode (it can even change, and
->does in this case, being calculated from pathname).
->
->> I just tried this on Windows XP.  On a FAT32 or a NTFS filesystem the
->
->I have FAT32. It does not support inodes"
->    $ : > foo
->    $ stat foo |grep node
->    Device: 111712fch/286724860d    Inode: 3595119992080318288  Links: 1
->    $ mv foo bar
->    $ stat bar |grep node
->    Device: 111712fch/286724860d    Inode: 3595119974866484701  Links: 1
+Hello,
 
-Ok, I must have been hallucinating.  I just tried it again.  It doesn't
-work on FAT32.
+I resent this patch against (a more) current HEAD:
 
-cgf
+If repo has the form <host>:<path> and <path> doesn't contain a slash, the
+cloned repository is named "<host>:<path>", instead of "<path>" only.
+
+Signed-off-by: Uwe Zeisberger <zeisberg@cepheus.pub>
+
+---
+
+ git-clone.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+300d15b114323292c25259ce68b25cf1fb5769e2
+diff --git a/git-clone.sh b/git-clone.sh
+index 168eb96..ded4085 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -99,7 +99,7 @@ fi
+ 
+ dir="$2"
+ # Try using "humanish" part of source repo if user didn't specify one
+-[ -z "$dir" ] && dir=$(echo "$repo" | sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*/||g')
++[ -z "$dir" ] && dir=$(echo "$repo" | sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
+ [ -e "$dir" ] && echo "$dir already exists." && usage
+ mkdir -p "$dir" &&
+ D=$(cd "$dir" && pwd) &&
+-- 
+1.0.8
+
+Best regards
+Uwe
+
+-- 
+Uwe Zeisberger
+
+main(){char*a="main(){char*a=%c%s%c;printf(a,34,a,34%c";printf(a,34,a,34
+,10);a=",10);a=%c%s%c;printf(a,34,a,34,10);}%c";printf(a,34,a,34,10);}
