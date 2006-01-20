@@ -1,58 +1,66 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: cygwin-latest: compile errors related to sockaddr_storage, dirent->d_type and dirent->d_ino
-Date: Fri, 20 Jan 2006 14:23:14 +0100
-Message-ID: <81b0412b0601200523t14e3220fr9365c9e02a981abc@mail.gmail.com>
-References: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com>
-	 <7vzmlr7lc3.fsf@assigned-by-dhcp.cox.net>
+From: Franck <vagabon.xyz@gmail.com>
+Subject: Re: [QUESTION] about .git/info/grafts file
+Date: Fri, 20 Jan 2006 14:43:10 +0100
+Message-ID: <cda58cb80601200543s41b3f63ch@mail.gmail.com>
+References: <cda58cb80601170928r252a6e34y@mail.gmail.com>
+	 <cda58cb80601170932o6f955469y@mail.gmail.com>
+	 <7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net>
+	 <cda58cb80601190251v5251c8bdh@mail.gmail.com>
+	 <7v3bjkf54k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Christopher Faylor <me@cgf.cx>
-X-From: git-owner@vger.kernel.org Fri Jan 20 14:23:23 2006
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 20 14:43:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzwEb-0000sW-90
-	for gcvg-git@gmane.org; Fri, 20 Jan 2006 14:23:21 +0100
+	id 1EzwXs-0005mM-Ft
+	for gcvg-git@gmane.org; Fri, 20 Jan 2006 14:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750951AbWATNXS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jan 2006 08:23:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750955AbWATNXR
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 08:23:17 -0500
-Received: from uproxy.gmail.com ([66.249.92.199]:4365 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750949AbWATNXQ convert rfc822-to-8bit
+	id S1750968AbWATNnM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jan 2006 08:43:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750971AbWATNnM
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 08:43:12 -0500
+Received: from zproxy.gmail.com ([64.233.162.193]:10282 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750967AbWATNnL convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2006 08:23:16 -0500
-Received: by uproxy.gmail.com with SMTP id s2so323717uge
-        for <git@vger.kernel.org>; Fri, 20 Jan 2006 05:23:15 -0800 (PST)
+	Fri, 20 Jan 2006 08:43:11 -0500
+Received: by zproxy.gmail.com with SMTP id 14so459976nzn
+        for <git@vger.kernel.org>; Fri, 20 Jan 2006 05:43:10 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tsOJIxs57zVQmVgB4CtnnDBv42Dm5LLOBnspq/wtG/JHxFrhz34PmKXIoC6vUvNJrBnvbMS6cen4O5mJGisB0TSt6B8NXYh3FZ0RVmQ0KDopJyFdKBvPdDnkoZRvj6hRi/Mkrb9IDuuMVUW/NsNaFAO3qO+Uc4lEedIL+oKn/GI=
-Received: by 10.48.127.10 with SMTP id z10mr137734nfc;
-        Fri, 20 Jan 2006 05:23:15 -0800 (PST)
-Received: by 10.49.14.20 with HTTP; Fri, 20 Jan 2006 05:23:14 -0800 (PST)
+        b=gLn7RCPF+5dAqfp6rZEakYDAl6SI11q2w5u5FrYX0AqcLly/NXdrmONhb5HQgNW2m3VzLgHj+pD0joRXSbJ5JkGSW8enhRVSRLgsVPVQQpRGn8BvBze2gCQ084tvxNfeWIM7o/cn1C6ZPk7/9/AGTSIL6akpVvxvYm1elJYJPbI=
+Received: by 10.37.14.13 with SMTP id r13mr1397032nzi;
+        Fri, 20 Jan 2006 05:43:10 -0800 (PST)
+Received: by 10.36.47.7 with HTTP; Fri, 20 Jan 2006 05:43:10 -0800 (PST)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmlr7lc3.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7v3bjkf54k.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14960>
 
-On 1/20/06, Junio C Hamano <junkio@cox.net> wrote:
-> Just removing "-Dsockaddr_storage=sockaddr_in" from ALL_CFLAGS
-> seems to solve the problem for new Cygwin.
+2006/1/19, Junio C Hamano <junkio@cox.net>:
+> Franck <vagabon.xyz@gmail.com> writes:
 >
-> I doubt that -Dsockaddr_storage=sockaddr_in should be tied to
-> NO_IPV6.  Maybe a better approach would be something like the
-> attached patch.
+> > I don't see why it is so bad to create a "grafted" repository ? I want
+> > it to be small but still want to merge by using git-resolve with XX
+> > repository.
 >
-> Although /usr/include/cygwin/in.h seems to have struct sockaddr_in6,
-> getaddrinfo() and friends still do not seem to be there, so
-> NO_IPV6 still remains in effect on Cygwin.
+> Franck, and people on the list,
 >
-> Comments?
+> I have a bad habit of responding to a "call for help" request by
+> stating how things are currently done and why, sometimes with an
 
-It compiles, I don't think I can try the daemon though...
+what ? Hey, I would say that you, Linus and other people on the list
+have a GREAT habit to spend time to answer others how things work. And
+there are usually accurate explanations, examples with a lot of
+details with them.
+
+Thanks !
+--
+               Franck
