@@ -1,58 +1,76 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: cygwin-latest: compile errors related to sockaddr_storage, dirent->d_type and dirent->d_ino
-Date: Thu, 19 Jan 2006 17:51:28 -0500
-Message-ID: <20060119225128.GA8702@trixie.casa.cgf.cx>
-References: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com> <20060119052914.GC8121@trixie.casa.cgf.cx> <81b0412b0601190242m4792e73bg181172e478b6e0c2@mail.gmail.com> <20060119183143.GB27888@trixie.casa.cgf.cx> <20060119220843.GA3601@steel.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] local push/pull env cleanup
+Date: Thu, 19 Jan 2006 17:13:06 -0800
+Message-ID: <7vhd7z8zx9.fsf@assigned-by-dhcp.cox.net>
+References: <20060119205803.308.78669.stgit@della.draisey.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jan 19 23:51:42 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 20 02:13:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ezicu-0003Gm-Br
-	for gcvg-git@gmane.org; Thu, 19 Jan 2006 23:51:34 +0100
+	id 1Ezkq4-0001Lp-47
+	for gcvg-git@gmane.org; Fri, 20 Jan 2006 02:13:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161469AbWASWv3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 17:51:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161468AbWASWv3
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 17:51:29 -0500
-Received: from c-24-61-23-223.hsd1.ma.comcast.net ([24.61.23.223]:11704 "EHLO
-	cgf.cx") by vger.kernel.org with ESMTP id S1161359AbWASWv2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2006 17:51:28 -0500
-Received: by cgf.cx (Postfix, from userid 201)
-	id 26D174A8571; Thu, 19 Jan 2006 17:51:28 -0500 (EST)
-To: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060119220843.GA3601@steel.home>
-User-Agent: Mutt/1.5.11
+	id S1030406AbWATBNK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 20:13:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030410AbWATBNJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 20:13:09 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:2496 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1030406AbWATBNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2006 20:13:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060120011108.THSH17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 19 Jan 2006 20:11:08 -0500
+To: Matt Draisey <matt@draisey.ca>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14944>
 
-On Thu, Jan 19, 2006 at 11:08:43PM +0100, Alex Riesen wrote:
->Christopher Faylor, Thu, Jan 19, 2006 19:31:43 +0100:
->>Hmm.  I thought we'd already dispelled the myth that cygwin is
->>unsupported in this very mailing list.  That is an odd impression given
->>the fact that you were complaining about behavior in a version of
->>cygwin which was released on Monday but, apology accepted.
+Matt Draisey <matt@draisey.ca> writes:
+
+> From: Matt Draisey <matt@draisey.ca>
 >
->It was my first update since a long time (which BTW broke some programs
->like cp: they missed symbols in cygwin1.dll).
+> remove environment variables relating to the current repository
+> before execing the 'remote' half of a local push or pull operation
+> ---
+>
+>  connect.c |    7 ++++++-
+>  1 files changed, 6 insertions(+), 1 deletions(-)
+>
+> diff --git a/connect.c b/connect.c
+> index d6f4e4c..50cc879 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -644,8 +644,13 @@ int git_connect(int fd[2], char *url, co
+>  				ssh_basename++;
+>  			execlp(ssh, ssh_basename, host, command, NULL);
+>  		}
+> -		else
+> +		else {
+> +			unsetenv("GIT_DIR");
+> +			unsetenv("GIT_INDEX_FILE");
+> +			unsetenv("GIT_OBJECT_DIRECTORY");
+> +			unsetenv("GIT_ALTERNATE_OBJECT_DIRECTORIES");
+>  			execlp("sh", "sh", "-c", command, NULL);
+> +		}
+>  		die("exec failed");
+>  	}		
+>  	fd[0] = pipefd[0][0];
 
-Detailed bug reports are always welcome on the cygwin mailing list:
-cygwin at cygwin dot com .  I should point out that the existence of
-bugs in a product does not indicate a lack of support of the product,
-however.
+There are platforms that lack unsetenv(3C), so you also need an
+emulation similar to what we do for setenv(3) in
+compat/setenv.c.
 
->Maybe it'd be a good idea just to remove the definitions? Or, as
->__INSIDE_CYGWIN__ implies, move them into cygwin internal sources.
->Would be less confusion and no chance of someone defining one of the
->macros and getting a binary-incompatible object?
-
-I sincerely doubt that anyone in this mailing list wants to get into a
-discussion of cygwin design.  If you really want to discuss this, the
-cygwin mailing list is a much better place for that.
-
-cgf
+I suspect GIT_DIR is automatically set up by enter_repo on the
+other side when upload-pack (for fetch case) or receive-pack
+(for push case) is run, so that may not be necessary, but
+cleaning it along with others here sounds sane, even if only for
+consistency's sake.
