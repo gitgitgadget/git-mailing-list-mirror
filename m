@@ -1,84 +1,58 @@
-From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] fix generation of "humanish" part of source repo
-Date: Fri, 20 Jan 2006 17:16:19 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20060120161619.GA13469@informatik.uni-freiburg.de>
-References: <20060120064739.GA2306@informatik.uni-freiburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: /etc in git?
+Date: Fri, 20 Jan 2006 09:55:14 -0800
+Message-ID: <7vlkxabx8d.fsf@assigned-by-dhcp.cox.net>
+References: <b476569a0601181943y6a14e703k1b521a7edb9e2e2@mail.gmail.com>
+	<7vlkxckf7o.fsf@assigned-by-dhcp.cox.net>
+	<b476569a0601182040w581b72b7xbb99845da4085646@mail.gmail.com>
+	<7v64ogkdtu.fsf@assigned-by-dhcp.cox.net>
+	<43CF3061.2030504@michonline.com>
+	<7vvewgirlt.fsf@assigned-by-dhcp.cox.net>
+	<43D0EAA2.8090308@michonline.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Jan 20 17:17:18 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 20 18:55:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ezywb-0003Aq-Ok
-	for gcvg-git@gmane.org; Fri, 20 Jan 2006 17:16:58 +0100
+	id 1F00Tr-00031Q-D7
+	for gcvg-git@gmane.org; Fri, 20 Jan 2006 18:55:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751049AbWATQQX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jan 2006 11:16:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbWATQQX
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 11:16:23 -0500
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:16559 "EHLO
-	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
-	id S1751054AbWATQQW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2006 11:16:22 -0500
-Received: from juno.informatik.uni-freiburg.de ([132.230.151.45])
-	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1Ezyw1-0001Yg-3F
-	for git@vger.kernel.org; Fri, 20 Jan 2006 17:16:21 +0100
-Received: from juno.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by juno.informatik.uni-freiburg.de (8.12.11/8.12.11) with ESMTP id k0KGGJxJ013576
-	for <git@vger.kernel.org>; Fri, 20 Jan 2006 17:16:20 +0100 (MET)
-Received: (from zeisberg@localhost)
-	by juno.informatik.uni-freiburg.de (8.12.11/8.12.11/Submit) id k0KGGJe3013575
-	for git@vger.kernel.org; Fri, 20 Jan 2006 17:16:19 +0100 (MET)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060120064739.GA2306@informatik.uni-freiburg.de>
-User-Agent: Mutt/1.5.6+20040523i
+	id S1751066AbWATRzT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jan 2006 12:55:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbWATRzS
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 12:55:18 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:28878 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751066AbWATRzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2006 12:55:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060120175236.XLBF17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 20 Jan 2006 12:52:36 -0500
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <43D0EAA2.8090308@michonline.com> (Ryan Anderson's message of
+	"Fri, 20 Jan 2006 08:50:26 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14969>
 
-Hello,
+Ryan Anderson <ryan@michonline.com> writes:
 
-I resent this patch against (a more) current HEAD:
+>>...  This does not match typical "package" use.
+>>
+> To provide an off-topic, but perhaps useful, counter-example, where I
+> work, I've made a package that does something similar...
 
-If repo has the form <host>:<path> and <path> doesn't contain a slash, the
-cloned repository is named "<host>:<path>", instead of "<path>" only.
+Ah, haven't thought about the use of postinstallation scripts.
+If your environment is more or less uniform that is an excellent
+way of doing it.
 
-Signed-off-by: Uwe Zeisberger <zeisberg@cepheus.pub>
-
----
-
- git-clone.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-300d15b114323292c25259ce68b25cf1fb5769e2
-diff --git a/git-clone.sh b/git-clone.sh
-index 168eb96..ded4085 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -99,7 +99,7 @@ fi
- 
- dir="$2"
- # Try using "humanish" part of source repo if user didn't specify one
--[ -z "$dir" ] && dir=$(echo "$repo" | sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*/||g')
-+[ -z "$dir" ] && dir=$(echo "$repo" | sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
- [ -e "$dir" ] && echo "$dir already exists." && usage
- mkdir -p "$dir" &&
- D=$(cd "$dir" && pwd) &&
--- 
-1.0.8
-
-Best regards
-Uwe
-
--- 
-Uwe Zeisberger
-
-main(){char*a="main(){char*a=%c%s%c;printf(a,34,a,34%c";printf(a,34,a,34
-,10);a=",10);a=%c%s%c;printf(a,34,a,34,10);}%c";printf(a,34,a,34,10);}
+Unfortunately, our Solaris boxen do not understand .deb postinst
+scripts, so that is why we are not doing it X-<.  Maybe after we
+get rid of them perhaps..
