@@ -1,76 +1,51 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] local push/pull env cleanup
-Date: Thu, 19 Jan 2006 17:13:06 -0800
-Message-ID: <7vhd7z8zx9.fsf@assigned-by-dhcp.cox.net>
-References: <20060119205803.308.78669.stgit@della.draisey.ca>
+Subject: Re: [PATCH] "sleep 1" sleeps too little on cygwin
+Date: Thu, 19 Jan 2006 17:13:28 -0800
+Message-ID: <7v64of8zwn.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0601170325y60094b4w693ac37490c67410@mail.gmail.com>
+	<7vmzhtzzlf.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0601181233460.8678@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v4q41zd1t.fsf@assigned-by-dhcp.cox.net>
+	<20060118185229.GA3001@steel.home>
+	<7vmzhtqakl.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0601190701g2696b1a9l14f3d288875e11ab@mail.gmail.com>
+	<7vr774dqjo.fsf@assigned-by-dhcp.cox.net>
+	<20060119221346.GC3601@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 20 02:13:26 2006
+X-From: git-owner@vger.kernel.org Fri Jan 20 02:13:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ezkq4-0001Lp-47
-	for gcvg-git@gmane.org; Fri, 20 Jan 2006 02:13:16 +0100
+	id 1EzkqS-0001R3-C0
+	for gcvg-git@gmane.org; Fri, 20 Jan 2006 02:13:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030406AbWATBNK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 20:13:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030410AbWATBNJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 20:13:09 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:2496 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1030406AbWATBNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2006 20:13:08 -0500
+	id S1422712AbWATBNc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 20:13:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422711AbWATBNc
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 20:13:32 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:16362 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1030438AbWATBNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2006 20:13:31 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao09.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060120011108.THSH17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 19 Jan 2006 20:11:08 -0500
-To: Matt Draisey <matt@draisey.ca>
+          id <20060120011335.TEX25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 19 Jan 2006 20:13:35 -0500
+To: Alex Riesen <raa.lkml@gmail.com>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14945>
 
-Matt Draisey <matt@draisey.ca> writes:
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-> From: Matt Draisey <matt@draisey.ca>
->
-> remove environment variables relating to the current repository
-> before execing the 'remote' half of a local push or pull operation
-> ---
->
->  connect.c |    7 ++++++-
->  1 files changed, 6 insertions(+), 1 deletions(-)
->
-> diff --git a/connect.c b/connect.c
-> index d6f4e4c..50cc879 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -644,8 +644,13 @@ int git_connect(int fd[2], char *url, co
->  				ssh_basename++;
->  			execlp(ssh, ssh_basename, host, command, NULL);
->  		}
-> -		else
-> +		else {
-> +			unsetenv("GIT_DIR");
-> +			unsetenv("GIT_INDEX_FILE");
-> +			unsetenv("GIT_OBJECT_DIRECTORY");
-> +			unsetenv("GIT_ALTERNATE_OBJECT_DIRECTORIES");
->  			execlp("sh", "sh", "-c", command, NULL);
-> +		}
->  		die("exec failed");
->  	}		
->  	fd[0] = pipefd[0][0];
+> Maybe just wait for 3 (three) seconds? It should guarantee the change
+> in mtime.
 
-There are platforms that lack unsetenv(3C), so you also need an
-emulation similar to what we do for setenv(3) in
-compat/setenv.c.
-
-I suspect GIT_DIR is automatically set up by enter_repo on the
-other side when upload-pack (for fetch case) or receive-pack
-(for push case) is run, so that may not be necessary, but
-cleaning it along with others here sounds sane, even if only for
-consistency's sake.
+That is certainly an easy way out.  Unless somebody comes up
+with more simple and elegant solution I'd opt for this.
