@@ -1,75 +1,69 @@
-From: "Luck, Tony" <tony.luck@intel.com>
-Subject: [PATCH] update using-topic-branches
-Date: Fri, 20 Jan 2006 11:00:18 -0800
-Message-ID: <200601201900.k0KJ0Ia2023842@agluck-lia64.sc.intel.com>
-X-From: git-owner@vger.kernel.org Fri Jan 20 20:00:39 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] DT_UNKNOWN: do not fully trust existence of DT_UNKNOWN
+Date: Fri, 20 Jan 2006 11:10:59 -0800
+Message-ID: <7vzmlqaf5o.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com>
+	<7voe277lbe.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0601200701n76f1d912y4671c6800735cd0d@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Christopher Faylor <me@cgf.cx>
+X-From: git-owner@vger.kernel.org Fri Jan 20 20:14:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F01Uq-0001uf-3W
-	for gcvg-git@gmane.org; Fri, 20 Jan 2006 20:00:28 +0100
+	id 1F01h6-0004m8-QC
+	for gcvg-git@gmane.org; Fri, 20 Jan 2006 20:13:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750790AbWATTAY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jan 2006 14:00:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbWATTAY
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 14:00:24 -0500
-Received: from fmr23.intel.com ([143.183.121.15]:24248 "EHLO
-	scsfmr003.sc.intel.com") by vger.kernel.org with ESMTP
-	id S1750790AbWATTAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2006 14:00:24 -0500
-Received: from scsfmr100.sc.intel.com (scsfmr100.sc.intel.com [10.3.253.9])
-	by scsfmr003.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id k0KJ0JB5008081
-	for <git@vger.kernel.org>; Fri, 20 Jan 2006 19:00:19 GMT
-Received: from intel.com (agluck-lia64.sc.intel.com [10.3.52.217])
-	by scsfmr100.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id k0KCBYQl010247
-	for <git@vger.kernel.org>; Fri, 20 Jan 2006 12:11:34 GMT
-Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [127.0.0.1])
-	by intel.com (Postfix) with ESMTP id 4969B19F63
-	for <git@vger.kernel.org>; Fri, 20 Jan 2006 11:00:19 -0800 (PST)
-Received: (from aegl@localhost)
-	by agluck-lia64.sc.intel.com (8.13.1/8.13.1/Submit) id k0KJ0Ia2023842;
-	Fri, 20 Jan 2006 11:00:18 -0800
-To: git@vger.kernel.org
-X-Scanned-By: MIMEDefang 2.52 on 10.3.253.9
+	id S932107AbWATTLs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jan 2006 14:11:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932099AbWATTLG
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 14:11:06 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:50310 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932093AbWATTLB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2006 14:11:01 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060120190945.EFKC6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 20 Jan 2006 14:09:45 -0500
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0601200701n76f1d912y4671c6800735cd0d@mail.gmail.com>
+	(Alex Riesen's message of "Fri, 20 Jan 2006 16:01:46 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14976>
 
-Update documentation to warn users not to create noise in then Linux
-history by creating pointless "Auto-update from upstream" merge
-commits.
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+> On 1/20/06, Junio C Hamano <junkio@cox.net> wrote:
+>> The recent Cygwin defines DT_UNKNOWN although it does not have d_type
+>> in struct dirent.  Give an option to tell us not to use d_type on such
+>> platforms.  Hopefully this problem will be transient.
+>
+> You still have to #undef all the DT_ macros if you have a somewhat old Cygwin
+> (before Christopher removed the macros).
+> -
 
----
+Ah, you mean something like this?
 
-diff --git a/Documentation/howto/using-topic-branches.txt b/Documentation/howto/using-topic-branches.txt
-index b3d592f..2c98194 100644
---- a/Documentation/howto/using-topic-branches.txt
-+++ b/Documentation/howto/using-topic-branches.txt
-@@ -9,7 +9,7 @@ GIT as a Linux subsystem maintainer.
- 
- -Tony
- 
--Last updated w.r.t. GIT 0.99.9f
-+Last updated w.r.t. GIT 1.1
- 
- Linux subsystem maintenance using GIT
- -------------------------------------
-@@ -92,6 +92,14 @@ These can be easily kept up to date by m
-  $ git checkout test && git merge "Auto-update from upstream" test linus
-  $ git checkout release && git merge "Auto-update from upstream" release linus
- 
-+Important note!  If you have any local changes in these branches, then
-+this merge will create a commit object in the history (with no local
-+changes git will simply do a "Fast forward" merge).  Many people dislike
-+the "noise" that this creates in the Linux history, so you should avoid
-+doing this capriciously in the "release" branch, as these noisy commits
-+will become part of the permanent history when you ask Linus to pull
-+from the release branch.
-+
- Set up so that you can push upstream to your public tree (you need to
- log-in to the remote system and create an empty tree there before the
- first push).
+-- >8 --
+diff --git a/cache.h b/cache.h
+index 8339931..6f13434 100644
+--- a/cache.h
++++ b/cache.h
+@@ -13,6 +13,10 @@
+ #if defined(DT_UNKNOWN) && !NO_D_TYPE_IN_DIRENT
+ #define DTYPE(de)	((de)->d_type)
+ #else
++#undef DT_UNKNOWN
++#undef DT_DIR
++#undef DT_REG
++#undef DT_LNK
+ #define DT_UNKNOWN	0
+ #define DT_DIR		1
+ #define DT_REG		2
