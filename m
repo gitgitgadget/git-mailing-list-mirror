@@ -1,101 +1,85 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cygwin-latest: compile errors related to sockaddr_storage, dirent->d_type and dirent->d_ino
-Date: Thu, 19 Jan 2006 17:13:32 -0800
-Message-ID: <7vzmlr7lc3.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com>
+Subject: Re: [QUESTION] about .git/info/grafts file
+Date: Thu, 19 Jan 2006 17:14:02 -0800
+Message-ID: <7virsf7lb9.fsf@assigned-by-dhcp.cox.net>
+References: <cda58cb80601170928r252a6e34y@mail.gmail.com>
+	<cda58cb80601170932o6f955469y@mail.gmail.com>
+	<7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christopher Faylor <me@cgf.cx>
-X-From: git-owner@vger.kernel.org Fri Jan 20 02:13:58 2006
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 20 02:14:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzkqZ-0001TU-Kv
-	for gcvg-git@gmane.org; Fri, 20 Jan 2006 02:13:48 +0100
+	id 1Ezkqy-0001X9-Dz
+	for gcvg-git@gmane.org; Fri, 20 Jan 2006 02:14:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030374AbWATBNo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jan 2006 20:13:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030438AbWATBNo
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 20:13:44 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:31168 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1030374AbWATBNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2006 20:13:43 -0500
+	id S1030450AbWATBOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jan 2006 20:14:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030445AbWATBOF
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jan 2006 20:14:05 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:14756 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1030450AbWATBOE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2006 20:14:04 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060120011143.THZO17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 19 Jan 2006 20:11:43 -0500
-To: Alex Riesen <raa.lkml@gmail.com>
+          id <20060120011150.OGCW26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 19 Jan 2006 20:11:50 -0500
+To: Franck <vagabon.xyz@gmail.com>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14948>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> For reasons unknown, cygwin decided to use our sockaddr_storage.
-> As it is redefined to sockaddr_in it'd cause compilation errors in
-> cygwin headers.
+> It _might_ work if you tell your downloader to have a proper
+> graft file in his repository to cauterize the commit ancestry
+> chain _before_ he pulls from you, though.  I haven't tried it
+> (and honestly I did not feel that is something important to
+> support, so it might work by accident but that is not by
+> design).
 
-Just removing "-Dsockaddr_storage=sockaddr_in" from ALL_CFLAGS
-seems to solve the problem for new Cygwin.
+I just tried it and it actually works.
 
-I doubt that -Dsockaddr_storage=sockaddr_in should be tied to
-NO_IPV6.  Maybe a better approach would be something like the
-attached patch.
+	$ git clone git.git junk
+        $ cd junk ;# I am not brave enough to risk the real thing ;-)
+	$ git rev-parse master~4 >.git/refs/info/grafts
+        $ cd ..
+        $ mkdir cloned
+        $ cd cloned
+        $ git init-db
+        $ cp ../junk/.git/info/grafts .git/info/
+	$ git clone-pack ../baz
+	$ git fsck-objects --full
+	$ git log --pretty=short | cat
 
-Although /usr/include/cygwin/in.h seems to have struct sockaddr_in6,
-getaddrinfo() and friends still do not seem to be there, so
-NO_IPV6 still remains in effect on Cygwin.
+This "only the tip of the git.git" repository has about 450
+objects in it, fully packed because of clone-pack, with one 680K
+packfile.  I think the true full history of git.git/ packed into
+one is aruond a 5MB packfile.  I suspect a bigger repository
+would not see that much size reduction, as Linus already
+explained here.
 
-Comments?
+You could emulate what I just did above to prepare the
+equivalent of "baz" above, and make it available over git://
+protocol, say at git://franck.example.com/franck.git/.
 
--- >8 --
-[PATCH] Makefile: do not assume lack of IPV6 means no sockaddr_storage.
+Then you tell your downloaders something like this:
 
-Noticed first by Alex, that the latest Cygwin now properly has
-sockaddr_storage.
+	This repository has been cauterized, and cannot be
+	cloned in a usual manner, but once you make a clone
+	everything including further incremental updates should
+	work.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+        To clone this repository:
 
----
-
- Makefile |   12 +++++++++++-
- 1 files changed, 11 insertions(+), 1 deletions(-)
-
-0b61a10bb258ae0971bce3e01e40a5a9e5d9537f
-diff --git a/Makefile b/Makefile
-index f6d9e0a..e8f4b24 100644
---- a/Makefile
-+++ b/Makefile
-@@ -42,6 +42,9 @@ all:
- #
- # Define NO_IPV6 if you lack IPv6 support and getaddrinfo().
- #
-+# Define NO_SOCKADDR_STORAGE if your platform does not have struct
-+# sockaddr_storage.
-+#
- # Define COLLISION_CHECK below if you believe that SHA1's
- # 1461501637330902918203684832716283019655932542976 hashes do not give you
- # sufficient guarantee that no collisions between objects will ever happen.
-@@ -342,7 +345,14 @@ ifdef NO_MMAP
- 	COMPAT_OBJS += compat/mmap.o
- endif
- ifdef NO_IPV6
--	ALL_CFLAGS += -DNO_IPV6 -Dsockaddr_storage=sockaddr_in
-+	ALL_CFLAGS += -DNO_IPV6
-+endif
-+ifdef NO_SOCKADDR_STORAGE
-+ifdef NO_IPV6
-+	ALL_CFLAGS += -Dsockaddr_storage=sockaddr_in
-+else
-+	ALL_CFLAGS += -Dsockaddr_storage=sockaddr_in6
-+endif
- endif
- 
- ifdef PPC_SHA1
--- 
-1.1.3-gacdd
+		$ mkdir franckproject ;# make a new repository
+		$ cd franckproject && git init-db
+		$ echo 'XXxxxxXXxxx' >.git/info/grafts
+		$ git clone-pack git://franck.example.com/franck.git/
