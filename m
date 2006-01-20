@@ -1,87 +1,77 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: StGIT: "stg new" vs "stg new --force"
-Date: Fri, 20 Jan 2006 01:23:44 -0500
-Message-ID: <1137738224.27911.26.camel@dv>
-References: <1137144291.20073.104.camel@dv>
-	 <b0943d9e0601160018x206faf9ck@mail.gmail.com>
-	 <1137517300.20556.26.camel@dv> <20060117215752.GH32585@nowhere.earth>
-	 <1137539762.12454.11.camel@dv> <20060118193717.GI32585@nowhere.earth>
-	 <1137631749.13853.22.camel@dv>  <20060119213838.GA27397@nowhere.earth>
+From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+Subject: [PATCH] fix generation of "humanish" part of source repo
+Date: Fri, 20 Jan 2006 07:47:39 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20060120064739.GA2306@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	git <git@vger.kernel.org>, Charles Lever <cel@citi.umich.edu>
-X-From: git-owner@vger.kernel.org Fri Jan 20 07:24:16 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Jan 20 07:48:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ezpgw-0000RD-2Y
-	for gcvg-git@gmane.org; Fri, 20 Jan 2006 07:24:10 +0100
+	id 1Ezq47-0004ZQ-0K
+	for gcvg-git@gmane.org; Fri, 20 Jan 2006 07:48:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030400AbWATGXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jan 2006 01:23:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030406AbWATGXv
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 01:23:51 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:2453 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1030400AbWATGXv
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2006 01:23:51 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1EzpdX-0001Jn-9v
-	for git@vger.kernel.org; Fri, 20 Jan 2006 01:20:39 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.60)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1EzpgW-0007MO-Mr; Fri, 20 Jan 2006 01:23:44 -0500
-To: Yann Dirson <ydirson@altern.org>
-In-Reply-To: <20060119213838.GA27397@nowhere.earth>
-X-Mailer: Evolution 2.5.4 (2.5.4-9) 
+	id S1161233AbWATGrn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jan 2006 01:47:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161250AbWATGrn
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 01:47:43 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:27553 "EHLO
+	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
+	id S1161233AbWATGrm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2006 01:47:42 -0500
+Received: from juno.informatik.uni-freiburg.de ([132.230.151.45])
+	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1Ezq3h-0001Bh-0H
+	for git@vger.kernel.org; Fri, 20 Jan 2006 07:47:41 +0100
+Received: from juno.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by juno.informatik.uni-freiburg.de (8.12.11/8.12.11) with ESMTP id k0K6ldKi002337
+	for <git@vger.kernel.org>; Fri, 20 Jan 2006 07:47:39 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by juno.informatik.uni-freiburg.de (8.12.11/8.12.11/Submit) id k0K6ldqR002336
+	for git@vger.kernel.org; Fri, 20 Jan 2006 07:47:39 +0100 (MET)
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6+20040523i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14954>
 
-On Thu, 2006-01-19 at 22:38 +0100, Yann Dirson wrote:
-> > I believe StGIT should be primarily designed to be used interactively.
-> 
-> I tend to disagree.  3rd-party apps like qgit should be able to let
-> the user do the selection, and tell the command-line tool what they
-> want to act upon.  It may be useful as well if stg gains
-> interactivity, but should not become the only way to work with it
-> (unix way of life).
+If repo has the form <host>:<path> and <path> doesn't contain a slash, the
+cloned repository is named "<host>:<path>", instead of "<path>" only.
 
-In this particular case, the GUI frontend should be able to supply much
-more data than the hunk numbers.  It would be much safer.
+Signed-off-by: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
 
-I didn't mean to say that StGIT shouldn't have any options for
-non-interactive processing.  I meant that whenever adding a feature, we
-should try to make it immediately useful without any frontends or
-additional software.
+---
 
-> Maybe we could have a "fold" or "refresh" variant that takes its
-> output from the output of "stg diff" (or any arbitrary diff on stdin,
-> to be friendly with GUI wrappers) filtered by an arbitrary command.
+ git-clone.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-That would be "fold".  "refresh" like is saying - this patch should
-produce this file.  I actually tend to think now that deep refresh would
-be confusing and dangerous if there is another patch closer in the stack
-working with the same file, even in a separate part of it.  stg would
-either report conflict with the higher patches use the file with the
-higher patches reverted, and neither sounds good to me.
+3aa74cf5b61fdd2f75ebda942e839a3ecc1e1f9c
+diff --git a/git-clone.sh b/git-clone.sh
+index f99e0ad..0504ba4 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -97,7 +97,7 @@ fi
+ 
+ dir="$2"
+ # Try using "humanish" part of source repo if user didn't specify one
+-[ -z "$dir" ] && dir=$(echo "$repo" | sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*/||g')
++[ -z "$dir" ] && dir=$(echo "$repo" | sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
+ [ -e "$dir" ] && $(echo "$dir already exists."; usage)
+ mkdir -p "$dir" &&
+ D=$(
+-- 
+1.0.8
 
-Deep fold of the local changes would be much easier, since no other
-patch should have them.
-
-> That command could be "cat" to get the current "refresh" behaviour, or
-> an editor wrapper acting on stdin/out, or a wrapper to filterdiff, or
-> whatever clever filter one would want to use.
-> 
-> Does it sound better ?
-
-Yes.  The first step would be to fix "stg refresh --edit --showpatch" to
-actually respect edits made to the patch.
+Best regards
+Uwe
 
 -- 
-Regards,
-Pavel Roskin
+Uwe Zeisberger
+
+http://www.google.com/search?q=Planck%27s+constant%3D
