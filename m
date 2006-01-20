@@ -1,64 +1,53 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] DT_UNKNOWN: do not fully trust existence of DT_UNKNOWN
-Date: Fri, 20 Jan 2006 22:53:14 +0100
-Message-ID: <20060120215314.GA4203@steel.home>
-References: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com> <7voe277lbe.fsf@assigned-by-dhcp.cox.net> <81b0412b0601200701n76f1d912y4671c6800735cd0d@mail.gmail.com> <7vzmlqaf5o.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Greg KH <greg@kroah.com>
+Subject: "git push" logic changed?
+Date: Fri, 20 Jan 2006 14:53:36 -0800
+Message-ID: <20060120225336.GA29206@kroah.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christopher Faylor <me@cgf.cx>
-X-From: git-owner@vger.kernel.org Fri Jan 20 22:53:35 2006
+X-From: git-owner@vger.kernel.org Fri Jan 20 23:53:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F04CJ-00011s-Ls
-	for gcvg-git@gmane.org; Fri, 20 Jan 2006 22:53:32 +0100
+	id 1F058g-0005rB-C7
+	for gcvg-git@gmane.org; Fri, 20 Jan 2006 23:53:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751175AbWATVx2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jan 2006 16:53:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751177AbWATVx2
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 16:53:28 -0500
-Received: from devrace.com ([198.63.210.113]:36876 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1751175AbWATVx1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Jan 2006 16:53:27 -0500
-Received: from tigra.home (p54A06CFB.dip.t-dialin.net [84.160.108.251])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k0KLrGna041619;
-	Fri, 20 Jan 2006 15:53:17 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1F04C3-0006sb-00; Fri, 20 Jan 2006 22:53:15 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1F04C2-0001DJ-LN; Fri, 20 Jan 2006 22:53:14 +0100
-To: Junio C Hamano <junkio@cox.net>
+	id S932267AbWATWxq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jan 2006 17:53:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932268AbWATWxq
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 17:53:46 -0500
+Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174]:31457
+	"EHLO aria.kroah.org") by vger.kernel.org with ESMTP
+	id S932267AbWATWxp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2006 17:53:45 -0500
+Received: from echidna.kroah.org ([192.168.0.10] helo=localhost)
+	by aria.kroah.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.54)
+	id 1F058b-0006cf-6q
+	for git@vger.kernel.org; Fri, 20 Jan 2006 14:53:45 -0800
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vzmlqaf5o.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=2.0 required=4.5 tests=AWL,BAYES_50,
-	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL,RCVD_IN_SORBS_WEB autolearn=no 
-	version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14979>
 
-Junio C Hamano, Fri, Jan 20, 2006 20:10:59 +0100:
-> >> The recent Cygwin defines DT_UNKNOWN although it does not have d_type
-> >> in struct dirent.  Give an option to tell us not to use d_type on such
-> >> platforms.  Hopefully this problem will be transient.
-> >
-> > You still have to #undef all the DT_ macros if you have a somewhat
-> > old Cygwin (before Christopher removed the macros).
-> 
-> Ah, you mean something like this?
-> 
-> +#undef DT_UNKNOWN
-> +#undef DT_DIR
-> +#undef DT_REG
-> +#undef DT_LNK
+As of the git development tree from last night, 'git push' seems to work
+a bit differently now.
 
-yes, of course
+When I do:
+	$ git push parent
+it responds with
+	No refs given to be pushed.
+
+This used to work before.
+Now I have to do:
+	$ git push --all parent
+to get things to be pushed.
+
+Or should I always be doing --all?
+
+thanks,
+
+greg k-h
