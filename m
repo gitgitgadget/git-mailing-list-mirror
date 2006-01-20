@@ -1,66 +1,121 @@
-From: Franck <vagabon.xyz@gmail.com>
-Subject: Re: [QUESTION] about .git/info/grafts file
-Date: Fri, 20 Jan 2006 14:43:10 +0100
-Message-ID: <cda58cb80601200543s41b3f63ch@mail.gmail.com>
-References: <cda58cb80601170928r252a6e34y@mail.gmail.com>
-	 <cda58cb80601170932o6f955469y@mail.gmail.com>
-	 <7v8xtdrqwg.fsf@assigned-by-dhcp.cox.net>
-	 <cda58cb80601190251v5251c8bdh@mail.gmail.com>
-	 <7v3bjkf54k.fsf@assigned-by-dhcp.cox.net>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: /etc in git?
+Date: Fri, 20 Jan 2006 08:50:26 -0500
+Message-ID: <43D0EAA2.8090308@michonline.com>
+References: <b476569a0601181943y6a14e703k1b521a7edb9e2e2@mail.gmail.com>	<7vlkxckf7o.fsf@assigned-by-dhcp.cox.net>	<b476569a0601182040w581b72b7xbb99845da4085646@mail.gmail.com>	<7v64ogkdtu.fsf@assigned-by-dhcp.cox.net>	<43CF3061.2030504@michonline.com> <7vvewgirlt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 20 14:43:27 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig6C486DE5C420B58E3D5226DC"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 20 14:50:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EzwXs-0005mM-Ft
-	for gcvg-git@gmane.org; Fri, 20 Jan 2006 14:43:16 +0100
+	id 1Ezwf5-0007do-EW
+	for gcvg-git@gmane.org; Fri, 20 Jan 2006 14:50:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750968AbWATNnM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jan 2006 08:43:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750971AbWATNnM
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 08:43:12 -0500
-Received: from zproxy.gmail.com ([64.233.162.193]:10282 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750967AbWATNnL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2006 08:43:11 -0500
-Received: by zproxy.gmail.com with SMTP id 14so459976nzn
-        for <git@vger.kernel.org>; Fri, 20 Jan 2006 05:43:10 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gLn7RCPF+5dAqfp6rZEakYDAl6SI11q2w5u5FrYX0AqcLly/NXdrmONhb5HQgNW2m3VzLgHj+pD0joRXSbJ5JkGSW8enhRVSRLgsVPVQQpRGn8BvBze2gCQ084tvxNfeWIM7o/cn1C6ZPk7/9/AGTSIL6akpVvxvYm1elJYJPbI=
-Received: by 10.37.14.13 with SMTP id r13mr1397032nzi;
-        Fri, 20 Jan 2006 05:43:10 -0800 (PST)
-Received: by 10.36.47.7 with HTTP; Fri, 20 Jan 2006 05:43:10 -0800 (PST)
+	id S1750972AbWATNul (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jan 2006 08:50:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbWATNul
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 08:50:41 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:42196 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S1750972AbWATNuk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2006 08:50:40 -0500
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1Ezwez-0007Gx-QF; Fri, 20 Jan 2006 08:50:39 -0500
+Received: from [10.254.251.12] (helo=mythryan.michonline.com)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1Ezwet-0000WN-HK; Fri, 20 Jan 2006 08:50:37 -0500
+Received: from localhost ([127.0.0.1])
+	by mythryan with esmtp (Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1Ezwes-0008Br-F4; Fri, 20 Jan 2006 08:50:30 -0500
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
+X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3bjkf54k.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <7vvewgirlt.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14961>
 
-2006/1/19, Junio C Hamano <junkio@cox.net>:
-> Franck <vagabon.xyz@gmail.com> writes:
->
-> > I don't see why it is so bad to create a "grafted" repository ? I want
-> > it to be small but still want to merge by using git-resolve with XX
-> > repository.
->
-> Franck, and people on the list,
->
-> I have a bad habit of responding to a "call for help" request by
-> stating how things are currently done and why, sometimes with an
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig6C486DE5C420B58E3D5226DC
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-what ? Hey, I would say that you, Linus and other people on the list
-have a GREAT habit to spend time to answer others how things work. And
-there are usually accurate explanations, examples with a lot of
-details with them.
+Junio C Hamano wrote:
 
-Thanks !
---
-               Franck
+>Ryan Anderson <ryan@michonline.com> writes:
+>  
+>
+>>Junio C Hamano wrote:
+>>    
+>>
+>>>You are much better off to keep /usr/src/rootstuff/.git (and
+>>>working tree files are /usr/src/rootstuff/etc/hosts and
+>>>friends), have a build procedure (read: Makefile) there, and
+>>>version control that source directory.  I usually have 'install'
+>>>and 'diff' target in that Makefile, so that I can do this:
+>>>... 
+>>>      
+>>>
+>>If you're doing this, especially if you're doing this on multiple
+>>machines, creating a package is probably a worthwhile thing to
+>>contemplate as well.
+>>    
+>>
+>
+>In my workplace environment, the equivalent of the above
+>/usr/src/rootstuff is accessible throughout the networked
+>machines (mostly NFS mounted); for things that needs per-host
+>customization, we do not have /usr/src/rootstuff/etc/hosts but
+>keep /usr/src/rootstuff/etc/hosts.in as the source, and Makefile
+>customizes that into a form suitable for installation for each
+>machine.  Especially useful is vfstab.in --- a single source
+>builds fstab for local mounting and nfs exports, while other
+>machines have mountpoints and project symlinks pointing into
+>location automounted from that machine with disk, generated
+>automatically.  This does not match typical "package" use.
+>  
+>
+To provide an off-topic, but perhaps useful, counter-example, where I
+work, I've made a package that does something similar.
+
+I use a Makefile to generate a few template files, such as
+/etc/resolv.conf, /etc/apt/preferences, /etc/sudoers, /etc/ntp.conf
+It Pre-Depends on, ntp, sudo, (etc).
+
+A postinstallation script does a little bit of tweaking of these files
+based upon the answers to one or two questions asked during installation.
+
+It's simply another way of looking at the problem.
+
+-- 
+
+Ryan Anderson
+  sometimes Pug Majere
+
+
+--------------enig6C486DE5C420B58E3D5226DC
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFD0OqlfhVDhkBuUKURAtazAJ4qkh7tcOmncHZ+OYLFVK08B7uMCwCcDLJX
+S6PjAF4xS+cZoDzcwJLubPw=
+=dVXp
+-----END PGP SIGNATURE-----
+
+--------------enig6C486DE5C420B58E3D5226DC--
