@@ -1,66 +1,65 @@
-From: Andrey Borzenkov <arvidjaar@mail.ru>
-Subject: Re: Remove "historical" objects from repository to save place
-Date: Sun, 22 Jan 2006 00:46:32 +0300
-Message-ID: <200601220046.34151.arvidjaar@mail.ru>
-References: <200601212218.51055.arvidjaar@mail.ru> <7v1wz1mjy8.fsf@assigned-by-dhcp.cox.net>
-Content-Type: text/plain;
-  charset="iso-8859-1"
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: cg-update bug?
+Date: Sat, 21 Jan 2006 13:59:29 -0800
+Organization: none
+Message-ID: <dquas0$t5t$1@sea.gmane.org>
+References: <dqo6fs$sr$1@sea.gmane.org> <dqtih0$i80$1@sea.gmane.org> <20060121203519.GN28365@pasky.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 21 22:47:05 2006
+X-From: git-owner@vger.kernel.org Sat Jan 21 22:59:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0QZQ-00053K-0O
-	for gcvg-git@gmane.org; Sat, 21 Jan 2006 22:46:52 +0100
+	id 1F0Qlu-0007H8-SE
+	for gcvg-git@gmane.org; Sat, 21 Jan 2006 22:59:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932394AbWAUVqt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jan 2006 16:46:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932393AbWAUVqt
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 16:46:49 -0500
-Received: from mx1.mail.ru ([194.67.23.121]:5503 "EHLO mx1.mail.ru")
-	by vger.kernel.org with ESMTP id S932392AbWAUVqt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jan 2006 16:46:49 -0500
-Received: from [83.237.195.229] (port=51124 helo=cooker.home.net)
-	by mx1.mail.ru with asmtp 
-	id 1F0QZB-0009Ff-00; Sun, 22 Jan 2006 00:46:37 +0300
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.1
-In-Reply-To: <7v1wz1mjy8.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932376AbWAUV7o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jan 2006 16:59:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932399AbWAUV7o
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 16:59:44 -0500
+Received: from main.gmane.org ([80.91.229.2]:5584 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932376AbWAUV7n (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Jan 2006 16:59:43 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1F0Qlq-0007Gc-Bc
+	for git@vger.kernel.org; Sat, 21 Jan 2006 22:59:42 +0100
+Received: from adsl-69-234-188-194.dsl.irvnca.pacbell.net ([69.234.188.194])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 21 Jan 2006 22:59:42 +0100
+Received: from wa1ter by adsl-69-234-188-194.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 21 Jan 2006 22:59:42 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-188-194.dsl.irvnca.pacbell.net
+User-Agent: Mail/News 1.6a1 (X11/20060121)
+In-Reply-To: <20060121203519.GN28365@pasky.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15025>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Petr Baudis wrote:
+> Dear diary, on Sat, Jan 21, 2006 at 04:03:59PM CET, I got a letter
+> where walt <wa1ter@myrealbox.com> said that...
+>> Thanks for adding the flag, Petr.  I tried it on git and
+>> the kernel this morning, and in each case cg-update -v
+>> printed the name of only one file.  From looking at the
+>> logs I'm pretty sure there were multiple files updated,
+>> not just one.  Does it print all filenames for you?
 
-On Saturday 21 January 2006 22:58, Junio C Hamano wrote:
->
-> You might be able to cauterize the history at a specific commit
-> and then re-clone.  I've talked about how in "[QUESTION] about
-> ..git/info/grafts file" thread yesterday, so I won't repeat that.
+> It prints all the filenames for me, but only the fetched ones. If you
+> fetched without merge earlier, it will list only the newly fetched
+> stuff. That is rather confusing, so now I added also cg-merge -v and
+> cg-update will pass its -v to cg-merge instead of cg-fetch.
 
-thank you, quite complete description. One question - any caveats in using git 
-ls-remote to fetch graft point?
+Well, I was anxious to try your new changes so I did cg-update on
+your cogito repository and I saw *six* updated files print out.
 
-echo $(git ls-remote 
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git v2.6.15 
-| cut -f1) > .git/info/grafts
-
-etc
-
-this avoids downloading over 1G in the first place.
-
-regards
-
-- -andrey
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFD0qu6R6LMutpd94wRAtuzAJoCT15+8d9BcIEhOxmD9lrRGWE6EQCghg5l
-SR5g1+nAUNlltYyXydxsFAs=
-=U2cu
------END PGP SIGNATURE-----
+I guess that both git and the kernel really did have only *one*
+updated file this morning, after all.  A really bizarre coincidence!
+Thanks again for the update, and I hope your exam went well :o)
