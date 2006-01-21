@@ -1,57 +1,71 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: cg-update bug?
-Date: Sat, 21 Jan 2006 21:35:19 +0100
-Message-ID: <20060121203519.GN28365@pasky.or.cz>
-References: <dqo6fs$sr$1@sea.gmane.org> <dqtih0$i80$1@sea.gmane.org>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: Remove "historical" objects from repository to save place
+Date: 21 Jan 2006 12:49:39 -0800
+Message-ID: <86slrhe270.fsf@blue.stonehenge.com>
+References: <200601212218.51055.arvidjaar@mail.ru>
+	<7v1wz1mjy8.fsf@assigned-by-dhcp.cox.net>
+	<20060121200615.GM28365@pasky.or.cz>
+	<7virsdl44q.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 21 21:33:58 2006
+X-From: git-owner@vger.kernel.org Sat Jan 21 21:49:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0PQn-0007bN-L1
-	for gcvg-git@gmane.org; Sat, 21 Jan 2006 21:33:54 +0100
+	id 1F0PgC-0002oj-D4
+	for gcvg-git@gmane.org; Sat, 21 Jan 2006 21:49:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932324AbWAUUdv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jan 2006 15:33:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932326AbWAUUdv
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 15:33:51 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:64214 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932324AbWAUUdu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jan 2006 15:33:50 -0500
-Received: (qmail 9560 invoked by uid 2001); 21 Jan 2006 21:35:19 +0100
-To: walt <wa1ter@myrealbox.com>
-Content-Disposition: inline
-In-Reply-To: <dqtih0$i80$1@sea.gmane.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932343AbWAUUtp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jan 2006 15:49:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932344AbWAUUtp
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 15:49:45 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:16529 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932343AbWAUUto
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jan 2006 15:49:44 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 4BF498EBDB;
+	Sat, 21 Jan 2006 12:49:40 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 02263-01-4; Sat, 21 Jan 2006 12:49:39 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id D01618EBE3; Sat, 21 Jan 2006 12:49:39 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+x-mayan-date: Long count = 12.19.12.17.14; tzolkin = 13 Ix; haab = 12 Muan
+In-Reply-To: <7virsdl44q.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15019>
 
-Dear diary, on Sat, Jan 21, 2006 at 04:03:59PM CET, I got a letter
-where walt <wa1ter@myrealbox.com> said that...
-> walt wrote:
-> > ...there is no -v flag for cg-update.  Could it be added
-> > so I can get the old behavior back?
-> 
-> Thanks for adding the flag, Petr.  I tried it on git and
-> the kernel this morning, and in each case cg-update -v
-> printed the name of only one file.  From looking at the
-> logs I'm pretty sure there were multiple files updated,
-> not just one.  Does it print all filenames for you?
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
-It prints all the filenames for me, but only the fetched ones. If you
-fetched without merge earlier, it will list only the newly fetched
-stuff. That is rather confusing, so now I added also cg-merge -v and
-cg-update will pass its -v to cg-merge instead of cg-fetch.
+Junio> Most likely what the original requestor cloned from Linus has
+Junio> been already packed so git-prune would not do much.
+
+Wait.  Does that mean that:
+
+$ git-checkout -b playground
+$ work work work
+$ git-commit -m 'snapshot'
+$ git-checkout -b master
+$ git-repack -a -d
+
+means that even if I do
+
+$ git-branch -d playground
+$ git-repack -a -d
+
+I still have the commit from playground as objects inside my one big pack?
+
+Ick.  How do I make that go away?
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
