@@ -1,55 +1,67 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: problem installing latest cogito
-Date: Sat, 21 Jan 2006 22:46:54 +0100
-Message-ID: <20060121214654.GP28365@pasky.or.cz>
-References: <fof4t15q95qkakgk6b7fbfuqh3r6q7ei17@4ax.com> <20060121194826.GK28365@pasky.or.cz> <ep45t15q8ojs215f39ir9sli98163m4b87@4ax.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Remove "historical" objects from repository to save place
+Date: Sat, 21 Jan 2006 13:46:20 -0800
+Message-ID: <7vbqy5l0er.fsf@assigned-by-dhcp.cox.net>
+References: <200601212218.51055.arvidjaar@mail.ru>
+	<7v1wz1mjy8.fsf@assigned-by-dhcp.cox.net>
+	<20060121200615.GM28365@pasky.or.cz>
+	<7virsdl44q.fsf@assigned-by-dhcp.cox.net>
+	<86slrhe270.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: blaisorblade@yahoo.it, proski@gnu.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 21 22:45:31 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 21 22:46:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0QY4-0004pT-5m
-	for gcvg-git@gmane.org; Sat, 21 Jan 2006 22:45:28 +0100
+	id 1F0QYz-00050V-Aq
+	for gcvg-git@gmane.org; Sat, 21 Jan 2006 22:46:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932385AbWAUVpZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jan 2006 16:45:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932387AbWAUVpZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 16:45:25 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:9349 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932385AbWAUVpY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jan 2006 16:45:24 -0500
-Received: (qmail 24731 invoked by uid 2001); 21 Jan 2006 22:46:54 +0100
-To: dave morgan <morgad@eclipse.co.uk>
-Content-Disposition: inline
-In-Reply-To: <ep45t15q8ojs215f39ir9sli98163m4b87@4ax.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932387AbWAUVqX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jan 2006 16:46:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932392AbWAUVqX
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 16:46:23 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:12182 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932387AbWAUVqW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jan 2006 16:46:22 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060121214506.YAIE6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 21 Jan 2006 16:45:06 -0500
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+In-Reply-To: <86slrhe270.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "21 Jan 2006 12:49:39 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15023>
 
-Dear diary, on Sat, Jan 21, 2006 at 09:08:52PM CET, I got a letter
-where dave morgan <morgad@eclipse.co.uk> said that...
-> and then make-install worked, and I seem to have a working cogito ...
-> but 'make test' fails -
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-Thanks for the notice; I do not run make test very frequently (except
-before every release). This was introduced in
+>>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+>
+> Junio> Most likely what the original requestor cloned from Linus has
+> Junio> been already packed so git-prune would not do much.
+>
+> Wait.  Does that mean that:
+>
+> $ git-checkout -b playground
+> $ work work work
+> $ git-commit -m 'snapshot'
+> $ git-checkout -b master
+> $ git-repack -a -d
+>
+> means that even if I do
+>
+> $ git-branch -d playground
+> $ git-repack -a -d
+>
+> I still have the commit from playground as objects inside my one big pack?
 
-	[PATCH] Unclutter cg status with --directory as GIT does
+Repack retraces from all the available refs, so that is fine.
 
-and I've fixed it by making it optional for list_untracked_files,
-explicitly requesting it in cg-status and not in other users (that
-change also broke cg-add and cg-init), and make cg-status use
-list_untracked_files directly.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+Pasky was talking about prune, which is a different animal.
