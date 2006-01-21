@@ -1,65 +1,70 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: Re: cg-update bug?
-Date: Sat, 21 Jan 2006 13:59:29 -0800
-Organization: none
-Message-ID: <dquas0$t5t$1@sea.gmane.org>
-References: <dqo6fs$sr$1@sea.gmane.org> <dqtih0$i80$1@sea.gmane.org> <20060121203519.GN28365@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What is in git.git
+Date: Sat, 21 Jan 2006 14:22:48 -0800
+Message-ID: <7vu0bxjk5j.fsf@assigned-by-dhcp.cox.net>
+References: <7v3bjiuhxb.fsf@assigned-by-dhcp.cox.net>
+	<200601211636.02340.lan@ac-sw.com>
+	<7vek31mkyg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jan 21 22:59:51 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 21 23:22:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0Qlu-0007H8-SE
-	for gcvg-git@gmane.org; Sat, 21 Jan 2006 22:59:47 +0100
+	id 1F0R8I-0002ka-13
+	for gcvg-git@gmane.org; Sat, 21 Jan 2006 23:22:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932376AbWAUV7o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jan 2006 16:59:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932399AbWAUV7o
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 16:59:44 -0500
-Received: from main.gmane.org ([80.91.229.2]:5584 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932376AbWAUV7n (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jan 2006 16:59:43 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1F0Qlq-0007Gc-Bc
-	for git@vger.kernel.org; Sat, 21 Jan 2006 22:59:42 +0100
-Received: from adsl-69-234-188-194.dsl.irvnca.pacbell.net ([69.234.188.194])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Jan 2006 22:59:42 +0100
-Received: from wa1ter by adsl-69-234-188-194.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Jan 2006 22:59:42 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-188-194.dsl.irvnca.pacbell.net
-User-Agent: Mail/News 1.6a1 (X11/20060121)
-In-Reply-To: <20060121203519.GN28365@pasky.or.cz>
+	id S1751207AbWAUWWu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jan 2006 17:22:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbWAUWWu
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 17:22:50 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:221 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751207AbWAUWWu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jan 2006 17:22:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060121222022.ZJHU17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 21 Jan 2006 17:20:22 -0500
+To: Alexander Litvinov <lan@ac-sw.com>
+In-Reply-To: <7vek31mkyg.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 21 Jan 2006 11:37:11 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15026>
 
-Petr Baudis wrote:
-> Dear diary, on Sat, Jan 21, 2006 at 04:03:59PM CET, I got a letter
-> where walt <wa1ter@myrealbox.com> said that...
->> Thanks for adding the flag, Petr.  I tried it on git and
->> the kernel this morning, and in each case cg-update -v
->> printed the name of only one file.  From looking at the
->> logs I'm pretty sure there were multiple files updated,
->> not just one.  Does it print all filenames for you?
+Junio C Hamano <junkio@cox.net> writes:
 
-> It prints all the filenames for me, but only the fetched ones. If you
-> fetched without merge earlier, it will list only the newly fetched
-> stuff. That is rather confusing, so now I added also cg-merge -v and
-> cg-update will pass its -v to cg-merge instead of cg-fetch.
+> Alexander Litvinov <lan@ac-sw.com> writes:
+>...
+>> subpro and main are separate projects and master is the join
+>> of them. If I want to modify subpro I have to checkout subpro
+>> branch, edit files. When I have to got to master and bind new
+>> version of subpro to it.
+>
+> I do not see any problem with this....
+>...
+>> Worse, if I will edit subpro's files bined to master branch
+>> changes will go to master branch instead of subpro's history.
+>
+> Simply untrue.
 
-Well, I was anxious to try your new changes so I did cg-update on
-your cogito repository and I saw *six* updated files print out.
+Sorry, these came out somewhat in a wrong way, so let me
+clarify.
 
-I guess that both git and the kernel really did have only *one*
-updated file this morning, after all.  A really bizarre coincidence!
-Thanks again for the update, and I hope your exam went well :o)
+What I meant was that there isn't anything coded so far that
+makes your worries real issues yet, and I do not intend to code
+Porcelainish scripts that are broken in the ways you see as
+problems in your message.
+
+The point you raised are valid concerns.  You need to keep them
+in mind when you start writing subproject aware version of
+git-checkout, git-commit and git-merge commands (among other
+things I might have forgotten, but I think these three covers
+pretty much everything).  You are welcome to beat me to it,
+since I am not planning to do them right away.
