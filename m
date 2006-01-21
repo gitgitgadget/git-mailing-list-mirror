@@ -1,123 +1,89 @@
-From: dave morgan <morgad@eclipse.co.uk>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: problem installing latest cogito
-Date: Sat, 21 Jan 2006 20:08:52 +0000
-Organization: the great unwashed
-Message-ID: <ep45t15q8ojs215f39ir9sli98163m4b87@4ax.com>
-References: <fof4t15q95qkakgk6b7fbfuqh3r6q7ei17@4ax.com> <20060121194826.GK28365@pasky.or.cz>
-Reply-To: david morgan <morgad@eclipse.co.uk>
+Date: Sat, 21 Jan 2006 12:12:28 -0800
+Message-ID: <7vmzhpl4r7.fsf@assigned-by-dhcp.cox.net>
+References: <fof4t15q95qkakgk6b7fbfuqh3r6q7ei17@4ax.com>
+	<20060121194826.GK28365@pasky.or.cz>
+	<BAYC1-PASMTP061F43C7F760A9FB73B616AE1E0@CEZ.ICE>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 21 21:08:59 2006
+Cc: morgad@eclipse.co.uk, git@vger.kernel.org,
+	sean <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Sat Jan 21 21:12:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0P2g-0002Zy-Vp
-	for gcvg-git@gmane.org; Sat, 21 Jan 2006 21:08:59 +0100
+	id 1F0P6A-0003S9-Id
+	for gcvg-git@gmane.org; Sat, 21 Jan 2006 21:12:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932312AbWAUUI5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jan 2006 15:08:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932313AbWAUUI4
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 15:08:56 -0500
-Received: from mra01.ch.as12513.net ([82.153.252.23]:46743 "EHLO
-	mra01.ch.as12513.net") by vger.kernel.org with ESMTP
-	id S932312AbWAUUI4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jan 2006 15:08:56 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mra01.ch.as12513.net (Postfix) with ESMTP id 570E228C54D;
-	Sat, 21 Jan 2006 20:08:55 +0000 (GMT)
-Received: from mra01.ch.as12513.net ([127.0.0.1])
- by localhost (mra01.ch.as12513.net [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 12136-01-59; Sat, 21 Jan 2006 20:08:54 +0000 (GMT)
-Received: from unknown (unknown [82.152.150.47])
-	by mra01.ch.as12513.net (Postfix) with SMTP id B888128C76B;
-	Sat, 21 Jan 2006 20:08:52 +0000 (GMT)
+	id S932313AbWAUUMc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jan 2006 15:12:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932315AbWAUUMb
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 15:12:31 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:34023 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932313AbWAUUMb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jan 2006 15:12:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060121200949.SLBH17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 21 Jan 2006 15:09:49 -0500
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060121194826.GK28365@pasky.or.cz>
-X-Mailer: Forte Agent 3.1/32.783
-X-Virus-Scanned: by Eclipse VIRUSshield at eclipse.net.uk
+In-Reply-To: <BAYC1-PASMTP061F43C7F760A9FB73B616AE1E0@CEZ.ICE>
+	(seanlkml@sympatico.ca's message of "Sat, 21 Jan 2006 14:49:01 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15016>
 
-On Sat, 21 Jan 2006 20:48:26 +0100, Petr Baudis <pasky@suse.cz> wrote:
+sean <seanlkml@sympatico.ca> writes:
 
->Dear diary, on Sat, Jan 21, 2006 at 03:08:27PM CET, I got a letter
->where dave morgan <morgad@eclipse.co.uk> said that...
->>                 sed -e
->> 's/\${COGITO_LIB}/\${COGITO_LIB:-\/home\/david\/lib\/cogito\/}/g; \
->> 
->> s/\${COGITO_SHARE}/\${COGITO_SHARE:-\/home\/david\/share\/cogito\/}/g'
->> \
->>                        $file > $file.new; \
->>                 cat $file.new > $file; rm $file.new; \
->>         done
->> sed: -e expression #1, char 145: unterminated address regex
+> On Sat, 21 Jan 2006 20:48:26 +0100
+> Petr Baudis <pasky@suse.cz> wrote:
 >
->(145 is the total expression length.) Now, I'm at loss - this works here
->and I can see nothing wrong on the regexp - does anyone have any idea?
+>> >                 sed -e
+>> > 's/\${COGITO_LIB}/\${COGITO_LIB:-\/home\/david\/lib\/cogito\/}/g; \
+>> > 
+>> > s/\${COGITO_SHARE}/\${COGITO_SHARE:-\/home\/david\/share\/cogito\/}/g'
+>> > \
+>> >                        $file > $file.new; \
+>> >                 cat $file.new > $file; rm $file.new; \
+>> >         done
+>> > sed: -e expression #1, char 145: unterminated address regex
 >
->What is your sed version?
+> The problem seems to go away if you remove the quoted end-of-line:
 
-~/cogito$ sed --version
-GNU sed version 4.1.2
+That is not "the quoted end-of-line".  Backslashes do not have
+any special meaning inside a single quote pair for bourne shell
+quoting.  The script is passing the backslash to sed.
 
-(from Debian/testing)
+IIRC, make seems to do different things for the backslash at the
+end of line depending on vintage, so if this scriptlet appears
+in a Makefile you may have another version dependency.  I
+usually cop out of this problem by having a separate shell
+script and run it from the Makefile, instead of spelling out the
+sed commandline in the Makefile.
 
->
->> net result - a pile of zero length files in /home/david/bin/   :-(
->> 
->> can I just copy the cg-files from to cogito directory over?
->
->No, you would have to also set $COGITO_LIB and $COGITO_SHARE (or put
->cg-X* scripts to your bin directory as well).
+I got a complaint or two that some version of sed does not like
+';' to concatenate more than one commands, and have been trying
+to train myself to do either multiple -e options or multi-line
+scripts.  E.g when I am tempted to say:
 
+	sed -e 's/foo/bar/;s/baz/boa/' froboz
 
-I blundered about for 30 minutes with git-reset, and ended up here -
+Instead, I say either
 
-david@tower2:~/cogito$ cg-log | head
-commit a9c75f3b8b1adb01859ff2c9b028f72a247837c6
-tree c0c2b743d5dbacc33bced6ace62347724664c817
-parent 653b039dbf989696160db56bb196a1584932fdeb
-author Petr Baudis <pasky@suse.cz> Sat, 21 Jan 2006 02:28:30 +0100
-committer Petr Baudis <xpasky@machine.or.cz> Sat, 21 Jan 2006 02:28:30
-+0100
+	sed -e 's/foo/bar/' -e 's/baz/boa/' froboz
 
-    Add support for cg-update -v
+or
 
-    Makes it call cg-fetch with -v as well, to list all the changes
-being
-    pulled.
+	sed -e '
+        	s/foo/bar
+                s/baz/boa/
+	' froboz
 
-and then make-install worked, and I seem to have a working cogito ...
-but 'make test' fails -
-
-*** t9400-clean.sh ***
-*   ok 1: initialize repo
-*   ok 2: cg-clean -n in top-level dir
-*   ok 3: cg-clean -Ddxqn in top-level dir
-*   ok 4: cg-clean -n in subdir
-* FAIL 5: cg-clean in subdir
-        (cd 'repo dir' && cg-clean && check_loss)
-*   ok 6: cg-clean -d in subdir
-* FAIL 7: cg-clean -x in subdir
-        (cd 'repo dir' && cg-clean -x && check_loss)
-* FAIL 8: cg-clean in top-level dir
-        (cg-clean && check_loss)
-* FAIL 9: cg-clean -x in top-level dir
-        (cg-clean -x && check_loss)
-* FAIL 10: cg-clean -d in top-level dir
-        (cg-clean -d && check_loss)
-*   ok 11: cg-clean -D in top-level dir
-* failed 5 among 11 test(s)
-make[1]: *** [all] Error 1
-make[1]: Leaving directory `/home/david/cogito/t'
-make: *** [test] Error 2
-
-is this expected?
-
-best regards
-Dave
+I do not know how much of the above applies to your immediate
+problem, but I hope some of it helps.
