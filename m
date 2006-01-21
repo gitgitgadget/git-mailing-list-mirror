@@ -1,48 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: "git push" logic changed?
-Date: Fri, 20 Jan 2006 16:59:19 -0800
-Message-ID: <7v1wz22y6w.fsf@assigned-by-dhcp.cox.net>
-References: <20060120225336.GA29206@kroah.com>
-	<7vlkxa30rd.fsf@assigned-by-dhcp.cox.net>
-	<20060121001547.GA30712@kroah.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Lower priority of Cogito's default exclude patterns
+Date: Sat, 21 Jan 2006 03:04:23 +0100
+Message-ID: <20060121020423.GJ28365@pasky.or.cz>
+References: <20060107221931.10616.25897.stgit@backpacker.hemma.treskal.com> <20060119100712.GA12154@diana.vm.bytemark.co.uk> <20060119124244.GJ27976@pasky.or.cz> <20060119140728.GA14998@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 21 01:59:40 2006
+X-From: git-owner@vger.kernel.org Sat Jan 21 03:03:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F076F-0005nP-5p
-	for gcvg-git@gmane.org; Sat, 21 Jan 2006 01:59:28 +0100
+	id 1F085l-0002hz-Ec
+	for gcvg-git@gmane.org; Sat, 21 Jan 2006 03:03:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932263AbWAUA7Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jan 2006 19:59:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932285AbWAUA7Y
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 19:59:24 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:24315 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932263AbWAUA7X (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2006 19:59:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060121005822.HLPS15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 20 Jan 2006 19:58:22 -0500
-To: Greg KH <greg@kroah.com>
-In-Reply-To: <20060121001547.GA30712@kroah.com> (Greg KH's message of "Fri, 20
-	Jan 2006 16:15:47 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030376AbWAUCC6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 Jan 2006 21:02:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030314AbWAUCC6
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jan 2006 21:02:58 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:53689 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1030376AbWAUCC5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jan 2006 21:02:57 -0500
+Received: (qmail 3880 invoked by uid 2001); 21 Jan 2006 03:04:23 +0100
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Content-Disposition: inline
+In-Reply-To: <20060119140728.GA14998@diana.vm.bytemark.co.uk>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/14984>
 
-Greg KH <greg@kroah.com> writes:
+Thanks, patch applied and pushed out.
 
-> It would be nicer not to break a previously working command :)
+Dear diary, on Thu, Jan 19, 2006 at 03:07:28PM CET, I got a letter
+where Karl Hasselstr=F6m <kha@treskal.com> said that...
+> On 2006-01-19 13:42:44 +0100, Petr Baudis wrote:
+> > Oh, now I remember - one my major concern is that now Cogito will
+> > not work if not make install'd, which is how I actually primarily
+> > use it on my machine.
+>=20
+> The not-installed case could easily be worked around by users if
+> cogito looked at /etc/cogito/exclude and ~/.cogito/exclude as well.
+> (Or maybe that should be /etc/git/exclude and ~/.gitexclude, so that
+> e.g. stgit can use the same files.) Would you accept a patch that did
+> this?
 
-Well the change was not about breaking things but the command's
-natural way of "working" (which was fine for you and other
-people, me included) was not so helpful to the shared repository
-people, and unfortunately I couldn't have it both ways X-<.
+Sorry, this doesn't make sense to me - how would that help? The user ca=
+n
+as well just make install in that case, instead of manually copying out
+one file.
+
+	if [ -n "${COGITO_SHARE}" ]; then
+		COGITO_REAL_SHARE=3D"${COGITO_SHARE}"
+		return
+	fi
+	if [ "${0%/*}" !=3D "$0" ]; then
+		COGITO_REAL_SHARE=3D"${0%/*}/"
+		return
+	fi
+	# I'm not sure if the following normally ever gets triggered.
+	# I can only do it by `sh cg-status`. --pasky
+	COGITO_REAL_SHARE=3D"./$_git_relpath/"
+
+should work well, though.
+
+--=20
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
