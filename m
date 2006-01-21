@@ -1,70 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What is in git.git
-Date: Sat, 21 Jan 2006 14:22:48 -0800
-Message-ID: <7vu0bxjk5j.fsf@assigned-by-dhcp.cox.net>
-References: <7v3bjiuhxb.fsf@assigned-by-dhcp.cox.net>
-	<200601211636.02340.lan@ac-sw.com>
-	<7vek31mkyg.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 21 23:22:57 2006
+From: Andrey Borzenkov <arvidjaar@mail.ru>
+Subject: Re: Remove "historical" objects from repository to save place
+Date: Sun, 22 Jan 2006 02:27:50 +0300
+Message-ID: <200601220227.56367.arvidjaar@mail.ru>
+References: <200601212218.51055.arvidjaar@mail.ru> <7v1wz1mjy8.fsf@assigned-by-dhcp.cox.net> <20060121200615.GM28365@pasky.or.cz>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 22 00:28:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0R8I-0002ka-13
-	for gcvg-git@gmane.org; Sat, 21 Jan 2006 23:22:54 +0100
+	id 1F0S9X-0004pJ-7p
+	for gcvg-git@gmane.org; Sun, 22 Jan 2006 00:28:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751207AbWAUWWu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jan 2006 17:22:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbWAUWWu
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 17:22:50 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:221 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751207AbWAUWWu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jan 2006 17:22:50 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060121222022.ZJHU17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 21 Jan 2006 17:20:22 -0500
-To: Alexander Litvinov <lan@ac-sw.com>
-In-Reply-To: <7vek31mkyg.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 21 Jan 2006 11:37:11 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751223AbWAUX2L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jan 2006 18:28:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbWAUX2L
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 18:28:11 -0500
+Received: from mx2.mail.ru ([194.67.23.122]:6156 "EHLO mx2.mail.ru")
+	by vger.kernel.org with ESMTP id S1751223AbWAUX2K (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Jan 2006 18:28:10 -0500
+Received: from [83.237.195.229] (port=43916 helo=cooker.home.net)
+	by mx2.mail.ru with asmtp 
+	id 1F0S9R-000KW2-00; Sun, 22 Jan 2006 02:28:09 +0300
+To: Petr Baudis <pasky@suse.cz>
+User-Agent: KMail/1.9.1
+In-Reply-To: <20060121200615.GM28365@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15027>
 
-Junio C Hamano <junkio@cox.net> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Alexander Litvinov <lan@ac-sw.com> writes:
->...
->> subpro and main are separate projects and master is the join
->> of them. If I want to modify subpro I have to checkout subpro
->> branch, edit files. When I have to got to master and bind new
->> version of subpro to it.
+On Saturday 21 January 2006 23:06, Petr Baudis wrote:
+> Dear diary, on Sat, Jan 21, 2006 at 08:58:55PM CET, I got a letter
+> where Junio C Hamano <junkio@cox.net> said that...
 >
-> I do not see any problem with this....
->...
->> Worse, if I will edit subpro's files bined to master branch
->> changes will go to master branch instead of subpro's history.
+> > You might be able to cauterize the history at a specific commit
+> > and then re-clone.  I've talked about how in "[QUESTION] about
+> > .git/info/grafts file" thread yesterday, so I won't repeat that.
 >
-> Simply untrue.
+> Shouldn't the git-prune be sufficient after cauterizing the history?
 
-Sorry, these came out somewhat in a wrong way, so let me
-clarify.
+this did not work for me, at least applied naively. May be, it is due to the 
+way I setup repository - first I created local version from 2.6.15 tree and 
+then pulled in remote one.
 
-What I meant was that there isn't anything coded so far that
-makes your worries real issues yet, and I do not intend to code
-Porcelainish scripts that are broken in the ways you see as
-problems in your message.
+Anyway repacking and pruning resulted in over 500MB size reduction so its OK 
+for me so far. I'll probably try fetching cleanly later.
 
-The point you raised are valid concerns.  You need to keep them
-in mind when you start writing subproject aware version of
-git-checkout, git-commit and git-merge commands (among other
-things I might have forgotten, but I think these three covers
-pretty much everything).  You are welcome to beat me to it,
-since I am not planning to do them right away.
+thank you and best regards
+
+- -andrey
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQFD0sN8R6LMutpd94wRAt1WAKC18LjAl+MbyfmvSvvNQGUF/mlbIgCfcu6s
+nuZtYttRsd673Yqlq3aKr+A=
+=B6jN
+-----END PGP SIGNATURE-----
