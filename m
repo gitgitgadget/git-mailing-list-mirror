@@ -1,101 +1,82 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: What is in git.git
-Date: Sun, 22 Jan 2006 00:33:25 +0100
-Message-ID: <200601220033.26321.Josef.Weidendorfer@gmx.de>
-References: <7v3bjiuhxb.fsf@assigned-by-dhcp.cox.net> <200601211636.02340.lan@ac-sw.com> <7vek31mkyg.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: [PATCH] minor git-reset and git-commit documentation fixes
+Date: Sat, 21 Jan 2006 18:54:11 -0500
+Message-ID: <E1F0SYd-0005iu-UY@puzzle.fieldses.org>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 22 00:33:35 2006
+X-From: git-owner@vger.kernel.org Sun Jan 22 00:55:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0SEf-0005ac-JP
-	for gcvg-git@gmane.org; Sun, 22 Jan 2006 00:33:34 +0100
+	id 1F0SZP-0000Zt-8Q
+	for gcvg-git@gmane.org; Sun, 22 Jan 2006 00:54:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751226AbWAUXdb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jan 2006 18:33:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbWAUXdb
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 18:33:31 -0500
-Received: from mail.gmx.net ([213.165.64.21]:50921 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751226AbWAUXda (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jan 2006 18:33:30 -0500
-Received: (qmail invoked by alias); 21 Jan 2006 23:33:28 -0000
-Received: from p54968D0E.dip0.t-ipconnect.de (EHLO noname) [84.150.141.14]
-  by mail.gmx.net (mp039) with SMTP; 22 Jan 2006 00:33:28 +0100
-X-Authenticated: #352111
+	id S1751227AbWAUXyR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jan 2006 18:54:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751234AbWAUXyR
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 18:54:17 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:46011 "EHLO
+	puzzle.fieldses.org") by vger.kernel.org with ESMTP
+	id S1751227AbWAUXyQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jan 2006 18:54:16 -0500
+Received: from bfields by puzzle.fieldses.org with local (Exim 4.60)
+	(envelope-from <bfields@fieldses.org>)
+	id 1F0SYd-0005iu-UY; Sat, 21 Jan 2006 18:54:11 -0500
 To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9
-In-Reply-To: <7vek31mkyg.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15029>
 
-On Saturday 21 January 2006 20:37, you wrote:
-> Alexander Litvinov <lan@ac-sw.com> writes:
-> >> 1. Can I bind some branch instead of tag (commit) ?
-> ... 
-> If you mean by "binding a branch", to record how each subproject
-> relates to the toplevel project (i.e. "the subproject bound to
-> X/ subdirectory of the toplevel project comes from branch Y"),
-> that information needs to be somewhere, but recording it in the
-> commit object goes against the whole git philosophy.
+Minor copyediting of recent additions to git-commit and git-reset documentation
 
-The original gitlink proposal did exactly this: it recorded
-the place where a subproject is bound by putting a gitlink into
-a tree. This way, the binding point can be changed, and is subject to
-versioning itself.
+Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
 
-I just realized that this is not currently possible with the bind lines.
-What about the following usage szenario:
-- in a superproject, I use a subproject X implementing some lib by 
-  binding it at X/. My Makefile recurses into X/ for this.
-  This is recorded at commit point (A)
-- later on, I realize I need another lib from a probject Y; I want
-  to put the libs X and Y into subdirectory lib/ of my superproject;
-  i.e. I bind Y at lib/Y/ and move the binding point of X to lib/X/.
-  The Makefile is changed accordingly to build the subprojects.
-  This is recorded at commit point (B)
+---
 
-A $GITDIR/bind alone will no work, as moving back to (A) would keep
-the binding point of subproject, and make is broken.
+ Documentation/git-commit.txt |    2 +-
+ Documentation/git-reset.txt  |    8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-I understand that "moving binding point of X from X/ to lib/X/" is not
-representable within the index as a simple change. Is this the main issue
-for your "against the whole git philosophy"?
-
-I think it still is quite useful to put the binding point into bind lines of the
-commit. Of course, moving a binding point has to go together with a new commit.
-
-> You need to keep a file that describes how your repository is
-> tracking the development histories of each subproject in
-> $GIT_DIR/bind, that would look like:
-> 
-> 	master main=/ subpro=sub/
-
-What about putting $GITDIR/bind information directly into reference files?
-
- $HOME/gitproj> cat .git/refs/heads/master
- 92347432598...
- bind main=/
- bind subpro=sub/
-
-This way, you can rename/copy heads, and the binding info will stay with
-the commit.
-This also is nice for subprojects that do not need the bind lines, but similar
-to current cogito subproject proposal:
-
-  92347432598...
-  main=/
-  subpro=sub/
-
-would be the same superproject/subproject configuration without commiting
-bind lines.
-
-Josef
+18d55bf231ae7116e0f0c4da144de46fe0cb2cbf
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index e35984d..72f96fc 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -27,7 +27,7 @@ OPTIONS
+ -a|--all::
+ 	Update all paths in the index file.  This flag notices
+ 	files that have been modified and deleted, but new files
+-	you have not told about git are not affected.
++	you have not told git about are not affected.
+ 
+ -c or -C <commit>::
+ 	Take existing commit object, and reuse the log message
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 315683a..b4e737e 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -147,8 +147,8 @@ and resets the tip of the branch to that
+ 
+ Interrupted workflow::
+ +
+-You can get interrupted by an ungent fix request while you are
+-still in the middle of a large change.  The files in your
++Suppose you are interrupted by an urgent fix request while you
++are in the middle of a large change.  The files in your
+ working tree are not in any shape to be committed yet, but you
+ need to get to the other branch for a quick bugfix.
+ +
+@@ -164,8 +164,8 @@ $ git reset --soft HEAD^ ;# go back to W
+ $ git reset <3>
+ 
+ <1> This commit will get blown away so a throw-away log message is OK.
+-<2> This removes the 'WIP' commit from the commit history, and makes
+-    your working tree in the state just before you made that snapshot.
++<2> This removes the 'WIP' commit from the commit history, and sets
++    your working tree to the state just before you made that snapshot.
+ <3> After <2>, the index file still has all the WIP changes you
+     committed in <1>.  This sets it to the last commit you were
+     basing the WIP changes on.
+-- 
+0.99.8b-g58e3
