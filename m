@@ -1,82 +1,78 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: [PATCH] AsciiDoc fixes for the git-svnimport manpage
-Date: Sat, 21 Jan 2006 20:06:19 +0100
-Message-ID: <E1F0O43-0002pn-7O@mid.deneb.enyo.de>
-X-From: git-owner@vger.kernel.org Sat Jan 21 20:06:35 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-grep documentation
+Date: Sat, 21 Jan 2006 11:06:27 -0800
+Message-ID: <7vzmlpo0y4.fsf@assigned-by-dhcp.cox.net>
+References: <BAYC1-PASMTP07F7EA1F3B544C07AA01F8AE1F0@CEZ.ICE>
+	<7vvewet330.fsf@assigned-by-dhcp.cox.net>
+	<BAYC1-PASMTP031BAB23C3237DA15F88D3AE1E0@CEZ.ICE>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 21 20:06:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0O4E-0007j4-Ph
-	for gcvg-git@gmane.org; Sat, 21 Jan 2006 20:06:31 +0100
+	id 1F0O4G-0007j4-5T
+	for gcvg-git@gmane.org; Sat, 21 Jan 2006 20:06:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932251AbWAUTG2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jan 2006 14:06:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbWAUTG2
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 14:06:28 -0500
-Received: from mail.enyo.de ([212.9.189.167]:30695 "EHLO mail.enyo.de")
-	by vger.kernel.org with ESMTP id S1751165AbWAUTG1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jan 2006 14:06:27 -0500
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1F0O49-0002mC-1j
-	for git@vger.kernel.org; Sat, 21 Jan 2006 20:06:25 +0100
-Received: from fw by deneb.enyo.de with local (Exim 4.60)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1F0O43-0002pn-7O
-	for git@vger.kernel.org; Sat, 21 Jan 2006 20:06:19 +0100
-To: unlisted-recipients:; (no To-header on input)
+	id S932254AbWAUTGa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jan 2006 14:06:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbWAUTGa
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 14:06:30 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:1748 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751193AbWAUTG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jan 2006 14:06:29 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060121190531.SJBF15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 21 Jan 2006 14:05:31 -0500
+To: sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP031BAB23C3237DA15F88D3AE1E0@CEZ.ICE>
+	(seanlkml@sympatico.ca's message of "Sat, 21 Jan 2006 09:13:18 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15003>
 
-Change "SVN:: Perl" to "SVN::Perl", wrap a long line, and clean up the
-description of positional arguments.
+sean <seanlkml@sympatico.ca> writes:
 
-Signed-off-by: Florian Weimer <fw@deneb.enyo.de>
+> So your new patch should also fix that comment to remove the 
+> "(or flags)" portion.
 
----
+Probably.
 
- Documentation/git-svnimport.txt |   12 ++++--------
- 1 files changed, 4 insertions(+), 8 deletions(-)
+> Since you comment on the -- marker here I think it should
+> also appear in the command line above:
+>
+> 'git-grep' [<option>...] [-e] <pattern> [--] [<path>...]
 
-592699f759a61aee33060d91cfe13ff432c147cf
-diff --git a/Documentation/git-svnimport.txt b/Documentation/git-svnimport.txt
-index db1ce38..63e28b8 100644
---- a/Documentation/git-svnimport.txt
-+++ b/Documentation/git-svnimport.txt
-@@ -21,7 +21,7 @@ DESCRIPTION
- Imports a SVN repository into git. It will either create a new
- repository, or incrementally import into an existing one.
- 
--SVN access is done by the SVN:: Perl module.
-+SVN access is done by the SVN::Perl module.
- 
- git-svnimport assumes that SVN repositories are organized into one
- "trunk" directory where the main development happens, "branch/FOO"
-@@ -74,8 +74,8 @@ When importing incrementally, you might 
- -l <max_rev>::
- 	Specify a maximum revision number to pull.
- 
--	Formerly, this option controlled how many revisions to pull, due to
--	SVN memory leaks. (These have been worked around.)
-+	Formerly, this option controlled how many revisions to pull,
-+	due to SVN memory leaks. (These have been worked around.)
- 
- -v::
- 	Verbosity: let 'svnimport' report what it is doing.
-@@ -100,11 +100,7 @@ with a 40x error pretty quickly.
- If you're using the "-d" or "-D" option, this is the URL of the SVN
- repository itself; it usually ends in "/svn".
- 
--<SVN_repository_URL>::
--	The URL of the SVN module you want to import. For local
--	repositories, use "file:///absolute/path".
--
--<path>
-+<path>::
- 	The path to the module you want to check out.
- 
- -h::
--- 
-1.1.3
+I've thought about this but it is not any more correct than what
+we have now (both are technically incorrect).  If you do not use
+an `-e` and let a non-option terminate the option processing,
+double dashes are not removed, so you do not want it there.
+
+> Instead it is more useful for them to be told _specificly_ which 
+> git-ls-files options  are available and that all others will be 
+> passed to grep.   Somthing like:
+
+I like it.
+
+> ...    Your patch fixes the problem case and 
+> there is no reason now to warn the user away from supplying the --
+> marker in addition to the "-e"; it'll work properly in either case.
+
+Does it?  I think if you give -- without -e it will look for a
+path that matches -- because we pass our own -- to ls-files.
+
+> That's it and the rest looked good.  In case you agree with anything
+> i've said here, find an amended version of your patch below.
+
+Thanks.
+
+When people make an improvement proposal, I'd often prefer to
+see a patch that is on top of the patch being discussed, not a
+replacement.
