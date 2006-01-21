@@ -1,54 +1,82 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] stgit: make tutorial a valid asciidoc article
-Date: Sat, 21 Jan 2006 18:32:38 +0000
-Message-ID: <b0943d9e0601211032t2d7e6ba9x@mail.gmail.com>
-References: <1137142486.20073.77.camel@dv>
-	 <b0943d9e0601160021t3b40ba3fp@mail.gmail.com>
-	 <1137451068.5043.19.camel@dv>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 21 19:32:43 2006
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: [PATCH] AsciiDoc fixes for the git-svnimport manpage
+Date: Sat, 21 Jan 2006 20:06:19 +0100
+Message-ID: <E1F0O43-0002pn-7O@mid.deneb.enyo.de>
+X-From: git-owner@vger.kernel.org Sat Jan 21 20:06:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0NXV-0000wL-Qd
-	for gcvg-git@gmane.org; Sat, 21 Jan 2006 19:32:42 +0100
+	id 1F0O4E-0007j4-Ph
+	for gcvg-git@gmane.org; Sat, 21 Jan 2006 20:06:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932236AbWAUScj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jan 2006 13:32:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932233AbWAUScj
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 13:32:39 -0500
-Received: from xproxy.gmail.com ([66.249.82.204]:8658 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932236AbWAUSci convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jan 2006 13:32:38 -0500
-Received: by xproxy.gmail.com with SMTP id i30so457449wxd
-        for <git@vger.kernel.org>; Sat, 21 Jan 2006 10:32:38 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JXwv5rA6u+eg8tU2GvDcDLM56D0+zJD1mdmSIHmvp7cNWS6wsBXEugfyrj46uSDK/iF+yEOq2CJLuaMcY0yFeJrCZwI2ooWzvwDfz2stW0mgHuRE6R0gtYIBvODTgv5QqvXEBaS+/a44IiPf5+4cgJccPsN426HTpt7cKpM4z2E=
-Received: by 10.70.90.19 with SMTP id n19mr3800652wxb;
-        Sat, 21 Jan 2006 10:32:38 -0800 (PST)
-Received: by 10.70.53.11 with HTTP; Sat, 21 Jan 2006 10:32:38 -0800 (PST)
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1137451068.5043.19.camel@dv>
-Content-Disposition: inline
+	id S932251AbWAUTG2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jan 2006 14:06:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbWAUTG2
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 14:06:28 -0500
+Received: from mail.enyo.de ([212.9.189.167]:30695 "EHLO mail.enyo.de")
+	by vger.kernel.org with ESMTP id S1751165AbWAUTG1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Jan 2006 14:06:27 -0500
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1F0O49-0002mC-1j
+	for git@vger.kernel.org; Sat, 21 Jan 2006 20:06:25 +0100
+Received: from fw by deneb.enyo.de with local (Exim 4.60)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1F0O43-0002pn-7O
+	for git@vger.kernel.org; Sat, 21 Jan 2006 20:06:19 +0100
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15002>
 
-On 16/01/06, Pavel Roskin <proski@gnu.org> wrote:
-> Also, I've added a makefile.  It's not used by default, but those who
-> want to read a tutorial, can generate it in html or pdf format.
->
-> Here's the new patch.
+Change "SVN:: Perl" to "SVN::Perl", wrap a long line, and clean up the
+description of positional arguments.
 
-That's great, thanks. I'll push it, probably tomorrow.
+Signed-off-by: Florian Weimer <fw@deneb.enyo.de>
 
---
-Catalin
+---
+
+ Documentation/git-svnimport.txt |   12 ++++--------
+ 1 files changed, 4 insertions(+), 8 deletions(-)
+
+592699f759a61aee33060d91cfe13ff432c147cf
+diff --git a/Documentation/git-svnimport.txt b/Documentation/git-svnimport.txt
+index db1ce38..63e28b8 100644
+--- a/Documentation/git-svnimport.txt
++++ b/Documentation/git-svnimport.txt
+@@ -21,7 +21,7 @@ DESCRIPTION
+ Imports a SVN repository into git. It will either create a new
+ repository, or incrementally import into an existing one.
+ 
+-SVN access is done by the SVN:: Perl module.
++SVN access is done by the SVN::Perl module.
+ 
+ git-svnimport assumes that SVN repositories are organized into one
+ "trunk" directory where the main development happens, "branch/FOO"
+@@ -74,8 +74,8 @@ When importing incrementally, you might 
+ -l <max_rev>::
+ 	Specify a maximum revision number to pull.
+ 
+-	Formerly, this option controlled how many revisions to pull, due to
+-	SVN memory leaks. (These have been worked around.)
++	Formerly, this option controlled how many revisions to pull,
++	due to SVN memory leaks. (These have been worked around.)
+ 
+ -v::
+ 	Verbosity: let 'svnimport' report what it is doing.
+@@ -100,11 +100,7 @@ with a 40x error pretty quickly.
+ If you're using the "-d" or "-D" option, this is the URL of the SVN
+ repository itself; it usually ends in "/svn".
+ 
+-<SVN_repository_URL>::
+-	The URL of the SVN module you want to import. For local
+-	repositories, use "file:///absolute/path".
+-
+-<path>
++<path>::
+ 	The path to the module you want to check out.
+ 
+ -h::
+-- 
+1.1.3
