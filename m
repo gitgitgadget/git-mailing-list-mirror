@@ -1,80 +1,72 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: StGIT: "stg new" vs "stg new --force"
-Date: Sun, 22 Jan 2006 00:05:09 -0500
-Message-ID: <20060122000509.btnr4s4g0wgg0kwo@webmail.spamcop.net>
-References: <1137144291.20073.104.camel@dv>
-	<b0943d9e0601160018x206faf9ck@mail.gmail.com>
-	<1137517300.20556.26.camel@dv> <20060117215752.GH32585@nowhere.earth>
-	<1137539762.12454.11.camel@dv>
-	<b0943d9e0601211024s76528ce8m@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [ANNOUNCE] Stacked GIT 0.8.1
+Date: Sun, 22 Jan 2006 10:20:31 +0000
+Message-ID: <b0943d9e0601220220t59e30c18h@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Yann Dirson <ydirson@altern.org>, git <git@vger.kernel.org>,
-	Charles Lever <cel@citi.umich.edu>
-X-From: git-owner@vger.kernel.org Sun Jan 22 06:05:39 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sun Jan 22 11:20:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0XPx-0006rF-3Y
-	for gcvg-git@gmane.org; Sun, 22 Jan 2006 06:05:33 +0100
+	id 1F0cKs-0004xg-1T
+	for gcvg-git@gmane.org; Sun, 22 Jan 2006 11:20:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750760AbWAVFFN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jan 2006 00:05:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbWAVFFN
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jan 2006 00:05:13 -0500
-Received: from mailgate.cesmail.net ([216.154.195.36]:31150 "HELO
-	mailgate.cesmail.net") by vger.kernel.org with SMTP
-	id S1750760AbWAVFFL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jan 2006 00:05:11 -0500
-Received: (qmail 19974 invoked from network); 22 Jan 2006 05:05:09 -0000
-Received: from unknown (HELO gamma.cesmail.net) (192.168.1.20)
-  by mailgate.cesmail.net with SMTP; 22 Jan 2006 05:05:09 -0000
-Received: (qmail 21616 invoked by uid 99); 22 Jan 2006 05:05:09 -0000
-Received: from static-68-161-241-229.ny325.east.verizon.net
-	(static-68-161-241-229.ny325.east.verizon.net [68.161.241.229]) by
-	webmail.spamcop.net (Horde) with HTTP for <proski@spamcop.net@cesmail.net>;
-	Sun, 22 Jan 2006 00:05:09 -0500
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <b0943d9e0601211024s76528ce8m@mail.gmail.com>
+	id S932190AbWAVKUd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jan 2006 05:20:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932343AbWAVKUd
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jan 2006 05:20:33 -0500
+Received: from xproxy.gmail.com ([66.249.82.199]:62743 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932190AbWAVKUc convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jan 2006 05:20:32 -0500
+Received: by xproxy.gmail.com with SMTP id i30so510361wxd
+        for <git@vger.kernel.org>; Sun, 22 Jan 2006 02:20:32 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=DALDT2wglrzYcG0gBqujKT0GWm/Fg1IiWGl0ST8sVRsKjdoTyBiP2zMItc+HQg5mkuIIC2yZ1yEz5EbMbEmLRNJrpl0Wba7ohCya3Dz69ErB0Ek/tVMbvlrETSRxwjGV74v1tuT3bvG+qXsXLI4WAP4z6Xbua+W4MBr7YQ2ce/U=
+Received: by 10.70.60.17 with SMTP id i17mr4632932wxa;
+        Sun, 22 Jan 2006 02:20:31 -0800 (PST)
+Received: by 10.70.53.11 with HTTP; Sun, 22 Jan 2006 02:20:31 -0800 (PST)
+To: git <git@vger.kernel.org>
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.0-cvs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15046>
 
-Hello, Catalin!
+Stacked GIT 0.8.1 release is available from http://www.procode.org/stgit/
 
-Quoting Catalin Marinas <catalin.marinas@gmail.com>:
+StGIT is a Python application providing similar functionality to Quilt
+(i.e. pushing/popping patches to/from a stack) on top of GIT. These
+operations are performed using GIT commands and the patches are stored
+as GIT commit objects, allowing easy merging of the StGIT patches into
+other repositories using standard GIT functionality.
 
-> On 17/01/06, Pavel Roskin <proski@gnu.org> wrote:
-> > I think if would be better to improve "stg fold" to work on arbitrary
-> > patches.  This way, you prepare the patch in the editor (which would not
-> > be harder than finding hunk numbers) and fold it into the patch of your
-> > choice.  stg should check that the stack remains valid, possibly doing
-> > trivial adjustments to the higher patches.  The current tree should not
-> > be impacted.
->
-> Note that 'stg fold' uses git-apply-patch which doesn't take fuzzy
-> patches (a feature I began to like actually). Modifying the patch in
-> an editor might create some problems with applying.
+This is a bug-fix release:
 
-Actually, the safest way would be to keep the original patch as presented to the
-user.  Then the new patch would be "subtracted" from the original patch (using
-e.g. interdiff from diff-utils).  The the difference would be "added" to the
-current version of the patch.  Changes to "binary files differ" and similar
-line should be ignored.  This way, changes to binary files are preserved.
+- Fix the removal vs. change merging conflict
+- 'clone' command fixed
+- 'status --reset <file>' command fixed
+- typos corrected
 
-For additional safety (and at expense or concurrency), it could be required that
- the patch is unchanged since the editor was launched.  Editors tend to run for
-a long time compared to non-interactive utilities.
+Acknowledgements (generated with 'git shortlog'):
 
-Fuzziness should be tolerated to a point.  Removing hunks could mean that the
-line numbers would be slightly off.  If needed, the patch should be applied to
-a temporary copy and regenerated from it.
+Catalin Marinas:
+      Fix the clone command failure
+      Fix the 'status --reset' for individual files
+      Release 0.8.1
+
+Kirill Smelkov:
+      [trivial]  fix spelling typos
+
+Paolo 'Blaisorblade' Giarrusso:
+      Stgit - gitmergeonefile.py: handle removal vs. changes
+
+Pavel Roskin:
+      stgit: typo fixes
 
 --
-Regards,
-Pavel Roskin
+Catalin
