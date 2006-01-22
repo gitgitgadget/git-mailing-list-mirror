@@ -1,119 +1,88 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: git cherry unkillable
-Date: Sun, 22 Jan 2006 10:48:50 -0500
-Message-ID: <BAYC1-PASMTP02221D60BC2E89DF618E0AAE110@CEZ.ICE>
-References: <200601221323.33377.arvidjaar@mail.ru>
-	<BAYC1-PASMTP10435A067270A659801A48AE110@CEZ.ICE>
-	<BAYC1-PASMTP123903F6C83FFE0EDA6284AE110@CEZ.ICE>
-	<200601221821.54461.arvidjaar@mail.ru>
-	<BAYC1-PASMTP03EC255443CA14D57D82F6AE110@CEZ.ICE>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: What is in git.git
+Date: Sun, 22 Jan 2006 12:53:51 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0601221106330.25300@iabervon.org>
+References: <7v3bjiuhxb.fsf@assigned-by-dhcp.cox.net> <200601211636.02340.lan@ac-sw.com>
+ <7vek31mkyg.fsf@assigned-by-dhcp.cox.net> <200601220033.26321.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: arvidjaar@mail.ru, git@vger.kernel.org, zsh-workers@sunsite.dk
-X-From: git-owner@vger.kernel.org Sun Jan 22 16:53:57 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 22 18:52:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0hXK-0005HR-Iw
-	for gcvg-git@gmane.org; Sun, 22 Jan 2006 16:53:50 +0100
+	id 1F0jNc-0002lo-O7
+	for gcvg-git@gmane.org; Sun, 22 Jan 2006 18:51:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751278AbWAVPxs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jan 2006 10:53:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbWAVPxs
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jan 2006 10:53:48 -0500
-Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:35567 "EHLO
-	BAYC1-PASMTP02.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1751278AbWAVPxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jan 2006 10:53:47 -0500
-X-Originating-IP: [69.156.6.171]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.6.171]) by BAYC1-PASMTP02.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 22 Jan 2006 07:53:46 -0800
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 92EEC644C23;
-	Sun, 22 Jan 2006 10:53:45 -0500 (EST)
-To: sean <seanlkml@sympatico.ca>
-Message-Id: <20060122104850.33d07ad5.seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP03EC255443CA14D57D82F6AE110@CEZ.ICE>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.10; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 22 Jan 2006 15:53:46.0962 (UTC) FILETIME=[07836B20:01C61F6C]
+	id S1751297AbWAVRvv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jan 2006 12:51:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbWAVRvv
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jan 2006 12:51:51 -0500
+Received: from iabervon.org ([66.92.72.58]:59148 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751297AbWAVRvu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Jan 2006 12:51:50 -0500
+Received: (qmail 4394 invoked by uid 1000); 22 Jan 2006 12:53:51 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 22 Jan 2006 12:53:51 -0500
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+In-Reply-To: <200601220033.26321.Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15055>
 
-On Sun, 22 Jan 2006 10:32:04 -0500
-sean <seanlkml@sympatico.ca> wrote:
+On Sun, 22 Jan 2006, Josef Weidendorfer wrote:
 
-> Damn, would be so much nicer to get this stuff out of shell scripts.   Anyway,
-> your discovery kills the idea of being able to just ignore the higher signal
-> traps...   The following implements the same idea as my second patch
-> in hopefully a slightly more cross-shell compatible way;  it works on bash
-> and zsh at least.
+> On Saturday 21 January 2006 20:37, you wrote:
+> > Alexander Litvinov <lan@ac-sw.com> writes:
+> > >> 1. Can I bind some branch instead of tag (commit) ?
+> > ... 
+> > If you mean by "binding a branch", to record how each subproject
+> > relates to the toplevel project (i.e. "the subproject bound to
+> > X/ subdirectory of the toplevel project comes from branch Y"),
+> > that information needs to be somewhere, but recording it in the
+> > commit object goes against the whole git philosophy.
+> 
+> The original gitlink proposal did exactly this: it recorded
+> the place where a subproject is bound by putting a gitlink into
+> a tree. This way, the binding point can be changed, and is subject to
+> versioning itself.
+> 
+> I just realized that this is not currently possible with the bind lines.
+> What about the following usage szenario:
+> - in a superproject, I use a subproject X implementing some lib by 
+>   binding it at X/. My Makefile recurses into X/ for this.
+>   This is recorded at commit point (A)
+> - later on, I realize I need another lib from a probject Y; I want
+>   to put the libs X and Y into subdirectory lib/ of my superproject;
+>   i.e. I bind Y at lib/Y/ and move the binding point of X to lib/X/.
+>   The Makefile is changed accordingly to build the subprojects.
+>   This is recorded at commit point (B)
+> 
+> A $GITDIR/bind alone will no work, as moving back to (A) would keep
+> the binding point of subproject, and make is broken.
 
-Ooops, not even close on that attempt :o/   Here's a version that really does
-work on zsh and bash; and should work on all shells.
+I think you're misunderstanding the use of the "bind" file or equivalent. 
+It isn't a configuration file that specifies where the subprojects go; 
+it's a state file that tracks where the subprojects currently are. The 
+commits by themselves are sufficient to indentify the locations of the 
+subprojects, and the bind file would be written by "git checkout" reading 
+a commit with subprojects. It's used to create the next commit, in much 
+the same way that MERGE_HEAD is used to create the next commit by storing 
+information between the git call that starts a merge that needs user 
+interaction and the git call to commit the merge.
 
-Sean
+So moving back to (A) wouldn't keep the binding point of subproject, 
+because it would rewrite bind to what it had been.
 
-diff --git a/git-cherry.sh b/git-cherry.sh
-index 1a62320..4925f1f 100755
---- a/git-cherry.sh
-+++ b/git-cherry.sh
-@@ -49,7 +49,9 @@ ours=`git-rev-list $ours ^$limit` || exi
- tmp=.cherry-tmp$$
- patch=$tmp-patch
- mkdir $patch
--trap "rm -rf $tmp-*" 0 1 2 3 15
-+cleanup() { rm -rf $tmp-*; }
-+trap cleanup 0
-+trap "cleanup;trap 0;exit 1" 1 2 3 15
- 
- _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
- _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
-diff --git a/git-format-patch.sh b/git-format-patch.sh
-index 7e67c4e..574a79c 100755
---- a/git-format-patch.sh
-+++ b/git-format-patch.sh
-@@ -77,7 +77,9 @@ tt)
- esac
- 
- tmp=.tmp-series$$
--trap 'rm -f $tmp-*' 0 1 2 3 15
-+cleanup() { rm -f $tmp-*; }
-+trap cleanup 0
-+trap "cleanup;trap 0;exit 1" 1 2 3 15
- 
- series=$tmp-series
- commsg=$tmp-commsg
-diff --git a/git-ls-remote.sh b/git-ls-remote.sh
-index f699268..0259a88 100755
---- a/git-ls-remote.sh
-+++ b/git-ls-remote.sh
-@@ -38,7 +38,9 @@ peek_repo="$(get_remote_url "$@")"
- shift
- 
- tmp=.ls-remote-$$
--trap "rm -fr $tmp-*" 0 1 2 3 15
-+cleanup() { rm -rf $tmp-*; }
-+trap cleanup 0
-+trap "cleanup;trap 0;exit 1" 1 2 3 15
- tmpdir=$tmp-d
- 
- case "$peek_repo" in
-diff --git a/git-reset.sh b/git-reset.sh
-index 6c9e58a..3336690 100755
---- a/git-reset.sh
-+++ b/git-reset.sh
-@@ -4,7 +4,9 @@ USAGE='[--mixed | --soft | --hard]  [<co
- . git-sh-setup
- 
- tmp=${GIT_DIR}/reset.$$
--trap 'rm -f $tmp-*' 0 1 2 3 15
-+cleanup() { rm -f $tmp-*; }
-+trap cleanup 0
-+trap "cleanup;trap 0;exit 1" 1 2 3 15
- 
- reset_type=--mixed
- case "$1" in
+I'm going to suggest again keeping this information in the index file (but 
+not in the index data structure, so the changes to the code are only in 
+the library routines to read and write the file, and, of course, anything 
+that's actually trying to manipulate the binding locations). I started 
+working on a patch to pu to skip S_IFDIR entries from the index file when 
+building the table in memory, and that was straightforward, but I got into 
+sysadmin issues when I was going to test giving it something to skip.
+
+	-Daniel
+*This .sig left intentionally blank*
