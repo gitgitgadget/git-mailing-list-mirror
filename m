@@ -1,72 +1,66 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: [ANNOUNCE] Stacked GIT 0.8.1
-Date: Sun, 22 Jan 2006 10:20:31 +0000
-Message-ID: <b0943d9e0601220220t59e30c18h@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sun Jan 22 11:20:38 2006
+From: Andrey Borzenkov <arvidjaar@mail.ru>
+Subject: git cherry unkillable
+Date: Sun, 22 Jan 2006 13:23:26 +0300
+Message-ID: <200601221323.33377.arvidjaar@mail.ru>
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Jan 22 11:23:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0cKs-0004xg-1T
-	for gcvg-git@gmane.org; Sun, 22 Jan 2006 11:20:38 +0100
+	id 1F0cNz-0005PT-JB
+	for gcvg-git@gmane.org; Sun, 22 Jan 2006 11:23:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932190AbWAVKUd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jan 2006 05:20:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932343AbWAVKUd
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jan 2006 05:20:33 -0500
-Received: from xproxy.gmail.com ([66.249.82.199]:62743 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932190AbWAVKUc convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jan 2006 05:20:32 -0500
-Received: by xproxy.gmail.com with SMTP id i30so510361wxd
-        for <git@vger.kernel.org>; Sun, 22 Jan 2006 02:20:32 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=DALDT2wglrzYcG0gBqujKT0GWm/Fg1IiWGl0ST8sVRsKjdoTyBiP2zMItc+HQg5mkuIIC2yZ1yEz5EbMbEmLRNJrpl0Wba7ohCya3Dz69ErB0Ek/tVMbvlrETSRxwjGV74v1tuT3bvG+qXsXLI4WAP4z6Xbua+W4MBr7YQ2ce/U=
-Received: by 10.70.60.17 with SMTP id i17mr4632932wxa;
-        Sun, 22 Jan 2006 02:20:31 -0800 (PST)
-Received: by 10.70.53.11 with HTTP; Sun, 22 Jan 2006 02:20:31 -0800 (PST)
-To: git <git@vger.kernel.org>
+	id S1751152AbWAVKXt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jan 2006 05:23:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbWAVKXt
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jan 2006 05:23:49 -0500
+Received: from mx3.mail.ru ([194.67.23.149]:38425 "EHLO mx3.mail.ru")
+	by vger.kernel.org with ESMTP id S1751152AbWAVKXs (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Jan 2006 05:23:48 -0500
+Received: from [83.237.195.229] (port=15184 helo=cooker.home.net)
+	by mx3.mail.ru with asmtp 
+	id 1F0cNk-0006AJ-00
+	for git@vger.kernel.org; Sun, 22 Jan 2006 13:23:36 +0300
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.1
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15047>
 
-Stacked GIT 0.8.1 release is available from http://www.procode.org/stgit/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-StGIT is a Python application providing similar functionality to Quilt
-(i.e. pushing/popping patches to/from a stack) on top of GIT. These
-operations are performed using GIT commands and the patches are stored
-as GIT commit objects, allowing easy merging of the StGIT patches into
-other repositories using standard GIT functionality.
+I mistakenly run git cherry on linus tree which was a bit too much for my poor 
+old system. Trying to kill (^C) it I got
 
-This is a bug-fix release:
+{pts/0}% git cherry ali1535 linus
+external diff died, stopping at include/linux/sysctl.h.
+external diff died, stopping at drivers/serial/suncore.c.
+diff: /home/bor/tmp/.diff_Y6CvCw: No such file or directory
+diff: /home/bor/tmp/.diff_tBqCCk: No such file or directory
+external diff died, stopping at include/asm-arm/arch-pxa/pxa-regs.h.
+external diff died, stopping at fs/cifs/file.c.
+external diff died, stopping at MAINTAINERS.
+diff: /home/bor/tmp/.diff_P12uX9: No such file or directory
+diff: /home/bor/tmp/.diff_R4v0g0: No such file or directory
+external diff died, stopping at net/ipv4/route.c.
+....
 
-- Fix the removal vs. change merging conflict
-- 'clone' command fixed
-- 'status --reset <file>' command fixed
-- typos corrected
+and it jut goes on. This takes really some time here so ability to stop it 
+would be really nice. It still runs with CPU temp rocketing.
 
-Acknowledgements (generated with 'git shortlog'):
+Regards
 
-Catalin Marinas:
-      Fix the clone command failure
-      Fix the 'status --reset' for individual files
-      Release 0.8.1
+- -andrey
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
 
-Kirill Smelkov:
-      [trivial]  fix spelling typos
-
-Paolo 'Blaisorblade' Giarrusso:
-      Stgit - gitmergeonefile.py: handle removal vs. changes
-
-Pavel Roskin:
-      stgit: typo fixes
-
---
-Catalin
+iD8DBQFD010lR6LMutpd94wRArDIAKC4yNPpwZ2AEKpXwjeZREMRCL3VyACeJaYu
+UMZUpX3D3UfHSm0m44pvAmY=
+=0Cxg
+-----END PGP SIGNATURE-----
