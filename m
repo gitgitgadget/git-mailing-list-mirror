@@ -1,69 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-count-objects --all support
-Date: Sat, 21 Jan 2006 19:03:35 -0800
-Message-ID: <7v7j8thsl4.fsf@assigned-by-dhcp.cox.net>
-References: <20060122022718.16375.78611.stgit@machine.or.cz>
-	<7vslrhht8b.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: What is in git.git
+Date: Sun, 22 Jan 2006 04:12:37 +0100
+Message-ID: <20060122031237.GU28365@pasky.or.cz>
+References: <7v3bjiuhxb.fsf@assigned-by-dhcp.cox.net> <200601211636.02340.lan@ac-sw.com> <7vek31mkyg.fsf@assigned-by-dhcp.cox.net> <200601220033.26321.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 22 04:03:58 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 22 04:11:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0VW0-0007Gd-Rc
-	for gcvg-git@gmane.org; Sun, 22 Jan 2006 04:03:42 +0100
+	id 1F0VdF-0008NX-Us
+	for gcvg-git@gmane.org; Sun, 22 Jan 2006 04:11:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260AbWAVDDi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jan 2006 22:03:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751261AbWAVDDi
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 22:03:38 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:63142 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751260AbWAVDDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jan 2006 22:03:37 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060122030229.XUJT20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 21 Jan 2006 22:02:29 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <7vslrhht8b.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 21 Jan 2006 18:49:40 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932218AbWAVDLH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jan 2006 22:11:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932165AbWAVDLG
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jan 2006 22:11:06 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:4267 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932218AbWAVDLF (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Jan 2006 22:11:05 -0500
+Received: (qmail 19906 invoked by uid 2001); 22 Jan 2006 04:12:37 +0100
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <200601220033.26321.Josef.Weidendorfer@gmx.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15041>
 
-Junio C Hamano <junkio@cox.net> writes:
+Just-in-case panic response...
 
-> The point of counting objects is to see if it is time to repack,
-> so the warning is something I am quite hesitant to accept, even
-> with a suppression option.  The other way around is probably OK
-> ("please warn me if I have packs"), but feels somewhat pointless.
->
-> The --all option might be a welcome addition, though.
+Dear diary, on Sun, Jan 22, 2006 at 12:33:25AM CET, I got a letter
+where Josef Weidendorfer <Josef.Weidendorfer@gmx.de> said that...
+> > You need to keep a file that describes how your repository is
+> > tracking the development histories of each subproject in
+> > $GIT_DIR/bind, that would look like:
+> > 
+> > 	master main=/ subpro=sub/
+> 
+> What about putting $GITDIR/bind information directly into reference files?
+> 
+>  $HOME/gitproj> cat .git/refs/heads/master
+>  92347432598...
+>  bind main=/
+>  bind subpro=sub/
+> 
+> This way, you can rename/copy heads, and the binding info will stay with
+> the commit.
 
-I think your patch counts the same object twice if it is packed
-in more than one packs and/or it has a loose copy _and_ also in
-a pack.  If it is a good thing or not is totally up to the
-reason why we are counting.
+Please don't. I can see no real advantage to separate files (except for
+the very rare case of rename/copy/removal of heads) except for massive
+porcelain breakage and significant clutter-up of all the code dealing
+with refs.
 
-We might be better off if we did this kind of additions by
-building on fsck-objects.  For example, you could give a --stat
-option that might say something like this:
+Please leave our poor refs alone. :) They are fine as they are - simple
+one-value thing.
 
-	$ git fsck-objects --full --stat
-        commit	 2488
-        tree    43343
-        blob   212234
-        total  258065
-	packed 184382
-	loose   78115
-        dups     4432
-
-where "dups" is number of duplicated copies --- an object packed
-in more than two packs, or appearing in a pack and also having a
-loose copy.  I dunno.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
