@@ -1,66 +1,62 @@
-From: Beber <beber.lkml@gmail.com>
-Subject: [PATCH] Cogito: Handle push over http
-Date: Mon, 23 Jan 2006 00:57:10 +0100
-Message-ID: <4615f4910601221557u1dc37233ue2e3c312547a14de@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: RFC: Subprojects
+Date: Mon, 23 Jan 2006 01:50:56 +0100
+Message-ID: <20060123005056.GV28365@pasky.or.cz>
+References: <43C52B1F.8020706@hogyros.de> <Pine.LNX.4.64.0601141055210.13339@g5.osdl.org> <7vek3ah8f9.fsf@assigned-by-dhcp.cox.net> <200601161144.48245.Josef.Weidendorfer@gmx.de> <7vek37rj83.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_35724_9514194.1137974230909"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 23 00:57:39 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 23 01:49:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F0p5O-0007on-8R
-	for gcvg-git@gmane.org; Mon, 23 Jan 2006 00:57:30 +0100
+	id 1F0ptd-0000Al-3r
+	for gcvg-git@gmane.org; Mon, 23 Jan 2006 01:49:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932082AbWAVX5P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jan 2006 18:57:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932360AbWAVX5P
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jan 2006 18:57:15 -0500
-Received: from uproxy.gmail.com ([66.249.92.194]:49737 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932082AbWAVX5P (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Jan 2006 18:57:15 -0500
-Received: by uproxy.gmail.com with SMTP id s2so574920uge
-        for <git@vger.kernel.org>; Sun, 22 Jan 2006 15:57:11 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=sQYbG9wkqGw1fORCfMfAdl2XzYRWJPoREVTNvEfGfynKPCgjLZxpg16KWZwhl0XuUeJciE4+hORtdoL5qlKQrVrq0Cs+8aMvdKgNdilFafDuUwKigd6WupfLaiqL8NSXvr0+drRlJsYmtujy14xqA09Cwt5+0O69zbRCVZ7DZ0c=
-Received: by 10.66.239.17 with SMTP id m17mr560098ugh;
-        Sun, 22 Jan 2006 15:57:10 -0800 (PST)
-Received: by 10.66.242.15 with HTTP; Sun, 22 Jan 2006 15:57:10 -0800 (PST)
-To: pasky@suse.cz
+	id S964791AbWAWAtW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jan 2006 19:49:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964792AbWAWAtW
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jan 2006 19:49:22 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:49561 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964791AbWAWAtV (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Jan 2006 19:49:21 -0500
+Received: (qmail 1555 invoked by uid 2001); 23 Jan 2006 01:50:56 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vek37rj83.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15069>
 
-------=_Part_35724_9514194.1137974230909
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Dear diary, on Mon, Jan 16, 2006 at 09:49:48PM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+>    We could introduce "bind the rest" to make write-tree write
+>    out a tree that contains only the containing project part and
+>    not any of the subproject part (e.g. Makefile, README and
+>    src/ but not linux-2.6/ nor gcc-4.0/ in the earlier example).
+>    Essentially the contents of such a tree object would be the
+>    same as what "gitlink" approach would have had for the
+>    containing project in the index file, minus "gitlink" entries
+>    themselves).  This is not so surprising, because the missing
+>    information "gitlink" approach recorded in the tree object
+>    itself is expressed on "bind" lines in the commit object with
+>    this approach.
 
-Hi,
+Now, I must have missed the obvious again, but what is the point in
+having the write-tree --exclude stuff? My impression (also from your
+later mail in this thread) is that now the moment you introduce any
+binds, your top-level development changes to "two-tiered" - the
+top-level project and the meta-project holding it all together. I'd say
+that's pretty confusing and I don't see big gain in this; the simplicity
+of the original proposal was a lot more appealing.
 
-Here is a patch allow cg-push to push over http.
-
-You can pull http://guybrush.ath.cx/git/public/cogito.git/
-Or use attach patch.
-
-Beber
-
-------=_Part_35724_9514194.1137974230909
-Content-Type: application/octet-stream; name="http-push-for-cg.patch"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="http-push-for-cg.patch"
-
-LS0tIGEvY2ctcHVzaAorKysgYi9jZy1wdXNoCkBAIC02OSw3ICs2OSw3IEBAIGZpCiBzcHJlbWJy
-YW5jaD0iOnJlZnMvaGVhZHMvJHJlbWJyYW5jaCIKIAogaWYgWyAiJHt1cmkjaHR0cDovL30iICE9
-ICIkdXJpIiBdOyB0aGVuCi0JZGllICJwdXNoaW5nIG92ZXIgSFRUUCBub3Qgc3VwcG9ydGVkIHll
-dCIKKwlnaXQtaHR0cC1wdXNoICIkdXJpLyIgJGxvY2JyYW5jaAogZWxpZiBbICIke3VyaSNnaXQr
-c3NoOi8vfSIgIT0gIiR1cmkiIF07IHRoZW4KIAlzZW5kX3BhY2tfdXBkYXRlICIkbmFtZSIgIiQo
-ZWNobyAiJHVyaSIgfCBzZWQgJ3MjXmdpdCtzc2g6Ly9cKFteL10qXClcKC8uKlwpJCNcMTpcMiMn
-KSIgIiRsb2NicmFuY2gkc3ByZW1icmFuY2giICIke3RhZ3NbQF19IgogZWxpZiBbICIke3VyaSNy
-c3luYzovL30iICE9ICIkdXJpIiBdOyB0aGVuCg==
-------=_Part_35724_9514194.1137974230909--
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
