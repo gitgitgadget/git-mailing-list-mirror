@@ -1,64 +1,86 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] DT_UNKNOWN: do not fully trust existence of DT_UNKNOWN
-Date: Mon, 23 Jan 2006 14:07:18 +0100
-Message-ID: <81b0412b0601230507n34311c14l5f1c14528f90ec14@mail.gmail.com>
-References: <81b0412b0601180547q4a812c8xb632de6ab13a5e62@mail.gmail.com>
-	 <7voe277lbe.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0601200701n76f1d912y4671c6800735cd0d@mail.gmail.com>
-	 <7vzmlqaf5o.fsf@assigned-by-dhcp.cox.net>
-	 <20060120215314.GA4203@steel.home>
-	 <7vpsmmt32x.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Notes on Subproject Support
+Date: Mon, 23 Jan 2006 11:31:11 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0601231116550.25300@iabervon.org>
+References: <7v3bjfafql.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0601222104120.25300@iabervon.org> <7v7j8r7e7s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 23 14:07:41 2006
+X-From: git-owner@vger.kernel.org Mon Jan 23 17:30:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F11Po-00060U-8K
-	for gcvg-git@gmane.org; Mon, 23 Jan 2006 14:07:24 +0100
+	id 1F14Z9-0001P8-No
+	for gcvg-git@gmane.org; Mon, 23 Jan 2006 17:29:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932186AbWAWNHV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jan 2006 08:07:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932188AbWAWNHV
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jan 2006 08:07:21 -0500
-Received: from uproxy.gmail.com ([66.249.92.204]:15505 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932186AbWAWNHU convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jan 2006 08:07:20 -0500
-Received: by uproxy.gmail.com with SMTP id s2so744787uge
-        for <git@vger.kernel.org>; Mon, 23 Jan 2006 05:07:18 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZoRBcBpRBp9Y1W2pVdYhSf+1Oog5xLvUYhwsIdCfTWJFHA7vrzPJ7eJvupVBaP8fQHaiGvgcyCOqiF92tf1eyznWO7Po4ni9CTla1C7WVE4oqhtsMWsfFcg9CAYIKTccKq2pwcQLUz3yJFqAKpjtCq0rCJ6ITNjv0oG98pZQo6c=
-Received: by 10.48.43.4 with SMTP id q4mr330074nfq;
-        Mon, 23 Jan 2006 05:07:18 -0800 (PST)
-Received: by 10.49.14.20 with HTTP; Mon, 23 Jan 2006 05:07:18 -0800 (PST)
+	id S932226AbWAWQ3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jan 2006 11:29:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751483AbWAWQ3J
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jan 2006 11:29:09 -0500
+Received: from iabervon.org ([66.92.72.58]:1805 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751479AbWAWQ3I (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jan 2006 11:29:08 -0500
+Received: (qmail 18855 invoked by uid 1000); 23 Jan 2006 11:31:11 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 23 Jan 2006 11:31:11 -0500
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vpsmmt32x.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <7v7j8r7e7s.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15085>
 
-On 1/21/06, Junio C Hamano <junkio@cox.net> wrote:
-> Alex Riesen <raa.lkml@gmail.com> writes:
->
-> >> +#undef DT_UNKNOWN
-> >> +#undef DT_DIR
-> >> +#undef DT_REG
-> >> +#undef DT_LNK
+On Sun, 22 Jan 2006, Junio C Hamano wrote:
+
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> >> Switching branches
+> >> ------------------
+> >> 
+> >> Along with the traditional two-way merge by `read-tree -m -u`,
+> >> we would need to look at:
+> >> 
+> >> . `bind` lines in the current `HEAD` commit.
+> >> 
+> >> . `bind` lines in the commit we are switching to.
+> >> 
+> >> . subproject binding information in the index file.
+> >> 
+> >> to make sure we do sensible things.
 > >
-> > yes, of course
->
-> That is technically correct but I suspect it would not matter in
-> practice.  The only thing you are avoiding is four compiler
-> warnings when compiling for Cygwin of this week (I heard this is
-> already fixed in Cygwin CVS).  On older Cygwin you simply would
-> not use NO_D_TYPE_IN_DIRENT, since d_type worked before.  No?
+> > This is one place I think storing the bindings in the commit is awkward. 
+> > read-tree deals in trees (hence the name), but will need information from 
+> > the commit.
+> 
+> That's why it is 'along with'.  Dealing with binding information
+> can be done between commits and index without bothering tree
+> objects.  read-tree would not have to deal with it, and I think
+> keeping it that way is probably a good idea.
 
-Yes :)
+I think it would be a lot more fragile if switching branches requires 
+multiple programs interacting with the index file. If things get 
+interrupted after the tree is read but before the bindings are changed, 
+the user will probably generate an inconsistant commit or have to deal 
+with figuring out what's going on. It is a nice property of the current 
+system that the index file never exists under the usual filename without 
+being consistant.
+
+> In other words, I think the design so far does not require us to
+> touch tree objects at all, and I'd be happy if we do not have to.
+>
+> One reason I started the bound commit approach was exactly
+> because I only needed to muck with commit objects and did not
+> have to touch trees and blobs; after trying to implement the
+> core level for "gitlink", which I ended up touching quite a lot
+> and have abandoned for now.
+
+I think that the same thing that worked with the index file would work for 
+minimizing the impact of the changes as far as the code sees. If the 
+struct tree parser reported the tree at a path when it found a commit at a 
+path, it would work just as if the original tree had used trees (like in 
+your proposal).
+
+	-Daniel
+*This .sig left intentionally blank*
