@@ -1,86 +1,61 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: Notes on Subproject Support
-Date: Mon, 23 Jan 2006 11:31:11 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0601231116550.25300@iabervon.org>
-References: <7v3bjfafql.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0601222104120.25300@iabervon.org> <7v7j8r7e7s.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 23 Jan 2006 11:48:41 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0601231137250.25300@iabervon.org>
+References: <7v3bjfafql.fsf@assigned-by-dhcp.cox.net> <7v7j8r7e7s.fsf@assigned-by-dhcp.cox.net>
+ <7v64ob1omh.fsf@assigned-by-dhcp.cox.net> <200601231206.53466.lan@ac-sw.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 23 17:30:27 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Jan 23 17:46:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F14Z9-0001P8-No
-	for gcvg-git@gmane.org; Mon, 23 Jan 2006 17:29:17 +0100
+	id 1F14q2-0006GP-3t
+	for gcvg-git@gmane.org; Mon, 23 Jan 2006 17:46:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932226AbWAWQ3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jan 2006 11:29:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751483AbWAWQ3J
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jan 2006 11:29:09 -0500
-Received: from iabervon.org ([66.92.72.58]:1805 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751479AbWAWQ3I (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Jan 2006 11:29:08 -0500
-Received: (qmail 18855 invoked by uid 1000); 23 Jan 2006 11:31:11 -0500
+	id S932436AbWAWQqj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jan 2006 11:46:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932442AbWAWQqj
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jan 2006 11:46:39 -0500
+Received: from iabervon.org ([66.92.72.58]:2829 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932436AbWAWQqi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jan 2006 11:46:38 -0500
+Received: (qmail 23055 invoked by uid 1000); 23 Jan 2006 11:48:41 -0500
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 23 Jan 2006 11:31:11 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7j8r7e7s.fsf@assigned-by-dhcp.cox.net>
+  by localhost with SMTP; 23 Jan 2006 11:48:41 -0500
+To: Alexander Litvinov <lan@ac-sw.com>
+In-Reply-To: <200601231206.53466.lan@ac-sw.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15086>
 
-On Sun, 22 Jan 2006, Junio C Hamano wrote:
+On Mon, 23 Jan 2006, Alexander Litvinov wrote:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
+> In our development we use a little bit other case (it is simplified):
+> 1. We have self written C++ library for linked list implementation. Lets call 
+> it liblist.
+> 2. We have project A that use liblist as separate directory and project B that 
+> use this library too.
 > 
-> >> Switching branches
-> >> ------------------
-> >> 
-> >> Along with the traditional two-way merge by `read-tree -m -u`,
-> >> we would need to look at:
-> >> 
-> >> . `bind` lines in the current `HEAD` commit.
-> >> 
-> >> . `bind` lines in the commit we are switching to.
-> >> 
-> >> . subproject binding information in the index file.
-> >> 
-> >> to make sure we do sensible things.
-> >
-> > This is one place I think storing the bindings in the commit is awkward. 
-> > read-tree deals in trees (hence the name), but will need information from 
-> > the commit.
+> Currently we have 3 cvs projects with cvs-modules for linking liblist to A and 
+> B. During development of A and B we often modify liblist to fix bugs and 
+> these changes are immidatly visible to all projects who use liblist.
 > 
-> That's why it is 'along with'.  Dealing with binding information
-> can be done between commits and index without bothering tree
-> objects.  read-tree would not have to deal with it, and I think
-> keeping it that way is probably a good idea.
+> After full implementation of bind functionality I see one restriction: I have 
+> to use one repo for storing all three projects: A, B and liblist to make 
+> changes of liblist visible to all projects. The solution is to make separate 
+> repos and on each change of liblist in prokect A push these changes to 
+> liblist repo and pull them into project B again - bit hacky solution.
 
-I think it would be a lot more fragile if switching branches requires 
-multiple programs interacting with the index file. If things get 
-interrupted after the tree is read but before the bindings are changed, 
-the user will probably generate an inconsistant commit or have to deal 
-with figuring out what's going on. It is a nice property of the current 
-system that the index file never exists under the usual filename without 
-being consistant.
-
-> In other words, I think the design so far does not require us to
-> touch tree objects at all, and I'd be happy if we do not have to.
->
-> One reason I started the bound commit approach was exactly
-> because I only needed to muck with commit objects and did not
-> have to touch trees and blobs; after trying to implement the
-> core level for "gitlink", which I ended up touching quite a lot
-> and have abandoned for now.
-
-I think that the same thing that worked with the index file would work for 
-minimizing the impact of the changes as far as the code sees. If the 
-struct tree parser reported the tree at a path when it found a commit at a 
-path, it would work just as if the original tree had used trees (like in 
-your proposal).
+We haven't yet discussed how pushing a repository with subprojects would 
+work. We could probably have an extra line in the remotes/ file to make 
+the desired thing happen automatically, so that you can just do "git push" 
+and have the subproject go to its repository and the main project go to 
+its repository.
 
 	-Daniel
 *This .sig left intentionally blank*
