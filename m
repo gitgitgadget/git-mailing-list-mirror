@@ -1,84 +1,46 @@
-From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-Subject: [PATCH] use "git <command>" instead of "git-<command>"
-Date: Tue, 24 Jan 2006 11:52:24 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20060124105224.GA6765@informatik.uni-freiburg.de>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: git pull on a branch semantics
+Date: Tue, 24 Jan 2006 07:37:03 -0800 (PST)
+Message-ID: <20060124153703.53338.qmail@web31804.mail.mud.yahoo.com>
+References: <7v7j8sc6wy.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Jan 24 11:56:14 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 24 16:38:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F1LnD-0001jt-Lv
-	for gcvg-git@gmane.org; Tue, 24 Jan 2006 11:52:56 +0100
+	id 1F1QEJ-0004Qh-E5
+	for gcvg-git@gmane.org; Tue, 24 Jan 2006 16:37:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030447AbWAXKw0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jan 2006 05:52:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030448AbWAXKw0
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jan 2006 05:52:26 -0500
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:39409 "EHLO
-	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
-	id S1030447AbWAXKwZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jan 2006 05:52:25 -0500
-Received: from juno.informatik.uni-freiburg.de ([132.230.151.45])
-	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1F1Lmi-00018G-HO
-	for git@vger.kernel.org; Tue, 24 Jan 2006 11:52:24 +0100
-Received: from juno.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by juno.informatik.uni-freiburg.de (8.12.11/8.12.11) with ESMTP id k0OAqOmY006879
-	for <git@vger.kernel.org>; Tue, 24 Jan 2006 11:52:24 +0100 (MET)
-Received: (from zeisberg@localhost)
-	by juno.informatik.uni-freiburg.de (8.12.11/8.12.11/Submit) id k0OAqO46006878
-	for git@vger.kernel.org; Tue, 24 Jan 2006 11:52:24 +0100 (MET)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040523i
+	id S1030358AbWAXPhI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jan 2006 10:37:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030359AbWAXPhI
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jan 2006 10:37:08 -0500
+Received: from web31804.mail.mud.yahoo.com ([68.142.207.67]:2147 "HELO
+	web31804.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1030358AbWAXPhG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jan 2006 10:37:06 -0500
+Received: (qmail 53340 invoked by uid 60001); 24 Jan 2006 15:37:03 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=AUGi9m2uEsAQDQLcrUu49FdJwaOYQF8BqemIKLMwYS4Uc9JNRRkIjWEtDN8df0eWHIbUZGyivOjRmMaE3jKToOJIpxS7Sp81EGt3p+WeI4FsK8CE1KTxBorHMHkoSjM2M2sNm7hUR8AH3sGIBKT+7yqqBzo+2xSk1uPrqIryDos=  ;
+Received: from [65.74.248.133] by web31804.mail.mud.yahoo.com via HTTP; Tue, 24 Jan 2006 07:37:03 PST
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7j8sc6wy.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15100>
 
-Hello,
+--- Junio C Hamano <junkio@cox.net> wrote:
+> You wanted to "git fetch", not "git pull" which is "fetch
+> followed by merge into the current branch".
 
-Otherwise installations with gitexecdir != bindir are not able to determine the
-right version.
+Ah, ok, thanks Junio.
 
----
-
- GIT-VERSION-GEN |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-9d9d610164ec140f3fee21475b976d3e4b998991
-diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index e3cd9fa..2085ad3 100755
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -5,13 +5,13 @@ DEF_VER=v1.1.GIT
- 
- # First try git-describe, then see if there is a version file
- # (included in release tarballs), then default
--VN=$(git-describe --abbrev=4 HEAD 2>/dev/null | sed -e 's/-/./g') ||
-+VN=$(git describe --abbrev=4 HEAD 2>/dev/null | sed -e 's/-/./g') ||
- VN=$(cat version) ||
- VN="$DEF_VER"
- 
- VN=$(expr "$VN" : v*'\(.*\)')
- 
--dirty=$(sh -c 'git-diff-index --name-only HEAD' 2>/dev/null) || dirty=
-+dirty=$(sh -c 'git diff-index --name-only HEAD' 2>/dev/null) || dirty=
- case "$dirty" in
- '')
- 	;;
--- 
-1.1.4.g2eaa
-
-Best regards
-Uwe
-
--- 
-Uwe Zeisberger
-
-http://www.google.com/search?q=1+year+divided+by+3+in+seconds
+   Luben
