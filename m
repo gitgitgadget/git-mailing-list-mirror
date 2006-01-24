@@ -1,109 +1,61 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] Parametrize asciidoc and add --unsafe
-Date: Tue, 24 Jan 2006 17:15:46 -0500
-Message-ID: <1138140946.19065.2.camel@dv>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] diff-tree -c: show a merge commit a bit more sensibly.
+Date: Tue, 24 Jan 2006 17:15:44 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0601241655090.10804@evo.osdl.org>
+References: <7vwtgqas0y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jan 24 23:16:10 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 24 23:16:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F1WSA-0000lP-BK
-	for gcvg-git@gmane.org; Tue, 24 Jan 2006 23:15:55 +0100
+	id 1F1WSK-0000ob-J2
+	for gcvg-git@gmane.org; Tue, 24 Jan 2006 23:16:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750773AbWAXWPv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jan 2006 17:15:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750774AbWAXWPv
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jan 2006 17:15:51 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:55247 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750773AbWAXWPu
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jan 2006 17:15:50 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1F1WRy-00040W-QX
-	for git@vger.kernel.org; Tue, 24 Jan 2006 17:15:42 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.60)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1F1WS2-00053e-Qj
-	for git@vger.kernel.org; Tue, 24 Jan 2006 17:15:46 -0500
-To: git <git@vger.kernel.org>
-X-Mailer: Evolution 2.5.4 (2.5.4-10) 
+	id S1750774AbWAXWP7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jan 2006 17:15:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750775AbWAXWP7
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jan 2006 17:15:59 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:3257 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750774AbWAXWP6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jan 2006 17:15:58 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0OMFsDZ010407
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 24 Jan 2006 14:15:54 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0OMFqws024118;
+	Tue, 24 Jan 2006 14:15:53 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwtgqas0y.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.66__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15108>
-
-Including files from the parent directory is considered unsafe by
-asciidoc 7.1.0.  This is used in git.txt, which includes ../README.
-
-Since git is developed openly, we shouldn't be afraid of exploits
-lurking in the docs.  Create a make variable ASCIIDOC and use it to
-always call asciidoc with the --unsafe option.
-
-Signed-off-by: Pavel Roskin <proski@gnu.org>
----
-
- Documentation/Makefile |   12 +++++++-----
- 1 files changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index a65fb1b..391f583 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -28,6 +28,8 @@ man7=$(mandir)/man7
- 
- INSTALL?=install
- 
-+ASCIIDOC = asciidoc --unsafe
-+
- #
- # Please note that there is a minor bug in asciidoc.
- # The version after 6.0.3 _will_ include the patch found here:
-@@ -69,20 +71,20 @@ clean:
- 	rm -f *.xml *.html *.1 *.7 howto-index.txt howto/*.html doc.dep
- 
- %.html : %.txt
--	asciidoc -b xhtml11 -d manpage -f asciidoc.conf $<
-+	$(ASCIIDOC) -b xhtml11 -d manpage -f asciidoc.conf $<
- 
- %.1 %.7 : %.xml
- 	xmlto man $<
- 
- %.xml : %.txt
--	asciidoc -b docbook -d manpage -f asciidoc.conf $<
-+	$(ASCIIDOC) -b docbook -d manpage -f asciidoc.conf $<
- 
- git.html: git.txt ../README
- 
- glossary.html : glossary.txt sort_glossary.pl
- 	cat $< | \
- 	perl sort_glossary.pl | \
--	asciidoc -b xhtml11 - > glossary.html
-+	$(ASCIIDOC) -b xhtml11 - > glossary.html
- 
- howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
- 	rm -f $@+ $@
-@@ -90,13 +92,13 @@ howto-index.txt: howto-index.sh $(wildca
- 	mv $@+ $@
- 
- $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
--	asciidoc -b xhtml11 $*.txt
-+	$(ASCIIDOC) -b xhtml11 $*.txt
- 
- WEBDOC_DEST = /pub/software/scm/git/docs
- 
- $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
- 	rm -f $@+ $@
--	sed -e '1,/^$$/d' $? | asciidoc -b xhtml11 - >$@+
-+	sed -e '1,/^$$/d' $? | $(ASCIIDOC) -b xhtml11 - >$@+
- 	mv $@+ $@
- 
- install-webdoc : html
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15109>
 
 
 
--- 
-Regards,
-Pavel Roskin
+On Tue, 24 Jan 2006, Junio C Hamano wrote:
+>
+> A new option '-c' to diff-tree changes the way a merge commit is
+> displayed when generating a patch output.  It shows a "combined
+> diff" (hence the option letter 'c'), which looks like this:
+
+Thank you!
+
+Can you make this the default for "git-whatchanged" too? That way, merges 
+that have manual fixups will actually show up in the whatchanged output.
+
+Also, it would be perhaps even nicer if it had a "dense" version, which 
+only showed the chunks that had differences from more than one parent. 
+Chunks that have diffs from just one parent obviously had no conflicts in 
+that chunk, so they are much less interesting than a chunk that was 
+different from more than one parent..
+
+			Linus
