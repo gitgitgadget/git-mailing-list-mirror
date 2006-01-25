@@ -1,68 +1,48 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: [PATCH] Fix git-format-patch -s to include a Signed-off-by: line...
-Date: Wed, 25 Jan 2006 13:03:41 -0700
-Message-ID: <m1r76why76.fsf@ebiederm.dsl.xmission.com>
-References: <7voe212h53.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 25 21:04:45 2006
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Subject: Re: What's in git.git
+Date: Wed, 25 Jan 2006 12:36:47 -0800
+Message-ID: <10786.1138221407@lotus.CS.Berkeley.EDU>
+References: <7vy814qx6o.fsf@assigned-by-dhcp.cox.net>
+X-From: git-owner@vger.kernel.org Wed Jan 25 21:37:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F1qsm-0007hY-IY
-	for gcvg-git@gmane.org; Wed, 25 Jan 2006 21:04:44 +0100
+	id 1F1rNs-00013i-1C
+	for gcvg-git@gmane.org; Wed, 25 Jan 2006 21:36:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932160AbWAYUEL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jan 2006 15:04:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932162AbWAYUEL
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 15:04:11 -0500
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:64937 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S932161AbWAYUEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2006 15:04:04 -0500
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k0PK3fEe013799;
-	Wed, 25 Jan 2006 13:03:41 -0700
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k0PK3fBi013798;
-	Wed, 25 Jan 2006 13:03:41 -0700
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe212h53.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Tue, 24 Jan 2006 18:08:56 -0800")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S1750703AbWAYUgt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jan 2006 15:36:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbWAYUgs
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 15:36:48 -0500
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:64396 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S1750703AbWAYUgs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2006 15:36:48 -0500
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8) with ESMTP id k0PKalxV010794
+	for <git@vger.kernel.org>; Wed, 25 Jan 2006 12:36:47 -0800 (PST)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k0PKalja010793
+	for <git@vger.kernel.org>; Wed, 25 Jan 2006 12:36:47 -0800 (PST)
+To: git@vger.kernel.org
+In-reply-to: <7vy814qx6o.fsf@assigned-by-dhcp.cox.net> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15135>
 
+And Junio C Hamano writes:
+ -      This uses unsetenv(), which is not strictly portable, but 
+ - 	I was too lazy to fix it myself.
 
-In the last round of bug fixes the signed-off-by line was still be
-generated but it was not including a signed-off-by line :(
+And you manage to catch me on the one day in the last month
+I've played with git code...  Patch to add compat/unsetenv.c
+coming shortly.  Passes unit tests and make test as well as 
+before (I have some wierd, local-only cpio problems), but I 
+haven't used this extensively.
 
-Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+People _with_ unsetenv can still add compat functions, you 
+know.  ;)
 
-
----
-
- git-format-patch.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-78308e7078be1beb979def50579722910f2ff54f
-diff --git a/git-format-patch.sh b/git-format-patch.sh
-index 7e67c4e..5fb8ce1 100755
---- a/git-format-patch.sh
-+++ b/git-format-patch.sh
-@@ -178,7 +178,7 @@ my ($signoff_pattern, $done_header, $don
-     $last_was_signoff);
- 
- if ($signoff) {
--	$signoff = `git-var GIT_COMMITTER_IDENT`;
-+	$signoff = "Signed-off-by: " . `git-var GIT_COMMITTER_IDENT`;
- 	$signoff =~ s/>.*/>/;
- 	$signoff_pattern = quotemeta($signoff);
- }
--- 
-1.1.4.g7830
+Jason
