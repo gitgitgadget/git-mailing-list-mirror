@@ -1,66 +1,112 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: [PATCH] diff-tree -c: show a merge commit a bit more sensibly.
-Date: Wed, 25 Jan 2006 13:35:22 +0100
-Message-ID: <871wywzdrp.fsf@mid.deneb.enyo.de>
-References: <7vwtgqas0y.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git
+Date: Wed, 25 Jan 2006 05:00:47 -0800
+Message-ID: <7vy814qx6o.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Jan 25 13:35:36 2006
+X-From: git-owner@vger.kernel.org Wed Jan 25 14:01:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F1jrz-0005cf-Qt
-	for gcvg-git@gmane.org; Wed, 25 Jan 2006 13:35:28 +0100
+	id 1F1kGc-0004GU-1Y
+	for gcvg-git@gmane.org; Wed, 25 Jan 2006 14:00:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751159AbWAYMfZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jan 2006 07:35:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbWAYMfZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 07:35:25 -0500
-Received: from mail.enyo.de ([212.9.189.167]:22928 "EHLO mail.enyo.de")
-	by vger.kernel.org with ESMTP id S1751159AbWAYMfY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jan 2006 07:35:24 -0500
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1F1jrv-0001on-B4
-	for git@vger.kernel.org; Wed, 25 Jan 2006 13:35:23 +0100
-Received: from fw by deneb.enyo.de with local (Exim 4.60)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1F1jru-0004ZS-GK
-	for git@vger.kernel.org; Wed, 25 Jan 2006 13:35:22 +0100
+	id S1750909AbWAYNAt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jan 2006 08:00:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751165AbWAYNAt
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 08:00:49 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:45799 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1750909AbWAYNAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2006 08:00:48 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060125125843.TVZD17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 25 Jan 2006 07:58:43 -0500
 To: git@vger.kernel.org
-In-Reply-To: <7vwtgqas0y.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 24 Jan 2006 01:34:21 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15129>
 
-* Junio C. Hamano:
+I've pushed out the following changes to "master" branch:
 
-> A new option '-c' to diff-tree changes the way a merge commit is
-> displayed when generating a patch output.  It shows a "combined
-> diff" (hence the option letter 'c'), which looks like this:
->
->     $ git-diff-tree --pretty -c -p fec9ebf1 | head -n 18
->     diff-tree fec9ebf... (from parents)
->     Merge: 0620db3... 8a263ae...
->     Author: Junio C Hamano <junkio@cox.net>
->     Date:   Sun Jan 15 22:25:35 2006 -0800
->
-> 	Merge fixes up to GIT 1.1.3
->
->     diff --combined describe.c
->     @@ +99,18 @@
->        }
->
->     -  static void describe(char *arg)
->      - static void describe(struct commit *cmit, int last_one)
->     ++ static void describe(char *arg, int last_one)
+ * git-clone
 
-Maybe it would make sense to include a lines like these?
+   . --naked option is still accepted but is deprecated.  Please
+     say --bare.
 
-      #  0620db3... (Merge branch 'fix')
-       # 8a263ae... (GIT 1.1.3)
-      ## fec9ebf... (Merge fixes up to GIT 1.1.3)
+   . a repository cloned with --bare does not get "origin"
+     branch, nor remotes/origin file.
 
-This would make more clear which columns corresponds to which parent.
+   . Earlier we accepted more than one -o options, without
+     complaining.  We now complain.
+
+ * fetch and peek/ls-remote (Michal Ostrowski)
+
+   . --upload-pack option to the underlying git-peek-remote and
+     friends can be passed from the barebone Porcelain.
+
+ * local push/pull environment fix (Matt Draisey)
+
+   . We now clean "GIT_DIR" and friends from the environment
+     when spawning a program on the other end to drive git
+     native protocols on a local machine.  This uses unsetenv(),
+     which is not strictly portable, but I was too lazy to fix
+     it myself.  I am hoping that Jason Riedy will scream and
+     give us a patch to make it work again on his Solaris box
+     ;-).
+
+ * sample update-hook rewrite (Andreas Ericsson)
+
+ * asciidoc --unsafe workaround (Pavel Roskin)
+
+In the "pu" branch, there are some interesting changes.  The
+most immediately visible usability enhancement is the "combined
+diff" option to git-diff-tree command.  Interested people can
+try something like this:
+
+	$ git checkout pu
+	$ make clean strip all install
+	$ git checkout master
+
+Do not forget to come back to your "master" branch once you are
+done, or your next pull would be screwed.
+
+        $ git whatchanged --cc --abbrev pu
+
+This would show an improved version of "git whatchanged -m -p".
+The difference is that it uses the "dense combined diff"
+suggested by Linus yesterday.  Commits near the tip of "pu" tend
+to be Octopus, and you would see quite interesting combined
+diffs for them.  I am not proud of the implementation itself,
+and I am sure there are more bugs to be discovered, but overall
+I am reasonably happy with what it shows.  Once it stabilizes,
+it would be a good addition to gitweb UI.  In addition to the
+"commitdiff" next to each parent, there would be an extra link
+in a merge commit to get a combined diff.
+
+The "annotate helper" change by Linus and "bound commit"
+subproject support experiments are there as before.
+
+There are other minor fixes and enhancements.  Not all of them
+may make it to "master":
+
+ * "diff-tree --abbrev --pretty" was still showing full 40
+   characters of commit object names on "Merge:" line.
+
+ * "rev-parse --abbrev[=<n>] $rev" is similar to
+   "rev-parse --verify $rev", except that it shows an
+   abbreviated object name.
+
+ * The flag argument was handled confusingly by "rev-parse
+   [--flags|--no-flags]".  The command now treats anything that
+   come after --flags/--no-flags things to be parsed, not an
+   option to control what the command does.  This was primarily
+   needed to allow parsing out "--abbrev" option and giving it
+   to "diff-tree" inside whatchanged.  All existing users have
+   been adjusted to this change.  I do not think any of Cogito,
+   gitk, nor stgit is affected.
