@@ -1,52 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Make git-rev-list and git-rev-parse argument parsing stricter
-Date: Wed, 25 Jan 2006 14:40:35 -0800
-Message-ID: <7vhd7sorrw.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0601251655580.2644@evo.osdl.org>
+From: Ian Molton <spyro@f2s.com>
+Subject: how to import stuff?
+Date: Wed, 25 Jan 2006 23:40:39 +0000
+Organization: The Dragon Roost
+Message-ID: <43D80C77.70207@f2s.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 25 23:41:02 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Jan 26 00:37:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F1tJx-0003Gx-Cu
-	for gcvg-git@gmane.org; Wed, 25 Jan 2006 23:40:58 +0100
+	id 1F1uCl-0001m2-5t
+	for gcvg-git@gmane.org; Thu, 26 Jan 2006 00:37:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932199AbWAYWkx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jan 2006 17:40:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932193AbWAYWkn
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 17:40:43 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:64157 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932197AbWAYWkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2006 17:40:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060125223912.BVG20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 25 Jan 2006 17:39:12 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0601251655580.2644@evo.osdl.org> (Linus Torvalds's
-	message of "Wed, 25 Jan 2006 17:00:37 -0500 (EST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751189AbWAYXh2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jan 2006 18:37:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbWAYXh2
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 18:37:28 -0500
+Received: from outmail1.freedom2surf.net ([194.106.33.237]:23953 "EHLO
+	outmail.freedom2surf.net") by vger.kernel.org with ESMTP
+	id S1751189AbWAYXh1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2006 18:37:27 -0500
+Received: from [192.168.1.2] (i-195-137-81-187.freedom2surf.net [195.137.81.187])
+	by outmail.freedom2surf.net (8.12.10/8.12.10) with ESMTP id k0PNbQch032035
+	for <git@vger.kernel.org>; Wed, 25 Jan 2006 23:37:26 GMT
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051219)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15141>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Hi.
 
-> If you pass it a filename without the "--" marker to separate it from
-> revision information and flags, we now require that the file in question
-> actually exists. This makes mis-typed revision information not be silently
-> just considered a strange filename.
->...
-> Comments?
+I'd like to track the -mm tree in git.
 
-I think it is a good safety measure.  People has to say "git
-rev-list -- git-commit-script" if they are interested in
-historical paths, but that is less common.  We could even go
-stronger and always require '--', but that is probably too much
-for normal use.  I like the balance you struck here.
+I already have a linux git tree cloned from kernel.org, so I thought I'd try
+
+git checkout -b v2.6.16-rc1 v2.6.16-rc1
+git checkout -b v2.6.16-rc1-mm3
+patch -Np1 < 2.6.16-rc1-mm3
+
+So far so good - I have a tree with the patches applied
+
+but then how do I add / remove new / deleted files?
+
+git update-index --add --remove --refresh --ignore-missing
+
+seems to generate a list of said files, but I cant seem to figure out 
+how to get it to actually do anything useful with them.
+
+git add . adds all the new files, but there seems to be no equivalent to 
+remove files
+
+and I really dont want to run git updat-index on *every single file* 
+that changed by hand.
+
+Surely Im missing something, but I cant see what for the life of me. The 
+  'everyday git' document seems to focus on small changes to one or two 
+files.
+
+managing files not yet in or removed from the source isnt something 
+effectively covered in the document (or if it is, I missed it somehow).
+
+Its probably obvious that Im new to this kind of SCM - and I've not got 
+on with SCMs generally... they never seem to be logical to me.
+
+TIA!
+
+-Ian
