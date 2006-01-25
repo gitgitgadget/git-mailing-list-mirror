@@ -1,48 +1,58 @@
 From: Jason Riedy <ejr@EECS.Berkeley.EDU>
-Subject: Re: What's in git.git
-Date: Wed, 25 Jan 2006 12:36:47 -0800
-Message-ID: <10786.1138221407@lotus.CS.Berkeley.EDU>
-References: <7vy814qx6o.fsf@assigned-by-dhcp.cox.net>
-X-From: git-owner@vger.kernel.org Wed Jan 25 21:37:10 2006
+Subject: [PATCH] Run GIT-VERSION-GEN with $(SHELL), not sh.
+Date: Wed, 25 Jan 2006 12:37:51 -0800
+Message-ID: <10802.1138221471@lotus.CS.Berkeley.EDU>
+X-From: git-owner@vger.kernel.org Wed Jan 25 21:38:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F1rNs-00013i-1C
-	for gcvg-git@gmane.org; Wed, 25 Jan 2006 21:36:52 +0100
+	id 1F1rOs-0001Pa-S8
+	for gcvg-git@gmane.org; Wed, 25 Jan 2006 21:37:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750703AbWAYUgt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jan 2006 15:36:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbWAYUgs
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 15:36:48 -0500
-Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:64396 "EHLO
+	id S1750802AbWAYUhw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jan 2006 15:37:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750828AbWAYUhw
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 15:37:52 -0500
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:65164 "EHLO
 	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
-	id S1750703AbWAYUgs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2006 15:36:48 -0500
+	id S1750802AbWAYUhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2006 15:37:52 -0500
 Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8) with ESMTP id k0PKalxV010794
-	for <git@vger.kernel.org>; Wed, 25 Jan 2006 12:36:47 -0800 (PST)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8) with ESMTP id k0PKbpxV010808
+	for <git@vger.kernel.org>; Wed, 25 Jan 2006 12:37:51 -0800 (PST)
 Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k0PKalja010793
-	for <git@vger.kernel.org>; Wed, 25 Jan 2006 12:36:47 -0800 (PST)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k0PKbpXu010807
+	for <git@vger.kernel.org>; Wed, 25 Jan 2006 12:37:51 -0800 (PST)
 To: git@vger.kernel.org
-In-reply-to: <7vy814qx6o.fsf@assigned-by-dhcp.cox.net> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15136>
 
-And Junio C Hamano writes:
- -      This uses unsetenv(), which is not strictly portable, but 
- - 	I was too lazy to fix it myself.
+Alas, not all shells named sh are capable enough to run
+GIT-VERSION-GEN.
 
-And you manage to catch me on the one day in the last month
-I've played with git code...  Patch to add compat/unsetenv.c
-coming shortly.  Passes unit tests and make test as well as 
-before (I have some wierd, local-only cpio problems), but I 
-haven't used this extensively.
+Signed-off-by: Jason Riedy <ejr@cs.berkeley.edu>
 
-People _with_ unsetenv can still add compat functions, you 
-know.  ;)
+---
 
-Jason
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+ba55c17e4888568cf17da569f95f11e27a26072d
+diff --git a/Makefile b/Makefile
+index 3046056..245f658 100644
+--- a/Makefile
++++ b/Makefile
+@@ -67,7 +67,7 @@ all:
+ # change being considered an inode change from the update-cache perspective.
+ 
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+-	@sh ./GIT-VERSION-GEN
++	@$(SHELL) ./GIT-VERSION-GEN
+ -include GIT-VERSION-FILE
+ 
+ # CFLAGS and LDFLAGS are for the users to override from the command line.
+-- 
+1.0.GIT
