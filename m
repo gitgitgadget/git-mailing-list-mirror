@@ -1,63 +1,52 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: git-whatchanged: exit out early on errors
-Date: Wed, 25 Jan 2006 17:02:10 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0601251700540.2644@evo.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Make git-rev-list and git-rev-parse argument parsing stricter
+Date: Wed, 25 Jan 2006 14:40:35 -0800
+Message-ID: <7vhd7sorrw.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0601251655580.2644@evo.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed Jan 25 23:02:58 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 25 23:41:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F1sil-0000sM-3W
-	for gcvg-git@gmane.org; Wed, 25 Jan 2006 23:02:31 +0100
+	id 1F1tJx-0003Gx-Cu
+	for gcvg-git@gmane.org; Wed, 25 Jan 2006 23:40:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932166AbWAYWCY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jan 2006 17:02:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932167AbWAYWCY
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 17:02:24 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:13275 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932166AbWAYWCX (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jan 2006 17:02:23 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0PM2KDZ011368
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 25 Jan 2006 14:02:20 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0PM2Io0007388;
-	Wed, 25 Jan 2006 14:02:19 -0800
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0601251655580.2644@evo.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.66__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932199AbWAYWkx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jan 2006 17:40:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932193AbWAYWkn
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 17:40:43 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:64157 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932197AbWAYWkg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2006 17:40:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060125223912.BVG20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 25 Jan 2006 17:39:12 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0601251655580.2644@evo.osdl.org> (Linus Torvalds's
+	message of "Wed, 25 Jan 2006 17:00:37 -0500 (EST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15140>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-If we get an error parsing the arguments, exit.
+> If you pass it a filename without the "--" marker to separate it from
+> revision information and flags, we now require that the file in question
+> actually exists. This makes mis-typed revision information not be silently
+> just considered a strange filename.
+>...
+> Comments?
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-
-This goes together with the previous diff - it just makes git-whatchanged 
-exit gracefully when git-rev-parse errors out.
-
-diff --git a/git-whatchanged.sh b/git-whatchanged.sh
-index 80e2500..d4f985b 100755
---- a/git-whatchanged.sh
-+++ b/git-whatchanged.sh
-@@ -4,7 +4,7 @@ USAGE='[-p] [--max-count=<n>] [<since>..
- SUBDIRECTORY_OK='Yes'
- . git-sh-setup
- 
--diff_tree_flags=$(git-rev-parse --sq --no-revs --flags "$@")
-+diff_tree_flags=$(git-rev-parse --sq --no-revs --flags "$@") || exit
- test -z "$diff_tree_flags" &&
- 	diff_tree_flags=$(git-repo-config --get whatchanged.difftree)
- test -z "$diff_tree_flags" &&
+I think it is a good safety measure.  People has to say "git
+rev-list -- git-commit-script" if they are interested in
+historical paths, but that is less common.  We could even go
+stronger and always require '--', but that is probably too much
+for normal use.  I like the balance you struck here.
