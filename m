@@ -1,58 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] rev-{list,parse}: allow -<n> as shorthand for --max-count=<n>
-Date: Wed, 25 Jan 2006 01:52:48 -0800
-Message-ID: <7v8xt4ws5r.fsf@assigned-by-dhcp.cox.net>
-References: <20060124072946.GA9468@Muzzle>
-	<7vd5iicauh.fsf@assigned-by-dhcp.cox.net>
-	<20060125063325.GA7953@mail.yhbt.net>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: [PATCH] diff-tree -c: show a merge commit a bit more sensibly.
+Date: Wed, 25 Jan 2006 13:35:22 +0100
+Message-ID: <871wywzdrp.fsf@mid.deneb.enyo.de>
+References: <7vwtgqas0y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 25 10:53:26 2006
+X-From: git-owner@vger.kernel.org Wed Jan 25 13:35:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F1hL3-00059Q-Ta
-	for gcvg-git@gmane.org; Wed, 25 Jan 2006 10:53:19 +0100
+	id 1F1jrz-0005cf-Qt
+	for gcvg-git@gmane.org; Wed, 25 Jan 2006 13:35:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091AbWAYJwu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jan 2006 04:52:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751092AbWAYJwu
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 04:52:50 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:43963 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751091AbWAYJwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2006 04:52:49 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060125095002.KERB17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 25 Jan 2006 04:50:02 -0500
-To: Eric Wong <normalperson@yhbt.net>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751159AbWAYMfZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jan 2006 07:35:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbWAYMfZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 07:35:25 -0500
+Received: from mail.enyo.de ([212.9.189.167]:22928 "EHLO mail.enyo.de")
+	by vger.kernel.org with ESMTP id S1751159AbWAYMfY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Jan 2006 07:35:24 -0500
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1F1jrv-0001on-B4
+	for git@vger.kernel.org; Wed, 25 Jan 2006 13:35:23 +0100
+Received: from fw by deneb.enyo.de with local (Exim 4.60)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1F1jru-0004ZS-GK
+	for git@vger.kernel.org; Wed, 25 Jan 2006 13:35:22 +0100
+To: git@vger.kernel.org
+In-Reply-To: <7vwtgqas0y.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 24 Jan 2006 01:34:21 -0800")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15128>
 
-Eric Wong <normalperson@yhbt.net> writes:
+* Junio C. Hamano:
 
-> I don't agree with POSIX on this point, and I don't see why git should
-> be bound to POSIX, especially at the UI level just because it's POSIX.
+> A new option '-c' to diff-tree changes the way a merge commit is
+> displayed when generating a patch output.  It shows a "combined
+> diff" (hence the option letter 'c'), which looks like this:
+>
+>     $ git-diff-tree --pretty -c -p fec9ebf1 | head -n 18
+>     diff-tree fec9ebf... (from parents)
+>     Merge: 0620db3... 8a263ae...
+>     Author: Junio C Hamano <junkio@cox.net>
+>     Date:   Sun Jan 15 22:25:35 2006 -0800
+>
+> 	Merge fixes up to GIT 1.1.3
+>
+>     diff --combined describe.c
+>     @@ +99,18 @@
+>        }
+>
+>     -  static void describe(char *arg)
+>      - static void describe(struct commit *cmit, int last_one)
+>     ++ static void describe(char *arg, int last_one)
 
-Unfortunately, it does not matter in the real world that you and
-I both do not particularly like "head -n 4".  We will see more
-people who feel "-n 4" more familiar than "-4", unlike old
-fashioned people like myself.
+Maybe it would make sense to include a lines like these?
 
-> ...  Heck, I've
-> been wanting GNU getopt_long() option parsing in git for a while...
+      #  0620db3... (Merge branch 'fix')
+       # 8a263ae... (GIT 1.1.3)
+      ## fec9ebf... (Merge fixes up to GIT 1.1.3)
 
-We find somebody who wants to do this every now and then, it
-seems.  Last time somebody brought this up in late May 2005, we
-were still a "too rapidly moving" target, adding and changing
-options every other day, and the actual implementation went
-nowhere while the discussion was reasonably healthy.  If I
-recall the discussion correctly, argp instead of GNU getopt was
-the list favorite back then...
+This would make more clear which columns corresponds to which parent.
