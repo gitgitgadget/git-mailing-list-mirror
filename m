@@ -1,67 +1,61 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: Re: git-ls-files in subdirectories ignore higher-up .gitignore
-Date: Wed, 25 Jan 2006 07:11:40 +0100
-Message-ID: <20060125061140.GA8408@mars.ravnborg.org>
-References: <1138125570.24415.11.camel@dv>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] rev-{list,parse}: allow -<n> as shorthand for --max-count=<n>
+Date: Tue, 24 Jan 2006 22:33:25 -0800
+Message-ID: <20060125063325.GA7953@mail.yhbt.net>
+References: <20060124072946.GA9468@Muzzle> <7vd5iicauh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 25 07:11:55 2006
+Cc: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 25 07:33:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F1dsm-0003iG-OQ
-	for gcvg-git@gmane.org; Wed, 25 Jan 2006 07:11:53 +0100
+	id 1F1eDh-0000RZ-I7
+	for gcvg-git@gmane.org; Wed, 25 Jan 2006 07:33:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751033AbWAYGLq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jan 2006 01:11:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751025AbWAYGLq
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 01:11:46 -0500
-Received: from pasmtp.tele.dk ([193.162.159.95]:30219 "EHLO pasmtp.tele.dk")
-	by vger.kernel.org with ESMTP id S1751033AbWAYGLp (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jan 2006 01:11:45 -0500
-Received: from mars.ravnborg.org (0x50a0757d.hrnxx9.adsl-dhcp.tele.dk [80.160.117.125])
-	by pasmtp.tele.dk (Postfix) with ESMTP id CA1101EC312;
-	Wed, 25 Jan 2006 07:11:42 +0100 (CET)
-Received: by mars.ravnborg.org (Postfix, from userid 1000)
-	id 2AF2843C82F; Wed, 25 Jan 2006 07:11:40 +0100 (CET)
-To: Pavel Roskin <proski@gnu.org>
+	id S1751040AbWAYGd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jan 2006 01:33:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751043AbWAYGd1
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 01:33:27 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:60876 "EHLO mail.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751040AbWAYGd0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Jan 2006 01:33:26 -0500
+Received: by mail.yhbt.net (Postfix, from userid 500)
+	id 555202DC033; Tue, 24 Jan 2006 22:33:25 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <1138125570.24415.11.camel@dv>
-User-Agent: Mutt/1.5.11
+In-Reply-To: <7vd5iicauh.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15119>
 
-On Tue, Jan 24, 2006 at 12:59:30PM -0500, Pavel Roskin wrote:
-> Hello!
+Junio C Hamano <junkio@cox.net> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
 > 
-> git-ls-files appears to behave in a way that may be unexpected to the
-> users.  When run in a subdirectory, git-ls-files never reads .gitignore
-> or whatever is specified by --exclude-per-directory in the parent
-> directories.
+> > Some versions of head(1) and tail(1) allow their line limits to be
+> > parsed this way.  I find --max-count to be a commonly used option,
+> > and also similar in spirit to head/tail, so I decided to make life
+> > easier on my worn out (and lazy :) fingers with this patch.
 > 
-> This can be demonstrated in git's own repository:
-> 
-> $ touch t/test.o
-> $ git-ls-files --others --exclude-per-directory=.gitignore
-> $ cd t
-> $ git-ls-files --others --exclude-per-directory=.gitignore
-> test.o
-> $
-> 
-> Before I attempt to fix it, I'd like to make sure it's a bug, not a
-> feature.
+> As an old timer, I personally am very used to "head -4", but
+> also have been training my fingers to say "head -n 4" for the
+> past few years, because the former is not POSIXly correct.
 
-I for one consider it a bug.
-I expect exactly same output if I do
-git ls-files t/
-or
-cd t; git ls-files
+I don't agree with POSIX on this point, and I don't see why git should
+be bound to POSIX, especially at the UI level just because it's POSIX.
 
-Very usefull when I limit grep to some part of the kernel tree for
-example.
+Fwiw, head/tail in coreutils distributed by Debian still supports -<n>
+alongside -n <n> and -n<n>.
 
-	Sam
+> At the same time, I agree that --max-count *was* a mistake.  We
+> should maybe say "-n <n>" perhaps?
+
+Then, -n<n> (w/o the space) should be supported as well.  Heck, I've
+been wanting GNU getopt_long() option parsing in git for a while.  Not
+sure if I'll have time to implement it myself any time soon, though.
+
+-- 
+Eric Wong
