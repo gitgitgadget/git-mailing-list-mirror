@@ -1,128 +1,111 @@
-From: Jason Riedy <ejr@EECS.Berkeley.EDU>
-Subject: [PATCH] Add compat/unsetenv.c .
-Date: Wed, 25 Jan 2006 12:38:36 -0800
-Message-ID: <10812.1138221516@lotus.CS.Berkeley.EDU>
-X-From: git-owner@vger.kernel.org Wed Jan 25 21:38:48 2006
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Make git-rev-list and git-rev-parse argument parsing stricter
+Date: Wed, 25 Jan 2006 17:00:37 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0601251655580.2644@evo.osdl.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Wed Jan 25 23:01:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F1rPc-0001fp-Dc
-	for gcvg-git@gmane.org; Wed, 25 Jan 2006 21:38:40 +0100
+	id 1F1shC-0000Ng-FH
+	for gcvg-git@gmane.org; Wed, 25 Jan 2006 23:00:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750851AbWAYUih (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jan 2006 15:38:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750843AbWAYUih
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 15:38:37 -0500
-Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:909 "EHLO
-	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
-	id S1750808AbWAYUih (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2006 15:38:37 -0500
-Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8) with ESMTP id k0PKcaxV010818
-	for <git@vger.kernel.org>; Wed, 25 Jan 2006 12:38:36 -0800 (PST)
-Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k0PKcauv010817
-	for <git@vger.kernel.org>; Wed, 25 Jan 2006 12:38:36 -0800 (PST)
-To: git@vger.kernel.org
+	id S932155AbWAYWAv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jan 2006 17:00:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751177AbWAYWAv
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 17:00:51 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:36826 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751123AbWAYWAu (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Jan 2006 17:00:50 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0PM0lDZ011266
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 25 Jan 2006 14:00:47 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0PM0jJj007306;
+	Wed, 25 Jan 2006 14:00:46 -0800
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.66__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15138>
 
-Implement a (slow) unsetenv() for older systems.
 
-Signed-off-by: Jason Riedy <ejr@cs.berkeley.edu>
+If you pass it a filename without the "--" marker to separate it from
+revision information and flags, we now require that the file in question
+actually exists. This makes mis-typed revision information not be silently
+just considered a strange filename.
 
----
+With the "--" marker, you can continue to pass in filenames that do not
+actually exists - useful for querying what happened to a file that you
+no longer have in the repository.
 
- Makefile          |    5 +++++
- compat/unsetenv.c |   26 ++++++++++++++++++++++++++
- connect.c         |    1 +
- git-compat-util.h |    5 +++++
- 4 files changed, 37 insertions(+), 0 deletions(-)
- create mode 100644 compat/unsetenv.c
+[ All scripts should use the "--" format regardless, to make things
+  unambiguous. So this change should not affect any existing tools ]
 
-30e532bf9194724ac7923b07236ec8d3cdfe4a8a
-diff --git a/Makefile b/Makefile
-index 245f658..2e95353 100644
---- a/Makefile
-+++ b/Makefile
-@@ -232,6 +232,7 @@ ifeq ($(uname_S),SunOS)
- 	SHELL_PATH = /bin/bash
- 	NO_STRCASESTR = YesPlease
- 	ifeq ($(uname_R),5.8)
-+		NO_UNSETENV = YesPlease
- 		NO_SETENV = YesPlease
- 	endif
- 	INSTALL = ginstall
-@@ -355,6 +356,10 @@ ifdef NO_SETENV
- 	COMPAT_CFLAGS += -DNO_SETENV
- 	COMPAT_OBJS += compat/setenv.o
- endif
-+ifdef NO_SETENV
-+	COMPAT_CFLAGS += -DNO_UNSETENV
-+	COMPAT_OBJS += compat/unsetenv.o
-+endif
- ifdef NO_MMAP
- 	COMPAT_CFLAGS += -DNO_MMAP
- 	COMPAT_OBJS += compat/mmap.o
-diff --git a/compat/unsetenv.c b/compat/unsetenv.c
-new file mode 100644
-index 0000000..3a5e4ec
---- /dev/null
-+++ b/compat/unsetenv.c
-@@ -0,0 +1,26 @@
-+#include <stdlib.h>
-+#include <string.h>
-+
-+void gitunsetenv (const char *name)
-+{
-+     extern char **environ;
-+     int src, dst;
-+     size_t nmln;
-+
-+     nmln = strlen(name);
-+
-+     for (src = dst = 0; environ[src]; ++src) {
-+	  size_t enln;
-+	  enln = strlen(environ[src]);
-+	  if (enln > nmln) {
-+               /* might match, and can test for '=' safely */
-+	       if (0 == strncmp (environ[src], name, nmln)
-+		   && '=' == environ[src][nmln])
-+		    /* matches, so skip */
-+		    continue;
-+	  }
-+	  environ[dst] = environ[src];
-+	  ++dst;
-+     }
-+     environ[dst] = NULL;
-+}
-diff --git a/connect.c b/connect.c
-index e1c04e1..3f2d65c 100644
---- a/connect.c
-+++ b/connect.c
-@@ -1,3 +1,4 @@
-+#include "git-compat-util.h"
- #include "cache.h"
- #include "pkt-line.h"
- #include "quote.h"
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 12ce659..f982b8e 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -63,6 +63,11 @@ extern int gitfakemunmap(void *start, si
- extern int gitsetenv(const char *, const char *, int);
- #endif
- 
-+#ifdef NO_UNSETENV
-+#define unsetenv gitunsetenv
-+extern void gitunsetenv(const char *);
-+#endif
-+
- #ifdef NO_STRCASESTR
- #define strcasestr gitstrcasestr
- extern char *gitstrcasestr(const char *haystack, const char *needle);
--- 
-1.0.GIT
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+----
+
+I hit this the hard way when I was showing off git at Linux.Conf.Au 
+yesterday, and I asked for
+
+	git log v2.6.14..v2.6.16
+
+which silently did nothing at all. The reason? I don't actually have a 
+v2.6.16, the most recent version is 2.6.16-rc1. So it thought 
+v2.6.14..v2.6.16 was a _filename_.
+
+Now, normally, if you use the "proper" format (with the -- delimeter to 
+mark where filenames start), you'd never have this ambiguity. But without 
+the "--", the way I decided that we should disambiguate things is to 
+verify that any filename given with the ambiguous shorthand version 
+actually exists.
+
+Comments?
+
+diff --git a/rev-list.c b/rev-list.c
+index d060966..e00e6fc 100644
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -844,8 +844,12 @@ int main(int argc, const char **argv)
+ 			arg++;
+ 			limited = 1;
+ 		}
+-		if (get_sha1(arg, sha1) < 0)
++		if (get_sha1(arg, sha1) < 0) {
++			struct stat st;
++			if (lstat(arg, &st) < 0)
++				die("'%s': %s", arg, strerror(errno));
+ 			break;
++		}
+ 		commit = get_commit_reference(arg, sha1, flags);
+ 		handle_one_commit(commit, &list);
+ 	}
+diff --git a/rev-parse.c b/rev-parse.c
+index 0c951af..7abad35 100644
+--- a/rev-parse.c
++++ b/rev-parse.c
+@@ -154,6 +154,7 @@ int main(int argc, char **argv)
+ 	const char *prefix = setup_git_directory();
+ 	
+ 	for (i = 1; i < argc; i++) {
++		struct stat st;
+ 		char *arg = argv[i];
+ 		char *dotdot;
+ 	
+@@ -293,6 +294,8 @@ int main(int argc, char **argv)
+ 		}
+ 		if (verify)
+ 			die("Needed a single revision");
++		if (lstat(arg, &st) < 0)
++			die("'%s': %s", arg, strerror(errno));
+ 		as_is = 1;
+ 		show_file(arg);
+ 	}
