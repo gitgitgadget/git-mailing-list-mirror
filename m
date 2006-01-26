@@ -1,57 +1,77 @@
-From: Santi Bejar <sbejar@gmail.com>
-Subject: Re: What's in git.git
-Date: Thu, 26 Jan 2006 17:24:35 +0100
-Message-ID: <8aa486160601260824g72b127ddn@mail.gmail.com>
-References: <7vy814qx6o.fsf@assigned-by-dhcp.cox.net>
-	 <8aa486160601250634v294857e0j@mail.gmail.com>
-	 <7vvew7lv4s.fsf@assigned-by-dhcp.cox.net>
-	 <8aa486160601260104v745594d9m@mail.gmail.com>
-	 <7vk6cngwfh.fsf@assigned-by-dhcp.cox.net>
-	 <8aa486160601260156h6157ca34s@mail.gmail.com>
-	 <7vhd7rfare.fsf@assigned-by-dhcp.cox.net>
+From: Uwe Zeisberger <Uwe_Zeisberger@digi.com>
+Subject: [PATCH] Make GIT-VERSION-GEN tolerate missing git describe command again
+Date: Thu, 26 Jan 2006 17:39:27 +0100
+Message-ID: <1138293567831-git-send-email-Uwe_Zeisberger@digi.com>
+References: <20060126134521.GA11570@informatik.uni-freiburg.de>
+Reply-To: Uwe Zeisberger <Uwe_Zeisberger@digi.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 26 17:24:55 2006
+Cc: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Thu Jan 26 17:39:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F29vN-00016I-Fl
-	for gcvg-git@gmane.org; Thu, 26 Jan 2006 17:24:41 +0100
+	id 1F2A9M-0005Og-ON
+	for gcvg-git@gmane.org; Thu, 26 Jan 2006 17:39:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964788AbWAZQYi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jan 2006 11:24:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964790AbWAZQYi
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jan 2006 11:24:38 -0500
-Received: from xproxy.gmail.com ([66.249.82.205]:36674 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964788AbWAZQYi convert rfc822-to-8bit
+	id S964798AbWAZQjG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jan 2006 11:39:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964797AbWAZQjF
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jan 2006 11:39:05 -0500
+Received: from www.z-kom.de ([212.101.151.131]:48023 "EHLO www.levante.de")
+	by vger.kernel.org with ESMTP id S964798AbWAZQjE convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2006 11:24:38 -0500
-Received: by xproxy.gmail.com with SMTP id s14so246846wxc
-        for <git@vger.kernel.org>; Thu, 26 Jan 2006 08:24:37 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MgLUN+4JRcVesK9niYGV89A5GdjZtFkQUqirhCE7yfQpYkb7KDt9/rVb4ACU5Zd5r7J+C18P1PL5+FzZ1WSNt436atu3suVm2W6VibHM0gUWW7IM81iQ40UqEC/RHHuSryzZZsD1gPLjfZaXcT5xqzi/JRNTkpSHEQ9sQMObq48=
-Received: by 10.70.15.3 with SMTP id 3mr2335837wxo;
-        Thu, 26 Jan 2006 08:24:35 -0800 (PST)
-Received: by 10.70.19.18 with HTTP; Thu, 26 Jan 2006 08:24:35 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhd7rfare.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	Thu, 26 Jan 2006 11:39:04 -0500
+Received: from pd95b6420.dip0.t-ipconnect.de ([217.91.100.32] helo=mail.fsforth.de)
+	by www.levante.de with asmtp (Exim 3.36 #1 (Debian))
+	id 1F2A9B-0000FB-00; Thu, 26 Jan 2006 17:38:57 +0100
+Received: from io.fsforth.de ([192.168.40.169])
+	by mail.fsforth.de with esmtp (Exim 4.52)
+	id 1F2A96-00038X-Vx; Thu, 26 Jan 2006 17:38:53 +0100
+Received: from io.fsforth.de (localhost [127.0.0.1])
+	by io.fsforth.de (Postfix) with SMTP id 343C7358E;
+	Thu, 26 Jan 2006 17:39:27 +0100 (CET)
+In-Reply-To: <20060126134521.GA11570@informatik.uni-freiburg.de>
+X-Mailer: git-send-email
+To: git@vger.kernel.org
+X-FS-MailScanner: Found to be clean
+X-MailScanner-From: uwe_zeisberger@digi.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15169>
 
-> I think this patch would address your two issues (applies on top
-> of "pu"), but I have not had time to test it seriously enough.
+Commit 5c7d3c95 broke that by making the git-describe command part of
+a pipe.
 
-It works here, thanks.
+Signed-off-by: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
 
-Just a little issue. With grafted commits the combined diff works but
-the "Merge:" line is not shown.
+---
 
-Santi
+ GIT-VERSION-GEN |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
+
+b5763601050151e944cb58b3b0fe6f4aee88b47f
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index e3cd9fa..72201be 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -5,9 +5,11 @@ DEF_VER=v1.1.GIT
+ 
+ # First try git-describe, then see if there is a version file
+ # (included in release tarballs), then default
+-VN=$(git-describe --abbrev=4 HEAD 2>/dev/null | sed -e 's/-/./g') ||
+-VN=$(cat version) ||
+-VN="$DEF_VER"
++if VN=$(git-describe --abbrev=4 HEAD 2>/dev/null); then
++	VN=$(echo "$VN" | sed -e 's/-/./g');
++else
++	VN=$(cat version) || VN="$DEF_VER"
++fi
+ 
+ VN=$(expr "$VN" : v*'\(.*\)')
+ 
+-- 
+1.1.4-g9acfd
