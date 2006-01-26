@@ -1,63 +1,68 @@
-From: Eric Sandall <eric@sandall.us>
-Subject: Re: [ANNOUNCE] GIT 1.1.4
-Date: Wed, 25 Jan 2006 16:29:26 -0800 (PST)
-Message-ID: <Pine.LNX.4.63.0601251629070.3833@cerberus>
-References: <7v1wz31e9t.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: LCA06 Cogito/GIT workshop - (Re: git-whatchanged: exit out early on errors)
+Date: Thu, 26 Jan 2006 15:10:54 +1300
+Message-ID: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 26 01:28:47 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 26 03:11:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F1v0B-000727-9b
-	for gcvg-git@gmane.org; Thu, 26 Jan 2006 01:28:39 +0100
+	id 1F1wbM-0001R7-Ph
+	for gcvg-git@gmane.org; Thu, 26 Jan 2006 03:11:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932225AbWAZA2f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jan 2006 19:28:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbWAZA2f
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 19:28:35 -0500
-Received: from dslb138.fsr.net ([12.7.7.138]:932 "EHLO sandall.us")
-	by vger.kernel.org with ESMTP id S1751269AbWAZA2e (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jan 2006 19:28:34 -0500
-Received: from cerberus ([192.168.0.254])
-	by sandall.us with esmtp (Exim 4.50)
-	id 1F1v11-0001HQ-1l; Wed, 25 Jan 2006 16:29:31 -0800
-X-X-Sender: sandalle@cerberus
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1wz31e9t.fsf@assigned-by-dhcp.cox.net>
+	id S1751286AbWAZCK4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jan 2006 21:10:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750710AbWAZCKz
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jan 2006 21:10:55 -0500
+Received: from wproxy.gmail.com ([64.233.184.193]:50214 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751286AbWAZCKz convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2006 21:10:55 -0500
+Received: by wproxy.gmail.com with SMTP id 57so237049wri
+        for <git@vger.kernel.org>; Wed, 25 Jan 2006 18:10:54 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=XJKNAeVGXt0wZl7Q9d1TrdgW8V4FVqNrqVPlgjg3w+6j1xCrYIGOdXLPuzHpRZiFpxcFlAjIr06JmnrlkAZmETT04K0smlnWQy4ehiD0gPnoYO1kN2Rv7e+Ri5ye8Wum7VbCgNo+zdU4g5wVUKaOxmif7hSom6ppQ0U98Fx502s=
+Received: by 10.54.127.3 with SMTP id z3mr1819788wrc;
+        Wed, 25 Jan 2006 18:10:54 -0800 (PST)
+Received: by 10.54.127.8 with HTTP; Wed, 25 Jan 2006 18:10:54 -0800 (PST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15148>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 1/26/06, Linus Torvalds <torvalds@osdl.org> wrote:
 
-On Fri, 20 Jan 2006, Junio C Hamano wrote:
-> The latest maintenance release GIT 1.1.4 is available at the
-> usual places:
->
-> 	http://www.kernel.org/pub/software/scm/git/
->
-> 	git-1.1.4.tar.{gz,bz2}			(tarball)
-> 	RPMS/$arch/git-*-1.1.4-1.$arch.rpm	(RPM)
-<snip>
+> If we get an error parsing the arguments, exit.
 
-I've updated the Source Mage GNU/Linux package for this, thanks!
+This bug found thanks to the 'demo' effect. ;-)
 
-- -sandalle
+The workshop had a 2hr slot -- after 2hs 15, I asked Linus if he
+wanted to talk about the internals. He did, and the workshop went
+on... for 2 hours more. It was actually hard to get people out of the
+room.
 
-- --
-Eric Sandall                     |  Source Mage GNU/Linux Developer
-eric@sandall.us                  |  http://www.sourcemage.org/
-http://eric.sandall.us/          |  SysAdmin @ Inst. Shock Physics @ WSU
-http://counter.li.org/  #196285  |  http://www.shock.wsu.edu/
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+Sadly, not many people actually played along on their laptop. Those
+who did got an extra bit of help to migrate their preexisting CVS/SVN
+repos ;-) (thanks to Sam Vilain for all the help!)
 
-iD8DBQFD2BfqHXt9dKjv3WERAq/hAKCoX5loHUI9VqVLbSLl41yvPOemEgCfXOoN
-FapnbqdRcvlK1MiEWbUxVqI=
-=bTyp
------END PGP SIGNATURE-----
+I'll upload the presentation material soon -- very similar to the
+stuff I used @ Wellington Perl Mongers. Still text-based; given all
+the talk about plumbing and porcelain, I steadfastly refuse to add
+imagery.
+
+During the presentation someone mentioned errors when running
+git-cvsimport which I'm keen on hearing more about.
+
+cheers,
+
+
+m
