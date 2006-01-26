@@ -1,92 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git describe fails without tags
-Date: Thu, 26 Jan 2006 01:02:44 -0800
-Message-ID: <7vr76vgy4r.fsf@assigned-by-dhcp.cox.net>
-References: <20060125074725.GA2768@informatik.uni-freiburg.de>
-	<7vek2wws61.fsf@assigned-by-dhcp.cox.net>
-	<20060126084151.GB2941@informatik.uni-freiburg.de>
+From: Erik Mouw <erik@harddisk-recovery.com>
+Subject: Safe way to remove .temp objects?
+Date: Thu, 26 Jan 2006 10:35:07 +0100
+Organization: Harddisk-recovery.com
+Message-ID: <20060126093507.GA5118@harddisk-recovery.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 26 10:02:58 2006
+X-From: git-owner@vger.kernel.org Thu Jan 26 10:35:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F231m-0004iQ-9S
-	for gcvg-git@gmane.org; Thu, 26 Jan 2006 10:02:51 +0100
+	id 1F23XB-00037e-MS
+	for gcvg-git@gmane.org; Thu, 26 Jan 2006 10:35:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932136AbWAZJCr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jan 2006 04:02:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932138AbWAZJCq
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jan 2006 04:02:46 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:18595 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932136AbWAZJCp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2006 04:02:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060126085958.JCLX17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 26 Jan 2006 03:59:58 -0500
-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932186AbWAZJfO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jan 2006 04:35:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932210AbWAZJfO
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jan 2006 04:35:14 -0500
+Received: from dtp.xs4all.nl ([80.126.206.180]:50057 "HELO abra2.bitwizard.nl")
+	by vger.kernel.org with SMTP id S932186AbWAZJfM (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Jan 2006 04:35:12 -0500
+Received: (qmail 11677 invoked by uid 501); 26 Jan 2006 10:35:08 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15155>
 
-Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de> writes:
+Hi,
 
-> I see two things to fix in that patch:
->
->  1) define DEFAULT_ABBREV (e.g. by moving it to cache.h, where
->     find_unique_abbrev is defined.)
+After a git repack, git count-objects reports there are still 20
+objects in the repository. It looks like those are temp objects:
 
-Sorry, the patch alone was not compilable since cleaning up the
-definition of symbolic constants *_ABBREV comes before the patch
-you quoted in the "pu" branch.
+  erik@arthur:~/git/linux-2.6 > ls .git/objects/??/
+  .git/objects/14/:
+  d6545767f5103b5ef4702bc8fffa18dbe32ce1.temp
 
->  2) describe.c allows only abbrev >= 4.  (Allowing values less than 2
->     failes, because find_short_object_filename (and maybe others) assume
->     len to be at least 2.)  I think 4 is sensible.
+  .git/objects/1a/:
+  d37b580be4215f1b0927b7560f5e8b8d1bc0fa.temp
 
-Thanks.  "rev-parse --abbrev=2" would have segfaulted without
-your fix.  I suspect substituting with MINIMUM instead of
-DEFAULT in such a case would be more sensible, so...
+  [...]
 
--- >8 --
-[PATCH] rev-parse --abbrev: do not try abbrev shorter than minimum.
+Is there a git command to remove those objects in a safe way, or can I
+just rm them without "harming" git??
 
-We do not allow abbreviation shorter than 4 letters in other
-parts of the system so do not attempt to generate such.
 
-Noticed by Uwe Zeisberger.
+Erik
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- rev-parse.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
-
-030d25d271adb2671f560b410d77585d8744acbf
-diff --git a/rev-parse.c b/rev-parse.c
-index 42969a6..8bf316e 100644
---- a/rev-parse.c
-+++ b/rev-parse.c
-@@ -206,8 +206,10 @@ int main(int argc, char **argv)
- 				abbrev = DEFAULT_ABBREV;
- 				if (arg[8] == '=')
- 					abbrev = strtoul(arg + 9, NULL, 10);
--				if (abbrev < 0 || 40 <= abbrev)
--					abbrev = DEFAULT_ABBREV;
-+				if (abbrev < MINIMUM_ABBREV)
-+					abbrev = MINIMUM_ABBREV;
-+				else if (40 <= abbrev)
-+					abbrev = 40;
- 				continue;
- 			}
- 			if (!strcmp(arg, "--sq")) {
 -- 
-1.1.4.g00a4
++-- Erik Mouw -- www.harddisk-recovery.com -- +31 70 370 12 90 --
+| Lab address: Delftechpark 26, 2628 XH, Delft, The Netherlands
+| Data lost? Stay calm and contact Harddisk-recovery.com
