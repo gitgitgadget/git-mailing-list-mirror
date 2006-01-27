@@ -1,89 +1,93 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Refs naming after clone (was: Re: How to create and keep up to date a naked/bare repository?)
-Date: Fri, 27 Jan 2006 11:30:50 +0100
-Message-ID: <200601271130.50322.Josef.Weidendorfer@gmx.de>
-References: <7v1wyvn9pc.fsf@assigned-by-dhcp.cox.net> <m34q3q9759.fsf@localhost.localdomain> <7vd5ie735a.fsf@assigned-by-dhcp.cox.net>
+From: Mathieu Chouquet-Stringer <ml2news@free.fr>
+Subject: Re: How to create and keep up to date a naked/bare repository?
+Date: 27 Jan 2006 14:34:28 +0100
+Organization: Uh?
+Message-ID: <m34q3p7q1n.fsf@localhost.localdomain>
+References: <7v1wyvn9pc.fsf@assigned-by-dhcp.cox.net>
+	<7vd5ie735a.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 27 11:31:44 2006
+X-From: git-owner@vger.kernel.org Fri Jan 27 14:35:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F2QtG-0004ru-IU
-	for gcvg-git@gmane.org; Fri, 27 Jan 2006 11:31:38 +0100
+	id 1F2Tks-0005hm-Fg
+	for gcvg-git@gmane.org; Fri, 27 Jan 2006 14:35:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030292AbWA0Ka6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jan 2006 05:30:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030289AbWA0Ka6
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jan 2006 05:30:58 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:19353 "EHLO
-	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S1030292AbWA0Ka5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jan 2006 05:30:57 -0500
-Received: from dhcp-3s-57.lrr.in.tum.de (dhcp-3s-57.lrr.in.tum.de [131.159.35.57])
-	by mail.in.tum.de (Postfix) with ESMTP id 536AF2162;
-	Fri, 27 Jan 2006 11:30:52 +0100 (MET)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9
+	id S1750890AbWA0NfH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 27 Jan 2006 08:35:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbWA0NfH
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jan 2006 08:35:07 -0500
+Received: from AMarseille-252-1-15-107.w83-197.abo.wanadoo.fr ([83.197.214.107]:37089
+	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
+	id S1750890AbWA0NfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jan 2006 08:35:06 -0500
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.5/8.13.5) with ESMTP id k0RDYWUj018365;
+	Fri, 27 Jan 2006 14:34:32 +0100
+Received: (from mchouque@localhost)
+	by localhost.localdomain (8.13.5/8.13.5/Submit) id k0RDYSZP018362;
+	Fri, 27 Jan 2006 14:34:28 +0100
+X-Authentication-Warning: localhost.localdomain: mchouque set sender to ml2news@free.fr using -f
+To: junkio@cox.net (Junio C Hamano)
+X-Face: %JOeya=Dg!}[/#Go&*&cQ+)){p1c8}u\Fg2Q3&)kothIq|JnWoVzJtCFo~4X<uJ\9cHK'.w 3:{EoxBR
 In-Reply-To: <7vd5ie735a.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15181>
 
-Hi,
+Thanks and sorry for making you write this long message...
 
-On Friday 27 January 2006 04:36, Junio wrote:
-> The latest git-clone.sh stopped creating both refs/heads/origin
-> and remotes/origin.  The former was to prevent common mistake
-> when using it as a shared repository, but removal of the latter
-> might have been a mistake.  I dunno.
+junkio@cox.net (Junio C Hamano) writes:
+> [...]
+>  - A mirror of somebody else's work.
+>=20
+>    I suspect this is what you are doing.  Instead of individual
+>    developers pulling directly from upstream, you would want to
+>    fetch and update the bare cloned repository and have your
+>    developers fetch from it.
 
-IMHO it is convenient if git-clone remembers the origin repository
-in any case.
- 
-> Let's step back a bit and think about the modes of usage for a
-> bare cloned repository.
+Correct.
+=20
+> Let's outline how.
+>=20
+> What I would suggest is to arrange things like this:
+>=20
+>    +-------------------------------------------+
+>    | Your upstream repository                  |
+>    | git://git.kernel.org/pub/scm/git/git.git/ |
+>    +-------------------------------------------+=20
+>       |                                      ^
+>       | (1)                                  | (5)
+>       |                                      |
+>       v                                      |
+>    +-----------------+                     +----------------+
+>    | Your central    |        (4)          | My development |
+>    | bare repository |-------------------->| tree           |
+>    +-----------------+                     +----------------+
+>       |      ^
+>       | (2)  | (3)
+>       |      |
+>       v      |
+>    +------------------+
+>    | Your developers' |+
+>    | trees            ||+
+>    +------------------+||
+>      +-----------------+|
+>       +-----------------+
+> [...]
+> Does this make sense now?
 
-It would be nice to have a default which is working nice in all cases
-(not only bare ones as discussed here).
+It totally does. I guess this email could end up in the Documentation
+folder in some way!?
 
-IMHO the main problem with the current default (creating master and origin
-heads after cloning) is that two namespaces are mixed up:
-(1) local (possible development) heads
-(2) and heads tracking remote heads
-
-Any compatibility issues aside, wouldn't it be better to have another
-namespace for (2), similar to the proposed ref namespaces for subprojects,
-like refs/remote/<remote-shortcut>/heads/<remote-head> ?
-Clone would create a head refs/remote/origin/heads/master to track the
-master of the origin remote repo.
-
-In the case of a the mirror discussed here, you would default to
-quite cumbersome long head names:
-Tracking master of git://git.kernel.org/pub/scm/git/git.git in
-the central mirroring repository would be done on "remote/origin/heads/master",
-and tracking this mirror head in developer repos would give a head
-name "remote/origin/remote/origin/heads/master".
-
-Still, I think this is nice because everybody can see that above head
-is tracking a remote head which is tracking itself another remote
-head. gitk could give remote tracking heads another color.
-
-Note that I talk only about the default setup, which of course can be
-changed by changing .git/remotes/origin.
-Eg. in the mirror case, you probably want local and remote namespace
-being the same, ie. .git/refs/heads/* -> .git/refs/remote/origin/heads/*
-
-Perhaps a command to rename head names, which automatically updates
-pull/push lines of .git/remotes/ accordingly would be nice here.
-Also a command to rename remote shortcuts (e.g. origin to gitmain),
-renaming above proposed head names accordingly would be nice.
-
-Josef
+--=20
+Mathieu Chouquet-Stringer
+    "Le disparu, si l'on v=E9n=E8re sa m=E9moire, est plus pr=E9sent et
+                 plus puissant que le vivant".
+           -- Antoine de Saint-Exup=E9ry, Citadelle --
