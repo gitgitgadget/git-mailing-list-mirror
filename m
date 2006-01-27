@@ -1,50 +1,72 @@
-From: Aneesh Kumar <aneesh.kumar@gmail.com>
-Subject: git rev-list
-Date: Fri, 27 Jan 2006 09:16:58 +0530
-Message-ID: <cc723f590601261946h101d7000oa1990c31c5b642fc@mail.gmail.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Treat "stg --help cmd" and "stg help cmd" like "stg cmd
+	--help"
+Date: Fri, 27 Jan 2006 00:17:28 -0500
+Message-ID: <1138339048.1801.3.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Fri Jan 27 04:47:06 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Jan 27 06:17:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F2KZl-0003Q4-Ap
-	for gcvg-git@gmane.org; Fri, 27 Jan 2006 04:47:05 +0100
+	id 1F2LzR-0000Oc-OD
+	for gcvg-git@gmane.org; Fri, 27 Jan 2006 06:17:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030286AbWA0DrB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jan 2006 22:47:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030287AbWA0DrB
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jan 2006 22:47:01 -0500
-Received: from uproxy.gmail.com ([66.249.92.195]:32537 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1030286AbWA0DrA convert rfc822-to-8bit
+	id S932418AbWA0FRe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jan 2006 00:17:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932407AbWA0FRe
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jan 2006 00:17:34 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:32431 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932418AbWA0FRe
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2006 22:47:00 -0500
-Received: by uproxy.gmail.com with SMTP id s2so96905uge
-        for <git@vger.kernel.org>; Thu, 26 Jan 2006 19:46:58 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=kz4DbOJrTvsGFd9VMTBC+bfLQXzZdNKd++qxY3z2r8411mxU8bCbGQVhDeC3GwQ7L3xdOuGbkdJEFFs2OynQiPHofxZPNNaEsvBSyFLFIQL4yiudj769wpK3mZWuQ4/JEfmSoiPwsPDfiLH0UdyK6f+dQLGM+8QPiEodI/Gnh4k=
-Received: by 10.66.250.9 with SMTP id x9mr135926ugh;
-        Thu, 26 Jan 2006 19:46:58 -0800 (PST)
-Received: by 10.66.254.16 with HTTP; Thu, 26 Jan 2006 19:46:58 -0800 (PST)
-To: junkio@cox.net, git@vger.kernel.org
-Content-Disposition: inline
+	Fri, 27 Jan 2006 00:17:34 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1F2Lyu-0002c9-CR
+	for git@vger.kernel.org; Fri, 27 Jan 2006 00:17:08 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1F2LzE-0000ak-MF; Fri, 27 Jan 2006 00:17:28 -0500
+To: git <git@vger.kernel.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+X-Mailer: Evolution 2.5.4 (2.5.4-10) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15176>
 
-I am right now making a gnome based git repository browser [1] . I use
-git-rev-list to get the revision list. What i found is  that from the
-second commit on wards i am finding some control character at the
-beginning of the first line with respect to each commit. You can
-reproduce it easily by redirecting the output to a file and reading
-the file using vi. I am using the latest git built from git repository
+User's intention is perfectly clear if "-h", "--help" or "help" is
+followed by a valid command - show help for that command.
 
-[1] http://www.flickr.com/photos/17388011@N00/91636482/
-This is based on bzrk GUI frontend to bazaar and written in python
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+---
 
--aneesh
+ stgit/main.py |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/stgit/main.py b/stgit/main.py
+index 2336a43..6d86ee4 100644
+--- a/stgit/main.py
++++ b/stgit/main.py
+@@ -125,8 +125,12 @@ def main():
+     cmd = sys.argv[1]
+ 
+     if cmd in ['-h', '--help', 'help']:
+-        print_help()
+-        sys.exit(0)
++        if len(sys.argv) == 3 and sys.argv[2] in commands:
++            cmd = sys.argv[2]
++            sys.argv[2] = '--help';
++        else:
++            print_help()
++            sys.exit(0)
+     if cmd in ['-v', '--version', 'version']:
+         print 'Stacked GIT %s' % version
+         os.system('git --version')
+
+
+
+-- 
+Regards,
+Pavel Roskin
