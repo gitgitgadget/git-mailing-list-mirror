@@ -1,93 +1,78 @@
-From: Mathieu Chouquet-Stringer <ml2news@free.fr>
-Subject: Re: How to create and keep up to date a naked/bare repository?
-Date: 27 Jan 2006 14:34:28 +0100
-Organization: Uh?
-Message-ID: <m34q3p7q1n.fsf@localhost.localdomain>
-References: <7v1wyvn9pc.fsf@assigned-by-dhcp.cox.net>
-	<7vd5ie735a.fsf@assigned-by-dhcp.cox.net>
+From: Romano Giannetti <romano@dea.icai.upcomillas.es>
+Subject: Two newbie question: "dead" branches and merging after cherry-pick.
+Date: Fri, 27 Jan 2006 18:36:19 +0100
+Message-ID: <20060127173619.GA26199@pern.dea.icai.upcomillas.es>
+Reply-To: Romano Giannetti <romano@dea.icai.upcomillas.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 27 14:35:11 2006
+Content-Type: text/plain; charset=iso-8859-15
+X-From: git-owner@vger.kernel.org Fri Jan 27 18:35:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F2Tks-0005hm-Fg
-	for gcvg-git@gmane.org; Fri, 27 Jan 2006 14:35:10 +0100
+	id 1F2XVj-00080k-5c
+	for gcvg-git@gmane.org; Fri, 27 Jan 2006 18:35:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750890AbWA0NfH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 27 Jan 2006 08:35:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbWA0NfH
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jan 2006 08:35:07 -0500
-Received: from AMarseille-252-1-15-107.w83-197.abo.wanadoo.fr ([83.197.214.107]:37089
-	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
-	id S1750890AbWA0NfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jan 2006 08:35:06 -0500
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.5/8.13.5) with ESMTP id k0RDYWUj018365;
-	Fri, 27 Jan 2006 14:34:32 +0100
-Received: (from mchouque@localhost)
-	by localhost.localdomain (8.13.5/8.13.5/Submit) id k0RDYSZP018362;
-	Fri, 27 Jan 2006 14:34:28 +0100
-X-Authentication-Warning: localhost.localdomain: mchouque set sender to ml2news@free.fr using -f
-To: junkio@cox.net (Junio C Hamano)
-X-Face: %JOeya=Dg!}[/#Go&*&cQ+)){p1c8}u\Fg2Q3&)kothIq|JnWoVzJtCFo~4X<uJ\9cHK'.w 3:{EoxBR
-In-Reply-To: <7vd5ie735a.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1750823AbWA0Rfo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jan 2006 12:35:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbWA0Rfo
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jan 2006 12:35:44 -0500
+Received: from mail1.upco.es ([130.206.70.227]:65429 "EHLO mail1.upco.es")
+	by vger.kernel.org with ESMTP id S1750823AbWA0Rfo (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Jan 2006 12:35:44 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail1.upco.es (Postfix) with ESMTP id 903541131E5
+	for <git@vger.kernel.org>; Fri, 27 Jan 2006 18:35:40 +0100 (CET)
+Received: from mail1.upco.es ([127.0.0.1])
+	by localhost (mail1 [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+	id 25292-09 for <git@vger.kernel.org>;
+	Fri, 27 Jan 2006 18:35:39 +0100 (CET)
+Received: from pern.dea.icai.upcomillas.es (pern.dea.icai.upco.es [130.206.71.186])
+	by mail1.upco.es (Postfix) with ESMTP id 7F3B51131C8
+	for <git@vger.kernel.org>; Fri, 27 Jan 2006 18:35:39 +0100 (CET)
+Received: by pern.dea.icai.upcomillas.es (Postfix, from userid 1153)
+	id 54AF2102DB; Fri, 27 Jan 2006 18:36:19 +0100 (CET)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: by amavisd-new-20030616-p7 (Debian) at upco.es
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15182>
 
-Thanks and sorry for making you write this long message...
 
-junkio@cox.net (Junio C Hamano) writes:
-> [...]
->  - A mirror of somebody else's work.
->=20
->    I suspect this is what you are doing.  Instead of individual
->    developers pulling directly from upstream, you would want to
->    fetch and update the bare cloned repository and have your
->    developers fetch from it.
+Hi,
 
-Correct.
-=20
-> Let's outline how.
->=20
-> What I would suggest is to arrange things like this:
->=20
->    +-------------------------------------------+
->    | Your upstream repository                  |
->    | git://git.kernel.org/pub/scm/git/git.git/ |
->    +-------------------------------------------+=20
->       |                                      ^
->       | (1)                                  | (5)
->       |                                      |
->       v                                      |
->    +-----------------+                     +----------------+
->    | Your central    |        (4)          | My development |
->    | bare repository |-------------------->| tree           |
->    +-----------------+                     +----------------+
->       |      ^
->       | (2)  | (3)
->       |      |
->       v      |
->    +------------------+
->    | Your developers' |+
->    | trees            ||+
->    +------------------+||
->      +-----------------+|
->       +-----------------+
-> [...]
-> Does this make sense now?
+   this is a "really-newbie-question"...  git is the first SCM that I try to
+   use, and I am really fascinated with it. I develop my software on three
+   different PC and git solves all my problems of keeping uptodate with
+   myself in a really nice way. 
 
-It totally does. I guess this email could end up in the Documentation
-folder in some way!?
+   I have a couple of doubts that probably are at the very silly level but... 
+   Here I go: 
 
---=20
-Mathieu Chouquet-Stringer
-    "Le disparu, si l'on v=E9n=E8re sa m=E9moire, est plus pr=E9sent et
-                 plus puissant que le vivant".
-           -- Antoine de Saint-Exup=E9ry, Citadelle --
+        - I use to work on a topic branch to make test, try solutions for
+        bugs, etc. Say I am done with the branch "test-bill-idea". I decide
+        it's a dead branch, so that I do not want to see it in day-by-day
+        work (git branch, basically), but I do not want to loose it. If I
+        delete the branch I will loose all its commit at the next prune,
+        correct? There is a way to maintain it as a dead or hidden branch,
+        shown for example just by gitk --all? If I tag the tip of the
+        branch, and then delete .git/refs/head/test-bill-idea, will the
+        "dead branch commits" be preserved by next prune(s)? 
+
+        - Easier: suppose I cheery-picked "abababab" from branch "testing"
+        to master branch. What will happen if later I decide to merge
+        all "testing" to master branch? I will have a merge conflict (trying
+        to apply two times the same fix) or not? 
+
+   Thank you very much for your time! Have a nice week end,
+
+         Romano   
+
+   
+-- 
+Romano Giannetti             -  Univ. Pontificia Comillas (Madrid, Spain)
+Electronic Engineer - phone +34 915 422 800 ext 2416  fax +34 915 596 569
+http://www.dea.icai.upcomillas.es/romano/
