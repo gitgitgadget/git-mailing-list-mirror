@@ -1,119 +1,87 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] rev-{list,parse}: optionally allow -<n> as shorthand for --max-count=<n>
-Date: Sun, 29 Jan 2006 05:47:20 -0800
-Message-ID: <20060129134720.GB3428@Muzzle>
-References: <20060124072946.GA9468@Muzzle> <7vd5iicauh.fsf@assigned-by-dhcp.cox.net> <20060125063325.GA7953@mail.yhbt.net> <20060129134056.GA3428@Muzzle>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH] git-branch: Documentation fixes
+Date: Sun, 29 Jan 2006 15:02:51 +0100
+Message-ID: <20060129140251.GD4815@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 29 14:47:29 2006
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Sun Jan 29 15:03:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3Cts-0005gI-Mj
-	for gcvg-git@gmane.org; Sun, 29 Jan 2006 14:47:29 +0100
+	id 1F3D8y-0008Ta-29
+	for gcvg-git@gmane.org; Sun, 29 Jan 2006 15:03:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750996AbWA2NrW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jan 2006 08:47:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750997AbWA2NrW
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 08:47:22 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:15315 "EHLO mail.yhbt.net")
-	by vger.kernel.org with ESMTP id S1750975AbWA2NrW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 08:47:22 -0500
-Received: from mayonaise.dyndns.org (user-118bgak.cable.mindspring.com [66.133.193.84])
-	by mail.yhbt.net (Postfix) with SMTP id 53AB12DC033;
-	Sun, 29 Jan 2006 05:47:20 -0800 (PST)
-Received: by mayonaise.dyndns.org (sSMTP sendmail emulation); Sun, 29 Jan 2006 05:47:20 -0800
-To: Junio C Hamano <junkio@cox.net>
+	id S1750778AbWA2OCw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jan 2006 09:02:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750896AbWA2OCw
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 09:02:52 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:60061 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1750778AbWA2OCw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 09:02:52 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id E784740FF; Sun, 29 Jan 2006 15:16:06 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1F3D8l-0008BA-00; Sun, 29 Jan 2006 15:02:51 +0100
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20060129134056.GA3428@Muzzle>
-User-Agent: Mutt/1.5.11
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15219>
 
-I also made this for my own private use, it's on top of the previous
-one I made that is POSIX-friendly.  I don't if you or anyone wants
-it merged mainline, but I like it :)
+Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
-This will only be enabled if POSIX_SHMOSIX is defined at compile-time.
-
-Some versions of head(1) and tail(1) allow their line limits to be
-parsed this way.  I find --max-count to be a commonly used option,
-and also similar in spirit to head/tail, so I decided to make life
-easier on my worn out (and lazy :) fingers with this patch.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
 ---
 
- Makefile          |    3 +++
- git-compat-util.h |    3 +++
- rev-list.c        |    7 ++++++-
- rev-parse.c       |    4 ++++
- 4 files changed, 16 insertions(+), 1 deletions(-)
+ Documentation/git-branch.txt |    7 +++++--
+ git-branch.sh                |    2 +-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-3b650b00deb7e51e5c9a8bdc4cc1eaaf4fc65029
-diff --git a/Makefile b/Makefile
-index 2e95353..9ef97ca 100644
---- a/Makefile
-+++ b/Makefile
-@@ -367,6 +367,9 @@ endif
- ifdef NO_IPV6
- 	ALL_CFLAGS += -DNO_IPV6
- endif
-+ifdef POSIX_SHMOSIX
-+	ALL_CFLAGS += -DPOSIX_SHMOSIX=1
-+endif
- ifdef NO_SOCKADDR_STORAGE
- ifdef NO_IPV6
- 	ALL_CFLAGS += -Dsockaddr_storage=sockaddr_in
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f982b8e..46d331d 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -154,4 +154,7 @@ static inline int sane_case(int x, int h
- #ifndef MAXPATHLEN
- #define MAXPATHLEN 256
- #endif
-+#ifndef POSIX_SHMOSIX 
-+#define POSIX_SHMOSIX 0
-+#endif
- #endif
-diff --git a/rev-list.c b/rev-list.c
-index 33541cc..c85de51 100644
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -731,7 +731,12 @@ int main(int argc, const char **argv)
- 		char *dotdot;
- 		struct commit *commit;
- 		unsigned char sha1[20];
--
-+		
-+		/* accept, -<digit>, like some versions of head/tail  */
-+		if (POSIX_SHMOSIX && (*arg == '-') && isdigit(arg[1])) {
-+			max_count = atoi(arg + 1);
-+			continue;
-+		}
- 		if (!strcmp(arg, "-n")) {
- 			if (++i >= argc)
- 				die("-n requires an argument");
-diff --git a/rev-parse.c b/rev-parse.c
-index 3790463..d9b3fa9 100644
---- a/rev-parse.c
-+++ b/rev-parse.c
-@@ -53,6 +53,10 @@ static int is_rev_argument(const char *a
- 	};
- 	const char **p = rev_args;
+fb625f143454671bfa6862ee83fbe9cdbac9af0b
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index d20b475..b1bc827 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -7,7 +7,7 @@ git-branch - Create a new branch, or rem
  
-+	/* accept, -<digit>, like some versions of head/tail  */
-+	if (POSIX_SHMOSIX && (*arg == '-') && isdigit(arg[1]))
-+		return 1;
+ SYNOPSIS
+ --------
+-'git-branch' [-d | -D] [<branchname> [start-point]]
++'git-branch' [(-d | -D) <branchname>] | [[-f] <branchname> [<start-point>]]
+ 
+ DESCRIPTION
+ -----------
+@@ -25,10 +25,13 @@ OPTIONS
+ -D::
+ 	Delete a branch irrespective of its index status.
+ 
++-f::
++	Force a reset of <branchname> to <start-point> (or current head).
 +
- 	for (;;) {
- 		const char *str = *p++;
- 		int len;
+ <branchname>::
+ 	The name of the branch to create or delete.
+ 
+-start-point::
++<start-point>::
+ 	Where to create the branch; defaults to HEAD. This
+ 	option has no meaning with -d and -D.
+ 
+diff --git a/git-branch.sh b/git-branch.sh
+index b0e54ed..6ac961e 100755
+--- a/git-branch.sh
++++ b/git-branch.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-USAGE='[-d <branch>] | [[-f] <branch> [start-point]]'
++USAGE='[(-d | -D) <branchname>] | [[-f] <branchname> [<start-point>]]'
+ LONG_USAGE='If no arguments, show available branches and mark current branch with a star.
+ If one argument, create a new branch <branchname> based off of current HEAD.
+ If two arguments, create a new branch <branchname> based off of <start-point>.'
 -- 
-1.1.4.g3b65
+0.99.9k.g3480-dirty
