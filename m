@@ -1,72 +1,98 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [Census] So who uses git?
-Date: Mon, 30 Jan 2006 09:29:53 +1300
-Message-ID: <46a038f90601291229u3d357b7ci98109656e432e891@mail.gmail.com>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
-	 <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
-	 <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
-	 <1138446030.9919.112.camel@evo.keithp.com>
-	 <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
-	 <20060129183731.GE19685@redhat.com>
-	 <Pine.LNX.4.64.0601291438251.25300@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git commit error on initial (the very first) commit
+Date: Sun, 29 Jan 2006 13:05:28 -0800
+Message-ID: <7v8xsyiw2v.fsf@assigned-by-dhcp.cox.net>
+References: <200601292026.54893.arvidjaar@mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Dave Jones <davej@redhat.com>, Junio C Hamano <junkio@cox.net>,
-	Keith Packard <keithp@keithp.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 29 21:30:12 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 29 22:05:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3JBQ-0003Ih-GI
-	for gcvg-git@gmane.org; Sun, 29 Jan 2006 21:30:02 +0100
+	id 1F3Jjv-0003jV-LP
+	for gcvg-git@gmane.org; Sun, 29 Jan 2006 22:05:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751168AbWA2U36 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jan 2006 15:29:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbWA2U35
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 15:29:57 -0500
-Received: from wproxy.gmail.com ([64.233.184.202]:29889 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751168AbWA2U35 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jan 2006 15:29:57 -0500
-Received: by wproxy.gmail.com with SMTP id 57so931044wri
-        for <git@vger.kernel.org>; Sun, 29 Jan 2006 12:29:54 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Tr0lox2JpLAsF4NyPVRz3ztrSw9VykQ00Iq6T11SP9oX0MGENwKN15YAA/Eu760W5zfcpDzV4nPzD0QElMCDiHdRiDCtglOAx3pCRyo/1xzths7wJxh/EhCBXXcQ1K8wsI2lcQiMUcGSCU/r655NmhucGEYqDXXMQk94iwNjQEg=
-Received: by 10.54.127.3 with SMTP id z3mr6862570wrc;
-        Sun, 29 Jan 2006 12:29:53 -0800 (PST)
-Received: by 10.54.70.12 with HTTP; Sun, 29 Jan 2006 12:29:53 -0800 (PST)
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0601291438251.25300@iabervon.org>
-Content-Disposition: inline
+	id S1751085AbWA2VFa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jan 2006 16:05:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751083AbWA2VFa
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 16:05:30 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:56561 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751085AbWA2VF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jan 2006 16:05:29 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060129210251.PBPF17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 29 Jan 2006 16:02:51 -0500
+To: Andrey Borzenkov <arvidjaar@mail.ru>
+In-Reply-To: <200601292026.54893.arvidjaar@mail.ru> (Andrey Borzenkov's
+	message of "Sun, 29 Jan 2006 20:26:54 +0300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15244>
 
-On 1/30/06, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> > There's also another git usage that I doubt I'm alone in doing.
-> > I regularly use git to import cvs trees from sourceforge etc for
-> > random projects, because I now find browsing history of projects
-> > with tools like gitk much nicer than any cvs tool I've used.
-> > (cvs annotate is the only thing I really miss).
+Andrey Borzenkov <arvidjaar@mail.ru> writes:
+
+> May be I do something wrong? What is correct procedure to initially import 
+> tree? git 1.1.4
 >
-> I think this is the real driving factor for git adoption: it doesn't have
-> to be 10x better for people to use it, because individuals can use it for
-> interacting with CVS projects without causing anybody else any pain.
+> {pts/0}% git init-db
+> defaulting to local storage area
+> {pts/0}% git add .
+> {pts/0}% git commit -m 'initial import'
+> usage: git-diff-index [-m] [--cached] [<common diff options>] <tree-ish> 
+> [<path>...]
+> common diff options:
+> ... etc
 
-IMHO, this is a killer feature of GIT. From a CVS/SVN user point of
-view, it has vendor branches done right. At work, we do that with
-Moodle, Elgg, EPrints and GForge. And the list is growing. That's why
-I'm working on the toolchain to make interop with CVS smooth so I can
-land patches in  upstream projects where I have cvs access.
+I suspect you have $(template_dir)/hooks/pre-commit enabled.
 
-cheers,
+-- >8 --
+[PATCH] pre-commit sample hook: do not barf on the initial import
 
+The example hook barfs on the initial import.  Ideally it should
+produce a diff from an empty tree, but for now let's stop at
+squelching the bogus error message.  Often an initial import
+involves tons of badly formatted files from foreign SCM, so not
+complaining about them like this patch does might actually be a
+better idea than enforcing the "Perfect Patch" format on them.
 
-m
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-commit
+index 4bb6803..6b3a21b 100644
+--- a/templates/hooks--pre-commit
++++ b/templates/hooks--pre-commit
+@@ -10,8 +10,16 @@
+ # This is slightly modified from Andrew Morton's Perfect Patch.
+ # Lines you introduce should not have trailing whitespace.
+ # Also check for an indentation that has SP before a TAB.
++
++if git-rev-parse --verify HEAD 2>/dev/null
++then
++	git-diff-index -p -M --cached HEAD
++else
++	# NEEDSWORK: we should produce a diff with an empty tree here
++	# if we want to do the same verification for the initial import.
++	:
++fi |		
+ perl -e '
+-    my $fh;
+     my $found_bad = 0;
+     my $filename;
+     my $reported_filename = "";
+@@ -31,8 +39,7 @@ perl -e '
+ 	print STDERR "* $why (line $lineno)\n";
+ 	print STDERR "$filename:$lineno:$line\n";
+     }
+-    open $fh, "-|", qw(git-diff-index -p -M --cached HEAD);
+-    while (<$fh>) {
++    while (<>) {
+ 	if (m|^diff --git a/(.*) b/\1$|) {
+ 	    $filename = $1;
+ 	    next;
