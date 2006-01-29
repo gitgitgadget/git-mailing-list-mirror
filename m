@@ -1,111 +1,119 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] rev-{list,parse}: allow -n<n> as shorthand for --max-count=<n>
-Date: Sun, 29 Jan 2006 05:40:56 -0800
-Message-ID: <20060129134056.GA3428@Muzzle>
-References: <20060124072946.GA9468@Muzzle> <7vd5iicauh.fsf@assigned-by-dhcp.cox.net> <20060125063325.GA7953@mail.yhbt.net>
+Subject: [PATCH] rev-{list,parse}: optionally allow -<n> as shorthand for --max-count=<n>
+Date: Sun, 29 Jan 2006 05:47:20 -0800
+Message-ID: <20060129134720.GB3428@Muzzle>
+References: <20060124072946.GA9468@Muzzle> <7vd5iicauh.fsf@assigned-by-dhcp.cox.net> <20060125063325.GA7953@mail.yhbt.net> <20060129134056.GA3428@Muzzle>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 29 14:41:08 2006
+X-From: git-owner@vger.kernel.org Sun Jan 29 14:47:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3Cnd-0004YF-FC
-	for gcvg-git@gmane.org; Sun, 29 Jan 2006 14:41:02 +0100
+	id 1F3Cts-0005gI-Mj
+	for gcvg-git@gmane.org; Sun, 29 Jan 2006 14:47:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbWA2Nk7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jan 2006 08:40:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbWA2Nk6
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 08:40:58 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:14803 "EHLO mail.yhbt.net")
-	by vger.kernel.org with ESMTP id S1750994AbWA2Nk6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 08:40:58 -0500
+	id S1750996AbWA2NrW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jan 2006 08:47:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750997AbWA2NrW
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 08:47:22 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:15315 "EHLO mail.yhbt.net")
+	by vger.kernel.org with ESMTP id S1750975AbWA2NrW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 08:47:22 -0500
 Received: from mayonaise.dyndns.org (user-118bgak.cable.mindspring.com [66.133.193.84])
-	by mail.yhbt.net (Postfix) with SMTP id 7962B2DC033;
-	Sun, 29 Jan 2006 05:40:56 -0800 (PST)
-Received: by mayonaise.dyndns.org (sSMTP sendmail emulation); Sun, 29 Jan 2006 05:40:56 -0800
+	by mail.yhbt.net (Postfix) with SMTP id 53AB12DC033;
+	Sun, 29 Jan 2006 05:47:20 -0800 (PST)
+Received: by mayonaise.dyndns.org (sSMTP sendmail emulation); Sun, 29 Jan 2006 05:47:20 -0800
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <20060125063325.GA7953@mail.yhbt.net>
+In-Reply-To: <20060129134056.GA3428@Muzzle>
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15218>
 
-Both -n<n> and -n <n> are supported.  POSIX versions of head(1) and
-tail(1) allow their line limits to be parsed this way.  I find
---max-count to be a commonly used option, and also similar in spirit to
-head/tail, so I decided to make life easier on my worn out (and lazy :)
-fingers with this patch.
+I also made this for my own private use, it's on top of the previous
+one I made that is POSIX-friendly.  I don't if you or anyone wants
+it merged mainline, but I like it :)
+
+This will only be enabled if POSIX_SHMOSIX is defined at compile-time.
+
+Some versions of head(1) and tail(1) allow their line limits to be
+parsed this way.  I find --max-count to be a commonly used option,
+and also similar in spirit to head/tail, so I decided to make life
+easier on my worn out (and lazy :) fingers with this patch.
 
 Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
 ---
 
- rev-list.c  |   10 ++++++++++
- rev-parse.c |   19 +++++++++++++++++++
- 2 files changed, 29 insertions(+), 0 deletions(-)
+ Makefile          |    3 +++
+ git-compat-util.h |    3 +++
+ rev-list.c        |    7 ++++++-
+ rev-parse.c       |    4 ++++
+ 4 files changed, 16 insertions(+), 1 deletions(-)
 
-a598ce380cfcf01b27be92bca92a3c451d3b41e3
+3b650b00deb7e51e5c9a8bdc4cc1eaaf4fc65029
+diff --git a/Makefile b/Makefile
+index 2e95353..9ef97ca 100644
+--- a/Makefile
++++ b/Makefile
+@@ -367,6 +367,9 @@ endif
+ ifdef NO_IPV6
+ 	ALL_CFLAGS += -DNO_IPV6
+ endif
++ifdef POSIX_SHMOSIX
++	ALL_CFLAGS += -DPOSIX_SHMOSIX=1
++endif
+ ifdef NO_SOCKADDR_STORAGE
+ ifdef NO_IPV6
+ 	ALL_CFLAGS += -Dsockaddr_storage=sockaddr_in
+diff --git a/git-compat-util.h b/git-compat-util.h
+index f982b8e..46d331d 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -154,4 +154,7 @@ static inline int sane_case(int x, int h
+ #ifndef MAXPATHLEN
+ #define MAXPATHLEN 256
+ #endif
++#ifndef POSIX_SHMOSIX 
++#define POSIX_SHMOSIX 0
++#endif
+ #endif
 diff --git a/rev-list.c b/rev-list.c
-index e00e6fc..33541cc 100644
+index 33541cc..c85de51 100644
 --- a/rev-list.c
 +++ b/rev-list.c
-@@ -732,6 +732,16 @@ int main(int argc, const char **argv)
+@@ -731,7 +731,12 @@ int main(int argc, const char **argv)
+ 		char *dotdot;
  		struct commit *commit;
  		unsigned char sha1[20];
- 
-+		if (!strcmp(arg, "-n")) {
-+			if (++i >= argc)
-+				die("-n requires an argument");
-+			max_count = atoi(argv[i]);
+-
++		
++		/* accept, -<digit>, like some versions of head/tail  */
++		if (POSIX_SHMOSIX && (*arg == '-') && isdigit(arg[1])) {
++			max_count = atoi(arg + 1);
 +			continue;
 +		}
-+		if (!strncmp(arg,"-n",2)) {
-+			max_count = atoi(arg + 2);
-+			continue;
-+		}
- 		if (!strncmp(arg, "--max-count=", 12)) {
- 			max_count = atoi(arg + 12);
- 			continue;
+ 		if (!strcmp(arg, "-n")) {
+ 			if (++i >= argc)
+ 				die("-n requires an argument");
 diff --git a/rev-parse.c b/rev-parse.c
-index 7abad35..3790463 100644
+index 3790463..d9b3fa9 100644
 --- a/rev-parse.c
 +++ b/rev-parse.c
-@@ -21,6 +21,7 @@ static char *def = NULL;
- static int show_type = NORMAL;
- static int symbolic = 0;
- static int output_sq = 0;
-+static int next_arg_is_rev = 0;
+@@ -53,6 +53,10 @@ static int is_rev_argument(const char *a
+ 	};
+ 	const char **p = rev_args;
  
- static int revs_count = 0;
- 
-@@ -162,6 +163,24 @@ int main(int argc, char **argv)
- 			show_file(arg);
- 			continue;
- 		}
-+		if (next_arg_is_rev) {
-+			if ((filter & DO_FLAGS) && (filter & DO_REVS))
-+				show(arg);
-+			next_arg_is_rev = 0;
-+			continue;
-+		}
-+		if (!strcmp(arg,"-n")) {
-+			next_arg_is_rev = 1;
-+			if ((filter & DO_FLAGS) && (filter & DO_REVS))
-+				show(arg);
-+			continue;
-+		}
-+		if (!strncmp(arg,"-n",2)) {
-+			if ((filter & DO_FLAGS) && (filter & DO_REVS))
-+				show(arg);
-+			continue;
-+		}
++	/* accept, -<digit>, like some versions of head/tail  */
++	if (POSIX_SHMOSIX && (*arg == '-') && isdigit(arg[1]))
++		return 1;
 +
- 		if (*arg == '-') {
- 			if (!strcmp(arg, "--")) {
- 				as_is = 1;
+ 	for (;;) {
+ 		const char *str = *p++;
+ 		int len;
 -- 
 1.1.4.g3b65
