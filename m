@@ -1,80 +1,58 @@
 From: Marco Costalba <mcostalba@yahoo.it>
-Subject: qgit with autotools
-Date: Sun, 29 Jan 2006 10:14:28 +0100
-Message-ID: <43DC8774.8080309@yahoo.it>
+Subject: Possible git-rev-list bug
+Date: Sun, 29 Jan 2006 10:41:51 +0100
+Message-ID: <43DC8DDF.6080904@yahoo.it>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: proski@gnu.org
-X-From: git-owner@vger.kernel.org Sun Jan 29 10:14:45 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 29 10:42:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F38dv-000547-Jp
-	for gcvg-git@gmane.org; Sun, 29 Jan 2006 10:14:43 +0100
+	id 1F394U-0000Nw-SM
+	for gcvg-git@gmane.org; Sun, 29 Jan 2006 10:42:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750759AbWA2JOk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jan 2006 04:14:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750766AbWA2JOk
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 04:14:40 -0500
-Received: from smtp015.mail.yahoo.com ([216.136.173.59]:58990 "HELO
-	smtp015.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S1750759AbWA2JOk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jan 2006 04:14:40 -0500
-Received: (qmail 65739 invoked from network); 29 Jan 2006 09:14:37 -0000
+	id S1750800AbWA2Jl7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jan 2006 04:41:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750814AbWA2Jl7
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 04:41:59 -0500
+Received: from smtp101.mail.sc5.yahoo.com ([216.136.174.139]:52904 "HELO
+	smtp101.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
+	id S1750800AbWA2Jl6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jan 2006 04:41:58 -0500
+Received: (qmail 82760 invoked from network); 29 Jan 2006 09:41:56 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.it;
   h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:CC:Subject:Content-Type:Content-Transfer-Encoding;
-  b=k/GoXFxByIxe0ltLjjGbz+54xW/5NgzXyxDfFKDT/rF4IIGgwJDjmzgXuJIkmTjmW88RlSPJWSNofiziCusd654dvu0gLz+A6oINHQMVNaautZz5V1kg9xxZ6GW4lDNs6pLFQEdpZlpjWwkn1dpp6xVKpIFLlQLaHVwtXy/XsT0=  ;
+  b=x6UQD4nCzLgrSNox2z9kISjOQJhfevCmBk9GcgcMMGfe/kvf4TeV7OHCnbyzGmIndyrYJpg4fbc38mJKiQsK4fUVvphaH2OOV3y6Pypo92FZqT3EC73inrCNcGkTPrPxLFgpHBcdLp02X2f9NDNBuwmzBNZoZd0WwurXo2Z574w=  ;
 Received: from unknown (HELO ?10.0.0.13?) (mcostalba@151.56.33.177 with plain)
-  by smtp015.mail.yahoo.com with SMTP; 29 Jan 2006 09:14:35 -0000
+  by smtp101.mail.sc5.yahoo.com with SMTP; 29 Jan 2006 09:41:54 -0000
 User-Agent: Mozilla Thunderbird 1.0.6-7.4.20060mdk (X11/20050322)
 X-Accept-Language: it, it-it, en-us, en
-To: git@vger.kernel.org
+To: junkio@cox.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15209>
 
-Hi all,
+In today git archive:
 
-QGit now uses autotools instead of scons, courtesy of Pavel patch that has been pushed.
-In patch description you will find the rationale for this update.
+$ git-rev-list --max-count=1 --parents addafaf92eeb86033da91323d0d3ad7a496dae83 -- rev-list.c
+addafaf92eeb86033da91323d0d3ad7a496dae83 d8f6b342ae200b2eb72e2f81afea7fe0d41aec0b 93b74bca86f59b8df410b6fd4803b88ee0f304bf d8f6b342ae200b2eb72e2f81afea7fe0d41aec0b 
+d8f6b342ae200b2eb72e2f81afea7fe0d41aec0b 3815f423ae39bf774de3c268c6d3e3b72128a4e5
 
-Also old git public repo has been removed after a deprecation period, so please now use:
+We have the same parent (d8f6b342ae200b2eb72e2f81afea7fe0d41aec0b) multiple times.
 
-    http://digilander.libero.it/mcostalba/scm/qgit.git
-
-
-After pulling new changes you should run "autoreconf -i" to create proper build environment and
-then the usual ./configure + make + make install
+This behaviour causes a wrong graph in qgit and brakes gitk (try 'qgit rev-list.c'  or
+'gitk rev-list.c' and click on first merge commit).
 
 
-Following, Pavel's answers regarding some notes on new build environment.
-
-
- >
- > 1) qgit binary is now 4,6MB on my machine, with scons it was 858KB.
-
-
-I think Autoconf defaults to using "-g".  You can strip the binary.  I think you
-can even run "make install-strip".  And of course you can use "configure
-CXXFLAGS=-O2" or something to disable debug information.
-
- > 2) qgit is built in src directory instead of ./bin/ or ./ (not a biggie)
-
-
-That's an Automake thing.  There are ways to work it about, but they are not
-nice (using libraries).
-
-However, you can create a separate directory and run "configure && make" from it
-(configure should run be with full path to the source directory).  Then you get
-a build outside the source tree.  It may be just as good for your purposes.
+Please confirm if it's a rev-list bug or it's a 'feature' ;-) in the latter case I will fix qgit.
 
 
 Marco
-
 
 	
 
