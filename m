@@ -1,44 +1,58 @@
-From: "Giovanni" <EarnestStarrStarr@etnic.be>
-Subject: Find local sex-addicts
-Date: Sun, 29 Jan 2006 11:16:43 -0800
-Message-ID: <464c.katowice@morrissey23.refinery56.net>
-X-From: git-owner@vger.kernel.org Sun Jan 29 20:17:07 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] diff: add --no-diff-deleted to make -p more pleasant
+Date: Sun, 29 Jan 2006 12:12:32 -0800
+Message-ID: <7vy80ykd3j.fsf@assigned-by-dhcp.cox.net>
+References: <20060129142403.GA15482@Muzzle>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 29 21:12:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3I2p-0006im-Oy
-	for gcvg-git@gmane.org; Sun, 29 Jan 2006 20:17:04 +0100
+	id 1F3Iub-0008HM-Qz
+	for gcvg-git@gmane.org; Sun, 29 Jan 2006 21:12:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751121AbWA2TQ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jan 2006 14:16:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751120AbWA2TQ7
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 14:16:59 -0500
-Received: from 200-206-227-137.dsl.telesp.net.br ([200.206.227.137]:65291 "HELO
-	7959B240") by vger.kernel.org with SMTP id S1751122AbWA2TQ7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 14:16:59 -0500
-Received: (qmail 44505 invoked from network); Sun, 29 Jan 2006 11:16:43 -0800
-To: git@vger.kernel.org, rdomo@vger.kernel.org
+	id S1751149AbWA2UMf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jan 2006 15:12:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751150AbWA2UMf
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 15:12:35 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:17370 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1751149AbWA2UMe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jan 2006 15:12:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060129201239.GZRZ25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 29 Jan 2006 15:12:39 -0500
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <20060129142403.GA15482@Muzzle> (Eric Wong's message of "Sun, 29
+	Jan 2006 06:24:04 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.3 points;
- * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
- *      [score: 0.0000]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: hookup-now.net]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: hookup-now.net]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: hookup-now.net]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15235>
 
-We offer you a service that helps people get laid!
-Lots of sex-o-holics are in your region, looking to have some fun!
+Eric Wong <normalperson@yhbt.net> writes:
 
-No cheezy pickup lines, no gifts, no walks on the beach,
-people here only care about sex ;)
+> This is a feature I've stol^Wborrowed from svn that I find very
+> useful since I usually don't care to see what I've deleted.
 
-And just so you know, a little over 60% of our members have already gotten some action!
+There is a thing called --diff-filter, and 
 
-http://www.hookup-now.net/nr/
+	git diff -p --no-diff-deleted
+
+is equivalent to
+
+	git diff -p --diff-filter=AM
+
+when you are not using rename/copy detection (and a byte
+shorter).  Or maybe improve its syntax to also take:
+
+	--diff-filter=-D
+
+That is, a minus followed by list of undesired change class
+letters.
