@@ -1,42 +1,52 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: git commit error on initial (the very first) commit
-Date: Sun, 29 Jan 2006 16:51:57 -0500
-Message-ID: <20060129215157.GB12394@fieldses.org>
-References: <200601292026.54893.arvidjaar@mail.ru> <20060129181625.GA5540@fieldses.org> <7v1wyqivx1.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 0/3] Remove more parsers
+Date: Sun, 29 Jan 2006 17:05:22 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0601291645060.25300@iabervon.org>
+References: <Pine.LNX.4.64.0601291336420.25300@iabervon.org>
+ <7vk6ciixv0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrey Borzenkov <arvidjaar@mail.ru>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 29 22:52:17 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 29 23:03:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3KSs-00042R-My
-	for gcvg-git@gmane.org; Sun, 29 Jan 2006 22:52:07 +0100
+	id 1F3Kdy-0006Qg-21
+	for gcvg-git@gmane.org; Sun, 29 Jan 2006 23:03:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751185AbWA2VwD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jan 2006 16:52:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751187AbWA2VwD
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 16:52:03 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:4064 "EHLO pickle.fieldses.org")
-	by vger.kernel.org with ESMTP id S1751185AbWA2VwC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 16:52:02 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
-	(envelope-from <bfields@fieldses.org>)
-	id 1F3KSj-0004xY-LC; Sun, 29 Jan 2006 16:51:57 -0500
+	id S1751199AbWA2WDK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jan 2006 17:03:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbWA2WDK
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 17:03:10 -0500
+Received: from iabervon.org ([66.92.72.58]:50701 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751196AbWA2WDJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 17:03:09 -0500
+Received: (qmail 20569 invoked by uid 1000); 29 Jan 2006 17:05:22 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 29 Jan 2006 17:05:22 -0500
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v1wyqivx1.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
+In-Reply-To: <7vk6ciixv0.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15247>
 
-On Sun, Jan 29, 2006 at 01:08:58PM -0800, Junio C Hamano wrote:
-> In a freshly created repository, "git add ." would register
-> everything to the index file, and a "git commit" with or without
-> "-a" that immediately follows "git add ." would commit what is
-> in the index.  Use of "-a" would not make a difference here.
+On Sun, 29 Jan 2006, Junio C Hamano wrote:
 
-Aie, you're right of course, thanks.--b.
+> I do not have objections to git-tar-tree changes, but I am
+> hesitant to use the tree parser in diff-tree due to its memory
+> retention behaviour.  We already use the commit parser in
+> diff-tree but I think we currently do not ask for the tree part
+> of the object to be parsed.  I suspect this patch would badly
+> interact with long-running "diff-tree --stdin", which is the
+> workhorse of whatchanged.  I haven't benched it though, and I'd
+> be happy to see the impact is proven to be negligible.
+
+I'll look into discarding the struct trees after use (since we're not 
+keeping flags on them, or storing references to them long-term), so we can 
+use the same parser without worse memory behavior. It does seem to take a 
+bunch more memory (and, oddly, be very slow) as I currently have it.
+
+	-Daniel
+*This .sig left intentionally blank*
