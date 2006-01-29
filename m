@@ -1,109 +1,76 @@
 From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: No merge strategy handled the merge (git version 1.1.GIT)
-Date: Sun, 29 Jan 2006 13:03:44 +0100
-Message-ID: <20060129120344.GB4815@c165.ib.student.liu.se>
-References: <43DB4D16.6050807@drugphish.ch>
+Subject: [PATCH] merge-recursive: Improve the error message printed when merge(1) isn't found.
+Date: Sun, 29 Jan 2006 13:16:08 +0100
+Message-ID: <20060129121608.GC4815@c165.ib.student.liu.se>
+References: <43DB4D16.6050807@drugphish.ch> <20060129120344.GB4815@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 29 13:04:00 2006
+Cc: Roberto Nibali <ratz@drugphish.ch>, git@vger.kernel.org,
+	junkio@cox.net
+X-From: git-owner@vger.kernel.org Sun Jan 29 13:16:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3BHe-0005Bh-FX
-	for gcvg-git@gmane.org; Sun, 29 Jan 2006 13:03:54 +0100
+	id 1F3BTu-0006xe-Ja
+	for gcvg-git@gmane.org; Sun, 29 Jan 2006 13:16:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750936AbWA2MDq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jan 2006 07:03:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbWA2MDq
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 07:03:46 -0500
-Received: from [85.8.31.11] ([85.8.31.11]:46237 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S1750868AbWA2MDq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 07:03:46 -0500
+	id S1750939AbWA2MQU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jan 2006 07:16:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbWA2MQU
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 07:16:20 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:47517 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1750938AbWA2MQT (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 07:16:19 -0500
 Received: from c165 (unknown [85.8.2.189])
 	by mail6.wasadata.com (Postfix) with ESMTP
-	id 818E140FF; Sun, 29 Jan 2006 13:16:59 +0100 (CET)
+	id 532AB40FF; Sun, 29 Jan 2006 13:29:24 +0100 (CET)
 Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1F3BHU-0007kV-00; Sun, 29 Jan 2006 13:03:44 +0100
-To: Roberto Nibali <ratz@drugphish.ch>
+	id 1F3BTU-0007sl-00; Sun, 29 Jan 2006 13:16:08 +0100
+To: Fredrik Kuivinen <freku045@student.liu.se>
 Content-Disposition: inline
-In-Reply-To: <43DB4D16.6050807@drugphish.ch>
+In-Reply-To: <20060129120344.GB4815@c165.ib.student.liu.se>
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15214>
 
-On Sat, Jan 28, 2006 at 11:53:10AM +0100, Roberto Nibali wrote:
-> Hello,
-> 
-> I've been hacking on some features for IPVS in the Linux kernel recently 
-> but abandoned work for 3 weeks. Today I wanted to re-sync with Linus to 
-> work in a more up-to-date tree and simply typed (forgot I had previously 
-> done work in that tree)
-> 
->     git-pull
-> 
-> in my local repository tree, which resulted in following:
-> 
 
-...
+Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
-> Auto-merging net/ipv4/ipvs/ip_vs_ctl.c
-> Traceback (most recent call last):
->   File "/home/ratz/bin/git-merge-recursive", line 915, in ?
->     firstBranch, secondBranch, graph)
->   File "/home/ratz/bin/git-merge-recursive", line 87, in merge
->     branch1Name, branch2Name)
->   File "/home/ratz/bin/git-merge-recursive", line 160, in mergeTrees
->     if not processEntry(entry, branch1Name, branch2Name):
->   File "/home/ratz/bin/git-merge-recursive", line 868, in processEntry
->     branch1Name, branch2Name)
->   File "/home/ratz/bin/git-merge-recursive", line 212, in mergeFile
->     src1, orig, src2], returnCode=True)
->   File "/home/ratz/share/git-core/python/gitMergeCommon.py", line 72, 
-> in runProgram
->     raise ProgramError(progStr, e.strerror)
-> ProgramError: merge -L HEAD/net/ipv4/ipvs/ip_vs_ctl.c -L 
-> orig/net/ipv4/ipvs/ip_vs_ctl.c -L 
-> 3ee68c4af3fd7228c1be63254b9f884614f9ebb2/net/ipv4/ipvs/ip_vs_ctl.c 
-> .merge_file_uofMwv .merge_file_hcesLs .merge_file_TwtEqw: No such file 
-> or directory
-> No merge strategy handled the merge.
-> 
 
-The problem is that merge(1), which is used for file-level merges,
-couldn't be found. Is it installed on your system? If you use Linux,
-it is usually found in the "rcs" package in your favorite
-distribution.
+---
 
-This have came up a couple of times now, we should probably make this
-error message a bit less cryptic. I will send a patch in a separate
-mail.
+ git-merge-recursive.py |   15 ++++++++++-----
+ 1 files changed, 10 insertions(+), 5 deletions(-)
 
-> I'm all for verbosity when it comes to a problem with software, however 
-> this output does not tell me much about what I could do to achieve 
-> following state:
-> 
-> 1. Sync my local tree to Linus' tree.
-> 2. Merge my changes I've done locally with the resulting tree of 1.
-> 
-
-If your repository is in the state that the failed git-pull left it
-in, then the following actions should merge your changes with Linus'
-tree.
-
-1. Install merge(1)
-2. Run 'git reset --hard' (NOTE: Be careful with this command. It will
-   revert any uncommitted changes you may have in your working directory!)
-3. Run 'git pull'
-
-> Oh, btw, how is git branch -D supposed to work? Isn't there some code 
-> missing?
-
-Could you be a bit more specific? Do you mean that there is code
-missing in git-branch.sh? What happens when you run 'git branch -D
-<some branch>'? It seems to work fine here.
-
-- Fredrik
+75cd8eff434fd6e9cf7fff98f13a27bfaa1b363b
+diff --git a/git-merge-recursive.py b/git-merge-recursive.py
+index 56c3641..b17c8e5 100755
+--- a/git-merge-recursive.py
++++ b/git-merge-recursive.py
+@@ -205,11 +205,16 @@ def mergeFile(oPath, oSha, oMode, aPath,
+             orig = runProgram(['git-unpack-file', oSha]).rstrip()
+             src1 = runProgram(['git-unpack-file', aSha]).rstrip()
+             src2 = runProgram(['git-unpack-file', bSha]).rstrip()
+-            [out, code] = runProgram(['merge',
+-                                      '-L', branch1Name + '/' + aPath,
+-                                      '-L', 'orig/' + oPath,
+-                                      '-L', branch2Name + '/' + bPath,
+-                                      src1, orig, src2], returnCode=True)
++            try:
++                [out, code] = runProgram(['merge',
++                                          '-L', branch1Name + '/' + aPath,
++                                          '-L', 'orig/' + oPath,
++                                          '-L', branch2Name + '/' + bPath,
++                                          src1, orig, src2], returnCode=True)
++            except ProgramError, e:
++                print >>sys.stderr, e
++                die("Failed to execute 'merge'. merge(1) is used as the "
++                    "file-level merge tool. Is 'merge' in your path?")
+ 
+             sha = runProgram(['git-hash-object', '-t', 'blob', '-w',
+                               src1]).rstrip()
+-- 
+0.99.9k.g3480-dirty
