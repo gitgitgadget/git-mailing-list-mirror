@@ -1,77 +1,99 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: Re: [Census] So who uses git?
-Date: Sun, 29 Jan 2006 09:19:23 -0500
-Message-ID: <118833cc0601290619k1e9c6bb8gc63937f1a2d2b31e@mail.gmail.com>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
-	 <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
-	 <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
-	 <1138446030.9919.112.camel@evo.keithp.com>
-	 <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
-	 <118833cc0601281814i503bf934ge32b12e7b090c44@mail.gmail.com>
-	 <7v7j8jpu48.fsf@assigned-by-dhcp.cox.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] diff: add --no-diff-deleted to make -p more pleasant
+Date: Sun, 29 Jan 2006 06:24:04 -0800
+Message-ID: <20060129142403.GA15482@Muzzle>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 29 15:19:44 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Jan 29 15:24:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3DP2-0002oa-Qw
-	for gcvg-git@gmane.org; Sun, 29 Jan 2006 15:19:41 +0100
+	id 1F3DTR-0003ao-3T
+	for gcvg-git@gmane.org; Sun, 29 Jan 2006 15:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751003AbWA2OTZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jan 2006 09:19:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751004AbWA2OTZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 09:19:25 -0500
-Received: from pproxy.gmail.com ([64.233.166.181]:27987 "EHLO pproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751002AbWA2OTY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jan 2006 09:19:24 -0500
-Received: by pproxy.gmail.com with SMTP id o67so89419pye
-        for <git@vger.kernel.org>; Sun, 29 Jan 2006 06:19:24 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=l3LoJspW6Go/Q+bi0nSUVKHYZXsNyUQ5eQNHixvJow19nWPlCUsHuLoLohXfoZkE2JJ6OtD5d+Esh6HfgnYspF9j4BBKiO2aPS+nazviQZoKQE4pciYXoyskHqtcjFhSvfk2yjNuDrD4LJR5XNQtcteaxO9/c+0RR8mO9CQSAo0=
-Received: by 10.35.60.15 with SMTP id n15mr21501pyk;
-        Sun, 29 Jan 2006 06:19:23 -0800 (PST)
-Received: by 10.35.39.13 with HTTP; Sun, 29 Jan 2006 06:19:23 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7j8jpu48.fsf@assigned-by-dhcp.cox.net>
+	id S1751001AbWA2OYH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jan 2006 09:24:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751005AbWA2OYH
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 09:24:07 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:50643 "EHLO mail.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751001AbWA2OYG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 09:24:06 -0500
+Received: from mayonaise.dyndns.org (user-118bgak.cable.mindspring.com [66.133.193.84])
+	by mail.yhbt.net (Postfix) with SMTP id 500442DC033
+	for <git@vger.kernel.org>; Sun, 29 Jan 2006 06:24:04 -0800 (PST)
+Received: by mayonaise.dyndns.org (sSMTP sendmail emulation); Sun, 29 Jan 2006 06:24:04 -0800
+To: git list <git@vger.kernel.org>
 Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15221>
 
-> I think that 40% sounds about right.  My understanding of the
-> underlying format CVS uses, RCS, is that it stores an full copy
-> of the tip of trunk uncompressed, and other versions of the file
-> are represented as incremental delta from that.  The packed git
-> format does not favor particular version based on the distance
-> from the tip, and stores either a compressed full copy, or a
-> delta from some other revision (which may not necessarily be
-> represented as a full copy).  When we store something as a delta
-> from something else, we limit the length of the delta chain to a
-> full copy to 10 (by default), so that you can get to a specific
-> object with at most 10 applications of delta on top of a full
-> copy.
+This is a feature I've stol^Wborrowed from svn that I find very
+useful since I usually don't care to see what I've deleted.
 
-If I understand this right, that means that for a log file (in this
-case a ChangeLog file) that is appended to linearly as a
-function of revision number, we have...
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
-cvs: O(n) archive size
-git: O(n*n) archive size
+---
 
-At least that is what we get if revision N is always deltad over
-revision N-1.  A good deal could be saved if instead of dumping
-a full copy every 10 revisions, that revision would instead be
-deltad off an earlier revision, but I think it'll still be O(n*n).
+ diff.c |    6 ++++++
+ diff.h |    3 +++
+ 2 files changed, 9 insertions(+), 0 deletions(-)
 
-(/me prepares for Linus chiming in and telling me I should not
-keep ChangeLog files, :-)
-
-M.
+0b426af15a7da4f430d9cca8c1ad057557d93627
+diff --git a/diff.c b/diff.c
+index f45d18c..6db3e19 100644
+--- a/diff.c
++++ b/diff.c
+@@ -769,6 +769,7 @@ void diff_setup(struct diff_options *opt
+ {
+ 	memset(options, 0, sizeof(*options));
+ 	options->output_format = DIFF_FORMAT_RAW;
++	options->diff_deleted = 1;
+ 	options->line_termination = '\n';
+ 	options->break_opt = -1;
+ 	options->rename_limit = -1;
+@@ -849,6 +850,8 @@ int diff_opt_parse(struct diff_options *
+ 	}
+ 	else if (!strcmp(arg, "--find-copies-harder"))
+ 		options->find_copies_harder = 1;
++	else if (!strcmp(arg, "--no-diff-deleted"))
++		options->diff_deleted = 0;
+ 	else if (!strcmp(arg, "--abbrev"))
+ 		options->abbrev = DEFAULT_ABBREV;
+ 	else if (!strncmp(arg, "--abbrev=", 9)) {
+@@ -1103,6 +1106,9 @@ int diff_unmodified_pair(struct diff_fil
+ 
+ static void diff_flush_patch(struct diff_filepair *p, struct diff_options *o)
+ {
++	if (!o->diff_deleted && (p->status == DIFF_STATUS_DELETED))
++		return;
++
+ 	if (diff_unmodified_pair(p))
+ 		return;
+ 
+diff --git a/diff.h b/diff.h
+index 9a0169c..4f320ac 100644
+--- a/diff.h
++++ b/diff.h
+@@ -39,6 +39,7 @@ struct diff_options {
+ 	int find_copies_harder;
+ 	int line_termination;
+ 	int output_format;
++	int diff_deleted;
+ 	int pickaxe_opts;
+ 	int rename_score;
+ 	int reverse_diff;
+@@ -120,6 +121,8 @@ extern void diffcore_std_no_resolve(stru
+ "  -C            detect copies.\n" \
+ "  --find-copies-harder\n" \
+ "                try unchanged files as candidate for copy detection.\n" \
++"  --no-diff-deleted\n" \
++"                do not print patch format for deleted files\n" \
+ "  -l<n>         limit rename attempts up to <n> paths.\n" \
+ "  -O<file>      reorder diffs according to the <file>.\n" \
+ "  -S<string>    find filepair whose only one side contains the string.\n" \
+-- 
+1.1.5.gae18-dirty
