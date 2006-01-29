@@ -1,59 +1,53 @@
-From: Andrey Borzenkov <arvidjaar@mail.ru>
-Subject: git commit error on initial (the very first) commit
-Date: Sun, 29 Jan 2006 20:26:54 +0300
-Message-ID: <200601292026.54893.arvidjaar@mail.ru>
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Jan 29 18:27:34 2006
+From: Chuck Lever <cel@netapp.com>
+Subject: [PATCH] "stg pull" says "popping all patches" even when it doesn't
+Date: Sun, 29 Jan 2006 13:08:36 -0500
+Message-ID: <20060129180835.1868.43455.stgit@dexter.citi.umich.edu>
+Reply-To: Chuck Lever <cel@citi.umich.edu>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 29 19:08:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3GKp-0001Ub-41
-	for gcvg-git@gmane.org; Sun, 29 Jan 2006 18:27:31 +0100
+	id 1F3Gyr-0000uG-Dy
+	for gcvg-git@gmane.org; Sun, 29 Jan 2006 19:08:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751088AbWA2R1K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jan 2006 12:27:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751085AbWA2R1K
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 12:27:10 -0500
-Received: from mx1.mail.ru ([194.67.23.121]:44677 "EHLO mx1.mail.ru")
-	by vger.kernel.org with ESMTP id S1751088AbWA2R1J (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 12:27:09 -0500
-Received: from [85.141.134.85] (port=47391 helo=cooker.home.net)
-	by mx1.mail.ru with asmtp 
-	id 1F3GKH-000GE8-00
-	for git@vger.kernel.org; Sun, 29 Jan 2006 20:26:57 +0300
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
-Content-Disposition: inline
+	id S1751092AbWA2SIh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jan 2006 13:08:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751093AbWA2SIg
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jan 2006 13:08:36 -0500
+Received: from citi.umich.edu ([141.211.133.111]:62546 "EHLO citi.umich.edu")
+	by vger.kernel.org with ESMTP id S1751092AbWA2SIg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2006 13:08:36 -0500
+Received: from dexter.citi.umich.edu (dexter.citi.umich.edu [141.211.133.33])
+	by citi.umich.edu (Postfix) with ESMTP id 0D48A1BC08;
+	Sun, 29 Jan 2006 13:08:36 -0500 (EST)
+To: catalin.marinas@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15223>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Running "stg pull" says it pops all patches, but it really means it is
+popping all *applied* patches.  Change the informational message to match
+the behavior.
 
-May be I do something wrong? What is correct procedure to initially import 
-tree? git 1.1.4
+Signed-off-by: Chuck Lever <cel@netapp.com>
+---
 
-{pts/0}% git init-db
-defaulting to local storage area
-{pts/0}% git add .
-{pts/0}% git commit -m 'initial import'
-usage: git-diff-index [-m] [--cached] [<common diff options>] <tree-ish> 
-[<path>...]
-common diff options:
-... etc
+ stgit/commands/pull.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Committing initial tree 4c9bc57b6911db86c7ab482cca33948a9ba20ef0
-
-- -andrey
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFD3PreR6LMutpd94wRAiP1AJwI93tNjyQ3PYjuwh/EP/GQJHhjKQCeNsuq
-6oWKT+2XHaU3Qe50hkmkQ+g=
-=493D
------END PGP SIGNATURE-----
+diff --git a/stgit/commands/pull.py b/stgit/commands/pull.py
+index 25832a5..843b579 100644
+--- a/stgit/commands/pull.py
++++ b/stgit/commands/pull.py
+@@ -64,7 +64,7 @@ def func(parser, options, args):
+     # pop all patches
+     applied = crt_series.get_applied()
+     if len(applied) > 0:
+-        print 'Popping all patches...',
++        print 'Popping all applied patches...',
+         sys.stdout.flush()
+         crt_series.pop_patch(applied[0])
+         print 'done'
