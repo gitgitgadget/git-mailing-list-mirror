@@ -1,127 +1,132 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] shallow clone
-Date: Mon, 30 Jan 2006 12:39:34 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
+From: Romano Giannetti <romanol@upcomillas.es>
+Subject: Re: Two newbie question: "dead" branches and merging after cherry-pick.
+Date: Mon, 30 Jan 2006 12:44:44 +0100
+Message-ID: <20060130114444.GA17093@pern.dea.icai.upcomillas.es>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 30 12:39:52 2006
+Content-Type: text/plain; charset=iso-8859-15
+X-From: git-owner@vger.kernel.org Mon Jan 30 12:44:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3XNr-000168-1f
-	for gcvg-git@gmane.org; Mon, 30 Jan 2006 12:39:47 +0100
+	id 1F3XS6-0002D3-MR
+	for gcvg-git@gmane.org; Mon, 30 Jan 2006 12:44:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932224AbWA3Lji (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jan 2006 06:39:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932225AbWA3Lji
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jan 2006 06:39:38 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:41616 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932224AbWA3Ljh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2006 06:39:37 -0500
-Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 758C9146689; Mon, 30 Jan 2006 12:39:34 +0100 (CET)
+	id S932227AbWA3LoH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jan 2006 06:44:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932232AbWA3LoH
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jan 2006 06:44:07 -0500
+Received: from mail1.upco.es ([130.206.70.227]:26522 "EHLO mail1.upco.es")
+	by vger.kernel.org with ESMTP id S932230AbWA3LoF (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jan 2006 06:44:05 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 6563FAAA;
-	Mon, 30 Jan 2006 12:39:34 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 1ED68146689; Mon, 30 Jan 2006 12:39:34 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	by mail1.upco.es (Postfix) with ESMTP id C84C21131C6
+	for <git@vger.kernel.org>; Mon, 30 Jan 2006 12:44:04 +0100 (CET)
+Received: from mail1.upco.es ([127.0.0.1])
+	by localhost (mail1 [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+	id 25301-04 for <git@vger.kernel.org>;
+	Mon, 30 Jan 2006 12:44:03 +0100 (CET)
+Received: from pern.dea.icai.upcomillas.es (pern.dea.icai.upco.es [130.206.71.186])
+	by mail1.upco.es (Postfix) with ESMTP id A462D1131B2
+	for <git@vger.kernel.org>; Mon, 30 Jan 2006 12:44:03 +0100 (CET)
+Received: by pern.dea.icai.upcomillas.es (Postfix, from userid 1153)
+	id 7CD10102DD; Mon, 30 Jan 2006 12:44:44 +0100 (CET)
+To: git@vger.kernel.org
+Mail-Followup-To: Romano Giannetti <romanol@upcomillas.es>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: by amavisd-new-20030616-p7 (Debian) at upco.es
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15268>
 
-Hi,
+First of all, 1000 thanks and please forgive me for the broken thread, I was
+not subscribed to the list before so I did a copy-and-paste from the web
+archive. 
 
-On Sun, 29 Jan 2006, Junio C Hamano wrote:
-
-> Strategy
-> --------
+Junio C. Hamano wrote:
 > 
-> We have `info/grafts` mechanism to fake parent information for
-> commit objects.  Using this facility, we could roughly do:
+> You are done with what you did in the branch for now, but you
+> have not merged the work to your day-to-day development "master"
+> for some reason.  In the meantime you would want to switch to
+> other topic branches to work on other topics, and while working
+> on them you do not want to "git branch" and "git show-branch" to
+> show the topic you are done with but not merged yet.  Later you
+> would want to come back to it to do some interesting stuff with
+> it (maybe finally merge into "master", or format-patch to send
+> upstream).  Is that what is happening here?
+> If so, I would have chosen "postponed" not "dead" to describe
+> the situation but you said "dead" and that is why I am wondering
+> if I am getting you correctly.
+
+Yes, you have understood perfectly. I called them "dead" because really I do
+not think to come back to them ever, but I want to maintain that as "old
+story", something of the style "that was an error, store it so that you will
+never fall in it again". 
 > 
-> . Download the full tree for v2.6.14 commit and store its
->   objects locally.
-
-On first read, I mistook "tree" for "commit"...
-
-> . Set up `info/grafts` to lie to the local git that Linux kernel
->   history began at v2.6.14 version.
-
-Maybe also record this in .git/config, so that you can
-
-- disallow fetching from this repo, and
-- easily extend the shallow copy to a larger shallow one, or a full one.
-
-> . Run `git fetch git://.../linux-2.6 master`, with a local ref
->   pointing at v2.6.14 commit, to pretend that we have everything
->   up to v2.6.14 to `upload-pack` running on the other end.
-
-How about refs/tags/start_shallow?
-
-> . Update the `origin` branch with the master commit object name
->   we just fetched from Linus.
+> Yes.  You have the tag under .git/refs which points at the tip
+> of that postponed branch head, so the development trail will not
+> be lost.  When you are done with other topics and would want to
+> come back to that topic again, you could do this:
 > 
-> Design
-> ------
+
+>     $ git tag hold/jc/gitlink jc/link ;# copy it to tags/
+>        $ git branch -D jc/link             ;# delete it from heads/
+> 
+> Now "git branch" would not show it, but "gitk --all" still would.
 >
-> [...]
->
-> Another functionality we would need is to tell `upload-pack` to
-> use `info/grafts` of downloader's choice.  With this, after
-> fetching the objects for v2.6.14 commit, the downloader can set
-> up its own grafts file to cauterize the development history at
-> v2.6.14, and tell the `upload-pack` to pretend the kernel
-> history starts at that commit, while sending the tip of Linus'
-> development track to us.
 
-Why not just start another fetch? Then, "have <refs/tags/start_shallow>" 
-would be sent, and upload-pack does the right thing?
+What I have done (and it seems to work perfectly) is 
 
-If you absolutely want to get only one pack, which then is stored as-is, 
-upload-pack could start two rev-list processes: one for the tree and one 
-for all the rest.
+    git checkout master
+    mkdir .git/refs/olds 
+    mv .git/heads/test-bill-idea .git/olds
 
-> [...]
+and it seems to work ok. Thanks! 
+
+    
+>         - Easier: suppose I cheery-picked "abababab" from branch "testing"
+>         to master branch. What will happen if later I decide to merge
+>         all "testing" to master branch? I will have a merge conflict (trying
+>         to apply two times the same fix) or not? 
 > 
-> [NOTE]
-> Most likely this is not directly run by the user but is run as
-> the first command invoked by the shallow clone script.
-
-Better make it an option to git-clone
-
-> 4. `upload-pack` notices this is a single commit request, and
->    sends an ACK if it can satisfy the request (or a NAK if it
->    can't, e.g. it does not have the asked commit).  Instead of
->    doing the usual `get_common_commits` followed by
->    `create_pack_file`, it does:
+> This is easy to experiment so I'd suggest you to try it and tell
+> us what you see, like this:
 > 
-> 	$ git rev-list -n1 --objects $commit | git pack-object
-
-Here it could say
-
-(git rev-list -n1 --objects $commit_since; git rev-list --objects 
-	^$commit_since $commit) | git pack-object
-
-If the former is still needed (e.g. for git-tar-remote-tree), we could 
-distinguish "single <ref>" and "shallow <ref>" commands.
-
-> [...]
+>   $ git checkout -b test-merge-throwaway master
+>        $ git cherry-pick abababab
+>        $ ... play with it, maybe making a couple of commits
+>        $ git pull . testing
 > 
-> The second phase of the shallow clone is to fetch the history
-> since v2.6.14 to the tip.
+> I would not be surprised if this resolves cleanly. If abababab
+> is the only thing that touches the set of paths it touches,
+> other than what are in "testing" and what you did since
+> "testing" forked from "master", it is likely that the merge
+> would resolve cleanly.
+> 
+> Otherwise you would likely to see conflicts --- in which case
+> you may want to suggest if/how we can reduce it.  "cherry-pick"
+> without -r drops a hint of which commit was picked in the commit
+> log so it _might_ be a good idea to teach git to optionally take
+> that information into account while doing the merge.  I dunno.
+> 
+> Once you are done experimenting, you can come back to master and
+> delete the test-merge-throwaway branch:
+> 
+>       $ git checkout master
+>        $ git branch -D test-merge-throwaway
+> 
 
-As I outlined above, I don't see the need for this.
+Thanks. I will play a bit with it. I sometime have a bit of fear to not
+being able to come back to a good state. I will do my homework and study a
+bit more git checkout, branch and reset (this latter gives me a bit of
+headheache last time... ;-) ).
 
-Ciao,
-Dscho
+Thanks a lot. 
+          
+-- 
+Romano Giannetti             -  Univ. Pontificia Comillas (Madrid, Spain)
+Electronic Engineer - phone +34 915 422 800 ext 2416  fax +34 915 596 569
+http://www.dea.icai.upcomillas.es/romano/
