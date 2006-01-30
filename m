@@ -1,64 +1,66 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Erik Mouw <erik@harddisk-recovery.com>
 Subject: Re: git vs git
-Date: 30 Jan 2006 08:55:36 -0800
-Message-ID: <86acddirjr.fsf@blue.stonehenge.com>
-References: <d93f04c70601300714i4b7b3b58qa5aa151e3e42a413@mail.gmail.com>
-	<20060130153715.GE30671@harddisk-recovery.com>
+Date: Mon, 30 Jan 2006 18:23:45 +0100
+Organization: Harddisk-recovery.com
+Message-ID: <20060130172344.GA20867@harddisk-recovery.com>
+References: <d93f04c70601300714i4b7b3b58qa5aa151e3e42a413@mail.gmail.com> <20060130153715.GE30671@harddisk-recovery.com> <86acddirjr.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Hendrik Visage <hvjunk@gmail.com>, david@dgreaves.com,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 30 17:56:09 2006
+X-From: git-owner@vger.kernel.org Mon Jan 30 18:24:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3cJc-0001VZ-QL
-	for gcvg-git@gmane.org; Mon, 30 Jan 2006 17:55:45 +0100
+	id 1F3cko-0000aJ-6H
+	for gcvg-git@gmane.org; Mon, 30 Jan 2006 18:23:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964777AbWA3Qzm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jan 2006 11:55:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964778AbWA3Qzm
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jan 2006 11:55:42 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:65314 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S964777AbWA3Qzl
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2006 11:55:41 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 112BB8EBD9;
-	Mon, 30 Jan 2006 08:55:37 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 19413-02-23; Mon, 30 Jan 2006 08:55:36 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 95BB68F283; Mon, 30 Jan 2006 08:55:36 -0800 (PST)
-To: Erik Mouw <erik@harddisk-recovery.com>
-x-mayan-date: Long count = 12.19.13.0.3; tzolkin = 9 Akbal; haab = 1 Pax
-In-Reply-To: <20060130153715.GE30671@harddisk-recovery.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S964821AbWA3RXr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jan 2006 12:23:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964822AbWA3RXr
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jan 2006 12:23:47 -0500
+Received: from dtp.xs4all.nl ([80.126.206.180]:64117 "HELO abra2.bitwizard.nl")
+	by vger.kernel.org with SMTP id S964821AbWA3RXq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jan 2006 12:23:46 -0500
+Received: (qmail 3429 invoked by uid 501); 30 Jan 2006 18:23:45 +0100
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+Content-Disposition: inline
+In-Reply-To: <86acddirjr.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15284>
 
->>>>> "Erik" == Erik Mouw <erik@harddisk-recovery.com> writes:
+On Mon, Jan 30, 2006 at 08:55:36AM -0800, Randal L. Schwartz wrote:
+> >>>>> "Erik" == Erik Mouw <erik@harddisk-recovery.com> writes:
+> 
+> Erik>   #! /bin/sh
+> Erik>   # sct: call git
+> Erik>   gitpath=/path/to/git
+> Erik>   export PATH=$gitpath:$PATH
+> Erik>   exec $gitpath/git $*
+> 
+> You must not get a lot of spaces in your pathnames.
 
-Erik>   #! /bin/sh
-Erik>   # sct: call git
-Erik>   gitpath=/path/to/git
-Erik>   export PATH=$gitpath:$PATH
-Erik>   exec $gitpath/git $*
+That usually doesn't happen in the kernel tree (which is what the OP
+wants to follow).
 
-You must not get a lot of spaces in your pathnames.  I think you want
-those last two lines to be:
+> I think you want
+> those last two lines to be:
+> 
+>         export PATH="$gitpath:$PATH"
+>         exec "$gitpath/git" "$@"
+> 
+> Typical lazy shell programmer. :) :)
 
-        export PATH="$gitpath:$PATH"
-        exec "$gitpath/git" "$@"
+Hey, I said "untested" :) But yeah, you're right. Your syntax is
+correct, every time I write such a wrapper I try to remember it...
 
-Typical lazy shell programmer. :) :)
+
+Erik
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
++-- Erik Mouw -- www.harddisk-recovery.com -- +31 70 370 12 90 --
+| Lab address: Delftechpark 26, 2628 XH, Delft, The Netherlands
