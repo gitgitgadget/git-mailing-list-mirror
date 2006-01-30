@@ -1,59 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
 Subject: Re: git vs git
-Date: Mon, 30 Jan 2006 17:26:22 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0601301724560.21298@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <d93f04c70601300714i4b7b3b58qa5aa151e3e42a413@mail.gmail.com> 
- <20060130153715.GE30671@harddisk-recovery.com>
- <d93f04c70601300809v2f18221bxb4ddb495a6f2f47f@mail.gmail.com>
+Date: 30 Jan 2006 08:55:36 -0800
+Message-ID: <86acddirjr.fsf@blue.stonehenge.com>
+References: <d93f04c70601300714i4b7b3b58qa5aa151e3e42a413@mail.gmail.com>
+	<20060130153715.GE30671@harddisk-recovery.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Erik Mouw <erik@harddisk-recovery.com>, david@dgreaves.com,
+Content-Type: text/plain; charset=us-ascii
+Cc: Hendrik Visage <hvjunk@gmail.com>, david@dgreaves.com,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 30 17:27:08 2006
+X-From: git-owner@vger.kernel.org Mon Jan 30 17:56:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3brH-0001cV-AR
-	for gcvg-git@gmane.org; Mon, 30 Jan 2006 17:26:27 +0100
+	id 1F3cJc-0001VZ-QL
+	for gcvg-git@gmane.org; Mon, 30 Jan 2006 17:55:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932364AbWA3Q0Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jan 2006 11:26:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932366AbWA3Q0Y
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jan 2006 11:26:24 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:46991 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932364AbWA3Q0Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2006 11:26:24 -0500
-Received: from virusscan.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 34CBE14616D; Mon, 30 Jan 2006 17:26:23 +0100 (CET)
+	id S964777AbWA3Qzm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jan 2006 11:55:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964778AbWA3Qzm
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jan 2006 11:55:42 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:65314 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S964777AbWA3Qzl
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2006 11:55:41 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 24E69A46;
-	Mon, 30 Jan 2006 17:26:23 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 57F9B14616D; Mon, 30 Jan 2006 17:26:22 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Hendrik Visage <hvjunk@gmail.com>
-In-Reply-To: <d93f04c70601300809v2f18221bxb4ddb495a6f2f47f@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	by blue.stonehenge.com (Postfix) with ESMTP id 112BB8EBD9;
+	Mon, 30 Jan 2006 08:55:37 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 19413-02-23; Mon, 30 Jan 2006 08:55:36 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 95BB68F283; Mon, 30 Jan 2006 08:55:36 -0800 (PST)
+To: Erik Mouw <erik@harddisk-recovery.com>
+x-mayan-date: Long count = 12.19.13.0.3; tzolkin = 9 Akbal; haab = 1 Pax
+In-Reply-To: <20060130153715.GE30671@harddisk-recovery.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15283>
 
-Hi,
+>>>>> "Erik" == Erik Mouw <erik@harddisk-recovery.com> writes:
 
-On Mon, 30 Jan 2006, Hendrik Visage wrote:
+Erik>   #! /bin/sh
+Erik>   # sct: call git
+Erik>   gitpath=/path/to/git
+Erik>   export PATH=$gitpath:$PATH
+Erik>   exec $gitpath/git $*
 
-> On 1/30/06, Erik Mouw <erik@harddisk-recovery.com> wrote:
-> >
-> > Yes, this has been discussed in the past.
-> 
-> Hmm... liked to know the search terms to use :(
+You must not get a lot of spaces in your pathnames.  I think you want
+those last two lines to be:
 
-"GNU Interactive Tools" ;-)
+        export PATH="$gitpath:$PATH"
+        exec "$gitpath/git" "$@"
 
-Ciao,
-Dscho
+Typical lazy shell programmer. :) :)
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
