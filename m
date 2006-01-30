@@ -1,159 +1,101 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] shallow clone
-Date: Mon, 30 Jan 2006 10:46:15 -0800
-Message-ID: <7v8xsxa70o.fsf@assigned-by-dhcp.cox.net>
-References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
+From: mdw@distorted.org.uk (Mark Wooding)
+Subject: (unknown)
+Date: Mon, 30 Jan 2006 18:50:26 +0000
+Message-ID: <17374.24562.614471.779986@metalzone.distorted.org.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 30 19:47:14 2006
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jan 30 19:52:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3e2g-00067D-LD
-	for gcvg-git@gmane.org; Mon, 30 Jan 2006 19:46:23 +0100
+	id 1F3e6y-000767-LH
+	for gcvg-git@gmane.org; Mon, 30 Jan 2006 19:50:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964856AbWA3SqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jan 2006 13:46:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964859AbWA3SqT
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jan 2006 13:46:19 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:60824 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S964856AbWA3SqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2006 13:46:17 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060130184403.WNLG17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 30 Jan 2006 13:44:03 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964866AbWA3Suq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jan 2006 13:50:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964867AbWA3Suq
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jan 2006 13:50:46 -0500
+Received: from excessus.demon.co.uk ([83.105.60.35]:28325 "HELO
+	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
+	id S964866AbWA3Sup (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2006 13:50:45 -0500
+Received: (qmail 31132 invoked by uid 1000); 30 Jan 2006 18:50:28 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15287>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+git-http-fetch seems buggy.  I /think/ it's getting confused by a
+combination of a large top-level tree (lots of blobs directly attached)
+attached to the top commit, together with most of the things being
+packed.
 
->> . Download the full tree for v2.6.14 commit and store its
->>   objects locally.
->
-> On first read, I mistook "tree" for "commit"...
+To illustrate the bug, create a repository with the following shell
+script.  (It will create a working tree called `funt' with a little GIT
+history inside.)
 
-It turns out that this 'single' request step is unneeded, as
-long as we implement 'graft' requests.  We can then tell
-"Cauterize at v2.6.14 and give me the master" to `upload-pack`.
-`upload-pack` would run `rev-list --objects master`, tries to include
-everything that is reachable from "master", but notices that the
-v2.6.14 commit does not have any parent (thanks to the
-customized graft) and stops there -- the result is the history
-since v2.6.14.
+----
+#! /bin/sh
 
->> . Set up `info/grafts` to lie to the local git that Linux kernel
->>   history began at v2.6.14 version.
->
-> Maybe also record this in .git/config, so that you can
->
-> - disallow fetching from this repo, and
-> - easily extend the shallow copy to a larger shallow one, or a full one.
+set -e
+mkdir funt
+cd funt
+git-init-db 
+yes | nl | head -200 | while read n hunoz; do echo file $n >foo.$n; done
+git-add *
+echo Boo. | git-commit -F - -a
+git-repack
+git-prune-packed 
+echo Censored >foo.197
+echo Ouch. | git-commit -F - -a
+git-update-server-info
+----
 
-I thought about that before I wrote the message, but it boils
-down to grepping lines from grafts that have only one object
-name (i.e. cauterizing records), so it is redundant.
+Then put the repository somewhere your web server will let you get to
+it, and try to clone it, say using
 
-Also there is no strict reason to forbid cloning from such a
-shallow repository.  No harm is done as long as you make it
-clear to somebody who clones from you that what you have is a
-shallow copy, so that the cloned repository can cauterize
-history at appropriate places.
+  git-clone http://boyle.nsict.org/~mdw/funt.git
 
-A second generation clone, when cloning from a shallow
-repository, needs to mark itself that it has the same or
-shallower history (otherwise a third generation clone from it
-would not work), so the `upload-pack` protocol needs to be
-updated to send grafts information the `upload-pack` side
-usually uses to the downloader even when 'graft' request is not
-used by the downloader.  But once it is done, you should be able
-to clone safely from a shallow repository and end up with a
-repository with the same (or shallower -- if you asked to make a
-shallow clone from it) history.
+(Yes, that repository exists and is live; the server is fairly
+well-connected.)  You ought to be greeted with text like this:
 
-> Why not just start another fetch? Then, "have <refs/tags/start_shallow>" 
-> would be sent, and upload-pack does the right thing?
+  error: Unable to find b4f495485ca9ae825ec8c504cdcf24652342f43c under
+  http://boyle.nsict.org/~mdw/funt/.git/
 
-Yes, almost.  We need to realize that `upload-pack` that hears
-"have A, want B" is allowed to omit objects that appear in
-`ls-tree B` output but not in `ls-tree A`.  "have A" means not
-just "I have A", but "I have A and all of its ancestors", so
-just sending "have start_shallow" (or start_shallow^ for that
-matter) is not quite enough [*1*].
+  Cannot obtain needed commit b4f495485ca9ae825ec8c504cdcf24652342f43c
+  while processing commit 351c72525b9ee5b2321c65598ce82a4e79015012.
 
-> If you absolutely want to get only one pack, which then is stored as-is, 
-> upload-pack could start two rev-list processes: one for the tree and one 
-> for all the rest.
+If you're very lucky, git-http-fetch will segfault.
 
-The message you are responding did two separate transfers (one
-'single', and another 'fetch'); I do not particularly mind doing
-two (it is just an initial clone anyway), but as I said it turns
-out that we do not need the initial 'single'.
+What's going on here?
 
->> [NOTE]
->> Most likely this is not directly run by the user but is run as
->> the first command invoked by the shallow clone script.
->
-> Better make it an option to git-clone
+Think about the repository layout for a bit.  There's a `big' pack file,
+and a little commit.  The commit has an unpacked tree attached, but
+almost all of its leaves are in the pack.  The commit's parent is
+packed.
 
-Probably -- I was just outlining the lowest-level mechanism and
-haven't thought much about the UI.
+So git-http-fetch starts by filling its queue with prefetches for blob
+objects which are packed (and so it gets 404s for them).  This is fine.
+However! when it comes to collect the parent commit, it realises it
+needs to fetch the pack list.  Unfortunately, something goes wrong in
+run_active_slot.  As far as I can make out, the slot used to collect
+.../info/packs is being /reused/ by fill_active_slots (called by
+step_active_slots) before fetch_indices is returned to.  Since the
+prefetch which got the new slot is for an object which got packed, it
+fails with a 404, which is written back to the slot.  The result is that
+fetch_indices thinks that the pack list doesn't exist (even though it
+actually does, and libcurl fetched it just fine, thanks).  This is
+marked as a permanent error, and that parent commit can't be found.
 
-[Footnote]
+The segfault is I think due to this reuse too, but it only happens
+sometimes and I'm not entirely clear on why.
 
-*1* This is true even without more aggressive optimization by
-rev-list that does not exist there yet.  Here is a minimalistic
-demonstration.  One file project with a handful straight-line
-commits.  Each change to the file reverts the change made by the
-previous commit.
+I'm afraid I don't have a patch.  I've spent a little while trying to
+fix this bug myself, but my changes just seem to cause wedging, or fd
+leaks, or segfaults, or all three, so it's obvious I don't understand
+the code well enough.
 
- * The HEAD commit has "white", the HEAD~1 "black" and HEAD~2
-   "white".
-
- * We say we are interested in things since HEAD~2 (i.e. we
-   pretend that the history starts at HEAD~1 and it does not
-   have a parent) and ask for HEAD.
-
- * Notice that only one copy of the file appears in the output.
-   It is "black" blob.  We do not get "white" blob because we
-   are telling it that we _have_ HEAD~2.  The resulting set of
-   objects is not enough to check-out the HEAD commit.
-
-This roughly corresponds to your "have shallow_start", but not
-quite -- in that sequence you have objects for HEAD~2 commit.
-But the point is that I want to leave the door open for
-optimizing upload-pack, so that it can choose to omit objects
-that do not appear in A when you say "have A", if the object
-appears in one of A's ancestors.
-
--- >8 --
-#!/bin/sh
-
-rm -fr .git
-
-git init-db
-zebra=white
-echo $zebra >file
-git add file
-git commit -m initial
-
-for i in 0 1 2 3 4 5
-do
-	case $zebra in
-	white) zebra=black ;;
-	black) zebra=white ;;
-	esac
-	echo $zebra >file
-	git commit -a -m "$i $zebra"
-done
-git rev-list --objects HEAD~2..HEAD |
-git name-rev --stdin
+-- [mdw]
