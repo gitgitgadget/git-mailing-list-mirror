@@ -1,76 +1,66 @@
-From: "Sam Ravnborg" <sam@ravnborg.org>
-Subject: Re: [Census] So who uses git?
-Date: Tue, 31 Jan 2006 21:56:48 +0100 (CET)
-Message-ID: <29639.194.237.142.10.1138741008.squirrel@194.237.142.10>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com> 
-    <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org> 
-    <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com> 
-    <1138446030.9919.112.camel@evo.keithp.com> 
-    <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> 
-    <20060130185822.GA24487@hpsvcnb.fc.hp.com> 
-    <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
-     <Pine.LNX.4.64.0601310926330.7301@g5.osdl.org>
-    <1138734110.18852.26.camel@evo.keithp.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Set errno to EEXIST if mkdir returns EACCES or EPERM
+Date: Tue, 31 Jan 2006 00:16:22 +0100
+Message-ID: <20060130231622.GB3857@limbo.home>
+References: <20060130193839.GA6575@steel.home> <7vvew14frk.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Linus Torvalds" <torvalds@osdl.org>, keithp@keithp.com,
-	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
-	"Carl Baldwin" <cnb@fc.hp.com>, "Junio C Hamano" <junkio@cox.net>,
-	"Martin Langhoff" <martin.langhoff@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 31 21:58:43 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 31 22:00:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F42Zj-00032V-9K
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 21:58:07 +0100
+	id 1F42b9-0003UV-9O
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 21:59:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751479AbWAaU4x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 15:56:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbWAaU4x
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 15:56:53 -0500
-Received: from dslsmtp.struer.net ([62.242.36.21]:61969 "EHLO
-	dslsmtp.struer.net") by vger.kernel.org with ESMTP id S1751479AbWAaU4t
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 15:56:49 -0500
-Received-SPF: none (dslsmtp.struer.net: 62.242.36.15 is neither permitted nor denied by domain of ravnborg.org) client-ip=62.242.36.15; envelope-from=sam@ravnborg.org; helo=squirrelmail.post1.dk;
-Received: from squirrelmail.post1.dk (unknown [62.242.36.15])
-	by dslsmtp.struer.net (Postfix) with ESMTP id 4DE219373;
-	Tue, 31 Jan 2006 21:56:48 +0100 (CET)
-Received: from 194.237.142.10
-        (SquirrelMail authenticated user sam@ravnborg.org);
-        by squirrelmail.post1.dk with HTTP;
-        Tue, 31 Jan 2006 21:56:48 +0100 (CET)
-In-Reply-To: <1138734110.18852.26.camel@evo.keithp.com>
-To: "Keith Packard" <keithp@keithp.com>
-User-Agent: SquirrelMail/1.4.3a
-X-Mailer: SquirrelMail/1.4.3a
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1751480AbWAaU7c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 15:59:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751484AbWAaU7c
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 15:59:32 -0500
+Received: from devrace.com ([198.63.210.113]:35341 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S1751480AbWAaU7b (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 15:59:31 -0500
+Received: from tigra.home (p54A07FD9.dip.t-dialin.net [84.160.127.217])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id k0VKxKO6078016;
+	Tue, 31 Jan 2006 14:59:21 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from [192.168.1.24] (helo=limbo.home ident=200)
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1F42ap-0003vh-00; Tue, 31 Jan 2006 21:59:15 +0100
+Received: by limbo.home (Postfix, from userid 1000)
+	id DD3B2EC418; Tue, 31 Jan 2006 00:16:22 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vvew14frk.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.2.1i
+X-Spam-Status: No, score=1.3 required=4.5 tests=AWL,DATE_IN_PAST_12_24,
+	RCVD_IN_NJABL_DUL autolearn=no version=3.0.2
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15344>
 
-> As a newly initiated user, this would have been a more gentle
-> introduction to the system. But, it would be hard to make it entirely
-> invisible given the current interfaces. I'm not sure if obscuring the
-> presense of the index is a great plan; it's already hard enough to
-> figure out how it works.
+Junio C Hamano, Mon, Jan 30, 2006 21:33:51 +0100:
+> and have current callers of mkdir() use it, regardless of the
+> platform.  It may not worth saving mkdir_errno, though.
 
-I have found myself using a mixture of cogito and git commands lately.
-Part of it being that my finger type something like:
-rm `git ls-files -m`
-cg-restore
+errno may be worth saving. I find the process of finding
+"why-the-f$%^-did-the-windows-broke-again" really tedious:
+1. find the application which failed (grep for the die message)
+2. put "%s", strerror(errno) in the die
+3. retest
+4. find out errno is 0 (success)
+5. remove close(fd), munmap, whatever before the die
+6. retest
+7. repeat
 
-and I have not convinced them about git reset --hard
+> Then everybody but entry.c one would say force=0, and entry.c
+> one passes force appropriately using the condition it uses in
+> its current if() statement.
 
-
-But the primary thing is cg-commit
-I give you a list of files modified which can be edited and
-it have saved me a couple of times commiting to much.
-And I get vi fired up so no need to fiddle with command line argumetns.
-
-   Sam
+I like it :)
