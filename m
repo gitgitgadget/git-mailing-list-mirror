@@ -1,66 +1,84 @@
-From: Erik Mouw <erik@harddisk-recovery.com>
-Subject: Re: git vs git
-Date: Mon, 30 Jan 2006 18:23:45 +0100
-Organization: Harddisk-recovery.com
-Message-ID: <20060130172344.GA20867@harddisk-recovery.com>
-References: <d93f04c70601300714i4b7b3b58qa5aa151e3e42a413@mail.gmail.com> <20060130153715.GE30671@harddisk-recovery.com> <86acddirjr.fsf@blue.stonehenge.com>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [PATCH] diff: add --no-diff-deleted to make -p more pleasant
+Date: Mon, 30 Jan 2006 12:08:46 -0600
+Message-ID: <1138644525.24410.18.camel@cashmere.sps.mot.com>
+References: <20060129142403.GA15482@Muzzle>
+	 <7vy80ykd3j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Hendrik Visage <hvjunk@gmail.com>, david@dgreaves.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 30 18:24:18 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jan 30 19:09:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3cko-0000aJ-6H
-	for gcvg-git@gmane.org; Mon, 30 Jan 2006 18:23:51 +0100
+	id 1F3dSQ-0004hU-1t
+	for gcvg-git@gmane.org; Mon, 30 Jan 2006 19:08:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964821AbWA3RXr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jan 2006 12:23:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964822AbWA3RXr
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jan 2006 12:23:47 -0500
-Received: from dtp.xs4all.nl ([80.126.206.180]:64117 "HELO abra2.bitwizard.nl")
-	by vger.kernel.org with SMTP id S964821AbWA3RXq (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jan 2006 12:23:46 -0500
-Received: (qmail 3429 invoked by uid 501); 30 Jan 2006 18:23:45 +0100
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-Content-Disposition: inline
-In-Reply-To: <86acddirjr.fsf@blue.stonehenge.com>
-User-Agent: Mutt/1.5.9i
+	id S964849AbWA3SIu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jan 2006 13:08:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964862AbWA3SIt
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jan 2006 13:08:49 -0500
+Received: from az33egw01.freescale.net ([192.88.158.102]:25255 "EHLO
+	az33egw01.freescale.net") by vger.kernel.org with ESMTP
+	id S964849AbWA3SIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2006 13:08:48 -0500
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id k0UIODD2001214
+	for <git@vger.kernel.org>; Mon, 30 Jan 2006 11:24:13 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id k0UIHKul009865
+	for <git@vger.kernel.org>; Mon, 30 Jan 2006 12:17:21 -0600 (CST)
+To: Git List <git@vger.kernel.org>
+In-Reply-To: <7vy80ykd3j.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15285>
 
-On Mon, Jan 30, 2006 at 08:55:36AM -0800, Randal L. Schwartz wrote:
-> >>>>> "Erik" == Erik Mouw <erik@harddisk-recovery.com> writes:
+On Sun, 2006-01-29 at 14:12, Junio C Hamano wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
 > 
-> Erik>   #! /bin/sh
-> Erik>   # sct: call git
-> Erik>   gitpath=/path/to/git
-> Erik>   export PATH=$gitpath:$PATH
-> Erik>   exec $gitpath/git $*
+> > This is a feature I've stol^Wborrowed from svn that I find very
+> > useful since I usually don't care to see what I've deleted.
 > 
-> You must not get a lot of spaces in your pathnames.
-
-That usually doesn't happen in the kernel tree (which is what the OP
-wants to follow).
-
-> I think you want
-> those last two lines to be:
+> There is a thing called --diff-filter, and 
 > 
->         export PATH="$gitpath:$PATH"
->         exec "$gitpath/git" "$@"
+> 	git diff -p --no-diff-deleted
 > 
-> Typical lazy shell programmer. :) :)
+> is equivalent to
+> 
+> 	git diff -p --diff-filter=AM
+> 
+> when you are not using rename/copy detection (and a byte
+> shorter).
 
-Hey, I said "untested" :) But yeah, you're right. Your syntax is
-correct, every time I write such a wrapper I try to remember it...
+Hmmm.... I think this may be the problem:
 
+    % grep -r diff-filter Documentation/
+    Documentation/git-diff.txt:$ git diff --diff-filter=MRC <1>
 
-Erik
+And that is:
 
--- 
-+-- Erik Mouw -- www.harddisk-recovery.com -- +31 70 370 12 90 --
-| Lab address: Delftechpark 26, 2628 XH, Delft, The Netherlands
+    Limiting the diff output::
+    +
+    ------------
+    $ git diff --diff-filter=MRC <1>
+    $ git diff --name-status -r <2>
+    $ git diff arch/i386 include/asm-i386 <3>
+ 
+    <1> show only modification, rename and copy, but not addition
+    nor deletion.
+    <2> show only names and the nature of change, but not actual
+    diff output.  --name-status disables usual patch generation
+    which in turn also disables recursive behaviour, so without -r
+    you would only see the directory name if there is a change in a
+    file in a subdirectory.
+    <3> limit diff output to named subtrees.
+
+That's pretty thin documentation there.
+Unless someone beats me to it, I'll try to find
+a spare documentation cycle...
+
+jdl
