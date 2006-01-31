@@ -1,153 +1,115 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: [PATCH 2/2] Make git-tar-tree use the tree_desc abstractions
-Date: Tue, 31 Jan 2006 14:13:40 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601311411080.7301@g5.osdl.org>
-References: <Pine.LNX.4.64.0601311407460.7301@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [Census] So who uses git?
+Date: Tue, 31 Jan 2006 14:21:43 -0800
+Message-ID: <7vzmlcrqbs.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
+	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
+	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
+	<1138446030.9919.112.camel@evo.keithp.com>
+	<7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
+	<20060130185822.GA24487@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0601310926330.7301@g5.osdl.org>
+	<1138734110.18852.26.camel@evo.keithp.com>
+	<29639.194.237.142.10.1138741008.squirrel@194.237.142.10>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue Jan 31 23:14:18 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 31 23:22:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F43ky-000699-DO
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 23:13:49 +0100
+	id 1F43sl-0007x5-4W
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 23:21:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751677AbWAaWNp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 17:13:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751679AbWAaWNp
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 17:13:45 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:38052 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751678AbWAaWNo (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 17:13:44 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0VMDfDZ010021
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 31 Jan 2006 14:13:41 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0VMDec8002733;
-	Tue, 31 Jan 2006 14:13:40 -0800
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0601311407460.7301@g5.osdl.org>
-X-Spam-Status: No, hits=-6 required=5 tests=PATCH_UNIFIED_DIFF_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751683AbWAaWVs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 17:21:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751685AbWAaWVs
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 17:21:48 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:61949 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751683AbWAaWVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 17:21:47 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060131221905.LAVC17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 31 Jan 2006 17:19:05 -0500
+To: "Sam Ravnborg" <sam@ravnborg.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15358>
+
+"Sam Ravnborg" <sam@ravnborg.org> writes:
+
+> But the primary thing is cg-commit
+> I give you a list of files modified which can be edited and
+> it have saved me a couple of times commiting to much.
+> And I get vi fired up so no need to fiddle with command line argumetns.
+
+[this is what I sent in a separate message but I goofed up the
+destination headers and the message did not appear on the list,
+so I am reprinting.]
+
+I have always felt "git commit paths..." was a mistake; it
+encourages partial commits by individual developers.
+
+By "partial commit", I mean a commit that does not exactly match
+the state of the working tree when the commit is made.  There
+are two kinds of "partial commits".  Good ones and bad ones.
+
+Being able to make partial commits is handy for people whose
+primary role is to integrate many changes from trusted
+developers rather than testing each and every commit as a whole
+(read: Linus and subsystem maintainers).  Integrators' job may
+include testing what have been merged as a whole by a compile
+and reboot cycle as the final "wrap-up" step, but the most
+important role they play is to sanity check the changes from
+architectural perspective.
+
+For that workflow to work effectively, however, the changes fed
+by individual developers to the integrators have to be clean and
+well tested.  A partial commit records something that never
+existed in any working tree as a whole, so by definition it is
+an untested change.  You would risk "sorry I forgot to commit
+the changes to these paths but without them it does not even
+compile", and end up wasting integrators' time.
+
+The integrators make commits out of their working trees using
+git-merge and git-apply to record changes made by others after
+reviewing them.  These commands ignore unconflicting local
+changes (but notices conflicting ones to operate correctly), and
+allow them to make partial commits.  This is a good thing;
+otherwise they would have to reset their own changes in their
+working tree, only to do merges and to accept patches.  However,
+people playing the integrator role rarely have reason to use
+"git commit paths..." while merging from others to make such a
+partial commit.  Only after they resolve conflicts by hand,
+perhaps.  But that happens far less often than careless
+individual developers making partial commits of bad kind using
+the same "git commit paths..." command.
+
+This is the reason why I feel "git commit paths..." is a bad
+feature.  It helps to make bad partial commits, without having
+to do much with making good partial commits.
+
+Many SCMs may have the ability to do "commit paths...", but that
+does not change the fact that it encourages carelessness for
+individual developers, which is especially bad in a distributed
+development workflow like the Linux kernel style [*1*].
+
+But that was not my change ;-).
 
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
+[Foornote]
 
-This is a first try at making git-tar-tree use the "struct tree_desc" 
-infrastructure. I actually did test it by creating a tar-file of Linux 
-v2.6.15, and it _seemed_ to work, and it passes all the git testsuite, but 
-hey, that was all very superficial.
-
-It was a pretty straightforward change from "struct tree" to "struct 
-tree_desc", though, so it should all be fine. Daniel had already cleaned 
-up the code by his original conversion.
-
-diff --git a/tar-tree.c b/tar-tree.c
-index d36baed..e85a1ed 100644
---- a/tar-tree.c
-+++ b/tar-tree.c
-@@ -3,7 +3,7 @@
-  */
- #include <time.h>
- #include "cache.h"
--#include "tree.h"
-+#include "diff.h"
- #include "commit.h"
- 
- #define RECORDSIZE	(512)
-@@ -336,37 +336,38 @@ static void write_header(const unsigned 
- 	write_if_needed();
- }
- 
--static void traverse_tree(struct tree *tree,
-+static void traverse_tree(struct tree_desc *tree,
- 			  struct path_prefix *prefix)
- {
- 	struct path_prefix this_prefix;
--	struct tree_entry_list *item;
- 	this_prefix.prev = prefix;
- 
--	parse_tree(tree);
--	item = tree->entries;
--
--	while (item) {
-+	while (tree->size) {
-+		const char *name;
-+		const unsigned char *sha1;
-+		unsigned mode;
- 		void *eltbuf;
- 		char elttype[20];
- 		unsigned long eltsize;
- 
--		eltbuf = read_sha1_file(item->item.any->sha1, 
--					elttype, &eltsize);
-+		sha1 = tree_entry_extract(tree, &name, &mode);
-+		update_tree_entry(tree);
-+
-+		eltbuf = read_sha1_file(sha1, elttype, &eltsize);
- 		if (!eltbuf)
--			die("cannot read %s", 
--			    sha1_to_hex(item->item.any->sha1));
--		write_header(item->item.any->sha1, TYPEFLAG_AUTO, basedir, 
--			     prefix, item->name,
--		             item->mode, eltbuf, eltsize);
--		if (item->directory) {
--			this_prefix.name = item->name;
--			traverse_tree(item->item.tree, &this_prefix);
--		} else if (!item->symlink) {
-+			die("cannot read %s", sha1_to_hex(sha1));
-+		write_header(sha1, TYPEFLAG_AUTO, basedir, 
-+			     prefix, name, mode, eltbuf, eltsize);
-+		if (S_ISDIR(mode)) {
-+			struct tree_desc subtree;
-+			subtree.buf = eltbuf;
-+			subtree.size = eltsize;
-+			this_prefix.name = name;
-+			traverse_tree(&subtree, &this_prefix);
-+		} else if (!S_ISLNK(mode)) {
- 			write_blocked(eltbuf, eltsize);
- 		}
- 		free(eltbuf);
--		item = item->next;
- 	}
- }
- 
-@@ -374,7 +375,7 @@ int main(int argc, char **argv)
- {
- 	unsigned char sha1[20];
- 	struct commit *commit;
--	struct tree *tree;
-+	struct tree_desc tree;
- 
- 	setup_git_directory();
- 
-@@ -395,8 +396,8 @@ int main(int argc, char **argv)
- 		write_global_extended_header(commit->object.sha1);
- 		archive_time = commit->date;
- 	}
--	tree = parse_tree_indirect(sha1);
--	if (!tree)
-+	tree.buf = read_object_with_reference(sha1, "tree", &tree.size, NULL);
-+	if (!tree.buf)
- 		die("not a reference to a tag, commit or tree object: %s",
- 		    sha1_to_hex(sha1));
- 	if (!archive_time)
-@@ -404,7 +405,7 @@ int main(int argc, char **argv)
- 	if (basedir)
- 		write_header((unsigned char *)"0", TYPEFLAG_DIR, NULL, NULL,
- 			basedir, 040777, NULL, 0);
--	traverse_tree(tree, NULL);
-+	traverse_tree(&tree, NULL);
- 	write_trailer();
- 	return 0;
- }
+*1* It could be argued that being able to do partial commit is a
+good thing in other SCM systems where there is no equivalent to
+our "index" file.  It is one way for the developer to snapshot
+their work-in-progress state where they might later come back to
+if the approach they are currently pursuing does not pan out.
+But for that, we have index file we can "check into" without
+committing.
