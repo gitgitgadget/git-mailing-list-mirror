@@ -1,66 +1,62 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Set errno to EEXIST if mkdir returns EACCES or EPERM
-Date: Tue, 31 Jan 2006 00:16:22 +0100
-Message-ID: <20060130231622.GB3857@limbo.home>
-References: <20060130193839.GA6575@steel.home> <7vvew14frk.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] shallow clone
+Date: Tue, 31 Jan 2006 12:59:31 -0800
+Message-ID: <7vr76oun9o.fsf@assigned-by-dhcp.cox.net>
+References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v8xsxa70o.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 31 22:00:12 2006
+X-From: git-owner@vger.kernel.org Tue Jan 31 22:00:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F42b9-0003UV-9O
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 21:59:36 +0100
+	id 1F42bA-0003UV-E0
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 21:59:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbWAaU7c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 15:59:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751484AbWAaU7c
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 15:59:32 -0500
-Received: from devrace.com ([198.63.210.113]:35341 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1751480AbWAaU7b (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 15:59:31 -0500
-Received: from tigra.home (p54A07FD9.dip.t-dialin.net [84.160.127.217])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k0VKxKO6078016;
-	Tue, 31 Jan 2006 14:59:21 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from [192.168.1.24] (helo=limbo.home ident=200)
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1F42ap-0003vh-00; Tue, 31 Jan 2006 21:59:15 +0100
-Received: by limbo.home (Postfix, from userid 1000)
-	id DD3B2EC418; Tue, 31 Jan 2006 00:16:22 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vvew14frk.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.2.1i
-X-Spam-Status: No, score=1.3 required=4.5 tests=AWL,DATE_IN_PAST_12_24,
-	RCVD_IN_NJABL_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S1751397AbWAaU7f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 15:59:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbWAaU7f
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 15:59:35 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:28599 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751397AbWAaU7e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 15:59:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060131205834.ZVUJ3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 31 Jan 2006 15:58:34 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <7v8xsxa70o.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Mon, 30 Jan 2006 10:46:15 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15345>
 
-Junio C Hamano, Mon, Jan 30, 2006 21:33:51 +0100:
-> and have current callers of mkdir() use it, regardless of the
-> platform.  It may not worth saving mkdir_errno, though.
+This is whacky, but another completely different strategy is to
+introduce remote alternates.
 
-errno may be worth saving. I find the process of finding
-"why-the-f$%^-did-the-windows-broke-again" really tedious:
-1. find the application which failed (grep for the die message)
-2. put "%s", strerror(errno) in the die
-3. retest
-4. find out errno is 0 (success)
-5. remove close(fd), munmap, whatever before the die
-6. retest
-7. repeat
+If you can allow objects/info/alternates to name a repository
+that is not on the local disk, we can set the original remote
+repository we "clone" from as one of the alternates, and teach
+read_sha1_file() to locally cache objects we read from remote
+alternates.
 
-> Then everybody but entry.c one would say force=0, and entry.c
-> one passes force appropriately using the condition it uses in
-> its current if() statement.
+After such a "shallow clone", the user may want to prime the
+cache by something like:
 
-I like it :)
+	$ git-rev-list --objects v2.6.14..master |
+          git-pack-objects --stdout >/dev/null
+
+before going offline.  Obviously you can keep the resulting pack
+instead of leaving things loose.
+
+I am not seriously advocating this yet -- adding calls to http
+and git transfer machinery in read_sha1_file(), which is as low
+level as you can go, is not something I have guts to do at the
+moment.
