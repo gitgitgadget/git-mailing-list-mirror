@@ -1,117 +1,74 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Make apply accept the -pNUM option like patch does.
-Date: Tue, 31 Jan 2006 00:36:24 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0601310015460.25300@iabervon.org>
-References: <43DE1DB7.20909@f2s.com>
+From: Franck <vagabon.xyz@gmail.com>
+Subject: Re: [RFC] shallow clone
+Date: Tue, 31 Jan 2006 09:37:38 +0100
+Message-ID: <cda58cb80601310037s58989b26s@mail.gmail.com>
+References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <43DDFF5C.30803@hogyros.de> <7v64o18qn4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 31 06:34:28 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Simon Richter <Simon.Richter@hogyros.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 31 09:38:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3o9g-0004pb-R8
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 06:34:17 +0100
+	id 1F3r1F-0007mh-Tq
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 09:37:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965026AbWAaFeL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 00:34:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965025AbWAaFeL
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 00:34:11 -0500
-Received: from iabervon.org ([66.92.72.58]:62221 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S965026AbWAaFeK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 00:34:10 -0500
-Received: (qmail 29079 invoked by uid 1000); 31 Jan 2006 00:36:25 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 31 Jan 2006 00:36:25 -0500
-To: Ian Molton <spyro@f2s.com>
-In-Reply-To: <43DE1DB7.20909@f2s.com>
+	id S1030369AbWAaIhj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 03:37:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965059AbWAaIhj
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 03:37:39 -0500
+Received: from zproxy.gmail.com ([64.233.162.197]:26358 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S965055AbWAaIhj convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 03:37:39 -0500
+Received: by zproxy.gmail.com with SMTP id 14so1251905nzn
+        for <git@vger.kernel.org>; Tue, 31 Jan 2006 00:37:38 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LVAwGVbSXVUMQd14cl7B+KgwlQA5A8wVW0S6ZcVfeh5ypKggwUmjlMHucFwmWxbd+kb3WAztSdupKYvKsR4En3ErGNncUBh3xVdhboi3UvWaymcMbPD5ZoZccszqfZjLcGd4kXcVcLf5WGByPH7d3E63S+EgHRZ4YzjWmrfGsIw=
+Received: by 10.37.13.2 with SMTP id q2mr5527021nzi;
+        Tue, 31 Jan 2006 00:37:38 -0800 (PST)
+Received: by 10.36.49.12 with HTTP; Tue, 31 Jan 2006 00:37:38 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64o18qn4.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15303>
 
-This only applies to traditional diffs, not to git diffs.
+2006/1/30, Junio C Hamano <junkio@cox.net>:
+> Simon Richter <Simon.Richter@hogyros.de> writes:
+>
+> >> - disallow fetching from this repo, and
+> >
+> > Why? It's perfectly acceptable to pull from an incomplete repo, as
+> > long as you don't care about the old history.
+>
+> I agree.  As long as the cloned one can record itself as a
+> shallow one (and with what epochs), I do not see a reason to
+> forbid second generation clone from a shallow repository.
+>
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+I agree too
 
----
-On Mon, 30 Jan 2006, Ian Molton wrote:
+> Cauterizing is not any more special than other grafts entries.
+> If you have grafted historical kernel repository behind the
+> official kernel repository with 2.6.12-rc2 epoch, I do not think
+> of any reason to forbid people from cloning such with the
+> grafts.
+>
 
-> Hi.
-> 
-> is there any reason why git insists diffs be -p1 format ?
+I built my public repository from a cautorized one and everybody who
+is pulling from mine is aware of the lack of the full history but they
+actually don't care. If someone is pulling from my repo, he actually
+wants to work on my project which do not need any old thing...
 
-Try this patch. Completely untested; if it works, tell Junio. :)
-
- Documentation/git-apply.txt |    6 +++++-
- apply.c                     |    8 ++++++--
- 2 files changed, 11 insertions(+), 3 deletions(-)
-
-2490f3129103a0eae9013eb2a6f564f4a7290fbd
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index 51c7d47..75076b6 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git-apply' [--stat] [--numstat] [--summary] [--check] [--index] [--apply]
--	  [--no-add] [--index-info] [--allow-binary-replacement] [-z]
-+	  [--no-add] [--index-info] [--allow-binary-replacement] [-z] [-pNUM]
- 	  [<patch>...]
- 
- DESCRIPTION
-@@ -68,6 +68,10 @@ OPTIONS
- 	backslash characters replaced with `\t`, `\n`, and `\\`,
- 	respectively.
- 
-+-p<n>::
-+	Remove <n> leading slashes from traditional diff paths. The
-+	default is 1.
-+
- --apply::
- 	If you use any of the options marked ``Turns off
- 	"apply"'' above, git-apply reads and outputs the
-diff --git a/apply.c b/apply.c
-index c471a82..79e23a7 100644
---- a/apply.c
-+++ b/apply.c
-@@ -19,6 +19,7 @@
- static const char *prefix;
- static int prefix_length = -1;
- 
-+static int p_value = 1;
- static int allow_binary_replacement = 0;
- static int check_index = 0;
- static int write_index = 0;
-@@ -31,7 +32,7 @@ static int no_add = 0;
- static int show_index_info = 0;
- static int line_termination = '\n';
- static const char apply_usage[] =
--"git-apply [--stat] [--numstat] [--summary] [--check] [--index] [--apply] [--no-add] [--index-info] [--allow-binary-replacement] [-z] <patch>...";
-+"git-apply [--stat] [--numstat] [--summary] [--check] [--index] [--apply] [--no-add] [--index-info] [--allow-binary-replacement] [-z] [-pNUM] <patch>...";
- 
- /*
-  * For "diff-stat" like behaviour, we keep track of the biggest change
-@@ -217,7 +218,6 @@ static char * find_name(const char *line
-  */
- static void parse_traditional_patch(const char *first, const char *second, struct patch *patch)
- {
--	int p_value = 1;
- 	char *name;
- 
- 	first += 4;	// skip "--- "
-@@ -1799,6 +1799,10 @@ int main(int argc, char **argv)
- 			excludes = x;
- 			continue;
- 		}
-+		if (!strncmp(arg, "-p", 2)) {
-+			p_value = atoi(arg + 2);
-+			continue;
-+		}
- 		if (!strcmp(arg, "--no-add")) {
- 			no_add = 1;
- 			continue;
--- 
-0.99.6.g3480
+Thanks
+--
+               Franck
