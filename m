@@ -1,89 +1,65 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Bottlenecks in git merge
-Date: Wed, 1 Feb 2006 00:35:04 +0100
-Message-ID: <20060131233504.GB31278@pasky.or.cz>
-References: <20060131213314.GA32131@ebar091.ebar.dtu.dk> <7vk6cgq9ny.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [Census] So who uses git?
+Date: Wed, 1 Feb 2006 00:36:12 +0100
+Message-ID: <20060131233612.GC31278@pasky.or.cz>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com> <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org> <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com> <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> <20060130185822.GA24487@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0601311750270.25300@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Peter Eriksen <s022018@student.dtu.dk>,
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
+	Keith Packard <keithp@keithp.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 01 00:34:56 2006
+X-From: git-owner@vger.kernel.org Wed Feb 01 00:36:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F451O-0006vZ-5P
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 00:34:50 +0100
+	id 1F452V-00079u-9Z
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 00:35:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932129AbWAaXer (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 18:34:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932130AbWAaXer
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 18:34:47 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:7064 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932129AbWAaXer (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 18:34:47 -0500
-Received: (qmail 15492 invoked by uid 2001); 1 Feb 2006 00:35:04 +0100
-To: Junio C Hamano <junkio@cox.net>
+	id S932134AbWAaXf4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 18:35:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932131AbWAaXf4
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 18:35:56 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:9368 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932142AbWAaXfz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 18:35:55 -0500
+Received: (qmail 15694 invoked by uid 2001); 1 Feb 2006 00:36:12 +0100
+To: Daniel Barkalow <barkalow@iabervon.org>
 Content-Disposition: inline
-In-Reply-To: <7vk6cgq9ny.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <Pine.LNX.4.64.0601311750270.25300@iabervon.org>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15364>
 
-Dear diary, on Wed, Feb 01, 2006 at 12:06:57AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> "Peter Eriksen" <s022018@student.dtu.dk> writes:
+Dear diary, on Wed, Feb 01, 2006 at 12:16:26AM CET, I got a letter
+where Daniel Barkalow <barkalow@iabervon.org> said that...
+> On Tue, 31 Jan 2006, Johannes Schindelin wrote:
 > 
-> > Recursive (default):  4m22.282s
-> > Resolve (-s resolve): 3m23.548s
-> >
-> > What is taking so long?
+> > Hi,
+> > 
+> > On Mon, 30 Jan 2006, Carl Baldwin wrote:
+> > 
+> > > In general, I think it is grasping the reason for the index file and how 
+> > > git commands like git-commit and git-diff interact with it.
+> > 
+> > IMHO this is the one big showstopper. I had problems explaining the 
+> > concept myself.
+> > 
+> > For example, I had a hard time explaining to a friend why a git-add'ed 
+> > file is committed when saying "git commit some_other_file", but not 
+> > another (modified) file. Very unintuitive.
 > 
-> I am actually surprised that recursive is not much slower than
-> resolve.  I expected to see bigger difference for a merge like
-> this.
-> 
-> > git checkout -b test v2.6.12
-> > change_readme
-> > git commit -a -m "Work, work, work"
-> > time git merge $STRATEGY "Merging happily." HEAD v2.6.15
-> 
-> You are merging a variant of v2.6.12 and v2.6.15.  Each of these
-> two official revisions has roughly 18,000 files, and they differ
-> at 10,723 files among them.
-> 
-> With an up-to-date index that has small changes from v2.6.12,
-> merging these two revisions using read-tree -m to do the trivial
-> merge (the part that comes before recursive/resolve) leaves
-> about 850 files to be resolved in the working tree.  For these
-> files, you need to do an equivalent of merge-one-file to merge
-> the differences (in this particular case, most of them are
-> "removed in one but unchanged in the other" kind).  In addition,
-> you have to checkout the result of the merge, which means you
-> need to update at least 10,723 files.
-> 
-> I suspect that it might make things quite faster if we resolved
-> case 8 and 10 (see either Documentation/technical/trivial-merge
-> or t/t1000) in index for this particular case, but it has
-> correctness issues.  A merge strategy may want to say "This file
-> was removed by the other branch while it stayed on our branch;
-> but this is not a remove but actually a rename", and do
-> something different from what merge-one-file does, and resolving
-> these cases in index closes the door for that possibility.
+> I sort of suspect that "git commit some_other_file" should really read 
+> HEAD into a temporary index, update "some_other_file" in that (and the 
+> main index), and commit it.
 
-What about letting the file-handler actually tell merge-index what to
-do? merge-index could make a fifo at fd 3 for it (we might fork a
-special buffering process for it to avoid PIPE_BUF issues) and let it
-write there a sequence of lines like:
-
-	path\0{add|remove|update} {workingcopy|<sha1> <mode>}
-
-That would avoid many in-file-handler forks and especially perpetual
-reloading and rewriting of the index file, which _seems_ to be the main
-time waster according to my somewhat fuzzy benchmarks.
+FWIW, this is also what cg-commit does.
 
 -- 
 				Petr "Pasky" Baudis
