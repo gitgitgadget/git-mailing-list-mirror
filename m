@@ -1,118 +1,153 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: [PATCH 1/2] Make the "struct tree_desc" operations available to
- others
-Date: Tue, 31 Jan 2006 14:10:56 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601311407460.7301@g5.osdl.org>
+Subject: [PATCH 2/2] Make git-tar-tree use the tree_desc abstractions
+Date: Tue, 31 Jan 2006 14:13:40 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601311411080.7301@g5.osdl.org>
+References: <Pine.LNX.4.64.0601311407460.7301@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue Jan 31 23:12:41 2006
+X-From: git-owner@vger.kernel.org Tue Jan 31 23:14:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F43iM-0005S2-QX
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 23:11:07 +0100
+	id 1F43ky-000699-DO
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 23:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751675AbWAaWLD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 17:11:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751673AbWAaWLD
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 17:11:03 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:5028 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751674AbWAaWLA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 17:11:00 -0500
+	id S1751677AbWAaWNp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 17:13:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751679AbWAaWNp
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 17:13:45 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:38052 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751678AbWAaWNo (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 17:13:44 -0500
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0VMAuDZ009911
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0VMDfDZ010021
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 31 Jan 2006 14:10:57 -0800
+	Tue, 31 Jan 2006 14:13:41 -0800
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0VMAuWJ002624;
-	Tue, 31 Jan 2006 14:10:56 -0800
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0VMDec8002733;
+	Tue, 31 Jan 2006 14:13:40 -0800
 To: Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
+In-Reply-To: <Pine.LNX.4.64.0601311407460.7301@g5.osdl.org>
+X-Spam-Status: No, hits=-6 required=5 tests=PATCH_UNIFIED_DIFF_OSDL
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
 X-MIMEDefang-Filter: osdl$Revision: 1.129 $
 X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15357>
 
-
-We have operations to "extract" and "update" a "struct tree_desc", but we 
-only used them in tree-diff.c and they were static to that file.
-
-But other tree traversal functions can use them to their advantage
 
 Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 ---
 
-This is just infrastructure. No real changes, except for the renaming of 
-the "extract()" function to make it have a more palatable name when it's
-globally visible.
+This is a first try at making git-tar-tree use the "struct tree_desc" 
+infrastructure. I actually did test it by creating a tar-file of Linux 
+v2.6.15, and it _seemed_ to work, and it passes all the git testsuite, but 
+hey, that was all very superficial.
 
-diff --git a/diff.h b/diff.h
-index 9a0169c..32134d7 100644
---- a/diff.h
-+++ b/diff.h
-@@ -13,6 +13,9 @@ struct tree_desc {
- 	unsigned long size;
- };
+It was a pretty straightforward change from "struct tree" to "struct 
+tree_desc", though, so it should all be fine. Daniel had already cleaned 
+up the code by his original conversion.
+
+diff --git a/tar-tree.c b/tar-tree.c
+index d36baed..e85a1ed 100644
+--- a/tar-tree.c
++++ b/tar-tree.c
+@@ -3,7 +3,7 @@
+  */
+ #include <time.h>
+ #include "cache.h"
+-#include "tree.h"
++#include "diff.h"
+ #include "commit.h"
  
-+extern void update_tree_entry(struct tree_desc *);
-+extern const unsigned char *tree_entry_extract(struct tree_desc *, const char **, unsigned int *);
-+
- struct diff_options;
- 
- typedef void (*change_fn_t)(struct diff_options *options,
-diff --git a/tree-diff.c b/tree-diff.c
-index 382092b..d978428 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -9,7 +9,7 @@ static int nr_paths = 0;
- static const char **paths = NULL;
- static int *pathlens = NULL;
- 
--static void update_tree_entry(struct tree_desc *desc)
-+void update_tree_entry(struct tree_desc *desc)
- {
- 	void *buf = desc->buf;
- 	unsigned long size = desc->size;
-@@ -21,7 +21,7 @@ static void update_tree_entry(struct tre
- 	desc->size = size - len;
+ #define RECORDSIZE	(512)
+@@ -336,37 +336,38 @@ static void write_header(const unsigned 
+ 	write_if_needed();
  }
  
--static const unsigned char *extract(struct tree_desc *desc, const char **pathp, unsigned int *modep)
-+const unsigned char *tree_entry_extract(struct tree_desc *desc, const char **pathp, unsigned int *modep)
+-static void traverse_tree(struct tree *tree,
++static void traverse_tree(struct tree_desc *tree,
+ 			  struct path_prefix *prefix)
  {
- 	void *tree = desc->buf;
- 	unsigned long size = desc->size;
-@@ -56,8 +56,8 @@ static int compare_tree_entry(struct tre
- 	const unsigned char *sha1, *sha2;
- 	int cmp, pathlen1, pathlen2;
+ 	struct path_prefix this_prefix;
+-	struct tree_entry_list *item;
+ 	this_prefix.prev = prefix;
  
--	sha1 = extract(t1, &path1, &mode1);
--	sha2 = extract(t2, &path2, &mode2);
-+	sha1 = tree_entry_extract(t1, &path1, &mode1);
-+	sha2 = tree_entry_extract(t2, &path2, &mode2);
+-	parse_tree(tree);
+-	item = tree->entries;
+-
+-	while (item) {
++	while (tree->size) {
++		const char *name;
++		const unsigned char *sha1;
++		unsigned mode;
+ 		void *eltbuf;
+ 		char elttype[20];
+ 		unsigned long eltsize;
  
- 	pathlen1 = strlen(path1);
- 	pathlen2 = strlen(path2);
-@@ -109,7 +109,7 @@ static int interesting(struct tree_desc 
- 	if (!nr_paths)
- 		return 1;
+-		eltbuf = read_sha1_file(item->item.any->sha1, 
+-					elttype, &eltsize);
++		sha1 = tree_entry_extract(tree, &name, &mode);
++		update_tree_entry(tree);
++
++		eltbuf = read_sha1_file(sha1, elttype, &eltsize);
+ 		if (!eltbuf)
+-			die("cannot read %s", 
+-			    sha1_to_hex(item->item.any->sha1));
+-		write_header(item->item.any->sha1, TYPEFLAG_AUTO, basedir, 
+-			     prefix, item->name,
+-		             item->mode, eltbuf, eltsize);
+-		if (item->directory) {
+-			this_prefix.name = item->name;
+-			traverse_tree(item->item.tree, &this_prefix);
+-		} else if (!item->symlink) {
++			die("cannot read %s", sha1_to_hex(sha1));
++		write_header(sha1, TYPEFLAG_AUTO, basedir, 
++			     prefix, name, mode, eltbuf, eltsize);
++		if (S_ISDIR(mode)) {
++			struct tree_desc subtree;
++			subtree.buf = eltbuf;
++			subtree.size = eltsize;
++			this_prefix.name = name;
++			traverse_tree(&subtree, &this_prefix);
++		} else if (!S_ISLNK(mode)) {
+ 			write_blocked(eltbuf, eltsize);
+ 		}
+ 		free(eltbuf);
+-		item = item->next;
+ 	}
+ }
  
--	(void)extract(desc, &path, &mode);
-+	(void)tree_entry_extract(desc, &path, &mode);
- 
- 	pathlen = strlen(path);
- 	baselen = strlen(base);
-@@ -167,7 +167,7 @@ static int show_entry(struct diff_option
+@@ -374,7 +375,7 @@ int main(int argc, char **argv)
  {
- 	unsigned mode;
- 	const char *path;
--	const unsigned char *sha1 = extract(desc, &path, &mode);
-+	const unsigned char *sha1 = tree_entry_extract(desc, &path, &mode);
+ 	unsigned char sha1[20];
+ 	struct commit *commit;
+-	struct tree *tree;
++	struct tree_desc tree;
  
- 	if (opt->recursive && S_ISDIR(mode)) {
- 		char type[20];
+ 	setup_git_directory();
+ 
+@@ -395,8 +396,8 @@ int main(int argc, char **argv)
+ 		write_global_extended_header(commit->object.sha1);
+ 		archive_time = commit->date;
+ 	}
+-	tree = parse_tree_indirect(sha1);
+-	if (!tree)
++	tree.buf = read_object_with_reference(sha1, "tree", &tree.size, NULL);
++	if (!tree.buf)
+ 		die("not a reference to a tag, commit or tree object: %s",
+ 		    sha1_to_hex(sha1));
+ 	if (!archive_time)
+@@ -404,7 +405,7 @@ int main(int argc, char **argv)
+ 	if (basedir)
+ 		write_header((unsigned char *)"0", TYPEFLAG_DIR, NULL, NULL,
+ 			basedir, 040777, NULL, 0);
+-	traverse_tree(tree, NULL);
++	traverse_tree(&tree, NULL);
+ 	write_trailer();
+ 	return 0;
+ }
