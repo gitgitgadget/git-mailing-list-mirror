@@ -1,55 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix HTTP request result processing after slot reuse
-Date: Tue, 31 Jan 2006 13:39:01 -0800
-Message-ID: <7v64o0ulfu.fsf@assigned-by-dhcp.cox.net>
-References: <20060131190655.GE3873@reactrix.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 3/3] Use struct tree in diff-tree
+Date: Tue, 31 Jan 2006 16:49:38 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0601311626070.25300@iabervon.org>
+References: <Pine.LNX.4.64.0601291336420.25300@iabervon.org>
+ <Pine.LNX.4.64.0601291405250.25300@iabervon.org> <Pine.LNX.4.64.0601310846380.7301@g5.osdl.org>
+ <7virs0uma8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 31 22:39:19 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 31 22:47:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F43DO-0006C0-JN
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 22:39:06 +0100
+	id 1F43LR-0008NO-Id
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 22:47:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524AbWAaVjD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 16:39:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751527AbWAaVjD
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 16:39:03 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:43741 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751524AbWAaVjC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 16:39:02 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060131213803.PRG3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 31 Jan 2006 16:38:03 -0500
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20060131190655.GE3873@reactrix.com> (Nick Hengeveld's message of
-	"Tue, 31 Jan 2006 11:06:55 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751542AbWAaVrX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 16:47:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751544AbWAaVrW
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 16:47:22 -0500
+Received: from iabervon.org ([66.92.72.58]:270 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751542AbWAaVrW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 16:47:22 -0500
+Received: (qmail 3062 invoked by uid 1000); 31 Jan 2006 16:49:38 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 31 Jan 2006 16:49:38 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7virs0uma8.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15351>
 
-Nick Hengeveld <nickh@reactrix.com> writes:
+On Tue, 31 Jan 2006, Junio C Hamano wrote:
 
-> Add a way to store the results of an HTTP request when a slot finishes
-> so the results can be processed after the slot has been reused.
->
-> Signed-off-by: Nick Hengeveld <nickh@reactrix.com>
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > On Sun, 29 Jan 2006, Daniel Barkalow wrote:
+> >>
+> >> It had been open-coding a tree parser. This updates the programs that
+> >> call diff_tree() to send it the struct tree instead of a buffer and
+> >> size.
+> >
+> > Please don't.
+> > ...
+> > Junio, please don't apply this.
+> >
+> > 		Linus
+> 
+> I haven't, and I won't.  From my gut feeling I did not even
+> place it in "pu".  After timing it myself and then looking at
+> the code I agree with your analysis.
+> 
+> The one to git-tar-tree I've already applied, mostly because I
+> was not careful enough and especially I did not care enough
+> about performance of that program.  On my slow machine the tip
+> of kernel before you came back takes 9.2 seconds wallclock as
+> opposed to 8.7 seconds to tar up, so the patch degrades the
+> performance by about 5%.  Maybe we would want to revert that one
+> as well.
 
-I do not claim I understand this part of the code well, but it
-feels awkward to see that a problem caused by a structure being
-reused can be solved by having a pointer from that structure
-that points at a static location.
+Probably a better solution is to move the tree parser from tree-diff.c 
+into tree.c, provide a clear API in tree.h, and use that in tar-tree. 
+There's definitely no need to have another parser beyond the one 
+currently in tree-diff and the struct tree one.
 
-These static variables are probably correct, provided if
-fetch_index, fetch_indices and friends do not recurse into
-themselves, but it just gives me this funny feeling...
+I think I should be able to change the struct tree API slightly to make it 
+an iterator instead of a linked list, and get the efficiency benefits of 
+the tree-diff parser while still having a nice API.
 
-Care to enlighten me, please?
+	-Daniel
+*This .sig left intentionally blank*
