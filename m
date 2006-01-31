@@ -1,81 +1,112 @@
-From: Franck <vagabon.xyz@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [RFC] shallow clone
-Date: Tue, 31 Jan 2006 12:11:53 +0100
-Message-ID: <cda58cb80601310311v45531fb5u@mail.gmail.com>
+Date: Tue, 31 Jan 2006 12:28:39 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0601311127490.25248@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <43DDFF5C.30803@hogyros.de> <7v64o18qn4.fsf@assigned-by-dhcp.cox.net>
-	 <cda58cb80601310037s58989b26s@mail.gmail.com>
-	 <7vvew03hls.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
+ <43DDFF5C.30803@hogyros.de> <Pine.LNX.4.63.0601301305100.20228@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vzmld7c2g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 31 12:12:21 2006
+X-From: git-owner@vger.kernel.org Tue Jan 31 12:28:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3tQf-0006uh-Qo
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 12:12:10 +0100
+	id 1F3tgk-000245-FB
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 12:28:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750760AbWAaLLz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 06:11:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbWAaLLz
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 06:11:55 -0500
-Received: from zproxy.gmail.com ([64.233.162.201]:1045 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750760AbWAaLLy convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 06:11:54 -0500
-Received: by zproxy.gmail.com with SMTP id 14so1271529nzn
-        for <git@vger.kernel.org>; Tue, 31 Jan 2006 03:11:53 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OLLH+KhH6rTFp0a3NAYn9fssmh7+SGMln6gFRdD7YTxUPAS8qKAGwCgYHPJCWz/0re6VMR6bAvUaZt/ImNWf3iDtBht2Ws2NrCPXzhgiJUQY9KrV7q04CYeHp+wUprkmDWtUmuSTwTWjVSEocTYt5ZQFArd9WSbQkahwHejlV8A=
-Received: by 10.36.252.76 with SMTP id z76mr2452358nzh;
-        Tue, 31 Jan 2006 03:11:53 -0800 (PST)
-Received: by 10.36.49.12 with HTTP; Tue, 31 Jan 2006 03:11:53 -0800 (PST)
+	id S1750767AbWAaL2m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 06:28:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750768AbWAaL2m
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 06:28:42 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:24301 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750767AbWAaL2l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 06:28:41 -0500
+Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 1BC111463F4; Tue, 31 Jan 2006 12:28:40 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 0E15BA47;
+	Tue, 31 Jan 2006 12:28:40 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id BF1931463F4; Tue, 31 Jan 2006 12:28:39 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vvew03hls.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <7vzmld7c2g.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15310>
 
-2006/1/31, Junio C Hamano <junkio@cox.net>:
-> Franck <vagabon.xyz@gmail.com> writes:
->
-> > I built my public repository from a cautorized one and everybody who
-> > is pulling from mine is aware of the lack of the full history but they
-> > actually don't care. If someone is pulling from my repo, he actually
-> > wants to work on my project which do not need any old thing...
->
-> Mind writing up a howto on the topic?
+Hi,
 
-ok I'll try to sum-up something this week, hope my bad english will be
-understandable...
+On Mon, 30 Jan 2006, Junio C Hamano wrote:
 
->
->  - How things are set up using the current tool.
->  - How others initially clone from you.
->  - How others update (pull) from you.
->  - What are the pitfalls you and others need to avoid
->    (i.e. operations that involve old history)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> > - disallow fetching from this repo, and
+> >> 
+> >> Why? It's perfectly acceptable to pull from an incomplete
+> >> repo, as long as you don't care about the old history.
+> >
+> > Right. But should that be the default? I don't think so. Therefore: 
+> > disable it, and if the user is absolutely sure to do dumb things, she'll 
+> > have to enable it explicitely.
+> 
+> If the downstream person wants to have a shallow history of post
+> X.org X server core to further hack on it, I do not think of a
+> reason why we would want to refuse her from cloning a repository
+> of a fellow developer who has already done such a shallow copy.
 
-actually I just discovered one thanks to your first email for this
-thread about reverted commit...So I'm not very the one for this
-section...
+Okay. But in their case, they'll probably do what was done with Linux: 
+start afresh. If you want to have the old history, you can import it and 
+merge it via a graft.
 
->
-> I brought this up, because lack of official support of shallow
-> cloning was cited as one of the showstopper for a project that
-> once considered switching to git but didn't, from a mailing list
-> research.
+> If such a clone is done without telling the downstream that the
+> result is a shallow one, it is "dumb".  I would agree it should
+> not be done.
 
-again I wasn't aware that this feature is really needed...
+That was my point. As long as you don't make sure the client handles the 
+shallow upstream gracefully, it is dangerous. At the moment, there are too 
+many code parts relying on the completeness of the repository (local and 
+remote).
 
-thanks
---
-               Franck
+Since I wrote this, I realized that the problem I saw is not limited to 
+shallow upstream, but there is a subtle issue with shallow downstreams, 
+too:
+
+Just imagine this: Alice starts a project, Bob makes a shallow copy from 
+it when Alice just reverted an experimental feature. Then, Alice decides 
+the experimental feature was not bad at all and reverts the revert. Bob 
+pulls from Alice: Alice's upload-pack assumes Bob already has the original 
+files (now re-reverted), and Bob ends up with a broken repository.
+
+While writing the last paragraph, it became clear to me that the shallow 
+thing is very fragile: IMHO it is impossible to be fully backwards 
+compatible (remember: you should not force anybody to upgrade).
+
+> By the way, please refrain from discussing .git/config vs 
+> .git/eparate-config-files issue in this thread.
+
+Okay. I will shut up on that issue.
+
+> My personal feeling so far is that the information current graft 
+> represents is good enough to support shallow clones, and if not we can 
+> extend its semantics to support such.
+
+No. The grafts are more powerful. I have quite a few repos here in which I 
+heavily work with grafts, and they are no cutoffs for shallow repos. They 
+are hard links between different lines of development. For example, I use 
+them to map merges in cvsimported projects, thus fixing a shortcoming of 
+CVS. Also, you can "add" history.
+
+If you now rely on the grafts file to determine what was a cutoff, you may 
+well end up with bogus cutoffs.
+
+Ciao,
+Dscho
