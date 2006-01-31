@@ -1,70 +1,86 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [Census] So who uses git?
-Date: Tue, 31 Jan 2006 18:16:26 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0601311750270.25300@iabervon.org>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
- <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
- <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
- <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
- <20060130185822.GA24487@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Bottlenecks in git merge
+Date: Wed, 1 Feb 2006 00:27:32 +0100
+Message-ID: <20060131232731.GA31278@pasky.or.cz>
+References: <20060131213314.GA32131@ebar091.ebar.dtu.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
-	Keith Packard <keithp@keithp.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 01 00:14:31 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Feb 01 00:27:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F44hU-0002J3-MU
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 00:14:17 +0100
+	id 1F44uG-0005FD-1f
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 00:27:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751067AbWAaXOM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 18:14:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751069AbWAaXOM
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 18:14:12 -0500
-Received: from iabervon.org ([66.92.72.58]:2574 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751067AbWAaXOK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 18:14:10 -0500
-Received: (qmail 4469 invoked by uid 1000); 31 Jan 2006 18:16:26 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 31 Jan 2006 18:16:26 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S932122AbWAaX1Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 18:27:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932121AbWAaX1Z
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 18:27:25 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:34246 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932122AbWAaX1Z (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 18:27:25 -0500
+Received: (qmail 14302 invoked by uid 2001); 1 Feb 2006 00:27:32 +0100
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20060131213314.GA32131@ebar091.ebar.dtu.dk>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15362>
 
-On Tue, 31 Jan 2006, Johannes Schindelin wrote:
+Hello,
 
-> Hi,
+Dear diary, on Tue, Jan 31, 2006 at 10:33:14PM CET, I got a letter
+where Peter Eriksen <s022018@student.dtu.dk> said that...
+> In connection with Ian Molton's question about merge have I played a
+> little with 'git merge' on the kernel sources.  What I find is that a
+> merge can take quite some time, but I'm not sure where that time exactly
+> goes to.  Here are the times I got:
 > 
-> On Mon, 30 Jan 2006, Carl Baldwin wrote:
+> Recursive (default):  4m22.282s
+> Resolve (-s resolve): 3m23.548s
 > 
-> > In general, I think it is grasping the reason for the index file and how 
-> > git commands like git-commit and git-diff interact with it.
 > 
-> IMHO this is the one big showstopper. I had problems explaining the 
-> concept myself.
-> 
-> For example, I had a hard time explaining to a friend why a git-add'ed 
-> file is committed when saying "git commit some_other_file", but not 
-> another (modified) file. Very unintuitive.
+> What is taking so long?
 
-I sort of suspect that "git commit some_other_file" should really read 
-HEAD into a temporary index, update "some_other_file" in that (and the 
-main index), and commit it. The concept of the index isn't hard (it's the 
-preparation you've made so far towards a commit), and plain "git commit" 
-makes sense with it; "git commit -a" also makes sense, since committing 
-all changes is pretty clear. The surprising thing is that "git commit path 
-..." means "everything I've already mentioned, plus path..." not just 
-"path ...", and it's particularly surprising because people only tend to 
-specify paths when they've done something they don't want to commit.
+it is difficult to benchmark for me since everything required for the
+merge (that is, both all the objects and the whole working tree) just
+won't fit into my caches (or Linux at least won't let it stay there for
+long enough). I ended up repeatedly calling the subcommands, but that
+obviously is not a real world usage pattern. Proportionally, the
+significant eaters of time for cg-merge (similar to -s resolve) are:
 
-	-Daniel
-*This .sig left intentionally blank*
+git-merge-base       --- 1s cached, 10s to 20s uncached
+git-read-tree -m     --- 1s cached, 10s or more uncached
+git-read-tree -m -u  --- 1m50s w/ heavy disk activity, but big part of it
+                         is writing blocks
+git-merge-index -a \
+	-o /bin/true --- 1s cached
+git-merge-index -a \
+	-o ~/cogito/cg-Xmergefile
+                     --- 1m27s with some disk activity (44s user, 20s sys)
+                         cg-Xmergefile is very similar to
+			 git-merge-one-file
+
+Note that the time spent by git-read-tree here is just checking out the
+new file versions, which is inevitable. ;-)
+
+The real killer here is therefore git-merge-one-file. Most frequent hits
+here are probably of the added-in-one case, resulting in two more
+fork()s, reloading the index like mad all the time.
+
+Comparing cg-merge to git-merge, one difference is that git-merge tries
+to do kind of "trivial" merge first (apparently even if -s was passed to
+it), the point of which kind of escapes me if you are using the resolve
+strategy, but which causes two git-update-index calls - even one can
+take good half a minute or more if your cache is cold.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
