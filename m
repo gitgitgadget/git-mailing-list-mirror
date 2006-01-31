@@ -1,84 +1,89 @@
-From: Simon Richter <Simon.Richter@hogyros.de>
-Subject: Re: [RFC] shallow clone
-Date: Tue, 31 Jan 2006 15:23:34 +0100
-Message-ID: <43DF72E6.4050802@hogyros.de>
-References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de> <43DDFF5C.30803@hogyros.de> <Pine.LNX.4.63.0601301305100.20228@wbgn013.biozentrum.uni-wuerzburg.de> <7vzmld7c2g.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0601311127490.25248@wbgn013.biozentrum.uni-wuerzburg.de> <43DF608C.1060201@hogyros.de> <Pine.LNX.4.63.0601311422400.7918@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Carl Baldwin <cnb@fc.hp.com>
+Subject: Re: [Census] So who uses git?
+Date: Tue, 31 Jan 2006 08:24:29 -0700
+Organization: Hewlett Packard
+Message-ID: <20060131152429.GA26817@hpsvcnb.fc.hp.com>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com> <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org> <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com> <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> <20060130185822.GA24487@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigEDD969EA53EEE38FA45E97CC"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 31 15:24:17 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, Keith Packard <keithp@keithp.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 31 16:26:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3wQC-0000a2-6K
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 15:23:56 +0100
+	id 1F3xN7-0001vY-4z
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 16:24:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905AbWAaOXo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 09:23:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbWAaOXo
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 09:23:44 -0500
-Received: from kleinhenz.com ([213.239.205.196]:54486 "EHLO kleinhenz.com")
-	by vger.kernel.org with ESMTP id S1750905AbWAaOXn (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 09:23:43 -0500
-Received: from [192.168.115.35] (p54995B2F.dip.t-dialin.net [84.153.91.47])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "Simon Richter", Issuer "Kleinhenz Elektronik CA" (verified OK))
-	by kleinhenz.com (Postfix) with ESMTP id E3C0B4A8045;
-	Tue, 31 Jan 2006 15:23:41 +0100 (CET)
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051019)
-X-Accept-Language: en-us, en
+	id S1750931AbWAaPYg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 10:24:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750932AbWAaPYg
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 10:24:36 -0500
+Received: from atlrel7.hp.com ([156.153.255.213]:43141 "EHLO atlrel7.hp.com")
+	by vger.kernel.org with ESMTP id S1750926AbWAaPYf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 10:24:35 -0500
+Received: from smtp1.fc.hp.com (smtp2a.fc.hp.com [15.15.136.127])
+	by atlrel7.hp.com (Postfix) with ESMTP id 7B3DF34AC8;
+	Tue, 31 Jan 2006 10:24:34 -0500 (EST)
+Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
+	by smtp1.fc.hp.com (Postfix) with ESMTP
+	id 18ADE38234; Tue, 31 Jan 2006 15:24:30 +0000 (UTC)
+Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
+	id ED365BF81; Tue, 31 Jan 2006 08:24:29 -0700 (MST)
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0601311422400.7918@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Enigmail-Version: 0.93.0.0
-OpenPGP: url=http://www.hogyros.de/simon.asc
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>, Keith Packard <keithp@keithp.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Origin: hpsvcnb.fc.hp.com
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15318>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigEDD969EA53EEE38FA45E97CC
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Its difficult to explain because it breaks away from the precedent set
+by other SCMs.  I wouldn't call it a show-stopper for this reason.  In
+fact, some who have wrapped their heads around the concept might call it
+a valuable feature.  I, myself, have found it a handy thing in certain
+circumstances.  In other circumstances I simply bypass it by adding -a
+to the command-line.
 
-Hi,
+This doesn't fit my definition of a show-stopper.
 
-Johannes Schindelin wrote:
+Carl
 
-> If you pull, upload-pack will think you have *every* object depending on 
-> every ref you have stored.
+On Tue, Jan 31, 2006 at 11:27:34AM +0100, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 30 Jan 2006, Carl Baldwin wrote:
+> 
+> > In general, I think it is grasping the reason for the index file and how 
+> > git commands like git-commit and git-diff interact with it.
+> 
+> IMHO this is the one big showstopper. I had problems explaining the 
+> concept myself.
+> 
+> For example, I had a hard time explaining to a friend why a git-add'ed 
+> file is committed when saying "git commit some_other_file", but not 
+> another (modified) file. Very unintuitive.
+> 
+> Ciao,
+> Dscho
+> 
+> 
 
-Ah, okay. That was the missing information, thanks.
-
-> You only have two choices: you proposed code duplication, and yours truly 
-> proposed data duplication.
-
-Erm, if there are multiple places for parsing a grafts file, that needs 
-to be addressed as well.
-
-> As is known from good database design: a few redundancies here and there 
-> are typically needed for good performance.
-
-Sure, but only if you can "rebuild" all the redundant information reliably.
-
-    Simon
-
---------------enigEDD969EA53EEE38FA45E97CC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iQCVAwUBQ99y6FYr4CN7gCINAQK8CQP+KsjhoNgXlcAerHnCv4s/97UsFw+EFOtI
-HSuAGySieFb5FjiFiHnGq8spbnibS1/ewdbiJcRAqezioqW2+Kcs8jlEBS84yI78
-zUNYlJqPRcAIisq33G5wu+y7YhUqoezvzEWtUUyMZqKQ520mzD6vO6HyezFkzkk7
-C78JkQ+/5cU=
-=QteN
------END PGP SIGNATURE-----
-
---------------enigEDD969EA53EEE38FA45E97CC--
+-- 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Carl Baldwin                        RADCAD (R&D CAD)
+ Hewlett Packard Company
+ MS 88                               work: 970 898-1523
+ 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
+ Fort Collins, CO 80525              home: Carl@ecBaldwin.net
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
