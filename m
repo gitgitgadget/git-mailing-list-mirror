@@ -1,300 +1,120 @@
-From: mdw@distorted.org.uk (Mark Wooding)
-Subject: Re: git-http-fetch failure/segfault -- alas no patch
-Date: Tue, 31 Jan 2006 11:46:50 +0000
-Message-ID: <17375.20010.283458.869140@metalzone.distorted.org.uk>
-References: <17374.30792.548889.344768@metalzone.distorted.org.uk>
-	<20060131093200.GA5154@informatik.uni-freiburg.de>
+From: Simon Richter <Simon.Richter@hogyros.de>
+Subject: Re: [RFC] shallow clone
+Date: Tue, 31 Jan 2006 14:05:16 +0100
+Message-ID: <43DF608C.1060201@hogyros.de>
+References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de> <43DDFF5C.30803@hogyros.de> <Pine.LNX.4.63.0601301305100.20228@wbgn013.biozentrum.uni-wuerzburg.de> <7vzmld7c2g.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0601311127490.25248@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 31 12:47:32 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig4107A3CC2EEAB17C2D6FEEB4"
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 31 14:06:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3tyt-0006Ls-3i
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 12:47:31 +0100
+	id 1F3vCi-0003SQ-Cy
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 14:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750765AbWAaLrI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 06:47:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750768AbWAaLrH
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 06:47:07 -0500
-Received: from excessus.demon.co.uk ([83.105.60.35]:57791 "HELO
-	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
-	id S1750765AbWAaLrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 06:47:05 -0500
-Received: (qmail 3152 invoked by uid 1000); 31 Jan 2006 11:46:50 -0000
-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-In-Reply-To: <20060131093200.GA5154@informatik.uni-freiburg.de>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1750784AbWAaNFo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 08:05:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbWAaNFo
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 08:05:44 -0500
+Received: from kleinhenz.com ([213.239.205.196]:49110 "EHLO kleinhenz.com")
+	by vger.kernel.org with ESMTP id S1750784AbWAaNFn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 08:05:43 -0500
+Received: from [192.168.115.35] (p54995B2F.dip.t-dialin.net [84.153.91.47])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "Simon Richter", Issuer "Kleinhenz Elektronik CA" (verified OK))
+	by kleinhenz.com (Postfix) with ESMTP id 9DB1F4A8045;
+	Tue, 31 Jan 2006 14:05:27 +0100 (CET)
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051019)
+X-Accept-Language: en-us, en
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0601311127490.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Enigmail-Version: 0.93.0.0
+OpenPGP: url=http://www.hogyros.de/simon.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15312>
 
-Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de> wrote:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig4107A3CC2EEAB17C2D6FEEB4
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> The offending commit is 056211053b7516a57ff7a6dd02f503ecef6fca70:
-> 
-> git-clone: do not special case dumb http.
+Hi,
 
-Fine, except that it's quite clear to me that the bug is actually in
-git-http-fetch -- it shouldn't segfault, dammit! -- and that commit
-affects only git-clone.sh.  Besides, I get the same symptoms running
-git-http-fetch by hand.  That commit appears if you bisect on a test
-based on git-clone because before then it fetched the pack list and pack
-files before it tried to mop up the remaining objects, which obviously
-hides the underlying bug.
+Johannes Schindelin wrote:
 
-Here's my low-level test-case.
+>>If the downstream person wants to have a shallow history of post
+>>X.org X server core to further hack on it, I do not think of a
+>>reason why we would want to refuse her from cloning a repository
+>>of a fellow developer who has already done such a shallow copy.
 
-----
-#! /bin/sh
+> Okay. But in their case, they'll probably do what was done with Linux: 
+> start afresh. If you want to have the old history, you can import it and 
+> merge it via a graft.
 
-set -e
-rm -rf funt
-GIT_DIR=funt; export GIT_DIR
-./git-init-db
-./git-http-fetch -a -v \
-  heads/master http://boyle.nsict.org/~mdw/git/catacomb.broken/
-----
+Well, in the Linux case the problem was not knowing what the SHA1 sum of 
+the entire Linux history was. In the shallow repo case we know it, so 
+there is no point in throwing away that information.
 
-This is the `real-life' repository which has broken.  I'm using it
-because the patch I made /works/ on the trivial `funt' example, but
-fails miserably on the real thing.
+>>If such a clone is done without telling the downstream that the
+>>result is a shallow one, it is "dumb".  I would agree it should
+>>not be done.
 
-Bisecting with this test lays the blame on 1d389ab65dc6867d30...  Which
-I think is just telling me that it's always been broken.
+> That was my point. As long as you don't make sure the client handles the 
+> shallow upstream gracefully, it is dangerous. At the moment, there are too 
+> many code parts relying on the completeness of the repository (local and 
+> remote).
 
-For amusement value, my patch is below.  Here's what happens if I try to
-use it.
+Well, the important thing would be that commands that can work (a merge 
+only needs to find the most recent common ancestor, etc) do work, and 
+commands that cannot ("log") emit sensible diagnostics.
 
-----
-got 7c40480318648672af86e03bc72bc45c07194c37
-walk 7c40480318648672af86e03bc72bc45c07194c37
-Getting alternates list for
-http://boyle.nsict.org/~mdw/git/catacomb.broken/
-got 0fd8bd4823315feb1c537a154efba002c053ed8e
-Getting pack list for http://boyle.nsict.org/~mdw/git/catacomb.broken/
-Getting index for pack f6d543b58ba9183c53ddbd981835f0378bdab919
-Getting pack f6d543b58ba9183c53ddbd981835f0378bdab919
- which contains a137c6b3695c32ea9c42520a387a85641687662f
-walk a137c6b3695c32ea9c42520a387a85641687662f
-error: fd leakage in release: 4
-error: fd leakage in release: 9
-error: fd leakage in release: 5
-error: fd leakage in release: 7
-got 53124000638e53ee8aa51830fab72d8a0ce654e4
-error: Couldn't find request for d2f2768351d41f80469240d1b533575d833c7370 in the queue
-error: Unable to find d2f2768351d41f80469240d1b533575d833c7370 under http://boyle.nsict.org/~mdw/git/catacomb.broken/
+> Just imagine this: Alice starts a project, Bob makes a shallow copy from 
+> it when Alice just reverted an experimental feature. Then, Alice decides 
+> the experimental feature was not bad at all and reverts the revert. Bob 
+> pulls from Alice: Alice's upload-pack assumes Bob already has the original 
+> files (now re-reverted), and Bob ends up with a broken repository.
 
-Cannot obtain needed blob d2f2768351d41f80469240d1b533575d833c7370
-while processing commit a137c6b3695c32ea9c42520a387a85641687662f.
-Waiting for
-http://boyle.nsict.org/~mdw/git/catacomb.broken/objects/eb/2dc153b8981ad02430bc166b925ef2457c7c36
-got eb2dc153b8981ad02430bc166b925ef2457c7c36
-Segmentation fault      (core dumped)
-----
+I know far too little about the internal workings for that, but I'd 
+assume that in this case Bob's copy starts at the commit that was never 
+in question (and he never saw the reverted commit), and Alice's contains 
+a commit on top of that. That one should work. But the other way 'round 
+is problematic, when Bob starts with a commit that has been reverted in 
+Alice's repository. The solution is for Bob to ask Alice's repo for the 
+common ancestor of his shallow base and Alice's HEAD. Alice's repo can, 
+however, fail to deliver these if there has been a purge since, in that 
+case, stuff needs to be merged by hand (but you already have a problem 
+if someone clones your repo before you revert changes, so no regression 
+here).
 
-Without the patch, I get
+> If you now rely on the grafts file to determine what was a cutoff, you may 
+> well end up with bogus cutoffs.
 
-----
-got 7c40480318648672af86e03bc72bc45c07194c37
-walk 7c40480318648672af86e03bc72bc45c07194c37
-Getting alternates list for
-http://boyle.nsict.org/~mdw/git/catacomb.broken/
-got 0fd8bd4823315feb1c537a154efba002c053ed8e
-Getting pack list for http://boyle.nsict.org/~mdw/git/catacomb.broken/
-got 53124000638e53ee8aa51830fab72d8a0ce654e4
-got eb2dc153b8981ad02430bc166b925ef2457c7c36
-error: Unable to find a137c6b3695c32ea9c42520a387a85641687662f under http://boyle.nsict.org/~mdw/git/catacomb.broken/
-----
+Exactly that was my concern earlier; my database design gut feeling 
+tells me that information duplication is not good either, hence my 
+suggestion to split off these grafts into a separate file in order to 
+mark them as cutoff points.
 
-And the patch itself.  Warning!  This DOES NOT WORK!  (But it may be of
-some use to you lot anyway.)
+    Simon
 
-git-http-fetch: Fix failure to find pack list.
+--------------enig4107A3CC2EEAB17C2D6FEEB4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-From:  <mdw@distorted.org.uk>
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
 
-  * Problem seems to be premature reuse of a slot.  In some cases, we
-    end up fetching the exit status for a different fetch; if that fetch
-    fails (because the object is already in a pack) then the pack list
-    fetch is assumed to fail and the entire fetch falls apart.
----
+iQCVAwUBQ99gj1Yr4CN7gCINAQJxYwP8CosNi2aRDV0eaIkY5VpxnPyV4AjTzr1i
+wEBFSwZEpwokzjZZeK8u54W5NCTomD/lHgbF6/Ac+z6ax/Dm6QbACnhsr/zS9MxO
+6rNekr+vvHpgFGepEjWknWXDHWE0uMf0DKqFuvUoKZ+bUaY1QK+SppRQo/485Gs0
+cxwE5U1zt48=
+=kCG7
+-----END PGP SIGNATURE-----
 
- http.c   |   49 +++++++++++++++++++++++++++++++++++++++----------
- http.h   |    8 +++++++-
- 2 files changed, 46 insertions(+), 11 deletions(-)
-
-diff --git a/http.c b/http.c
-index 75e6717..54aa9ee 100644
---- a/http.c
-+++ b/http.c
-@@ -1,3 +1,4 @@
-+#include <assert.h>
- #include "http.h"
- 
- int data_received;
-@@ -192,6 +193,9 @@ static CURL* get_curl_handle(void)
- 
- 	curl_easy_setopt(result, CURLOPT_FOLLOWLOCATION, 1);
- 
-+	if (getenv("GIT_CURL_VERBOSE"))
-+		curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
-+
- 	return result;
- }
- 
-@@ -262,7 +266,7 @@ void http_cleanup(void)
- 
- 	while (slot != NULL) {
- #ifdef USE_CURL_MULTI
--		if (slot->in_use) {
-+		if (slot->in_use & SLOTUSE_ACTIVE) {
- 			curl_easy_getinfo(slot->curl,
- 					  CURLINFO_EFFECTIVE_URL,
- 					  &wait_url);
-@@ -311,6 +315,7 @@ struct active_request_slot *get_active_s
- 		newslot->curl = NULL;
- 		newslot->in_use = 0;
- 		newslot->next = NULL;
-+		newslot->nrefs = 0;
- 
- 		slot = active_queue_head;
- 		if (slot == NULL) {
-@@ -333,7 +338,7 @@ struct active_request_slot *get_active_s
- 	}
- 
- 	active_requests++;
--	slot->in_use = 1;
-+	slot->in_use |= SLOTUSE_ACTIVE;
- 	slot->local = NULL;
- 	slot->callback_data = NULL;
- 	slot->callback_func = NULL;
-@@ -351,8 +356,9 @@ int start_active_slot(struct active_requ
- 
- 	if (curlm_result != CURLM_OK &&
- 	    curlm_result != CURLM_CALL_MULTI_PERFORM) {
--		active_requests--;
--		slot->in_use = 0;
-+		slot->in_use &= ~SLOTUSE_ACTIVE;
-+		if (!slot->in_use)
-+			active_requests--;
- 		return 0;
- 	}
- #endif
-@@ -375,6 +381,25 @@ void step_active_slots(void)
- }
- #endif
- 
-+void watch_active_slot(struct active_request_slot *slot)
-+{
-+	if (!slot->in_use)
-+		active_requests++;
-+	slot->in_use |= SLOTUSE_REF;
-+	slot->nrefs++;
-+}
-+
-+void unwatch_active_slot(struct active_request_slot *slot)
-+{
-+	assert(slot->nrefs);
-+	slot->nrefs--;
-+	if (!slot->nrefs) {
-+		slot->in_use &= ~SLOTUSE_REF;
-+		if (!slot->in_use)
-+			active_requests--;
-+	}
-+}
-+
- void run_active_slot(struct active_request_slot *slot)
- {
- #ifdef USE_CURL_MULTI
-@@ -386,7 +411,8 @@ void run_active_slot(struct active_reque
- 	int max_fd;
- 	struct timeval select_timeout;
- 
--	while (slot->in_use) {
-+	watch_active_slot(slot);
-+	while (slot->in_use & SLOTUSE_ACTIVE) {
- 		data_received = 0;
- 		step_active_slots();
- 
-@@ -397,7 +423,7 @@ void run_active_slot(struct active_reque
- 			last_pos = current_pos;
- 		}
- 
--		if (slot->in_use && !data_received) {
-+		if ((slot->in_use & SLOTUSE_ACTIVE) && !data_received) {
- 			max_fd = 0;
- 			FD_ZERO(&readfds);
- 			FD_ZERO(&writefds);
-@@ -408,8 +434,9 @@ void run_active_slot(struct active_reque
- 			       &excfds, &select_timeout);
- 		}
- 	}
-+	unwatch_active_slot(slot);
- #else
--	while (slot->in_use) {
-+	while (slot->in_use & SLOTUSE_ACTIVE) {
- 		slot->curl_result = curl_easy_perform(slot->curl);
- 		finish_active_slot(slot);
- 	}
-@@ -418,8 +445,10 @@ void run_active_slot(struct active_reque
- 
- static void finish_active_slot(struct active_request_slot *slot)
- {
--        active_requests--;
--        slot->in_use = 0;
-+	assert(slot->in_use & SLOTUSE_ACTIVE);
-+        slot->in_use &= ~SLOTUSE_ACTIVE;
-+	if (!slot->in_use)
-+		active_requests--;
-         curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CODE, &slot->http_code);
-  
-         /* Run callback if appropriate */
-@@ -433,7 +462,7 @@ void finish_all_active_slots(void)
- 	struct active_request_slot *slot = active_queue_head;
- 
- 	while (slot != NULL)
--		if (slot->in_use) {
-+		if (slot->in_use & SLOTUSE_ACTIVE) {
- 			run_active_slot(slot);
- 			slot = active_queue_head;
- 		} else {
-diff --git a/http.h b/http.h
-index ed4ea33..6913c6a 100644
---- a/http.h
-+++ b/http.h
-@@ -26,7 +26,8 @@ struct active_request_slot
- {
- 	CURL *curl;
- 	FILE *local;
--	int in_use;
-+	unsigned in_use;
-+	int nrefs;
- 	CURLcode curl_result;
- 	long http_code;
- 	void *callback_data;
-@@ -34,6 +35,9 @@ struct active_request_slot
- 	struct active_request_slot *next;
- };
- 
-+#define SLOTUSE_ACTIVE 1u
-+#define SLOTUSE_REF 2u
-+
- struct buffer
- {
-         size_t posn;
-@@ -54,6 +58,8 @@ extern struct active_request_slot *get_a
- extern int start_active_slot(struct active_request_slot *slot);
- extern void run_active_slot(struct active_request_slot *slot);
- extern void finish_all_active_slots(void);
-+extern void watch_active_slot(struct active_request_slot *slot);
-+extern void unwatch_active_slot(struct active_request_slot *slot);
- 
- #ifdef USE_CURL_MULTI
- extern void fill_active_slots(void);
-
--- [mdw]
+--------------enig4107A3CC2EEAB17C2D6FEEB4--
