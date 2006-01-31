@@ -1,70 +1,65 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [Cogito] Various bugs
-Date: Tue, 31 Jan 2006 05:13:18 +0100
-Message-ID: <20060131041318.GC30744@diku.dk>
+From: Hendrik Visage <hvjunk@gmail.com>
+Subject: Re: git vs git
+Date: Tue, 31 Jan 2006 07:05:55 +0200
+Message-ID: <d93f04c70601302105v426201dbhac6abd41cdc4050c@mail.gmail.com>
+References: <d93f04c70601300714i4b7b3b58qa5aa151e3e42a413@mail.gmail.com>
+	 <46a038f90601301216n793f0eb5k34a2b5a7c4e7491e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue Jan 31 05:13:29 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: david@dgreaves.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 31 06:06:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3mtT-0006Bf-3Q
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 05:13:27 +0100
+	id 1F3niX-00007t-7i
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 06:06:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030206AbWAaENW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jan 2006 23:13:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030221AbWAaENW
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jan 2006 23:13:22 -0500
-Received: from mgw1.diku.dk ([130.225.96.91]:63386 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1030206AbWAaENV (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jan 2006 23:13:21 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id B449C52D46B;
-	Tue, 31 Jan 2006 05:13:20 +0100 (CET)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 30270-10; Tue, 31 Jan 2006 05:13:19 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 1DD4652D2E4;
-	Tue, 31 Jan 2006 05:13:19 +0100 (CET)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id EB97A6DF88D; Tue, 31 Jan 2006 05:12:43 +0100 (CET)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 0634961A1B; Tue, 31 Jan 2006 05:13:18 +0100 (CET)
-To: git@vger.kernel.org
+	id S1030336AbWAaFF6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 00:05:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030338AbWAaFF6
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 00:05:58 -0500
+Received: from uproxy.gmail.com ([66.249.92.193]:54964 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1030336AbWAaFF5 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 00:05:57 -0500
+Received: by uproxy.gmail.com with SMTP id s2so121400uge
+        for <git@vger.kernel.org>; Mon, 30 Jan 2006 21:05:56 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gW2hx6wMoGNcAg2LDcOTJ2Q1oflO77CJUmaJc4EbJva8VDHwI0qo0ugEgnCU5RXS6htVUcnClhcFZsN6vkSzIawHja469ysWfs9IZfYpSohQuieZAByWRM9hlx8/TcCGEZ/nzTjiKTIgBU5dKI6YxWUuD7hfav2XX4ug0HKtTZM=
+Received: by 10.66.244.10 with SMTP id r10mr1611002ugh;
+        Mon, 30 Jan 2006 21:05:55 -0800 (PST)
+Received: by 10.66.250.17 with HTTP; Mon, 30 Jan 2006 21:05:55 -0800 (PST)
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90601301216n793f0eb5k34a2b5a7c4e7491e@mail.gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15301>
 
-A few Cogito bugs I found yesterday.
+On 1/30/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> On 1/31/06, Hendrik Visage <hvjunk@gmail.com> wrote:
+> > git isn't
+> > working because the wrong git is in the right place :(
+>
+> Well, I just hit this yesterday on a colleage's machine who was trying
+> to get going with git.His first try was to `apt-get install git` and
+> as that didn't lead anywhere he fetched the git (scm) sources and
+> built them.
+>
+<snip>
 
- - cg-fetch between local repos fails when the cloned branch URL does
-   not point to a .git directory and a needed object from the repository
-   being cloned is packed. git-local-fetch expects a .git directory.
+> Not sure how to deal with this. Packages already record (or can
+> record) it as a conflict, but source built stuff is different. Perhaps
+> during `make install` we should try and exec git --version towards the
+> end and print a big fat warning?
 
- - cg-commit -c will do the wrong thing (use the invokers gecos info)
-   when the author name is empty. One workaround is to make
-   pick_author_script append a space at the end of the GIT_* variables.
-   GIT will strip those and no gecos info is used.
+Or stop the egos and do a name change as would be the honourable way
+especially as gitscm is less than a year old...
 
- - cg-status reports a deleted file both as deleted and as unknown:
-
-	fonseca@antimatter:~/src/elinks/0.12 > git --version
-	git version 1.1.6.g1506
-	fonseca@antimatter:~/src/elinks/0.12 > cg --version
-	cogito-0.17pre.GIT (d3aa9a2b3375e36c774ea477492db76baa1db03e)
-	fonseca@antimatter:~/src/elinks/0.12 > cg rm AUTHORS
-	Removing file AUTHORS
-	fonseca@antimatter:~/src/elinks/0.12 > cg status | grep AUTHORS
-	? AUTHORS
-	D AUTHORS
-
--- 
-Jonas Fonseca
+--
+Hendrik Visage
