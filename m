@@ -1,52 +1,64 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [Census] So who uses git?
-Date: Tue, 31 Jan 2006 16:52:47 -0500
-Message-ID: <20060131215247.GF16561@fieldses.org>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com> <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org> <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com> <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> <1138529385.9919.185.camel@evo.keithp.com> <43DCA495.9040301@gorzow.mm.pl> <20060130225107.GA3857@limbo.home> <Pine.LNX.4.64.0601311314030.7301@g5.osdl.org>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: Bottlenecks in git merge
+Date: Tue, 31 Jan 2006 22:33:14 +0100
+Message-ID: <20060131213314.GA32131@ebar091.ebar.dtu.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>,
-	Keith Packard <keithp@keithp.com>,
-	Junio C Hamano <junkio@cox.net>, cworth@cworth.org,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 31 22:53:12 2006
+X-From: git-owner@vger.kernel.org Tue Jan 31 22:55:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F43R1-0001BC-K2
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 22:53:12 +0100
+	id 1F43Ti-0001nR-49
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 22:55:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546AbWAaVxD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 16:53:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751550AbWAaVxD
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 16:53:03 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:44267 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP
-	id S1751546AbWAaVxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 16:53:01 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
-	(envelope-from <bfields@fieldses.org>)
-	id 1F43Qd-00064E-JD; Tue, 31 Jan 2006 16:52:47 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751555AbWAaVzz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 16:55:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751557AbWAaVzz
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 16:55:55 -0500
+Received: from ebar091.ebar.dtu.dk ([192.38.93.106]:46465 "HELO
+	ebar091.ebar.dtu.dk") by vger.kernel.org with SMTP id S1751553AbWAaVzz
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 16:55:55 -0500
+Received: (qmail 32319 invoked by uid 5842); 31 Jan 2006 21:33:14 -0000
+To: Git Mailing List <git@vger.kernel.org>
+Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0601311314030.7301@g5.osdl.org>
-User-Agent: Mutt/1.5.11
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15353>
 
-On Tue, Jan 31, 2006 at 01:25:08PM -0800, Linus Torvalds wrote:
-> So we could speed it up on cygwin (and yes, it would speed git up a lot 
-> even on Linux, but since the cached lstat() case is so fast anyway, I 
-> doubt a lot of Linux users care - the biggest win would be on a cold-cache 
-> tree).  But it would require that you explicitly _mark_ the files you edit 
-> some way.
+Hello, 
 
-You couldn't depend on a combination of lstat's and some kind of
-filesystem change notifications?
+In connection with Ian Molton's question about merge have I played a
+little with 'git merge' on the kernel sources.  What I find is that a
+merge can take quite some time, but I'm not sure where that time exactly
+goes to.  Here are the times I got:
 
---b.
+Recursive (default):  4m22.282s
+Resolve (-s resolve): 3m23.548s
+
+
+What is taking so long?
+
+Regards,
+
+Peter
+
+
+==============================>8==================
+#!/bin/sh
+#  Run from linux-2.6
+
+change_readme() {
+	sed -i "s/are much better/are better/" README
+}
+
+git checkout -f master
+git branch -d test
+git checkout -b test v2.6.12
+change_readme
+git commit -a -m "Work, work, work"
+time git merge $STRATEGY "Merging happily." HEAD v2.6.15
