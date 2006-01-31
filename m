@@ -1,59 +1,76 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
+From: "Sam Ravnborg" <sam@ravnborg.org>
 Subject: Re: [Census] So who uses git?
-Date: Tue, 31 Jan 2006 15:56:22 -0500
-Message-ID: <20060131205621.GC16561@fieldses.org>
-References: <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com> <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> <20060130185822.GA24487@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0601310926330.7301@g5.osdl.org> <20060131181248.GE11955@fieldses.org> <7vbqxsyyym.fsf@assigned-by-dhcp.cox.net> <1138736666.24410.38.camel@cashmere.sps.mot.com> <7vd5i8w2nc.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 31 Jan 2006 21:56:48 +0100 (CET)
+Message-ID: <29639.194.237.142.10.1138741008.squirrel@194.237.142.10>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com> 
+    <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org> 
+    <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com> 
+    <1138446030.9919.112.camel@evo.keithp.com> 
+    <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> 
+    <20060130185822.GA24487@hpsvcnb.fc.hp.com> 
+    <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+     <Pine.LNX.4.64.0601310926330.7301@g5.osdl.org>
+    <1138734110.18852.26.camel@evo.keithp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Loeliger <jdl@freescale.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 31 21:56:43 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Linus Torvalds" <torvalds@osdl.org>, keithp@keithp.com,
+	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
+	"Carl Baldwin" <cnb@fc.hp.com>, "Junio C Hamano" <junkio@cox.net>,
+	"Martin Langhoff" <martin.langhoff@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 31 21:58:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F42YG-0002ZA-JO
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 21:56:37 +0100
+	id 1F42Zj-00032V-9K
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 21:58:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475AbWAaU41 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 15:56:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751480AbWAaU41
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 15:56:27 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:27536 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP
-	id S1751475AbWAaU40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 15:56:26 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
-	(envelope-from <bfields@fieldses.org>)
-	id 1F42Y2-0005Wl-2X; Tue, 31 Jan 2006 15:56:22 -0500
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vd5i8w2nc.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
+	id S1751479AbWAaU4x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 15:56:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbWAaU4x
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 15:56:53 -0500
+Received: from dslsmtp.struer.net ([62.242.36.21]:61969 "EHLO
+	dslsmtp.struer.net") by vger.kernel.org with ESMTP id S1751479AbWAaU4t
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 15:56:49 -0500
+Received-SPF: none (dslsmtp.struer.net: 62.242.36.15 is neither permitted nor denied by domain of ravnborg.org) client-ip=62.242.36.15; envelope-from=sam@ravnborg.org; helo=squirrelmail.post1.dk;
+Received: from squirrelmail.post1.dk (unknown [62.242.36.15])
+	by dslsmtp.struer.net (Postfix) with ESMTP id 4DE219373;
+	Tue, 31 Jan 2006 21:56:48 +0100 (CET)
+Received: from 194.237.142.10
+        (SquirrelMail authenticated user sam@ravnborg.org);
+        by squirrelmail.post1.dk with HTTP;
+        Tue, 31 Jan 2006 21:56:48 +0100 (CET)
+In-Reply-To: <1138734110.18852.26.camel@evo.keithp.com>
+To: "Keith Packard" <keithp@keithp.com>
+User-Agent: SquirrelMail/1.4.3a
+X-Mailer: SquirrelMail/1.4.3a
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15343>
 
-On Tue, Jan 31, 2006 at 12:41:59PM -0800, Junio C Hamano wrote:
-> On the tutorial front, maybe we could start teaching people to
-> always use "commit -a", and not tell them about update-index nor
-> "commit paths.." at all.  Have them do "hello world", review
-> changes since the last commit with "git diff", and make commit
-> with "git commit -a".  Next tell them about index, and after
-> they understand index, finally tell them "commit paths..."  is
-> there merely to reduce typing.
+> As a newly initiated user, this would have been a more gentle
+> introduction to the system. But, it would be hard to make it entirely
+> invisible given the current interfaces. I'm not sure if obscuring the
+> presense of the index is a great plan; it's already hard enough to
+> figure out how it works.
 
-Yeah, I think that's approximately what you get right now if you read
-tutorial.txt followed by core-tutorial.txt, though the two currently may
-not really work together well as sequels.
+I have found myself using a mixture of cogito and git commands lately.
+Part of it being that my finger type something like:
+rm `git ls-files -m`
+cg-restore
 
-So I'm inclined to start by revising the two to make them read well as
-sequels, then maybe moving some of core-tutorial.txt into the earlier
-tutorial.txt.  By the time we're done the two might end up being one
-document.  Or they might still be two, but with the split being more
-clearly beginning/advanced instead of high-level/low-level.
+and I have not convinced them about git reset --hard
 
-Feedback from people who'd actually worked through the two would
-obviously be useful.
 
---b.
+But the primary thing is cg-commit
+I give you a list of files modified which can be edited and
+it have saved me a couple of times commiting to much.
+And I get vi fired up so no need to fiddle with command line argumetns.
+
+   Sam
