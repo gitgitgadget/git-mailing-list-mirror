@@ -1,91 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 0/3] Remove more parsers
-Date: Tue, 31 Jan 2006 09:16:00 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0601310905000.7301@g5.osdl.org>
-References: <Pine.LNX.4.64.0601291336420.25300@iabervon.org>
- <7vk6ciixv0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0601291645060.25300@iabervon.org>
+From: Eric Sandall <eric@sandall.us>
+Subject: Re: [ANNOUNCE] GIT 1.1.5
+Date: Tue, 31 Jan 2006 09:38:19 -0800 (PST)
+Message-ID: <Pine.LNX.4.63.0601310937490.29839@cerberus>
+References: <7virs5x8im.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 31 18:16:42 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 31 18:38:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3z73-0002Lu-DV
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 18:16:18 +0100
+	id 1F3zRA-0008L4-Ce
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 18:37:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271AbWAaRQM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 12:16:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751279AbWAaRQM
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 12:16:12 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:43449 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751271AbWAaRQK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 12:16:10 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0VHG3DZ025561
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 31 Jan 2006 09:16:04 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0VHG0K9019720;
-	Tue, 31 Jan 2006 09:16:01 -0800
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0601291645060.25300@iabervon.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751113AbWAaRg6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 12:36:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbWAaRg6
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 12:36:58 -0500
+Received: from dslb138.fsr.net ([12.7.7.138]:54464 "EHLO sandall.us")
+	by vger.kernel.org with ESMTP id S1751113AbWAaRg6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 12:36:58 -0500
+Received: from cerberus ([192.168.0.254])
+	by sandall.us with esmtp (Exim 4.50)
+	id 1F3zSR-0000rf-Jb; Tue, 31 Jan 2006 09:38:23 -0800
+X-X-Sender: sandalle@cerberus
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7virs5x8im.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15325>
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+On Fri, 27 Jan 2006, Junio C Hamano wrote:
+> The latest maintenance release GIT 1.1.5 is available at the
+> usual places:
+>
+> 	http://www.kernel.org/pub/software/scm/git/
+>
+> 	git-1.1.5.tar.{gz,bz2}			(tarball)
+> 	RPMS/$arch/git-*-1.1.5-1.$arch.rpm	(RPM)
+>
+> Mark Wooding noticed that there is a bug in git-checkout-index
+> to overflow its internal buffer, if you construct a blob that
+> records an insanely long symbolic link in your index file and
+> try to check it out.  This makes it dump core or worse.
+>
+> The fix for this problem is the only change from v1.1.4.  The
+> master branch has been updated with the same fix (so has "pu").
+>
+>
+> ---
+>
+> By the way, "dump core or worse" is a subtle way to say that
+> this is a security fix.  To be victimized, you have to somehow
+> first get such a bogus symbolic link in your index.  Merging
+> with somebody of dubious trustworthiness is a way to do so;
+> please practice safe merge ;-).
 
-On Sun, 29 Jan 2006, Daniel Barkalow wrote:
-> 
-> I'll look into discarding the struct trees after use (since we're not 
-> keeping flags on them, or storing references to them long-term), so we can 
-> use the same parser without worse memory behavior. It does seem to take a 
-> bunch more memory (and, oddly, be very slow) as I currently have it.
+I've updated the Source Mage GNU/Linux package, thanks!
 
-Really, trying to use "struct tree" just is _broken_.
+- -sandalle
 
-Even if you start freeing the memory, performance will absolutely _suck_. 
-You'll be using a "malloc()" (and eventually, a "free()") and copying the 
-tree entries around for absolutely zero gain. You'll make things follow 
-pointers and have indirection, instead of just walking the data structure 
-directly.
+- --
+Eric Sandall                     |  Source Mage GNU/Linux Developer
+eric@sandall.us                  |  http://www.sourcemage.org/
+http://eric.sandall.us/          |  SysAdmin @ Inst. Shock Physics @ WSU
+http://counter.li.org/  #196285  |  http://www.shock.wsu.edu/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-IOW, it will be about ten times more expensive in CPU time, in the most 
-performance-critical part of git.
-
-I would actually argue that if you want to use a common structure, try to 
-convert existing users of "struct tree" to the "struct tree_desc" 
-iterators. Yes, their use is a little awkward, but there's really no way 
-you can use anything but the fast ones for tree diffing.
-
-The "struct tree_desc" can only be used for traversing a tree linearly in 
-one order, but I bet that nobody really ever does anything else.
-
-To make "struct tree_desc" more generic, you'd obviously have to export 
-the "update_tree_entry()" and "extract()" functions (and the latter would 
-probably need to be re-named to "extract_tree_entry()").
-
-Oh, and to make freeign the tree entry a bit simpler, you'd probably want 
-to replace
-
-	void *buf
-	unsigned int size;
-
-with a
-
-	const void *const tree_base;
-	const unsigned int tree_size;
-	unsigned int offset;
-
-so that you'd just update "offset" and leave tree_base/size untouched (to 
-make freeing easier - right now the person who populates the "struct 
-tree_desc" has to free the thing by hand).
-
-		Linus
+iD8DBQFD36CPHXt9dKjv3WERAhpUAKCXdVE+RgUUEY2BGl2jf0Bicdo7lgCgu/PJ
+yfRqXjYEzA8etWJBWQ+fK7E=
+=4UVq
+-----END PGP SIGNATURE-----
