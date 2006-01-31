@@ -1,84 +1,63 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [Census] So who uses git?
-Date: Tue, 31 Jan 2006 13:12:48 -0500
-Message-ID: <20060131181248.GE11955@fieldses.org>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com> <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org> <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com> <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> <20060130185822.GA24487@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0601310926330.7301@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Shallow clone: low level machinery.
+Date: Tue, 31 Jan 2006 10:22:22 -0800
+Message-ID: <7vzmlcz28x.fsf@assigned-by-dhcp.cox.net>
+References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v8xsxa70o.fsf@assigned-by-dhcp.cox.net>
+	<7vmzhc1wz6.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0601311449040.8033@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vd5i81e4e.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0601311904410.10944@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
-	Keith Packard <keithp@keithp.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 31 19:13:16 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 31 19:24:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4002-0000TP-72
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 19:13:06 +0100
+	id 1F409b-0002t5-5r
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 19:22:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751308AbWAaSND (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 13:13:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbWAaSND
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 13:13:03 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:17626 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP
-	id S1751308AbWAaSNB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 13:13:01 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
-	(envelope-from <bfields@fieldses.org>)
-	id 1F3zzk-0003ut-D2; Tue, 31 Jan 2006 13:12:48 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0601310926330.7301@g5.osdl.org>
-User-Agent: Mutt/1.5.11
+	id S1751323AbWAaSWZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 13:22:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbWAaSWZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 13:22:25 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:13052 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751324AbWAaSWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 13:22:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060131182119.RSFI15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 31 Jan 2006 13:21:19 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0601311904410.10944@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 31 Jan 2006 19:06:28 +0100
+	(CET)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15331>
 
-On Tue, Jan 31, 2006 at 09:30:48AM -0800, Linus Torvalds wrote:
-> I really think you should explain it one of two ways:
-> 
->  - ignore it. Never _ever_ use git-update-index directly, and don't tell 
->    people about use individual filenames to git-commit. Maybe even add 
->    "-a" by default to the git-commit flags as a special installation 
->    addition.
-> 
->  - talk about the index, and revel in it as a way to explain the staging 
->    area. This is what the old tutorial.txt did before it got simplified.
-> 
-> The "ignore the index" approach is the simple one to explain. It's 
-> strictly less powerful, but hey, what else is new? 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Yeah, I do wonder what's likely to be the best approach for most users.
-My goal with the new tutorial was to get a reader doing something fun
-and useful as quickly as possible.  So it just refers elsewhere for any
-discussion of the index file or SHA1 names.  But probably everyone needs
-to pick up that stuff eventually anyway, and maybe it's better to get to
-it a little sooner, I dunno.
+> Worse, you cannot pull from older servers into shallow repos.
 
-Besides the git-add/git-commit thing, the other thing that caught me by
-suprise was the behaviour of git reset.  I expected there to be an
-"inverse" to git commit -a, meaning that
+"have X" means different thing if you do not have matching
+grafts information, so I suspect that is fundamentally
+unsolvable.
 
-	1) the sequence
-		git reset HEAD^
-		git commit -a
-	   would be a no-op, in the sense that the new commit would
-	   get the same changes as the old one, and
-	2) the sequence
-		git commit -a
-		git reset HEAD^
-	   would be a no-op, in the sense that "git diff" would report
-	   the same diff before and after.
+I am not sure you can convince "git-rev-list ^A" to mean "not at
+A but things before that is still interesting", especially when
+you give many other heads to start traversing from, but if you
+can, then you can do things at rev-list command line parameter
+level without doing the "exchange and use the same grafts"
+trickery.  That _might_ be easier to implement but I do not see
+an obvious correctness guarantee in the approach.
 
-But there isn't, and explaining how --soft and --mixed actually work
-requires referring to the index file.
-
-Is that something that can be fixed in the tools or does the user
-fundamentally need to know about the index file to do this kind of
-stuff?
-
---b.
+Implementation bugs aside, it is obvious the things _would_ work 
+correctly with "exchange and use the same grafts" approach.
