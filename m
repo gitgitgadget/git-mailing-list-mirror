@@ -1,73 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [Census] So who uses git?
-Date: Tue, 31 Jan 2006 16:31:19 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0601311628220.10176@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
- <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
- <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
- <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
- <20060130185822.GA24487@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060131152429.GA26817@hpsvcnb.fc.hp.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Possible git-rev-list bug
+Date: Tue, 31 Jan 2006 07:55:53 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601310745270.7301@g5.osdl.org>
+References: <43DC8DDF.6080904@yahoo.it> <7vmzhekcz3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Keith Packard <keithp@keithp.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 31 16:34:02 2006
+Cc: Marco Costalba <mcostalba@yahoo.it>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 31 16:57:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3xTo-000420-KJ
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 16:31:41 +0100
+	id 1F3xrQ-0003YI-OR
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 16:56:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750967AbWAaPbZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 10:31:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750981AbWAaPbZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 10:31:25 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:36052 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750966AbWAaPbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 10:31:24 -0500
-Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 678C614672E; Tue, 31 Jan 2006 16:31:23 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 5858C995;
-	Tue, 31 Jan 2006 16:31:23 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 6C0B614672E; Tue, 31 Jan 2006 16:31:19 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Carl Baldwin <cnb@fc.hp.com>
-In-Reply-To: <20060131152429.GA26817@hpsvcnb.fc.hp.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1750776AbWAaPz7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 10:55:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750777AbWAaPz7
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 10:55:59 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:20134 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750776AbWAaPz6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 10:55:58 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k0VFtsDZ020909
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 31 Jan 2006 07:55:55 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k0VFtrfI016203;
+	Tue, 31 Jan 2006 07:55:54 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzhekcz3.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15320>
 
-Hi,
 
-On Tue, 31 Jan 2006, Carl Baldwin wrote:
 
-> Its difficult to explain because it breaks away from the precedent set
-> by other SCMs.  I wouldn't call it a show-stopper for this reason.
+On Sun, 29 Jan 2006, Junio C Hamano wrote:
 
-I don't.
+> Marco Costalba <mcostalba@yahoo.it> writes:
+> 
+> > $ git-rev-list --max-count=1 --parents addafaf92eeb86033da91323d0d3ad7a496dae83 -- rev-list.c
+> > addaf.. d8f6b.. 93b74.. d8f6b.. d8f6b.. 3815f..
+> >
+> > We have the same parent (d8f6b..) multiple times.
+> 
+> I think it probably is a bug.
 
-The strange concept from the user's perspective is that
+Well, it's not strictly a bug, and multiple of the same parents _can_ 
+happen in real life due to buggy commits, so a tool that depends on some 
+kind of parent uniqueness are a bit fragile. There is nothing fundamental 
+in the git data structures that says that you couldn't have the same 
+parent twice.
 
-	git commit -m "some message" file-a.txt
+In this case, it didn't start out with the same parent - we had five 
+unique parents, but by the time the tree had been simplified, some of them 
+had become common.
 
-can commit file-b.txt also.
+So I don't know if it's a "bug", and the bad reaction by gitk and qgit are 
+arguably the _real_ bugs. 
 
-> [...] In other circumstances I simply bypass it by adding -a to the 
-> command-line.
+But Junio's patch is simple, and perhaps the right thing to do. 
 
-This is a different thing.
-
-Ciao,
-Dscho
+			Linus
