@@ -1,67 +1,108 @@
-From: Alex Riesen <raa.lkml@gmail.com>
+From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
 Subject: Re: [Census] So who uses git?
-Date: Mon, 30 Jan 2006 23:51:07 +0100
-Message-ID: <20060130225107.GA3857@limbo.home>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com> <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org> <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com> <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> <1138529385.9919.185.camel@evo.keithp.com> <43DCA495.9040301@gorzow.mm.pl>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Date: Tue, 31 Jan 2006 22:02:53 +0100
+Message-ID: <43DFD07D.7000903@gorzow.mm.pl>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>	<1138446030.9919.112.camel@evo.keithp.com>	<7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>	<1138529385.9919.185.camel@evo.keithp.com>	<43DCA495.9040301@gorzow.mm.pl> <20060129181240.GA11721@kroah.com>	<43DFAD91.4080105@gorzow.mm.pl> <43DFBF9A.2020409@gorzow.mm.pl> <7v8xsww2kt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Keith Packard <keithp@keithp.com>, Junio C Hamano <junkio@cox.net>,
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig9606BEF6A5DD31BE08C250E5"
+Cc: Greg KH <greg@kroah.com>, Keith Packard <keithp@keithp.com>,
 	cworth@cworth.org, Martin Langhoff <martin.langhoff@gmail.com>,
 	Linus Torvalds <torvalds@osdl.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 31 22:00:10 2006
+X-From: git-owner@vger.kernel.org Tue Jan 31 22:03:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F42bQ-0003Y6-9B
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 21:59:52 +0100
+	id 1F42ey-0004fS-Sx
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 22:03:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751484AbWAaU7t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 15:59:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751485AbWAaU7t
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 15:59:49 -0500
-Received: from devrace.com ([198.63.210.113]:11279 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1751484AbWAaU7s (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 15:59:48 -0500
-Received: from tigra.home (p54A07FD9.dip.t-dialin.net [84.160.127.217])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k0VKxKYs078017;
-	Tue, 31 Jan 2006 14:59:21 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from [192.168.1.24] (helo=limbo.home ident=200)
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1F42ap-0003vg-00; Tue, 31 Jan 2006 21:59:15 +0100
-Received: by limbo.home (Postfix, from userid 1000)
-	id D360BEC417; Mon, 30 Jan 2006 23:51:08 +0100 (CET)
-To: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
-Content-Disposition: inline
-In-Reply-To: <43DCA495.9040301@gorzow.mm.pl>
-User-Agent: Mutt/1.4.2.1i
-X-Spam-Status: No, score=0.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL 
-	autolearn=no version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S1751485AbWAaVDD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 16:03:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbWAaVDC
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 16:03:02 -0500
+Received: from goliat1.kalisz.mm.pl ([81.15.136.226]:63900 "EHLO kalisz.mm.pl")
+	by vger.kernel.org with ESMTP id S1751485AbWAaVDA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 16:03:00 -0500
+Received: (qmail 1045 invoked from network); 31 Jan 2006 21:02:58 -0000
+Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.201.167])
+          (envelope-sender <astralstorm@gorzow.mm.pl>)
+          by 0 (qmail-ldap-1.03) with SMTP
+          for <junkio@cox.net>; 31 Jan 2006 21:02:58 -0000
+Received: from [192.168.0.1] (zen.uplink [192.168.0.1])
+	by zen.uplink (Postfix) with ESMTP id 19732A81AE;
+	Tue, 31 Jan 2006 22:02:58 +0100 (CET)
+User-Agent: Thunderbird 1.4.1 (X11/20051010)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xsww2kt.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15347>
 
-Radoslaw Szkodzinski, Sun, Jan 29, 2006 12:18:45 +0100:
-> > Fortunately, there are very few people involved with any specific piece
-> > of the X.org distribution; there's really only one or two people
-> > actively developing the X.org core server, so that part of the migration
-> > will be easy. Our users will be stuck, but there aren't many of them
-> > either, and git makes just sucking the current bits pretty easy. 
-> 
-> Not under Windows (bleh), but it's support for Cygwin is getting better
-> and better.
-> 
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig9606BEF6A5DD31BE08C250E5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I use git in cygwin for a project with more then 17k files (almost 6M lines).
-It's real slow on ntfs (on 3.2Mhz PIV!), PITA on fat, and has some hiccups now
-and then (of the kind: "windows unexpectedly does not have feature X, which
-everything else has" or "windows broke a 20-year-old feature Y").
+Junio C Hamano wrote:
+> Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl> writes:
+>=20
+>> Radoslaw Szkodzinski wrote:
+>>> Cloning without -l option is much slower - some minutes vs below a mi=
+nute.
+>>> I could have time(8)d it, but it's no use.
+>>>
+>> Make that time(1)d.
+>>
+>> Results for the kernel follow. Disc cache has been preheated with find=
+=2E
+>=20
+> While you are at it, "git clone -l -s -n" might be more interesting.
+>=20
+>=20
 
-But its more intuitive and more powerful than any alternatives here (Perforce,
-SVN and CVS come to mind).
+Sure:
+
+time git clone -l -s -n linux-2.6.git linux-2.6.git.lsn
+
+real    0m0.458s
+user    0m0.020s
+sys     0m0.027s
+
+Speed demon. I'd use it, but I often need a checkout anyway, so...
+
+time git clone -l -s linux-2.6.git linux-2.6.git.ls
+
+real    0m35.752s
+user    0m2.661s
+sys     0m2.374s
+
+Not really better than git clone -l and relies on the tools more.
+However, it should make for easier repacking and pruning. I'll keep it.
+
+--=20
+GPG Key id:  0xD1F10BA2
+Fingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
+
+AstralStorm
+
+
+--------------enig9606BEF6A5DD31BE08C250E5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFD39CBlUMEU9HxC6IRAnjnAJ9iFUsS7aCSX5wRm1SKvkbu+iZ3pQCeJqa4
+FRKWu2QbpPDO6SgvfSw82pw=
+=WEOC
+-----END PGP SIGNATURE-----
+
+--------------enig9606BEF6A5DD31BE08C250E5--
