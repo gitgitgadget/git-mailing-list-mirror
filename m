@@ -1,72 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Shallow clone: low level machinery.
-Date: Tue, 31 Jan 2006 19:06:28 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0601311904410.10944@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v8xsxa70o.fsf@assigned-by-dhcp.cox.net> <7vmzhc1wz6.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0601311449040.8033@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vd5i81e4e.fsf@assigned-by-dhcp.cox.net>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [Census] So who uses git?
+Date: Tue, 31 Jan 2006 13:12:48 -0500
+Message-ID: <20060131181248.GE11955@fieldses.org>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com> <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org> <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com> <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> <20060130185822.GA24487@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0601310926330.7301@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 31 19:07:02 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
+	Keith Packard <keithp@keithp.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 31 19:13:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3ztg-0007Mq-KT
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 19:06:32 +0100
+	id 1F4002-0000TP-72
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 19:13:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751309AbWAaSGa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 13:06:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751310AbWAaSGa
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 13:06:30 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:45712 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751309AbWAaSG3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 13:06:29 -0500
-Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 671AD1464BA; Tue, 31 Jan 2006 19:06:28 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 59BADA6A;
-	Tue, 31 Jan 2006 19:06:28 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3DD731464BA; Tue, 31 Jan 2006 19:06:28 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5i81e4e.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1751308AbWAaSND (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 13:13:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbWAaSND
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 13:13:03 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:17626 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP
+	id S1751308AbWAaSNB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 13:13:01 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
+	(envelope-from <bfields@fieldses.org>)
+	id 1F3zzk-0003ut-D2; Tue, 31 Jan 2006 13:12:48 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0601310926330.7301@g5.osdl.org>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15330>
 
-Hi,
-
-On Tue, 31 Jan 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Jan 31, 2006 at 09:30:48AM -0800, Linus Torvalds wrote:
+> I really think you should explain it one of two ways:
 > 
-> > apart from my thinking this is not backward-compatible (you are supposed 
-> > to be able to pull from a complete repo, even if it has a 
-> > non-shallow-capable upload-pack), here are my comments:
+>  - ignore it. Never _ever_ use git-update-index directly, and don't tell 
+>    people about use individual filenames to git-commit. Maybe even add 
+>    "-a" by default to the git-commit flags as a special installation 
+>    addition.
 > 
-> It cannot do a shallow clone against older servers, no.
-
-Worse, you cannot pull from older servers into shallow repos.
-
-> > - The custom_graft issue could be handled in a more elegant manner if 
-> > 	git was lib'ified (no temporary file). Since that is already the 
-> > 	plan, why not do that first, and come back later?
+>  - talk about the index, and revel in it as a way to explain the staging 
+>    area. This is what the old tutorial.txt did before it got simplified.
 > 
-> That is why it does not write any temporary files.  It
-> introduces a way to read graft information from an environment
-> variable.
+> The "ignore the index" approach is the simple one to explain. It's 
+> strictly less powerful, but hey, what else is new? 
 
-Ooops. I only saw that you setup_custom_grafts and assumed wrongly.
+Yeah, I do wonder what's likely to be the best approach for most users.
+My goal with the new tutorial was to get a reader doing something fun
+and useful as quickly as possible.  So it just refers elsewhere for any
+discussion of the index file or SHA1 names.  But probably everyone needs
+to pick up that stuff eventually anyway, and maybe it's better to get to
+it a little sooner, I dunno.
 
-Ciao,
-Dscho
+Besides the git-add/git-commit thing, the other thing that caught me by
+suprise was the behaviour of git reset.  I expected there to be an
+"inverse" to git commit -a, meaning that
+
+	1) the sequence
+		git reset HEAD^
+		git commit -a
+	   would be a no-op, in the sense that the new commit would
+	   get the same changes as the old one, and
+	2) the sequence
+		git commit -a
+		git reset HEAD^
+	   would be a no-op, in the sense that "git diff" would report
+	   the same diff before and after.
+
+But there isn't, and explaining how --soft and --mixed actually work
+requires referring to the index file.
+
+Is that something that can be fixed in the tools or does the user
+fundamentally need to know about the index file to do this kind of
+stuff?
+
+--b.
