@@ -1,72 +1,95 @@
-From: Simon Richter <Simon.Richter@hogyros.de>
-Subject: Idea: "repair" tool
-Date: Tue, 31 Jan 2006 14:16:50 +0100
-Message-ID: <43DF6342.2010703@hogyros.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] shallow clone
+Date: Tue, 31 Jan 2006 14:31:03 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0601311422400.7918@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
+ <43DDFF5C.30803@hogyros.de> <Pine.LNX.4.63.0601301305100.20228@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vzmld7c2g.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0601311127490.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+ <43DF608C.1060201@hogyros.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig853DC847A8132AA045D68F52"
-X-From: git-owner@vger.kernel.org Tue Jan 31 14:17:24 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 31 14:32:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F3vNY-0006x2-78
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 14:17:04 +0100
+	id 1F3vbk-0002ko-6e
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 14:31:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750803AbWAaNRA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 08:17:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbWAaNRA
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 08:17:00 -0500
-Received: from kleinhenz.com ([213.239.205.196]:49366 "EHLO kleinhenz.com")
-	by vger.kernel.org with ESMTP id S1750803AbWAaNQ7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 08:16:59 -0500
-Received: from [192.168.115.35] (p54995B2F.dip.t-dialin.net [84.153.91.47])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "Simon Richter", Issuer "Kleinhenz Elektronik CA" (verified OK))
-	by kleinhenz.com (Postfix) with ESMTP id 174EC4A8045
-	for <git@vger.kernel.org>; Tue, 31 Jan 2006 14:16:58 +0100 (CET)
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051019)
-X-Accept-Language: en-us, en
-To: git <git@vger.kernel.org>
-X-Enigmail-Version: 0.93.0.0
-OpenPGP: url=http://www.hogyros.de/simon.asc
+	id S1750810AbWAaNbI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 08:31:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750812AbWAaNbH
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 08:31:07 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:36263 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750810AbWAaNbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 08:31:06 -0500
+Received: from virusscan.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 78BA0146B85; Tue, 31 Jan 2006 14:31:03 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 6AFF48FB;
+	Tue, 31 Jan 2006 14:31:03 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 36454146B80; Tue, 31 Jan 2006 14:31:03 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Simon Richter <Simon.Richter@hogyros.de>
+In-Reply-To: <43DF608C.1060201@hogyros.de>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15313>
-
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig853DC847A8132AA045D68F52
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15314>
 
 Hi,
 
-since one of my linux-2.6 repos got damaged by filesystem corruption (a 
-bunch of objects vanished), I am wondering whether it would make sense 
-to have a small tool that would get a list of missing objects and try to 
-acquire them from all known remote repos (possibly with the approach of 
-trying the one you got the last object from first, as usually only files 
-from the same pull will have problems if there are filesystem issues).
+On Tue, 31 Jan 2006, Simon Richter wrote:
 
-What do you think?
+> Well, the important thing would be that commands that can work (a merge only
+> needs to find the most recent common ancestor, etc) do work, and commands that
+> cannot ("log") emit sensible diagnostics.
 
-    Simon
+No it would not.
 
---------------enig853DC847A8132AA045D68F52
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+A commit is a very small object which points (among others) to a tree 
+object.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
+A tree object corresponds to a directory (that is, it can point to a 
+number of tree and blob objects).
 
-iQCVAwUBQ99jRFYr4CN7gCINAQI7hgQAnzgaV5aHj2XoWbP6F/oY59M3FtVG4sa5
-BpKV83RNtkLTtUm207L6wsS6vUcvDIEHgYmiKWBLYAJDg6zXXiXHqHD5lFLXaTL9
-phdV2t3ZwGrHhLJLOC5dVvcRAcwSPDiY4PzCoOEtviYs9KwgF2Znx7+j/TCqinRe
-CWsWMU0wOHE=
-=o82u
------END PGP SIGNATURE-----
+A blob object corresponds to a file (that is, git never parses its 
+contents).
 
---------------enig853DC847A8132AA045D68F52--
+If two separate revisions contain the same file (i.e. same contents), this 
+is not duplicated, but the corresponding tree objects point to the same 
+object.
+
+If you pull, upload-pack will think you have *every* object depending on 
+every ref you have stored.
+
+Say you have three revisions, A -> B -> C, and A and C contain the 
+same file bla.txt, and the client says it has B, the upstream upload-pack 
+assumes you have bla.txt.
+
+> I know far too little about the internal workings for that, [...]
+
+I hope I clarified the important aspect.
+
+> > If you now rely on the grafts file to determine what was a cutoff, you may
+> > well end up with bogus cutoffs.
+> 
+> Exactly that was my concern earlier; my database design gut feeling tells me
+> that information duplication is not good either, [...]
+
+You only have two choices: you proposed code duplication, and yours truly 
+proposed data duplication.
+
+As is known from good database design: a few redundancies here and there 
+are typically needed for good performance.
+
+Ciao,
+Dscho
