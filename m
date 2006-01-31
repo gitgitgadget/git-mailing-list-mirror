@@ -1,63 +1,100 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Shallow clone: low level machinery.
-Date: Tue, 31 Jan 2006 10:22:22 -0800
-Message-ID: <7vzmlcz28x.fsf@assigned-by-dhcp.cox.net>
-References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v8xsxa70o.fsf@assigned-by-dhcp.cox.net>
-	<7vmzhc1wz6.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0601311449040.8033@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vd5i81e4e.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0601311904410.10944@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
+Subject: Re: [Census] So who uses git?
+Date: Tue, 31 Jan 2006 19:33:53 +0100
+Message-ID: <43DFAD91.4080105@gorzow.mm.pl>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com> <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org> <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com> <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> <1138529385.9919.185.camel@evo.keithp.com> <43DCA495.9040301@gorzow.mm.pl> <20060129181240.GA11721@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 31 19:24:17 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigFF1621F055C08705EB9CC46A"
+Cc: Keith Packard <keithp@keithp.com>, Junio C Hamano <junkio@cox.net>,
+	cworth@cworth.org, Martin Langhoff <martin.langhoff@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 31 19:34:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F409b-0002t5-5r
-	for gcvg-git@gmane.org; Tue, 31 Jan 2006 19:22:59 +0100
+	id 1F40KM-0005xw-TA
+	for gcvg-git@gmane.org; Tue, 31 Jan 2006 19:34:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751323AbWAaSWZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 13:22:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbWAaSWZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 13:22:25 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:13052 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751324AbWAaSWY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 13:22:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060131182119.RSFI15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 31 Jan 2006 13:21:19 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0601311904410.10944@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Tue, 31 Jan 2006 19:06:28 +0100
-	(CET)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751328AbWAaSeE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 13:34:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbWAaSeD
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 13:34:03 -0500
+Received: from goliat1.kalisz.mm.pl ([81.15.136.226]:23988 "EHLO kalisz.mm.pl")
+	by vger.kernel.org with ESMTP id S1751328AbWAaSeB (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 13:34:01 -0500
+Received: (qmail 30670 invoked from network); 31 Jan 2006 18:33:58 -0000
+Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.201.167])
+          (envelope-sender <astralstorm@gorzow.mm.pl>)
+          by 0 (qmail-ldap-1.03) with SMTP
+          for <junkio@cox.net>; 31 Jan 2006 18:33:58 -0000
+Received: from [192.168.0.1] (zen.uplink [192.168.0.1])
+	by zen.uplink (Postfix) with ESMTP id 8B0DE1780F3;
+	Tue, 31 Jan 2006 19:33:57 +0100 (CET)
+User-Agent: Thunderbird 1.4.1 (X11/20051010)
+To: Greg KH <greg@kroah.com>
+In-Reply-To: <20060129181240.GA11721@kroah.com>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15332>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigFF1621F055C08705EB9CC46A
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Worse, you cannot pull from older servers into shallow repos.
+Greg KH wrote:
+> On Sun, Jan 29, 2006 at 12:18:45PM +0100, Radoslaw Szkodzinski wrote:
+>> The only drawback is local cloning. This operation is like 4x slower
+>> than plain copying of the repository. Probably because it works like a=
+n
+>> ssh clone - creates a pack, copies it, then unpacks. This is just
+>> inefficient on a local machine.
+>=20
+> Have you tried the "-l" option for cloneing locally?  It's _very_ fast,=
 
-"have X" means different thing if you do not have matching
-grafts information, so I suspect that is fundamentally
-unsolvable.
+> even for my tiny little old laptop.
 
-I am not sure you can convince "git-rev-list ^A" to mean "not at
-A but things before that is still interesting", especially when
-you give many other heads to start traversing from, but if you
-can, then you can do things at rev-list command line parameter
-level without doing the "exchange and use the same grafts"
-trickery.  That _might_ be easier to implement but I do not see
-an obvious correctness guarantee in the approach.
+Because it's cp -rl <one-tree> <second-tree> and some file modifications,=
+ right?
+It's what I've been using already.
 
-Implementation bugs aside, it is obvious the things _would_ work 
-correctly with "exchange and use the same grafts" approach.
+This -l option should be more prominent in the documentation.
+Maybe it even already is. I've taught myself using git before 0.9.
+
+Thank you. This helps a lot.
+
+> If you add a "-n" that will not checkout the source tree, so you can
+> compare the time of cloning with the checkout portion.
+
+Cloning without -l option is much slower - some minutes vs below a minute=
+=2E
+I could have time(8)d it, but it's no use.
+
+--=20
+GPG Key id:  0xD1F10BA2
+Fingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
+
+AstralStorm
+
+
+--------------enigFF1621F055C08705EB9CC46A
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFD362VlUMEU9HxC6IRAq7dAJ4ho4tbuv1lsbS20AkDDypKFAyzIQCggT7r
+gjf3vXrkBuZX8hppX1YpFBc=
+=owhZ
+-----END PGP SIGNATURE-----
+
+--------------enigFF1621F055C08705EB9CC46A--
