@@ -1,74 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Bottlenecks in git merge
-Date: Tue, 31 Jan 2006 15:06:57 -0800
-Message-ID: <7vk6cgq9ny.fsf@assigned-by-dhcp.cox.net>
-References: <20060131213314.GA32131@ebar091.ebar.dtu.dk>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [Census] So who uses git?
+Date: Tue, 31 Jan 2006 18:16:26 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0601311750270.25300@iabervon.org>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
+ <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
+ <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
+ <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
+ <20060130185822.GA24487@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 01 00:07:12 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
+	Keith Packard <keithp@keithp.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 01 00:14:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F44aV-0000mp-OR
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 00:07:04 +0100
+	id 1F44hU-0002J3-MU
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 00:14:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750955AbWAaXG7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 18:06:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750957AbWAaXG7
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 18:06:59 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:19124 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1750933AbWAaXG7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 18:06:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060131230354.HNKD20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 31 Jan 2006 18:03:54 -0500
-To: "Peter Eriksen" <s022018@student.dtu.dk>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751067AbWAaXOM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 18:14:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751069AbWAaXOM
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 18:14:12 -0500
+Received: from iabervon.org ([66.92.72.58]:2574 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751067AbWAaXOK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 18:14:10 -0500
+Received: (qmail 4469 invoked by uid 1000); 31 Jan 2006 18:16:26 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 31 Jan 2006 18:16:26 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15361>
 
-"Peter Eriksen" <s022018@student.dtu.dk> writes:
+On Tue, 31 Jan 2006, Johannes Schindelin wrote:
 
-> Recursive (default):  4m22.282s
-> Resolve (-s resolve): 3m23.548s
->
-> What is taking so long?
+> Hi,
+> 
+> On Mon, 30 Jan 2006, Carl Baldwin wrote:
+> 
+> > In general, I think it is grasping the reason for the index file and how 
+> > git commands like git-commit and git-diff interact with it.
+> 
+> IMHO this is the one big showstopper. I had problems explaining the 
+> concept myself.
+> 
+> For example, I had a hard time explaining to a friend why a git-add'ed 
+> file is committed when saying "git commit some_other_file", but not 
+> another (modified) file. Very unintuitive.
 
-I am actually surprised that recursive is not much slower than
-resolve.  I expected to see bigger difference for a merge like
-this.
+I sort of suspect that "git commit some_other_file" should really read 
+HEAD into a temporary index, update "some_other_file" in that (and the 
+main index), and commit it. The concept of the index isn't hard (it's the 
+preparation you've made so far towards a commit), and plain "git commit" 
+makes sense with it; "git commit -a" also makes sense, since committing 
+all changes is pretty clear. The surprising thing is that "git commit path 
+..." means "everything I've already mentioned, plus path..." not just 
+"path ...", and it's particularly surprising because people only tend to 
+specify paths when they've done something they don't want to commit.
 
-> git checkout -b test v2.6.12
-> change_readme
-> git commit -a -m "Work, work, work"
-> time git merge $STRATEGY "Merging happily." HEAD v2.6.15
-
-You are merging a variant of v2.6.12 and v2.6.15.  Each of these
-two official revisions has roughly 18,000 files, and they differ
-at 10,723 files among them.
-
-With an up-to-date index that has small changes from v2.6.12,
-merging these two revisions using read-tree -m to do the trivial
-merge (the part that comes before recursive/resolve) leaves
-about 850 files to be resolved in the working tree.  For these
-files, you need to do an equivalent of merge-one-file to merge
-the differences (in this particular case, most of them are
-"removed in one but unchanged in the other" kind).  In addition,
-you have to checkout the result of the merge, which means you
-need to update at least 10,723 files.
-
-I suspect that it might make things quite faster if we resolved
-case 8 and 10 (see either Documentation/technical/trivial-merge
-or t/t1000) in index for this particular case, but it has
-correctness issues.  A merge strategy may want to say "This file
-was removed by the other branch while it stayed on our branch;
-but this is not a remove but actually a rename", and do
-something different from what merge-one-file does, and resolving
-these cases in index closes the door for that possibility.
+	-Daniel
+*This .sig left intentionally blank*
