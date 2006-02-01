@@ -1,90 +1,87 @@
-From: Alex Riesen <raa.lkml@gmail.com>
+From: "Fernando J. Pereda" <ferdy@ferdyx.org>
 Subject: Re: [Announce] gitview-0.1
-Date: Wed, 1 Feb 2006 21:58:05 +0100
-Message-ID: <20060201205805.GA6384@steel.home>
-References: <cc723f590601312016vabba201ye6d3739b3927f1a@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Date: Wed, 1 Feb 2006 22:02:04 +0100
+Message-ID: <20060201210204.GB15900@ferdyx.org>
+References: <cc723f590601312016vabba201ye6d3739b3927f1a@mail.gmail.com> <20060201205805.GA6384@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 01 21:59:09 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="0ntfKIWw70PvrIHh"
+Cc: Aneesh Kumar <aneesh.kumar@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 22:02:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4P3Y-0004Ll-Bb
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 21:58:25 +0100
+	id 1F4P7G-0005Ox-Ag
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 22:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422929AbWBAU6P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 15:58:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932468AbWBAU6P
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 15:58:15 -0500
-Received: from devrace.com ([198.63.210.113]:18955 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S932463AbWBAU6P (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 15:58:15 -0500
-Received: from tigra.home (p54A06D68.dip.t-dialin.net [84.160.109.104])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k11Kw8np099589;
-	Wed, 1 Feb 2006 14:58:09 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1F4P3G-0008PD-00; Wed, 01 Feb 2006 21:58:06 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1F4P3F-0003tE-Sp; Wed, 01 Feb 2006 21:58:05 +0100
-To: Aneesh Kumar <aneesh.kumar@gmail.com>
+	id S1422927AbWBAVCK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 16:02:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932463AbWBAVCK
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 16:02:10 -0500
+Received: from 170.Red-213-96-222.staticIP.rima-tde.net ([213.96.222.170]:27533
+	"EHLO smtp.ferdyx.org") by vger.kernel.org with ESMTP
+	id S932453AbWBAVCJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 16:02:09 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.ferdyx.org (Postfix) with ESMTP id 78E668D34B;
+	Wed,  1 Feb 2006 21:56:37 +0100 (CET)
+Received: from smtp.ferdyx.org ([127.0.0.1])
+	by localhost (tungsteno [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 05424-09; Wed, 1 Feb 2006 21:56:35 +0100 (CET)
+Received: from posidon.ferdyx.org (posidon.ferdyx.org [192.168.0.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.ferdyx.org (Postfix) with ESMTP id A69F48D343;
+	Wed,  1 Feb 2006 21:56:34 +0100 (CET)
+Received: by posidon.ferdyx.org (nbSMTP-1.01-cvs) for uid 1000
+	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	ferdy@ferdyx.org; Wed,  1 Feb 2006 22:02:04 +0100 (CET)
+To: Alex Riesen <raa.lkml@gmail.com>
+Mail-Followup-To: Alex Riesen <raa.lkml@gmail.com>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <cc723f590601312016vabba201ye6d3739b3927f1a@mail.gmail.com>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=0.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL 
-	autolearn=no version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+In-Reply-To: <20060201205805.GA6384@steel.home>
+User-Agent: Mutt/1.5.11
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at ferdyx.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15447>
 
-Aneesh Kumar, Wed, Feb 01, 2006 05:16:59 +0100:
-> 
-> Gnome based git repository browser. The code is derived from bazaar-ng
-> repository browser.
-> 
-> To see how it looks
-> 
-> http://www.flickr.com/photos/17388011@N00/92918446/
-> 
-> I don't have a web location where i can host it so i am attaching it below.
-> It would be great if we can get it added to git repository
-> 
-> sample usage
-> takes same argument as git rev-list
-> 
-> gitview --since=2.week.ago
-> 
 
-Doesn't really work here: no tree like on your screenshot, and a lot
-of messages like this:
+--0ntfKIWw70PvrIHh
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
-s `PyGtkGenericCellRenderer' has no property named `out-lines'
+On Wed, Feb 01, 2006 at 09:58:05PM +0100, Alex Riesen wrote:
+| Gentoo, Python 2.4.2, pycairo 1.0.2.
 
-(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
-s `PyGtkGenericCellRenderer' has no property named `in-lines'
+Just upgrade to a newer pygtk and it'll work fine:
 
-(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
-s `PyGtkGenericCellRenderer' has no property named `node'
+[ebuild   R   ] dev-python/pygtk-2.8.2  -doc +opengl 0 kB
 
-(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
-s `PyGtkGenericCellRenderer' has no property named `out-lines'
+I had the same problem until I installed the above version.
 
-(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
-s `PyGtkGenericCellRenderer' has no property named `in-lines'
+Cheers,
+Ferdy
 
-(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
-s `PyGtkGenericCellRenderer' has no property named `node'
-Traceback (most recent call last):
-  File "/home/raa/gitview", line 166, in on_render
-    ctx = window.cairo_create()
-AttributeError: 'gtk.gdk.Window' object has no attribute 'cairo_create'
+--=20
+Fernando J. Pereda Garcimart=EDn
+Gentoo Developer (Alpha,net-mail,mutt,git)
+20BB BDC3 761A 4781 E6ED  ED0B 0A48 5B0C 60BD 28D4
 
-Gentoo, Python 2.4.2, pycairo 1.0.2.
+--0ntfKIWw70PvrIHh
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQFD4SHMCkhbDGC9KNQRAkBRAJ0V7PjEio/UYvvAxiqJ8KkEN/chogCcD9No
+/BTcyFuMaMELHPzOb2c9/0k=
+=M4cc
+-----END PGP SIGNATURE-----
+
+--0ntfKIWw70PvrIHh--
