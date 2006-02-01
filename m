@@ -1,65 +1,95 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: Re: [PATCH 0/9] http-fetch fixes
-Date: Wed, 1 Feb 2006 15:47:48 +0000 (UTC)
-Organization: Straylight/Edgeware development
-Message-ID: <slrndu1m14.2i8.mdw@metalzone.distorted.org.uk>
-References: <20060201112822.5042.41256.stgit@metalzone.distorted.org.uk> <20060201153052.GA16461@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Wed Feb 01 16:48:56 2006
+From: Sasha Khapyorsky <sashak@voltaire.com>
+Subject: [PATCH] git-svnimport.perl: fix for 'arg list too long...'
+Date: Wed, 1 Feb 2006 17:53:31 +0200
+Message-ID: <20060201155331.GE18078@sashak.voltaire.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 16:54:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4KD9-0002ql-N8
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 16:48:03 +0100
+	id 1F4KIR-0004P0-4O
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 16:53:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422639AbWBAPrx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 10:47:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161097AbWBAPrw
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 10:47:52 -0500
-Received: from excessus.demon.co.uk ([83.105.60.35]:24051 "HELO
-	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
-	id S1161100AbWBAPrw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 10:47:52 -0500
-Received: (qmail 23115 invoked by uid 110); 1 Feb 2006 15:47:48 -0000
-To: git@vger.kernel.org
-Received: (qmail 23101 invoked by uid 9); 1 Feb 2006 15:47:48 -0000
-Path: not-for-mail
-Newsgroups: mail.vger.git
-NNTP-Posting-Host: metalzone.distorted.org.uk
-X-Trace: metalzone.distorted.org.uk 1138808868 23099 172.29.199.2 (1 Feb 2006 15:47:48 GMT)
-X-Complaints-To: usenet@distorted.org.uk
-NNTP-Posting-Date: Wed, 1 Feb 2006 15:47:48 +0000 (UTC)
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S1161097AbWBAPxA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 10:53:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161100AbWBAPw7
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 10:52:59 -0500
+Received: from taurus.voltaire.com ([193.47.165.240]:18285 "EHLO
+	taurus.voltaire.com") by vger.kernel.org with ESMTP
+	id S1161097AbWBAPw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 10:52:58 -0500
+Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 1 Feb 2006 17:52:57 +0200
+Received: by sashak (sSMTP sendmail emulation); Wed,  1 Feb 2006 17:53:31 +0200
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
+	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-OriginalArrivalTime: 01 Feb 2006 15:52:57.0809 (UTC) FILETIME=[9258C410:01C62747]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15422>
 
-Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de> wrote:
+Hello,
 
->> The series applies to commit 1506fc34f7585880aeeb12b5fdfe2de4800f9df5.
-> after reverting c8568e139ed2149fbfb7ef9a8d819d5b6b7c554f it applies to
-> 8233340ce6eb700eb2cd9c0fef4d1705997c499b (=current master), too.
+This fixes 'arg list too long' problem when passed to git-ls-files.
 
-Good-oh.  (I did pull the latest tip, and then panicked because Nick's
-change had already made it out.)
+Sasha.
 
-> With these patches applied, I get now a Segfault, while cloning
-> u-boot.
 
-Oh. :-(  
+This fixes 'arg list too long..' problem with git-ls-files.
 
-> Actually now I cannot reproduce it anymore.  I added some debugging code
-> s.t. I can give more details if it reoccurs.
+Note that second arg list separation loop (with 'git-update-index') is
+needed since git-ls-files arguments can be directories.
 
-Please do.  I've just tried, and I can't reproduce the problem either.
+Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
 
-The watch-slots patch seems to uncover all manner of brokenness in
-http-fetch.c -- or I've violated some unwritten assumptions of a very
-deep nature, which is always possible.
-
-Maybe the right thing to do is to go with Nick's separate-status-
-structures patch as an actual mainline fix, with my patches for
-http-fetch.c's other bugs as a belt-and-braces.
-
--- [mdw]
+diff --git a/git-svnimport.perl b/git-svnimport.perl
+index 6e3a44a..b6799d8 100755
+--- a/git-svnimport.perl
++++ b/git-svnimport.perl
+@@ -546,23 +546,30 @@ sub commit {
+ 			}
+ 		}
+ 
+-		if(@old) {
+-			open my $F, "-|", "git-ls-files", "-z", @old or die $!;
+-			@old = ();
++		while(@old) {
++			my @o1;
++			if(@old > 55) {
++				@o1 = splice(@old,0,50);
++			} else {
++				@o1 = @old;
++				@old = ();
++			}
++			open my $F, "-|", "git-ls-files", "-z", @o1 or die $!;
++			@o1 = ();
+ 			local $/ = "\0";
+ 			while(<$F>) {
+ 				chomp;
+-				push(@old,$_);
++				push(@o1,$_);
+ 			}
+ 			close($F);
+ 
+-			while(@old) {
++			while(@o1) {
+ 				my @o2;
+-				if(@old > 55) {
+-					@o2 = splice(@old,0,50);
++				if(@o1 > 55) {
++					@o2 = splice(@o1,0,50);
+ 				} else {
+-					@o2 = @old;
+-					@old = ();
++					@o2 = @o1;
++					@o1 = ();
+ 				}
+ 				system("git-update-index","--force-remove","--",@o2);
+ 				die "Cannot remove files: $?\n" if $?;
