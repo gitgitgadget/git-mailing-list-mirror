@@ -1,61 +1,71 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Question around git-shell usage in Everyday Git
-Date: Wed, 01 Feb 2006 15:30:28 -0800
-Message-ID: <7vslr264iz.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 1 Feb 2006 15:30:35 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602011523000.21884@g5.osdl.org>
 References: <200602012301.56141.alan@chandlerfamily.org.uk>
-	<7vy80u64xf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 00:30:41 2006
+X-From: git-owner@vger.kernel.org Thu Feb 02 00:30:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4RQo-00067L-12
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 00:30:34 +0100
+	id 1F4RR0-0006B3-Kr
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 00:30:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423026AbWBAXab (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 18:30:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423027AbWBAXab
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 18:30:31 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:34007 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1423026AbWBAXaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 18:30:30 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060201232900.NZIM20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 1 Feb 2006 18:29:00 -0500
+	id S1423027AbWBAXao (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 18:30:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423028AbWBAXao
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 18:30:44 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:62602 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1423027AbWBAXan (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 18:30:43 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k11NUaDZ032733
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 1 Feb 2006 15:30:36 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k11NUZcF017534;
+	Wed, 1 Feb 2006 15:30:35 -0800
 To: Alan Chandler <alan@chandlerfamily.org.uk>
-In-Reply-To: <7vy80u64xf.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 01 Feb 2006 15:21:48 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+In-Reply-To: <200602012301.56141.alan@chandlerfamily.org.uk>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15465>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Do you mean to reuse single directory /home/gitu/ for user A, B, C,
-> and hang repositories /home/gitu/{X,Y,Z} for projects?  I'd
-> imagine things could be arranged that way.  User A and B but not
-> C may be in "projectX" group and /home/gitu/X is writable only
-> by projectX group members and such...
 
-OTOH, if you did things the way as you suggested:
+On Wed, 1 Feb 2006, Alan Chandler wrote:
+> 
+> My question, in this case is there any reason (such as git creating home 
+> directoriy temp files or something) why each developer could not have their 
+> home directory as the root of all the repositories (ie where my git user in 
+> the above example had its home directory).
 
->URL:git@host.com:repository.git
->and in ~git/.ssh/authorized_keys putting all the developers
->public keys.
+No reason why not.
 
-you cannot tell a person using one key to become "git" on that
-machine from another person using different key to become the
-same "git" on that machine; if you do not care about that
-then it is OK.  That would work only when all of your git
-repositories are supposed to be accessible by everybody.
+I use my home directory for all _my_ projects, and just clone them within 
+my own network with
 
-But I suspect doing so would not let you have different projects
-with different subset of "git" users on your shared machine.
+	git pull g5:v2.6/linux ..
+
+rather than using the absolute path-name.
+
+And no, git should never use your home directory for anything else (ie 
+all file operations are normally done just in $GIT_OBJECT_DIR or 
+similar: some things like "git-diff-files" will use the current working 
+directory, but nothing uses $HOME (*)).
+
+So I would indeed suggest that the home directory would be the natural 
+place to put developer projects.
+
+		Linus
+
+(*) Not entirely true. "git-cvsimport" uses "$HOME/.cvspass" for CVS 
+passwords. But the _basic_ git commands shouldn't do that.
