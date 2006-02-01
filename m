@@ -1,76 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
+From: linux@horizon.com
 Subject: Re: [Census] So who uses git?
-Date: Tue, 31 Jan 2006 23:03:55 -0800
-Message-ID: <7vmzhbk1b8.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
-	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
-	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
-	<1138446030.9919.112.camel@evo.keithp.com>
-	<7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
-	<1138529385.9919.185.camel@evo.keithp.com>
-	<43DCA495.9040301@gorzow.mm.pl> <20060130225107.GA3857@limbo.home>
-	<Pine.LNX.4.64.0601311314030.7301@g5.osdl.org>
-	<20060131220148.GA19411@steel.home> <20060201013901.GA16832@mail.com>
-	<Pine.LNX.4.64.0601311747360.7301@g5.osdl.org>
-	<7v64nzollt.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0601311938130.7301@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 01 08:04:02 2006
+Date: 1 Feb 2006 02:08:47 -0500
+Message-ID: <20060201070847.2021.qmail@science.horizon.com>
+Cc: git@vger.kernel.org, linux@horizon.com
+X-From: git-owner@vger.kernel.org Wed Feb 01 08:09:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4C23-0000Yl-Vv
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 08:04:00 +0100
+	id 1F4C78-0001bT-U8
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 08:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030559AbWBAHD5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 02:03:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030560AbWBAHD5
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 02:03:57 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:26830 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1030559AbWBAHD5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 02:03:57 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060201070116.VCCM17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 1 Feb 2006 02:01:16 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0601311938130.7301@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 31 Jan 2006 19:43:12 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750935AbWBAHJM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 02:09:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750793AbWBAHJM
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 02:09:12 -0500
+Received: from science.horizon.com ([192.35.100.1]:36395 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1751331AbWBAHJL
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 02:09:11 -0500
+Received: (qmail 2025 invoked by uid 1000); 1 Feb 2006 02:08:47 -0500
+To: torvalds@osdl.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15390>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+> Yes, I think the "assume unchanged" flag goes well together with making 
+> sure that the checked-out file is non-writable at the time.
+> 
+> Of course, any number of editors and other actions won't care: if you do 
+> anything like
+> 
+> 	for i in *.c
+> 	do
+> 		sed 's/xyzzy/bas/g' < $i > $i.new
+> 		mv $i.new $i
+> 	done
+> 
+> you'll never have even noticed that the old file was marked read-only. So 
+> it's obviously not in any way any guarantee, but it probably makes sense 
+> as a crutch.
 
-> Your point that we discussed a similar flag for the "don't require a full 
-> checkout" is a good one: we should try to make sure that it works for both 
-> uses. Although maybe we decided for some reason that nobody cared about 
-> the non-checked-out case?
+At the risk of complicating something already very complicated, and
+possibly breaking on Microsoft file systems, that case can be detected
+by reading the directory and noticing that the inode number changed.
 
-We gave them a way to add --cacheinfo but did not do any more
-than that, because they are independently coming up with some
-hash (not necessarily be a proper git blob object name), they
-did not have the huge blob data with the working tree anyway,
-and the only thing they cared about was which paths changed and
-they did not even want to see how the contents changed.
-I.e. "diff-tree -r" was the only thing they cared about.
+Would it be worth validating the inode numbers (which can be retrieved
+in a batch) even if you don't do a full lstat()?
 
-If we end up doing "assume unchanged", I should remember to do a
-sensible thing for "diff-index" without --cached.  It should not
-look at the working tree file for paths marked as such.  This
-implies one optimization in "diff-index -p" and "diff-tree -p"
-may need to be disabled.  They cheat and avoid expanding blob
-objects when their cache entries are clean and required blobs
-are in the working tree.  If "assume unchanged" path was
-actually changed, such a diff would show up as a confusing
-unexpected change.
-
-Well, the user is asking for it, so that confusion is not _my_
-problem, though ;-).
+Or is that too Unix-centric and prone to performance problems on other
+file systems?  I'd think that, even if a file system used fake inode
+numbers, they'd be pretty consistent if you didn't touch the file at all,
+and being different would just cause a more expensive validation.
+Which would be okay as long as it's infrequent.
