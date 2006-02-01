@@ -1,67 +1,59 @@
-From: Aneesh Kumar <aneesh.kumar@gmail.com>
-Subject: Re: [Announce] gitview-0.1
-Date: Wed, 1 Feb 2006 10:11:00 +0530
-Message-ID: <cc723f590601312041o1dc594c7t69418b735ef29ee@mail.gmail.com>
-References: <cc723f590601312016vabba201ye6d3739b3927f1a@mail.gmail.com>
-	 <20060201042930.GV16557@redhat.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [Census] So who uses git?
+Date: Tue, 31 Jan 2006 21:04:46 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0601312104190.7301@g5.osdl.org>
+References: <1138446030.9919.112.camel@evo.keithp.com>
+ <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> <1138529385.9919.185.camel@evo.keithp.com>
+ <43DCA495.9040301@gorzow.mm.pl> <20060130225107.GA3857@limbo.home>
+ <Pine.LNX.4.64.0601311314030.7301@g5.osdl.org> <20060131220148.GA19411@steel.home>
+ <20060201013901.GA16832@mail.com> <Pine.LNX.4.64.0601311747360.7301@g5.osdl.org>
+ <7v64nzollt.fsf@assigned-by-dhcp.cox.net> <20060201045337.GC25753@mail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Feb 01 05:41:26 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 06:14:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F49nx-00071C-4r
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 05:41:19 +0100
+	id 1F4AKO-00049w-2u
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 06:14:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030293AbWBAElE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 23:41:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964916AbWBAElE
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 23:41:04 -0500
-Received: from uproxy.gmail.com ([66.249.92.192]:59313 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964915AbWBAElC convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 23:41:02 -0500
-Received: by uproxy.gmail.com with SMTP id q2so132419uge
-        for <git@vger.kernel.org>; Tue, 31 Jan 2006 20:41:00 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=m0dcwOTdfJyCX9dDnNeiIqmFfjjbqbc5iGcXMVOGHCL5chicMUArjqOFUteFtoyfnZRteJp3slO4Tl8QHD8r24irQEp3bqig0jbl2Q32RNhCr85FLKSuFhoXY+AvdGHmu3tM/t7o5Q3t8gYnIpJE9L4p1VU0zjRdWBCmlHEenMs=
-Received: by 10.66.234.13 with SMTP id g13mr2507880ugh;
-        Tue, 31 Jan 2006 20:41:00 -0800 (PST)
-Received: by 10.66.254.16 with HTTP; Tue, 31 Jan 2006 20:41:00 -0800 (PST)
-To: Dave Jones <davej@redhat.com>
-In-Reply-To: <20060201042930.GV16557@redhat.com>
-Content-Disposition: inline
+	id S1030339AbWBAFOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 00:14:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030356AbWBAFNi
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 00:13:38 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:30617 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030339AbWBAFNI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 00:13:08 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1154lDZ028615
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 31 Jan 2006 21:04:48 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1154kAO019472;
+	Tue, 31 Jan 2006 21:04:47 -0800
+To: Ray Lehtiniemi <rayl@mail.com>
+In-Reply-To: <20060201045337.GC25753@mail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15386>
 
-On 2/1/06, Dave Jones <davej@redhat.com> wrote:
-> On Wed, Feb 01, 2006 at 09:46:59AM +0530, Aneesh Kumar wrote:
->
->  > I don't have a web location where i can host it so i am attaching it below.
->  > It would be great if we can get it added to git repository
->  >
->  > sample usage
->  > takes same argument as git rev-list
->  >
->  > gitview --since=2.week.ago
->
-> Nice, here's your first patch against it :-)
->
-> The one thing I like about gitk over this though is that with gitk
-> you don't have to click a button to see the diff.
-> For casual history browsing, it's much nicer to just scroll the bottom
-> window. Making it pop up a new window for each diff is just irritating.
->
 
-I always browse the repository looking at the commit message and only
-if interested i look at the changes.  That's why i made it look that
-way.
 
--aneesh
+On Tue, 31 Jan 2006, Ray Lehtiniemi wrote:
+> 
+> what if the user wants to change the mode bits of an assume-unchanged
+> file with the twiddled permissions, but forgets to clear the flag
+> first?  seems like that change is likely to get lost, especially if the
+> new mode is read-only....
+
+Remember - git only cares about execute permissions. The write permissions 
+are entirely ignored by git ..
+
+		Linus
