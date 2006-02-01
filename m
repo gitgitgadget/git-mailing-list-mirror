@@ -1,73 +1,50 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Question around git-shell usage in Everyday Git
-Date: Wed, 1 Feb 2006 23:01:55 +0000
-Message-ID: <200602012301.56141.alan@chandlerfamily.org.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Question around git-shell usage in Everyday Git
+Date: Wed, 01 Feb 2006 15:21:48 -0800
+Message-ID: <7vy80u64xf.fsf@assigned-by-dhcp.cox.net>
+References: <200602012301.56141.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Feb 02 00:04:14 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 02 00:22:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4QzA-0006uZ-Pp
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 00:02:02 +0100
+	id 1F4RIQ-0004Fz-04
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 00:21:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423006AbWBAXB5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 18:01:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423008AbWBAXB5
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 18:01:57 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:22189
-	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
-	id S1423006AbWBAXB5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 18:01:57 -0500
-Received: from kanger.home ([192.168.0.21])
-	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
-	id 1F4Qz6-0008Ep-Bh
-	for git@vger.kernel.org; Wed, 01 Feb 2006 23:01:56 +0000
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
-Content-Disposition: inline
+	id S1423017AbWBAXVu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 18:21:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423021AbWBAXVu
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 18:21:50 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:40853 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1423017AbWBAXVt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 18:21:49 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060201231908.JYGW17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 1 Feb 2006 18:19:08 -0500
+To: Alan Chandler <alan@chandlerfamily.org.uk>
+In-Reply-To: <200602012301.56141.alan@chandlerfamily.org.uk> (Alan Chandler's
+	message of "Wed, 1 Feb 2006 23:01:55 +0000")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15463>
 
-In the Repository Administrator section of the Everyday Git document it shows 
-how to allocate accounts to developers so that you can have fine grained 
-control over access to the repository (I assume it is because of that.  
-Otherwise I assume you would do what I have done, and that is create a "git" 
-user, with a home directory where you want to locate your repositories and 
-then tell your users to put the following sort of entry in .git/remotes/xxx
+Alan Chandler <alan@chandlerfamily.org.uk> writes:
 
-URL:git@host.com:repository.git
+> My question, in this case is there any reason (such as git creating home 
+> directoriy temp files or something) why each developer could not have their 
+> home directory as the root of all the repositories (ie where my git user in 
+> the above example had its home directory).
 
-and in ~git/.ssh/authorized_keys putting all the developers public keys.
-
-).  But the example shows creating independant home directories for each of 
-the developers - but then limiting their access by giving them git-shell as 
-their shell.
-
-I assume they would then user a .git/remotes entry of the form
-URL:host.com:/absolute/path/to/repositories
-
-My question, in this case is there any reason (such as git creating home 
-directoriy temp files or something) why each developer could not have their 
-home directory as the root of all the repositories (ie where my git user in 
-the above example had its home directory).
-
-This would then mean each user (unless he had a real account on that machine) 
-would then use the following in .git/remotes
-
-URL:host.com:repository.git
-
-Which has the advantage of not revealing exactly where on your filesystem you 
-have chosen to store the repository (or more precisely allowing you to move 
-it without all users having to change their.git/remotes urls)
-
-
--- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
-Open Source. It's the difference between trust and antitrust.
+Do you mean to reuse single directory /home/gitu/ for user A, B, C,
+and hang repositories /home/gitu/{X,Y,Z} for projects?  I'd
+imagine things could be arranged that way.  User A and B but not
+C may be in "projectX" group and /home/gitu/X is writable only
+by projectX group members and such...
