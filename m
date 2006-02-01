@@ -1,117 +1,63 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Tracking and committing back to Subversion?
-Date: Thu, 02 Feb 2006 11:51:40 +1300
-Message-ID: <1138834301.21899.40.camel@wilber.wgtn.cat-it.co.nz>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [Census] So who uses git?
+Date: Wed, 1 Feb 2006 17:57:47 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602011747380.25300@iabervon.org>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
+ <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
+ <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
+ <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
+ <20060130185822.GA24487@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0601311750270.25300@iabervon.org> <7vek2oot7z.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0601311623240.7301@g5.osdl.org> <7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0602011125370.5397@localhost.localdomain>
+ <7vhd7ibza2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602011307250.21884@g5.osdl.org>
+ <7v8xsu91vf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Feb 01 23:54:51 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>, Nicolas Pitre <nico@cam.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 23:57:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4QpN-00041P-Ud
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 23:51:56 +0100
+	id 1F4Qsw-00054g-EP
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 23:55:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422997AbWBAWvv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 17:51:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423000AbWBAWvv
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 17:51:51 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:45212 "EHLO mail.utsl.gen.nz")
-	by vger.kernel.org with ESMTP id S1422997AbWBAWvu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 17:51:50 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id 8EFA8364C; Thu,  2 Feb 2006 11:51:47 +1300 (NZDT)
-Received: from localhost.localdomain (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 482C9364A
-	for <git@vger.kernel.org>; Thu,  2 Feb 2006 11:51:42 +1300 (NZDT)
-To: Git Mailing List <git@vger.kernel.org>
-X-Mailer: Evolution 2.4.1 
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1422998AbWBAWzb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 17:55:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422999AbWBAWzb
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 17:55:31 -0500
+Received: from iabervon.org ([66.92.72.58]:21006 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1422998AbWBAWza (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 17:55:30 -0500
+Received: (qmail 11606 invoked by uid 1000); 1 Feb 2006 17:57:48 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 1 Feb 2006 17:57:48 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xsu91vf.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15461>
 
-Hi all,
+On Wed, 1 Feb 2006, Junio C Hamano wrote:
 
-Has anyone done any work on bidirectional access to SVN repositories?
-ie, tracking and committing.
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > If somebody doesn't know about the index, he normally will never have 
+> > index changes _anyway_, except for the "git add" case. In which case "git 
+> > commit" does the right thing for him: it will either commit the added 
+> > files, or it will say "nothing to commit".
+> 
+> ... the original complaint was that "git commit" without
+> explicit paths does not quack like "cvs/svn commit" -- commit
+> all my changes in the working tree.
 
-That would be porcelain that behaves like SVK (http://svk.elixus.org)
+Actually, the original complaint was about "git commit path ...", I 
+believe. That's the case where new users are finding that the behavior is 
+surprising, rather than just unfamiliar.
 
-Ideally it would probably need to link against the Subversion RA (remote
-access) library, neon.
-
-I can see forsee two potential issues;
-
-  1. file properties - such as mime type, ignores and custom properties.
-     Linus, when I asked you about this in Dunedin, you mentioned that
-     there is a place at the end of the directory entry where this could
-     fit without breaking backwards compatibility.  Perhaps this could
-     be an optional pointer to another directory node;
-
-     /
-      trunk/       # after all, we're tracking an SVN repo ;)
-        MyModule/
-          Makefile.PL
-          MyModule.pm
-          <prop-dir>/
-            svn:ignore
-
-     <prop-dir> is a directory object, with one file in this example;
-     called svn:ignore.  The contents of this file would be something
-     like the .gitignore;
-
-          Makefile
-          Makefile.old
-          blib
-          ...etc...
-
-     This configures the directory "/trunk/MyModule" to have a property
-     "svn:ignore", which makes SVN ignore those files.
-
-  2. "forensic" file movement history - as opposed to the uncached,
-     (and unversioned), automatic "analytical" file movement history.
-
-     It would be easy for a tool to provide 100% interface compatibility
-     with SVN client/SVK using properties, but properties that hang off
-     the head rather than the file itself (so that they don't stuff up
-     the ability to merge identical trees reached via independent
-     paths).  SVN calls these "revision properties".  If a good
-     convention is adopted for this, it could be used as a nice way to
-     supplement git's automatic analysis of the revision history.
-
-     So, then, git could support these three methods of finding
-     revision history;
-
-        1. automatic/analytical, as at present.  Cachable information,
-           and such a cache would not form part of the revision history.
-
-        2. forensic, if using porcelain that supports it; this would
-           form part of the revision history, but be out of band to the
-           content.
-
-        3. (potentially) retrospective, for instance, somebody studying
-           an old code base and tracking history for some reason - or
-           even 'correcting' forensic revision history that is causing
-           their advanced patch calculus algorithm to trip up (should
-           someone be using git as a storage back-end for darcs, for
-           instance)
-
-     Ideally, it would be possible to distinguish between 2 and 3, of
-     course this would require two head identifiers; the content head,
-     and the revision history head.
-
-This might seem like functionality not needed for merging kernel
-trees ;) but I think it would add value to be able to make git truly
-join the trump suit in the VCS deck (along with SVK, which can, for
-instance, track Perforce and even git repositories).
-
-Sam.
+	-Daniel
+*This .sig left intentionally blank*
