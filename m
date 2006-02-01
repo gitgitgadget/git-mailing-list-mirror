@@ -1,77 +1,58 @@
-From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
-Subject: Re: gnu/linux sued for predatory business practices
-Date: Wed, 01 Feb 2006 20:33:43 +0100
-Message-ID: <43E10D17.6000709@gorzow.mm.pl>
-References: <drp5vk$njt$1@sea.gmane.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [Census] So who uses git?
+Date: Wed, 01 Feb 2006 11:32:30 -0800
+Message-ID: <43E10CCE.5090500@zytor.com>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com> <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org> <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com> <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net> <20060130185822.GA24487@hpsvcnb.fc.hp.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigB49CE33B969E9AA8045ACDE4"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 01 20:33:58 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, Keith Packard <keithp@keithp.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 01 20:37:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4Njo-0006eY-Fz
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 20:33:56 +0100
+	id 1F4Nmm-0007PK-Lk
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 20:37:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422892AbWBATdy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 14:33:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422893AbWBATdy
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 14:33:54 -0500
-Received: from goliat1.kalisz.mm.pl ([81.15.136.226]:17579 "EHLO kalisz.mm.pl")
-	by vger.kernel.org with ESMTP id S1422892AbWBATdx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 14:33:53 -0500
-Received: (qmail 31919 invoked from network); 1 Feb 2006 19:33:49 -0000
-Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.201.167])
-          (envelope-sender <astralstorm@gorzow.mm.pl>)
-          by 0 (qmail-ldap-1.03) with SMTP
-          for <wa1ter@myrealbox.com>; 1 Feb 2006 19:33:49 -0000
-Received: from [192.168.0.1] (zen.uplink [192.168.0.1])
-	by zen.uplink (Postfix) with ESMTP id 26948178F5B;
-	Wed,  1 Feb 2006 20:33:49 +0100 (CET)
-User-Agent: Thunderbird 1.4.1 (X11/20051010)
-To: walt <wa1ter@myrealbox.com>
-In-Reply-To: <drp5vk$njt$1@sea.gmane.org>
-X-Enigmail-Version: 0.93.0.0
+	id S1422895AbWBATg5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 14:36:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422897AbWBATg5
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 14:36:57 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:6533 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1422895AbWBATg5
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 14:36:57 -0500
+Received: from [172.27.0.18] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k11JWUI7011199
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 1 Feb 2006 11:32:31 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Carl Baldwin <cnb@fc.hp.com>
+In-Reply-To: <20060130185822.GA24487@hpsvcnb.fc.hp.com>
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15436>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigB49CE33B969E9AA8045ACDE4
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Carl Baldwin wrote:
+> 
+> - Anyone can install and fire it up without license/contract hassles.
+> 
 
-walt wrote:
-> Now, when Micro$oft (eventually) takes its (natural)
-> place as a loser in the marketplace -- who will the
-> lawyers be anxious to sue?
+For something like an SCM this is a big deal, and not just for the Open 
+Source world.  In a company, it means not having to worry about having 
+enough licenses, and getting budget approval, etc, etc, before a new 
+person can join a project.  Perhaps more importantly, it allows someone 
+who normally isn't *on* the project to look at it and participate.
 
-Possible targets include FSF and especially OSDL.
-Is there any Linux Corp.? Maybe Linux Australia?
-
---=20
-GPG Key id:  0xD1F10BA2
-Fingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
-
-AstralStorm
-
-
---------------enigB49CE33B969E9AA8045ACDE4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFD4Q0dlUMEU9HxC6IRAuHsAKC1jejSsgY2jmr1zrTKwRgdJi6xFACgp7Dl
-3ZJfhjiRsalStT5b/DbXUDU=
-=aWZr
------END PGP SIGNATURE-----
-
---------------enigB49CE33B969E9AA8045ACDE4--
+	-hpa
