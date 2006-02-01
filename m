@@ -1,64 +1,62 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: How to use git for Linux kernel development ?
-Date: Wed, 1 Feb 2006 15:38:42 -0500
-Message-ID: <20060201203842.GB5900@fieldses.org>
-References: <200602011238.44188.laurent.pinchart@tbox.biz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [Census] So who uses git?
+Date: Wed, 01 Feb 2006 12:48:48 -0800
+Message-ID: <7vvevyajpr.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
+	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
+	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
+	<1138446030.9919.112.camel@evo.keithp.com>
+	<7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
+	<20060130185822.GA24487@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0601311750270.25300@iabervon.org>
+	<7vek2oot7z.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0601311623240.7301@g5.osdl.org>
+	<7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
+	<87vevzpmql.wl%cworth@cworth.org>
+	<7virrzfpse.fsf@assigned-by-dhcp.cox.net>
+	<86bqxr8kms.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 01 21:39:46 2006
+X-From: git-owner@vger.kernel.org Wed Feb 01 21:49:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4Oke-0007W5-Dr
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 21:38:52 +0100
+	id 1F4OuP-0001mN-1v
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 21:48:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161116AbWBAUiu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 15:38:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932461AbWBAUiu
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 15:38:50 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:3000 "EHLO pickle.fieldses.org")
-	by vger.kernel.org with ESMTP id S932453AbWBAUit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 15:38:49 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
-	(envelope-from <bfields@fieldses.org>)
-	id 1F4OkU-0001yd-My; Wed, 01 Feb 2006 15:38:42 -0500
-To: Laurent Pinchart <laurent.pinchart@tbox.biz>
-Content-Disposition: inline
-In-Reply-To: <200602011238.44188.laurent.pinchart@tbox.biz>
-User-Agent: Mutt/1.5.11
+	id S1422928AbWBAUsy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 15:48:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932468AbWBAUsy
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 15:48:54 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:29928 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932463AbWBAUsx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 15:48:53 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060201204625.FHKD26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 1 Feb 2006 15:46:25 -0500
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+In-Reply-To: <86bqxr8kms.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "01 Feb 2006 01:59:39 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15445>
 
-On Wed, Feb 01, 2006 at 12:38:44PM +0100, Laurent Pinchart wrote:
-> I have no idea how to layout my git repository to work on day-to-day 
-> development. I need to :
-> 
-> - commit bug fixes, external patches and internal modifications to a branch 
-> (or possibly on separate branches depending on what I commit if needed). The 
-> work will be based on Linux kernel 2.6.15 but I'd like to stay up-to-date 
-> with the master repository as much as possible.
-> - push bug fixes upstream by creating a patchset and submitting it by email.
-> - pull changes from upstream and merge them in my various branches when the 
-> upstream versions become stable enough.
-> - keep branches for all the versions shipped to the customers for bug fixes.
-> 
-> I'm the only developer working on the Linux kernel in my company, but that 
-> might change in a few months, so other developers will need to use git as 
-> well.
-> 
-> Is git able to accomodate my needs ?
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-Those certainly sound like the kinds of things it's meant for.
+>>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+>
+> Junio> *1* The reason he has unrelated changes while doing a merge is
+> Junio> because he works on things himself (I am speculating about
+> Junio> this),
+>
+> You need to speculate that Linus works on things himself? :)
 
-> I've been trying to setup a git repository with a few branches over
-> the last two days, but I always had to throw everything away and start
-> back from zero. I haven't been able to figure out which branches I
-> should create and how I should use them.
-
-Maybe you could be more specific about the problems you've had?
-
---b.
+Forgot a smiley ;-).
