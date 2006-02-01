@@ -1,58 +1,99 @@
-From: Jason Riedy <ejr@cs.berkeley.edu>
-Subject: [PATCH] git-svnimport: Allow direct access over https.
-Date: Wed, 01 Feb 2006 13:31:56 -0800
-Message-ID: <7756.1138829516@lotus.CS.Berkeley.EDU>
-X-From: git-owner@vger.kernel.org Wed Feb 01 22:32:31 2006
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [Census] So who uses git?
+Date: Wed, 01 Feb 2006 16:34:34 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602011622371.5397@localhost.localdomain>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
+ <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
+ <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
+ <1138446030.9919.112.camel@evo.keithp.com>
+ <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
+ <20060130185822.GA24487@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0601311750270.25300@iabervon.org>
+ <7vek2oot7z.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0601311623240.7301@g5.osdl.org>
+ <7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0602011125370.5397@localhost.localdomain>
+ <7vhd7ibza2.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0602011307250.21884@g5.osdl.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 22:35:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4Pa5-00054n-I2
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 22:32:03 +0100
+	id 1F4Pce-0005qf-G6
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 22:34:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932467AbWBAVb6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 16:31:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422945AbWBAVb6
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 16:31:58 -0500
-Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:4248 "EHLO
-	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
-	id S932467AbWBAVb5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 16:31:57 -0500
-Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8) with ESMTP id k11LVvxV007758
-	for <git@vger.kernel.org>; Wed, 1 Feb 2006 13:31:57 -0800 (PST)
-Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k11LVuIe007757
-	for <git@vger.kernel.org>; Wed, 1 Feb 2006 13:31:57 -0800 (PST)
-To: git@vger.kernel.org
+	id S1422945AbWBAVeg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 16:34:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422947AbWBAVeg
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 16:34:36 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:29511 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1422945AbWBAVef (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 16:34:35 -0500
+Received: from xanadu.home ([24.202.136.67]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IU100FR32LMBY70@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 01 Feb 2006 16:34:34 -0500 (EST)
+In-reply-to: <Pine.LNX.4.64.0602011307250.21884@g5.osdl.org>
+X-X-Sender: nico@localhost.localdomain
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15451>
 
-I'm not sure what the benefits of "direct access" are,
-but it works over https as well as http.
+On Wed, 1 Feb 2006, Linus Torvalds wrote:
 
-Signed-off-by: Jason Riedy <ejr@cs.berkeley.edu>
+> 
+> 
+> On Wed, 1 Feb 2006, Junio C Hamano wrote:
+> > 
+> > How about this:
+> > 
+> >  - "git commit --also fileA..." means: update index at listed
+> >    paths (add/remove if necessary) and then commit the tree
+> >    described in index (the current behaviour with explicit paths).
+> 
+> I'd suggest "--incremental" instead of "--also".
+> 
+> >  - "git commit fileA..." means: create a temporary index from the
+> >    current HEAD commit (or empty index if there is none), update
+> >    it at listed paths (add/remove if necessary) and commit the
+> >    resulting tree.  Also update the real index at the listed
+> >    paths (add/remove if necessary).  In the original index file,
+> >    the paths listed must be either empty or match exactly the
+> >    HEAD commit -- otherwise we error out (Linus' suggestion).
+> 
+> Yes.
 
----
+Agreed.
 
- git-svnimport.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> >  - "git commit" means: update index with all local changes and
+> >    then commit the tree described in index (current "-a"
+> >    behaviour).
+> 
+> No. Please no. "git commit" should continue to do what it does now. 
+> Otherwise you can't do the two-stage thing in any sane way.
+> 
+> Requiring "--incremental"/"--also" is very confusing.
+> 
+> If somebody doesn't know about the index, he normally will never have 
+> index changes _anyway_, except for the "git add" case. In which case "git 
+> commit" does the right thing for him: it will either commit the added 
+> files, or it will say "nothing to commit".
 
-71596fc3eb8d2ea25bd8fc99c03d2171d4136d88
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index 6e3a44a..63339ef 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -141,7 +141,7 @@ if($opt_d or $opt_D) {
- 	} else {
- 		$svn_dir = "";
- 	}
--	if ($svn_url->scheme eq "http") {
-+	if ($svn_url->scheme eq "http" || $svn_url->scheme eq "https") {
- 		use LWP::UserAgent;
- 		$lwp_ua = LWP::UserAgent->new(keep_alive => 1, requests_redirectable => []);
- 	} else {
--- 
-1.1.5.g4a2b
+Sensible.  As long as "commit files..." actually commits _only_ those 
+files unless --index (or something) is specified to also explicitly 
+include the index changes.
+
+What is really counter-intuitive is to have index changes merged by 
+default when a single file is specified as argument to commit.
+
+
+Nicolas
