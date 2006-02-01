@@ -1,62 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [Census] So who uses git?
-Date: Wed, 01 Feb 2006 12:48:48 -0800
-Message-ID: <7vvevyajpr.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
-	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
-	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
-	<1138446030.9919.112.camel@evo.keithp.com>
-	<7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
-	<20060130185822.GA24487@hpsvcnb.fc.hp.com>
-	<Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0601311750270.25300@iabervon.org>
-	<7vek2oot7z.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0601311623240.7301@g5.osdl.org>
-	<7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
-	<87vevzpmql.wl%cworth@cworth.org>
-	<7virrzfpse.fsf@assigned-by-dhcp.cox.net>
-	<86bqxr8kms.fsf@blue.stonehenge.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [Announce] gitview-0.1
+Date: Wed, 1 Feb 2006 21:58:05 +0100
+Message-ID: <20060201205805.GA6384@steel.home>
+References: <cc723f590601312016vabba201ye6d3739b3927f1a@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 01 21:49:47 2006
+X-From: git-owner@vger.kernel.org Wed Feb 01 21:59:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4OuP-0001mN-1v
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 21:48:57 +0100
+	id 1F4P3Y-0004Ll-Bb
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 21:58:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422928AbWBAUsy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 15:48:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932468AbWBAUsy
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 15:48:54 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:29928 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932463AbWBAUsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 15:48:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060201204625.FHKD26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 1 Feb 2006 15:46:25 -0500
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-In-Reply-To: <86bqxr8kms.fsf@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "01 Feb 2006 01:59:39 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1422929AbWBAU6P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 15:58:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932468AbWBAU6P
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 15:58:15 -0500
+Received: from devrace.com ([198.63.210.113]:18955 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S932463AbWBAU6P (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 15:58:15 -0500
+Received: from tigra.home (p54A06D68.dip.t-dialin.net [84.160.109.104])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id k11Kw8np099589;
+	Wed, 1 Feb 2006 14:58:09 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1F4P3G-0008PD-00; Wed, 01 Feb 2006 21:58:06 +0100
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1F4P3F-0003tE-Sp; Wed, 01 Feb 2006 21:58:05 +0100
+To: Aneesh Kumar <aneesh.kumar@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <cc723f590601312016vabba201ye6d3739b3927f1a@mail.gmail.com>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=0.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL 
+	autolearn=no version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15446>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
+Aneesh Kumar, Wed, Feb 01, 2006 05:16:59 +0100:
+> 
+> Gnome based git repository browser. The code is derived from bazaar-ng
+> repository browser.
+> 
+> To see how it looks
+> 
+> http://www.flickr.com/photos/17388011@N00/92918446/
+> 
+> I don't have a web location where i can host it so i am attaching it below.
+> It would be great if we can get it added to git repository
+> 
+> sample usage
+> takes same argument as git rev-list
+> 
+> gitview --since=2.week.ago
+> 
 
->>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
->
-> Junio> *1* The reason he has unrelated changes while doing a merge is
-> Junio> because he works on things himself (I am speculating about
-> Junio> this),
->
-> You need to speculate that Linus works on things himself? :)
+Doesn't really work here: no tree like on your screenshot, and a lot
+of messages like this:
 
-Forgot a smiley ;-).
+(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
+s `PyGtkGenericCellRenderer' has no property named `out-lines'
+
+(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
+s `PyGtkGenericCellRenderer' has no property named `in-lines'
+
+(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
+s `PyGtkGenericCellRenderer' has no property named `node'
+
+(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
+s `PyGtkGenericCellRenderer' has no property named `out-lines'
+
+(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
+s `PyGtkGenericCellRenderer' has no property named `in-lines'
+
+(gitview:14905): GLib-GObject-WARNING **: IA__g_object_set_property: object clas
+s `PyGtkGenericCellRenderer' has no property named `node'
+Traceback (most recent call last):
+  File "/home/raa/gitview", line 166, in on_render
+    ctx = window.cairo_create()
+AttributeError: 'gtk.gdk.Window' object has no attribute 'cairo_create'
+
+Gentoo, Python 2.4.2, pycairo 1.0.2.
