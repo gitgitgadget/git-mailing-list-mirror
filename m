@@ -1,79 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: Bottlenecks in git merge
-Date: Tue, 31 Jan 2006 16:43:51 -0800
-Message-ID: <7vvevzoqm0.fsf@assigned-by-dhcp.cox.net>
-References: <20060131213314.GA32131@ebar091.ebar.dtu.dk>
-	<7vk6cgq9ny.fsf@assigned-by-dhcp.cox.net>
-	<20060131233504.GB31278@pasky.or.cz>
+Date: Wed, 1 Feb 2006 01:50:35 +0100
+Message-ID: <20060201005035.GD31278@pasky.or.cz>
+References: <20060131213314.GA32131@ebar091.ebar.dtu.dk> <7vk6cgq9ny.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0601311533040.7301@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 01 01:44:02 2006
+Cc: Junio C Hamano <junkio@cox.net>,
+	Peter Eriksen <s022018@student.dtu.dk>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 01 01:50:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F466G-0004ED-Ez
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 01:43:57 +0100
+	id 1F46CV-0005Rs-1G
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 01:50:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932367AbWBAAny (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 19:43:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932378AbWBAAny
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 19:43:54 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:50082 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932367AbWBAAnx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 19:43:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060201004139.IJQM17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 31 Jan 2006 19:41:39 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060131233504.GB31278@pasky.or.cz> (Petr Baudis's message of
-	"Wed, 1 Feb 2006 00:35:04 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932322AbWBAAuT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 19:50:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932383AbWBAAuT
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 19:50:19 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:39588 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932322AbWBAAuS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 19:50:18 -0500
+Received: (qmail 22805 invoked by uid 2001); 1 Feb 2006 01:50:35 +0100
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0601311533040.7301@g5.osdl.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15370>
 
-Petr Baudis <pasky@suse.cz> writes:
+Dear diary, on Wed, Feb 01, 2006 at 12:45:27AM CET, I got a letter
+where Linus Torvalds <torvalds@osdl.org> said that...
+> It would be interesting to see how big the "resolve 850 files" part is vs 
+> the "check out 10k+ files" is.
 
-> What about letting the file-handler actually tell merge-index what to
-> do? merge-index could make a fifo at fd 3 for it (we might fork a
-> special buffering process for it to avoid PIPE_BUF issues) and let it
-> write there a sequence of lines like...
+See my other mail.
 
-Yes.  That is sensible.
+> In particular, if the "resolve 850 files" is a noticeable portion of it, 
+> then the right thing to do may be to just re-write git-merge-one-file.sh 
+> in C. Right now, almost _all_ of the expense of that thing is just the 
+> shell interpreter startup. The actual actions it does are usually fairly 
+> cheap.
 
-A merge handler that is willing to look at the current index
-stages (and merge-recursive certainly is capable of doing that)
-can open an outgoing pipe to 'git-update-index --index-info' and
-drive it.  The command syntax is a bit different from what you
-wrote in your message and I think if we go this route we should
-make --index-info a bit easier to use by allowing it to accept
-stage 0 entries.
+Nope.
 
--- >8 --
-update-index --index-info: allow stage 0 entries.
+xpasky@machine[0:0]~/linux-2.6.git$ echo -e '#!/bin/sh\n/bin/true' >r && chmod a+x r
+xpasky@machine[0:0]~/linux-2.6.git$ time git-merge-index -o ./r -a
 
-Somehow we did not allow stuffing the index with stage 0 entries
-through --index-info interface.  I do not think of a reason to
-forbid it offhand.
+real    0m3.827s
+user    0m1.788s
+sys     0m2.004s
+xpasky@machine[0:0]~/linux-2.6.git$ time git-merge-index -o ~/git-pb/git-merge-one-file -a
+[lots of "Removing"]
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-diff --git a/update-index.c b/update-index.c
-index 2361e41..94436dd 100644
---- a/update-index.c
-+++ b/update-index.c
-@@ -303,7 +303,7 @@ static void read_index_info(int line_ter
- 		if (!tab || tab - ptr < 41)
- 			goto bad_line;
- 
--		if (tab[-2] == ' ' && '1' <= tab[-1] && tab[-1] <= '3') {
-+		if (tab[-2] == ' ' && '0' <= tab[-1] && tab[-1] <= '3') {
- 			stage = tab[-1] - '0';
- 			ptr = tab + 1; /* point at the head of path */
- 			tab = tab - 2; /* point at tail of sha1 */
+real    1m21.773s
+user    0m30.806s
+sys     0m13.248s
+
+The costs are apparently in git-update-index, not in the shell.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
