@@ -1,60 +1,106 @@
-From: Sasha Khapyorsky <sashak@voltaire.com>
-Subject: Re: [PATCH] git-svnimport.perl: fix for 'arg list too long...'
-Date: Wed, 1 Feb 2006 23:54:54 +0200
-Message-ID: <20060201215454.GB31711@sashak.voltaire.com>
-References: <20060201155331.GE18078@sashak.voltaire.com> <7v64nybz9m.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [Census] So who uses git?
+Date: Wed, 01 Feb 2006 13:59:32 -0800
+Message-ID: <7v8xsu91vf.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
+	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
+	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
+	<1138446030.9919.112.camel@evo.keithp.com>
+	<7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
+	<20060130185822.GA24487@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0601311750270.25300@iabervon.org>
+	<7vek2oot7z.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0601311623240.7301@g5.osdl.org>
+	<7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602011125370.5397@localhost.localdomain>
+	<7vhd7ibza2.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602011307250.21884@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthias Urlichs <smurf@smurf.noris.de>
-X-From: git-owner@vger.kernel.org Wed Feb 01 22:56:24 2006
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 23:01:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4Pvk-0003Ti-Dw
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 22:54:25 +0100
+	id 1F4Q0o-0004oM-0n
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 22:59:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422964AbWBAVyW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 16:54:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422965AbWBAVyV
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 16:54:21 -0500
-Received: from taurus.voltaire.com ([193.47.165.240]:28312 "EHLO
-	taurus.voltaire.com") by vger.kernel.org with ESMTP
-	id S1422964AbWBAVyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 16:54:21 -0500
-Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 1 Feb 2006 23:54:19 +0200
-Received: by sashak (sSMTP sendmail emulation); Wed,  1 Feb 2006 23:54:54 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v64nybz9m.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 01 Feb 2006 21:54:19.0693 (UTC) FILETIME=[0DC1B5D0:01C6277A]
+	id S1422968AbWBAV7f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 16:59:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422966AbWBAV7f
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 16:59:35 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:15855 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1422968AbWBAV7e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 16:59:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060201215720.CMDO17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 1 Feb 2006 16:57:20 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602011307250.21884@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 1 Feb 2006 13:09:19 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15454>
 
-On 12:27 Wed 01 Feb     , Junio C Hamano wrote:
-> Sasha Khapyorsky <sashak@voltaire.com> writes:
-> 
-> > This fixes 'arg list too long..' problem with git-ls-files.
-> 
-> I wonder if feeding the list into a pipe to 'update-index --stdin' 
-> would be an option.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-This can be option for git-update-index, but my problem was with
-git-ls-files, git-update-index was ok (arg list processing were splitted
-already).
+>>  - "git commit" means: update index with all local changes and
+>>    then commit the tree described in index (current "-a"
+>>    behaviour).
+>
+> No. Please no. "git commit" should continue to do what it does now. 
+> Otherwise you can't do the two-stage thing in any sane way.
+> Requiring "--incremental"/"--also" is very confusing.
 
-> 
-> BTW, please do not do this:
-> 
->         Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
->                 Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-> 
-> It is simply rude.
+I myself did not like it but...
 
-OK, will not. Thanks for pointing.
+> If somebody doesn't know about the index, he normally will never have 
+> index changes _anyway_, except for the "git add" case. In which case "git 
+> commit" does the right thing for him: it will either commit the added 
+> files, or it will say "nothing to commit".
 
-Sasha.
+... the original complaint was that "git commit" without
+explicit paths does not quack like "cvs/svn commit" -- commit
+all my changes in the working tree.
+
+And actually the one you are responding to was my cunning move
+to pull this exact reaction from you: "No commit without
+parameter should not imply -a".  I prefer the "minor twist"
+version in the same messge myself.
+
+To recap:
+
+ - "git commit fileA..." means: update index at listed paths
+   (add/remove if necessary) and then commit the tree described
+   in index (the same as the current behaviour with explicit
+   paths).
+
+ - "git commit -a" means: update index with all local changes and
+   then commit the tree described in index (the same as the
+   current behaviour).
+
+ - "git commit" means: write out the current index and commit
+   (the same as the current behaviour).
+
+ - "git commit --only fileA..." means: create a temporary index
+   from the current HEAD commit (or empty index if there is
+   none), update it at listed paths (add/remove if necessary)
+   and commit the resulting tree.  Also update the real index at
+   the listed paths (add/remove if necessary).  In the original
+   index file, the paths listed must be either empty or match
+   exactly the HEAD commit -- otherwise we error out (Linus'
+   suggestion).
+
+ - In all cases, revert the index to the state before the
+   command is run if we end up not making the commit (e.g. index
+   unmerged, empty log message, pre-commit hook refusal).  With
+   this, "git diff-files fileA" would show the differences as it
+   showed beforean aborted "git commit -a" or "git commit fileA"
+   and removes one common gripe.
