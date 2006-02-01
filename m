@@ -1,117 +1,162 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [Census] So who uses git?
-Date: Wed, 1 Feb 2006 09:11:59 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602010856150.21884@g5.osdl.org>
+Date: Wed, 01 Feb 2006 12:18:10 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602011125370.5397@localhost.localdomain>
 References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
  <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
  <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
- <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
+ <1138446030.9919.112.camel@evo.keithp.com>
+ <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
  <20060130185822.GA24487@hpsvcnb.fc.hp.com>
  <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0601311750270.25300@iabervon.org> <7vek2oot7z.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0601311623240.7301@g5.osdl.org> <7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0601311750270.25300@iabervon.org>
+ <7vek2oot7z.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0601311623240.7301@g5.osdl.org>
+ <7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 01 18:12:54 2006
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 18:18:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4LWc-0001tw-L2
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 18:12:11 +0100
+	id 1F4LcX-0003eI-06
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 18:18:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932446AbWBARMG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 12:12:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932461AbWBARMG
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 12:12:06 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:48009 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932446AbWBARME (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 12:12:04 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k11HC0DZ012280
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 1 Feb 2006 09:12:00 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k11HBxgf015311;
-	Wed, 1 Feb 2006 09:12:00 -0800
+	id S1030376AbWBARSM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 12:18:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030378AbWBARSM
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 12:18:12 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:4401 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1030376AbWBARSM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 12:18:12 -0500
+Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IU00004PQQAVKG0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 01 Feb 2006 12:18:11 -0500 (EST)
+In-reply-to: <7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@localhost.localdomain
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15429>
-
-
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15430>
 
 On Tue, 31 Jan 2006, Junio C Hamano wrote:
+
+> This "I thought I was only checking in the two-liner I did as
+> the last step but you committed the whole thing, stupid git!"
+> confusion feels to be a parallel of "I thought I was only
+> checking in the files I specified on the command line but you
+> also committed the files I earlier git-add'ed, stupid git!"
+> confusion.
 > 
 > Taken together with your "during a partially conflicted merge"
 > example, it feels to me that the simplest safety valve would be
 > to refuse "git commit paths..." if the index does not exactly
 > match HEAD.  Not just mentioned paths but anywhere.
+> 
+> People who do not like this can set in their config file some
+> flag, say, 'core.index = understood', to get the current
+> behaviour.
 
-But at that point, the existing "git commit" semantics actually are the 
-ones we'd use, and the only difference ends up being that we error out 
-if the index doesn't match HEAD.
+I'd avoid hidden config options that magically change behaviors and 
+semantics like that as much as possible.  _This_ would pave the way to 
+even greater confusion and prevent the git user base from converging on 
+a unified semantics knowledge.  Better add a command line option which 
+has the vertue of being visible, and name it such that it make the 
+intention explicit whether the previous index state is preserved or not,
+something like --current-index or the like.
 
-The problem with that is that it appears that some of the people who don't 
-like the current "git commit <filename>" thing _do_ actually understand 
-the index, but they want to commit just that one file. 
+> The reason I am bringing this up is because of this command
+> sequence:
+> 
+> 	# start from a clean tree, after 'git reset --hard'
+>         $ create a-new-file
+>         $ git add a-new-file
+>         $ edit existing-file
+>         $ edit another-file
+>         $ git commit existing-file
+> 
+> There is no question we do not commit "another-file" and we do
+> commit changes to the "existing-file" as a whole.  What should
+> we do to "a-new-file", and how do we explain why we do so to
+> novices?
+> 
+> We can argue it either way.  We could say we shouldn't because
+> "commit" argument does not mention it.  We could say we should
+> because the user already told that he wants to add that file to
+> git.  Either makes sort-of sense from what the end user did.
 
-So at least from my understanding, I think Dscho was arguing for the new 
-semantics of "git commit <file>" to _work_, but to only commit <file>, 
-even if he does understand the index perfectly well, and might have done a 
-"git add" or updated a file for some other reason..
+It is much more intuitive to expect that, if you specify path arguments 
+to commit, then only those paths are considered, and even if you didn't 
+do a git add on some of them.  If nothing is specified then the current 
+index (the default, including a-new-file) is considered.
 
-Btw, one thing that _can_ be confusing is that you do
+> I think a file "cvs add"ed is committed if whole subdirectory
+> commit (similar to our "commit -a") is done or the file is
+> explicitly specified on the "cvs commit" command line, and that
+> may match people's expectations.  That's an argument for not
+> committing "a-new-file".
 
-	git commit fileA
+Exact.
 
-and then when you edit the commit message, you realize that you don't 
-actually want to do this at all, so you exit out of the editor without 
-changes (which aborts the commit). Now "git commit" will not actually have 
-done the commit, but it _will_ have done the "git-update-index" on that 
-file.
+> But to be consistent with that, this should not commit anything:
+> 
+>         # the same clean tree.
+> 	$ create a-new-file
+>         $ git add a-new-file
+>         $ git commit
+> 
+> Which is counterintuitive to me by now (because I played too
+> long with git).
 
-So next time, when you do
+IMHO this should commit a_new_file simply because you added it to the 
+index and a commit without any argument should commit the whole 
+(refreshed) index.
 
-	git commit fileB
+> We could make "git commit" without paths to mean the current
+> "-a" behaviour, which would match CVS behaviour more closely.
 
-you'll currently commit _both_ fileA and fileB.
+Exact.
 
-This is, in my opinion, the biggest argument for the suggested _new_ 
-semantics: if you explicitly name a set of files, it should always do a
+> However, it would make commit after a merge conflict resolution
+> in a dirty working tree _very_ dangerous -- it may give more
+> familiar feel to CVS people, but it is not an improvement for
+> git people at all.  I would rather not.
 
-	# Verify current state
-	parent=$(git-rev-parse --verify HEAD) || exit
+For that case, (assuming that -a would be the default) maybe something 
+meaning the opposite of -a could be specified on the commit argument 
+list like I suggested earlier.  And maybe it should always be the 
+default when committing a merge (in which case the -a would override 
+that and refresh everything and not only the merged files plus those 
+specified on the command line).
 
-	# Verify that the current index is ok in the named files
-	a=$(git-diff-files --name-only --cached $parent "$@") || exit
-	if [ "$a" ]; then
-	   echo -e >&2 "Files are changed in the index:\n  $a"
-	   exit 2
-	fi
+So to resume:
 
-	# create the new tree object
-	export GIT_INDEX_FILE=tmpfile
-	newtree=$(git-read-tree $parent &&
-	  git-update-index "$@" &&
-	  git-write-tree) || exit
+ - a non-merge commit without any argument would imply -a.
 
-	# edit message
-	... edit message ..
+ - a non-merge commit with path arguments implies _only_ those paths, 
+   regardless if they were previously "git add"ed or not.
 
-	# do commit
-	newhead=$(git-commit-tree -p $parent < msg)
-	git-update-ref HEAD $newhead $parent
+ - a non-merge commit with, say, --no-auto or --current-index or 
+   whatever would preserve the current behavior, with or without 
+   additional paths.
 
-or similar. That has the advantage that if we _do_ decide to break out of 
-the commit, we will not have changed the current index (only the temporary 
-one).
+ - a merge commit would imply that --no-auto behavior automatically.
 
-		Linus
+ - a merge commit could override the --no-auto with an explicit -a.
+
+This might look complicated when presented like that, but I think that 
+the default behavior of each (non-merge vs merge) commit would more 
+closely fit most people's expectations.  The merge commit create a shift 
+in semantics of course, but committing a merge is already something a 
+bit more involved anyway and at that point git users should have gained 
+a bit more experience with the index concept and the default merge 
+behavior is probably what most people will expect at that point as well.
+
+
+Nicolas
