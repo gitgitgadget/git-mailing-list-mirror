@@ -1,57 +1,99 @@
 From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: [PATCH] Fix HTTP request result processing after slot reuse
-Date: Tue, 31 Jan 2006 17:50:47 -0800
-Message-ID: <20060201015047.GF3873@reactrix.com>
-References: <20060131190655.GE3873@reactrix.com> <7v64o0ulfu.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Use local structs for HTTP slot callback data
+Date: Tue, 31 Jan 2006 18:00:37 -0800
+Message-ID: <20060201020037.GG3873@reactrix.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 01 02:51:09 2006
+X-From: git-owner@vger.kernel.org Wed Feb 01 03:00:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F479E-0001Ms-4C
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 02:51:05 +0100
+	id 1F47Im-0003Ed-TQ
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 03:00:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964829AbWBABu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 20:50:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964828AbWBABu4
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 20:50:56 -0500
-Received: from 193.37.26.69.virtela.com ([69.26.37.193]:38546 "EHLO
+	id S964851AbWBACAi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 21:00:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964853AbWBACAi
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 21:00:38 -0500
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:25748 "EHLO
 	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S964824AbWBABuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2006 20:50:55 -0500
+	id S964851AbWBACAh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 21:00:37 -0500
 Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k111olLc009701;
-	Tue, 31 Jan 2006 17:50:47 -0800
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k1120bkW009985
+	for <git@vger.kernel.org>; Tue, 31 Jan 2006 18:00:37 -0800
 Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k111olkv009699;
-	Tue, 31 Jan 2006 17:50:47 -0800
-To: Junio C Hamano <junkio@cox.net>
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k1120brl009983
+	for git@vger.kernel.org; Tue, 31 Jan 2006 18:00:37 -0800
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7v64o0ulfu.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15374>
 
-On Tue, Jan 31, 2006 at 01:39:01PM -0800, Junio C Hamano wrote:
+There's no need for these structures to be static, and it could potentially
+cause problems down the road.
 
-> These static variables are probably correct, provided if
-> fetch_index, fetch_indices and friends do not recurse into
-> themselves, but it just gives me this funny feeling...
+Signed-off-by: Nick Hengeveld <nickh@reactrix.com>
 
-It's true that in the current implementation we either don't recurse
-into these functions or we explicitly handle cases where we do such as
-fetch_alternates.  However, I've got no argument as to why the
-structures should be static and can imagine it just causing problems
-down the road if we were to eg. start downloading multiple packs
-concurrently.
 
-I'll follow up with a patch.
+---
 
---
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+ http-fetch.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+6146f9e8be9d4bb49b7008af5b99853ee7c0afc1
+diff --git a/http-fetch.c b/http-fetch.c
+index 92326f9..97ce13c 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -375,7 +375,7 @@ static int fetch_index(struct alt_base *
+ 
+ 	FILE *indexfile;
+ 	struct active_request_slot *slot;
+-	static struct slot_results results;
++	struct slot_results results;
+ 
+ 	if (has_pack_index(sha1))
+ 		return 0;
+@@ -555,7 +555,7 @@ static void fetch_alternates(char *base)
+ 	char *url;
+ 	char *data;
+ 	struct active_request_slot *slot;
+-	static struct alternates_request alt_req;
++	struct alternates_request alt_req;
+ 
+ 	/* If another request has already started fetching alternates,
+ 	   wait for them to arrive and return to processing this request's
+@@ -618,7 +618,7 @@ static int fetch_indices(struct alt_base
+ 	int i = 0;
+ 
+ 	struct active_request_slot *slot;
+-	static struct slot_results results;
++	struct slot_results results;
+ 
+ 	if (repo->got_indices)
+ 		return 0;
+@@ -699,7 +699,7 @@ static int fetch_pack(struct alt_base *r
+ 	struct curl_slist *range_header = NULL;
+ 
+ 	struct active_request_slot *slot;
+-	static struct slot_results results;
++	struct slot_results results;
+ 
+ 	if (fetch_indices(repo))
+ 		return -1;
+@@ -900,7 +900,7 @@ int fetch_ref(char *ref, unsigned char *
+         struct buffer buffer;
+ 	char *base = alt->base;
+ 	struct active_request_slot *slot;
+-	static struct slot_results results;
++	struct slot_results results;
+         buffer.size = 41;
+         buffer.posn = 0;
+         buffer.buffer = hex;
+-- 
+1.1.6.g1417-dirty
