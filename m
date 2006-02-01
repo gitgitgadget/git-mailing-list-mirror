@@ -1,80 +1,77 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [Census] So who uses git?
-Date: Wed, 1 Feb 2006 11:29:07 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602011124090.21884@g5.osdl.org>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
- <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
- <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
- <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
- <1138529385.9919.185.camel@evo.keithp.com> <43DCA495.9040301@gorzow.mm.pl>
- <20060130225107.GA3857@limbo.home> <Pine.LNX.4.64.0601311314030.7301@g5.osdl.org>
- <20060131220148.GA19411@steel.home> <20060201013901.GA16832@mail.com>
- <Pine.LNX.4.64.0601311747360.7301@g5.osdl.org>
- <Pine.LNX.4.64.0602011909330.6498@beast.quantumfyre.co.uk>
+From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
+Subject: Re: gnu/linux sued for predatory business practices
+Date: Wed, 01 Feb 2006 20:33:43 +0100
+Message-ID: <43E10D17.6000709@gorzow.mm.pl>
+References: <drp5vk$njt$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ray Lehtiniemi <rayl@mail.com>, Alex Riesen <raa.lkml@gmail.com>,
-	Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>,
-	Keith Packard <keithp@keithp.com>,
-	Junio C Hamano <junkio@cox.net>, cworth@cworth.org,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 01 20:33:18 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigB49CE33B969E9AA8045ACDE4"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 20:33:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4Nj0-0006RV-SB
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 20:33:07 +0100
+	id 1F4Njo-0006eY-Fz
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 20:33:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422890AbWBATdE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 14:33:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422892AbWBATdE
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 14:33:04 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:37808 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1422890AbWBATdC (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 14:33:02 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k11JT8DZ020675
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 1 Feb 2006 11:29:09 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k11JT7gn022748;
-	Wed, 1 Feb 2006 11:29:07 -0800
-To: Julian Phillips <julian@quantumfyre.co.uk>
-In-Reply-To: <Pine.LNX.4.64.0602011909330.6498@beast.quantumfyre.co.uk>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422892AbWBATdy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 14:33:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422893AbWBATdy
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 14:33:54 -0500
+Received: from goliat1.kalisz.mm.pl ([81.15.136.226]:17579 "EHLO kalisz.mm.pl")
+	by vger.kernel.org with ESMTP id S1422892AbWBATdx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 14:33:53 -0500
+Received: (qmail 31919 invoked from network); 1 Feb 2006 19:33:49 -0000
+Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.201.167])
+          (envelope-sender <astralstorm@gorzow.mm.pl>)
+          by 0 (qmail-ldap-1.03) with SMTP
+          for <wa1ter@myrealbox.com>; 1 Feb 2006 19:33:49 -0000
+Received: from [192.168.0.1] (zen.uplink [192.168.0.1])
+	by zen.uplink (Postfix) with ESMTP id 26948178F5B;
+	Wed,  1 Feb 2006 20:33:49 +0100 (CET)
+User-Agent: Thunderbird 1.4.1 (X11/20051010)
+To: walt <wa1ter@myrealbox.com>
+In-Reply-To: <drp5vk$njt$1@sea.gmane.org>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15435>
+
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigB49CE33B969E9AA8045ACDE4
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+walt wrote:
+> Now, when Micro$oft (eventually) takes its (natural)
+> place as a loser in the marketplace -- who will the
+> lawyers be anxious to sue?
+
+Possible targets include FSF and especially OSDL.
+Is there any Linux Corp.? Maybe Linux Australia?
+
+--=20
+GPG Key id:  0xD1F10BA2
+Fingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
+
+AstralStorm
 
 
+--------------enigB49CE33B969E9AA8045ACDE4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-On Wed, 1 Feb 2006, Julian Phillips wrote:
-> 
-> As it happens, yes ... I can't say that I've noticed git being particularly
-> slow, but then - I've not tried running git with a local repos ... ;)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-Well, NFS seems to be ok. Which is not that surprising: NFS has gotten a 
-_lot_ of attention in the caching area (I worked on it myself a couple of 
-years back when the page cache transition happened during 2.3.x, but 
-happily we've had very good NFS maintainership since, so I don't get 
-involved any more).
+iD8DBQFD4Q0dlUMEU9HxC6IRAuHsAKC1jejSsgY2jmr1zrTKwRgdJi6xFACgp7Dl
+3ZJfhjiRsalStT5b/DbXUDU=
+=aWZr
+-----END PGP SIGNATURE-----
 
-Your numbers show that NFS is fine (my "benchmark" is that I refuse to see 
-the kinds of commit times that "cvs commit" does - easily several minutes 
-for a big project. If it goes over 2 seconds, it's painful, and over ten 
-seconds is totally unacceptable).
-
-Your numbers seem to say that at least with a good network/server, NFS on 
-Linux is not a problem at all.
-
-CIFS is likely a very different animal. I suspect the cifs people have 
-spent a whole lot more effort on strange Windows interaction issues than 
-on trying to make sure that cached performance is top-notch.
-
-			Linus
+--------------enigB49CE33B969E9AA8045ACDE4--
