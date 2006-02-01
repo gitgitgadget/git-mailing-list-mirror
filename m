@@ -1,158 +1,89 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: [PATCH 8/9] http: Paranoid sanity checking for active slots.
-Date: Wed, 01 Feb 2006 11:44:41 +0000
-Message-ID: <20060201114441.5042.13819.stgit@metalzone.distorted.org.uk>
-References: <20060201112822.5042.41256.stgit@metalzone.distorted.org.uk>
-X-From: git-owner@vger.kernel.org Wed Feb 01 12:45:14 2006
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Shallow clone: low level machinery.
+Date: Wed, 1 Feb 2006 15:33:51 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602011528030.28923@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v8xsxa70o.fsf@assigned-by-dhcp.cox.net> <7vmzhc1wz6.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0601311449040.8033@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vd5i81e4e.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0601311904410.10944@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vzmlcz28x.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 15:34:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4GPp-00055O-SZ
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 12:44:50 +0100
+	id 1F4J3X-0006x8-6l
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 15:34:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161025AbWBALoo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 06:44:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161024AbWBALoo
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 06:44:44 -0500
-Received: from excessus.demon.co.uk ([83.105.60.35]:6896 "HELO
-	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
-	id S1161025AbWBALom (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 06:44:42 -0500
-Received: (qmail 6610 invoked from network); 1 Feb 2006 11:44:41 -0000
-Received: from localhost (HELO metalzone.distorted.org.uk) (?vgJhZdlXEG3w/VDC8oHXZ0meERcutOkU?@127.0.0.1)
-  by localhost with SMTP; 1 Feb 2006 11:44:41 -0000
-To: git@vger.kernel.org
-In-Reply-To: <20060201112822.5042.41256.stgit@metalzone.distorted.org.uk>
+	id S932449AbWBAOd4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 09:33:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932450AbWBAOd4
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 09:33:56 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:38573 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932449AbWBAOdz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 09:33:55 -0500
+Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id F1DF01467A1; Wed,  1 Feb 2006 15:33:51 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id E3257A1B;
+	Wed,  1 Feb 2006 15:33:51 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C44661467A1; Wed,  1 Feb 2006 15:33:51 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmlcz28x.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15413>
 
-From: Mark Wooding <mdw@distorted.org.uk>
+Hi,
 
-Probably not wanted in the mainline, but very useful when debugging.
+On Tue, 31 Jan 2006, Junio C Hamano wrote:
 
-Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
----
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Worse, you cannot pull from older servers into shallow repos.
+> 
+> "have X" means different thing if you do not have matching
+> grafts information, so I suspect that is fundamentally
+> unsolvable.
 
- http-fetch.c |    2 ++
- http.c       |   28 ++++++++++++++++++++++++++++
- http.h       |    1 +
- 3 files changed, 31 insertions(+), 0 deletions(-)
+If the shallow-capable client could realize that the server is not 
+shallow-capable *and* the local repo is shallow, and refuse to operate 
+(unless called with "-f", in which case the result may or may not be a 
+broken repo, which has to be fixed up manually by copying 
+over ORIG_HEAD to HEAD).
 
-diff --git a/http-fetch.c b/http-fetch.c
-index 4aa5a11..fa3eb4a 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -465,9 +465,11 @@ static void process_alternates_response(
- 				base);
- 			curl_easy_setopt(slot->curl, CURLOPT_URL,
- 					 alt_req->url);
-+			sanity_check_active_slots();
- 			if (!slot->in_use)
- 				active_requests++;
- 			slot->in_use |= SLOTUSE_ACTIVE;
-+			sanity_check_active_slots();
- 			if (!start_active_slot(slot))
- 				got_alternates = -1;
- 			return;
-diff --git a/http.c b/http.c
-index d0c92dc..8087ca0 100644
---- a/http.c
-+++ b/http.c
-@@ -1,3 +1,4 @@
-+#include <assert.h>
- #include "http.h"
+Of course, the client has to know that the local repo is shallow, which it 
+must not determine by looking at the grafts file.
  
- int data_received;
-@@ -348,19 +349,36 @@ struct active_request_slot *get_active_s
- 	return slot;
- }
- 
-+void sanity_check_active_slots(void)
-+{
-+	struct active_request_slot *slot;
-+	int n = 0;
-+
-+	for (slot = active_queue_head; slot; slot = slot->next) {
-+		assert(!(slot->in_use & SLOTUSE_REF) == !slot->nrefs);
-+		if (slot->in_use)
-+			n++;
-+	}
-+	assert(n == active_requests);
-+}
-+
- int start_active_slot(struct active_request_slot *slot)
- {
-+	sanity_check_active_slots();
- #ifdef USE_CURL_MULTI
- 	CURLMcode curlm_result = curl_multi_add_handle(curlm, slot->curl);
- 
- 	if (curlm_result != CURLM_OK &&
- 	    curlm_result != CURLM_CALL_MULTI_PERFORM) {
-+		assert(slot->in_use & SLOTUSE_ACTIVE);
- 		slot->in_use &= ~SLOTUSE_ACTIVE;
- 		if (!slot->in_use)
- 			active_requests--;
-+		assert(active_requests >= 0);
- 		return 0;
- 	}
- #endif
-+	sanity_check_active_slots();
- 	return 1;
- }
- 
-@@ -382,20 +400,26 @@ void step_active_slots(void)
- 
- static void watch_active_slot(struct active_request_slot *slot)
- {
-+	sanity_check_active_slots();
- 	if (!slot->in_use)
- 		active_requests++;
- 	slot->in_use |= SLOTUSE_REF;
- 	slot->nrefs++;
-+	sanity_check_active_slots();
- }
- 
- static void unwatch_active_slot(struct active_request_slot *slot)
- {
-+	sanity_check_active_slots();
-+	assert(slot->nrefs);
- 	slot->nrefs--;
- 	if (!slot->nrefs) {
- 		slot->in_use &= ~SLOTUSE_REF;
- 		if (!slot->in_use)
- 			active_requests--;
-+		assert(active_requests >= 0);
- 	}
-+	sanity_check_active_slots();
- }
- 
- void run_active_slot(struct active_request_slot *slot)
-@@ -445,9 +469,13 @@ void run_active_slot(struct active_reque
- 
- static void closedown_active_slot(struct active_request_slot *slot)
- {
-+	sanity_check_active_slots();
-+	assert(slot->in_use & SLOTUSE_ACTIVE);
-         slot->in_use &= ~SLOTUSE_ACTIVE;
- 	if (!slot->in_use)
- 		active_requests--;
-+	assert(active_requests >= 0);
-+	sanity_check_active_slots();
- }
- 
- void release_active_slot(struct active_request_slot *slot)
-diff --git a/http.h b/http.h
-index d028a5d..a2e48e8 100644
---- a/http.h
-+++ b/http.h
-@@ -59,6 +59,7 @@ extern int start_active_slot(struct acti
- extern void run_active_slot(struct active_request_slot *slot);
- extern void finish_all_active_slots(void);
- extern void release_active_slot(struct active_request_slot *slot);
-+extern void sanity_check_active_slots(void);
- 
- #ifdef USE_CURL_MULTI
- extern void fill_active_slots(void);
+> I am not sure you can convince "git-rev-list ^A" to mean "not at
+> A but things before that is still interesting", especially when
+> you give many other heads to start traversing from, but if you
+> can, then you can do things at rev-list command line parameter
+> level without doing the "exchange and use the same grafts"
+> trickery.  That _might_ be easier to implement but I do not see
+> an obvious correctness guarantee in the approach.
+
+If you introduce a different "have X" -- like "have-no-parent X" -- and 
+teach git-rev-list that "~A" means "traverse the tree of A, but not A's 
+parents", you'd basically have everything you need, right?
+
+> Implementation bugs aside, it is obvious the things _would_ work 
+> correctly with "exchange and use the same grafts" approach.
+
+Yes, I agree. But again, the local repo has to know which grafts were 
+introduced by making the repo shallow.
+
+Ciao,
+Dscho
