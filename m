@@ -1,95 +1,68 @@
-From: Sasha Khapyorsky <sashak@voltaire.com>
-Subject: [PATCH] git-svnimport.perl: fix for 'arg list too long...'
-Date: Wed, 1 Feb 2006 17:53:31 +0200
-Message-ID: <20060201155331.GE18078@sashak.voltaire.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [Census] So who uses git?
+Date: Wed, 1 Feb 2006 08:04:18 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602010800090.21884@g5.osdl.org>
+References: <20060201070847.2021.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 01 16:54:18 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 17:05:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4KIR-0004P0-4O
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 16:53:27 +0100
+	id 1F4KTQ-0007Ur-1D
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 17:04:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161097AbWBAPxA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 10:53:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161100AbWBAPw7
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 10:52:59 -0500
-Received: from taurus.voltaire.com ([193.47.165.240]:18285 "EHLO
-	taurus.voltaire.com") by vger.kernel.org with ESMTP
-	id S1161097AbWBAPw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 10:52:58 -0500
-Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 1 Feb 2006 17:52:57 +0200
-Received: by sashak (sSMTP sendmail emulation); Wed,  1 Feb 2006 17:53:31 +0200
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
-	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 01 Feb 2006 15:52:57.0809 (UTC) FILETIME=[9258C410:01C62747]
+	id S1422659AbWBAQE1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 11:04:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422663AbWBAQE1
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 11:04:27 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:28642 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1422659AbWBAQE0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 11:04:26 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k11G4KDZ008037
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 1 Feb 2006 08:04:20 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k11G4Iwd011869;
+	Wed, 1 Feb 2006 08:04:19 -0800
+To: linux@horizon.com
+In-Reply-To: <20060201070847.2021.qmail@science.horizon.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15422>
-
-Hello,
-
-This fixes 'arg list too long' problem when passed to git-ls-files.
-
-Sasha.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15423>
 
 
-This fixes 'arg list too long..' problem with git-ls-files.
 
-Note that second arg list separation loop (with 'git-update-index') is
-needed since git-ls-files arguments can be directories.
+On Tue, 1 Feb 2006, linux@horizon.com wrote:
+> 
+> At the risk of complicating something already very complicated, and
+> possibly breaking on Microsoft file systems, that case can be detected
+> by reading the directory and noticing that the inode number changed.
+> 
+> Would it be worth validating the inode numbers (which can be retrieved
+> in a batch) even if you don't do a full lstat()?
 
-Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
+I don't think it's worth it. It's the unusual case anyway, and it doesn't 
+even really guarantee anything either (the person _could_ just have marked 
+the inode writable - not understanding what is going on, he could have 
+just done a "chmod +w" behind git's back).
 
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index 6e3a44a..b6799d8 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -546,23 +546,30 @@ sub commit {
- 			}
- 		}
- 
--		if(@old) {
--			open my $F, "-|", "git-ls-files", "-z", @old or die $!;
--			@old = ();
-+		while(@old) {
-+			my @o1;
-+			if(@old > 55) {
-+				@o1 = splice(@old,0,50);
-+			} else {
-+				@o1 = @old;
-+				@old = ();
-+			}
-+			open my $F, "-|", "git-ls-files", "-z", @o1 or die $!;
-+			@o1 = ();
- 			local $/ = "\0";
- 			while(<$F>) {
- 				chomp;
--				push(@old,$_);
-+				push(@o1,$_);
- 			}
- 			close($F);
- 
--			while(@old) {
-+			while(@o1) {
- 				my @o2;
--				if(@old > 55) {
--					@o2 = splice(@old,0,50);
-+				if(@o1 > 55) {
-+					@o2 = splice(@o1,0,50);
- 				} else {
--					@o2 = @old;
--					@old = ();
-+					@o2 = @o1;
-+					@o1 = ();
- 				}
- 				system("git-update-index","--force-remove","--",@o2);
- 				die "Cannot remove files: $?\n" if $?;
+Together with the fact that it might not work everywhere, and that I could 
+well imagine that "readdir()" is slow on cygwin too (how does it do 
+"d_ino"? Maybe it has to do a stat() to emulate unix behaviour?), I'm not 
+convinced it's worth it.
+
+I think the whole "assume it's valid" is a crutch - but if we do it, we 
+should make it _really_ fast, because it's also useful for automated 
+procedures that _know_ which files they touch. So we should make it have 
+minimal impact.
+
+		Linus
