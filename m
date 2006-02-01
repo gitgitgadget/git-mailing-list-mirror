@@ -1,62 +1,74 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [Census] So who uses git?
-Date: Wed, 1 Feb 2006 15:55:58 +0100
-Message-ID: <81b0412b0602010655i7b538bdck2baa216203279bce@mail.gmail.com>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
-	 <1138446030.9919.112.camel@evo.keithp.com>
-	 <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
-	 <1138529385.9919.185.camel@evo.keithp.com>
-	 <43DCA495.9040301@gorzow.mm.pl> <20060130225107.GA3857@limbo.home>
-	 <Pine.LNX.4.64.0601311314030.7301@g5.osdl.org>
-	 <20060131220148.GA19411@steel.home> <20060201013901.GA16832@mail.com>
-	 <46a038f90601311852ie8cfac0rbe92779edea4da1b@mail.gmail.com>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: [PATCH 4/9] http-fetch: Actually watch the file descriptors of interest.
+Date: Wed, 1 Feb 2006 07:03:27 -0800
+Message-ID: <20060201150327.GH3873@reactrix.com>
+References: <20060201112822.5042.41256.stgit@metalzone.distorted.org.uk> <20060201114433.5042.22737.stgit@metalzone.distorted.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Ray Lehtiniemi <rayl@mail.com>, Linus Torvalds <torvalds@osdl.org>,
-	Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>,
-	Keith Packard <keithp@keithp.com>,
-	Junio C Hamano <junkio@cox.net>, cworth@cworth.org,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 01 15:56:28 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 16:04:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4JOx-00051m-Ex
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 15:56:09 +0100
+	id 1F4JWN-00076n-0L
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 16:03:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161074AbWBAO4E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 09:56:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161073AbWBAO4E
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 09:56:04 -0500
-Received: from uproxy.gmail.com ([66.249.92.205]:39847 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1161072AbWBAO4B convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 09:56:01 -0500
-Received: by uproxy.gmail.com with SMTP id s2so256903uge
-        for <git@vger.kernel.org>; Wed, 01 Feb 2006 06:56:00 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GkeWN9lf7NJ5GZoCh3UJxWbpKqPzE/KBX+48769hvnxD0nCfZaYDlZsIV2Vn5x63wzxFP2BdqlDJQ2Zlrjw5BW+i0IRYt8A6IfeZecs8t0yga8Xg8Qffu4w0U3zwbkTZN3FFxVaphlANB0PgKYLDAcyI3zSwgPF5Z9VrWWAgSak=
-Received: by 10.48.250.5 with SMTP id x5mr1699259nfh;
-        Wed, 01 Feb 2006 06:55:59 -0800 (PST)
-Received: by 10.49.23.15 with HTTP; Wed, 1 Feb 2006 06:55:58 -0800 (PST)
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90601311852ie8cfac0rbe92779edea4da1b@mail.gmail.com>
+	id S932466AbWBAPDo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 10:03:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932387AbWBAPDo
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 10:03:44 -0500
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:27619 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S932466AbWBAPDo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 10:03:44 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k11F3S5Q022830;
+	Wed, 1 Feb 2006 07:03:28 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k11F3RtG022828;
+	Wed, 1 Feb 2006 07:03:28 -0800
+To: Mark Wooding <mdw@distorted.org.uk>
 Content-Disposition: inline
+In-Reply-To: <20060201114433.5042.22737.stgit@metalzone.distorted.org.uk>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15417>
 
-On 2/1/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> Perhaps a local git/cygwin on NTFS  would be more reasonable to benchmark?
+On Wed, Feb 01, 2006 at 11:44:33AM +0000, Mark Wooding wrote:
 
-$ time git update-index --refresh
+> Presumably this was just some kind of oversight.
 
-real    0m21.500s
-user    0m0.358s
-sys     0m1.406s
+I was never able to make this work reliably across multiple versions of
+curl.
 
-WinNT, NTFS, 13k files, hot cache.
+> Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
+> ---
+> 
+>  http.c |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+> 
+> diff --git a/http.c b/http.c
+> index 0a70e1c..521323c 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -425,6 +425,8 @@ void run_active_slot(struct active_reque
+>  			FD_ZERO(&excfds);
+>  			select_timeout.tv_sec = 0;
+>  			select_timeout.tv_usec = 50000;
+> +			curl_multi_fdset(curlm, &readfds, &writefds,
+> +					 &excfds, &max_fd);
+>  			select(max_fd, &readfds, &writefds,
+>  			       &excfds, &select_timeout);
+>  		}
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
