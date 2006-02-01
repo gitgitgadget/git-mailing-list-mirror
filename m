@@ -1,72 +1,66 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Bottlenecks in git merge
-Date: Wed, 1 Feb 2006 01:50:35 +0100
-Message-ID: <20060201005035.GD31278@pasky.or.cz>
-References: <20060131213314.GA32131@ebar091.ebar.dtu.dk> <7vk6cgq9ny.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0601311533040.7301@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [Census] So who uses git?
+Date: Tue, 31 Jan 2006 16:52:46 -0800
+Message-ID: <7vek2noq75.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
+	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
+	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
+	<1138446030.9919.112.camel@evo.keithp.com>
+	<7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
+	<20060130185822.GA24487@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0601311750270.25300@iabervon.org>
+	<7vek2oot7z.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0601311623240.7301@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Peter Eriksen <s022018@student.dtu.dk>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 01 01:50:29 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 01:52:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F46CV-0005Rs-1G
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 01:50:23 +0100
+	id 1F46Eu-0005rI-J0
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 01:52:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932322AbWBAAuT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jan 2006 19:50:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932383AbWBAAuT
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 19:50:19 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:39588 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932322AbWBAAuS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2006 19:50:18 -0500
-Received: (qmail 22805 invoked by uid 2001); 1 Feb 2006 01:50:35 +0100
+	id S1750924AbWBAAwt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jan 2006 19:52:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751273AbWBAAwt
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jan 2006 19:52:49 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:34447 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1750924AbWBAAws (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2006 19:52:48 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060201005119.UUMQ20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 31 Jan 2006 19:51:19 -0500
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0601311533040.7301@g5.osdl.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+In-Reply-To: <Pine.LNX.4.64.0601311623240.7301@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 31 Jan 2006 16:38:50 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15371>
 
-Dear diary, on Wed, Feb 01, 2006 at 12:45:27AM CET, I got a letter
-where Linus Torvalds <torvalds@osdl.org> said that...
-> It would be interesting to see how big the "resolve 850 files" part is vs 
-> the "check out 10k+ files" is.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-See my other mail.
+> One thing to be careful about is merges.
+> ...
+> So the current "git commit filename" behaviour is actually the only 
+> possible correct one for a merge. Nothing else makes any sense 
+> what-so-ever.
 
-> In particular, if the "resolve 850 files" is a noticeable portion of it, 
-> then the right thing to do may be to just re-write git-merge-one-file.sh 
-> in C. Right now, almost _all_ of the expense of that thing is just the 
-> shell interpreter startup. The actual actions it does are usually fairly 
-> cheap.
+Agreed 100%, and I kind of feel silly about not mentioning that
+myself.  It _might_ even make sense to reject explicit filenames
+when MERGE_HEAD does not exist ;-).
 
-Nope.
+> Oh, one final suggestion: if you give a filename to "git
+> commit", and you do the new semantics which means something
+> _different_ than "do a git-update-index on that file and
+> commit", then I'd really suggest that the _old_ index for that
+> filename should match the parent exactly.
 
-xpasky@machine[0:0]~/linux-2.6.git$ echo -e '#!/bin/sh\n/bin/true' >r && chmod a+x r
-xpasky@machine[0:0]~/linux-2.6.git$ time git-merge-index -o ./r -a
-
-real    0m3.827s
-user    0m1.788s
-sys     0m2.004s
-xpasky@machine[0:0]~/linux-2.6.git$ time git-merge-index -o ~/git-pb/git-merge-one-file -a
-[lots of "Removing"]
-
-real    1m21.773s
-user    0m30.806s
-sys     0m13.248s
-
-The costs are apparently in git-update-index, not in the shell.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+That is also a good safety measure.
