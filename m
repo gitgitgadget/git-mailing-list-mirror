@@ -1,87 +1,87 @@
-From: "Fernando J. Pereda" <ferdy@ferdyx.org>
-Subject: Re: [Announce] gitview-0.1
-Date: Wed, 1 Feb 2006 22:02:04 +0100
-Message-ID: <20060201210204.GB15900@ferdyx.org>
-References: <cc723f590601312016vabba201ye6d3739b3927f1a@mail.gmail.com> <20060201205805.GA6384@steel.home>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [Census] So who uses git?
+Date: Wed, 1 Feb 2006 13:09:19 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602011307250.21884@g5.osdl.org>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
+ <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
+ <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
+ <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
+ <20060130185822.GA24487@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0601311750270.25300@iabervon.org> <7vek2oot7z.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0601311623240.7301@g5.osdl.org> <7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0602011125370.5397@localhost.localdomain>
+ <7vhd7ibza2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="0ntfKIWw70PvrIHh"
-Cc: Aneesh Kumar <aneesh.kumar@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 01 22:02:34 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 22:09:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4P7G-0005Ox-Ag
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 22:02:14 +0100
+	id 1F4PEV-0007Rb-To
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 22:09:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422927AbWBAVCK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 16:02:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932463AbWBAVCK
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 16:02:10 -0500
-Received: from 170.Red-213-96-222.staticIP.rima-tde.net ([213.96.222.170]:27533
-	"EHLO smtp.ferdyx.org") by vger.kernel.org with ESMTP
-	id S932453AbWBAVCJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 16:02:09 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.ferdyx.org (Postfix) with ESMTP id 78E668D34B;
-	Wed,  1 Feb 2006 21:56:37 +0100 (CET)
-Received: from smtp.ferdyx.org ([127.0.0.1])
-	by localhost (tungsteno [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 05424-09; Wed, 1 Feb 2006 21:56:35 +0100 (CET)
-Received: from posidon.ferdyx.org (posidon.ferdyx.org [192.168.0.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.ferdyx.org (Postfix) with ESMTP id A69F48D343;
-	Wed,  1 Feb 2006 21:56:34 +0100 (CET)
-Received: by posidon.ferdyx.org (nbSMTP-1.01-cvs) for uid 1000
-	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	ferdy@ferdyx.org; Wed,  1 Feb 2006 22:02:04 +0100 (CET)
-To: Alex Riesen <raa.lkml@gmail.com>
-Mail-Followup-To: Alex Riesen <raa.lkml@gmail.com>,
-	Aneesh Kumar <aneesh.kumar@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060201205805.GA6384@steel.home>
-User-Agent: Mutt/1.5.11
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at ferdyx.org
+	id S1422931AbWBAVJl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 16:09:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932461AbWBAVJl
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 16:09:41 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:57294 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932453AbWBAVJk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 16:09:40 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k11L9KDZ025667
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 1 Feb 2006 13:09:20 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k11L9JTA027341;
+	Wed, 1 Feb 2006 13:09:19 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhd7ibza2.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15448>
 
 
---0ntfKIWw70PvrIHh
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 01, 2006 at 09:58:05PM +0100, Alex Riesen wrote:
-| Gentoo, Python 2.4.2, pycairo 1.0.2.
+On Wed, 1 Feb 2006, Junio C Hamano wrote:
+> 
+> How about this:
+> 
+>  - "git commit --also fileA..." means: update index at listed
+>    paths (add/remove if necessary) and then commit the tree
+>    described in index (the current behaviour with explicit paths).
 
-Just upgrade to a newer pygtk and it'll work fine:
+I'd suggest "--incremental" instead of "--also".
 
-[ebuild   R   ] dev-python/pygtk-2.8.2  -doc +opengl 0 kB
+>  - "git commit fileA..." means: create a temporary index from the
+>    current HEAD commit (or empty index if there is none), update
+>    it at listed paths (add/remove if necessary) and commit the
+>    resulting tree.  Also update the real index at the listed
+>    paths (add/remove if necessary).  In the original index file,
+>    the paths listed must be either empty or match exactly the
+>    HEAD commit -- otherwise we error out (Linus' suggestion).
 
-I had the same problem until I installed the above version.
+Yes.
 
-Cheers,
-Ferdy
+>  - "git commit" means: update index with all local changes and
+>    then commit the tree described in index (current "-a"
+>    behaviour).
 
---=20
-Fernando J. Pereda Garcimart=EDn
-Gentoo Developer (Alpha,net-mail,mutt,git)
-20BB BDC3 761A 4781 E6ED  ED0B 0A48 5B0C 60BD 28D4
+No. Please no. "git commit" should continue to do what it does now. 
+Otherwise you can't do the two-stage thing in any sane way.
 
---0ntfKIWw70PvrIHh
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Requiring "--incremental"/"--also" is very confusing.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
+If somebody doesn't know about the index, he normally will never have 
+index changes _anyway_, except for the "git add" case. In which case "git 
+commit" does the right thing for him: it will either commit the added 
+files, or it will say "nothing to commit".
 
-iD8DBQFD4SHMCkhbDGC9KNQRAkBRAJ0V7PjEio/UYvvAxiqJ8KkEN/chogCcD9No
-/BTcyFuMaMELHPzOb2c9/0k=
-=M4cc
------END PGP SIGNATURE-----
-
---0ntfKIWw70PvrIHh--
+		Linus
