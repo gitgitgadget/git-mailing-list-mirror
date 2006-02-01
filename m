@@ -1,83 +1,123 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [Census] So who uses git?
-Date: Wed, 01 Feb 2006 14:50:03 -0800
-Message-ID: <7v8xsu7kys.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
-	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
-	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
-	<1138446030.9919.112.camel@evo.keithp.com>
-	<7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
-	<20060130185822.GA24487@hpsvcnb.fc.hp.com>
-	<Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0601311750270.25300@iabervon.org>
-	<7vek2oot7z.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0601311623240.7301@g5.osdl.org>
-	<7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602011125370.5397@localhost.localdomain>
-	<7vhd7ibza2.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602011307250.21884@g5.osdl.org>
-	<7v8xsu91vf.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602011717010.5397@localhost.localdomain>
+Subject: Re: [PATCH] git-svnimport.perl: fix for 'arg list too long...'
+Date: Wed, 01 Feb 2006 14:50:53 -0800
+Message-ID: <7v3bj27kxe.fsf@assigned-by-dhcp.cox.net>
+References: <20060201155331.GE18078@sashak.voltaire.com>
+	<7v64nybz9m.fsf@assigned-by-dhcp.cox.net>
+	<20060201215454.GB31711@sashak.voltaire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Joel Becker <Joel.Becker@oracle.com>
-X-From: git-owner@vger.kernel.org Wed Feb 01 23:50:44 2006
+Cc: git@vger.kernel.org, Matthias Urlichs <smurf@smurf.noris.de>
+X-From: git-owner@vger.kernel.org Wed Feb 01 23:53:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4Qo2-0003cV-Qk
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 23:50:31 +0100
+	id 1F4QoU-0003l8-OL
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 23:50:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422994AbWBAWuI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 17:50:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422995AbWBAWuH
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 17:50:07 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:44466 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1422997AbWBAWuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 17:50:05 -0500
+	id S1422995AbWBAWu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 17:50:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422998AbWBAWuz
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 17:50:55 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:32473 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1422995AbWBAWuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 17:50:55 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060201224835.NEME20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 1 Feb 2006 17:48:35 -0500
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0602011717010.5397@localhost.localdomain> (Nicolas
-	Pitre's message of "Wed, 01 Feb 2006 17:25:18 -0500 (EST)")
+          id <20060201224827.HQCK26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 1 Feb 2006 17:48:27 -0500
+To: Sasha Khapyorsky <sashak@voltaire.com>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15459>
 
-Nicolas Pitre <nico@cam.org> writes:
+Sasha Khapyorsky <sashak@voltaire.com> writes:
 
-> Actually, my opinion is that should be the behavior for your first item 
-> above (when only filenames are specified).  If you want to _also_ 
-> include the index like you describe in your first item then an 
-> additional switch should be provided.
+> On 12:27 Wed 01 Feb     , Junio C Hamano wrote:
+>> Sasha Khapyorsky <sashak@voltaire.com> writes:
+>> 
+>> > This fixes 'arg list too long..' problem with git-ls-files.
+>> 
+>> I wonder if feeding the list into a pipe to 'update-index --stdin' 
+>> would be an option.
+>
+> This can be option for git-update-index, but my problem was with
+> git-ls-files, git-update-index was ok (arg list processing were splitted
+> already).
 
-OK, agreed.  Sorry to be slow.
+I was commenting on the "while (@o1)" loop that splices at 50
+when the list has more than 55 items to feed update-index.  You
+could accumulate output from multiple invocations of ls-files
+and feed everything to a single "update-index --stdin" after the
+"while (@old)" loop is done.  Batch of 50 vs a single batch may
+not matter though [*1*].
 
-So, to recap:
+But you are right; that git-ls-files can get too many arguments
+unless you split like that.
 
-git commit paths...			(temporary index thing)
-git commit --incremental paths...	(same as current w/o --incremental)
-git commit               		(same as current)
-git commit -a				(same as current)	
+A casual skimming over the rest of the code tells me that this
+fixes the last instance of such a command invocation with too
+many arguments.  Good catch.
 
-And I agree with Joel that we should not automatically imply
-"git add" with or without --incremental.
+Smurf, I do not have problems with Sasha's patch.  Are you OK
+if I apply it?
 
-I do not particularly have much preference among --also,
---with-index, or --incremental, but:
 
- - 'with-index' is precise but might be too technical;
- - 'incremental' is not really incremental -- you can use it
-   only once.
+-- >8 --
 
-Because you do not have to say "git commit --also" without paths
-(which _is_ awkward) to get the traditional behaviour, maybe it
-is a good name for that flag (it is also the shortest).
+*1* I do not think this makes much of a difference but here is what
+I mean.
+
+diff --git a/git-svnimport.perl b/git-svnimport.perl
+index b6799d8..d76a595 100755
+--- a/git-svnimport.perl
++++ b/git-svnimport.perl
+@@ -546,7 +546,8 @@ sub commit {
+ 			}
+ 		}
+ 
+-		while(@old) {
++		my @u = ();
++		while (@old) {
+ 			my @o1;
+ 			if(@old > 55) {
+ 				@o1 = splice(@old,0,50);
+@@ -555,26 +556,19 @@ sub commit {
+ 				@old = ();
+ 			}
+ 			open my $F, "-|", "git-ls-files", "-z", @o1 or die $!;
+-			@o1 = ();
+ 			local $/ = "\0";
+ 			while(<$F>) {
+ 				chomp;
+-				push(@o1,$_);
++				push(@u,$_);
+ 			}
+ 			close($F);
+-
+-			while(@o1) {
+-				my @o2;
+-				if(@o1 > 55) {
+-					@o2 = splice(@o1,0,50);
+-				} else {
+-					@o2 = @o1;
+-					@o1 = ();
+-				}
+-				system("git-update-index","--force-remove","--",@o2);
+-				die "Cannot remove files: $?\n" if $?;
+-			}
+ 		}
++		open my $F, "|-",
++			qw(git-update-index --force-remove -z --stdin)
++				or die $!;
++		print $F "$_\0" for @u;
++		close $F or die $!;
++
+ 		while(@new) {
+ 			my @n2;
+ 			if(@new > 12) {
