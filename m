@@ -1,89 +1,90 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Shallow clone: low level machinery.
-Date: Wed, 1 Feb 2006 15:33:51 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602011528030.28923@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v8xsxa70o.fsf@assigned-by-dhcp.cox.net> <7vmzhc1wz6.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0601311449040.8033@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vd5i81e4e.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0601311904410.10944@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzmlcz28x.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [Census] So who uses git?
+Date: Wed, 1 Feb 2006 15:43:56 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602011535220.28923@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
+ <Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
+ <46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
+ <1138446030.9919.112.camel@evo.keithp.com> <7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
+ <20060130185822.GA24487@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0601310926330.7301@g5.osdl.org> <1138734110.18852.26.camel@evo.keithp.com>
+ <Pine.LNX.4.64.0601311110210.7301@g5.osdl.org> <20060131225514.GC2812@ca-server1.us.oracle.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 01 15:34:56 2006
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Keith Packard <keithp@keithp.com>,
+	Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 01 15:44:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4J3X-0006x8-6l
-	for gcvg-git@gmane.org; Wed, 01 Feb 2006 15:34:03 +0100
+	id 1F4JDe-0001fW-1U
+	for gcvg-git@gmane.org; Wed, 01 Feb 2006 15:44:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932449AbWBAOd4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 09:33:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932450AbWBAOd4
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 09:33:56 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:38573 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932449AbWBAOdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 09:33:55 -0500
-Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id F1DF01467A1; Wed,  1 Feb 2006 15:33:51 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id E3257A1B;
-	Wed,  1 Feb 2006 15:33:51 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id C44661467A1; Wed,  1 Feb 2006 15:33:51 +0100 (CET)
+	id S932465AbWBAOoI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 09:44:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932466AbWBAOoH
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 09:44:07 -0500
+Received: from mail.gmx.de ([213.165.64.21]:50874 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932465AbWBAOoG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2006 09:44:06 -0500
+Received: (qmail invoked by alias); 01 Feb 2006 14:44:04 -0000
+Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
+  by mail.gmx.net (mp039) with SMTP; 01 Feb 2006 15:44:04 +0100
+X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmlcz28x.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+To: Joel Becker <Joel.Becker@oracle.com>
+In-Reply-To: <20060131225514.GC2812@ca-server1.us.oracle.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15414>
 
 Hi,
 
-On Tue, 31 Jan 2006, Junio C Hamano wrote:
+On Tue, 31 Jan 2006, Joel Becker wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Tue, Jan 31, 2006 at 11:21:52AM -0800, Linus Torvalds wrote:
+> > Now, I do agree. I don't actually like hiding the index too much. 
+> > Understanding the index is _invaluable_ whenever you're doing a merge with 
+> > conflicts, and understanding what tools are available to you to resolve 
+> > those conflicts.
 > 
-> > Worse, you cannot pull from older servers into shallow repos.
+> 	This is precisely the experience I've had explaining GIT to
+> folks moving to it.  The simplest workflow (clone; hack one file, commit
+> one file) is so similar to CVS/Subversion/Anything that it's immediately
+> understood.  But when pull, push, merge, and any non-linear history are
+> discussed, I have to describe the index and the commit/tree layout.
+> Once I do, they get it.
 > 
-> "have X" means different thing if you do not have matching
-> grafts information, so I suspect that is fundamentally
-> unsolvable.
+> > So I'm actually of the "revel in the index" camp (as could probably be 
+> > guessed by the original tutorial).
+> 
+> 	I'm going to second this, from a real-world "explain it to
+> others" standpoint.
 
-If the shallow-capable client could realize that the server is not 
-shallow-capable *and* the local repo is shallow, and refuse to operate 
-(unless called with "-f", in which case the result may or may not be a 
-broken repo, which has to be fixed up manually by copying 
-over ORIG_HEAD to HEAD).
+How about talking about the index a bit at the end of tutorial.txt like 
+this:
 
-Of course, the client has to know that the local repo is shallow, which it 
-must not determine by looking at the grafts file.
- 
-> I am not sure you can convince "git-rev-list ^A" to mean "not at
-> A but things before that is still interesting", especially when
-> you give many other heads to start traversing from, but if you
-> can, then you can do things at rev-list command line parameter
-> level without doing the "exchange and use the same grafts"
-> trickery.  That _might_ be easier to implement but I do not see
-> an obvious correctness guarantee in the approach.
+-- snip --
+For a number of (mostly technical) reasons, "git diff" does not show the 
+changes of the current working directory with respect to the latest 
+commit, but rather to an intermediate stage: the "index".
 
-If you introduce a different "have X" -- like "have-no-parent X" -- and 
-teach git-rev-list that "~A" means "traverse the tree of A, but not A's 
-parents", you'd basically have everything you need, right?
+Think of the index as a staging area just before committing: the commit 
+object (and the tree and blob objects referenced from it) are assembled 
+there.
 
-> Implementation bugs aside, it is obvious the things _would_ work 
-> correctly with "exchange and use the same grafts" approach.
+Also, when you checkout, the index is used to disassemble the commit 
+object just before writing the corresponding files and directories.
+-- snap --
 
-Yes, I agree. But again, the local repo has to know which grafts were 
-introduced by making the repo shallow.
+May this be worth the work?
 
 Ciao,
 Dscho
