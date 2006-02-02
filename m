@@ -1,128 +1,85 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Question around git-shell usage in Everyday Git
-Date: Thu, 2 Feb 2006 05:17:05 +0000
-Message-ID: <200602020517.05827.alan@chandlerfamily.org.uk>
-References: <200602012301.56141.alan@chandlerfamily.org.uk> <7vy80u64xf.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602011530530.21884@g5.osdl.org>
+Date: Wed, 01 Feb 2006 21:44:40 -0800
+Message-ID: <7vbqxqxqk7.fsf@assigned-by-dhcp.cox.net>
+References: <200602012301.56141.alan@chandlerfamily.org.uk>
+	<7vy80u64xf.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602011530530.21884@g5.osdl.org>
+	<200602020517.05827.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 06:17:13 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 02 06:44:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4WqF-0003uk-IO
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 06:17:11 +0100
+	id 1F4XH1-0000Mh-7m
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 06:44:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422932AbWBBFRI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Feb 2006 00:17:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422933AbWBBFRI
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 00:17:08 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:54190
-	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
-	id S1422932AbWBBFRH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2006 00:17:07 -0500
-Received: from kanger.home ([192.168.0.21])
-	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
-	id 1F4Wq8-0000PN-Ha; Thu, 02 Feb 2006 05:17:04 +0000
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: KMail/1.9.1
-In-Reply-To: <Pine.LNX.4.64.0602011530530.21884@g5.osdl.org>
-Content-Disposition: inline
+	id S1422951AbWBBFon (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Feb 2006 00:44:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422959AbWBBFon
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 00:44:43 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:30848 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1422951AbWBBFom (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2006 00:44:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060202054159.RSHA17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 2 Feb 2006 00:41:59 -0500
+To: Alan Chandler <alan@chandlerfamily.org.uk>
+In-Reply-To: <200602020517.05827.alan@chandlerfamily.org.uk> (Alan Chandler's
+	message of "Thu, 2 Feb 2006 05:17:05 +0000")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15484>
 
-On Wednesday 01 February 2006 23:37, Linus Torvalds wrote:
-> On Wed, 1 Feb 2006, Junio C Hamano wrote:
-> > Do you mean to reuse single directory /home/gitu/ for user A, B, C,
-> > and hang repositories /home/gitu/{X,Y,Z} for projects?  I'd
-> > imagine things could be arranged that way.  User A and B but not
-> > C may be in "projectX" group and /home/gitu/X is writable only
-> > by projectX group members and such...
+Alan Chandler <alan@chandlerfamily.org.uk> writes:
+
+> Then each developer would access the repository via
 >
-> That would work from a _git_ angle, but I don't think that was what Alan
-> was talking about, and it would failr horribly from a "ssh" perspective
-> (because "ssh" will want $HOME/.ssh/authorized_keys etc).
+> URL:home.chandlerfamily.org.uk:projectx.git
 >
-> So I _think_ what Alan was describing was just a
->
-> 	/home/user-A/project.git
-> 		     another-project.git
-> 		     ya-project.git
-> 	      user-B/myproject.git
-> 	      user-C/..
->
+> but would be only allowed access if they were on a white list within each 
+> project.
 
-Actually Junio was right in layout - but I am not sure he understands what I 
-want to achieve.
+This is the part I highly doubt is doable -- without having
+separate unix level UID your whitelist mechanism would not work.
+And I do not think you would get separate unix level UID without
+having separate $HOME/.ssh directory, even if you have prepared
+separate unix level UID in your /etc/passwd file.
 
-What I have in mind is that I am a personal developer at home with my own 
-server.  I have written various code in a number of projects whose public 
-repositories are all located under /var/lib/git. 
-(ie /var/lib/git/projectA.git, /var/lib/git/projectB.git) and they are all 
-shareable.
+Come to think of it, it is worse than that.  IIRC, sshd has
+rather strict check to make sure that only one unix user can
+write into $HOME/.ssh/ directory (obviously the owner of that
+$HOME directory, which means the user who has the directory as
+her home directory in /etc/passwd).  If more than one unix level
+user shares a home directory, I do not think you can satisfy
+that checking.
 
-git-daemon is run with base-path as /var/lib/git and have defined user "git" 
-to have a home directory of /var/lib/git and git-shell as his shell, so 
-anyone can clone from them
+Maybe it does not matter, since they will be pushing the commits
+with their name set to committer/author fields and if you trust
+them, but then there is no point assigning one UID per user.
 
-So, if my projects take off, and I have some outside developers helping me, I 
-do not want to give them individual home directories on my server instead my 
-plan_had_ been to collect their public keys at put them 
-in /var/lib/git/.ssh/authorized_keys, and then tell them to push to the 
-repository via
+One UID per project is probably doable but I do not think that
+is a useful arrangement either.
 
-URL:git@home.chandlerfamily.org.uk:projectA.git
+> So the third approach I am now contemplating is to actually create separate 
+> users for each project
 
-etc.
+You still cannot distinguish your users in a project with each
+other, which may or may not matter to you.  Also this is
+inconvenient for your developer who works on more than one of
+your projects -- I think he needs to use one project identity
+for each.
 
-The downside of this approach is that all developers get access to all 
-repositories - maybe I need better control.
-
-
-Then I saw the howto on repository control with the update hook and was 
-thinking that I could do it as follows
-
-in /etc/password create an entry for each developer with a home directory 
-of /var/lib/git and git shell. (so I DO NOT create a large number of /home 
-directories at all) and make them members of group git.
-
-Then each developer would access the repository via
-
-URL:home.chandlerfamily.org.uk:projectx.git
-
-but would be only allowed access if they were on a white list within each 
-project.
-
-Thats when I asked the question that started this thread.  
-
-Since then I have realised that the downside of this is that its pretty easy 
-to fake being someone else and getting access by just giving someone elses 
-name.
-
-So the third approach I am now contemplating is to actually create separate 
-users for each project
-
-so user projectA had a home directory of /var/lib/git/projectA.git with a 
-subdirectory of .ssh for the authorized keys file.
-
-Super users (e.g. ME) would have their keys 
-in /var/lib/git/.ssh/authorized_keys
-
-Individual project developers would have their keys in 
-
-/var/lib/git/projectA.git/.ssh/authorized_keys etc
-
-and would access the repository with
-
-URL:ProjectA@home.chandlerfamily.org.uk:.
-
- 
--- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
-Open Source. It's the difference between trust and antitrust.
+So in short, I am mildly negative about this.  If I were doing
+this kind of thing I'd have one unix UID and one directory per
+one physical user.  What is the real reason (other than "I just
+do not want to" feeling) you want to have smaller number of home
+directories than you have users?
