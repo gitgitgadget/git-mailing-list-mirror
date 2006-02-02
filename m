@@ -1,78 +1,77 @@
-From: Aneesh Kumar <aneesh.kumar@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: The merge from hell...
-Date: Thu, 2 Feb 2006 13:37:41 +0530
-Message-ID: <cc723f590602020007s43f89d10i4529d118ade7c764@mail.gmail.com>
+Date: Thu, 2 Feb 2006 00:08:05 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602020002110.21884@g5.osdl.org>
 References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
-	 <e5bfff550602012325s7d0a799ct5bfabbce2c579449@mail.gmail.com>
-	 <Pine.LNX.4.64.0602012356131.21884@g5.osdl.org>
+ <7v8xsuuto5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602012334360.21884@g5.osdl.org>
+ <Pine.LNX.4.64.0602012353130.21884@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
 	Paul Mackerras <paulus@samba.org>,
-	Marco Costalba <mcostalba@yahoo.it>
-X-From: git-owner@vger.kernel.org Thu Feb 02 09:08:02 2006
+	Marco Costalba <mcostalba@yahoo.it>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>,
+	Len Brown <len.brown@intel.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 09:09:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4ZVK-0003qs-NH
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 09:07:47 +0100
+	id 1F4ZXA-0004M0-Mj
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 09:09:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423359AbWBBIHo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Feb 2006 03:07:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423370AbWBBIHo
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 03:07:44 -0500
-Received: from uproxy.gmail.com ([66.249.92.202]:35530 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1423359AbWBBIHn convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Feb 2006 03:07:43 -0500
-Received: by uproxy.gmail.com with SMTP id s2so105987uge
-        for <git@vger.kernel.org>; Thu, 02 Feb 2006 00:07:42 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ENZIFsFQ601K2tpnB0u8TWOWt83d0+WWL7EyDCZesAIHqWt+c812D9ZIZT8PPVEbAsyqGfdTMIK2cB8RkKGGrf+QmTchP/oSEpbtTETQRJ7crWmJx3jJ7xJ/bsZpBLmaOjtbu1LX2xmWUWzm6omw41IlFSZlYlQC/iKNqNg32OM=
-Received: by 10.66.225.15 with SMTP id x15mr174198ugg;
-        Thu, 02 Feb 2006 00:07:41 -0800 (PST)
-Received: by 10.66.254.16 with HTTP; Thu, 2 Feb 2006 00:07:41 -0800 (PST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602012356131.21884@g5.osdl.org>
-Content-Disposition: inline
+	id S1423371AbWBBIJi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Feb 2006 03:09:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423372AbWBBIJi
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 03:09:38 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:51094 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1423371AbWBBIJh (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2006 03:09:37 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k12886DZ024636
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 2 Feb 2006 00:08:07 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k12885Bf009231;
+	Thu, 2 Feb 2006 00:08:06 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.64.0602012353130.21884@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15494>
-
-On 2/2/06, Linus Torvalds <torvalds@osdl.org> wrote:
->
->
-> On Thu, 2 Feb 2006, Marco Costalba wrote:
-> >
-> > Currently the public git repo version of qgit uses "git-diff-tree -c"
-> > for merges, It's not a problem to change qgit to use --cc option
-> > instead. But I would like to use just one kind of option to filter
-> > merges files.
->
-> I think using "-c" rather than "--cc" is fine, and if it makes parsing
-> easier..
->
-> The "--cc" option should show less "noise", an dI'm actually arguing that
-> it should show even less than it does now (for when the branches agreed
-> with each other, and there was no actual conflict, which is what I think
-> is more useful), but I don't think "-c" is _wrong_ either.
->
-> Using "-c" is a strange kind of "show all differences in a file that had
-> file-level merges" while at least to me "--cc" is meant to be more of a
-> "show all actual file-level CONFLICTS where the merge actually did
-> something different"
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15495>
 
 
-Ok i tried using --cc. But then as per the man page if the
-optimization makes the all the hunks disapper then commit log is not
-show unless -m is used. Is there a way to get the commit log printed.
-BTW using -m didn't show any difference even though man page said
-about some difference
 
--aneesh
+On Wed, 1 Feb 2006, Linus Torvalds wrote:
+> 
+> I _think_ your version of the rule ("pluses and minuses in all the same 
+> columns") ends up being exactly the same as my rule ("only two different 
+> versions").
+
+Actually, I take that back.
+
+My version of the rule was not just that there were only two versions: the 
+merge _result_ had to match one of the versions in one of the branches 
+too.
+
+That's important. It's important because you _can_ actually have a merge 
+where both branches have the exact same content, but some evil merger 
+ended up editing just the merge result.
+
+So there are literally just two versions, but one of the versions _only_ 
+exists in the merge result. Such a thing must always be considered a 
+conflict, since basically the merge result is obviously "interesting".
+
+That requirement can still be rewritten as a slight variation of your 
+version, I think: "the pluses and minuses are all in the same columns, and 
+the final column has to match one other column"
+
+Maybe I'm not thinking clearly. Somebody else should double-check my 
+thinking. My brain is tired, and I'm going to bed.
+
+			Linus
