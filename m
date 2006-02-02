@@ -1,91 +1,55 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: Two ideas for improving git's user interface
-Date: Thu, 2 Feb 2006 09:30:12 -0700
-Organization: Hewlett Packard
-Message-ID: <20060202163012.GB10937@hpsvcnb.fc.hp.com>
-References: <Pine.LNX.4.64.0601311750270.25300@iabervon.org> <7vek2oot7z.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0601311623240.7301@g5.osdl.org> <7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602011125370.5397@localhost.localdomain> <7vhd7ibza2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602011307250.21884@g5.osdl.org> <7v8xsu91vf.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602011433290.21884@g5.osdl.org> <87lkwupsbr.wl%cworth@cworth.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: [PATCH 0/2] Small updates to git-send-email
+Date: Thu, 2 Feb 2006 11:56:06 -0500
+Message-ID: <11388993661745-git-send-email-ryan@michonline.com>
+Reply-To: Ryan Anderson <ryan@michonline.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 17:32:07 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Feb 02 17:59:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4hMP-0006Dr-3e
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 17:31:05 +0100
+	id 1F4hlK-0005Ww-P4
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 17:56:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932137AbWBBQap (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Feb 2006 11:30:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932139AbWBBQap
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 11:30:45 -0500
-Received: from atlrel6.hp.com ([156.153.255.205]:60618 "EHLO atlrel6.hp.com")
-	by vger.kernel.org with ESMTP id S932137AbWBBQaQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2006 11:30:16 -0500
-Received: from smtp2.fc.hp.com (smtp2-c.fc.hp.com [15.15.136.253])
-	by atlrel6.hp.com (Postfix) with ESMTP id 36D1537D13;
-	Thu,  2 Feb 2006 11:30:13 -0500 (EST)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp2.fc.hp.com (Postfix) with ESMTP
-	id 70CB341EC6C; Thu,  2 Feb 2006 16:30:12 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 6287D9B21; Thu,  2 Feb 2006 09:30:12 -0700 (MST)
-To: Carl Worth <cworth@cworth.org>
-Mail-Followup-To: Carl Worth <cworth@cworth.org>,
-	Linus Torvalds <torvalds@osdl.org>, Junio C Hamano <junkio@cox.net>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <87lkwupsbr.wl%cworth@cworth.org>
-X-Origin: hpsvcnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+	id S932162AbWBBQ4s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Feb 2006 11:56:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932168AbWBBQ4r
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 11:56:47 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:28590 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S932162AbWBBQ4r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2006 11:56:47 -0500
+Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1F4hlF-00052D-9H
+	for git@vger.kernel.org; Thu, 02 Feb 2006 11:56:46 -0500
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1F4hl9-000299-NU
+	for git@vger.kernel.org; Thu, 02 Feb 2006 11:56:44 -0500
+Received: from localhost
+	([127.0.0.1] helo=mythryan2 ident=ryan)
+	by mythical with smtp (Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1F4hkc-0000OE-CI
+	for git@vger.kernel.org; Thu, 02 Feb 2006 11:56:06 -0500
+In-Reply-To: 
+X-Mailer: git-send-email
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15510>
 
-On Wed, Feb 01, 2006 at 03:33:44PM -0800, Carl Worth wrote:
-> 	Is it ever useful (reasonable, desirable) to commit file
-> 	contents that differ from the contents of the working
-> 	directory?
+These updates fix some usability issues raised by Octavian in #git.
 
-What _is_ useful about the status quo is the ability to make some minor
-change, update that change to the index when I've decided that it is a
-good change and then use git diff to see what I've incrementally changed
-in the same file since that update.  That way new incremental changes
-can be viewed independantly of the change I've already decided was good.
-
-> What I would love to have is the ability to pass the same arguments to
-> git diff to get a preview of what any get commit would do. For
-> example, something like:
-> 
-> 	git diff		# would be a preview of:
-> 	git commit
-
-'git diff --cached' does this.
-
-> 	git diff -a		# would be a preview of:
-> 	git commit -a
-
-'git diff HEAD' does this.
-
-> 	git diff fileA fileB	# would be a preview of:
-> 	git commit fileA fileB
-
-Paths can be specified in conjunction with the above commands.
-
-Yes, these are idioms specific to git and are not immediately intuitive
-to the new user.  However, if the user has access to a good tutorial
-that walks through these scenerios its not so bad.
-
-Carl
+Thanks for the feedback!
 
 -- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        RADCAD (R&D CAD)
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Ryan Anderson
+  sometimes Pug Majere
