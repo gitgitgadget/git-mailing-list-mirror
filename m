@@ -1,66 +1,44 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: The merge from hell...
-Date: Thu, 02 Feb 2006 02:41:28 -0800
-Message-ID: <7v7j8erqjr.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
-	<e5bfff550602012325s7d0a799ct5bfabbce2c579449@mail.gmail.com>
-	<Pine.LNX.4.64.0602012356131.21884@g5.osdl.org>
-	<cc723f590602020007s43f89d10i4529d118ade7c764@mail.gmail.com>
-	<Pine.LNX.4.64.0602020027400.21884@g5.osdl.org>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH 0/2] Make merge recursive faster in some cases
+Date: Thu, 2 Feb 2006 12:38:48 +0100
+Message-ID: <20060202113848.GA8103@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Marco Costalba <mcostalba@yahoo.it>
-X-From: git-owner@vger.kernel.org Thu Feb 02 11:42:05 2006
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Feb 02 12:39:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4buH-0002y3-8o
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 11:41:44 +0100
+	id 1F4cno-0008WC-4m
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 12:39:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423097AbWBBKlc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Feb 2006 05:41:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423440AbWBBKlb
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 05:41:31 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:21640 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1423097AbWBBKla (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2006 05:41:30 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060202104015.GJNT20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 2 Feb 2006 05:40:15 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602020027400.21884@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 2 Feb 2006 00:44:35 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750803AbWBBLiy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Feb 2006 06:38:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbWBBLiy
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 06:38:54 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:63397 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1750803AbWBBLix (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2006 06:38:53 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id B6FE14114; Thu,  2 Feb 2006 12:52:18 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1F4cnY-0007Wv-00; Thu, 02 Feb 2006 12:38:48 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15502>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+The first patch teaches git-merge-recursive how to use the bases that
+are supplied by the merge driver program in some cases. To be more
+precise: if git-merge-recursive is supplied with a single base then
+that one will be used, otherwise git-merge-recursive will compute the
+bases on its own.
 
-> On Thu, 2 Feb 2006, Aneesh Kumar wrote:
->> 
->> Ok i tried using --cc. But then as per the man page if the
->> optimization makes the all the hunks disapper then commit log is not
->> show unless -m is used.
->
-> Ahh. You're mis-using git-diff-tree.
->
-> git-diff-tree will _never_ show the commit log if the diff ends up being 
-> empty.
+The second patch makes the commit graph construction more efficient.
 
-True, I should fix the documentation.
-
-It _might_ make sense for certain users like gitk and gitview if
-we had a single tool that gives --pretty and its diff even if
-the diff is empty.  Having said that, the flag --cc -m is too
-specific.  If some uses want to see the commit log even for an
-empty diff, that flag should not be something only --cc honors.
+- Fredrik
