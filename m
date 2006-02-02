@@ -1,96 +1,117 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Question around git-shell usage in Everyday Git
-Date: Wed, 01 Feb 2006 16:04:55 -0800
-Message-ID: <7v8xsu62xk.fsf@assigned-by-dhcp.cox.net>
-References: <200602012301.56141.alan@chandlerfamily.org.uk>
-	<7vy80u64xf.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602011530530.21884@g5.osdl.org>
+Subject: Re: Two ideas for improving git's user interface
+Date: Wed, 01 Feb 2006 16:38:45 -0800
+Message-ID: <7v1wym4msq.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
+	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
+	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
+	<1138446030.9919.112.camel@evo.keithp.com>
+	<7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
+	<20060130185822.GA24487@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0601311750270.25300@iabervon.org>
+	<7vek2oot7z.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0601311623240.7301@g5.osdl.org>
+	<7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602011125370.5397@localhost.localdomain>
+	<7vhd7ibza2.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602011307250.21884@g5.osdl.org>
+	<7v8xsu91vf.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602011433290.21884@g5.osdl.org>
+	<87lkwupsbr.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 01:05:02 2006
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu Feb 02 01:38:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4Ry8-0005fl-Lk
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 01:05:01 +0100
+	id 1F4SUt-0005Ms-JO
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 01:38:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750709AbWBBAE6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 19:04:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbWBBAE6
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 19:04:58 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:8131 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1750709AbWBBAE5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 19:04:57 -0500
+	id S1751491AbWBBAis (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 19:38:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751494AbWBBAis
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 19:38:48 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:23458 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1751491AbWBBAis (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 19:38:48 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao09.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060202000216.KZDJ17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 1 Feb 2006 19:02:16 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602011530530.21884@g5.osdl.org> (Linus Torvalds's
-	message of "Wed, 1 Feb 2006 15:37:36 -0800 (PST)")
+          id <20060202003852.VHMF25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 1 Feb 2006 19:38:52 -0500
+To: Carl Worth <cworth@cworth.org>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15470>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Carl Worth <cworth@cworth.org> writes:
 
-> On Wed, 1 Feb 2006, Junio C Hamano wrote:
->> 
->> Do you mean to reuse single directory /home/gitu/ for user A, B, C,
->> and hang repositories /home/gitu/{X,Y,Z} for projects?  I'd
->> imagine things could be arranged that way.  User A and B but not
->> C may be in "projectX" group and /home/gitu/X is writable only
->> by projectX group members and such...
+> To explain this, "just use -a" isn't enough, it would have to be
+> something like, "always use -a or else 'git commit' just won't work
+> and you can end up committing stale garbage". And perhaps "unless you
+> also add the filename to the commit line, then it will start working
+> again."
+
+I do not think you have to make it sound *that* negative.  I
+agree it may be counterintuitive until the user groks the index.
+
+Let's assume that we will fix things to (1) require "--also" (or
+"--incremental") to get the current "git commit paths..."
+behaviour, (2) without any arguments we commit the index as is,
+(3) with explicit paths we commit clean HEAD plus only specified
+paths using a temporary index.  I think a fairer way to say what
+you said would be:
+
+        Always use -a, or explicit paths.  With -a all of your
+        changes in the working tree are committed.  With paths,
+        only changes to those paths are committed.
+
+        Once you are comfortable with making commits this way,
+        you might want to learn about index file and then start
+        using 'git commit' without any argument.  This works in
+        a way that cannot be understood until you learn how the
+        index file works, so stick to "-a or explicit paths"
+        rule for now.  That rule is good enough for everyday
+        use.
+
+And you can probably go a long way without ever knowing about
+index.  Initially when I wrote the above two paragraphs, I said
+"appreciated" instead of "understood".  But depending on your
+workflow, you may not even need what "git commit" without
+arguments would give you, in which case there is nothing to
+appreciate about, so I changed the wording.
+
+Old-timer git people seem to like what it gives them but that
+does not mean everybody should marvel at what it does and adopt
+the workflow to take advantage of the index file.
+
+> Here's a fundamental question I have, (and thanks to Keith Packard for
+> helping me to phrase it):
 >
-> That would work from a _git_ angle, but I don't think that was what Alan 
-> was talking about, and it would failr horribly from a "ssh" perspective 
-> (because "ssh" will want $HOME/.ssh/authorized_keys etc).
+> 	Is it ever useful (reasonable, desirable) to commit file
+> 	contents that differ from the contents of the working
+> 	directory?
 
-Hmph.  I thought that was what Alan was talking about, after he
-read about the shared repository configuration section that
-mentions git-shell, which is about shared repository.
+What that means is people should always do "git commit -a".  Not
+even "git commit paths...".  It matches _my_ sense of developer
+discipline, especially for individual developers, but it is a
+rather cumbersome straightjacket if enforced upon you in
+practice.  It is a useful timesaver to be able to leave
+unrelated changes around in the working tree.
 
-Project administrator or project secretary sets up the shared
-repository for the project and member accounts on that machine,
-and members just use that shared repository.  Not allowing
-remote repository creation nor deletion over git-shell is a
-slightly lesser issue in this context.
+> I don't think it is, (but please let me know if I've missed some
+> useful case).
 
-> However, to be truly useful for this kind of hosting schenario, 
-> "git-shell" still needs to be extended to be able to at a minimum create 
-> (and delete) projects.
+I think I've already done this a couple of times today.
 
-Hosting is a different story and I think branch/tag removal in
-addition to repository creation, and deletion you listed above
-are needed in that context.  Your "my projects are all under my
-HOME directory, it is very convenient and things naturally work"
-would apply for non-shared (i.e. something each person can call
-"my") repositories, and would apply to hosting situation, of
-course.
-
-> It probably also makes a lot of sense to be able to pre-populate a 
-> project, so that you don't have to do a remote "git push" to push a big 
-> project over the network, when another version of that project already 
-> exists at the hosting site.
-
-Depends on what you mean by pre-populate, but that may just mean
-to be able to manage objects/info/alternates remotely.
-Capability to manage hook scripts may also be needed to a
-certain degree if the repository side access control (e.g. who
-can push into this branch) is done by hooks/pre-update, but in
-either the hosting environment or a shared project setup, the
-machine owner who is paranoid to install git-shell would want to
-control what hooks can do very carefully.  The operator would
-probably not allow updating of hooks at all, but install a BCP
-hook by Carl Baldwin.  The users can only manage what is in the
-info/allowed-{users,groups} file.
-
-What this implies is extending what git-shell allows is a
-concious policy decision and probably be quite different from
-site to site until a set of BCP emerges.
+Your "git diff" is interesting, but I'd rather make them
+completely separate command from "git diff".  Perhaps "git
+ndiff" and "git ncommit", that assumes there is nothing but "git
+commit -a" kind of commits.
