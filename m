@@ -1,85 +1,82 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Question around git-shell usage in Everyday Git
-Date: Wed, 01 Feb 2006 21:44:40 -0800
-Message-ID: <7vbqxqxqk7.fsf@assigned-by-dhcp.cox.net>
-References: <200602012301.56141.alan@chandlerfamily.org.uk>
-	<7vy80u64xf.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602011530530.21884@g5.osdl.org>
-	<200602020517.05827.alan@chandlerfamily.org.uk>
+Subject: Re: gitview 0.3
+Date: Wed, 01 Feb 2006 22:13:34 -0800
+Message-ID: <7vzmlauw35.fsf@assigned-by-dhcp.cox.net>
+References: <cc723f590602012033w41b49b2ao4423707702086739@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 06:44:58 2006
+X-From: git-owner@vger.kernel.org Thu Feb 02 07:13:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4XH1-0000Mh-7m
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 06:44:51 +0100
+	id 1F4Xj0-0005Yb-QN
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 07:13:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422951AbWBBFon (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Feb 2006 00:44:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422959AbWBBFon
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 00:44:43 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:30848 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1422951AbWBBFom (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2006 00:44:42 -0500
+	id S1423011AbWBBGNh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Feb 2006 01:13:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423003AbWBBGNh
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 01:13:37 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:55290 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1423011AbWBBGNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2006 01:13:36 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060202054159.RSHA17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 2 Feb 2006 00:41:59 -0500
-To: Alan Chandler <alan@chandlerfamily.org.uk>
-In-Reply-To: <200602020517.05827.alan@chandlerfamily.org.uk> (Alan Chandler's
-	message of "Thu, 2 Feb 2006 05:17:05 +0000")
+          id <20060202061231.YCS15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 2 Feb 2006 01:12:31 -0500
+To: Aneesh Kumar <aneesh.kumar@gmail.com>
+In-Reply-To: <cc723f590602012033w41b49b2ao4423707702086739@mail.gmail.com>
+	(Aneesh Kumar's message of "Thu, 2 Feb 2006 10:03:14 +0530")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15485>
 
-Alan Chandler <alan@chandlerfamily.org.uk> writes:
+Nice work for 0.low-number version.
 
-> Then each developer would access the repository via
->
-> URL:home.chandlerfamily.org.uk:projectx.git
->
-> but would be only allowed access if they were on a white list within each 
-> project.
+On my notebook, I felt really miserable to see that the middle
+band taking so much space to show rev committer timestamp and
+parents.  The bottom window starts with the same information
+repeated (worse, with unreadable timestamp format) and I had to
+scroll all the way down to view the rest of the commit message.
 
-This is the part I highly doubt is doable -- without having
-separate unix level UID your whitelist mechanism would not work.
-And I do not think you would get separate unix level UID without
-having separate $HOME/.ssh directory, even if you have prepared
-separate unix level UID in your /etc/passwd file.
+If you absolutely want the middle band, maybe instead of showing
+object names in "Parents" "Children" part, you can show the
+one-line commit logs from them there, and pop-up the object
+names along with the rest of commit log message as mouse hovers
+over.
 
-Come to think of it, it is worse than that.  IIRC, sshd has
-rather strict check to make sure that only one unix user can
-write into $HOME/.ssh/ directory (obviously the owner of that
-$HOME directory, which means the user who has the directory as
-her home directory in /etc/passwd).  If more than one unix level
-user shares a home directory, I do not think you can satisfy
-that checking.
+I missed "this commit is branch head of X" and "this commit is
+tagged with T" markers gitk has.
 
-Maybe it does not matter, since they will be pushing the commits
-with their name set to committer/author fields and if you trust
-them, but then there is no point assigning one UID per user.
+Needs a bit more compact layout to be useful for me.  In short,
+gitk's display does everything I want it to show in a compact
+enough way and I think there is no reason not to imitate it.
 
-One UID per project is probably doable but I do not think that
-is a useful arrangement either.
+Do colors of nodes have any significance?  I couldn't tell from
+the UI (and I tried to figure it out without reading code --
+otherwise I cannot tell if the choice of colors is intuitive).
 
-> So the third approach I am now contemplating is to actually create separate 
-> users for each project
+It might match more people's expectation if --with-diff were the
+default.
 
-You still cannot distinguish your users in a project with each
-other, which may or may not matter to you.  Also this is
-inconvenient for your developer who works on more than one of
-your projects -- I think he needs to use one project identity
-for each.
+This patch might make merges easier to read.
 
-So in short, I am mildly negative about this.  If I were doing
-this kind of thing I'd have one unix UID and one directory per
-one physical user.  What is the real reason (other than "I just
-do not want to" feeling) you want to have smaller number of home
-directories than you have users?
+-- >8 --
+[PATCH] Use "diff-tree -c" to display merges a bit more readably.
+
+--- a/gitview	2006-02-01 21:16:43.000000000 -0800
++++ b/gitview	2006-02-01 21:46:24.000000000 -0800
+@@ -305,7 +305,7 @@
+ 		return message
+ 
+ 	def diff_tree(self):
+-		fp = os.popen("git diff-tree --pretty -m -v -p " + " " + self.commit_sha1)
++		fp = os.popen("git diff-tree --pretty -c -v -p " + " " + self.commit_sha1)
+ 		diff = fp.read()
+ 		fp.close()
+ 
