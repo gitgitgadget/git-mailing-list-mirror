@@ -1,138 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] get_sha1_1: allow octopus^12 to be properly parsed.
-Date: Thu, 02 Feb 2006 23:48:36 -0800
-Message-ID: <7virrwj31n.fsf_-_@assigned-by-dhcp.cox.net>
-References: <F7DC2337C7631D4386A2DF6E8FB22B3005EFE7FF@hdsmsx401.amr.corp.intel.com>
-	<Pine.LNX.4.64.0602022139190.3462@g5.osdl.org>
-	<7vbqxpj6qs.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [Census] So who uses git?
+Date: Thu, 02 Feb 2006 15:59:18 +0100
+Message-ID: <43E21E46.4040502@op5.se>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>	<1138446030.9919.112.camel@evo.keithp.com>	<7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>	<20060130185822.GA24487@hpsvcnb.fc.hp.com>	<Pine.LNX.4.63.0601311127250.25248@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0601311750270.25300@iabervon.org>	<7vek2oot7z.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0601311623240.7301@g5.osdl.org>	<7v4q3jlgw2.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0602011125370.5397@localhost.localdomain>	<7vhd7ibza2.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0602011307250.21884@g5.osdl.org>	<7v8xsu91vf.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0602011717010.5397@localhost.localdomain> <7v8xsu7kys.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux@horizon.com
-X-From: git-owner@vger.kernel.org Fri Feb 03 08:48:51 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>, Linus Torvalds <torvalds@osdl.org>,
+	git@vger.kernel.org, Joel Becker <Joel.Becker@oracle.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 09:10:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4vgP-0004qX-UX
-	for gcvg-git@gmane.org; Fri, 03 Feb 2006 08:48:42 +0100
+	id 1F4w16-0002Wa-Oy
+	for gcvg-git@gmane.org; Fri, 03 Feb 2006 09:10:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932293AbWBCHsj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Feb 2006 02:48:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932511AbWBCHsj
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 02:48:39 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:17370 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932293AbWBCHsi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2006 02:48:38 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060203074624.IBYD17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 3 Feb 2006 02:46:24 -0500
-To: git@vger.kernel.org
-In-Reply-To: <7vbqxpj6qs.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 02 Feb 2006 22:28:43 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751220AbWBCIJY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Feb 2006 03:09:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751234AbWBCIJX
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 03:09:23 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:51119 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751224AbWBCIJX
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Feb 2006 03:09:23 -0500
+Received: from [192.168.1.104] (gprs2.vodafone.se [217.174.67.69])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id DEA276BCFE; Fri,  3 Feb 2006 09:09:16 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xsu7kys.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15534>
 
-We probably thought anybody who does more than 9 parents in an
-Octopus is insane when this was initially done, but there is no
-inherent reason to limit the number of independent topic
-branches that happen to mature at the same time.
+Junio C Hamano wrote:
+> 
+> I do not particularly have much preference among --also,
+> --with-index, or --incremental, but:
+> 
+>  - 'with-index' is precise but might be too technical;
+>  - 'incremental' is not really incremental -- you can use it
+>    only once.
+> 
+> Because you do not have to say "git commit --also" without paths
+> (which _is_ awkward) to get the traditional behaviour, maybe it
+> is a good name for that flag (it is also the shortest).
+> 
 
-Our commit-tree allows up to 16 already, so at least we should
-prepare to handle what we can produce, if only to be consistent.
+Except that -a, which is the logical shorthand, is already taken. How 
+about --include (or --include-index, or --index) and -i? commit being a 
+fairly commonly used command, I think it's safe to assume that most 
+people will read the man-page or the help output if there's something 
+they don't undetstand.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- Junio C Hamano <junkio@cox.net> writes:
-
- > That reminds me of another practical limit I've known but did
- > nothing about for quite some time (you may not even remember
- > doing that parser anymore).  This does not work for Len's merge:
- >
- > 	$ git rev-parse --verify funmerge^10
- >
- > You could do a 16-way merge but 12-way is already hitting
- > usability limit, depending on what you would want to do with
- > them.  For example, you cannot easily decompose the topic
- > branches out of that merge, like this:
- >
- > 	$ git checkout -b redo-3549 funmerge^2     ;# works
- >       $ git checkout -b redo-pnpacpi funmerge^12 ;# doesn't
-
- sha1_name.c |   39 ++++++++++++++++-----------------------
- 1 files changed, 16 insertions(+), 23 deletions(-)
-
-6c7e009d38da459545bd2eed63e7624f81cea90f
-diff --git a/sha1_name.c b/sha1_name.c
-index ba0747c..fa85d8a 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -388,43 +388,36 @@ static int peel_onion(const char *name, 
- 
- static int get_sha1_1(const char *name, int len, unsigned char *sha1)
- {
--	int parent, ret;
-+	int ret, has_suffix;
- 	const char *cp;
- 
--	/* foo^[0-9] or foo^ (== foo^1); we do not do more than 9 parents. */
--	if (len > 2 && name[len-2] == '^' &&
--	    name[len-1] >= '0' && name[len-1] <= '9') {
--		parent = name[len-1] - '0';
--		len -= 2;
--	}
--	else if (len > 1 && name[len-1] == '^') {
--		parent = 1;
--		len--;
--	} else
--		parent = -1;
--
--	if (parent >= 0)
--		return get_parent(name, len, sha1, parent);
--
- 	/* "name~3" is "name^^^",
--	 * "name~12" is "name^^^^^^^^^^^^", and
- 	 * "name~" and "name~0" are name -- not "name^0"!
-+	 * "name^" is not "name^0"; it is "name^1".
- 	 */
--	parent = 0;
-+	has_suffix = 0;
- 	for (cp = name + len - 1; name <= cp; cp--) {
- 		int ch = *cp;
- 		if ('0' <= ch && ch <= '9')
- 			continue;
--		if (ch != '~')
--			parent = -1;
-+		if (ch == '~' || ch == '^')
-+			has_suffix = ch;
- 		break;
- 	}
--	if (!parent && *cp == '~') {
-+
-+	if (has_suffix) {
-+		int num = 0;
- 		int len1 = cp - name;
- 		cp++;
- 		while (cp < name + len)
--			parent = parent * 10 + *cp++ - '0';
--		return get_nth_ancestor(name, len1, sha1, parent);
-+			num = num * 10 + *cp++ - '0';
-+		if (has_suffix == '^') {
-+			if (!num && len1 == len - 1)
-+				num = 1;
-+			return get_parent(name, len1, sha1, num);
-+		}
-+		/* else if (has_suffix == '~') -- goes without saying */
-+		return get_nth_ancestor(name, len1, sha1, num);
- 	}
- 
- 	ret = peel_onion(name, len, sha1);
 -- 
-1.1.6.gb1a9
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
