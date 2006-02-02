@@ -1,129 +1,114 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [Census] So who uses git?
-Date: Thu, 2 Feb 2006 10:12:26 +0100
-Message-ID: <81b0412b0602020112l26f69728v11139ae84ea9b84f@mail.gmail.com>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
-	 <1138529385.9919.185.camel@evo.keithp.com>
-	 <43DCA495.9040301@gorzow.mm.pl> <20060130225107.GA3857@limbo.home>
-	 <Pine.LNX.4.64.0601311314030.7301@g5.osdl.org>
-	 <20060131220148.GA19411@steel.home> <20060201013901.GA16832@mail.com>
-	 <46a038f90601311852ie8cfac0rbe92779edea4da1b@mail.gmail.com>
-	 <81b0412b0602010655i7b538bdck2baa216203279bce@mail.gmail.com>
-	 <Pine.LNX.4.64.0602010815480.21884@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] combine-diff: add safety check to --cc.
+Date: Thu, 02 Feb 2006 01:34:34 -0800
+Message-ID: <7vvevyrtn9.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
+	<7v8xsuuto5.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602012334360.21884@g5.osdl.org>
+	<Pine.LNX.4.64.0602012353130.21884@g5.osdl.org>
+	<Pine.LNX.4.64.0602020002110.21884@g5.osdl.org>
+	<7voe1qtbr5.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Ray Lehtiniemi <rayl@mail.com>,
-	Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>,
-	Keith Packard <keithp@keithp.com>,
-	Junio C Hamano <junkio@cox.net>, cworth@cworth.org,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 02 10:12:40 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Marco Costalba <mcostalba@yahoo.it>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>,
+	Len Brown <len.brown@intel.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 10:35:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4aW6-0004LC-Pl
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 10:12:39 +0100
+	id 1F4arc-0001YX-36
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 10:34:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423387AbWBBJMc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Feb 2006 04:12:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423393AbWBBJMc
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 04:12:32 -0500
-Received: from uproxy.gmail.com ([66.249.92.202]:16982 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1423387AbWBBJMb convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Feb 2006 04:12:31 -0500
-Received: by uproxy.gmail.com with SMTP id s2so125293uge
-        for <git@vger.kernel.org>; Thu, 02 Feb 2006 01:12:26 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FwPGuRN4WPX2mk6+7NkEHxiOYEIhx1dhy1KEGjQuVJi/x24TO9ZanGB/6sJ5cm8xSRpe5byVnoGc7r2CTIm1h51g1gNtSkkqqZAKPM1PitQRRprjrqPwZo4b4elqTgDXChCY6nt6we0FJ6zFgcGdl5OgodLw1qxGHtVJN863nbw=
-Received: by 10.49.95.15 with SMTP id x15mr46726nfl;
-        Thu, 02 Feb 2006 01:12:26 -0800 (PST)
-Received: by 10.49.23.15 with HTTP; Thu, 2 Feb 2006 01:12:26 -0800 (PST)
+	id S1423415AbWBBJei (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Feb 2006 04:34:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423419AbWBBJei
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 04:34:38 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:6287 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1423415AbWBBJeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2006 04:34:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060202093441.CRSL25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 2 Feb 2006 04:34:41 -0500
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602010815480.21884@g5.osdl.org>
-Content-Disposition: inline
+In-Reply-To: <7voe1qtbr5.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 02 Feb 2006 00:18:06 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15500>
 
-On 2/1/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> > $ time git update-index --refresh
-> >
-> > real    0m21.500s
-> > user    0m0.358s
-> > sys     0m1.406s
-> >
-> > WinNT, NTFS, 13k files, hot cache.
->
-> That's 25% less files than the Linux kernel, and I can do that operation
-> in 0m0.062s (0.012s user, 0.048s system).
+The earlier change implemented "only two version" check but
+without checking if the change rewrites from all the parents.
+This implements a check to make sure that a change introduced
+by the merge from all the parents is caught to be interesting.
 
-correction. It's 18k files, which is almost the same as 2.6.13-rc6. But these
-files got *very* long names (the project poisoned by classical C++ education
-and breaks windows' 255 chars limit on filename length from time to time).
-Refresh index in 2.6.13 is actualy consistantly faster:
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-$ cd src/linux-2.6.13-rc6
-$ time git update-index --refresh
-real    0m1.344s
-user    0m0.358s
-sys     0m0.984s
+---
 
-> So WinNT/cygwin is about 2.5 _orders_of_maginitude_ slower here, or 340
-> times slower.
->
-> Now, I'm tempted to say that NT is a piece of sh*t, but the fact is, your
-> CPU-times seem to indicate that most of it is IO (and the "real" cost is
-> just 1.7 seconds, much of which is system time, which in turn itself is
-> probably due to the IO costs too - so even that isn't comparable with
-> the ).
->
-> Which may mean that you simply don't have enough memory to cache the whole
-> thing. Which may be NT sucking, of course ("we don't like to use more than
-> 10% of memory for caches"), but it might also be a tunable (which is sucky
-> in itself, of course), but finally, it might just be that you just don't
-> have a ton of memory. I've got 2GB in my machines, although 1GB is plenty
-> to cache the kernel.
+ Junio C Hamano <junkio@cox.net> writes:
 
-I have 2Gb, the "System Cache" is around 1.5Gb, and this is PIV 3.2GHz.
-There seem to be no tunables for any kind of system stuff
-(savin' on support costs, do they?).
-You'd be very hardpressed not to say that windows is a piece of sh*t.
+ >  Linus Torvalds <torvalds@osdl.org> writes:
+ >
+ >  > On Wed, 1 Feb 2006, Linus Torvalds wrote:
+ >  >
+ >  > Actually, I take that back.
+ >
+ >  I do not do that "result to match the final" check in this
+ >  version yet.  I'll need to revisit it before placing this in
+ >  the master, but I am going to bed.
 
-The "benchmark: several times in a row:
+ Well, I didn't ;-).
 
-$ time git update-index --refresh
-real    0m1.766s
-user    0m0.498s
-sys     0m1.203s
+ combine-diff.c |   20 ++++++++++++++++++--
+ 1 files changed, 18 insertions(+), 2 deletions(-)
 
-$ time git update-index --refresh
-real    0m1.766s
-user    0m0.358s
-sys     0m1.390s
-
-$ time git update-index --refresh
-real    0m1.781s
-user    0m0.420s
-sys     0m1.311s
-
-$ time git update-index --refresh
-real    0m1.875s
-user    0m0.374s
-sys     0m1.343s
-
-$ time git update-index --refresh
-real    0m1.766s
-user    0m0.326s
-sys     0m1.375s
-
-It is always almost the same time. I don't think it's IO, looks more like
-cache accesses. It is just that bad in this cygwin+win2k combination.
-Besides, I don't trust "time <command>" on windows much: it returned
-sys time 0 for git-update-index in a directory which was read before.
-Yes, there was disk activity, I can hear it real good with that barrakuda.
+43fef6678c8e925307197fb705e499a023bba838
+diff --git a/combine-diff.c b/combine-diff.c
+index 45f1822..69e19ed 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -397,7 +397,23 @@ static int make_hunks(struct sline *slin
+ 		hunk_end = j;
+ 
+ 		/* [i..hunk_end) are interesting.  Now is it really
+-		 * interesting?
++		 * interesting?  We check if there are only two versions
++		 * and the result matches one of them.  That is, we look
++		 * at:
++		 *   (+) line, which records lines added to which parents;
++		 *       this line appears in the result.
++		 *   (-) line, which records from what parents the line
++		 *       was removed; this line does not appear in the result.
++		 * then check the set of parents the result has difference
++		 * from, from all lines.  If there are lines that has
++		 * different set of parents that the result has differences
++		 * from, that means we have more than two versions.
++		 *
++		 * Even when we have only two versions, if the result does
++		 * not match any of the parents, the it should be considered
++		 * interesting.  In such a case, we would have all '+' line.
++		 * After passing the above "two versions" test, that would
++		 * appear as "the same set of parents" to be "all parents".
+ 		 */
+ 		same_diff = 0;
+ 		has_interesting = 0;
+@@ -429,7 +445,7 @@ static int make_hunks(struct sline *slin
+ 			}
+ 		}
+ 
+-		if (!has_interesting) {
++		if (!has_interesting && same_diff != all_mask) {
+ 			/* This hunk is not that interesting after all */
+ 			for (j = hunk_begin; j < hunk_end; j++)
+ 				sline[j].flag &= ~mark;
+-- 
+1.1.6.g2672
