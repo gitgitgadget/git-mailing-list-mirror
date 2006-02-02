@@ -1,65 +1,53 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/9] http-fetch fixes
-Date: Wed, 01 Feb 2006 19:02:23 -0800
-Message-ID: <7vzmlaxy2o.fsf@assigned-by-dhcp.cox.net>
-References: <20060201112822.5042.41256.stgit@metalzone.distorted.org.uk>
-	<20060201153052.GA16461@informatik.uni-freiburg.de>
-	<slrndu1m14.2i8.mdw@metalzone.distorted.org.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
-	Nick Hengeveld <nickh@reactrix.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 04:02:50 2006
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Subject: Re: [RFC & PATCH] Solaris 8: ENOSYS when mkdir applied to automount.
+Date: Wed, 01 Feb 2006 20:14:00 -0800
+Message-ID: <25920.1138853640@lotus.CS.Berkeley.EDU>
+References: <7vwtge37w5.fsf@assigned-by-dhcp.cox.net>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 02 05:14:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4Ujs-000332-Un
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 04:02:29 +0100
+	id 1F4VrN-0007C5-Ha
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 05:14:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422887AbWBBDC0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Feb 2006 22:02:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423066AbWBBDCZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 22:02:25 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:41167 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1422887AbWBBDCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2006 22:02:25 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060202025957.MQVN26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 1 Feb 2006 21:59:57 -0500
-To: Mark Wooding <mdw@distorted.org.uk>
-In-Reply-To: <slrndu1m14.2i8.mdw@metalzone.distorted.org.uk> (Mark Wooding's
-	message of "Wed, 1 Feb 2006 15:47:48 +0000 (UTC)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1422919AbWBBEOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Feb 2006 23:14:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423078AbWBBEOE
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Feb 2006 23:14:04 -0500
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:36249 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S1423076AbWBBEOE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2006 23:14:04 -0500
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8) with ESMTP id k124E0xV025922;
+	Wed, 1 Feb 2006 20:14:00 -0800 (PST)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k124E0k6025921;
+	Wed, 1 Feb 2006 20:14:00 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-reply-to: <7vwtge37w5.fsf@assigned-by-dhcp.cox.net> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15480>
 
-Mark Wooding <mdw@distorted.org.uk> writes:
+And Junio C Hamano writes:
+ - There was a similar patch for working around Cygwin that threw
+ - different errno in an earlier thread:
 
-> Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de> wrote:
->
->> With these patches applied, I get now a Segfault, while cloning
->> u-boot.
-> ...
-> Maybe the right thing to do is to go with Nick's separate-status-
-> structures patch as an actual mainline fix, with my patches for
-> http-fetch.c's other bugs as a belt-and-braces.
+Thanks.  The thread mentioned in that one seems to have a few
+"right" solutions.  A compat/gitmkdirat.c likely is the best,
+modelled after the gnulib one.  I'll look at it when I can in 
+the next week or so, so you can ignore my patch.
 
-Thanks.
+ - Somehow I started to trust your ability to code portably a lot
+ - better than I trust myself, [...]
 
-I briefly looked at the series; the following may be ready to be
-applied:
+eep.  ;)  I only have access to three major variations at the
+moment (Linux, semi-old Solaris, recent AIX), so I'm not an
+authority...  Solaris 8 is from before the general Linux/glibc 
+compatability movement, so it's pretty useful for testing.
 
-[PATCH 2/9] http-fetch: Fix object list corruption in fill_activ...
-[PATCH 5/9] http-fetch: Fix message reporting rename of object file
-[PATCH 6/9] http: Turn on verbose Curl messages if GIT_CURL_VERB...
-[PATCH 7/9] http-fetch: Tidy control flow in process_alternate_r...
-
-For now however I'll wait and see for a while, in case you can
-reproduce the breakage Uwe found and add fixes to your set.
+Jason
