@@ -1,115 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Shallow clone: low level machinery.
-Date: Thu, 02 Feb 2006 11:31:35 -0800
-Message-ID: <7v3bj1r208.fsf@assigned-by-dhcp.cox.net>
-References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v8xsxa70o.fsf@assigned-by-dhcp.cox.net>
-	<7vmzhc1wz6.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0601311449040.8033@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vd5i81e4e.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0601311904410.10944@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vzmlcz28x.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0602011528030.28923@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vbqxqbz9q.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0602020113200.30910@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vr76m36ge.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0602021932450.16426@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Re: Question around git-shell usage in Everyday Git
+Date: Thu, 2 Feb 2006 21:23:56 +0000
+Message-ID: <200602022123.57120.alan@chandlerfamily.org.uk>
+References: <200602012301.56141.alan@chandlerfamily.org.uk> <200602020517.05827.alan@chandlerfamily.org.uk> <7vbqxqxqk7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 20:32:39 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Feb 02 22:24:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4kBL-0002LX-HN
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 20:31:52 +0100
+	id 1F4lvv-0004JE-Nk
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 22:24:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932197AbWBBTbi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Feb 2006 14:31:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932201AbWBBTbi
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 14:31:38 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:25735 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932200AbWBBTbh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2006 14:31:37 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060202193140.JYVU25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 2 Feb 2006 14:31:40 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932257AbWBBVX7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Feb 2006 16:23:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932262AbWBBVX7
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 16:23:59 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:8116
+	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
+	id S932257AbWBBVX6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2006 16:23:58 -0500
+Received: from kanger.home ([192.168.0.21])
+	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
+	id 1F4lvp-0001L4-Av; Thu, 02 Feb 2006 21:23:57 +0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.1
+In-Reply-To: <7vbqxqxqk7.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15518>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Scenario: I have cvsimported a project. Using a graft, I told git that a 
-> certain commit is indeed a merge between two branches. That is, in 
-> addition to the parent the commit objects tells us about, it has another 
-> parent which was tip of another branch.
+On Thursday 02 February 2006 05:44, Junio C Hamano wrote:
+...
 >
-> How would this graft be interpreted by the server we want to pull from? As 
-> if we had cut off the history. Which we did not. In effect, we could be 
-> sent many, many objects we already have.
+> So in short, I am mildly negative about this.  If I were doing
+> this kind of thing I'd have one unix UID and one directory per
+> one physical user.  What is the real reason (other than "I just
+> do not want to" feeling) you want to have smaller number of home
+> directories than you have users?
 
-I thought the protocol is sending the full graft file both ways.
-The uploader says "here are the grafts I have and use", and the
-downloader modifies it and sends back what grafts it wants to
-be used during the common revision discovery (aka building
-rev-list parameters).  The most important modification during
-this exchange is to cauterize the history at --since=v2.6.14
-commit (or tag).
+You are right.  I don't know whether you can tell, but I wrote my last note at 
+just gone 5:00am my time this moring  after getting up to go an catch a 
+flight to Germany for the day.  I spent the flight and the wait for the 
+flight back going over the options in my mind and I NOW think it better to 
+have proper home directories.
 
-The uploader may not have the fake parent you grafted onto a
-commit.  You may have a graft entry that says commit W has X, Y
-and Z as its parents, when its real parent is only X.  Y may be
-some other commit in the project (i.e. the other end knows about
-it but it is not a real parent of W), and Z may be from a
-development track that the uploader has not even heard of.  You
-may say a commit V does not have parent but that commit itself
-is from a separate development track the uploader does not know
-about.
+I do have to say, my motivation originally was more about not announcing to 
+the world the internal structure of my filesystem rather than the limitation 
+around creating lots of home directories, but part of the reasoning to myself 
+today was that that probably doesn't really matter.
 
-The uploader, however, should be able to at least honour, modulo
-implementation bugs ;-), "X and Y are both parents of W" part.
-Just ignoring V and Z and keeping usable part of information
-would be a reasonable fallback position [*1*].  And that should
-not result in a "many objects" situation when the downloader
-says "Now I happen to have W, do not send things reachable from
-it".  The uploader side should be able to omit what are
-reachable from X or Y even though it cannot exclude things
-reachable from Z.  Because the uploader does not even have Z,
-there is no reason to worry about things reachable from Z being
-sent unnecessarily to the downloader.
-
-At least that was the intention.  "graft" messages are not about
-sending "here are the cut-off points"; it is to agree on the
-graft information both ends use during the common revision
-computation.  The experimental code does not treat cut-offs any
-differently other grafts.
-
-
-[Footnote]
-
-*1* we might want to enhance the "shallow" protocol further to
-do this exchange slightly differently.  The downloader first
-sends its grafts (which may contain parents or graft/cutoff
-points that uploader does not have), and the uploader adjusts
-the received grafts for commits like V and parents like Z and
-then add its own grafts.  The result is sent back to the
-downloader and that becomes the common set of grafts in effect
-during the common revision discovery.  This would contain
-commits and parents that the downloader does not yet have but
-that is not a problem for common revision discovery.  After the
-transfer is done, the downloader would adjust its "graft" file
-if it made a new shallow clone, but otherwise it should not use
-the information it received from the uploader, because things
-like V and Z are not in this list.  I _think_ it would suffice
-to look at each graft entry and to add that entry locally if it
-talks about a commit the downloader does not have in its graft
-file.
+-- 
+Alan Chandler
+http://www.chandlerfamily.org.uk
+Open Source. It's the difference between trust and antitrust.
