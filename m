@@ -1,88 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Shallow clone: low level machinery.
-Date: Thu, 2 Feb 2006 19:44:00 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602021932450.16426@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7voe1uchet.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0601301220420.6424@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v8xsxa70o.fsf@assigned-by-dhcp.cox.net> <7vmzhc1wz6.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0601311449040.8033@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vd5i81e4e.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0601311904410.10944@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzmlcz28x.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0602011528030.28923@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vbqxqbz9q.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0602020113200.30910@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vr76m36ge.fsf@assigned-by-dhcp.cox.net>
+From: dave morgan <morgad@eclipse.co.uk>
+Subject: Re: problem compiling tonights Git
+Date: Thu, 02 Feb 2006 18:58:30 +0000
+Organization: the great unwashed
+Message-ID: <0dl4u191iocfkemvgq1665ciuqbir4ho3a@4ax.com>
+References: <i6k4u1p8jnuq0anj0v59bep2r6itnqk2ru@4ax.com>
+Reply-To: david morgan <morgad@eclipse.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 19:44:11 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+X-From: git-owner@vger.kernel.org Thu Feb 02 19:59:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4jRB-0004o0-9H
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 19:44:10 +0100
+	id 1F4jfA-0000Oe-5h
+	for gcvg-git@gmane.org; Thu, 02 Feb 2006 19:58:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751172AbWBBSoG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Feb 2006 13:44:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750994AbWBBSoF
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 13:44:05 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:56276 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751172AbWBBSoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2006 13:44:04 -0500
-Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 19A61141809; Thu,  2 Feb 2006 19:44:01 +0100 (CET)
+	id S1750900AbWBBS6d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Feb 2006 13:58:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751035AbWBBS6d
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 13:58:33 -0500
+Received: from mra03.ch.as12513.net ([82.153.252.25]:47236 "EHLO
+	mra03.ch.as12513.net") by vger.kernel.org with ESMTP
+	id S1750900AbWBBS6d convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2006 13:58:33 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 0BFD61D7A;
-	Thu,  2 Feb 2006 19:44:01 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D7B88143F08; Thu,  2 Feb 2006 19:44:00 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr76m36ge.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	by mra03.ch.as12513.net (Postfix) with ESMTP id 9BEE5D43EF
+	for <git@vger.kernel.org>; Thu,  2 Feb 2006 18:58:31 +0000 (GMT)
+Received: from mra03.ch.as12513.net ([127.0.0.1])
+ by localhost (mra03.ch.as12513.net [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 12197-01-43 for <git@vger.kernel.org>;
+ Thu,  2 Feb 2006 18:58:30 +0000 (GMT)
+Received: from unknown (unknown [82.152.150.47])
+	by mra03.ch.as12513.net (Postfix) with SMTP id 41CF6D440D
+	for <git@vger.kernel.org>; Thu,  2 Feb 2006 18:58:30 +0000 (GMT)
+To: git@vger.kernel.org
+In-Reply-To: <i6k4u1p8jnuq0anj0v59bep2r6itnqk2ru@4ax.com>
+X-Mailer: Forte Agent 3.2/32.830
+X-Virus-Scanned: by Eclipse VIRUSshield at eclipse.net.uk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15516>
 
-Hi,
+On Thu, 02 Feb 2006 18:41:30 +0000, dave morgan <morgad@eclipse.co.uk>
+wrote:
 
-On Wed, 1 Feb 2006, Junio C Hamano wrote:
+>Debian/testing system, 2.6.15 Kernel, AMD Athlon CPU @ 1Ghz, 512Mb RAM
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > I think it would be trivial: just resolve ~A to the tree A points to:
-> 
-> <tired> Hmph.  I thought you meant "have-only A" to mean similar
-> to "have A" but additionally "do not assume I have things behind
-> A", and are going to extend rev-list to support ~A syntax to do
-> that.  I am a bit surprised to see your "rev-list ~A" is to
-> include A, not exclude A and not what are behind A.  Where is
-> the connection between this and "have-only A"?  </tired> ;-)
+[snip]
 
-<tired> My patch was wrong. You'd have to introduce a new flag saying: 
-Traverse this commit, but mark its parents as uninteresting. </tired>
+I did another 'make' and it worked the 2nd time ...
 
-> > Now, is it possible that a fetch does something unintended, when there are 
-> > grafts which are not cutoffs? I don't know yet, but I think so.
-> 
-> I think we are disagreeing, so "not Exactly".  I meant "grafts
-> are grafts, there is no cutoffs, they are also just grafts".  So
-> the answer to your question is "it does not matter".
+I assume it must be local problem with XMMS, X or Gnome
 
-Scenario: I have cvsimported a project. Using a graft, I told git that a 
-certain commit is indeed a merge between two branches. That is, in 
-addition to the parent the commit objects tells us about, it has another 
-parent which was tip of another branch.
+Sorry for the noise
 
-How would this graft be interpreted by the server we want to pull from? As 
-if we had cut off the history. Which we did not. In effect, we could be 
-sent many, many objects we already have.
-
-Ciao,
-Dscho
+best regards
+Dave
