@@ -1,62 +1,75 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: Question around git-shell usage in Everyday Git
-Date: Thu, 2 Feb 2006 21:23:56 +0000
-Message-ID: <200602022123.57120.alan@chandlerfamily.org.uk>
-References: <200602012301.56141.alan@chandlerfamily.org.uk> <200602020517.05827.alan@chandlerfamily.org.uk> <7vbqxqxqk7.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] combine-diff: add safety check to --cc.
+Date: Thu, 2 Feb 2006 15:03:02 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602021454060.21884@g5.osdl.org>
+References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
+ <7v8xsuuto5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602012334360.21884@g5.osdl.org>
+ <Pine.LNX.4.64.0602012353130.21884@g5.osdl.org> <Pine.LNX.4.64.0602020002110.21884@g5.osdl.org>
+ <7voe1qtbr5.fsf_-_@assigned-by-dhcp.cox.net> <7vvevyrtn9.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 02 22:24:15 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Marco Costalba <mcostalba@yahoo.it>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>,
+	Len Brown <len.brown@intel.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 00:04:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4lvv-0004JE-Nk
-	for gcvg-git@gmane.org; Thu, 02 Feb 2006 22:24:04 +0100
+	id 1F4nUt-000071-A9
+	for gcvg-git@gmane.org; Fri, 03 Feb 2006 00:04:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932257AbWBBVX7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Feb 2006 16:23:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932262AbWBBVX7
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 16:23:59 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:8116
-	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
-	id S932257AbWBBVX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2006 16:23:58 -0500
-Received: from kanger.home ([192.168.0.21])
-	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
-	id 1F4lvp-0001L4-Av; Thu, 02 Feb 2006 21:23:57 +0000
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
-In-Reply-To: <7vbqxqxqk7.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751120AbWBBXEM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Feb 2006 18:04:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbWBBXEM
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Feb 2006 18:04:12 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:53931 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751120AbWBBXEL (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2006 18:04:11 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k12N33DZ007193
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 2 Feb 2006 15:03:03 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k12N32uJ012101;
+	Thu, 2 Feb 2006 15:03:02 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvevyrtn9.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15519>
 
-On Thursday 02 February 2006 05:44, Junio C Hamano wrote:
-...
+
+
+On Thu, 2 Feb 2006, Junio C Hamano wrote:
 >
-> So in short, I am mildly negative about this.  If I were doing
-> this kind of thing I'd have one unix UID and one directory per
-> one physical user.  What is the real reason (other than "I just
-> do not want to" feeling) you want to have smaller number of home
-> directories than you have users?
+> The earlier change implemented "only two version" check but
+> without checking if the change rewrites from all the parents.
+> This implements a check to make sure that a change introduced
+> by the merge from all the parents is caught to be interesting.
 
-You are right.  I don't know whether you can tell, but I wrote my last note at 
-just gone 5:00am my time this moring  after getting up to go an catch a 
-flight to Germany for the day.  I spent the flight and the wait for the 
-flight back going over the options in my mind and I NOW think it better to 
-have proper home directories.
+Ok, my testing shows that this is all wonderful.
 
-I do have to say, my motivation originally was more about not announcing to 
-the world the internal structure of my filesystem rather than the limitation 
-around creating lots of home directories, but part of the reasoning to myself 
-today was that that probably doesn't really matter.
+In fact, git-diff-tree now gets the subtle cases right for things that 
+"gitk" for some reason gets wrong. I haven't figured out what's wrong with 
+gitk, but I don't think it's even worth it: it would be better to just 
+teach gitk to use git-diff-tree --cc.
 
--- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
-Open Source. It's the difference between trust and antitrust.
+And now when I look at Len's "Merge from hell", not only does it take less 
+than 2 seconds for git-diff-tree to calculate, it looks correct too. At 
+least I don't see anything that I consider extraneous, although it might, 
+of course, have removed too much, and I'd not notice. But it looks great 
+(well, as great as it can look without colorization and/or years of 
+experience with it - multi-way diffs really aren't very readable ;)
+
+Paul, I'm not able to do something like this in tcl/tk, but could you look 
+at trying to make gitk use "git-rev-list --cc" for the colorization?
+
+			Linus
