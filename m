@@ -1,64 +1,123 @@
-From: Junio C Hamano <junkio@cox.net>
+From: linux@horizon.com
 Subject: Re: The merge from hell...
-Date: Thu, 02 Feb 2006 22:33:54 -0800
-Message-ID: <7v1wylj6i5.fsf@assigned-by-dhcp.cox.net>
-References: <F7DC2337C7631D4386A2DF6E8FB22B3005EFE838@hdsmsx401.amr.corp.intel.com>
-	<Pine.LNX.4.64.0602022210540.3462@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Brown, Len" <len.brown@intel.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Marco Costalba <mcostalba@yahoo.it>,
-	Aneesh Kumar <aneesh.kumar@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 03 07:34:02 2006
+Date: 3 Feb 2006 01:41:54 -0500
+Message-ID: <20060203064154.21015.qmail@science.horizon.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 08:08:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4uW7-0003qs-HM
-	for gcvg-git@gmane.org; Fri, 03 Feb 2006 07:33:59 +0100
+	id 1F4v3o-0003LJ-4E
+	for gcvg-git@gmane.org; Fri, 03 Feb 2006 08:08:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932355AbWBCGd5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Feb 2006 01:33:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932506AbWBCGd5
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 01:33:57 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:1725 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932355AbWBCGd4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2006 01:33:56 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060203063251.VNNV15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 3 Feb 2006 01:32:51 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602022210540.3462@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 2 Feb 2006 22:16:05 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751136AbWBCHIn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Feb 2006 02:08:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbWBCHIn
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 02:08:43 -0500
+Received: from science.horizon.com ([192.35.100.1]:31283 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1751136AbWBCHIn
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Feb 2006 02:08:43 -0500
+Received: (qmail 21016 invoked by uid 1000); 3 Feb 2006 01:41:54 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15532>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+While we're stress-testing the ystem, does anyone feel like fixing
+git-rev-parse 9fdb62af92c741addbea15545f214a6e89460865^10 ?
 
-> On Fri, 3 Feb 2006, Brown, Len wrote:
->>
->> In the back of my head I was worried about using plain
->> numbers when I saw somebody refer to "shorthand SHA1".
->> Hopefully this is an idle worry and it is not possible
->> for the tool to confuse a numeric branch name with a SHA1 id.
->
-> It _is_ possible, but the rule is that references will be resolved first. 
+The following is my attempt, but it doesn't seem sufficient...
 
-I have to admit that I had this broken for a while.  The
-breakage was when you have the same numeric branch name _and_
-tagname, then ref resolution was skipped and short SHA1 was
-taken.  It _might_ have bitten somebody in real life until I
-fixed it.  But I believe this is fixed now.
+$ ~/git/git-rev-parse 9fdb62af92c741addbea15545f214a6e89460865^{1,2,3,4,5,6,7,8,9,10,11,12}
+3ee68c4af3fd7228c1be63254b9f884614f9ebb2
+876c184b31dc73cc3f38c5b86dee55d091a56769
+729b4d4ce1982c52040bbf22d6711cdf8db07ad8
+cf82478840188f8c8494c1d7a668a8ae170d0e07
+dacd9b80355525be0e3c519687868410e304ad1c
+63c94b68ec30847a6e2b36651703f41066f91480
+35f652b5ef4ef145ac5514f6302b3f4cebfbbad4
+1a38416cea8ac801ae8f261074721f35317613dc
+4a90c7e86202f46fa9af011bdbcdf36e355d1721
+fatal: '9fdb62af92c741addbea15545f214a6e89460865^10': No such file or directory
 
-> It's pretty unlikely, of course. But it's one reason to try to avoid using 
-> ref names that are numeric.
+(Placed in the public domain; go nuts.)
 
-Or even non numeric ones, like "deadbeef".
+diff --git a/sha1_name.c b/sha1_name.c
+index ba0747c..adf49d2 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -388,52 +388,33 @@ static int peel_onion(const char *name, 
+ 
+ static int get_sha1_1(const char *name, int len, unsigned char *sha1)
+ {
+-	int parent, ret;
+-	const char *cp;
+-
+-	/* foo^[0-9] or foo^ (== foo^1); we do not do more than 9 parents. */
+-	if (len > 2 && name[len-2] == '^' &&
+-	    name[len-1] >= '0' && name[len-1] <= '9') {
+-		parent = name[len-1] - '0';
+-		len -= 2;
+-	}
+-	else if (len > 1 && name[len-1] == '^') {
+-		parent = 1;
+-		len--;
+-	} else
+-		parent = -1;
+-
+-	if (parent >= 0)
+-		return get_parent(name, len, sha1, parent);
+-
+-	/* "name~3" is "name^^^",
+-	 * "name~12" is "name^^^^^^^^^^^^", and
+-	 * "name~" and "name~0" are name -- not "name^0"!
+-	 */
+-	parent = 0;
+-	for (cp = name + len - 1; name <= cp; cp--) {
+-		int ch = *cp;
+-		if ('0' <= ch && ch <= '9')
+-			continue;
+-		if (ch != '~')
+-			parent = -1;
+-		break;
++	int parent = 0, pow10 = 1;
++	const char *cp = name + len;
++	char ch = 0;	/* In case len == 0 */
++
++	/* Parse trailing number and check for ^5 or ~5 */
++	while (cp > name && (ch = *--cp) >= '0' && ch <= '9') {
++		parent += ch - '0' * pow10;
++		pow10 *= 10;
+ 	}
+-	if (!parent && *cp == '~') {
+-		int len1 = cp - name;
+-		cp++;
+-		while (cp < name + len)
+-			parent = parent * 10 + *cp++ - '0';
+-		return get_nth_ancestor(name, len1, sha1, parent);
++
++	/* Handle foo^[0-9]* case */
++	if (ch == '^') {
++		/* foo^ means foo^1, first parent */
++		if (cp + 1 == name)
++			parent = 1;
++		return get_parent(name, cp - name, sha1, parent);
+ 	}
++	/* Handle foo~[0-9]* case.  name~ = name~0 = name (not name^0!) */
++	if (ch == '~')
++		return get_nth_ancestor(name, cp - name, sha1, parent);
+ 
+-	ret = peel_onion(name, len, sha1);
+-	if (!ret)
++	if (!peel_onion(name, len, sha1))
+ 		return 0;
+ 
+-	ret = get_sha1_basic(name, len, sha1);
+-	if (!ret)
++	if (!get_sha1_basic(name, len, sha1))
+ 		return 0;
++
+ 	return get_short_sha1(name, len, sha1, 0);
+ }
+ 
