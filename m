@@ -1,64 +1,80 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: RE: The merge from hell...
-Date: Thu, 2 Feb 2006 22:16:05 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602022210540.3462@g5.osdl.org>
-References: <F7DC2337C7631D4386A2DF6E8FB22B3005EFE838@hdsmsx401.amr.corp.intel.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: The merge from hell...
+Date: Thu, 02 Feb 2006 22:28:43 -0800
+Message-ID: <7vbqxpj6qs.fsf@assigned-by-dhcp.cox.net>
+References: <F7DC2337C7631D4386A2DF6E8FB22B3005EFE7FF@hdsmsx401.amr.corp.intel.com>
+	<Pine.LNX.4.64.0602022139190.3462@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: "Brown, Len" <len.brown@intel.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Paul Mackerras <paulus@samba.org>,
 	Marco Costalba <mcostalba@yahoo.it>,
 	Aneesh Kumar <aneesh.kumar@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 03 07:16:58 2006
+X-From: git-owner@vger.kernel.org Fri Feb 03 07:28:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4uFd-0008TZ-0z
-	for gcvg-git@gmane.org; Fri, 03 Feb 2006 07:16:58 +0100
+	id 1F4uR9-0002jA-7L
+	for gcvg-git@gmane.org; Fri, 03 Feb 2006 07:28:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751196AbWBCGQ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Feb 2006 01:16:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbWBCGQ0
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 01:16:26 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:42396 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751196AbWBCGQZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2006 01:16:25 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k136GADZ028477
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 2 Feb 2006 22:16:11 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k136G5Tf028187;
-	Thu, 2 Feb 2006 22:16:07 -0800
-To: "Brown, Len" <len.brown@intel.com>
-In-Reply-To: <F7DC2337C7631D4386A2DF6E8FB22B3005EFE838@hdsmsx401.amr.corp.intel.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751261AbWBCG2q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Feb 2006 01:28:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbWBCG2q
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 01:28:46 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:37106 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751261AbWBCG2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2006 01:28:45 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060203062615.KMIZ26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 3 Feb 2006 01:26:15 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602022139190.3462@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 2 Feb 2006 21:45:57 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15530>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> The 12-way merge was a bit over the top, but it worked. I'd suggest not 
+> beign quite _that_ aggressive in the future, though, but it's not a big 
+> deal.
 
-On Fri, 3 Feb 2006, Brown, Len wrote:
->
-> In the back of my head I was worried about using plain
-> numbers when I saw somebody refer to "shorthand SHA1".
-> Hopefully this is an idle worry and it is not possible
-> for the tool to confuse a numeric branch name with a SHA1 id.
+Heh, I was quietly planning to raise the limit, or lift it
+altogether ;-).
 
-It _is_ possible, but the rule is that references will be resolved first. 
+I find Len's explanation that those topics cooked independently
+and happened to mature at about the same time an excellent
+excuse to record this as an Octopus, and with that usage there
+is no inherent reason, other than making the diff completely
+unreadable, to limit the number of parents.  But I tend to agree
+that the current 16 is a sane limit in practice.
 
-If you mis-type a reference and it could be construed as a short hex SHA1 
-ID (it needs to have more than 5 characters in it to trigger, though), the 
-auto-completion of SHA1 ID's could bite you, though.
+That reminds me of another practical limit I've known but did
+nothing about for quite some time (you may not even remember
+doing that parser anymore).  This does not work for Len's merge:
 
-It's pretty unlikely, of course. But it's one reason to try to avoid using 
-ref names that are numeric.
+	$ git rev-parse --verify funmerge^10
 
-		Linus
+You could do a 16-way merge but 12-way is already hitting
+usability limit, depending on what you would want to do with
+them.  For example, you cannot easily decompose the topic
+branches out of that merge, like this:
+
+	$ git checkout -b redo-3549 funmerge^2     ;# works
+        $ git checkout -b redo-pnpacpi funmerge^12 ;# doesn't
+
+> One thing I'd ask for: would it be possible to have more descriptive 
+> branch names than just numbers? Even if you want to track it by bugzilla 
+> entry number, how about calling it "bugzilla-12345" instead? 
+
+When kernel people (not just Len) talk about a "bugzilla ID",
+does that ID always come from the same namespace, or do some
+subsystems have their own bugzilla?
