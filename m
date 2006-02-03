@@ -1,78 +1,88 @@
-From: Amos Waterland <apw@us.ibm.com>
-Subject: [PATCH] do not open editor in dumb terminal
-Date: Fri, 3 Feb 2006 06:41:33 -0500
-Message-ID: <20060203114133.GA11499@kvasir.watson.ibm.com>
+From: Marco Costalba <mcostalba@gmail.com>
+Subject: Re: [Attn - repository browser authors] diff-tree combined format.
+Date: Fri, 3 Feb 2006 13:17:50 +0100
+Message-ID: <e5bfff550602030417w290c12b6yc4406f890acadc73@mail.gmail.com>
+References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
+	 <7v8xsuuto5.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0602012334360.21884@g5.osdl.org>
+	 <Pine.LNX.4.64.0602012353130.21884@g5.osdl.org>
+	 <Pine.LNX.4.64.0602020002110.21884@g5.osdl.org>
+	 <7voe1qtbr5.fsf_-_@assigned-by-dhcp.cox.net>
+	 <7vvevyrtn9.fsf_-_@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0602021454060.21884@g5.osdl.org>
+	 <7v64nxmhqn.fsf@assigned-by-dhcp.cox.net>
+	 <7v1wylkn54.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, boutcher@cs.umn.edu
-X-From: git-owner@vger.kernel.org Fri Feb 03 12:41:57 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Paul Mackerras <paulus@samba.org>,
+	Marco Costalba <mcostalba@yahoo.it>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>,
+	Kay Sievers <kay.sievers@suse.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 03 13:18:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4zJr-0005Fj-Jp
-	for gcvg-git@gmane.org; Fri, 03 Feb 2006 12:41:40 +0100
+	id 1F4zsy-0000vU-8j
+	for gcvg-git@gmane.org; Fri, 03 Feb 2006 13:17:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964780AbWBCLlg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Feb 2006 06:41:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964807AbWBCLlg
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 06:41:36 -0500
-Received: from e5.ny.us.ibm.com ([32.97.182.145]:49612 "EHLO e5.ny.us.ibm.com")
-	by vger.kernel.org with ESMTP id S964780AbWBCLlg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2006 06:41:36 -0500
-Received: from d01relay04.pok.ibm.com (d01relay04.pok.ibm.com [9.56.227.236])
-	by e5.ny.us.ibm.com (8.12.11/8.12.11) with ESMTP id k13BfZQV007588
-	for <git@vger.kernel.org>; Fri, 3 Feb 2006 06:41:35 -0500
-Received: from d01av02.pok.ibm.com (d01av02.pok.ibm.com [9.56.224.216])
-	by d01relay04.pok.ibm.com (8.12.10/NCO/VERS6.8) with ESMTP id k13BfZXV203598
-	for <git@vger.kernel.org>; Fri, 3 Feb 2006 06:41:35 -0500
-Received: from d01av02.pok.ibm.com (loopback [127.0.0.1])
-	by d01av02.pok.ibm.com (8.12.11/8.13.3) with ESMTP id k13BfYcC004823
-	for <git@vger.kernel.org>; Fri, 3 Feb 2006 06:41:35 -0500
-Received: from kvasir.watson.ibm.com (kvasir.watson.ibm.com [9.2.218.19])
-	by d01av02.pok.ibm.com (8.12.11/8.12.11) with ESMTP id k13BfYYX004820;
-	Fri, 3 Feb 2006 06:41:34 -0500
-Received: from apw by kvasir.watson.ibm.com with local (Exim 4.52)
-	id 1F4zJl-00035S-OW; Fri, 03 Feb 2006 06:41:33 -0500
-To: junkio@cox.net
+	id S1750723AbWBCMRx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Feb 2006 07:17:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750729AbWBCMRx
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 07:17:53 -0500
+Received: from zproxy.gmail.com ([64.233.162.201]:26591 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750723AbWBCMRw convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Feb 2006 07:17:52 -0500
+Received: by zproxy.gmail.com with SMTP id l8so628526nzf
+        for <git@vger.kernel.org>; Fri, 03 Feb 2006 04:17:52 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rgRvSLdQCXpqP7hpd+KH891hjBxXGeQp8k9G7nFsQn4ejr4Z5mJDSIwCQE1EEu3abIkZAP9yhQgfYhbV3SEFKJ9PcDyYmNELTC1rHv9jk0Uqw/2tK1JgkucSbyqIMDn7nY1O0pmm2C425ksa/+xBXuJol1cGhgMoJYiSAwn7eXc=
+Received: by 10.65.180.18 with SMTP id h18mr1161878qbp;
+        Fri, 03 Feb 2006 04:17:50 -0800 (PST)
+Received: by 10.64.131.15 with HTTP; Fri, 3 Feb 2006 04:17:50 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1wylkn54.fsf_-_@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15538>
 
-Many people run git from a shell in emacs (obtained by M-x shell).  When
-they try to do a commit without specifying a log message on the command
-line with -m, git opens vi inside emacs, with unpleasant results.  I
-think the right answer is to just refuse to open an editor in any dumb
-terminal.
+On 2/3/06, Junio C Hamano <junkio@cox.net> wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+>
 
-Signed-off-by: Amos Waterland <apw@us.ibm.com>
-Cc: Dave C Boutcher <boutcher@cs.umn.edu>
+>
+>     (2) match line numbers in the hunk header to normal diff's
+>         order:
+>
+>         @@@ -1,87 -1,3 +1,93 @@@
+>
+>         That is, counts for parents prefixed with '-', and
+>         the count for result prefixed with '+'.
+>
 
----
+It's OK for me. Just one (documentation) note. I found, by means of a
+past qgit annotate bug ;-)  in case of small files (1 line files as
+VERSION files) the diff header format is slightly different.
 
- git-commit.sh |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+Sorry, I am not able to post now the diff output but I think should be
+not a problem to reproduce.
 
-c0ee93460521c1cbf9d3fe86a08b41295a79ebb1
-diff --git a/git-commit.sh b/git-commit.sh
-index 193feeb..fef8f96 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -207,6 +207,12 @@ then
- fi
- case "$no_edit" in
- '')
-+	if [ "$TERM" = "dumb" ]; then
-+		printf "%s: %s: %s\n" "git-commit" \
-+			"cannot open editor in a dumb terminal" \
-+			"use -m to supply message" >&2
-+		exit 1
-+	fi
- 	${VISUAL:-${EDITOR:-vi}} "$GIT_DIR/COMMIT_EDITMSG"
- 	;;
- esac
--- 
-1.1.6.g46dc-dirty
+This is just, as said above, a note to avoid someone else falls in the
+same bug assuming
+
+@ -1,87 -1,3 +1,93 @
+
+is the only possible header format.
+
+
+Regarding the rest is all OK for me. I choose to do not alter/coloring
+the patch as gitk does, but to always use red for removed lines and
+green for added and to keep the patch output _as is_ . I found this
+more simple and clear, at least for me.
+
+Marco
