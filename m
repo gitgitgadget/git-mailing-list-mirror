@@ -1,54 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] combine-diff: add safety check to --cc.
-Date: Thu, 02 Feb 2006 21:28:00 -0800
-Message-ID: <7vu0bhko4f.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
-	<7v8xsuuto5.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602012334360.21884@g5.osdl.org>
-	<Pine.LNX.4.64.0602012353130.21884@g5.osdl.org>
-	<Pine.LNX.4.64.0602020002110.21884@g5.osdl.org>
-	<7voe1qtbr5.fsf_-_@assigned-by-dhcp.cox.net>
-	<7vvevyrtn9.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602021454060.21884@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: RE: The merge from hell...
+Date: Thu, 2 Feb 2006 21:45:57 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602022139190.3462@g5.osdl.org>
+References: <F7DC2337C7631D4386A2DF6E8FB22B3005EFE7FF@hdsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 03 06:28:28 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Marco Costalba <mcostalba@yahoo.it>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 06:46:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F4tUe-0005ki-FB
-	for gcvg-git@gmane.org; Fri, 03 Feb 2006 06:28:25 +0100
+	id 1F4tlx-0001Y6-4R
+	for gcvg-git@gmane.org; Fri, 03 Feb 2006 06:46:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964807AbWBCF2E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Feb 2006 00:28:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964907AbWBCF2E
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 00:28:04 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:62412 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S964807AbWBCF2D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2006 00:28:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060203052533.JSLD26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 3 Feb 2006 00:25:33 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602021454060.21884@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 2 Feb 2006 15:03:02 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751154AbWBCFqI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Feb 2006 00:46:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbWBCFqI
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 00:46:08 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:28308 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751154AbWBCFqH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2006 00:46:07 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k135jwDZ027496
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 2 Feb 2006 21:45:59 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k135jvfi027279;
+	Thu, 2 Feb 2006 21:45:57 -0800
+To: "Brown, Len" <len.brown@intel.com>
+In-Reply-To: <F7DC2337C7631D4386A2DF6E8FB22B3005EFE7FF@hdsmsx401.amr.corp.intel.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15526>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> And now when I look at Len's "Merge from hell", not only does it take less 
-> than 2 seconds for git-diff-tree to calculate, it looks correct too. At 
-> least I don't see anything that I consider extraneous, although it might, 
-> of course, have removed too much, and I'd not notice.
 
-I've run "diff -u0" between -c output and --cc output and what
-was dropped looked sane.
+On Thu, 2 Feb 2006, Brown, Len wrote:
+> 
+> I can do 16 next time, or 22, or none
+
+Actually, you can't do 22:
+
+	/*
+	 * Having more than two parents is not strange at all, and this is
+	 * how multi-way merges are represented.
+	 */
+	#define MAXPARENT (16)
+
+(commit-tree.c).
+
+Now, admittedly you should literally need no more than to change that 
+#define and recompile, but at least by default, git-write-tree won't 
+accept more than 16 parents.
+
+The 12-way merge was a bit over the top, but it worked. I'd suggest not 
+beign quite _that_ aggressive in the future, though, but it's not a big 
+deal.
+
+One thing I'd ask for: would it be possible to have more descriptive 
+branch names than just numbers? Even if you want to track it by bugzilla 
+entry number, how about calling it "bugzilla-12345" instead? 
+
+I can make the educated guess that it's the bugzilla.kernel.org tracking 
+number, but still.. I think it would make the changelog more readable and 
+understandable to outsiders.
+
+		Linus
