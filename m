@@ -1,73 +1,100 @@
-From: "Luck, Tony" <tony.luck@intel.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: RE: git bisect and the merge from hell
-Date: Fri, 3 Feb 2006 15:16:58 -0800
-Message-ID: <B8E391BBE9FE384DAA4C5C003888BE6F059F4AF6@scsmsx401.amr.corp.intel.com>
+Date: Fri, 3 Feb 2006 15:44:01 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602031531440.3969@g5.osdl.org>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F059F4AF6@scsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 04 00:17:42 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 04 00:44:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5AAz-0002uS-2T
-	for gcvg-git@gmane.org; Sat, 04 Feb 2006 00:17:13 +0100
+	id 1F5Ab7-0003Th-DY
+	for gcvg-git@gmane.org; Sat, 04 Feb 2006 00:44:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945983AbWBCXRJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Feb 2006 18:17:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946037AbWBCXRJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 18:17:09 -0500
-Received: from fmr21.intel.com ([143.183.121.13]:13496 "EHLO
-	scsfmr001.sc.intel.com") by vger.kernel.org with ESMTP
-	id S1945983AbWBCXRI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2006 18:17:08 -0500
-Received: from scsfmr100.sc.intel.com (scsfmr100.sc.intel.com [10.3.253.9])
-	by scsfmr001.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id k13NGxmR027512;
-	Fri, 3 Feb 2006 23:16:59 GMT
-Received: from scsmsxvs041.sc.intel.com (scsmsxvs041.sc.intel.com [10.3.90.10])
-	by scsfmr100.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id k13GS8so029801;
-	Fri, 3 Feb 2006 16:28:21 GMT
-Received: from scsmsx331.amr.corp.intel.com ([10.3.90.4])
- by scsmsxvs041.sc.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2006020315165807996
- ; Fri, 03 Feb 2006 15:16:58 -0800
-Received: from scsmsx401.amr.corp.intel.com ([10.3.90.12]) by scsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Fri, 3 Feb 2006 15:16:59 -0800
-X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git bisect and the merge from hell
-Thread-Index: AcYpBPDyTfIGqIMSSgmMq0wXQXEg6AAEoAQA
-To: "Linus Torvalds" <torvalds@osdl.org>
-X-OriginalArrivalTime: 03 Feb 2006 23:16:59.0028 (UTC) FILETIME=[EE93AD40:01C62917]
-X-Scanned-By: MIMEDefang 2.52 on 10.3.253.9
+	id S1946080AbWBCXoJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Feb 2006 18:44:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946004AbWBCXoJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 18:44:09 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:23778 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1946080AbWBCXoI (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2006 18:44:08 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k13Ni4DZ017620
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 3 Feb 2006 15:44:05 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k13Ni1Y7003147;
+	Fri, 3 Feb 2006 15:44:02 -0800
+To: "Luck, Tony" <tony.luck@intel.com>
+In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F059F4AF6@scsmsx401.amr.corp.intel.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15558>
 
-> "git bisect visualize" really makes it very obvious what to try next, I 
-> think. Which exact commit you try next probably depends on what the 
-> compile error was. I'd try
->
->	git reset --hard 3d5271f9883cba7b54762bc4fe027d4172f06db7
->
-> (which is after the "pull release into acpica branch" commit).
 
-Yup, that got the bisection moving again.  I finished up at:
 
-$ git bisect bad
-96db255c8f014ae3497507104e8df809785a619f is first bad commit
-diff-tree 96db255c8f014ae3497507104e8df809785a619f (from 0897831bb54eb36fd9e2a22da7f0f64be1b20d09)
-Author: Bob Moore <robert.moore@intel.com>
-Date:   Wed Nov 2 00:00:00 2005 -0500
+On Fri, 3 Feb 2006, Luck, Tony wrote:
+> 
+> So Len's mega-octopus merge wasn't a problem at all, but this is still
+> all his fault :-)  I'll go beat on him.
 
-    [ACPI] ACPICA 20051102
+Note that this _can_ be a problem with huge octopus merges.
 
-So Len's mega-octopus merge wasn't a problem at all, but this is still
-all his fault :-)  I'll go beat on him.
+If some bug only appears as a result of the interaction of two branches, 
+doing a 12-way merge will make it harder to debug. Doing a "git bisect" 
+will (correctly) pinpoint the merge as being the problem, but after that 
+you're on your own as to how to debug it.
 
-Thanks for the tip.
+So _if_ it had been a merge error, there's two issues with that:
 
--Tony
+ - debugging merges is usually a bit less straightforward than debugging a 
+   single well-defined changeset anyway.
+
+ - especially an octopus-merge will cause "git-bisect" to be less 
+   efficient, since it cannot be bisected, so if the bug is in the merge 
+   itself, it will ask you to test _every_ _single_ top-of-branch before 
+   the merge.
+
+(Normally, testing 12 kernels would zoom in on a bug from 10.000 feet, and 
+you'd have bisected a massive four-thousand commits. So having to test 12 
+branch heads just to pinpoint a _single_ commit is "unusually expensive" 
+by any standard for git bisection).
+
+Anyway, had it been a merge bug, you should then have done:
+
+ - check if it's simply a mis-merge. Do "git-diff-tree --cc" to see if 
+   there were any conflicts, and check them out more closely to see 
+   if maybe they were incorrectly fixed up.
+
+   Normally, an octopus merge will never have any actual _manual_ 
+   conflicts (the standard git tools shouldn't allow it), but there can 
+   still be several branches that touch the same area and that could have 
+   merged strangely.
+
+If that doesn't get you anywhere, you'll literally have to go to the next 
+step:
+
+ - re-do the merges one by one, until the bug appears, or, if it's not 
+   there once you've re-done them all, check what the differences are 
+   (there _should_ be none, but see above on doing mis-merging) with the 
+   final octopus one.
+
+Anyway, for "normal" bugs (like this one apparently is), git-bisect 
+shouldn't ever pinpoint a merge, since the bug hopefully was introduced 
+somewhere _during_ the branch development, and not when it was merged 
+back. Hopefully.
+
+Anyway. The message you should take home from this is that "git bisect" 
+handles merges perfectly well, and that at worst it might be less 
+efficient and harder to debug - especially for octopus merges - but that 
+both of those problems are likely (a) rare and (b) not insurmountable.
+
+		Linus
