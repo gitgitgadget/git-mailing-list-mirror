@@ -1,69 +1,56 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git-svnimport
-Date: Sat, 4 Feb 2006 16:16:22 +1300
-Message-ID: <46a038f90602031916x6cfb9e6bg7dfa0fb1cc237dac@mail.gmail.com>
-References: <200602031429.07894.jharrison@linuxbs.org>
-	 <16255.1139021263@lotus.CS.Berkeley.EDU>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH] combine-diff: add safety check to --cc.
+Date: Sat, 4 Feb 2006 16:38:36 +1100
+Message-ID: <17380.15836.61062.401906@cargo.ozlabs.ibm.com>
+References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
+	<7v8xsuuto5.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602012334360.21884@g5.osdl.org>
+	<Pine.LNX.4.64.0602012353130.21884@g5.osdl.org>
+	<Pine.LNX.4.64.0602020002110.21884@g5.osdl.org>
+	<7voe1qtbr5.fsf_-_@assigned-by-dhcp.cox.net>
+	<7vvevyrtn9.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602021454060.21884@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jason Harrison <jharrison@linuxbs.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 04 04:16:28 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Marco Costalba <mcostalba@yahoo.it>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>,
+	Len Brown <len.brown@intel.com>
+X-From: git-owner@vger.kernel.org Sat Feb 04 06:39:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5DuU-0008Tg-MM
-	for gcvg-git@gmane.org; Sat, 04 Feb 2006 04:16:27 +0100
+	id 1F5G8X-00056R-5t
+	for gcvg-git@gmane.org; Sat, 04 Feb 2006 06:39:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946291AbWBDDQY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Feb 2006 22:16:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946294AbWBDDQY
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Feb 2006 22:16:24 -0500
-Received: from wproxy.gmail.com ([64.233.184.203]:60724 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1946291AbWBDDQY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Feb 2006 22:16:24 -0500
-Received: by wproxy.gmail.com with SMTP id i34so712357wra
-        for <git@vger.kernel.org>; Fri, 03 Feb 2006 19:16:23 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Tmx083iUIR7HC5VSd1qcB5L6EZH2SHke80B6YOEQqWTQhXJUTWdJWT1TVbYiUHW+2dtv21rYlVrVOVUO7uIKkd6+05bZqZv9t/2IDKjVWauh4v9hskD4xxsahCAiRRP1yH9y7SzjjoR7x0fX6VKvHtmcEwcsQdeJ3lQU8/cqCyg=
-Received: by 10.54.76.1 with SMTP id y1mr1228196wra;
-        Fri, 03 Feb 2006 19:15:58 -0800 (PST)
-Received: by 10.54.71.7 with HTTP; Fri, 3 Feb 2006 19:16:22 -0800 (PST)
-To: Jason Riedy <ejr@eecs.berkeley.edu>
-In-Reply-To: <16255.1139021263@lotus.CS.Berkeley.EDU>
-Content-Disposition: inline
+	id S1946303AbWBDFis (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Feb 2006 00:38:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946304AbWBDFis
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 00:38:48 -0500
+Received: from ozlabs.org ([203.10.76.45]:61404 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1946303AbWBDFis (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 00:38:48 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 52B0A68A46; Sat,  4 Feb 2006 16:38:47 +1100 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602021454060.21884@g5.osdl.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15569>
 
-On 2/4/06, Jason Riedy <ejr@eecs.berkeley.edu> wrote:
-> Looking through the git-svnimport source makes it appear
-> difficult to just snarf just one directory (maybe /) out
-> of a svn repository.  Actually, it makes everything svn-
-> related appear difficult.  Why should I worry about
-> memory management by default in Perl?!?
+Linus Torvalds writes:
 
-I think that the SVN internals are so yucky that we're lucky to get
-away with "just" that bit of memory-handling crud.
+> In fact, git-diff-tree now gets the subtle cases right for things that 
+> "gitk" for some reason gets wrong. I haven't figured out what's wrong with 
+> gitk, but I don't think it's even worth it: it would be better to just 
+> teach gitk to use git-diff-tree --cc.
 
->  It'd be nice if
-> there were an git-svnimport-trivial that just snarfed a
-> single URL without tags or branches.
+Working on it now.  That will let me cut out about 500 lines of pretty
+hairy Tcl code from gitk, which is nice.
 
-We're definitely needing some updates to the doco for svnimport to
-make it easier. Maybe some examples of real life scenarios with
-different repo layouts
-
-> I have to deal with a few repos with bizarre directory
-> structures...
-
-looks like you're the man for the job ;-)
-
-cheers,
-
-
-martin
+Paul.
