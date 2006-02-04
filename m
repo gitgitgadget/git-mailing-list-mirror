@@ -1,64 +1,64 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: Re: [PATCH] config: Rummage through ~/.gitrc as well as the repository's config.
-Date: Sat, 4 Feb 2006 10:22:58 +0000 (UTC)
-Organization: Straylight/Edgeware development
-Message-ID: <slrndu9042.2i8.mdw@metalzone.distorted.org.uk>
-References: <20060203203332.2718.13451.stgit@metalzone.distorted.org.uk> <7vacd7c4bm.fsf@assigned-by-dhcp.cox.net>
-X-From: git-owner@vger.kernel.org Sat Feb 04 11:23:17 2006
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: The merge from hell...
+Date: Sat, 4 Feb 2006 21:46:21 +1100
+Message-ID: <17380.34301.584514.520465@cargo.ozlabs.ibm.com>
+References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
+	<7v8xsuuto5.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Marco Costalba <mcostalba@yahoo.it>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 04 11:46:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5KZQ-0006CF-Nq
-	for gcvg-git@gmane.org; Sat, 04 Feb 2006 11:23:09 +0100
+	id 1F5KwC-00020o-T5
+	for gcvg-git@gmane.org; Sat, 04 Feb 2006 11:46:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946100AbWBDKXA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Feb 2006 05:23:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946099AbWBDKXA
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 05:23:00 -0500
-Received: from excessus.demon.co.uk ([83.105.60.35]:48171 "HELO
-	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
-	id S1946100AbWBDKW7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2006 05:22:59 -0500
-Received: (qmail 22321 invoked by uid 110); 4 Feb 2006 10:22:58 -0000
-To: git@vger.kernel.org
-Received: (qmail 22307 invoked by uid 9); 4 Feb 2006 10:22:58 -0000
-Path: not-for-mail
-Newsgroups: mail.vger.git
-NNTP-Posting-Host: metalzone.distorted.org.uk
-X-Trace: metalzone.distorted.org.uk 1139048578 21065 172.29.199.2 (4 Feb 2006 10:22:58 GMT)
-X-Complaints-To: usenet@distorted.org.uk
-NNTP-Posting-Date: Sat, 4 Feb 2006 10:22:58 +0000 (UTC)
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S1946102AbWBDKq3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Feb 2006 05:46:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751480AbWBDKq3
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 05:46:29 -0500
+Received: from ozlabs.org ([203.10.76.45]:19427 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1751240AbWBDKq3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 05:46:29 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id E0BC268A53; Sat,  4 Feb 2006 21:46:27 +1100 (EST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xsuuto5.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15585>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Mark Wooding <mdw@distorted.org.uk> writes:
->
->> I'm fed up of setting user.email in every repository I own.
->
-> That is what --template-dir to init-db is for (it works in an
-> already initialized git repository, but it does not overwrite
-> files).
+Junio C Hamano writes:
 
-Except that git-clone has already made a .git/config file, so it won't
-be overwritten by git-init-db --template-dir.  git-init-db doesn't do
-merging of config file lines, and rightly so -- it'd just get too
-confusing.
+> Linus Torvalds <torvalds@osdl.org> writes:
+> > That octopus commit has got _twelve_ parents.
 
->> I want to put this somewhere central, and I shouldn't have to
->> log in again to make it take effect.
->
-> I do not understand about logging in again.  If you are talking
-> about environment variables, ". ~/.env" would work nicely.
+Making it a dodecapus, or something? :)
 
-Argh.  In every terminal and screen window, restart Emacs, ...  Logging
-out looks like the better plan.
+> But this is still interesting:
+> 
+> @@@@@@@@@@@@@ +308,35 @@@@@@@@@@@@@
+>             			goto end;
+>             		}
+>             	}
+>   --        	cx->usage++;
+>   --        
+>             
+>      +++    #ifdef CONFIG_HOTPLUG_CPU
+>      +++    	/*
 
-What's the objection to a ~/.gitrc?  (If it's just new-feature
-resistance, I can live with that; I'm just interested.)
+Why is that interesting?  It seems to me that two independent changes
+were made that just happened to be within a couple of lines of each
+other, but didn't interact.  The reason that one change appears in two
+branches, and the other in 3, is I think just related to where the
+branches start from.  So IMHO this hunk isn't interesting.
 
--- [mdw]
+Paul.
