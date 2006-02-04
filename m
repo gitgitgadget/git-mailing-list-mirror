@@ -1,94 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: The merge from hell...
-Date: Sat, 4 Feb 2006 11:42:57 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602041125440.3854@g5.osdl.org>
-References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
- <7v8xsuuto5.fsf@assigned-by-dhcp.cox.net> <17380.34301.584514.520465@cargo.ozlabs.ibm.com>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: Tracking and committing back to Subversion?
+Date: Sat, 04 Feb 2006 11:51:08 -0800
+Message-ID: <m2hd7e52dv.fsf@ziti.local>
+References: <1138834301.21899.40.camel@wilber.wgtn.cat-it.co.nz>
+	<20060204054056.GB24314@Muzzle>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Marco Costalba <mcostalba@yahoo.it>,
-	Aneesh Kumar <aneesh.kumar@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 20:43:44 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Feb 04 20:51:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5TJu-0007yU-Dn
-	for gcvg-git@gmane.org; Sat, 04 Feb 2006 20:43:42 +0100
+	id 1F5TRC-00018a-73
+	for gcvg-git@gmane.org; Sat, 04 Feb 2006 20:51:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964818AbWBDTnJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Feb 2006 14:43:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964792AbWBDTnJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 14:43:09 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:59611 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964786AbWBDTnH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 14:43:07 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k14JgxDZ030996
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 4 Feb 2006 11:42:59 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k14JgvWU004532;
-	Sat, 4 Feb 2006 11:42:57 -0800
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17380.34301.584514.520465@cargo.ozlabs.ibm.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964786AbWBDTvJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Feb 2006 14:51:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964792AbWBDTvJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 14:51:09 -0500
+Received: from wproxy.gmail.com ([64.233.184.197]:33291 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964786AbWBDTvI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 14:51:08 -0500
+Received: by wproxy.gmail.com with SMTP id 69so1022161wri
+        for <git@vger.kernel.org>; Sat, 04 Feb 2006 11:51:07 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=huIS25Mp2TN07BeX/kKBQWu/e5GQXwQrUjU/aIYAKGBLmPL0UCK6gFD5h1iwaQZ1lZ0jXPbf7R68CfG0roZaE/o8IgGx5DmSi8bCj4bKmniIyVChHq9HcbCJ7Ndp2JVAdpBSxr3VnEqzJS8jslnC1A1QSRswmD1FVO3L7yDD3+Q=
+Received: by 10.54.148.2 with SMTP id v2mr5090912wrd;
+        Sat, 04 Feb 2006 11:51:07 -0800 (PST)
+Received: from ziti.local ( [67.171.24.140])
+        by mx.gmail.com with ESMTP id 33sm5509389wra.2006.02.04.11.51.06;
+        Sat, 04 Feb 2006 11:51:06 -0800 (PST)
+To: git@vger.kernel.org
+In-Reply-To: <20060204054056.GB24314@Muzzle> (Eric Wong's message of "Fri, 3 Feb 2006 21:40:57 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15599>
 
+On  3 Feb 2006, normalperson@yhbt.net wrote:
+>> Sam Vilain <sam@vilain.net> wrote:
+>> Has anyone done any work on bidirectional access to SVN
+>> repositories?  ie, tracking and committing.
 
+I think tailor claims to be able to handle this:
+http://www.darcs.net/DarcsWiki/Tailor
 
-On Sat, 4 Feb 2006, Paul Mackerras wrote:
-> 
-> > But this is still interesting:
-> > 
-> > @@@@@@@@@@@@@ +308,35 @@@@@@@@@@@@@
-> >             			goto end;
-> >             		}
-> >             	}
-> >   --        	cx->usage++;
-> >   --        
-> >             
-> >      +++    #ifdef CONFIG_HOTPLUG_CPU
-> >      +++    	/*
-> 
-> Why is that interesting?  It seems to me that two independent changes
-> were made that just happened to be within a couple of lines of each
-> other, but didn't interact.
+The README in the devel version seems to indicate that two-way sync
+for svn <--> git is implemented (despite the table on the main page).  
 
-Correct. It's "interesting" only because the context of three lines 
-overlapped. So _technically_ it's not that interesting.
-
-> The reason that one change appears in two branches, and the other in 3, 
-> is I think just related to where the branches start from.  So IMHO this 
-> hunk isn't interesting.
-
-I actually think that whenever there are edits this close (even if they 
-aren't strictly overlapping) they actually _are_ interesting. Even if it 
-merged automatically, you may well want to know that the automated merge 
-did something like this.
-
-Doing a 
-
-	git-rev-list --parents HEAD |
-		egrep '^.{90}' |
-		cut -d' ' -f1 | 
-		git-diff-tree --pretty --cc --stdin
-		| less -S
-
-on the kernel is actually interesting. It's interesting because it shows 
-that out of 1391 merges, in the kernel, only _19_ actually had these close 
-calls. Some - but certainly not all - of them actually did need manual 
-fixup.
-
-So I actually prefer the "show close misses" case. But I guess we could 
-have a "-cN" line to tell how many lines of context to use..
-
-		Linus
+--
+ + seth
