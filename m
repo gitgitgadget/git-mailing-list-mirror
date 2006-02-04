@@ -1,93 +1,79 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: git-diff-tree --cc on the dodecapus
-Date: Sat, 4 Feb 2006 22:45:35 +1100
-Message-ID: <17380.37855.117313.631961@cargo.ozlabs.ibm.com>
+From: Marco Costalba <mcostalba@gmail.com>
+Subject: Re: [Attn - repository browser authors] diff-tree combined format.
+Date: Sat, 4 Feb 2006 13:03:34 +0100
+Message-ID: <e5bfff550602040403k293b02e5sce17eecbf41c008e@mail.gmail.com>
+References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
+	 <Pine.LNX.4.64.0602012353130.21884@g5.osdl.org>
+	 <Pine.LNX.4.64.0602020002110.21884@g5.osdl.org>
+	 <7voe1qtbr5.fsf_-_@assigned-by-dhcp.cox.net>
+	 <7vvevyrtn9.fsf_-_@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0602021454060.21884@g5.osdl.org>
+	 <7v64nxmhqn.fsf@assigned-by-dhcp.cox.net>
+	 <7v1wylkn54.fsf_-_@assigned-by-dhcp.cox.net>
+	 <e5bfff550602030417w290c12b6yc4406f890acadc73@mail.gmail.com>
+	 <7v1wykceic.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Feb 04 12:45:52 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Paul Mackerras <paulus@samba.org>,
+	Marco Costalba <mcostalba@yahoo.it>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>,
+	Kay Sievers <kay.sievers@suse.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 04 13:03:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5LrO-0004rl-JX
-	for gcvg-git@gmane.org; Sat, 04 Feb 2006 12:45:46 +0100
+	id 1F5M8h-0008JC-3Q
+	for gcvg-git@gmane.org; Sat, 04 Feb 2006 13:03:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932379AbWBDLpm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Feb 2006 06:45:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932451AbWBDLpm
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 06:45:42 -0500
-Received: from ozlabs.org ([203.10.76.45]:38118 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S932379AbWBDLpl (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 06:45:41 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 1A80768A5B; Sat,  4 Feb 2006 22:45:40 +1100 (EST)
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S932460AbWBDMDf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Feb 2006 07:03:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932454AbWBDMDf
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 07:03:35 -0500
+Received: from wproxy.gmail.com ([64.233.184.200]:11312 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932231AbWBDMDf convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 07:03:35 -0500
+Received: by wproxy.gmail.com with SMTP id i23so780446wra
+        for <git@vger.kernel.org>; Sat, 04 Feb 2006 04:03:34 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=r0vxkWTESB9Tm5D2znDW6M0j9mHHNDJNEatrzIP05G6d09geKSMVzGRW0Yrhp81Fs7eVp+bwZHCHj2gLj4gwY/Rpmrl6iakPgxUnLTWcRKW9bfyMI2hY+Z8rE5tzQiEo5UiP3b8mmTcEW2VKMkeawBpwhGsccU1SjjBrnjk/VlQ=
+Received: by 10.64.153.4 with SMTP id a4mr12625qbe;
+        Sat, 04 Feb 2006 04:03:34 -0800 (PST)
+Received: by 10.64.131.15 with HTTP; Sat, 4 Feb 2006 04:03:34 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1wykceic.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15588>
 
-Junio,
+On 2/3/06, Junio C Hamano <junkio@cox.net> wrote:
+> Marco Costalba <mcostalba@gmail.com> writes:
+>
+> This reminds me of one thing.  One thing I did not like about
+> the colouring of gitk on an Octopus was that it repeats the same
+> parents in different colors, wasting lines.  From diff-tree -c
+> output, one thing coloured diff browsers _could_ do is to let
+> the user pick one parent and paint the lines to make the
+> differences from that parent alone stand out.
+>
 
-When I use git diff-tree --cc on Len's dodecapus merge (9fdb62af), the
-first diff hunk that it shows is this:
+Both qgit and gitk have the 'diff to selected rev' feature.
 
-@@@@@@@@@@@@@ -712,17 -711,9 -703,9 -703,9 -703,9 -708,9 -703,9 -703,9 -711,9 -703,9 -711,9 -711,9 +717,17 @@@@@@@@@@@@@
-            	load_ramdisk=	[RAM] List of ramdisks to load from floppy
-            			See Documentation/ramdisk.txt.
-            
- -----------	lockd.udpport=	[NFS]
- +++++++++++	lockd.nlm_grace_period=P  [NFS] Assign grace period.
- +++++++++++			Format: <integer>
- +++++++++++
- +++++++++++	lockd.nlm_tcpport=N	[NFS] Assign TCP port.
- +++++++++++			Format: <integer>
- ++++ ++++++
-     -      	lockd.tcpport=	[NFS]
- +++++++++++	lockd.nlm_timeout=T	[NFS] Assign timeout value.
- +++++++++++			Format: <integer>
-     +      
- ---- ------	lockd.tcpport=	[NFS]
- +++++++++++	lockd.nlm_udpport=M	[NFS] Assign UDP port.
- +++++++++++			Format: <integer>
-            
-            	logibm.irq=	[HW,MOUSE] Logitech Bus Mouse Driver
-            			Format: <irq>
+What about integrate combined output with exsisting 'diff to selected'
+functionality to reach what you are proposing?
 
-For some reason, the 6th parent's lines are getting matched
-differently from the other parents.  Parents 2-12 are actually all the
-same in this file AFAICS.  All that has happened is that a sequence of
-three lines: "lockd.udpport=  [NFS]", a blank line, "lockd.tcpport=
-[NFS]", have been replaced by 11 lines.  For parent 6, the blank line
-has been matched with the 6th line of the new stuff, whereas for
-parents 2..5 and 7..12 the blank line has been matched with line 9 of
-the new stuff.  This makes it look like the change from parent 6 is
-different when it isn't really, and thus the diff looks interesting
-when it shouldn't.
+Put in other words, an user selects the parent (CTRL + right click in
+qgit) and only the
+corresponding interesting diffs is shown.
 
-In general, I have found in doing N-way diff displays (both in dirdiff
-and in gitk), that one needs to be a bit clever about working out
-which lines correspond in the N versions.  If you do a series of 2-way
-diffs and just believe what diff tells you about which lines
-correspond, you will end up with things being shown as different when
-they aren't.  Where there is ambiguity, some of the 2-way diffs will
-resolve it one way and some another, and as a result, something which
-is in fact common to all the files can end up being shown as a
-difference.
+For this to work it is necessary (at least in qgit) something like
 
-What I do in dirdiff is to do a number of 2-way diffs, but just use
-the result as an indication of which parts of the files have some
-difference.  I then find the matches between all the files in Tcl code
-and work out which lines are common and which lines are unique.  I
-have found it necessary to apply a rule that says that a match across
-a larger number of files is preferable to a match across a smaller
-number, even if it is a longer match.  For a set of lines, I
-iteratively pull out the best match (most number of files, then most
-number of lines).  What's left at the end is the lines that are unique
-to one file.  This ends up being a bit complicated, but it seems to be
-necessary for producing a reasonable result.  I can go into more
-detail on the algorithm I use if you want.
+   git-diff-tree -c -r -m -p <sha1> <sha2>
 
-Paul.
+
+Marco
