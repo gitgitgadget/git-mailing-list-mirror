@@ -1,79 +1,98 @@
-From: Marco Costalba <mcostalba@gmail.com>
-Subject: Re: [Attn - repository browser authors] diff-tree combined format.
-Date: Sat, 4 Feb 2006 13:03:34 +0100
-Message-ID: <e5bfff550602040403k293b02e5sce17eecbf41c008e@mail.gmail.com>
-References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
-	 <Pine.LNX.4.64.0602012353130.21884@g5.osdl.org>
-	 <Pine.LNX.4.64.0602020002110.21884@g5.osdl.org>
-	 <7voe1qtbr5.fsf_-_@assigned-by-dhcp.cox.net>
-	 <7vvevyrtn9.fsf_-_@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0602021454060.21884@g5.osdl.org>
-	 <7v64nxmhqn.fsf@assigned-by-dhcp.cox.net>
-	 <7v1wylkn54.fsf_-_@assigned-by-dhcp.cox.net>
-	 <e5bfff550602030417w290c12b6yc4406f890acadc73@mail.gmail.com>
-	 <7v1wykceic.fsf@assigned-by-dhcp.cox.net>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: Re: [PATCH] read-tree --aggressive
+Date: Sat, 4 Feb 2006 12:52:01 +0100
+Message-ID: <20060204115201.GA22333@ebar091.ebar.dtu.dk>
+References: <20060131213314.GA32131@ebar091.ebar.dtu.dk> <7v8xsr60n2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Paul Mackerras <paulus@samba.org>,
-	Marco Costalba <mcostalba@yahoo.it>,
-	Aneesh Kumar <aneesh.kumar@gmail.com>,
-	Kay Sievers <kay.sievers@suse.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 04 13:03:44 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Feb 04 13:13:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5M8h-0008JC-3Q
-	for gcvg-git@gmane.org; Sat, 04 Feb 2006 13:03:39 +0100
+	id 1F5MI5-0001k0-L9
+	for gcvg-git@gmane.org; Sat, 04 Feb 2006 13:13:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932460AbWBDMDf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Feb 2006 07:03:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932454AbWBDMDf
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 07:03:35 -0500
-Received: from wproxy.gmail.com ([64.233.184.200]:11312 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932231AbWBDMDf convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 07:03:35 -0500
-Received: by wproxy.gmail.com with SMTP id i23so780446wra
-        for <git@vger.kernel.org>; Sat, 04 Feb 2006 04:03:34 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=r0vxkWTESB9Tm5D2znDW6M0j9mHHNDJNEatrzIP05G6d09geKSMVzGRW0Yrhp81Fs7eVp+bwZHCHj2gLj4gwY/Rpmrl6iakPgxUnLTWcRKW9bfyMI2hY+Z8rE5tzQiEo5UiP3b8mmTcEW2VKMkeawBpwhGsccU1SjjBrnjk/VlQ=
-Received: by 10.64.153.4 with SMTP id a4mr12625qbe;
-        Sat, 04 Feb 2006 04:03:34 -0800 (PST)
-Received: by 10.64.131.15 with HTTP; Sat, 4 Feb 2006 04:03:34 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1wykceic.fsf@assigned-by-dhcp.cox.net>
+	id S932222AbWBDMNT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Feb 2006 07:13:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932340AbWBDMNT
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 07:13:19 -0500
+Received: from ebar091.ebar.dtu.dk ([192.38.93.106]:57477 "HELO
+	ebar091.ebar.dtu.dk") by vger.kernel.org with SMTP id S932222AbWBDMNS
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 07:13:18 -0500
+Received: (qmail 22524 invoked by uid 5842); 4 Feb 2006 11:52:01 -0000
+To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <7v8xsr60n2.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15589>
 
-On 2/3/06, Junio C Hamano <junkio@cox.net> wrote:
-> Marco Costalba <mcostalba@gmail.com> writes:
->
-> This reminds me of one thing.  One thing I did not like about
-> the colouring of gitk on an Octopus was that it repeats the same
-> parents in different colors, wasting lines.  From diff-tree -c
-> output, one thing coloured diff browsers _could_ do is to let
-> the user pick one parent and paint the lines to make the
-> differences from that parent alone stand out.
->
+On Fri, Feb 03, 2006 at 11:31:13PM -0800, Junio C Hamano wrote:
+> "Peter Eriksen" <s022018@student.dtu.dk> writes:
+> 
+> > In connection with Ian Molton's question about merge have I played a
+> > little with 'git merge' on the kernel sources.  What I find is that a
+> > merge can take quite some time, but I'm not sure where that time exactly
+> > goes to.  Here are the times I got:
+> >
+> > Recursive (default):  4m22.282s
+> > Resolve (-s resolve): 3m23.548s
+> 
+> In your sample script, you do not disable the post-merge diff,
+> which is typically one of the most expensive part in the whole
+> merge, and I am wondering how fast a machine you are using to
+> get 4 minutes.  The post-merge diff is generated by piping the
+> output of 'diff-tree -M' to 'apply --stat --summary', and that
+> step alone takes about 12 minutes wallclock time on my box X-<.
+> 
+> Since my box is not as fast as yours, I've eliminated the
+> post-merge diff step and tried your final merge step like this:
+> 
+> 	$ time git merge --no-summary -s resolve \
+>             'Merging happily' HEAD v2.6.15 >/dev/null
+> 
+> and got this:
+> 
+>         real	2m15.737s
+>         user	1m43.320s
+>         sys	0m26.690s
 
-Both qgit and gitk have the 'diff to selected rev' feature.
+I got this:
 
-What about integrate combined output with exsisting 'diff to selected'
-functionality to reach what you are proposing?
+real    0m51.661s
+user    0m28.302s
+sys     0m8.949s
 
-Put in other words, an user selects the parent (CTRL + right click in
-qgit) and only the
-corresponding interesting diffs is shown.
+> With the attached patch, the most expensive part, which is the
+> repeated invocation of git-merge-one-file to remove many deleted
+> paths, is eliminated.  The result is this.
+> 
+>         real	0m20.311s
+>         user	0m15.780s
+>         sys	0m4.150s
 
-For this to work it is necessary (at least in qgit) something like
+I got this:
 
-   git-diff-tree -c -r -m -p <sha1> <sha2>
+real    0m20.221s
+user    0m6.456s
+sys     0m1.828s
 
+> This patch would not help recursive strategy, though.  Calling
+> read-tree with --aggressive flag essentially disables the
+> benefit we would expect to get from it -- rename detection.
 
-Marco
+Aha, so now I better understand where all the time goes.  Most of the
+time is spend calculating the merge summary.  After that the bottleneck
+was the large amount of git-merge-one-file invocations.
+
+With the aggressive patch applied it feels like the merge is mostly IO
+bound, which might explain why we get similar running times.  I did get
+one run of 12s, but that was a lucky shot I guess.  Repeated runs gave
+between 15s and 21s but most where close to 20s.
+
+Thanks,
+
+Peter
