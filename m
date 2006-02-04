@@ -1,55 +1,154 @@
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: Tracking and committing back to Subversion?
-Date: Sat, 04 Feb 2006 11:51:08 -0800
-Message-ID: <m2hd7e52dv.fsf@ziti.local>
-References: <1138834301.21899.40.camel@wilber.wgtn.cat-it.co.nz>
-	<20060204054056.GB24314@Muzzle>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: The merge from hell...
+Date: Sat, 4 Feb 2006 12:59:59 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602041239471.3854@g5.osdl.org>
+References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
+ <7v8xsuuto5.fsf@assigned-by-dhcp.cox.net> <17380.34301.584514.520465@cargo.ozlabs.ibm.com>
+ <Pine.LNX.4.64.0602041125440.3854@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Feb 04 20:51:22 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Marco Costalba <mcostalba@yahoo.it>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 04 22:00:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5TRC-00018a-73
-	for gcvg-git@gmane.org; Sat, 04 Feb 2006 20:51:14 +0100
+	id 1F5UW3-0007D7-Jx
+	for gcvg-git@gmane.org; Sat, 04 Feb 2006 22:00:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964786AbWBDTvJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Feb 2006 14:51:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964792AbWBDTvJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 14:51:09 -0500
-Received: from wproxy.gmail.com ([64.233.184.197]:33291 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964786AbWBDTvI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 14:51:08 -0500
-Received: by wproxy.gmail.com with SMTP id 69so1022161wri
-        for <git@vger.kernel.org>; Sat, 04 Feb 2006 11:51:07 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=huIS25Mp2TN07BeX/kKBQWu/e5GQXwQrUjU/aIYAKGBLmPL0UCK6gFD5h1iwaQZ1lZ0jXPbf7R68CfG0roZaE/o8IgGx5DmSi8bCj4bKmniIyVChHq9HcbCJ7Ndp2JVAdpBSxr3VnEqzJS8jslnC1A1QSRswmD1FVO3L7yDD3+Q=
-Received: by 10.54.148.2 with SMTP id v2mr5090912wrd;
-        Sat, 04 Feb 2006 11:51:07 -0800 (PST)
-Received: from ziti.local ( [67.171.24.140])
-        by mx.gmail.com with ESMTP id 33sm5509389wra.2006.02.04.11.51.06;
-        Sat, 04 Feb 2006 11:51:06 -0800 (PST)
-To: git@vger.kernel.org
-In-Reply-To: <20060204054056.GB24314@Muzzle> (Eric Wong's message of "Fri, 3 Feb 2006 21:40:57 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+	id S1946080AbWBDVAP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Feb 2006 16:00:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946144AbWBDVAO
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 16:00:14 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:37355 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1946080AbWBDVAN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 16:00:13 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k14L01DZ001416
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 4 Feb 2006 13:00:04 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k14KxxOd006962;
+	Sat, 4 Feb 2006 13:00:00 -0800
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <Pine.LNX.4.64.0602041125440.3854@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15600>
 
-On  3 Feb 2006, normalperson@yhbt.net wrote:
->> Sam Vilain <sam@vilain.net> wrote:
->> Has anyone done any work on bidirectional access to SVN
->> repositories?  ie, tracking and committing.
 
-I think tailor claims to be able to handle this:
-http://www.darcs.net/DarcsWiki/Tailor
 
-The README in the devel version seems to indicate that two-way sync
-for svn <--> git is implemented (despite the table on the main page).  
+On Sat, 4 Feb 2006, Linus Torvalds wrote:
+> 
+> Doing a 
+> 
+> 	git-rev-list --parents HEAD |
+> 		egrep '^.{90}' |
+> 		cut -d' ' -f1 | 
+> 		git-diff-tree --pretty --cc --stdin
+> 		| less -S
+> 
+> on the kernel is actually interesting. It's interesting because it shows 
+> that out of 1391 merges, in the kernel, only _19_ actually had these close 
+> calls. Some - but certainly not all - of them actually did need manual 
+> fixup.
 
---
- + seth
+There are some doubly interesting lessons when I looked closer.
+
+In particular, some merges that needed manual fixups do _not_ show up. I 
+found that surprising, at first. I expected that if I had to fix something 
+manually, it would obviously show up in the "--cc" output.
+
+Not so.  In fact, the one I looked closer at didn't show up even in the 
+"long" version, aka "-c".
+
+The reason? A lot of the manual fixups end up selecting one version or the 
+other - the clash is because two people fixes the same bug slightly 
+differently, and the manual merge will end up just selecting one of them. 
+So then even "-c" won't show it, because it will notice that the whole 
+file was actually the same as one of the branches merged.
+
+That may be a bit non-intuitive (maybe it shouldn't be, and it was just me 
+who didn't think about it the right way when I was initially surprised), 
+but it was definitely the right thing (both from a merge standpoint _and_ 
+from a "what happened" standpoint) in the cases I looked at. The merge may 
+have been manual, but the end _result_ was trivial, and thus isn't shown.
+
+So even after looking at it more, and searching for "interesting" cases 
+from the other side, I really like the current git-diff-tree --cc output. 
+It sometimes shows you things you wouldn't expect, and it sometimes 
+doesn't show you things you'd expect to show up, but in both cases it 
+shows/avoids the _right_ things.
+
+However, the point that a "diff" itself isn't totally unambigious is well 
+taken. You're right that the very first hunk of the 12-way merge is really 
+not interesting.
+
+However, looking at the other cases, it seems to not really be a huge 
+problem - that seems to be the only case in the whole kernel - and the 
+git-diff-tree algorithm may show an unnecessary hunk once in a blue moon, 
+but that's better than having the heuristics fail the other way around (ie 
+not showing a hunk).
+
+That's what the gitk problem was, btw (showing too little, not too much). 
+Current gitk fails on this trivial case:
+
+	mkdir test-merge
+	cd test-merge/
+	git-init-db 
+
+	#
+	# Initial silly contents
+	#
+	echo "Hello" > hello
+	echo "Hi" > hi
+	git add hello hi
+	git commit -m "Initial"
+
+	#
+	# Create another branch
+	#
+	git branch other
+
+	#
+	# Edit the contents on the master branch,
+	# commit it.
+	#
+	echo "Hello there" > hello
+	git commit -m "first change" hello
+
+	#
+	# Edit/commit the other differently
+	#
+	git checkout other
+	echo "Hello differently" > hello
+	git commit -m "second change" hello
+
+	#
+	# Try to merge - this will fail
+	#
+	git checkout master
+	git merge "Clashing merge" HEAD other
+
+	#
+	# Do an evil merge conflict that also edits a 
+	# nonconflicting file
+	#
+	echo "Hello third version" > hello
+	echo "Hidden hi change" > hi 
+	git commit -m "Evil merge conflict" hello hi
+
+At this point, "git-diff-tree --cc HEAD" shows exactly the right thing, 
+but "gitk" doesn't show anything at all for that merge (it shows the 
+"hello" file in the file pane, but no diff at all, and certainly not the 
+"hi" file which it _should_ show).
+
+		Linus
