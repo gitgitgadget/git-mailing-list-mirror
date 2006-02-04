@@ -1,159 +1,72 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] daemon: Support a --user-path option.
-Date: Sat, 04 Feb 2006 14:02:24 -0800
-Message-ID: <7vacd6wznz.fsf@assigned-by-dhcp.cox.net>
-References: <20060203202330.1895.60474.stgit@metalzone.distorted.org.uk>
-	<20060203202706.1895.70864.stgit@metalzone.distorted.org.uk>
-	<7vr76kcggx.fsf@assigned-by-dhcp.cox.net>
-	<slrndu8utr.2i8.mdw@metalzone.distorted.org.uk>
-	<7v8xsrz49e.fsf@assigned-by-dhcp.cox.net>
-	<slrndu9v7h.2i8.mdw@metalzone.distorted.org.uk>
+Subject: Re: 2 questions/nits about commit and config
+Date: Sat, 04 Feb 2006 14:13:03 -0800
+Message-ID: <7voe1mvkls.fsf@assigned-by-dhcp.cox.net>
+References: <20060204212337.GA8612@blinkenlights.visv.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 04 23:02:58 2006
+X-From: git-owner@vger.kernel.org Sat Feb 04 23:13:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5VUf-0001vw-Fb
-	for gcvg-git@gmane.org; Sat, 04 Feb 2006 23:02:57 +0100
+	id 1F5VeY-0003gr-HS
+	for gcvg-git@gmane.org; Sat, 04 Feb 2006 23:13:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932369AbWBDWC2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Feb 2006 17:02:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932386AbWBDWC2
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 17:02:28 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:38311 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932369AbWBDWC2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2006 17:02:28 -0500
+	id S964822AbWBDWNG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Feb 2006 17:13:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964796AbWBDWNG
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 17:13:06 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:3260 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932386AbWBDWNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2006 17:13:05 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao11.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060204215940.MTYM17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 4 Feb 2006 16:59:40 -0500
-To: Mark Wooding <mdw@distorted.org.uk>
-In-Reply-To: <slrndu9v7h.2i8.mdw@metalzone.distorted.org.uk> (Mark Wooding's
-	message of "Sat, 4 Feb 2006 19:13:53 +0000 (UTC)")
+          id <20060204221141.QJZJ6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 4 Feb 2006 17:11:41 -0500
+To: Michael Fischer <michael@visv.net>
+In-Reply-To: <20060204212337.GA8612@blinkenlights.visv.net> (Michael Fischer's
+	message of "Sat, 4 Feb 2006 16:23:37 -0500")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15604>
 
-Mark Wooding <mdw@distorted.org.uk> writes:
+Michael Fischer <michael@visv.net> writes:
 
-> OK, then: how about putting the user_path logic into enter_repo?  Like
-> this, perhaps:
+> 1) git commit -m"this is a commit message"  doesn't work. 
+>    It has to have a space between -m and the first '"'. 
 
-I'd like to *REALLY* leave enter_repo alone unless necessary.
-The last round to finalize enter_repo() was painful enough to
-think its security implications through.  And this particular
-"public_html" insertion change can be done without touching it.
+Well that is a minor inconvenience and would be trivial to
+accomodate, but please do not send patches in yet.  I do not
+know if you have been following the list discussion, but it
+seems very likely that we will update the way git-commit command
+works slightly in other semantic aspects and I do not want to
+worry about trivialities.  Duly noted and I'll try to remember
+that command line parsing issue when we do a rewrite.
 
-I think the attached patch would essentially do the same thing.
-Only lightly tested, but tested nevertheless ;-).  This comes on
-top of what I have in 'pu'.
+> 2) I can descend into subdirectories in my project, and 
+>    git diff, git status both work fine, but git commit
+>    gets annoyed..
 
-One thing I have not done yet but I consider bould be a good
-change is to perhaps change the whitelist logic in path_ok()
-after enter_repo() says what canonicalized path it decided to
-use, so that it allows any user-relative paths without checking
-the whitelist when user_path is in effect (and perhaps not
-empty, so giving --user-path="public_git" would allow everybody
-while giving --user-path alone or --user-path="" would not).
-Otherwise, as the code currently stands (regardless of any of
-the patches in the discussion in this thread) I think you need
-to list all users on the whitelist line.  I think --user-path is
-about giving all users ability to export their stuff.  What do
-you think?
+This is more or less deliberate, and I personally do not have a
+strong reason to change it (except perhaps making the error
+message a bit more helpful) even when we do a rewrite.
 
--- >8 --
-diff --git a/daemon.c b/daemon.c
-index dab8c2c..a1ccda3 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -18,7 +18,8 @@ static int reuseaddr;
- static const char daemon_usage[] =
- "git-daemon [--verbose] [--syslog] [--inetd | --port=n] [--export-all]\n"
- "           [--timeout=n] [--init-timeout=n] [--strict-paths]\n"
--"           [--base-path=path] [--reuseaddr] [directory...]";
-+"           [--base-path=path] [--user-path | --user-path=path]\n"
-+"           [--reuseaddr] [directory...]";
- 
- /* List of acceptable pathname prefixes */
- static char **ok_paths = NULL;
-@@ -30,6 +31,12 @@ static int export_all_trees = 0;
- /* Take all paths relative to this one if non-NULL */
- static char *base_path = NULL;
- 
-+/* If defined, ~user notation is allowed and the string is inserted
-+ * after ~user/.  E.g. a request to git://host/~alice/frotz would
-+ * go to /home/alice/pub_git/frotz with --user-path=pub_git.
-+ */
-+static char *user_path = NULL;
-+
- /* Timeout, and initial timeout */
- static unsigned int timeout = 0;
- static unsigned int init_timeout = 0;
-@@ -137,6 +144,7 @@ static int avoid_alias(char *p)
- 
- static char *path_ok(char *dir)
- {
-+	static char rpath[PATH_MAX];
- 	char *path;
- 
- 	if (avoid_alias(dir)) {
-@@ -144,12 +152,31 @@ static char *path_ok(char *dir)
- 		return NULL;
- 	}
- 
--	if (base_path) {
--		static char rpath[PATH_MAX];
--		if (!strict_paths && *dir == '~')
--			; /* allow user relative paths */
--		else if (*dir != '/') {
--			/* otherwise allow only absolute */
-+	if (*dir == '~') {
-+		if (!user_path) {
-+			logerror("'%s': User-path not allowed", dir);
-+			return NULL;
-+		}
-+		if (*user_path) {
-+			/* Got either "~alice" or "~alice/foo";
-+			 * rewrite them to "~alice/%s" or
-+			 * "~alice/%s/foo".
-+			 */
-+			int namlen, restlen = strlen(dir);
-+			char *slash = strchr(dir, '/');
-+			if (!slash)
-+				slash = dir + restlen;
-+			namlen = slash - dir;
-+			restlen -= namlen;
-+			loginfo("userpath <%s>, request <%s>, namlen %d, restlen %d, slash <%s>", user_path, dir, namlen, restlen, slash);
-+			snprintf(rpath, PATH_MAX, "%.*s/%s%.*s",
-+				 namlen, dir, user_path, restlen, slash);
-+			dir = rpath;
-+		}
-+	}
-+	else if (base_path) {
-+		if (*dir != '/') {
-+			/* Allow only absolute */
- 			logerror("'%s': Non-absolute path denied (base-path active)", dir);
- 			return NULL;
- 		}
-@@ -688,6 +715,14 @@ int main(int argc, char **argv)
- 			reuseaddr = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--user-path")) {
-+			user_path = "";
-+			continue;
-+		}
-+		if (!strncmp(arg, "--user-path=", 12)) {
-+			user_path = arg + 12;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--")) {
- 			ok_paths = &argv[i+1];
- 			break;
+Unlike CVS that does version control per file basis, commit in
+git is really about the whole tree state, so even if we changed
+'git commit' to work from subdirectories that would commit
+everything, which would probably be more confusing.  That is,
+until somebody comes up with a good semantics and rationale why
+allowing that semantics is a good change and the code to do so.
+
+An example of such semantic change would be: if I am in
+subdirecotry foo/, commit changes to files in that subdirectory
+and subdirectory alone.  But that is actively _encouraging_
+partial commits (commits that records a state that never existed
+in your working tree as a whole) so I personally am not so
+enthused to buy such a _feature_.
