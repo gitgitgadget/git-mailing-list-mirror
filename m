@@ -1,194 +1,181 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] read-tree --aggressive
-Date: Fri, 03 Feb 2006 23:31:13 -0800
-Message-ID: <7v8xsr60n2.fsf@assigned-by-dhcp.cox.net>
-References: <20060131213314.GA32131@ebar091.ebar.dtu.dk>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Re: Two ideas for improving git's user interface
+Date: Sat, 4 Feb 2006 08:03:45 +0000
+Message-ID: <200602040803.45617.alan@chandlerfamily.org.uk>
+References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com> <Pine.LNX.4.64.0602011656130.21884@g5.osdl.org> <Pine.LNX.4.64.0602011732560.21884@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Fredrik Kuivinen <freku045@student.liu.se>
-X-From: git-owner@vger.kernel.org Sat Feb 04 08:31:30 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Feb 04 09:03:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5HtF-0007mT-Bf
-	for gcvg-git@gmane.org; Sat, 04 Feb 2006 08:31:25 +0100
+	id 1F5IOb-00056y-J3
+	for gcvg-git@gmane.org; Sat, 04 Feb 2006 09:03:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946315AbWBDHbP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Feb 2006 02:31:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946326AbWBDHbP
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 02:31:15 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:47779 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1946315AbWBDHbP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2006 02:31:15 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060204073013.TXJL3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 4 Feb 2006 02:30:13 -0500
-To: "Peter Eriksen" <s022018@student.dtu.dk>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1946340AbWBDIDr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Feb 2006 03:03:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946343AbWBDIDr
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 03:03:47 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:43197
+	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
+	id S1946340AbWBDIDq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2006 03:03:46 -0500
+Received: from kanger.home ([192.168.0.21])
+	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
+	id 1F5IOV-0006Gt-Aq
+	for git@vger.kernel.org; Sat, 04 Feb 2006 08:03:43 +0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.1
+In-Reply-To: <Pine.LNX.4.64.0602011732560.21884@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15577>
 
-"Peter Eriksen" <s022018@student.dtu.dk> writes:
-
-> In connection with Ian Molton's question about merge have I played a
-> little with 'git merge' on the kernel sources.  What I find is that a
-> merge can take quite some time, but I'm not sure where that time exactly
-> goes to.  Here are the times I got:
+On Thursday 02 February 2006 01:44, Linus Torvalds wrote:
+> On Wed, 1 Feb 2006, Linus Torvalds wrote:
+> > And notice how I commit the _merge_ without actually committing my dirty
+> > state in the tree - and whether the files involved in my standard dirty
+> > changes ("Makefile") are part of the state that the merge changed or not
+> > is _totally_ irrelevant.
 >
-> Recursive (default):  4m22.282s
-> Resolve (-s resolve): 3m23.548s
+> If you get the feeling that merging is special, then to some degree, yes,
+> you'd be right.
+>
+> Merging (especially with conflicts) is the _one_ operation where you
+> absolutely have to know about the index. If you don't know about how the
+> index works, you can get the conflict resolution right kind of by
+> accident, simply because the default workflow of
+>
+> 	.. edit conflict to look ok ..
+> 	git commit file/with/conflict
+>
+> actually happens to do exactly the right thing (very much on purpose,
+> btw), but the fact is, to actually figure out more complicated conflicts
+> and to _understand_ what happens, you absolutely need to be aware of the
+> index. Not being aware of it just isn't an option for any serious git
+> user.
+>
+> (Btw, I think this is where cogito falls down. Cogito tries to hide the
+> index file, but I don't think you really _can_ hide the index file and
+> also do merges well at the same time. Anybody who has non-trivial merges
+> should use raw git - not just because the "recursive" strategy just works
+> better, but exactly because of the index file issue).
 
-In your sample script, you do not disable the post-merge diff,
-which is typically one of the most expensive part in the whole
-merge, and I am wondering how fast a machine you are using to
-get 4 minutes.  The post-merge diff is generated by piping the
-output of 'diff-tree -M' to 'apply --stat --summary', and that
-step alone takes about 12 minutes wallclock time on my box X-<.
 
-Since my box is not as fast as yours, I've eliminated the
-post-merge diff step and tried your final merge step like this:
+Wow - light comes on.
 
-	$ time git merge --no-summary -s resolve \
-            'Merging happily' HEAD v2.6.15 >/dev/null
+I have been using git (or rather to be exact git with cg-add, cg-rm and 
+cg-commit) for about 6 months (bearing in mind I am only a part time 
+programmer in the evenings for fun - even though I work in the computer 
+industry the last time I was paid to write code was in 1979 - so I don't 
+really need to be a power user).  Although I knew about the index file since 
+the beginning I never really groked what it was about before.
 
-and got this:
+Of course I knew of its existance, and I even knew that it could be used as a 
+staging area, but up to now I had always thought of it as a necessary 
+inconvenience to enable git to run as blazingly fast as it does - not as an 
+essential part of work flow it complex situations
 
-        real	2m15.737s
-        user	1m43.320s
-        sys	0m26.690s
+I think the problem is with three crucial bits of documentation. Firstly, the 
+document is full of the git doesn't do prorcelain statements - pushing towards 
+cogito which then hides the existance of the index file.  Git not doing 
+porcelain was true at the very beginning, but I don't think that it is true 
+any longer.
 
-With the attached patch, the most expensive part, which is the
-repeated invocation of git-merge-one-file to remove many deleted
-paths, is eliminated.  The result is this.
+Secondly the tutorial.  The examples given start by using commands to 
+explicitly update the index and them they move on to show how you don't need 
+to do that by using the more advanced commands of git-add and git-commit.  So 
+as I was trying to learn how to use git, I followed through this and thought 
+that you just try an avoid using it directly.  Whats more, viewed in this 
+light git-commit seemed to be a rather poor implementation of cogito's 
+superior cg-commit command
 
-        real	0m20.311s
-        user	0m15.780s
-        sys	0m4.150s
+[Incidentally there is a use case that doesn't seem to have been discussed in 
+this thread which I use cg-commit all the time for and will now have to see 
+if there is a use index file equivalence for.  That is, I am developing a web 
+application and in the running version the database framework (iBatis) is 
+using Tomcats connection pooling.  In order to run my JUnit test harness, I 
+don't have tomcat, so I need to define a different version of iBatis 
+configuration file to used its own database connection.  So I have created a 
+test branch and edited the configuration file in that branch, and I update 
+both code and tests in a edit/compile/fix and text loop until I have written 
+or changed both code and tests.  I then do a cg-commit which lists the files 
+I have changed.  I ONLY commit those in the test harness - by deleting the 
+others from cogito's list of files to commit - and then repeat the commit 
+commiting the rest].  I then switch back to my master branch and cherry pick 
+commit that is the code changes - not the text harness] 
 
-This patch would not help recursive strategy, though.  Calling
-read-tree with --aggressive flag essentially disables the
-benefit we would expect to get from it -- rename detection.
+Thirdly,  "discussion" of the index file at the bottom end of the git man page 
+(The "index" aka "Current Directory Cache") really concentrates on what it is 
+and what operations you can perform with it in the normal situation.
 
--- >8 --
-A new flag --aggressive resolves what we traditionally resolved
-with external git-merge-one-file inside index while read-tree
-3-way merge works.
+I tried looking at the core tutorial looking at what I might be a way of bring 
+this to the attention of the new learner into git and produced the following 
+(partial) patch to the core-tutorial (It needs a whole set of examples on 
+resolving merge problems which I have no idea at the moment how to do - this 
+has been the real area which never understood - basically because the 
+tutorial itself says skip that part).
 
-git-merge-octopus and git-merge-resolve use this flag before
-running git-merge-index with git-merge-one-file.
+--- a/Documentation/core-tutorial.txt
++++ b/Documentation/core-tutorial.txt
+@@ -212,15 +212,22 @@ was just to show that `git-update-index`
+ actually saved away the contents of your files into the git object
+ database.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- git-merge-octopus.sh |    2 +-
- git-merge-resolve.sh |    2 +-
- read-tree.c          |   32 ++++++++++++++++++++++++++++++++
- 3 files changed, 34 insertions(+), 2 deletions(-)
-
-2a4bb6bc618bdad6529d9ffe361bc8b7dd28a56c
-diff --git a/git-merge-octopus.sh b/git-merge-octopus.sh
-index eb74f96..eb3f473 100755
---- a/git-merge-octopus.sh
-+++ b/git-merge-octopus.sh
-@@ -90,7 +90,7 @@ do
- 	NON_FF_MERGE=1
- 
- 	echo "Trying simple merge with $SHA1"
--	git-read-tree -u -m $common $MRT $SHA1 || exit 2
-+	git-read-tree -u -m --aggressive  $common $MRT $SHA1 || exit 2
- 	next=$(git-write-tree 2>/dev/null)
- 	if test $? -ne 0
- 	then
-diff --git a/git-merge-resolve.sh b/git-merge-resolve.sh
-index 966e81f..0a8ef21 100755
---- a/git-merge-resolve.sh
-+++ b/git-merge-resolve.sh
-@@ -38,7 +38,7 @@ then
- fi
- 
- git-update-index --refresh 2>/dev/null
--git-read-tree -u -m $bases $head $remotes || exit 2
-+git-read-tree -u -m --aggressive $bases $head $remotes || exit 2
- echo "Trying simple merge."
- if result_tree=$(git-write-tree  2>/dev/null)
- then
-diff --git a/read-tree.c b/read-tree.c
-index a46c6fe..5580f15 100644
---- a/read-tree.c
-+++ b/read-tree.c
-@@ -15,6 +15,7 @@ static int update = 0;
- static int index_only = 0;
- static int nontrivial_merge = 0;
- static int trivial_merges_only = 0;
-+static int aggressive = 0;
- 
- static int head_idx = -1;
- static int merge_size = 0;
-@@ -424,11 +425,14 @@ static int threeway_merge(struct cache_e
- 	int df_conflict_remote = 0;
- 
- 	int any_anc_missing = 0;
-+	int no_anc_exists = 1;
- 	int i;
- 
- 	for (i = 1; i < head_idx; i++) {
- 		if (!stages[i])
- 			any_anc_missing = 1;
-+		else
-+			no_anc_exists = 0;
- 	}
- 
- 	index = stages[0];
-@@ -489,6 +493,29 @@ static int threeway_merge(struct cache_e
- 	if (!head && !remote && any_anc_missing)
- 		return 0;
- 
-+	/* Under the new "aggressive" rule, we resolve mostly trivial
-+	 * cases that we historically had git-merge-one-file resolve.
-+	 */
-+	if (aggressive) {
-+		int head_deleted = !head && !df_conflict_head;
-+		int remote_deleted = !remote && !df_conflict_remote;
-+		/*
-+		 * Deleted in both.
-+		 * Deleted in one and unchanged in the other.
-+		 */
-+		if ((head_deleted && remote_deleted) ||
-+		    (head_deleted && remote && remote_match) ||
-+		    (remote_deleted && head && head_match))
-+			return 0;
++The Index File
++--------------
 +
-+		/*
-+		 * Added in both, identically.
-+		 */
-+		if (no_anc_exists && head && remote && same(head, remote))
-+			return merged_entry(head, index);
+ Updating the index did something else too: it created a `.git/index`
+ file. This is the index that describes your current working tree, and
+-something you should be very aware of. Again, you normally never worry
+-about the index file itself, but you should be aware of the fact that
+-you have not actually really "checked in" your files into git so far,
+-you've only *told* git about them.
++something you should be very aware of.  It is a staging area between your
++working tree and the object store described above.
 +
-+	}
++In normal circumstances you do not worry about the index file itself, but you
++should be aware of the fact that you have not actually really "checked in"
++your files into git so far, you've only *told* git about them.  Later you
++will see how you can exploit the fact that there is this separate index
++file to undertake more complex operations.
+
+-However, since git knows about them, you can now start using some of the
+-most basic git commands to manipulate the files or look at their status.
++However, since git knows about these files, you can now start using some of
++the most basic git commands to manipulate them or look at their status.
+
+ In particular, let's not even check in the two files into git yet, we'll
+ start off by adding another line to `hello` first:
+@@ -1188,8 +1195,8 @@ How does the merge work?
+ We said this tutorial shows what plumbing does to help you cope
+ with the porcelain that isn't flushing, but we so far did not
+ talk about how the merge really works.  If you are following
+-this tutorial the first time, I'd suggest to skip to "Publishing
+-your work" section and come back here later.
++this tutorial the first time, I'd suggest to skip to "Resolving Merge
++Problems" section and come back here later.
+
+ OK, still with me?  To give us an example to look at, let's go
+ back to the earlier repository with "hello" and "example" file,
+@@ -1332,6 +1339,10 @@ merge for you to resolve.  Notice that t
+ unmerged, and what you see with `git diff` at this point is
+ differences since stage 2 (i.e. your version).
+
++Resolving Merge Problems
++------------------------
 +
- 	/* Below are "no merge" cases, which require that the index be
- 	 * up-to-date to avoid the files getting overwritten with
- 	 * conflict resolution files. 
-@@ -677,6 +704,11 @@ int main(int argc, char **argv)
- 			continue;
- 		}
- 
-+		if (!strcmp(arg, "--aggressive")) {
-+			aggressive = 1;
-+			continue;
-+		}
-+
- 		/* "-m" stands for "merge", meaning we start in stage 1 */
- 		if (!strcmp(arg, "-m")) {
- 			if (stage || merge)
++NOT SURE WHAT GOES HERE
+
+ Publishing your work
+ --------------------
+
 -- 
-1.1.6.ge2129
+Alan Chandler
+http://www.chandlerfamily.org.uk
+Open Source. It's the difference between trust and antitrust.
