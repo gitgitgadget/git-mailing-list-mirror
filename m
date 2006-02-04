@@ -1,81 +1,102 @@
-From: Keith Packard <keithp@keithp.com>
-Subject: Re: 2 questions/nits about commit and config
-Date: Sat, 04 Feb 2006 15:00:54 -0800
-Message-ID: <1139094055.4200.6.camel@evo.keithp.com>
-References: <20060204212337.GA8612@blinkenlights.visv.net>
-	 <7voe1mvkls.fsf@assigned-by-dhcp.cox.net>
-	 <7vhd7evk38.fsf@assigned-by-dhcp.cox.net>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: [PATCH] Use adler32() from zlib instead of defining our own.
+Date: Sat, 4 Feb 2006 23:54:01 +0100
+Message-ID: <20060204225401.GA24725@ebar091.ebar.dtu.dk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-pFPaoBMdRcPkEHPW6Ly6"
-Cc: keithp@keithp.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 05 00:01:22 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Feb 05 00:03:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5WP0-00041p-2a
-	for gcvg-git@gmane.org; Sun, 05 Feb 2006 00:01:10 +0100
+	id 1F5WRW-0004e1-TR
+	for gcvg-git@gmane.org; Sun, 05 Feb 2006 00:03:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964866AbWBDXBH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Feb 2006 18:01:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964865AbWBDXBG
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 18:01:06 -0500
-Received: from home.keithp.com ([63.227.221.253]:42506 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S964849AbWBDXBF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 18:01:05 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 4769413001F;
-	Sat,  4 Feb 2006 15:01:03 -0800 (PST)
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 03739-05; Sat, 4 Feb 2006 15:01:03 -0800 (PST)
-Received: by keithp.com (Postfix, from userid 1033)
-	id E78E813001E; Sat,  4 Feb 2006 15:01:02 -0800 (PST)
-Received: from evo.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id DBC3314001;
-	Sat,  4 Feb 2006 15:01:02 -0800 (PST)
-Received: from keithp by evo.keithp.com with local (Exim 4.60)
-	(envelope-from <keithp@keithp.com>)
-	id 1F5WOq-0001HQ-GN; Sat, 04 Feb 2006 15:01:00 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhd7evk38.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.4.2.1 
+	id S964849AbWBDXDn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Feb 2006 18:03:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964865AbWBDXDn
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 18:03:43 -0500
+Received: from ebar091.ebar.dtu.dk ([192.38.93.106]:36799 "HELO
+	ebar091.ebar.dtu.dk") by vger.kernel.org with SMTP id S964849AbWBDXDn
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 18:03:43 -0500
+Received: (qmail 25031 invoked by uid 5842); 4 Feb 2006 22:54:01 -0000
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15609>
 
 
---=-pFPaoBMdRcPkEHPW6Ly6
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Since we already depend on zlib, we don't need to define our
+own adler32().  Spotted by oprofile.
 
-On Sat, 2006-02-04 at 14:24 -0800, Junio C Hamano wrote:
+Signed-off-by: Peter Eriksen <s022018@student.dtu.dk>
 
-> Before people start complaining about it, I take this part
-> back.  "git commit -a" inside a subdirectory "foo" is not much
-> different from "git commit foo/a foo/b foo/c" from the toplevel
-> directory=20
 
-making '-a' equivalent to '.' then? Seems like '.' is a whole lot more
-understandable than '-a', but maybe that's just my na=C3=AFvit=C3=A9 showin=
-g
-again. I expected the '-a' flag to commit the whole tree from wherever
-you were inside it...
- =20
---=20
-keith.packard@intel.com
+---
 
---=-pFPaoBMdRcPkEHPW6Ly6
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+ diff-delta.c |   39 +--------------------------------------
+ 1 files changed, 1 insertions(+), 38 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQBD5TImQp8BWwlsTdMRAhCQAKCitmEvfc4vSu/IuPmrVRkrgTsThQCgnqvL
-jUfcYsk9mgwms/vnCa94YBw=
-=u+2t
------END PGP SIGNATURE-----
-
---=-pFPaoBMdRcPkEHPW6Ly6--
+86557e168f581f27b6869a751a56386bbc9e5059
+diff --git a/diff-delta.c b/diff-delta.c
+index 890986e..c2f656a 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -20,6 +20,7 @@
+ 
+ #include <stdlib.h>
+ #include "delta.h"
++#include "zlib.h"
+ 
+ 
+ /* block size: min = 16, max = 64k, power of 2 */
+@@ -30,44 +31,6 @@
+ #define GR_PRIME 0x9e370001
+ #define HASH(v, b) (((unsigned int)(v) * GR_PRIME) >> (32 - (b)))
+ 	
+-/* largest prime smaller than 65536 */
+-#define BASE 65521
+-
+-/* NMAX is the largest n such that 255n(n+1)/2 + (n+1)(BASE-1) <= 2^32-1 */
+-#define NMAX 5552
+-
+-#define DO1(buf, i)  { s1 += buf[i]; s2 += s1; }
+-#define DO2(buf, i)  DO1(buf, i); DO1(buf, i + 1);
+-#define DO4(buf, i)  DO2(buf, i); DO2(buf, i + 2);
+-#define DO8(buf, i)  DO4(buf, i); DO4(buf, i + 4);
+-#define DO16(buf)    DO8(buf, 0); DO8(buf, 8);
+-
+-static unsigned int adler32(unsigned int adler, const unsigned char *buf, int len)
+-{
+-	int k;
+-	unsigned int s1 = adler & 0xffff;
+-	unsigned int s2 = adler >> 16;
+-
+-	while (len > 0) {
+-		k = MIN(len, NMAX);
+-		len -= k;
+-		while (k >= 16) {
+-			DO16(buf);
+-			buf += 16;
+-			k -= 16;
+-		}
+-		if (k != 0)
+-			do {
+-				s1 += *buf++;
+-				s2 += s1;
+-			} while (--k);
+-		s1 %= BASE;
+-		s2 %= BASE;
+-	}
+-
+-	return (s2 << 16) | s1;
+-}
+-
+ static unsigned int hashbits(unsigned int size)
+ {
+ 	unsigned int val = 1, bits = 0;
+-- 
+1.1.6.g8655
