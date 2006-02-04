@@ -1,48 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-diff-tree --cc on the dodecapus
-Date: Sat, 04 Feb 2006 05:01:22 -0800
-Message-ID: <7vy80rwa59.fsf@assigned-by-dhcp.cox.net>
-References: <17380.37855.117313.631961@cargo.ozlabs.ibm.com>
+From: Marco Costalba <mcostalba@gmail.com>
+Subject: [PATCH] qgit: add some installation instruction
+Date: Sat, 04 Feb 2006 15:32:19 +0100
+Message-ID: <43E4BAF3.3040307@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 04 14:01:32 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Pavel Roskin <proski@gnu.org>, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Feb 04 15:33:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5N2g-0003A8-ER
-	for gcvg-git@gmane.org; Sat, 04 Feb 2006 14:01:30 +0100
+	id 1F5OTX-0004w9-RC
+	for gcvg-git@gmane.org; Sat, 04 Feb 2006 15:33:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751449AbWBDNBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Feb 2006 08:01:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbWBDNBY
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 08:01:24 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:64950 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751449AbWBDNBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2006 08:01:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060204130018.OHHL15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 4 Feb 2006 08:00:18 -0500
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17380.37855.117313.631961@cargo.ozlabs.ibm.com> (Paul
-	Mackerras's message of "Sat, 4 Feb 2006 22:45:35 +1100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932266AbWBDOc2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Feb 2006 09:32:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932287AbWBDOc2
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Feb 2006 09:32:28 -0500
+Received: from uproxy.gmail.com ([66.249.92.205]:63397 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932266AbWBDOc2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2006 09:32:28 -0500
+Received: by uproxy.gmail.com with SMTP id h2so198035ugf
+        for <git@vger.kernel.org>; Sat, 04 Feb 2006 06:32:25 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=Jyo8y7cmzFC8mfXiZo4dDvBBQBw8ETw8xbdNjTaRD+6QTTfQlcQ2Zo+V5qo/KHOlifOxvl0gvjrBUc74FqPcWSfYIWhzBPHVRZbc/dwDeRETJ/ovhxwWYj2THbplKuohV+aw/IdIiiIH1FEOUxYV8NkwQyzblroSC3sY2DzqQjI=
+Received: by 10.48.108.11 with SMTP id g11mr773498nfc;
+        Sat, 04 Feb 2006 06:32:25 -0800 (PST)
+Received: from ?10.0.0.13? ( [151.56.32.149])
+        by mx.gmail.com with ESMTP id m15sm1513572nfc.2006.02.04.06.32.24;
+        Sat, 04 Feb 2006 06:32:25 -0800 (PST)
+User-Agent: Mozilla Thunderbird 1.0.6-7.4.20060mdk (X11/20050322)
+X-Accept-Language: it, it-it, en-us, en
+To: git mailing list <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15595>
 
-Paul Mackerras <paulus@samba.org> writes:
+With this I would start to post possible patches for list review.
 
-> Junio,
->
-> When I use git diff-tree --cc on Len's dodecapus merge (9fdb62af), the
-> first diff hunk that it shows is this:
+I am planning to post only a very limited number of patches that could be interesting or
+that modify someone else work (like in this case, the new Pavel build system).
 
-Yeah, I noticed it too, and you described how that happens quite
-well.  The algorithm is simplistic and improvement patches are
-welcome.
+Is not my intention to add noise to the list, so I will try to keep the patches to the minimum.
+
+In any case, please, Junio, feel free to express any concern about this and I will stop as soon
+as started!
+
+Thanks
+Marco
+
+-- >8 --
+
+Document how to strip debug information and better explaing when to reconfigure
+the build environment.
+
+
+Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+---
+
+diff --git a/README b/README
+index 0869c0c..f32dce4 100644
+--- a/README
++++ b/README
+@@ -23,10 +23,11 @@ which is used to locate Qt. Version 0.15
+  also work.
+
+  To compile qgit, unpack the tar file (you probably have done it
+-already), run "./configure", "make" and "make install". You may need to
+-get root permissions for the later. You can run "configure" with full
+-path from another empty directory if you want qgit to be compiled in a
+-separate directory.
++already), run "./configure", "make" and "make install" or "make install-strip"
++to have debug information removed and install a much smaller bin.
++You may need to get root permissions for the later. You can run "configure"
++with full path from another empty directory if you want qgit to be compiled
++in a separate directory.
+
+  If there is another qgit executable in PATH, "make install" will
+  overwrite it. Otherwise, qgit will be installed in /usr/local/bin. You
+@@ -41,6 +42,8 @@ Automake, preferably the latest versions
+  Only in case you clone the public qgit repository you may need to run
+  "autoreconf -i" the first time to create the ./configure file. Do not need
+  to run it on a released tarball.
++You may need to run "autoreconf -i" also when pulling revisions that modify
++some build system file, as "configure.ac".
+
+
+  Command line arguments
+
+---
