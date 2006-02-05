@@ -1,72 +1,105 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: 2 questions/nits about commit and config
-Date: Sat, 04 Feb 2006 21:58:50 -0800
-Message-ID: <7vek2imjmt.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 5 Feb 2006 01:14:08 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602050053280.6773@iabervon.org>
 References: <20060204212337.GA8612@blinkenlights.visv.net>
-	<7voe1mvkls.fsf@assigned-by-dhcp.cox.net>
-	<7vhd7evk38.fsf@assigned-by-dhcp.cox.net>
-	<1139094055.4200.6.camel@evo.keithp.com>
-	<7vu0bemkce.fsf@assigned-by-dhcp.cox.net>
+ <7voe1mvkls.fsf@assigned-by-dhcp.cox.net> <7vhd7evk38.fsf@assigned-by-dhcp.cox.net>
+ <1139094055.4200.6.camel@evo.keithp.com> <7vu0bemkce.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Feb 05 06:59:12 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Keith Packard <keithp@keithp.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 05 07:15:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5cvW-0003CF-SP
-	for gcvg-git@gmane.org; Sun, 05 Feb 2006 06:59:12 +0100
+	id 1F5dB2-0005UE-PH
+	for gcvg-git@gmane.org; Sun, 05 Feb 2006 07:15:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030274AbWBEF6x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Feb 2006 00:58:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964906AbWBEF6x
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Feb 2006 00:58:53 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:30858 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S964903AbWBEF6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Feb 2006 00:58:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060205055635.MMGT17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 5 Feb 2006 00:56:35 -0500
-To: git@vger.kernel.org
-In-Reply-To: <7vu0bemkce.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 04 Feb 2006 21:43:29 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1946158AbWBEGOL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Feb 2006 01:14:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946159AbWBEGOL
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Feb 2006 01:14:11 -0500
+Received: from iabervon.org ([66.92.72.58]:30225 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1946158AbWBEGOK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Feb 2006 01:14:10 -0500
+Received: (qmail 18649 invoked by uid 1000); 5 Feb 2006 01:14:09 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Feb 2006 01:14:09 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vu0bemkce.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15624>
 
-Junio C Hamano <junkio@cox.net> writes:
+On Sat, 4 Feb 2006, Junio C Hamano wrote:
 
 > Here is me thinking aloud again.
+> 
+>  - "git commit" without _any_ parameter would keep the current
+>    behaviour.  It commits the current index.
+> 
+>    We have two choices.  (1) we disallow this form to be run in
+>    a subdirectory, or (2) we do the whole index even when this
+>    form was run from a subdirectory.  I am inclined to say the
+>    latter.
 
-Before I started writing this message, I meant to address an
-excellent point Carl Worth raised in an earlier thread.  "What
-would I do for final sanity check before committing?".  So here
-is a follow-up.
-
->  - "git commit"
-
-"git diff --cached HEAD".
-
->  - "git commit --include paths..." (or "git commit -i paths...")
-
-This is for people who work by taking advantage of the power of
-the index file, i.e. perform "checking in without committing" by
-running update-index whenever the changes so-far look good.
-Combined use of "git diff --cached HEAD" (to look at diffs for
-paths other than paths...) and "git diff HEAD paths..." would be
-the _full_ "final sanity check", but in practice "git diff HEAD
-paths..." or even "git diff paths..." would be more useful for
-these people.  They've verified the changes so-far were sane
-when they did update-index already.
+I'd guess this would primarily happen when the user goes into a 
+subdirectory to look at related files when resolving a conflicted merge. 
+If you're committing the prepared index, the working tree isn't 
+particularly important, so the pwd isn't, either.
 
 >  - "git commit paths..." acquires a new semantics.  This is an
 >    incompatible change that needs user training, which I am
 >    still a bit reluctant to swallow, but enough people seem to
->    have complained.
+>    have complained.  It
+> 
+>    1. refuses to run if $GIT_DIR/MERGE_HEAD exists (maybe
+>       remind trained git users that the traditional semantics
+>       now needs -i flag).
+>    2. refuses to run if named paths... are different in HEAD and
+>       the index (ditto about reminding).
+>    3. reads HEAD commit into a temporary index file.
+>    4. updates named paths... from the working tree in this
+>       temporary index (similar to -i form, we never --add).
 
-"git diff HEAD paths...".
+I think the following sequence should be permitted:
+
+% git add foo
+% git commit foo
+
+I think this means we want --add in step 4, but want to check that the 
+named paths exist in the index in step 3, although they're allowed to not 
+exist in HEAD.
+
+>    5. does the same updates of the paths... from the working
+>       tree to the real index.
+>    6. makes a commit using the temporary index that has the
+>       current HEAD as the parent, and updates the HEAD with this
+>       new commit.
+> 
+>    The first check is needed because otherwise during a merge
+>    you would end up inserting an unrelated commit between the
+>    original HEAD and the eventual merge result.  The second
+>    check is to prevent "skewed commit" from confusing people.
+>    If you updated index, modified the file further and then used
+>    "git commit paths..." to make a commit, next "git commit"
+>    without paths would record a partial revert otherwise.
+> 
+>    For this one, I think running from subdirectory is a natural
+>    thing to allow.
+> 
+>  - "git commit --all".  Now what should we do about this?  As
+>    you reminded me, it is equivalent to "git commit -i ." if run
+>    from the toplevel (because of the "index must match HEAD on
+>    named paths" requirements for the partial commits with named
+>    paths, it is equivalent to "git commit ." only if your index
+>    is clean).  I am inclined to say that this should commit all
+>    changes in the whole working tree, regardless of where it is
+>    run.
+
+Agreed.
+
+	-Daniel
+*This .sig left intentionally blank*
