@@ -1,94 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Fix git-rev-parse over-eager errors
-Date: Sun, 5 Feb 2006 11:58:34 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602051155460.3854@g5.osdl.org>
-References: <Pine.LNX.4.64.0602012212200.21884@g5.osdl.org>
- <e5bfff550602012325s7d0a799ct5bfabbce2c579449@mail.gmail.com>
- <Pine.LNX.4.64.0602012356131.21884@g5.osdl.org>
- <cc723f590602020007s43f89d10i4529d118ade7c764@mail.gmail.com>
- <Pine.LNX.4.64.0602020027400.21884@g5.osdl.org> <7v7j8erqjr.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0602051141020.3854@g5.osdl.org> <Pine.LNX.4.64.0602051144580.3854@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-commit: revamp the git-commit semantics.
+Date: Sun, 05 Feb 2006 12:03:45 -0800
+Message-ID: <7v64ntindq.fsf@assigned-by-dhcp.cox.net>
+References: <7vpsm2hzng.fsf@assigned-by-dhcp.cox.net>
+	<e5bfff550602050536j73f1091dq9afae232f574d0b4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Feb 05 20:58:51 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 05 21:03:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F5q24-0001t3-02
-	for gcvg-git@gmane.org; Sun, 05 Feb 2006 20:58:48 +0100
+	id 1F5q6v-0002hA-Mv
+	for gcvg-git@gmane.org; Sun, 05 Feb 2006 21:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750705AbWBET6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Feb 2006 14:58:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750707AbWBET6j
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Feb 2006 14:58:39 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:29408 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750705AbWBET6j (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Feb 2006 14:58:39 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k15JwZDZ001573
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 5 Feb 2006 11:58:35 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k15JwYOw012041;
-	Sun, 5 Feb 2006 11:58:34 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0602051144580.3854@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.67__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750708AbWBEUDs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Feb 2006 15:03:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750707AbWBEUDs
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Feb 2006 15:03:48 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:42166 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1750708AbWBEUDr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Feb 2006 15:03:47 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060205200114.RSVY26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 5 Feb 2006 15:01:14 -0500
+To: Marco Costalba <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550602050536j73f1091dq9afae232f574d0b4@mail.gmail.com>
+	(Marco Costalba's message of "Sun, 5 Feb 2006 14:36:51 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15636>
 
+I was planning to think about the migration strategy _after_ I
+get the feeling that everybody who got confused by the current
+one thinks this is a good change, and I am glad you did that
+work for me ;-).
 
-Using "--verify" together with "--no-flags" makes perfect sense, but 
-git-rev-parse would complain about it when it saw a flag, even though it 
-would never actually use/output that flag.
+I think it is sane to add a no-op '--include' to the current
+version.
 
-This fixes it.
+I am not sure if it is worth to take two-phased introduction of
+this new "temporary index" thing.  We could:
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
+ * add '--only' that asks for the new "temporary index" thing.
 
-This is independent of the "git show" patches, although the problem was 
-triggered by the "git show" usage of git-rev-parse. It's a bug whether git 
-show is merged or not, though.
+ * initially make '--include' the default, not '--only'.
 
-diff --git a/rev-parse.c b/rev-parse.c
-index 6bf205a..9cec33b 100644
---- a/rev-parse.c
-+++ b/rev-parse.c
-@@ -107,12 +107,15 @@ static void show_rev(int type, const uns
- }
- 
- /* Output a flag, only if filter allows it. */
--static void show_flag(char *arg)
-+static int show_flag(char *arg)
- {
- 	if (!(filter & DO_FLAGS))
--		return;
--	if (filter & (is_rev_argument(arg) ? DO_REVS : DO_NOREV))
-+		return 0;
-+	if (filter & (is_rev_argument(arg) ? DO_REVS : DO_NOREV)) {
- 		show(arg);
-+		return 1;
-+	}
-+	return 0;
- }
- 
- static void show_default(void)
-@@ -296,9 +299,8 @@ int main(int argc, char **argv)
- 				show_datestring("--min-age=", arg+8);
- 				continue;
- 			}
--			if (verify)
-+			if (show_flag(arg) && verify)
- 				die("Needed a single revision");
--			show_flag(arg);
- 			continue;
- 		}
- 
+ * later switch the default to '--only'.
