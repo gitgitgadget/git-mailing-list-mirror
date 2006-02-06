@@ -1,47 +1,50 @@
-From: "Cesar" <Rickeynp@faw.com.cn>
-Subject: Want to find a fuckbuddy?
-Date: Mon, 06 Feb 2006 12:44:21 -0800
-Message-ID: <637c.cyanate@bradley42.net>
-X-From: git-owner@vger.kernel.org Mon Feb 06 21:44:58 2006
+From: "Bertrand Jacquin (Beber)" <beber@guybrush.melee>
+Subject: Push or merge certain commitid
+Date: Mon, 6 Feb 2006 21:49:35 +0100
+Message-ID: <20060206204935.GA20274@guybrush.melee>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf8
+X-From: git-owner@vger.kernel.org Mon Feb 06 21:50:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6DDw-0002Ef-SB
-	for gcvg-git@gmane.org; Mon, 06 Feb 2006 21:44:37 +0100
+	id 1F6DIh-0003MQ-Oc
+	for gcvg-git@gmane.org; Mon, 06 Feb 2006 21:49:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964809AbWBFUoe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Feb 2006 15:44:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964811AbWBFUod
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Feb 2006 15:44:33 -0500
-Received: from host-87-74-94-128.bulldogdsl.com ([87.74.94.128]:15378 "HELO
-	441BC158") by vger.kernel.org with SMTP id S964809AbWBFUod (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Feb 2006 15:44:33 -0500
-Received: by changeable (Wostfix 55 74)
-	id 33B05C1149069; Mon, 06 Feb 2006 12:44:21 -0800
+	id S964811AbWBFUt2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Feb 2006 15:49:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964813AbWBFUt2
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Feb 2006 15:49:28 -0500
+Received: from mailfe01.tele2.fr ([212.247.154.12]:40919 "EHLO swip.net")
+	by vger.kernel.org with ESMTP id S964811AbWBFUt1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Feb 2006 15:49:27 -0500
+X-T2-Posting-ID: BetTtMwqy0Jkfva2ln69X2TC1dgmj0IYgoi60RiAKx0=
+X-Cloudmark-Score: 0.000000 []
+Received: from guybrush.ath.cx ([80.170.85.192] verified)
+  by mailfe01.swip.net (CommuniGate Pro SMTP 5.0.2)
+  with ESMTPS id 95408622 for git@vger.kernel.org; Mon, 06 Feb 2006 21:49:18 +0100
+Received: from beber by guybrush.ath.cx with local (Exim 4.60)
+	(envelope-from <beber@guybrush.ath.cx>)
+	id 1F6DIm-0005Kq-05
+	for git@vger.kernel.org; Mon, 06 Feb 2006 21:49:36 +0100
 To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.5 points;
- * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
- *      [score: 0.0000]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: findhotpartners.net]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: findhotpartners.net]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: findhotpartners.net]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: findhotpartners.net]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15658>
 
-We offer you a service that helps people get laid!
-Alot of guys and girls are in your region, looking to have some fun!
+Hi,
 
-No cheezy pickup lines... no flowers... no walks on the beach...
-people here only want to have sex ;)
+I don't know if it's really possible to do but I would like to know if
+there is a way to push or merge just certain commitid specified ?
+I think it can trouble parents, trees, etc, but here I need that.
 
-And just to let you know, about 70% of members already got some action!
+Thanks
 
-http://www.findhotpartners.net/nr/
+-- 
+/* Beber : beber (AT) setibzh (DOT) com
+ * http://guybrush.ath.cx, irc://irc.freenode.net/#{e.fr,gentoofr}
+ * Guybrush @ Melee */
