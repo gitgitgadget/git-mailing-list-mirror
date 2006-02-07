@@ -1,80 +1,55 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH] git-commit: revamp the git-commit semantics.
-Date: Tue, 07 Feb 2006 13:25:02 -0600
-Message-ID: <1139340302.13067.42.camel@cashmere.sps.mot.com>
-References: <7vpsm2hzng.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550602050536j73f1091dq9afae232f574d0b4@mail.gmail.com>
-	 <7v64ntindq.fsf@assigned-by-dhcp.cox.net> <43E67745.2080302@gmail.com>
-	 <7voe1le71b.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0602071135110.5397@localhost.localdomain>
-	 <7vfymvvz1r.fsf@assigned-by-dhcp.cox.net>
-	 <7vpslzuj6e.fsf@assigned-by-dhcp.cox.net>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: git-http-push and hooks
+Date: Tue, 7 Feb 2006 20:54:58 +0100
+Message-ID: <20060207195458.GA7217@c165.ib.student.liu.se>
+References: <20060206205203.GA20973@guybrush.melee> <20060206232231.GK3873@reactrix.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Feb 07 20:25:23 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: "Bertrand Jacquin (Beber)" <beber@guybrush.melee>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 07 20:55:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6YSb-00016F-Ha
-	for gcvg-git@gmane.org; Tue, 07 Feb 2006 20:25:10 +0100
+	id 1F6Yvr-0007LD-8l
+	for gcvg-git@gmane.org; Tue, 07 Feb 2006 20:55:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965163AbWBGTZG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Feb 2006 14:25:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965168AbWBGTZG
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 14:25:06 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:43464 "EHLO
-	az33egw02.freescale.net") by vger.kernel.org with ESMTP
-	id S965163AbWBGTZE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2006 14:25:04 -0500
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id k17JbiRl006464
-	for <git@vger.kernel.org>; Tue, 7 Feb 2006 12:37:44 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id k17JYMI7013458
-	for <git@vger.kernel.org>; Tue, 7 Feb 2006 13:34:22 -0600 (CST)
-To: Git List <git@vger.kernel.org>
-In-Reply-To: <7vpslzuj6e.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+	id S1751013AbWBGTzM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Feb 2006 14:55:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbWBGTzL
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 14:55:11 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:60592 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1750792AbWBGTzK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Feb 2006 14:55:10 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id ADC864103; Tue,  7 Feb 2006 21:08:47 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1F6YvT-0001si-00; Tue, 07 Feb 2006 20:54:59 +0100
+To: Nick Hengeveld <nickh@reactrix.com>
+Content-Disposition: inline
+In-Reply-To: <20060206232231.GK3873@reactrix.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15710>
 
-On Tue, 2006-02-07 at 12:18, Junio C Hamano wrote:
-
-> That means 1.2.0 (and its maintenance series 1.2.X) will ship
-> with --include semantics for "git commit paths...", and will
-> allow explicit --only/--include.  After 1.2.0, at some point,
-> the "master" branch will start shipping with --only semantics as
-> default.  No script should break when 1.3.0 happens.
+On Mon, Feb 06, 2006 at 03:22:31PM -0800, Nick Hengeveld wrote:
+> On Mon, Feb 06, 2006 at 09:52:03PM +0100, Bertrand Jacquin (Beber) wrote:
 > 
-> People who want to use --include semantics will acquire a habit
-> of explicitly askign for --include during 1.3.0 development
-> period.  They do not need to unlearn anything when 1.3.0 happens.
+> > Why aren't excute hooks/* (with +x perms) when I do a git-http-push ?
+> > Also if i push with cg-push on the same repo but with git+ssh
+> > protocol, hooks are execute.
 > 
-> People who learned to type --only can unlearn it to reduce
-> typing when 1.3.0 happens, but unlearning is not a requirement.
-> Being explicit should always work.
+> Hooks must run on the destination server when you're doing a push.  If
+> you use the git+ssh protocol, that server is running a git daemon that
+> knows how to execute hooks; if you use the http/DAV protocol, that
+> server does not.
 > 
-> New people that come after 1.3.0 will get the --only semantics
-> by default, the intuitiveness of which has been argued to death,
-> without using any flags.
 
-Hmmm...  So maybe just to add fire to the discussion,
-maybe the problem lies in the "tool name".  What if there
-were two tools named "git-commit-index" and "git-commit-path"?
-I understand that this is, in some way, identical to the
-"--include" and "--only" sorts of notions.  But I think it
-might make the intent clearer, and easier to describe/document.
-I think part of my concern with the options is trying to
-recall/describe just exactly _what_ is "included" with
-the "--include", or what is excluded with the "--only".
-It is the index's data/state, of course.  So perhaps
-a "git commit-index" might be consistent tool naming?
-And for contrast "git commit-file" or "git commit-path"?
+I know basically nothing about DAV, but wouldn't it be possible to
+have a CGI-script which executes the hooks upon the client's request?
 
-Just a thought.
-
-jdl
+- Fredrik
