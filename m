@@ -1,89 +1,68 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [Cogito] Various bugs
-Date: Mon, 06 Feb 2006 19:03:00 -0800
-Message-ID: <7v8xsn50rf.fsf@assigned-by-dhcp.cox.net>
-References: <20060131041318.GC30744@diku.dk>
-	<20060207003643.GJ31278@pasky.or.cz>
-	<7vfymw3oym.fsf@assigned-by-dhcp.cox.net>
-	<20060207021006.GM31278@pasky.or.cz>
+Subject: Re: git-am: "Patch fragment without a header"
+Date: Mon, 06 Feb 2006 19:20:52 -0800
+Message-ID: <7vwtg73ld7.fsf@assigned-by-dhcp.cox.net>
+References: <43E80D23.4070007@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 07 04:03:28 2006
+X-From: git-owner@vger.kernel.org Tue Feb 07 04:21:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6J8J-000429-SN
-	for gcvg-git@gmane.org; Tue, 07 Feb 2006 04:03:13 +0100
+	id 1F6JPX-0006rI-4N
+	for gcvg-git@gmane.org; Tue, 07 Feb 2006 04:21:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964943AbWBGDDE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Feb 2006 22:03:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964947AbWBGDDE
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Feb 2006 22:03:04 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:48045 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S964943AbWBGDDC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2006 22:03:02 -0500
+	id S932446AbWBGDU4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Feb 2006 22:20:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932447AbWBGDU4
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Feb 2006 22:20:56 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:28302 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932446AbWBGDU4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Feb 2006 22:20:56 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao06.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060207030027.PQME26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 6 Feb 2006 22:00:27 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060207021006.GM31278@pasky.or.cz> (Petr Baudis's message of
-	"Tue, 7 Feb 2006 03:10:06 +0100")
+          id <20060207031743.VCVG20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 6 Feb 2006 22:17:43 -0500
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <43E80D23.4070007@zytor.com> (H. Peter Anvin's message of "Mon,
+	06 Feb 2006 18:59:47 -0800")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15679>
 
-Petr Baudis <pasky@suse.cz> writes:
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
->> > I'm puzzled. GIT should handle this fine.
->> >
->> > 	export GIT_AUTHOR_NAME=''
->> > 	git-commit-tree $(cg-object-id -t)
->> >
->> > works as expected, but for some reason escaping me it does not work
->> > inside of cg-commit. Insights welcomed.
->> ...
-> Thanks, I've updated the cg-commit version. Note that the empty
-> GIT_AUTHOR_NAME problem seems to exist in git-commit as well.
+> git-am from git-1.1.6 refuses to apply the following two patches,
+> whereas patch(1) sees nothing wrong with them...
 
-It depends on what you expect, but it meets _my_ expectation:
+Linus would have said "Say No to MIME".  I am a bit too busy
+right now so if you are inclined to take a look, the problem is
+in mailinfo.
 
-    $ GIT_AUTHOR_NAME='' git-commit-tree $(git-write-tree) </dev/null
-    Committing initial tree a2b59c3848164a2c9c3c75fbaadccaed9485da92
-    ef90563fa278735af367e7606ea7eb2559121ca7
-    $ git-cat-file commit ef90563fa278735af367e7606ea7eb2559121ca7
-    tree a2b59c3848164a2c9c3c75fbaadccaed9485da92
-    author  <junkio@cox.net> 1139281078 -0800
-    committer Junio C Hamano <junkio@cox.net> 1139281078 -0800
+It tries to do a limited form of MIME and fails.  The problem is
+that it does not handle different content transfer encodings
+used in the same message.  The first part of the multipart (log
+message) does this:
 
-That is, the user said GIT_AUTHOR_NAME is empty, so he gets a
-commit with an empty author name.
+    Content-Type: text/plain; charset=iso-8859-1; format=flowed
+    Content-Disposition: inline
+    Content-Transfer-Encoding: quoted-printable
 
-get_ident() in ident.c does this. getenv("GIT_AUTHOR_NAME") and
-friends are passed to it, and git_default_* are takenfrom gecos.
-It might match some peoples' expectation (but not mine) if we
-did this instead.
+and it then switches to:
 
+    Content-Type: text/plain; charset=us-ascii
+    Content-Disposition: inline; filename=klibc-add-luks-to-fstype-v2
 
-diff --git a/ident.c b/ident.c
-index 0461b8b..7ec7516 100644
---- a/ident.c
-+++ b/ident.c
-@@ -163,9 +163,9 @@ static const char *get_ident(const char 
- 	char date[50];
- 	int i;
- 
--	if (!name)
-+	if (!name || !*name)
- 		name = git_default_name;
--	if (!email)
-+	if (!email || !*email)
- 		email = git_default_email;
- 	strcpy(date, git_default_date);
- 	if (date_str)
+    Index: klibc/usr/kinit/fstype/fstype.c
+    ===================================================================
+    --- .....
+
+in the second part.  The mailinfo splits them alright but it
+still thinks it needs to help with quoted printable, and ends up
+eating these ===== marks and spitting out garbage.
