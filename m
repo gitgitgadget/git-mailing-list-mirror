@@ -1,67 +1,97 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: git-http-push and hooks
-Date: Tue, 7 Feb 2006 15:48:12 -0800
-Message-ID: <20060207234812.GC3833@reactrix.com>
-References: <20060206205203.GA20973@guybrush.melee> <20060206232231.GK3873@reactrix.com> <20060207195458.GA7217@c165.ib.student.liu.se> <20060207202351.GA3833@reactrix.com> <7vwtg6uaw6.fsf@assigned-by-dhcp.cox.net> <20060207224551.GB3833@reactrix.com> <7vpslysqcb.fsf@assigned-by-dhcp.cox.net>
+From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
+Subject: Re: [PATCH] .gitignore git-rerere and config.mak
+Date: Wed, 08 Feb 2006 00:23:41 +0100
+Message-ID: <43E92BFD.7060909@gorzow.mm.pl>
+References: <20060207172234.41A975BF02@nox.op5.se> <7vk6c7uj21.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0602071951370.26070@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 08 00:49:01 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig75249AC97475F85017F0B87C"
+Cc: Junio C Hamano <junkio@cox.net>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 08 01:47:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6cZv-0006or-Dy
-	for gcvg-git@gmane.org; Wed, 08 Feb 2006 00:48:59 +0100
+	id 1F6dUj-0008RG-VZ
+	for gcvg-git@gmane.org; Wed, 08 Feb 2006 01:47:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030292AbWBGXs5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Feb 2006 18:48:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030290AbWBGXs4
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 18:48:56 -0500
-Received: from 195.37.26.69.virtela.com ([69.26.37.195]:45856 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1030292AbWBGXs4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2006 18:48:56 -0500
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k17NmCEi027479;
-	Tue, 7 Feb 2006 15:48:13 -0800
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k17NmCq6027477;
-	Tue, 7 Feb 2006 15:48:12 -0800
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vpslysqcb.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.1i
+	id S1030315AbWBHArj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Feb 2006 19:47:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030323AbWBHArj
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 19:47:39 -0500
+Received: from goliat1.kalisz.mm.pl ([81.15.136.226]:40921 "EHLO kalisz.mm.pl")
+	by vger.kernel.org with ESMTP id S1030315AbWBHAri (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Feb 2006 19:47:38 -0500
+Received: (qmail 1996 invoked from network); 8 Feb 2006 00:47:33 -0000
+Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.201.167])
+          (envelope-sender <astralstorm@gorzow.mm.pl>)
+          by 0 (qmail-ldap-1.03) with SMTP
+          for <junkio@cox.net>; 8 Feb 2006 00:47:33 -0000
+Received: from [192.168.0.1] (zen.uplink [192.168.0.1])
+	by zen.uplink (Postfix) with ESMTP id 24403178696;
+	Wed,  8 Feb 2006 00:23:46 +0100 (CET)
+User-Agent: Thunderbird 1.4.1 (X11/20051010)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0602071951370.26070@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15725>
 
-On Tue, Feb 07, 2006 at 03:26:28PM -0800, Junio C Hamano wrote:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig75249AC97475F85017F0B87C
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> If I and you clone from a shared repository at the same time, I
-> did my development while you did your own on top of that same
-> commit without pulling from the repository further, and I
-> uploaded my changes to update the ref, what should happen to you
-> once you are ready to push?
-> 
-> Is that what being asked?
-> 
-> If so, I think the sensible thing to do is to reject your push
-> and suggest you to pull first, just like the git native protocol
-> push does.  That pull would end up first merging my changes to
-> your work in your repository, and then you can push the result
-> back to the shared repository.  Otherwise you would lose my
-> changes.
+Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Tue, 7 Feb 2006, Junio C Hamano wrote:
+>=20
+>> Andreas Ericsson <ae@op5.se> writes:
+>>
+>>> --- a/.gitignore
+>>> +++ b/.gitignore
+>>> @@ -123,3 +124,4 @@ git-core.spec
+>>>  libgit.a
+>>>  *.o
+>>>  *.py[co]
+>>> +config.mak
+>> I am not sure about this part.  It is plausible that somebody
+>> who privately uses config.mak has it in _his_ repository under
+>> version control.  Should we list it in .gitignore?
+>=20
+> I have it in .gitignore. If there were changes to config.mak which I ha=
+d=20
+> in all my copies of git, I'd have them directly in the Makefile.
+>=20
+> Hth,
+> Dscho
 
-Makes sense, and it's the way http-push already works for heads.  I
-guess where I'm not clear is tags - since info/refs is generated by
-recursing through everything in the refs/ subdirectory.  I think I just
-answered my own question though; http-push needs to recurse through
-everything under refs/ on the remote end to generate the new info/refs
-file.  That just leaves the problem that http-push doesn't push tags
-yet.
+Somehow git-rerere didn't end up getting included in .gitignore...
 
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+--=20
+GPG Key id:  0xD1F10BA2
+Fingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
+
+AstralStorm
+
+
+--------------enig75249AC97475F85017F0B87C
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFD6SwBlUMEU9HxC6IRArEVAJ9IoBaN8nxC5o5f1dSMsF7vcDqBFACgqaoS
+4XdIXlc21KDs2ZQebGJKpdI=
+=/5xP
+-----END PGP SIGNATURE-----
+
+--------------enig75249AC97475F85017F0B87C--
