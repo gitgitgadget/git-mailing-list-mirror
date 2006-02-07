@@ -1,74 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [Cogito] Various bugs
-Date: Tue, 07 Feb 2006 12:49:34 -0800
-Message-ID: <7v8xsmvqqp.fsf@assigned-by-dhcp.cox.net>
-References: <20060131041318.GC30744@diku.dk>
-	<20060207003643.GJ31278@pasky.or.cz>
-	<7vfymw3oym.fsf@assigned-by-dhcp.cox.net>
-	<20060207021006.GM31278@pasky.or.cz>
-	<7v8xsn50rf.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602070751410.3854@g5.osdl.org>
+From: Bertrand Jacquin <beber.mailing@gmail.com>
+Subject: Re: git-http-push and hooks
+Date: Tue, 7 Feb 2006 21:51:25 +0100
+Message-ID: <4fb292fa0602071251y173efc4dw98fe1e4c035741a3@mail.gmail.com>
+References: <20060206205203.GA20973@guybrush.melee>
+	 <20060206232231.GK3873@reactrix.com>
+	 <20060207195458.GA7217@c165.ib.student.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 07 21:51:12 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Nick Hengeveld <nickh@reactrix.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 07 21:53:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6ZmR-0003UQ-Ff
-	for gcvg-git@gmane.org; Tue, 07 Feb 2006 21:49:45 +0100
+	id 1F6ZoC-0003ua-SB
+	for gcvg-git@gmane.org; Tue, 07 Feb 2006 21:51:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932391AbWBGUth (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Feb 2006 15:49:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932401AbWBGUth
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 15:49:37 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:61094 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932391AbWBGUtg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2006 15:49:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060207204647.LXKE17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 7 Feb 2006 15:46:47 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602070751410.3854@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 7 Feb 2006 07:53:57 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932073AbWBGUva (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Feb 2006 15:51:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932182AbWBGUva
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 15:51:30 -0500
+Received: from uproxy.gmail.com ([66.249.92.201]:16701 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932073AbWBGUv3 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Feb 2006 15:51:29 -0500
+Received: by uproxy.gmail.com with SMTP id s2so50027uge
+        for <git@vger.kernel.org>; Tue, 07 Feb 2006 12:51:27 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KkH6tH4tlloaObNlikJpyXBLdUtadj5gWjCsc+1Nj6r/AgW00DgBvOKr81bBbV9LTX/v904TO+jXkGCD+saUkY06RnC3XrnyX9bXUQywiRi0xW+qlRnnOAK/n/oa4wrxfNlfDPmBFlL3g1g5ZPbO1c/4hBJRwXRyNt9xkP6ZHNw=
+Received: by 10.48.235.15 with SMTP id i15mr1696730nfh;
+        Tue, 07 Feb 2006 12:51:25 -0800 (PST)
+Received: by 10.49.5.3 with HTTP; Tue, 7 Feb 2006 12:51:25 -0800 (PST)
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20060207195458.GA7217@c165.ib.student.liu.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15714>
 
-Linus Torvalds <torvalds@osdl.org> writes:
-
-> An empty GIT_AUTHOR_NAME should _not_ mean that we use the default name 
-> (which is usually the committer), because rather than meaning "default", 
-> it most likely means "buggy import script". 
+On 2/7/06, Fredrik Kuivinen <freku045@student.liu.se> wrote:
+> On Mon, Feb 06, 2006 at 03:22:31PM -0800, Nick Hengeveld wrote:
+> > On Mon, Feb 06, 2006 at 09:52:03PM +0100, Bertrand Jacquin (Beber) wrote:
+> >
+> > > Why aren't excute hooks/* (with +x perms) when I do a git-http-push ?
+> > > Also if i push with cg-push on the same repo but with git+ssh
+> > > protocol, hooks are execute.
+> >
+> > Hooks must run on the destination server when you're doing a push.  If
+> > you use the git+ssh protocol, that server is running a git daemon that
+> > knows how to execute hooks; if you use the http/DAV protocol, that
+> > server does not.
+> >
 >
-> I'd rather have an email import of mine say that it cannot commit, than 
-> have it put "Linus Torvalds" in the author line (and some random email).
+> I know basically nothing about DAV, but wouldn't it be possible to
+> have a CGI-script which executes the hooks upon the client's request?
 
-I am inclined to agree.  Something like this?
+Svn can execute hooks :/ But maybe this is implemented in -D SVN
+module for Apache. Donno
 
-This would also make 'git-var GIT_COMMITTER_IDENT' to barf,
-which I think is a good thing.
+>
+> - Fredrik
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
----
-diff --git a/ident.c b/ident.c
-index 0461b8b..23b8cfc 100644
---- a/ident.c
-+++ b/ident.c
-@@ -167,6 +167,11 @@ static const char *get_ident(const char 
- 		name = git_default_name;
- 	if (!email)
- 		email = git_default_email;
-+
-+	if (!*name || !*email)
-+		die("empty ident %s <%s> not allowed",
-+		    name, email);
-+
- 	strcpy(date, git_default_date);
- 	if (date_str)
- 		parse_date(date_str, date, sizeof(date));
+
+--
+Beber
+#e.fr@freenode
