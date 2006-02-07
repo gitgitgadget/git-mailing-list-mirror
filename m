@@ -1,55 +1,57 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
+From: Nick Hengeveld <nickh@reactrix.com>
 Subject: Re: git-http-push and hooks
-Date: Tue, 7 Feb 2006 20:54:58 +0100
-Message-ID: <20060207195458.GA7217@c165.ib.student.liu.se>
-References: <20060206205203.GA20973@guybrush.melee> <20060206232231.GK3873@reactrix.com>
+Date: Tue, 7 Feb 2006 12:23:51 -0800
+Message-ID: <20060207202351.GA3833@reactrix.com>
+References: <20060206205203.GA20973@guybrush.melee> <20060206232231.GK3873@reactrix.com> <20060207195458.GA7217@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: "Bertrand Jacquin (Beber)" <beber@guybrush.melee>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 07 20:55:33 2006
+X-From: git-owner@vger.kernel.org Tue Feb 07 21:25:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6Yvr-0007LD-8l
-	for gcvg-git@gmane.org; Tue, 07 Feb 2006 20:55:25 +0100
+	id 1F6ZNb-0005PI-6d
+	for gcvg-git@gmane.org; Tue, 07 Feb 2006 21:24:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751013AbWBGTzM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Feb 2006 14:55:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbWBGTzL
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 14:55:11 -0500
-Received: from [85.8.31.11] ([85.8.31.11]:60592 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S1750792AbWBGTzK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Feb 2006 14:55:10 -0500
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id ADC864103; Tue,  7 Feb 2006 21:08:47 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1F6YvT-0001si-00; Tue, 07 Feb 2006 20:54:59 +0100
-To: Nick Hengeveld <nickh@reactrix.com>
+	id S965064AbWBGUYA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Feb 2006 15:24:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965071AbWBGUYA
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 15:24:00 -0500
+Received: from 194.37.26.69.virtela.com ([69.26.37.194]:41665 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S965064AbWBGUX7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2006 15:23:59 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k17KNqMR023541;
+	Tue, 7 Feb 2006 12:23:53 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k17KNq2v023539;
+	Tue, 7 Feb 2006 12:23:52 -0800
+To: Fredrik Kuivinen <freku045@student.liu.se>
 Content-Disposition: inline
-In-Reply-To: <20060206232231.GK3873@reactrix.com>
-User-Agent: Mutt/1.5.11
+In-Reply-To: <20060207195458.GA7217@c165.ib.student.liu.se>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15711>
 
-On Mon, Feb 06, 2006 at 03:22:31PM -0800, Nick Hengeveld wrote:
-> On Mon, Feb 06, 2006 at 09:52:03PM +0100, Bertrand Jacquin (Beber) wrote:
-> 
-> > Why aren't excute hooks/* (with +x perms) when I do a git-http-push ?
-> > Also if i push with cg-push on the same repo but with git+ssh
-> > protocol, hooks are execute.
-> 
-> Hooks must run on the destination server when you're doing a push.  If
-> you use the git+ssh protocol, that server is running a git daemon that
-> knows how to execute hooks; if you use the http/DAV protocol, that
-> server does not.
-> 
+On Tue, Feb 07, 2006 at 08:54:58PM +0100, Fredrik Kuivinen wrote:
 
-I know basically nothing about DAV, but wouldn't it be possible to
-have a CGI-script which executes the hooks upon the client's request?
+> I know basically nothing about DAV, but wouldn't it be possible to
+> have a CGI-script which executes the hooks upon the client's request?
 
-- Fredrik
+It would, although if custom software can be run on the server you might
+as well run the git daemon.
+
+There are options for a DAV-only environment though.  While the hooks
+themselves can't be run, git-http-push can be modified to update the
+remote pack and ref info (although it's not clear to me under what
+conditions it should do so...)  DAV-specific versions of pack
+management utilities are feasible as well.
+
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
