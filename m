@@ -1,67 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Nick Hengeveld <nickh@reactrix.com>
 Subject: Re: git-http-push and hooks
-Date: Tue, 07 Feb 2006 15:41:22 -0800
-Message-ID: <7v8xsmspnh.fsf@assigned-by-dhcp.cox.net>
-References: <20060206205203.GA20973@guybrush.melee>
-	<20060206232231.GK3873@reactrix.com>
-	<20060207195458.GA7217@c165.ib.student.liu.se>
-	<20060207202351.GA3833@reactrix.com>
-	<20060207205709.GB7217@c165.ib.student.liu.se>
-	<4fb292fa0602071302p551aca02j53d40e3f8e25ff8a@mail.gmail.com>
+Date: Tue, 7 Feb 2006 15:48:12 -0800
+Message-ID: <20060207234812.GC3833@reactrix.com>
+References: <20060206205203.GA20973@guybrush.melee> <20060206232231.GK3873@reactrix.com> <20060207195458.GA7217@c165.ib.student.liu.se> <20060207202351.GA3833@reactrix.com> <7vwtg6uaw6.fsf@assigned-by-dhcp.cox.net> <20060207224551.GB3833@reactrix.com> <7vpslysqcb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 08 00:41:59 2006
+X-From: git-owner@vger.kernel.org Wed Feb 08 00:49:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6cT0-0005jG-L7
-	for gcvg-git@gmane.org; Wed, 08 Feb 2006 00:41:51 +0100
+	id 1F6cZv-0006or-Dy
+	for gcvg-git@gmane.org; Wed, 08 Feb 2006 00:48:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030285AbWBGXl0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Feb 2006 18:41:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030283AbWBGXl0
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 18:41:26 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:21957 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1030285AbWBGXlY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2006 18:41:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060207233904.JKSO17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 7 Feb 2006 18:39:04 -0500
-To: Bertrand Jacquin <beber.mailing@gmail.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030292AbWBGXs5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Feb 2006 18:48:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030290AbWBGXs4
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 18:48:56 -0500
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:45856 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1030292AbWBGXs4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2006 18:48:56 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k17NmCEi027479;
+	Tue, 7 Feb 2006 15:48:13 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k17NmCq6027477;
+	Tue, 7 Feb 2006 15:48:12 -0800
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vpslysqcb.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15724>
 
-Bertrand Jacquin <beber.mailing@gmail.com> writes:
+On Tue, Feb 07, 2006 at 03:26:28PM -0800, Junio C Hamano wrote:
 
-> On 2/7/06, Fredrik Kuivinen <freku045@student.liu.se> wrote:
->> You can't push to a git daemon, can you?
->>
->> Furthermore, if the user has a working http/DAV server installed it
->> might be the case that she prefers to use that one instead of
->> installing a new daemon.
->
-> Personaly is use http because at work i've a $$@#! proxy and allow dav
-> and nothing else.
-> Could you push over http/proxy with gitdaemon ? Isn't it just a read
-> only method ?
+> If I and you clone from a shared repository at the same time, I
+> did my development while you did your own on top of that same
+> commit without pulling from the repository further, and I
+> uploaded my changes to update the ref, what should happen to you
+> once you are ready to push?
+> 
+> Is that what being asked?
+> 
+> If so, I think the sensible thing to do is to reject your push
+> and suggest you to pull first, just like the git native protocol
+> push does.  That pull would end up first merging my changes to
+> your work in your repository, and then you can push the result
+> back to the shared repository.  Otherwise you would lose my
+> changes.
 
-I think you are agreeing with what Fredrik said.  git-daemon is
-a read-only thing.  You would want to SSH into the repository
-machine.
+Makes sense, and it's the way http-push already works for heads.  I
+guess where I'm not clear is tags - since info/refs is generated by
+recursing through everything in the refs/ subdirectory.  I think I just
+answered my own question though; http-push needs to recurse through
+everything under refs/ on the remote end to generate the new info/refs
+file.  That just leaves the problem that http-push doesn't push tags
+yet.
 
-If you are using git at work for work, and the benefit git gives
-you outweigh the cost and trouble to modify the proxy and/or
-firewalling settings, maybe you can convince your management to
-allow you to SSH out to make you more productive?  That way you
-can use git-push over native git protocol.
-
-If you are using git while at work but not for work, then maybe
-I should not be giving an advice ;-).
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
