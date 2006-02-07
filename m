@@ -1,84 +1,81 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: gitk changing line color for no reason after merge
-Date: Tue, 07 Feb 2006 00:18:37 -0500
-Message-ID: <1139289517.15955.23.camel@dv>
-References: <1138900897.28967.18.camel@dv>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-am: "Patch fragment without a header"
+Date: Mon, 06 Feb 2006 21:35:25 -0800
+Message-ID: <7vfymv3f4y.fsf@assigned-by-dhcp.cox.net>
+References: <43E80D23.4070007@zytor.com>
+	<7vwtg73ld7.fsf@assigned-by-dhcp.cox.net> <43E814C2.6090104@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 07 06:18:52 2006
+X-From: git-owner@vger.kernel.org Tue Feb 07 06:35:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6LFX-00014K-FE
-	for gcvg-git@gmane.org; Tue, 07 Feb 2006 06:18:47 +0100
+	id 1F6LVj-0003V3-ND
+	for gcvg-git@gmane.org; Tue, 07 Feb 2006 06:35:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964982AbWBGFSo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Feb 2006 00:18:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964985AbWBGFSo
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 00:18:44 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:63921 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S964982AbWBGFSo
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Feb 2006 00:18:44 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1F6LDx-0004en-53
-	for git@vger.kernel.org; Tue, 07 Feb 2006 00:17:09 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.60)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1F6LFN-00056d-ER; Tue, 07 Feb 2006 00:18:37 -0500
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <1138900897.28967.18.camel@dv>
-X-Mailer: Evolution 2.5.90 (2.5.90-1) 
+	id S1750897AbWBGFf3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Feb 2006 00:35:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750915AbWBGFf3
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 00:35:29 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:49800 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1750888AbWBGFf2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2006 00:35:28 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060207053533.DNEX25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 7 Feb 2006 00:35:33 -0500
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <43E814C2.6090104@zytor.com> (H. Peter Anvin's message of "Mon,
+	06 Feb 2006 19:32:18 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15685>
 
-Hello!
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-Sorry for replying to myself, but there is nobody else to reply to.
+> Unfortunately git-mailinfo is in C, otherwise I'd have suggested using
+> the Perl MIME-tools, which seems to have all this stuff in it.
 
-> I think it would be much better if line colors only change at
-> non-trivial nodes, i.e. those with more than one child or parent.
+Heh, spawn Perl for every message?  I'd be ****ed by Linus if I
+did so ;-).
 
-I didn't realize that the colors correspond to nodes, not branches.
-Every node has one color that is used for lines to all of its children.
-It would be much better to assign colors to "branches" consisting of
-individual lines connecting nodes, but changing that would require many
-changes in gitk.
+This should fix it and I'd appreciate if you try it on other
+messages.
 
-> diff --git a/gitk b/gitk
-> index f12b3ce..14ff570 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -770,7 +770,7 @@ proc assigncolor {id} {
->  
->      if [info exists colormap($id)] return
->      set ncolors [llength $colors]
-> -    if {$nparents($id) <= 1 && $nchildren($id) == 1} {
-> +    if {$nchildren($id) == 1} {
->  	set child [lindex $children($id) 0]
->  	if {[info exists colormap($child)]
->  	    && $nparents($child) == 1} {
-> 
-> 
+I tried it on the message you quoted with:
 
-I still stand behind this patch because it eliminates color changes on
-the nodes that have exactly one child and parent.  $nparents($id) is
-irrelevant here, because it characterizes the current node, but the code
-decides whether the line should change color at the child node.
+    git-mailinfo -u /var/tmp/msg /var/tmp/patch <./+hpa.eml >/var/tmp/info
 
-However, further changes to reduce color changes didn't produce nice
-results for me.  If I try to keep one color running as long as possible,
-I get branches of the same color because, as I said, gitk uses the same
-color for connections to all children.  So, every node on the branch
-spurs branching lines of the same color, which can intersect or run
-side-by-side.
+The resulting 'msg' and 'info' looks reasonable utf8 and patch
+was not corrupt.
 
-I can submit this patch formally, but I hope to get some comments first.
+-- >8 --
+[PATCH] mailinfo: reset CTE after each multipart
 
--- 
-Regards,
-Pavel Roskin
+If the first part uses quoted-printable to protect iso8859-1
+name in the commit log, and the second part was plain ascii text
+patchfile without even Content-Transfer-Encoding subheader, we
+incorrectly tried to decode the patch as quoted printable.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+diff --git a/mailinfo.c b/mailinfo.c
+index 0265a29..ff2d4d4 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -707,6 +707,9 @@ static void handle_multipart_body(void)
+ 		if (!len) {
+ 			if (handle_multipart_one_part() < 0)
+ 				return;
++			/* Reset per part headers */
++			transfer_encoding = TE_DONTCARE;
++			charset[0] = 0;
+ 		}
+ 		else
+ 			check_subheader_line(line, len);
