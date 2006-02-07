@@ -1,81 +1,68 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH 2/3] cg-patch: Use optparse
-Date: Tue, 7 Feb 2006 23:44:33 +0100
-Message-ID: <20060207224433.GB24790@diku.dk>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: git-http-push and hooks
+Date: Tue, 7 Feb 2006 14:45:51 -0800
+Message-ID: <20060207224551.GB3833@reactrix.com>
+References: <20060206205203.GA20973@guybrush.melee> <20060206232231.GK3873@reactrix.com> <20060207195458.GA7217@c165.ib.student.liu.se> <20060207202351.GA3833@reactrix.com> <7vwtg6uaw6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 07 23:45:32 2006
+X-From: git-owner@vger.kernel.org Tue Feb 07 23:46:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6baC-0003Cw-B1
-	for gcvg-git@gmane.org; Tue, 07 Feb 2006 23:45:14 +0100
+	id 1F6bbb-0003VB-Br
+	for gcvg-git@gmane.org; Tue, 07 Feb 2006 23:46:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030222AbWBGWoz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Feb 2006 17:44:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030221AbWBGWoy
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 17:44:54 -0500
-Received: from mgw1.diku.dk ([130.225.96.91]:24779 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1030222AbWBGWof (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Feb 2006 17:44:35 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id BD2F752D5A3;
-	Tue,  7 Feb 2006 23:44:34 +0100 (CET)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 19983-05; Tue,  7 Feb 2006 23:44:33 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 359B252D5A2;
-	Tue,  7 Feb 2006 23:44:33 +0100 (CET)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 358E86DFC1C; Tue,  7 Feb 2006 23:43:48 +0100 (CET)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 2407261AD6; Tue,  7 Feb 2006 23:44:33 +0100 (CET)
-To: Petr Baudis <pasky@ucw.cz>
+	id S1030231AbWBGWqb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Feb 2006 17:46:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030238AbWBGWqa
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 17:46:30 -0500
+Received: from 193.37.26.69.virtela.com ([69.26.37.193]:20731 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1030239AbWBGWq3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2006 17:46:29 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k17MjpNV025992;
+	Tue, 7 Feb 2006 14:45:51 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k17MjpA8025990;
+	Tue, 7 Feb 2006 14:45:51 -0800
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
+In-Reply-To: <7vwtg6uaw6.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15721>
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
-commit 77defc166986330f4285db8faf206c1176a6c4ae
-tree 293120fe428f40eab2422ed59d84e77aa1fa53a1
-parent 5095aca7013d87ccdb08dad20a9fb93d7465d33d
-author Jonas Fonseca <fonseca@diku.dk> Tue, 07 Feb 2006 23:07:32 +0100
-committer Jonas Fonseca <fonseca@antimatter.localdomain> Tue, 07 Feb 2006 23:07:32 +0100
+On Tue, Feb 07, 2006 at 01:17:13PM -0800, Junio C Hamano wrote:
 
- cg-patch |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
+> If the server info updates is the _only_ problem, then perhaps
+> that would be the easiest and cleanest.  Whenever you update or
+> add a ref you would need to update info/refs (otherwise
+> ls-remote would not give you the latest info), and whenever you
+> repack you would need to update objects/info/packs.
 
-diff --git a/cg-patch b/cg-patch
-index 8be13be..90dfd30 100755
---- a/cg-patch
-+++ b/cg-patch
-@@ -70,10 +70,13 @@ redzone_border()
- 
- 
- reverse=
--if [ "${ARGS[0]}" = "-R" ]; then
--	reverse=1
--	shift
--fi
-+while optparse; do
-+	if optparse -R; then
-+		reverse=1
-+	else
-+		optfail
-+	fi
-+done
- 
- 
- gonefile="$(mktemp -t gitapply.XXXXXX)"
+What happens if someone else updates a ref and it no longer matches your
+local ref?  Should the push scan the remote versions of all local refs
+and update whatever doesn't match?
+
+> You may probably want to have a CGI to allow you manage the
+> repository remotely anyway, to trigger a repack or remove a
+> stale branch head, for example.  Once you go that route maybe
+> having the CGI to do something like the pack protocol for more
+> efficient transfer might become more attractive.
+
+That's an option if the user has the ability to install CGI scripts on the
+DAV server, which doesn't seem like it will always be true.  Perhaps it
+would make sense to do both:
+
+- add a git-http-repack command that works in a DAV-only environment
+- add a CGI script to provide remote management, and a config
+  setting to git-http-push for the remote management URL
 
 -- 
-Jonas Fonseca
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
