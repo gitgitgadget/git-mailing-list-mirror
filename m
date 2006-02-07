@@ -1,51 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] .gitignore git-rerere and config.mak
-Date: Tue, 07 Feb 2006 10:20:54 -0800
-Message-ID: <7vk6c7uj21.fsf@assigned-by-dhcp.cox.net>
-References: <20060207172234.41A975BF02@nox.op5.se>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: "git diff a..b" broken
+Date: Tue, 7 Feb 2006 10:23:22 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602071020120.3854@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 07 19:23:04 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue Feb 07 19:26:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6XSV-0004Nz-GH
-	for gcvg-git@gmane.org; Tue, 07 Feb 2006 19:20:59 +0100
+	id 1F6XV2-0004yx-5w
+	for gcvg-git@gmane.org; Tue, 07 Feb 2006 19:23:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751029AbWBGSU4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Feb 2006 13:20:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964831AbWBGSU4
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 13:20:56 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:13761 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751029AbWBGSU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2006 13:20:56 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060207181929.JIRV6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 7 Feb 2006 13:19:29 -0500
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <20060207172234.41A975BF02@nox.op5.se> (Andreas Ericsson's
-	message of "Tue, 7 Feb 2006 17:23:12 +0000 (UTC)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964836AbWBGSXd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Feb 2006 13:23:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964843AbWBGSXd
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 13:23:33 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:57527 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964836AbWBGSXd (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Feb 2006 13:23:33 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k17INQDZ031841
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 7 Feb 2006 10:23:27 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k17INN8I009304;
+	Tue, 7 Feb 2006 10:23:26 -0800
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15704>
 
-Andreas Ericsson <ae@op5.se> writes:
 
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -123,3 +124,4 @@ git-core.spec
->  libgit.a
->  *.o
->  *.py[co]
-> +config.mak
+There's a funny breakage from the recent "--cc" changes.
 
-I am not sure about this part.  It is plausible that somebody
-who privately uses config.mak has it in _his_ repository under
-version control.  Should we list it in .gitignore?
+If you do 
+
+	git-diff-tree --cc version version2
+
+and "version2" is a merge, it will do something really strange. I haven't 
+figured out quite _what_ it does, but it's definitely the wrong thing.
+
+Just a heads up. I'll try to track down what the breakage is.
+
+		Linus
