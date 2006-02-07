@@ -1,65 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] .gitignore git-rerere and config.mak
-Date: Tue, 7 Feb 2006 19:52:37 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602071951370.26070@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060207172234.41A975BF02@nox.op5.se> <7vk6c7uj21.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] git-commit: revamp the git-commit semantics.
+Date: Tue, 07 Feb 2006 14:18:39 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602071412390.5397@localhost.localdomain>
+References: <7vpsm2hzng.fsf@assigned-by-dhcp.cox.net>
+ <e5bfff550602050536j73f1091dq9afae232f574d0b4@mail.gmail.com>
+ <7v64ntindq.fsf@assigned-by-dhcp.cox.net> <43E67745.2080302@gmail.com>
+ <7voe1le71b.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0602071135110.5397@localhost.localdomain>
+ <7vfymvvz1r.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0602071304160.5397@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 07 19:53:35 2006
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 07 20:19:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6XxD-0002ul-Os
-	for gcvg-git@gmane.org; Tue, 07 Feb 2006 19:52:45 +0100
+	id 1F6YMP-0008Hg-5D
+	for gcvg-git@gmane.org; Tue, 07 Feb 2006 20:18:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964889AbWBGSwl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Feb 2006 13:52:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964903AbWBGSwl
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 13:52:41 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:7051 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S964889AbWBGSwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2006 13:52:40 -0500
-Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5795F14651B; Tue,  7 Feb 2006 19:52:37 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 4904CA07;
-	Tue,  7 Feb 2006 19:52:37 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 10038146549; Tue,  7 Feb 2006 19:52:37 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S965148AbWBGTSm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Feb 2006 14:18:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965157AbWBGTSm
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Feb 2006 14:18:42 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:23942 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S965148AbWBGTSl
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Feb 2006 14:18:41 -0500
+Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IUC00BQU0B3TGF0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 07 Feb 2006 14:18:39 -0500 (EST)
+In-reply-to: <Pine.LNX.4.64.0602071304160.5397@localhost.localdomain>
+X-X-Sender: nico@localhost.localdomain
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk6c7uj21.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15708>
 
-Hi,
+On Tue, 7 Feb 2006, Nicolas Pitre wrote:
 
-On Tue, 7 Feb 2006, Junio C Hamano wrote:
+> The 1.3.x branch being the so called "unstable" branch makes it the 
+> appropriate place to do it at the earliest...
 
-> Andreas Ericsson <ae@op5.se> writes:
-> 
-> > --- a/.gitignore
-> > +++ b/.gitignore
-> > @@ -123,3 +124,4 @@ git-core.spec
-> >  libgit.a
-> >  *.o
-> >  *.py[co]
-> > +config.mak
-> 
-> I am not sure about this part.  It is plausible that somebody
-> who privately uses config.mak has it in _his_ repository under
-> version control.  Should we list it in .gitignore?
+As someone refreshed my memory in private, there is no "unstable" branch 
+like Linux used to have.  But hopefully you all understood what I meant 
+i.e. in the main branch after the stable 1.2.0 branch is forked.
 
-I have it in .gitignore. If there were changes to config.mak which I had 
-in all my copies of git, I'd have them directly in the Makefile.
 
-Hth,
-Dscho
+Nicolas
