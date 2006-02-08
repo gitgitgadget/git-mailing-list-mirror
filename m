@@ -1,54 +1,60 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] .gitignore git-rerere and config.mak
-Date: Tue, 07 Feb 2006 21:34:28 -0800
-Message-ID: <7vlkwmquqj.fsf@assigned-by-dhcp.cox.net>
-References: <7vk6c7uj21.fsf@assigned-by-dhcp.cox.net>
-	<1303.1139370931@lotus.CS.Berkeley.EDU>
+Subject: Re: [PATCH] git-commit: revamp the git-commit semantics.
+Date: Tue, 07 Feb 2006 21:41:37 -0800
+Message-ID: <7vbqxiquem.fsf@assigned-by-dhcp.cox.net>
+References: <7vpsm2hzng.fsf@assigned-by-dhcp.cox.net>
+	<e5bfff550602050536j73f1091dq9afae232f574d0b4@mail.gmail.com>
+	<7v64ntindq.fsf@assigned-by-dhcp.cox.net> <43E67745.2080302@gmail.com>
+	<7voe1le71b.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602071135110.5397@localhost.localdomain>
+	<7vfymvvz1r.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602071304160.5397@localhost.localdomain>
+	<Pine.LNX.4.64.0602071412390.5397@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 08 06:34:37 2006
+X-From: git-owner@vger.kernel.org Wed Feb 08 06:41:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6hyP-000360-3s
-	for gcvg-git@gmane.org; Wed, 08 Feb 2006 06:34:37 +0100
+	id 1F6i5O-0004Kj-Dc
+	for gcvg-git@gmane.org; Wed, 08 Feb 2006 06:41:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030452AbWBHFec (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Feb 2006 00:34:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030530AbWBHFec
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 00:34:32 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:62937 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1030452AbWBHFec (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Feb 2006 00:34:32 -0500
+	id S1030525AbWBHFls (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Feb 2006 00:41:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030535AbWBHFlr
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 00:41:47 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:17627 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1030525AbWBHFlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2006 00:41:47 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060208053126.BBZK17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 8 Feb 2006 00:31:26 -0500
-To: Jason Riedy <ejr@EECS.Berkeley.EDU>
-In-Reply-To: <1303.1139370931@lotus.CS.Berkeley.EDU> (Jason Riedy's message of
-	"Tue, 07 Feb 2006 19:55:31 -0800")
+          id <20060208053904.NTZJ26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 8 Feb 2006 00:39:04 -0500
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0602071412390.5397@localhost.localdomain> (Nicolas
+	Pitre's message of "Tue, 07 Feb 2006 14:18:39 -0500 (EST)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15732>
 
-Jason Riedy <ejr@EECS.Berkeley.EDU> writes:
+Nicolas Pitre <nico@cam.org> writes:
 
-> And Junio C Hamano writes:
->  - I am not sure about this part.  It is plausible that somebody
->  - who privately uses config.mak has it in _his_ repository under
->  - version control.
->
-> Like me.  That way I don't have to worry about conflicts in the
-> Makefile.  But I can change .gitignore in those branches...
+> As someone refreshed my memory in private, there is no "unstable" branch 
+> like Linux used to have.  But hopefully you all understood what I meant 
+> i.e. in the main branch after the stable 1.2.0 branch is forked.
 
-Or you can leave that as is.  .gitignore is used to sift
-untracked files into two categories - ignored and unknown.  So
-my initial worry was unfounded.
+Yes I understood what you meant.  Eventually we ship with --only
+as the default and the best timing is between 1.2.0 and 1.3.0.
 
-Sorry for the noise.
+I am just worried if it might turn out to be like shipping a
+bicycle with training wheels welded onto it (so it cannot be
+easily removed).  That is where my reluctance comes from.
+
+But I do not have to be convinced 100% myself in order to set it
+to the default, as long as the more important users are happy.
