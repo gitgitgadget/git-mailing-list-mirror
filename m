@@ -1,60 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-commit: revamp the git-commit semantics.
-Date: Tue, 07 Feb 2006 21:41:37 -0800
-Message-ID: <7vbqxiquem.fsf@assigned-by-dhcp.cox.net>
-References: <7vpsm2hzng.fsf@assigned-by-dhcp.cox.net>
-	<e5bfff550602050536j73f1091dq9afae232f574d0b4@mail.gmail.com>
-	<7v64ntindq.fsf@assigned-by-dhcp.cox.net> <43E67745.2080302@gmail.com>
-	<7voe1le71b.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602071135110.5397@localhost.localdomain>
-	<7vfymvvz1r.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602071304160.5397@localhost.localdomain>
-	<Pine.LNX.4.64.0602071412390.5397@localhost.localdomain>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Handling large files with GIT
+Date: Wed, 8 Feb 2006 22:14:18 +1300
+Message-ID: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 08 06:41:51 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Feb 08 10:14:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6i5O-0004Kj-Dc
-	for gcvg-git@gmane.org; Wed, 08 Feb 2006 06:41:50 +0100
+	id 1F6lPC-00050L-Mp
+	for gcvg-git@gmane.org; Wed, 08 Feb 2006 10:14:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030525AbWBHFls (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Feb 2006 00:41:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030535AbWBHFlr
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 00:41:47 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:17627 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1030525AbWBHFlr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Feb 2006 00:41:47 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060208053904.NTZJ26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 8 Feb 2006 00:39:04 -0500
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0602071412390.5397@localhost.localdomain> (Nicolas
-	Pitre's message of "Tue, 07 Feb 2006 14:18:39 -0500 (EST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932391AbWBHJOV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Feb 2006 04:14:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964986AbWBHJOV
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 04:14:21 -0500
+Received: from wproxy.gmail.com ([64.233.184.199]:61106 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964858AbWBHJOU convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Feb 2006 04:14:20 -0500
+Received: by wproxy.gmail.com with SMTP id i34so1428747wra
+        for <git@vger.kernel.org>; Wed, 08 Feb 2006 01:14:19 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=lAnk0uqMH2l4qgbTXVh5ZxEWXDSvTAoiWA0Xq5d341Lu19RPaxa0ErvvnUSnwMqXznsk8EncAwj554qoEby3m+fR5uu6xwgL4KgdP+QY91+Af8pn+mhFJMIdIAOeuvSIvI/4G+czcniLMvNijyMafAgF6qs6ka9V4pSr6oVXSU8=
+Received: by 10.54.112.10 with SMTP id k10mr9014820wrc;
+        Wed, 08 Feb 2006 01:14:18 -0800 (PST)
+Received: by 10.54.71.7 with HTTP; Wed, 8 Feb 2006 01:14:18 -0800 (PST)
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15734>
 
-Nicolas Pitre <nico@cam.org> writes:
+Roland Stigge recently pointed out a use case using very large files
+where GIT has some serious limitations. He is one of several Debian
+developers keeping their homedir under version control with SVN (blame
+Joey Hess for this - http://www.kitenet.net/~joey/svnhome.html ).
 
-> As someone refreshed my memory in private, there is no "unstable" branch 
-> like Linux used to have.  But hopefully you all understood what I meant 
-> i.e. in the main branch after the stable 1.2.0 branch is forked.
+SVN does reasonably well tracking his >1GB mbox file. Now, I don't
+know if I like the idea of putting my own mbox file under version
+control, but it looks like projects with large and slow-changing files
+would be in trouble with GIT. Not literally trouble, but gross
+inefficiencies.
 
-Yes I understood what you meant.  Eventually we ship with --only
-as the default and the best timing is between 1.2.0 and 1.3.0.
+The problems are two. At commit time, a full copy is stored in the
+object database until git-repack && git-prune-packed are called. And
+during the transfer over the git protocol we send the full object,
+even if both ends have objects that are good candidates for a small
+delta.
 
-I am just worried if it might turn out to be like shipping a
-bicycle with training wheels welded onto it (so it cannot be
-easily removed).  That is where my reluctance comes from.
+I'm not strong on either aspect of git (packfile format or git
+protocol), and I don't personally deal with large files. So feel free
+to ignore me for the time being. If it ever itches, you might get a
+patch...
 
-But I do not have to be convinced 100% myself in order to set it
-to the default, as long as the more important users are happy.
+cheers,
+
+
+martin
