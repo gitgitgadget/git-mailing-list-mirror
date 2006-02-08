@@ -1,88 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Handling large files with GIT
-Date: Wed, 08 Feb 2006 12:11:30 -0800
-Message-ID: <7v4q39pq4t.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>
-	<Pine.LNX.4.63.0602081248270.31700@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0602080815180.2458@g5.osdl.org>
-	<Pine.LNX.4.64.0602080853480.2458@g5.osdl.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [PATCH] Add git-annotate - a tool for annotating files with the revision and person that created each line in the file.
+Date: Wed, 8 Feb 2006 16:07:57 -0500
+Message-ID: <20060208210756.GA9490@mythryan2.michonline.com>
+References: <11394103753694-git-send-email-ryan@michonline.com> <7vd5hxpr2d.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 08 21:12:26 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 08 22:09:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6vfR-0004Ol-Qo
-	for gcvg-git@gmane.org; Wed, 08 Feb 2006 21:11:59 +0100
+	id 1F6wZ0-0003Nj-1G
+	for gcvg-git@gmane.org; Wed, 08 Feb 2006 22:09:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030598AbWBHULd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Feb 2006 15:11:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030599AbWBHULd
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 15:11:33 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:5366 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1030598AbWBHULc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Feb 2006 15:11:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060208200957.DFUW20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 8 Feb 2006 15:09:57 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602080853480.2458@g5.osdl.org> (Linus Torvalds's
-	message of "Wed, 8 Feb 2006 09:01:13 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964960AbWBHVJT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Feb 2006 16:09:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964922AbWBHVJT
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 16:09:19 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:50155 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S964914AbWBHVJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2006 16:09:18 -0500
+Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1F6wYp-0005rl-O9; Wed, 08 Feb 2006 16:09:13 -0500
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1F6wYj-0008B9-8h; Wed, 08 Feb 2006 16:09:11 -0500
+Received: from ryan by mythical with local (Exim 4.60)
+	(envelope-from <ryan@mythryan2.michonline.com>)
+	id 1F6wYA-0003LQ-VK; Wed, 08 Feb 2006 16:08:30 -0500
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vd5hxpr2d.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15750>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Wed, Feb 08, 2006 at 11:51:22AM -0800, Junio C Hamano wrote:
+> Ryan Anderson <ryan@michonline.com> writes:
+> 
+> > Signed-off-by: Ryan Anderson <ryan@michonline.com>
+> >
+> > ---
+> >
+> > I think this version is mostly ready to go.
+> >
+> > Junio, the post you pointed me at was very helpful (once I got around to
+> > listening to it), but the code it links to is missing - if that's a
+> > better partial implementation than this, can you ressurrect it
+> > somewhere?  I'd be happy to reintegrate it together.
+> 
+> I still have it, but the reason why I withdrew circulating it
+> was because I found that on some inputs it did not work
+> correctly as intended.  Not that the algorithm was necessarily
+> broken but the implementation certainly was.
+> 
+> Unlike yours mine reads and interprets diff output to find which
+> lines are common and which lines are added, and I think the diff
+> interpretation logic has various corner cases wrong.  I did
+> combine-diff.c diff interpreter without looking at my
+> 'git-blame', so I do not remember where I got it wrong,
+> though...
 
-> Side note: the original explicit git "delta" objects by Nicolas Pitre 
-> would have handled this large-file-case much more gracefully. 
+I tried that approach at first, and it was much much more confusing to
+try to keep track of.  The problem Linus found (that of a missing
+"all_lines_claimed()") was related to that code.  This implementation is
+simple, though it has to have some problems with guessing at duplicated
+lines incorrectly.
 
-True.
+> It's been a while since I looked at it the last time so it may
+> not even work with the current git, but here it is..
 
-> The pack-files had absolutely huge advantages, though, so I think we (I) 
-> did the right thing there in making the delta code only a very specific 
-> special case..
+I'll take a look through this in greater detail later, hopefully your
+approach can be applied.  Diff-analyzing is apparently tricky.
 
-Well the blame for ripping that out falls on me, actually...
+-- 
 
-> It is possible that we could re-introduce the "explicit delta" object, 
-> though (it's not incompatible with also doing pack-files, it's just that 
-> pack-files made 99% of all the arguments for an explicit delta go away).
-
-I do not remember we had 'rev-list --objects' support for Nico's
-explicit delta object chains.  If we didn't that would be a new
-development that needs to be done to resurrect it.  I know
-pack-objects never had support for it so obviously that needs to
-be added as well.  Probably explicit delta objects should always
-be packed in full without spending cost to find delta candidates.
-
-Personally I feel that post-1.2.0 would be a good time to start
-looking at enhancing the pack generation chain, rev-list piped
-to pack-objects.  This "large files" use case is helped by
-less self-contained packs while "shallow clone" use case
-we discussed earlier is helped by more self-contained packs (we
-had a discussion long time ago on this and I think we have the
-code to do so [*1*]). 
-
-An addition to pack-objects is needed to make it capable to read
-a list of objects that we do not want to include in the
-resulting pack but can be used as base objects for delitified.
-
-BTW, as to the "shallow clone", I changed my mind and am
-inclined to agree with Johannes that handling cut-offs
-differently from grafts is easier for dealing with later "give
-me more history" operation, so I am planning to chuck my jc/clone
-topic branch that I have included in the proposed updates so
-far.
-
-[Footnote]
-
-*1* http://article.gmane.org/gmane.comp.version-control.git/5779
+Ryan Anderson
+  sometimes Pug Majere
