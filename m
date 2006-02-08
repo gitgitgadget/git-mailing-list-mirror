@@ -1,53 +1,44 @@
-From: "Peter Eriksen" <s022018@student.dtu.dk>
-Subject: Re: [PATCH] Add git-annotate - a tool for annotating files with the revision and person that created each line in the file.
-Date: Wed, 8 Feb 2006 16:09:50 +0100
-Message-ID: <20060208150950.GA29346@ebar091.ebar.dtu.dk>
-References: <11394103753694-git-send-email-ryan@michonline.com>
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: Shortest path between commits
+Date: Wed, 8 Feb 2006 16:03:08 +0000
+Message-ID: <20060208160308.GB3484@linux-mips.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Feb 08 16:28:11 2006
+X-From: git-owner@vger.kernel.org Wed Feb 08 17:09:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6rCy-0004m7-Ct
-	for gcvg-git@gmane.org; Wed, 08 Feb 2006 16:26:17 +0100
+	id 1F6rma-00068F-2n
+	for gcvg-git@gmane.org; Wed, 08 Feb 2006 17:03:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030349AbWBHP0J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Feb 2006 10:26:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030355AbWBHP0J
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 10:26:09 -0500
-Received: from ebar091.ebar.dtu.dk ([192.38.93.106]:65244 "HELO
-	ebar091.ebar.dtu.dk") by vger.kernel.org with SMTP id S1030349AbWBHP0I
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Feb 2006 10:26:08 -0500
-Received: (qmail 29350 invoked by uid 5842); 8 Feb 2006 15:09:50 -0000
+	id S965168AbWBHQDA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Feb 2006 11:03:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965169AbWBHQC7
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 11:02:59 -0500
+Received: from mipsfw.mips-uk.com ([194.74.144.146]:26122 "EHLO
+	bacchus.dhis.org") by vger.kernel.org with ESMTP id S965168AbWBHQC7
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Feb 2006 11:02:59 -0500
+Received: from denk.linux-mips.net (denk.linux-mips.net [127.0.0.1])
+	by bacchus.dhis.org (8.13.4/8.13.4) with ESMTP id k18G39Bk003881
+	for <git@vger.kernel.org>; Wed, 8 Feb 2006 16:03:09 GMT
+Received: (from ralf@localhost)
+	by denk.linux-mips.net (8.13.4/8.13.4/Submit) id k18G382a003880
+	for git@vger.kernel.org; Wed, 8 Feb 2006 16:03:08 GMT
 To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <11394103753694-git-send-email-ryan@michonline.com>
-User-Agent: Mutt/1.5.6i
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15738>
 
-On Wed, Feb 08, 2006 at 09:52:55AM -0500, Ryan Anderson wrote:
-> Signed-off-by: Ryan Anderson <ryan@michonline.com>
-> 
-> ---
-> 
-> I think this version is mostly ready to go.
-> 
-> Junio, the post you pointed me at was very helpful (once I got around to
-> listening to it), but the code it links to is missing - if that's a
-> better partial implementation than this, can you ressurrect it
-> somewhere?  I'd be happy to reintegrate it together.
+I wonder if there some way to find the shortest path between two commits?
+That is if there is a merge between the two commits I only want the merge
+commit itself, not the potencially large list of commits that were merged.
 
-Does it depends on some ealier patch?  I get this:
+I need that for commit notification scripts; I don't want to spam users
+with too many emails and aggregating everything that came through a single
+merge would be a reaonsable approach.
 
-git]$ git-annotate diff-delta.c
-Undefined subroutine &main::all_lines_claimed called at
-/home/peter/bin/git-annotate line 124.
-
-The patch was applied to: git version 1.1.6.gd19e-dirty.
-
-Peter
+  Ralf
