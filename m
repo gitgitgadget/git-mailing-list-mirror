@@ -1,75 +1,64 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: Handling large files with GIT
-Date: Wed, 08 Feb 2006 22:20:39 +0100
-Message-ID: <87slqty2c8.fsf@mid.deneb.enyo.de>
-References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>
+From: Nicolas Vilz 'niv' <niv@iaglans.de>
+Subject: git + ssh + key authentication feature-request
+Date: Wed, 08 Feb 2006 23:42:11 +0100
+Message-ID: <43EA73C3.2040309@iaglans.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Feb 08 22:21:05 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Feb 08 22:43:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6wk0-0006t4-NM
-	for gcvg-git@gmane.org; Wed, 08 Feb 2006 22:20:45 +0100
+	id 1F6x5o-0004Y8-S7
+	for gcvg-git@gmane.org; Wed, 08 Feb 2006 22:43:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964996AbWBHVUm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Feb 2006 16:20:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965000AbWBHVUm
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 16:20:42 -0500
-Received: from mail.enyo.de ([212.9.189.167]:63617 "EHLO mail.enyo.de")
-	by vger.kernel.org with ESMTP id S964996AbWBHVUl (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Feb 2006 16:20:41 -0500
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1F6wjw-0001Q3-Pp
-	for git@vger.kernel.org; Wed, 08 Feb 2006 22:20:40 +0100
-Received: from fw by deneb.enyo.de with local (Exim 4.60)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1F6wjv-0006M6-Mb
-	for git@vger.kernel.org; Wed, 08 Feb 2006 22:20:39 +0100
+	id S932078AbWBHVnO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Feb 2006 16:43:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932470AbWBHVnO
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 16:43:14 -0500
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:9733 "EHLO
+	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
+	id S932078AbWBHVnN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2006 16:43:13 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id AA9323E9D
+	for <git@vger.kernel.org>; Wed,  8 Feb 2006 22:43:11 +0100 (CET)
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
+	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 28003-07 for <git@vger.kernel.org>;
+	Wed, 8 Feb 2006 22:43:10 +0100 (CET)
+Received: from [192.168.100.26] (hermes.lan.home.vilz.de [192.168.100.26])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 66E573E51
+	for <git@vger.kernel.org>; Wed,  8 Feb 2006 22:43:09 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051204)
+X-Accept-Language: en-us, en
 To: git@vger.kernel.org
-In-Reply-To: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>
-	(Martin Langhoff's message of "Wed, 8 Feb 2006 22:14:18 +1300")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15753>
 
-* Martin Langhoff:
+Hi guys,
 
-> SVN does reasonably well tracking his >1GB mbox file. Now, I don't
-> know if I like the idea of putting my own mbox file under version
-> control, but it looks like projects with large and slow-changing files
-> would be in trouble with GIT.
+first of all, great work.
 
-To my surprise, it's not that bad.  The Debian testing-security team
-uses a single 1.8 MB file (400 KB compressed) to keep vulnerability
-data.  Most changes to that file involve just a few lines.  But even
-in this extreme case, git doesn't compare too badly against Subversion
-if you pack regularly (but not too often).  Disk usage is actually
-*below* Subversion FSFS even with --depth=10 (the default,
-unfortunately a bit hard to override).
+I just discovered git and i like it.
 
-I plan to do another experiment for GCC, which contains marvels such
-as:
+I would like to ask if it is possible to use ssh keys to authenticate 
+via ssh on a git repository via git-pull/git-push. Since ssh supports 
+them, wouldn't it be nice to use them in git, too?
 
-  35905  126056 1379093 gcc/ChangeLog-2005
-  12610   61215  417584 gcc/combine.c
+The layout would be following:
 
-But the outcome will likely be quite similar to the secure-testing
-case: comparable disk space usage, not a difference in the order of
-one or more magnitudes.
+you have a system user with a git-shell and several keys in 
+.ssh/authorized_keys ... these are the keys of your contributors. They 
+are allowed to login and work with the repository.
 
-But Subversion still has got a significant adventage: I can get a
-working copy without downloading full history (several gigabytes in
-GCC's case).  There's also the slight drawback that you shouldn't pack
-too often, otherwise you'll reduce its effectiveness.  You can always
-run "git-repack -a -d", but it's rather expensive.  This means that
-you need to keep compressed fulltexts from a few dozen revisions, but
-I don't think this is a huge burden.  All in all, the compressed
-fulltexts/packs model is a pretty good trade-off between disk usage,
-end user usability nad code complexity.
+I haven't found a posibility to get this. Maybe I haven't discovered it, 
+yet...
 
-In your mbox case, you should simply try Maildir.  The tree object
-(which lists all files in the Maildir folder) will still be rather
-large (about 40 to 50 bytes per message stored), though.
+Sincerly
+Nicolas
