@@ -1,60 +1,70 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Handling large files with GIT
-Date: Thu, 9 Feb 2006 11:35:36 +1300
-Message-ID: <46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com>
-References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>
-	 <87slqty2c8.fsf@mid.deneb.enyo.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git + ssh + key authentication feature-request
+Date: Wed, 8 Feb 2006 14:45:34 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602081438390.2458@g5.osdl.org>
+References: <43EA73C3.2040309@iaglans.de> <7vhd79o6m5.fsf@assigned-by-dhcp.cox.net>
+ <43EA7D57.7040409@iaglans.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 08 23:36:07 2006
+X-From: git-owner@vger.kernel.org Wed Feb 08 23:46:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6xuX-0000FX-HE
-	for gcvg-git@gmane.org; Wed, 08 Feb 2006 23:35:45 +0100
+	id 1F6y4F-0002kD-VA
+	for gcvg-git@gmane.org; Wed, 08 Feb 2006 23:45:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965214AbWBHWfi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Feb 2006 17:35:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965213AbWBHWfi
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 17:35:38 -0500
-Received: from wproxy.gmail.com ([64.233.184.200]:40672 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965214AbWBHWfh convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Feb 2006 17:35:37 -0500
-Received: by wproxy.gmail.com with SMTP id i22so1617253wra
-        for <git@vger.kernel.org>; Wed, 08 Feb 2006 14:35:36 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NzFUVoOGyVNweVlPZTWUUJVn7cOtMgJSSm5CeieB7NS4KGRcGH4nUVGv+j4PQ4tjL0QjzEyVsSyhlcMw60/M7RhkWic9t1VM9hGZkaWsFy4rzH6+hMUonC2jiNV/fr9ntoS/sgw5hVgFU/o/6L7h7U7eapCHI+zUld3IAZiNxGQ=
-Received: by 10.54.72.17 with SMTP id u17mr53282wra;
-        Wed, 08 Feb 2006 14:35:36 -0800 (PST)
-Received: by 10.54.71.8 with HTTP; Wed, 8 Feb 2006 14:35:36 -0800 (PST)
-To: Florian Weimer <fw@deneb.enyo.de>
-In-Reply-To: <87slqty2c8.fsf@mid.deneb.enyo.de>
-Content-Disposition: inline
+	id S965225AbWBHWpl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Feb 2006 17:45:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965226AbWBHWpl
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 17:45:41 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:41604 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965225AbWBHWpk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Feb 2006 17:45:40 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k18MjZDZ020274
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 8 Feb 2006 14:45:35 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k18MjYkG016050;
+	Wed, 8 Feb 2006 14:45:35 -0800
+To: "Nicolas Vilz 'niv'" <niv@iaglans.de>
+In-Reply-To: <43EA7D57.7040409@iaglans.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15757>
-
-On 2/9/06, Florian Weimer <fw@deneb.enyo.de> wrote:
-> In your mbox case, you should simply try Maildir.  The tree object
-> (which lists all files in the Maildir folder) will still be rather
-> large (about 40 to 50 bytes per message stored), though.
-
-I did suggest maildir,  where GIT is bound to do well as the content
-of the emails doesn't change but they just move around a lot. Though
-yes, trees are going to be nasty.
-
-But the interesting case I gues is the general one of large files
-changing slowly. My guess is that supporting delta transfers in the
-git protocol would make it a lot more manageable. For local storage
-git isn't so bad, and the problem is perhaps harder to resolve.
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15758>
 
 
-martin
+
+On Thu, 9 Feb 2006, Nicolas Vilz 'niv' wrote:
+> 
+> in my case it would be only one system-user which has full access to several
+> repositories. At this time, the users which use that account, have to give a
+> password, which isn't that bad... it would be easier and more secure for me,
+> not to give a password, but ask the users for the ssh pubkey..
+
+That is very much part of how the whole git-shell usage was envisioned.
+
+Create a "project" account on some shared machine, create the project(s) 
+in that accounts home directory, and set the login shell for that 
+project to "git-shell".
+
+Then you ask people who are part of the project to send in some ssh key 
+for that project. Then add those keys to the authorized_keys2 file for the 
+project, and voila, you all your participants can pull and push into it 
+but do not get any other access to the machine.
+
+It _should_ all work perfectly fine. There are features you may want to 
+add, like logging (but sshd does some of that for you) and various "admin" 
+commands in addition to just plain push/pull. git-shell was really just a 
+quick hack, and I don't know if anybody actually uses it.
+
+In other words, it hasn't exactly been tested,
+
+		Linus
