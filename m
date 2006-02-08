@@ -1,50 +1,567 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Add git-annotate - a tool for annotating files with the revision and person that created each line in the file.
-Date: Wed, 08 Feb 2006 11:19:37 -0800
-Message-ID: <7v3bitr73q.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 08 Feb 2006 11:51:22 -0800
+Message-ID: <7vd5hxpr2d.fsf@assigned-by-dhcp.cox.net>
 References: <11394103753694-git-send-email-ryan@michonline.com>
-	<cda58cb80602080835s38713193t@mail.gmail.com>
-	<Pine.LNX.4.63.0602081843220.20568@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Franck Bui-Huu <vagabon.xyz@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 08 20:19:59 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 08 20:51:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6uqs-0006FA-E7
-	for gcvg-git@gmane.org; Wed, 08 Feb 2006 20:19:43 +0100
+	id 1F6vLd-0007Ei-LA
+	for gcvg-git@gmane.org; Wed, 08 Feb 2006 20:51:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932426AbWBHTTk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Feb 2006 14:19:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932482AbWBHTTj
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 14:19:39 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:37036 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932426AbWBHTTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Feb 2006 14:19:39 -0500
+	id S932490AbWBHTv0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Feb 2006 14:51:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932491AbWBHTv0
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 14:51:26 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:32702 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932490AbWBHTvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2006 14:51:25 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
+          by fed1rmmtao11.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060208191715.DEYW17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 8 Feb 2006 14:17:15 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0602081843220.20568@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Wed, 8 Feb 2006 18:45:30 +0100
-	(CET)")
+          id <20060208194957.GEOE6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 8 Feb 2006 14:49:57 -0500
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <11394103753694-git-send-email-ryan@michonline.com> (Ryan
+	Anderson's message of "Wed, 8 Feb 2006 09:52:55 -0500")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15748>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Ryan Anderson <ryan@michonline.com> writes:
 
->> Are there any rules on the choice of the script language ?
+> Signed-off-by: Ryan Anderson <ryan@michonline.com>
 >
-> Yes. Do not try to introduce unnecessary dependencies. But if it is 
-> the right tool to do the job, you should use it. As of now, we have perl, 
-> python and Tcl/Tk.
+> ---
+>
+> I think this version is mostly ready to go.
+>
+> Junio, the post you pointed me at was very helpful (once I got around to
+> listening to it), but the code it links to is missing - if that's a
+> better partial implementation than this, can you ressurrect it
+> somewhere?  I'd be happy to reintegrate it together.
 
-Very well said.  That's what currently stands.
+I still have it, but the reason why I withdrew circulating it
+was because I found that on some inputs it did not work
+correctly as intended.  Not that the algorithm was necessarily
+broken but the implementation certainly was.
+
+Unlike yours mine reads and interprets diff output to find which
+lines are common and which lines are added, and I think the diff
+interpretation logic has various corner cases wrong.  I did
+combine-diff.c diff interpreter without looking at my
+'git-blame', so I do not remember where I got it wrong,
+though...
+
+It's been a while since I looked at it the last time so it may
+not even work with the current git, but here it is..
+
+--
+#!/usr/bin/perl -w
+
+use strict;
+
+package main;
+$::debug = 0;
+
+sub read_blob {
+    my $sha1 = shift;
+    my $fh = undef;
+    my $result;
+    local ($/) = undef;
+    open $fh, '-|', 'git-cat-file', 'blob', $sha1
+	or die "cannot read blob $sha1";
+    $result = join('', <$fh>);
+    close $fh
+	or die "failure while closing pipe to git-cat-file";
+    return $result;
+}
+
+sub read_diff_raw {
+    my ($parent, $filename) = @_;
+    my $fh = undef;
+    local ($/) = "\0";
+    my @result = (); 
+    my ($meta, $status, $sha1_1, $sha1_2, $file1, $file2);
+
+    print STDERR "* diff-index --cached $parent $filename\n" if $::debug;
+    my $has_changes = 0;
+    open $fh, '-|', 'git-diff-index', '--cached', '-z', $parent, $filename
+	or die "cannot read git-diff-index $parent $filename";
+    while (defined ($meta = <$fh>)) {
+	$has_changes = 1;
+    }
+    close $fh
+	or die "failure while closing pipe to git-diff-index";
+    if (!$has_changes) {
+	return ();
+    }
+
+    $fh = undef;
+    print STDERR "* diff-index -B -C --find-copies-harder --cached $parent\n" if $::debug;
+    open($fh, '-|', 'git-diff-index', '-B', '-C', '--find-copies-harder',
+	 '--cached', '-z', $parent)
+	or die "cannot read git-diff-index with $parent";
+    while (defined ($meta = <$fh>)) {
+	chomp($meta);
+	(undef, undef, $sha1_1, $sha1_2, $status) = split(/ /, $meta);
+	$file1 = <$fh>;
+	chomp($file1);
+	if ($status =~ /^[CR]/) {
+	    $file2 = <$fh>;
+	    chomp($file2);
+	} elsif ($status =~ /^D/) {
+	    next;
+	} else {
+	    $file2 = $file1;
+	}
+	if ($file2 eq $filename) {
+	    push @result, [$status, $sha1_1, $sha1_2, $file1, $file2];
+	}
+    }
+    close $fh
+	or die "failure while closing pipe to git-diff-index";
+    return @result;
+}
+
+sub write_temp_blob {
+    my ($sha1, $temp) = @_;
+    my $fh = undef;
+    my $blob = read_blob($sha1);
+    open $fh, '>', $temp
+	or die "cannot open temporary file $temp";
+    print $fh $blob;
+    close($fh);
+}
+
+package Git::Patch;
+sub new {
+    my ($class, $sha1_1, $sha1_2) = @_;
+    my $self = bless [], $class;
+    my $fh = undef;
+    ::write_temp_blob($sha1_1, "/tmp/blame-$$-1");
+    ::write_temp_blob($sha1_2, "/tmp/blame-$$-2");
+    open $fh, '-|', 'diff', '-u0', "/tmp/blame-$$-1", "/tmp/blame-$$-2"
+	or die "cannot read diff";
+    while (<$fh>) {
+	if (/^\@\@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? \@\@/) {
+	    push @$self, [$1, (defined $2 ? $2 : 1),
+			  $3, (defined $4 ? $4 : 1)];
+	}
+    }
+    close $fh;
+    unlink "/tmp/blame-$$-1", "/tmp/blame-$$-2";
+    return $self;
+}
+
+sub find_parent_line {
+    my ($self, $commit_lineno) = @_;
+    my $ofs = 0;
+    for (@$self) {
+	my ($line_1, $len_1, $line_2, $len_2) = @$_;
+	if ($commit_lineno < $line_2) {
+	    return $commit_lineno - $ofs;
+	}
+	if ($line_2 <= $commit_lineno && $commit_lineno < $line_2 + $len_2) {
+	    return -1; # changed by commit.
+	}
+	$ofs += ($len_1 - $len_2);
+    }
+    return $commit_lineno + $ofs;
+}
+
+package Git::Commit;
+
+my %author_name_canon = 
+('Linus Torvalds <torvalds@evo.osdl.org>' =>
+ 'Linus Torvalds <torvalds@osdl.org>',
+ 'Linus Torvalds <torvalds@ppc970.osdl.org.(none)>' =>
+ 'Linus Torvalds <torvalds@osdl.org>',
+ 'Linus Torvalds <torvalds@ppc970.osdl.org>' =>
+ 'Linus Torvalds <torvalds@osdl.org>',
+ 'Linus Torvalds <torvalds@g5.osdl.org>' =>
+ 'Linus Torvalds <torvalds@osdl.org>',
+ 'Matthias Urlichs <smurf@kiste.(none)>' =>
+ 'Matthias Urlichs <smurf@smurf.noris.de>',
+ 'Paul Mackerras <paulus@dorrigo.(none)>' =>
+ 'Paul Mackerras <paulus@samba.org>',
+ 'Paul Mackerras <paulus@pogo.(none)>' =>
+ 'Paul Mackerras <paulus@samba.org>',
+ 'Petr Baudis <pasky@ucw.cz>' =>
+ 'Petr Baudis <pasky@suse.cz>',
+ 'tony.luck@intel.com <tony.luck@intel.com>' =>
+ 'Tony Luck <tony.luck@intel.com>',
+ 'barkalow@iabervon.org <barkalow@iabervon.org>' =>
+ 'Daniel Barkalow <barkalow@iabervon.org>',
+ 'jon@blackcubes.dyndns.org <jon@blackcubes.dyndns.org>' =>
+ 'Jon Seymour <jon.seymour@gmail.com>',
+ 'Sven Verdoolaege <skimo@kotnet.org>' =>
+ 'Sven Verdoolaege <skimo@liacs.nl>',
+ 'Bryan Larsen <bryanlarsen@yahoo.com>' =>
+ 'Bryan Larsen <bryan.larsen@gmail.com>',
+ 'Junio C Hamano <junio@twinsun.com>' =>
+ 'Junio C Hamano <junkio@cox.net>',
+ );
+
+sub canon_author_name {
+    my ($name) = @_;
+    if (exists $author_name_canon{$name}) {
+	return $author_name_canon{$name};
+    }
+    return $name;
+}
+
+sub new {
+    my $class = shift;
+    my $self = bless {
+	PARENT => [],
+	TREE => undef,
+	AUTHOR => undef,
+	COMMITTER => undef,
+    }, $class;
+    my $commit_sha1 = shift;
+    $self->{SHA1} = $commit_sha1;
+    my $fh = undef;
+    open $fh, '-|', 'git-cat-file', 'commit', $commit_sha1
+	or die "cannot read commit object $commit_sha1";
+    while (<$fh>) {
+	chomp;
+	if (/^tree ([0-9a-f]{40})$/) { $self->{TREE} = $1; }
+	elsif (/^parent ([0-9a-f]{40})$/) { push @{$self->{PARENT}}, $1; }
+	elsif (/^author ([^>]+>)/) {
+	    $self->{AUTHOR} = canon_author_name($1);
+	}
+	elsif (/^committer ([^>]+>)/) {
+	    $self->{COMMITTER} = canon_author_name($1);
+	}
+    }
+    close $fh
+	or die "failure while closing pipe to git-cat-file";
+    return $self;
+}
+
+sub find_file {
+    my ($commit, $path) = @_;
+    my $result = undef;
+    my $fh = undef;
+    local ($/) = "\0";
+    open $fh, '-|', 'git-ls-tree', '-z', '-r', '-d', $commit->{TREE}, $path
+	or die "cannot read git-ls-tree $commit->{TREE}";
+    while (<$fh>) {
+	chomp;
+	if (/^[0-7]{6} blob ([0-9a-f]{40})	(.*)$/) {
+	    if ($2 ne $path) {
+		die "$2 ne $path???";
+	    }
+	    $result = $1;
+	    last;
+	}
+    }
+    close $fh
+	or die "failure while closing pipe to git-ls-tree";
+    return $result;
+}
+
+package Git::Blame;
+sub new {
+    my $class = shift;
+    my $self = bless {
+	LINE => [],
+	UNKNOWN => undef,
+	WORK => [],
+    }, $class;
+    my $commit = shift;
+    my $filename = shift;
+    my $sha1 = $commit->find_file($filename);
+    my $blob = ::read_blob($sha1);
+    my @blob = (split(/\n/, $blob));
+    for (my $i = 0; $i < @blob; $i++) {
+	$self->{LINE}[$i] = +{
+	    COMMIT => $commit,
+	    FOUND => undef,
+	    FILENAME => $filename,
+	    LINENO => ($i + 1),
+	};
+    }
+    $self->{UNKNOWN} = scalar @blob;
+    push @{$self->{WORK}}, [$commit, $filename];
+    return $self;
+}
+
+sub read_blame_cache {
+    my $self = shift;
+    my $filename = shift;
+    my $fh = undef;
+    my $pi = $self->{'PATHINFO'} = {};
+    open $fh, '<', $filename;
+    while (<$fh>) {
+	chomp;
+	my ($commit, $parent, $path) = split(/\t/, $_);
+	$pi->{$path}{$commit}{$parent} = 1;
+    }
+    close $fh;
+}
+
+sub print {
+    my $self = shift;
+    my $line_termination = shift;
+    for (my $i = 0; $i < @{$self->{LINE}}; $i++) {
+	my $l = $self->{LINE}[$i];
+	print ($l->{FOUND} ? ':' : '?');;
+	print "$l->{COMMIT}->{SHA1}	";
+	print "$l->{COMMIT}->{AUTHOR}	";
+	print "$l->{COMMIT}->{COMMITTER}	";
+	print "$l->{LINENO}	$l->{FILENAME}";
+	print $line_termination;
+    }
+}
+
+sub take_responsibility {
+    my ($self, $commit) = @_;
+    for (my $i = 0; $i < @{$self->{LINE}}; $i++) {
+	my $l = $self->{LINE}[$i];
+	if (! $l->{FOUND} && ($l->{COMMIT}->{SHA1} eq $commit->{SHA1})) {
+	    $l->{FOUND} = 1;
+	    $self->{UNKNOWN}--;
+	}
+    }
+}
+
+sub blame_parent {
+    my ($self, $commit, $parent, $filename) = @_;
+    my @diff = ::read_diff_raw($parent->{SHA1}, $filename);
+    my $filename_in_parent;
+    my $passed_blame_to_parent = undef;
+    if (@diff == 0) {
+	# We have not touched anything.  Blame parent for everything
+	# that we are suspected for.
+	for (my $i = 0; $i < @{$self->{LINE}}; $i++) {
+	    my $l = $self->{LINE}[$i];
+	    if (! $l->{FOUND} && ($l->{COMMIT}->{SHA1} eq $commit->{SHA1})) {
+		$l->{COMMIT} = $parent;
+		$passed_blame_to_parent = 1;
+	    }
+	}
+	$filename_in_parent = $filename;
+    }
+    elsif (@diff != 1) {
+	# This should not happen.
+	for (@diff) {
+	    print "** @$_\n";
+	}
+	die "Oops";
+    }
+    else {
+	my ($status, $sha1_1, $sha1_2, $file1, $file2) = @{$diff[0]};
+	print STDERR "** $status $file1 $file2\n" if $::debug;
+	if ($status =~ /A/ || $status =~ /M[0-9][0-9]/) {
+	    # Either some of other parents created it, or we did.
+	    # At this point the only thing we know is that this
+	    # parent is not responsible for it.
+	    ;
+	}
+	else {
+	    my $patch = Git::Patch->new($sha1_1, $sha1_2);
+	    $filename_in_parent = $file1;
+	    for (my $i = 0; $i < @{$self->{LINE}}; $i++) {
+		my $l = $self->{LINE}[$i];
+		if (! $l->{FOUND} && $l->{COMMIT}->{SHA1} eq $commit->{SHA1}) {
+		    # We are suspected to have introduced this line.
+		    # Does it exist in the parent?
+		    my $lineno = $l->{LINENO};
+		    my $parent_line = $patch->find_parent_line($lineno);
+		    if ($parent_line < 0) {
+			# No, we may be the guilty ones, or some other
+			# parent might be.  We do not assign blame to
+			# ourselves here yet.
+			;
+		    }
+		    else {
+			# This line is coming from the parent, so pass
+			# blame to it.
+			$l->{COMMIT} = $parent;
+			$l->{FILENAME} = $file1;
+			$l->{LINENO} = $parent_line;
+			$passed_blame_to_parent = 1;
+		    }
+		}
+	    }
+	}
+    }
+    if ($passed_blame_to_parent && $self->{UNKNOWN}) {
+	unshift @{$self->{WORK}},
+	[$parent, $filename_in_parent];
+    }
+}
+
+sub assign {
+    my ($self, $commit, $filename) = @_;
+    # We do read-tree of the current commit and diff-index
+    # with each parents, instead of running diff-tree.  This
+    # is because diff-tree does not look for copies hard enough.
+
+    if (exists $self->{'PATHINFO'} && exists $self->{'PATHINFO'}{$filename} &&
+	!exists $self->{'PATHINFO'}{$filename}{$commit->{SHA1}} &&
+	@{$commit->{PARENT}} == 1) {
+	# This commit did not touch the path at all, and
+	# has only one parent.  It is all that parent's fault.
+
+	my $parent = Git::Commit->new($commit->{PARENT}[0]);
+	my $passed_blame_to_parent = 0;
+	for (my $i = 0; $i < @{$self->{LINE}}; $i++) {
+	    my $l = $self->{LINE}[$i];
+	    if (! $l->{FOUND} &&
+		($l->{COMMIT}->{SHA1} eq $commit->{SHA1})) {
+		$l->{COMMIT} = $parent;
+		$passed_blame_to_parent = 1;
+	    }
+	}
+	if ($passed_blame_to_parent && $self->{UNKNOWN}) {
+	    unshift @{$self->{WORK}},
+	    [$parent, $filename];
+	}
+	return;
+    }
+
+    print STDERR "* read-tree  $commit->{SHA1}\n" if $::debug;
+    system('git-read-tree', '-m', $commit->{SHA1});
+    for my $parent (@{$commit->{PARENT}}) {
+	$self->blame_parent($commit, Git::Commit->new($parent), $filename);
+    }
+    $self->take_responsibility($commit);
+}
+
+sub assign_blame {
+    my ($self) = @_;
+    while ($self->{UNKNOWN} && @{$self->{WORK}}) {
+	my $wk = shift @{$self->{WORK}};
+	my ($commit, $filename) = @$wk;
+	$self->assign($commit, $filename);
+    }
+}
+
+
+
+################################################################
+package main;
+my $usage = "blame [-z] <commit> filename";
+my $line_termination = "\n";
+
+$::ENV{GIT_INDEX_FILE} = "/tmp/blame-$$-index";
+unlink($::ENV{GIT_INDEX_FILE});
+
+if ($ARGV[0] eq '-z') {
+    $line_termination = "\0";
+    shift;
+}
+
+if (@ARGV != 2) {
+    die $usage;
+}
+
+my $head_commit = Git::Commit->new($ARGV[0]);
+my $filename = $ARGV[1];
+my $blame = Git::Blame->new($head_commit, $filename);
+if (-f ".blame-cache") {
+    $blame->read_blame_cache(".blame-cache");
+}
+
+$blame->assign_blame();
+$blame->print($line_termination);
+
+unlink($::ENV{GIT_INDEX_FILE});
+
+__END__
+
+How does this work, and what do we do about merges?
+
+The algorithm considers that the first parent is our main line of
+development and treats it somewhat special than other parents.  So we
+pass on the blame to the first parent if a line has not changed from
+it.  For lines that have changed from the first parent, we must have
+either inherited that change from some other parent, or it could have
+been merge conflict resolution edit we did on our own.
+
+The following picture illustrates how we pass on and assign blames.
+
+In the sample, the original O was forked into A and B and then merged
+into M.  Line 1, 2, and 4 did not change.  Line 3 and 5 are changed in
+A, and Line 5 and 6 are changed in B.  M made its own decision to
+resolve merge conflicts at Line 5 to something different from A and B:
+
+                A: 1 2 T 4 T 6
+               /               \ 
+O: 1 2 3 4 5 6                  M: 1 2 T 4 M S
+               \               / 
+                B: 1 2 3 4 S S
+
+In the following picture, each line is annotated with a blame letter.
+A lowercase blame (e.g. "a" for "1") means that commit or its ancestor
+is the guilty party but we do not know which particular ancestor is
+responsible for the change yet.  An uppercase blame means that we know
+that commit is the guilty party.
+
+First we look at M (the HEAD) and initialize Git::Blame->{LINE} like
+this:
+
+             M: 1 2 T 4 M S
+                m m m m m m
+
+That is, we know all lines are results of modification made by some
+ancestor of M, so we assign lowercase 'm' to all of them.
+
+Then we examine our first parent A.  Throughout the algorithm, we are
+always only interested in the lines we are the suspect, but this being
+the initial round, we are the suspect for all of them.  We notice that
+1 2 T 4 are the same as the parent A, so we pass the blame for these
+four lines to A.  M and S are different from A, so we leave them as
+they are (note that we do not immediately take the blame for them):
+
+             M: 1 2 T 4 M S
+                a a a a m m
+
+Next we go on to examine parent B.  Again, we are only interested in
+the lines we are still the suspect (i.e. M and S).  We notice S is
+something we inherited from B, so we pass the blame on to it, like
+this:
+
+             M: 1 2 T 4 M S
+                a a a a m b
+
+Once we exhausted the parents, we look at the results and take
+responsibility for the remaining ones that we are still the suspect:
+
+             M: 1 2 T 4 M S
+                a a a a M b
+
+We are done with M.  And we know commits A and B need to be examined
+further, so we do them recursively.  When we look at A, we again only
+look at the lines that A is the suspect:
+
+             A: 1 2 T 4 T 6
+                a a a a M b
+
+Among 1 2 T 4, comparing against its parent O, we notice 1 2 4 are
+the same so pass the blame for those lines to O:
+
+             A: 1 2 T 4 T 6
+                o o a o M b
+
+A is a non-merge commit; we have already exhausted the parents and
+take responsibility for the remaining ones that A is the suspect:
+
+             A: 1 2 T 4 T 6
+                o o A o M b
+
+We go on like this and the final result would become:
+
+             O: 1 2 3 4 5 6
+                O O A O M B
