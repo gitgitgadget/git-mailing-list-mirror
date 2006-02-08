@@ -1,64 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Handling large files with GIT
-Date: Wed, 8 Feb 2006 09:01:13 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602080853480.2458@g5.osdl.org>
-References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>
- <Pine.LNX.4.63.0602081248270.31700@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0602080815180.2458@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add git-annotate - a tool for annotating files with the
+ revision and person that created each line in the file.
+Date: Wed, 8 Feb 2006 18:45:30 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602081843220.20568@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11394103753694-git-send-email-ryan@michonline.com>
+ <cda58cb80602080835s38713193t@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 08 18:05:37 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 08 18:47:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6sh4-0003sS-Gb
-	for gcvg-git@gmane.org; Wed, 08 Feb 2006 18:01:26 +0100
+	id 1F6tNm-0005sZ-Ll
+	for gcvg-git@gmane.org; Wed, 08 Feb 2006 18:45:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030606AbWBHRBX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Feb 2006 12:01:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030607AbWBHRBX
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 12:01:23 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:13778 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030606AbWBHRBW (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Feb 2006 12:01:22 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k18H1EDZ031844
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 8 Feb 2006 09:01:15 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k18H1DIW001053;
-	Wed, 8 Feb 2006 09:01:14 -0800
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.64.0602080815180.2458@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030377AbWBHRpc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Feb 2006 12:45:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030382AbWBHRpc
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 12:45:32 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:55228 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1030377AbWBHRpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2006 12:45:31 -0500
+Received: from virusscan.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A22E71461B5; Wed,  8 Feb 2006 18:45:30 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 941ED1257;
+	Wed,  8 Feb 2006 18:45:30 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 6A8491461B5; Wed,  8 Feb 2006 18:45:30 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Franck Bui-Huu <vagabon.xyz@gmail.com>
+In-Reply-To: <cda58cb80602080835s38713193t@mail.gmail.com>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15744>
 
+Hi,
 
+On Wed, 8 Feb 2006, Franck Bui-Huu wrote:
 
-On Wed, 8 Feb 2006, Linus Torvalds wrote:
->
-> The fact that all the operations work on a full object, and the delta's 
-> are (on purpose) just a very specific and limited kind of size 
-> compression is just very ingrained.
+> another perl script :(
+> 
+> Are there any rules on the choice of the script language ?
 
-Side note: the original explicit git "delta" objects by Nicolas Pitre 
-would have handled this large-file-case much more gracefully. 
+Yes. Do not try to introduce unnecessary dependencies. But if it is 
+the right tool to do the job, you should use it. As of now, we have perl, 
+python and Tcl/Tk.
 
-The pack-files had absolutely huge advantages, though, so I think we (I) 
-did the right thing there in making the delta code only a very specific 
-special case..
-
-It is possible that we could re-introduce the "explicit delta" object, 
-though (it's not incompatible with also doing pack-files, it's just that 
-pack-files made 99% of all the arguments for an explicit delta go away).
-
-		Linus
+Hth,
+Dscho
