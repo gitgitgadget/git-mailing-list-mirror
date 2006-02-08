@@ -1,75 +1,54 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: git + ssh + key authentication feature-request
-Date: Wed, 8 Feb 2006 23:35:42 +0000
-Message-ID: <200602082335.42449.alan@chandlerfamily.org.uk>
-References: <43EA73C3.2040309@iaglans.de> <7vhd79o6m5.fsf@assigned-by-dhcp.cox.net> <43EA7D57.7040409@iaglans.de>
+From: Bertrand Jacquin <beber.mailing@gmail.com>
+Subject: gitweb: View graphes & get tar
+Date: Thu, 9 Feb 2006 00:34:43 +0100
+Message-ID: <4fb292fa0602081534x7f6e74c1veb8c4ea7ad5a83cc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Feb 09 00:36:08 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Feb 09 00:41:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6yqr-0005KW-KH
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 00:35:58 +0100
+	id 1F6ywQ-0006SJ-JX
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 00:41:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422635AbWBHXfn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Feb 2006 18:35:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422636AbWBHXfn
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 18:35:43 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:37596
-	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
-	id S1422635AbWBHXfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Feb 2006 18:35:42 -0500
-Received: from kanger.home ([192.168.0.21])
-	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
-	id 1F6yqb-0004Fw-N8
-	for git@vger.kernel.org; Wed, 08 Feb 2006 23:35:41 +0000
+	id S1422640AbWBHXlk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Feb 2006 18:41:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422642AbWBHXlj
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 18:41:39 -0500
+Received: from uproxy.gmail.com ([66.249.92.203]:43051 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1422640AbWBHXlj convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Feb 2006 18:41:39 -0500
+Received: by uproxy.gmail.com with SMTP id s2so31585uge
+        for <git@vger.kernel.org>; Wed, 08 Feb 2006 15:41:38 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=UXb8/eCSxybw/3eRr4mvamTqLPabBAiHDF3u7qMA4srIfc2Jxjhcn3aDdWvWOPMFOMcVvOW3FfkGF5b+pEKlHi0+Y1z7Mp/ySxtYCjxTUurfOvwGMBwCfDOEjOrYIZf4QqV0AXe2rmmFf4qv+FX48nAp4+2WGCAbJqUX23wWHPM=
+Received: by 10.48.235.15 with SMTP id i15mr2160088nfh;
+        Wed, 08 Feb 2006 15:34:43 -0800 (PST)
+Received: by 10.49.5.3 with HTTP; Wed, 8 Feb 2006 15:34:43 -0800 (PST)
 To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
-In-Reply-To: <43EA7D57.7040409@iaglans.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15762>
 
-On Wednesday 08 February 2006 23:23, Nicolas Vilz 'niv' wrote:
+Hi,
 
-> in my case it would be only one system-user which has full access to
-> several repositories. At this time, the users which use that account,
-> have to give a password, which isn't that bad... it would be easier and
-> more secure for me, not to give a password, but ask the users for the
-> ssh pubkey..
+Is gitweb maintainer planned to allow people to get from gitweb ? It
+could be something good for ungited/remote people to get a tar for a
+specific tree.
+gd provide to create graphs and is often use in "web project" to
+generate graphe. Could it here generated a graph of branches like in
+gitk ?
+It also could be cool to allow people to get binary files in an other
+mimetype that text/plain.
 
-This sounds like you haven't got sshd set up correctly.  You can get it to log 
-you in soley based on keys, and whether or not you give a password is then 
-dependent soley on whether your private key has a pass phrase or not and then 
-whether or not you are using some ssh-agent to remember them for you.
+Here are my wish :D it's worth what it's worth.
 
-I have it setup so that access to ssh controlled accounts is soley via key.
-
-Private keys remaining on fixed computers at home have no passphrase, my 
-laptop has a private key with a passphrase which I enter once on login.
-
-I have several accounts around the place with my public keys enumerated in 
-their .ssh/authorized_keys file, so I have been able to contact git 
-repositories with urls like
-
-git@www.chandlerfamily.org.uk
-www-data@www.chandlerfamily.org.uk
- and for my own account
-just www.chandlerfamily.org.uk
-
-all without entering a password.
-
-But following the discussion thread Junio pointed to I have converted 
-everything to shared repositories and I now only use my own account to log 
-in.
-
--- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
-Open Source. It's the difference between trust and antitrust.
+--
+Beber
+#e.fr@freenode
