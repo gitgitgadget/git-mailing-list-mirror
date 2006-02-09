@@ -1,88 +1,131 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: What's in git.git
-Date: Thu, 09 Feb 2006 02:32:15 -0800
-Message-ID: <7vfymsddqo.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 09 Feb 2006 02:55:52 -0800
+Message-ID: <7vr76cby2v.fsf@assigned-by-dhcp.cox.net>
 References: <7vslqtf2p1.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0602091055540.24701@wbgn013.biozentrum.uni-wuerzburg.de>
+	<BAYC1-PASMTP1142DA49F5BC7B7B42B22FAE030@CEZ.ICE>
+	<43EB05B5.20307@op5.se> <7vk6c4etzy.fsf@assigned-by-dhcp.cox.net>
+	<43EB1984.3040602@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 09 11:32:33 2006
+X-From: git-owner@vger.kernel.org Thu Feb 09 11:56:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7964-0001uV-9o
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 11:32:21 +0100
+	id 1F79Sv-0006yn-G0
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 11:55:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030595AbWBIKcR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Feb 2006 05:32:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030541AbWBIKcR
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 05:32:17 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:36841 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1030595AbWBIKcQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2006 05:32:16 -0500
+	id S1422650AbWBIKzz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Feb 2006 05:55:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422652AbWBIKzz
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 05:55:55 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:10418 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1422650AbWBIKzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2006 05:55:54 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao09.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060209103042.QUZA20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 9 Feb 2006 05:30:42 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0602091055540.24701@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 9 Feb 2006 10:58:13 +0100
-	(CET)")
+          id <20060209105559.UXUR25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Feb 2006 05:55:59 -0500
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <43EB1984.3040602@op5.se> (Andreas Ericsson's message of "Thu, 09
+	Feb 2006 11:29:24 +0100")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15804>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Andreas Ericsson <ae@op5.se> writes:
 
-> IMHO what you intend to put into "next" should be put into "master" 
-> anyway: everyone interested in git development should try the new features 
-> as early as possible.
+> This is exactly what I do when I improve upon things in master, and
+> according to numerous emails this is the recommended workflow.
 
-Yes, but I've been trying to be _very_ conservative to keep
-"master" clean and stable, as I said in my inauguration speech.
+Yes.
 
-Since git is still young and we are building features that are
-needed in the field every day, it is very beneficial for users
-to keep up-to-date with "master", and I would really like to
-encourage that.  It saddens me to see git patches posted to the
-kernel list marked with 0.99.9.GIT by prominent kernel people.
+> Do you mean
+> 	$ git pull git://git.kernel.org/pub/scm/git/git +pu:my-pu
 
-However, I do not want to see their time wasted on getting
-bitten by stupid bugs I carelessly place on the "master" branch.
-So I'd like to keep "master" conservative, stable and boring, at
-least for now.
+I do mean "+pu:pu".  In my illustration, "pu" is used in your
+repository to track "pu" retrieved from me, and "my-pu" is a
+fork you created from it and you build your changes upon.
 
-Instead of introducing "next", I could treat "pu" the way I said
-I would do "next".  But even if I rid of its constant rewinding
-nature, "pu" tends to have intrusive stuff near its tip and is
-very hard to build on top of it.  Patches against the tip of
-"pu" to fix things unrelated to the whacky ones often would be
-inapplicable to "master".  This is especially true with what are
-currently pending near the tip of "pu" (bind commits and shallow
-clones).  I do not forsee them to graduate to "master" any time
-soon.  Not in their current shape.
+	$ git pull $URL +pu:my-pu
 
-The promised "next" should be much easier to build on top of,
-without disecting it into component topic branches, and it would
-be the branch to track for people interested in git development
-if you want to stay closer to the edge without touching bleeding
-or even broken edge.  Making it easier to participate in git
-development by people interested is what I am aiming at here.
+is a shorthand for:
 
-I've considered publishing the topic branches individually.
-Branches are cheap from the storage point of view (not really,
-one inode and a filesystem block wasted to store only 41-bytes
-;-)), but it needs management time and care (I will need to
-remember to go to the repository and remove stale ones once they
-are merged up).  Since branches in "next" are meant to be
-short-lived, I am hoping it is easier for me to bundle them up
-like I am planning.
+	$ git fetch $URL +pu:my-pu
+        $ git merge "auto merge message" HEAD my-pu
 
-On the other hand, long-lived whacky intrusive ones might be
-better published as individual branches.  
+and you definitely do not want to _fetch_ into my-pu when you
+are on my-pu.
+
+> ? Otherwise, I don't see how I can end up with merge-conflicts.
+
+The problem is exactly why you need the plus sign when you fetch,
+i.e. "+pu:pu".  My "pu" rebases.
+
+Suppose I had this:
+
+             o--o--o
+            /      "pu"
+	o--o
+           "master"     
+
+You do fetch +pu:pu, branch my-pu, and build on top of it:
+
+                     o--o--o--o--o--o--o
+                    /                  "my-pu"
+             o--o--o
+            /      "pu"
+	o--o
+           "master"
+
+I add some to my "master" and rebuild "pu", maybe while adding
+another commit on "pu".  You fetch +pu:pu again:
+
+                     o--o--o--o--o--o--o
+                    /                  "my-pu"
+             o--o--o        o--o--o--o
+            /              /         "pu" 
+	o--o--o--o--o--o--o
+                          "master"
+
+Now, what happens when you merge "pu" into "my-pu"?  The three
+commits I had on my previous "pu" are not part of the history of
+the updated "pu" anymore, but is considered to be part of your
+development trail.  If these had an addition of a file, and if
+your development on top of the previous "pu" modified it, the
+merge would result in:
+
+ * originally the file did not exist.
+ * "pu" adds it one way.
+ * "my-pu" adds it in another way.
+
+This requires a hand merge.  What should be done is for me to
+instead of rebasing "pu", merge the updated master to "pu".
+
+                     o--o--o--o--o--o--o
+                    /                  "my-pu"
+             o--o--o--------*--o
+            /              /   "pu" 
+	o--o--o--o--o--o--o
+                          "master"
+
+Then merge between "my-pu" and "pu" become easier.  You do not
+have to worry about the earlier three commits, because the point
+you forked from the previous "pu" becomes the merge base.
+
+The reason I have not done it that way so far is primarily I am
+lazy and also I do not like to see too many merges in the log.
+Also "pu" tends to have really wacky stuff, so separating out
+only usable bits, excluding wacky ones is slightly easier if I
+rebuild it from scratch.
+
+The new "next" aka "not too close to bleeding or broken edge"
+branch will be managed like the last picture above, in order to
+make working with it easier to manage.  This is only usable if I
+do not include too bleeding-edge topic branch in it.
