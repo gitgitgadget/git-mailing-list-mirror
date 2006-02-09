@@ -1,102 +1,95 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] ls-files: debugging aid for CE_VALID changes.
-Date: Wed, 08 Feb 2006 21:50:18 -0800
-Message-ID: <7vd5hxgjxh.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
-	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
-	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
-	<1138446030.9919.112.camel@evo.keithp.com>
-	<7vzmlgt5zt.fsf@assigned-by-dhcp.cox.net>
-	<1138529385.9919.185.camel@evo.keithp.com>
-	<43DCA495.9040301@gorzow.mm.pl> <20060130225107.GA3857@limbo.home>
-	<Pine.LNX.4.64.0601311314030.7301@g5.osdl.org>
-	<20060131220148.GA19411@steel.home> <20060201013901.GA16832@mail.com>
-	<Pine.LNX.4.64.0601311747360.7301@g5.osdl.org>
-	<Pine.LNX.4.64.0601311807470.7301@g5.osdl.org>
-	<7vek2di043.fsf@assigned-by-dhcp.cox.net>
+Subject: What's in git.git
+Date: Wed, 08 Feb 2006 22:47:54 -0800
+Message-ID: <7vslqtf2p1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>,
-	Keith Packard <keithp@keithp.com>, cworth@cworth.org,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu Feb 09 06:50:36 2006
+X-From: git-owner@vger.kernel.org Thu Feb 09 07:48:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F74hE-0000WO-0V
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 06:50:25 +0100
+	id 1F75ax-0002E0-8T
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 07:47:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422806AbWBIFuV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Feb 2006 00:50:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422809AbWBIFuV
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 00:50:21 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:52466 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1422806AbWBIFuV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2006 00:50:21 -0500
+	id S1422829AbWBIGr4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Feb 2006 01:47:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422830AbWBIGr4
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 01:47:56 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:58542 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1422829AbWBIGrz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2006 01:47:55 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060209054913.WAPW15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 9 Feb 2006 00:49:13 -0500
+          id <20060209064504.TTLK17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Feb 2006 01:45:04 -0500
 To: git@vger.kernel.org
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15792>
 
-This is not really part of the proposed updates for CE_VALID,
-but with this change, ls-files -t shows CE_VALID paths with
-lowercase tag letters instead of the usual uppercase.  Useful
-for checking out what is going on.
+I haven't heard major breakage around the new features scheduled
+for 1.2.0 so far, except for the two-tree "diff-tree --cc" Linus
+has already fixed, so the previous "What's new" is pretty much
+unchanged.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+One *major* change I am thinking about doing is to change my
+workflow a bit.  So far, the proposed updates branch "pu" was
+almost impossible to follow unless you are really a devoted git
+developer, because it is always rebased to the latest master and
+then topic branches are merged onto it.  While that keeps the
+number of unnecessary merge nodes between master and pu to the
+minimum, it actively discouraged for the branch to be followed
+by developers.
 
----
+I would like to rectify that.
 
- ls-files.c |   18 +++++++++++++++++-
- 1 files changed, 17 insertions(+), 1 deletions(-)
+So I have created another branch, "next".  This is managed quite
+differently from "pu".  I'd promise these things:
 
-775ca05ee2ba7e1f54ec4db1fed7069014364f2c
-diff --git a/ls-files.c b/ls-files.c
-index 6af3b09..3f06ece 100644
---- a/ls-files.c
-+++ b/ls-files.c
-@@ -447,6 +447,22 @@ static void show_ce_entry(const char *ta
- 	if (pathspec && !match(pathspec, ce->name, len))
- 		return;
- 
-+	if (tag && *tag && (ce->ce_flags & htons(CE_VALID))) {
-+		static char alttag[4];
-+		memcpy(alttag, tag, 3);
-+		if (isalpha(tag[0]))
-+			alttag[0] = tolower(tag[0]);
-+		else if (tag[0] == '?')
-+			alttag[0] = '!';
-+		else {
-+			alttag[0] = 'v';
-+			alttag[1] = tag[0];
-+			alttag[2] = ' ';
-+			alttag[3] = 0;
-+		}
-+		tag = alttag;
-+	}
-+
- 	if (!show_stage) {
- 		fputs(tag, stdout);
- 		write_name_quoted("", 0, ce->name + offset,
-@@ -503,7 +519,7 @@ static void show_files(void)
- 			err = lstat(ce->name, &st);
- 			if (show_deleted && err)
- 				show_ce_entry(tag_removed, ce);
--			if (show_modified && ce_modified(ce, &st))
-+			if (show_modified && ce_modified(ce, &st, 0))
- 				show_ce_entry(tag_modified, ce);
- 		}
- 	}
--- 
-1.1.6.gbb042
+ * It is to contain planned updates and merge from topic
+   branches, just like "pu" currently does.  However, the topics
+   merged there will not contain majorly whacky / unproven ones
+   like bind commits and shallow clones, until the basic part
+   proves sound during the list discussion.
+
+ * I will not rewind or rebase the "next" branch.  Also I will
+   not rebase the topic branches that are merged into it.
+
+ * It would occasionally merge from "master" if only to prevent
+   conflicts.
+
+ * If there are patches sent to improve a topic branch in it,
+   they will be applied to the topic branch, and then the topic
+   branch is merged into "next", without any funny rewinding or
+   rebasing of "next".  This will make the "next" branch
+   cluttered with repeated merges from the same topic branch,
+   but that is OK.  "next" will not be merged into "master",
+   ever.
+
+ * Once a topic is fully cooked, the topic branch will be merged
+   into "master".
+
+What this means is that "next" should be as easy to follow as
+"master", but still is slightly ahead of "master" with not so
+wildly experimental features.
+
+Although there theoretically is no reason not to follow the
+above principles I set for "next" to manage "pu", it will stay
+wild for now until I get more comfortable with this workflow.
+
+Now, what's in "next"?  Currently I have two topic branches
+merged to it.
+
+    * jc/nostat:
+      ls-files: debugging aid for CE_VALID changes.
+      "Assume unchanged" git: do not set CE_VALID with --refresh
+      "Assume unchanged" git
+
+    * jc/empty-commit:
+      t6000: fix a careless test library add-on.
+      Do not allow empty name or email.
