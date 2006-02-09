@@ -1,118 +1,59 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: What's in git.git
-Date: Thu, 09 Feb 2006 12:35:38 +0100
-Message-ID: <43EB290A.6060407@op5.se>
-References: <7vslqtf2p1.fsf@assigned-by-dhcp.cox.net>	<BAYC1-PASMTP1142DA49F5BC7B7B42B22FAE030@CEZ.ICE>	<43EB05B5.20307@op5.se> <7vk6c4etzy.fsf@assigned-by-dhcp.cox.net>	<43EB1984.3040602@op5.se> <7vr76cby2v.fsf@assigned-by-dhcp.cox.net>
+From: Franck Bui-Huu <vagabon.xyz@gmail.com>
+Subject: Re: [PATCH] Add git-annotate - a tool for annotating files with the revision and person that created each line in the file.
+Date: Thu, 9 Feb 2006 13:04:54 +0100
+Message-ID: <cda58cb80602090404o4e753839g@mail.gmail.com>
+References: <11394103753694-git-send-email-ryan@michonline.com>
+	 <cda58cb80602080835s38713193t@mail.gmail.com>
+	 <86ek2dsn5f.fsf@blue.stonehenge.com> <43EB093A.1060207@op5.se>
+	 <7vek2cetxh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 09 12:35:56 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 09 13:05:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7A5S-00074N-1R
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 12:35:46 +0100
+	id 1F7AXs-0006BY-2J
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 13:05:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422881AbWBILfk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Feb 2006 06:35:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422889AbWBILfk
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 06:35:40 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:49829 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1422881AbWBILfj
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Feb 2006 06:35:39 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 7FD2D6BCBE; Thu,  9 Feb 2006 12:35:38 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
+	id S1422894AbWBIMEz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Feb 2006 07:04:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422896AbWBIMEz
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 07:04:55 -0500
+Received: from zproxy.gmail.com ([64.233.162.193]:65384 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1422894AbWBIMEz convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Feb 2006 07:04:55 -0500
+Received: by zproxy.gmail.com with SMTP id 14so156634nzn
+        for <git@vger.kernel.org>; Thu, 09 Feb 2006 04:04:54 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LimEsagjBlQOzEVAmDhfpuA1xfL/wc+F1BSAlnK41YCzxvV0J2TjXhu9q1uGLy9V267zH53w9pafz/pc+vJ7elzoGk++6Sp03jVgIDXHloew9kUpxqSoD74VKn1Yq4qnJzXmHMOB+B3RoTBAnPIke/fsP+uJcqDjEPRMWOD8Qpo=
+Received: by 10.36.108.12 with SMTP id g12mr7257018nzc;
+        Thu, 09 Feb 2006 04:04:54 -0800 (PST)
+Received: by 10.36.49.12 with HTTP; Thu, 9 Feb 2006 04:04:54 -0800 (PST)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr76cby2v.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vek2cetxh.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15809>
 
-Junio C Hamano wrote:
-> 
-> The problem is exactly why you need the plus sign when you fetch,
-> i.e. "+pu:pu".  My "pu" rebases.
-> 
-> Suppose I had this:
-> 
->              o--o--o
->             /      "pu"
-> 	o--o
->            "master"     
-> 
-> You do fetch +pu:pu, branch my-pu, and build on top of it:
-> 
->                      o--o--o--o--o--o--o
->                     /                  "my-pu"
->              o--o--o
->             /      "pu"
-> 	o--o
->            "master"
-> 
-> I add some to my "master" and rebuild "pu", maybe while adding
-> another commit on "pu".  You fetch +pu:pu again:
-> 
->                      o--o--o--o--o--o--o
->                     /                  "my-pu"
->              o--o--o        o--o--o--o
->             /              /         "pu" 
-> 	o--o--o--o--o--o--o
->                           "master"
-> 
+2006/2/9, Junio C Hamano <junkio@cox.net>:
+> Andreas Ericsson <ae@op5.se> writes:
+>
+> > So long as we never involve ruby, java or DCL, I'm a happy fellow.
+>
+> Wholeheartedly seconded ;-).
+>
 
-But wouldn't rebase detect the commits as being the same, unless you've 
-made changes to them? If it doesn't, can we teach it to discard parent 
-info and re-hash the commits if they conflict? That should solve most 
-such merge-conflicts, really.
+I agree to but my point was more why not only using python scripts ?
+Why sometimes some scripts is written in perl whereas python could be
+used and vice-versa ?
 
-
-> Now, what happens when you merge "pu" into "my-pu"?  The three
-> commits I had on my previous "pu" are not part of the history of
-> the updated "pu" anymore, but is considered to be part of your
-> development trail.  If these had an addition of a file, and if
-> your development on top of the previous "pu" modified it, the
-> merge would result in:
-> 
->  * originally the file did not exist.
->  * "pu" adds it one way.
->  * "my-pu" adds it in another way.
-> 
-> This requires a hand merge.  What should be done is for me to
-> instead of rebasing "pu", merge the updated master to "pu".
-> 
->                      o--o--o--o--o--o--o
->                     /                  "my-pu"
->              o--o--o--------*--o
->             /              /   "pu" 
-> 	o--o--o--o--o--o--o
->                           "master"
-> 
-> Then merge between "my-pu" and "pu" become easier.  You do not
-> have to worry about the earlier three commits, because the point
-> you forked from the previous "pu" becomes the merge base.
-> 
-> The reason I have not done it that way so far is primarily I am
-> lazy and also I do not like to see too many merges in the log.
-> Also "pu" tends to have really wacky stuff, so separating out
-> only usable bits, excluding wacky ones is slightly easier if I
-> rebuild it from scratch.
-> 
-> The new "next" aka "not too close to bleeding or broken edge"
-> branch will be managed like the last picture above, in order to
-> make working with it easier to manage.  This is only usable if I
-> do not include too bleeding-edge topic branch in it.
-> 
-> 
-
-Good thinking. You're a marvel at explaining things.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Thanks
+--
+               Franck
