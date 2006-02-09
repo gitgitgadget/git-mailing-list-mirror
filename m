@@ -1,52 +1,64 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Fatal error from git bisect
-Date: Thu, 9 Feb 2006 11:50:49 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602091148080.2458@g5.osdl.org>
-References: <7E000E7F06B05C49BDBB769ADAF44D0773A48E@NT-SJCA-0750.brcm.ad.broadcom.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add --diff-filter= documentation paragraph
+Date: Thu, 09 Feb 2006 11:53:45 -0800
+Message-ID: <7vr76c9uly.fsf@assigned-by-dhcp.cox.net>
+References: <E1F7DSt-0001q8-PV@jdl.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 09 20:52:04 2006
+X-From: git-owner@vger.kernel.org Thu Feb 09 20:54:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7Hoi-00033H-Ml
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 20:51:01 +0100
+	id 1F7HrX-0003qX-Ro
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 20:53:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750728AbWBITuy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Feb 2006 14:50:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750742AbWBITuy
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 14:50:54 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:28889 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750728AbWBITux (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2006 14:50:53 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k19JooDZ016304
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 9 Feb 2006 11:50:50 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k19JonJr009344;
-	Thu, 9 Feb 2006 11:50:49 -0800
-To: Mark E Mason <mark.e.mason@broadcom.com>
-In-Reply-To: <7E000E7F06B05C49BDBB769ADAF44D0773A48E@NT-SJCA-0750.brcm.ad.broadcom.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750749AbWBITxw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Feb 2006 14:53:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbWBITxw
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 14:53:52 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:54724 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1750745AbWBITxw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2006 14:53:52 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060209195358.CJTP25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Feb 2006 14:53:58 -0500
+To: Jon Loeliger <jdl@jdl.com>
+In-Reply-To: <E1F7DSt-0001q8-PV@jdl.com> (Jon Loeliger's message of "Thu, 09
+	Feb 2006 09:12:11 -0600")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15820>
 
+Jon Loeliger <jdl@jdl.com> writes:
 
-On Thu, 9 Feb 2006, Mark E Mason wrote:
->  
-> I'm trying to use 'git bisect' and am running into the following error:
+> Signed-off-by: Jon Loeliger <jdl@jdl.com>
 >
-> fatal: Entry 'block/elevator.c' would be overwritten by merge. Cannot merge.
+> ----
+>
+> So, I don't know what the "*" selection flag does.
+> It is called "AON" in the source.  Anyone?
 
-This seems to mean that you have a dirty block/elevator.c file. Have you 
-perhaps edited it?
+That's All-or-None.
 
-		Linus
+After applying the other filters if there is anything left, then
+spit out everything (including the ones that did not pass the
+other filters).  Otherwise do not output anything.
+
+In other words,
+
+	-M --pretty --diff-filter='R'
+
+shows log for a commit that contains a rename, and diff for only
+renamed paths.  On the other hand,
+
+	-M --pretty --diff-filter='R*'
+
+shows the same log and diff for all paths the commit touches,
+not just the renamed ones.
