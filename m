@@ -1,95 +1,95 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git
-Date: Wed, 08 Feb 2006 22:47:54 -0800
-Message-ID: <7vslqtf2p1.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] ls-files: honour per-directory ignore file from higher directories.
+Date: Thu, 09 Feb 2006 00:16:53 -0800
+Message-ID: <7vmzh1eykq.fsf_-_@assigned-by-dhcp.cox.net>
+References: <1138125570.24415.11.camel@dv>
+	<20060125061140.GA8408@mars.ravnborg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Feb 09 07:48:04 2006
+Cc: Sam Ravnborg <sam@ravnborg.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 09 09:17:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F75ax-0002E0-8T
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 07:47:59 +0100
+	id 1F76zD-0002mz-UW
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 09:17:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422829AbWBIGr4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Feb 2006 01:47:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422830AbWBIGr4
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 01:47:56 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:58542 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1422829AbWBIGrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2006 01:47:55 -0500
+	id S1422844AbWBIIQz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Feb 2006 03:16:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422854AbWBIIQz
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 03:16:55 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:41355 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1422844AbWBIIQy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2006 03:16:54 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060209064504.TTLK17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 9 Feb 2006 01:45:04 -0500
-To: git@vger.kernel.org
+          id <20060209081551.BHCB3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Feb 2006 03:15:51 -0500
+To: Pavel Roskin <proski@gnu.org>
+In-Reply-To: <20060125061140.GA8408@mars.ravnborg.org> (Sam Ravnborg's message
+	of "Wed, 25 Jan 2006 07:11:40 +0100")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15793>
 
-I haven't heard major breakage around the new features scheduled
-for 1.2.0 so far, except for the two-tree "diff-tree --cc" Linus
-has already fixed, so the previous "What's new" is pretty much
-unchanged.
+When git-ls-files -o --exclude-per-directory=.gitignore is run
+from a subdirectory, it did not read from .gitignore from its
+parent directory.  Reading from them makes output from these two
+commands consistent:
 
-One *major* change I am thinking about doing is to change my
-workflow a bit.  So far, the proposed updates branch "pu" was
-almost impossible to follow unless you are really a devoted git
-developer, because it is always rebased to the latest master and
-then topic branches are merged onto it.  While that keeps the
-number of unnecessary merge nodes between master and pu to the
-minimum, it actively discouraged for the branch to be followed
-by developers.
+    $ git ls-files -o --exclude-per-directory=.gitignore Documentation
+    $ cd Documentation &&
+      git ls-files -o --exclude-per-directory=.gitignore
 
-I would like to rectify that.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-So I have created another branch, "next".  This is managed quite
-differently from "pu".  I'd promise these things:
+---
 
- * It is to contain planned updates and merge from topic
-   branches, just like "pu" currently does.  However, the topics
-   merged there will not contain majorly whacky / unproven ones
-   like bind commits and shallow clones, until the basic part
-   proves sound during the list discussion.
+ * If there are positive feedbacks on this one, I consider it
+   a safe enough candidate to be included in 1.2.0 release.
 
- * I will not rewind or rebase the "next" branch.  Also I will
-   not rebase the topic branches that are merged into it.
+ ls-files.c |   22 +++++++++++++++++++++-
+ 1 files changed, 21 insertions(+), 1 deletions(-)
 
- * It would occasionally merge from "master" if only to prevent
-   conflicts.
-
- * If there are patches sent to improve a topic branch in it,
-   they will be applied to the topic branch, and then the topic
-   branch is merged into "next", without any funny rewinding or
-   rebasing of "next".  This will make the "next" branch
-   cluttered with repeated merges from the same topic branch,
-   but that is OK.  "next" will not be merged into "master",
-   ever.
-
- * Once a topic is fully cooked, the topic branch will be merged
-   into "master".
-
-What this means is that "next" should be as easy to follow as
-"master", but still is slightly ahead of "master" with not so
-wildly experimental features.
-
-Although there theoretically is no reason not to follow the
-above principles I set for "next" to manage "pu", it will stay
-wild for now until I get more comfortable with this workflow.
-
-Now, what's in "next"?  Currently I have two topic branches
-merged to it.
-
-    * jc/nostat:
-      ls-files: debugging aid for CE_VALID changes.
-      "Assume unchanged" git: do not set CE_VALID with --refresh
-      "Assume unchanged" git
-
-    * jc/empty-commit:
-      t6000: fix a careless test library add-on.
-      Do not allow empty name or email.
+701ca744e386c2429ca44072ea987bbb4bdac7ce
+diff --git a/ls-files.c b/ls-files.c
+index 6af3b09..7024cf1 100644
+--- a/ls-files.c
++++ b/ls-files.c
+@@ -474,8 +474,28 @@ static void show_files(void)
+ 		const char *path = ".", *base = "";
+ 		int baselen = prefix_len;
+ 
+-		if (baselen)
++		if (baselen) {
+ 			path = base = prefix;
++			if (exclude_per_dir) {
++				char *p, *pp = xmalloc(baselen+1);
++				memcpy(pp, prefix, baselen+1);
++				p = pp;
++				while (1) {
++					char save = *p;
++					*p = 0;
++					push_exclude_per_directory(pp, p-pp);
++					*p++ = save;
++					if (!save)
++						break;
++					p = strchr(p, '/');
++					if (p)
++						p++;
++					else
++						p = pp + baselen;
++				}
++				free(pp);
++			}
++		}
+ 		read_directory(path, base, baselen);
+ 		qsort(dir, nr_dir, sizeof(struct nond_on_fs *), cmp_name);
+ 		if (show_others)
+-- 
+1.1.6.gbb042
