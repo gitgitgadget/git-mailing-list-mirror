@@ -1,7 +1,7 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] "Assume unchanged" git: do not set CE_VALID with --refresh
-Date: Wed, 08 Feb 2006 21:49:47 -0800
-Message-ID: <7virrpgjyc.fsf_-_@assigned-by-dhcp.cox.net>
+Subject: [PATCH] ls-files: debugging aid for CE_VALID changes.
+Date: Wed, 08 Feb 2006 21:50:18 -0800
+Message-ID: <7vd5hxgjxh.fsf@assigned-by-dhcp.cox.net>
 References: <46a038f90601251810m1086d353ne8c7147edee4962a@mail.gmail.com>
 	<Pine.LNX.4.64.0601272345540.2909@evo.osdl.org>
 	<46a038f90601272133o53438987ka6b97c21d0cdf921@mail.gmail.com>
@@ -21,92 +21,82 @@ Cc: Alex Riesen <raa.lkml@gmail.com>,
 	Keith Packard <keithp@keithp.com>, cworth@cworth.org,
 	Martin Langhoff <martin.langhoff@gmail.com>,
 	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu Feb 09 06:50:01 2006
+X-From: git-owner@vger.kernel.org Thu Feb 09 06:50:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F74gj-0000OS-Sa
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 06:49:54 +0100
+	id 1F74hE-0000WO-0V
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 06:50:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422803AbWBIFtv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Feb 2006 00:49:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422807AbWBIFtv
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 00:49:51 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:31730 "EHLO
+	id S1422806AbWBIFuV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Feb 2006 00:50:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422809AbWBIFuV
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 00:50:21 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:52466 "EHLO
 	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1422803AbWBIFtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2006 00:49:50 -0500
+	id S1422806AbWBIFuV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2006 00:50:21 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
           by fed1rmmtao01.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060209054842.WAKB15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 9 Feb 2006 00:48:42 -0500
+          id <20060209054913.WAPW15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Feb 2006 00:49:13 -0500
 To: git@vger.kernel.org
-In-Reply-To: <7vek2di043.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 08 Feb 2006 21:15:24 -0800")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15791>
 
-When working with automatic assume-unchanged mode using
-core.ignorestat, setting CE_VALID after --refresh makes things
-more cumbersome to use.  Consider this scenario:
-
- (1) the working tree is on a filesystem with slow lstat(2).
-     The user sets core.ignorestat = true.
-
- (2) "git checkout" to switch to a different branch (or initial
-     checkout) updates all paths and the index starts out with
-     "all clean".
-
- (3) The user knows she wants to edit certain paths.  She uses
-     update-index --no-assume-unchanged (we could call it --edit;
-     the name is inmaterial) to mark these paths and starts
-     editing.
-
- (4) After editing half of the paths marked to be edited, she
-     runs "git status".  This runs "update-index --refresh" to
-     reduce the false hits from diff-files.
-
- (5) Now the other half of the paths, since she has not changed
-     them, are found to match the index, and CE_VALID is set on
-     them again.
-
-For this reason, this commit makes update-index --refresh not to
-set CE_VALID even after the path without CE_VALID are verified
-to be up to date.  The user still can run --really-refresh to
-force lstat() to match the index entries to the reality.
+This is not really part of the proposed updates for CE_VALID,
+but with this change, ls-files -t shows CE_VALID paths with
+lowercase tag letters instead of the usual uppercase.  Useful
+for checking out what is going on.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 
 ---
 
- update-index.c |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
+ ls-files.c |   18 +++++++++++++++++-
+ 1 files changed, 17 insertions(+), 1 deletions(-)
 
-fd4e57f17733d85ed5346d70005ea900cb80b9ff
-diff --git a/update-index.c b/update-index.c
-index 767fd49..bb73050 100644
---- a/update-index.c
-+++ b/update-index.c
-@@ -172,6 +172,15 @@ static struct cache_entry *refresh_entry
- 	memcpy(updated, ce, size);
- 	fill_stat_cache_info(updated, &st);
+775ca05ee2ba7e1f54ec4db1fed7069014364f2c
+diff --git a/ls-files.c b/ls-files.c
+index 6af3b09..3f06ece 100644
+--- a/ls-files.c
++++ b/ls-files.c
+@@ -447,6 +447,22 @@ static void show_ce_entry(const char *ta
+ 	if (pathspec && !match(pathspec, ce->name, len))
+ 		return;
  
-+	/* In this case, if really is not set, we should leave
-+	 * CE_VALID bit alone.  Otherwise, paths marked with
-+	 * --no-assume-unchanged (i.e. things to be edited) will
-+	 * reacquire CE_VALID bit automatically, which is not
-+	 * really what we want.
-+	 */
-+	if (!really && assume_unchanged && !(ce->ce_flags & htons(CE_VALID)))
-+		updated->ce_flags &= ~htons(CE_VALID);
++	if (tag && *tag && (ce->ce_flags & htons(CE_VALID))) {
++		static char alttag[4];
++		memcpy(alttag, tag, 3);
++		if (isalpha(tag[0]))
++			alttag[0] = tolower(tag[0]);
++		else if (tag[0] == '?')
++			alttag[0] = '!';
++		else {
++			alttag[0] = 'v';
++			alttag[1] = tag[0];
++			alttag[2] = ' ';
++			alttag[3] = 0;
++		}
++		tag = alttag;
++	}
 +
- 	return updated;
- }
- 
+ 	if (!show_stage) {
+ 		fputs(tag, stdout);
+ 		write_name_quoted("", 0, ce->name + offset,
+@@ -503,7 +519,7 @@ static void show_files(void)
+ 			err = lstat(ce->name, &st);
+ 			if (show_deleted && err)
+ 				show_ce_entry(tag_removed, ce);
+-			if (show_modified && ce_modified(ce, &st))
++			if (show_modified && ce_modified(ce, &st, 0))
+ 				show_ce_entry(tag_modified, ce);
+ 		}
+ 	}
 -- 
 1.1.6.gbb042
