@@ -1,63 +1,89 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Kay Sievers <kay.sievers@suse.de>
 Subject: Re: gitweb using "--cc"?
-Date: Wed, 8 Feb 2006 18:26:39 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602081817040.2458@g5.osdl.org>
-References: <Pine.LNX.4.64.0602081532360.2458@g5.osdl.org> <43EAA560.8030504@didntduck.org>
+Date: Thu, 9 Feb 2006 04:13:02 +0100
+Message-ID: <20060209031302.GA7214@vrfy.org>
+References: <Pine.LNX.4.64.0602081532360.2458@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kay Sievers <kay.sievers@suse.de>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 09 03:26:52 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 09 04:13:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F71WB-0003f7-5Y
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 03:26:47 +0100
+	id 1F72F1-0003vX-N9
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 04:13:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422776AbWBIC0o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Feb 2006 21:26:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422777AbWBIC0o
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 21:26:44 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:46782 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1422776AbWBIC0o (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Feb 2006 21:26:44 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k192QdDZ030112
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 8 Feb 2006 18:26:40 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k192Qdwn025159;
-	Wed, 8 Feb 2006 18:26:39 -0800
-To: Brian Gerst <bgerst@didntduck.org>
-In-Reply-To: <43EAA560.8030504@didntduck.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965048AbWBIDNE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Feb 2006 22:13:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964943AbWBIDNE
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 22:13:04 -0500
+Received: from soundwarez.org ([217.160.171.123]:53635 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S1030428AbWBIDND (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Feb 2006 22:13:03 -0500
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id E16647E728; Thu,  9 Feb 2006 04:13:02 +0100 (CET)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0602081532360.2458@g5.osdl.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15785>
 
-
-
-On Wed, 8 Feb 2006, Brian Gerst wrote:
+On Wed, Feb 08, 2006 at 03:44:58PM -0800, Linus Torvalds wrote:
 > 
-> git-whatchanged doesn't show that merge commit either.
+> I just did an arm merge that needed some (very trivial) manual fixups 
+> (commit ID cce0cac1, in case anybody cares).
+> 
+> As usual, git-diff-tree --cc does a beautiful job on it, but I also 
+> checked the gitweb output, which seems to not do as well (the commit 
+> message about a manual conflict merge doesn't make any sense at all).
+> 
+> Now, in this case, what gitweb shows is actually "sensible": it will show 
+> the diff of what the merge "brought in" to the mainline kernel, and in 
+> that sense I can certainly understand it. It basically diffs the merge 
+> against the first parent.
+> 
+> So looking at that particular example, arguably gitweb does something 
+> "different" from what the commit message is talking about, but in many 
+> ways it's a perfectly logical thing.
+> 
+> However, diffing against the first parent, while it sometimes happens to 
+> be a sane thing to do, really isn't very sane in general. The merge may go 
+> the other way (subdevelopers merging my code), like in commit b2faf597, 
+> and sometimes there might not be a single reference tree, but more of a 
+> "couple of main branches" approach with merging back and forth). Then the 
+> current gitweb behaviour makes no sense at all.
+> 
+> So it would be much nicer if gitweb had some alternate approach to showing 
+> merge diffs. My suggested approach would be to just let the user choose: 
+> have separate "diff against fist/second[/third[/..]] parent" buttons. And 
+> one of the choices would be the "conflict view" that git-diff-tree --cc 
+> gives (I'd argue for that being the default one, because it's the only one 
+> that doesn't have a "preferred parent").
 
-Actually, it does. You just have to ask it.
+Hmm, I have no real clue what all the --cc is about. It's not obvious
+for someone who never thought about "meta patches" or "complex merges". :)
 
-	git-whatchanged --cc
+If nobody else can do the changes to gitweb, sure, I'll do this and try
+to understand what is needed, but then I will need it explained in more
+details, what functionality we want to see here. At best with some commented
+commandline examples that produce the data you want to see. So that I
+can imagine what you are looking for and can give it a try ...
 
-The thing is, "git-whatchanged" is different from "git diff" and other 
-helpers, in that it by default shows the "raw" git representation. Which 
-indeed doesn't show that merge as being anything interesting.
+On the technical side for the kernel.org installation:
+  does git diff use /usr/bin/diff?
 
-But with "--cc", the merge suddenly blossoms.
+  does git diff create temp files?
 
-Now, arguably, the raw format should default to the same kind of "were 
-there data conflicts" that "-c" does for merges, but it doesn't, so it's 
-silent ;(
+  how can i specify the location for the temp files?
+  (wasn't possible some months ago, but needed on kernel.org)
 
-		Linus
+  is the temp file naming safe for a lot of git diff running in parallel?
+
+  is a --cc capable git already available on the kernel.org boxes?
+
+Thanks,
+Kay
