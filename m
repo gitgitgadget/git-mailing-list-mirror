@@ -1,147 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Allow using --cc when showing a merge.
-Date: Wed, 08 Feb 2006 16:02:13 -0800
-Message-ID: <7vhd79mmbe.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0602081532360.2458@g5.osdl.org>
-	<7vu0b9mmij.fsf@assigned-by-dhcp.cox.net>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Re: gitweb: View graphes & get tar
+Date: Thu, 9 Feb 2006 00:03:35 +0000
+Message-ID: <200602090003.35354.alan@chandlerfamily.org.uk>
+References: <4fb292fa0602081534x7f6e74c1veb8c4ea7ad5a83cc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 09 01:02:22 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Feb 09 01:03:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F6zGM-0001qx-PG
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 01:02:19 +0100
+	id 1F6zHe-00026q-Av
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 01:03:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422675AbWBIACQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Feb 2006 19:02:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422676AbWBIACP
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 19:02:15 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:38344 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1422675AbWBIACP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Feb 2006 19:02:15 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060209000040.HTFO20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 8 Feb 2006 19:00:40 -0500
-To: Kay Sievers <kay.sievers@suse.de>
-In-Reply-To: <7vu0b9mmij.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 08 Feb 2006 15:57:56 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1422677AbWBIADg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Feb 2006 19:03:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422678AbWBIADf
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Feb 2006 19:03:35 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:56028
+	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
+	id S1422677AbWBIADf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2006 19:03:35 -0500
+Received: from kanger.home ([192.168.0.21])
+	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
+	id 1F6zHa-0004Ko-Eo
+	for git@vger.kernel.org; Thu, 09 Feb 2006 00:03:34 +0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.1
+In-Reply-To: <4fb292fa0602081534x7f6e74c1veb8c4ea7ad5a83cc@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15770>
+
+On Wednesday 08 February 2006 23:34, Bertrand Jacquin wrote:
+> Hi,
+>
+> Is gitweb maintainer planned to allow people to get from gitweb ? It
+> could be something good for ungited/remote people to get a tar for a
+> specific tree.
+> gd provide to create graphs and is often use in "web project" to
+> generate graphe. Could it here generated a graph of branches like in
+> gitk ?
+> It also could be cool to allow people to get binary files in an other
+> mimetype that text/plain.
+>
+> Here are my wish :D it's worth what it's worth.
+
+You can do some of that a different way.
+
+I have it set up so that when I push a tag into my public git repositories, 
+that a post-update hook creates a tarball of the site and puts it into the 
+download directory.
+
+The hook is of the following form
+
+#!/bin/sh
+#
+# This script is used to create a tarball of the project and place it into the 
+"files"
+# directory of the web site whenever a release is tagged in the repository
+#
+PROJECT=akcmoney
+# this should look at each positional parameter
+for ref ; do
+#if its a tag then create a tarball
+        if [ "${ref:0:10}" == "refs/tags/" ] ; then
+                git-tar-tree ${ref:10} $PROJECT | gzip -9 
+> /var/www/chandlerfamily/files/$PROJECT/$PROJECT-${ref:10}.tar.gz
+        fi
+done
 
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- * This does not do the colorized diff, but just to show ideas
-   where to put the link to ask for the combined diff.
-
- gitweb.cgi |   60 +++++++++++++++++++++++++++++++++++++++++++++++-------------
- 1 files changed, 47 insertions(+), 13 deletions(-)
-
-1f19febaefbf90dc04a6b37d79ba3a9337decaff
-diff --git a/gitweb.cgi b/gitweb.cgi
-index c1bb624..d2659ea 100755
---- a/gitweb.cgi
-+++ b/gitweb.cgi
-@@ -191,6 +191,9 @@ if (!defined $action || $action eq "summ
- } elsif ($action eq "commitdiff_plain") {
- 	git_commitdiff_plain();
- 	exit;
-+} elsif ($action eq "combinediff") {
-+	git_combinediff();
-+	exit;
- } elsif ($action eq "history") {
- 	git_history();
- 	exit;
-@@ -1762,7 +1765,15 @@ sub git_commit {
- 	      "</tr>\n";
- 	print "<tr><td>committer</td><td>" . esc_html($co{'committer'}) . "</td></tr>\n";
- 	print "<tr><td></td><td> $cd{'rfc2822'}" . sprintf(" (%02d:%02d %s)", $cd{'hour_local'}, $cd{'minute_local'}, $cd{'tz_local'}) . "</td></tr>\n";
--	print "<tr><td>commit</td><td style=\"font-family:monospace\">$co{'id'}</td></tr>\n";
-+	print "<tr><td>commit</td><td style=\"font-family:monospace\">$co{'id'}</td>";
-+	if (1 < @{$co{'parents'}}) {
-+		print '<td class="link">';
-+		print $cgi->a({-href => "$my_uri?" .
-+				   esc_param("p=$project;a=combinediff;".
-+					     "h=$hash")}, "combinediff");
-+		print '</td>';
-+	}
-+	print "</tr>\n";
- 	print "<tr>" .
- 	      "<td>tree</td>" .
- 	      "<td style=\"font-family:monospace\">" .
-@@ -2044,6 +2055,38 @@ sub git_commitdiff {
- 	git_footer_html();
- }
- 
-+sub git_combinediff {
-+	mkdir($git_temp, 0700);
-+	my $fd;
-+	my $refs = read_info_ref("tags");
-+	open $fd, "-|", "$gitbin/git-describe $hash";
-+	my ($tagname) = <$fd>;
-+	chomp($tagname);
-+	close $fd;
-+	print $cgi->header(-type => "text/plain", -charset => 'utf-8', '-content-disposition' => "inline; filename=\"git-$hash.patch\"");
-+	my %co = git_read_commit($hash);
-+	my %ad = date_str($co{'author_epoch'}, $co{'author_tz'});
-+	my $comment = $co{'comment'};
-+	print "From: $co{'author'}\n" .
-+	      "Date: $ad{'rfc2822'} ($ad{'tz_local'})\n".
-+	      "Subject: $co{'title'}\n";
-+	if (defined $tagname) {
-+	      print "X-Git-Tag: $tagname\n";
-+	}
-+	print "\n";
-+
-+	foreach my $line (@$comment) {;
-+		print "$line\n";
-+	}
-+	print "---\n\n";
-+
-+	open $fd, "-|", "$gitbin/git-diff-tree --cc $hash";
-+	while (<$fd>) {
-+		print $_;
-+	}
-+	close $fd;
-+}
-+
- sub git_commitdiff_plain {
- 	mkdir($git_temp, 0700);
- 	open my $fd, "-|", "$gitbin/git-diff-tree -r $hash_parent $hash" or die_error(undef, "Open failed.");
-@@ -2051,20 +2094,11 @@ sub git_commitdiff_plain {
- 	close $fd or die_error(undef, "Reading diff-tree failed.");
- 
- 	# try to figure out the next tag after this commit
--	my $tagname;
- 	my $refs = read_info_ref("tags");
--	open $fd, "-|", "$gitbin/git-rev-list HEAD";
--	chomp (my (@commits) = <$fd>);
-+	open $fd, "-|", "$gitbin/git-describe $hash";
-+	my ($tagname) = <$fd>;
-+	chomp($tagname);
- 	close $fd;
--	foreach my $commit (@commits) {
--		if (defined $refs->{$commit}) {
--			$tagname = $refs->{$commit}
--		}
--		if ($commit eq $hash) {
--			last;
--		}
--	}
--
- 	print $cgi->header(-type => "text/plain", -charset => 'utf-8', '-content-disposition' => "inline; filename=\"git-$hash.patch\"");
- 	my %co = git_read_commit($hash);
- 	my %ad = date_str($co{'author_epoch'}, $co{'author_tz'});
 -- 
-1.1.6.gbb042
+Alan Chandler
+http://www.chandlerfamily.org.uk
+Open Source. It's the difference between trust and antitrust.
