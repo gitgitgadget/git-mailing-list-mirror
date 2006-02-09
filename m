@@ -1,56 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git
-Date: Thu, 9 Feb 2006 10:58:13 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602091055540.24701@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vslqtf2p1.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Fix t9000-init.sh - comment for initial commit is different
+Date: Thu, 09 Feb 2006 05:01:49 -0500
+Message-ID: <1139479309.2966.23.camel@dv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 09 10:58:47 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Feb 09 11:02:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F78ZE-0002yG-RR
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 10:58:26 +0100
+	id 1F78ch-0003m4-Kp
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 11:02:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422649AbWBIJ6R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Feb 2006 04:58:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422647AbWBIJ6R
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 04:58:17 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:5840 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1422649AbWBIJ6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2006 04:58:16 -0500
-Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id ABD5514650D; Thu,  9 Feb 2006 10:58:13 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 9CB2AA1B;
-	Thu,  9 Feb 2006 10:58:13 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 76B911411EC; Thu,  9 Feb 2006 10:58:13 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslqtf2p1.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1422656AbWBIKBz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Feb 2006 05:01:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422652AbWBIKBz
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 05:01:55 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:43669 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1422656AbWBIKBy
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Feb 2006 05:01:54 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1F78ca-0001wb-Lu
+	for git@vger.kernel.org; Thu, 09 Feb 2006 05:01:52 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1F78cY-0000hP-6f; Thu, 09 Feb 2006 05:01:50 -0500
+To: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-Mailer: Evolution 2.5.90 (2.5.90-1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15801>
 
-Hi,
+[PATCH] Fix t9000-init.sh - comment for initial commit is different
 
-On Wed, 8 Feb 2006, Junio C Hamano wrote:
+Comment for initial commit has "Initial commit" prepended to it now. 
+Update test to match.
 
-> So I have created another branch, "next".
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+---
 
-I never quite understood why you not just publish your topic branches. 
-IMHO what you intend to put into "next" should be put into "master" 
-anyway: everyone interested in git development should try the new features 
-as early as possible. If there is a "whacky" feature, you can put it into 
-"whacky/archexport" or something along the lines.
+ t/t9000-init.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/t/t9000-init.sh b/t/t9000-init.sh
+index aef2587..b3b9df3 100755
+--- a/t/t9000-init.sh
++++ b/t/t9000-init.sh
+@@ -37,7 +37,8 @@ test_expect_success 'initialize with the
+ test_expect_success 'check if we have a commit' \
+ 	'[ -s .git/refs/heads/master ] && cg-object-id -c HEAD'
+ test_expect_success 'check if the commit is proper' \
+-	'[ "$(git-cat-file commit HEAD | sed -n '\''/^parent/q; /^$/{n; :a p; n; b a}'\'')" = "silly commit message" ]'
++	'[ "$(git-cat-file commit HEAD | sed -n '\''/^parent/q; /^$/{n; :a p; n; b a}'\'')" = "Initial commit
++silly commit message" ]'
+ test_expect_success 'check if we have populated index' \
+ 	'[ "$(git-ls-files | tr '\''\n'\'' " ")" = "file1 file2 " ]'
+ test_expect_success 'blow away the repository' \
+
+-- 
+Regards,
+Pavel Roskin
