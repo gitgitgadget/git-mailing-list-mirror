@@ -1,95 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] ls-files: honour per-directory ignore file from higher directories.
-Date: Thu, 09 Feb 2006 00:16:53 -0800
-Message-ID: <7vmzh1eykq.fsf_-_@assigned-by-dhcp.cox.net>
-References: <1138125570.24415.11.camel@dv>
-	<20060125061140.GA8408@mars.ravnborg.org>
+From: sean <seanlkml@sympatico.ca>
+Subject: Re: What's in git.git
+Date: Thu, 9 Feb 2006 03:09:05 -0500
+Message-ID: <BAYC1-PASMTP1142DA49F5BC7B7B42B22FAE030@CEZ.ICE>
+References: <7vslqtf2p1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sam Ravnborg <sam@ravnborg.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 09 09:17:18 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 09 09:42:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F76zD-0002mz-UW
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 09:17:11 +0100
+	id 1F77Ns-0007rb-6d
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 09:42:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422844AbWBIIQz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Feb 2006 03:16:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422854AbWBIIQz
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 03:16:55 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:41355 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1422844AbWBIIQy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2006 03:16:54 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060209081551.BHCB3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 9 Feb 2006 03:15:51 -0500
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <20060125061140.GA8408@mars.ravnborg.org> (Sam Ravnborg's message
-	of "Wed, 25 Jan 2006 07:11:40 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965173AbWBIImS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Feb 2006 03:42:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965184AbWBIImS
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 03:42:18 -0500
+Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:39987 "EHLO
+	BAYC1-PASMTP11.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S965173AbWBIImR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2006 03:42:17 -0500
+X-Originating-IP: [65.94.251.146]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.94.251.146]) by BAYC1-PASMTP11.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 9 Feb 2006 00:44:28 -0800
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id CDC48644C28;
+	Thu,  9 Feb 2006 03:09:20 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
+Message-Id: <20060209030905.319f2e48.seanlkml@sympatico.ca>
+In-Reply-To: <7vslqtf2p1.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.11; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 09 Feb 2006 08:44:29.0218 (UTC) FILETIME=[0A231820:01C62D55]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15793>
 
-When git-ls-files -o --exclude-per-directory=.gitignore is run
-from a subdirectory, it did not read from .gitignore from its
-parent directory.  Reading from them makes output from these two
-commands consistent:
+On Wed, 08 Feb 2006 22:47:54 -0800
+Junio C Hamano <junkio@cox.net> wrote:
 
-    $ git ls-files -o --exclude-per-directory=.gitignore Documentation
-    $ cd Documentation &&
-      git ls-files -o --exclude-per-directory=.gitignore
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+> One *major* change I am thinking about doing is to change my
+> workflow a bit.  So far, the proposed updates branch "pu" was
+> almost impossible to follow unless you are really a devoted git
+> developer, because it is always rebased to the latest master and
+> then topic branches are merged onto it.  While that keeps the
+> number of unnecessary merge nodes between master and pu to the
+> minimum, it actively discouraged for the branch to be followed
+> by developers.
 
----
+I've always followed it okay by just using "git branch -d pu" each time 
+before pulling from you.   Your "next" branch does sound like an 
+improvement though.
 
- * If there are positive feedbacks on this one, I consider it
-   a safe enough candidate to be included in 1.2.0 release.
-
- ls-files.c |   22 +++++++++++++++++++++-
- 1 files changed, 21 insertions(+), 1 deletions(-)
-
-701ca744e386c2429ca44072ea987bbb4bdac7ce
-diff --git a/ls-files.c b/ls-files.c
-index 6af3b09..7024cf1 100644
---- a/ls-files.c
-+++ b/ls-files.c
-@@ -474,8 +474,28 @@ static void show_files(void)
- 		const char *path = ".", *base = "";
- 		int baselen = prefix_len;
- 
--		if (baselen)
-+		if (baselen) {
- 			path = base = prefix;
-+			if (exclude_per_dir) {
-+				char *p, *pp = xmalloc(baselen+1);
-+				memcpy(pp, prefix, baselen+1);
-+				p = pp;
-+				while (1) {
-+					char save = *p;
-+					*p = 0;
-+					push_exclude_per_directory(pp, p-pp);
-+					*p++ = save;
-+					if (!save)
-+						break;
-+					p = strchr(p, '/');
-+					if (p)
-+						p++;
-+					else
-+						p = pp + baselen;
-+				}
-+				free(pp);
-+			}
-+		}
- 		read_directory(path, base, baselen);
- 		qsort(dir, nr_dir, sizeof(struct nond_on_fs *), cmp_name);
- 		if (show_others)
--- 
-1.1.6.gbb042
+Sean
