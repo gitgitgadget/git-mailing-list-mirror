@@ -1,77 +1,60 @@
-From: "Mark E Mason" <mark.e.mason@broadcom.com>
-Subject: Fatal error from git bisect
-Date: Thu, 9 Feb 2006 10:51:25 -0800
-Message-ID: <7E000E7F06B05C49BDBB769ADAF44D0773A48E@NT-SJCA-0750.brcm.ad.broadcom.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: gitweb using "--cc"?
+Date: Thu, 09 Feb 2006 11:41:36 -0800
+Message-ID: <7v3bisb9qn.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0602081532360.2458@g5.osdl.org>
+	<43EAA560.8030504@didntduck.org>
+	<Pine.LNX.4.64.0602081817040.2458@g5.osdl.org>
+	<7vu0b9jkad.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602090822100.2458@g5.osdl.org>
+	<Pine.LNX.4.64.0602091029310.2458@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "Mark E Mason" <mark.e.mason@broadcom.com>
-X-From: git-owner@vger.kernel.org Thu Feb 09 19:52:26 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 09 20:42:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7GtQ-0003kY-RD
-	for gcvg-git@gmane.org; Thu, 09 Feb 2006 19:51:50 +0100
+	id 1F7Hfm-0000v8-5L
+	for gcvg-git@gmane.org; Thu, 09 Feb 2006 20:41:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750703AbWBISvo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Feb 2006 13:51:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750705AbWBISvo
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 13:51:44 -0500
-Received: from mms1.broadcom.com ([216.31.210.17]:35857 "EHLO
-	mms1.broadcom.com") by vger.kernel.org with ESMTP id S1750703AbWBISvn convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Feb 2006 13:51:43 -0500
-Received: from 10.10.64.154 by mms1.broadcom.com with ESMTP (Broadcom
- SMTP Relay (Email Firewall v6.2.0)); Thu, 09 Feb 2006 10:51:29 -0800
-X-Server-Uuid: F962EFE0-448C-40EE-8100-87DF498ED0EA
-Received: by mail-irva-10.broadcom.com (Postfix, from userid 47) id
- E59A82AF; Thu, 9 Feb 2006 10:51:27 -0800 (PST)
-Received: from mail-irva-8.broadcom.com (mail-irva-8 [10.10.64.221]) by
- mail-irva-10.broadcom.com (Postfix) with ESMTP id D1E892AE for
- <git@vger.kernel.org>; Thu, 9 Feb 2006 10:51:27 -0800 (PST)
-Received: from mail-sj1-12.sj.broadcom.com (mail-sj1-12.sj.broadcom.com
- [10.16.128.215]) by mail-irva-8.broadcom.com (MOS 3.7.3a-GA) with ESMTP
- id CWW16647; Thu, 9 Feb 2006 10:51:26 -0800 (PST)
-Received: from NT-SJCA-0750.brcm.ad.broadcom.com (nt-sjca-0750
- [10.16.192.220]) by mail-sj1-12.sj.broadcom.com (Postfix) with ESMTP id
- 2A3A520502 for <git@vger.kernel.org>; Thu, 9 Feb 2006 10:51:26 -0800 (
- PST)
-X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
-Content-class: urn:content-classes:message
-Thread-Topic: Fatal error from git bisect
-Thread-Index: AcYtqdPNHVZIai1jRUSCkVxm0zlozg==
-To: git@vger.kernel.org
-X-TMWD-Spam-Summary: SEV=1.1; DFV=A2006020907; IFV=2.0.6,4.0-7;
- RPD=4.00.0004;
- RPDID=303030312E30413039303230362E34334542384435372E303033382D412D;
- ENG=IBF; TS=20060209185133; CAT=NONE; CON=NONE;
-X-MMS-Spam-Filter-ID: A2006020907_4.00.0004_2.0.6,4.0-7
-X-WSS-ID: 6FF550BB10G9360964-01-01
+	id S1750744AbWBITlm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Feb 2006 14:41:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbWBITlm
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 14:41:42 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:53220 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1750742AbWBITll (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2006 14:41:41 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060209193917.RKD17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Feb 2006 14:39:17 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602091029310.2458@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 9 Feb 2006 10:30:28 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15818>
 
-Hello,
- 
-I'm trying to use 'git bisect' and am running into the following error:
+I was wondering if we could teach not diff_tree_combined_merge
+but show_combined_diff to do this, so that diff-files -c would
+benefit from the raw output as wel.
 
-[mason@hawaii linux.git]$ git bisect reset
-[mason@hawaii linux.git]$ git bisect start
-[mason@hawaii linux.git]$ git bisect good
-d166b5a220813a08a79312fc384d11e1c57e9072
-[mason@hawaii linux.git]$ git bisect bad
-a7900c9bdb64c11688719bef9f6373fbc4c276ab
-Bisecting: 116 revisions left to test after this
-fatal: Entry 'block/elevator.c' would be overwritten by merge. Cannot
-merge.
+That aside, one remaining nit with your patch is printing
+p->path.  diff.c::diff_flush_raw() does something like this:
 
-(this is the linux-mips.org kernel repository, a7900c9b is a child of
-d166b5a2).
+	if (line_termination) {
+		path_one = quote_one(path_one);
+		path_two = quote_one(path_two);
+	}
+	...
+	printf("%s%c%s", status, inter_name_termination, path_one);
 
-What does this mean?  How do I get around it?
-As you can probably guess, I'm a beginner to git bisect.
+But otherwise from a cursory look the patch appears correct.
 
-Thanks in advance.
-Mark
+Thanks.
