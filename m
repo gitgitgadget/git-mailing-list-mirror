@@ -1,65 +1,65 @@
-From: Christian Biesinger <cbiesinger@web.de>
-Subject: [PATCH] Handle the case where cvsps claims a branch is an ancestor of itself
-Date: Fri, 10 Feb 2006 22:02:37 +0100
-Message-ID: <200602102102.k1AL2bG0010419@biesi.no-ip.org>
-X-From: git-owner@vger.kernel.org Sat Feb 11 00:20:50 2006
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Ignore commits for which cvsps can't identify a branch
+Date: Fri, 10 Feb 2006 15:25:09 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602101517290.19172@g5.osdl.org>
+References: <200602102102.k1AL2Xkd010415@biesi.no-ip.org>
+ <7vmzgyvrih.fsf@assigned-by-dhcp.cox.net> <43ED0D63.5090105@web.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 11 00:25:36 2006
 Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
-	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1F7fPp-0001y9-00
-	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 22:02:54 +0100
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1F7hdg-00058c-ED
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 00:25:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932189AbWBJVCp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 16:02:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932194AbWBJVCp
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 16:02:45 -0500
-Received: from 85-124-17-142.dynamic.xdsl-line.inode.at ([85.124.17.142]:31669
-	"EHLO biesi.no-ip.org") by vger.kernel.org with ESMTP
-	id S932189AbWBJVCo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 16:02:44 -0500
-Received: from biesi.no-ip.org (localhost.localdomain [127.0.0.1])
-	by biesi.no-ip.org (8.13.4/8.13.4) with ESMTP id k1AL2bET010420
-	for <git@vger.kernel.org>; Fri, 10 Feb 2006 22:02:37 +0100
-Received: (from chb@localhost)
-	by biesi.no-ip.org (8.13.4/8.13.4/Submit) id k1AL2bG0010419
-	for git@vger.kernel.org; Fri, 10 Feb 2006 22:02:37 +0100
-X-Authentication-Warning: biesi.no-ip.org: chb set sender to cbiesinger@web.de using -f
-To: unlisted-recipients:; (no To-header on input)
+	id S932233AbWBJXZQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 18:25:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbWBJXZQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 18:25:16 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:47063 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932233AbWBJXZO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2006 18:25:14 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1ANP9DZ002231
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 10 Feb 2006 15:25:10 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1ANP94u009561;
+	Fri, 10 Feb 2006 15:25:09 -0800
+To: Christian Biesinger <cbiesinger@web.de>
+In-Reply-To: <43ED0D63.5090105@web.de>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15898>
 
-cvsps sometimes claims that a branch is an ancestor of itself. That confuses
-cvsimport. This checkin makes it change the ancestor to HEAD instead.
 
-Signed-off-by: Christian Biesinger <cbiesinger@web.de>
 
----
+On Fri, 10 Feb 2006, Christian Biesinger wrote:
+> 
+> I have to admit that I can't actually tell you for sure, since I still get a
+> failure later (I think it's because cvsps orders changesets wrongly).
 
-On the mozilla.org CVS repository, cvsps managed to output a branch as an
-ancestor of itself... This patch allows cvsimport to handle that, although
-I'm not sure if this is a good idea (a better fix might be to make cvsps not
-do that. I haven't debugged yet why it does this)
+Do you have a recent version of "cvsps"? The wrong ordering happened quite 
+often with old cvsps versions. So make sure you absolutely have 2.1.
 
- git-cvsimport.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+Also, David Mansfield may not be maintaining it horribly actively, but 
+that's probably because it's purely a "minimal maintenance" project for 
+him by now. He reacted in a very timely manner when we pointed out 
+specific bugs, so if you can pinpoint the exact thing cvsps does wrong, I 
+bet David will be more than happy to apply patches or perhaps even fix it 
+himself and make a new version.
 
-71f7fdb5fd6eccf75ca3c9e070391f94f013dd7e
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 4b8ca95..74d6e10 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -811,6 +811,10 @@ while(<CVS>) {
- 				print "In patchset $patchset: ancestor branch unknown, setting to $opt_o" if $opt_v;
- 				$ancestor = $opt_o;
- 			}
-+			if ($ancestor eq $branch) {
-+				print "CVSPS INCONSISTENCY: Branch is an ancestor of itself. Setting ancestor to $opt_o\n";
-+				$ancestor = $opt_o;
-+			}
- 			if(-f "$git_dir/refs/heads/$branch") {
- 				print STDERR "Branch $branch already exists!\n";
- 				$state=11;
--- 
-1.1.6
+So while it's fine to work around cvsps problems inside "git cvsimport", 
+it's even better if you could try to see if you can figure out why they 
+happen in the first place. The source code wasn't all that unreadable from 
+what I can remember.
+
+		Linus
