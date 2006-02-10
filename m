@@ -1,49 +1,42 @@
-From: Jason Riedy <ejr@EECS.Berkeley.EDU>
-Subject: Re: [PATCH 2/3] Use File::Find rather than find and xargs in git-archimport
-Date: Fri, 10 Feb 2006 16:17:00 -0800
-Message-ID: <1939.1139617020@lotus.CS.Berkeley.EDU>
-References: <86k6c2ojx6.fsf@blue.stonehenge.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] count-delta.c: Match the delta data semantics change in version 3.
+Date: Fri, 10 Feb 2006 09:19:05 -0800
+Message-ID: <7vlkwjw2ra.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0602091736500.5397@localhost.localdomain>
+	<7v7j846qco.fsf@assigned-by-dhcp.cox.net>
+	<7vbqxg3tdd.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602092053200.5397@localhost.localdomain>
+	<Pine.LNX.4.64.0602101017420.5397@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 11 01:17:10 2006
+X-From: git-owner@vger.kernel.org Sat Feb 11 01:49:06 2006
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
-	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7iRp-0006Ub-Kc
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 01:17:10 +0100
+	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
+	id 1F7bvL-0000u2-00
+	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 18:19:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932264AbWBKARE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 19:17:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932267AbWBKARE
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 19:17:04 -0500
-Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:26787 "EHLO
-	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
-	id S932266AbWBKARD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 19:17:03 -0500
-Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k1B0H1xZ001941;
-	Fri, 10 Feb 2006 16:17:01 -0800 (PST)
-Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k1B0H1Kn001940;
-	Fri, 10 Feb 2006 16:17:01 -0800 (PST)
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-In-reply-to: <86k6c2ojx6.fsf@blue.stonehenge.com> 
+	id S1751337AbWBJRTI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 12:19:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbWBJRTI
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 12:19:08 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:36045 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751337AbWBJRTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2006 12:19:07 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060210171614.WPUZ17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 10 Feb 2006 12:16:14 -0500
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0602101017420.5397@localhost.localdomain> (Nicolas
+	Pitre's message of "Fri, 10 Feb 2006 10:20:40 -0500 (EST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15908>
 
-And Randal L. Schwartz writes:
- - Jason> +	if (-f && !-z && /^.*\.patch$/ && !/{arch}/) {
- - 
- - If that works, it's only accidentally.
-
-Thanks!  Not only is the regex wrong, it's applied to the 
-wrong quantity.  Should be on $File::Find::dir.  Looks like 
-the repos I tested against didn't have any Arch state 
-patches.
-
-I'll fix this, test it on a nastier set of repos, and re-
-send.  It'll be an hour or so, at least.
-
-Jason
+You are right about that comment.  Thanks.
