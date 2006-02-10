@@ -1,79 +1,88 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Tracking and committing back to Subversion?
-Date: Fri, 10 Feb 2006 17:27:26 +1300
-Message-ID: <43EC162E.9090905@vilain.net>
-References: <1138834301.21899.40.camel@wilber.wgtn.cat-it.co.nz> <200602040727.30965.linuxfood@linuxfood.net> <43E7DA7F.6060503@vilain.net> <200602091650.55370.linuxfood@linuxfood.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Resetting paths
+Date: Thu, 09 Feb 2006 20:40:15 -0800
+Message-ID: <7vlkwjzv0w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 05:27:56 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Feb 10 05:40:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7Psp-0007Gz-O5
-	for gcvg-git@gmane.org; Fri, 10 Feb 2006 05:27:48 +0100
+	id 1F7Q51-0002xH-V0
+	for gcvg-git@gmane.org; Fri, 10 Feb 2006 05:40:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbWBJE1p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Feb 2006 23:27:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbWBJE1p
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 23:27:45 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:23198 "EHLO mail.utsl.gen.nz")
-	by vger.kernel.org with ESMTP id S1751071AbWBJE1o (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2006 23:27:44 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id B72541865; Fri, 10 Feb 2006 17:27:41 +1300 (NZDT)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id C048B3D10;
-	Fri, 10 Feb 2006 17:27:34 +1300 (NZDT)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Brian Smith <linuxfood@linuxfood.net>
-In-Reply-To: <200602091650.55370.linuxfood@linuxfood.net>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1750929AbWBJEkT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Feb 2006 23:40:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750932AbWBJEkS
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 23:40:18 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:25065 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750929AbWBJEkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2006 23:40:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060210043725.OLAB17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Feb 2006 23:37:25 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15864>
 
-Brian Smith wrote:
->>Right; I was looking for an approach that did not require working copies
->>of the remote subversion repository to be kept locally.  Still, perhaps
->>that approach has merit, though I would probably start in Perl and use
->>SVK::Simple (see CPAN) to give a richer SVN mirroring API.
-> While that is an admirable goal, unless you can point me to something that
-> will allow you to actually commit back to SVN without a working copy,
+While working on "assume unchanged" git series, I found one
+thing missing from the current set of tools.
 
-Such as SVK
+While I worked on parts of the system that deals with the cached
+lstat() information, I needed a way to debug that, so I hacked
+ls-files -t option to show entries marked as "always matches the
+index" with lowercase tag letters.  This was primarily debugging
+aid hack.
 
-   http://svk.elixus.org/
-   (svn url: http://svn.openfoundry.org/svk/)
+Then I committed the whole thing with "git commit -a" by
+mistake.  In order to rewind the HEAD to pre-commit state, I can
+say "git reset --soft HEAD^", but after doing that, now I want
+to unupdate the index so that ls-files.c matches the pre-commit
+HEAD.
 
-> it 
-> defeats the purpose of my tools which is basically to use to git for the 
-> purpose of holding intermediate development before sending it into SVN as a 
-> final commit. That, and being able to use git tools which speak to me on a 
-> level far greater than SVN tools. ;)
+"git reset --mixed" is a heavy-handed tool for that.  It reads
+the entier index from the HEAD commit without touching the
+working tree, so I would need to add the modified paths back
+with "git update-index".
 
-Your solution may ultimately be the most pragmatic approach.  Issues 
-surrounding the C (SWIG) bindings between Perl and the Subversion RA
-(remote access) API were "the hard part" in making SVK work, according
-to the lead author.
+The low-level voodoo to do so for this particular case is this
+single liner:
 
-That being said, I am unaware of any drastic outstanding issues, so
-perhaps there are useful components there.
+	git ls-tree HEAD ls-files.c | git update-index --index-info
 
-> Sure, you can actually pick up the current development straight from
-> git://linuxfood.net/pub/git/kosek.git
+Have people found themselves in similar need like this?  This
+could take different forms.
 
-I will take a look.
+ * you did "git update-index" on a wrong path.  This is my
+   example and the above voodoo is a recipe for recovery.
 
-Sam.
+ * you did "git add" on a wrong path and you want to remove it.
+   This is easier than the above:
+
+	git update-index --force-remove path
+
+ * you did the above recovery from "git add" on a wrong path,
+   and you want to add it again.  The same voodoo would work in
+   this case as well.
+
+	git ls-tree HEAD path | git update-index --index-info
+
+We could add "git reset path..." to reduce typing for the above,
+but I am wondering if it is worth it.
+
+BTW, this shows how "index centric" git is.  With other SCM that
+has only the last commit and the working tree files, you do not
+have to worry any of these things, so it might appear that index
+is just a nuisance.  But if you do not have any "registry of
+paths to be committed", you cannot do a partial commit like what
+I did above ("commit changes to all files other than
+ls-files.c") without listing all the paths to be committed, or
+fall back on CVS style "one path at a time", breaking an atomic
+commit, so there is a drawback for not having an index as well.
