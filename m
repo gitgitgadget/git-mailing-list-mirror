@@ -1,94 +1,76 @@
-From: Ben Greear <greearb@candelatech.com>
-Subject: Re: How to pull a single changeset from a child branch into a parent
- branch?
-Date: Fri, 10 Feb 2006 13:16:21 -0800
-Organization: Candela Technologies
-Message-ID: <43ED02A5.6030500@candelatech.com>
-References: <43EC10AA.1040800@candelatech.com> <7vzmkzyfhh.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
+Date: Fri, 10 Feb 2006 22:17:40 +0100
+Message-ID: <20060210211740.GO31278@pasky.or.cz>
+References: <20060210195914.GA1350@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 22:16:49 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Feb 10 22:17:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1F7fdI-00033q-00
-	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 22:16:48 +0100
+	id 1F7fdl-00036A-00
+	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 22:17:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932197AbWBJVQ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 16:16:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932199AbWBJVQ2
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 16:16:28 -0500
-Received: from ns2.lanforge.com ([66.165.47.211]:27578 "EHLO ns2.lanforge.com")
-	by vger.kernel.org with ESMTP id S932197AbWBJVQ1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2006 16:16:27 -0500
-Received: from [71.112.206.236] (pool-71-112-206-236.sttlwa.dsl-w.verizon.net [71.112.206.236])
-	(authenticated bits=0)
-	by ns2.lanforge.com (8.13.4/8.13.4) with ESMTP id k1ALGMhw016525;
-	Fri, 10 Feb 2006 13:16:23 -0800
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.7.12) Gecko/20050922 Fedora/1.7.12-1.3.1
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmkzyfhh.fsf@assigned-by-dhcp.cox.net>
+	id S1751023AbWBJVRO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 16:17:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbWBJVRO
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 16:17:14 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:45704 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751023AbWBJVRN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2006 16:17:13 -0500
+Received: (qmail 12050 invoked by uid 2001); 10 Feb 2006 22:17:40 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060210195914.GA1350@spearce.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15886>
 
-Junio C Hamano wrote:
-> Ben Greear <greearb@candelatech.com> writes:
-> 
-> 
->>I have a linux-2.6 repo with two branches off of 2.6.13.
->>
->>One branch (ben_v13) has just my own changes.
->>A second branch (work_v13) has the 2.6.13.5 patch, and I've also pulled
->>ben_v13 into it.
-> 
-> 
->                      "2.6.13.5"
->          o---o---o---o
->         /             \ "work_v13"
->     ---o "2.6.13"  .---*
->         \         /
->          o---o---o
->                  "ben_v13"
-> 
-> 	'o' are commits, '*' is a merge.
-> 
-> 
->>Now, I made a small change to work_v13,
-> 
-> 
->                      "2.6.13.5"
->          o---o---o---o
->         /             \   "work_v13"
->     ---o "2.6.13"  .---*---x
->         \         /        (new change)
->          o---o---o
->                  "ben_v13"
-> 
-> 
->>... and I'd like to pull only
->>that changeset into ben_v13.  Is there a way to do that w/out
->>having to export and apply a patch?
-> 
-> 
-> I would have done things differently.
+  Hi,
 
-Yeah, the main problem is that I test in the combined tree
-and forgot to change to the ben_v13 tree before making
-my changes...
+Dear diary, on Fri, Feb 10, 2006 at 08:59:14PM CET, I got a letter
+where Shawn Pearce <spearce@spearce.org> said that...
+> I just posted the first public version of pg, a GIT porcelain for
+> managing patches.  Think StGIT, but better in some ways:
 
-I'll try out the cherry-pick option..and if that doesn't
-work, I'll just manually patch the changes into the ben_v13
-tree.
+  it sounds interesting. I've been thinking about wrapping some patch
+queue tool in Cogito (post-1.0) and pg might be a better choice than
+StGIT.
 
-Thanks,
-Ben
+  One thing I dislike on both StGIT and pg is that they both try to
+build a full-fledged porcelain on top of GIT, instead of just focusing
+on the patch management, doing it well and providing a convenient user
+interface (well, can't say about pg's interface, didn't try it yet).
+Instead of having pg-add, pg-log, or pg-status it might be more fruitful
+to contribute the features you are missing to git-core or Cogito.
 
+> And for those so inclined:
+> 
+>   Homepage:       http://www.spearce.org/projects/scm/pg/
+>   GIT Repository: http://www.spearce.org/projects/scm/pg.git
+
+But while it claims to be compatible with all the porcelains, it at
+least cannot be clone by them. ;) The GIT repository is not quite a
+valid GIT repository since it is missing the HEAD and Cogito clones
+based on this file instead of just assuming that your head is on the
+master branch.
+
+
+Also, when cloning it gives me a little unnerving errors like
+
+error: File 6427c0154400f578d9cdff178e01e946db6f714f
+(http://www.spearce.org/projects/scm/pg.git/objects/64/27c0154400f578d9cdff178e01e946db6f714f)
+corrupt
+
+(but strangely, fsck-objects later does not complain).
 
 -- 
-Ben Greear <greearb@candelatech.com>
-Candela Technologies Inc  http://www.candelatech.com
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
