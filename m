@@ -1,82 +1,85 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: Documentation
-Date: Fri, 10 Feb 2006 09:20:34 +0100
-Message-ID: <20060210082034.GA11533@schottelius.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Two crazy proposals for changing git's diff commands
+Date: Fri, 10 Feb 2006 01:05:28 -0800
+Message-ID: <7vmzgzy46f.fsf@assigned-by-dhcp.cox.net>
+References: <87slqtcr2f.wl%cworth@cworth.org>
+	<7vfymtl43b.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602081726390.2458@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="J2SCkAp4GZ/dPZZf"
-X-From: git-owner@vger.kernel.org Fri Feb 10 09:21:06 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 10 10:05:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7TWZ-0002xN-Ca
-	for gcvg-git@gmane.org; Fri, 10 Feb 2006 09:21:03 +0100
+	id 1F7UDk-0003fo-QS
+	for gcvg-git@gmane.org; Fri, 10 Feb 2006 10:05:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751192AbWBJIVB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 03:21:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbWBJIVA
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 03:21:00 -0500
-Received: from wg.technophil.ch ([213.189.149.230]:51369 "HELO
-	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
-	id S1751192AbWBJIVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 03:21:00 -0500
-Received: (qmail 30910 invoked by uid 1000); 10 Feb 2006 08:20:34 -0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Linux-Info: http://linux.schottelius.org/
-X-Operating-System: Linux 2.6.14
+	id S1751187AbWBJJFc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 04:05:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751201AbWBJJFc
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 04:05:32 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:20101 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751187AbWBJJFb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2006 04:05:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060210090355.LDMQ20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 10 Feb 2006 04:03:55 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602081726390.2458@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 8 Feb 2006 17:30:56 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15869>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
---J2SCkAp4GZ/dPZZf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Under that logic, "git status -v" would show all the diffs (not just 
+> filenames) and "git commit -v .." would be the same as "git commit .." but 
+> the "-v" flag would have been passed down to the "git status" call, so the 
+> commit message file would be pre-populated with the diff.
 
-Hello!
+Now that is done and sitting at the tip of "next".
 
-I wrote some documentation about (using) git in German. For those
-interested:
+> For small commits, it's actually nice to see the diff itself as you write 
+> the commit message.
 
-   http://nico.schotteli.us/papers/linux/howto/index.html (small introducti=
-on)
-   http://creme.schottelius.org/~nico/linux/arbeiten_mit_git (very short
-   'how to work with git')
+Yes, that is my experience, and even with fairly big one, it is
+pleasant as long as your editor allows you to C-x 2 C-x o around
+the file you are editing, like "em" ;-).
 
-Sincerly,
+commit cf7bb589af739563c90dc32b4901bea73aaaa9d0
+Author: Junio C Hamano <junkio@cox.net>
+Date:   Fri Feb 10 00:45:59 2006 -0800
 
-Nico
-
---=20
-Latest release: ccollect-0.3.2 (http://linux.schottelius.org/ccollect/)
-Open Source nutures open minds and free, creative developers.
-
---J2SCkAp4GZ/dPZZf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iQIVAwUBQ+xM0rOTBMvCUbrlAQLNFg//e+LxPJhyWfu4q99G5vE062mjH/B+J7f/
-+XPVi/XvAAjCsKin4xpNkLniJ9C2rKjo7+gSkFQK+lb1TB4beOFxBRXeVlCdKMcq
-8aZTwlHeIquyiq+wDcfWvALY5dHOSN6qySSSqJGGbzFcf/2+kBvhkEGhnrQE/H8G
-4KyyJpJW/ymwHIlfbv1k2Vt9BrzfArlFQI1RlZ2YU0w+ggI3igsDSZ+6TIcEoXSc
-MRhMqr4mz8XkMcqdrNalCqRUTEiFaCsn4+byxZljMQLtUKIHpIrxurR+mTxHLwfd
-OLWcmhG5TTDgagJZgG9mJkTRLmIZONWo3DtpTUBy0BkHljlovocXg2H4gLszl9V6
-uTjoNv7i7b/VbwA0B1OMZOCRQNLU26u+V4BXJm2ePSCgfC1PoOhwb6SydvjZUSzo
-oE+6KAVpVePRIJQ0ij69ZK2LXJmu4fyvtPXvWcVYdDDigr8pcJhjw/6bU+0XhNV5
-tasGEpsusaW+MbiAJ1/qt6baNm1FKH5f1m/Pes5lSrdYx2BZqewDWhjJ9RZrqcUr
-kWeUluupO/PZT5a35BCcIPxj2ThP8nEx2Ddti7ry5bw/v3nZxgmsC6HRfqZlpqI3
-06q3Yql5oTRmG8YulLpt5B2e5LDulYdTLfO8ekwCMsXpF9vhiMx9tA7jLnb1KbSA
-SYdyFN7unzM=
-=79Ai
------END PGP SIGNATURE-----
-
---J2SCkAp4GZ/dPZZf--
+    git-status -v
+    
+    This revamps the git-status command to take the same set of
+    parameters as git commit.  It gives a preview of what is being
+    committed with that command.  With -v flag, it shows the diff
+    output between the HEAD commit and the index that would be
+    committed if these flags were given to git-commit command.
+    
+    git-commit also acquires -v flag (it used to mean "verify" but
+    that is the default anyway and there is --no-verify to turn it
+    off, so not much is lost), which uses the updated git-status -v
+    to seed the commit log buffer.  This is handy for writing a log
+    message while reviewing the changes one last time.
+    
+    Now, git-commit and git-status internally share the same
+    implementation.
+    
+    Unlike previous git-commit change, this uses a temporary index
+    to prepare the index file that would become the real index file
+    after a successful commit, and moves it to the real index file
+    once the commit is actually made.  This makes it safer than the
+    previous scheme, which stashed away the original index file and
+    restored it after an aborted commit.
+    
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
