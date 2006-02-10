@@ -1,76 +1,69 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
-Date: Fri, 10 Feb 2006 22:17:40 +0100
-Message-ID: <20060210211740.GO31278@pasky.or.cz>
-References: <20060210195914.GA1350@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Ignore commits for which cvsps can't identify a branch
+Date: Fri, 10 Feb 2006 13:21:58 -0800
+Message-ID: <7vmzgyvrih.fsf@assigned-by-dhcp.cox.net>
+References: <200602102102.k1AL2Xkd010415@biesi.no-ip.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Feb 10 22:17:18 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 10 22:22:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1F7fdl-00036A-00
-	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 22:17:17 +0100
+	id 1F7fiS-0003SQ-00
+	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 22:22:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751023AbWBJVRO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 16:17:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbWBJVRO
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 16:17:14 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:45704 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751023AbWBJVRN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2006 16:17:13 -0500
-Received: (qmail 12050 invoked by uid 2001); 10 Feb 2006 22:17:40 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060210195914.GA1350@spearce.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932192AbWBJVWE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 16:22:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751386AbWBJVWE
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 16:22:04 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:55224 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751385AbWBJVWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2006 16:22:01 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060210212032.XWNU6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 10 Feb 2006 16:20:32 -0500
+To: Christian Biesinger <cbiesinger@web.de>
+In-Reply-To: <200602102102.k1AL2Xkd010415@biesi.no-ip.org> (Christian
+	Biesinger's message of "Fri, 10 Feb 2006 22:02:33 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15887>
 
-  Hi,
+Christian Biesinger <cbiesinger@web.de> writes:
 
-Dear diary, on Fri, Feb 10, 2006 at 08:59:14PM CET, I got a letter
-where Shawn Pearce <spearce@spearce.org> said that...
-> I just posted the first public version of pg, a GIT porcelain for
-> managing patches.  Think StGIT, but better in some ways:
+> cvps sometimes can't identify a branch for a specific revision, it shows
+> messages like:
+>   WARNING: revision 1.36.2.2 of file Makefile.in on unnamed branch
+> and uses #CVSPS_NO_BRANCH as branch name in its output.
+>
+> This checkin makes it so that git-cvsimport ignores such branches,
+> and when they
+> appear as ancestor branch, it maps them to HEAD.
 
-  it sounds interesting. I've been thinking about wrapping some patch
-queue tool in Cogito (post-1.0) and pg might be a better choice than
-StGIT.
+Does continuing with this kind of "fixups" produce usable
+history, perhaps just some changes missing but trees contained
+in other commits are still faithful reproductions of what the
+CVS repository would have given you?  Or does it result in
+unusable history?
 
-  One thing I dislike on both StGIT and pg is that they both try to
-build a full-fledged porcelain on top of GIT, instead of just focusing
-on the patch management, doing it well and providing a convenient user
-interface (well, can't say about pg's interface, didn't try it yet).
-Instead of having pg-add, pg-log, or pg-status it might be more fruitful
-to contribute the features you are missing to git-core or Cogito.
+Depending on the nature of corruption and its expected use,
+sometimes silently corrupt conversion result is worse than not
+having it at all.  If you are going to use it primarily for
+archaeology, it is much more useful to have a more-or-less
+correct conversion than not having anything at all, but if you
+are building on top of it, you at least would want to have the
+correct tree at the tip of the branch you build upon.  I cannot
+offhand tell how this workaround affects the conversion result,
+hence this question.
 
-> And for those so inclined:
-> 
->   Homepage:       http://www.spearce.org/projects/scm/pg/
->   GIT Repository: http://www.spearce.org/projects/scm/pg.git
+> I hope I did this right, I'm not so familiar with git...
 
-But while it claims to be compatible with all the porcelains, it at
-least cannot be clone by them. ;) The GIT repository is not quite a
-valid GIT repository since it is missing the HEAD and Cogito clones
-based on this file instead of just assuming that your head is on the
-master branch.
-
-
-Also, when cloning it gives me a little unnerving errors like
-
-error: File 6427c0154400f578d9cdff178e01e946db6f714f
-(http://www.spearce.org/projects/scm/pg.git/objects/64/27c0154400f578d9cdff178e01e946db6f714f)
-corrupt
-
-(but strangely, fsck-objects later does not complain).
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+The only gripe I might have is your log message is too wide.
+Other than that it looks like it properly follows the the
+formatting and submitting convention.
