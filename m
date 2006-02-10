@@ -1,70 +1,63 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
-Date: Fri, 10 Feb 2006 16:04:01 -0500
-Message-ID: <20060210210401.GA1604@spearce.org>
-References: <20060210195914.GA1350@spearce.org> <20060210204143.GA18784@kroah.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Comments on "status -v"
+Date: Fri, 10 Feb 2006 13:09:41 -0800
+Message-ID: <7vaccyx6ne.fsf@assigned-by-dhcp.cox.net>
+References: <87slqtcr2f.wl%cworth@cworth.org>
+	<7vfymtl43b.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602081726390.2458@g5.osdl.org>
+	<7vmzgzy46f.fsf@assigned-by-dhcp.cox.net>
+	<87u0b7uf91.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 22:04:54 2006
+X-From: git-owner@vger.kernel.org Fri Feb 10 22:09:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1F7fRl-00027F-00
-	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 22:04:53 +0100
+	id 1F7fWV-0002Uz-00
+	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 22:09:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932194AbWBJVEv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 16:04:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932195AbWBJVEu
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 16:04:50 -0500
-Received: from [64.38.20.226] ([64.38.20.226]:58319 "EHLO corvette.plexpod.net")
-	by vger.kernel.org with ESMTP id S932194AbWBJVEu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2006 16:04:50 -0500
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1F7fRD-00064X-Ru; Fri, 10 Feb 2006 16:04:21 -0500
-Received: by asimov.spearce.org (Postfix, from userid 1000)
-	id 72DC920FBA0; Fri, 10 Feb 2006 16:04:01 -0500 (EST)
-To: Greg KH <greg@kroah.com>
-Mail-Followup-To: Greg KH <greg@kroah.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060210204143.GA18784@kroah.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932202AbWBJVJo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 16:09:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932203AbWBJVJo
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 16:09:44 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:744 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932202AbWBJVJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2006 16:09:44 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060210210835.CWKX15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 10 Feb 2006 16:08:35 -0500
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <87u0b7uf91.wl%cworth@cworth.org> (Carl Worth's message of "Fri,
+	10 Feb 2006 12:32:10 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15884>
 
-Greg KH <greg@kroah.com> wrote:
-> On Fri, Feb 10, 2006 at 02:59:14PM -0500, Shawn Pearce wrote:
-> > I just posted the first public version of pg, a GIT porcelain for
-> > managing patches.  Think StGIT, but better in some ways:
-> > 
-> > Feature Summary:
-> 
-> Hm, is there any way to import an existing patch into pg?
+Carl Worth <cworth@cworth.org> writes:
 
-Doh!  I haven't needed to do that yet.  I'll code up a pg-import
-later tonight.  But since git and pg play nice together you can
-do this:
+> 1) I think the patch should come after the traditional status summary,
+>    not before. If something is obviously "wrong" (non-updated file,
+>    etc.) that will be more obvious in the summary, so it's good to
+>    present that up front, and not bury it after the patch, (which
+>    might make it initially invisible without scrolling).
 
-	pg-new Patch-Name
-	git-apply the-patch-file.patch
-	pg-ci -m"Importing the-patch-file.patch..."
+Maybe.  A time for a quick poll.
 
-or even:
+> 2) Using the "^---$" separator to separate the the edited contents
+>    into a commit message and ignored content seems risky to me.
+>
+>    Moving the patch after the summary (as discussed above) would help
+>    greatly in avoiding the clobbered separator, but wouldn't address
+>    the separator-appears-in-commit-message problem.
 
-	pg-new Patch-Name
-	git-am mbox
-
-and keep the 'history' stored in the mailbox.
-
-So pg-import won't amount to a very long script.  :-|
+That is a good argument for (1).  Since the diff output never
+has '^---$' in itself, instead of discarding everything after
+the first '^---$', we could change the log cleanser to discard
+after the _last_ '^---$'.  But coding this sanely is much
+trickier with sed ;-).
