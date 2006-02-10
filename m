@@ -1,80 +1,54 @@
-From: Jason Riedy <ejr@EECS.Berkeley.EDU>
-Subject: [PATCH 3/3] Use active CPIO, FIND, and XARGS to set built-in defaults.
-Date: Fri, 10 Feb 2006 15:36:42 -0800
-Message-ID: <1112.1139614602@lotus.CS.Berkeley.EDU>
-X-From: git-owner@vger.kernel.org Sat Feb 11 00:36:51 2006
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH 2/3] Use File::Find rather than find and xargs in  git-archimport
+Date: 10 Feb 2006 15:47:49 -0800
+Message-ID: <86k6c2ojx6.fsf@blue.stonehenge.com>
+References: <1103.1139614557@lotus.CS.Berkeley.EDU>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 11 00:48:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7hok-0007Zv-37
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 00:36:46 +0100
+	id 1F7hza-00019f-Mg
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 00:48:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932251AbWBJXgn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 18:36:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932252AbWBJXgn
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 18:36:43 -0500
-Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:51106 "EHLO
-	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
-	id S932251AbWBJXgm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 18:36:42 -0500
-Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k1ANagxZ001114
-	for <git@vger.kernel.org>; Fri, 10 Feb 2006 15:36:42 -0800 (PST)
-Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k1ANagAe001113
-	for <git@vger.kernel.org>; Fri, 10 Feb 2006 15:36:42 -0800 (PST)
-To: git@vger.kernel.org
+	id S1751398AbWBJXr4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 18:47:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbWBJXr4
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 18:47:56 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:26416 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1751398AbWBJXrz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2006 18:47:55 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 9F1BC8F69C;
+	Fri, 10 Feb 2006 15:47:50 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 17838-03-21; Fri, 10 Feb 2006 15:47:50 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 2C1708F744; Fri, 10 Feb 2006 15:47:50 -0800 (PST)
+To: Jason Riedy <ejr@EECS.Berkeley.EDU>
+x-mayan-date: Long count = 12.19.13.0.14; tzolkin = 7 Ix; haab = 12 Pax
+In-Reply-To: <1103.1139614557@lotus.CS.Berkeley.EDU>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15906>
 
-Move the sed program in the % : %.sh pattern into the shellsedprog
-variable.  Add clauses to change the CPIO, FIND, and XARGS built-in
-defaults if those variables are set.  With appropriate settings, all
-the current tests pass on Solaris 8 with my personal bizarre setup.
-I'll try on a modules-based AIX once the machine's back next week.
+>>>>> "Jason" == Jason Riedy <ejr@EECS.Berkeley.EDU> writes:
 
-I don't really like how I build the sed program, but I can't think of
-an easier / better way.
+Jason> +	if (-f && !-z && /^.*\.patch$/ && !/{arch}/) {
 
-Signed-off-by: Jason Riedy <ejr@cs.berkeley.edu>
+If that works, it's only accidentally.  Perhaps you wanted !/\{arch\}/ because
+curlies are special to regex.  Dunno, because I don't know what you're
+excluding.
 
----
-
- Makefile |   16 +++++++++++++---
- 1 files changed, 13 insertions(+), 3 deletions(-)
-
-e512a44ccd488fec29af59e95b35741d4454b118
-diff --git a/Makefile b/Makefile
-index f240e45..edf785c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -415,11 +415,21 @@ git$X: git.c $(LIB_FILE)
- 	$(CC) -DGIT_VERSION='"$(GIT_VERSION)"' \
- 		$(CFLAGS) $(COMPAT_CFLAGS) -o $@ $(filter %.c,$^) $(LIB_FILE)
- 
-+shellsedprog=-e '1s|\#!.*/sh|\#!$(call shq,$(SHELL_PATH))|;'
-+shellsedprog+= -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g;'
-+ifdef CPIO
-+	shellsedprog+= -e 's@^: \$${CPIO:=cpio}@: \$${CPIO:=$(CPIO)}@;'
-+endif
-+ifdef FIND
-+	shellsedprog+= -e 's@^: \$${FIND:=find}@: \$${FIND:=$(FIND)}@;'
-+endif
-+ifdef XARGS
-+	shellsedprog+= -e 's@^: \$${XARGS:=xargs}@: \$${XARGS:=$(XARGS)}@;'
-+endif
-+
- $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
- 	rm -f $@
--	sed -e '1s|#!.*/sh|#!$(call shq,$(SHELL_PATH))|' \
--	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
--	    $@.sh >$@
-+	sed $(shellsedprog) $@.sh >$@
- 	chmod +x $@
- 
- $(patsubst %.perl,%,$(SCRIPT_PERL)) : % : %.perl
 -- 
-1.1.6.g0d39d
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
