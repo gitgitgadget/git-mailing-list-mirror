@@ -1,77 +1,48 @@
-From: Ryan Anderson <ryan@michonline.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: What's in git.git
-Date: Thu, 9 Feb 2006 19:40:40 -0500
-Message-ID: <20060210004040.GB2866@mythryan2.michonline.com>
+Date: Thu, 09 Feb 2006 16:46:32 -0800
+Message-ID: <7vvevo3us7.fsf@assigned-by-dhcp.cox.net>
 References: <B8E391BBE9FE384DAA4C5C003888BE6F05AA1FB3@scsmsx401.amr.corp.intel.com>
+	<20060210004040.GB2866@mythryan2.michonline.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 01:42:05 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 10 01:46:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7MMM-0003KN-4V
-	for gcvg-git@gmane.org; Fri, 10 Feb 2006 01:42:02 +0100
+	id 1F7MQn-0004B2-At
+	for gcvg-git@gmane.org; Fri, 10 Feb 2006 01:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750890AbWBJAly (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Feb 2006 19:41:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750892AbWBJAly
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 19:41:54 -0500
-Received: from mail.autoweb.net ([198.172.237.26]:50382 "EHLO
-	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
-	id S1750888AbWBJAlx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2006 19:41:53 -0500
-Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
-	by mail.internal.autoweb.net with esmtp (Exim 4.50)
-	id 1F7MM9-0003Ux-AW; Thu, 09 Feb 2006 19:41:50 -0500
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.60)
-	(envelope-from <ryan@michonline.com>)
-	id 1F7MM8-0007af-6F; Thu, 09 Feb 2006 19:41:48 -0500
-Received: from ryan by mythical with local (Exim 4.60)
-	(envelope-from <ryan@mythryan2.michonline.com>)
-	id 1F7MLa-0000pU-4V; Thu, 09 Feb 2006 19:41:14 -0500
-To: "Luck, Tony" <tony.luck@intel.com>
-Content-Disposition: inline
-In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F05AA1FB3@scsmsx401.amr.corp.intel.com>
-User-Agent: Mutt/1.5.9i
+	id S1750906AbWBJAqf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Feb 2006 19:46:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbWBJAqe
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Feb 2006 19:46:34 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:10231 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750902AbWBJAqe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2006 19:46:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060210004342.JDRN17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Feb 2006 19:43:42 -0500
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20060210004040.GB2866@mythryan2.michonline.com> (Ryan Anderson's
+	message of "Thu, 9 Feb 2006 19:40:40 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15849>
 
-On Thu, Feb 09, 2006 at 03:49:16PM -0800, Luck, Tony wrote:
-> Looks very close to what I want.
-> 
-> > git checkout topic
-> > git format-patch --stdout origin > topic-diff
-> 
->  topic-diff contains each commit as a separate message
-> 
-> > $VISUAL topic-diff
-> > # Fix comments
-> 
->  so this needs some skill & care to rearrange the pieces
->  and end up with legal input to git-am
+Ryan Anderson <ryan@michonline.com> writes:
 
-Doh, right, I was thinking "git apply" actually.  (Apply the whole thing
-as  single diff - the comments from each commit in the middle should get
-ignored.)
+> Note that I don't believe there is any need to combine the hunks, just
+> stick them there in order and it *should* do the right thing.
 
-Note that I don't believe there is any need to combine the hunks, just
-stick them there in order and it *should* do the right thing.
+Probably not.  I suspect it would not like two pieces of diffs
+touching the same path in a batch.
 
-> Perhaps I'd like to have:
-> 
->  git diff SHA-where-I-branched..HEAD
-> 
-> but I don't see the way to compute the SHA-where-I-branched
-
-git-merge-base topic master ?
-
--- 
-
-Ryan Anderson
-  sometimes Pug Majere
+Feeding one at a time is OK, though.
