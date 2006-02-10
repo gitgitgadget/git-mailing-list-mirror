@@ -1,50 +1,80 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] delta micro optimization
-Date: Fri, 10 Feb 2006 15:38:57 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0602101516310.5397@localhost.localdomain>
-References: <Pine.LNX.4.64.0602101335160.5397@localhost.localdomain>
- <7vhd77vv9o.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 21:39:02 2006
+From: Christian Biesinger <cbiesinger@web.de>
+Subject: [PATCH] Ignore commits for which cvsps can't identify a branch
+Date: Fri, 10 Feb 2006 22:02:33 +0100
+Message-ID: <200602102102.k1AL2Xkd010415@biesi.no-ip.org>
+X-From: git-owner@vger.kernel.org Fri Feb 10 22:02:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1F7f2k-00007N-00
-	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 21:39:02 +0100
+	id 1F7fPh-0001xc-00
+	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 22:02:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932178AbWBJUi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 15:38:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932184AbWBJUi7
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 15:38:59 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:8272 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932178AbWBJUi6
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 15:38:58 -0500
-Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IUH00CEYO0XKG30@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 10 Feb 2006 15:38:57 -0500 (EST)
-In-reply-to: <7vhd77vv9o.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S932193AbWBJVCm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 16:02:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932189AbWBJVCl
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 16:02:41 -0500
+Received: from 85-124-17-142.dynamic.xdsl-line.inode.at ([85.124.17.142]:31157
+	"EHLO biesi.no-ip.org") by vger.kernel.org with ESMTP
+	id S932193AbWBJVCk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2006 16:02:40 -0500
+Received: from biesi.no-ip.org (localhost.localdomain [127.0.0.1])
+	by biesi.no-ip.org (8.13.4/8.13.4) with ESMTP id k1AL2XcY010416
+	for <git@vger.kernel.org>; Fri, 10 Feb 2006 22:02:34 +0100
+Received: (from chb@localhost)
+	by biesi.no-ip.org (8.13.4/8.13.4/Submit) id k1AL2Xkd010415
+	for git@vger.kernel.org; Fri, 10 Feb 2006 22:02:33 +0100
+X-Authentication-Warning: biesi.no-ip.org: chb set sender to cbiesinger@web.de using -f
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15882>
 
-On Fri, 10 Feb 2006, Junio C Hamano wrote:
+cvps sometimes can't identify a branch for a specific revision, it shows
+messages like:
+  WARNING: revision 1.36.2.2 of file Makefile.in on unnamed branch
+and uses #CVSPS_NO_BRANCH as branch name in its output.
 
-> That looks obviously correct but it really is micro.  Have you
-> benched it?  On which architectures?  Does it help everywhere or
-> register starved ones benefit more than others?
+This checkin makes it so that git-cvsimport ignores such branches, and when they
+appear as ancestor branch, it maps them to HEAD.
 
-I doubt the performance difference would be measurable on i386 although 
-the code is a bit smaller.
+Signed-off-by: Christian Biesinger <cbiesinger@web.de>
 
-On ARM it causes a code reduction of 12.5% in count-delta.o.
+---
 
+I tried to import the Mozilla CVS Repository into git, just for fun, and it
+failed. This is one of the patches that are required for it.
 
-Nicolas
+I hope I did this right, I'm not so familiar with git...
+Documentation/SubmittingPatches says to mail patches to the maintainer, who is
+that? :)
+
+ git-cvsimport.perl |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
+
+ed142593c84ba76580e780ce8f12244214023213
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 00fc3ba..4b8ca95 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -799,7 +799,18 @@ while(<CVS>) {
+ 			$state = 11;
+ 			next;
+ 		}
++                if ($branch eq "#CVSPS_NO_BRANCH") {
++			# skip
++			print "skip patchset $patchset: unknown branch\n" if $opt_v;
++			$state = 11;
++			next;
++		}
+ 		if($ancestor) {
++			if ($ancestor eq "#CVSPS_NO_BRANCH") {
++				# skip
++				print "In patchset $patchset: ancestor branch unknown, setting to $opt_o" if $opt_v;
++				$ancestor = $opt_o;
++			}
+ 			if(-f "$git_dir/refs/heads/$branch") {
+ 				print STDERR "Branch $branch already exists!\n";
+ 				$state=11;
+-- 
+1.1.6
