@@ -1,65 +1,55 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] delta micro optimization
-Date: Fri, 10 Feb 2006 13:42:05 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0602101335160.5397@localhost.localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-apply segfault.
+Date: Fri, 10 Feb 2006 11:22:46 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602101120440.19172@g5.osdl.org>
+References: <20060210183745.GI22611@redhat.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 19:42:11 2006
+X-From: git-owner@vger.kernel.org Fri Feb 10 20:23:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1F7dDf-0007Yl-00
-	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 19:42:11 +0100
+	id 1F7drE-0002TJ-00
+	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 20:23:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750864AbWBJSmH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 13:42:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751309AbWBJSmH
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 13:42:07 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:43254 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1750864AbWBJSmG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 13:42:06 -0500
-Received: from xanadu.home ([24.202.136.67]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IUH00ERSIM5WKP0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 10 Feb 2006 13:42:05 -0500 (EST)
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S1751309AbWBJTXA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 14:23:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751311AbWBJTXA
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 14:23:00 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:38037 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751309AbWBJTW7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2006 14:22:59 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1AJMnDZ020564
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 10 Feb 2006 11:22:50 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1AJMk8E031971;
+	Fri, 10 Feb 2006 11:22:48 -0800
+To: Dave Jones <davej@redhat.com>
+In-Reply-To: <20060210183745.GI22611@redhat.com>
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15877>
 
-My kernel work habit made me look at the generated assembly for the 
-delta code, and one obvious albeit small improvement is this patch.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
 
----
+On Fri, 10 Feb 2006, Dave Jones wrote:
+>
+> (gdb) bt
+> #0  0x0000003287f73474 in memset () from /lib64/libc.so.6
+> #1  0x0000003287f6c92a in calloc () from /lib64/libc.so.6
+> #2  0x0000000000407399 in read_cache () at read-cache.c:537
 
-diff --git a/delta.h b/delta.h
-index 31d1820..a15350d 100644
---- a/delta.h
-+++ b/delta.h
-@@ -19,14 +19,14 @@ extern void *patch_delta(void *src_buf, 
- static inline unsigned long get_delta_hdr_size(const unsigned char **datap)
- {
- 	const unsigned char *data = *datap;
--	unsigned char cmd = *data++;
--	unsigned long size = cmd & ~0x80;
--	int i = 7;
--	while (cmd & 0x80) {
-+	unsigned char cmd;
-+	unsigned long size = 0;
-+	int i = 0;
-+	do {
- 		cmd = *data++;
- 		size |= (cmd & ~0x80) << i;
- 		i += 7;
--	}
-+	} while (cmd & 0x80);
- 	*datap = data;
- 	return size;
- }
+Ouch. Looks like malloc heap corruption.
+
+> git on hera is 1.1.6-1
+
+Can you try running "valgrind" on it? That should show what corrupts the 
+heap.
+
+		Linus
