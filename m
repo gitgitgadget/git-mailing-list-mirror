@@ -1,80 +1,70 @@
-From: Christian Biesinger <cbiesinger@web.de>
-Subject: [PATCH] Ignore commits for which cvsps can't identify a branch
-Date: Fri, 10 Feb 2006 22:02:33 +0100
-Message-ID: <200602102102.k1AL2Xkd010415@biesi.no-ip.org>
-X-From: git-owner@vger.kernel.org Fri Feb 10 22:02:46 2006
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
+Date: Fri, 10 Feb 2006 16:04:01 -0500
+Message-ID: <20060210210401.GA1604@spearce.org>
+References: <20060210195914.GA1350@spearce.org> <20060210204143.GA18784@kroah.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 10 22:04:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1F7fPh-0001xc-00
-	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 22:02:45 +0100
+	id 1F7fRl-00027F-00
+	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 22:04:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932193AbWBJVCm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 16:02:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932189AbWBJVCl
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 16:02:41 -0500
-Received: from 85-124-17-142.dynamic.xdsl-line.inode.at ([85.124.17.142]:31157
-	"EHLO biesi.no-ip.org") by vger.kernel.org with ESMTP
-	id S932193AbWBJVCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 16:02:40 -0500
-Received: from biesi.no-ip.org (localhost.localdomain [127.0.0.1])
-	by biesi.no-ip.org (8.13.4/8.13.4) with ESMTP id k1AL2XcY010416
-	for <git@vger.kernel.org>; Fri, 10 Feb 2006 22:02:34 +0100
-Received: (from chb@localhost)
-	by biesi.no-ip.org (8.13.4/8.13.4/Submit) id k1AL2Xkd010415
-	for git@vger.kernel.org; Fri, 10 Feb 2006 22:02:33 +0100
-X-Authentication-Warning: biesi.no-ip.org: chb set sender to cbiesinger@web.de using -f
-To: unlisted-recipients:; (no To-header on input)
+	id S932194AbWBJVEv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 16:04:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932195AbWBJVEu
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 16:04:50 -0500
+Received: from [64.38.20.226] ([64.38.20.226]:58319 "EHLO corvette.plexpod.net")
+	by vger.kernel.org with ESMTP id S932194AbWBJVEu (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2006 16:04:50 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1F7fRD-00064X-Ru; Fri, 10 Feb 2006 16:04:21 -0500
+Received: by asimov.spearce.org (Postfix, from userid 1000)
+	id 72DC920FBA0; Fri, 10 Feb 2006 16:04:01 -0500 (EST)
+To: Greg KH <greg@kroah.com>
+Mail-Followup-To: Greg KH <greg@kroah.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060210204143.GA18784@kroah.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15883>
 
-cvps sometimes can't identify a branch for a specific revision, it shows
-messages like:
-  WARNING: revision 1.36.2.2 of file Makefile.in on unnamed branch
-and uses #CVSPS_NO_BRANCH as branch name in its output.
+Greg KH <greg@kroah.com> wrote:
+> On Fri, Feb 10, 2006 at 02:59:14PM -0500, Shawn Pearce wrote:
+> > I just posted the first public version of pg, a GIT porcelain for
+> > managing patches.  Think StGIT, but better in some ways:
+> > 
+> > Feature Summary:
+> 
+> Hm, is there any way to import an existing patch into pg?
 
-This checkin makes it so that git-cvsimport ignores such branches, and when they
-appear as ancestor branch, it maps them to HEAD.
+Doh!  I haven't needed to do that yet.  I'll code up a pg-import
+later tonight.  But since git and pg play nice together you can
+do this:
 
-Signed-off-by: Christian Biesinger <cbiesinger@web.de>
+	pg-new Patch-Name
+	git-apply the-patch-file.patch
+	pg-ci -m"Importing the-patch-file.patch..."
 
----
+or even:
 
-I tried to import the Mozilla CVS Repository into git, just for fun, and it
-failed. This is one of the patches that are required for it.
+	pg-new Patch-Name
+	git-am mbox
 
-I hope I did this right, I'm not so familiar with git...
-Documentation/SubmittingPatches says to mail patches to the maintainer, who is
-that? :)
+and keep the 'history' stored in the mailbox.
 
- git-cvsimport.perl |   11 +++++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
-
-ed142593c84ba76580e780ce8f12244214023213
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 00fc3ba..4b8ca95 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -799,7 +799,18 @@ while(<CVS>) {
- 			$state = 11;
- 			next;
- 		}
-+                if ($branch eq "#CVSPS_NO_BRANCH") {
-+			# skip
-+			print "skip patchset $patchset: unknown branch\n" if $opt_v;
-+			$state = 11;
-+			next;
-+		}
- 		if($ancestor) {
-+			if ($ancestor eq "#CVSPS_NO_BRANCH") {
-+				# skip
-+				print "In patchset $patchset: ancestor branch unknown, setting to $opt_o" if $opt_v;
-+				$ancestor = $opt_o;
-+			}
- 			if(-f "$git_dir/refs/heads/$branch") {
- 				print STDERR "Branch $branch already exists!\n";
- 				$state=11;
--- 
-1.1.6
+So pg-import won't amount to a very long script.  :-|
