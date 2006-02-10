@@ -1,101 +1,82 @@
-From: Brian Smith <linuxfood@linuxfood.net>
-Subject: Re: Tracking and committing back to Subversion?
-Date: Thu, 9 Feb 2006 23:01:20 -0800
-Message-ID: <200602092301.21098.linuxfood@linuxfood.net>
-References: <1138834301.21899.40.camel@wilber.wgtn.cat-it.co.nz> <200602091650.55370.linuxfood@linuxfood.net> <43EC162E.9090905@vilain.net>
+From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+Subject: Documentation
+Date: Fri, 10 Feb 2006 09:20:34 +0100
+Message-ID: <20060210082034.GA11533@schottelius.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 08:01:56 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="J2SCkAp4GZ/dPZZf"
+X-From: git-owner@vger.kernel.org Fri Feb 10 09:21:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7SHb-00042q-Jv
-	for gcvg-git@gmane.org; Fri, 10 Feb 2006 08:01:32 +0100
+	id 1F7TWZ-0002xN-Ca
+	for gcvg-git@gmane.org; Fri, 10 Feb 2006 09:21:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbWBJHBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 02:01:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbWBJHBY
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 02:01:24 -0500
-Received: from [67.124.82.122] ([67.124.82.122]:24903 "EHLO linuxfood.net")
-	by vger.kernel.org with ESMTP id S1751167AbWBJHBX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2006 02:01:23 -0500
-Received: (qmail 22539 invoked from network); 9 Feb 2006 23:01:22 -0800
-Received: from unknown (HELO borealis.linuxfood.net) (192.168.1.2)
-  by 192.168.1.6 with AES256-SHA encrypted SMTP; 9 Feb 2006 23:01:22 -0800
-To: Sam Vilain <sam@vilain.net>
-User-Agent: KMail/1.9
-In-Reply-To: <43EC162E.9090905@vilain.net>
+	id S1751192AbWBJIVB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 03:21:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbWBJIVA
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 03:21:00 -0500
+Received: from wg.technophil.ch ([213.189.149.230]:51369 "HELO
+	hydrogenium.schottelius.org") by vger.kernel.org with SMTP
+	id S1751192AbWBJIVA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2006 03:21:00 -0500
+Received: (qmail 30910 invoked by uid 1000); 10 Feb 2006 08:20:34 -0000
+To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
+X-Linux-Info: http://linux.schottelius.org/
+X-Operating-System: Linux 2.6.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15868>
 
-On Thursday 09 February 2006 20:27, Sam Vilain wrote:
->>> [snip]
-> >
-> > While that is an admirable goal, unless you can point me to something
-> > that will allow you to actually commit back to SVN without a working
-> > copy,
->
-> Such as SVK
->
->    http://svk.elixus.org/
->    (svn url: http://svn.openfoundry.org/svk/)
 
-Well, after reading through a number of pages I discovered something:
+--J2SCkAp4GZ/dPZZf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-"The repository created is actually a Subversion repository. In other words, 
-you could use any subversion commands with that repository." [*1*]
+Hello!
 
-So, while it is a technicality, there is an SVN Repo, which is what I'm trying 
-to avoid (the point being to have a git repo after all, for the purpose of 
-using git commands), perhaps it would be worth looking into to see if I could 
-somehow utilize the svk svn repo (since there are space savings) for the SVN 
-working copy. [*2*]
+I wrote some documentation about (using) git in German. For those
+interested:
 
->
-> > [snip]
->
-> Your solution may ultimately be the most pragmatic approach.  Issues
-> surrounding the C (SWIG) bindings between Perl and the Subversion RA
-> (remote access) API were "the hard part" in making SVK work, according
-> to the lead author.
->
-> That being said, I am unaware of any drastic outstanding issues, so
-> perhaps there are useful components there.
+   http://nico.schotteli.us/papers/linux/howto/index.html (small introducti=
+on)
+   http://creme.schottelius.org/~nico/linux/arbeiten_mit_git (very short
+   'how to work with git')
 
-There are useful things in there. I have considered rewriting in perl so that 
-I don't have to use my kludge of a rewrite of Getopt::Long (yes, I did. No, 
-not everything is supported.) but have decided against it mostly because it 
-would take weeks, and Kosek (my program) isn't even complete yet.
+Sincerly,
 
-(Incidentally, the allure of the SVN perl bindings had me for awhile, but 
-after trying to decipher the horrid PODs for it decided that Bash was just 
-easier. )
+Nico
 
->
-> > Sure, you can actually pick up the current development straight from
-> > git://linuxfood.net/pub/git/kosek.git
->
-> I will take a look.
->
-Awesome let me know what you think. Please try to ignore the massive lack of 
-documentation, up until someone in the kopete irc channel showed interest I 
-had been writing it for my own purposes. Though, since I posted the link here 
-I did go ahead and fixup the readme with a little howto. If you like it, feel 
-free to email me with questions and suggestions.
+--=20
+Latest release: ccollect-0.3.2 (http://linux.schottelius.org/ccollect/)
+Open Source nutures open minds and free, creative developers.
 
-[*1*] http://svk.elixus.org/?SingleUserSVK (under Mapping Repositories)
+--J2SCkAp4GZ/dPZZf
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-[*2*] 
-While writing this, I had an absolutely insane idea, which I may or may not 
-persue.  The idea being that it may be possible to remove 99% of the actual 
-SVN working copy (except for perhaps the base directory at the root of the 
-project), and just use symlinks for the rest of the hierarchy. This would 
-require careful management though, since every .svn directory contains 
-specific and distinct information.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iQIVAwUBQ+xM0rOTBMvCUbrlAQLNFg//e+LxPJhyWfu4q99G5vE062mjH/B+J7f/
++XPVi/XvAAjCsKin4xpNkLniJ9C2rKjo7+gSkFQK+lb1TB4beOFxBRXeVlCdKMcq
+8aZTwlHeIquyiq+wDcfWvALY5dHOSN6qySSSqJGGbzFcf/2+kBvhkEGhnrQE/H8G
+4KyyJpJW/ymwHIlfbv1k2Vt9BrzfArlFQI1RlZ2YU0w+ggI3igsDSZ+6TIcEoXSc
+MRhMqr4mz8XkMcqdrNalCqRUTEiFaCsn4+byxZljMQLtUKIHpIrxurR+mTxHLwfd
+OLWcmhG5TTDgagJZgG9mJkTRLmIZONWo3DtpTUBy0BkHljlovocXg2H4gLszl9V6
+uTjoNv7i7b/VbwA0B1OMZOCRQNLU26u+V4BXJm2ePSCgfC1PoOhwb6SydvjZUSzo
+oE+6KAVpVePRIJQ0ij69ZK2LXJmu4fyvtPXvWcVYdDDigr8pcJhjw/6bU+0XhNV5
+tasGEpsusaW+MbiAJ1/qt6baNm1FKH5f1m/Pes5lSrdYx2BZqewDWhjJ9RZrqcUr
+kWeUluupO/PZT5a35BCcIPxj2ThP8nEx2Ddti7ry5bw/v3nZxgmsC6HRfqZlpqI3
+06q3Yql5oTRmG8YulLpt5B2e5LDulYdTLfO8ekwCMsXpF9vhiMx9tA7jLnb1KbSA
+SYdyFN7unzM=
+=79Ai
+-----END PGP SIGNATURE-----
+
+--J2SCkAp4GZ/dPZZf--
