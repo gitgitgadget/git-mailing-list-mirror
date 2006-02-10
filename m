@@ -1,71 +1,90 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Add git-annotate - a tool for annotating files with the
- revision and person that created each line in the file.
-Date: Fri, 10 Feb 2006 12:55:03 +0100
-Message-ID: <43EC7F17.6050007@op5.se>
-References: <11394103753694-git-send-email-ryan@michonline.com> <cda58cb80602080835s38713193t@mail.gmail.com> <Pine.LNX.4.63.0602081843220.20568@wbgn013.biozentrum.uni-wuerzburg.de> <7v3bitr73q.fsf@assigned-by-dhcp.cox.net> <20060210112541.GA3513@linux-mips.org>
+From: Dave Jones <davej@redhat.com>
+Subject: git-apply segfault.
+Date: Fri, 10 Feb 2006 13:37:45 -0500
+Message-ID: <20060210183745.GI22611@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Franck Bui-Huu <vagabon.xyz@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 12:55:34 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Feb 10 19:38:03 2006
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
-	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7Ws5-0007ui-Vz
-	for gcvg-git@gmane.org; Fri, 10 Feb 2006 12:55:32 +0100
+	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
+	id 1F7d9e-0007FU-00
+	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 19:38:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751094AbWBJLzH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 06:55:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751093AbWBJLzH
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 06:55:07 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:63921 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751090AbWBJLzF
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 06:55:05 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id E9F026BD12; Fri, 10 Feb 2006 12:55:03 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Ralf Baechle <ralf@linux-mips.org>
-In-Reply-To: <20060210112541.GA3513@linux-mips.org>
+	id S1750736AbWBJShy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 13:37:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750774AbWBJShy
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 13:37:54 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:5252 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S1750736AbWBJShx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2006 13:37:53 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id k1AIbkYE030060
+	for <git@vger.kernel.org>; Fri, 10 Feb 2006 13:37:46 -0500
+Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id k1AIbk122274
+	for <git@vger.kernel.org>; Fri, 10 Feb 2006 13:37:46 -0500
+Received: from nwo.kernelslacker.org (vpn83-122.boston.redhat.com [172.16.83.122])
+	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id k1AIbk87024271
+	for <git@vger.kernel.org>; Fri, 10 Feb 2006 13:37:46 -0500
+Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
+	by nwo.kernelslacker.org (8.13.5/8.13.4) with ESMTP id k1AIbkJf024547
+	for <git@vger.kernel.org>; Fri, 10 Feb 2006 13:37:46 -0500
+Received: (from davej@localhost)
+	by nwo.kernelslacker.org (8.13.5/8.13.5/Submit) id k1AIbjiL024546
+	for git@vger.kernel.org; Fri, 10 Feb 2006 13:37:45 -0500
+X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15875>
 
-Ralf Baechle wrote:
-> On Wed, Feb 08, 2006 at 11:19:37AM -0800, Junio C Hamano wrote:
-> 
-> 
->>Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>
->>
->>>>Are there any rules on the choice of the script language ?
->>>
->>>Yes. Do not try to introduce unnecessary dependencies. But if it is 
->>>the right tool to do the job, you should use it. As of now, we have perl, 
->>>python and Tcl/Tk.
->>
->>Very well said.  That's what currently stands.
-> 
-> 
-> The dependency on Python 2.4 already is a problem for installation on some
-> systems ...
-> 
+I managed to get git-apply to segfault.
 
-Not many though. Since Python is only required on the workstation where 
-the developer does his/her work it's not a very cumbersome requirement. 
-The same holds for Perl, btw. It's not a requirement on the server 
-hosting the public repositories, unless some of the scripts are used 
-from the hooks (git shortlog is used from the default update-hook, but 
-that can be changed with no trouble at all).
+(18:35:37:davej@hera:agpgart)$ apply-mbox ~/Mail/mbox
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Applying 'help text updates'
+
+/home/davej/bin/applypatch: line 64: 17990 Segmentation fault      (core dumped) git-apply --index $PATCHFILE
+(18:35:40:davej@hera:agpgart)$ file core
+core: ELF 64-bit LSB core file AMD x86-64, version 1 (SYSV), SVR4-style, from 'git-apply'
+(18:35:45:davej@hera:agpgart)$ gdb `which git-apply` core
+GNU gdb Red Hat Linux (6.3.0.0-1.84rh)
+Copyright 2004 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu"...Using host libthread_db library "/lib64/libthread_db.so.1".
+
+Core was generated by `git-apply --index .dotest/patch'.
+Program terminated with signal 11, Segmentation fault.
+Reading symbols from /usr/lib64/libz.so.1...done.
+Loaded symbols for /usr/lib64/libz.so.1
+Reading symbols from /lib64/libcrypto.so.5...done.
+Loaded symbols for /lib64/libcrypto.so.5
+Reading symbols from /lib64/libc.so.6...done.
+Loaded symbols for /lib64/libc.so.6
+Reading symbols from /lib64/libdl.so.2...done.
+Loaded symbols for /lib64/libdl.so.2
+Reading symbols from /lib64/ld-linux-x86-64.so.2...done.
+Loaded symbols for /lib64/ld-linux-x86-64.so.2
+#0  0x0000003287f73474 in memset () from /lib64/libc.so.6
+(gdb) bt
+#0  0x0000003287f73474 in memset () from /lib64/libc.so.6
+#1  0x0000003287f6c92a in calloc () from /lib64/libc.so.6
+#2  0x0000000000407399 in read_cache () at read-cache.c:537
+#3  0x0000000000404e1b in apply_patch (fd=-1) at apply.c:1749
+#4  0x0000000000405632 in main (argc=3, argv=0x7fffff841c38) at apply.c:1860
+#5  0x0000003287f1c3cf in __libc_start_main () from /lib64/libc.so.6
+#6  0x0000000000402459 in _start ()
+#7  0x00007fffff841c28 in ?? ()
+#8  0x0000000000000000 in ?? ()
+
+
+git on hera is 1.1.6-1
+
+		Dave
