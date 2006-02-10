@@ -1,47 +1,40 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
-Date: Fri, 10 Feb 2006 12:41:43 -0800
-Message-ID: <20060210204143.GA18784@kroah.com>
-References: <20060210195914.GA1350@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] delta micro optimization
+Date: Fri, 10 Feb 2006 12:00:51 -0800
+Message-ID: <7vhd77vv9o.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0602101335160.5397@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Feb 11 00:31:57 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 11 00:32:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1F7f5T-0000Kp-00
-	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 21:41:51 +0100
+	id 1F7eRt-0005Yv-00
+	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 21:00:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932185AbWBJUls (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 15:41:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932186AbWBJUls
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 15:41:48 -0500
-Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174]:50109
-	"EHLO aria.kroah.org") by vger.kernel.org with ESMTP
-	id S932185AbWBJUls (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 15:41:48 -0500
-Received: from press.kroah.org ([192.168.0.25] helo=localhost)
-	by aria.kroah.org with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.54)
-	id 1F7f5O-0004Xd-OA
-	for git@vger.kernel.org; Fri, 10 Feb 2006 12:41:46 -0800
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060210195914.GA1350@spearce.org>
-User-Agent: Mutt/1.5.11
+	id S1751047AbWBJUAy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 15:00:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbWBJUAy
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 15:00:54 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:48813 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751047AbWBJUAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2006 15:00:53 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060210195948.DVZW3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 10 Feb 2006 14:59:48 -0500
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0602101335160.5397@localhost.localdomain> (Nicolas
+	Pitre's message of "Fri, 10 Feb 2006 13:42:05 -0500 (EST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15902>
 
-On Fri, Feb 10, 2006 at 02:59:14PM -0500, Shawn Pearce wrote:
-> I just posted the first public version of pg, a GIT porcelain for
-> managing patches.  Think StGIT, but better in some ways:
-> 
-> Feature Summary:
-
-Hm, is there any way to import an existing patch into pg?
-
-thanks,
-
-greg k-h
+That looks obviously correct but it really is micro.  Have you
+benched it?  On which architectures?  Does it help everywhere or
+register starved ones benefit more than others?
