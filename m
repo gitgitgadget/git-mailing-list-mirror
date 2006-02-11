@@ -1,107 +1,70 @@
-From: Jason Riedy <ejr@EECS.Berkeley.EDU>
-Subject: [PATCH 2/3] Use File::Find rather than find and xargs in git-archimport
-Date: Fri, 10 Feb 2006 18:52:03 -0800
-Message-ID: <549.1139626323@lotus.CS.Berkeley.EDU>
-X-From: git-owner@vger.kernel.org Sat Feb 11 03:52:18 2006
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: Git 1.1.6.g4d44 make test FAILURE report
+Date: Fri, 10 Feb 2006 19:52:00 -0800
+Message-ID: <43ED5F60.1010408@gmail.com>
+References: <43ED0368.7020204@gmail.com>	<7vhd76vqrg.fsf@assigned-by-dhcp.cox.net> <43ED3FD3.7020005@gmail.com> <7vvevmtza4.fsf@assigned-by-dhcp.cox.net>
+Reply-To: gitzilla@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 11 04:52:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7krs-0003Hv-2k
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 03:52:13 +0100
+	id 1F7lnt-0004rH-4s
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 04:52:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932094AbWBKCwH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 21:52:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932122AbWBKCwH
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 21:52:07 -0500
-Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:37283 "EHLO
-	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
-	id S932094AbWBKCwE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 21:52:04 -0500
-Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k1B2q4xZ000554
-	for <git@vger.kernel.org>; Fri, 10 Feb 2006 18:52:04 -0800 (PST)
-Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k1B2q3DF000553
-	for <git@vger.kernel.org>; Fri, 10 Feb 2006 18:52:04 -0800 (PST)
-To: git@vger.kernel.org
+	id S932214AbWBKDwF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 22:52:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932225AbWBKDwF
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 22:52:05 -0500
+Received: from xproxy.gmail.com ([66.249.82.207]:32911 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932214AbWBKDwE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2006 22:52:04 -0500
+Received: by xproxy.gmail.com with SMTP id t15so364230wxc
+        for <git@vger.kernel.org>; Fri, 10 Feb 2006 19:52:03 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=b81bUu+c4wdFZstXTojU/tFsnIOVc9fhC6SVthelffcWD3dTi/hopeZw96FIdri8ybztjbDQzs8mgl8HbgEgwGulVyOJyzC5WFh2fIomEqviaquhwow5sqaw+itkI1kzx2eZxc6YSiSHzPxXIWP/j3OFf4claSUABU7ijSDKjdg=
+Received: by 10.70.124.11 with SMTP id w11mr141026wxc;
+        Fri, 10 Feb 2006 19:52:03 -0800 (PST)
+Received: from ?10.0.0.6? ( [68.234.172.144])
+        by mx.gmail.com with ESMTP id i35sm2890578wxd.2006.02.10.19.52.02;
+        Fri, 10 Feb 2006 19:52:03 -0800 (PST)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvevmtza4.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15920>
 
-git-archimport uses find and xargs directly to find and apply patches.
-Replace these by File::Find and save one call to find.  Tested on
-Solaris 8 with a quite complex, interrelated set of Arch repos.
+Junio C Hamano wrote:
+> A Large Angry SCM <gitzilla@gmail.com> writes:
+> 
+>>Also, git-var complains when used by an account with an empty gcos
+>>field; thereby, breaking all the non-C git commands even when the user
+>>is not committing.
+>>
+>>If the _intent_ was to force commiters and author names in commits,
+>>why was the test not placed only in commit-tree.c?
+> 
+> git-var was more or less intentional.  Scripts such as
+> git-applypatch, git-commit and git-tag use the command to grab
+> COMMITTER_IDENT to generate sign-off line and tagger information
+> when asked, and commit-tree.c changes alone would not catch
+> them.
+> 
+> A user eventually would make commit so it may not be a too bad
+> to _strongly_ encourage setting up these environment variables,
+> by being nasty ;-).  I agree it would be _very_ annoying until
+> you either fix your gecos and/or environment.
+> 
+> Ideas welcome.
 
-Hopefully handles {arch} subdirectories correctly.  Thanks to Randal
-Schwartz for pointing out the problem.
-
-Signed-off-by: Jason Riedy <ejr@cs.berkeley.edu>
-
----
-
- git-archimport.perl |   39 +++++++++++++++++++++++++++++----------
- 1 files changed, 29 insertions(+), 10 deletions(-)
-
-8e7119df3d59da189baa741d44b04e7c8da2c421
-diff --git a/git-archimport.perl b/git-archimport.perl
-index 841738d..ffdf742 100755
---- a/git-archimport.perl
-+++ b/git-archimport.perl
-@@ -60,6 +60,7 @@ use Getopt::Std;
- use File::Temp qw(tempdir);
- use File::Path qw(mkpath rmtree);
- use File::Basename qw(basename dirname);
-+use File::Find;
- use Data::Dumper qw/ Dumper /;
- use IPC::Open2;
- 
-@@ -664,17 +665,35 @@ sub apply_cset {
-     # get the changeset
-     safe_pipe_capture($TLA,'get-changeset',$ps->{id},"$tmp/changeset");
-     die "Cannot get changeset: $!" if $?;
--    
-+
-+    my @patchlist;
-+    my $wanted_patches = sub {
-+        # We want all those non-empty *.patch files that do not modify
-+        # arch state.  The preprocess argument strips out {arch}.
-+	if (-f && !-z && /^.*\.patch$/) {
-+	    push @patchlist, $File::Find::name;
-+	}
-+	if ($File::Find::dir =~ /\{arch\}/) {
-+	    print STDERR "AUGH!  tested " . $File::Find::name . "\n";
-+	}
-+    }; # perl note: This needs to be an anonymous sub to share
-+       # @patchlist correctly.
-+
-     # apply patches
--    if (`find $tmp/changeset/patches -type f -name '*.patch'`) {
--        # this can be sped up considerably by doing
--        #    (find | xargs cat) | patch
--        # but that cna get mucked up by patches
--        # with missing trailing newlines or the standard 
--        # 'missing newline' flag in the patch - possibly
--        # produced with an old/buggy diff.
--        # slow and safe, we invoke patch once per patchfile
--        `find $tmp/changeset/patches -type f -name '*.patch' -print0 | grep -zv '{arch}' | xargs -iFILE -0 --no-run-if-empty patch -p1 --forward -iFILE`;
-+
-+    # this can be sped up considerably by applying all the patches in
-+    # one pass, as with
-+    #    (find | xargs cat) | patch
-+    # but that can get mucked up by patches with missing trailing
-+    # newlines or the standard 'missing newline' flag in the patch -
-+    # possibly produced with an old/buggy diff.
-+    # slow and safe, we invoke patch once per patchfile
-+
-+    File::Find ({wanted => $wanted_patches,
-+		 preprocess => sub { grep(!/^\{arch\}$/, @_); }},
-+		$tmp . "/changeset/patches");
-+    foreach my $patchname (@patchlist) {
-+	safe_pipe_capture("patch", "-p1", "--forward", "-i", $patchname);
-         die "Problem applying patches! $!" if $?;
-     }
- 
--- 
-1.1.6.g0d39d
+It also breaks a lot of commands not related to making commits; 
+git-fetch for one.
