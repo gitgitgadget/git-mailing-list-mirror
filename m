@@ -1,54 +1,49 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [PATCH 2/3] Use File::Find rather than find and xargs in  git-archimport
-Date: 10 Feb 2006 15:47:49 -0800
-Message-ID: <86k6c2ojx6.fsf@blue.stonehenge.com>
-References: <1103.1139614557@lotus.CS.Berkeley.EDU>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Subject: Re: [PATCH 2/3] Use File::Find rather than find and xargs in git-archimport
+Date: Fri, 10 Feb 2006 16:17:00 -0800
+Message-ID: <1939.1139617020@lotus.CS.Berkeley.EDU>
+References: <86k6c2ojx6.fsf@blue.stonehenge.com>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 11 00:48:23 2006
+X-From: git-owner@vger.kernel.org Sat Feb 11 01:17:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7hza-00019f-Mg
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 00:48:00 +0100
+	id 1F7iRp-0006Ub-Kc
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 01:17:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751398AbWBJXr4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 18:47:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbWBJXr4
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 18:47:56 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:26416 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751398AbWBJXrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 18:47:55 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 9F1BC8F69C;
-	Fri, 10 Feb 2006 15:47:50 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 17838-03-21; Fri, 10 Feb 2006 15:47:50 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 2C1708F744; Fri, 10 Feb 2006 15:47:50 -0800 (PST)
-To: Jason Riedy <ejr@EECS.Berkeley.EDU>
-x-mayan-date: Long count = 12.19.13.0.14; tzolkin = 7 Ix; haab = 12 Pax
-In-Reply-To: <1103.1139614557@lotus.CS.Berkeley.EDU>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S932264AbWBKARE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 19:17:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932267AbWBKARE
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 19:17:04 -0500
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:26787 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S932266AbWBKARD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2006 19:17:03 -0500
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k1B0H1xZ001941;
+	Fri, 10 Feb 2006 16:17:01 -0800 (PST)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k1B0H1Kn001940;
+	Fri, 10 Feb 2006 16:17:01 -0800 (PST)
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+In-reply-to: <86k6c2ojx6.fsf@blue.stonehenge.com> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15907>
 
->>>>> "Jason" == Jason Riedy <ejr@EECS.Berkeley.EDU> writes:
+And Randal L. Schwartz writes:
+ - Jason> +	if (-f && !-z && /^.*\.patch$/ && !/{arch}/) {
+ - 
+ - If that works, it's only accidentally.
 
-Jason> +	if (-f && !-z && /^.*\.patch$/ && !/{arch}/) {
+Thanks!  Not only is the regex wrong, it's applied to the 
+wrong quantity.  Should be on $File::Find::dir.  Looks like 
+the repos I tested against didn't have any Arch state 
+patches.
 
-If that works, it's only accidentally.  Perhaps you wanted !/\{arch\}/ because
-curlies are special to regex.  Dunno, because I don't know what you're
-excluding.
+I'll fix this, test it on a nastier set of repos, and re-
+send.  It'll be an hour or so, at least.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Jason
