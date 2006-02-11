@@ -1,63 +1,62 @@
-From: Alex Riesen <raa.lkml@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Make "git clone" less of a deathly quiet experience
-Date: Sat, 11 Feb 2006 18:24:03 +0100
-Message-ID: <20060211172403.GA10099@steel.home>
-References: <Pine.LNX.4.64.0602102018250.3691@g5.osdl.org> <7vwtg2o37c.fsf@assigned-by-dhcp.cox.net> <20060211133340.GS31278@pasky.or.cz>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Date: Sat, 11 Feb 2006 09:39:38 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602110936510.3691@g5.osdl.org>
+References: <Pine.LNX.4.64.0602102018250.3691@g5.osdl.org>
+ <Pine.LNX.4.64.0602102032410.3691@g5.osdl.org> <7vslqqo341.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 11 18:24:59 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sat Feb 11 18:39:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7yUG-00078K-0w
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 18:24:44 +0100
+	id 1F7yiw-0002ch-Vw
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 18:39:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932232AbWBKRYc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Feb 2006 12:24:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932337AbWBKRYc
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 12:24:32 -0500
-Received: from devrace.com ([198.63.210.113]:22290 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S932232AbWBKRYc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2006 12:24:32 -0500
-Received: from tigra.home (p54A05B96.dip.t-dialin.net [84.160.91.150])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k1BHOANn055324;
-	Sat, 11 Feb 2006 11:24:15 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1F7yTd-0003Ux-00; Sat, 11 Feb 2006 18:24:05 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1F7yTc-0007gZ-7G; Sat, 11 Feb 2006 18:24:04 +0100
-To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <20060211133340.GS31278@pasky.or.cz>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S932343AbWBKRjt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Feb 2006 12:39:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932344AbWBKRjt
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 12:39:49 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:49883 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932343AbWBKRjs (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2006 12:39:48 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1BHddDZ011532
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 11 Feb 2006 09:39:39 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1BHdcQ6007272;
+	Sat, 11 Feb 2006 09:39:39 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslqqo341.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15952>
 
-Petr Baudis, Sat, Feb 11, 2006 14:33:40 +0100:
-> > It probably should default to quiet if (!isatty(1)).
+
+
+On Fri, 10 Feb 2006, Junio C Hamano wrote:
 > 
-> isatty(2) or something, 1 is in practice always a ref generator. Perhaps
-> it would be better not to clutter stderr, though; what about directly
-> opening /dev/tty? Does Cygwin support that?
+> Would you suggest doing that with "checkout-index -v", that
+> shows "1 path1\r2 path2\r3 path3\r...\rDone.\n"?
 
-It can't. Windows has no terminals (as in "none at all"). It has a
-Console, which is a special kind of window attached to an application
-and where the unbuffered stdout and stderr are magically redirected.
+Not if it shows every single path.
 
-A test for is stdout/err is a tty can only check if the process has
-the console attached, and an attempt to open it for writing will
-probably just create the thing.
+When going tty output, we should be careful to limit it to not do tons and 
+tons of lines. The download output does gettimeofday to limit itself to 
+max 2 times per sec, and the percentage output of git-unpack-objects 
+similarly limits itself so that it never spews _tons_ of stuff to the 
+terminal.
+
+Under many loads, the terminal will be a lot slower than actually writing 
+a file ("context switch to gnome-term + context switch to X + set up 
+complex text output").
+
+		Linus
