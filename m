@@ -1,75 +1,55 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] count-delta.c: Match the delta data semantics change in
- version 3.
-Date: Fri, 10 Feb 2006 10:20:40 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0602101017420.5397@localhost.localdomain>
-References: <Pine.LNX.4.64.0602091736500.5397@localhost.localdomain>
- <7v7j846qco.fsf@assigned-by-dhcp.cox.net>
- <7vbqxg3tdd.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0602092053200.5397@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Don't propagate SKIPPED warning to future commits.
+Date: Fri, 10 Feb 2006 18:21:30 -0800
+Message-ID: <7vpslutz2t.fsf@assigned-by-dhcp.cox.net>
+References: <87r76avfhz.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 11 03:17:37 2006
+X-From: git-owner@vger.kernel.org Sat Feb 11 03:21:37 2006
 Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
-	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1F7ajU-0002YM-00
-	for <gcvg-git@gmane.org>; Fri, 10 Feb 2006 17:02:52 +0100
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1F7kOF-0006Sr-7q
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 03:21:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932132AbWBJPUo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 10:20:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932133AbWBJPUo
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 10:20:44 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:46176 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932132AbWBJPUo
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2006 10:20:44 -0500
-Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IUH004ZM9AH4L00@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 10 Feb 2006 10:20:41 -0500 (EST)
-In-reply-to: <Pine.LNX.4.64.0602092053200.5397@localhost.localdomain>
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S932085AbWBKCVd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 21:21:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932086AbWBKCVc
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 21:21:32 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:52669 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932085AbWBKCVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2006 21:21:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060211021852.STUH26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 10 Feb 2006 21:18:52 -0500
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <87r76avfhz.wl%cworth@cworth.org> (Carl Worth's message of "Fri,
+	10 Feb 2006 17:41:28 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15917>
 
-On Thu, 9 Feb 2006, Nicolas Pitre wrote:
+Carl Worth <cworth@cworth.org> writes:
 
-> On Thu, 9 Feb 2006, Junio C Hamano wrote:
-> 
-> > Junio C Hamano <junkio@cox.net> writes:
-> > 
-> > > The bit is however _already_ looked at by the count_delta(),
-> > > to assess the extent of damage, IIRC.  Should we be
-> > > futureproofing that bit as well?
-> > 
-> > Something like this?
-> 
-> Right.
+> Here's a simple bug fix for the (currently undocumented) -S flag to
+> git-cvsimport.
+>
+> The -S flag allows an import to proceed in the face of a missing ,v
+> file in the CVS repository. It marks this by adding a SKIPPED warning
+> in the relevant commit.
+>
+> Without this patch, the SKIPPED warning propagates to all future
+> commits, (and accumulates with future SKIPPED warnings).
 
-I'm not sure to fully understand what you meant in the comment below. 
-but if it was related to the removed code, maybe this patch would make 
-sense:
-
-diff --git a/count-delta.c b/count-delta.c
-index 978a60c..058a2aa 100644
---- a/count-delta.c
-+++ b/count-delta.c
-@@ -16,11 +16,7 @@
-  *
-  * Number of bytes that are _not_ copied from the source is deletion,
-  * and number of inserted literal bytes are addition, so sum of them
-- * is the extent of damage.  xdelta can express an edit that copies
-- * data inside of the destination which originally came from the
-- * source.  We do not count that in the following routine, so we are
-- * undercounting the source material that remains in the final output
-- * that way.
-+ * is the extent of damage.
-  */
- int count_delta(void *delta_buf, unsigned long delta_size,
- 		unsigned long *src_copied, unsigned long *literal_added)
+I might be missing something fundamental, but isn't prapagating
+the warning a good thing?  If an earlier commit is suspected to
+lack some path that needs to be there (I think that is what
+"missing ,v file" means), wouldn't later commits built on top of
+that one be by definition missing that path?
