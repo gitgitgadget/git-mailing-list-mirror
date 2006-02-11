@@ -1,66 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] git-commit: Only call git-rerere if $GIT_DIR/rr-cache exists
-Date: Sat, 11 Feb 2006 16:03:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602111602270.26560@wbgn013.biozentrum.uni-wuerzburg.de>
+From: walt <wa1ter@myrealbox.com>
+Subject: gitk: searching on filenames?
+Date: Sat, 11 Feb 2006 07:42:32 -0800
+Organization: git
+Message-ID: <Pine.LNX.4.64.0602110729450.23279@x2.ybpnyarg>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat Feb 11 16:05:56 2006
+X-From: git-owner@vger.kernel.org Sat Feb 11 16:43:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7wJd-0003N3-VA
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 16:05:38 +0100
+	id 1F7wth-0002K6-J3
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 16:42:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932305AbWBKPDs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Feb 2006 10:03:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932323AbWBKPDp
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 10:03:45 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:24961 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932305AbWBKPDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Feb 2006 10:03:05 -0500
-Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 754C413F0A9; Sat, 11 Feb 2006 16:03:04 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 66569895;
-	Sat, 11 Feb 2006 16:03:04 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3A23813F0A9; Sat, 11 Feb 2006 16:03:04 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932325AbWBKPmw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Feb 2006 10:42:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932327AbWBKPmw
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 10:42:52 -0500
+Received: from main.gmane.org ([80.91.229.2]:17793 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932325AbWBKPmv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2006 10:42:51 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1F7wtX-0002Hm-7V
+	for git@vger.kernel.org; Sat, 11 Feb 2006 16:42:43 +0100
+Received: from adsl-69-234-221-91.dsl.irvnca.pacbell.net ([69.234.221.91])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 11 Feb 2006 16:42:43 +0100
+Received: from wa1ter by adsl-69-234-221-91.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 11 Feb 2006 16:42:43 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-221-91.dsl.irvnca.pacbell.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15948>
 
+A real example from this morning:  I noticed when pulling from
+Linus that kernel/sched.c had been updated, so I wanted to look
+at that particular commit.
 
-This makes an error go away if you do not have Digest.pm installed, but
-do not intend to make use of git-rerere anyway.
+If I do 'gitk kernel/sched.c' then it does what I expect.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+But, if I just start gitk with no arguments and then attempt
+to search for kernel/sched.c it eventually stops with an error
+saying "can't find diffs for <SHA1> <SHA2>".
 
----
+Is this the expected behavior?  (I have the 'Files' field
+selected in the gitk search bar.)
 
- git-commit.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-111b9e1abeb98a8009a457fe8e7dff5a91b30778
-diff --git a/git-commit.sh b/git-commit.sh
-index 073ec81..28ec7c3 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -638,7 +638,7 @@ else
- fi
- ret="$?"
- rm -f "$GIT_DIR/COMMIT_MSG" "$GIT_DIR/COMMIT_EDITMSG"
--git-rerere
-+test -d "$GIT_DIR/rr-cache" && git-rerere
- 
- if test -x "$GIT_DIR"/hooks/post-commit && test "$ret" = 0
- then
--- 
-1.1.4.gaef2-dirty
+Thanks!
