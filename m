@@ -1,7 +1,7 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: gitweb using "--cc"?
-Date: Sat, 11 Feb 2006 11:32:00 -0800
-Message-ID: <7vhd75n13j.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 11 Feb 2006 12:59:36 -0800
+Message-ID: <7vslqplih3.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0602081532360.2458@g5.osdl.org>
 	<Pine.LNX.4.64.0602091029310.2458@g5.osdl.org>
 	<7v3bisb9qn.fsf@assigned-by-dhcp.cox.net>
@@ -16,60 +16,126 @@ References: <Pine.LNX.4.64.0602081532360.2458@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 11 20:32:17 2006
+X-From: git-owner@vger.kernel.org Sat Feb 11 22:00:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F80Ta-0003OT-Fo
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 20:32:10 +0100
+	id 1F81qW-0007XN-7w
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 21:59:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964782AbWBKTcE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Feb 2006 14:32:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964777AbWBKTcE
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 14:32:04 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:43720 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S964782AbWBKTcB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Feb 2006 14:32:01 -0500
+	id S964796AbWBKU7j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Feb 2006 15:59:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932356AbWBKU7j
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 15:59:39 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:3541 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932354AbWBKU7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Feb 2006 15:59:39 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao11.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060211192850.QRXD17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 11 Feb 2006 14:28:50 -0500
+          id <20060211205809.KXGW6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 11 Feb 2006 15:58:09 -0500
 To: Marco Costalba <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550602110117i7b742351m14e908de10aac12c@mail.gmail.com>
+	(Marco Costalba's message of "Sat, 11 Feb 2006 10:17:19 +0100")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15963>
 
 Marco Costalba <mcostalba@gmail.com> writes:
 
-> On 2/9/06, Junio C Hamano <junkio@cox.net> wrote:
->>
->> Does it matter?  I presume that a Porcelain that cares would
->> rather use the traditional "diff-tree -m -r" to look at diff
->> with each parent.  I dunno.
->
-> Yes, please preserve this behaviour.
->...
 > Please _do not_ change this behaviour to make -m a no-op as stated in
 > "diff-tree -c raw output" patch message
 > (ee63802422af14e43eccce3c6dc4150a27ceb1a3).
+>
+> qgit has the possibility to switch from "see all merge files"
+> to "see interesting only", so we really need that difference
+> between 'git-diff-tree -r' and 'git-diff-tree -r -m'
 
-The one you pulled already contains another one to fix that
-ee6380 change done by gittus.  What "diff-tree -r -m ca1820"
-shows should be the same as traditional "diff-tree -r -m ca1820"
-output.
+Let me make sure I am not misreading you.  You are proposing to
+revert making -m a no-op.  So '-r' and '-r -m' would do
+different things, like illustrated in the log message below.
 
-What is different is "diff-tree ca1820".  It used to show
-*nothing* only because it is a merge.  It now defaults to show
-"diff-tree -c ca1820".
+All of the above combinations of flags produces the same result
+for non-merge commit, by the way.
 
-For the sake of backward compatibility we could change it to not
-output anything, but I sort of feel that is backwards.  If a
-Porcelain wants raw-diff for 1 (or more) parents, "diff-tree -r
--m" has been the way to do so before the ee6380 change, and that
-output has not changed (well ee6380 might have changed it but
-now it is fixed).
+Ack, or did I grossly misunderstand what you wanted?
+
+-- >8 --
+[PATCH] diff-tree: do not default to -c
+
+Marco says it breaks qgit.  This makes the flags a bit more
+orthogonal.
+
+  $ git-diff-tree -r --abbrev ca18
+
+    No output from this command because you asked to skip merge by
+    not having -m there.
+
+  $ git-diff-tree -r -m --abbrev ca18
+  ca182053c7710a286d72102f4576cf32e0dafcfb
+  :100644 100644 538d21d... 59042d1... M	Makefile
+  :100644 100644 410b758... 6c47c3a... M	entry.c
+  ca182053c7710a286d72102f4576cf32e0dafcfb
+  :100644 100644 30479b4... 59042d1... M	Makefile
+
+    The same "independent sets of diff" as before without -c.
+
+  $ git-diff-tree -r -m -c --abbrev ca18
+  ca182053c7710a286d72102f4576cf32e0dafcfb
+  ::100644 100644 100644 538d21d... 30479b4... 59042d1... MM	Makefile
+
+    Combined.
+
+  $ git-diff-tree -r -c --abbrev ca18
+  ca182053c7710a286d72102f4576cf32e0dafcfb
+  ::100644 100644 100644 538d21d... 30479b4... 59042d1... MM	Makefile
+
+    Asking for combined without -m does not make sense, so -c
+    implies -m.
+
+We need to supply -c as default to whatchanged, which is a
+one-liner.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+---
+diff --git a/diff-tree.c b/diff-tree.c
+index b170b03..f55a35a 100644
+--- a/diff-tree.c
++++ b/diff-tree.c
+@@ -6,7 +6,7 @@ static int show_root_diff = 0;
+ static int no_commit_id = 0;
+ static int verbose_header = 0;
+ static int ignore_merges = 1;
+-static int combine_merges = 1;
++static int combine_merges = 0;
+ static int dense_combined_merges = 0;
+ static int read_stdin = 0;
+ static int always_show_header = 0;
+@@ -248,7 +248,7 @@ int main(int argc, const char **argv)
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "-m")) {
+-			combine_merges = ignore_merges = 0;
++			ignore_merges = 0;
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "-c")) {
+diff --git a/git-whatchanged.sh b/git-whatchanged.sh
+index 574fc35..1fb9feb 100755
+--- a/git-whatchanged.sh
++++ b/git-whatchanged.sh
+@@ -10,7 +10,7 @@ case "$0" in
+ 	count=
+ 	test -z "$diff_tree_flags" &&
+ 		diff_tree_flags=$(git-repo-config --get whatchanged.difftree)
+-	diff_tree_default_flags='-M --abbrev' ;;
++	diff_tree_default_flags='-c -M --abbrev' ;;
+ *show)
+ 	count=-n1
+ 	test -z "$diff_tree_flags" &&
