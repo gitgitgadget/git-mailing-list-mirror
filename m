@@ -1,55 +1,80 @@
-From: Kent Engstrom <kent@lysator.liu.se>
-Subject: Re: Two crazy proposals for changing git's diff commands
-Date: Fri, 10 Feb 2006 20:36:24 +0100
-Message-ID: <m31wybknuv.fsf@athena.unit.liu.se>
-References: <87slqtcr2f.wl%cworth@cworth.org> <7vfymtl43b.fsf@assigned-by-dhcp.cox.net> <87bqxgxfl7.wl%cworth@cworth.org> <7vr76c5avd.fsf@assigned-by-dhcp.cox.net> <87fymst399.wl%cworth@cworth.org> <7vfyms0x4p.fsf@assigned-by-dhcp.cox.net>
+From: Olaf Hering <olh@suse.de>
+Subject: [PATCH] allow double click on current HEAD id after git-pull
+Date: Sat, 11 Feb 2006 12:26:30 +0100
+Message-ID: <20060211112630.GA12421@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sat Feb 11 12:11:21 2006
+Content-Type: text/plain; charset=utf-8
+X-From: git-owner@vger.kernel.org Sat Feb 11 12:26:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7sep-0007RM-EN
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 12:11:15 +0100
+	id 1F7stj-0002FB-CO
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 12:26:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751347AbWBKLLM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 11 Feb 2006 06:11:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751372AbWBKLLM
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 06:11:12 -0500
-Received: from main.gmane.org ([80.91.229.2]:1461 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751347AbWBKLLM convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Feb 2006 06:11:12 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1F7seT-0007LG-UI
-	for git@vger.kernel.org; Sat, 11 Feb 2006 12:10:53 +0100
-Received: from c83-250-32-176.bredband.comhem.se ([83.250.32.176])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 11 Feb 2006 12:10:53 +0100
-Received: from kent by c83-250-32-176.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 11 Feb 2006 12:10:53 +0100
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1751409AbWBKL0g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Feb 2006 06:26:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751412AbWBKL0g
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 06:26:36 -0500
+Received: from cantor.suse.de ([195.135.220.2]:31206 "EHLO mx1.suse.de")
+	by vger.kernel.org with ESMTP id S1751409AbWBKL0g (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2006 06:26:36 -0500
+Received: from Relay1.suse.de (mail2.suse.de [195.135.221.8])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 137B2EB41
+	for <git@vger.kernel.org>; Sat, 11 Feb 2006 12:26:31 +0100 (CET)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-250-32-176.bredband.comhem.se
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-Cancel-Lock: sha1:m3j1dhqBZ+BKor6XIxXjHkBwzjE=
-X-MIME-Autoconverted: from 8bit to quoted-printable by mail-relay.eunet.no id k1AJaRHD083583
+Content-Disposition: inline
+X-DOS: I got your 640K Real Mode Right Here Buddy!
+X-Homeland-Security: You are not supposed to read this line! You are a terrorist!
+User-Agent: Mutt und vi sind doch schneller als Notes (und GroupWise)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15937>
 
-Junio C Hamano <junkio@cox.net> writes:
-> *1* Often I find myself doing that while rewriting messy
-> development history.  For example, I start doing some
-> work without knowing exactly where it leads, and end up with a
-> history like this:
 
-Perhaps this discussion could be added under Documentation/howto?
+Double click on to current HEAD commit id is not possible,
+the dot has to go.
 
-/ Kent Engstr=F6m, Lysator
+olaf@pomegranate:~/kernel/git/linux-2.6> git-pull
+Unpacking 194 objects
+ 100% (194/194) done
+* refs/heads/origin: fast forward to branch 'master' of git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+Updating from 5bc159e6cb7ca8d173195919ee935885c129011e to 25bf368b3d98668c5d5f38e2201d8bca16e52680.
+Fast forward
+...
+olaf@pomegranate:~/kernel/git/linux-2.6> git-whatchanged 5bc159e6cb7ca8d173195919ee935885c129011e..25bf368b3d98668c5d5f38e2201d8bca16e52680.
+olaf@pomegranate:~/kernel/git/linux-2.6> git-whatchanged 5bc159e6cb7ca8d173195919ee935885c129011e..25bf368b3d98668c5d5f38e2201d8bca16e52680
+<stuff>
+
+Index: git-1.1.3/git-merge.sh
+===================================================================
+--- git-1.1.3.orig/git-merge.sh
++++ git-1.1.3/git-merge.sh
+@@ -127,7 +127,7 @@ case "$#,$common,$no_commit" in
+ 	;;
+ 1,"$head",*)
+ 	# Again the most common case of merging one remote.
+-	echo "Updating from $head to $1."
++	echo "Updating from $head to $1"
+ 	git-update-index --refresh 2>/dev/null
+ 	new_head=$(git-rev-parse --verify "$1^0") &&
+ 	git-read-tree -u -m $head "$new_head" &&
+Index: git-1.1.3/git-resolve.sh
+===================================================================
+--- git-1.1.3.orig/git-resolve.sh
++++ git-1.1.3/git-resolve.sh
+@@ -41,7 +41,7 @@ case "$common" in
+ 	exit 0
+ 	;;
+ "$head")
+-	echo "Updating from $head to $merge."
++	echo "Updating from $head to $merge"
+ 	git-read-tree -u -m $head $merge || exit 1
+ 	git-update-ref HEAD "$merge" "$head"
+ 	git-diff-tree -p $head $merge | git-apply --stat
+-- 
+short story of a lazy sysadmin:
+ alias appserv=wotan
