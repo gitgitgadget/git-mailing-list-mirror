@@ -1,66 +1,107 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Make "git clone" less of a deathly quiet experience
-Date: Fri, 10 Feb 2006 20:37:26 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602102032410.3691@g5.osdl.org>
-References: <Pine.LNX.4.64.0602102018250.3691@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Git 1.1.6.g4d44 make test FAILURE report
+Date: Fri, 10 Feb 2006 20:43:21 -0800
+Message-ID: <7vwtg2pkt2.fsf@assigned-by-dhcp.cox.net>
+References: <43ED0368.7020204@gmail.com>
+	<7vhd76vqrg.fsf@assigned-by-dhcp.cox.net> <43ED3FD3.7020005@gmail.com>
+	<7vvevmtza4.fsf@assigned-by-dhcp.cox.net> <43ED5F60.1010408@gmail.com>
+	<7v1wyasfam.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat Feb 11 05:37:46 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 11 05:43:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7mVy-0005bK-V9
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 05:37:44 +0100
+	id 1F7mbW-0006Sm-P5
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 05:43:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932227AbWBKEhi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Feb 2006 23:37:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932231AbWBKEhi
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 23:37:38 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:681 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932227AbWBKEhi (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2006 23:37:38 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1B4bRDZ014652
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 10 Feb 2006 20:37:27 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1B4bQP9019240;
-	Fri, 10 Feb 2006 20:37:27 -0800
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@suse.cz>
-In-Reply-To: <Pine.LNX.4.64.0602102018250.3691@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932240AbWBKEnX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Feb 2006 23:43:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932245AbWBKEnX
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Feb 2006 23:43:23 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:33014 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932240AbWBKEnX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2006 23:43:23 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060211044028.IRWR17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 10 Feb 2006 23:40:28 -0500
+To: A Large Angry SCM <gitzilla@gmail.com>
+In-Reply-To: <7v1wyasfam.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 10 Feb 2006 20:14:09 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15925>
 
+Junio C Hamano <junkio@cox.net> writes:
 
+> git-sh-setup one is easy to fix.  We could say something equally
+> silly like this instead:
 
-On Fri, 10 Feb 2006, Linus Torvalds wrote:
-> 
-> Instead, it at least prints out how much data it's gotten, and what the 
-> packign speed is. Which makes the user realize that it's actually doing 
-> something useful instead of sitting there silently (and if the recipient 
-> knows how large the final result is, he can at least make a guess about 
-> when it migt be done).
+BTW, the reason I initially did this one and git-pull with
+git-var was there was no way to extract values from the config
+file easily from the command line back then. git-repo-config was
+initially called git-config-set and was about setting values.
 
-Btw, we should print out the other "stages" too - the checkout in 
-particular can be a big part of the overhead, and it would probably make 
-sense to tell people about the fact that "hey, now we're checking the 
-result out, we're not actually trying to destroy your disk".
+IMHO the configuration mechanism, and git-var in particular, is
+quite broken, and nobody bothered to fix it.
 
-Quite often, the way to make users happy is not by being impossibly fast 
-or beautiful or otherwise wonderful, but by just _managing_ their 
-expectations, so that they don't say "that's some slow crud", but instead 
-say "Ok, it's a nice program, and it's doing a lot of hard work for me".
+ (1) git-var -l can show all defined variables in the config
+     file, but you cannot ask about specific variable it does
+     not know about.  You have to use git-repo-config for that:
 
-It takes me 15 minutes to clone a kernel repo over the network. Once I can 
-see that most of that is getting a 106MB pack-file at 146 kB/s, I say "ok, 
-that's fairly reasonable".
+	$ git var -l | head -n 4
+        core.filemode=true
+        core.gitproxy=none for kernel.org
+        pull.twohead=resolve
+        pull.octopus=octopus
+	$ git var core.filemode ;# it does not know
+        usage: git-var [-l | <variable>]
+	$ git repo-config core.filemode
+	true
 
-			Linus
+ (2) git-repo-config does not have a way to list all the
+     configuration items like "git-var -l".
+
+ (3) neither of these commands know list of all the possible
+     configuration items, nor types of them, so core.filename
+     can be spelled as "1" or "true" to mean the same thing to
+     our C code, but repo-config faithfully returns how the
+     value is literally spelled in the configuration file.  The
+     following two means the same thing to the C layer, so the
+     calling script needs to further interpret the output from
+     git-repo-config:
+
+	$ git repo-config core.filemode ;# [core] filemode=1
+	1
+	$ git repo-config core.filemode ;# [core] filemode=true
+	true
+
+ (4) worse, boolean 'true' can be specified by just having the
+     configuration item in the file, but repo-config dumps core
+     on that:
+
+	$ git repo-config core.filemode ;# [core] filemode
+        segmentation fault
+
+Above problems are not the only problems with git-var and
+git-repo-config, but these are not entirely these programs'
+faults.  They come from the way the configuration file mechanism
+works.  To allow different classes of configuration items to be
+defined by commands that know about them, there is no central
+registry of all the supported configuration items in the code.
+For example, "diff.*" configuration items can be interpreted only
+by C level programs that call git_config(git_diff_config).
+
+With the current structure, it is very hard for these commands
+to sensibly list all the configuration values (e.g. lack of
+"[core] filemode" in the configuration file ought to mean that
+the executable bit is unreliable i.e. core.filemode=false, but
+they cannot report it), or report the values taking into account
+their types.  I do not think they even attempt to do so.
