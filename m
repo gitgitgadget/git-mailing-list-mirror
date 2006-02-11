@@ -1,76 +1,78 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Make "git clone" less of a deathly quiet experience
-Date: Sat, 11 Feb 2006 14:05:30 +0100
-Message-ID: <20060211130530.GR31278@pasky.or.cz>
-References: <Pine.LNX.4.64.0602102018250.3691@g5.osdl.org> <7vwtg2o37c.fsf@assigned-by-dhcp.cox.net> <5C03F8F8-656F-48B0-825C-DE55C837F996@codefountain.com> <43EDA3D0.7090204@gorzow.mm.pl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Craig Schlenter <craig@codefountain.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 11 14:05:13 2006
+From: Andrey Borzenkov <arvidjaar@newmail.ru>
+Subject: stg branch switch causes unnecessary recompilation
+Date: Sat, 11 Feb 2006 16:07:27 +0300
+Message-ID: <200602111607.27631.arvidjaar@newmail.ru>
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Feb 11 14:07:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7uR6-0004OC-OK
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 14:05:13 +0100
+	id 1F7uTd-000512-Qe
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 14:07:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751418AbWBKNFH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Feb 2006 08:05:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751419AbWBKNFH
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 08:05:07 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:3506 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751418AbWBKNFF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2006 08:05:05 -0500
-Received: (qmail 27532 invoked by uid 2001); 11 Feb 2006 14:05:30 +0100
-To: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
+	id S1751421AbWBKNHr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Feb 2006 08:07:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbWBKNHr
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 08:07:47 -0500
+Received: from flock1.newmail.ru ([80.68.241.157]:56467 "HELO
+	flock1.newmail.ru") by vger.kernel.org with SMTP id S1751421AbWBKNHr
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Feb 2006 08:07:47 -0500
+Received: (qmail 11065 invoked from network); 11 Feb 2006 13:07:28 -0000
+Received: from unknown (HELO cooker.local) (arvidjaar@newmail.ru@83.237.13.127)
+  by smtpd.newmail.ru with SMTP; 11 Feb 2006 13:07:28 -0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.1
 Content-Disposition: inline
-In-Reply-To: <43EDA3D0.7090204@gorzow.mm.pl>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15942>
 
-Dear diary, on Sat, Feb 11, 2006 at 09:44:00AM CET, I got a letter
-where Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl> said that...
-> Craig Schlenter wrote:
-> > On 11 Feb 2006, at 7:48 AM, Junio C Hamano wrote:
-> > It would be nice if the "partial pack" or whatever that has been
-> > downloaded at the time of the breakage could be re-used and
-> > things could start "from that point onwards" or the bits that were
-> > already received could be unpacked. Comments?
-> 
-> It even already works on plain http repos with git fetch.
-> (e.g. WineHQ repository)
-> Why git protocol doesn't support it?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Because it works totally different. When downloading from plain HTTP
-repos, you are just downloading files from the remote repository and it
-is easy to pick up wherever you left (and last night, I just added a
-possibility to Cogito to resume an interrupted cg-clone by just cd'ing
-inside and running cg-fetch, as is; it's pretty neat) - you just resume
-downloading of the file you downloaded last, and don't download again
-the files you already have.
+{pts/1}% stg version
+Stacked GIT 0.8.1
+git version 1.1.6
+Python version 2.4.2 (#2, Jan 30 2006, 18:33:58)
+[GCC 4.0.2 (4.0.2-1mdk for Mandriva Linux release 2006.1)]
 
-But the native git protocol works completely differently - you tell the
-server "give me all objects you have between object X and head", the
-object will generate a completely custom pack just for you and send it
-over the network. The next time you fetch, you just ask for a pack
-between object X and head again, but the head can be already totally
-different. What we would have to do is to check for interrupted
-packfiles before fetching, attempt to fix them (cutting out the
-incomplete objects and broken delta chains, if applicable), and then
-tell the remote side to skip those objects; but that may not be easy
-because there can be a lot of "loose fibres". Another way would be to
-just tell the server "if head is still Y, start sending the pack only
-after N bytes". *shudder*
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+Apparently stg branch is implemented as
+
+- - pop all patches
+- - do git checkout branch
+- - push all patches
+
+unfortunately it results in changing timestamp of all patched files causing 
+sometimes long recompilations. What I just had was:
+
+- - I have several local patches for kernel that I keep in separate branches; I 
+also have one branch that I pick patches into and that I keep in sync with 
+upstream.
+
+- - I pulled 2.6.15.4 stable and recompiled. In the process I noticed a trivial 
+error in one file
+
+- - I created new branch, put fix in there, switched to my main branch, picked 
+patch and did make. It resulted in recompilation of *everything* that was 
+touched by *any* patch.
+
+Sometimes it may be quite time consuming. Notice that git checkout does not 
+have this problem - it sets timestamp exactly to the one in index. It would 
+be nice if stg did the same.
+
+regards
+
+- -andrey
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQFD7eGPR6LMutpd94wRAmGEAJ49maPpI6VjGyp8sIOwPBKQNuUeZgCePOoN
+C9bqat7QEA5Pt6bzegW0q2E=
+=0JHo
+-----END PGP SIGNATURE-----
