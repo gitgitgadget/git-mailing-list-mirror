@@ -1,95 +1,88 @@
-From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: Make "git clone" less of a deathly quiet experience
-Date: Sat, 11 Feb 2006 14:15:40 +0100
-Message-ID: <43EDE37C.9050005@gorzow.mm.pl>
-References: <Pine.LNX.4.64.0602102018250.3691@g5.osdl.org> <7vwtg2o37c.fsf@assigned-by-dhcp.cox.net> <5C03F8F8-656F-48B0-825C-DE55C837F996@codefountain.com> <43EDA3D0.7090204@gorzow.mm.pl> <20060211130530.GR31278@pasky.or.cz>
+Date: Sat, 11 Feb 2006 14:33:40 +0100
+Message-ID: <20060211133340.GS31278@pasky.or.cz>
+References: <Pine.LNX.4.64.0602102018250.3691@g5.osdl.org> <7vwtg2o37c.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigA811B6D3E50C2AEFCB87FF53"
-Cc: Craig Schlenter <craig@codefountain.com>,
-	Junio C Hamano <junkio@cox.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 11 14:16:00 2006
+X-From: git-owner@vger.kernel.org Sat Feb 11 14:34:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F7ubU-0006ga-57
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 14:15:56 +0100
+	id 1F7uso-0001jV-7E
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 14:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751412AbWBKNPs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Feb 2006 08:15:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbWBKNPs
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 08:15:48 -0500
-Received: from goliat1.kalisz.mm.pl ([81.15.136.226]:53147 "EHLO kalisz.mm.pl")
-	by vger.kernel.org with ESMTP id S1751412AbWBKNPr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2006 08:15:47 -0500
-Received: (qmail 11039 invoked from network); 11 Feb 2006 13:15:44 -0000
-Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.201.167])
-          (envelope-sender <astralstorm@gorzow.mm.pl>)
-          by 0 (qmail-ldap-1.03) with SMTP
-          for <craig@codefountain.com>; 11 Feb 2006 13:15:44 -0000
-Received: from [192.168.0.1] (zen.uplink [192.168.0.1])
-	by zen.uplink (Postfix) with ESMTP id 476CC178FD5;
-	Sat, 11 Feb 2006 14:15:44 +0100 (CET)
-User-Agent: Thunderbird 1.4.1 (X11/20051010)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060211130530.GR31278@pasky.or.cz>
-X-Enigmail-Version: 0.93.0.0
+	id S1751425AbWBKNdL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Feb 2006 08:33:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751423AbWBKNdL
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 08:33:11 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:19596 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751425AbWBKNdJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2006 08:33:09 -0500
+Received: (qmail 30127 invoked by uid 2001); 11 Feb 2006 14:33:40 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vwtg2o37c.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15944>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigA811B6D3E50C2AEFCB87FF53
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+BTW, some historical (from the very channel beginning) logs of #git for
+fun, profit and late night reading are available at
+http://pasky.or.cz/~pasky/cp/%23git/, e.g. the 2006-02-10 early morning
+features the King Penguin explaining the deepness and intricacies of
+pack files construction! Don't miss the opportunity!
 
-Petr Baudis wrote:
-> But the native git protocol works completely differently - you tell the=
-
-> server "give me all objects you have between object X and head", the
-> object will generate a completely custom pack just for you and send it
-> over the network. The next time you fetch, you just ask for a pack
-> between object X and head again, but the head can be already totally
-> different. What we would have to do is to check for interrupted
-> packfiles before fetching, attempt to fix them (cutting out the
-> incomplete objects and broken delta chains, if applicable), and then
-> tell the remote side to skip those objects; but that may not be easy
-> because there can be a lot of "loose fibres". Another way would be to
-> just tell the server "if head is still Y, start sending the pack only
-> after N bytes". *shudder*
->=20
-
-The other way would be:
- - generate pack file between X and Y
- - start sending from N bytes
-
-It could break if the repo has been rebased in the meantime.
-But we could safeguard against it by sending the hash of the packfile
-up to N bytes.
-
---=20
-GPG Key id:  0xD1F10BA2
-Fingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
-
-AstralStorm
+New files won't be world-readable by default, but I hope to get some
+irclogger with cutesy web interface set up for #git.
 
 
---------------enigA811B6D3E50C2AEFCB87FF53
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Dear diary, on Sat, Feb 11, 2006 at 06:48:55AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > Anyway, _something_ like this is definitely needed. It could certainly be 
+> > better (if it showed the same kind of thing that git-unpack-objects did, 
+> > that would be much nicer, but would require parsing the object stream as 
+> > it comes in). But this is  big step forward, I think.
+> >
+> > Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+> > ---
+> >
+> > Comments? Hate-mail? Improvements?
+> 
+> It probably should default to quiet if (!isatty(1)).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+isatty(2) or something, 1 is in practice always a ref generator. Perhaps
+it would be better not to clutter stderr, though; what about directly
+opening /dev/tty? Does Cygwin support that?
 
-iD8DBQFD7eOAlUMEU9HxC6IRAk6BAJ9DuN7EyZVmeb2PZrveGIaKZRy/vwCfVyeT
-j5A55LEWMN0x95UflQDDp6g=
-=9nDJ
------END PGP SIGNATURE-----
+> The real improvement, independent of this client-side patch,
+> would be to reuse recently generated packs, but that needs
+> writable cache directory on the server side.  Another thing that
+> I stumbled upon last time I tried it was that it did not look
+> totally trivial to modify the csum-file interface so that I can
+> splice the output from it into two different destinations (one
+> to cachefile, the other to the consumer).
 
---------------enigA811B6D3E50C2AEFCB87FF53--
+Yes, I said that on IRC yesterday as well. I don't think even a cache is
+needed; just look at the repository and say:
+
+	* while there are packs containing only objects we are going to
+	  send, pick the largest one and send it as-is.
+	* if there is a pack with more than a 75% (totally arbitrary)
+	  overlap with the objects we are going to send, send it as-is.
+	* pack the loose objects.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
