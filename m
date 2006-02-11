@@ -1,63 +1,83 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Keith Packard <keithp@keithp.com>
 Subject: Re: Make "git clone" less of a deathly quiet experience
-Date: Sat, 11 Feb 2006 11:04:35 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602111100270.3691@g5.osdl.org>
+Date: Sat, 11 Feb 2006 11:10:29 -0800
+Message-ID: <1139685031.4183.31.camel@evo.keithp.com>
 References: <Pine.LNX.4.64.0602102018250.3691@g5.osdl.org>
- <20060211183959.GA9984@steel.home>
+	 <7vwtg2o37c.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0602110943170.3691@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Feb 11 20:05:07 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-RjT1XOfeM6XyBQDVQbRT"
+Cc: keithp@keithp.com, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sat Feb 11 20:10:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F803O-0005jJ-MN
-	for gcvg-git@gmane.org; Sat, 11 Feb 2006 20:05:07 +0100
+	id 1F808z-00073r-NE
+	for gcvg-git@gmane.org; Sat, 11 Feb 2006 20:10:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964773AbWBKTEq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Feb 2006 14:04:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964776AbWBKTEq
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 14:04:46 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:51178 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964773AbWBKTEq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2006 14:04:46 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1BJ4aDZ014568
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 11 Feb 2006 11:04:36 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1BJ4ZXQ009600;
-	Sat, 11 Feb 2006 11:04:35 -0800
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <20060211183959.GA9984@steel.home>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964776AbWBKTKu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Feb 2006 14:10:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964777AbWBKTKu
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 14:10:50 -0500
+Received: from home.keithp.com ([63.227.221.253]:8202 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S964776AbWBKTKu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2006 14:10:50 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 38B4B130023;
+	Sat, 11 Feb 2006 11:10:49 -0800 (PST)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 07325-03; Sat, 11 Feb 2006 11:10:48 -0800 (PST)
+Received: by keithp.com (Postfix, from userid 1033)
+	id 9E60113001F; Sat, 11 Feb 2006 11:10:48 -0800 (PST)
+Received: from evo.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 8C2E114001;
+	Sat, 11 Feb 2006 11:10:48 -0800 (PST)
+Received: from keithp by evo.keithp.com with local (Exim 4.60)
+	(envelope-from <keithp@keithp.com>)
+	id 1F808f-0004ZR-CF; Sat, 11 Feb 2006 11:10:33 -0800
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602110943170.3691@g5.osdl.org>
+X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15959>
 
 
+--=-RjT1XOfeM6XyBQDVQbRT
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 11 Feb 2006, Alex Riesen wrote:
-> 
-> I'd put a \n before finish_pack to make it nicer.
+On Sat, 2006-02-11 at 09:45 -0800, Linus Torvalds wrote:
 
-Yes.
+> More importantly, it really wouldn't have helped that much in this=20
+> situation. At least for me, the network is 90% of the problem, the=20
+> pack-file generation is at most 10%. So cached packfiles really only=20
+> matter for server-side problems (high CPU load, or lack of memory, or=20
+> heavy disk activity).
 
-Duh. I did all my testing with "time git clone ..", so I had the extra \n 
-added by the fact that "time" itself will do it.
+I'd like to see git use less CPU than CVS does on my distribution host;
+some mechanism for re-using either existing or cached packs would help a
+whole lot with that. The alternative is to see people switch to rsync
+instead, which seems like a far worse idea.  =20
 
-Side comment: the pack preparation stage seems to take about 90s for the 
-kernel. Of course, that will keep growing with history, but so will 
-probably the pack-size, so percentage-wise, the 90% / 10% thing is likely 
-to hold for DSL (yes, DSL gets faster too, but so do CPU ;).
+--=20
+keith.packard@intel.com
 
-That 90s is unquestionably irritating, though, so we do want to either 
-cache them, or add similar "I'm working on it" output to that phase too.
+--=-RjT1XOfeM6XyBQDVQbRT
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-		Linus
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQBD7jalQp8BWwlsTdMRAmNsAKDmFrUxKX/HD7Hjz+60z2bjU/i8BwCg0KFP
+KSWHMC1lyTeufP9XfUMQCDc=
+=OZYk
+-----END PGP SIGNATURE-----
+
+--=-RjT1XOfeM6XyBQDVQbRT--
