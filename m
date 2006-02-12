@@ -1,60 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Configuration file musings
-Date: Sun, 12 Feb 2006 10:56:52 -0800
-Message-ID: <7v4q34be2z.fsf@assigned-by-dhcp.cox.net>
-References: <slrnduuf08.518.mdw@metalzone.distorted.org.uk>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Fix object re-hashing
+Date: Sun, 12 Feb 2006 11:10:11 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602121101040.3691@g5.osdl.org>
+References: <Pine.LNX.4.64.0602120956130.3691@g5.osdl.org>
+ <Pine.LNX.4.64.0602121006360.3691@g5.osdl.org> <7vaccwbf6v.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0602121037460.3691@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 12 19:56:59 2006
+X-From: git-owner@vger.kernel.org Sun Feb 12 20:10:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8MP4-0002G6-5Z
-	for gcvg-git@gmane.org; Sun, 12 Feb 2006 19:56:59 +0100
+	id 1F8Mc6-0005c6-4h
+	for gcvg-git@gmane.org; Sun, 12 Feb 2006 20:10:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751205AbWBLS4z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Feb 2006 13:56:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750865AbWBLS4z
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 13:56:55 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:12206 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750831AbWBLS4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Feb 2006 13:56:54 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060212185525.UCTX6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 12 Feb 2006 13:55:25 -0500
-To: Mark Wooding <mdw@distorted.org.uk>
-In-Reply-To: <slrnduuf08.518.mdw@metalzone.distorted.org.uk> (Mark Wooding's
-	message of "Sun, 12 Feb 2006 13:45:44 +0000 (UTC)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751415AbWBLTKQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Feb 2006 14:10:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751412AbWBLTKQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 14:10:16 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:645 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751415AbWBLTKP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2006 14:10:15 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1CJABDZ017729
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 12 Feb 2006 11:10:11 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1CJABQp016264;
+	Sun, 12 Feb 2006 11:10:11 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.64.0602121037460.3691@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16012>
 
-Mark Wooding <mdw@distorted.org.uk> writes:
 
-> Having thought about things a bit, I've reached the conclusion that the
-> configuration file $GIT_DIR/config is trying to hold (at least) three
-> entirely different kinds of configuration.
 
-Yes.  I've been somewhat bothered by that, but I did not ramble
-on it too much because I could not say what exactly is _wrong_
-to have these things in the same file.
+On Sun, 12 Feb 2006, Linus Torvalds wrote:
+> 
+>  - the "overflow of the overflow": when the linear probing itself 
+>    overflows the size of the hash queue, it will "change direction" by 
+>    overflowing back to index zero.
+> 
+>    Happily, the re-hashing does not need to care about this case, because 
+>    the new hash is bigger: the rule we have when doing the re-hashing is 
+>    that as we re-hash, the "i" entries we have already re-hashed are all 
+>    valid in the new hash, so even if overflow occurs, it will occur the 
+>    right way (and if it overflows all the way past the current "i", we'll 
+>    re-hash the already re-hashed entry anyway).
 
-Except perhaps that pure user configuration could be further
-split out from per-repository user configuration to .gitconfig
-under $HOME or something like that.  The former is things like
-"I am Junio C Hamano no matter which project I work on" the
-latter is for example "The e-mail address I use for this project
-is <junkio@cox>".  But once we start dealing with more than one
-configuration file, you need one file taking precedence over the
-other and it appeared there is no single _right_ order.  The
-above identity case is an example that it is better to make the
-config in repository to override $HOME one, but if you think
-long enough I am sure you can come up with an example that you
-would want to override repository one from $HOME one.
+Btw, this is only always true if the new hash is at least twice the size 
+of the old hash, I think. Otherwise a re-hash can fill up the new entries 
+and overflow entirely before we've actually even re-hashed all the old 
+entries, and then we'd need to re-hash even the overflowed entries (which 
+are now below "i").
+
+If the new size is at least twice the old size, the "upper area" cannot 
+overflow completely (there has to be empty room), and we cannot be in the 
+situation that we need to move even the overflowed entries when we remove 
+an old hash entry.
+
+Anyway, if all this makes you nervous, the conceptually much simpler way 
+to do the re-sizing is to not do the in-place re-hashing. Instead of doing 
+the xrealloc(), just do a "xmalloc()" of the new area, do the re-hashing 
+(which now _must_ re-hash in just the "0..oldcount-1" old area) into the 
+new area, and then free the old area after rehashing.
+
+That would make things more obviously correct, and perhaps simpler.
+
+Johannes, do you want to try that?
+
+Btw, as it currently stands, I worry a tiny tiny bit about the
+
+	obj_allocs = (obj_allocs < 32 ? 32 : 2 * obj_allocs)
+
+thing, because I think that second "32" needs to be a "64" to be really 
+safe (ie guarantee that the new obj_allocs value is always at least twice 
+the old one).
+
+Anyway, I'm pretty sure people smarter than me have already codified 
+exactly what needs to be done for a in-place rehash of a linear probe hash 
+overflow algorithm. This must all be in some "hashing 101" book. I had to 
+think it through from first principles rather than "knowing" what the 
+right answer was (which probably means that I slept through some 
+fundamental algorithms class in University ;)
+
+		Linus
