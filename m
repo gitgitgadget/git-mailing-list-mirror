@@ -1,214 +1,195 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Use a hashtable for objects instead of a sorted list
-Date: Sun, 12 Feb 2006 02:57:57 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602120254260.10235@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <87slqpg11q.fsf@wine.dyndns.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] fetch-clone progress: finishing touches.
+Date: Sat, 11 Feb 2006 17:58:21 -0800
+Message-ID: <7vslqpjq2q.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0602111041430.3691@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 12 02:58:16 2006
+X-From: git-owner@vger.kernel.org Sun Feb 12 02:58:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F86VA-0001bF-Es
-	for gcvg-git@gmane.org; Sun, 12 Feb 2006 02:58:12 +0100
+	id 1F86VW-0001hR-FJ
+	for gcvg-git@gmane.org; Sun, 12 Feb 2006 02:58:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932117AbWBLB57 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Feb 2006 20:57:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932127AbWBLB57
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 20:57:59 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:27045 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932117AbWBLB56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Feb 2006 20:57:58 -0500
-Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 9FDB5146543; Sun, 12 Feb 2006 02:57:57 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 91948A07;
-	Sun, 12 Feb 2006 02:57:57 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 37E3E146543; Sun, 12 Feb 2006 02:57:57 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Alexandre Julliard <julliard@winehq.org>
-In-Reply-To: <87slqpg11q.fsf@wine.dyndns.org>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932127AbWBLB6Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Feb 2006 20:58:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932180AbWBLB6Z
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 20:58:25 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:56473 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932127AbWBLB6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Feb 2006 20:58:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060212015716.UXKS3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 11 Feb 2006 20:57:16 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602111041430.3691@g5.osdl.org> (Linus Torvalds's
+	message of "Sat, 11 Feb 2006 10:43:56 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15969>
 
+This makes fetch-pack also report the progress of packing part.
 
-In a simple test, this brings down the CPU time from 47 sec to 22 sec.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
-	On Sat, 11 Feb 2006, Alexandre Julliard wrote:
+ * While we are doing eye-candy, this makes the silence after
+   "Generating pack..." part a bit more bearable.
 
-	> When building a large list of objects, most of the time is spent in
-	> created_object() inserting the objects in the sorted list. This patch
-	> splits the list in 256 sublists to reduce the impact of the O(n^2)
-	> list insertion.
+   Likes, dislikes, too-much's?
 
-	Your patch brought down the CPU time to 27 sec in my test.
+   BTW, don't you mean 512 down there???
 
- fsck-objects.c |    5 +++-
- name-rev.c     |    7 +++---
- object.c       |   67 +++++++++++++++++++++++++++++++++-----------------------
- object.h       |    2 +-
- 4 files changed, 48 insertions(+), 33 deletions(-)
+        -	msecs += (int)(tv.tv_usec - prev_tv.tv_usec) >> 10;
+        +	msecs += usec_to_binarymsec(tv.tv_usec - prev_tv.tv_usec);
+        +
+                if (msecs > 500) {
+                        prev_tv = tv;
 
-diff --git a/fsck-objects.c b/fsck-objects.c
-index 9950be2..6439d55 100644
---- a/fsck-objects.c
-+++ b/fsck-objects.c
-@@ -61,9 +61,12 @@ static void check_connectivity(void)
- 	int i;
+ clone-pack.c   |    4 ++--
+ pack-objects.c |   43 +++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 43 insertions(+), 4 deletions(-)
+
+21fcd1bdea2440236aea1713ea42a66bc2da5563
+diff --git a/clone-pack.c b/clone-pack.c
+index 719e1c4..a4370f5 100644
+--- a/clone-pack.c
++++ b/clone-pack.c
+@@ -125,9 +125,9 @@ static int clone_pack(int fd[2], int nr_
+ 	}
+ 	clone_handshake(fd, refs);
  
- 	/* Look up all the requirements, warn about missing objects.. */
--	for (i = 0; i < nr_objs; i++) {
-+	for (i = 0; i < obj_allocs; i++) {
- 		struct object *obj = objs[i];
+-	if (!quiet)
+-		fprintf(stderr, "Generating pack ...\r");
+ 	status = receive_keep_pack(fd, "git-clone-pack", quiet);
++	if (!quiet)
++		fprintf(stderr, "\n");
  
-+		if (!obj)
-+			continue;
-+
- 		if (!obj->parsed) {
- 			if (!standalone && has_sha1_file(obj->sha1))
- 				; /* it is in pack */
-diff --git a/name-rev.c b/name-rev.c
-index bdaa59b..08faa54 100644
---- a/name-rev.c
-+++ b/name-rev.c
-@@ -303,9 +303,10 @@ int main(int argc, char **argv)
- 	} else if (all) {
- 		int i;
+ 	if (!status) {
+ 		if (nr_match == 0)
+diff --git a/pack-objects.c b/pack-objects.c
+index c3f2531..2135e9a 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -3,6 +3,7 @@
+ #include "delta.h"
+ #include "pack.h"
+ #include "csum-file.h"
++#include <sys/time.h>
  
--		for (i = 0; i < nr_objs; i++)
--			printf("%s %s\n", sha1_to_hex(objs[i]->sha1),
--					get_rev_name(objs[i]));
-+		for (i = 0; i < obj_allocs; i++)
-+			if (objs[i])
-+				printf("%s %s\n", sha1_to_hex(objs[i]->sha1),
-+						get_rev_name(objs[i]));
- 	} else
- 		for ( ; revs; revs = revs->next)
- 			printf("%s %s\n", revs->name, get_rev_name(revs->item));
-diff --git a/object.c b/object.c
-index 1577f74..3259862 100644
---- a/object.c
-+++ b/object.c
-@@ -6,30 +6,32 @@
- #include "tag.h"
+ static const char pack_usage[] = "git-pack-objects [--non-empty] [--local] [--incremental] [--window=N] [--depth=N] {--stdout | base-name} < object-list";
  
- struct object **objs;
--int nr_objs;
--static int obj_allocs;
-+static int nr_objs;
-+int obj_allocs;
+@@ -26,6 +27,7 @@ static struct object_entry *objects = NU
+ static int nr_objects = 0, nr_alloc = 0;
+ static const char *base_name;
+ static unsigned char pack_file_sha1[20];
++static int progress = 0;
  
- int track_object_refs = 1;
- 
-+static int hashtable_index(const unsigned char *sha1)
-+{
-+	unsigned int i = *(unsigned int *)sha1;
-+	return (int)(i % obj_allocs);
-+}
-+
- static int find_object(const unsigned char *sha1)
+ static void *delta_against(void *buf, unsigned long size, struct object_entry *entry)
  {
--	int first = 0, last = nr_objs;
-+	int i = hashtable_index(sha1);
-+
-+	if (!objs)
-+		return -1;
+@@ -362,10 +364,13 @@ static void find_deltas(struct object_en
+ 	int i, idx;
+ 	unsigned int array_size = window * sizeof(struct unpacked);
+ 	struct unpacked *array = xmalloc(array_size);
++	int eye_candy;
  
--        while (first < last) {
--                int next = (first + last) / 2;
--                struct object *obj = objs[next];
--                int cmp;
+ 	memset(array, 0, array_size);
+ 	i = nr_objects;
+ 	idx = 0;
++	eye_candy = i - (nr_objects / 20);
++
+ 	while (--i >= 0) {
+ 		struct object_entry *entry = list[i];
+ 		struct unpacked *n = array + idx;
+@@ -373,6 +378,10 @@ static void find_deltas(struct object_en
+ 		char type[10];
+ 		int j;
+ 
++		if (progress && i <= eye_candy) {
++			eye_candy -= nr_objects / 20;
++			fputc('.', stderr);
++		}
+ 		free(n->data);
+ 		n->entry = entry;
+ 		n->data = read_sha1_file(entry->sha1, type, &size);
+@@ -404,11 +413,13 @@ static void prepare_pack(int window, int
+ {
+ 	get_object_details();
+ 
+-	fprintf(stderr, "Packing %d objects\n", nr_objects);
 -
--                cmp = memcmp(sha1, obj->sha1, 20);
--                if (!cmp)
--                        return next;
--                if (cmp < 0) {
--                        last = next;
--                        continue;
--                }
--                first = next+1;
--        }
--        return -first-1;
-+	while (objs[i]) {
-+		if (memcmp(sha1, objs[i]->sha1, 20) == 0)
-+			return i;
-+		i++;
-+		if (i == obj_allocs)
-+			i = 0;
-+	}
-+	return -1 - i;
++	if (progress)
++		fprintf(stderr, "Packing %d objects", nr_objects);
+ 	sorted_by_type = create_sorted_list(type_size_sort);
+ 	if (window && depth)
+ 		find_deltas(sorted_by_type, window+1, depth);
++	if (progress)
++		fputc('\n', stderr);
+ 	write_pack_file();
  }
  
- struct object *lookup_object(const unsigned char *sha1)
-@@ -42,7 +44,7 @@ struct object *lookup_object(const unsig
+@@ -472,6 +483,10 @@ int main(int argc, char **argv)
+ 	int window = 10, depth = 10, pack_to_stdout = 0;
+ 	struct object_entry **list;
+ 	int i;
++	struct timeval prev_tv;
++	int eye_candy = 0;
++	int eye_candy_incr = 500;
++
  
- void created_object(const unsigned char *sha1, struct object *obj)
- {
--	int pos = find_object(sha1);
-+	int pos;
+ 	setup_git_directory();
  
- 	obj->parsed = 0;
- 	memcpy(obj->sha1, sha1, 20);
-@@ -50,18 +52,27 @@ void created_object(const unsigned char 
- 	obj->refs = NULL;
- 	obj->used = 0;
+@@ -519,12 +534,34 @@ int main(int argc, char **argv)
+ 	if (pack_to_stdout != !base_name)
+ 		usage(pack_usage);
  
--	if (pos >= 0)
--		die("Inserting %s twice\n", sha1_to_hex(sha1));
--	pos = -pos-1;
--
--	if (obj_allocs == nr_objs) {
--		obj_allocs = alloc_nr(obj_allocs);
-+	if (obj_allocs - 1 <= nr_objs * 2) {
-+		int i, count = obj_allocs;
-+		obj_allocs = (obj_allocs < 32 ? 32 : 2 * obj_allocs);
- 		objs = xrealloc(objs, obj_allocs * sizeof(struct object *));
-+		memset(objs + count, 0, (obj_allocs - count)
-+				* sizeof(struct object *));
-+		for (i = 0; i < count; i++)
-+			if (objs[i]) {
-+				int j = find_object(objs[i]->sha1);
-+				if (j != i) {
-+					j = -1 - j;
-+					objs[j] = objs[i];
-+					objs[i] = NULL;
-+				}
++	progress = isatty(2);
++
+ 	prepare_packed_git();
++	if (progress) {
++		fprintf(stderr, "Generating pack...\n");
++		gettimeofday(&prev_tv, NULL);
++	}
+ 	while (fgets(line, sizeof(line), stdin) != NULL) {
+ 		unsigned int hash;
+ 		char *p;
+ 		unsigned char sha1[20];
+ 
++		if (progress && (eye_candy <= nr_objects)) {
++			fprintf(stderr, "Counting objects...%d\r", nr_objects);
++			if (eye_candy && (50 <= eye_candy_incr)) {
++				struct timeval tv;
++				int time_diff;
++				gettimeofday(&tv, NULL);
++				time_diff = (tv.tv_sec - prev_tv.tv_sec);
++				time_diff <<= 10;
++				time_diff += (tv.tv_usec - prev_tv.tv_usec);
++				if ((1 << 9) < time_diff)
++					eye_candy_incr += 50;
++				else if (50 < eye_candy_incr)
++					eye_candy_incr -= 50;
 +			}
++			eye_candy += eye_candy_incr;
++		}
+ 		if (get_sha1_hex(line, sha1))
+ 			die("expected sha1, got garbage:\n %s", line);
+ 		hash = 0;
+@@ -537,6 +574,8 @@ int main(int argc, char **argv)
+ 		}
+ 		add_object_entry(sha1, hash);
  	}
++	if (progress)
++		fprintf(stderr, "Done counting %d objects.\n", nr_objects);
+ 	if (non_empty && !nr_objects)
+ 		return 0;
  
--	/* Insert it into the right place */
--	memmove(objs + pos + 1, objs + pos, (nr_objs - pos) * 
--		sizeof(struct object *));
-+	pos = find_object(sha1);
-+	if (pos >= 0)
-+		die("Inserting %s twice\n", sha1_to_hex(sha1));
-+	pos = -pos-1;
- 
- 	objs[pos] = obj;
- 	nr_objs++;
-diff --git a/object.h b/object.h
-index 0e76182..e08afbd 100644
---- a/object.h
-+++ b/object.h
-@@ -23,7 +23,7 @@ struct object {
- };
- 
- extern int track_object_refs;
--extern int nr_objs;
-+extern int obj_allocs;
- extern struct object **objs;
- 
- /** Internal only **/
+-- 
+1.1.6.g69c5
