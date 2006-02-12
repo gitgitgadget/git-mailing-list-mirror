@@ -1,65 +1,48 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] fetch-clone progress: finishing touches.
-Date: Sun, 12 Feb 2006 12:37:08 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602121230370.3691@g5.osdl.org>
+Date: Sun, 12 Feb 2006 13:50:04 -0800
+Message-ID: <7vu0b48cxf.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0602111041430.3691@g5.osdl.org>
- <7vslqpjq2q.fsf@assigned-by-dhcp.cox.net>
+	<7vslqpjq2q.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602121230370.3691@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 12 21:37:31 2006
+X-From: git-owner@vger.kernel.org Sun Feb 12 22:50:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8NyG-0000kI-18
-	for gcvg-git@gmane.org; Sun, 12 Feb 2006 21:37:24 +0100
+	id 1F8P6h-0006lH-3h
+	for gcvg-git@gmane.org; Sun, 12 Feb 2006 22:50:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750712AbWBLUhS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Feb 2006 15:37:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750883AbWBLUhS
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 15:37:18 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:57750 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750712AbWBLUhQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2006 15:37:16 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1CKbCDZ021041
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 12 Feb 2006 12:37:13 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1CKb8GH018852;
-	Sun, 12 Feb 2006 12:37:11 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslqpjq2q.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751467AbWBLVuH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Feb 2006 16:50:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751471AbWBLVuH
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 16:50:07 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:1665 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751467AbWBLVuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Feb 2006 16:50:05 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060212214653.DAAZ17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 12 Feb 2006 16:46:53 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602121230370.3691@g5.osdl.org> (Linus Torvalds's
+	message of "Sun, 12 Feb 2006 12:37:08 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16020>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> ssh will only set up a pty pair if it starts an interactive shell, not if 
+> you use the "ssh host cmd" form.
 
-On Sat, 11 Feb 2006, Junio C Hamano wrote:
-> 
->  * While we are doing eye-candy, this makes the silence after
->    "Generating pack..." part a bit more bearable.
-> 
->    Likes, dislikes, too-much's?
-
-Too little, actually.
-
-Your change makes
-
-	git clone ssh://...
-
-be silent again, until the download actually starts. The "isatty(2)" thing 
-in git-pack-objects won't trigger, because it's actually a socket, not a 
-tty ;/
-
-ssh will only set up a pty pair if it starts an interactive shell, not if 
-you use the "ssh host cmd" form.
-
-		Linus
+True.  Or we _could_ use "ssh -t", but I've decided to make
+progress the default.  If some script wants quiet behaviour they
+can say 'pack-objects -q'.
