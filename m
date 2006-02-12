@@ -1,56 +1,67 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Fix object re-hashing
-Date: Sun, 12 Feb 2006 10:18:47 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602121017290.3691@g5.osdl.org>
+Date: Sun, 12 Feb 2006 10:32:56 -0800
+Message-ID: <7vaccwbf6v.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0602120956130.3691@g5.osdl.org>
- <Pine.LNX.4.64.0602121015020.3691@g5.osdl.org>
+	<Pine.LNX.4.64.0602121006360.3691@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun Feb 12 19:19:17 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 12 19:33:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8LoT-0002We-NA
-	for gcvg-git@gmane.org; Sun, 12 Feb 2006 19:19:10 +0100
+	id 1F8M1v-00059R-0v
+	for gcvg-git@gmane.org; Sun, 12 Feb 2006 19:33:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751131AbWBLSSz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Feb 2006 13:18:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750850AbWBLSSy
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 13:18:54 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:36586 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750748AbWBLSSx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2006 13:18:53 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1CIImDZ015696
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 12 Feb 2006 10:18:48 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1CIIlAQ014769;
-	Sun, 12 Feb 2006 10:18:47 -0800
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.64.0602121015020.3691@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750798AbWBLSdA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Feb 2006 13:33:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750809AbWBLSdA
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 13:33:00 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:25548 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1750798AbWBLSc7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Feb 2006 13:32:59 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060212183148.HTY15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 12 Feb 2006 13:31:48 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602121006360.3691@g5.osdl.org> (Linus Torvalds's
+	message of "Sun, 12 Feb 2006 10:10:02 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16008>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> On Sun, 12 Feb 2006, Linus Torvalds wrote:
+>> 
+>> I actually didn't see any of this trigger in real life, so maybe my 
+>> analysis is wrong. Junio? Johannes?
+>
+> Btw, if it does trigger, the behaviour would be that a subsequent object 
+> lookup will fail, because the last old slot would be NULL, and a few 
+> entries following it (likely just a couple - never mind that the event 
+> triggering in the first place is probably fairly rare) wouldn't have 
+> gotten re-hashed down.
+>
+> As a result, we'd allocate a new object, and have _two_ "struct object"s 
+> that describe the same real object. I don't know what would get upset, but 
+> git-fsck-index certainly would be (one of them would likely be marked 
+> unreachable, because lookup wouldn't find it, but you might have other 
+> issues too).
 
-On Sun, 12 Feb 2006, Linus Torvalds wrote:
-> 
-> That's what I get for editing the patch in-place to remove the optimized 
-> version that I felt wasn't worth worrying about due to being subtle. So 
-> instead I sent out a patch that was not-so-subtly obvious crap!
+This "fix" makes the symptom that me fire two (maybe three)
+Grrrrr messages earlier this morning disappear.  I haven't had
+my caffeine nor nicotine yet after my short sleep, so I need to
+take some time understanding your explanation first, but I am
+reasonably sure this must be it (not that I do not trust you,
+not at all -- it is that I do not trust *me* applying a patch
+without understanding when I have a bug reproducible).
 
-Btw: the reason I edited out the optimization is that it doesn't actually 
-matter. Re-hashing the whole thing is a trivial thing, and has basically 
-zero overhead in my testing. The costs are all elsewhere now.
-
-		Linus
+Thanks.
