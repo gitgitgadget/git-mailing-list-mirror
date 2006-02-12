@@ -1,85 +1,62 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] avoid echo -e, there are systems where it does not work
-Date: Sun, 12 Feb 2006 19:05:34 +0100
-Message-ID: <20060212180534.GB3322@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Fix object re-hashing
+Date: Sun, 12 Feb 2006 10:10:02 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602121006360.3691@g5.osdl.org>
+References: <Pine.LNX.4.64.0602120956130.3691@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 12 19:05:57 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sun Feb 12 19:10:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8LbT-0008P7-S8
-	for gcvg-git@gmane.org; Sun, 12 Feb 2006 19:05:44 +0100
+	id 1F8Lfp-0000je-RX
+	for gcvg-git@gmane.org; Sun, 12 Feb 2006 19:10:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750806AbWBLSFl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Feb 2006 13:05:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750826AbWBLSFl
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 13:05:41 -0500
-Received: from devrace.com ([198.63.210.113]:25093 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1750806AbWBLSFk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2006 13:05:40 -0500
-Received: from tigra.home (p54A06C50.dip.t-dialin.net [84.160.108.80])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k1CI5ZwA067824;
-	Sun, 12 Feb 2006 12:05:36 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1F8LbL-0005g2-00; Sun, 12 Feb 2006 19:05:35 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1F8LbL-0000rs-03; Sun, 12 Feb 2006 19:05:35 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S1751094AbWBLSKK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Feb 2006 13:10:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751100AbWBLSKK
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 13:10:10 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:10729 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751094AbWBLSKJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2006 13:10:09 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1CIA3DZ015372
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 12 Feb 2006 10:10:04 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1CIA21j014483;
+	Sun, 12 Feb 2006 10:10:03 -0800
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.64.0602120956130.3691@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16005>
 
-FreeBSD 4.11 being one example: the built-in echo doesn't have -e,
-and the installed /bin/echo does not do "-e" as well.
-"printf" works, laking just "\e" and "\xAB'.
 
----
 
- git-tag.sh                         |    3 ++-
- t/t3001-ls-files-others-exclude.sh |    2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+On Sun, 12 Feb 2006, Linus Torvalds wrote:
+> 
+> I actually didn't see any of this trigger in real life, so maybe my 
+> analysis is wrong. Junio? Johannes?
 
-b155e96dcb988b2533e8546666d0f045a36f594d
-diff --git a/git-tag.sh b/git-tag.sh
-index 6d0c973..c74e1b4 100755
---- a/git-tag.sh
-+++ b/git-tag.sh
-@@ -85,7 +85,8 @@ if [ "$annotate" ]; then
- 	exit 1
-     }
- 
--    ( echo -e "object $object\ntype $type\ntag $name\ntagger $tagger\n";
-+    ( printf 'object %s\ntype %s\ntag %s\ntagger %s\n\n' \
-+	"$object" "$type" "$name" "$tagger";
-       cat "$GIT_DIR"/TAG_FINALMSG ) >"$GIT_DIR"/TAG_TMP
-     rm -f "$GIT_DIR"/TAG_TMP.asc "$GIT_DIR"/TAG_FINALMSG
-     if [ "$signed" ]; then
-diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
-index fde2bb2..6979b7c 100755
---- a/t/t3001-ls-files-others-exclude.sh
-+++ b/t/t3001-ls-files-others-exclude.sh
-@@ -68,7 +68,7 @@ test_expect_success \
-      diff -u expect output'
- 
- # Test \r\n (MSDOS-like systems)
--echo -ne '*.1\r\n/*.3\r\n!*.6\r\n' >.gitignore
-+printf '*.1\r\n/*.3\r\n!*.6\r\n' >.gitignore
- 
- test_expect_success \
-     'git-ls-files --others with \r\n line endings.' \
--- 
-1.1.6.gd46b
+Btw, if it does trigger, the behaviour would be that a subsequent object 
+lookup will fail, because the last old slot would be NULL, and a few 
+entries following it (likely just a couple - never mind that the event 
+triggering in the first place is probably fairly rare) wouldn't have 
+gotten re-hashed down.
+
+As a result, we'd allocate a new object, and have _two_ "struct object"s 
+that describe the same real object. I don't know what would get upset, but 
+git-fsck-index certainly would be (one of them would likely be marked 
+unreachable, because lookup wouldn't find it, but you might have other 
+issues too).
+
+			Linus
