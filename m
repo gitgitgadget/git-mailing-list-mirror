@@ -1,66 +1,114 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 22:58:09 +0100
-Message-ID: <200611302258.09523.jnareb@gmail.com>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net> <f2b55d220611301341n45c45506rca312dfa8ee6f795@mail.gmail.com> <8764cwtxhm.wl%cworth@cworth.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [ANNOUNCE] Cogito-0.17rc1
+Date: Sun, 12 Feb 2006 18:11:54 +0100
+Message-ID: <20060212171154.GW31278@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 30 Nov 2006 21:56:40 +0000 (UTC)
-Cc: "Michael K. Edwards" <medwards.linux@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 12 Feb 2006 17:11:29 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=EeuscPAKfcNmimvqPPibvwiD1pNS4yA+iXHU7u1zrGfgzQC34t3vd+eWfDGoblUEIhjUyKfcAJgODHVN72gLOlVoriBfhk5ilqaq8NZQ5BuEqY+s6Alblo73MNzIMaJc4G/5brOIPfXZfcea3f9wYq2PiSeTizzO384xGyGYBDE=
-User-Agent: KMail/1.9.3
-In-Reply-To: <8764cwtxhm.wl%cworth@cworth.org>
 Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16000>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpttG-0006S5-Sw for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 22:56:23 +0100
+ esmtp (Exim 4.43) id 1F8Kkr-0006dh-Ot for gcvg-git@gmane.org; Sun, 12 Feb
+ 2006 18:11:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967940AbWK3V4U convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006 16:56:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967942AbWK3V4U
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 16:56:20 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:12706 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S967940AbWK3V4T
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 16:56:19 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2250818uga for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 13:56:18 -0800 (PST)
-Received: by 10.66.239.18 with SMTP id m18mr6051718ugh.1164923777482; Thu, 30
- Nov 2006 13:56:17 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id e1sm24433679ugf.2006.11.30.13.56.17; Thu, 30 Nov
- 2006 13:56:17 -0800 (PST)
-To: Carl Worth <cworth@cworth.org>
+ S1750783AbWBLRLS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Feb 2006
+ 12:11:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbWBLRLS
+ (ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 12:11:18 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:56284 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1750783AbWBLRLS (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 12 Feb 2006 12:11:18 -0500
+Received: (qmail 13032 invoked by uid 2001); 12 Feb 2006 18:11:54 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Dnia czwartek 30. listopada 2006 22:50, Carl Worth napisa=B3:
-> On Thu, 30 Nov 2006 13:41:37 -0800, "Michael K. Edwards" wrote:
->>
->> git mark
->=20
-> I actually thought of that. But compared to "refresh" it sounds more
-> like something that suggests marking a file path rather than copying
-> contents, so our dark lord might not approve of the wrong ideas it
-> might allow to persist in brain-damaged heads.
->=20
-> It is nice and short, which is a bonus though.
+  Hello,
 
-What about "git update"? "git add" would also work, I think.
---=20
-Jakub Narebski
+  I'm announcing the release of Cogito version 0.17rc1, the human-friendly
+version control UI for Linus' GIT tool. Share and enjoy at:
+
+	http://www.kernel.org/pub/software/scm/cogito/
+
+  This isn't as heavy on bugfixes as 0.16rc1 was, since most of the
+bugfixes already went to 0.16 minor releases. This worked out pretty
+well and 0.16.4 is really quite stable; so I will do the same thing for
+0.17 as well.
+
+  Still, there is a huge amount of new features and cool stuff. The
+highlight is cg-switch for switching between local branches and massive
+cg-patch improvements, but there is plenty of other stuff as well. Read
+on for more details.
+
+  Note that there is a lot of new stuff inside and some of it went in
+quite lately so it didn't have a lot of time to get tested by the
+bleeding edge users. Therefore take care, bugs might be lurking around.
+
+  The notable new stuff includes:
+
+  * cg-switch - Cogito finally gives you the full convenience of
+    multiple local branches in a single repository ;)
+  * cg-patch -c, -C, -d - Cogito now supports cherrypicking, easy commit
+    reverts and automatic committing of applied patches
+  * Resumable cg-clone - if cg-clone fails in the middle of the initial
+    fetch, the directory is not deleted and you do not have to start all
+    over again - just cd inside and run cg-fetch and it will DTRT
+
+  * Support for tracking rebasing branches; as long as you use cg-update
+    (NOT cg-fetch + cg-merge) and won't commit local changes, Cogito
+    will correctly update the branch even if it got rebased in the
+    meanwhile
+  * Quoting fixes - this means that Cogito should be now theoretically
+    100% resilient to whitespaces and metacharacters in filenames etc.
+    Note that filenames containing newlines still aren't supported and
+    aren't likely to ever be. You are a loonie. Go away.
+  * Radically improved cg-fetch progressbar; it still doesn't quite work
+    with rsync (use cg-fetch -v -v), but I don't think that can be
+    helped. The main advantage is that it will show HTTP fetch progress
+    even when fetching large files (especially packs).
+
+  * Significant merges speedup (but still quite some potential for
+    improvement)
+  * cg-* --help now by default shows only short help; use --long-help
+    to see the full manual
+  * cg-commit --signoff
+  * cg-commit --review to review and even modify the patch you are
+    committing
+  * bash commandline autocompletion files in contrib/
+  * cg-fetch -v, cg-fetch -v -v, cg-merge -v, cg-update -v
+  * cg-push -r to push a different branch (or even a specific commit)
+    instead of your current branch
+  * cg-rm -r for recursive directories removal
+  * cg-mv trivial wrapper for git-mv
+  * cg-push over HTTP
+  * cg-patch -u for applying non-git patches while autoadding/removing
+    files, cg-patch -pN with obvious meaning
+  * cg-object-id -d for short human-readable commit string id
+    (just wraps git-describe)
+
+  * Too many minor new features to list here
+
+  * Incompatible change - the post-commit hook won't be ran for all the
+    merged commits anymore when you commit a merge; you can reenable
+    that in .git/config, see the cg-commit documentation for details
+
+
+P.S.: See us at #git @ FreeNode!
+
+  Happy hacking,
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+VI has two modes: the one in which it beeps and the one in which
