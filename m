@@ -1,100 +1,109 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Use a hashtable for objects instead of a sorted list
-Date: Sun, 12 Feb 2006 15:31:33 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602121517050.15392@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <87slqpg11q.fsf@wine.dyndns.org>
- <Pine.LNX.4.63.0602120254260.10235@wbgn013.biozentrum.uni-wuerzburg.de>
- <7virrli9am.fsf@assigned-by-dhcp.cox.net> <87oe1dez7k.fsf@wine.dyndns.org>
- <7vaccwdbfs.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Properly git-bisect reset after bisecting from non-master head
+Date: Sun, 12 Feb 2006 17:06:14 +0100
+Message-ID: <20060212160614.GV31278@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alexandre Julliard <julliard@winehq.org>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Feb 12 15:31:53 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 12 17:05:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8IGP-0006Wq-JU
-	for gcvg-git@gmane.org; Sun, 12 Feb 2006 15:31:45 +0100
+	id 1F8JjK-00026q-50
+	for gcvg-git@gmane.org; Sun, 12 Feb 2006 17:05:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbWBLObm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Feb 2006 09:31:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbWBLObm
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 09:31:42 -0500
-Received: from mail.gmx.net ([213.165.64.21]:19884 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750764AbWBLObm (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2006 09:31:42 -0500
-Received: (qmail invoked by alias); 12 Feb 2006 14:31:40 -0000
-Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
-  by mail.gmx.net (mp010) with SMTP; 12 Feb 2006 15:31:40 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vaccwdbfs.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751138AbWBLQFj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Feb 2006 11:05:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751139AbWBLQFj
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 11:05:39 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:40140 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751138AbWBLQFi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2006 11:05:38 -0500
+Received: (qmail 512 invoked by uid 2001); 12 Feb 2006 17:06:14 +0100
+To: junkio@cox.net
+Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15999>
 
-Hi,
+git-bisect reset without an argument would return to master even
+if the bisecting started at a non-master branch. This patch makes
+it save the original branch name to .git/head-name and restore it
+afterwards.
 
-On Sun, 12 Feb 2006, Junio C Hamano wrote:
+This is also compatible with Cogito and cg-seek, so cg-status will
+show that we are seeked on the bisect branch and cg-reset will
+properly restore the original branch.
 
-> Alexandre Julliard <julliard@winehq.org> writes:
-> 
-> > Junio C Hamano <junkio@cox.net> writes:
-> >
-> >> Alexandle, if you have a chance, could you try Johannes' patch
-> >> on your workload to see if it works OK for you?
-> >
-> > It works great for me, CPU time is down to 15 sec instead of 20 sec
-> > with my patch.
-> 
-> Thanks.  Now we have three independent numbers to back up that
-> Johannes is the winner....
-> 
-> Grrrrrrr.  Please, DO NOT USE THIS ONE YET.
-> 
-> At least, not with your production repository.
-> 
-> I am trying to nail it down but it appears at least fsck-objects
-> using this version gives bogus results.  I am first trying to
-> see if my primary working repository is sane.
-> 
-> Oh, and thanks again for your initial patch, which was what
-> started this drastic improvement.
+git-bisect start will refuse to work if it is not on a bisect but
+.git/head-name exists; this is to protect against conflicts with
+other seeking tools.
 
-I am sorry! I tested fsck, but only *once*, since I did not think such a 
-creepy bug was in there. And then, I had to run to sing Beethoven's Missa 
-Solemnis, and missed all the action about this patch.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
 
-Just a few remarks around the comments in this thread:
+---
+commit 143fc0c9a04ca38a70fbd882e38620f566415b6c
+tree c93f93a984c00cfa08bbb9cb46bd1c6ba2c82de0
+parent 8dcc626cd144b2c6eae2a299242bbbe905cb0059
+author Petr Baudis <pasky@suse.cz> Sun, 12 Feb 2006 16:57:39 +0100
+committer Petr Baudis <xpasky@machine.or.cz> Sun, 12 Feb 2006 16:57:39 +0100
 
-- the doubling of obj_allocs is arbitrary. Originally, I planned to do the 
-growing much faster, which would have been helped by the fact. But it 
-turned out my thinking was defective. So, you can grow the hashtable by 
-whatever you like (doubling is quite effective, though).
+ git-bisect.sh |   17 ++++++++++++++---
+ 1 files changed, 14 insertions(+), 3 deletions(-)
 
-- hashtable has expected O(1) insertion, and that is what boosts the 
-performance. Since the table growing is linear in the number of objects 
-(both size and computing time), and all operations afterwards are linear 
-on the table, *and the hash is already computed*, the hashtable is 
-preferrable over other data structures (sorted list has O(n) insertion 
-time, and tree still O(log n)).
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 51e1e44..3c024aa 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -49,9 +49,16 @@ bisect_start() {
+ 	die "Bad HEAD - I need a symbolic ref"
+ 	case "$head" in
+ 	refs/heads/bisect*)
+-		git checkout master || exit
++		if [ -s "$GIT_DIR/head-name" ]; then
++		    branch=`cat "$GIT_DIR/head-name"`
++		else
++		    branch=master
++	        fi
++		git checkout $branch || exit
+ 		;;
+ 	refs/heads/*)
++		[ -s "$GIT_DIR/head-name" ] && die "won't bisect on seeked tree"
++		echo "$head" | sed 's#^refs/heads/##' >"$GIT_DIR/head-name"
+ 		;;
+ 	*)
+ 		die "Bad HEAD - strange symbolic ref"
+@@ -159,7 +166,11 @@ bisect_visualize() {
+ 
+ bisect_reset() {
+ 	case "$#" in
+-	0) branch=master ;;
++	0) if [ -s "$GIT_DIR/head-name" ]; then
++	       branch=`cat "$GIT_DIR/head-name"`
++	   else
++	       branch=master
++	   fi ;;
+ 	1) test -f "$GIT_DIR/refs/heads/$1" || {
+ 	       echo >&2 "$1 does not seem to be a valid branch"
+ 	       exit 1
+@@ -170,7 +181,7 @@ bisect_reset() {
+ 	esac
+ 	git checkout "$branch" &&
+ 	rm -fr "$GIT_DIR/refs/bisect"
+-	rm -f "$GIT_DIR/refs/heads/bisect"
++	rm -f "$GIT_DIR/refs/heads/bisect" "$GIT_DIR/head-name"
+ 	rm -f "$GIT_DIR/BISECT_LOG"
+ }
+ 
 
-- the bug Junio fixed was not triggered here, since I did all the testing 
-on my venerable iBook. The PowerPC architecture evidently aligns 
-all pointers to 32-bit, so I could reinterpret the pointer as to an 
-unsigned int. Note that there is a small overhead in Junio's version, but 
-it is probably not worth the hassle to make that a compile time option. 
-But I agree with Florian that memcpy would be more efficient.
 
-- Arithmetic and Boolean operations on 32-bit integers typically are 
-handled very efficiently in modern 32-bit CPUs, so there should be no 
-reason to use "&" instead of "%" (especially since understanding the code 
-wouldn't be helped by that).
-
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
