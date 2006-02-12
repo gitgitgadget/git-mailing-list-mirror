@@ -1,63 +1,78 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Make "git clone" less of a deathly quiet experience
-Date: Sun, 12 Feb 2006 04:43:47 +0100
-Message-ID: <43EEAEF3.7040202@op5.se>
-References: <Pine.LNX.4.64.0602102018250.3691@g5.osdl.org>	 <7vwtg2o37c.fsf@assigned-by-dhcp.cox.net>	 <Pine.LNX.4.64.0602110943170.3691@g5.osdl.org> <1139685031.4183.31.camel@evo.keithp.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Two crazy proposals for changing git's diff commands
+Date: Sat, 11 Feb 2006 19:48:54 -0800
+Message-ID: <7vr769fd95.fsf@assigned-by-dhcp.cox.net>
+References: <87slqtcr2f.wl%cworth@cworth.org>
+	<7vfymtl43b.fsf@assigned-by-dhcp.cox.net>
+	<20060212031527.GA31228@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun Feb 12 04:43:56 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 12 04:48:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F889Q-0002es-46
-	for gcvg-git@gmane.org; Sun, 12 Feb 2006 04:43:52 +0100
+	id 1F88EM-0003Rr-Pm
+	for gcvg-git@gmane.org; Sun, 12 Feb 2006 04:48:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750875AbWBLDnt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Feb 2006 22:43:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932172AbWBLDnt
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 22:43:49 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:13252 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750875AbWBLDns
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Feb 2006 22:43:48 -0500
-Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id AFA5B6BD01; Sun, 12 Feb 2006 04:43:47 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Keith Packard <keithp@keithp.com>
-In-Reply-To: <1139685031.4183.31.camel@evo.keithp.com>
+	id S1750952AbWBLDs4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Feb 2006 22:48:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750968AbWBLDs4
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Feb 2006 22:48:56 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:26326 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1750952AbWBLDsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Feb 2006 22:48:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060212034628.SXQV17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 11 Feb 2006 22:46:28 -0500
+To: "J. Bruce Fields" <bfields@fieldses.org>
+In-Reply-To: <20060212031527.GA31228@fieldses.org> (J. Bruce Fields's message
+	of "Sat, 11 Feb 2006 22:15:27 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/15978>
 
-Keith Packard wrote:
-> On Sat, 2006-02-11 at 09:45 -0800, Linus Torvalds wrote:
-> 
-> 
->>More importantly, it really wouldn't have helped that much in this 
->>situation. At least for me, the network is 90% of the problem, the 
->>pack-file generation is at most 10%. So cached packfiles really only 
->>matter for server-side problems (high CPU load, or lack of memory, or 
->>heavy disk activity).
-> 
-> 
-> I'd like to see git use less CPU than CVS does on my distribution host;
-> some mechanism for re-using either existing or cached packs would help a
-> whole lot with that. The alternative is to see people switch to rsync
-> instead, which seems like a far worse idea.   
-> 
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-A weird oddity; Cloning is faster over rsync, day-to-day pulling is not.
+> On Wed, Feb 08, 2006 at 05:21:12PM -0800, Junio C Hamano wrote:
+>> Of course, learning various flags to give "git diff" is part of
+>> understanding the index
+>
+> Well, there's understanding the index, and then there's memorizing the
+> flags...
+> ...
+> But maybe that's just me.  (And maybe the namespace in question is
+> already to crowded to allow for INDEX and WORK.)
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I do not think it is just you.  The real problem, honestly
+speaking, is that "git diff" wrapper cheats and avoids doing its
+own set of flags.
+
+The low-level is just a mechanism UI is built upon, and as a
+mechanism, except perhaps maybe --cached might be now better
+spelled as --index, has set of options and semantics that are
+consistent with its world model (index centric way of thinking).
+
+Because "git diff" wrapper cheats, it ends up exposing the
+low-level flags and arguments to the end user, and to use that
+effectively, obviously you need to understand the world model
+the low-level is built upon.
+
+It was OK (it could be argued that it was even better than sugar
+coating to make it *inconsistent* with the underlying world
+model) so far, as long as people who use it are aware of the
+index centric world model, but that "consistency with the
+underlying world model" makes it harder to approach and causes
+confusion.
+
+That is why I these days often mention "welding training
+wheels".  Doing half-baked sugarcoating of the UI layer would
+break mental model of people who understand the world model
+low-level builds and tries to make effective use of low-level
+through the UI.
