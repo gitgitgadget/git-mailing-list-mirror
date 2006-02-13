@@ -1,69 +1,144 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: Handling large files with GIT
-Date: Mon, 13 Feb 2006 00:55:38 -0500
-Message-ID: <43F01F5A.5020808@pobox.com>
-References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>  <87slqty2c8.fsf@mid.deneb.enyo.de> <46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com> <Pine.OSX.4.64.0602131416530.25089@piva.hawaga.org.uk> <Pine.LNX.4.64.0602121939070.3691@g5.osdl.org> <Pine.LNX.4.64.0602122049010.3691@g5.osdl.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Fake linear history in a deterministic manner.
+Date: Mon, 13 Feb 2006 18:58:40 +1300
+Message-ID: <46a038f90602122158n51fc94a8h2ff2631c16cd28b5@mail.gmail.com>
+References: <46a038f90602121746v5adb448ej73cc2be6dd3745ce@mail.gmail.com>
+	 <7vk6bz3k7e.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Ben Clifford <benc@hawaga.org.uk>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 13 06:56:03 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 13 06:58:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8Wgs-0005dg-68
-	for gcvg-git@gmane.org; Mon, 13 Feb 2006 06:56:02 +0100
+	id 1F8WjV-0005z9-Gy
+	for gcvg-git@gmane.org; Mon, 13 Feb 2006 06:58:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750908AbWBMFz7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Feb 2006 00:55:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750912AbWBMFz7
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 00:55:59 -0500
-Received: from mail.dvmed.net ([216.237.124.58]:39903 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1750890AbWBMFz7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2006 00:55:59 -0500
-Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.99])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1F8Wga-0001FI-1K; Mon, 13 Feb 2006 05:55:44 +0000
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602122049010.3691@g5.osdl.org>
-X-Spam-Score: 0.1 (/)
-X-Spam-Report: Spam detection software, running on the system "srv2.dvmed.net", has
-	identified this incoming email as possible spam.  The original message
-	has been attached to this so you can view it (if it isn't spam) or label
-	similar future email.  If you have any questions, see
-	the administrator of that system for details.
-	Content preview:  Linus Torvalds wrote: > I've never used maildir layout,
-	but if it is a couple of large _flat_ > subdirectories, That's what it
-	is :/ One directory per mail folder, with each email an individual file
-	in that dir. [...] 
-	Content analysis details:   (0.1 points, 5.0 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.1 RCVD_IN_SORBS_DUL      RBL: SORBS: sent directly from dynamic IP address
-	[69.134.188.146 listed in dnsbl.sorbs.net]
+	id S1750912AbWBMF6n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Feb 2006 00:58:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbWBMF6n
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 00:58:43 -0500
+Received: from wproxy.gmail.com ([64.233.184.202]:36123 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750912AbWBMF6m convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2006 00:58:42 -0500
+Received: by wproxy.gmail.com with SMTP id 57so762895wri
+        for <git@vger.kernel.org>; Sun, 12 Feb 2006 21:58:42 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oc/mt9aIq1IN4YFc0922tDh0uwqsYdzlopXjSQSl+CYELER15xGfOR83i4mFqZL9MqOQyFzbI8RS21MbApJFIDvn1FIauSDPqvqG4erzZlq9UApltLpqAQKeGXRkH7QAetCy1JBthZOKhVI68rErHvrGflv6eoxwhozejKjjmbA=
+Received: by 10.54.79.4 with SMTP id c4mr1796451wrb;
+        Sun, 12 Feb 2006 21:58:40 -0800 (PST)
+Received: by 10.54.71.8 with HTTP; Sun, 12 Feb 2006 21:58:40 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk6bz3k7e.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16048>
 
-Linus Torvalds wrote:
-> I've never used maildir layout, but if it is a couple of large _flat_ 
-> subdirectories,
+On 2/13/06, Junio C Hamano <junkio@cox.net> wrote:
 
-That's what it is :/   One directory per mail folder, with each email an 
-individual file in that dir.
+Yep, I had roughly this exact scenario in my mind, thanks for the
+graphs -- help make sense of what's happening.
 
-On the side I run a mini-ISP that offers (among other things) 
-SMTP/IMAP/POP via exim/dovecot.  I use maildir for my customers, and am 
-desperately searching for a better solution.  David Woodhouse and I talk 
-off and on about using git for distributed mail storage.
+> When somebody pushes a ref to your existing commit ancestry
+> graph, you can easily identify which commits are the new ones
+> you see for the first time.
+>
+>                 A
+>            o---o
+>           /
+>      o---o---o---o---o B
+>
+> Suppose you started from two branch repo A and B.  Your sqlite
+> database knows about all of these commits, and say you earlier
+> have decided to treat A as a side branch, B as trunk.
 
-OTOH, I wonder if a P2P-ish, sha1-indexed network service wouldn't be 
-better for both a git fallback and email storage.
+Well, from the point of view of B being a head we know about, either A
+is another head, and we don't care about it, or A is someone's repo
+and we haven't seen it and thus cannot care about it either.
 
-	Jeff
+A bit of background... git-cvsserver at the moment has the following
+semantics: what cvs considers a top-level "module" we use to identify
+the head. So
+
+    cvs -d :ext:me@server:/var/frob.git checkout  master
+
+will get you frob.git#master. I thought long and hard about this, and
+it is horribly hard to mimic CVS's idea of branches. So clients see a
+strictly linear history. Any user in this scenario wanting to do
+branching and merging is kindly invited to use real tools. There';s
+only so much magic Perl can do ;-)
+
+> Then somebody pushed a new B, making the ancestry graph like
+> this:
+>
+>                 A
+>            o---o-------*---*---* B-new
+>           /           /
+>      o---o---o---o---o B-old
+>
+> When the update-hook runs, as you read in receive-pack.c,
+> your refs have not been updated yet, so you can identify the
+> commits marked with * with:
+>
+>         git rev-list B-new $(git rev-parse --not --all)
+
+That's a nifty trick, though I'm not sure I'll be able to use it.
+
+Right now I'm doing something stupid-er just using `git-log
+--parents`, skipping commits that don't move the ball forward on the
+linear head I know about, and then processing those "other tracks"
+when I see a merge commit. I'll probably find the merge base and see
+what commits were brought in from the other side.
+
+The problem is that the situation running from post update hook is
+very different from the scenario of running the very same script on a
+repo where you see all the history.
+
+In any case, I'm undecided whether to use --topo-order or
+--merge-order. Does it really matter?
+
+(...)
+> With CVS you cannot express a merge very well, so you now face a
+> choice.  Which parent to drop from the leftmost * commit in the
+> above picture?
+
+Well, we've already lied about having B to clients that won't know
+what to do if we tell them about parallel histories, so our pick is B.
+
+(...)
+> One approach would be to see the world with eyes of the person
+> who did such a merge.  Both git and cogito place the current
+> branch as the first parent,
+
+Yes, I thought about that, but that order is ambiguous in the two most
+interesting cases:
+
+ - project maintainer pulls from mature feature branches from other
+developers - her side is first, show the "pulled" stuff as merges
+(flattened with a merge summary in the commit msg). Still, you can
+argue the feature development is more interesting.
+
+ - team-shared-git-repo user does cg-update and merges updates from
+origin - her side is first, we don't know which side is the
+interesting one. At all. Hmmm.
+
+> But the thing is, there is no
+> inherent trunk or branch in the distributed world, so the cvs
+> clients of your server needs to live with it.
+
+That's the mantra so far, and we'll talk to cvs clients about
+perfectly linearized history. Anything else won't be useful as far as
+I can tell -- or in any case,until this is going well for basic usage.
+If someone's crazy enough to try I won't get in the way.
+
+cheers.
+
+
+martin
