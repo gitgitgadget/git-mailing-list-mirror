@@ -1,41 +1,36 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Handling large files with GIT
-Date: Mon, 13 Feb 2006 08:19:10 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602130806070.3691@g5.osdl.org>
-References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com> 
- <87slqty2c8.fsf@mid.deneb.enyo.de> <46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com>
- <Pine.OSX.4.64.0602131416530.25089@piva.hawaga.org.uk>
- <Pine.LNX.4.64.0602121939070.3691@g5.osdl.org> <Pine.LNX.4.64.0602122049010.3691@g5.osdl.org>
- <43F01F5A.5020808@pobox.com>
+Subject: Re: Fake linear history in a deterministic manner.
+Date: Mon, 13 Feb 2006 08:34:19 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602130819490.3691@g5.osdl.org>
+References: <46a038f90602121746v5adb448ej73cc2be6dd3745ce@mail.gmail.com> 
+ <7vk6bz3k7e.fsf@assigned-by-dhcp.cox.net> <46a038f90602122158n51fc94a8h2ff2631c16cd28b5@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ben Clifford <benc@hawaga.org.uk>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 13 17:21:01 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 13 17:35:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8gRE-0001mS-UQ
-	for gcvg-git@gmane.org; Mon, 13 Feb 2006 17:20:33 +0100
+	id 1F8gem-0004z8-AG
+	for gcvg-git@gmane.org; Mon, 13 Feb 2006 17:34:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750828AbWBMQU1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Feb 2006 11:20:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750819AbWBMQU1
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 11:20:27 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:50307 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750739AbWBMQU0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2006 11:20:26 -0500
+	id S932127AbWBMQe3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Feb 2006 11:34:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932129AbWBMQe3
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 11:34:29 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:28814 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932127AbWBMQe2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2006 11:34:28 -0500
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1DGJCDZ008157
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1DGYKDZ009000
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 13 Feb 2006 08:19:12 -0800
+	Mon, 13 Feb 2006 08:34:21 -0800
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1DGJAA5024677;
-	Mon, 13 Feb 2006 08:19:10 -0800
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <43F01F5A.5020808@pobox.com>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1DGYJ61025400;
+	Mon, 13 Feb 2006 08:34:20 -0800
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90602122158n51fc94a8h2ff2631c16cd28b5@mail.gmail.com>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
 X-MIMEDefang-Filter: osdl$Revision: 1.129 $
@@ -43,64 +38,57 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16074>
 
 
 
-On Mon, 13 Feb 2006, Jeff Garzik wrote:
->
-> Linus Torvalds wrote:
-> > I've never used maildir layout, but if it is a couple of large _flat_
-> > subdirectories,
+On Mon, 13 Feb 2006, Martin Langhoff wrote:
 > 
-> That's what it is :/   One directory per mail folder, with each email an
-> individual file in that dir.
+> In any case, I'm undecided whether to use --topo-order or
+> --merge-order. Does it really matter?
 
-Ok.
+Use topo-order.
 
-Anyway, I double-checked, and I'm wrong anyway. While the "static 
-directories" thing is a huge performance optimization for doing many 
-things (diffing trees, file history in git-rev-list, etc etc), for merging 
-it doesn't help. We always end up expanding the whole tree.
+merge-order is much more expensive to calculate, and doesn't even exist if 
+NO_OPENSSL is set.
 
-Which is kind of sad.
+Anyway, while linearization in general is impossible, I'd suggest a few 
+heuristics:
 
-It's inevitable in one sense: we do the merge in the index, after all, and 
-the index - unlike the tree structures - is a flat file (like the 
-"manifest" in mercurial or monotone). It's also represented that way in 
-memory. 
+ - you obviously must remember the head of the previous linearization. Any 
+   tree choices you made in the past are not something you can change any 
+   more for cvs export.
 
-However, it is a total and complete waste in other cases.
+   This may sound obvious, but the fact is, especially if you do the cvs 
+   export frequently, and the main maintainer updates the tree in a timely 
+   manner, it will limit your choices a LOT. In fact, most of the time 
+   you'll have no choice at all: you will have an unambiguous "TRUNK" that 
+   is defined by the fact that there is only one linear path from the 
+   previous export-head to the current HEAD.
 
-Thinking more about it, this is also why merging causes all the horrible 
-index performance: not only do we (unnecessarily) read the same trees over 
-and over again only to collapse them back to stage0 later when they are 
-the same, but because we keep the index in a linear format, when we read 
-the other trees, we'll have to move things around with memmove() (just the 
-pointers, but still).
+In short, most of the time you won't have any issues in a stable system. 
+You'll see a true "fork in the road" choice only when the maintainer 
+hasn't pushed his tree to the thing you export in a while, long enough 
+that no CVS exporting has taken place over a whole parallel cycle. It's 
+probably rare.
 
-We'd actually be a _lot_ better off if we split "git-read-tree" up into 
-two phases: one that did the recursive tree operation (which can optimize 
-the "same tree everywhere" case), and the second stage that actually 
-populated the index.
+So the main issue of "which child to choose" becomes one of the initial 
+export, and then just occasionally thereafter. And in that case, there's 
+really just one obvious algorithm:
 
-I'll have to think about this. It would be an absolutely _huge_ 
-optimization for merging in certain patterns, it just doesn't matter for 
-something like the kernel with "just" 18,000 files and not a lot of 
-strange merging going on.
+ - simply enumerate the possible paths (not that hard - it's just 
+   enumerating a tree once you've generated the graph in memory with child 
+   and parent pointers), and just selecting the one with the "longest 
+   weighted path".
 
-In contrast, I can see a mail archive easily having hundreds of thousands 
-of individual emails. At which time it's horribly stupid to read them all 
-in three times (for a merge - base, origin, new) and do so in a pretty 
-inefficient manner.
+I say "weighted path", because you might want to consider different 
+commits to have different weights. For example, you might want to consider 
+merge commits to be less interesting (so weight them as 0.5 commits) in 
+order to get as many "real" commits as possible. And you might consider 
+commits made by a certain person to be "more TRUNKish", and give them a 
+weight of 2, so that you'll be more likely to follow the "maintainer view" 
+over any other linearized history.
 
-Ho humm. It doesn't look _hard_ per se, and I think the two-stage 
-git-read-tree is actually also what the recursive merge strategy wants 
-anyway (it can't use the index - it really just wants to get a list of 
-conflict information). So this definitely sounds like the RightThing(tm) 
-to do anyway, and it fits the git data structures really well.
+No other algorithm seems very sane. 
 
-So no downsides. Except that this is some rather core code, and you can't 
-afford to get it wrong. And the fact that I'm a lazy bastard, of course.
-
-			Linus
+		Linus
