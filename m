@@ -1,76 +1,61 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-cvsserver & push/commit atomically
-Date: Mon, 13 Feb 2006 01:17:23 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602130110590.21465@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <46a038f90602121550v4f487edfs788885a78c1b167@mail.gmail.com>
+Subject: Re: Fix object re-hashing
+Date: Mon, 13 Feb 2006 01:31:23 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602130130360.22638@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0602120956130.3691@g5.osdl.org>
+ <Pine.LNX.4.64.0602121006360.3691@g5.osdl.org> <7vaccwbf6v.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0602121037460.3691@g5.osdl.org> <Pine.LNX.4.64.0602121101040.3691@g5.osdl.org>
+ <Pine.LNX.4.63.0602130007320.9507@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0602121614340.3691@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>, martyn@catalyst.net.nz
-X-From: git-owner@vger.kernel.org Mon Feb 13 01:17:28 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 13 01:31:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8RPD-0005Mu-Bf
-	for gcvg-git@gmane.org; Mon, 13 Feb 2006 01:17:27 +0100
+	id 1F8Rcw-0008M7-PW
+	for gcvg-git@gmane.org; Mon, 13 Feb 2006 01:31:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464AbWBMARZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Feb 2006 19:17:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751499AbWBMARZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 19:17:25 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:58349 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751464AbWBMARY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Feb 2006 19:17:24 -0500
-Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id CD3A3146507; Mon, 13 Feb 2006 01:17:23 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id BF9839C5;
-	Mon, 13 Feb 2006 01:17:23 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 15316146507; Mon, 13 Feb 2006 01:17:23 +0100 (CET)
+	id S1751101AbWBMAb2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Feb 2006 19:31:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751500AbWBMAb2
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 19:31:28 -0500
+Received: from mail.gmx.de ([213.165.64.21]:45759 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751101AbWBMAb2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2006 19:31:28 -0500
+Received: (qmail invoked by alias); 13 Feb 2006 00:31:26 -0000
+Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
+  by mail.gmx.net (mp037) with SMTP; 13 Feb 2006 01:31:26 +0100
+X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90602121550v4f487edfs788885a78c1b167@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602121614340.3691@g5.osdl.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16032>
 
 Hi,
 
-On Mon, 13 Feb 2006, Martin Langhoff wrote:
+On Sun, 12 Feb 2006, Linus Torvalds wrote:
 
->  - precondition: all the relevant objects are already in the repo
->  - reads old sha1
->  - creates repo.git/refs/<headname>.lock file with new sha1
->  - compares old and current head
->  - runs update hooks
->  - renames repo.git/refs/<headname>.lock into repo.git/refs/<headname>
+> On Mon, 13 Feb 2006, Johannes Schindelin wrote:
+> > 
+> > Make hashtable resizing more robust AKA do not resize in-place
 > 
-> So it is mostly race-safe, except for the window while we are running
-> update hooks. Only a misbehaving implementation that doesn't fail on
-> the creation of repo.git/refs/<headname>.lock  would affect us there,
-> though. Would locking repo.git/refs/<headname> make sense?
+> You forgot to release the old array afterwards.
 
-Correct. The filesystem way to lock is to create a lock file and fail if 
-it already exists. Since you are doing something akin to git-commit, I 
-think you *must* lock repo.git/refs/<headname>.
+D'oh! I am going to bed now.
 
-> git-cvsserver commits are likely to be slow (not only likely, they
-> _are_ slow right now), so we need a way to block other clients for a
-> relatively long time.
+> Anyway, I think the in-place version is fine now, even if it has a few 
+> subtleties. So this isn't needed, but keep it in mind if we find another 
+> bug, or if somebody wants to shrink the hash table less aggressively than 
+> with doubling it every time.
 
-I don't think there is a way around that. Of course, you could write the 
-objects first without locking. But then you probably have loose objects in 
-the repository if the commit fails due to another commit in the meantime.
+Sounds fine to me.
 
-<becomessweatyhands>
-	BTW when are we going to see git-cvsserver?
-</becomessweatyhands>
-
-Ciao,
+Good night,
 Dscho
