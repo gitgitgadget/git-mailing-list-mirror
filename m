@@ -1,94 +1,74 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Fake linear history in a deterministic manner.
-Date: Mon, 13 Feb 2006 08:34:19 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602130819490.3691@g5.osdl.org>
-References: <46a038f90602121746v5adb448ej73cc2be6dd3745ce@mail.gmail.com> 
- <7vk6bz3k7e.fsf@assigned-by-dhcp.cox.net> <46a038f90602122158n51fc94a8h2ff2631c16cd28b5@mail.gmail.com>
+From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
+Subject: Quick question
+Date: Mon, 13 Feb 2006 17:36:07 +0100
+Message-ID: <43F0B577.4070608@gorzow.mm.pl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 13 17:35:03 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig7B92A9F79B339E06C513A991"
+X-From: git-owner@vger.kernel.org Mon Feb 13 17:37:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8gem-0004z8-AG
-	for gcvg-git@gmane.org; Mon, 13 Feb 2006 17:34:33 +0100
+	id 1F8ggW-0005Tm-Cy
+	for gcvg-git@gmane.org; Mon, 13 Feb 2006 17:36:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932127AbWBMQe3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Feb 2006 11:34:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932129AbWBMQe3
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 11:34:29 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:28814 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932127AbWBMQe2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2006 11:34:28 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1DGYKDZ009000
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 13 Feb 2006 08:34:21 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1DGYJ61025400;
-	Mon, 13 Feb 2006 08:34:20 -0800
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90602122158n51fc94a8h2ff2631c16cd28b5@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932136AbWBMQgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Feb 2006 11:36:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932139AbWBMQgQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 11:36:16 -0500
+Received: from goliat1.kalisz.mm.pl ([81.15.136.226]:39896 "EHLO kalisz.mm.pl")
+	by vger.kernel.org with ESMTP id S932136AbWBMQgP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2006 11:36:15 -0500
+Received: (qmail 17649 invoked from network); 13 Feb 2006 16:36:12 -0000
+Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.201.167])
+          (envelope-sender <astralstorm@gorzow.mm.pl>)
+          by 0 (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 13 Feb 2006 16:36:12 -0000
+Received: from [192.168.0.1] (zen.uplink [192.168.0.1])
+	by zen.uplink (Postfix) with ESMTP id D3D7C1784C4
+	for <git@vger.kernel.org>; Mon, 13 Feb 2006 17:36:11 +0100 (CET)
+User-Agent: Thunderbird 1.4.1 (X11/20051010)
+To: Git Mailing List <git@vger.kernel.org>
+X-Enigmail-Version: 0.93.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16075>
+
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig7B92A9F79B339E06C513A991
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+How to display ignored files of the whole project using only core git?
+
+I've tried:
+
+git-ls-files -o -i -X .git/info/exclude
+
+and it only showed me the excluded files in the current directory...
+
+--=20
+GPG Key id:  0xD1F10BA2
+Fingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
+
+AstralStorm
 
 
+--------------enig7B92A9F79B339E06C513A991
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-On Mon, 13 Feb 2006, Martin Langhoff wrote:
-> 
-> In any case, I'm undecided whether to use --topo-order or
-> --merge-order. Does it really matter?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-Use topo-order.
+iD8DBQFD8LV7lUMEU9HxC6IRAn14AKCC+I+D0VD57uzL9qID5Uo0setcJACgh7RH
+O9V0kKIt0tudsTge/8jaABE=
+=/O/G
+-----END PGP SIGNATURE-----
 
-merge-order is much more expensive to calculate, and doesn't even exist if 
-NO_OPENSSL is set.
-
-Anyway, while linearization in general is impossible, I'd suggest a few 
-heuristics:
-
- - you obviously must remember the head of the previous linearization. Any 
-   tree choices you made in the past are not something you can change any 
-   more for cvs export.
-
-   This may sound obvious, but the fact is, especially if you do the cvs 
-   export frequently, and the main maintainer updates the tree in a timely 
-   manner, it will limit your choices a LOT. In fact, most of the time 
-   you'll have no choice at all: you will have an unambiguous "TRUNK" that 
-   is defined by the fact that there is only one linear path from the 
-   previous export-head to the current HEAD.
-
-In short, most of the time you won't have any issues in a stable system. 
-You'll see a true "fork in the road" choice only when the maintainer 
-hasn't pushed his tree to the thing you export in a while, long enough 
-that no CVS exporting has taken place over a whole parallel cycle. It's 
-probably rare.
-
-So the main issue of "which child to choose" becomes one of the initial 
-export, and then just occasionally thereafter. And in that case, there's 
-really just one obvious algorithm:
-
- - simply enumerate the possible paths (not that hard - it's just 
-   enumerating a tree once you've generated the graph in memory with child 
-   and parent pointers), and just selecting the one with the "longest 
-   weighted path".
-
-I say "weighted path", because you might want to consider different 
-commits to have different weights. For example, you might want to consider 
-merge commits to be less interesting (so weight them as 0.5 commits) in 
-order to get as many "real" commits as possible. And you might consider 
-commits made by a certain person to be "more TRUNKish", and give them a 
-weight of 2, so that you'll be more likely to follow the "maintainer view" 
-over any other linearized history.
-
-No other algorithm seems very sane. 
-
-		Linus
+--------------enig7B92A9F79B339E06C513A991--
