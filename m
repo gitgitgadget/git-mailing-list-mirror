@@ -1,144 +1,159 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Fake linear history in a deterministic manner.
-Date: Mon, 13 Feb 2006 18:58:40 +1300
-Message-ID: <46a038f90602122158n51fc94a8h2ff2631c16cd28b5@mail.gmail.com>
-References: <46a038f90602121746v5adb448ej73cc2be6dd3745ce@mail.gmail.com>
-	 <7vk6bz3k7e.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
+Date: Mon, 13 Feb 2006 01:03:21 -0500
+Message-ID: <20060213060321.GA32704@spearce.org>
+References: <20060210195914.GA1350@spearce.org> <43EFF3D0.4090701@vilain.net> <20060213032903.GA32121@spearce.org> <43F00DB6.4040306@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 13 06:58:47 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Feb 13 07:03:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8WjV-0005z9-Gy
-	for gcvg-git@gmane.org; Mon, 13 Feb 2006 06:58:45 +0100
+	id 1F8Wo4-0006Rw-VT
+	for gcvg-git@gmane.org; Mon, 13 Feb 2006 07:03:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750912AbWBMF6n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Feb 2006 00:58:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbWBMF6n
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 00:58:43 -0500
-Received: from wproxy.gmail.com ([64.233.184.202]:36123 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750912AbWBMF6m convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2006 00:58:42 -0500
-Received: by wproxy.gmail.com with SMTP id 57so762895wri
-        for <git@vger.kernel.org>; Sun, 12 Feb 2006 21:58:42 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oc/mt9aIq1IN4YFc0922tDh0uwqsYdzlopXjSQSl+CYELER15xGfOR83i4mFqZL9MqOQyFzbI8RS21MbApJFIDvn1FIauSDPqvqG4erzZlq9UApltLpqAQKeGXRkH7QAetCy1JBthZOKhVI68rErHvrGflv6eoxwhozejKjjmbA=
-Received: by 10.54.79.4 with SMTP id c4mr1796451wrb;
-        Sun, 12 Feb 2006 21:58:40 -0800 (PST)
-Received: by 10.54.71.8 with HTTP; Sun, 12 Feb 2006 21:58:40 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk6bz3k7e.fsf@assigned-by-dhcp.cox.net>
+	id S1751414AbWBMGD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Feb 2006 01:03:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbWBMGD0
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 01:03:26 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:36297 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1750902AbWBMGDZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2006 01:03:25 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1F8Wnn-00015L-C6
+	for git@vger.kernel.org; Mon, 13 Feb 2006 01:03:11 -0500
+Received: by asimov.spearce.org (Postfix, from userid 1000)
+	id 0D42C20FBA0; Mon, 13 Feb 2006 01:03:21 -0500 (EST)
+To: Git Mailing List <git@vger.kernel.org>
+Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <43F00DB6.4040306@vilain.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16049>
 
-On 2/13/06, Junio C Hamano <junkio@cox.net> wrote:
+Sam Vilain <sam@vilain.net> wrote:
+> ok.  Well, perhaps a nice solution might be just to aggregate the
+> comments as each new commit is made.  ie, the previous comment is
+> prepended to the new comment unless you use the editor or a special
+> -M (or whatever) option that replaces the running comment.
 
-Yep, I had roughly this exact scenario in my mind, thanks for the
-graphs -- help make sense of what's happening.
+Yea, that's not a bad idea.  If you are creating a new commit you
+probably would want to edit the running description for the patch;
+or at least be reminded of what it is.
+ 
+> I tried importing a patchset into pg, and made some changes to it to see
+> the patch revisioning going on.  However, I can't see this happening.
+> Can you perhaps include this information in your tutorial?
 
-> When somebody pushes a ref to your existing commit ancestry
-> graph, you can easily identify which commits are the new ones
-> you see for the first time.
->
->                 A
->            o---o
->           /
->      o---o---o---o---o B
->
-> Suppose you started from two branch repo A and B.  Your sqlite
-> database knows about all of these commits, and say you earlier
-> have decided to treat A as a side branch, B as trunk.
+Revisioning doesn't happen for the series, just the individual
+patches.  But I've thought about series revisoning and keeping a
+secondary GIT index/commit chain external to the main repository
+for exactly this purpose.
 
-Well, from the point of view of B being a head we know about, either A
-is another head, and we don't care about it, or A is someone's repo
-and we haven't seen it and thus cannot care about it either.
+Each change to a patch (pg-ci) is a new commit object in GIT with
+the prior commit object as its parent; if you use pg-ci a few times
+with the same patch on the stack then look at the log with git-log
+or gitk you'll see the commits are chained together.
 
-A bit of background... git-cvsserver at the moment has the following
-semantics: what cvs considers a top-level "module" we use to identify
-the head. So
+When you pop patches and reorder them in the series the resulting
+merges are stored as commits with two parents: one for the HEAD
+at the time of the merge and one for the commit which was the last
+commit in the patch being pushed (HEAD^1 and HEAD^2 respectively).
+For example:
 
-    cvs -d :ext:me@server:/var/frob.git checkout  master
+	pg-new A
+	echo a >>somefile
+	pg-ci -m"This is a"
+	pg-new B
+	echo b >>somefile
+	pg-ci -m"This is b"
 
-will get you frob.git#master. I thought long and hard about this, and
-it is horribly hard to mimic CVS's idea of branches. So clients see a
-strictly linear history. Any user in this scenario wanting to do
-branching and merging is kindly invited to use real tools. There';s
-only so much magic Perl can do ;-)
+	pg-pop -a
+	pg-push B  # base used to be HEAD+A, now its HEAD
+	pg-push A  # base used to be HEAD, now its HEAD+B
 
-> Then somebody pushed a new B, making the ancestry graph like
-> this:
->
->                 A
->            o---o-------*---*---* B-new
->           /           /
->      o---o---o---o---o B-old
->
-> When the update-hook runs, as you read in receive-pack.c,
-> your refs have not been updated yet, so you can identify the
-> commits marked with * with:
->
->         git rev-list B-new $(git rev-parse --not --all)
+The challenge then becomes walking through the merge history.
+If you look at pg's own history you'll see an interesting knot
+in gitk at a7e73545e511c5c2daea1f6c7bf06cf3179e7f0da (Refreshed
+patch Create-Rebase-Tool).  This was produced because I reorded
+the patches in the stack and thus had to merge them.  It was an
+automatic merge, but it still generated merge commit objects.
 
-That's a nifty trick, though I'm not sure I'll be able to use it.
+Good suggestion about including some details about it in the
+tutorial.
 
-Right now I'm doing something stupid-er just using `git-log
---parents`, skipping commits that don't move the ball forward on the
-linear head I know about, and then processing those "other tracks"
-when I see a merge commit. I'll probably find the merge base and see
-what commits were brought in from the other side.
+> As far as other, more general critiques of the software goes:  What
+> about merging?  stgit has a very nice way of merging; I specify how to
+> merge using a config file, and when I rebase my patches with "stg pull",
+> it fires up my custom editor.  All I really want is a way to specify how
+> to handle merges, with the ancestor/left/right files on hand.  I want to
+> use something as simple as this script:
+> 
+>     echo "falling back to ediff-merge"
+>     emacs --eval "(ediff-merge-files-with-ancestor \"${branch1}\"
+>                    \"${branch2}\" \"${ancestor}\" nil \"${output}\")"
 
-The problem is that the situation running from post update hook is
-very different from the scenario of running the very same script on a
-repo where you see all the history.
+pg doesn't currently invoke any user code when an automatic merge
+fails during pg-push or pg-rebase.  It does attempt to produce
+a 3 way merge and leaves the resulting portions for you in the
+filesystem.  If you look at MERGING.txt you'll see that up to 5
+files can come out of a merge (here I'm using the tracked file X.c):
 
-In any case, I'm undecided whether to use --topo-order or
---merge-order. Does it really matter?
+	X.c
+	X.c-head
+	X.c-last
+	X.c-pbase
+	X.c-rej
 
-(...)
-> With CVS you cannot express a merge very well, so you now face a
-> choice.  Which parent to drop from the leftmost * commit in the
-> above picture?
+These just get left in the filesystem for you to use as you want;
+in your case it sounds like you'd want to invoke:
 
-Well, we've already lied about having B to clients that won't know
-what to do if we tell them about parallel histories, so our pick is B.
+	emacs --eval "(ediff-merge-files-with-ancestor
+		\"X.c-head\"
+		\"X.c-last\"
+		\"X.c-pbase\"
+		nil
+		\"X.c\"
+		)"
 
-(...)
-> One approach would be to see the world with eyes of the person
-> who did such a merge.  Both git and cogito place the current
-> branch as the first parent,
+X.c already contains the result of performing:
 
-Yes, I thought about that, but that order is ambiguous in the two most
-interesting cases:
+	diff X.c-pbase X.c-last | patch X.c
 
- - project maintainer pulls from mature feature branches from other
-developers - her side is first, show the "pulled" stuff as merges
-(flattened with a merge summary in the commit msg). Still, you can
-argue the feature development is more interesting.
+so it already has any hunks which were part of your patch and
+which applied cleanly to X.c-head (which is the file coming in as
+the new base).  Thus you are left only with the rejecting hunks,
+which are in X.c-rej.
 
- - team-shared-git-repo user does cg-update and merges updates from
-origin - her side is first, we don't know which side is the
-interesting one. At all. Hmmm.
+Personally I've always preferred being given the rejects from
+patch to work out a merge problem then to be given the mess that
+RCS merge leaves you with.  (I've _never_ been able to decipher
+what I want from an RCS merge conflict.)
 
-> But the thing is, there is no
-> inherent trunk or branch in the distributed world, so the cvs
-> clients of your server needs to live with it.
+What is the desired behavior when multiple files have conflicts?
+Stop and let the user work on one file before moving to the next?
+Open all merge editors in parallel?  Neither seems right to me in
+all situations, which is why I just left the `mess' in the filesystem
+for the user to resolve at their own pace.
 
-That's the mantra so far, and we'll talk to cvs clients about
-perfectly linearized history. Anything else won't be useful as far as
-I can tell -- or in any case,until this is going well for basic usage.
-If someone's crazy enough to try I won't get in the way.
+> That's all the features I'm really after.
 
-cheers.
+I like what you are suggesting and will try to incorporate these
+improvements this week.
 
-
-martin
+-- 
+Shawn.
