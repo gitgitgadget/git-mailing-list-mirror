@@ -1,96 +1,91 @@
-From: Eduardo Pereira Habkost <ehabkost@mandriva.com>
-Subject: git-svnimport -d and -D options (was Re: [PATCH] Use a relative path for SVN importing)
-Date: Mon, 13 Feb 2006 18:52:43 -0200
-Message-ID: <20060213205243.GF4323@duckman.conectiva>
-References: <1139672651713-git-send-email-cbiesinger@web.de>
+From: Aubin LaBrosse <aubin@stormboxes.com>
+Subject: StGIT mail configuration
+Date: Mon, 13 Feb 2006 15:47:46 -0500
+Message-ID: <43F0F072.90609@stormboxes.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="z0eOaCaDLjvTGF2l"
-Cc: git@vger.kernel.org, Matthias Urlichs <smurf@smurf.noris.de>
-X-From: git-owner@vger.kernel.org Mon Feb 13 21:47:11 2006
+Content-Type: multipart/mixed;
+ boundary="------------080409010400090309010001"
+X-From: git-owner@vger.kernel.org Mon Feb 13 21:48:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8kbF-0003L7-UT
-	for gcvg-git@gmane.org; Mon, 13 Feb 2006 21:47:10 +0100
+	id 1F8kbw-0003UN-4N
+	for gcvg-git@gmane.org; Mon, 13 Feb 2006 21:47:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964864AbWBMUrG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Feb 2006 15:47:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964867AbWBMUrG
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 15:47:06 -0500
-Received: from perninha.conectiva.com.br ([200.140.247.100]:47489 "EHLO
-	perninha.conectiva.com.br") by vger.kernel.org with ESMTP
-	id S964864AbWBMUrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2006 15:47:05 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id D051736D29;
-	Mon, 13 Feb 2006 18:47:03 -0200 (BRST)
-Received: from perninha.conectiva.com.br ([127.0.0.1])
- by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 01233-05; Mon, 13 Feb 2006 18:47:03 -0200 (BRST)
-Received: from duckman.conectiva.com.br (duckman.conectiva [10.0.2.193])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 05BDA36D25;
-	Mon, 13 Feb 2006 18:47:02 -0200 (BRST)
-Received: by duckman.conectiva.com.br (Postfix, from userid 500)
-	id 81FE63FB7; Mon, 13 Feb 2006 18:52:43 -0200 (BRST)
-To: Christian Biesinger <cbiesinger@web.de>
-Content-Disposition: inline
-In-Reply-To: <1139672651713-git-send-email-cbiesinger@web.de>
-User-Agent: Mutt/1.5.11
-X-Virus-Scanned: by amavisd-new at conectiva.com.br
+	id S964858AbWBMUru (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Feb 2006 15:47:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964867AbWBMUrt
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 15:47:49 -0500
+Received: from mail.stormboxes.com ([207.234.184.232]:43413 "EHLO
+	dedicated.stormboxes.com") by vger.kernel.org with ESMTP
+	id S964858AbWBMUrt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2006 15:47:49 -0500
+Received: from [192.168.1.101] (c-24-62-216-234.hsd1.nh.comcast.net [24.62.216.234])
+	(authenticated bits=0)
+	by dedicated.stormboxes.com (8.12.10/8.12.10) with ESMTP id k1DKWb6x022618;
+	Mon, 13 Feb 2006 15:32:37 -0500
+User-Agent: Thunderbird 1.5 (Macintosh/20051201)
+To: catalin.marinas@gmail.com, git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16081>
+
+This is a multi-part message in MIME format.
+--------------080409010400090309010001
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Hello,
+
+I'm using StGIT 0.8.1 on top of the latest release of Cogito - in 
+.git/stgitrc of a local git repo, I have the following part related to 
+my mail configuration:
+
+smtpserver: mail.stormboxes.com:25
+smtpuser: username@stormboxes.com
+smtppassword: myPassword
+
+(actual username and password redacted, of course) - the point is, the 
+username actually is that entire string 'username@stormboxes.com' (no 
+quotes) because the box it's on is a virtual server for many domains and 
+the usernames must contain the domain to which they belong.  anyway, i 
+was getting authentication failures, so i hacked up mail.py and set the 
+debug level on the smtp object - i found out that it's trying to auth 
+using CRAM-MD5.  And I'm not sure whether the server doesn't support 
+that or not, but i didn't see anything in the python doc that would 
+indicate that i could make the login() method use auth login or auth 
+plain or something else, and it seems like it gets a valid response from 
+the server that tells it that the authentication failed - and i'm not 
+sure why - thunderbird works fine but i can't figure out which auth type 
+it's using. (suppose i could tcpdump it and see) I have, of course, 
+triple checked my auth credentials at this point. 
+
+does anyone have any hints or insights, or is this a server 
+configuration problem?  any help would be greatly appreciated.  Please 
+CC, as I am not subscribed to the git list. 
+
+Thanks,
+
+Aubin LaBrosse
+
+--------------080409010400090309010001
+Content-Type: text/x-vcard; charset=utf-8;
+ name="aubin.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="aubin.vcf"
+
+begin:vcard
+fn:Aubin LaBrosse
+n:LaBrosse;Aubin
+email;internet:aubin@stormboxes.com
+tel;work:589-0692
+tel;home:429-1520
+tel;cell:493-0121
+version:2.1
+end:vcard
 
 
---z0eOaCaDLjvTGF2l
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-On Sat, Feb 11, 2006 at 04:44:11PM +0100, Christian Biesinger wrote:
-> The absolute path (with the leading slash) breaks SVN importing, because =
-it then
-> looks for /trunk/... instead of /svn/trunk/... (in my case, the repositor=
-y URL
-> was https://servername/svn/)
-
-I've hit this bug today, and fortunately I've found the fix from
-Christian. Thanks! :)
-
-I am wondering if this bug was the initial reason why the -d and -D
-options where added to git-svnimport.
-
-Is there another real reason why the -d and -D options exist in
-git-svnimport?
-
-The documentation for the options say that the "wrong" option will die
-with 40x, but the commit message[1] says something about "internal server
-error". I don't know which one is right.
-
-Mathias, couldn't be the errors you described in the commit message
-related to this bug?
-
-[1] http://www.kernel.org/git/?p=3Dgit/git.git;a=3Dcommit;h=3D25f6f325d7a8f=
-7cb686a9ffd9fa2c00b3aa85a60
-
---=20
-Eduardo
-
---z0eOaCaDLjvTGF2l
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFD8PGbcaRJ66w1lWgRAlDVAKCjT4uG/6XCWFckRYKF0+tc2L5dDwCfZNcB
-PXvOb9g1aiADyZSlbMYZbjU=
-=2Puh
------END PGP SIGNATURE-----
-
---z0eOaCaDLjvTGF2l--
+--------------080409010400090309010001--
