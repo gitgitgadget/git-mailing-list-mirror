@@ -1,75 +1,96 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Quick question
-Date: Mon, 13 Feb 2006 21:17:09 +0100
-Message-ID: <20060213201709.GB5935@steel.home>
-References: <43F0B577.4070608@gorzow.mm.pl> <Pine.LNX.4.64.0602130848220.3691@g5.osdl.org> <43F0CF3B.6040807@gorzow.mm.pl>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Eduardo Pereira Habkost <ehabkost@mandriva.com>
+Subject: git-svnimport -d and -D options (was Re: [PATCH] Use a relative path for SVN importing)
+Date: Mon, 13 Feb 2006 18:52:43 -0200
+Message-ID: <20060213205243.GF4323@duckman.conectiva>
+References: <1139672651713-git-send-email-cbiesinger@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 13 21:18:32 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="z0eOaCaDLjvTGF2l"
+Cc: git@vger.kernel.org, Matthias Urlichs <smurf@smurf.noris.de>
+X-From: git-owner@vger.kernel.org Mon Feb 13 21:47:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8k8f-00058Q-By
-	for gcvg-git@gmane.org; Mon, 13 Feb 2006 21:17:38 +0100
+	id 1F8kbF-0003L7-UT
+	for gcvg-git@gmane.org; Mon, 13 Feb 2006 21:47:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964854AbWBMURd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Feb 2006 15:17:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964855AbWBMURd
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 15:17:33 -0500
-Received: from devrace.com ([198.63.210.113]:32272 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S964854AbWBMURd (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2006 15:17:33 -0500
-Received: from tigra.home (p54A0590F.dip.t-dialin.net [84.160.89.15])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k1DKHDDu096909;
-	Mon, 13 Feb 2006 14:17:15 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1F8k8G-0001Bv-00; Mon, 13 Feb 2006 21:17:12 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1F8k8F-0001vA-1E; Mon, 13 Feb 2006 21:17:11 +0100
-To: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
+	id S964864AbWBMUrG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Feb 2006 15:47:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964867AbWBMUrG
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 15:47:06 -0500
+Received: from perninha.conectiva.com.br ([200.140.247.100]:47489 "EHLO
+	perninha.conectiva.com.br") by vger.kernel.org with ESMTP
+	id S964864AbWBMUrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2006 15:47:05 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id D051736D29;
+	Mon, 13 Feb 2006 18:47:03 -0200 (BRST)
+Received: from perninha.conectiva.com.br ([127.0.0.1])
+ by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 01233-05; Mon, 13 Feb 2006 18:47:03 -0200 (BRST)
+Received: from duckman.conectiva.com.br (duckman.conectiva [10.0.2.193])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 05BDA36D25;
+	Mon, 13 Feb 2006 18:47:02 -0200 (BRST)
+Received: by duckman.conectiva.com.br (Postfix, from userid 500)
+	id 81FE63FB7; Mon, 13 Feb 2006 18:52:43 -0200 (BRST)
+To: Christian Biesinger <cbiesinger@web.de>
 Content-Disposition: inline
-In-Reply-To: <43F0CF3B.6040807@gorzow.mm.pl>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=0.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL 
-	autolearn=no version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+In-Reply-To: <1139672651713-git-send-email-cbiesinger@web.de>
+User-Agent: Mutt/1.5.11
+X-Virus-Scanned: by amavisd-new at conectiva.com.br
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16080>
 
-Radoslaw Szkodzinski, Mon, Feb 13, 2006 19:26:03 +0100:
-> Linus Torvalds wrote:
-> > 
-> > Well, since you're telling it to only show excluded files, it will also 
-> > only show excluded directories.
-> > 
-> > Which is admittedly insane. You don't want to exclude directories. Or 
-> > maybe you do, but then we should add the "/" to the end before we do the 
-> > exclusion.
-> > 
-> > This patch (untested) will never exclude directories. Which may or may not 
-> > be the right thing. 
 
-I actually quiet like it how it is.
+--z0eOaCaDLjvTGF2l
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > Junio? Others? Comments?
-> > 
-> 
-> For me it seems to do the right thing, although I have no need to exclude directories.
-> If I really needed to, I'd say something like:
-> 
-> /excluded_dir/*
-> 
-> in .git/info/exclude, and it would show the files as being excluded.
-> 
+Hi,
 
-What's wrong with .gitignore in the excluded_dir containing everything
-you don't want to see, or even just "*"?
+On Sat, Feb 11, 2006 at 04:44:11PM +0100, Christian Biesinger wrote:
+> The absolute path (with the leading slash) breaks SVN importing, because =
+it then
+> looks for /trunk/... instead of /svn/trunk/... (in my case, the repositor=
+y URL
+> was https://servername/svn/)
+
+I've hit this bug today, and fortunately I've found the fix from
+Christian. Thanks! :)
+
+I am wondering if this bug was the initial reason why the -d and -D
+options where added to git-svnimport.
+
+Is there another real reason why the -d and -D options exist in
+git-svnimport?
+
+The documentation for the options say that the "wrong" option will die
+with 40x, but the commit message[1] says something about "internal server
+error". I don't know which one is right.
+
+Mathias, couldn't be the errors you described in the commit message
+related to this bug?
+
+[1] http://www.kernel.org/git/?p=3Dgit/git.git;a=3Dcommit;h=3D25f6f325d7a8f=
+7cb686a9ffd9fa2c00b3aa85a60
+
+--=20
+Eduardo
+
+--z0eOaCaDLjvTGF2l
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQFD8PGbcaRJ66w1lWgRAlDVAKCjT4uG/6XCWFckRYKF0+tc2L5dDwCfZNcB
+PXvOb9g1aiADyZSlbMYZbjU=
+=2Puh
+-----END PGP SIGNATURE-----
+
+--z0eOaCaDLjvTGF2l--
