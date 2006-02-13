@@ -1,142 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-bisect problem
-Date: Mon, 13 Feb 2006 01:11:23 -0800
-Message-ID: <7virrj1v44.fsf@assigned-by-dhcp.cox.net>
-References: <20060213002502.5c23122c.akpm@osdl.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: stg refresh/conflict resolution helptext/reality inconsistency
+Date: Mon, 13 Feb 2006 09:20:09 +0000
+Message-ID: <b0943d9e0602130120p542c2b0ex@mail.gmail.com>
+References: <Pine.OSX.4.64.0602131305420.19080@piva.hawaga.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 13 10:11:32 2006
+X-From: git-owner@vger.kernel.org Mon Feb 13 10:20:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8Zk2-0003y0-JD
-	for gcvg-git@gmane.org; Mon, 13 Feb 2006 10:11:30 +0100
+	id 1F8ZsX-0005DL-Av
+	for gcvg-git@gmane.org; Mon, 13 Feb 2006 10:20:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751660AbWBMJL2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Feb 2006 04:11:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751662AbWBMJL1
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 04:11:27 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:61623 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751660AbWBMJL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2006 04:11:27 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060213090804.MTEV20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 13 Feb 2006 04:08:04 -0500
-To: Andrew Morton <akpm@osdl.org>
-In-Reply-To: <20060213002502.5c23122c.akpm@osdl.org> (Andrew Morton's message
-	of "Mon, 13 Feb 2006 00:25:02 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751252AbWBMJUM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Feb 2006 04:20:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751186AbWBMJUL
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 04:20:11 -0500
+Received: from xproxy.gmail.com ([66.249.82.192]:59020 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751252AbWBMJUK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2006 04:20:10 -0500
+Received: by xproxy.gmail.com with SMTP id s9so620284wxc
+        for <git@vger.kernel.org>; Mon, 13 Feb 2006 01:20:09 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QDk0hOiZupPEmFTHI1va8/OaAz7uPjAyncOhgW4KHRMBtr0m/5RW78mJ7mpb4CRjfRKjCESugkwINgu3cf2MTXnf48/v/EnUo27j0BhgzzCs3N/BnR6JlIpNz+Q/QrFV6HfnRT52vehCCvFsRwxJfDN8B63Vo5ZWsoYHvp6BxAI=
+Received: by 10.70.67.5 with SMTP id p5mr2282481wxa;
+        Mon, 13 Feb 2006 01:20:09 -0800 (PST)
+Received: by 10.70.53.7 with HTTP; Mon, 13 Feb 2006 01:20:09 -0800 (PST)
+To: Ben Clifford <benc@hawaga.org.uk>
+In-Reply-To: <Pine.OSX.4.64.0602131305420.19080@piva.hawaga.org.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16056>
 
-Andrew Morton <akpm@osdl.org> writes:
+On 13/02/06, Ben Clifford <benc@hawaga.org.uk> wrote:
+> The following happens to me. The help text about using "refresh" doesn't
+> seem to match up what I actually did. Am I doing something wrong?
 
-> I've been trying to locate an ipw2200 regression in Jeff's tree
-> (git+ssh://master.kernel.org/pub/scm/linux/kernel/git/jgarzik/netdev-2.6.git#ALL)
-> and it ended up leading me to 
+Indeed, the 'refresh' help doesn't say anything about this. Dealing
+with conflicts can be found in the tutorial.
+
+> $ stg push
+> Pushing patch "strcmp-ordering"...Error: three-way merge tool failed for
+> file "imap/src/osdep/unix/maildir.c"
+> The merge failed during "push". Use "refresh" after fixing the conflicts
+> stg push: git-merge-index failed (possible conflicts)
 >
-> 826eeb53a6f264842200d3311d69107d2eb25f5e is first bad commit
-> diff-tree 826eeb53a6f264842200d3311d69107d2eb25f5e (from 33052057e3e2db7f37fc78aa3f25c98f7e989fae)
-> Author: Linus Torvalds <torvalds@g5.osdl.org>
-> Date:   Thu Feb 2 22:03:08 2006 -0800
+> [edit file to get rid of the <<< === >>> stuff]
 >
->     Linux v2.6.16-rc2
->
-> which wasn't very useful.
->
-> I don't _think_ I screwed anything up.
->
-> git-bisect start
-> # good: [2664b25051f7ab96b22b199aa2f5ef6a949a4296] Linux v2.6.16-rc1
-> git-bisect good 2664b25051f7ab96b22b199aa2f5ef6a949a4296
-> # bad: [826eeb53a6f264842200d3311d69107d2eb25f5e] Linux v2.6.16-rc2
-> git-bisect bad 826eeb53a6f264842200d3311d69107d2eb25f5e
-> # good: [10379a25fee8ddc8698d2f6c54ccedd4664c2941] Merge master.kernel.org:/pub/scm/linux/kernel/git/davej/agpgart
-> git-bisect good 10379a25fee8ddc8698d2f6c54ccedd4664c2941
-> # good: [9a2dba4b4912b493070cbc170629fdbf440b01d7] slab: rename ac_data to cpu_cache_get
-> git-bisect good 9a2dba4b4912b493070cbc170629fdbf440b01d7
-> # good: [9ad11ab48b1ad618bf47076e9e579f267f5306c2] compat: fix compat_sys_openat and friends
-> git-bisect good 9ad11ab48b1ad618bf47076e9e579f267f5306c2
-> # good: [1494a92f4c2b1d5abdaa1f823dd19f797bb137de] [ALSA] hda-codec - Fix typos in alc882 model table
-> git-bisect good 1494a92f4c2b1d5abdaa1f823dd19f797bb137de
-> # good: [9fdb62af92c741addbea15545f214a6e89460865] [ACPI] merge 3549 4320 4485 4588 4980 5483 5651 acpica asus fops pnpacpi branches into release
-> git-bisect good 9fdb62af92c741addbea15545f214a6e89460865
-> # good: [cf41f8ac386e8d62122e7e394b4c6b3e3ab30ede] Merge branch 'drm-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/airlied/drm-2.6
-> git-bisect good cf41f8ac386e8d62122e7e394b4c6b3e3ab30ede
+> $ stg refresh
+> stg refresh: Unsolved conflicts. Please resolve them first
 
-At this point, looking at "git bisect visualize" shows that
-bisect point is at "SUNRPC: Remove obsolete rpcauth #defines",
-and commits older than that are NFSv3, 4 SUNRPCs, 2 NLMs, and
-stops at "[PATCH] kernel-doc: clean up the script (whitespace)".
+'stg status -c' would show the conflict files.
 
-> # good: [00b464debf0038b1628996065f0be564ccfbfd86] SUNRPC: Remove obsolete rpcauth #defines
-> git-bisect good 00b464debf0038b1628996065f0be564ccfbfd86
+> $ rm .git/conflicts
 
-And this is marked to be good -- it leaves:
+'stg resolved --all' does the same thing. I'd recommend that you use
+it instead since it also clears the index if the merge conflict wasn't
+handled by gitmergeonefile.py.
 
-       SUNPRC    good
-   SUNRPC  NFSv3 00b464
-  ...o---o---o---o---------o--------o
-                          /         bad
-     o---o---o---o---o---o          v2.6.16-rc2
- good  
- cf41f8  md  md  md  md  dm
+If you don't like doing this, you can set 'autoresolved: yes' in your
+configuration file (/etc/stgitrc, ~/.stgitrc or .git/stgitrc) which
+would mark all the conficts as resolved before refreshing. I
+personally prefer to mark each individual conflict as resolved.
 
-> # good: [35849c75d7750a254119c1a4b88c90156919df2a] md: Add sysfs access to raid6 stripe cache size
-> git-bisect good 35849c75d7750a254119c1a4b88c90156919df2a
+Setting 'keeporig: no' would also prevent StGIT from generating the
+original versions of the file being merged.
 
-Then you mark the rightmost md to be good.
-
-                 good
-                 00b464
-                 o---------o--------o
-                          /         bad
-                     o---o          v2.6.16-rc2
-                   good
-                     md  dm
-
-So at this point, assuming the bug is something that is
-bisectable, there are still three suspects:
-
-  (1) dm (device-mapper log bitset: fix big endian)
-  (2) the merge was screwed up 
-  (3) Linus did more than setting EXTRAVERSION in v2.6.16-rc2
-
-> # good: [33052057e3e2db7f37fc78aa3f25c98f7e989fae] Merge branch 'master' of git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
-> git-bisect good 33052057e3e2db7f37fc78aa3f25c98f7e989fae
-
-And your test showed the merge one was good.
-
-                          good
-                          330520
-                 o---------o--------o
-                          /         bad
-                     o---o          v2.6.16-rc2
-                   good
-                     md  dm
-
-As humans, we can tell that it is not very plausible that the
-EXTRAVERSION change caused whatever breakage you are chasing,
-but sorry, from your log, I think bisect is doing the right
-thing.
-
-The last stretch of the md/dm track does not seem to have much
-to do with ipw2200 (isn't that a wireless thing?), and the other
-track does not look card specific even though NFS and SUNRPC
-sounds networking related.  If I have to guess:
-
- (0) the bug is not really reproducible;
-
- (1) an earlier part of bisection misrecorded bad as good;
-
- (2) older commits on these two tracks have subtle interaction,
-     and the problem does not surface without such interaction
-     (but that is not plausible because your test on the final
-     "merge" should have shown the problem if that is the case);
+--
+Catalin
