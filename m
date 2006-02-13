@@ -1,116 +1,80 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
-Date: Mon, 13 Feb 2006 17:40:22 +1300
-Message-ID: <43F00DB6.4040306@vilain.net>
-References: <20060210195914.GA1350@spearce.org> <43EFF3D0.4090701@vilain.net> <20060213032903.GA32121@spearce.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Handling large files with GIT
+Date: Sun, 12 Feb 2006 20:57:25 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602122049010.3691@g5.osdl.org>
+References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com> 
+ <87slqty2c8.fsf@mid.deneb.enyo.de> <46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com>
+ <Pine.OSX.4.64.0602131416530.25089@piva.hawaga.org.uk>
+ <Pine.LNX.4.64.0602121939070.3691@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 13 05:41:11 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 13 05:57:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8VWH-00008b-Gp
-	for gcvg-git@gmane.org; Mon, 13 Feb 2006 05:41:02 +0100
+	id 1F8Vma-0003Dl-CU
+	for gcvg-git@gmane.org; Mon, 13 Feb 2006 05:57:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751622AbWBMEkz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Feb 2006 23:40:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751615AbWBMEkn
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 23:40:43 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:21919 "EHLO mail.utsl.gen.nz")
-	by vger.kernel.org with ESMTP id S1751613AbWBMEkm (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2006 23:40:42 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id 14A6E469A; Mon, 13 Feb 2006 17:40:38 +1300 (NZDT)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 767F64581;
-	Mon, 13 Feb 2006 17:40:26 +1300 (NZDT)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060213032903.GA32121@spearce.org>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1751616AbWBME5t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Feb 2006 23:57:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751621AbWBME5t
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 23:57:49 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:57224 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751614AbWBME5s (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2006 23:57:48 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1D4vTDZ009218
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 12 Feb 2006 20:57:29 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1D4vPar002661;
+	Sun, 12 Feb 2006 20:57:28 -0800
+To: Ben Clifford <benc@hawaga.org.uk>
+In-Reply-To: <Pine.LNX.4.64.0602121939070.3691@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16044>
 
-Shawn Pearce wrote:
->>>I just posted the first public version of pg, a GIT porcelain for
->>>managing patches.  Think StGIT, but better in some ways:
->>>Feature Summary:
->>>- Maximum compatibility with other GIT porcelains.
->>>- Simplified command line user interface.
->>How do I edit the description of an existing patch using pg?  Perhaps an
->>option to pg-push ?
-> There isn't any description associated with a patch beyond its name
-> (which can be changed with pg-rename).  Unlike StGIT pg currently
-> doesn't store a description with each patch.
-> This is partly because I want pg to extract the comments given to
-> pg-ci to make the description of the patch during an export with
-> pg-export - but I haven't written the code to walk back along the
-> related commits and extract each comment.  On the other hand this
-> might not be the best description for a patch.  :-)
 
-ok.  Well, perhaps a nice solution might be just to aggregate the
-comments as each new commit is made.  ie, the previous comment is
-prepended to the new comment unless you use the editor or a special
--M (or whatever) option that replaces the running comment.
 
-I tried importing a patchset into pg, and made some changes to it to see
-the patch revisioning going on.  However, I can't see this happening.
-Can you perhaps include this information in your tutorial?
+On Sun, 12 Feb 2006, Linus Torvalds wrote:
+> 
+> If it takes an hour per merge, it _is_ unusable. I consider 15 _seconds_ 
+> to be pretty unusable.
 
-As far as other, more general critiques of the software goes:  What
-about merging?  stgit has a very nice way of merging; I specify how to
-merge using a config file, and when I rebase my patches with "stg pull",
-it fires up my custom editor.  All I really want is a way to specify how
-to handle merges, with the ancestor/left/right files on hand.  I want to
-use something as simple as this script:
+Btw, one thing to realize is that git is inherently a lot better at 
+handling lots of files in _subdirectories_, especially if those 
+subdirectories don't change.
 
-#!/bin/sh
+I've never used maildir layout, but if it is a couple of large _flat_ 
+subdirectories, git will potentially handle that a lot worse than if you 
+have a hierarchy of directories.
 
-branch1="$1"
-branch2="$2"
-ancestor="$3"
-output="$4"
+I say "potentially", because if the directories are all mutable and 
+change, then the flat approach is better. But if they tend to have some 
+kind of stability, a lot of git operations (diffing and merging in 
+particular) are able to see that two subdirectories are 100% equal, and 
+will entirely skip them.
 
-echo "Merging:"
-echo
-echo "   $branch1"
-echo " - $ancestor"
-echo
-echo " with:"
-echo
-echo "   $branch2"
-echo " - $ancestor"
-echo
-echo " to: $output"
-echo ""
-echo -n "Trying diff3..."
+This is a large part of why git performs well on the kernel. Most merges 
+don't actually touch all - or even a very big percentage - of the over 
+thousand subdirectories in the kernel. Git can quickly see and ignore the 
+whole subdirectory when that happens - the SHA1 is exactly the same, so 
+git knows that every file under that subdirectory (and every recursive 
+directory) is the same.
 
-if diff3 -L local -L older -L remote -m -E "$branch1" "$ancestor" \
-    "$branch2" > "$output"
-then
-     echo "OK"
-else
-     echo "failed"
-     echo "falling back to ediff-merge"
-     emacs --eval "(ediff-merge-files-with-ancestor \"${branch1}\"
-                    \"${branch2}\" \"${ancestor}\" nil \"${output}\")"
-fi
+In contrast, if you have a million files in one directory, and 10 of them 
+changed, git will still have to check the SHA1's for matches for the other 
+999,990 files. Which is going to be slow.
 
-Those commands I got from the default .stgitrc config.
+That said, I suspect there's space for optimization. 
 
-That's all the features I'm really after.
-
-Sam.
+		Linus
