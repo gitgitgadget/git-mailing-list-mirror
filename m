@@ -1,70 +1,85 @@
-From: Ben Clifford <benc@hawaga.org.uk>
-Subject: stg refresh/conflict resolution helptext/reality inconsistency
-Date: Mon, 13 Feb 2006 13:14:05 +1300 (NZDT)
-Message-ID: <Pine.OSX.4.64.0602131305420.19080@piva.hawaga.org.uk>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Fake linear history in a deterministic manner.
+Date: Mon, 13 Feb 2006 14:46:38 +1300
+Message-ID: <46a038f90602121746v5adb448ej73cc2be6dd3745ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-X-From: git-owner@vger.kernel.org Mon Feb 13 02:44:03 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Feb 13 02:47:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8Sky-0007rK-4Q
-	for gcvg-git@gmane.org; Mon, 13 Feb 2006 02:44:00 +0100
+	id 1F8Snf-0000V7-02
+	for gcvg-git@gmane.org; Mon, 13 Feb 2006 02:46:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751103AbWBMBn5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Feb 2006 20:43:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbWBMBn5
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 20:43:57 -0500
-Received: from mundungus.clifford.ac ([81.187.211.39]:55302 "EHLO
-	mundungus.clifford.ac") by vger.kernel.org with ESMTP
-	id S1751103AbWBMBn5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Feb 2006 20:43:57 -0500
-Received: from piva.hawaga.org.uk (localhost [127.0.0.1])
-	by mundungus.clifford.ac (8.13.3/8.13.3) with ESMTP id k1D1gkPJ022828;
-	Mon, 13 Feb 2006 01:42:48 GMT
-Received: by piva.hawaga.org.uk (Postfix, from userid 501)
-	id 4041CD4E49F; Mon, 13 Feb 2006 13:14:06 +1300 (NZDT)
-Received: from localhost (localhost [127.0.0.1])
-	by piva.hawaga.org.uk (Postfix) with ESMTP id 113E5D4E49B;
-	Mon, 13 Feb 2006 13:14:06 +1300 (NZDT)
-To: git@vger.kernel.org, catalin.marinas@gmail.com
+	id S1751545AbWBMBqk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Feb 2006 20:46:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751541AbWBMBqk
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Feb 2006 20:46:40 -0500
+Received: from wproxy.gmail.com ([64.233.184.193]:32551 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751503AbWBMBqj convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Feb 2006 20:46:39 -0500
+Received: by wproxy.gmail.com with SMTP id i34so737705wra
+        for <git@vger.kernel.org>; Sun, 12 Feb 2006 17:46:38 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=TdJGvH6/Lx0VyaralJ+OKrAts+ifQQpX0KBQxYiQD10GMgH/k8DaMr6D4ZtlY/nhaObuOQJ2qI9Tx3Sga5WzIcLxGTe2uVERFs9aeZL0hyO7/6CaJbp+IKAV/Oh+9A5wcsdDuNcQG6nraOSlpvtysrQ5FlPQZr7mHTZag0Fi1WY=
+Received: by 10.54.143.17 with SMTP id q17mr1780482wrd;
+        Sun, 12 Feb 2006 17:46:38 -0800 (PST)
+Received: by 10.54.71.8 with HTTP; Sun, 12 Feb 2006 17:46:38 -0800 (PST)
+To: Git Mailing List <git@vger.kernel.org>, martyn@catalyst.net.nz
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16035>
+
+To emulate `cvs log somepath` I need to munge history to look linear.
+I am working on the theory that I will tell the cvs client about *one*
+linear history, and show merges from parallel histories as a merge
+commit, "flattened" so to speak, and with a commit message where I'll
+list the hash and first line of each commit that it involves.
+
+Now, we are keeping a sqlite db (bad dependency, I know) with a list
+of the lies we tell to the clients, so we can at least be consistent
+(and fast). The fact that true git clients will be able to commit to
+the repo means that actual parallel development will happen in the
+repo.
+
+Now, I can't think of an approach to drawing the linearized history
+that is deterministic. I can't chose any branch with any confidence,
+because the repo always has a very limited view. A client could come
+in any time and push onto the repo a series of commits based on an
+ancient commit, with ancient dates, and a merge to todays head.
+
+We've been talking about updating the sqlite db with a post update
+hook, which means that in that context we never have to choose, the
+commits that get to the repo first win because they now drive the
+linearized history.
+
+But when creating a new lies database, we have no
+"pushed-to-this-repo" timestamp in the commits so we'll have to pick.
+At the moment, I suspect I'll pick the one with the earliest
+"following" commit.
+
+I thought briefly about delaying the decision until I see the merge,
+and pick the leftmost, or rightmost, if there is some bias in
+git-merge or cg-merge on putting whatever origin has on a particular
+side. It'd mean running backwards through history and that the very
+last merge can flip the decision entirely. Hmmm... any strategy I can
+come up with means that each new merge throws the dice again entirely.
+
+Ideas?
+
+(As a result of this, the git-cvsserver we're drafting is of limited
+usefulness to projects that really do use git to do what it does best:
+DSCM. Projects with a mostly linearized history -- using git-rebase
+liberally to avoid uninteresting merges -- do get a reasonable cvs
+history. Or will get. Sometime. Soon.)
 
 
-The following happens to me. The help text about using "refresh" doesn't 
-seem to match up what I actually did. Am I doing something wrong?
 
-
-$ stg push
-Pushing patch "strcmp-ordering"...Error: three-way merge tool failed for 
-file "imap/src/osdep/unix/maildir.c"
-The merge failed during "push". Use "refresh" after fixing the conflicts
-stg push: git-merge-index failed (possible conflicts)
-
-[edit file to get rid of the <<< === >>> stuff]
-
-$ stg refresh
-stg refresh: Unsolved conflicts. Please resolve them first
-
-$ rm .git/conflicts
-
-$ stg refresh
-Refreshing patch "strcmp-ordering"... done
-
-
-
-This is the stg version I'm using:
-
-$ stg --version
-Stacked GIT 0.8
-git version 1.1.6.gd19e
-Python version 2.3.5 (#1, Mar 20 2005, 20:38:20)
-[GCC 3.3 20030304 (Apple Computer, Inc. build 1809)]
-
-$ cd ~/src/stgit 
-$ cg status | grep master
-    >master      0a01a6d0eaf0c6a70819da2f73fc659e7a83b569
+martin
