@@ -1,62 +1,70 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH] s/SHELL/SHELL_PATH/ in Makefile
-Date: Tue, 14 Feb 2006 00:15:14 +0100
-Message-ID: <20060213231514.GA26758@c165.ib.student.liu.se>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Handling large files with GIT
+Date: Tue, 14 Feb 2006 12:19:23 +1300
+Message-ID: <46a038f90602131519l1d281a32o80dbc5621fbf00af@mail.gmail.com>
+References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>
+	 <87slqty2c8.fsf@mid.deneb.enyo.de>
+	 <46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com>
+	 <Pine.OSX.4.64.0602131416530.25089@piva.hawaga.org.uk>
+	 <Pine.LNX.4.64.0602121939070.3691@g5.osdl.org>
+	 <Pine.LNX.4.64.0602122049010.3691@g5.osdl.org>
+	 <Pine.LNX.4.64.0602122058260.3691@g5.osdl.org>
+	 <43F113A5.2080506@f2s.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Tue Feb 14 00:16:28 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Ben Clifford <benc@hawaga.org.uk>,
+	Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 14 00:19:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8mvS-0000WY-C1
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 00:16:11 +0100
+	id 1F8myh-0001FM-9v
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 00:19:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030265AbWBMXPw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Feb 2006 18:15:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030267AbWBMXPm
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 18:15:42 -0500
-Received: from [85.8.31.11] ([85.8.31.11]:9405 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S1030269AbWBMXPZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2006 18:15:25 -0500
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id D65CE40FD; Tue, 14 Feb 2006 00:29:24 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1F8muY-0006z4-00; Tue, 14 Feb 2006 00:15:14 +0100
-To: git@vger.kernel.org
+	id S1030258AbWBMXT1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Feb 2006 18:19:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030272AbWBMXT1
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 18:19:27 -0500
+Received: from wproxy.gmail.com ([64.233.184.200]:54587 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1030258AbWBMXT0 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2006 18:19:26 -0500
+Received: by wproxy.gmail.com with SMTP id 69so959139wra
+        for <git@vger.kernel.org>; Mon, 13 Feb 2006 15:19:23 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=n0vBtiLxOscQyakOdkxAA6KFZOdzU2DKcDqX6lQsVjYqkHc4mZ8W9zfSTDlL14x8fl1P1MlCPeBwl2HT7LJ5EPD0qlYZ7Imc+1In+NX6/SiJ91lJc0d+yB28QTokuT6gYQ5s9KoR6TVLMdggQRx4U7BNSNayY2RqUCmdk3KWsKE=
+Received: by 10.54.123.4 with SMTP id v4mr2804367wrc;
+        Mon, 13 Feb 2006 15:19:23 -0800 (PST)
+Received: by 10.54.71.8 with HTTP; Mon, 13 Feb 2006 15:19:23 -0800 (PST)
+To: Ian Molton <spyro@f2s.com>
+In-Reply-To: <43F113A5.2080506@f2s.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16086>
 
-With the current Makefile we don't use the shell chosen by the
-platform specific defines when we invoke GIT-VERSION-GEN.
+On 2/14/06, Ian Molton <spyro@f2s.com> wrote:
+> Im curious as to why anyone would want to use a SCM tool on a mail dir
+> anyway - surely no-one edits their pasnt mails and needs to keep logs?
+>
+> surely incremental backups would be a better way to manage something
+> like this ?
 
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
+Well, the maildir arrangement is friendlier to something content-smart
+like git than to something content-stupid like a backup tool. Files
+inside a maildir change name/location to reflect changes in status,
+but their content tends to remain the same.
+
+git does great in this scenario, except for the "dealing with a
+bazillion files" part of it.
+
+cheers,
 
 
----
-
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-86d29e725d299d2bba7404809d81c61d7dab590c
-diff --git a/Makefile b/Makefile
-index f240e45..d40aa6a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -67,7 +67,7 @@ all:
- # change being considered an inode change from the update-cache perspective.
- 
- GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
--	@$(SHELL) ./GIT-VERSION-GEN
-+	@$(SHELL_PATH) ./GIT-VERSION-GEN
- -include GIT-VERSION-FILE
- 
- # CFLAGS and LDFLAGS are for the users to override from the command line.
--- 
-1.1.6.g4dc8
+martin
