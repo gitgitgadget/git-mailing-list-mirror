@@ -1,69 +1,58 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: several quick questions
-Date: Tue, 14 Feb 2006 21:27:28 +0100
-Message-ID: <20060214202728.GE31278@pasky.or.cz>
-References: <43F20532.5000609@iaglans.de> <Pine.LNX.4.64.0602140845080.3691@g5.osdl.org> <87k6bxvmj6.wl%cworth@cworth.org> <Pine.LNX.4.64.0602141026570.3691@g5.osdl.org> <87fymlvgzv.wl%cworth@cworth.org>
+Date: Tue, 14 Feb 2006 21:34:41 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602142133360.23093@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <43F20532.5000609@iaglans.de> <Pine.LNX.4.64.0602140845080.3691@g5.osdl.org>
+ <87k6bxvmj6.wl%cworth@cworth.org> <87irrhvkyl.wl%cworth@cworth.org>
+ <Pine.LNX.4.64.0602141056170.3691@g5.osdl.org> <43F231C5.5010205@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Nicolas Vilz 'niv' <niv@iaglans.de>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 14 21:26:48 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 14 21:35:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F96l5-0006gf-Ho
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 21:26:48 +0100
+	id 1F96so-00006O-A5
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 21:34:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422793AbWBNU0m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 15:26:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422794AbWBNU0m
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 15:26:42 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:62444 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1422793AbWBNU0m (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 15:26:42 -0500
-Received: (qmail 3316 invoked by uid 2001); 14 Feb 2006 21:27:28 +0100
-To: Carl Worth <cworth@cworth.org>
-Content-Disposition: inline
-In-Reply-To: <87fymlvgzv.wl%cworth@cworth.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932072AbWBNUen (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 15:34:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932376AbWBNUen
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 15:34:43 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:4548 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932072AbWBNUem (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2006 15:34:42 -0500
+Received: from virusscan.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 1B95C146EF7; Tue, 14 Feb 2006 21:34:42 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 0CCDE6B14;
+	Tue, 14 Feb 2006 21:34:42 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id BE3E2146EF7; Tue, 14 Feb 2006 21:34:41 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <43F231C5.5010205@op5.se>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16167>
 
-Dear diary, on Tue, Feb 14, 2006 at 09:10:28PM CET, I got a letter
-where Carl Worth <cworth@cworth.org> said that...
-> That gives a very natural name, "seek", for the operation I'd like.
-> 
-> How about "git seek" for doing the operations above, and using some
-> reserved branch name, (say "seek"). Then, git-bisect could easily be
-> built on that, and git-commit could respect the "seek" name and refuse
-> to commit to it, (could tell the user how to create the branch
-> necessary to commit from the current point).
-> 
-> There could also be a "git seek reset" to return to the HEAD saved by
-> the first in a chain of "git seek" operations.
-> 
-> That looks like I minor generalization of existing behavior in
-> git-bisect, but it would provide an operation that I would find
-> useful.
+Hi,
 
-Well, this is exactly what cg-seek does (and it's one of pretty old
-Cogito commands) - it even has the same name. ;-) See my other mail in
-this thread.
+On Tue, 14 Feb 2006, Andreas Ericsson wrote:
 
-It works by creating a new branch cg-seek-point and storing the seeked
-point there; if HEAD is already on the branch, it merely changes the
-seek point and resets the working tree appropriately. cg-seek without
-any arguments will then return to your original head, whose name was
-stored in .git/head-name.
+> [...] it would be nifty (and I imagine not particularly hard) to teach 
+> "git checkout" to check out any revision, and not just a branch.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+You have to have a valid HEAD. So, you can create a throw-away branch 
+easily:
+
+	git-checkout -f throw HEAD~56
+
+Hth,
+Dscho
