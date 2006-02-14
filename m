@@ -1,107 +1,80 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: several quick questions
-Date: Tue, 14 Feb 2006 20:46:50 +0100
-Message-ID: <20060214194650.GD31278@pasky.or.cz>
-References: <43F20532.5000609@iaglans.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Handling large files with GIT
+Date: Tue, 14 Feb 2006 11:52:26 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602141108050.3691@g5.osdl.org>
+References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com> 
+ <87slqty2c8.fsf@mid.deneb.enyo.de> <46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com>
+ <Pine.OSX.4.64.0602131416530.25089@piva.hawaga.org.uk>
+ <Pine.LNX.4.64.0602121939070.3691@g5.osdl.org> <Pine.LNX.4.64.0602122049010.3691@g5.osdl.org>
+ <Pine.LNX.4.64.0602122058260.3691@g5.osdl.org> <43F113A5.2080506@f2s.com>
+ <Pine.LNX.4.63.0602141953000.22451@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 14 20:46:22 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Ian Molton <spyro@f2s.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 14 20:52:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F967w-0005hR-Sl
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 20:46:21 +0100
+	id 1F96EN-0007L8-4Y
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 20:52:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422763AbWBNTqF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 14:46:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422765AbWBNTqE
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 14:46:04 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:27047 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1422763AbWBNTqD (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 14:46:03 -0500
-Received: (qmail 27745 invoked by uid 2001); 14 Feb 2006 20:46:50 +0100
-To: Nicolas Vilz 'niv' <niv@iaglans.de>
-Content-Disposition: inline
-In-Reply-To: <43F20532.5000609@iaglans.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1422770AbWBNTwe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 14:52:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422772AbWBNTwd
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 14:52:33 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:3474 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1422770AbWBNTwc (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 14:52:32 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1EJqRDZ028268
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 14 Feb 2006 11:52:28 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1EJqQxK023773;
+	Tue, 14 Feb 2006 11:52:27 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0602141953000.22451@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16163>
 
-  Hi,
 
-  now from the simple Cogito's point of view. I will swap the two parts
-of your mail.
 
-Dear diary, on Tue, Feb 14, 2006 at 05:28:34PM CET, I got a letter
-where Nicolas Vilz 'niv' <niv@iaglans.de> said that...
-> And another thing, is there no posibility to get back to some commits or
-> tags? I realized you can rebranch tags... what, if i want to switch back
-> to git version 1.1.6 in the git repository? Or a certain commit?
+On Tue, 14 Feb 2006, Johannes Schindelin wrote:
 > 
-> do you have to make a new private branch out of the tag 1.1.6?
-> 
-> i used svn and there i could go back some revisions. I haven't found
-> such a feature in git, yet... but i think i am blind all the time.
+> Point is, if you want to read your email on different computers (like one 
+> desktop and one laptop), you are quite well off managing them with git. Of 
+> course, you could rsync them from/to the other computer. But rsync is slow 
+> once you accumulated enough files, since it has to compare the hashes of 
+> tons of files (or file chunks). Git knows if they have changed.
 
-  The simple answer is cg-seek, which is meant for temporary ventures to
-the commit history - e.g. you want to go back to git version 1.1.6, but
-intend to do no development on top of it and to return back to the top
-later. cg-seek will remember "where you came from" and by doing either
-cg-reset or simply calling cg-seek without any parameters, it will
-return back to the top.
+Yes. I actually think that git would be a _wonderful_ email tracking tool, 
+but that may not mean that it's a wonderful tool for tracking all 
+particular email layout possibilities. It clearly is _not_ a wonderful 
+tool for tracking mbox-style email setups, for example ;)
 
-  If you want to permanently change your branch to point to the 1.1.6
-tag, the command to use is cg-switch -f. There is also a simpler but
-less powerful variant of this command available as cg-admin-uncommit.
+I suspect we actually could make the "one linear directory" setup perform 
+pretty well. It wouldn't be the best possible layout (by far), but I think 
+our problems there are just because of some decisions we've (me, mostly) 
+made that didn't take that layout into account. I don't think the problems 
+are in any way fundamental.
 
-> i wonder, how i revoke a straight forward merge of two trees... I
-> And another thing, is there no posibility to get back to some commits or
-> tags? I realized you can rebranch tags... what, if i want to switch back
-> to git version 1.1.6 in the git repository? Or a certain commit?
-> 
-> do you have to make a new private branch out of the tag 1.1.6?
-> 
-> i used svn and there i could go back some revisions. I haven't found
-> such a feature in git, yet... but i think i am blind all the time.
-> 
-> I like git very much and every new day I like it more.
-> actually wanted to be look like somewhere in the git-repository, where
-> some branches are merged back with the master tree, but i think, that
-> wasn't "cg-merge -c <tree to merge with the actual one>"...
-> 
-> my result was that my master tree has now the same sha1-sum as my
-> development-tree and gitk visualisation differs from that what i saw in
-> the git-repository. (Several Arrows headed into back into one line...)
-> 
-> maybe that was because i didn't do anything in my master tree in the
-> meantime.
+That said, I think git could do much better if the layout was optimized 
+for git. For example, in the maildir thing, there's two issues: the flat 
+directory structure is sub-optimal, but the other thing seems to be that 
+maildir apparently saves metadata in the filename.
 
-  So I assume that it made a fast-forward merge and you want to undo it.
-Unfortunately, there is no facility to automatically remember what your
-previous last commit was, so you either:
+Saving meta-data in the filename should actually work wonderfully well 
+with git, but both merging and git-diff-tree consider the filename to be 
+the "index", so they optimize for that. You could do indexing the other 
+way around, and consider the contents to be the index (and the filename is 
+the "status"), but that's obviously not sane for a sw project, even if it 
+might be exactly what you want to do for mail handling.
 
-  * Remember the "fast-forwarding" message cg-merge gave you. ;-)
-  * Fire up cg-log and find the commit you want to go back to.
-
-  Now, when you have the commit id, this is the time for cg-switch -f -
-what you want to do is to "repoint" your current branch (let's assume it
-is master) to the commit id you've just found:
-
-	cg-switch -f -r commit_id master
-
-  (The same thing could be done using cg-admin-uncommit, but it is a
-little confusing in this particular usage; you would have to rather
-choose the commit id of the last commit to uncommit, and it does not
-cope well with merges.)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+		Linus
