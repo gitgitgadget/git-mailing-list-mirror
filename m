@@ -1,41 +1,47 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: several quick questions
-Date: Tue, 14 Feb 2006 18:03:07 +0100
-Message-ID: <43F20D4B.3060606@op5.se>
+Date: Tue, 14 Feb 2006 09:05:16 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602140845080.3691@g5.osdl.org>
 References: <43F20532.5000609@iaglans.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 14 18:06:47 2006
+X-From: git-owner@vger.kernel.org Tue Feb 14 18:08:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F93aj-0006kE-FH
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 18:03:55 +0100
+	id 1F93cD-0007IW-Pj
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 18:05:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422675AbWBNRDL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 12:03:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422676AbWBNRDK
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 12:03:10 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:4334 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S1422679AbWBNRDI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 12:03:08 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id B7A5E6BCFF; Tue, 14 Feb 2006 18:03:07 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Nicolas Vilz 'niv' <niv@iaglans.de>
+	id S1422678AbWBNRFX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 12:05:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422679AbWBNRFX
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 12:05:23 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:18345 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1422678AbWBNRFW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 12:05:22 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1EH5HDZ018593
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 14 Feb 2006 09:05:17 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1EH5Gt9016899;
+	Tue, 14 Feb 2006 09:05:16 -0800
+To: "Nicolas Vilz 'niv'" <niv@iaglans.de>
 In-Reply-To: <43F20532.5000609@iaglans.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16141>
 
-Nicolas Vilz 'niv' wrote:
-> Hello everyone,
+
+
+On Tue, 14 Feb 2006, Nicolas Vilz 'niv' wrote:
 > 
 > i wonder, how i revoke a straight forward merge of two trees... I
 > actually wanted to be look like somewhere in the git-repository, where
@@ -49,68 +55,100 @@ Nicolas Vilz 'niv' wrote:
 > maybe that was because i didn't do anything in my master tree in the
 > meantime.
 > 
-
-Correct. The "several arrows" thing is when a merge happens (i.e. two 
-simultaneous lines of development crash into one another with 
-surprisingly pleasant results most of the time). When you do
-
-$ git checkout -b topic-branch
-# work, work, work
-$ git checkout master
-$ git pull . topic-branch
-
-git will recognize the merge-base as being the current HEAD and simply 
-sets HEAD to point to that of topic-branch. This is why it's called a 
-fast-forward, since no heavy computing needs to be done to combine the 
-two development tracks.
-
 > And another thing, is there no posibility to get back to some commits or
 > tags? I realized you can rebranch tags... what, if i want to switch back
 > to git version 1.1.6 in the git repository? Or a certain commit?
-> 
 
-git reset is your friend.
+Both of these can be solved with "git reset".
 
-$ git reset --hard v1.1.6
-$ git reset --hard ORIG_HEAD
+Before going into any more detail on that, let's go over the other related 
+"basic operations" too:
 
-should do something along the lines of what you want.
+ - "git branch". This creates a new branch of development at an arbitrary 
+   point (that defaults to "current state").
 
-> do you have to make a new private branch out of the tag 1.1.6?
-> 
+   Example:
 
-No, you don't, but you can if you wish. It's nifty if you want to fork 
-the development from a particular branch. In your case, if you really, 
-really *want* the arrows pointing to one line, you can do
+	git branch development-trial v1.1.6
 
-$ git branch topic-branch HEAD^
-# work, work, work
-$ git checkout master
-$ git pull . topic-branch
+   This will create a new branch called "development-trial", which starts 
+   at the v1.1.6 state. NOTE! It will _not_ check it out - your old active 
+   state is left totally alone, and you still stay on whatever branch you 
+   used to be on.
 
-That would create one pretty arrow. When multiple tracks of development 
-(rather than just two) are combined into one it's called an octopus 
-merge. Unless you really know what you're doing, you should try to avoid 
-those for small projects, and doing it just for the pretty arrows is.... 
-well, let's call it "interesting from the behaviour science scholars 
-point of view".
+ - "git checkout". This switches to another branch. As a shorthand, you 
+   can also choose to create the branch at the same time, but normally 
+   you'd just do like this example:
 
+	git checkout development-trial
 
-> i used svn and there i could go back some revisions. I haven't found
-> such a feature in git, yet... but i think i am blind all the time.
-> 
+   which will switch to the branch you just created and check that out.
 
-Most likely. I believe at least the reset command is mentioned in the 
-tutorial. I trust you've read it before asking, so something is amiss 
-either with your eyesight or the tutorial.
+ - "git reset". This will reset the current branch state to something 
+   else. This is what you would use if you want to undo a commit, 
+   for example: you can "reset" the current branch to before the commit 
+   happened.
 
+   NOTE! When you do this, you also have to choose what you want to do 
+   about your checked-out working tree. For example, when undoing the last 
+   commit, you normally want to totally undo all the working tree changes 
+   too, but you might also want to just undo the commit, and leave the 
+   actual changes you committed alone, so that you can re-commit them with 
+   a fixed commit message, for example.
 
-> I like git very much and every new day I like it more.
-> 
+   Example:
 
-It's a Good Thing. ;)
+	git reset --hard HEAD^
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+   this will undo the last commit (more exactly: it will select the first 
+   parent of HEAD to be the new top-of-development, so if the last thing 
+   you did was a merge, it will reset to the previous state). The "--hard" 
+   means that you want to reset the working tree too.
+
+   Other example:
+
+	git reset --hard v1.1.6
+
+   This will just reset the current branch to a particular known state (ie 
+   1.1.6 in this case).
+
+   Without the "--hard", it will _not_ change the working tree, but just 
+   update the index (and branch pointer, of course) to the new state, and 
+   tell you which files are "dirty" in that new state. This is great for 
+   undoing just a "git commit", but leaving the tree in the state is was 
+   before you committed. It's not so great if you expected to revert 
+   everything, and are now confused because "git diff" shows lots of 
+   changes ;)
+
+Finally, let's go over the difference between "git fetch" and "git pull":
+
+ - "git fetch" is what you want to do if you want to _update_ another 
+   branch. For example, if you want to track what Junio is doing in his 
+   git repository (assuming that was what you cloned for), doing
+
+	git fetch origin
+
+   will update the "origin" branch, but will _not_ touch the current 
+   branch itself. This is very useful for seeing what Junio has been 
+   doing, without actually affecting your own work in any way.
+
+ - "git pull" is really just "git fetch" + "git merge". It will fetch the 
+   state you asked for, and then merge that into your current branch. So 
+   it's important to rmember that this actually _changes_ what you have 
+   checked out and have worked on. 
+
+   One very special case of "git pull" is when you only use the repository 
+   to track another branch, and you never do any changes at all, and you 
+   never switch branches around, and you always pull from the same source. 
+   In that case, "git pull" will basically boil down to just a read-only 
+   tracking mechanism (ie you could think of this particular usage as 
+   being the git equivalent of "anoncvs" access)
+
+The reason people may get confused is that they start out using "git pull" 
+as a read-only tracking mechanism, and it's not necessarily obvious that 
+"git pull" really fundamentally is a very powerful operations - much MUCH 
+more complex and powerful than just "track that other branch". Which is 
+why I try to make the distinction between "git fetch" and "git pull" 
+clear.
+
+			Linus
