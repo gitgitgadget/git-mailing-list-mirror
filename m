@@ -1,36 +1,36 @@
 From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: several quick questions
-Date: Tue, 14 Feb 2006 10:26:32 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602141008220.3691@g5.osdl.org>
+Date: Tue, 14 Feb 2006 10:34:35 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602141026570.3691@g5.osdl.org>
 References: <43F20532.5000609@iaglans.de> <Pine.LNX.4.64.0602140845080.3691@g5.osdl.org>
- <pan.2006.02.14.17.47.53.126690@canit.se>
+ <87k6bxvmj6.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 14 19:27:27 2006
+Cc: "Nicolas Vilz 'niv'" <niv@iaglans.de>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 14 19:35:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F94tE-0003CP-RE
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 19:27:09 +0100
+	id 1F950w-0005KO-G3
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 19:35:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422759AbWBNS0k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 13:26:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422760AbWBNS0j
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 13:26:39 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:22222 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1422759AbWBNS0j (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 13:26:39 -0500
+	id S1030470AbWBNSe5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 13:34:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030416AbWBNSe4
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 13:34:56 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:62419 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030374AbWBNSez (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 13:34:55 -0500
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1EIQXDZ023193
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1EIYaDZ023651
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 14 Feb 2006 10:26:33 -0800
+	Tue, 14 Feb 2006 10:34:36 -0800
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1EIQWLQ020400;
-	Tue, 14 Feb 2006 10:26:32 -0800
-To: Kenneth Johansson <ken@canit.se>
-In-Reply-To: <pan.2006.02.14.17.47.53.126690@canit.se>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1EIYZPm020738;
+	Tue, 14 Feb 2006 10:34:36 -0800
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <87k6bxvmj6.wl%cworth@cworth.org>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
 X-MIMEDefang-Filter: osdl$Revision: 1.129 $
@@ -38,31 +38,56 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16153>
 
 
 
-On Tue, 14 Feb 2006, Kenneth Johansson wrote:
+On Tue, 14 Feb 2006, Carl Worth wrote:
 > 
-> What I ended up doing was going nee deep into the plumbing.
+> I don't know if it's the original poster's question or not, but an
+> operation I don't see in the above is "put the working files into the
+> state of a given revision".
+
+What a strange thing to ask for.
+
+But you can do it several ways:
+
+ - just use "git reset" to move around in history, possibly on a temporary 
+   branch.
+
+ - use "git checkout <rev> <filename>" to checkout a particular filename 
+   of a particular version (it's a special case of "git checkout", which 
+   is useful, but I personally think it's a bit confusing, so I wouldn't 
+   mention it unless you asked)
+
+ - use the core internal git functions, in particular
+
+	git-read-tree -m -u <oldtree> <newtree>
+
+   will switch from "oldtree" to "newtree" and update (-u) the working 
+   tree.
+
+> 2) Ensure that bogus-branch exists somewhere (don't care where), then
+>    move it:
 > 
-> first doing cat on the tag in .git/refs/tags/ 
-> taking the output as an argument to  "git-read-tree"
-> followed by "git-update-index --replace" and "git-checkout-index -a -f -u"
-> 
-> I'm not sure that many people will understand that they want git-reset for
-> this just reading the man pages.
+> 	# Create the branch (if it doesn't exist)
+> 	git checkout -b bogus-branch >& /dev/null
+> 	# Switch to it (which doesn't happen above if it already existed)
+> 	git checkout bogus-branch
+> 	# Move the branch to the revision of interest
+> 	git reset --hard <revision>
 
-Hey, but I bet you now as a result feel you really understand git, right? 
+This is actually what I'd suggest you always do.
 
-;)
+Why?
 
-You did it the old-fashioned way - the way real men did it back in June.
+It's actually as efficient as anything else, and there's much less room 
+for confusion. When you want to go back, you can just do a simple
 
-In general, doing "ls *.sh" in the git source tree shows you pretty much 
-every command that you might ever want to use. Using the actual core git 
-binaries directly is normally not all that useful, unless you want to do 
-some strange shell pipeline to do statistics about different things in the 
-tree.
+	git checkout -f master
+
+and there's no room for confusion. You've not lost sight of any old state, 
+and your HEAD never differs from your checked-out copy, so all the normal 
+commands work the way you'd expect them to.
 
 		Linus
