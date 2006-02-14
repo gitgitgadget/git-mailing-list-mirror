@@ -1,59 +1,105 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
-Date: Tue, 14 Feb 2006 23:29:13 +0100
-Message-ID: <20060214222913.GK31278@pasky.or.cz>
-References: <20060210195914.GA1350@spearce.org> <20060210211740.GO31278@pasky.or.cz> <20060213210001.GA31278@pasky.or.cz> <tnxoe1aqoj2.fsf@arm.com> <20060214100844.GA1234@diana.vm.bytemark.co.uk> <43F1F5CB.10402@citi.umich.edu> <20060214160747.GA6350@diana.vm.bytemark.co.uk> <43F2445A.6020109@citi.umich.edu>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: diffstat wierdness with 'git format-patch' output
+Date: Tue, 14 Feb 2006 23:30:05 +0100
+Message-ID: <20060214223005.GA12652@c165.ib.student.liu.se>
+References: <20060214055425.GA32261@kroah.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 14 23:28:46 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 14 23:30:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F98es-00019I-KU
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 23:28:30 +0100
+	id 1F98gf-0001Yb-Mg
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 23:30:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422833AbWBNW21 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 17:28:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422838AbWBNW21
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 17:28:27 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:22947 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1422833AbWBNW20 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 17:28:26 -0500
-Received: (qmail 20788 invoked by uid 2001); 14 Feb 2006 23:29:14 +0100
-To: Chuck Lever <cel@citi.umich.edu>
+	id S1422838AbWBNWaS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 17:30:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422840AbWBNWaS
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 17:30:18 -0500
+Received: from [85.8.31.11] ([85.8.31.11]:2497 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S1422838AbWBNWaR (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 17:30:17 -0500
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id BEE274102; Tue, 14 Feb 2006 23:44:19 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1F98gP-0003Yu-00; Tue, 14 Feb 2006 23:30:05 +0100
+To: Greg KH <greg@kroah.com>
 Content-Disposition: inline
-In-Reply-To: <43F2445A.6020109@citi.umich.edu>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <20060214055425.GA32261@kroah.com>
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16187>
 
-Dear diary, on Tue, Feb 14, 2006 at 09:58:02PM CET, I got a letter
-where Chuck Lever <cel@citi.umich.edu> said that...
-> my impression of git is that you don't change stuff that's already 
-> committed.  you revert changes by applying a new commit that backs out 
-> the original changes.  i'm speculating, but i suspect that's why there's 
-> a "stg pick --reverse" and not a "stg uncommit."
+On Mon, Feb 13, 2006 at 09:54:25PM -0800, Greg KH wrote:
+> I was trying to use the built-in git tools to send patches off, instead
+> of my horribly hacked up scripts that use the git low-level stuff, when
+> I noticed that git format-patch's output confuses diffstat a bit, and
+> causes it to add another line to it's count.
+> 
+> This isn't good when I do a 'diffstat -p1 *.txt' of the output and add
+> it to an email to send off for someone to pull from, as the result will
+> be off from what is really there.
+> 
+> Here's what I get:
+> 
+>  $ git format-patch -n origin..HEAD
+>  0001-USB-fix-up-the-usb-early-handoff-logic-for-EHCI.txt
+>  0002-USB-add-new-device-ids-to-ldusb.txt
+>  0003-USB-change-ldusb-s-experimental-state.txt
+>  0004-USB-PL2303-Leadtek-9531-GPS-Mouse.txt
+>  0005-USB-sl811_cs-needs-platform_device-conversion-too.txt
+>  0006-usb-storage-new-unusual_devs-entry.txt
+>  0007-usb-storage-unusual_devs-entry.txt
+>  0008-USB-unusual_devs.h-entry-TrekStor-i.Beat.txt
+>  0009-USB-unusual_devs.h-entry-iAUDIO-M5.txt
+>  0010-USB-unusual-devs-bugfix.txt
+> 
+>  $ git log | head -n 1
+>  commit 16f05be7be0bf121491d83bd97337fe179b3b323
+> 
+>  $ git show 16f05be7be0bf121491d83bd97337fe179b3b323 | diffstat -p1
+>   drivers/usb/storage/unusual_devs.h |   25 ++++++++++++++++++-------
+>   1 file changed, 18 insertions(+), 7 deletions(-)
+> 
+>  $ diffstat -p1 0010-USB-unusual-devs-bugfix.txt
+>   drivers/usb/storage/unusual_devs.h |   26 ++++++++++++++++++--------
+>   1 file changed, 18 insertions(+), 8 deletions(-)
+> 
+> Any thoughts?
+> 
 
-It is ok as long as you know what are you doing - if you don't push out
-the commits you've just "undid" (or work on a public accessible
-repository in the first place, but I think that's kind of rare these
-days; quick survey - does anyone reading these lines do that?), there's
-nothing wrong on it, and it gives you nice flexibility.
+If you don't have to generate the diffstat from the individual patches
+then
 
-For example, to import bunch of patches (I guess that's the original
-intention behind this) you just run git-am on them and then stg uncommit
-all of the newly added commits.
+    git-diff-tree -p origin HEAD | git-apply --stat
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+should give you what you want.
+
+
+BTW when I tried the above command on two random tags in the git tree
+I got:
+
+    $ git-diff-tree -p v1.2.0 v1.0.8 | diffstat -p1 | tail -1
+    165 files changed, 3913 insertions(+), 8092 deletions(-)
+
+and
+
+    $ git-diff-tree -p v1.2.0 v1.0.8 | git apply --stat | tail -1
+    160 files changed, 3925 insertions(+), 8092 deletions(-)
+
+The difference seems to be caused by diffstat which seems to think
+that all lines starting with '---' are diff headers. Hence, there are
+some bogus files in the diffstat output such as:
+
+    [master]                                          |  177 ++
+    [master^2~4]                                      |    9 
+    [master^]                                         |   24 
+    [mybranch]                                        |   56 
+    [mybranch^]                                       |  616 +++++++
+
+- Fredrik
