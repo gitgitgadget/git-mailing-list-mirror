@@ -1,66 +1,82 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Handling large files with GIT
-Date: Tue, 14 Feb 2006 14:01:33 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602141357300.3691@g5.osdl.org>
-References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com> 
- <87slqty2c8.fsf@mid.deneb.enyo.de> <46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com>
- <Pine.OSX.4.64.0602131416530.25089@piva.hawaga.org.uk>
- <Pine.LNX.4.64.0602121939070.3691@g5.osdl.org> <Pine.LNX.4.64.0602122049010.3691@g5.osdl.org>
- <Pine.LNX.4.64.0602122058260.3691@g5.osdl.org> <43F113A5.2080506@f2s.com>
- <Pine.LNX.4.63.0602141953000.22451@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0602141108050.3691@g5.osdl.org> <43F249F7.5060008@vilain.net>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: several quick questions
+Date: Tue, 14 Feb 2006 23:17:29 +0100
+Message-ID: <200602142317.29626.Josef.Weidendorfer@gmx.de>
+References: <43F20532.5000609@iaglans.de> <200602142230.11442.Josef.Weidendorfer@gmx.de> <7v7j7xr54u.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ian Molton <spyro@f2s.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 14 23:01:58 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Feb 14 23:18:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F98F0-0003Qy-Qj
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 23:01:47 +0100
+	id 1F98Ue-0007Bn-Ix
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 23:17:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422823AbWBNWBn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 17:01:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422826AbWBNWBn
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 17:01:43 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:971 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1422823AbWBNWBm (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 17:01:42 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1EM1YDZ003173
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 14 Feb 2006 14:01:35 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1EM1X9k029502;
-	Tue, 14 Feb 2006 14:01:34 -0800
-To: Sam Vilain <sam@vilain.net>
-In-Reply-To: <43F249F7.5060008@vilain.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422826AbWBNWRn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 17:17:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422829AbWBNWRn
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 17:17:43 -0500
+Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:1781 "EHLO
+	tuminfo2.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1422826AbWBNWRm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2006 17:17:42 -0500
+Received: from dhcp-3s-57.lrr.in.tum.de (dhcp-3s-57.lrr.in.tum.de [131.159.35.57])
+	by mail.in.tum.de (Postfix) with ESMTP id 6751921B0
+	for <git@vger.kernel.org>; Tue, 14 Feb 2006 23:17:41 +0100 (MET)
+To: git <git@vger.kernel.org>
+User-Agent: KMail/1.9.1
+In-Reply-To: <7v7j7xr54u.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16184>
 
-
-
-On Wed, 15 Feb 2006, Sam Vilain wrote:
+On Tuesday 14 February 2006 22:40, you wrote:
+> Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 > 
-> This seems to me to be another use case where git could gain orders of
-> magnitude speed improvement by either explicit ("forensic") history
-> objects, or a history analysis cache.
+> > Why not allow something like
+> >
+> > 	git-checkout master~5
+> >
+> > which implicitly does create a read-only branch "seek-point"?
+> 
+> Now what does "git-checkout branch" mean?  Does it switch to the
+> branch, or does it force tip of seek-point to be the tip of
+> branch and switch to seek-point branch?  More interestingly,
+> what does "git-checkout seek-point" mean? 
 
-Well, the thing is, it could get that _without_ any cache too.
+You are right; it would get quite confusing.
+But perhaps the current error message
 
-The problem really isn't that we couldn't make things faster, the problem 
-is that at least for _me_ the thing is fast enough.
+  git checkout: you need to specify a new branch name
 
-If somebody is interested in making the "lots of filename changes" case go 
-fast, I'd be more than happy to walk them through what they'd need to 
-change. I'm just not horribly motivated to do it myself. Hint, hint.
+should be a little bit more explaining by appending
 
-			Linus
+  "... to switch to for being able to checkout the requested revision"
+
+> Having said that, I am not convinced in either way, though.
+
+Me too. Specifying a branch name is easy enough.
+
+> > And git-commit should refuse to commit on a readonly ref, telling
+> > the user to create a writable branch before with "git-branch new".
+> 
+> Now, read-only ref does not interest me, but "do not commit on
+> top of this yourself, only fast-forward from somewhere else is
+> allowed" may be useful, for the reason why you mentioned
+> "origin".
+
+Yes. The idea to make the ref readonly to specify this intent was
+a quick (not so good) idea.
+
+Still, being able to specify that you can not commit on some branch
+(as you said) is very useful to prohibit doing things by accident.
+.git/config does not sound very good for such a thing, especially
+if there could be other branch-specific properties in the future.
+
+Josef
