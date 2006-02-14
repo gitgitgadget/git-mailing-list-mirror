@@ -1,58 +1,61 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: several quick questions
-Date: Tue, 14 Feb 2006 21:34:41 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602142133360.23093@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Tue, 14 Feb 2006 21:37:39 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602142136250.23659@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <43F20532.5000609@iaglans.de> <Pine.LNX.4.64.0602140845080.3691@g5.osdl.org>
- <87k6bxvmj6.wl%cworth@cworth.org> <87irrhvkyl.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0602141056170.3691@g5.osdl.org> <43F231C5.5010205@op5.se>
+ <87k6bxvmj6.wl%cworth@cworth.org> <Pine.LNX.4.64.0602141026570.3691@g5.osdl.org>
+ <87fymlvgzv.wl%cworth@cworth.org> <20060214202728.GE31278@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 14 21:35:00 2006
+Cc: Carl Worth <cworth@cworth.org>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 14 21:38:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F96so-00006O-A5
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 21:34:46 +0100
+	id 1F96vf-0000rE-PX
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 21:37:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932072AbWBNUen (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 15:34:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932376AbWBNUen
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 15:34:43 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:4548 "EHLO
+	id S1161046AbWBNUhl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 15:37:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932447AbWBNUhl
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 15:37:41 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:22468 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932072AbWBNUem (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2006 15:34:42 -0500
-Received: from virusscan.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	id S932376AbWBNUhk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2006 15:37:40 -0500
+Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 1B95C146EF7; Tue, 14 Feb 2006 21:34:42 +0100 (CET)
+	id AC7FF146EF7; Tue, 14 Feb 2006 21:37:39 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 0CCDE6B14;
-	Tue, 14 Feb 2006 21:34:42 +0100 (CET)
+	by virusscan.mail (Postfix) with ESMTP id 9DBD910F1;
+	Tue, 14 Feb 2006 21:37:39 +0100 (CET)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
 	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BE3E2146EF7; Tue, 14 Feb 2006 21:34:41 +0100 (CET)
+	id 3E556146EF7; Tue, 14 Feb 2006 21:37:39 +0100 (CET)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <43F231C5.5010205@op5.se>
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060214202728.GE31278@pasky.or.cz>
 X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16168>
 
 Hi,
 
-On Tue, 14 Feb 2006, Andreas Ericsson wrote:
+On Tue, 14 Feb 2006, Petr Baudis wrote:
 
-> [...] it would be nifty (and I imagine not particularly hard) to teach 
-> "git checkout" to check out any revision, and not just a branch.
+> [...]
+>
+> It works by creating a new branch cg-seek-point and storing the seeked
+> point there; if HEAD is already on the branch, it merely changes the
+> seek point and resets the working tree appropriately. cg-seek without
+> any arguments will then return to your original head, whose name was
+> stored in .git/head-name.
 
-You have to have a valid HEAD. So, you can create a throw-away branch 
-easily:
+And if you want to prevent accidental commit, just "chmod a-w 
+$GIT_DIR/index".
 
-	git-checkout -f throw HEAD~56
-
-Hth,
+Ciao,
 Dscho
