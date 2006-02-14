@@ -1,99 +1,57 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: several quick questions
-Date: Wed, 15 Feb 2006 00:00:57 +0100
-Message-ID: <43F26129.4040804@op5.se>
-References: <43F20532.5000609@iaglans.de>	<Pine.LNX.4.64.0602141026570.3691@g5.osdl.org>	<87fymlvgzv.wl%cworth@cworth.org>	<200602142230.11442.Josef.Weidendorfer@gmx.de> <7v7j7xr54u.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: cg-clean, cg-status improvements
+Date: Wed, 15 Feb 2006 00:02:37 +0100
+Message-ID: <20060214230237.GL31278@pasky.or.cz>
+References: <1139930899.1944.13.camel@dv> <20060214155356.GB9573@pasky.or.cz> <1139941032.26723.4.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 15 00:01:49 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 15 00:02:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F99Au-0008Gx-Cr
-	for gcvg-git@gmane.org; Wed, 15 Feb 2006 00:01:36 +0100
+	id 1F99BX-0008OL-CK
+	for gcvg-git@gmane.org; Wed, 15 Feb 2006 00:02:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422863AbWBNXBA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 18:01:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422866AbWBNXA7
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 18:00:59 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:8067 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S1422863AbWBNXA7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 18:00:59 -0500
-Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id D10016BCFF; Wed, 15 Feb 2006 00:00:57 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7j7xr54u.fsf@assigned-by-dhcp.cox.net>
+	id S1422865AbWBNXBv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 18:01:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422866AbWBNXBv
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 18:01:51 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:37018 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1422865AbWBNXBu (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 18:01:50 -0500
+Received: (qmail 24325 invoked by uid 2001); 15 Feb 2006 00:02:37 +0100
+To: Pavel Roskin <proski@gnu.org>
+Content-Disposition: inline
+In-Reply-To: <1139941032.26723.4.camel@dv>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16191>
 
-Junio C Hamano wrote:
-> Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+Dear diary, on Tue, Feb 14, 2006 at 07:17:12PM CET, I got a letter
+where Pavel Roskin <proski@gnu.org> said that...
+> On Tue, 2006-02-14 at 16:53 +0100, Petr Baudis wrote:
+> >   I didn't plan to require git 1.2.0 with 0.17, so it would be better if
+> > you could do the workaround. But if the workaround means significant
+> > hassle, it's no biggie if git 1.2.0 will be required.
 > 
-> 
->>Why not allow something like
->>
->>	git-checkout master~5
->>
->>which implicitly does create a read-only branch "seek-point"?
-> 
-> 
-> Now what does "git-checkout branch" mean?  Does it switch to the
-> branch, or does it force tip of seek-point to be the tip of
-> branch and switch to seek-point branch?  More interestingly,
-> what does "git-checkout seek-point" mean? 
-> 
-> If we _were_ to do something like cg-seek where an implicit
-> throw-away branch is used, you at least need a way to
-> disambiguate these cases, and "git seek" originally suggested is
-> far clearer than what you said above.
-> 
+> It turns out a proper workaround can only be implemented in cg-Xlib, not
+> in cg-clean.  It's a bit hairy for my taste (a bash guru could write it
+> better, I believe), but it's a compact blob of code that can be easily
+> removed at any time.
 
-Nah. What's the point of having another protected name. Just allow
+Wow, how you managed to simplify and shrink cg-clean sounds really
+impressive! :)
 
-	$ git checkout -b discard HEAD~15
-
-and we're good to go.
-
-> Having said that, I am not convinced in either way, though.
-> 
-> 
->>A branch could be marked readonly by above command with
->>
->>	chmod a-w .git/refs/heads/seek
-> 
-> 
-> I do not think that would work.  Have you tried it?
-> 
-
-It wouldn't on cygwin, for one. I'm against having things work 
-differently on different platforms. If nothing else it usually worsens 
-the bitrot that always happens to documentation.
-
-> 
->>And git-commit should refuse to commit on a readonly ref, telling
->>the user to create a writable branch before with "git-branch new".
-> 
-> 
-> Now, read-only ref does not interest me, but "do not commit on
-> top of this yourself, only fast-forward from somewhere else is
-> allowed" may be useful, for the reason why you mentioned
-> "origin".
-> 
-
-Do my suggestion and you wouldn't have to worry about read-only 
-branches, and although merging any changes from it might be more trouble 
-than its worth, it might be possible to cherry-pick the commit rather 
-than reverting and re-applying it.
+Thanks, both applied and pushed out.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
