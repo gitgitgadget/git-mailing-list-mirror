@@ -1,65 +1,69 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Handling large files with GIT
-Date: Wed, 15 Feb 2006 10:21:59 +1300
-Message-ID: <43F249F7.5060008@vilain.net>
-References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>  <87slqty2c8.fsf@mid.deneb.enyo.de> <46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com> <Pine.OSX.4.64.0602131416530.25089@piva.hawaga.org.uk> <Pine.LNX.4.64.0602121939070.3691@g5.osdl.org> <Pine.LNX.4.64.0602122049010.3691@g5.osdl.org> <Pine.LNX.4.64.0602122058260.3691@g5.osdl.org> <43F113A5.2080506@f2s.com> <Pine.LNX.4.63.0602141953000.22451@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0602141108050.3691@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] commit: detect misspelled pathspec while making a partial commit.
+Date: Tue, 14 Feb 2006 22:25:52 +0100
+Message-ID: <20060214212552.GH31278@pasky.or.cz>
+References: <7vfymlr7n8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ian Molton <spyro@f2s.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 14 22:22:23 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 14 22:25:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F97cn-0002ca-CH
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 22:22:18 +0100
+	id 1F97fb-0003KD-Pm
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 22:25:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422781AbWBNVWP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 16:22:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422789AbWBNVWO
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 16:22:14 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:13984 "EHLO mail.utsl.gen.nz")
-	by vger.kernel.org with ESMTP id S1422781AbWBNVWO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 16:22:14 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id 16A344BE4; Wed, 15 Feb 2006 10:22:10 +1300 (NZDT)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 0B5232ECB;
-	Wed, 15 Feb 2006 10:22:03 +1300 (NZDT)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602141108050.3691@g5.osdl.org>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1422796AbWBNVZH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 16:25:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422685AbWBNVZH
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 16:25:07 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:55983 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1422796AbWBNVZF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 16:25:05 -0500
+Received: (qmail 12284 invoked by uid 2001); 14 Feb 2006 22:25:52 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vfymlr7n8.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16177>
 
-Linus Torvalds wrote:
-> That said, I think git could do much better if the layout was optimized 
-> for git. For example, in the maildir thing, there's two issues: the flat 
-> directory structure is sub-optimal, but the other thing seems to be that 
-> maildir apparently saves metadata in the filename.
+Dear diary, on Tue, Feb 14, 2006 at 09:46:03PM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> When you say "git commit Documentaiton" to make partial commit
+> for the files only in that directory, we did not detect that as
+> a misspelled pathname and attempted to commit index without
+> change.  If nothing matched, there is no harm done, but if the
+> index gets modified otherwise by having another valid pathspec
+> or after an explicit update-index, a user will not notice
+> without paying attention to the "git status" preview.
 > 
-> Saving meta-data in the filename should actually work wonderfully well 
-> with git, but both merging and git-diff-tree consider the filename to be 
-> the "index", so they optimize for that. You could do indexing the other 
-> way around, and consider the contents to be the index (and the filename is 
-> the "status"), but that's obviously not sane for a sw project, even if it 
-> might be exactly what you want to do for mail handling.
+> This introduces --error-unmatch option to ls-files, and uses it
+> to detect this common user error.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> 
+> ---
+> 
+>  * Pasky, does this address the issue you mentioned earlier on
+>    the #git channnel?
 
-This seems to me to be another use case where git could gain orders of
-magnitude speed improvement by either explicit ("forensic") history
-objects, or a history analysis cache.
+Yes, this is what I meant. I actually have no practical experience with
+this since I'm not a git-commit user, I merely expressed horror ;) on
+what you mentioned during the night. BUT it turns out that this affects
+Cogito as well, albeit in a milder version - only when you pass multiple
+explicit paths to cg-commit and some of them are misspelled, they are
+ignored quietly (unless all of them are misspelled).
 
-Sam.
+So, thanks for the fix on behalf of Cogito users as well. ;-)
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
