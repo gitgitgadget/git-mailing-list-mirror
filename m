@@ -1,72 +1,67 @@
-From: Greg KH <greg@kroah.com>
-Subject: older git archive access broken in 1.2.0?
-Date: Mon, 13 Feb 2006 21:06:16 -0800
-Message-ID: <20060214050616.GA28528@kroah.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Feb 14 06:08:38 2006
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Subject: git 1.2 works on Solaris, AIX [was Re: [PATCH 1/3] Call extended-semantics commands through variables.]
+Date: Mon, 13 Feb 2006 21:12:41 -0800
+Message-ID: <12579.1139893961@lotus.CS.Berkeley.EDU>
+References: <7v64nllbdj.fsf@assigned-by-dhcp.cox.net>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 14 06:14:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8sQI-0007rg-DP
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 06:08:22 +0100
+	id 1F8sVu-0000dO-LA
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 06:14:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030423AbWBNFGw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 00:06:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030422AbWBNFGY
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 00:06:24 -0500
-Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174]:13205
-	"EHLO aria.kroah.org") by vger.kernel.org with ESMTP
-	id S1030420AbWBNFGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2006 00:06:15 -0500
-Received: from press.kroah.org ([192.168.0.25] helo=localhost)
-	by aria.kroah.org with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.54)
-	id 1F8sOE-0001mO-95
-	for git@vger.kernel.org; Mon, 13 Feb 2006 21:06:14 -0800
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+	id S1030393AbWBNFNL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 00:13:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030424AbWBNFM6
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 00:12:58 -0500
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:11428 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S1030414AbWBNFMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2006 00:12:44 -0500
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k1E5CgxZ012581;
+	Mon, 13 Feb 2006 21:12:42 -0800 (PST)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k1E5CgWF012580;
+	Mon, 13 Feb 2006 21:12:42 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-reply-to: <7v64nllbdj.fsf@assigned-by-dhcp.cox.net> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16112>
 
-I was trying to find where something changed in the historical Linux
-kernel git tree:
-	rsync://rsync.kernel.org/pub/scm/linux/kernel/git/tglx/history.git/
+The AIX machines I work on are back, and it looks like my 
+patches are unnecessary, at least for my use.  It'd be cute 
+to allow builders to point at GNU tools, but not terribly 
+useful.  The File::Find patch to git-archimport.perl might 
+be nice, but it functions as-is.
 
-when I noticed that the latest version of git doesn't seem to like this
-archive.  I can't clone it, but 'git log' and 'git whatchanged' seems to
-work fine.
+To have diff and merge on my path with this AIX platform, I have 
+to pull *all* the GNU tools into my path.  (NERSC uses modules.)  
+I suspect that is a rather common setup, so it's not worth the 
+serious surgery to redirect diff and merge.  diff is used in C 
+and shell, and merge is in shell, Perl, and Python sources.
 
-Also, gitk dies with the following error:
-$ gitk
-Error in startup script: fatal: '.git': unable to chdir or not a git archive
-fatal: unexpected EOF
-Failed to find remote refs
-    while executing
-"close $refd"
-    (procedure "readrefs" line 41)
-    invoked from within
-"readrefs"
-    (file "/home/greg/bin/gitk" line 3744)
+And pkgsrc on Solaris appears happy using GNU's cpio (under
+archivers/gcpio) rather than its default, plain one.  I hadn't 
+realized I could replace it easily.
 
+So with the GNU tools in the path and a properly built Python, 
+the mainline code works on Solaris 8 and AIX.
 
-Is this because I just synced the whole tree over using rsync and didn't
-use git to clone it a long time ago?  Or that it was created with an
-older version of git?
+For posterity: Any problems with git-merge-recursive.py on AIX
+likely are a yucky Python/AIX problem.  The sha has 'sem_trywait: 
+Permission denied\n' prepended to it a few times.  You need to 
+rebuild Python with HAVE_BROKEN_POSIX_SEMAPHORES:
+  https://sourceforge.net/tracker/?func=detail&atid=105470&aid=1106262&group_id=5470
 
-I'm not able to clone it locally either:
-	$ git clone history.git/ test
-	fatal: '/home/greg/linux/git/history.git/.git': unable to chdir or not a git archive
-	fatal: unexpected EOF
-	clone-pack from '/home/greg/linux/git/history.git/.git' failed.
+If anyone really wants to point at particular tools but not 
+require them in the user's path, the simplest way would be to 
+link the correct tools (or wrappers) into the GIT_EXEC_PATH 
+and prepend that to the PATH *everywhere*.  But it's not worth 
+the effort until someone really needs it.
 
-I don't know when this broke with git, as it's been a long time since I
-looked at this tree...
-
-thanks,
-
-greg k-h
+Jason
