@@ -1,50 +1,55 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: [PATCH] Add git-annotate - a tool for annotating files with the revision and person that created each line in the file.
-Date: Tue, 14 Feb 2006 11:51:32 +0100
-Message-ID: <20060214105132.GA7006@c165.ib.student.liu.se>
-References: <11394103753694-git-send-email-ryan@michonline.com> <cda58cb80602080835s38713193t@mail.gmail.com> <Pine.LNX.4.63.0602081843220.20568@wbgn013.biozentrum.uni-wuerzburg.de> <7v3bitr73q.fsf@assigned-by-dhcp.cox.net> <20060210112541.GA3513@linux-mips.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: cg-clean, cg-status improvements
+Date: Tue, 14 Feb 2006 10:28:19 -0500
+Message-ID: <1139930899.1944.13.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Franck Bui-Huu <vagabon.xyz@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 14 11:52:01 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Feb 14 16:36:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8xme-00036f-C9
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 11:51:49 +0100
+	id 1F926m-0003WL-1J
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 16:28:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030563AbWBNKvp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 05:51:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030565AbWBNKvo
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 05:51:44 -0500
-Received: from [85.8.31.11] ([85.8.31.11]:22975 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S1030563AbWBNKvo (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 05:51:44 -0500
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 069964143; Tue, 14 Feb 2006 12:05:45 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1F8xmO-0001pi-00; Tue, 14 Feb 2006 11:51:32 +0100
-To: Ralf Baechle <ralf@linux-mips.org>
-Content-Disposition: inline
-In-Reply-To: <20060210112541.GA3513@linux-mips.org>
-User-Agent: Mutt/1.5.11
+	id S1161085AbWBNP2t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 10:28:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161087AbWBNP2t
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 10:28:49 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:43692 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1161085AbWBNP2s
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2006 10:28:48 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1F926Y-0001rk-4W
+	for git@vger.kernel.org; Tue, 14 Feb 2006 10:28:39 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1F926F-000552-OP; Tue, 14 Feb 2006 10:28:19 -0500
+To: Petr Baudis <pasky@ucw.cz>, git <git@vger.kernel.org>
+X-Mailer: Evolution 2.5.90 (2.5.90-2.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16135>
 
-On Fri, Feb 10, 2006 at 11:25:41AM +0000, Ralf Baechle wrote:
-> The dependency on Python 2.4 already is a problem for installation on some
-> systems ... 
+Hello, Petr!
 
-I understand that in the environments where the Python dependency is a
-problem it is probably not due to the specific version. However, if
-WITH_OWN_SUBPROCESS is defined in the Makefile then Python 2.3 should
-work fine too (this is actually automatically detected now, so you
-shouldn't have to do anything special to use Python 2.3).
+Is cogito 0.17 going to require git 1.2.0?  If so, I'm ready to submit a
+patch for cg-clean that would use the fixed functionality of git
+regarding ignores when run in subdirectories (commit
+701ca744e386c2429ca44072ea987bbb4bdac7ce).  I think cg-status can be
+improved as well.
 
-- Fredrik
+If cogito 0.17 is not going to require git 1.2.0, I'm ready to add a
+temporary workaround for older versions of git.
+
+The problem with cg-clean right now is that it removes contents of
+untracked directories by default, which makes it pointless to keep the
+directories.  I submitted a patch for that, but it it wasn't noticed.
+Anyway, I can do it better now.
+
+-- 
+Regards,
+Pavel Roskin
