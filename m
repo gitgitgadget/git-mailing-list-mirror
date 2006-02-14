@@ -1,59 +1,79 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Handling large files with GIT
-Date: Tue, 14 Feb 2006 13:07:34 +1300
-Message-ID: <46a038f90602131607k63aa32abpa273b2325fc4b1b8@mail.gmail.com>
-References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>
-	 <87slqty2c8.fsf@mid.deneb.enyo.de>
-	 <46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com>
-	 <Pine.OSX.4.64.0602131416530.25089@piva.hawaga.org.uk>
-	 <Pine.LNX.4.64.0602121939070.3691@g5.osdl.org>
-	 <Pine.LNX.4.64.0602122049010.3691@g5.osdl.org>
-	 <43F01F5A.5020808@pobox.com> <1139810847.4183.85.camel@evo.keithp.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-bisect problem
+Date: Mon, 13 Feb 2006 16:33:05 -0800
+Message-ID: <7v3bimzsn2.fsf@assigned-by-dhcp.cox.net>
+References: <20060213002502.5c23122c.akpm@osdl.org>
+	<7virrj1v44.fsf@assigned-by-dhcp.cox.net>
+	<20060213013205.4ba47836.akpm@osdl.org>
+	<20060213093938.GC11053@mythryan2.michonline.com>
+	<20060213015146.26e6c09d.akpm@osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff Garzik <jgarzik@pobox.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Ben Clifford <benc@hawaga.org.uk>,
-	Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 14 01:07:56 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Morton <akpm@osdl.org>
+X-From: git-owner@vger.kernel.org Tue Feb 14 01:33:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8njK-0002nD-FH
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 01:07:43 +0100
+	id 1F8o81-0008Fp-EU
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 01:33:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964858AbWBNAHi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Feb 2006 19:07:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964879AbWBNAHi
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 19:07:38 -0500
-Received: from wproxy.gmail.com ([64.233.184.193]:55169 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964858AbWBNAHh convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2006 19:07:37 -0500
-Received: by wproxy.gmail.com with SMTP id 50so977617wri
-        for <git@vger.kernel.org>; Mon, 13 Feb 2006 16:07:34 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=A3/YrObIgodJD4ph6UYxQvttoLPJ64iRgbIliQl0549uUKd7TOqw3ZfqvoF4GvKevfZHgGs6PXie1fy+KoMtASNi2dhB2AP4KrZsj4r1Cqmpp2AGh5MVU55UHGpL1DUJa+ofKKXch9tiuoCkg9ADz9it5YqEVn7ARNq3OW/RGBw=
-Received: by 10.54.71.3 with SMTP id t3mr2871142wra;
-        Mon, 13 Feb 2006 16:07:34 -0800 (PST)
-Received: by 10.54.71.8 with HTTP; Mon, 13 Feb 2006 16:07:34 -0800 (PST)
-To: Keith Packard <keithp@keithp.com>
-In-Reply-To: <1139810847.4183.85.camel@evo.keithp.com>
-Content-Disposition: inline
+	id S1030304AbWBNAdI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Feb 2006 19:33:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030305AbWBNAdI
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Feb 2006 19:33:08 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:61893 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1030304AbWBNAdH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2006 19:33:07 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060214002943.BXAI20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 13 Feb 2006 19:29:43 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16091>
 
-On 2/13/06, Keith Packard <keithp@keithp.com> wrote:
-> and, named to include a hash of the contents
+Andrew Morton <akpm@osdl.org> writes:
 
-really? I thought it was something like md5(hostname+datestamp+random).
+> git-format-patch -o ~/a 386093ef9a6c88576d8b418bf1c8616d5e410a20 git-netdev-all
+>
+> and that chewed 10 minutes CPU time and produced no output, so I killed it.
 
-cheers,
+A single commit is either:
 
-m
+	git format-patch -o ~/a 386093^ 386093
+	git show 386093
+
+But if you _did_ want to get everything that builds on top of
+386093 (and Linus counted 1000+ commits if I recall),
+format-patch could be optimized.  It currently does a lot more
+than just format 1000+ commits, to handle case where "his" and
+"mine" are not linear history and may have the same change
+acquired by applying the same patch:
+
+          1---2---3 mine
+         /
+     ---4---5---6 his
+
+In this picture, it does not just format 1 2 3.  It first checks
+1 2 3 5 6, and if each of 1 2 3 introduces the same change as
+either 5 or 6 introduces to omit it from the output.  If 2 and 5
+are the same change from 1 and 4 respectively, the final result
+has 1 and 3.  This is OK and useful for smaller branch, but
+clearly expensive for long branches.
+
+This is omitted when the ancestry graph would look like this:
+	
+          1---2---3 mine
+         /
+     ---4 his
+
+but that would not have helped in this case anyway.
+
+Maybe we could have --no-omit-common flag or something to
+disable this check.
