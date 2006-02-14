@@ -1,92 +1,72 @@
-From: Manu <manu@blairos.org>
-Subject: Re: git-svnimport issue with rename+change in the same commit
-Date: Tue, 14 Feb 2006 18:29:23 +0100
-Message-ID: <43F21373.8040400@blairos.org>
-References: <20060214171233.GC4381@duckman.conectiva>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: bug: stgit doesn't handle branch names with / in them
+Date: Tue, 14 Feb 2006 18:35:09 +0100
+Message-ID: <20060214173509.GA8666@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 14 18:30:07 2006
+X-From: git-owner@vger.kernel.org Tue Feb 14 18:36:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F93zq-0005RT-V1
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 18:29:54 +0100
+	id 1F945D-00076z-V2
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 18:35:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422694AbWBNR31 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 12:29:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422695AbWBNR31
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 12:29:27 -0500
-Received: from ovh.blairos.org ([213.186.41.56]:24759 "EHLO mail.blairos.org")
-	by vger.kernel.org with ESMTP id S1422694AbWBNR30 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 12:29:26 -0500
-Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
-	by mail.blairos.org (Postfix) with ESMTP
-	id 8BFBA844C8; Tue, 14 Feb 2006 18:46:44 +0100 (CET)
-User-Agent: Thunderbird 1.5 (Windows/20051201)
-To: Eduardo Pereira Habkost <ehabkost@mandriva.com>
-In-Reply-To: <20060214171233.GC4381@duckman.conectiva>
+	id S1422695AbWBNRfU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 14 Feb 2006 12:35:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422696AbWBNRfT
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 12:35:19 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:32783 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S1422695AbWBNRfS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2006 12:35:18 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1F944z-0002K9-00; Tue, 14 Feb 2006 17:35:09 +0000
+To: Catalin Marinas <catalin.marinas@arm.com>
+Content-Disposition: inline
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16144>
 
-Hi,
-Eduardo Pereira Habkost wrote:
- > Hi,
- >
- > I've just hit a problem when using git-svnimport to import a big
- > subversion repository: it doesn't import correctly a commit when the
- > commit renames (or copies) and modify a file at the same time.
+"stg branch -l" only shows branches directly under refs/heads, and
+completely ignores branches in subdirectories. But it does print the
+name of the subdirectories . . .
 
-I came accross the same problem myself. Here is a patch that seemed to 
-do the trick for me.
-I tried your script, and it also seems to work.
-Regards,
+"stg branch" prints only the part of the branch name following the
+final slash.
 
-Emmanuel
+    $ git-branch
+      kha/abc123
+      kha/dab
+    * kha/patches
+      kha/powerup
+      kha/dare
+      kha/dare-build
+      kha/boo123
+      kha/lisp106
+      local/test0
+      local/test3
+      local/test4
+      SVN-import
+      test5
 
----
+    $ stg branch -l
+    Available branches:
+            SVN-import  |
+            kha         |
+            local       |
+            test5       |
 
-[PATCH] git-svnimport: Correction when a "copy_path" has different 
-contents for src and dest.
+    $ stg branch
+    patches
 
-In my SVN repository, there is a weird log:
+No patch (yet), sorry.
 
-   A /trunk/mydir2 (from /trunk/mydir1:4)
-   R /trunk/mydir2/test.txt (from /trunk/mydir1/test.txt:4)
-
-As a result, mydir2/test.txt is different than mydir1/test.txt, but
-git-svnimport assumes that the content of mydir2/test.txt is the same
-as mydir1/test.txt.
-
-This patch adds a test in copy_path, that makes sure that src and dest
-have the same content. If not, it uses the content of dest.
-
----
-
- git-svnimport.perl |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-e107ff9a06497a0003036ffafa45fa9dc050ecc4
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index f17d5a2..a2faa9a 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -409,6 +409,12 @@ sub copy_path($$$$$$$$) {
-             $p = $path . substr($p,length($srcpath)-1);
-         } else {
-             $p = $path;
-+            # Deal with copy and modification
-+            my $f=get_file($newrev,$newbranch,$path);
-+            my ($tmode,$tsha1,$tp)=@$f;
-+            if ($tsha1 ne $sha1) {
-+                $sha1=$tsha1;
-+            }
-         }
-         push(@$new,[$mode,$sha1,$p]);   
-     }
--- 
-1.1.GIT
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
