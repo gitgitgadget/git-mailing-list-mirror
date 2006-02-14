@@ -1,119 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-commit: Now --only semantics is the default.
-Date: Mon, 13 Feb 2006 23:53:12 -0800
-Message-ID: <7v7j7ytlzr.fsf@assigned-by-dhcp.cox.net>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
+Date: Tue, 14 Feb 2006 09:26:41 +0000
+Message-ID: <tnxoe1aqoj2.fsf@arm.com>
+References: <20060210195914.GA1350@spearce.org>
+	<20060210211740.GO31278@pasky.or.cz>
+	<20060213210001.GA31278@pasky.or.cz>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Feb 14 08:53:44 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 14 10:27:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F8v0B-0001U2-PX
-	for gcvg-git@gmane.org; Tue, 14 Feb 2006 08:53:36 +0100
+	id 1F8wSi-0002r3-Tk
+	for gcvg-git@gmane.org; Tue, 14 Feb 2006 10:27:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030408AbWBNHxP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 02:53:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030487AbWBNHxP
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 02:53:15 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:65431 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1030423AbWBNHxN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2006 02:53:13 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060214075030.VQEZ26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 14 Feb 2006 02:50:30 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030524AbWBNJ07 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 04:26:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030529AbWBNJ07
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 04:26:59 -0500
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:4011 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S1030524AbWBNJ06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2006 04:26:58 -0500
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k1E9Qk6s006146;
+	Tue, 14 Feb 2006 09:26:46 GMT
+Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Tue, 14 Feb 2006 09:26:46 +0000
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060213210001.GA31278@pasky.or.cz> (Petr Baudis's message of
+ "Mon, 13 Feb 2006 22:00:01 +0100")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 14 Feb 2006 09:26:46.0279 (UTC) FILETIME=[C668A170:01C63148]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16132>
 
-This changes the "git commit paths..." to default to --only
-semantics from traditional --include semantics, as agreed on the
-list.
+Petr Baudis <pasky@suse.cz> wrote:
+>   Some common gripes for both StGIT and pg (well, I'm using some
+> ridiculously old StGIT version, so this may not apply anymore there):
+>
+> 	* stg new --force - seriously, what's the point?! I always to
+> 	the change first and when it's any good, I want to create a
+> 	patch for it.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+This was fixed couple of weeks ago in the main branch. No need to pass
+--force anymore.
 
----
+> 	* I can't just get the patch in its "canonical ready-to-mail
+> 	form" on stdout so that I could easily review it. Why is
+> 	pg-export insisting to dump it to a file?
 
- * This will be part of the post 1.2.0 "master" updates, towards
-   1.3.0 development track.
+To view the patch you can use 'stg diff -r <patch>/' but it doesn't
+show the description. Dumping the full patch on stdout would be
+useful, indeed. The export and mail commands use different templates
+and the latter even adds the standard mail headers. Which of these two
+commands would you prefer to dump the patch on stdout (both is fine as
+well)?
 
- Documentation/git-commit.txt |   17 +++++++++++------
- git-commit.sh                |    9 +++------
- 2 files changed, 14 insertions(+), 12 deletions(-)
+Another thing that's missing in StGIT is the import of a series of
+patches. At the moment I run a small shell script to import individual
+patches.
 
-4170a19587280eeb3663a47a6fd993910de78076
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 53b64fa..214ed23 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -8,8 +8,8 @@ git-commit - Record your changes
- SYNOPSIS
- --------
- [verse]
--'git-commit' [-a] [-i] [-s] [-v] [(-c | -C) <commit> | -F <file> | -m <msg>]
--	   [-e] [--author <author>] [--] <file>...
-+'git-commit' [-a] [-s] [-v] [(-c | -C) <commit> | -F <file> | -m <msg>]
-+	   [-e] [--author <author>] [--] [[-i | -o ]<file>...]
- 
- DESCRIPTION
- -----------
-@@ -73,15 +73,20 @@ OPTIONS
- 	commit the whole index.  This is the traditional
- 	behaviour.
- 
----::
--	Do not interpret any more arguments as options.
--
--<file>...::
-+-o|--only::
- 	Commit only the files specified on the command line.
- 	This format cannot be used during a merge, nor when the
- 	index and the latest commit does not match on the
- 	specified paths to avoid confusion.
- 
-+--::
-+	Do not interpret any more arguments as options.
-+
-+<file>...::
-+	Files to be committed.  The meaning of these is
-+	different between `--include` and `--only`.  Without
-+	either, it defaults `--only` semantics.
-+
- If you make a commit and then found a mistake immediately after
- that, you can recover from it with gitlink:git-reset[1].
- 
-diff --git a/git-commit.sh b/git-commit.sh
-index 59551d9..ab5e6bc 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2005 Linus Torvalds
- # Copyright (c) 2006 Junio C Hamano
- 
--USAGE='[-a] [-i] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit>] [-e] [--author <author>] [<path>...]'
-+USAGE='[-a] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit>] [-e] [--author <author>] [[-i | -o] <path>...]'
- SUBDIRECTORY_OK=Yes
- . git-sh-setup
- 
-@@ -340,11 +340,8 @@ case "$#,$also$only" in
- 0,)
-   ;;
- *,)
--  echo >&2 "assuming --include paths..."
--  also=t
--  # Later when switch the defaults, we will replace them with these:
--  # echo >&2 "assuming --only paths..."
--  # also=
-+  echo >&2 "assuming --only paths..."
-+  also=
- 
-   # If we are going to launch an editor, the message won't be
-   # shown without this...
 -- 
-1.2.0.g45dc
+Catalin
