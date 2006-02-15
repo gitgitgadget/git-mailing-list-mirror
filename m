@@ -1,76 +1,60 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Use case: GIT to manage transactions in a CMS?
-Date: Wed, 15 Feb 2006 12:45:24 +0100
-Message-ID: <43F31454.8060704@op5.se>
-References: <43F30602.500@itaapy.com>
+From: Martin Mares <mj@ucw.cz>
+Subject: Shared repositories and umask
+Date: Wed, 15 Feb 2006 13:19:07 +0100
+Message-ID: <mj+md-20060215.120104.14337.atrey@ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 15 12:45:43 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Feb 15 13:19:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9L69-000761-CT
-	for gcvg-git@gmane.org; Wed, 15 Feb 2006 12:45:30 +0100
+	id 1F9Lcp-0005ek-0C
+	for gcvg-git@gmane.org; Wed, 15 Feb 2006 13:19:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932362AbWBOLp0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 15 Feb 2006 06:45:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbWBOLp0
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 06:45:26 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:47496 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751080AbWBOLpZ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2006 06:45:25 -0500
-Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id C52DC6BCBE; Wed, 15 Feb 2006 12:45:24 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: =?ISO-8859-15?Q?=22J=2E_David_Ib=E1=F1ez=22?= <jdavid@itaapy.com>
-In-Reply-To: <43F30602.500@itaapy.com>
+	id S1751075AbWBOMTJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Feb 2006 07:19:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945914AbWBOMTJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 07:19:09 -0500
+Received: from atrey.karlin.mff.cuni.cz ([195.113.31.123]:52356 "EHLO
+	atrey.karlin.mff.cuni.cz") by vger.kernel.org with ESMTP
+	id S1751076AbWBOMTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2006 07:19:08 -0500
+Received: by atrey.karlin.mff.cuni.cz (Postfix, from userid 1000)
+	id 8EAAA4B426D; Wed, 15 Feb 2006 13:19:07 +0100 (CET)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16239>
 
-J. David Ib=E1=F1ez wrote:
-> Hello,
->=20
-> I am working on a project (a content management system) where the dat=
-a
-> is stored as files and folders.
->=20
-> Currently, for persistance and transactions we use the ZODB [1] objec=
-t
-> database. But our goal is to move away from the ZODB and use directly
-> the file system, as it will allow us to use all the good unix tools.
->=20
-> We are using git to manage the source code. And now we are exploring =
-git
-> to see if it can do the job of transactions, so that each transaction=
- in
-> the system will be a git commit.
->=20
-> One problem we have found is that we can not commit empty directories=
- (what
-> we need to do). Any idea how to solve or work-around this constraint?
->=20
+Hello, world!\n
 
-$ touch empty/dir/.placeholder
+I'm playing with a shared repository and I am still unable to get the
+file and directory permissions kept correctly, that is writeable to
+a group.
 
+Setting the `core.sharedrepository' flag helps a bit, but not completely:
+the object files and directories are group-writeable, but for example new
+head refs aren't.
 
-> Any suggestions and input on this exotic use case for git will be ver=
-y
-> welcomed.
->=20
+The documentation hints on setting umask, but I would really like to avoid
+doing that globally, because the user accounts are used for many other
+things as well where the permissions should be tighter.
 
-Sounds cool. I'll have to give it a whirl when you've got something to =
-show.
+It seems that a correct solution would be to add an `umask' option to
+the repository config and make enter_repo() adjust the umask accordingly.
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I was thinking about doing the same in setup_git_directory() for the
+local commands, but that probably doesn't make much sense since many commands
+are in fact scripts creating files themselves.
+
+If you agree, I will send a patch.
+
+				Have a nice fortnight
+-- 
+Martin `MJ' Mares   <mj@ucw.cz>   http://atrey.karlin.mff.cuni.cz/~mj/
+Faculty of Math and Physics, Charles University, Prague, Czech Rep., Earth
+Q: How many Prolog programmers does it take to change a light bulb?  A: No.
