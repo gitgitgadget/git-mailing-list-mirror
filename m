@@ -1,57 +1,48 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: "git reset --hard" leaves empty directories that shouldn't exist
-Date: Wed, 15 Feb 2006 03:06:24 -0500
-Message-ID: <20060215080624.GA27037@spearce.org>
+Date: Wed, 15 Feb 2006 00:09:09 -0800
+Message-ID: <7vk6bxm4be.fsf@assigned-by-dhcp.cox.net>
 References: <87y80dhxfd.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 15 09:06:43 2006
+X-From: git-owner@vger.kernel.org Wed Feb 15 09:09:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9HgH-00031e-4r
-	for gcvg-git@gmane.org; Wed, 15 Feb 2006 09:06:33 +0100
+	id 1F9His-0003SW-V3
+	for gcvg-git@gmane.org; Wed, 15 Feb 2006 09:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423029AbWBOIG3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Feb 2006 03:06:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423030AbWBOIG2
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 03:06:28 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:56497 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1423029AbWBOIG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2006 03:06:28 -0500
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1F9Hg9-0003yO-Qb; Wed, 15 Feb 2006 03:06:25 -0500
-Received: by asimov.spearce.org (Postfix, from userid 1000)
-	id 778DF20FBA0; Wed, 15 Feb 2006 03:06:24 -0500 (EST)
-To: Carl Worth <cworth@cworth.org>
-Mail-Followup-To: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <87y80dhxfd.wl%cworth@cworth.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1423032AbWBOIJM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Feb 2006 03:09:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423031AbWBOIJM
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 03:09:12 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:39823 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1423032AbWBOIJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2006 03:09:10 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060215080730.SHTC20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 15 Feb 2006 03:07:30 -0500
+To: git@vger.kernel.org
+In-Reply-To: <87y80dhxfd.wl%cworth@cworth.org> (Carl Worth's message of "Tue,
+	14 Feb 2006 23:51:34 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16221>
 
-Carl Worth <cworth@cworth.org> wrote:
+Carl Worth <cworth@cworth.org> writes:
+
 > I've been exploring the potential for git-sync, and I found some odd
 > behavior with "git reset --hard". It appears that if the current tree
 > has some directory structure (at least two levels deep) that does not
 > exist in the tree being reset to, that empty directories are left
 > around after the reset:
-> 
+>
 > 	$ git --version
 > 	git version 1.2.0.gf6e8
 > 	$ git init-db
@@ -68,20 +59,19 @@ Carl Worth <cworth@cworth.org> wrote:
 > 	a/b
 > 	a/b/c
 > 	$
-> 
-> Is this operator error? I don't see any extra options I might be
-> missing in the documentation of git-reset.
+>
+> Is this operator error?
 
-Its not operator error.
+Git does not track directories but bends backwards to make empty
+directories go away.  I do not know if it is an operator error
+or not, but it appears sometimes it does not bend hard enough.
 
-I just dug though git-reset.sh in 1.2.0 and it won't cull
-directories, only files.  Culling the directories is a little bit
-on the ugly side obviously as you must cull bottom-up.  The perl
-code which git-reset.sh is using to cull files definately won't
-cull the directories.
+Interestingly enough, this seems to do things more carefully.
 
-No patch attached.  Maybe someone not on the east coast can write
-one; I need to go catch some sleep.  :-)
-
--- 
-Shawn.
+	$ ...
+	$ git commit -m 'Add file'
+        $ git branch OLD
+        $ ...
+        $ git commit -m 'Add a/b/c/foo'
+        $ git checkout -b bogo
+        $ git checkout OLD
