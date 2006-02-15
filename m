@@ -1,114 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [FYI] pack idx format
-Date: Wed, 15 Feb 2006 00:39:23 -0800
-Message-ID: <7vd5hpm2x0.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: StGIT refreshes all added files - limitation of git-write-tree?
+Date: Wed, 15 Feb 2006 04:06:17 -0500
+Message-ID: <1139994377.5796.30.camel@dv>
+References: <1139978528.28292.41.camel@dv>
+	 <7vacctnnx4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Feb 15 09:39:35 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 15 10:06:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9IC7-0000bE-Rf
-	for gcvg-git@gmane.org; Wed, 15 Feb 2006 09:39:28 +0100
+	id 1F9IcF-0006Ef-9E
+	for gcvg-git@gmane.org; Wed, 15 Feb 2006 10:06:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422666AbWBOIjZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Feb 2006 03:39:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423037AbWBOIjZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 03:39:25 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:21415 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1422666AbWBOIjY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2006 03:39:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060215083600.GONO20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 15 Feb 2006 03:36:00 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1423056AbWBOJGW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Feb 2006 04:06:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423057AbWBOJGW
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 04:06:22 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:42645 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1423056AbWBOJGV
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2006 04:06:21 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1F9Ic7-0001IJ-PU
+	for git@vger.kernel.org; Wed, 15 Feb 2006 04:06:19 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1F9Ic5-00079s-Ka; Wed, 15 Feb 2006 04:06:18 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vacctnnx4.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.5.90 (2.5.90-2.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16224>
 
-This is still WIP but if anybody is interested...  Once done, it
-should become Documentation/technical/pack-format.txt.
+On Tue, 2006-02-14 at 22:20 -0800, Junio C Hamano wrote:
+> Pavel Roskin <proski@gnu.org> writes:
+> 
+> > Or maybe git-write-tree and other utilities could be changed to work on
+> > a copy of the index file?  I would prefer not to move the
+> > actual .git/index away, but to make a copy for the current "stg refresh"
+> > operation.
+> 
+> There is no need to change the core side.  
+> 
+> 	GIT_INDEX_FILE=temporary-index git-write-tree
+> 
+> would do the job.  See the current round of git-commit and how
+> it handles "git commit --only these files" case.
 
-The reason I started doing this is to prototype this one:
+Thank you!  It's comforting to know that the issue is not unique to
+StGIT.
 
-	<7v4q3453qu.fsf@assigned-by-dhcp.cox.net>
-
--- >8 --
-
-Idx file:
-
-The idx file is to map object name SHA1 to offset into the
-corresponding pack file.  There is the 'first-level fan-out'
-table at the beginning, and then the main part of the index
-follows.  This is a table whose entries are sorted by their
-object name SHA1.  The file ends with some trailer information.
-
-The main part is a table of 24-byte entries, and each entry is:
-
-	offset : 4-byte network byte order integer.
-	SHA1   : 20-byte object name SHA1.
-
-The data for the named object begins at byte offset "offset" in
-the corresponding pack file.
-
-Before this main table, at the beginning of the idx file, there
-is a table of 256 4-byte network byte order integers.  This is
-called "first-level fan-out".  N-th entry of this table records
-the offset into the main index for the first object whose object
-name SHA1 starts with N+1.  fanout[255] points at the end of
-main index.  The offset is expressed in 24-bytes unit.
-
-Example:
-
-	idx
-	    +--------------------------------+
-	    | fanout[0] = 2                  |-.
-	    +--------------------------------+ |
-	    | fanout[1]                      | |
-	    +--------------------------------+ |
-	    | fanout[2]                      | |
-	    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |
-	    | fanout[255]                    | |
-	    +--------------------------------+ |
-main	    | offset                         | |
-index	    | object name 00XXXXXXXXXXXXXXXX | |
-table	    +--------------------------------+ | 
-	    | offset                         | |
-	    | object name 00XXXXXXXXXXXXXXXX | |
-	    +--------------------------------+ |
-	  .-| offset                         |<+
-	  | | object name 01XXXXXXXXXXXXXXXX |
-	  | +--------------------------------+
-	  | | offset                         |
-	  | | object name 01XXXXXXXXXXXXXXXX |
-	  | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	  | | offset                         |
-	  | | object name FFXXXXXXXXXXXXXXXX |
-	  | +--------------------------------+
-trailer	  | | packfile checksum              |
-	  | +--------------------------------+
-	  | | idxfile checksum               |
-	  | +--------------------------------+
-          .-------.      
-                  |
-Pack file entry: <+
-
-     packed object header:
-	1-byte type (upper 4-bit)
-	       size0 (lower 4-bit) 
-        n-byte sizeN (as long as MSB is set, each 7-bit)
-		size0..sizeN form 4+7+7+..+7 bit integer, size0
-		is the most significant part.
-     packed object data:
-        If it is not DELTA, then deflated bytes (the size above
-		is the size before compression).
-	If it is DELTA, then
-	  20-byte base object name SHA1 (the size above is the
-	  	size of the delta data that follows).
-          delta data, deflated.
+-- 
+Regards,
+Pavel Roskin
