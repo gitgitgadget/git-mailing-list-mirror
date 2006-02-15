@@ -1,92 +1,89 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
-Date: Tue, 14 Feb 2006 19:35:10 -0500
-Message-ID: <20060215003510.GA25715@spearce.org>
-References: <20060210195914.GA1350@spearce.org> <20060210211740.GO31278@pasky.or.cz> <20060213210001.GA31278@pasky.or.cz> <tnxoe1aqoj2.fsf@arm.com> <20060214100844.GA1234@diana.vm.bytemark.co.uk> <43F1F5CB.10402@citi.umich.edu> <20060214160747.GA6350@diana.vm.bytemark.co.uk> <43F2445A.6020109@citi.umich.edu> <20060214222913.GK31278@pasky.or.cz> <43F2745D.4010800@vilain.net>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Handling large files with GIT
+Date: Wed, 15 Feb 2006 13:40:24 +1300
+Message-ID: <43F27878.50701@vilain.net>
+References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>	<87slqty2c8.fsf@mid.deneb.enyo.de>	<46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com>	<Pine.OSX.4.64.0602131416530.25089@piva.hawaga.org.uk>	<Pine.LNX.4.64.0602121939070.3691@g5.osdl.org>	<Pine.LNX.4.64.0602122049010.3691@g5.osdl.org>	<Pine.LNX.4.64.0602122058260.3691@g5.osdl.org>	<43F113A5.2080506@f2s.com>	<Pine.LNX.4.63.0602141953000.22451@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0602141108050.3691@g5.osdl.org>	<43F249F7.5060008@vilain.net>	<Pine.LNX.4.64.0602141357300.3691@g5.osdl.org> <7vy80dpo9g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Chuck Lever <cel@citi.umich.edu>,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 15 01:35:45 2006
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Feb 15 01:40:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9Ae0-0001be-5j
-	for gcvg-git@gmane.org; Wed, 15 Feb 2006 01:35:44 +0100
+	id 1F9Ais-0002V9-Ge
+	for gcvg-git@gmane.org; Wed, 15 Feb 2006 01:40:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422899AbWBOAfm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 19:35:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422900AbWBOAfm
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 19:35:42 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:9867 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1422899AbWBOAfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2006 19:35:41 -0500
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1F9AdK-0006Ml-Mz; Tue, 14 Feb 2006 19:35:02 -0500
-Received: by asimov.spearce.org (Postfix, from userid 1000)
-	id 7E36820FBA0; Tue, 14 Feb 2006 19:35:10 -0500 (EST)
-To: Sam Vilain <sam@vilain.net>
-Mail-Followup-To: Sam Vilain <sam@vilain.net>, Petr Baudis <pasky@suse.cz>,
-	Chuck Lever <cel@citi.umich.edu>,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <43F2745D.4010800@vilain.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1422900AbWBOAkj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Feb 2006 19:40:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422902AbWBOAkj
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 19:40:39 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:16288 "EHLO mail.utsl.gen.nz")
+	by vger.kernel.org with ESMTP id S1422900AbWBOAkj (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2006 19:40:39 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id B977F4C1A; Wed, 15 Feb 2006 13:40:35 +1300 (NZDT)
+Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 584E01955;
+	Wed, 15 Feb 2006 13:40:29 +1300 (NZDT)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>,
+	Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <7vy80dpo9g.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.92.1.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.watts.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16198>
 
-Sam Vilain <sam@vilain.net> wrote:
-> Petr Baudis wrote:
-> >>my impression of git is that you don't change stuff that's already 
-> >>committed.  you revert changes by applying a new commit that backs out 
-> >>the original changes.  i'm speculating, but i suspect that's why there's 
-> >>a "stg pick --reverse" and not a "stg uncommit."
-> >It is ok as long as you know what are you doing - if you don't push out
-> >the commits you've just "undid" (or work on a public accessible
-> >repository in the first place, but I think that's kind of rare these
-> >days; quick survey - does anyone reading these lines do that?), there's
-> >nothing wrong on it, and it gives you nice flexibility.
+Junio C Hamano wrote:
+> Linus Torvalds <torvalds@osdl.org> writes:
 > 
-> Yes, and this is one problem I envision with publishing a git repository
-> with an stgit stack applied - somebody later doing a pull of it will not
-> find the head revision they had.  I'm not sure what the net effect of
-> this will be, though.
+>>If somebody is interested in making the "lots of filename changes" case go 
+>>fast, I'd be more than happy to walk them through what they'd need to 
+>>change. I'm just not horribly motivated to do it myself. Hint, hint.
+> 
+> In case anybody is wondering, I share the same feeling.  I
+> cannot say I'd be "more than happy to" clean up potential
+> breakages during the development of such changes, but if the
+> change eventually would help certain use cases, I can be
+> persuaded to help debugging such a mess ;-).
 
-It would cause some pain for anyone pulling from it with git-pull, as
-git-pull won't happily go backwards from what I've seen. But I think
-you can force it to do so even if it won't make sense during the
-resulting merge, which then leaves the user in an interesting state.
+Excellent.  Any speculations on where they might fit?  Clearly, it needs
+to be out of the "tree".
 
-This is actually why pg-rebase doesn't care what you move to
-when you grab the remote's commit; it just jumps to that commit
-and pushes your patch stack back down onto it.  So if the remote
-rebuilds itself through a new commit lineage which you have never
-seen before the next pg-rebase will still update to it.  But on
-the other hand if you have a commit that isn't in your local patch
-stack its gone into the bit bucket.
+Dealing with the three cases I mentioned before in my Warnocked post;
 
-Publishing a repository with a stg (or pg) patch series isn't
-a problem; the problem is that no clients currently know how to
-follow along with the remote repository's patch series.  And I can't
-think of a sensible behavior for doing so that isn't what git-core is
-already doing today for non patch series type clients (as in don't go
-backwards by popping but instead by pushing a negative delta).  :-)
+   1. caching - I'll consider this an "under the hood" thing, it really
+                doesn't matter, so long as the tools all know.
 
--- 
-Shawn.
+   2. forensic - extra stuff at the end of the commit object?
+
+      eg
+         Copied: /new/path from /old/path:commit:c0bb171d..
+           (for SVN case where history matters)
+         Copied: /new/path from blob:b10b1d..
+           (for general pre-caching case)
+         Merged: /new/path from /old/path:commit:C0bb171d..
+           (for an SVK clone, so we know that subsequent merges on
+            /new/path need only merge from /old/path starting at commit
+            C0bb171d..)
+
+   3. retrospective - as above, but allow to specify old versions.
+
+      eg
+         Copied: /new/path:C0bb171d1 from /old/path:commit:c0bb171d2...
+           (for SVN case where history matters)
+
+Martin, is that enough for your CVS case?
+
+Sam.
