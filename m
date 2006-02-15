@@ -1,93 +1,90 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: StGIT refreshes all added files - limitation of git-write-tree?
-Date: Tue, 14 Feb 2006 23:42:08 -0500
-Message-ID: <1139978528.28292.41.camel@dv>
+From: Keith Packard <keithp@keithp.com>
+Subject: Re: several quick questions
+Date: Tue, 14 Feb 2006 21:25:45 -0800
+Message-ID: <1139981145.4341.137.camel@evo.keithp.com>
+References: <43F20532.5000609@iaglans.de>
+	 <Pine.LNX.4.64.0602140845080.3691@g5.osdl.org>
+	 <87k6bxvmj6.wl%cworth@cworth.org> <1139943349.4341.66.camel@evo.keithp.com>
+	 <Pine.LNX.4.64.0602141101110.3691@g5.osdl.org>
+	 <1139945967.4341.71.camel@evo.keithp.com>
+	 <46a038f90602142011o36b975b7s1833953db3b6d376@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Feb 15 05:42:17 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-a8AFAGY0kfCDBU5WLdR5"
+Cc: keithp@keithp.com, Linus Torvalds <torvalds@osdl.org>,
+	Carl Worth <cworth@cworth.org>,
+	Nicolas Vilz 'niv' <niv@iaglans.de>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 15 06:25:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9EUZ-00023E-Tl
-	for gcvg-git@gmane.org; Wed, 15 Feb 2006 05:42:16 +0100
+	id 1F9FAq-0000dW-87
+	for gcvg-git@gmane.org; Wed, 15 Feb 2006 06:25:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422666AbWBOEmN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Feb 2006 23:42:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422825AbWBOEmN
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Feb 2006 23:42:13 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:31362 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1422666AbWBOEmM
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2006 23:42:12 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1F9EUU-0002CY-Ui
-	for git@vger.kernel.org; Tue, 14 Feb 2006 23:42:11 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.60)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1F9EUS-0007Qu-6i; Tue, 14 Feb 2006 23:42:08 -0500
-To: Catalin Marinas <catalin.marinas@gmail.com>,
-	git <git@vger.kernel.org>
-X-Mailer: Evolution 2.5.90 (2.5.90-2.1) 
+	id S1422959AbWBOFZx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Feb 2006 00:25:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422964AbWBOFZx
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 00:25:53 -0500
+Received: from home.keithp.com ([63.227.221.253]:42000 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S1422959AbWBOFZw (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Feb 2006 00:25:52 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 2B07013002C;
+	Tue, 14 Feb 2006 21:25:51 -0800 (PST)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 24302-07; Tue, 14 Feb 2006 21:25:50 -0800 (PST)
+Received: by keithp.com (Postfix, from userid 1033)
+	id B875F130020; Tue, 14 Feb 2006 21:25:50 -0800 (PST)
+Received: from evo.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id AF4FF14001;
+	Tue, 14 Feb 2006 21:25:50 -0800 (PST)
+Received: from keithp by evo.keithp.com with local (Exim 4.60)
+	(envelope-from <keithp@keithp.com>)
+	id 1F9FAi-0008FE-ID; Tue, 14 Feb 2006 21:25:48 -0800
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90602142011o36b975b7s1833953db3b6d376@mail.gmail.com>
+X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16212>
 
-Hello!
 
-Current StGIT would refresh all added files on "stg refresh", even if
-they are not specified on the command line.  I believe the same is true
-for removed files.
+--=-a8AFAGY0kfCDBU5WLdR5
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-That's when it can hurt.  I apply a large patch that modifies and adds
-several files.  I want to split the patch into several StGIT patches by
-selecting which files belong to which patch.  All files that need to be
-modified are already modifies.  It's natural that I add new files using
-"stg add" at this stage.  To me, adding files looks very similar to
-modifying them.  However, then I create a patch by "stg new" and commit
-_some_ files to it using "stg refresh" with those files on the command
-line, I discover that _all_ added files have been refreshed.
+On Wed, 2006-02-15 at 17:11 +1300, Martin Langhoff wrote:
 
-The only workaround seems to be to add only those files that will be
-included in the current patch.  The same should be true for renamed
-files.
+> Did that lead to finding any problems with the import? Can I get my
+> hands on that script you've written to run the comparison?
 
-Debugging StGIT shows that it builds correct lists of the files to be
-included in the current patch (update_cache in git.py), but they are
-never used.  Instead, StGIT runs "git-write-tree" without arguments
-(commit in git.py).  While StGIT is careful to only add user-specified
-modified files to the directory cache, it does nothing to the added
-files, which are in the cache already.
+The only issues we had were with manual changes to the repository; other
+than that, we now has a usable git repository for cairo (visible at
+git://git.cairographics.org/cairo). The comparison tool that I wrote was
+a cheesy shell script; I think Carl has updated it to do something less
+severe than rm -rf *; git-reset --hard; if he can share that, I think
+you'll like it a lot better than mine.
 
-Purely StGIT way of handling this problem would be to remove added files
-from the directory cache if they are not being committed.  The problem
-is, "stg add" uses the cache, so this would undo "stg add" on files
-unused in the current operation.  Either StGIT should restore files in
-the cache after the refresh, or there should be a separate StGIT cache
-that "stg add" would work on.  The former is potentially unreliable
-(what if refresh is interrupted), the later creates an extra layer,
-another directory cache no less, this reducing usability of the pure git
-commands.
+Our CVS import script has some magic ChangeLog-style mangling which
+we've posted to the list before; that clearly needs to be encapsulated
+in an optional log-reformatting bit for it to be generally useful.=20
+=20
+--=20
+keith.packard@intel.com
 
-Another approach would be to get rid of "stg add" and "stg rm" and use
-"stg refresh --add" and "stg refresh --rm" to add files to the current
-patch or to remove them.  It does feel like removal of a useful feature,
-since "stg diff" without arguments will no longer show added or removed
-files.  Adding and removing files would be too immediate compared to
-modifying them.
+--=-a8AFAGY0kfCDBU5WLdR5
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-What I really hope to hear is that there is or there will be a git based
-solution.  Either git-write-tree could be changed to only process files
-specified on the command line, or there should be some other command
-doing that.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
 
-Or maybe git-write-tree and other utilities could be changed to work on
-a copy of the index file?  I would prefer not to move the
-actual .git/index away, but to make a copy for the current "stg refresh"
-operation.
+iD8DBQBD8rtZQp8BWwlsTdMRArz8AKDN6foU+K4Ncgpxi/nGFxEjEAf7rgCfbVUZ
+JxS32GV+H3OKRBiNTq2gyeo=
+=Fxpn
+-----END PGP SIGNATURE-----
 
--- 
-Regards,
-Pavel Roskin
+--=-a8AFAGY0kfCDBU5WLdR5--
