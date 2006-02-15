@@ -1,87 +1,112 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Handling large files with GIT
-Date: Wed, 15 Feb 2006 01:54:52 -0800
-Message-ID: <7vd5hpj6ab.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>
-	<87slqty2c8.fsf@mid.deneb.enyo.de>
-	<46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com>
-	<Pine.OSX.4.64.0602131416530.25089@piva.hawaga.org.uk>
-	<Pine.LNX.4.64.0602121939070.3691@g5.osdl.org>
-	<Pine.LNX.4.64.0602122049010.3691@g5.osdl.org>
-	<Pine.LNX.4.64.0602122058260.3691@g5.osdl.org>
-	<43F113A5.2080506@f2s.com>
-	<Pine.LNX.4.63.0602141953000.22451@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0602141108050.3691@g5.osdl.org>
-	<43F249F7.5060008@vilain.net>
-	<Pine.LNX.4.64.0602141357300.3691@g5.osdl.org>
-	<7vy80dpo9g.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602141741210.3691@g5.osdl.org>
-	<Pine.LNX.4.64.0602141811050.3691@g5.osdl.org>
-	<Pine.LNX.4.64.0602141829080.3691@g5.osdl.org>
-	<Pine.LNX.4.64.0602141953081.3691@g5.osdl.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
+Date: Wed, 15 Feb 2006 11:11:36 +0100
+Message-ID: <20060215101136.GB26911@diana.vm.bytemark.co.uk>
+References: <20060210195914.GA1350@spearce.org> <20060210211740.GO31278@pasky.or.cz> <20060213210001.GA31278@pasky.or.cz> <tnxoe1aqoj2.fsf@arm.com> <20060214100844.GA1234@diana.vm.bytemark.co.uk> <43F1F5CB.10402@citi.umich.edu> <20060214160747.GA6350@diana.vm.bytemark.co.uk> <43F2445A.6020109@citi.umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Kuivinen <freku045@student.liu.se>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 15 10:55:07 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Feb 15 11:12:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9JNB-0000L7-Kj
-	for gcvg-git@gmane.org; Wed, 15 Feb 2006 10:55:00 +0100
+	id 1F9Jdo-00049T-1M
+	for gcvg-git@gmane.org; Wed, 15 Feb 2006 11:12:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751059AbWBOJyy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Feb 2006 04:54:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbWBOJyy
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 04:54:54 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:37819 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751056AbWBOJyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2006 04:54:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060215095342.XNZ15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 15 Feb 2006 04:53:42 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602141953081.3691@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 14 Feb 2006 19:58:03 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751091AbWBOKLq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 15 Feb 2006 05:11:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751092AbWBOKLq
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 05:11:46 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:14089 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S1751091AbWBOKLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2006 05:11:45 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1F9JdI-00075r-00; Wed, 15 Feb 2006 10:11:36 +0000
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <43F2445A.6020109@citi.umich.edu>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16230>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On 2006-02-14 15:58:02 -0500, Chuck Lever wrote:
 
-> As far as I can tell, the output from git-merge-tree with that fix to only 
-> simplify subdirectories that match exactly in all of base/branch1/branch2 
-> is precisely the output that git-merge-recursive actually wants.
+> Karl Hasselstr=F6m wrote:
+>
+> > No, I literally want the opposite of "stg commit", so that the
+> > sequence "stg commit; stg uncommit" has zero net effect.
+>
+> well, that would work OK for maintainers, but would be kind of
+> strange for folks who are pulling from such a repository. how would
+> that work?
 
-The matches the recollection I had last time I mucked with the
-code.  Currently it is set up to do one path at a time in both
-index and working tree, so it would not be a trivial rewrite,
-but merge-tree based approach would speed things up quite a
-bit.
+I didn't plan to publish branches where this kind of history munging
+was being done. It's precisely like "git rebase" in that regard --
+it's a tool for cleaning up history before it is published.
 
-I was thinking about implementing mergers as a pipeline:
+> my impression of git is that you don't change stuff that's already
+> committed. you revert changes by applying a new commit that backs
+> out the original changes.
 
-	git-merge-tree O A B |
-        git-merge-renaming A |
-        git-merge-aggressive A |
-        git-merge-filemerge
+You don't change stuff that's already committed _and published_ (well,
+except for pu branches :-). Rewriting history is perfectly OK up until
+the moment someone has pulled your branch.
 
-git-merge-tree (yours) does not do trivial collapsing, and
-produce raw-diff from A.  git-merge-renaming reads it, finds
-copied/renamed entries (maybe reusing parts of diffcore), and
-writes out the results in the same format as merge-tree output
-(that's why I am giving A on the command line -- so it can also
-read A if it wanted to. it may need to talk about what a path in
-A was even when merge-tree did not say anything about that
-path).  Then git-merge-aggressive (bad naming, I know, it only
-corresponds to the flag of the same name in read-tree) will
-collapse git-merge-one-file equivalent stage collapsing.  The
-remainder is fed to file-level merger for postprocessing.
-Everything except the last step would work on a data format that
-merge-tree outputs.
+> i'm speculating, but i suspect that's why there's a "stg pick
+> --reverse" and not a "stg uncommit."
+
+I don't think I've been very successful in communicating exactly what
+I want "stg uncommit" for. It's not that I want to undo a committed
+change -- what I want is to transform it into an stgit patch so that I
+can edit it with a minimum of effort.
+
+  $ edit edit edit
+  $ git-commit -a -m "create foo"
+  $ edit edit edit
+  $ git-commit -a -m "improve foo"
+  $ edit edit edit
+  $ git-commit -a -m "improve bar"
+
+  # Oops, I realize that the "create foo" changeset had a debug
+  # printout left in it, and I wasn't already using stgit.
+
+  $ stg init
+  $ stg uncommit improve-bar improve-foo create-foo
+  $ stg stg pop --to=3Dcreate-foo
+  $ edit --remove=3Ddebug-printout
+  $ stg refresh
+  $ stg push --all
+
+Similar use-cases for e.g. reordering commits, merging commits,
+deleting one commit in the middle of a chain of good ones, etc. are
+easy to come up with. The point is that stgit alreay handles all this,
+_but only if you have been using stgit from the start_. What "stg
+uncommit" does is basically to import (linear) git history into stgit,
+where a powerful toolset exists to edit it.
+
+You can actually do this today; just create a new branch where you
+want your new stgit stack to be based, and "stg pick" the
+commits/patches from the old branch:
+
+  $ git-checkout -b new-branch HEAD^^^
+  $ stg init
+  $ stg pick old-branch^^^ -n create-foo
+  $ stg pick old-branch^^ -n improve-foo
+  $ stg pick old-branch^ -n improve-bar
+  $ git-branch -D old-branch
+  $ git-checkout -b old-branch
+  $ git-branch -d new-branch
+
+This series of commands also converts the top three commits to stgit
+patches, and leaves the user on the same branch where she started (it
+does _exactly_ the same job as "stg uncommit improve-bar improve-foo
+create-foo"), but it's a lot of work, and a typo could lose commits.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
