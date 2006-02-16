@@ -1,105 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git
-Date: Wed, 15 Feb 2006 22:57:21 -0800
-Message-ID: <7vk6bvhju6.fsf@assigned-by-dhcp.cox.net>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: Make "git clone" less of a deathly quiet experience
+Date: Wed, 15 Feb 2006 23:56:38 -0700
+Message-ID: <m1ek23rduh.fsf@ebiederm.dsl.xmission.com>
+References: <Pine.LNX.4.64.0602102018250.3691@g5.osdl.org>
+	<7vwtg2o37c.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602110943170.3691@g5.osdl.org>
+	<1139685031.4183.31.camel@evo.keithp.com> <43EEAEF3.7040202@op5.se>
+	<1139717510.4183.34.camel@evo.keithp.com> <43EF15D1.1050609@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Feb 16 07:57:32 2006
+Cc: Keith Packard <keithp@keithp.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Feb 16 07:58:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9d4w-0004rd-L4
-	for gcvg-git@gmane.org; Thu, 16 Feb 2006 07:57:26 +0100
+	id 1F9d5Y-0004xA-8D
+	for gcvg-git@gmane.org; Thu, 16 Feb 2006 07:58:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932485AbWBPG5Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Feb 2006 01:57:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932478AbWBPG5Y
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 01:57:24 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:44257 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932485AbWBPG5X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2006 01:57:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060216065728.OMET25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 16 Feb 2006 01:57:28 -0500
-To: git@vger.kernel.org
+	id S932478AbWBPG6A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Feb 2006 01:58:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932486AbWBPG6A
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 01:58:00 -0500
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:30620 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S932478AbWBPG57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2006 01:57:59 -0500
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k1G6ug82030636;
+	Wed, 15 Feb 2006 23:56:42 -0700
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k1G6uc9D030635;
+	Wed, 15 Feb 2006 23:56:38 -0700
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <43EF15D1.1050609@op5.se> (Andreas Ericsson's message of "Sun,
+ 12 Feb 2006 12:02:41 +0100")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16275>
 
-* Master branch has these since 1.2.1 maintenance release.
+Andreas Ericsson <ae@op5.se> writes:
 
-  - documentation fixes:
-    git-commit: Now --only semantics is the default.
+> Keith Packard wrote:
+>> On Sun, 2006-02-12 at 04:43 +0100, Andreas Ericsson wrote:
+>>
+>>>A weird oddity; Cloning is faster over rsync, day-to-day pulling is not.
+>> Precisely. If the protocol could deliver existing packs instead of
+>> unpacking and repacking them, then git would be as fast as rsync and I
+>> wouldn't have to worry about supporting two protocols.
+>>
+>
+> Caching features have been discussed, but that means the daemon needs to have
+> write-access to some directory within the repository. It would also work poorly
+> for projects that see very rapid development unless the cached pack-files can be
+> amended to. A sort of "create packs on demand". It shouldn't be too difficult,
+> really.
 
-  - usability:
-    - rebase aquired a hook to refuse rebasing.
-    - commit and add detects misspelled pathspec while making a partial commit.
-    - git-svnimport: -r adds svn revision number to commit messages
-    - properly git-bisect reset after bisecting from non-master head
-    - send-email: Add some options for controlling how addresses
-      are automatically added to the cc: list.
-    - send-email: Add --cc
+Actually for the clone case we don't need a writable directory for the
+git-daemon. 
 
-* Next branch has these, that are not in master.  If you feel
-  you would benefit from these, testing and feedback is greatly
-  appreciated.
+If we assume that a repository up for download is reasonably packed,
+we can just lob all of the packs in the current repository, and then
+pack the few remaining objects and send them.
 
- - "Assume unchanged git" series (7 commits):
+I don't know how well multiple packs will work with the current git
+protocol but it should be pretty natural, and the clone case is easy
+detect as there are no heads in common.  Can that be detected quickly?
 
-   This was done in response to people on filesystems with slow
-   lstat(2).  I do not have such an environment, so I cannot say
-   I tested it that much.
+I don't have a patch but it feels like a pretty straight forward thing
+to implement.
 
- - "Rebase to different branch" (1 commit):
-
-   This was previously discussed on the list.  With this command
-   line:
-
-    	$ git rebase --onto master~1 master topic
-    
-   would rebase this ancestry graph to:
-    
-              A---B---C topic
-             /
-        D---E---F---G master
-    
-    
-   another graph that looks like this:
-    
-                  A'--B'--C' topic
-                 /
-        D---E---F---G master
-
-   Earlier, you couldn't rebase to anywhere other than on top of
-   "the other branch".
-
-
-* Proposed updates "pu" branch has these, not in "next".  Some
-  of them are of iffy nature, and without further work will not
-  go anywhere.
-
- - "merge-tree" series by Linus (2 commits).
-
-   I haven't spent enough time looking at and thinking about
-   this yet.
-
- - "reuse pack data" (1 commit).
-
-   I still haven't seen data corruption with this one, which is
-   a good sign, but would like to keep beating it privately for
-   a while.  Perhaps will graduate to "next" by next week.
-
- - "bind commit" series (6 commits).
-
-   I think the core-side is more or less done with this one.
-   Anybody interested in doing Porcelain side?
-
- - "shallow clone" series (1 commit).
-
-   I should drop this one for now and perhaps when enough people
-   are interested reopen the issue.
+Eric
