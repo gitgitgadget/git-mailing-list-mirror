@@ -1,66 +1,111 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Handling large files with GIT
-Date: Wed, 15 Feb 2006 19:29:40 -0800
-Message-ID: <7vlkwckml7.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f90602080114r2205d72cmc2b5c93f6fffe03d@mail.gmail.com>
-	<87slqty2c8.fsf@mid.deneb.enyo.de>
-	<46a038f90602081435x49e53a1cgdc56040a19768adb@mail.gmail.com>
-	<Pine.OSX.4.64.0602131416530.25089@piva.hawaga.org.uk>
-	<Pine.LNX.4.64.0602121939070.3691@g5.osdl.org>
-	<Pine.LNX.4.64.0602122049010.3691@g5.osdl.org>
-	<Pine.LNX.4.64.0602122058260.3691@g5.osdl.org>
-	<43F113A5.2080506@f2s.com>
-	<Pine.LNX.4.63.0602141953000.22451@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0602141108050.3691@g5.osdl.org>
-	<43F249F7.5060008@vilain.net>
-	<Pine.LNX.4.64.0602141357300.3691@g5.osdl.org>
-	<7vy80dpo9g.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602141741210.3691@g5.osdl.org>
-	<Pine.LNX.4.64.0602141811050.3691@g5.osdl.org>
-	<Pine.LNX.4.64.0602141829080.3691@g5.osdl.org>
-	<Pine.LNX.4.64.0602141953081.3691@g5.osdl.org>
-	<7vd5hpj6ab.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602151915010.916@g5.osdl.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] pack-objects: reuse data from existing pack.
+Date: Wed, 15 Feb 2006 22:41:24 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602152226130.5606@localhost.localdomain>
+References: <7vd5hpm2x0.fsf@assigned-by-dhcp.cox.net>
+ <7vbqx8m62q.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 16 04:29:53 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 16 04:41:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9Zq1-0005dc-03
-	for gcvg-git@gmane.org; Thu, 16 Feb 2006 04:29:49 +0100
+	id 1F9a1P-0008Gs-BW
+	for gcvg-git@gmane.org; Thu, 16 Feb 2006 04:41:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932122AbWBPD3p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Feb 2006 22:29:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932143AbWBPD3p
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 22:29:45 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:37804 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932122AbWBPD3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2006 22:29:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060216032657.GKHF26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 15 Feb 2006 22:26:57 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602151915010.916@g5.osdl.org> (Linus Torvalds's
-	message of "Wed, 15 Feb 2006 19:25:32 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932137AbWBPDl0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Feb 2006 22:41:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932237AbWBPDl0
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 22:41:26 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:29605 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S932137AbWBPDlZ
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2006 22:41:25 -0500
+Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IUR0000IGX00AB0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 15 Feb 2006 22:41:25 -0500 (EST)
+In-reply-to: <7vbqx8m62q.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16266>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Wed, 15 Feb 2006, Junio C Hamano wrote:
 
-> Junio, that "traverse_trees()" logic is totally independent of whether we 
-> actually do "git-merge-tree" or not, so if you want to, I could split up 
-> the patches the other way (and merge "traverse_trees()" first as a new 
-> interface, independently).
+> When generating a new pack, notice if we have already the wanted
+> object in existing packs.  If the object has a delitified
+> representation, and its base object is also what we are going to
+> pack, then reuse the existing deltified representation
+> unconditionally, bypassing all the expensive find_deltas() and
+> try_deltas() routines.
+> 
+> Also, when writing out such deltified representation and
+> undeltified representation, if a matching data already exists in
+> an existing pack, just write it out without uncompressing &
+> recompressing.
 
-I won't have time to look at the actual patch tonight but I am
-interested.  I think the general idea should work nice with both
-multi-base and octopus merge cases as well ;-).
+Great !
+
+> Without this patch:
+> 
+>     $ git-rev-list --objects v1.0.0 >RL
+>     $ time git-pack-objects p <RL
+> 
+>     Generating pack...
+>     Done counting 12233 objects.
+>     Packing 12233 objects....................
+>     60a88b3979df41e22d1edc3967095e897f720192
+> 
+>     real    0m32.751s
+>     user    0m27.090s
+>     sys     0m2.750s
+> 
+> With this patch:
+> 
+>     $ git-rev-list --objects v1.0.0 >RL
+>     $ time ../git.junio/git-pack-objects q <RL
+> 
+>     Generating pack...
+>     Done counting 12233 objects.
+>     Packing 12233 objects.....................
+>     60a88b3979df41e22d1edc3967095e897f720192
+>     Total 12233, written 12233, reused 12177
+> 
+>     real    0m4.007s
+>     user    0m3.360s
+>     sys     0m0.090s
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> 
+> ---
+> 
+>  * This may depend on one cleanup patch I have not sent out, but
+>    I am so excited that I could not help sending this out first.
+> 
+>    Admittedly this is hot off the press, I have not had enough
+>    time to beat this too hard, but the resulting pack from the
+>    above passed unpack-objects, index-pack and verify-pack.
+
+In fact, the resulting pack should be identical with or without this 
+patch, shouldn't it?
+
+FYI: I have list of patches to produce even smaller (yet still 
+compatible) packs, or less dense ones but with much reduced CPU usage.  
+All depending on a new --speed argument to git-pack-objects.  I've been 
+able to produce 15-20% smaller packs with the same depth and window 
+size, but taking twice as much CPU time to produce. Combined with your 
+patch, one could repack the object store with the maximum compression 
+even if it is expensive CPU wise, but any pull will benefit from it 
+afterwards with no additional cost.
+
+I only need to find some time to finally clean and re-test those 
+patches...
+
+
+Nicolas
