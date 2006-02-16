@@ -1,51 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE] git-svn - bidirection operations between svn and git
-Date: Thu, 16 Feb 2006 01:20:23 -0800
-Message-ID: <7vmzgrbqy0.fsf@assigned-by-dhcp.cox.net>
-References: <20060216073826.GA12055@hand.yhbt.net>
-	<7v4q2zg2an.fsf@assigned-by-dhcp.cox.net>
-	<cc723f590602160008v5fcc0e35h6d9296bd0572fac2@mail.gmail.com>
-	<7vr763emwx.fsf@assigned-by-dhcp.cox.net>
-	<cc723f590602160030n498b18edla328f7c64d44c04a@mail.gmail.com>
+From: Gerrit Pape <pape@smarden.org>
+Subject: Re: [ANNOUNCE] Cogito-0.17rc1
+Date: Thu, 16 Feb 2006 10:20:59 +0000
+Message-ID: <20060216102059.17009.qmail@8b7ebad5023b2c.315fe32.mid.smarden.org>
+References: <20060212171154.GW31278@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 16 10:20:42 2006
+X-From: git-owner@vger.kernel.org Thu Feb 16 11:24:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9fJR-0004sH-VV
-	for gcvg-git@gmane.org; Thu, 16 Feb 2006 10:20:34 +0100
+	id 1F9gFz-00025e-FW
+	for gcvg-git@gmane.org; Thu, 16 Feb 2006 11:21:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932514AbWBPJUb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Feb 2006 04:20:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932521AbWBPJUb
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 04:20:31 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:38655 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932514AbWBPJUa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2006 04:20:30 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060216091753.EMIQ17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 16 Feb 2006 04:17:53 -0500
-To: Aneesh Kumar <aneesh.kumar@gmail.com>
-In-Reply-To: <cc723f590602160030n498b18edla328f7c64d44c04a@mail.gmail.com>
-	(Aneesh Kumar's message of "Thu, 16 Feb 2006 14:00:20 +0530")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030410AbWBPKUx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Feb 2006 05:20:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030454AbWBPKUx
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 05:20:53 -0500
+Received: from a.mx.smarden.org ([212.21.76.77]:59530 "HELO a.mx.smarden.org")
+	by vger.kernel.org with SMTP id S1030410AbWBPKUw (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Feb 2006 05:20:52 -0500
+Received: (qmail 17010 invoked by uid 1000); 16 Feb 2006 10:20:59 -0000
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060212171154.GW31278@pasky.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16289>
 
-Aneesh Kumar <aneesh.kumar@gmail.com> writes:
+On Sun, Feb 12, 2006 at 06:11:54PM +0100, Petr Baudis wrote:
+>   I'm announcing the release of Cogito version 0.17rc1, the human-friendly
+> version control UI for Linus' GIT tool. Share and enjoy at:
+> 
+> 	http://www.kernel.org/pub/software/scm/cogito/
 
-> It would be fine with me if you just  drop the script to
-> contrib/gitview directory.
+Hi, the selftests for cg-seek fail for me on Debian/unstable:
 
-OK.  One final question.  Actually, two.  Is the original author
-Scott James Remnant OK with adding the script to a GPLv2
-project?  Also do you want your HP affiliation appear in the
-author field or your gmail address?
+ $ wget -q -O- http://www.kernel.org/pub/software/scm/cogito/cogito-0.17rc1.tar.gz |tar xzpf -
+ $ cd cogito-0.17rc1
+ $ make
+ Generating cg-version...
+ $ make test
+ [...]
+ *** t9300-seek.sh ***
+ *   ok 1: initialize repo
+ Adding file different
+ *   ok 2: record second commit
+ *   ok 3: seeking to the first commit
+ *   ok 4: we should have .git/head-name == master
+ *   ok 5: current branch should be cg-seek-point
+ *   ok 6: current commit should be commit1
+ *   ok 7: newfile should be gone
+ *   ok 8: different should be v1
+ *   ok 9: identical should be identical
+ * FAIL 10: seeking to the second commit
+         cg-seek ab3fddb2498b5378c1eb91f341c0f9cfbc15944f
+ *   ok 11: we should not unseeked properly
+ * FAIL 12: current commit should be commit2
+         [ 422409bf18cdcf9214cd9fcc34a2cace15ce5aff =
+ ab3fddb2498b5378c1eb91f341c0f9cfbc15944f ]
+ *   ok 13: seeking to the last (well, still second) commit
+ *   ok 14: we should be unseeked properly
+ *   ok 15: current commit should be commit2
+ *   ok 16: newdir/newfile should be back
+ *   ok 17: different should be v2
+ *   ok 18: identical should be identical
+ *   ok 19: local change to identical (non-conflicting)
+ *   ok 20: local change to newdir/newfile (conflicting)
+ *   ok 21: seeking to the first commit
+ *   ok 22: current commit should be commit1
+ *   ok 23: different should be v1
+ *   ok 24: identical should be nonconflicting
+ *   ok 25: unseeking
+ *   ok 26: we should be unseeked properly
+ *   ok 27: current commit should be commit2
+ * failed 2 among 27 test(s)
+
+This seems to be a workaround:
+
+--- t/.t9300-seek.sh    2006-02-16 10:13:31.000000000 +0000
++++ t/t9300-seek.sh     2006-02-16 10:14:00.000000000 +0000
+@@ -45,7 +45,7 @@
+        "[ $(cat identical) = identical ]"
+ 
+ test_expect_success 'seeking to the second commit' \
+-       "cg-seek $commit2"
++       "cg-seek && cg-seek $commit2"
+ test_expect_success 'we should not unseeked properly' \
+        "([ -e .git/head-name ] &&
+         [ $(basename $(git-symbolic-ref HEAD)) = cg-seek-point ])"
+
+Regards, Gerrit.
