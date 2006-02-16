@@ -1,95 +1,86 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: [ANNOUNCE] Cogito-0.17rc1
-Date: Thu, 16 Feb 2006 10:20:59 +0000
-Message-ID: <20060216102059.17009.qmail@8b7ebad5023b2c.315fe32.mid.smarden.org>
-References: <20060212171154.GW31278@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
+Date: Thu, 16 Feb 2006 02:24:28 -0800
+Message-ID: <7vbqx7bnz7.fsf@assigned-by-dhcp.cox.net>
+References: <20060213210001.GA31278@pasky.or.cz> <tnxoe1aqoj2.fsf@arm.com>
+	<20060214100844.GA1234@diana.vm.bytemark.co.uk>
+	<43F1F5CB.10402@citi.umich.edu>
+	<20060214160747.GA6350@diana.vm.bytemark.co.uk>
+	<43F2445A.6020109@citi.umich.edu> <20060214222913.GK31278@pasky.or.cz>
+	<43F2745D.4010800@vilain.net> <20060215003510.GA25715@spearce.org>
+	<20060215041142.GA21048@fieldses.org>
+	<20060215065411.GB26632@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Feb 16 11:24:48 2006
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Sam Vilain <sam@vilain.net>, Petr Baudis <pasky@suse.cz>,
+	Chuck Lever <cel@citi.umich.edu>,
+	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 16 11:27:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9gFz-00025e-FW
-	for gcvg-git@gmane.org; Thu, 16 Feb 2006 11:21:04 +0100
+	id 1F9gJc-0003CR-0I
+	for gcvg-git@gmane.org; Thu, 16 Feb 2006 11:24:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030410AbWBPKUx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Feb 2006 05:20:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030454AbWBPKUx
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 05:20:53 -0500
-Received: from a.mx.smarden.org ([212.21.76.77]:59530 "HELO a.mx.smarden.org")
-	by vger.kernel.org with SMTP id S1030410AbWBPKUw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Feb 2006 05:20:52 -0500
-Received: (qmail 17010 invoked by uid 1000); 16 Feb 2006 10:20:59 -0000
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060212171154.GW31278@pasky.or.cz>
+	id S1751177AbWBPKYb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Feb 2006 05:24:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbWBPKYb
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 05:24:31 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:36230 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751222AbWBPKYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2006 05:24:30 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060216102159.ERFK17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 16 Feb 2006 05:21:59 -0500
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060215065411.GB26632@spearce.org> (Shawn Pearce's message of
+	"Wed, 15 Feb 2006 01:54:11 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16290>
 
-On Sun, Feb 12, 2006 at 06:11:54PM +0100, Petr Baudis wrote:
->   I'm announcing the release of Cogito version 0.17rc1, the human-friendly
-> version control UI for Linus' GIT tool. Share and enjoy at:
-> 
-> 	http://www.kernel.org/pub/software/scm/cogito/
+Shawn Pearce <spearce@spearce.org> writes:
 
-Hi, the selftests for cg-seek fail for me on Debian/unstable:
+> I think I'm almost there with pg.  One of my next tasks is the
+> patch log ripping code.  This is really only complicated because GIT
+> won't let me store the base of a 3 way merge as part of a commit;
+> all I can store is the set of parents.  If I had the base in the
+> commit (and specifically marked as such so I can tell it from the
+> end points) then I could easily walk through the log to extract all
+> commits relevant to a patch and seek forward and backward over it.
 
- $ wget -q -O- http://www.kernel.org/pub/software/scm/cogito/cogito-0.17rc1.tar.gz |tar xzpf -
- $ cd cogito-0.17rc1
- $ make
- Generating cg-version...
- $ make test
- [...]
- *** t9300-seek.sh ***
- *   ok 1: initialize repo
- Adding file different
- *   ok 2: record second commit
- *   ok 3: seeking to the first commit
- *   ok 4: we should have .git/head-name == master
- *   ok 5: current branch should be cg-seek-point
- *   ok 6: current commit should be commit1
- *   ok 7: newfile should be gone
- *   ok 8: different should be v1
- *   ok 9: identical should be identical
- * FAIL 10: seeking to the second commit
-         cg-seek ab3fddb2498b5378c1eb91f341c0f9cfbc15944f
- *   ok 11: we should not unseeked properly
- * FAIL 12: current commit should be commit2
-         [ 422409bf18cdcf9214cd9fcc34a2cace15ce5aff =
- ab3fddb2498b5378c1eb91f341c0f9cfbc15944f ]
- *   ok 13: seeking to the last (well, still second) commit
- *   ok 14: we should be unseeked properly
- *   ok 15: current commit should be commit2
- *   ok 16: newdir/newfile should be back
- *   ok 17: different should be v2
- *   ok 18: identical should be identical
- *   ok 19: local change to identical (non-conflicting)
- *   ok 20: local change to newdir/newfile (conflicting)
- *   ok 21: seeking to the first commit
- *   ok 22: current commit should be commit1
- *   ok 23: different should be v1
- *   ok 24: identical should be nonconflicting
- *   ok 25: unseeking
- *   ok 26: we should be unseeked properly
- *   ok 27: current commit should be commit2
- * failed 2 among 27 test(s)
+I think I know what you are talking about.  Maybe you might be
+interested to take a look at TO script in my todo branch [*1*]?
 
-This seems to be a workaround:
+Also there is a sample hook script templates/hooks--pre-rebase 
+that uses the same idea used in the said script.  These are what
+I use to manage the "next" branch (an aggregation of topic
+branches being cooked).
 
---- t/.t9300-seek.sh    2006-02-16 10:13:31.000000000 +0000
-+++ t/t9300-seek.sh     2006-02-16 10:14:00.000000000 +0000
-@@ -45,7 +45,7 @@
-        "[ $(cat identical) = identical ]"
- 
- test_expect_success 'seeking to the second commit' \
--       "cg-seek $commit2"
-+       "cg-seek && cg-seek $commit2"
- test_expect_success 'we should not unseeked properly' \
-        "([ -e .git/head-name ] &&
-         [ $(basename $(git-symbolic-ref HEAD)) = cg-seek-point ])"
+By the way, please do *not* do this:
 
-Regards, Gerrit.
+    Mail-Followup-To: "J. Bruce Fields" <bfields@fieldses.org>,
+            Sam Vilain <sam@vilain.net>, Petr Baudis <pasky@suse.cz>,...
+	    ...
+
+I wanted to reply to *you*, but by having the header you robbed
+about 30 seconds from me, forcing me to edit the "To:"
+addressee.
+
+
+[Footnote]
+
+*1* todo branch does not have *any* ancestry relationship with
+my primary branches, so please do not try to merge it in your
+primary repository (unless you know what you are doing).  Make a
+clone into a separate directory and running "git checkout todo"
+there is the cleanest way to peek into it.
