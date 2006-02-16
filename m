@@ -1,64 +1,67 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
-Date: Thu, 16 Feb 2006 08:54:40 +0100
-Message-ID: <20060216075440.GA11939@diana.vm.bytemark.co.uk>
-References: <20060210195914.GA1350@spearce.org> <20060210211740.GO31278@pasky.or.cz> <20060213210001.GA31278@pasky.or.cz> <tnxoe1aqoj2.fsf@arm.com> <20060214100844.GA1234@diana.vm.bytemark.co.uk> <43F1F5CB.10402@citi.umich.edu> <20060214160747.GA6350@diana.vm.bytemark.co.uk> <43F2445A.6020109@citi.umich.edu> <20060214222913.GK31278@pasky.or.cz> <b0943d9e0602150925v6f01accfw@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [ANNOUNCE] git-svn - bidirection operations between svn and git
+Date: Thu, 16 Feb 2006 00:01:36 -0800
+Message-ID: <7v4q2zg2an.fsf@assigned-by-dhcp.cox.net>
+References: <20060216073826.GA12055@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Feb 16 08:54:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Aneesh Kumar <aneesh.kumar@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 16 09:01:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9dyP-0004vY-Ba
-	for gcvg-git@gmane.org; Thu, 16 Feb 2006 08:54:46 +0100
+	id 1F9e5A-00063B-9t
+	for gcvg-git@gmane.org; Thu, 16 Feb 2006 09:01:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932509AbWBPHym convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 16 Feb 2006 02:54:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932510AbWBPHym
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 02:54:42 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:14340 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S932509AbWBPHym (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2006 02:54:42 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1F9dyK-00039D-00
-	for <git@vger.kernel.org>; Thu, 16 Feb 2006 07:54:40 +0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0602150925v6f01accfw@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S932512AbWBPIBj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Feb 2006 03:01:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932513AbWBPIBj
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 03:01:39 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:53434 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932512AbWBPIBi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2006 03:01:38 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060216075910.QLDO17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 16 Feb 2006 02:59:10 -0500
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <20060216073826.GA12055@hand.yhbt.net> (Eric Wong's message of
+	"Wed, 15 Feb 2006 23:38:26 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16280>
 
-On 2006-02-15 17:25:30 +0000, Catalin Marinas wrote:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> On 14/02/06, Petr Baudis <pasky@suse.cz> wrote:
->
-> > It is ok as long as you know what are you doing - if you don't
-> > push out the commits you've just "undid" (or work on a public
-> > accessible repository in the first place, but I think that's kind
-> > of rare these days; quick survey - does anyone reading these lines
-> > do that?), there's nothing wrong on it, and it gives you nice
-> > flexibility.
-> >
-> > For example, to import bunch of patches (I guess that's the
-> > original intention behind this) you just run git-am on them and
-> > then stg uncommit all of the newly added commits.
->
-> This is a sensible way of using an uncommit command but I initially
-> thought it would be better to make things harder for people wanting
-> to re-write the history. Anyway, I'll keep this command on my todo
-> list.
+> @ Junio: Is there room for this in the git distribution alongside
+> git-svnimport?
 
-stgit rewrites history all the time anyway. And as far as I recall,
-there's nothing in the documentation that warns the user not to
-publish stgit-managed branches. :-)
+Surely.  Things that superficially do similar things are not
+necessarily mutually exclusive, if that is what you are worried
+about.  There is not much incumbent advantage for tools that
+support a narrowly defined specific task (e.g. interfacing with
+foreign SCM X) on the periphery, while I would perhaps feel more
+hesitant to support 47 different variants of git-commit ;-).
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Especially, from your description (I haven't looked at the
+code), its point is to give a better support for an alternative
+workflow from svnimport supports.
+
+I was privately advised (by somebody I respect and trust) that I
+should not be too hesitant to expand the scope of the project.
+Also there are some interesting developments such as Martin's
+git-backed fake CVS server and Aneesh's gitview that I have been
+interested in, among other things.
+
+Even having some experimental tools that are only starting to do
+useful things might be useful, if we had it in the git.git
+repository.  For one thing, it would give more exposure to them
+and help improve things.
+
+How about first adding a contrib/ directory and see how it goes?
