@@ -1,70 +1,51 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: Handling large files with GIT
-Date: Thu, 16 Feb 2006 21:32:11 +0100
-Message-ID: <20060216203211.GA14408@c165.ib.student.liu.se>
-References: <43F113A5.2080506@f2s.com> <Pine.LNX.4.63.0602141953000.22451@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0602141108050.3691@g5.osdl.org> <43F249F7.5060008@vilain.net> <Pine.LNX.4.64.0602141357300.3691@g5.osdl.org> <7vy80dpo9g.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602141741210.3691@g5.osdl.org> <Pine.LNX.4.64.0602141811050.3691@g5.osdl.org> <Pine.LNX.4.64.0602141829080.3691@g5.osdl.org> <Pine.LNX.4.64.0602141953081.3691@g5.osdl.org>
+From: Greg KH <greg@kroah.com>
+Subject: Re: [ANNOUNCE] GIT 1.2.1
+Date: Thu, 16 Feb 2006 13:41:57 -0800
+Message-ID: <20060216214157.GA16047@kroah.com>
+References: <F7DC2337C7631D4386A2DF6E8FB22B300614210F@hdsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Fredrik Kuivinen <freku045@student.liu.se>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 16 21:32:26 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 16 22:42:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9pnc-0006RO-RE
-	for gcvg-git@gmane.org; Thu, 16 Feb 2006 21:32:25 +0100
+	id 1F9qtH-0005cn-G5
+	for gcvg-git@gmane.org; Thu, 16 Feb 2006 22:42:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964785AbWBPUcV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Feb 2006 15:32:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932353AbWBPUcU
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 15:32:20 -0500
-Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:29636 "EHLO
-	mail6.wasadata.com") by vger.kernel.org with ESMTP id S932357AbWBPUcU
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2006 15:32:20 -0500
-Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 386D940FD; Thu, 16 Feb 2006 21:46:32 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1F9pnP-000495-00; Thu, 16 Feb 2006 21:32:11 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+	id S932357AbWBPVmQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Feb 2006 16:42:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932355AbWBPVmQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 16:42:16 -0500
+Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174]:10938
+	"EHLO aria.kroah.org") by vger.kernel.org with ESMTP
+	id S932261AbWBPVmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2006 16:42:15 -0500
+Received: from [192.168.0.138] (helo=localhost)
+	by aria.kroah.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.54)
+	id 1F9qtC-0002rD-Gd; Thu, 16 Feb 2006 13:42:14 -0800
+To: "Brown, Len" <len.brown@intel.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0602141953081.3691@g5.osdl.org>
+In-Reply-To: <F7DC2337C7631D4386A2DF6E8FB22B300614210F@hdsmsx401.amr.corp.intel.com>
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16313>
 
-On Tue, Feb 14, 2006 at 07:58:03PM -0800, Linus Torvalds wrote:
+On Thu, Feb 16, 2006 at 01:47:28AM -0500, Brown, Len wrote:
+> Happy to notice Documentation/git-send-email
+> to standardize greg's scripts, but don't see it in the release.
 > 
-> 
-> On Tue, 14 Feb 2006, Linus Torvalds wrote:
-> > 
-> > So in case people want to try, here's a third patch. Oh, and it's against 
-> > my _original_ path, not incremental to the middle one (ie both patches two 
-> > and three are against patch #1, it's not a nice series).
-> > 
-> > Now I'm really done, and won't be sending out any more patches today. 
-> 
-> Still true. I've just been thinking about the last state.
-> 
-> As far as I can tell, the output from git-merge-tree with that fix to only 
-> simplify subdirectories that match exactly in all of base/branch1/branch2 
-> is precisely the output that git-merge-recursive actually wants.
-> 
-> Rather than doing a three-way merge with "git-read-tree", and then doing 
-> "git-ls-files --unmerged", I think this gives the same result much more 
-> efficiently.
-> 
-> That said, I can't follow the python code, so maybe I'm missing something. 
-> Fredrik cc'd, in case he can put me right.
-> 
+> anybody using it?
 
-I don't think you miss anything. I _think_ (I haven't looked at this
-too close yet) that it shouldn't be too much work to make
-git-merge-recursive make use of the git-merge-tree thing.
+I used it to send out my last 2 round of git patches (usb and i2c).  I
+like it a lot better than my original script, Ryan's done a great job of
+cleaning up my horrible perl code.
 
-- Fredrik
+thanks,
+
+greg k-h
