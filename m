@@ -1,58 +1,49 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git faq : draft and rfc
-Date: Thu, 16 Feb 2006 17:04:10 +1300
-Message-ID: <46a038f90602152004i30c67a56i24dd9dfd41c0e873@mail.gmail.com>
-References: <22e91bb0602151636r2e70e60cpa5038f4b6caccc9c@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] pack-objects: reuse data from existing pack.
+Date: Wed, 15 Feb 2006 20:07:38 -0800
+Message-ID: <7vzmksj69h.fsf@assigned-by-dhcp.cox.net>
+References: <7vd5hpm2x0.fsf@assigned-by-dhcp.cox.net>
+	<7vbqx8m62q.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602151953290.916@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 16 05:04:26 2006
+X-From: git-owner@vger.kernel.org Thu Feb 16 05:07:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9aNP-0004un-LB
-	for gcvg-git@gmane.org; Thu, 16 Feb 2006 05:04:20 +0100
+	id 1F9aQi-0005uJ-SD
+	for gcvg-git@gmane.org; Thu, 16 Feb 2006 05:07:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932134AbWBPEEQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Feb 2006 23:04:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932265AbWBPEEQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 23:04:16 -0500
-Received: from wproxy.gmail.com ([64.233.184.193]:12357 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932134AbWBPEEQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2006 23:04:16 -0500
-Received: by wproxy.gmail.com with SMTP id 68so88079wri
-        for <git@vger.kernel.org>; Wed, 15 Feb 2006 20:04:10 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ulJjMBxWDFoepacT3XWBD4iPLtJARFEP02douq+qqi4LOgQi3sLfFG1fbua9T+MR0A299Dinco1/Z/IUzw/pkGGH2fr0U4c39bmK9GURwlj6CDkoYn1NsDeTJslWCnXqycE/Wuzwv8hAlkkelRELzWfO1vaU6C1LdeNyJ3ngu9s=
-Received: by 10.54.122.6 with SMTP id u6mr31649wrc;
-        Wed, 15 Feb 2006 20:04:10 -0800 (PST)
-Received: by 10.54.71.8 with HTTP; Wed, 15 Feb 2006 20:04:10 -0800 (PST)
-To: Thomas Riboulet <riboulet@gmail.com>
-In-Reply-To: <22e91bb0602151636r2e70e60cpa5038f4b6caccc9c@mail.gmail.com>
-Content-Disposition: inline
+	id S932267AbWBPEHl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Feb 2006 23:07:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932272AbWBPEHl
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Feb 2006 23:07:41 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:19153 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932267AbWBPEHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2006 23:07:41 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060216040455.HDTE26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 15 Feb 2006 23:04:55 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602151953290.916@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 15 Feb 2006 19:55:32 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16270>
 
-On 2/16/06, Thomas Riboulet <riboulet@gmail.com> wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> . Can I import from cvs ?
-> Yes. Use git-cvsimport. See the cvs-migration doc for more details.
+> No ugly special-case caching, just automatically "the right thing", with 
+> very little overhead.
 >
-> . Can I import from svn ?
-> Yes. Use git-svnimport. See the svn-import doc for more details.
+> It just makes sense.
 
-+ Can I import from arch/baz/tla? Use git-archimport.
-
-+ Can I import from others? Maybe -- check if tailor.py can do it.
-
-cheers,
-
-
-martin
+Thanks.  I threw away two rounds of crap before this one, which
+were full of ugly special cases ;-).
