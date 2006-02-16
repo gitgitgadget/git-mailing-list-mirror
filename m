@@ -1,55 +1,64 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: git faq : draft and rfc
-Date: Thu, 16 Feb 2006 07:50:20 +0000
-Message-ID: <200602160750.20500.alan@chandlerfamily.org.uk>
-References: <22e91bb0602151636r2e70e60cpa5038f4b6caccc9c@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
+Date: Thu, 16 Feb 2006 08:54:40 +0100
+Message-ID: <20060216075440.GA11939@diana.vm.bytemark.co.uk>
+References: <20060210195914.GA1350@spearce.org> <20060210211740.GO31278@pasky.or.cz> <20060213210001.GA31278@pasky.or.cz> <tnxoe1aqoj2.fsf@arm.com> <20060214100844.GA1234@diana.vm.bytemark.co.uk> <43F1F5CB.10402@citi.umich.edu> <20060214160747.GA6350@diana.vm.bytemark.co.uk> <43F2445A.6020109@citi.umich.edu> <20060214222913.GK31278@pasky.or.cz> <b0943d9e0602150925v6f01accfw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Feb 16 08:50:36 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Feb 16 08:54:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9duJ-00048Z-Dp
-	for gcvg-git@gmane.org; Thu, 16 Feb 2006 08:50:31 +0100
+	id 1F9dyP-0004vY-Ba
+	for gcvg-git@gmane.org; Thu, 16 Feb 2006 08:54:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932507AbWBPHuP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Feb 2006 02:50:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932509AbWBPHuO
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 02:50:14 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:61355
-	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
-	id S932507AbWBPHuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2006 02:50:13 -0500
-Received: from kanger.home ([192.168.0.21])
-	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
-	id 1F9du0-0008Gg-L4
-	for git@vger.kernel.org; Thu, 16 Feb 2006 07:50:12 +0000
+	id S932509AbWBPHym convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 16 Feb 2006 02:54:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932510AbWBPHym
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 02:54:42 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:14340 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S932509AbWBPHym (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2006 02:54:42 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1F9dyK-00039D-00
+	for <git@vger.kernel.org>; Thu, 16 Feb 2006 07:54:40 +0000
 To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
-In-Reply-To: <22e91bb0602151636r2e70e60cpa5038f4b6caccc9c@mail.gmail.com>
 Content-Disposition: inline
+In-Reply-To: <b0943d9e0602150925v6f01accfw@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16279>
 
-On Thursday 16 February 2006 00:36, Thomas Riboulet wrote:
-> . What's the difference between fetch and pull ?
-> Fetch : download objects and a head from another repository.
-> Pull : pull and merge from another repository.
-> See man git-fetch and git-pull for more.
+On 2006-02-15 17:25:30 +0000, Catalin Marinas wrote:
 
-Surely you are using a pull to mean fetch here,  Shouldn't this be
+> On 14/02/06, Petr Baudis <pasky@suse.cz> wrote:
+>
+> > It is ok as long as you know what are you doing - if you don't
+> > push out the commits you've just "undid" (or work on a public
+> > accessible repository in the first place, but I think that's kind
+> > of rare these days; quick survey - does anyone reading these lines
+> > do that?), there's nothing wrong on it, and it gives you nice
+> > flexibility.
+> >
+> > For example, to import bunch of patches (I guess that's the
+> > original intention behind this) you just run git-am on them and
+> > then stg uncommit all of the newly added commits.
+>
+> This is a sensible way of using an uncommit command but I initially
+> thought it would be better to make things harder for people wanting
+> to re-write the history. Anyway, I'll keep this command on my todo
+> list.
 
-Fetch: download objects and a head from another repository.
-Pull: fetch (as defined above) and then merge this with current development
+stgit rewrites history all the time anyway. And as far as I recall,
+there's nothing in the documentation that warns the user not to
+publish stgit-managed branches. :-)
 
-or something
-
--- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
-Open Source. It's the difference between trust and antitrust.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
