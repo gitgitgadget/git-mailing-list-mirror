@@ -1,7 +1,7 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Catalin Marinas <catalin.marinas@arm.com>
 Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
-Date: Thu, 16 Feb 2006 02:52:41 -0800
-Message-ID: <7v64nfbmo6.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 16 Feb 2006 11:10:45 +0000
+Message-ID: <tnxfymjd0ei.fsf@arm.com>
 References: <43F1F5CB.10402@citi.umich.edu>
 	<20060214160747.GA6350@diana.vm.bytemark.co.uk>
 	<43F2445A.6020109@citi.umich.edu> <20060214222913.GK31278@pasky.or.cz>
@@ -11,60 +11,67 @@ References: <43F1F5CB.10402@citi.umich.edu>
 	<7vbqx7bnz7.fsf@assigned-by-dhcp.cox.net>
 	<b0943d9e0602160233i68fe5879y@mail.gmail.com>
 	<20060216104224.GA29192@ferdyx.org>
+	<7v64nfbmo6.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>,
+Cc: "Fernando J. Pereda" <ferdy@ferdyx.org>,
+	Shawn Pearce <spearce@spearce.org>,
 	"J. Bruce Fields" <bfields@fieldses.org>,
 	Sam Vilain <sam@vilain.net>, Petr Baudis <pasky@suse.cz>,
 	Chuck Lever <cel@citi.umich.edu>,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	=?iso-8859-1?q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 16 11:53:01 2006
+X-From: git-owner@vger.kernel.org Thu Feb 16 12:12:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9gkj-0001aX-IO
-	for gcvg-git@gmane.org; Thu, 16 Feb 2006 11:52:50 +0100
+	id 1F9h3i-0005iA-D3
+	for gcvg-git@gmane.org; Thu, 16 Feb 2006 12:12:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751329AbWBPKwo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Feb 2006 05:52:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751331AbWBPKwo
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 05:52:44 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:34000 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751329AbWBPKwn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2006 05:52:43 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060216105016.QYTD17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 16 Feb 2006 05:50:16 -0500
-To: "Fernando J. Pereda" <ferdy@ferdyx.org>
-In-Reply-To: <20060216104224.GA29192@ferdyx.org> (Fernando J. Pereda's message
-	of "Thu, 16 Feb 2006 11:42:24 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751330AbWBPLMW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Feb 2006 06:12:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbWBPLMW
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 06:12:22 -0500
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:52632 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S1751330AbWBPLMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2006 06:12:20 -0500
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k1GBAp6s028257;
+	Thu, 16 Feb 2006 11:10:52 GMT
+Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Thu, 16 Feb 2006 11:10:51 +0000
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64nfbmo6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Thu, 16 Feb 2006 02:52:41 -0800")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 16 Feb 2006 11:10:51.0693 (UTC) FILETIME=[A5CAADD0:01C632E9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16294>
 
-"Fernando J. Pereda" <ferdy@ferdyx.org> writes:
-
-> That's because you told mutt you are subscribed to that list, so mutt
-> won't add you to Mail-Followup-To:, so you don't get duplicates. If you
-> don't tell mutt you are subscribed to the list, It will add your own
-> addres there.
+Junio C Hamano <junkio@cox.net> wrote:
+> "Fernando J. Pereda" <ferdy@ferdyx.org> writes:
 >
-> I think it is a nice feature, although it seems to annoy Junio :)
+>> That's because you told mutt you are subscribed to that list, so mutt
+>> won't add you to Mail-Followup-To:, so you don't get duplicates. If you
+>> don't tell mutt you are subscribed to the list, It will add your own
+>> addres there.
+>>
+>> I think it is a nice feature, although it seems to annoy Junio :)
+>
+> Rightfully so.
+>
+> Last I heard that was a feature mutt people regret.  Go back to
+> the mail archive for details -- you robbed me 30 seconds so I
+> won't do a research for you this time as I usually do ;-).
 
-Rightfully so.
+For Gnus users:
 
-Last I heard that was a feature mutt people regret.  Go back to
-the mail archive for details -- you robbed me 30 seconds so I
-won't do a research for you this time as I usually do ;-).
+(setq message-use-mail-followup-to nil)
 
-The "feature" is to allow you be lazy and not filter on your own
-end and force everybody who wants to respond to you to fix up
-the addressee header.  In other words, it is not a "feature" for
-people who receives your mail at all.
+-- 
+Catalin
