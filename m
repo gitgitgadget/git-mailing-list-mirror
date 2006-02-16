@@ -1,51 +1,44 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: [ANNOUNCE] GIT 1.2.1
-Date: Thu, 16 Feb 2006 13:41:57 -0800
-Message-ID: <20060216214157.GA16047@kroah.com>
-References: <F7DC2337C7631D4386A2DF6E8FB22B300614210F@hdsmsx401.amr.corp.intel.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: fix revision order when XML::Simple is not loaded
+Date: Thu, 16 Feb 2006 13:44:02 -0800
+Message-ID: <20060216214402.GA19155@hand.yhbt.net>
+References: <20060216073826.GA12055@hand.yhbt.net> <43F4A4B1.4010307@blairos.org> <20060216190426.GC12055@hand.yhbt.net> <43F4CF5E.1010700@blairos.org> <20060216194532.GA4446@Muzzle> <20060216194751.GB4446@Muzzle>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 16 22:42:36 2006
+X-From: git-owner@vger.kernel.org Thu Feb 16 22:44:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9qtH-0005cn-G5
-	for gcvg-git@gmane.org; Thu, 16 Feb 2006 22:42:19 +0100
+	id 1F9qv3-000679-MX
+	for gcvg-git@gmane.org; Thu, 16 Feb 2006 22:44:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932357AbWBPVmQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Feb 2006 16:42:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932355AbWBPVmQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 16:42:16 -0500
-Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174]:10938
-	"EHLO aria.kroah.org") by vger.kernel.org with ESMTP
-	id S932261AbWBPVmP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2006 16:42:15 -0500
-Received: from [192.168.0.138] (helo=localhost)
-	by aria.kroah.org with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.54)
-	id 1F9qtC-0002rD-Gd; Thu, 16 Feb 2006 13:42:14 -0800
-To: "Brown, Len" <len.brown@intel.com>
+	id S932267AbWBPVoG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Feb 2006 16:44:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932355AbWBPVoG
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 16:44:06 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:60823 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S932267AbWBPVoE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Feb 2006 16:44:04 -0500
+Received: by hand.yhbt.net (Postfix, from userid 500)
+	id 11B9A2DC08D; Thu, 16 Feb 2006 13:44:03 -0800 (PST)
+To: git list <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <F7DC2337C7631D4386A2DF6E8FB22B300614210F@hdsmsx401.amr.corp.intel.com>
-User-Agent: Mutt/1.5.11
+In-Reply-To: <20060216194751.GB4446@Muzzle>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16314>
 
-On Thu, Feb 16, 2006 at 01:47:28AM -0500, Brown, Len wrote:
-> Happy to notice Documentation/git-send-email
-> to standardize greg's scripts, but don't see it in the release.
-> 
-> anybody using it?
+Just to add, XML::Simple is a recommended dependency.  git-svn will work
+fine without it (after this patch) as long as the repository doesn't
+have any log messages that regurgitate or otherwise look like svn log
+output (most svn repositories are sane in this regard :)
 
-I used it to send out my last 2 round of git patches (usb and i2c).  I
-like it a lot better than my original script, Ryan's done a great job of
-cleaning up my horrible perl code.
+I may add support for the SVN:: perl libraries in the future, but I'll
+always git-svn compatible with the command-line svn client and lazy load
+any non-standard libraries.
 
-thanks,
-
-greg k-h
+-- 
+Eric Wong
