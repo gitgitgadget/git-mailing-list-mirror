@@ -1,83 +1,135 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Fake linear history in a deterministic manner.
-Date: Fri, 17 Feb 2006 12:29:13 +1300
-Message-ID: <46a038f90602161529r6e1855a5l41a2dbfdea7ee2a0@mail.gmail.com>
-References: <46a038f90602121746v5adb448ej73cc2be6dd3745ce@mail.gmail.com>
-	 <20060216222956.GA5818@Muzzle>
+From: Thomas Riboulet <riboulet@gmail.com>
+Subject: Re: git faq : draft and rfc
+Date: Fri, 17 Feb 2006 00:52:36 +0100
+Message-ID: <22e91bb0602161552k3f88b98fu4ef2a4c97c840ad7@mail.gmail.com>
+References: <22e91bb0602151636r2e70e60cpa5038f4b6caccc9c@mail.gmail.com>
+	 <20060216151826.GS31278@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Feb 17 00:31:51 2006
+X-From: git-owner@vger.kernel.org Fri Feb 17 00:52:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9sb8-0002xd-Pt
-	for gcvg-git@gmane.org; Fri, 17 Feb 2006 00:31:43 +0100
+	id 1F9svR-0006hI-9l
+	for gcvg-git@gmane.org; Fri, 17 Feb 2006 00:52:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932518AbWBPXbj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Feb 2006 18:31:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932520AbWBPXbj
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 18:31:39 -0500
-Received: from wproxy.gmail.com ([64.233.184.200]:41016 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932518AbWBPXbj convert rfc822-to-8bit
+	id S1750756AbWBPXwh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Feb 2006 18:52:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbWBPXwh
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 18:52:37 -0500
+Received: from zproxy.gmail.com ([64.233.162.196]:7720 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750756AbWBPXwh convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2006 18:31:39 -0500
-Received: by wproxy.gmail.com with SMTP id i34so13179wra
-        for <git@vger.kernel.org>; Thu, 16 Feb 2006 15:31:38 -0800 (PST)
+	Thu, 16 Feb 2006 18:52:37 -0500
+Received: by zproxy.gmail.com with SMTP id m22so286645nzf
+        for <git@vger.kernel.org>; Thu, 16 Feb 2006 15:52:36 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eNttkfBfpsszzN4jht5Q+sUL+Ut6fVXhg6uqTHI+O6euOglXeXH4cKMi2fz0CpSP26rS1JOSPMmUQbIemlCIlIOj6ian57aUU57AqJKQQtMXtcYl3lqarbXup/FIM/saWQPAiZSvKEOxy+Zxd8L+d/9rXzkclA5Z7t1XteoHMpQ=
-Received: by 10.54.66.12 with SMTP id o12mr320760wra;
-        Thu, 16 Feb 2006 15:29:14 -0800 (PST)
-Received: by 10.54.71.8 with HTTP; Thu, 16 Feb 2006 15:29:13 -0800 (PST)
-To: Eric Wong <normalperson@yhbt.net>
-In-Reply-To: <20060216222956.GA5818@Muzzle>
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=W3rDGRsBEUQVQ493SPNgs7Y6JsCn5xUGhmCY6dBDB8A6uST+qfXEdo3KhIM2jV6zNqUwFuD7+zA7kAKcpWEjIKnAYu1nkV8k/fBzfpx1ONh+YzI0RbXsDYk8VMCwGElGVuK0lr+2VX6I6jjRDZWSepHK5FWGlP9YM73OBnrDQL0=
+Received: by 10.36.65.9 with SMTP id n9mr1620148nza;
+        Thu, 16 Feb 2006 15:52:36 -0800 (PST)
+Received: by 10.36.177.3 with HTTP; Thu, 16 Feb 2006 15:52:36 -0800 (PST)
+To: git@vger.kernel.org
+In-Reply-To: <20060216151826.GS31278@pasky.or.cz>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16317>
 
-On 2/17/06, Eric Wong <normalperson@yhbt.net> wrote:
-> Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> > To emulate `cvs log somepath` I need to munge history to look linear.
-> > I am working on the theory that I will tell the cvs client about *one*
-> > linear history, and show merges from parallel histories as a merge
-> > commit, "flattened" so to speak, and with a commit message where I'll
-> > list the hash and first line of each commit that it involves.
+On 2/16/06, Petr Baudis <pasky@suse.cz> wrote:
+> Dear diary, on Thu, Feb 16, 2006 at 01:36:20AM CET, I got a letter
+> where Thomas Riboulet <riboulet@gmail.com> said that...
+> > . Git commit is dying telling me "fatal : empty ident <user@myhost>
+> > not allowed", what's wrong ?
+> > Make sure your Full Name is not empty in chsh or the 5th field of your
+> > user line in /etc/passwd isn't empty. If you @myhost is empty make sure
+> > your hostname is correctly set.
 >
-> I'd be interested in exporting from git to SVN with something like this.
+> Please also mention GIT_AUTHOR_NAME; chsh may be frequently unavailable.
 
-We're hoping to release the code soon, but the truth is that it's
-really trivial. It was more agonizing over the fact that there's no
-"good" (aka "stable") algorithm for this.
+ok
 
-> > I thought briefly about delaying the decision until I see the merge,
-> > and pick the leftmost, or rightmost, if there is some bias in
-> > git-merge or cg-merge on putting whatever origin has on a particular
-> > side. It'd mean running backwards through history and that the very
-> > last merge can flip the decision entirely. Hmmm... any strategy I can
-> > come up with means that each new merge throws the dice again entirely.
-> >
-> > Ideas?
 >
-> I'd actually like to do this interactively in gitk.  Just browse history
-> visually and pick the path you want to choose each time there's a merge,
-> and then having it output the revisions to stdout or saved to a file
-> after you're done picking.  Ideally you'd be able to use saved output
-> interactively, as well.
+> > . What's the difference between fetch and pull ?
+> > Fetch : download objects and a head from another repository.
+> > Pull : pull and merge from another repository.
+> > See man git-fetch and git-pull for more.
+>
+> This could do with a little more elaboration as well. Nice inspiration
+> might be <Pine.LNX.4.64.0602140845080.3691@g5.osdl.org>.
 
-It's cool to be able to pick, but if it's for a git-svnserver
-implementation, you can't change your (fake) history you tell after
-clients have seen. So a merge that gets pushed to the repo later may
-contain more interesting paths, but you're bound to the lies you've
-told.
+ok, I'll as soon as I manage to get it :/
 
-cheers,
+>
+> > . Can I tell git to ignore files ?
+> > Yes. Put the files path in the repository in the .git/info/exclude file.
+>
+> Or .gitignore in the tree itself. .git/info/exclude is only for your
+> particular checkout while .gitignore is what matters for all and
+> everyone's checkouts of the project.
+>
 
+ok, added
 
-martin
+> > . What can I use to setup a public repository ?
+> > A ssh server, an http server, or the git-daemon.
+> > See the tutorial for more details.
+>
+> Well this is about how to make it available, not how to use it.
+>
+> The repository should be set up by cg-admin-setuprepo or git-init-db
+> --shared and normally does not have a working tree attached. You can
+> fetch from such a repository either over:
+>
+>         * the GIT protocol (you need to run git-daemon)
+>         * SSH (you can set up a git-use-only account using git-shell)
+>         * rsync (has important disadvantages but it is currently the
+>           fastest way to do the initial checkout)
+>         * or the HTTP protocol (any reasonable webhosting will do, but
+>           you need to run git-update-server-info after each repository
+>           update; if you used cg-admin-setuprepo to set it up, this
+>           will be done automatically, otherwise you may enable it in
+>           the post-update hook - see .git/hooks/post-update).
+>
+> You can push to such a repository over:
+>
+>         * SSH
+>         * HTTP DAV (you will need to specially configure your HTTP
+>           server for this)
+>
+> Obviously, you can also fetch/push from/to a repository locally if it
+> is available in the local filesystem structure.
+>
+
+the initial aim of that question was simply to tell svn people (and
+others) what can be used to setup a public repos.
+isn't it a bit too much for a faq ? maybe add some things to the
+present answer and put this question in the "general questions"
+section (see below), and add more details in the "usage" section ?
+
+> --
+>                                 Petr "Pasky" Baudis
+> Stuff: http://pasky.or.cz/
+> Of the 3 great composers Mozart tells us what it's like to be human,
+> Beethoven tells us what it's like to be Beethoven and Bach tells us
+> what it's like to be the universe.  -- Douglas Adams
+>
+
+ok added (and pushed) the :
+- taylor qa
+- the git import bk qa
+- GIT_AUTHOR_NAME
+
+I'll separate the questions between the following sections :
+- general questions (who, when, where, ...)
+- usage : commands, errors ...
+
+I'm planning on removing the text format faq and handle it as I handle
+the html one  : through the docbook. ok ?
+
+--
+Thom/ange
