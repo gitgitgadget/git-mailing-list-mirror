@@ -1,54 +1,103 @@
-From: Adrien Beau <adrienbeau@gmail.com>
-Subject: Re: [PATCH 0/5] Support ancient systems
-Date: Fri, 17 Feb 2006 16:18:35 +0100
-Message-ID: <94fc236b0602170718t76e01204ib2b50e33eaa5eeaa@mail.gmail.com>
-References: <Pine.LNX.4.63.0602171517580.24274@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+From: linux@horizon.com
+Subject: Re: Why can't git-rebase back up?
+Date: 17 Feb 2006 10:34:34 -0500
+Message-ID: <20060217153434.26359.qmail@science.horizon.com>
+References: <43F5DF8B.6050307@op5.se>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 17 16:18:52 2006
+X-From: git-owner@vger.kernel.org Fri Feb 17 16:34:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FA7NX-0004u9-Re
-	for gcvg-git@gmane.org; Fri, 17 Feb 2006 16:18:40 +0100
+	id 1FA7dF-0000G8-AO
+	for gcvg-git@gmane.org; Fri, 17 Feb 2006 16:34:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751132AbWBQPSh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Feb 2006 10:18:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751466AbWBQPSg
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 10:18:36 -0500
-Received: from zproxy.gmail.com ([64.233.162.192]:36908 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751132AbWBQPSg convert rfc822-to-8bit
+	id S1751485AbWBQPeg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Feb 2006 10:34:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbWBQPef
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 10:34:35 -0500
+Received: from science.horizon.com ([192.35.100.1]:36649 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1751485AbWBQPef
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2006 10:18:36 -0500
-Received: by zproxy.gmail.com with SMTP id l1so419208nzf
-        for <git@vger.kernel.org>; Fri, 17 Feb 2006 07:18:35 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SBRhbEw9SHZfxy/buMGdrE0ealogAECce6+5cYUhf4YMJEj3odeAPtLtohs5RHnLHC/VhUj8nEB6fEZw/MyKabDZ0GpDCA3vlEe9QcLS0rJ5KPfyQj7+Cn7/+bSsKoq4aneSjMyYV4efqpvsGSRITc4qP8Z1J5tlQMZ1HfuvUmc=
-Received: by 10.36.65.9 with SMTP id n9mr2295386nza;
-        Fri, 17 Feb 2006 07:18:35 -0800 (PST)
-Received: by 10.36.250.33 with HTTP; Fri, 17 Feb 2006 07:18:35 -0800 (PST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0602171517580.24274@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	Fri, 17 Feb 2006 10:34:35 -0500
+Received: (qmail 26360 invoked by uid 1000); 17 Feb 2006 10:34:34 -0500
+To: ae@op5.se, linux@horizon.com
+In-Reply-To: <43F5DF8B.6050307@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16355>
 
-On 2/17/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> I just got git to work on an Irix box. These are the changes I needed
-> to apply. Maybe some of them are of use for other ancient systems... You
-> know, I like ancient systems. And if I could get my hands on a VMS, I
-> would try to get git to work on it, too ;-)
+>> [[ This is because core git won't allow the checked-out HEAD to point
+>> to anything but a branch,
 
-You can get free VMS accounts at the Deathrow Cluster:
-http://deathrow.vistech.net/
+> Yes it will. That's how "git reset" works (i.e. pointing HEAD to some 
+> random object). Think of branches and tags as short and humanly 
+> understandable names for certain points in the history. You can visit 
+> any point in history without having a special short name for it.
 
-If you're serious about using your account, you'll find that the admin
-team is pretty supportive and friendly.
+Er... say again?  git reset doesn't touch the .git/HEAD symlink;
+it overwrites the file that .git/HEAD points to.
+
+If you know a way to make the core git tools produce a .git/HEAD that
+is either not a symlink or does NOT begin with "refs/heads/", I'm quite
+curious.
+
+>> and checking out something without having
+>> HEAD point to it is fragile and delicate.  Cogito lets you do this with
+>> cg-seek. ]]
+
+> It's more than delicate. It's impossible (even for Cogito). You can take 
+> snapshots of how the tree looked at a certain state and export that 
+> using git-tar-tree if you wish, but other than that it's impossible to 
+> visit a certain point in history without pointing HEAD to it (that's how 
+> visiting that point is done, actually).
+
+Actually, you're right... Cogito uses refs/heads/cg-seek-point.
+But you can do it by hand with git-read-tree and git-checkout-index.
+(Very little in git is impossible; some things are just a Really Bad
+Idea.)
+
+> Now, if I want to migrate to a newer base version, I can always use
+> git-reset --hard v2.6.16-rc3, but that's a bit dangerous.
+> Preferable is to use git-rebase v2.6.16-rc3, which will preserve
+> any local edits.
+> 
+> (I could also do it as a merge, but that seems like unnecessary history
+> clutter.  It's not like local edits are common, anyway.)
+> 
+> But suppose discover a nasty bug in -rc3 and want to move my build branch
+> back to -rc2.  "git-rebase v2.6.16-rc2" does nothing.  After a bit
+> of thought, I realize why, but sometime I do want to back up.
+> 
+
+> I'd suggest doing something like this when changing base version (of any 
+> project, really).
+
+[Use separate branch names for the two build versions.]
+
+That's certainly a possibility, but kind of annoying to remember what
+the "current" version is.  Typically, there are no local changes,
+and I'm just using "build" as a conventional name to let me check
+out the version.  Just like cg-seek-point.
+
+> However, branches and tags are cheap to create, efficient to use, easy 
+> to remove once you're done with them. They make life easier. Use them. 
+> You'll be glad you did.
+
+I don't really *want* a branch at all.  I just want to export the
+right source tree and compile it.  Local changes are more likely a
+mistake than anything else, but core git doesn't have Cogito's "blocked"
+flag.  I'm just trying to avoid getting
+into the habit of typing "git reset --hard" a lot because that's
+dangerous.
+
+It's sort of along the lines of "any workflow that makes you type
+'rm -rf *' on a regular basis is a recipe for disaster".
+
+The usual solution, of course, is to write a shell script wrapper with
+some safety checking.  For example, I could see if git-name-rev --tags
+can come up with a name for the branch head before unleashing git-reset
+on it.
+
+But I thought I'd check if the tool already existed.
