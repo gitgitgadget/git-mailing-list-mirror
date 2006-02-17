@@ -1,89 +1,70 @@
-From: Aneesh Kumar <aneesh.kumar@gmail.com>
-Subject: Re: contrib/ area
-Date: Fri, 17 Feb 2006 18:06:41 +0530
-Message-ID: <cc723f590602170436l5b33ae6s1780c3c8d6383627@mail.gmail.com>
-References: <7vmzgq451m.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_284_3144169.1140179801620"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 17 13:37:19 2006
+From: linux@horizon.com
+Subject: Why can't git-rebase back up?
+Date: 17 Feb 2006 08:59:38 -0500
+Message-ID: <20060217135938.7412.qmail@science.horizon.com>
+X-From: git-owner@vger.kernel.org Fri Feb 17 15:00:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FA4rM-00032f-3E
-	for gcvg-git@gmane.org; Fri, 17 Feb 2006 13:37:16 +0100
+	id 1FA69Q-0003o1-3J
+	for gcvg-git@gmane.org; Fri, 17 Feb 2006 15:00:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932174AbWBQMhJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Feb 2006 07:37:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932255AbWBQMhJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 07:37:09 -0500
-Received: from uproxy.gmail.com ([66.249.92.206]:27860 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932174AbWBQMhH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Feb 2006 07:37:07 -0500
-Received: by uproxy.gmail.com with SMTP id j40so260791ugd
-        for <git@vger.kernel.org>; Fri, 17 Feb 2006 04:37:05 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=QqiragFGYrFSTa5oKhnecCByietx1JmyGs93S9Zf/eDNKLcz3GakzLjEXJum2dnWmK0y4mju+oGXkslp/eJgzgMGkbHVdNtLb4xgg43fTOJyKQh3Z+UlMAO9kKacVedUS0MScT9thD3lJuIjuaF9hrmFhjieF+47w1euk+Jtezc=
-Received: by 10.66.164.4 with SMTP id m4mr722958uge;
-        Fri, 17 Feb 2006 04:36:41 -0800 (PST)
-Received: by 10.66.254.7 with HTTP; Fri, 17 Feb 2006 04:36:41 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzgq451m.fsf@assigned-by-dhcp.cox.net>
+	id S1751416AbWBQN7t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Feb 2006 08:59:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbWBQN7t
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 08:59:49 -0500
+Received: from science.horizon.com ([192.35.100.1]:17707 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1751416AbWBQN7t
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2006 08:59:49 -0500
+Received: (qmail 7413 invoked by uid 1000); 17 Feb 2006 08:59:38 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16343>
 
-------=_Part_284_3144169.1140179801620
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Newbie question...  In what I assume is a usual technique, I maintain a
+"build" branch off of the linux-2.6 history which is what I check out
+to build a kernel.  I usually keep it at an official tagged releas,
+such as v2.6.16-rc2.
 
-On 2/17/06, Junio C Hamano <junkio@cox.net> wrote:
->
->
-> One final request to Aneesh.  Could you send a patch to add a
-> bit of blurb and introductory text in contrib/gitview/README,
-> please?  As it stands, it would be hard to get as much exposure
-> as we had hoped by just having it in git.git repository.
->
+[[ This is because core git won't allow the checked-out HEAD to point
+to anything but a branch, and checking out something without having
+HEAD point to it is fragile and delicate.  Cogito lets you do this with
+cg-seek. ]]
+
+Now, if I want to migrate to a newer base version, I can always use
+git-reset --hard v2.6.16-rc3, but that's a bit dangerous.
+Preferable is to use git-rebase v2.6.16-rc3, which will preserve
+any local edits.
+
+(I could also do it as a merge, but that seems like unnecessary history
+clutter.  It's not like local edits are common, anyway.)
+
+But suppose discover a nasty bug in -rc3 and want to move my build branch
+back to -rc2.  "git-rebase v2.6.16-rc2" does nothing.  After a bit
+of thought, I realize why, but sometime I do want to back up.
+
+What's the best way to do that?  Should git-rebase take an optional
+third argument which is the branch head we are moving away from?
+E.g. what I want to do would be
+
+	git-rebase v2.6.16-rc2 build v2.6.16-rc3
+
+Or is there some other tool already suited to the job?
+
+(Yes, I'm aware the operations cannot be exact inverses, because if
+I applied a local patch that was also included in -rc3, git-rebase
+will delete the redundant copy from the build branch, and the backing
+up will have no way to know to put it back.  If I wanted to do that,
+I would use a merge.)
 
 
-Attaching below the same in the form of patch generated by git format-patch
-
--aneesh
-
-------=_Part_284_3144169.1140179801620
-Content-Type: text/plain; name="0001-Add-a-README-for-gitview.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="0001-Add-a-README-for-gitview.txt"
-X-Attachment-Id: f_ejshllvi
-
-RnJvbSBub2JvZHkgTW9uIFNlcCAxNyAwMDowMDowMCAyMDAxCkZyb206IEFuZWVzaCBLdW1hciBL
-LlYgPGFuZWVzaC5rdW1hckBnbWFpbC5jb20+CkRhdGU6IEZyaSBGZWIgMTcgMTg6MTg6MzYgMjAw
-NiArMDUzMApTdWJqZWN0OiBBZGQgYSBSRUFETUUgZm9yIGdpdHZpZXcKCi0tLQoKIGNvbnRyaWIv
-Z2l0dmlldy9naXR2aWV3LnR4dCB8ICAgMzggKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysKIDEgZmlsZXMgY2hhbmdlZCwgMzggaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMo
-LSkKIGNyZWF0ZSBtb2RlIDEwMDY0NCBjb250cmliL2dpdHZpZXcvZ2l0dmlldy50eHQKCjM2YWNm
-YWZmY2JiODZiYjRjOGQyNjM0ZWE4NDMwNmE0NTFhOWMxOWIKZGlmZiAtLWdpdCBhL2NvbnRyaWIv
-Z2l0dmlldy9naXR2aWV3LnR4dCBiL2NvbnRyaWIvZ2l0dmlldy9naXR2aWV3LnR4dApuZXcgZmls
-ZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwLi4xNzEyOTVhCi0tLSAvZGV2L251bGwKKysrIGIv
-Y29udHJpYi9naXR2aWV3L2dpdHZpZXcudHh0CkBAIC0wLDAgKzEsMzggQEAKK2dpdHZpZXcoMSkK
-Kz09PT09PT09PT0KKworTkFNRQorLS0tLQorZ2l0dmlldyAtIEEgR1RLIGJhc2VkIHJlcG9zaXRv
-cnkgYnJvd3NlciBmb3IgZ2l0CisKK1NZTk9QU0lTCistLS0tLS0tLQorJ2dpdHZpZXcnICBbb3B0
-aW9uc10gW2FyZ3NdCisKK0RFU0NSSVBUSU9OCistLS0tLS0tLS0KKworRGVwZW5kZW5jaWVzCisK
-KyogUHl0aG9uIDIuNAorKiBQeUdUSyAyLjggb3IgbGF0ZXIKKyogUHlDYWlybyAxLjAgb3IgbGF0
-ZXIKKworT1BUSU9OUworLS0tLS0tCisJLS13aXRob3V0LWRpZmYKKwkJSWYgdGhlIHVzZXIgZG9l
-c24ndCB3YW50IHRvIGxpc3QgdGhlIGNvbW1pdCBkaWZmcyBpbiB0aGUgbWFpbiB3aW5kb3cuIFRo
-aXMgbWF5IHNwZWVkIHVwIHRoZSByZXBvc2l0b3J5IGJyb3dzaW5nLgorCisJPGFyZ3M+CisJCUFs
-bCB0aGUgdmFsaWQgb3B0aW9uIGZvciBnaXQtcmV2LWxpc3QoMSkKKworRVhBTVBMRVMKKy0tLS0t
-LQorCWdpdHZpZXcgdjIuNi4xMi4uIGluY2x1ZGUvc2NzaSBkcml2ZXJzL3Njc2kKKwkgIFNob3cg
-YXMgdGhlIGNoYW5nZXMgc2luY2UgdmVyc2lvbiB2Mi42LjEyIHRoYXQgY2hhbmdlZCBhbnkgZmls
-ZSBpbiB0aGUgaW5jbHVkZS9zY3NpCisJICBvciBkcml2ZXJzL3Njc2kgc3ViZGlyZWN0b3JpZXMK
-KworCWdpdGsgLS1zaW5jZT0yLndlZWtzLmFnbworCSAgU2hvdyB0aGUgY2hhbmdlcyBkdXJpbmcg
-dGhlIGxhc3QgdHdvIHdlZWtzIAorCisJCi0tIAoxLjIuMC1kaXJ0eQoK
-------=_Part_284_3144169.1140179801620--
+On a completely unrelated note, how do I find out what git thinks of a
+particular file, such as linux-2.6/.config?  It isn't listed in the
+output of git-status or git-ls-files, but git-ls-files -i produces an error.
+Very confusingly,
+git-ls-files -i --exclude-per-directory=.gitignore -X .git/info/exclude .config
+also produces no output, even though .* is listed in .gitignore.
