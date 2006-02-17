@@ -1,94 +1,54 @@
-From: linux@horizon.com
-Subject: [PATCH] git-repack question
-Date: 17 Feb 2006 16:38:24 -0500
-Message-ID: <20060217213824.5848.qmail@science.horizon.com>
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri Feb 17 22:38:41 2006
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [ANNOUNCE] pg - A patch porcelain for GIT
+Date: Fri, 17 Feb 2006 21:57:49 +0000
+Message-ID: <43F646DD.8040103@gmail.com>
+References: <20060210195914.GA1350@spearce.org> <20060210211740.GO31278@pasky.or.cz> <20060213210001.GA31278@pasky.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 17 22:58:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FADJD-0003kV-Ew
-	for gcvg-git@gmane.org; Fri, 17 Feb 2006 22:38:39 +0100
+	id 1FADbw-0007Ry-Gp
+	for gcvg-git@gmane.org; Fri, 17 Feb 2006 22:57:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161151AbWBQVic (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Feb 2006 16:38:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751599AbWBQVic
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 16:38:32 -0500
-Received: from science.horizon.com ([192.35.100.1]:47657 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1751437AbWBQVib
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2006 16:38:31 -0500
-Received: (qmail 5849 invoked by uid 1000); 17 Feb 2006 16:38:24 -0500
-To: git@vger.kernel.org
+	id S1751022AbWBQV5x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Feb 2006 16:57:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbWBQV5x
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 16:57:53 -0500
+Received: from mta09-winn.ispmail.ntl.com ([81.103.221.49]:16254 "EHLO
+	mta09-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S1751022AbWBQV5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2006 16:57:53 -0500
+Received: from aamta10-winn.ispmail.ntl.com ([81.103.221.35])
+          by mta09-winn.ispmail.ntl.com with ESMTP
+          id <20060217215751.XIPW23947.mta09-winn.ispmail.ntl.com@aamta10-winn.ispmail.ntl.com>;
+          Fri, 17 Feb 2006 21:57:51 +0000
+Received: from [192.168.1.101] (really [86.15.186.141])
+          by aamta10-winn.ispmail.ntl.com with ESMTP
+          id <20060217215751.ZESF6973.aamta10-winn.ispmail.ntl.com@[192.168.1.101]>;
+          Fri, 17 Feb 2006 21:57:51 +0000
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060213210001.GA31278@pasky.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16372>
 
-I'm trying to imagine when you'd want to run git-repack without the -d
-option, or without running git-prune-packed afterwards.
-(Isn't the idea behind packs to save space?)
+Petr Baudis wrote:
+> 	* I can't just get the patch in its "canonical ready-to-mail
+> 	form" on stdout so that I could easily review it. Why is
+> 	pg-export insisting to dump it to a file?
 
-I'll leave changing the default to wiser heads, but this trivial patch
-will at least allow the normal operations to be performed with one
-command.
+I pushed tonight 2 patches for this. One of them adds a --stdout option
+to 'export' so that you can see the patches. The other patch adds a
+--mbox option to 'mail' that generates an mbox file on the stdout. This
+is useful not only for reviewing patches.
 
-Oh, and is the failure to support getopt-style concatenated
-single-letter options (git-repack -dp) a deliberate design feature
-of git, or just laziness?
-
-(Legalese: Patch placed in the public domain; copyright abandoned.)
-
-
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index 9060fe8..1b1f50d 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -47,6 +47,10 @@ OPTIONS
-         Do not update the server information with
-         `git update-server-info`.
- 
-+-p::
-+	After packing, run gitlink:git-prune-packed[1] to delete
-+	redundant unpacked objects.
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
-diff --git a/git-repack.sh b/git-repack.sh
-index 1fafb6e..361c7e9 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -3,10 +3,10 @@
- # Copyright (c) 2005 Linus Torvalds
- #
- 
--USAGE='[-a] [-d] [-l] [-n]'
-+USAGE='[-a] [-d] [-l] [-n] [-p]'
- . git-sh-setup
- 	
--no_update_info= all_into_one= remove_redundant= local=
-+no_update_info= all_into_one= remove_redundant= local= prune=
- while case "$#" in 0) break ;; esac
- do
- 	case "$1" in
-@@ -14,6 +14,7 @@ do
- 	-a)	all_into_one=t ;;
- 	-d)	remove_redundant=t ;;
- 	-l)	local=t ;;
-+	-p)	prune=t ;;
- 	*)	usage ;;
- 	esac
- 	shift
-@@ -76,6 +77,10 @@ then
- 	fi
- fi
- 
-+case "$prune" in
-+t) git-prune-packed ;;
-+esac
-+
- case "$no_update_info" in
- t) : ;;
- *) git-update-server-info ;;
+-- 
+Catalin
