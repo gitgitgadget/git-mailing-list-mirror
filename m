@@ -1,77 +1,84 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: stGIT: commit vs export vs mail
-Date: Fri, 17 Feb 2006 22:12:33 +0000
-Message-ID: <43F64A51.10607@gmail.com>
-References: <Pine.WNT.4.63.0602171139020.3052@jbrandeb-desk.amr.corp.intel.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] git-repack question
+Date: Fri, 17 Feb 2006 14:20:40 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602171414220.916@g5.osdl.org>
+References: <20060217213824.5848.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 17 23:12:54 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Fri Feb 17 23:21:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FADqD-0001l6-K4
-	for gcvg-git@gmane.org; Fri, 17 Feb 2006 23:12:41 +0100
+	id 1FADyP-0003bx-El
+	for gcvg-git@gmane.org; Fri, 17 Feb 2006 23:21:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751474AbWBQWMi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Feb 2006 17:12:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751801AbWBQWMi
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 17:12:38 -0500
-Received: from mta08-winn.ispmail.ntl.com ([81.103.221.48]:45112 "EHLO
-	mta08-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S1751474AbWBQWMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2006 17:12:37 -0500
-Received: from aamta09-winn.ispmail.ntl.com ([81.103.221.35])
-          by mta08-winn.ispmail.ntl.com with ESMTP
-          id <20060217221236.IVLW29066.mta08-winn.ispmail.ntl.com@aamta09-winn.ispmail.ntl.com>;
-          Fri, 17 Feb 2006 22:12:36 +0000
-Received: from [192.168.1.101] (really [86.15.186.141])
-          by aamta09-winn.ispmail.ntl.com with ESMTP
-          id <20060217221236.ZVEH20103.aamta09-winn.ispmail.ntl.com@[192.168.1.101]>;
-          Fri, 17 Feb 2006 22:12:36 +0000
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Jesse Brandeburg <jesse.brandeburg@intel.com>
-In-Reply-To: <Pine.WNT.4.63.0602171139020.3052@jbrandeb-desk.amr.corp.intel.com>
+	id S1751844AbWBQWVG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Feb 2006 17:21:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751849AbWBQWVF
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 17:21:05 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:6117 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751846AbWBQWVB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Feb 2006 17:21:01 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1HMKgDZ018403
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 17 Feb 2006 14:20:43 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1HMKeEQ017313;
+	Fri, 17 Feb 2006 14:20:41 -0800
+To: linux@horizon.com
+In-Reply-To: <20060217213824.5848.qmail@science.horizon.com>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16374>
 
-Jesse Brandeburg wrote:
-> So I am using stgit .8 right now, and I'm having a hard time figuring
-> out what the correct workflow should be for using stg and then
-> committing a change
-> 
-> Here is what I've been doing:
-> stg new test
->  enter my short description on first line
->  enter my long description on next lines.
-> vi file
-> stg refresh
-> stg mail <blah blah blah>
-> or
-> stg commit
 
-There is no "or" above but only "and maybe". The 'commit' command is
-only used to permanently store a set of patches into the repository.
-After that, you should not be able to change them anymore (well, someone
-just sent me a patch for an uncommit command). I only use this command
-when I work in the "maintainer" mode on StGIT. For contributing patches,
-you shouldn't need it since the base of the stack should usually be
-identical to the HEAD of the remote repository.
 
-> Problem that I'm having right now is that the templates do the right
-> thing for mail, but, the commit only puts in the "enter my..." text.
+On Fri, 17 Feb 2006, linux@horizon.com wrote:
+>
+> I'm trying to imagine when you'd want to run git-repack without the -d
+> option, or without running git-prune-packed afterwards.
+> (Isn't the idea behind packs to save space?)
 
-I don't fully understand this. Where does commit put the "enter my..." text?
+Normally you'd always run git-prune-packed.
 
-> Is there a template based way to automatically append the author in the
-> Signed-off-by: line when i do stg commit?
+The reason it doesn't do that is simply being anally careful, and because 
+conceptually the pruning phase is totally independent.
 
-This can only be done when creating a patch. Commit doesn't modify the
-patches. I think you slightly misunderstood the commit command.
+For example, in an environment that mirrors out git repositories by rsync, 
+it can make sense to wait with pruning until the mirror cycle has 
+finished, so that all mirrors always have all the objects.
 
-Catalin
+(I don't do it for the kernel, because (a) I'm a lazy bastard, (b) I'm so 
+confused that I sometimes forget my own name, much less to prune things a 
+day after I've repacked them and (c) I don't care that much about rsync 
+anyway, since you can't avoid some of the _other_ races).
+
+As to whether you'd normally run "-d" - usually you'd run it whenever you 
+pair it up with "-a". When you do an incremental re-pack, "-d" won't do 
+anything anyway.
+
+Again, it might make sense to not delete the old packs when repacking 
+everything in a rsync'ing environment - or even in a shared repository, 
+where removing a pack-file could race with somebody else working on it.
+
+Basically, the default ends up being to never remove any objects at all, 
+simply because that's the _safe_ thing to do.
+
+In practice, I personally always do
+
+	git repack -a -d
+	git prune-packed
+
+together, because the full repack isn't _that_ expensive for me (I tend to 
+have lots of cpu power), and because I can't be bothered to worry too much 
+about rsync and there are never any other users working on my git trees.
+
+		Linus
