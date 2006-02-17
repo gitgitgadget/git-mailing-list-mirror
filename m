@@ -1,58 +1,89 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
+From: Aneesh Kumar <aneesh.kumar@gmail.com>
 Subject: Re: contrib/ area
-Date: Sat, 18 Feb 2006 01:24:55 +1300
-Message-ID: <46a038f90602170424u59f84ac8l1311d80cd7251394@mail.gmail.com>
+Date: Fri, 17 Feb 2006 18:06:41 +0530
+Message-ID: <cc723f590602170436l5b33ae6s1780c3c8d6383627@mail.gmail.com>
 References: <7vmzgq451m.fsf@assigned-by-dhcp.cox.net>
-	 <873biikx6k.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 17 13:25:00 2006
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_284_3144169.1140179801620"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 17 13:37:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FA4fU-0000uV-18
-	for gcvg-git@gmane.org; Fri, 17 Feb 2006 13:25:00 +0100
+	id 1FA4rM-00032f-3E
+	for gcvg-git@gmane.org; Fri, 17 Feb 2006 13:37:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751405AbWBQMY5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Feb 2006 07:24:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751406AbWBQMY5
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 07:24:57 -0500
-Received: from wproxy.gmail.com ([64.233.184.203]:28640 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751405AbWBQMY4 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2006 07:24:56 -0500
-Received: by wproxy.gmail.com with SMTP id i20so120099wra
-        for <git@vger.kernel.org>; Fri, 17 Feb 2006 04:24:55 -0800 (PST)
+	id S932174AbWBQMhJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Feb 2006 07:37:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932255AbWBQMhJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 07:37:09 -0500
+Received: from uproxy.gmail.com ([66.249.92.206]:27860 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932174AbWBQMhH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Feb 2006 07:37:07 -0500
+Received: by uproxy.gmail.com with SMTP id j40so260791ugd
+        for <git@vger.kernel.org>; Fri, 17 Feb 2006 04:37:05 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Y8m+oWnlFS9SdUh35tOS8hVOXIkWXH1RtIOqGCSh4fihAqXHclugkK3PhhhYgBLE2agT77Hj8aJ+UetKULrlA//M/DRltu0FhmArBM4QnBPZP+CGJzCWnwJOGN89D+wVTZ17WdduV2IY9ovRahy0h7Yz1rz71IlkZVPOntZxW1o=
-Received: by 10.54.152.14 with SMTP id z14mr1055379wrd;
-        Fri, 17 Feb 2006 04:24:55 -0800 (PST)
-Received: by 10.54.127.12 with HTTP; Fri, 17 Feb 2006 04:24:55 -0800 (PST)
-To: Alexandre Julliard <julliard@winehq.org>
-In-Reply-To: <873biikx6k.fsf@wine.dyndns.org>
-Content-Disposition: inline
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=QqiragFGYrFSTa5oKhnecCByietx1JmyGs93S9Zf/eDNKLcz3GakzLjEXJum2dnWmK0y4mju+oGXkslp/eJgzgMGkbHVdNtLb4xgg43fTOJyKQh3Z+UlMAO9kKacVedUS0MScT9thD3lJuIjuaF9hrmFhjieF+47w1euk+Jtezc=
+Received: by 10.66.164.4 with SMTP id m4mr722958uge;
+        Fri, 17 Feb 2006 04:36:41 -0800 (PST)
+Received: by 10.66.254.7 with HTTP; Fri, 17 Feb 2006 04:36:41 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzgq451m.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16342>
 
-On 2/18/06, Alexandre Julliard <julliard@winehq.org> wrote:
-> Is there interest in an emacs interface for git?  I posted a first
-> version (http://marc.theaimsgroup.com/?l=git&m=113313040724346&w=2)
-> some time ago, I'd be happy to send you a patch with my latest version
-> if you want to include it.
+------=_Part_284_3144169.1140179801620
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Yes, please. I'd really like to see it help handle conflicts, and
-provide multi-pane views during merges. We are in love with emacs diff
-mode for conflict resolution when you end up with .rej files, but it
-doesn't kick in properly with the inline conflict markers :-(
+On 2/17/06, Junio C Hamano <junkio@cox.net> wrote:
+>
+>
+> One final request to Aneesh.  Could you send a patch to add a
+> bit of blurb and introductory text in contrib/gitview/README,
+> please?  As it stands, it would be hard to get as much exposure
+> as we had hoped by just having it in git.git repository.
+>
 
-cheers,
 
+Attaching below the same in the form of patch generated by git format-patch
 
-m
+-aneesh
+
+------=_Part_284_3144169.1140179801620
+Content-Type: text/plain; name="0001-Add-a-README-for-gitview.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="0001-Add-a-README-for-gitview.txt"
+X-Attachment-Id: f_ejshllvi
+
+RnJvbSBub2JvZHkgTW9uIFNlcCAxNyAwMDowMDowMCAyMDAxCkZyb206IEFuZWVzaCBLdW1hciBL
+LlYgPGFuZWVzaC5rdW1hckBnbWFpbC5jb20+CkRhdGU6IEZyaSBGZWIgMTcgMTg6MTg6MzYgMjAw
+NiArMDUzMApTdWJqZWN0OiBBZGQgYSBSRUFETUUgZm9yIGdpdHZpZXcKCi0tLQoKIGNvbnRyaWIv
+Z2l0dmlldy9naXR2aWV3LnR4dCB8ICAgMzggKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKysKIDEgZmlsZXMgY2hhbmdlZCwgMzggaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMo
+LSkKIGNyZWF0ZSBtb2RlIDEwMDY0NCBjb250cmliL2dpdHZpZXcvZ2l0dmlldy50eHQKCjM2YWNm
+YWZmY2JiODZiYjRjOGQyNjM0ZWE4NDMwNmE0NTFhOWMxOWIKZGlmZiAtLWdpdCBhL2NvbnRyaWIv
+Z2l0dmlldy9naXR2aWV3LnR4dCBiL2NvbnRyaWIvZ2l0dmlldy9naXR2aWV3LnR4dApuZXcgZmls
+ZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwLi4xNzEyOTVhCi0tLSAvZGV2L251bGwKKysrIGIv
+Y29udHJpYi9naXR2aWV3L2dpdHZpZXcudHh0CkBAIC0wLDAgKzEsMzggQEAKK2dpdHZpZXcoMSkK
+Kz09PT09PT09PT0KKworTkFNRQorLS0tLQorZ2l0dmlldyAtIEEgR1RLIGJhc2VkIHJlcG9zaXRv
+cnkgYnJvd3NlciBmb3IgZ2l0CisKK1NZTk9QU0lTCistLS0tLS0tLQorJ2dpdHZpZXcnICBbb3B0
+aW9uc10gW2FyZ3NdCisKK0RFU0NSSVBUSU9OCistLS0tLS0tLS0KKworRGVwZW5kZW5jaWVzCisK
+KyogUHl0aG9uIDIuNAorKiBQeUdUSyAyLjggb3IgbGF0ZXIKKyogUHlDYWlybyAxLjAgb3IgbGF0
+ZXIKKworT1BUSU9OUworLS0tLS0tCisJLS13aXRob3V0LWRpZmYKKwkJSWYgdGhlIHVzZXIgZG9l
+c24ndCB3YW50IHRvIGxpc3QgdGhlIGNvbW1pdCBkaWZmcyBpbiB0aGUgbWFpbiB3aW5kb3cuIFRo
+aXMgbWF5IHNwZWVkIHVwIHRoZSByZXBvc2l0b3J5IGJyb3dzaW5nLgorCisJPGFyZ3M+CisJCUFs
+bCB0aGUgdmFsaWQgb3B0aW9uIGZvciBnaXQtcmV2LWxpc3QoMSkKKworRVhBTVBMRVMKKy0tLS0t
+LQorCWdpdHZpZXcgdjIuNi4xMi4uIGluY2x1ZGUvc2NzaSBkcml2ZXJzL3Njc2kKKwkgIFNob3cg
+YXMgdGhlIGNoYW5nZXMgc2luY2UgdmVyc2lvbiB2Mi42LjEyIHRoYXQgY2hhbmdlZCBhbnkgZmls
+ZSBpbiB0aGUgaW5jbHVkZS9zY3NpCisJICBvciBkcml2ZXJzL3Njc2kgc3ViZGlyZWN0b3JpZXMK
+KworCWdpdGsgLS1zaW5jZT0yLndlZWtzLmFnbworCSAgU2hvdyB0aGUgY2hhbmdlcyBkdXJpbmcg
+dGhlIGxhc3QgdHdvIHdlZWtzIAorCisJCi0tIAoxLjIuMC1kaXJ0eQoK
+------=_Part_284_3144169.1140179801620--
