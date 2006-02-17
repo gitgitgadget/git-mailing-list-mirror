@@ -1,55 +1,50 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Handle branch names with slashes
-Date: Fri, 17 Feb 2006 05:21:08 +0100
-Message-ID: <20060217042108.GB28114@diana.vm.bytemark.co.uk>
-References: <20060214173509.GA8666@diana.vm.bytemark.co.uk> <20060217014117.12525.21330.stgit@backpacker.hemma.treskal.com> <43F53C76.6080902@vilain.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] pack-objects: reuse data from existing pack.
+Date: Thu, 16 Feb 2006 20:30:40 -0800
+Message-ID: <7vu0ay8v4f.fsf@assigned-by-dhcp.cox.net>
+References: <7vd5hpm2x0.fsf@assigned-by-dhcp.cox.net>
+	<7vbqx8m62q.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 17 05:21:36 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Feb 17 05:30:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9x7d-0007BN-0w
-	for gcvg-git@gmane.org; Fri, 17 Feb 2006 05:21:33 +0100
+	id 1F9xGY-0008VY-Vi
+	for gcvg-git@gmane.org; Fri, 17 Feb 2006 05:30:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750723AbWBQEV3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 16 Feb 2006 23:21:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750756AbWBQEV3
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 23:21:29 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:60174 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S1750723AbWBQEV3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2006 23:21:29 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1F9x7E-0007pn-00; Fri, 17 Feb 2006 04:21:08 +0000
-To: Sam Vilain <sam@vilain.net>
-Content-Disposition: inline
-In-Reply-To: <43F53C76.6080902@vilain.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1751239AbWBQEao (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Feb 2006 23:30:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbWBQEao
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 23:30:44 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:8132 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751239AbWBQEan (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2006 23:30:43 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060217042910.IKKS6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 16 Feb 2006 23:29:10 -0500
+To: git@vger.kernel.org
+In-Reply-To: <7vbqx8m62q.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 15 Feb 2006 17:43:25 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16326>
 
-On 2006-02-17 16:01:10 +1300, Sam Vilain wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Karl Hasselstr=F6m wrote:
->
-> > Let StGIT grok branch names with slashes in them. It used to fall
-> > flat on its face when confronted with them.
-> >
-> > I think I've covered all, or at least most cases, but there are
-> > probably some bugs left if you look hard enough.
->
-> Does `stgit -r patchname/bottom` still work?
+> When generating a new pack, notice if we have already the wanted
+> object in existing packs.  If the object has a delitified
+> representation, and its base object is also what we are going to
+> pack, then reuse the existing deltified representation
+> unconditionally, bypassing all the expensive find_deltas() and
+> try_deltas() routines.
 
-Yes (if you mean 'stg diff -r ... ' :-). It's just branches that can
-have slashes in their names, not patches.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+This one has one nasty data corruption bug, which fortunately I
+think I have figured out how to fix.  Please do not use it for
+your production repository in the meantime.
