@@ -1,83 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Use case: GIT to manage transactions in a CMS?
-Date: Fri, 17 Feb 2006 03:44:29 -0800
-Message-ID: <7v7j7u43c2.fsf@assigned-by-dhcp.cox.net>
-References: <43F30602.500@itaapy.com> <43F31454.8060704@op5.se>
-	<43F5AF3C.5050507@itaapy.com>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: contrib/ area
+Date: Fri, 17 Feb 2006 13:05:23 +0100
+Message-ID: <873biikx6k.fsf@wine.dyndns.org>
+References: <7vmzgq451m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 17 12:44:41 2006
+X-From: git-owner@vger.kernel.org Fri Feb 17 13:05:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FA42M-00022G-Gf
-	for gcvg-git@gmane.org; Fri, 17 Feb 2006 12:44:34 +0100
+	id 1FA4Mf-0005rh-3M
+	for gcvg-git@gmane.org; Fri, 17 Feb 2006 13:05:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751378AbWBQLob convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 17 Feb 2006 06:44:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751391AbWBQLob
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 06:44:31 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:32180 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751378AbWBQLob convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Feb 2006 06:44:31 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060217114202.MNNJ17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 17 Feb 2006 06:42:02 -0500
-To: =?iso-8859-1?Q?J=2E_David_Ib=E1=F1ez?= <jdavid@itaapy.com>
-In-Reply-To: <43F5AF3C.5050507@itaapy.com> (J. David =?iso-8859-1?Q?Ib=E1?=
- =?iso-8859-1?Q?=F1ez's?= message of "Fri,
-	17 Feb 2006 12:10:52 +0100")
+	id S1751400AbWBQMF3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Feb 2006 07:05:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbWBQMF3
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 07:05:29 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:20159 "EHLO
+	mail.codeweavers.com") by vger.kernel.org with ESMTP
+	id S1751400AbWBQMF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2006 07:05:29 -0500
+Received: from adsl-84-227-186-98.adslplus.ch ([84.227.186.98] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1FA4MY-0008FP-1S; Fri, 17 Feb 2006 06:05:28 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 889254F929; Fri, 17 Feb 2006 13:05:23 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzgq451m.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 17 Feb 2006 03:07:33 -0800")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+X-SA-Exim-Connect-IP: 84.227.186.98
+X-SA-Exim-Mail-From: julliard@winehq.org
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=3.0 tests=AWL,BAYES_00,
+	SPF_HELO_SOFTFAIL autolearn=no version=3.0.3
+X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
+X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16340>
 
-"J. David Ib=E1=F1ez" <jdavid@itaapy.com> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Maybe I could hack something, are there some docs explaining the
-> internal format of git objects? or, where to look in the source to
-> find this info?
+> By the way, I have to admit that merging these two were a bit
+> painful for me.  They came as text attachments to e-mail
+> messages, and I ended up hand committing with --author flag,
+> while fixing up whitespaces in them [*1*].  I do not want to do
+> that again.  So if you have new things to add to the contrib/
+> area, please first propose it on the list, and after a list
+> discussion proves there are some general interests (it does not
+> have to be a list-wide consensus for a tool targeted to a
+> relatively narrow audience -- for example I do not work with
+> projects whose upstream is svn, so I have no use for git-svn
+> myself), submit a patch to create a subdirectory of contrib/ and
+> put your stuff there.
 
-The index file is mostly dealt with by read-cache.c (despite its
-name, it has both read and write routines).  The easiest way to
-understand the tree object format is by reading write-tree.c.
+Is there interest in an emacs interface for git?  I posted a first
+version (http://marc.theaimsgroup.com/?l=git&m=113313040724346&w=2)
+some time ago, I'd be happy to send you a patch with my latest version
+if you want to include it.
 
-But the format is the easiest part.  You have to realize that
-this is a nontrivial task.
-
-The merge algorithm assumes that it can detect a presense of
-directory by finding a blob under that.  You need to teach
-'read-tree -m' that sometimes there is an empty directory
-recorded in the index file.  This is very important to avoid
-directory-file conflicts during the merge.
-
-Tree object side is probably easier because we _can_ write an
-empty tree object, and presumably three tree-walker
-implementations (one used in read-tree and object layer, one in
-diff-tree and another in merge-tree) should all handle empty
-trees gracefully, but still its callers need to be verified.
-
-> Another point, the application is written in Python, right now
-> I have to open a shell to run the git commands.
-
-I always have a shell open so it does not sound a big deal to me
-;-).
-
-> It would be nice if the core functionality was implemented in a C
-> library, then with a Python wrapper I could use git without going
-> through the shell.
->
-> Is this something to be expected? There will be a "libgit" sometime
-> in the future?
-
-Yes, read the list archive.
-
-But not yet.  The core level has been fluctuating quite a bit.  The
-latest round being the object layer bookkeeping changes.
+-- 
+Alexandre Julliard
+julliard@winehq.org
