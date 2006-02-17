@@ -1,83 +1,174 @@
-From: Karl =?ISO-8859-1?Q?=20Hasselstr=F6m?= <kha@treskal.com>
-Subject: [PATCH 1/2] Update .git/refs/heads/base after patch deletion
-Date: Fri, 17 Feb 2006 05:31:26 +0100
-Message-ID: <20060217043126.14175.21930.stgit@backpacker.hemma.treskal.com>
-References: <20060217042728.14175.39928.stgit@backpacker.hemma.treskal.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH] Make git-reset delete empty directories
+Date: Fri, 17 Feb 2006 02:26:16 -0500
+Message-ID: <20060217072616.GA15358@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 17 05:31:43 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Feb 17 08:27:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1F9xHL-0000Kk-Cp
-	for gcvg-git@gmane.org; Fri, 17 Feb 2006 05:31:35 +0100
+	id 1FA00y-0003OE-PI
+	for gcvg-git@gmane.org; Fri, 17 Feb 2006 08:26:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751379AbWBQEb3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Feb 2006 23:31:29 -0500
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbWBQEb2
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Feb 2006 23:31:28 -0500
-Received: from mxfep01.bredband.com ([195.54.107.70]:33717 "EHLO
-	mxfep01.bredband.com") by vger.kernel.org with ESMTP
-	id S932172AbWBQEb2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2006 23:31:28 -0500
-Received: from backpacker.hemma.treskal.com ([83.227.180.148] [83.227.180.148])
-          by mxfep01.bredband.com with ESMTP
-          id <20060217043126.KDCP12400.mxfep01.bredband.com@backpacker.hemma.treskal.com>;
-          Fri, 17 Feb 2006 05:31:26 +0100
-Received: from backpacker.hemma.treskal.com (localhost.localdomain [127.0.0.1])
-	by backpacker.hemma.treskal.com (Postfix) with ESMTP id A4D53172D;
-	Fri, 17 Feb 2006 05:31:26 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@arm.com>
-In-Reply-To: <20060217042728.14175.39928.stgit@backpacker.hemma.treskal.com>
+	id S1161111AbWBQH0V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Feb 2006 02:26:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932571AbWBQH0V
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 02:26:21 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:5270 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932546AbWBQH0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2006 02:26:20 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FA00Q-0004IL-2T
+	for git@vger.kernel.org; Fri, 17 Feb 2006 02:26:18 -0500
+Received: by asimov.spearce.org (Postfix, from userid 1000)
+	id BC74620FBA0; Fri, 17 Feb 2006 02:26:16 -0500 (EST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16331>
 
-Save the current HEAD into refs/heads/base if the stack is empty after
-a patch has been deleted. This was not done before, which caused
-refs/heads/base to not be updated after 'stg commit'. To guard against
-existing repositories with no applied patches and HEAD !=3D
-refs/heads/base, also do the update every time someone asks for the
-name of refs/heads/base.
+When git-reset --hard is used and a subdirectory becomes
+empty (as it contains no tracked files in the target tree)
+the empty subdirectory should be removed.  This matches
+the behavior of git-checkout-index and git-read-tree -m
+which would not have created the subdirectory or would
+have deleted it when updating the working directory.
 
-Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
+Subdirectories which are not empty will be left behind.
+This may happen if the subdirectory still contains object
+files from the user's build process (for example).
 
 ---
 
- stgit/stack.py |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ git-reset.sh     |   17 ++++++++++++---
+ t/t7101-reset.sh |   63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 77 insertions(+), 3 deletions(-)
+ create mode 100755 t/t7101-reset.sh
 
-diff --git a/stgit/stack.py b/stgit/stack.py
-index 68a2936..bc39d14 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -366,6 +366,7 @@ class Series:
-         return names
-=20
-     def get_base_file(self):
-+        self.__begin_stack_check()
-         return self.__base_file
-=20
-     def get_protected(self):
-@@ -686,6 +687,7 @@ class Series:
-         f =3D file(self.__unapplied_file, 'w+')
-         f.writelines([line + '\n' for line in unapplied])
-         f.close()
-+        self.__begin_stack_check()
-=20
-     def forward_patches(self, names):
-         """Try to fast-forward an array of patches.
+base 3397f9df53092871de2c33c143f1f4413654c40d
+last 9e4158a26134a05e6011613976e26e7bfa813aca
+diff --git a/git-reset.sh b/git-reset.sh
+index fe53fc8065dc82c0054ba9891b28a00b0752bf87..8eac4640bc8dfb655f8429036b68644df027dea4 100755
+--- a/git-reset.sh
++++ b/git-reset.sh
+@@ -74,22 +74,33 @@ case "$reset_type" in
+ 	git-ls-files --cached -z |
+ 	perl -e '
+ 		use strict;
+-		my (%keep, $fh);
++		my (%keep_file, %keep_dir, %rm_dir, $fh);
+ 		$/ = "\0";
+ 		while (<STDIN>) {
+ 			chomp;
+-			$keep{$_} = 1;
++			$keep_file{$_} = 1;
++			while (s,/?[^/]+$,, && $_) {
++				last if $keep_dir{$_}++;
++			}
+ 		}
+ 		open $fh, "<", $ARGV[0]
+ 			or die "cannot open $ARGV[0]";
+ 		while (<$fh>) {
+ 			chomp;
+-			if (! exists $keep{$_}) {
++			if (! exists $keep_file{$_}) {
+ 				# it is ok if this fails -- it may already
+ 				# have been culled by checkout-index.
+ 				unlink $_;
++				while (s,/?[^/]+$,, && $_ && !$keep_dir{$_}) {
++					last if $rm_dir{$_}++;
++				}
+ 			}
+ 		}
++		foreach (sort {length($b) <=> length($a)} keys %rm_dir) {
++			# it is ok if this fails -- it may have user files
++			# we do not track and thus should not delete.
++			rmdir $_;
++		}
+ 	' $tmp-exists
+ 	;;
+ --soft )
+diff --git a/t/t7101-reset.sh b/t/t7101-reset.sh
+new file mode 100755
+index 0000000000000000000000000000000000000000..a9191407f21c748f4c00bf909f670fc2b5124ec3
+--- /dev/null
++++ b/t/t7101-reset.sh
+@@ -0,0 +1,63 @@
++#!/bin/sh
++#
++# Copyright (c) 2006 Shawn Pearce
++#
++
++test_description='git-reset should cull empty subdirs'
++. ./test-lib.sh
++
++test_expect_success \
++    'creating initial files' \
++    'mkdir path0 &&
++     cp ../../COPYING path0/COPYING &&
++     git-add path0/COPYING &&
++     git-commit -m add -a'
++
++test_expect_success \
++    'creating second files' \
++    'mkdir path1 &&
++     mkdir path1/path2 &&
++     cp ../../COPYING path1/path2/COPYING &&
++     cp ../../COPYING path1/COPYING &&
++     cp ../../COPYING COPYING &&
++     cp ../../COPYING path0/COPYING-TOO &&
++     git-add path1/path2/COPYING &&
++     git-add path1/COPYING &&
++     git-add COPYING &&
++     git-add path0/COPYING-TOO &&
++     git-commit -m change -a'
++
++test_expect_success \
++    'resetting tree HEAD^' \
++    'git-reset --hard HEAD^'
++
++test_expect_success \
++    'checking initial files exist after rewind' \
++    'test -d path0 &&
++     test -f path0/COPYING'
++
++test_expect_failure \
++    'checking lack of path1/path2/COPYING' \
++    'test -f path1/path2/COPYING'
++
++test_expect_failure \
++    'checking lack of path1/COPYING' \
++    'test -f path1/COPYING'
++
++test_expect_failure \
++    'checking lack of COPYING' \
++    'test -f COPYING'
++
++test_expect_failure \
++    'checking checking lack of path1/COPYING-TOO' \
++    'test -f path0/COPYING-TOO'
++
++test_expect_failure \
++    'checking lack of path1/path2' \
++    'test -d path1/path2'
++
++test_expect_failure \
++    'checking lack of path1' \
++    'test -d path1'
++
++test_done
