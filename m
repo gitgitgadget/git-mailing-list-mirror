@@ -1,65 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make git-reset delete empty directories
-Date: Fri, 17 Feb 2006 00:15:56 -0800
-Message-ID: <7v7j7u8koz.fsf@assigned-by-dhcp.cox.net>
-References: <20060217072616.GA15358@spearce.org>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: Re: [PATCH] Handle branch names with slashes
+Date: Fri, 17 Feb 2006 09:47:21 +0000
+Message-ID: <tnxbqx6z592.fsf@arm.com>
+References: <20060214173509.GA8666@diana.vm.bytemark.co.uk>
+	<20060217014117.12525.21330.stgit@backpacker.hemma.treskal.com>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 17 09:16:11 2006
+X-From: git-owner@vger.kernel.org Fri Feb 17 10:48:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FA0md-0003dY-FJ
-	for gcvg-git@gmane.org; Fri, 17 Feb 2006 09:16:07 +0100
+	id 1FA2DQ-0004on-GG
+	for gcvg-git@gmane.org; Fri, 17 Feb 2006 10:47:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964800AbWBQIP6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Feb 2006 03:15:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932588AbWBQIP6
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 03:15:58 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:49140 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932587AbWBQIP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2006 03:15:57 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060217081417.GKUL20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 17 Feb 2006 03:14:17 -0500
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060217072616.GA15358@spearce.org> (Shawn Pearce's message of
-	"Fri, 17 Feb 2006 02:26:16 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1161173AbWBQJrt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 17 Feb 2006 04:47:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161172AbWBQJrt
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 04:47:49 -0500
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:48824 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S1161174AbWBQJrs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Feb 2006 04:47:48 -0500
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k1H9lQ6s017095;
+	Fri, 17 Feb 2006 09:47:26 GMT
+Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Fri, 17 Feb 2006 09:47:25 +0000
+To: =?iso-8859-1?q?Karl_Hasselstr=F6m?= <kha@treskal.com>
+In-Reply-To: <20060217014117.12525.21330.stgit@backpacker.hemma.treskal.com> (
+ =?iso-8859-1?q?Karl_Hasselstr=F6m's_message_of?= "Fri, 17 Feb 2006 02:41:17
+ +0100")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 17 Feb 2006 09:47:25.0838 (UTC) FILETIME=[287B92E0:01C633A7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16333>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> Let StGIT grok branch names with slashes in them. It used to fall fla=
+t
+> on its face when confronted with them.
 
-> When git-reset --hard is used and a subdirectory becomes
-> empty (as it contains no tracked files in the target tree)
-> the empty subdirectory should be removed.
+Thanks for the patches you sent. I'll have a look at them tomorrow.
 
-I thought I said it would be a few-liner, but it appears I did
-not send that message.
+As a side note, for future patches, could you please use my
+catalin.marinas@gmail.com address instead of the company one? I
+maintain StGIT outside the working hours and it's much easier to grab
+them from my personal address.
 
-This untested one is far simpler, if less efficient, isn't it?
+Thanks,
 
----
-
-diff --git a/git-reset.sh b/git-reset.sh
-index fe53fc8..195d043 100755
---- a/git-reset.sh
-+++ b/git-reset.sh
-@@ -88,6 +88,9 @@ case "$reset_type" in
- 				# it is ok if this fails -- it may already
- 				# have been culled by checkout-index.
- 				unlink $_;
-+				while (s|/[^/]*$|| && $_ ne "") {
-+					rmdir($_) or last;
-+				}
- 			}
- 		}
- 	' $tmp-exists
+--=20
+Catalin
