@@ -1,90 +1,64 @@
-From: Nicolas Vilz 'niv' <niv@iaglans.de>
-Subject: Re: [RFC] empty ident?
-Date: Sat, 18 Feb 2006 11:00:03 +0100
-Message-ID: <43F6F023.1020708@iaglans.de>
-References: <7vzmkpqco1.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [ANNOUNCE] GIT 1.2.1
+Date: Sat, 18 Feb 2006 11:39:41 +0100
+Message-ID: <43F6F96D.9090209@op5.se>
+References: <7vzmkrizuw.fsf@assigned-by-dhcp.cox.net> <20060218043113.GA8976@blinkenlights.visv.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigF5089A486B5D4AC9E9140763"
-X-From: git-owner@vger.kernel.org Sat Feb 18 11:03:36 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 18 11:39:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FAOvw-0002FA-MT
-	for gcvg-git@gmane.org; Sat, 18 Feb 2006 11:03:21 +0100
+	id 1FAPVC-0000CL-DI
+	for gcvg-git@gmane.org; Sat, 18 Feb 2006 11:39:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751122AbWBRKDR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Feb 2006 05:03:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbWBRKDR
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Feb 2006 05:03:17 -0500
-Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:52752 "EHLO
-	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
-	id S1751122AbWBRKDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Feb 2006 05:03:16 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 66F883F82
-	for <git@vger.kernel.org>; Sat, 18 Feb 2006 11:02:58 +0100 (CET)
-Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
-	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 23852-08 for <git@vger.kernel.org>;
-	Sat, 18 Feb 2006 11:02:57 +0100 (CET)
-Received: from [192.168.100.26] (hermes.lan.home.vilz.de [192.168.100.26])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id D18F83E92
-	for <git@vger.kernel.org>; Sat, 18 Feb 2006 11:02:55 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051204)
+	id S1751171AbWBRKjn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Feb 2006 05:39:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbWBRKjn
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Feb 2006 05:39:43 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:43183 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751171AbWBRKjm
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Feb 2006 05:39:42 -0500
+Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id B8E896BD04; Sat, 18 Feb 2006 11:39:41 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
 X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <7vzmkpqco1.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.92.0.0
+To: Michael Fischer <michael@visv.net>
+In-Reply-To: <20060218043113.GA8976@blinkenlights.visv.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16406>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigF5089A486B5D4AC9E9140763
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-
-Junio C Hamano wrote:
-> It appears that some people who did not care about having bogus
-> names in their own commit messages are bitten by the recent
-> change to require a sane environment [*1*].
+Michael Fischer wrote:
+> *sigh*
 > 
-> While it was a good idea to prevent people from using bogus
-> names to create commits and doing sign-offs, the error message
-> is not very informative.  This patch attempts to warn things
-> upfront and hint people how to fix their environments.
+> I got confused about git pull origin and git pull master.
+> 
+> Tutorial seems to tell me I should have said git pull origin
+> and left well enough alone. 
+> 
+> Now I get:
+> 
+> fatal: you need to resolve your current index first
+> 
+> How do I do that?
+> 
 
-Mh... it made me not using cg-init, but git-init, and after that editing
-.git/config, before the first commit.
+If you just want to clean the index so you can pull from origin again, 
+you should be able to just do
 
-This doesn't apply to works with git-svn, because here imported commits
-are tailored from the base-uuid of the SVN repository and the commit-user.
+	$ git reset --hard origin
 
-niv <niv@$uuid>
+If you've got local changes that has caused conflicts in the index you 
+need to fix that up first and commit them.
 
-after that i can setup my .git/config, as well.
-
-Sincerly
-Nicolas
-
---------------enigF5089A486B5D4AC9E9140763
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
-
-iD8DBQFD9vAqSlT0CowElk8RAgSNAJsECVCbEG1rpyxo31AvP29vVLf9KwCgn9Hc
-oFa40LS86oNvPPHWrhgEsbI=
-=sfFj
------END PGP SIGNATURE-----
-
---------------enigF5089A486B5D4AC9E9140763--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
