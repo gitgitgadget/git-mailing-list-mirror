@@ -1,75 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Why can't git-rebase back up?
-Date: Sat, 18 Feb 2006 01:15:09 -0800
-Message-ID: <7vpsllowo2.fsf@assigned-by-dhcp.cox.net>
-References: <7vmzgpru8m.fsf@assigned-by-dhcp.cox.net>
-	<20060218085608.30325.qmail@science.horizon.com>
+From: Nicolas Vilz 'niv' <niv@iaglans.de>
+Subject: Re: [RFC] empty ident?
+Date: Sat, 18 Feb 2006 11:00:03 +0100
+Message-ID: <43F6F023.1020708@iaglans.de>
+References: <7vzmkpqco1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 18 10:15:29 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigF5089A486B5D4AC9E9140763"
+X-From: git-owner@vger.kernel.org Sat Feb 18 11:03:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FAOBa-0002Zx-09
-	for gcvg-git@gmane.org; Sat, 18 Feb 2006 10:15:26 +0100
+	id 1FAOvw-0002FA-MT
+	for gcvg-git@gmane.org; Sat, 18 Feb 2006 11:03:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750803AbWBRJPM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Feb 2006 04:15:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751038AbWBRJPM
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Feb 2006 04:15:12 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:54201 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1750803AbWBRJPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Feb 2006 04:15:11 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060218091238.SBBI17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 18 Feb 2006 04:12:38 -0500
-To: linux@horizon.com
-In-Reply-To: <20060218085608.30325.qmail@science.horizon.com>
-	(linux@horizon.com's message of "18 Feb 2006 03:56:08 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751122AbWBRKDR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Feb 2006 05:03:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbWBRKDR
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Feb 2006 05:03:17 -0500
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:52752 "EHLO
+	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
+	id S1751122AbWBRKDQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Feb 2006 05:03:16 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 66F883F82
+	for <git@vger.kernel.org>; Sat, 18 Feb 2006 11:02:58 +0100 (CET)
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
+	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 23852-08 for <git@vger.kernel.org>;
+	Sat, 18 Feb 2006 11:02:57 +0100 (CET)
+Received: from [192.168.100.26] (hermes.lan.home.vilz.de [192.168.100.26])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id D18F83E92
+	for <git@vger.kernel.org>; Sat, 18 Feb 2006 11:02:55 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051204)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <7vzmkpqco1.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.92.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16405>
 
-linux@horizon.com writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigF5089A486B5D4AC9E9140763
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 
-> That also lets you do something about the rebasing-a-merged-branch
-> problem.  If you have:
->
->       g-->h-->i-->j topic
->      /       /
-> a-->b-->c-->d-->e-->f master
+Junio C Hamano wrote:
+> It appears that some people who did not care about having bogus
+> names in their own commit messages are bitten by the recent
+> change to require a sane environment [*1*].
+> 
+> While it was a good idea to prevent people from using bogus
+> names to create commits and doing sign-offs, the error message
+> is not very informative.  This patch attempts to warn things
+> upfront and hint people how to fix their environments.
 
-Ideally, you should be able to come up with:
+Mh... it made me not using cg-init, but git-init, and after that editing
+.git/config, before the first commit.
 
-                        g'->h'->j' topic
-                       /
-  a-->b-->c-->d-->e-->f master
+This doesn't apply to works with git-svn, because here imported commits
+are tailored from the base-uuid of the SVN repository and the commit-user.
 
-But it should not matter.  You should not be merging master (or
-any other branches that might have interaction with the topic)
-into your topic branches to begin with.
+niv <niv@$uuid>
 
-Instead, use a separate test branch and merge both topic and
-master into it:
+after that i can setup my .git/config, as well.
 
-             g-->h-->j topic
-            /         \       
-           /---o---o---o test
-          /       / 
-     a-->b-->c-->d-->e-->f master
+Sincerly
+Nicolas
 
-Once your topic is fully cooked, you would merge it into
-master.  If the area topic and master touch overlaps, you might
-have to resolve the same conflict you would have already
-resolved when you merged (j) commit into test in the above
-picture, but that is why we have "git rerere" ;-).
+--------------enigF5089A486B5D4AC9E9140763
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-BTW, why are we suddenly having many nameless people on this
-list, I wonder...
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFD9vAqSlT0CowElk8RAgSNAJsECVCbEG1rpyxo31AvP29vVLf9KwCgn9Hc
+oFa40LS86oNvPPHWrhgEsbI=
+=sfFj
+-----END PGP SIGNATURE-----
+
+--------------enigF5089A486B5D4AC9E9140763--
