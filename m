@@ -1,74 +1,82 @@
-From: carbonated beverage <ramune@net-ronin.org>
-Subject: empty ident error on pull
-Date: Fri, 17 Feb 2006 23:05:00 -0800
-Message-ID: <20060218070500.GA12259@prophet.net-ronin.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-cvs-import retries
+Date: Fri, 17 Feb 2006 23:27:48 -0800
+Message-ID: <7v1wy1t9cb.fsf@assigned-by-dhcp.cox.net>
+References: <mj+md-20060217.193146.10308.albireo@ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Feb 18 08:05:11 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 18 08:28:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FAM9W-0000yb-KG
-	for gcvg-git@gmane.org; Sat, 18 Feb 2006 08:05:10 +0100
+	id 1FAMVt-0004ZP-Iy
+	for gcvg-git@gmane.org; Sat, 18 Feb 2006 08:28:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750937AbWBRHFE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Feb 2006 02:05:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbWBRHFE
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Feb 2006 02:05:04 -0500
-Received: from S0106000ea6c7835e.no.shawcable.net ([70.67.106.153]:65169 "EHLO
-	prophet.net-ronin.org") by vger.kernel.org with ESMTP
-	id S1750937AbWBRHFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Feb 2006 02:05:03 -0500
-Received: from ramune by prophet.net-ronin.org with local (Exim 3.35 #1 (Debian))
-	id 1FAM9N-0003Cq-00
-	for <git@vger.kernel.org>; Fri, 17 Feb 2006 23:05:01 -0800
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1750965AbWBRH1u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Feb 2006 02:27:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750967AbWBRH1u
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Feb 2006 02:27:50 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:37345 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750965AbWBRH1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Feb 2006 02:27:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060218072447.RNPR17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 18 Feb 2006 02:24:47 -0500
+To: Martin Mares <mj@ucw.cz>
+In-Reply-To: <mj+md-20060217.193146.10308.albireo@ucw.cz> (Martin Mares's
+	message of "Fri, 17 Feb 2006 20:38:05 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16396>
 
-I'm tracking the Linux kernel repo via git, and got the following:
+Martin Mares <mj@ucw.cz> writes:
 
-barbeque/zarathustra:linux-2.6: git pull
-Unpacking 885 objects
- 100% (885/885) done
-* refs/heads/origin: fast forward to branch 'master' of git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
-Auto-following refs/tags/v2.6.16-rc4
-Unpacking 1 objects
- 100% (1/1) done
-* refs/tags/v2.6.16-rc4: storing tag 'v2.6.16-rc4' of git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
-Trying really trivial in-index merge...
-Wonderful.
-fatal: empty ident  <barbeque@zarathustra.internal.psychosnugglebunnies.net.> not allowed
+> Hello!
+>...
+> This patch extends the retry check and makes the symptoms go away.
+> However, take it with a grain of salt as I don't understand yet why the
+> connection is aborted.
+>
+> 				Have a nice fortnight
+> -- 
+> Martin `MJ' Mares   <mj@ucw.cz>   http://atrey.karlin.mff.cuni.cz/~mj/
+> Faculty of Math and Physics, Charles University, Prague, Czech Rep., Earth
+> A jury consists of 12 persons chosen to decide who has the better lawyer.
+>
+>
+> Signed-Off-By: Martin Mares <mj@ucw.cz>
+>
+> --- old/git-cvsimport	2006-02-17 13:02:24.000000000 +0100
 
-Then I tried the following:
+First, one technicality.  You can see what's wrong with the
+above, right?  Remember, the top part of your message goes into
+the commit log, so we do not want "Hello!" nor signature.
 
-barbeque/zarathustra:linux-2.6: git-fsck-objects
-dangling tree 47678b69f7dcc6d5fcae007d1e4fe511fd260e5b
-barbeque/zarathustra:linux-2.6: git prune
-barbeque/zarathustra:linux-2.6: git-fsck-objects
-barbeque/zarathustra:linux-2.6: git pull
-* refs/heads/origin: same as branch 'master' of git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
-Trying really trivial in-index merge...
-Wonderful.
-fatal: empty ident  <barbeque@zarathustra.internal.psychosnugglebunnies.net.> not allowed
+> +++ new/git-cvsimport	2006-02-17 18:13:06.000000000 +0100
+> @@ -371,7 +371,7 @@
+>  
+>  	$self->_file($fn,$rev) and $res = $self->_line($fh);
+>  
+> -	if (!defined $res) {
+> +	if (!defined $res || $res eq '') {
+>  	    # retry
+>  	    $self->conn();
+>  	    $self->_file($fn,$rev)
 
-Okay... so... what now?  I'm still a bit clueless when it comes to git.  Using
-it for some of my personal projects has gotten me a bit more comfortable with
-it, but my usage is still along the lines of "CVS without warts", for now.
+I read _line() three times but its return value is the lexical
+variable $res which is initialized to 0 and then either reset to
+0 by assignment or updated with $res += somethingelse.  So I do
+not see how you can get a defined but empty string in there.
+Even when _file() returns false, the $res variable in file()
+(the function you are modifying) is not initialized, so it would
+stay undefined.
 
-(And yes, it's the concept of the index file that's still throwing me for
-a loop :-)
-
-I was tracking the repo with "current" versions of git until I got the above
-error message the first time.  Went to a 1.1.6 tarball of git, pulled the
-repro from scratch, all seemed well.  Upgraded to 1.2.1, tried a pull today,
-and got the above.
-
-The system above is a Debian/sarge amd64 system, using gcc 3.3.5.
-
--- DN
-Daniel
+Maybe I am missing something very obvious, but I cannot see how
+this can make any difference.  Please enlighten.
