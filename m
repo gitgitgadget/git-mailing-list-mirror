@@ -1,52 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Junio, you are a genius.
-Date: Sat, 18 Feb 2006 03:12:00 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602180307100.6646@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 0/5] Support ancient systems
+Date: Sat, 18 Feb 2006 03:35:17 +0100
+Message-ID: <43F687E5.8070905@op5.se>
+References: <Pine.LNX.4.63.0602171517580.24274@wbgn013.biozentrum.uni-wuerzburg.de> <94fc236b0602170718t76e01204ib2b50e33eaa5eeaa@mail.gmail.com> <20060217170345.GB3468@ELSAMSW37164> <Pine.LNX.4.63.0602180109480.525@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat Feb 18 03:12:09 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Tim O'Callaghan <timo@dspsrv.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 18 03:35:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FAHZu-0005Qq-UD
-	for gcvg-git@gmane.org; Sat, 18 Feb 2006 03:12:07 +0100
+	id 1FAHwU-0000pA-JV
+	for gcvg-git@gmane.org; Sat, 18 Feb 2006 03:35:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750746AbWBRCME (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Feb 2006 21:12:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750738AbWBRCMD
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 21:12:03 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:61669 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750746AbWBRCMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2006 21:12:01 -0500
-Received: from virusscan.mail (amavis1.rz.uni-wuerzburg.de [132.187.3.48])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 1110D1467DC
-	for <git@vger.kernel.org>; Sat, 18 Feb 2006 03:12:01 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 04CC5B07
-	for <git@vger.kernel.org>; Sat, 18 Feb 2006 03:12:01 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id CB1941467DC
-	for <git@vger.kernel.org>; Sat, 18 Feb 2006 03:12:00 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1750742AbWBRCfX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Feb 2006 21:35:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750756AbWBRCfX
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Feb 2006 21:35:23 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:54189 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750742AbWBRCfW
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2006 21:35:22 -0500
+Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 8E3ED6BD04; Sat, 18 Feb 2006 03:35:21 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0602180109480.525@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16383>
 
-Hi,
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Fri, 17 Feb 2006, Tim O'Callaghan wrote:
+> 
+> 
+>>On Fri, Feb 17, 2006 at 04:18:35PM +0100, Adrien Beau wrote:
+>>
+>>>On 2/17/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>>>
+>>>>I just got git to work on an Irix box. These are the changes I needed
+>>>>to apply. Maybe some of them are of use for other ancient systems... You
+>>>>know, I like ancient systems. And if I could get my hands on a VMS, I
+>>>>would try to get git to work on it, too ;-)
+>>>
+>>>You can get free VMS accounts at the Deathrow Cluster:
+>>>http://deathrow.vistech.net/
+>>>
+>>>If you're serious about using your account, you'll find that the admin
+>>>team is pretty supportive and friendly.
+>>
+>>You should check out polarhome.com if you want a variety of platforms
+>>to muck about on, including IRIX, Plan 9, OpenVMS Vax, OpenVMS Alpha
+>>etc.
+>>
+>>I work on VMS systems at the moment and i thought of attempting to
+>>port git for the hell of it. I decided not to bother for a variety of
+>>reasons, but mostly because it looked like too much work :)  
+> 
+> 
+> Well, I did not remember that VMS does not have a proper fork() call.
 
-Earlier, I avoided to repack too often, since "repack -a -d" was too 
-expensive, and small incremental packs were inefficient.
+It doesn't. It's got vfork() though.
 
-Now, with the reusing delta patch, "repack -a -d" is marginally less 
-efficient than incremental packs. No longer worry about when to repack: 
-Just do it! No need for incremental packs!
 
-Hero!
+> BTW, my remark about VMS was more tongue-in-cheek than not...
+> 
 
-Ciao,
-Dscho
+Thanks anyway. I would never have gotten that link to polarhome if you'd 
+kept your tongue straight.
+
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
