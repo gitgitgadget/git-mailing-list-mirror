@@ -1,60 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 5/5] Optionally work without python
-Date: Fri, 17 Feb 2006 22:50:28 -0800
-Message-ID: <7vvevdtb2j.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0602171523510.24274@wbgn013.biozentrum.uni-wuerzburg.de>
+From: carbonated beverage <ramune@net-ronin.org>
+Subject: empty ident error on pull
+Date: Fri, 17 Feb 2006 23:05:00 -0800
+Message-ID: <20060218070500.GA12259@prophet.net-ronin.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 18 07:50:44 2006
+X-From: git-owner@vger.kernel.org Sat Feb 18 08:05:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FALvP-0007E6-3l
-	for gcvg-git@gmane.org; Sat, 18 Feb 2006 07:50:35 +0100
+	id 1FAM9W-0000yb-KG
+	for gcvg-git@gmane.org; Sat, 18 Feb 2006 08:05:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750935AbWBRGub (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Feb 2006 01:50:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbWBRGub
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Feb 2006 01:50:31 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:21711 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750932AbWBRGua (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Feb 2006 01:50:30 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060218064857.VRL6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 18 Feb 2006 01:48:57 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750937AbWBRHFE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Feb 2006 02:05:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbWBRHFE
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Feb 2006 02:05:04 -0500
+Received: from S0106000ea6c7835e.no.shawcable.net ([70.67.106.153]:65169 "EHLO
+	prophet.net-ronin.org") by vger.kernel.org with ESMTP
+	id S1750937AbWBRHFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Feb 2006 02:05:03 -0500
+Received: from ramune by prophet.net-ronin.org with local (Exim 3.35 #1 (Debian))
+	id 1FAM9N-0003Cq-00
+	for <git@vger.kernel.org>; Fri, 17 Feb 2006 23:05:01 -0800
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16395>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+I'm tracking the Linux kernel repo via git, and got the following:
 
-> In some setups (notably server setups) you do not need that dependency.
-> Gracefully handle the absence of python when NO_PYTHON is defined.
+barbeque/zarathustra:linux-2.6: git pull
+Unpacking 885 objects
+ 100% (885/885) done
+* refs/heads/origin: fast forward to branch 'master' of git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+Auto-following refs/tags/v2.6.16-rc4
+Unpacking 1 objects
+ 100% (1/1) done
+* refs/tags/v2.6.16-rc4: storing tag 'v2.6.16-rc4' of git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+Trying really trivial in-index merge...
+Wonderful.
+fatal: empty ident  <barbeque@zarathustra.internal.psychosnugglebunnies.net.> not allowed
 
-> +ifdef NO_PYTHON
-> +	TEST_DEFS += NO_PYTHON=YesPlease
-> +endif
+Then I tried the following:
 
-I wonder if there is a better way to do this.  All future
-NO_BLAH that may affect tests need to have something like this
-otherwise.
+barbeque/zarathustra:linux-2.6: git-fsck-objects
+dangling tree 47678b69f7dcc6d5fcae007d1e4fe511fd260e5b
+barbeque/zarathustra:linux-2.6: git prune
+barbeque/zarathustra:linux-2.6: git-fsck-objects
+barbeque/zarathustra:linux-2.6: git pull
+* refs/heads/origin: same as branch 'master' of git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+Trying really trivial in-index merge...
+Wonderful.
+fatal: empty ident  <barbeque@zarathustra.internal.psychosnugglebunnies.net.> not allowed
 
-> -default_strategies='recursive'
-> +if test -z "@@NO_PYTHON@@"; then
-> +	default_strategies='recursive'
-> +else
-> +	default_strategies='resolve'
-> +fi
+Okay... so... what now?  I'm still a bit clueless when it comes to git.  Using
+it for some of my personal projects has gotten me a bit more comfortable with
+it, but my usage is still along the lines of "CVS without warts", for now.
 
-Somebody commented on this part to make it shorter...
+(And yes, it's the concept of the index file that's still throwing me for
+a loop :-)
 
-I'll take 2, 3, and 4 from this series for now.  They will
-appear in "next".  Thanks.
+I was tracking the repo with "current" versions of git until I got the above
+error message the first time.  Went to a 1.1.6 tarball of git, pulled the
+repro from scratch, all seemed well.  Upgraded to 1.2.1, tried a pull today,
+and got the above.
+
+The system above is a Debian/sarge amd64 system, using gcc 3.3.5.
+
+-- DN
+Daniel
