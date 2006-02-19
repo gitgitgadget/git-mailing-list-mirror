@@ -1,306 +1,76 @@
-From: Jon Nelson <jnelson-git@jamponi.net>
+From: Jacob Kroon <jacob.kroon@gmail.com>
 Subject: Re: Fixing author/email fields in commit messages
-Date: Sun, 19 Feb 2006 17:01:03 -0600 (CST)
-Message-ID: <Pine.LNX.4.63.0602191651340.6352@gheavc.wnzcbav.cig>
-References: <43F8BCB1.2010701@gmail.com> <Pine.LNX.4.63.0602191634480.6352@gheavc.wnzcbav.cig>
+Date: Mon, 20 Feb 2006 00:33:50 +0100
+Message-ID: <43F9005E.30901@gmail.com>
+References: <43F8BCB1.2010701@gmail.com> <Pine.LNX.4.63.0602191634480.6352@gheavc.wnzcbav.cig> <Pine.LNX.4.63.0602191651340.6352@gheavc.wnzcbav.cig>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811838-390765366-1140390063=:6352"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 20 00:01:15 2006
+X-From: git-owner@vger.kernel.org Mon Feb 20 00:27:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FAxYI-0000R8-5I
-	for gcvg-git@gmane.org; Mon, 20 Feb 2006 00:01:14 +0100
+	id 1FAxxh-0005Gf-RM
+	for gcvg-git@gmane.org; Mon, 20 Feb 2006 00:27:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbWBSXBI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Feb 2006 18:01:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751137AbWBSXBH
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 18:01:07 -0500
-Received: from mxsf25.cluster1.charter.net ([209.225.28.225]:33476 "EHLO
-	mxsf25.cluster1.charter.net") by vger.kernel.org with ESMTP
-	id S1751135AbWBSXBG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Feb 2006 18:01:06 -0500
-Received: from mxip17a.cluster1.charter.net (mxip17a.cluster1.charter.net [209.225.28.147])
-	by mxsf25.cluster1.charter.net (8.12.11/8.12.11) with ESMTP id k1JN14Im024992
-	for <git@vger.kernel.org>; Sun, 19 Feb 2006 18:01:04 -0500
-Received: from 24-183-46-83.dhcp.mdsn.wi.charter.com (HELO turnip.jamponi.pvt) ([24.183.46.83])
-  by mxip17a.cluster1.charter.net with ESMTP; 19 Feb 2006 18:01:04 -0500
-X-IronPort-AV: i="4.02,128,1139202000"; 
-   d="diff'?scan'208"; a="2137111938:sNHT24535634"
-Received: by turnip.jamponi.pvt (Postfix, from userid 1000)
-	id 946F8C09E; Sun, 19 Feb 2006 17:01:03 -0600 (CST)
-Received: from localhost (localhost [127.0.0.1])
-	by turnip.jamponi.pvt (Postfix) with ESMTP id 751CEC09D
-	for <git@vger.kernel.org>; Sun, 19 Feb 2006 17:01:03 -0600 (CST)
-In-Reply-To: <Pine.LNX.4.63.0602191634480.6352@gheavc.wnzcbav.cig>
-To: unlisted-recipients:; (no To-header on input)
+	id S932334AbWBSX10 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Feb 2006 18:27:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932341AbWBSX10
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 18:27:26 -0500
+Received: from xproxy.gmail.com ([66.249.82.201]:61074 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932334AbWBSX10 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Feb 2006 18:27:26 -0500
+Received: by xproxy.gmail.com with SMTP id i29so564420wxd
+        for <git@vger.kernel.org>; Sun, 19 Feb 2006 15:27:25 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=J0I392iRqgmiZJiUfZXbTl5sahJeggjcRJVyV+WlH3Lyeo2BNtYi5oU+hsejJ0ClxgYNHEybbOeESrOjbmzL/SzdR8JmdvYkTFAzvcqz3t4qL3LEP8c5OarixAyGegsWkKH6+VRcjkZluhsl+yLUCvklH8XfQfvwr8ZAT2nPqeA=
+Received: by 10.70.76.1 with SMTP id y1mr2640800wxa;
+        Sun, 19 Feb 2006 15:27:25 -0800 (PST)
+Received: from ?192.168.0.3? ( [83.249.217.43])
+        by mx.gmail.com with ESMTP id h19sm4293447wxd.2006.02.19.15.27.23;
+        Sun, 19 Feb 2006 15:27:24 -0800 (PST)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Jon Nelson <jnelson-git@jamponi.net>
+In-Reply-To: <Pine.LNX.4.63.0602191651340.6352@gheavc.wnzcbav.cig>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16456>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jon Nelson wrote:
 
----1463811838-390765366-1140390063=:6352
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+>>I modified git-convert-objects to perform just that task.
+>>I'll see if I can dig it up (I'm not able to do so right now).
+>>    
+>>
+>
+>Attached. Notes:
+>
+>1. it's ugly
+>2. it's indented funny
+>3. it didn't seem to break anything for me, but no guarantees
+>4. it probably smells of elderberries
+>5. set your GIT_* environment up properly first or you'll wonder why it 
+>doesn't work like I did.
+>
+>  
+>
+Hi Jon,
 
+I've applied your patch to the latest git sources, and it compiles, but 
+I'm not quite sure how to
+invoke the command. I've setup GIT_* env. variables, and 
+git-convert-objects needs a sha1 identifier.
+I've tried passing "HEAD", and some other commit id's, but they don't 
+seem to make any difference.
+Am I doing things right ? How exactly do I invoke the command to clean 
+up the commit messages ?
 
-On Sun, 19 Feb 2006, Jon Nelson wrote:
+At least I don't get any error messages.
 
-> On Sun, 19 Feb 2006, Jacob Kroon wrote:
-> 
-> > When I started my git repository for my project, I never setup GIT_AUTHOR_NAME
-> > etc. correctly,
-> > so my commit messages used the default information, "<jacob@skeletor.(none)>",
-> > "skeletor" being the
-> > hostname of the computer I'm working on. I'd like to change it so that the
-> > messages will contain correct
-> > information about my e-mail and username. I noticed that this question has
-> > been brought up here before
-> > and that the solution might be to use git-convert-objects, but that it might
-> > need some modifications.
-> > 
-> > Has anyone come up with a working tool for this task ?
-> 
-> I modified git-convert-objects to perform just that task.
-> I'll see if I can dig it up (I'm not able to do so right now).
-
-Attached. Notes:
-
-1. it's ugly
-2. it's indented funny
-3. it didn't seem to break anything for me, but no guarantees
-4. it probably smells of elderberries
-5. set your GIT_* environment up properly first or you'll wonder why it 
-doesn't work like I did.
-
---
-Jon Nelson <jnelson-git@jamponi.net>
----1463811838-390765366-1140390063=:6352
-Content-Type: TEXT/PLAIN; charset=US-ASCII; name=convert-objects.diff
-Content-Transfer-Encoding: BASE64
-Content-ID: <Pine.LNX.4.63.0602191701030.6352@gheavc.wnzcbav.cig>
-Content-Description: 
-Content-Disposition: attachment; filename=convert-objects.diff
-
-ZGlmZiAtLWdpdCBhL2NvbnZlcnQtb2JqZWN0cy5jIGIvY29udmVydC1vYmpl
-Y3RzLmMNCmluZGV4IGI0OWJjZTIuLjEwOWJmYjAgMTAwNjQ0DQotLS0gYS9j
-b252ZXJ0LW9iamVjdHMuYw0KKysrIGIvY29udmVydC1vYmplY3RzLmMNCkBA
-IC0yNjMsNyArMjYzLDE1NiBAQCBzdGF0aWMgdm9pZCBjb252ZXJ0X2RhdGUo
-dm9pZCAqYnVmZmVyLCB1DQogCW5ld2xlbiArPSBzaXplOw0KIA0KIAl3cml0
-ZV9zaGExX2ZpbGUobmV3LCBuZXdsZW4sICJjb21taXQiLCByZXN1bHRfc2hh
-MSk7DQotCWZyZWUobmV3KTsJDQorCWZyZWUobmV3KTsNCit9DQorDQorc3Rh
-dGljIGludCBjb252ZXJ0X2VtYWlsX2xpbmUoY2hhciAqZHN0LCB2b2lkICoq
-YnVmLCB1bnNpZ25lZCBsb25nICpzcCwgY29uc3QgY2hhciAqbmFtZSwgY29u
-c3QgY2hhciAqbmV3X2VtYWlsKQ0KK3sNCisgICAgICAgIHVuc2lnbmVkIGxv
-bmcgc2l6ZSA9ICpzcDsNCisgICAgICAgIGNoYXIgKmxpbmUgPSAqYnVmOw0K
-KyAgICAgICAgY2hhciAqc3BhY2UgPSBzdHJjaHIobGluZSwgJyAnKTsNCisJ
-Y2hhciAqbmV4dCA9IHN0cmNocihsaW5lLCAnXG4nKTsNCisJY2hhciAqZW1h
-aWxfc3RhcnQgPSBzdHJjaHIobGluZSwgJzwnKTsNCisgICAgICAgIGNoYXIg
-KmVtYWlsX2VuZCA9IHN0cmNocihsaW5lLCAnPicpOw0KKyAgICAgICAgaW50
-IGxlbiwgdG90YWwgPSAwOw0KKw0KKwkvLyAiYXV0aG9yfGNvbW1pdHRlciB4
-eXogPHh5ej4gZGF0ZSINCisgICAgICAgIC8vICJjb21taXR0ZXIgeHl6IDx4
-eXo+IGRhdGUiDQorCWlmICghc3BhY2UgfHwgIW5leHQgfHwgIWVtYWlsX3N0
-YXJ0IHx8ICFlbWFpbF9lbmQpDQorICAgICAgICAgICAgZGllKCJtaXNzaW5n
-IG9yIGJhZCBhdXRob3IvY29tbWl0dGVyIGxpbmUgJXMiLCBsaW5lKTsNCisN
-CisgICAgICAgICsrc3BhY2U7DQorICAgICAgICArK2VtYWlsX3N0YXJ0Ow0K
-KyAgICAgICAgKytuZXh0Ow0KKw0KKyAgICAgICAgLy9mcHJpbnRmKHN0ZGVy
-ciwgInlpa2VzOiBzaXplOyAlbHUgXCIlc1wiXG4iLCBzaXplLCBsaW5lKTsN
-CisNCisgICAgICAgICpidWYgPSBuZXh0Ow0KKyAgICAgICAgKnNwID0gc2l6
-ZSAtIChuZXh0IC0gbGluZSk7DQorDQorICAgICAgICAvKiBjb3B5IHRoZSBz
-dHVmZiBmcm9tIGJlZm9yZSB0aGUgbmFtZSAqLw0KKyAgICAgICAgbGVuID0g
-c3BhY2UgLSBsaW5lOw0KKyAgICAgICAgbWVtY3B5KGRzdCwgbGluZSwgbGVu
-KTsNCisgICAgICAgIGRzdCArPSBsZW47DQorICAgICAgICB0b3RhbCArPSBs
-ZW47DQorICAgICAgICBzaXplIC09IGxlbjsNCisNCisgICAgICAgIC8qIGNv
-cHkgdGhlIG5ldyBuYW1lICovDQorICAgICAgICBsZW4gPSBzdHJsZW4obmFt
-ZSk7DQorICAgICAgICBtZW1jcHkoZHN0LCBuYW1lLCBsZW4pOw0KKyAgICAg
-ICAgZHN0ICs9IGxlbjsNCisgICAgICAgIHRvdGFsICs9IGxlbjsNCisgICAg
-ICAgIHNpemUgLT0gbGVuOw0KKw0KKyAgICAgICAgLyogcHV0IGEgc3BhY2Ug
-aW4gdGhlcmUgKi8NCisgICAgICAgICpkc3QgPSAnICc7DQorICAgICAgICAr
-K2RzdDsNCisgICAgICAgICsrdG90YWw7DQorICAgICAgICAtLXNpemU7DQor
-DQorICAgICAgICAvKiBwdXQgYSAnPCcgaW4gdGhlcmUgKi8NCisgICAgICAg
-ICpkc3QgPSAnPCc7DQorICAgICAgICArK2RzdDsNCisgICAgICAgICsrdG90
-YWw7DQorICAgICAgICAtLXNpemU7DQorDQorICAgICAgICAvKiBjb3B5IHRo
-ZSBuZXcgZW1haWwgKi8NCisgICAgICAgIGxlbiA9IHN0cmxlbihuZXdfZW1h
-aWwpOw0KKyAgICAgICAgbWVtY3B5KGRzdCwgbmV3X2VtYWlsLCBsZW4pOw0K
-KyAgICAgICAgZHN0ICs9IGxlbjsNCisgICAgICAgIHRvdGFsICs9IGxlbjsN
-CisgICAgICAgIHNpemUgLT0gbGVuOw0KKw0KKyAgICAgICAgLyogY29weSB0
-aGUgcmVzdCBvZiB0aGUgbGluZSAqLw0KKyAgICAgICAgbGVuID0gbmV4dCAt
-IGVtYWlsX2VuZDsNCisgICAgICAgIG1lbWNweShkc3QsIGVtYWlsX2VuZCwg
-bGVuKTsNCisgICAgICAgIGRzdCArPSBsZW47DQorICAgICAgICB0b3RhbCAr
-PSBsZW47DQorICAgICAgICBzaXplIC09IGxlbjsNCisNCisgICAgICAgIHJl
-dHVybiB0b3RhbDsNCit9DQorDQorc3RhdGljIHZvaWQgY29udmVydF9hdXRo
-b3Jjb21taXR0ZXIodm9pZCAqYnVmZmVyLCB1bnNpZ25lZCBsb25nIHNpemUs
-IHVuc2lnbmVkIGNoYXIgKnJlc3VsdF9zaGExKQ0KK3sNCisJY2hhciAqbmV3
-ID0geG1hbGxvYyhzaXplICsgMTAwKTsNCisgICAgICAgIHVuc2lnbmVkIGxv
-bmcgbmV3bGVuID0gMDsNCisgICAgICAgIGNoYXIgKmF1dGhvcl9pbmZvID0g
-c3RyZHVwKGdpdF9hdXRob3JfaW5mbygpKTsNCisgICAgICAgIGNoYXIgKmNv
-bW1pdHRlcl9pbmZvID0gc3RyZHVwKGdpdF9jb21taXR0ZXJfaW5mbygpKTsN
-CisgICAgICAgIGNoYXIgKmF1dGhvcl9uYW1lLCAqYXV0aG9yX2VtYWlsOw0K
-KyAgICAgICAgY2hhciAqY29tbWl0dGVyX25hbWUsICpjb21taXR0ZXJfZW1h
-aWw7DQorICAgICAgICBjaGFyICp0ZW1wOw0KKw0KKy8vI2RlZmluZSBURVNU
-SU5HDQorI2lmZGVmIFRFU1RJTkcNCisgICAgICAgIGZwcmludGYoc3RkZXJy
-LCAiYXV0aG9yX2luZm86IFwiJXNcIlxuIiwNCisgICAgICAgICAgICAgICAg
-YXV0aG9yX2luZm8pOw0KKyAgICAgICAgZnByaW50ZihzdGRlcnIsICJjb21t
-aXR0ZXJfaW5mbzogXCIlc1wiXG4iLA0KKyAgICAgICAgICAgICAgICBjb21t
-aXR0ZXJfaW5mbyk7DQorI2VuZGlmDQorICAgICAgICBhdXRob3JfbmFtZSA9
-IGF1dGhvcl9pbmZvOw0KKyAgICAgICAgdGVtcCA9IHN0cmNocihhdXRob3Jf
-bmFtZSwgJzwnKTsNCisgICAgICAgIGlmICghdGVtcCkNCisgICAgICAgICAg
-ICBkaWUoIlVuYWJsZSB0byBmaW5kIHZhbGlkIG5hbWUgYWRkcmVzcy4iKTsN
-CisgICAgICAgIC0tdGVtcDsNCisgICAgICAgICp0ZW1wID0gJ1wwJzsNCisg
-ICAgICAgIHRlbXAgKz0gMjsNCisNCisgICAgICAgIGF1dGhvcl9lbWFpbCA9
-IHRlbXA7DQorICAgICAgICB0ZW1wID0gc3RycmNocihhdXRob3JfZW1haWws
-ICc+Jyk7DQorICAgICAgICBpZiAoIXRlbXApDQorICAgICAgICAgICAgZGll
-KCJVbmFibGUgdG8gZmluZCB2YWxpZCBlbWFpbCBhZGRyZXNzLiIpOw0KKyAg
-ICAgICAgKnRlbXAgPSAnXDAnOw0KKw0KKyAgICAgICAgY29tbWl0dGVyX25h
-bWUgPSBjb21taXR0ZXJfaW5mbzsNCisgICAgICAgIHRlbXAgPSBzdHJjaHIo
-Y29tbWl0dGVyX25hbWUsICc8Jyk7DQorICAgICAgICBpZiAoIXRlbXApDQor
-ICAgICAgICAgICAgZGllKCJVbmFibGUgdG8gZmluZCB2YWxpZCBuYW1lIGFk
-ZHJlc3MuIik7DQorICAgICAgICAtLXRlbXA7DQorICAgICAgICAqdGVtcCA9
-ICdcMCc7DQorICAgICAgICB0ZW1wICs9IDI7DQorDQorICAgICAgICBjb21t
-aXR0ZXJfZW1haWwgPSB0ZW1wOw0KKyAgICAgICAgdGVtcCA9IHN0cnJjaHIo
-Y29tbWl0dGVyX2VtYWlsLCAnPicpOw0KKyAgICAgICAgaWYgKCF0ZW1wKQ0K
-KyAgICAgICAgICAgIGRpZSgiVW5hYmxlIHRvIGZpbmQgdmFsaWQgZW1haWwg
-YWRkcmVzcy4iKTsNCisgICAgICAgICp0ZW1wID0gJ1wwJzsNCisNCisjaWZk
-ZWYgVEVTVElORw0KKyAgICAgICAgZnByaW50ZihzdGRlcnIsICJhdXRob3Jf
-bmFtZTogXCIlc1wiXG4iLCBhdXRob3JfbmFtZSk7DQorICAgICAgICBmcHJp
-bnRmKHN0ZGVyciwgImF1dGhvcl9lbWFpbDogXCIlc1wiXG4iLCBhdXRob3Jf
-ZW1haWwpOw0KKyAgICAgICAgZnByaW50ZihzdGRlcnIsICJjb21taXR0ZXJf
-bmFtZTogXCIlc1wiXG4iLCBjb21taXR0ZXJfbmFtZSk7DQorICAgICAgICBm
-cHJpbnRmKHN0ZGVyciwgImNvbW1pdHRlcl9lbWFpbDogXCIlc1wiXG4iLCBj
-b21taXR0ZXJfZW1haWwpOw0KKyAgICAgICAgZXhpdCgwKTsNCisjZW5kaWYN
-CisNCisJLy8gInRyZWUgPHNoYTE+XG4iDQorCW1lbWNweShuZXcgKyBuZXds
-ZW4sIGJ1ZmZlciwgNDYpOw0KKwluZXdsZW4gKz0gNDY7DQorCWJ1ZmZlciAr
-PSA0NjsNCisJc2l6ZSAtPSA0NjsNCisNCisJLy8gInBhcmVudCA8c2hhMT5c
-biINCisJd2hpbGUgKCFtZW1jbXAoYnVmZmVyLCAicGFyZW50ICIsIDcpKSB7
-DQorCQltZW1jcHkobmV3ICsgbmV3bGVuLCBidWZmZXIsIDQ4KTsNCisJCW5l
-d2xlbiArPSA0ODsNCisJCWJ1ZmZlciArPSA0ODsNCisJCXNpemUgLT0gNDg7
-DQorCX0NCisNCisJLy8gImF1dGhvciB4eXogPHh5ej4gZGF0ZSINCisJLy8g
-ImNvbW1pdHRlciB4eXogPHh5ej4gZGF0ZSINCisgICAgICAgIG5ld2xlbiAr
-PSBjb252ZXJ0X2VtYWlsX2xpbmUobmV3ICsgbmV3bGVuLCAmYnVmZmVyLCAm
-c2l6ZSwgYXV0aG9yX25hbWUsIGF1dGhvcl9lbWFpbCk7DQorICAgICAgICBu
-ZXdsZW4gKz0gY29udmVydF9lbWFpbF9saW5lKG5ldyArIG5ld2xlbiwgJmJ1
-ZmZlciwgJnNpemUsIGNvbW1pdHRlcl9uYW1lLCBjb21taXR0ZXJfZW1haWwp
-Ow0KKw0KKwkvLyBSZXN0DQorCW1lbWNweShuZXcgKyBuZXdsZW4sIGJ1ZmZl
-ciwgc2l6ZSk7DQorCW5ld2xlbiArPSBzaXplOw0KKw0KKwl3cml0ZV9zaGEx
-X2ZpbGUobmV3LCBuZXdsZW4sICJjb21taXQiLCByZXN1bHRfc2hhMSk7DQor
-ICAgICAgICBmcmVlKG5ldyk7DQorICAgICAgICBmcmVlKGF1dGhvcl9pbmZv
-KTsNCisgICAgICAgIGZyZWUoY29tbWl0dGVyX2luZm8pOw0KIH0NCiANCiBz
-dGF0aWMgdm9pZCBjb252ZXJ0X2NvbW1pdCh2b2lkICpidWZmZXIsIHVuc2ln
-bmVkIGxvbmcgc2l6ZSwgdW5zaWduZWQgY2hhciAqcmVzdWx0X3NoYTEpDQpA
-QCAtMjc5LDcgKzQyOCwxMTcgQEAgc3RhdGljIHZvaWQgY29udmVydF9jb21t
-aXQodm9pZCAqYnVmZmVyLA0KIAkJY29udmVydF9hc2NpaV9zaGExKGJ1ZmZl
-cis3KTsNCiAJCWJ1ZmZlciArPSA0ODsNCiAJfQ0KLQljb252ZXJ0X2RhdGUo
-b3JpZ19idWZmZXIsIG9yaWdfc2l6ZSwgcmVzdWx0X3NoYTEpOw0KKwljb252
-ZXJ0X2F1dGhvcmNvbW1pdHRlcihvcmlnX2J1ZmZlciwgb3JpZ19zaXplLCBy
-ZXN1bHRfc2hhMSk7DQorfQ0KKw0KK3N0YXRpYyB2b2lkIGNvbnZlcnRfdGFn
-KHZvaWQgKmJ1ZmZlciwgdW5zaWduZWQgbG9uZyBzaXplLCB1bnNpZ25lZCBj
-aGFyICpyZXN1bHRfc2hhMSkNCit7DQorCXZvaWQgKm9yaWdfYnVmZmVyID0g
-YnVmZmVyOw0KKw0KKwljaGFyICpuZXcgPSB4bWFsbG9jKHNpemUgKyAxMDAp
-Ow0KKyAgICAgICAgdW5zaWduZWQgbG9uZyBuZXdsZW4gPSAwOw0KKw0KKyAg
-ICAgICAgY2hhciAqYXV0aG9yX2luZm8gPSBzdHJkdXAoZ2l0X2F1dGhvcl9p
-bmZvKCkpOw0KKyAgICAgICAgY2hhciAqY29tbWl0dGVyX2luZm8gPSBzdHJk
-dXAoZ2l0X2NvbW1pdHRlcl9pbmZvKCkpOw0KKyAgICAgICAgY2hhciAqYXV0
-aG9yX25hbWUsICphdXRob3JfZW1haWw7DQorICAgICAgICBjaGFyICpjb21t
-aXR0ZXJfbmFtZSwgKmNvbW1pdHRlcl9lbWFpbDsNCisgICAgICAgIGNoYXIg
-KnRlbXA7DQorICAgICAgICB1bnNpZ25lZCBsb25nIGxlbiA9IDA7DQorICAg
-ICAgICBjaGFyICplbWFpbF9zdGFydDsNCisgICAgICAgIGNoYXIgKmVtYWls
-X2VuZDsNCisgICAgICAgIGNoYXIgKmF1dGhvcl9zdGFydDsNCisgICAgICAg
-IGludCBoYXNfYXV0aG9yID0gMTsNCisNCisgICAgICAgIGF1dGhvcl9uYW1l
-ID0gYXV0aG9yX2luZm87DQorICAgICAgICB0ZW1wID0gc3RyY2hyKGF1dGhv
-cl9uYW1lLCAnPCcpOw0KKyAgICAgICAgaWYgKCF0ZW1wKQ0KKyAgICAgICAg
-ICAgIGRpZSgiVW5hYmxlIHRvIGZpbmQgdmFsaWQgbmFtZSBhZGRyZXNzLiIp
-Ow0KKyAgICAgICAgLS10ZW1wOw0KKyAgICAgICAgKnRlbXAgPSAnXDAnOw0K
-KyAgICAgICAgdGVtcCArPSAyOw0KKw0KKyAgICAgICAgYXV0aG9yX2VtYWls
-ID0gdGVtcDsNCisgICAgICAgIHRlbXAgPSBzdHJyY2hyKGF1dGhvcl9lbWFp
-bCwgJz4nKTsNCisgICAgICAgIGlmICghdGVtcCkNCisgICAgICAgICAgICBk
-aWUoIlVuYWJsZSB0byBmaW5kIHZhbGlkIGVtYWlsIGFkZHJlc3MuIik7DQor
-ICAgICAgICAqdGVtcCA9ICdcMCc7DQorDQorICAgICAgICBjb21taXR0ZXJf
-bmFtZSA9IGNvbW1pdHRlcl9pbmZvOw0KKyAgICAgICAgdGVtcCA9IHN0cmNo
-cihjb21taXR0ZXJfbmFtZSwgJzwnKTsNCisgICAgICAgIGlmICghdGVtcCkN
-CisgICAgICAgICAgICBkaWUoIlVuYWJsZSB0byBmaW5kIHZhbGlkIG5hbWUg
-YWRkcmVzcy4iKTsNCisgICAgICAgIC0tdGVtcDsNCisgICAgICAgICp0ZW1w
-ID0gJ1wwJzsNCisgICAgICAgIHRlbXAgKz0gMjsNCisNCisgICAgICAgIGNv
-bW1pdHRlcl9lbWFpbCA9IHRlbXA7DQorICAgICAgICB0ZW1wID0gc3RycmNo
-cihjb21taXR0ZXJfZW1haWwsICc+Jyk7DQorICAgICAgICBpZiAoIXRlbXAp
-DQorICAgICAgICAgICAgZGllKCJVbmFibGUgdG8gZmluZCB2YWxpZCBlbWFp
-bCBhZGRyZXNzLiIpOw0KKyAgICAgICAgKnRlbXAgPSAnXDAnOw0KKw0KKyAg
-ICAgICAgLy8qIFNUQVJUICovLw0KKw0KKwlpZiAobWVtY21wKGJ1ZmZlciwg
-Im9iamVjdCAiLCA3KSkNCisJCWRpZSgiQmFkIHRhZyAnJXMnIiwgKGNoYXIq
-KSBidWZmZXIpOw0KKyAgICAgICAgY29udmVydF9hc2NpaV9zaGExKGJ1ZmZl
-cis3KTsNCisvLyAgICAgICAgZnByaW50ZihzdGRlcnIsICJjb252ZXJ0aW5n
-ICVzIiwgKGNoYXIgKikgKGJ1ZmZlciArIDcpKTsNCisgICAgICAgIGJ1ZmZl
-ciArPSA3ICsgNDAgKyAxOyAgICAvKiAib2JqZWN0ICIgKyAiaGV4IHNoYTEi
-ICsgIlxuIiAqLw0KKyAgICAgICAgLyogdHlwZSBjb21taXQNCisgICAgICAg
-ICAgIHRhZyBib2EtMC45NC4xNHJjNg0KKyAgICAgICAgICAgdGFnZ2VyLi4u
-DQorICAgICAgICAgICAqLw0KKyAgICAgICAgLyogd2l0aCB0YWdnZXIsIHdl
-IGNoZWNrIGZvciB0YWdnZXIgYXV0aG9yX25hbWUgPGF1dGhvcl9lbWFpbD4N
-CisgICAgICAgICAqIGFuZCBpZiBzbywgd2UgY29udmVydCB0aGF0LCB0b28N
-CisgICAgICAgICAqLw0KKyAgICAgICAgdGVtcCA9IHN0cmNocihidWZmZXIs
-ICdcbicpOyAvKiBlbmQgb2YgY29tbWl0IGxpbmUgKi8NCisgICAgICAgIGlm
-ICghdGVtcCkgew0KKyAgICAgICAgICAgIGRpZSgiQmFkIHRhZyAnJXMnIiwg
-KGNoYXIgKikgYnVmZmVyKTsNCisgICAgICAgIH0NCisgICAgICAgICsrdGVt
-cDsNCisgICAgICAgIHRlbXAgPSBzdHJjaHIodGVtcCwgJ1xuJyk7IC8qIGVu
-ZCBvZiB0YWcgbGluZSAqLw0KKyAgICAgICAgaWYgKCF0ZW1wKSB7DQorICAg
-ICAgICAgICAgZGllKCJCYWQgdGFnICclcyciLCAoY2hhciAqKSBidWZmZXIp
-Ow0KKyAgICAgICAgfQ0KKyAgICAgICAgKyt0ZW1wOw0KKyAgICAgICAgaWYg
-KG1lbWNtcCh0ZW1wLCAidGFnZ2VyICIsIDcpKQ0KKyAgICAgICAgICAgIGRp
-ZSgiQmFkIHRhZyAnJXMnIiwgKGNoYXIgKikgYnVmZmVyKTsNCisgICAgICAg
-IHRlbXAgKz0gNzsgLyoganVzdCBhZnRlciAndGFnZ2VyICcgKi8NCisNCisg
-ICAgICAgIGxlbiA9ICh0ZW1wIC0gKGNoYXIgKikgb3JpZ19idWZmZXIpOw0K
-KyAgICAgICAgbWVtY3B5KG5ldywgb3JpZ19idWZmZXIsIGxlbik7DQorICAg
-ICAgICBuZXdsZW4gKz0gbGVuOw0KKyAgICAgICAgKyt0ZW1wOw0KKw0KKyAg
-ICAgICAgLyogY2hlY2sgdG8gc2VlIGlmIHRoZSBuZXh0IGl0ZW0gbG9va3Mg
-bGlrZSBhbiBuYW1lICsgZW1haWwgKi8NCisgICAgICAgIGVtYWlsX3N0YXJ0
-ID0gc3RyY2hyKHRlbXAsICc8Jyk7DQorICAgICAgICBpZiAoZW1haWxfc3Rh
-cnQpIHsNCisgICAgICAgICAgICBlbWFpbF9lbmQgPSBzdHJjaHIoZW1haWxf
-c3RhcnQsICc+Jyk7DQorICAgICAgICAgICAgaWYgKGVtYWlsX2VuZCkgew0K
-KyAgICAgICAgICAgICAgICBhdXRob3Jfc3RhcnQgPSBzdHJjaHIodGVtcCwg
-JyAnKTsNCisgICAgICAgICAgICAgICAgaWYgKGF1dGhvcl9zdGFydCAmJiBh
-dXRob3Jfc3RhcnQgPCBlbWFpbF9zdGFydCkgew0KKyAgICAgICAgICAgICAg
-ICAgICAgaGFzX2F1dGhvciA9IDE7DQorICAgICAgICAgICAgICAgICAgICBu
-ZXdsZW4gKz0gc3ByaW50ZihuZXcgKyBuZXdsZW4sDQorICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAiJXMgPCVzPlxuIiwNCisgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGF1dGhvcl9uYW1l
-LA0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYXV0
-aG9yX2VtYWlsKTsNCisgICAgICAgICAgICAgICAgICAgIGxlbiA9IChlbWFp
-bF9lbmQgLSAoY2hhciAqKSBidWZmZXIpICsgMjsNCisgICAgICAgICAgICAg
-ICAgfQ0KKw0KKyAgICAgICAgICAgIH0NCisgICAgICAgIH0NCisNCisgICAg
-ICAgIGlmIChsZW4gPiBzaXplKSB7DQorICAgICAgICAgICAgbWVtY3B5KG5l
-dyArIG5ld2xlbiwgb3JpZ19idWZmZXIgKyBsZW4sIHNpemUgLSBsZW4pOw0K
-KyAgICAgICAgICAgIG5ld2xlbiArPSAoc2l6ZSAtIGxlbik7DQorICAgICAg
-ICB9DQorLy8gICAgICAgIGZwcmludGYoc3RkZXJyLCAiQWJvdXQgdG8gd3Jp
-dGU6ICVzIiwgbmV3KTsNCisvLyAgICAgICAgZXhpdCgwKTsNCisNCisgICAg
-ICAgIHdyaXRlX3NoYTFfZmlsZShuZXcsIG5ld2xlbiwgInRhZyIsIHJlc3Vs
-dF9zaGExKTsNCisgICAgICAgIGZyZWUobmV3KTsNCisgICAgICAgIGZyZWUo
-YXV0aG9yX2luZm8pOw0KKyAgICAgICAgZnJlZShjb21taXR0ZXJfaW5mbyk7
-DQogfQ0KIA0KIHN0YXRpYyBzdHJ1Y3QgZW50cnkgKiBjb252ZXJ0X2VudHJ5
-KHVuc2lnbmVkIGNoYXIgKnNoYTEpDQpAQCAtMjk3LDEzICs1NTYsMTUgQEAg
-c3RhdGljIHN0cnVjdCBlbnRyeSAqIGNvbnZlcnRfZW50cnkodW5zaQ0KIA0K
-IAlidWZmZXIgPSB4bWFsbG9jKHNpemUpOw0KIAltZW1jcHkoYnVmZmVyLCBk
-YXRhLCBzaXplKTsNCi0JDQorDQogCWlmICghc3RyY21wKHR5cGUsICJibG9i
-IikpIHsNCiAJCXdyaXRlX3NoYTFfZmlsZShidWZmZXIsIHNpemUsICJibG9i
-IiwgZW50cnktPm5ld19zaGExKTsNCi0JfSBlbHNlIGlmICghc3RyY21wKHR5
-cGUsICJ0cmVlIikpDQotCQljb252ZXJ0X3RyZWUoYnVmZmVyLCBzaXplLCBl
-bnRyeS0+bmV3X3NoYTEpOw0KLQllbHNlIGlmICghc3RyY21wKHR5cGUsICJj
-b21taXQiKSkNCi0JCWNvbnZlcnRfY29tbWl0KGJ1ZmZlciwgc2l6ZSwgZW50
-cnktPm5ld19zaGExKTsNCisgICAgICAgIH0gZWxzZSBpZiAoIXN0cmNtcCh0
-eXBlLCAidHJlZSIpKQ0KKyAgICAgICAgICAgIGNvbnZlcnRfdHJlZShidWZm
-ZXIsIHNpemUsIGVudHJ5LT5uZXdfc2hhMSk7DQorICAgICAgICBlbHNlIGlm
-ICghc3RyY21wKHR5cGUsICJjb21taXQiKSkNCisgICAgICAgICAgICBjb252
-ZXJ0X2NvbW1pdChidWZmZXIsIHNpemUsIGVudHJ5LT5uZXdfc2hhMSk7DQor
-ICAgICAgICBlbHNlIGlmICghc3RyY21wKHR5cGUsICJ0YWciKSkNCisgICAg
-ICAgICAgICBjb252ZXJ0X3RhZyhidWZmZXIsIHNpemUsIGVudHJ5LT5uZXdf
-c2hhMSk7DQogCWVsc2UNCiAJCWRpZSgidW5rbm93biBvYmplY3QgdHlwZSAn
-JXMnIGluICVzIiwgdHlwZSwgc2hhMV90b19oZXgoc2hhMSkpOw0KIAllbnRy
-eS0+Y29udmVydGVkID0gMTsNCkBAIC0zMTgsNiArNTc5LDcgQEAgaW50IG1h
-aW4oaW50IGFyZ2MsIGNoYXIgKiphcmd2KQ0KIAlzdHJ1Y3QgZW50cnkgKmVu
-dHJ5Ow0KIA0KIAlzZXR1cF9naXRfZGlyZWN0b3J5KCk7DQorCXNldHVwX2lk
-ZW50KCk7DQogDQogCWlmIChhcmdjICE9IDIgfHwgZ2V0X3NoYTEoYXJndlsx
-XSwgc2hhMSkpDQogCQl1c2FnZSgiZ2l0LWNvbnZlcnQtb2JqZWN0cyA8c2hh
-MT4iKTsNCg==
-
----1463811838-390765366-1140390063=:6352--
+//Jacob
