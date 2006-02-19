@@ -1,57 +1,95 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] git-rev-list --help anywhere
-Date: Sun, 19 Feb 2006 11:40:14 -0800
-Message-ID: <43F8C99E.7080703@gmail.com>
-References: <20060219112627.18989.qmail@science.horizon.com> <20060219183930.GB10010@steel.home> <Pine.LNX.4.63.0602192023270.11855@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: gitzilla@gmail.com
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: New shiny gitk
+Date: Sun, 19 Feb 2006 23:12:15 +0300
+Message-ID: <20060219231215.545b1537.vsu@altlinux.ru>
+References: <17400.23434.724188.649656@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>, linux@horizon.com,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 19 20:40:24 2006
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Sun__19_Feb_2006_23_12_15_+0300_xEJ/RHHPvlXcTG1y"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 19 21:12:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FAuPu-0006mF-7Y
-	for gcvg-git@gmane.org; Sun, 19 Feb 2006 20:40:23 +0100
+	id 1FAuvA-0004U1-1d
+	for gcvg-git@gmane.org; Sun, 19 Feb 2006 21:12:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750808AbWBSTkT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Feb 2006 14:40:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbWBSTkT
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 14:40:19 -0500
-Received: from pproxy.gmail.com ([64.233.166.177]:24308 "EHLO pproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750808AbWBSTkR (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Feb 2006 14:40:17 -0500
-Received: by pproxy.gmail.com with SMTP id z74so921930pyg
-        for <git@vger.kernel.org>; Sun, 19 Feb 2006 11:40:16 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=sXN2EhKzqaEkWqwgHuDAjz5iBF6HDexRYODH7zaayPvP7AOApm/JyG3OtV7Q8YotG6ZiBhHEUCMA3IYyjipnv6kC7keklzmcFzLTVudvcnRtXyLcRBTVAMaYRz3n6nICzZAOsRV+l13uFpJMXa3dYSKelE5ICmOn4N89zOyXDyw=
-Received: by 10.35.109.2 with SMTP id l2mr1063908pym;
-        Sun, 19 Feb 2006 11:40:16 -0800 (PST)
-Received: from ?10.0.0.6? ( [67.20.71.142])
-        by mx.gmail.com with ESMTP id q36sm1003055pyg.2006.02.19.11.40.15;
-        Sun, 19 Feb 2006 11:40:16 -0800 (PST)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0602192023270.11855@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1750953AbWBSUMh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Feb 2006 15:12:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750990AbWBSUMg
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 15:12:36 -0500
+Received: from master.altlinux.org ([62.118.250.235]:55561 "EHLO
+	master.altlinux.org") by vger.kernel.org with ESMTP
+	id S1750953AbWBSUMg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Feb 2006 15:12:36 -0500
+Received: from procyon.home (localhost.localdomain [127.0.0.1])
+	by master.altlinux.org (Postfix) with ESMTP
+	id 8032EE36A9; Sun, 19 Feb 2006 23:12:24 +0300 (MSK)
+Received: by procyon.home (Postfix, from userid 500)
+	id D8632E36BC6; Sun, 19 Feb 2006 23:12:17 +0300 (MSK)
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17400.23434.724188.649656@cargo.ozlabs.ibm.com>
+X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; i586-alt-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16448>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> can someone please enlighten me why you need to see the usage, when you 
-> cannot execute the command anyway?
-> 
-> Puzzled,
-> Dscho
+--Signature=_Sun__19_Feb_2006_23_12_15_+0300_xEJ/RHHPvlXcTG1y
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-How about so that you can find the options needed to run the command in 
-another window where it will work.
+On Sun, 19 Feb 2006 22:50:34 +1100 Paul Mackerras wrote:
+
+> I just created a branch called "new" in my gitk repository at
+>=20
+> git://git.kernel.org/pub/scm/gitk/gitk.git
+>=20
+> which has a new improved version of gitk which is much faster than the
+> old one and has a better graph layout algorithm.  I'd like people to
+> try it out and tell me how they like it and if I broke anything (I'm
+> pretty sure I broke the "Update" function, for instance).
+
+I have found a case where the new algorithm produces much worse layout
+than before.
+
+I cloned the Linus' kernel tree:
+
+   git clone git://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2=
+.6.git linux-2.6
+
+then fetched the Ubuntu tree:
+
+   git fetch git://www.kernel.org/pub/scm/linux/kernel/git/bcollins/ubuntu-=
+2.6.git master:ubuntu
+
+then tried to look at Ubuntu changes:
+
+  gitk origin..ubuntu
+
+The old algorithm was producing a graph with less than 20 lines on the
+left, so the patch description was visible.  The new version, however,
+produces something which does not fit even on a 1920x1200 screen (look
+at the bottom of the graph).
+
+> If you use -d to get commits ordered by date, you will need the latest
+> version of git-rev-list, which has the --date-order option.
+
+I tried this option - it changes some things, but does not fix that
+layout problem.
+
+--Signature=_Sun__19_Feb_2006_23_12_15_+0300_xEJ/RHHPvlXcTG1y
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.9.17 (GNU/Linux)
+
+iD8DBQFD+NEhW82GfkQfsqIRAiQvAJ9an3srcnaz1XxDQ8uk6B99hwyMxQCfUtLi
+yZCEnEKTEGIVasokzSY1KKI=
+=0iXU
+-----END PGP SIGNATURE-----
+
+--Signature=_Sun__19_Feb_2006_23_12_15_+0300_xEJ/RHHPvlXcTG1y--
