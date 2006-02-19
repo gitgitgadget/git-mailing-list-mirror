@@ -1,56 +1,60 @@
-From: Marco Costalba <mcostalba@gmail.com>
-Subject: Re: [PATCH] Add a Documentation/git-tools.txt
-Date: Sun, 19 Feb 2006 13:39:11 +0100
-Message-ID: <43F866EF.1080500@gmail.com>
-References: <e5bfff550602190200j1ef3858as6a1564064dc81fef@mail.gmail.com> <200602191225.54311.alan@chandlerfamily.org.uk>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 2/2] Add 'stg uncommit' command
+Date: Sun, 19 Feb 2006 14:45:58 +0100
+Message-ID: <20060219134558.GA4784@diana.vm.bytemark.co.uk>
+References: <20060217042728.14175.39928.stgit@backpacker.hemma.treskal.com> <20060217043128.14175.60168.stgit@backpacker.hemma.treskal.com> <43F84D9A.2010905@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Sun Feb 19 13:39:29 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 19 14:46:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FAnqZ-0000an-C8
-	for gcvg-git@gmane.org; Sun, 19 Feb 2006 13:39:27 +0100
+	id 1FAotM-00034l-Nx
+	for gcvg-git@gmane.org; Sun, 19 Feb 2006 14:46:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932411AbWBSMjR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Feb 2006 07:39:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932415AbWBSMjR
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 07:39:17 -0500
-Received: from wproxy.gmail.com ([64.233.184.202]:932 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932411AbWBSMjQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Feb 2006 07:39:16 -0500
-Received: by wproxy.gmail.com with SMTP id i31so706632wra
-        for <git@vger.kernel.org>; Sun, 19 Feb 2006 04:39:16 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=ev1hMHM72rAwnGj17usNU5/PGlxoVDewHdFnab3Dv7LV8De2vISFToX8wS+WV7a8OuthELZSOXBMTIZ+m5PHWjWJRoofgORPfgSuzKcg2RgP5XWYFej5A+g3TzkDmr0icLUnab9nrY2LocvwSbWt8Cj/ekFyaQbrcMFrp++AXZs=
-Received: by 10.65.122.7 with SMTP id z7mr167344qbm;
-        Sun, 19 Feb 2006 04:39:15 -0800 (PST)
-Received: from ?10.0.0.13? ( [151.56.87.178])
-        by mx.gmail.com with ESMTP id e16sm2392524qba.2006.02.19.04.39.14;
-        Sun, 19 Feb 2006 04:39:15 -0800 (PST)
-User-Agent: Mozilla Thunderbird 1.0.6-7.4.20060mdk (X11/20050322)
-X-Accept-Language: it, it-it, en-us, en
-To: Alan Chandler <alan@chandlerfamily.org.uk>
-In-Reply-To: <200602191225.54311.alan@chandlerfamily.org.uk>
+	id S932435AbWBSNqD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 19 Feb 2006 08:46:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932436AbWBSNqD
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 08:46:03 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:26632 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S932435AbWBSNqC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Feb 2006 08:46:02 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1FAosw-0001Fr-00; Sun, 19 Feb 2006 13:45:58 +0000
+To: Catalin Marinas <catalin.marinas@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <43F84D9A.2010905@gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16437>
 
-Alan Chandler ha scritto:
-> On Sunday 19 February 2006 10:00, Marco Costalba wrote:
-> 
->>+
->>+Alternative/Argumentative Porcelains
->>+------------------------------------
-> 
-> 
-> Aren't these "Augmentative Procelains" rather than ones that argue a lot.
-> 
+On 2006-02-19 10:51:06 +0000, Catalin Marinas wrote:
 
-Yes, you are arguing correctly!
+> Karl Hasselstr=F6m wrote:
+>
+> > diff --git a/stgit/commands/uncommit.py b/stgit/commands/uncommit.p=
+y
+> > new file mode 100644
+> > index 0000000..4ac0dfb
+> > --- /dev/null
+> > +++ b/stgit/commands/uncommit.py
+> > @@ -0,0 +1,80 @@
+> > +__copyright__ =3D """
+> > +Copyright (C) 2006, Catalin Marinas <catalin.marinas@gmail.com>
+>
+> I added your name on the copyright since this is a new file.
+
+I did that too at first, but then I changed it back since I reckoned
+more than 50% of the file was copy-pasted from elsewhere. But thanks.
+:-)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
