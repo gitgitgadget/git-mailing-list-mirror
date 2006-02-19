@@ -1,57 +1,98 @@
-From: Jacob Kroon <jacob.kroon@gmail.com>
-Subject: Fixing author/email fields in commit messages
-Date: Sun, 19 Feb 2006 19:45:05 +0100
-Message-ID: <43F8BCB1.2010701@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] git-rev-list --help anywhere
+Date: Sun, 19 Feb 2006 19:39:30 +0100
+Message-ID: <20060219183930.GB10010@steel.home>
+References: <20060219112627.18989.qmail@science.horizon.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Feb 19 19:38:51 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 19 19:39:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FAtSI-0003st-Oy
-	for gcvg-git@gmane.org; Sun, 19 Feb 2006 19:38:47 +0100
+	id 1FAtTD-00042Q-LT
+	for gcvg-git@gmane.org; Sun, 19 Feb 2006 19:39:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932200AbWBSSin (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Feb 2006 13:38:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932203AbWBSSin
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 13:38:43 -0500
-Received: from xproxy.gmail.com ([66.249.82.194]:25490 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932200AbWBSSim (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Feb 2006 13:38:42 -0500
-Received: by xproxy.gmail.com with SMTP id s8so592613wxc
-        for <git@vger.kernel.org>; Sun, 19 Feb 2006 10:38:42 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=bE5FsppKogyNOpXZYeKtiOIz7C850E9sOa7XXUpPvGRbC7f8uQrtKSES4VS98HP3tY6uoujc4uG43t8ai76eLIAUvvEcsf0Ryo9bqb5M8+SkNDgeOH95ILraaBS6qIBuY5kZItwp3uiUZbK4eecQat2twSEf9BQw00mqtu1X8NM=
-Received: by 10.70.13.14 with SMTP id 14mr2993636wxm;
-        Sun, 19 Feb 2006 10:38:42 -0800 (PST)
-Received: from ?192.168.0.3? ( [83.249.217.43])
-        by mx.gmail.com with ESMTP id h8sm4436856wxd.2006.02.19.10.38.40;
-        Sun, 19 Feb 2006 10:38:41 -0800 (PST)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
+	id S932203AbWBSSjk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Feb 2006 13:39:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932204AbWBSSjk
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 13:39:40 -0500
+Received: from devrace.com ([198.63.210.113]:24334 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S932203AbWBSSjk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Feb 2006 13:39:40 -0500
+Received: from tigra.home (p54A07517.dip.t-dialin.net [84.160.117.23])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id k1JIdVwb096485;
+	Sun, 19 Feb 2006 12:39:32 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1FAtT0-0001WB-00; Sun, 19 Feb 2006 19:39:30 +0100
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1FAtT0-0004Nb-FC; Sun, 19 Feb 2006 19:39:30 +0100
+To: linux@horizon.com
+Content-Disposition: inline
+In-Reply-To: <20060219112627.18989.qmail@science.horizon.com>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16443>
 
-When I started my git repository for my project, I never setup 
-GIT_AUTHOR_NAME etc. correctly,
-so my commit messages used the default information, 
-"<jacob@skeletor.(none)>", "skeletor" being the
-hostname of the computer I'm working on. I'd like to change it so that 
-the messages will contain correct
-information about my e-mail and username. I noticed that this question 
-has been brought up here before
-and that the solution might be to use git-convert-objects, but that it 
-might need some modifications.
+linux@horizon.com, Sun, Feb 19, 2006 12:26:27 +0100:
+> >+	for (i = 1 ; i < argc; i++)
+> >+	    if ( !strcmp(argv[i], "--help") )
+> >+		usage(rev_list_usage);
+> 
+> You might want to try something more like:
+> 
+> +	for (i = 1 ; i < argc; i++) {
+> +	    if ( !strcmp(argv[i], "--help") )
+> +		usage(rev_list_usage);
+> +	    if ( !strcmp(argv[i], "--") )
+> +		break;
+> +	}
+> 
+> So that you don't break in the perverse but legal case of
+> having a file named "--help".
 
-Has anyone come up with a working tool for this task ?
+Of course. Thanks!
 
-I know how to make the future commits look as expected.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 
-//Jacob
+---
+
+diff --git a/rev-list.c b/rev-list.c
+index f2d1105..bcb492e 100644
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -755,11 +755,20 @@ static void handle_all(struct commit_lis
+ 
+ int main(int argc, const char **argv)
+ {
+-	const char *prefix = setup_git_directory();
++	const char *prefix;
+ 	struct commit_list *list = NULL;
+ 	int i, limited = 0;
+ 
+ 	for (i = 1 ; i < argc; i++) {
++	    if ( !strcmp(argv[i], "--help") )
++		usage(rev_list_usage);
++	    if ( !strcmp(argv[i], "--") )
++		break;
++	}
++
++	prefix = setup_git_directory();
++
++	for (i = 1 ; i < argc; i++) {
+ 		int flags;
+ 		const char *arg = argv[i];
+ 		char *dotdot;
+--
+1.2.2.gbc57
