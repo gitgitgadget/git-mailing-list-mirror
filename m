@@ -1,78 +1,69 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 2/2] Add 'stg uncommit' command
-Date: Sun, 19 Feb 2006 10:51:06 +0000
-Message-ID: <43F84D9A.2010905@gmail.com>
-References: <20060217042728.14175.39928.stgit@backpacker.hemma.treskal.com> <20060217043128.14175.60168.stgit@backpacker.hemma.treskal.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add a Documentation/git-tools.txt
+Date: Sun, 19 Feb 2006 02:59:12 -0800
+Message-ID: <7vlkw7iphb.fsf@assigned-by-dhcp.cox.net>
+References: <e5bfff550602190200j1ef3858as6a1564064dc81fef@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 19 11:51:15 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Sun Feb 19 11:59:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FAm9q-0008DJ-CA
-	for gcvg-git@gmane.org; Sun, 19 Feb 2006 11:51:14 +0100
+	id 1FAmHi-0001B4-2U
+	for gcvg-git@gmane.org; Sun, 19 Feb 2006 11:59:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932394AbWBSKvL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 19 Feb 2006 05:51:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932396AbWBSKvL
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 05:51:11 -0500
-Received: from mta07-winn.ispmail.ntl.com ([81.103.221.47]:14609 "EHLO
-	mta07-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S932394AbWBSKvK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Feb 2006 05:51:10 -0500
-Received: from aamta11-winn.ispmail.ntl.com ([81.103.221.35])
-          by mta07-winn.ispmail.ntl.com with ESMTP
-          id <20060219105108.GYND15056.mta07-winn.ispmail.ntl.com@aamta11-winn.ispmail.ntl.com>;
-          Sun, 19 Feb 2006 10:51:08 +0000
-Received: from [192.168.1.101] (really [86.15.186.141])
-          by aamta11-winn.ispmail.ntl.com with ESMTP
-          id <20060219105108.OONH11424.aamta11-winn.ispmail.ntl.com@[192.168.1.101]>;
-          Sun, 19 Feb 2006 10:51:08 +0000
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-In-Reply-To: <20060217043128.14175.60168.stgit@backpacker.hemma.treskal.com>
+	id S932293AbWBSK7P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Feb 2006 05:59:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932314AbWBSK7P
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 05:59:15 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:663 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932293AbWBSK7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Feb 2006 05:59:14 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060219105626.FBCA26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 19 Feb 2006 05:56:26 -0500
+To: "Marco Costalba" <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550602190200j1ef3858as6a1564064dc81fef@mail.gmail.com>
+	(Marco Costalba's message of "Sun, 19 Feb 2006 11:00:31 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16429>
 
-Karl Hasselstr=F6m wrote:
-> Add an uncommit command, which is exactly the opposite of 'stg
-> commit'.
+"Marco Costalba" <mcostalba@gmail.com> writes:
 
-Applied with two minor modifications. See below:
+> A brief survey of useful git tools, including third-party
+> and external projects.
+>
+> Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+> ---
+>
+> Please consider this more of a RFC  then a finished patch.
+>
+> Where possible, for each tool, the author's description is used as a summary.
+> I found http://git.or.cz/ a good source.
 
-> --- a/stgit/commands/commit.py
-> +++ b/stgit/commands/commit.py
-> @@ -28,8 +28,9 @@ usage =3D """%prog [options]
->  Merge the applied patches into the base of the current stack and
->  remove them from the series while advancing the base.
-> =20
-> -Use this command only if you want to permanently store the applied
-> -patches and no longer manage them with StGIT."""
-> +Use this command if you want to permanently store the applied patche=
-s
-> +and no longer manage them with StGIT. If you should change your mind
-> +later, use 'stg uncommit'."""
+Thanks for starting this.
 
-I removed this change because, even if uncommit does the opposite of
-commit does, the intended use is not to use commit/uncommit in pairs.
+Briefly mentioning tool's strength and weakness without being
+too subjective would be very helpful to potential users.  We
+would encourage competition without making other tools sound
+inferiour on subjective terms.  So "this is similar to foobar
+tool, but runs much faster, but has these limitations" would be
+a good style, but "this draws much nicer picture than barboz"
+without substantiating why it is nicer may be suboptimal.  Also
+I am a bit afraid that the summary can become stale unless
+maintained actively.  Hopefully the respective authors of tools
+can keep us updated.
 
-> diff --git a/stgit/commands/uncommit.py b/stgit/commands/uncommit.py
-> new file mode 100644
-> index 0000000..4ac0dfb
-> --- /dev/null
-> +++ b/stgit/commands/uncommit.py
-> @@ -0,0 +1,80 @@
-> +__copyright__ =3D """
-> +Copyright (C) 2006, Catalin Marinas <catalin.marinas@gmail.com>
-
-I added your name on the copyright since this is a new file.
-
-Thanks,
-
-Catalin
+I am of two minds about mentioning things available from the git
+repository, but I think it makes the survey more complete and
+more useful in general to include them in the list.  The private
+draft I sent out to you earlier forgot to include the foreign
+SCM interfaces.
