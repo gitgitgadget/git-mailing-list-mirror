@@ -1,395 +1,318 @@
-From: Jacob Kroon <jacob.kroon@gmail.com>
-Subject: Re: Fixing author/email fields in commit messages
-Date: Mon, 20 Feb 2006 02:21:25 +0100
-Message-ID: <43F91995.10304@gmail.com>
-References: <43F8BCB1.2010701@gmail.com> <Pine.LNX.4.63.0602191634480.6352@gheavc.wnzcbav.cig> <Pine.LNX.4.63.0602191651340.6352@gheavc.wnzcbav.cig> <43F9005E.30901@gmail.com> <Pine.LNX.4.63.0602191729100.6352@gheavc.wnzcbav.cig>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Convert the git faq to asciidoc
+Date: Mon, 20 Feb 2006 02:45:39 +0100
+Message-ID: <20060220014539.GA8759@diku.dk>
+References: <22e91bb0602151636r2e70e60cpa5038f4b6caccc9c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------080801090603040306040403"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 20 02:15:11 2006
+X-From: git-owner@vger.kernel.org Mon Feb 20 02:45:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FAzdu-000522-B3
-	for gcvg-git@gmane.org; Mon, 20 Feb 2006 02:15:11 +0100
+	id 1FB07d-0003IE-46
+	for gcvg-git@gmane.org; Mon, 20 Feb 2006 02:45:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932498AbWBTBPG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Feb 2006 20:15:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932500AbWBTBPG
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 20:15:06 -0500
-Received: from xproxy.gmail.com ([66.249.82.205]:47661 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932498AbWBTBPF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Feb 2006 20:15:05 -0500
-Received: by xproxy.gmail.com with SMTP id t14so623765wxc
-        for <git@vger.kernel.org>; Sun, 19 Feb 2006 17:15:04 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type;
-        b=lubBH7Spf9L7ZKj84XWUCvYYpnobe30lMZ5VhtB4Ad5qXpRmI4lLntj+i5keWFEvWwp7yM/0DdHzWnO+eCTQzAojHGu+GMp7AXizRJbKRHUI1TujlUMczOAy7UZy7/HsKFD+UaurJX6I32g0oJlV+RsUpwKR0pRpR+41Gf7dkq4=
-Received: by 10.70.15.5 with SMTP id 5mr3224978wxo;
-        Sun, 19 Feb 2006 17:15:04 -0800 (PST)
-Received: from ?192.168.0.3? ( [83.249.217.43])
-        by mx.gmail.com with ESMTP id h13sm3609977wxd.2006.02.19.17.15.01;
-        Sun, 19 Feb 2006 17:15:03 -0800 (PST)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Jon Nelson <jnelson-git@jamponi.net>
-In-Reply-To: <Pine.LNX.4.63.0602191729100.6352@gheavc.wnzcbav.cig>
+	id S932510AbWBTBpp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Feb 2006 20:45:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932515AbWBTBpp
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 20:45:45 -0500
+Received: from mgw1.diku.dk ([130.225.96.91]:9667 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S932510AbWBTBpo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Feb 2006 20:45:44 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 2CB3352D54B;
+	Mon, 20 Feb 2006 02:45:43 +0100 (CET)
+Received: from mgw1.diku.dk ([127.0.0.1])
+ by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 04466-14; Mon, 20 Feb 2006 02:45:39 +0100 (CET)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id B744F52D4D8;
+	Mon, 20 Feb 2006 02:45:39 +0100 (CET)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 25E616DFBF1; Mon, 20 Feb 2006 02:44:39 +0100 (CET)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 88BED61C00; Mon, 20 Feb 2006 02:45:39 +0100 (CET)
+To: Thomas Riboulet <riboulet@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <22e91bb0602151636r2e70e60cpa5038f4b6caccc9c@mail.gmail.com>
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16463>
 
-This is a multi-part message in MIME format.
---------------080801090603040306040403
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
-After some more private discussion (I forgot to CC the mailing list) 
-with Jon Nelson,
-he came up with this strategy for fixing the author/email part of commit 
-messages:
+---
 
-0. Make a backup copy of the repository, just in case.
+Thomas Riboulet <riboulet@gmail.com> wrote Thu, Feb 16, 2006:
+> Comments and suggestions are welcome (on the content, the form, format, etc ...)
+> I'll try to add questions from the archives of this ml, I'm also open
+> to any suggestions.
 
-1. Setup your GIT_AUTHOR_xxx/GIT_COMMITTER_xxx env. variables correctly.
+As promissed on the #git channel this patch converts the faq to asciidoc
+format, with a few enhancements such as links to manpages and a TOC.
 
-2. Apply the attached patch to recent git sources. (patch made by Jon 
-Nelson).
+Previews at
+http://www.diku.dk/hjemmesider/studerende/fonseca/git/git-faq.{html,txt,xml}.
 
-3. Run the patched git-convert-objects, passing HEAD as argument.
+---
 
-4. Run "git-update-ref HEAD 'newsha1'", where 'newsha1' is the output 
-from the previous command.
+ Makefile |   23 ++++++++
+ faq.conf |   19 +++++++
+ faq.txt  |  175 ++++++++++++++++++++++++++++++++++++++++++--------------------
+ 3 files changed, 161 insertions(+), 56 deletions(-)
 
-5. Run "git-prune" to get rid of the old stale object files.
-
-This worked for me, but I guess there are no warranties 8)
-In case you have multiple branches you might need to repeat the 
-procedure for each branch.
-
-thanks Jon
-
-//Jacob
-
---------------080801090603040306040403
-Content-Type: text/x-patch;
- name="convert-objects.diff"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="convert-objects.diff"
-
-diff --git a/convert-objects.c b/convert-objects.c
-index b49bce2..109bfb0 100644
---- a/convert-objects.c
-+++ b/convert-objects.c
-@@ -263,7 +263,156 @@ static void convert_date(void *buffer, u
- 	newlen += size;
+diff --git a/Makefile b/Makefile
+new file mode 100644
+index 0000000..09f6978
+--- /dev/null
++++ b/Makefile
+@@ -0,0 +1,23 @@
++all: git-faq.html git-faq.xml git-faq.txt
++
++clean:
++	rm -f git-faq.html git-faq.xml git-faq.txt faq-toc.txt
++
++git-faq.html git-faq.xml git-faq.txt: faq.txt faq-toc.txt
++
++git-faq.xml:
++	asciidoc -f faq.conf -b docbook -d article -o $@ faq.txt
++
++git-faq.html: faq.txt faq-toc.txt
++	asciidoc -f faq.conf -b xhtml11 -d article -o $@ faq.txt
++
++git-faq.txt: git-faq.html
++	elinks --no-numbering --no-references --dump $< > $@
++
++faq-toc.txt: faq.txt
++	sed -n '/^\[\[/,/--/p' < $< | while read line; do \
++		case "$$line" in \
++		"[["*"]]") echo -n ". <<$$line, " | sed 's/\[\[\(.*\)\]\]/\1/' ;; \
++		--*)	   echo    ">>" ;; \
++		*)	   echo -n "$$line " ;; \
++		esac; done > $@
+diff --git a/faq.conf b/faq.conf
+new file mode 100644
+index 0000000..fa16ad6
+--- /dev/null
++++ b/faq.conf
+@@ -0,0 +1,19 @@
++# AsciiDoc FAQ definitions
++
++[attributes]
++gitdoc-base=http://kernel.org/pub/software/scm/git/docs/
++cgdoc-base=http://kernel.org/pub/software/scm/cogito/docs/
++
++ifdef::backend-docbook[]
++[gitdoc-inlinemacro]
++<ulink url="{gitdoc-base}{target}.html">{0}</ulink>
++[cgdoc-inlinemacro]
++<ulink url="{cgdoc-base}{target}.html">{0}</ulink>
++endif::backend-docbook[]
++
++ifdef::backend-xhtml11[]
++[gitdoc-inlinemacro]
++<a href="{gitdoc-base}{target}.html">{0}</a>
++[cgdoc-inlinemacro]
++<a href="{cgdoc-base}{target}.html">{0}</a>
++endif::backend-xhtml11[]
+diff --git a/faq.txt b/faq.txt
+index e719d04..9c7baa0 100644
+--- a/faq.txt
++++ b/faq.txt
+@@ -1,68 +1,131 @@
+-Why the 'git' name ?
+-
+-As Linus' own words as the inventor of git : "git" can mean anything, depending on your mood.
+-
+-* random three-letter combination that is pronounceable, and not actually used by any common UNIX command. The fact that it is a mispronunciation of "get" may or may not be relevant.
+-*  stupid. contemptible and despicable. simple. Take your pick from the dictionary of slang.
+-* global information tracker": you're in a good mood, and it actually works for you. Angels sing, and a light suddenly fills the room.
+-* "goddamn idiotic truckload of sh*t": when it breaks 
+-
+-
+-Can I share a git public repository and use it in a CVS way ?
+-
+-Use cg-admin-setuprepo -g or do git-init-db --shared and some additional stuff. It's ok that refs aren't group writable, it's enough the directory is. See Cogito README or GIT's cvs-migration doc, "Emulating the CVS Development Model" for details.
+-
+-
+-Git commit is dying telling me "fatal : empty ident <user@myhost> not allowed" , what's wrong ?
+-
+-Make sure your Full Name is not empty in chsh or the 5th field of your user line in /etc/passwd isn't empty. You can also set the GIT_AUTHOR_NAME environment variable. If you @myhost is empty make sure your hostname is correctly set.
+-What's the difference between fetch and pull ?
+-
+-Fetch : download objects and a head from another repository.
+-Pull : fetch (as defined above) and merge with the current development.
+-See man git-fetch and git-pull or the tutorials for more details.
+-
+-
+-
+-Can I tell git to ignore files ?
+-
+-Yes. If you want to ignore files localy (only for you in your local work copy) put the files path in the repository in the .git/info/exclude file.
+-
+-If you want to make the ignore matters for all and everyone who checkouts the project you have to put the files path in the .gitignore in the tree itself.
+-
+-
+-Can I import from cvs ?
+-
+-Yes. Use git-cvsimport. See the cvs-migration doc for more details.
+-
+-
+-Can I import from svn ?
+-
+-Yes. Use git-svnimport. See the svn-import doc for more details.
++The git FAQ
++===========
++:Author:	Thomas Riboulet
++:CorpAuthor:	git mailing list
++
++//////////////////////////////////////////////////////////////////////////////
++A note about required info for FAQ entries. Please use the following template:
++
++	[[question-id]]
++	question?
++	---------
++	answer.
++
++The question-id + question will be used for generating a table of contents.
++//////////////////////////////////////////////////////////////////////////////
++
++// DocBook derived output will (hopefully) have it's own TOC
++ifdef::backend-xhtml11[]
++include::faq-toc.txt[]
++endif::backend-xhtml11[]
++
++[[git-name]]
++Why the 'git' name?
++-------------------
++In Linus' own words as the inventor of git: "git" can mean anything, depending
++on your mood:
++
++ - random three-letter combination that is pronounceable, and not actually
++   used by any common UNIX command. The fact that it is a mispronunciation of
++   "get" may or may not be relevant.
++ - stupid. contemptible and despicable. simple. Take your pick from the
++   dictionary of slang.
++ - global information tracker": you're in a good mood, and it actually works
++   for you. Angels sing, and a light suddenly fills the room.
++ - "goddamn idiotic truckload of sh*t": when it breaks 
++
++
++[[repo-sharing]]]
++Can I share a git public repository and use it in a CVS way?
++------------------------------------------------------------
++Use cg-admin-setuprepo -g or do git-init-db --shared and some additional
++stuff. It's ok that refs aren't group writable, it's enough the directory is.
++See Cogito README or GIT's cvs-migration doc, "Emulating the CVS Development
++Model" for details.
++
++
++[[empty-ident]]
++Git commit is dying telling me "fatal: empty ident <user@myhost> not allowed", what's wrong?
++--------------------------------------------------------------------------------------------
++Make sure your Full Name is not empty in chsh or the 5th field of your user
++line in `/etc/passwd` isn't empty. You can also set the `GIT_AUTHOR_NAME`
++environment variable. If your @myhost is empty make sure your hostname is
++correctly set. Use gitdoc:git-var[`git-var -l`] to make git display user
++identity variables.
++
++
++[[fetch-vs-pull]]
++What's the difference between fetch and pull?
++---------------------------------------------
++The short definition is:
++
++Fetch::	Download objects and a head from another repository.
++Pull::	Fetch (as defined above) and merge with the current development.
++
++See the gitdoc:git-fetch[git-fetch(1)] and gitdoc:git-pull[git-pull(1)]
++manpages or the tutorials for more details.
++
++
++[[gitignore]]
++Can I tell git to ignore files?
++-------------------------------
++Yes. If you want to ignore files localy (only for you in your local work copy)
++put the files path in the repository in the `.git/info/exclude` file.
++
++If you want to make the ignore matters for all and everyone who checkouts the
++project you have to put the files path in the `.gitignore` in the tree itself.
++
++
++[[import-cvs]]
++Can I import from CVS?
++----------------------
++Yes. Use git-cvsimport. See the gitdoc:git-cvsimport[git-cvsimport(1)] or
++gitdoc:cvs-migration[the CVS migration doc] for more detail.
++
++
++[[import-svn]]
++Can I import from svn?
++----------------------
++Yes. Use git-svnimport. See gitdoc:git-svnimport[git-svnimport(1)] for more
++details.
  
- 	write_sha1_file(new, newlen, "commit", result_sha1);
--	free(new);	
-+	free(new);
-+}
-+
-+static int convert_email_line(char *dst, void **buf, unsigned long *sp, const char *name, const char *new_email)
-+{
-+        unsigned long size = *sp;
-+        char *line = *buf;
-+        char *space = strchr(line, ' ');
-+	char *next = strchr(line, '\n');
-+	char *email_start = strchr(line, '<');
-+        char *email_end = strchr(line, '>');
-+        int len, total = 0;
-+
-+	// "author|committer xyz <xyz> date"
-+        // "committer xyz <xyz> date"
-+	if (!space || !next || !email_start || !email_end)
-+            die("missing or bad author/committer line %s", line);
-+
-+        ++space;
-+        ++email_start;
-+        ++next;
-+
-+        //fprintf(stderr, "yikes: size; %lu \"%s\"\n", size, line);
-+
-+        *buf = next;
-+        *sp = size - (next - line);
-+
-+        /* copy the stuff from before the name */
-+        len = space - line;
-+        memcpy(dst, line, len);
-+        dst += len;
-+        total += len;
-+        size -= len;
-+
-+        /* copy the new name */
-+        len = strlen(name);
-+        memcpy(dst, name, len);
-+        dst += len;
-+        total += len;
-+        size -= len;
-+
-+        /* put a space in there */
-+        *dst = ' ';
-+        ++dst;
-+        ++total;
-+        --size;
-+
-+        /* put a '<' in there */
-+        *dst = '<';
-+        ++dst;
-+        ++total;
-+        --size;
-+
-+        /* copy the new email */
-+        len = strlen(new_email);
-+        memcpy(dst, new_email, len);
-+        dst += len;
-+        total += len;
-+        size -= len;
-+
-+        /* copy the rest of the line */
-+        len = next - email_end;
-+        memcpy(dst, email_end, len);
-+        dst += len;
-+        total += len;
-+        size -= len;
-+
-+        return total;
-+}
-+
-+static void convert_authorcommitter(void *buffer, unsigned long size, unsigned char *result_sha1)
-+{
-+	char *new = xmalloc(size + 100);
-+        unsigned long newlen = 0;
-+        char *author_info = strdup(git_author_info());
-+        char *committer_info = strdup(git_committer_info());
-+        char *author_name, *author_email;
-+        char *committer_name, *committer_email;
-+        char *temp;
-+
-+//#define TESTING
-+#ifdef TESTING
-+        fprintf(stderr, "author_info: \"%s\"\n",
-+                author_info);
-+        fprintf(stderr, "committer_info: \"%s\"\n",
-+                committer_info);
-+#endif
-+        author_name = author_info;
-+        temp = strchr(author_name, '<');
-+        if (!temp)
-+            die("Unable to find valid name address.");
-+        --temp;
-+        *temp = '\0';
-+        temp += 2;
-+
-+        author_email = temp;
-+        temp = strrchr(author_email, '>');
-+        if (!temp)
-+            die("Unable to find valid email address.");
-+        *temp = '\0';
-+
-+        committer_name = committer_info;
-+        temp = strchr(committer_name, '<');
-+        if (!temp)
-+            die("Unable to find valid name address.");
-+        --temp;
-+        *temp = '\0';
-+        temp += 2;
-+
-+        committer_email = temp;
-+        temp = strrchr(committer_email, '>');
-+        if (!temp)
-+            die("Unable to find valid email address.");
-+        *temp = '\0';
-+
-+#ifdef TESTING
-+        fprintf(stderr, "author_name: \"%s\"\n", author_name);
-+        fprintf(stderr, "author_email: \"%s\"\n", author_email);
-+        fprintf(stderr, "committer_name: \"%s\"\n", committer_name);
-+        fprintf(stderr, "committer_email: \"%s\"\n", committer_email);
-+        exit(0);
-+#endif
-+
-+	// "tree <sha1>\n"
-+	memcpy(new + newlen, buffer, 46);
-+	newlen += 46;
-+	buffer += 46;
-+	size -= 46;
-+
-+	// "parent <sha1>\n"
-+	while (!memcmp(buffer, "parent ", 7)) {
-+		memcpy(new + newlen, buffer, 48);
-+		newlen += 48;
-+		buffer += 48;
-+		size -= 48;
-+	}
-+
-+	// "author xyz <xyz> date"
-+	// "committer xyz <xyz> date"
-+        newlen += convert_email_line(new + newlen, &buffer, &size, author_name, author_email);
-+        newlen += convert_email_line(new + newlen, &buffer, &size, committer_name, committer_email);
-+
-+	// Rest
-+	memcpy(new + newlen, buffer, size);
-+	newlen += size;
-+
-+	write_sha1_file(new, newlen, "commit", result_sha1);
-+        free(new);
-+        free(author_info);
-+        free(committer_info);
- }
  
- static void convert_commit(void *buffer, unsigned long size, unsigned char *result_sha1)
-@@ -279,7 +428,117 @@ static void convert_commit(void *buffer,
- 		convert_ascii_sha1(buffer+7);
- 		buffer += 48;
- 	}
--	convert_date(orig_buffer, orig_size, result_sha1);
-+	convert_authorcommitter(orig_buffer, orig_size, result_sha1);
-+}
-+
-+static void convert_tag(void *buffer, unsigned long size, unsigned char *result_sha1)
-+{
-+	void *orig_buffer = buffer;
-+
-+	char *new = xmalloc(size + 100);
-+        unsigned long newlen = 0;
-+
-+        char *author_info = strdup(git_author_info());
-+        char *committer_info = strdup(git_committer_info());
-+        char *author_name, *author_email;
-+        char *committer_name, *committer_email;
-+        char *temp;
-+        unsigned long len = 0;
-+        char *email_start;
-+        char *email_end;
-+        char *author_start;
-+        int has_author = 1;
-+
-+        author_name = author_info;
-+        temp = strchr(author_name, '<');
-+        if (!temp)
-+            die("Unable to find valid name address.");
-+        --temp;
-+        *temp = '\0';
-+        temp += 2;
-+
-+        author_email = temp;
-+        temp = strrchr(author_email, '>');
-+        if (!temp)
-+            die("Unable to find valid email address.");
-+        *temp = '\0';
-+
-+        committer_name = committer_info;
-+        temp = strchr(committer_name, '<');
-+        if (!temp)
-+            die("Unable to find valid name address.");
-+        --temp;
-+        *temp = '\0';
-+        temp += 2;
-+
-+        committer_email = temp;
-+        temp = strrchr(committer_email, '>');
-+        if (!temp)
-+            die("Unable to find valid email address.");
-+        *temp = '\0';
-+
-+        //* START *//
-+
-+	if (memcmp(buffer, "object ", 7))
-+		die("Bad tag '%s'", (char*) buffer);
-+        convert_ascii_sha1(buffer+7);
-+//        fprintf(stderr, "converting %s", (char *) (buffer + 7));
-+        buffer += 7 + 40 + 1;    /* "object " + "hex sha1" + "\n" */
-+        /* type commit
-+           tag boa-0.94.14rc6
-+           tagger...
-+           */
-+        /* with tagger, we check for tagger author_name <author_email>
-+         * and if so, we convert that, too
-+         */
-+        temp = strchr(buffer, '\n'); /* end of commit line */
-+        if (!temp) {
-+            die("Bad tag '%s'", (char *) buffer);
-+        }
-+        ++temp;
-+        temp = strchr(temp, '\n'); /* end of tag line */
-+        if (!temp) {
-+            die("Bad tag '%s'", (char *) buffer);
-+        }
-+        ++temp;
-+        if (memcmp(temp, "tagger ", 7))
-+            die("Bad tag '%s'", (char *) buffer);
-+        temp += 7; /* just after 'tagger ' */
-+
-+        len = (temp - (char *) orig_buffer);
-+        memcpy(new, orig_buffer, len);
-+        newlen += len;
-+        ++temp;
-+
-+        /* check to see if the next item looks like an name + email */
-+        email_start = strchr(temp, '<');
-+        if (email_start) {
-+            email_end = strchr(email_start, '>');
-+            if (email_end) {
-+                author_start = strchr(temp, ' ');
-+                if (author_start && author_start < email_start) {
-+                    has_author = 1;
-+                    newlen += sprintf(new + newlen,
-+                                      "%s <%s>\n",
-+                                      author_name,
-+                                      author_email);
-+                    len = (email_end - (char *) buffer) + 2;
-+                }
-+
-+            }
-+        }
-+
-+        if (len > size) {
-+            memcpy(new + newlen, orig_buffer + len, size - len);
-+            newlen += (size - len);
-+        }
-+//        fprintf(stderr, "About to write: %s", new);
-+//        exit(0);
-+
-+        write_sha1_file(new, newlen, "tag", result_sha1);
-+        free(new);
-+        free(author_info);
-+        free(committer_info);
- }
++[[import-arch]]
+ Can I import from arch/baz/tla?
+-
+-Yes. Use git-archimport.
++-------------------------------
++Yes. Use git-svnimport. See gitdoc:git-archimport[git-archimport(1)] for more
++details.
  
- static struct entry * convert_entry(unsigned char *sha1)
-@@ -297,13 +556,15 @@ static struct entry * convert_entry(unsi
  
- 	buffer = xmalloc(size);
- 	memcpy(buffer, data, size);
--	
++[[import-others]]
+ Can I import from others?
++-------------------------
++Maybe -- check if http://www.darcs.net/DarcsWiki/Tailor[tailor.py] can do it.
+ 
+-Maybe -- check if tailor.py can do it. Check http://www.darcs.net/DarcsWiki/Tailor.
+-
+-
+-How old linus bk repos have been import to git ?
+ 
++[[linux-bk]]
++How was the old Linux BitKeeper repository imported into git?
++-------------------------------------------------------------
+ Using the CVS gateway, via git-cvsimport.
+ 
+ 
+-What can I use to setup a public repository ?
+-
+-A ssh server, an http server, or the git-daemon. See the tutorial for more details.
+-
+-
+-Why won't git let me change to a different branch using "git checkout <branch>" or "git checkout -b <branch>"?
+-
+-Instead it just says: fatal: Entry 'foo.c' not uptodate. Cannot merge.
++[[public-repo]]
++What can I use to setup a public repository?
++--------------------------------------------
++A SSH server, an HTTP server, or the gitdoc:git-daemon[git-daemon]. See the
++tutorial for more details.
 +
- 	if (!strcmp(type, "blob")) {
- 		write_sha1_file(buffer, size, "blob", entry->new_sha1);
--	} else if (!strcmp(type, "tree"))
--		convert_tree(buffer, size, entry->new_sha1);
--	else if (!strcmp(type, "commit"))
--		convert_commit(buffer, size, entry->new_sha1);
-+        } else if (!strcmp(type, "tree"))
-+            convert_tree(buffer, size, entry->new_sha1);
-+        else if (!strcmp(type, "commit"))
-+            convert_commit(buffer, size, entry->new_sha1);
-+        else if (!strcmp(type, "tag"))
-+            convert_tag(buffer, size, entry->new_sha1);
- 	else
- 		die("unknown object type '%s' in %s", type, sha1_to_hex(sha1));
- 	entry->converted = 1;
-@@ -318,6 +579,7 @@ int main(int argc, char **argv)
- 	struct entry *entry;
++
++[[change-branch]]
++Why won't git let me change to a different branch?
++--------------------------------------------------
++Using "git checkout <branch>" or "git checkout -b <branch>" it just says:
++
++	fatal: Entry 'foo.c' not uptodate. Cannot merge.
++
++You have changes to files in your working directory that will be overwritten,
++removed or otherwise lost if the checkout and change to the new branch were to
++proceed. To fix this you may either check your changes in, create a patch of
++your changes and revert your files, or use the "-m" flag like this:
  
- 	setup_git_directory();
-+	setup_ident();
- 
- 	if (argc != 2 || get_sha1(argv[1], sha1))
- 		usage("git-convert-objects <sha1>");
+-You have changes to files in your working directory that will be overwritten, removed or otherwise lost if the checkout and change to the new branch were to proceed. To fix this you may either check your changes in, create a patch of your changes and revert your files, or use the "-m" flag like this: git checkout -m -b my-branch 
++	git checkout -m -b my-branch
 
---------------080801090603040306040403--
+-- 
+Jonas Fonseca
