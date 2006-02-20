@@ -1,53 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-rev-list --help anywhere
-Date: Sun, 19 Feb 2006 21:52:07 -0800
-Message-ID: <7vu0auefw8.fsf@assigned-by-dhcp.cox.net>
-References: <20060219112627.18989.qmail@science.horizon.com>
-	<20060219183930.GB10010@steel.home>
-	<Pine.LNX.4.63.0602192023270.11855@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Add a Documentation/git-tools.txt
+Date: Mon, 20 Feb 2006 07:21:42 +0100
+Message-ID: <e5bfff550602192221v65a50896r639ce0e7234ada84@mail.gmail.com>
+References: <e5bfff550602190200j1ef3858as6a1564064dc81fef@mail.gmail.com>
+	 <20060220020147.GB8759@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, linux@horizon.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 20 06:52:15 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Mon Feb 20 07:21:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FB3y3-00033F-93
-	for gcvg-git@gmane.org; Mon, 20 Feb 2006 06:52:15 +0100
+	id 1FB4Qd-00005Z-3h
+	for gcvg-git@gmane.org; Mon, 20 Feb 2006 07:21:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932652AbWBTFwL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Feb 2006 00:52:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932654AbWBTFwL
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 00:52:11 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:10423 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932652AbWBTFwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2006 00:52:10 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060220054848.KBHZ17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 20 Feb 2006 00:48:48 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0602192023270.11855@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sun, 19 Feb 2006 20:25:02 +0100
-	(CET)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932664AbWBTGVn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Feb 2006 01:21:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932665AbWBTGVn
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 01:21:43 -0500
+Received: from wproxy.gmail.com ([64.233.184.194]:11291 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932664AbWBTGVn convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2006 01:21:43 -0500
+Received: by wproxy.gmail.com with SMTP id 70so820133wra
+        for <git@vger.kernel.org>; Sun, 19 Feb 2006 22:21:42 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IQOKTq2vOB/VARCWBYuR5iSRbp83Vl+GaHKY6ntfR/StcIitJJ7WGfJOayz0Udn0ZiMmTeKko5GP6iAKsvucE6DVYepb78md15IE8i2Xc1aVjq5AT0X6ZYsDH+SbScjiKBzi1bw46+Og3lDdvff3djqMpOZxbkxSpX/hdXRYGDA=
+Received: by 10.65.183.18 with SMTP id k18mr506736qbp;
+        Sun, 19 Feb 2006 22:21:42 -0800 (PST)
+Received: by 10.64.131.15 with HTTP; Sun, 19 Feb 2006 22:21:42 -0800 (PST)
+To: "Jonas Fonseca" <fonseca@diku.dk>
+In-Reply-To: <20060220020147.GB8759@diku.dk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16467>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 2/20/06, Jonas Fonseca <fonseca@diku.dk> wrote:
+> Marco Costalba <mcostalba@gmail.com> wrote Sun, Feb 19, 2006:
+> > +     - *gitview*  (contrib/)
+> > +
+> > +            gitview is a GTK based repository browser for git
+> > +
+> > +
+> > +     - *gitweb* (ftp://ftp.kernel.org/pub/software/scm/gitweb/)
+> > +
+> > +            GITweb provides full-fledged web interface for GIT repositories.
+>
+> You can make it more asciidoc-friendly if you convert the list to use
+> the format:
+>
+> *gitview* (contrib)::
+>
+>         gitview is a GTK based repository browser for git
+>
+> ftp://ftp.kernel.org/pub/software/scm/gitweb/[*gitweb*]::
+>
+>         GITweb provides full-fledged web interface for GIT repositories.
+>
+> --
+> Jonas Fonseca
+>
 
-> can someone please enlighten me why you need to see the usage, when you 
-> cannot execute the command anyway?
+Thanks, I will change the format.
 
-I think Pasky gave rev-list just as an example, as I am sure
-there are other lowlevel core tools, that share this same
-unfriendliness.  Primarily, these tools are meant for scripting,
-and not for end-user interactive use.  For this reason, it is
-not high on my priority list to add --help to the lowlevel core
-tools, although it would be nicer to have.
+I am waiting to collect some more comments so to change git-tools.txt only once.
+
+Marco
