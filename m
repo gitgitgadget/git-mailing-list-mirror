@@ -1,106 +1,106 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add git-annotate, a tool for assigning blame.
-Date: Mon, 20 Feb 2006 14:54:15 -0800
-Message-ID: <7virr98wvc.fsf@assigned-by-dhcp.cox.net>
-References: <11404323692193-git-send-email-ryan@michonline.com>
+From: Paul Jakma <paul@clubi.ie>
+Subject: [PATCH] Makefile tweaks: Solaris 9+ dont need iconv / move up uname
+ variables
+Date: Mon, 20 Feb 2006 23:36:28 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0602202335020.31425@sheen.jakma.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 20 23:54:47 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 21 00:35:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBJvX-0007Vt-Qp
-	for gcvg-git@gmane.org; Mon, 20 Feb 2006 23:54:45 +0100
+	id 1FBKZ5-0007DL-Lm
+	for gcvg-git@gmane.org; Tue, 21 Feb 2006 00:35:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161051AbWBTWyS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Feb 2006 17:54:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161060AbWBTWyS
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 17:54:18 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:1452 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1161051AbWBTWyR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2006 17:54:17 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060220225252.TFY20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 20 Feb 2006 17:52:52 -0500
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <11404323692193-git-send-email-ryan@michonline.com> (Ryan
-	Anderson's message of "Mon, 20 Feb 2006 05:46:09 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1161202AbWBTXfa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Feb 2006 18:35:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161201AbWBTXfa
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 18:35:30 -0500
+Received: from hibernia.jakma.org ([212.17.55.49]:38044 "EHLO
+	hibernia.jakma.org") by vger.kernel.org with ESMTP id S1161199AbWBTXf2
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2006 18:35:28 -0500
+Received: from sheen.jakma.org (IDENT:U2FsdGVkX1+NchryQA7g0I98FYpbCGwbPhBPw/cs8Cg@sheen.jakma.org [212.17.55.53])
+	by hibernia.jakma.org (8.13.1/8.13.1) with ESMTP id k1KNZ5w5011705;
+	Mon, 20 Feb 2006 23:35:17 GMT
+X-X-Sender: paul@sheen.jakma.org
+To: git list <git@vger.kernel.org>
+Mail-Copies-To: paul@hibernia.jakma.org
+Mail-Followup-To: paul@hibernia.jakma.org
+X-NSA: al aqsar fluffy jihad cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt pelvix mustard gas x-ray british airways washington peroxide cool
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on hibernia.jakma.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16509>
 
-Ryan Anderson <ryan@michonline.com> writes:
+- Solaris 9 and up do not need -liconv, so NEEDS_LIBICONV should be set
+   only for S8.
+- Move the declaration of the uname variables to early in the Makefile
+   so they can be referenced by prefix and gitexecdir variables.
+- gitexecdir defaults to being same as bindir, it might as well reference
+   that variable.
 
-> I would appreciate some other testing on this, as I can't find a case
-> where it falls down, but the files with a lot of history tend to have a
-> lot of lines, making them hard to spotcheck without having been an
-> intimate part of that history.
+Signed-off-by: Paul Jakma <paul@quagga.net>
 
-I looked at a couple of files, including pack-objects.c,
-rev-list.c (in "pu"), and svnimport.perl; what I saw made sense.
-I think however we would want to check things with a lot of
-merges, so git repository may not be a good guinea pig.
+---
 
-> Oh, this is the "functional" version, but it might not qualify as "nice
-> looking" yet, pleaes, feel free to complain.
+  Makefile |   15 ++++++++-------
+  1 files changed, 8 insertions(+), 7 deletions(-)
 
-Nice.
+6ee3566e9b5408b7bfedbb6ffcdbac1be6bafbbb
+diff --git a/Makefile b/Makefile
+index 317be3c..a225e9c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -70,7 +70,12 @@ all:
 
-Two design glitches and an implementation:
+  GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+  	@$(SHELL_PATH) ./GIT-VERSION-GEN
+--include GIT-VERSION-FILE
++
++uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
++uname_M := $(shell sh -c 'uname -m 2>/dev/null || echo not')
++uname_O := $(shell sh -c 'uname -o 2>/dev/null || echo not')
++uname_R := $(shell sh -c 'uname -r 2>/dev/null || echo not')
++uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
 
- - You seem to rely on the working tree file to be clean relative to
-   HEAD.
+  # CFLAGS and LDFLAGS are for the users to override from the command line.
 
- - You do not take anything other than HEAD as the starting point.
+@@ -82,7 +87,7 @@ STRIP ?= strip
 
-Maybe an additional -r<this-version> option which defaults to
-HEAD, plus reading the blob always from that tree as the
-starting point would be helpful.
+  prefix = $(HOME)
+  bindir = $(prefix)/bin
+-gitexecdir = $(prefix)/bin
++gitexecdir = $(bindir)
+  template_dir = $(prefix)/share/git-core/templates/
+  GIT_PYTHON_DIR = $(prefix)/share/git-core/python
+  # DESTDIR=
+@@ -212,10 +217,6 @@ shellquote = '$(call shq,$(1))'
+  # We choose to avoid "if .. else if .. else .. endif endif"
+  # because maintaining the nesting to match is a pain.  If
+  # we had "elif" things would have been much nicer...
+-uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+-uname_M := $(shell sh -c 'uname -m 2>/dev/null || echo not')
+-uname_O := $(shell sh -c 'uname -o 2>/dev/null || echo not')
+-uname_R := $(shell sh -c 'uname -r 2>/dev/null || echo not')
 
-> +	open(P,"-|","git-rev-list","--parents","--remove-empty",$rev,"--",$file)
-
-Johannes noticed I slipped this form which Perl 5.6 does not
-grok in another program.  Eric pointed out he uses a backward
-compatible idiom in his code.
-
-We would need to make this one safe; something like this, perhaps:
-
-	sub open_read_pipe {
-        	my ($fh, @cmd) = @_;
-                my $pid = open($fh, '-|');
-		die "$!" unless defined($pid);
-		if (!$pid) {
-			exec(@cmd) or die "$!";
-		}
-		return $fh;
-	}
-	...
-        open_read_pipe(\*P, qw(git-rev-list --parents --remove-empty),
-			$rev, '--', $file);
-
-
-> +	open(P,"-|","git-diff-tree", "-M50", "-r","--name-status", "-z","$rev")
-> +		or die "Failed to exec git-diff: $!";
-
-If you do not mean "I want -M50" but you meant "I want whatever
-is default", I'd leave that 50 out.
-
-It is probably premature to talk about issues for UI that can be
-built on top of this, but what I found interesting was this.
-While looking at the annotate output, whenever I got curious
-about one line ("Oh, this is an ancient change and by somebody
-who does not feed patches to git regularly -- what was the
-change about???"), I grabbed the SHA1 of the commit on the line
-and threw it at "git show".  It was a good way to see how the
-change to the line was done in context.  Maybe a two-pane UI
-that shows annotate on the top pane, and activating one line
-from it shows "git show" output on the bottom pane to show the
-commit log plus changes the commit introduced to the file and
-other files.
+  ifeq ($(uname_S),Darwin)
+  	NEEDS_SSL_WITH_CRYPTO = YesPlease
+@@ -230,10 +231,10 @@ endif
+  ifeq ($(uname_S),SunOS)
+  	NEEDS_SOCKET = YesPlease
+  	NEEDS_NSL = YesPlease
+-	NEEDS_LIBICONV = YesPlease
+  	SHELL_PATH = /bin/bash
+  	NO_STRCASESTR = YesPlease
+  	ifeq ($(uname_R),5.8)
++		NEEDS_LIBICONV = YesPlease
+  		NO_UNSETENV = YesPlease
+  		NO_SETENV = YesPlease
+  	endif
+-- 
+1.2.1
