@@ -1,68 +1,81 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svnimport -- http/dav authentication notes
-Date: Mon, 20 Feb 2006 11:22:25 -0800
-Message-ID: <20060220192225.GB18085@hand.yhbt.net>
-References: <46a038f90602192324v7193f154od4ff6952a68c799d@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Should we support Perl 5.6?
+Date: Mon, 20 Feb 2006 22:01:58 +0100
+Message-ID: <43FA2E46.2000503@op5.se>
+References: <Pine.LNX.4.63.0602201934270.28957@wbgn013.biozentrum.uni-wuerzburg.de> <20060220191011.GA18085@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 20 20:22:53 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 20 22:02:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBGcA-0007EH-7A
-	for gcvg-git@gmane.org; Mon, 20 Feb 2006 20:22:30 +0100
+	id 1FBIAe-0007R1-Lu
+	for gcvg-git@gmane.org; Mon, 20 Feb 2006 22:02:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750889AbWBTTW1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Feb 2006 14:22:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932638AbWBTTW1
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 14:22:27 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:14780 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1750889AbWBTTW0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Feb 2006 14:22:26 -0500
-Received: by hand.yhbt.net (Postfix, from userid 500)
-	id 4A70A2DC03A; Mon, 20 Feb 2006 11:22:25 -0800 (PST)
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f90602192324v7193f154od4ff6952a68c799d@mail.gmail.com>
-User-Agent: Mutt/1.5.9i
+	id S1161182AbWBTVCJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Feb 2006 16:02:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161184AbWBTVCJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 16:02:09 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:5575 "EHLO smtp-gw1.op5.se")
+	by vger.kernel.org with ESMTP id S1161182AbWBTVCA (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Feb 2006 16:02:00 -0500
+Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 3FABB6BD08; Mon, 20 Feb 2006 22:01:59 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <20060220191011.GA18085@hand.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16500>
 
-Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> After a lot of trial and error against a server I don't control (so I
-> can't log things on) I've managed to use svn-import on it and it
-> mostly seems to work. Kind of. It's slowly grinding through the
-> commits.
+Eric Wong wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 > 
-> To make it short, I seem to be doing well with:
+>>Hi,
+>>
+>>I just had a failure when pulling, because since a few days (to be exact, 
+>>since commit 1cb30387, git-fmt-merge-msg uses a syntax which is not 
+>>understood by Perl 5.6.
+>>
+>>It is this:
+>>
+>>	open $fh, '-|', 'git-symbolic-ref', 'HEAD' or die "$!";
 > 
->    git-svnimport -t tags -T trunk -b branches -o svntrunk -v
->          'http://martin%40catalyst.net.nz:password@nameless.server.org/svn/someproject'
 > 
-> The repo has LDAP authentication, and the username is my email
-> address, so I guessed that url-encoding would work, and it did.
-
-Logging in with the svn command-line client (svn ls <url>) be enough to
-cache auth information for the SVN library (and therefore svnimport)?
-Unless you've disabled it in your config, of course...
-
-> svnimport is a bit of a mistery actually. I often know if it's really
-> doing the import or the files are going to be there but empty. SVN is
-> so flexible in its "everything is a directory" way of thinking that if
-> I mess up -t or -b I get the commits alright... but no files.
+> This is just 5.8 shorthand for the following (which is 5.6-compatible,
+> and probably for earlier versions, too):
 > 
-> Strange world, svn ;-)
+> 	my $pid = open my $fh, '-|';
+> 	defined $pid or die "Unable to fork: $!\n";
+> 	if ($pid == 0) {
+> 		exec 'git-symbolic-ref', 'HEAD' or die "$!";
+> 	}
+> 	<continue with original code here>
+> 
+> All of the Perl code I've written uses this method.
+> 
+> 
+>>I know that there was already some discussion on this list, but I don't 
+>>remember if we decided on leaving 5.6 behind or not.
+>>
+>>Somebody remembers?
+> 
+> 
+> IIRC, there was no clear decision.
+> 
 
-Hear, hear.  I always had to reread the manpage or look here for
-examples on how to use it.  And then echo !! > .git/info/svnimport-cmd
-after I was done using it so I wouldn't have to remember which command
-switches I used.
-
-Then I decided to write git-svn :>
+I think we agreed not to bother at all with Perl 5.4 and earlier, and 
+not to bend over backwards to support 5.6. This seems like a simple fix 
+though, so I'm sure Junio will accept a patch.
 
 -- 
-Eric Wong
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
