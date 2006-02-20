@@ -1,62 +1,106 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 2/2] Add 'stg uncommit' command
-Date: Mon, 20 Feb 2006 22:49:22 +0000
-Message-ID: <b0943d9e0602201449j15541f8aw@mail.gmail.com>
-References: <20060217042728.14175.39928.stgit@backpacker.hemma.treskal.com>
-	 <20060217043128.14175.60168.stgit@backpacker.hemma.treskal.com>
-	 <43F84D9A.2010905@gmail.com>
-	 <20060219134558.GA4784@diana.vm.bytemark.co.uk>
-	 <20060219144752.GA5541@diana.vm.bytemark.co.uk>
-	 <b0943d9e0602200920v10ef8788o@mail.gmail.com>
-	 <20060220173048.GC23501@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add git-annotate, a tool for assigning blame.
+Date: Mon, 20 Feb 2006 14:54:15 -0800
+Message-ID: <7virr98wvc.fsf@assigned-by-dhcp.cox.net>
+References: <11404323692193-git-send-email-ryan@michonline.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 20 23:49:37 2006
+X-From: git-owner@vger.kernel.org Mon Feb 20 23:54:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBJqU-0006Xe-Ev
-	for gcvg-git@gmane.org; Mon, 20 Feb 2006 23:49:30 +0100
+	id 1FBJvX-0007Vt-Qp
+	for gcvg-git@gmane.org; Mon, 20 Feb 2006 23:54:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932687AbWBTWtY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 20 Feb 2006 17:49:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932689AbWBTWtX
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 17:49:23 -0500
-Received: from xproxy.gmail.com ([66.249.82.195]:30017 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932687AbWBTWtX convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2006 17:49:23 -0500
-Received: by xproxy.gmail.com with SMTP id t13so749878wxc
-        for <git@vger.kernel.org>; Mon, 20 Feb 2006 14:49:22 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=M4RGA2mUvneUpU9ENIoUzI2uclVkI9gen+Zf5nA7ix9tGw7MzQl2rknjcAczY4JkcT2WBsHWkOusSu5Tg+dkV1LPHT9/ezCP5OxTW/2wxIxjim+lP0I6pjsrXcjDYBjhYJPCRjM0N2rHPTMq+WGhbt0ULn6kIwLOIUm5HHt5ueA=
-Received: by 10.70.103.18 with SMTP id a18mr4352327wxc;
-        Mon, 20 Feb 2006 14:49:22 -0800 (PST)
-Received: by 10.70.31.16 with HTTP; Mon, 20 Feb 2006 14:49:22 -0800 (PST)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-In-Reply-To: <20060220173048.GC23501@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1161051AbWBTWyS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Feb 2006 17:54:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161060AbWBTWyS
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 17:54:18 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:1452 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1161051AbWBTWyR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2006 17:54:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060220225252.TFY20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 20 Feb 2006 17:52:52 -0500
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <11404323692193-git-send-email-ryan@michonline.com> (Ryan
+	Anderson's message of "Mon, 20 Feb 2006 05:46:09 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16508>
 
-On 20/02/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2006-02-20 17:20:47 +0000, Catalin Marinas wrote:
-> > I fixed the escaping in the name_email* functions (I'll push it
-> > tonight). It was adding a \ for every character it didn't know. It
-> > now only escapes the quotes and back-slashes. This is needed when
-> > passing the strings via the GIT_AUTHOR_* variables.
->
-> It put curly braces around the name as well.
+Ryan Anderson <ryan@michonline.com> writes:
 
-It wasn't StGIT. Running "git log" on my machine only shows \'s and
-some weird characters. Maybe it's your terminal showing braces.
+> I would appreciate some other testing on this, as I can't find a case
+> where it falls down, but the files with a lot of history tend to have a
+> lot of lines, making them hard to spotcheck without having been an
+> intimate part of that history.
 
---
-Catalin
+I looked at a couple of files, including pack-objects.c,
+rev-list.c (in "pu"), and svnimport.perl; what I saw made sense.
+I think however we would want to check things with a lot of
+merges, so git repository may not be a good guinea pig.
+
+> Oh, this is the "functional" version, but it might not qualify as "nice
+> looking" yet, pleaes, feel free to complain.
+
+Nice.
+
+Two design glitches and an implementation:
+
+ - You seem to rely on the working tree file to be clean relative to
+   HEAD.
+
+ - You do not take anything other than HEAD as the starting point.
+
+Maybe an additional -r<this-version> option which defaults to
+HEAD, plus reading the blob always from that tree as the
+starting point would be helpful.
+
+> +	open(P,"-|","git-rev-list","--parents","--remove-empty",$rev,"--",$file)
+
+Johannes noticed I slipped this form which Perl 5.6 does not
+grok in another program.  Eric pointed out he uses a backward
+compatible idiom in his code.
+
+We would need to make this one safe; something like this, perhaps:
+
+	sub open_read_pipe {
+        	my ($fh, @cmd) = @_;
+                my $pid = open($fh, '-|');
+		die "$!" unless defined($pid);
+		if (!$pid) {
+			exec(@cmd) or die "$!";
+		}
+		return $fh;
+	}
+	...
+        open_read_pipe(\*P, qw(git-rev-list --parents --remove-empty),
+			$rev, '--', $file);
+
+
+> +	open(P,"-|","git-diff-tree", "-M50", "-r","--name-status", "-z","$rev")
+> +		or die "Failed to exec git-diff: $!";
+
+If you do not mean "I want -M50" but you meant "I want whatever
+is default", I'd leave that 50 out.
+
+It is probably premature to talk about issues for UI that can be
+built on top of this, but what I found interesting was this.
+While looking at the annotate output, whenever I got curious
+about one line ("Oh, this is an ancient change and by somebody
+who does not feed patches to git regularly -- what was the
+change about???"), I grabbed the SHA1 of the commit on the line
+and threw it at "git show".  It was a good way to see how the
+change to the line was done in context.  Maybe a two-pane UI
+that shows annotate on the top pane, and activating one line
+from it shows "git show" output on the bottom pane to show the
+commit log plus changes the commit introduced to the file and
+other files.
