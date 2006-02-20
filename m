@@ -1,318 +1,70 @@
 From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Convert the git faq to asciidoc
-Date: Mon, 20 Feb 2006 02:45:39 +0100
-Message-ID: <20060220014539.GA8759@diku.dk>
-References: <22e91bb0602151636r2e70e60cpa5038f4b6caccc9c@mail.gmail.com>
+Subject: Re: [PATCH] Add a Documentation/git-tools.txt
+Date: Mon, 20 Feb 2006 03:01:47 +0100
+Message-ID: <20060220020147.GB8759@diku.dk>
+References: <e5bfff550602190200j1ef3858as6a1564064dc81fef@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 20 02:45:54 2006
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Mon Feb 20 03:02:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FB07d-0003IE-46
-	for gcvg-git@gmane.org; Mon, 20 Feb 2006 02:45:53 +0100
+	id 1FB0Nf-0008Ii-Ra
+	for gcvg-git@gmane.org; Mon, 20 Feb 2006 03:02:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932510AbWBTBpp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Feb 2006 20:45:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932515AbWBTBpp
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 20:45:45 -0500
-Received: from mgw1.diku.dk ([130.225.96.91]:9667 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S932510AbWBTBpo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Feb 2006 20:45:44 -0500
+	id S932543AbWBTCBw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Feb 2006 21:01:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932547AbWBTCBv
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 21:01:51 -0500
+Received: from mgw1.diku.dk ([130.225.96.91]:8672 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S932543AbWBTCBv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Feb 2006 21:01:51 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 2CB3352D54B;
-	Mon, 20 Feb 2006 02:45:43 +0100 (CET)
+	by mgw1.diku.dk (Postfix) with ESMTP id 6D26252D5EB;
+	Mon, 20 Feb 2006 03:01:50 +0100 (CET)
 Received: from mgw1.diku.dk ([127.0.0.1])
  by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 04466-14; Mon, 20 Feb 2006 02:45:39 +0100 (CET)
+ id 05293-06; Mon, 20 Feb 2006 03:01:47 +0100 (CET)
 Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id B744F52D4D8;
-	Mon, 20 Feb 2006 02:45:39 +0100 (CET)
+	by mgw1.diku.dk (Postfix) with ESMTP id C307452D4D8;
+	Mon, 20 Feb 2006 03:01:47 +0100 (CET)
 Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
 	by nhugin.diku.dk (Postfix) with ESMTP
-	id 25E616DFBF1; Mon, 20 Feb 2006 02:44:39 +0100 (CET)
+	id 408EE6DF823; Mon, 20 Feb 2006 03:00:47 +0100 (CET)
 Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 88BED61C00; Mon, 20 Feb 2006 02:45:39 +0100 (CET)
-To: Thomas Riboulet <riboulet@gmail.com>
+	id A82EA61C01; Mon, 20 Feb 2006 03:01:47 +0100 (CET)
+To: Marco Costalba <mcostalba@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <22e91bb0602151636r2e70e60cpa5038f4b6caccc9c@mail.gmail.com>
+In-Reply-To: <e5bfff550602190200j1ef3858as6a1564064dc81fef@mail.gmail.com>
 User-Agent: Mutt/1.5.6i
 X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16464>
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+Marco Costalba <mcostalba@gmail.com> wrote Sun, Feb 19, 2006:
+> +	- *gitview*  (contrib/)
+> +
+> +            gitview is a GTK based repository browser for git
+> +
+> +
+> +	- *gitweb* (ftp://ftp.kernel.org/pub/software/scm/gitweb/)
+> +
+> +            GITweb provides full-fledged web interface for GIT repositories.
 
----
+You can make it more asciidoc-friendly if you convert the list to use
+the format:
 
-Thomas Riboulet <riboulet@gmail.com> wrote Thu, Feb 16, 2006:
-> Comments and suggestions are welcome (on the content, the form, format, etc ...)
-> I'll try to add questions from the archives of this ml, I'm also open
-> to any suggestions.
+*gitview* (contrib)::
 
-As promissed on the #git channel this patch converts the faq to asciidoc
-format, with a few enhancements such as links to manpages and a TOC.
+	gitview is a GTK based repository browser for git
 
-Previews at
-http://www.diku.dk/hjemmesider/studerende/fonseca/git/git-faq.{html,txt,xml}.
+ftp://ftp.kernel.org/pub/software/scm/gitweb/[*gitweb*]::
 
----
-
- Makefile |   23 ++++++++
- faq.conf |   19 +++++++
- faq.txt  |  175 ++++++++++++++++++++++++++++++++++++++++++--------------------
- 3 files changed, 161 insertions(+), 56 deletions(-)
-
-diff --git a/Makefile b/Makefile
-new file mode 100644
-index 0000000..09f6978
---- /dev/null
-+++ b/Makefile
-@@ -0,0 +1,23 @@
-+all: git-faq.html git-faq.xml git-faq.txt
-+
-+clean:
-+	rm -f git-faq.html git-faq.xml git-faq.txt faq-toc.txt
-+
-+git-faq.html git-faq.xml git-faq.txt: faq.txt faq-toc.txt
-+
-+git-faq.xml:
-+	asciidoc -f faq.conf -b docbook -d article -o $@ faq.txt
-+
-+git-faq.html: faq.txt faq-toc.txt
-+	asciidoc -f faq.conf -b xhtml11 -d article -o $@ faq.txt
-+
-+git-faq.txt: git-faq.html
-+	elinks --no-numbering --no-references --dump $< > $@
-+
-+faq-toc.txt: faq.txt
-+	sed -n '/^\[\[/,/--/p' < $< | while read line; do \
-+		case "$$line" in \
-+		"[["*"]]") echo -n ". <<$$line, " | sed 's/\[\[\(.*\)\]\]/\1/' ;; \
-+		--*)	   echo    ">>" ;; \
-+		*)	   echo -n "$$line " ;; \
-+		esac; done > $@
-diff --git a/faq.conf b/faq.conf
-new file mode 100644
-index 0000000..fa16ad6
---- /dev/null
-+++ b/faq.conf
-@@ -0,0 +1,19 @@
-+# AsciiDoc FAQ definitions
-+
-+[attributes]
-+gitdoc-base=http://kernel.org/pub/software/scm/git/docs/
-+cgdoc-base=http://kernel.org/pub/software/scm/cogito/docs/
-+
-+ifdef::backend-docbook[]
-+[gitdoc-inlinemacro]
-+<ulink url="{gitdoc-base}{target}.html">{0}</ulink>
-+[cgdoc-inlinemacro]
-+<ulink url="{cgdoc-base}{target}.html">{0}</ulink>
-+endif::backend-docbook[]
-+
-+ifdef::backend-xhtml11[]
-+[gitdoc-inlinemacro]
-+<a href="{gitdoc-base}{target}.html">{0}</a>
-+[cgdoc-inlinemacro]
-+<a href="{cgdoc-base}{target}.html">{0}</a>
-+endif::backend-xhtml11[]
-diff --git a/faq.txt b/faq.txt
-index e719d04..9c7baa0 100644
---- a/faq.txt
-+++ b/faq.txt
-@@ -1,68 +1,131 @@
--Why the 'git' name ?
--
--As Linus' own words as the inventor of git : "git" can mean anything, depending on your mood.
--
--* random three-letter combination that is pronounceable, and not actually used by any common UNIX command. The fact that it is a mispronunciation of "get" may or may not be relevant.
--*  stupid. contemptible and despicable. simple. Take your pick from the dictionary of slang.
--* global information tracker": you're in a good mood, and it actually works for you. Angels sing, and a light suddenly fills the room.
--* "goddamn idiotic truckload of sh*t": when it breaks 
--
--
--Can I share a git public repository and use it in a CVS way ?
--
--Use cg-admin-setuprepo -g or do git-init-db --shared and some additional stuff. It's ok that refs aren't group writable, it's enough the directory is. See Cogito README or GIT's cvs-migration doc, "Emulating the CVS Development Model" for details.
--
--
--Git commit is dying telling me "fatal : empty ident <user@myhost> not allowed" , what's wrong ?
--
--Make sure your Full Name is not empty in chsh or the 5th field of your user line in /etc/passwd isn't empty. You can also set the GIT_AUTHOR_NAME environment variable. If you @myhost is empty make sure your hostname is correctly set.
--What's the difference between fetch and pull ?
--
--Fetch : download objects and a head from another repository.
--Pull : fetch (as defined above) and merge with the current development.
--See man git-fetch and git-pull or the tutorials for more details.
--
--
--
--Can I tell git to ignore files ?
--
--Yes. If you want to ignore files localy (only for you in your local work copy) put the files path in the repository in the .git/info/exclude file.
--
--If you want to make the ignore matters for all and everyone who checkouts the project you have to put the files path in the .gitignore in the tree itself.
--
--
--Can I import from cvs ?
--
--Yes. Use git-cvsimport. See the cvs-migration doc for more details.
--
--
--Can I import from svn ?
--
--Yes. Use git-svnimport. See the svn-import doc for more details.
-+The git FAQ
-+===========
-+:Author:	Thomas Riboulet
-+:CorpAuthor:	git mailing list
-+
-+//////////////////////////////////////////////////////////////////////////////
-+A note about required info for FAQ entries. Please use the following template:
-+
-+	[[question-id]]
-+	question?
-+	---------
-+	answer.
-+
-+The question-id + question will be used for generating a table of contents.
-+//////////////////////////////////////////////////////////////////////////////
-+
-+// DocBook derived output will (hopefully) have it's own TOC
-+ifdef::backend-xhtml11[]
-+include::faq-toc.txt[]
-+endif::backend-xhtml11[]
-+
-+[[git-name]]
-+Why the 'git' name?
-+-------------------
-+In Linus' own words as the inventor of git: "git" can mean anything, depending
-+on your mood:
-+
-+ - random three-letter combination that is pronounceable, and not actually
-+   used by any common UNIX command. The fact that it is a mispronunciation of
-+   "get" may or may not be relevant.
-+ - stupid. contemptible and despicable. simple. Take your pick from the
-+   dictionary of slang.
-+ - global information tracker": you're in a good mood, and it actually works
-+   for you. Angels sing, and a light suddenly fills the room.
-+ - "goddamn idiotic truckload of sh*t": when it breaks 
-+
-+
-+[[repo-sharing]]]
-+Can I share a git public repository and use it in a CVS way?
-+------------------------------------------------------------
-+Use cg-admin-setuprepo -g or do git-init-db --shared and some additional
-+stuff. It's ok that refs aren't group writable, it's enough the directory is.
-+See Cogito README or GIT's cvs-migration doc, "Emulating the CVS Development
-+Model" for details.
-+
-+
-+[[empty-ident]]
-+Git commit is dying telling me "fatal: empty ident <user@myhost> not allowed", what's wrong?
-+--------------------------------------------------------------------------------------------
-+Make sure your Full Name is not empty in chsh or the 5th field of your user
-+line in `/etc/passwd` isn't empty. You can also set the `GIT_AUTHOR_NAME`
-+environment variable. If your @myhost is empty make sure your hostname is
-+correctly set. Use gitdoc:git-var[`git-var -l`] to make git display user
-+identity variables.
-+
-+
-+[[fetch-vs-pull]]
-+What's the difference between fetch and pull?
-+---------------------------------------------
-+The short definition is:
-+
-+Fetch::	Download objects and a head from another repository.
-+Pull::	Fetch (as defined above) and merge with the current development.
-+
-+See the gitdoc:git-fetch[git-fetch(1)] and gitdoc:git-pull[git-pull(1)]
-+manpages or the tutorials for more details.
-+
-+
-+[[gitignore]]
-+Can I tell git to ignore files?
-+-------------------------------
-+Yes. If you want to ignore files localy (only for you in your local work copy)
-+put the files path in the repository in the `.git/info/exclude` file.
-+
-+If you want to make the ignore matters for all and everyone who checkouts the
-+project you have to put the files path in the `.gitignore` in the tree itself.
-+
-+
-+[[import-cvs]]
-+Can I import from CVS?
-+----------------------
-+Yes. Use git-cvsimport. See the gitdoc:git-cvsimport[git-cvsimport(1)] or
-+gitdoc:cvs-migration[the CVS migration doc] for more detail.
-+
-+
-+[[import-svn]]
-+Can I import from svn?
-+----------------------
-+Yes. Use git-svnimport. See gitdoc:git-svnimport[git-svnimport(1)] for more
-+details.
- 
- 
-+[[import-arch]]
- Can I import from arch/baz/tla?
--
--Yes. Use git-archimport.
-+-------------------------------
-+Yes. Use git-svnimport. See gitdoc:git-archimport[git-archimport(1)] for more
-+details.
- 
- 
-+[[import-others]]
- Can I import from others?
-+-------------------------
-+Maybe -- check if http://www.darcs.net/DarcsWiki/Tailor[tailor.py] can do it.
- 
--Maybe -- check if tailor.py can do it. Check http://www.darcs.net/DarcsWiki/Tailor.
--
--
--How old linus bk repos have been import to git ?
- 
-+[[linux-bk]]
-+How was the old Linux BitKeeper repository imported into git?
-+-------------------------------------------------------------
- Using the CVS gateway, via git-cvsimport.
- 
- 
--What can I use to setup a public repository ?
--
--A ssh server, an http server, or the git-daemon. See the tutorial for more details.
--
--
--Why won't git let me change to a different branch using "git checkout <branch>" or "git checkout -b <branch>"?
--
--Instead it just says: fatal: Entry 'foo.c' not uptodate. Cannot merge.
-+[[public-repo]]
-+What can I use to setup a public repository?
-+--------------------------------------------
-+A SSH server, an HTTP server, or the gitdoc:git-daemon[git-daemon]. See the
-+tutorial for more details.
-+
-+
-+[[change-branch]]
-+Why won't git let me change to a different branch?
-+--------------------------------------------------
-+Using "git checkout <branch>" or "git checkout -b <branch>" it just says:
-+
-+	fatal: Entry 'foo.c' not uptodate. Cannot merge.
-+
-+You have changes to files in your working directory that will be overwritten,
-+removed or otherwise lost if the checkout and change to the new branch were to
-+proceed. To fix this you may either check your changes in, create a patch of
-+your changes and revert your files, or use the "-m" flag like this:
- 
--You have changes to files in your working directory that will be overwritten, removed or otherwise lost if the checkout and change to the new branch were to proceed. To fix this you may either check your changes in, create a patch of your changes and revert your files, or use the "-m" flag like this: git checkout -m -b my-branch 
-+	git checkout -m -b my-branch
+	GITweb provides full-fledged web interface for GIT repositories.
 
 -- 
 Jonas Fonseca
