@@ -1,89 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git
-Date: Sun, 19 Feb 2006 23:57:37 -0800
-Message-ID: <7v3bieea32.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: What's in git.git
+Date: Mon, 20 Feb 2006 09:34:21 +0100
+Message-ID: <43F97F0D.9080500@op5.se>
+References: <7v3bieea32.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Feb 20 08:58:00 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 20 09:34:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FB5vX-0006u5-Im
-	for gcvg-git@gmane.org; Mon, 20 Feb 2006 08:57:49 +0100
+	id 1FB6V0-00051J-Ig
+	for gcvg-git@gmane.org; Mon, 20 Feb 2006 09:34:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932690AbWBTH5k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Feb 2006 02:57:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932691AbWBTH5k
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 02:57:40 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:6125 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932690AbWBTH5j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2006 02:57:39 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060220075626.GIGF15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 20 Feb 2006 02:56:26 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932298AbWBTIeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Feb 2006 03:34:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932365AbWBTIeX
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 03:34:23 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:46523 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932298AbWBTIeX
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2006 03:34:23 -0500
+Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id E33ED6BD05; Mon, 20 Feb 2006 09:34:21 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3bieea32.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16470>
 
-The updated pack-object series is now in "next" branch, and
-seems to be cooking nicely.  The "reuse from existing pack"
-change seems to be a huge win and I haven't found problems in
-there.
+Junio C Hamano wrote:
+> The updated pack-object series is now in "next" branch, and
+> seems to be cooking nicely.  The "reuse from existing pack"
+> change seems to be a huge win and I haven't found problems in
+> there.
+> 
 
-There now is further performance improvements for git-send-pack
-to avoid sending a huge blob or tree object in its full
-representation when we know the other end has a suitable object
-to use as the base; instead we can just send it out deltified.
-The other end would expand it to a loose object and this would
-not make abit of difference in the resulting repository -- only
-the bandwidth requirement reduction is visible [*1*].
+Wonderful news. I'll cherry-pick them and do some further testing.
 
-In principle, this is also applicable for fetch-pack, but it
-involves a bit of pack protocol change.  The protocol extension
-mechanism was done nicely by Johannes a while ago, and we can
-use it to implement this with full backward compatibility.
+> There now is further performance improvements for git-send-pack
+> to avoid sending a huge blob or tree object in its full
+> representation when we know the other end has a suitable object
+> to use as the base; instead we can just send it out deltified.
+> The other end would expand it to a loose object and this would
+> not make abit of difference in the resulting repository -- only
+> the bandwidth requirement reduction is visible [*1*].
+> 
 
-After a bit more testing, we might want to make --thin transfer
-the default (even without an option to turn it off -- I just do
-not see a point not to use it if it is bug-free).
+How likely is this to increase the CPU-power needed on the server-side? 
+If there is a blob on the server-side, but far from the deltified object 
+I suppose we have to look at each commit, perhaps only to discover that 
+the client doesn't have them and we need to construct the blob anyways.
 
-* The 'master' branch has these since the last announcement.
+> 
+> After a bit more testing, we might want to make --thin transfer
+> the default (even without an option to turn it off -- I just do
+> not see a point not to use it if it is bug-free).
+> 
 
-Junio C Hamano:
-      fmt-merge-msg: say which branch things were merged into unless 'master'
-      Allow git-mv to accept ./ in paths.
-      Documentation: fix typo in rev-parse --short option description.
-      fmt-merge-msg: do not add excess newline at the end.
-      Merge branch 'jc/mv'
-      Merge branch 'jc/merge-msg'
+If the answer to my question above is "minimal to none", I agree most 
+vehemently. ;)
 
-
-* The 'next' branch, in addition, has these.
-
-Johannes Schindelin:
-      Fixes for ancient versions of GNU make
-      avoid makefile override warning
-      Really honour NO_PYTHON
-
-Junio C Hamano:
-      Merge branch 'jc/merge-msg' into next
-      Merge branch 'js/portable' into next
-      rev-list --objects-edge
-      Merge branch 'jc/rev-list' into next
-      Thin pack - create packfile with missing delta base.
-      send-pack --thin: use "thin pack" delta transfer.
-      Merge branch 'jc/pack-thin' into next
-
-
-[Footnote]
-
-*1* The version of the patch I earlier sent to the list had a
-grave performance bug; please do not use it.  The one in "next"
-branch has the bug fixed already.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
