@@ -1,52 +1,53 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: Re: New shiny gitk
-Date: Sun, 19 Feb 2006 18:04:57 -0800
-Organization: none
-Message-ID: <dtb845$851$1@sea.gmane.org>
-References: <17400.23434.724188.649656@cargo.ozlabs.ibm.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-rev-list --help anywhere
+Date: Sun, 19 Feb 2006 21:52:07 -0800
+Message-ID: <7vu0auefw8.fsf@assigned-by-dhcp.cox.net>
+References: <20060219112627.18989.qmail@science.horizon.com>
+	<20060219183930.GB10010@steel.home>
+	<Pine.LNX.4.63.0602192023270.11855@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Feb 20 03:05:06 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>, linux@horizon.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 20 06:52:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FB0QC-0000Pk-VO
-	for gcvg-git@gmane.org; Mon, 20 Feb 2006 03:05:05 +0100
+	id 1FB3y3-00033F-93
+	for gcvg-git@gmane.org; Mon, 20 Feb 2006 06:52:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932581AbWBTCFA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Feb 2006 21:05:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932582AbWBTCFA
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Feb 2006 21:05:00 -0500
-Received: from main.gmane.org ([80.91.229.2]:13248 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932581AbWBTCE7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Feb 2006 21:04:59 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FB0Q6-0000On-FK
-	for git@vger.kernel.org; Mon, 20 Feb 2006 03:04:58 +0100
-Received: from adsl-69-234-196-39.dsl.irvnca.pacbell.net ([69.234.196.39])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 20 Feb 2006 03:04:58 +0100
-Received: from wa1ter by adsl-69-234-196-39.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 20 Feb 2006 03:04:58 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-196-39.dsl.irvnca.pacbell.net
-User-Agent: Mail/News 1.6a1 (X11/20060219)
-In-Reply-To: <17400.23434.724188.649656@cargo.ozlabs.ibm.com>
+	id S932652AbWBTFwL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Feb 2006 00:52:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932654AbWBTFwL
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 00:52:11 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:10423 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932652AbWBTFwK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2006 00:52:10 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060220054848.KBHZ17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 20 Feb 2006 00:48:48 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0602192023270.11855@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sun, 19 Feb 2006 20:25:02 +0100
+	(CET)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16466>
 
-Paul Mackerras wrote:
-> I just created a branch called "new" in my gitk repository at
-> 
-> git://git.kernel.org/pub/scm/gitk/gitk.git
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Thanks.  The new version seems to fix a bug I posted about
-last week concerning searching on filenames.  I like it!
+> can someone please enlighten me why you need to see the usage, when you 
+> cannot execute the command anyway?
+
+I think Pasky gave rev-list just as an example, as I am sure
+there are other lowlevel core tools, that share this same
+unfriendliness.  Primarily, these tools are meant for scripting,
+and not for end-user interactive use.  For this reason, it is
+not high on my priority list to add --help to the lowlevel core
+tools, although it would be nicer to have.
