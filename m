@@ -1,54 +1,56 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 2/2] Add 'stg uncommit' command
-Date: Mon, 20 Feb 2006 18:30:48 +0100
-Message-ID: <20060220173048.GC23501@diana.vm.bytemark.co.uk>
-References: <20060217042728.14175.39928.stgit@backpacker.hemma.treskal.com> <20060217043128.14175.60168.stgit@backpacker.hemma.treskal.com> <43F84D9A.2010905@gmail.com> <20060219134558.GA4784@diana.vm.bytemark.co.uk> <20060219144752.GA5541@diana.vm.bytemark.co.uk> <b0943d9e0602200920v10ef8788o@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Should we support Perl 5.6?
+Date: Mon, 20 Feb 2006 19:37:28 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602201934270.28957@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 20 18:31:02 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Feb 20 19:37:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBEsF-0006aG-Ia
-	for gcvg-git@gmane.org; Mon, 20 Feb 2006 18:31:00 +0100
+	id 1FBFug-0005Lm-O0
+	for gcvg-git@gmane.org; Mon, 20 Feb 2006 19:37:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161069AbWBTRa5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 20 Feb 2006 12:30:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161070AbWBTRa4
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 12:30:56 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:37381 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S1161069AbWBTRa4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2006 12:30:56 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1FBEs4-0006Xs-00; Mon, 20 Feb 2006 17:30:48 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0602200920v10ef8788o@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1161114AbWBTSha (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Feb 2006 13:37:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161116AbWBTSha
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 13:37:30 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:43162 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1161115AbWBTSh3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2006 13:37:29 -0500
+Received: from virusscan.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id DB62A1444FE
+	for <git@vger.kernel.org>; Mon, 20 Feb 2006 19:37:28 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id C71E786E0
+	for <git@vger.kernel.org>; Mon, 20 Feb 2006 19:37:28 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id A52461444FE
+	for <git@vger.kernel.org>; Mon, 20 Feb 2006 19:37:28 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16487>
 
-On 2006-02-20 17:20:47 +0000, Catalin Marinas wrote:
+Hi,
 
-> On 19/02/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > By the way, it seems like my name got munged when you edited the
-> > commit.
->
-> I fixed the escaping in the name_email* functions (I'll push it
-> tonight). It was adding a \ for every character it didn't know. It
-> now only escapes the quotes and back-slashes. This is needed when
-> passing the strings via the GIT_AUTHOR_* variables.
+I just had a failure when pulling, because since a few days (to be exact, 
+since commit 1cb30387, git-fmt-merge-msg uses a syntax which is not 
+understood by Perl 5.6.
 
-It put curly braces around the name as well.
+It is this:
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+	open $fh, '-|', 'git-symbolic-ref', 'HEAD' or die "$!";
+
+I know that there was already some discussion on this list, but I don't 
+remember if we decided on leaving 5.6 behind or not.
+
+Somebody remembers?
+
+Ciao,
+Dscho
