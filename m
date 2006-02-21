@@ -1,65 +1,62 @@
-From: Paul Jakma <paul@clubi.ie>
-Subject: Re: [PATCH] Makefile tweaks: Solaris 9+ dont need iconv / move up
- uname variables
-Date: Mon, 20 Feb 2006 23:53:19 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0602202347410.31425@sheen.jakma.org>
-References: <Pine.LNX.4.64.0602202335020.31425@sheen.jakma.org>
- <7v3bid8umq.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add git-annotate, a tool for assigning blame.
+Date: Mon, 20 Feb 2006 16:01:56 -0800
+Message-ID: <7vlkw57f63.fsf@assigned-by-dhcp.cox.net>
+References: <11404323692193-git-send-email-ryan@michonline.com>
+	<20060220234054.GA7903@c165.ib.student.liu.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 21 00:52:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ryan Anderson <ryan@michonline.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 01:02:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBKpG-0001gB-F5
-	for gcvg-git@gmane.org; Tue, 21 Feb 2006 00:52:18 +0100
+	id 1FBKyj-0003vw-QA
+	for gcvg-git@gmane.org; Tue, 21 Feb 2006 01:02:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161196AbWBTXwO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Feb 2006 18:52:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964854AbWBTXwO
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 18:52:14 -0500
-Received: from hibernia.jakma.org ([212.17.55.49]:19332 "EHLO
-	hibernia.jakma.org") by vger.kernel.org with ESMTP id S964853AbWBTXwN
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2006 18:52:13 -0500
-Received: from sheen.jakma.org (IDENT:U2FsdGVkX18FYo8eGCNV8ej8LTqDi0XZz/I34YxMpY8@sheen.jakma.org [212.17.55.53])
-	by hibernia.jakma.org (8.13.1/8.13.1) with ESMTP id k1KNpuN2011880;
-	Mon, 20 Feb 2006 23:52:08 GMT
-X-X-Sender: paul@sheen.jakma.org
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3bid8umq.fsf@assigned-by-dhcp.cox.net>
-Mail-Copies-To: paul@hibernia.jakma.org
-Mail-Followup-To: paul@hibernia.jakma.org
-X-NSA: al aqsar fluffy jihad cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt pelvix mustard gas x-ray british airways washington peroxide cool
-X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on hibernia.jakma.org
-X-Virus-Status: Clean
+	id S1161210AbWBUACC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Feb 2006 19:02:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161211AbWBUACB
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Feb 2006 19:02:01 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:44210 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1161210AbWBUACA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2006 19:02:00 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060221000204.JOVN25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 20 Feb 2006 19:02:04 -0500
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20060220234054.GA7903@c165.ib.student.liu.se> (Fredrik
+	Kuivinen's message of "Tue, 21 Feb 2006 00:40:54 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16512>
 
-On Mon, 20 Feb 2006, Junio C Hamano wrote:
+Fredrik Kuivinen <freku045@student.liu.se> writes:
 
-> The latter two makes sense to me.
+> I have also been working on a blame program.
 
-Yeah, it's handy for installs to shared volumes, e.g. I like to set 
-bindir to $(prefix)/arch/$(uname_P)/bin.
+Very nice to see these two.
 
-> I'd appreciate independent confirmations from people with Solaris 8 
-> and/or Solaris 9 boxes.
+Obviously I prefer this one for its performance ;-).
 
-Seems wise ;).
+Its interface is probably friendlier when used as a preprocessor
+by other tools.  I can imagine GUI source viewer that fontifies
+the source code and prefers to get just the origin information
+from a "blame backend".
 
-Note that it doesn't change things for S8. Also, I've tested this on 
-Solaris 10 and fairly recent Solaris dev snapshots (snv_31). I didn't 
-try a test compile on S9, however I did check on an S9u7 box and 
-there is no libiconv to link against.
+BTW, these days I always compile things with 
 
-regards,
--- 
-Paul Jakma	paul@clubi.ie	paul@jakma.org	Key ID: 64A2FF6A
-Fortune:
-"Ada is the work of an architect, not a computer scientist."
-- Jean Icbiah, inventor of Ada, weenie
+	-Wall -Wdeclaration-after-statement
+
+which caught quite a many.
+
+Also I have my templates/hooks--pre-commit enabled so you might
+want to lindent it before inclusion.
+
+I'll play with both a bit.  Thanks for nice toys, both of you!
