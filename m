@@ -1,55 +1,86 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: PATCH: fix git-fmt-merge-msg on ActiveState Perl
-Date: Tue, 21 Feb 2006 23:18:01 +0100
-Message-ID: <20060221221801.GC5948@steel.home>
-References: <81b0412b0602210745i637692d3p5462c2b3a00df793@mail.gmail.com> <81b0412b0602210748t76d02007s316081a04ee685c8@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
+Date: Tue, 21 Feb 2006 23:19:25 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602212315400.12634@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0602201934270.28957@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060220191011.GA18085@hand.yhbt.net> <7vr75xbs8w.fsf_-_@assigned-by-dhcp.cox.net>
+ <81b0412b0602210930w5c1a71aage12bad2079dd515a@mail.gmail.com>
+ <43FB79E2.1040307@vilain.net> <20060221215742.GA5948@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 21 23:18:19 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Vilain <sam@vilain.net>, Junio C Hamano <junkio@cox.net>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 21 23:19:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBfpo-00053w-U4
-	for gcvg-git@gmane.org; Tue, 21 Feb 2006 23:18:17 +0100
+	id 1FBfr0-0005Ma-Nd
+	for gcvg-git@gmane.org; Tue, 21 Feb 2006 23:19:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161085AbWBUWSJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Feb 2006 17:18:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161114AbWBUWSJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 17:18:09 -0500
-Received: from devrace.com ([198.63.210.113]:31507 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1161095AbWBUWSH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2006 17:18:07 -0500
-Received: from tigra.home (p54A05C42.dip.t-dialin.net [84.160.92.66])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k1LMI2Dt076203;
-	Tue, 21 Feb 2006 16:18:03 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1FBfpZ-0000cy-00; Tue, 21 Feb 2006 23:18:01 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1FBfpZ-0001uq-4V; Tue, 21 Feb 2006 23:18:01 +0100
-To: Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <81b0412b0602210748t76d02007s316081a04ee685c8@mail.gmail.com>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S1161095AbWBUWT1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Feb 2006 17:19:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161041AbWBUWT1
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 17:19:27 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:51171 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1161095AbWBUWT0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2006 17:19:26 -0500
+Received: from virusscan.mail (amavis2.rz.uni-wuerzburg.de [132.187.3.47])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id ED2A1146446; Tue, 21 Feb 2006 23:19:25 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id DE84A2C0C;
+	Tue, 21 Feb 2006 23:19:25 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 0B7D7146446; Tue, 21 Feb 2006 23:19:25 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20060221215742.GA5948@steel.home>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16563>
 
-Alex Riesen, Tue, Feb 21, 2006 16:48:43 +0100:
-> On 2/21/06, Alex Riesen <raa.lkml@gmail.com> wrote:
-> > For people who stuck with ActiveState Perl, as there seem to be
-> > no chance for it to support the list form of "open" in foreseeable future.
+Hi,
+
+On Tue, 21 Feb 2006, Alex Riesen wrote:
+
+> Sam Vilain, Tue, Feb 21, 2006 21:36:50 +0100:
+> > >
+> > >>* Eric, thanks for the hint.  I have this four-patch series.
+> > >>  Could people with perl 5.6 please check them?
+> > >
+> > >
+> > >Does not work here (ActiveState Build 811, Perl 5.8.6):
+> > >
+> > >$ perl -e 'open(F, "-|")'
+> > >'-' is not recognized as an internal or external command,
+> > >operable program or batch file.
+> > 
+> > Portability, Ease of Coding, Few CPAN Module Dependencies.  Pick any two.
+> > 
 > 
-> Too late... Sorry :)
+> Sometimes an upgrade is just out of question. Besides, that'd mean an
+> upgrade to another operating system, because very important scripts
+> over here a just not portable to anything else but
+>     "ActiveState Perl on Windows (TM)"
+> I just have no choice.
 
-Not too late, actually. It'll work for everyone with ActiveState Perl
+Maybe I am stating the obvious, but it seems that
+
+	open (F, "git-blabla -option |");
+
+would be more portable.
+
+Alex, would this work on ActiveState?
+
+Perl gurus, is the latter way to open a pipe considered awful or what?
+
+Ciao,
+Dscho
+
+P.S.: Eric, we rely on fork() anyway. Most of git's programs just don't 
+work without a fork().
