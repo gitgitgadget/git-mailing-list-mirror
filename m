@@ -1,68 +1,55 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
-Date: Wed, 22 Feb 2006 11:38:14 +1300
-Message-ID: <43FB9656.8050308@vilain.net>
-References: <Pine.LNX.4.63.0602201934270.28957@wbgn013.biozentrum.uni-wuerzburg.de> <20060220191011.GA18085@hand.yhbt.net> <7vr75xbs8w.fsf_-_@assigned-by-dhcp.cox.net> <81b0412b0602210930w5c1a71aage12bad2079dd515a@mail.gmail.com> <43FB79E2.1040307@vilain.net> <20060221215742.GA5948@steel.home>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: What does this error message mean?
+Date: Wed, 22 Feb 2006 00:46:37 +0200
+Message-ID: <20060222004637.1a066569.tihirvon@gmail.com>
+References: <200602212206.36685.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 21 23:38:45 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 21 23:45:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBg9T-0001NZ-9r
-	for gcvg-git@gmane.org; Tue, 21 Feb 2006 23:38:35 +0100
+	id 1FBgG1-0002ma-VX
+	for gcvg-git@gmane.org; Tue, 21 Feb 2006 23:45:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750743AbWBUWic (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Feb 2006 17:38:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750758AbWBUWic
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 17:38:32 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:26788 "EHLO mail.utsl.gen.nz")
-	by vger.kernel.org with ESMTP id S1750743AbWBUWic (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2006 17:38:32 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id 112BA54F2; Wed, 22 Feb 2006 11:38:28 +1300 (NZDT)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 5972E55E4;
-	Wed, 22 Feb 2006 11:38:19 +1300 (NZDT)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <20060221215742.GA5948@steel.home>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1751201AbWBUWpR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Feb 2006 17:45:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbWBUWpR
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 17:45:17 -0500
+Received: from pproxy.gmail.com ([64.233.166.179]:5317 "EHLO pproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751201AbWBUWpQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2006 17:45:16 -0500
+Received: by pproxy.gmail.com with SMTP id o67so1569253pye
+        for <git@vger.kernel.org>; Tue, 21 Feb 2006 14:45:13 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=FWC5qxToCELe2ppDhmfg1fWyK9D41aAvURKxOVTAW9ts2Itlf3w7idosaktrhPqR9TciM+YYwpGBv+jb1WvXEEfU+2KRGaddE5NtQ+J6js4GfkbTgMTCP5hY8Mb6FsBP1v1x583WmUZ8XqrVQQ4NVgn1Ujo72KtRI5+PysQrNEo=
+Received: by 10.35.43.10 with SMTP id v10mr326548pyj;
+        Tue, 21 Feb 2006 14:45:12 -0800 (PST)
+Received: from garlic.home.net ( [82.128.201.218])
+        by mx.gmail.com with ESMTP id r66sm117513pye.2006.02.21.14.45.11;
+        Tue, 21 Feb 2006 14:45:12 -0800 (PST)
+To: git@vger.kernel.org
+In-Reply-To: <200602212206.36685.alan@chandlerfamily.org.uk>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.12; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16570>
 
-Alex Riesen wrote:
->>>Does not work here (ActiveState Build 811, Perl 5.8.6):
->>>$ perl -e 'open(F, "-|")'
->>>'-' is not recognized as an internal or external command,
->>>operable program or batch file.
->>Portability, Ease of Coding, Few CPAN Module Dependencies.  Pick any two.
-> Sometimes an upgrade is just out of question. Besides, that'd mean an
-> upgrade to another operating system, because very important scripts
-> over here a just not portable to anything else but
->     "ActiveState Perl on Windows (TM)"
-> I just have no choice.
+On Tue, 21 Feb 2006 22:06:36 +0000
+Alan Chandler <alan@chandlerfamily.org.uk> wrote:
 
-Sure, but perhaps IPC::Open2 or some other CPAN module has solved this 
-problem already.
+> alan@kanger usermgr[master]$ git commit -a
+> fatal: empty ident  <alan@chandlerfamily.org.uk> not allowed
+> 
+> Suddenly started happening, possibly after upgrade (via debian) to git 1.2.1
 
-I guess what I'm saying is that if you want to limit the modules that 
-Perl script uses, you end up either impacting on the portability of the 
-script or rediscovering problems with early wheel designs.
+Your GIT_AUTHOR_NAME is empty?
 
-Sam.
+-- 
+http://onion.dynserv.net/~timo/
