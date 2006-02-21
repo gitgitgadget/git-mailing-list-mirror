@@ -1,80 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: RFC: Subprojects
-Date: Mon, 20 Feb 2006 23:57:14 -0800
-Message-ID: <7v1wxx4011.fsf@assigned-by-dhcp.cox.net>
-References: <43C52B1F.8020706@hogyros.de>
-	<Pine.LNX.4.63.0601111740220.17966@wbgn013.biozentrum.uni-wuerzburg.de>
-	<43C537C9.4090206@hogyros.de>
-	<Pine.LNX.4.64.0601110928350.5073@g5.osdl.org>
-	<7vacdzkww3.fsf@assigned-by-dhcp.cox.net>
-	<20060220131659.GA8613@informatik.uni-freiburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] git-mktree: reverse of git-ls-tree.
+Date: Tue, 21 Feb 2006 09:46:22 +0100
+Message-ID: <43FAD35E.5080401@op5.se>
+References: <7vk6bp43qm.fsf@assigned-by-dhcp.cox.net> <1140504750.16926.111.camel@evo.keithp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 21 08:57:24 2006
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>, Tommi Virtanen <tv@debian.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 21 09:46:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBSOf-0003z5-D7
-	for gcvg-git@gmane.org; Tue, 21 Feb 2006 08:57:22 +0100
+	id 1FBTAH-0005Mm-Mv
+	for gcvg-git@gmane.org; Tue, 21 Feb 2006 09:46:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751174AbWBUH5S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Feb 2006 02:57:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751175AbWBUH5S
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 02:57:18 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:59313 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751173AbWBUH5R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2006 02:57:17 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060221075542.TSIK6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 21 Feb 2006 02:55:42 -0500
-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-In-Reply-To: <20060220131659.GA8613@informatik.uni-freiburg.de> (Uwe
-	Zeisberger's message of "Mon, 20 Feb 2006 14:16:59 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1161435AbWBUIqY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 21 Feb 2006 03:46:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161436AbWBUIqY
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 03:46:24 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:53452 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161435AbWBUIqX
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2006 03:46:23 -0500
+Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 7BC846BCFF; Tue, 21 Feb 2006 09:46:22 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Keith Packard <keithp@keithp.com>
+In-Reply-To: <1140504750.16926.111.camel@evo.keithp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16525>
 
-Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de> writes:
+Keith Packard wrote:
+> <internationalization-pedant-mode>
+> On Mon, 2006-02-20 at 22:37 -0800, Junio C Hamano wrote:
+>=20
+>=20
+>>+ * Copyright (c) Junio C Hamano, 2006
+>=20
+>=20
+> I've been told by at least two lawyers that the string '(c)' has no
+> legal meaning in the US. If you want to indicate copyright, the only
+> symbol which does carry legal weight is the c-in-a-circle mark '=C2=A9=
+'.=20
+>=20
+> Of course, this does force the issue of what encoding to present sour=
+ce
+> files in. I suggest that sources should be UTF-8, which also provides
+> opportunities to encode author names correctly, rather than
+> transliterating them to Latin. X.org uses UTF-8 for source files now
+> without difficulty across a wide range of compilers. Of course,
+> non-ascii glyphs are present only in comments.
+>=20
+> </internationalization-pedant-mode>
 
-> I'd prefer to have the objects needed to get the linux-2.6 tree in the
-> object db of the containing project.  Then "url" is not needed, and you
-> could directly use the commit as value for the link.
 
-... which is actually closer to what bind commit approach gives
-you.  The tree object in a commit of the containing project has
-the full tree object at path linux-2.6/.  The "bind" lines in
-the commit object are just notes that tell you where those
-trees happen to came from.
+In most countries the copyright is implied unless explicitly void by th=
+e=20
+author.
 
-> ...  Moreover the condition that the
-> "containing" tree must not have an entry named linux-2.6 is handled
-> implicitly with links.
+In other sane countries (I don't argue that USA is necessarily any such=
+=20
+country), the law is such that if the copier understands that there is =
+a=20
+copyright and violates it, he or she is in error and thus liable.
 
-I had an impression that two approaches were more or less
-equivalent, especially the last round of bound commit approach.
-It does not let anything to exist at the bound path in the
-containing project either ("read-tree --prefix" rejects it).
+I'm not sure how mad such a law can be written, but what you describe g=
+o=20
+against both common sense and common practice since it puts the burden=20
+of protection on the victim-to-be before the crime is even committed. I=
+t=20
+would be like a rapist being let off because his victims were where he=20
+happened to be.
 
-> Please correct me if I'm wrong somewhere.  It's some time ago I read the
-> patches and this thread.  This mail is the result of some thoughts in my
-> vacation.
-
-I have to admit that I haven't thought about the issues involved
-for a long time, having no great need nor desire for subprojects
-myself, and especially with more generally useful stuff like
-performance enhancement for pack generation to occupy me.  I am
-not sure I am much more qualified to comment than you are at
-this point.
-
-The bound commit lowlevel changes have been sitting in "pu" for
-about a month by now, but nobody seems to be interested enough
-to start prototyping Porcelain around it.  Neither the gitlink
-approach.  After seeing not much interest on the list, I was
-hoping that I could retire both WIPs.
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
