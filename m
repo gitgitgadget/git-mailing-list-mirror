@@ -1,57 +1,64 @@
-From: Dave Jones <davej@redhat.com>
-Subject: Re: merging problems with Linus' kernel tree.
-Date: Tue, 21 Feb 2006 15:29:35 -0500
-Message-ID: <20060221202935.GC24159@redhat.com>
-References: <20060221183306.GC22988@redhat.com> <Pine.LNX.4.64.0602211052360.30245@g5.osdl.org> <20060221191948.GE22988@redhat.com> <Pine.LNX.4.64.0602211153570.30245@g5.osdl.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
+Date: Wed, 22 Feb 2006 09:36:50 +1300
+Message-ID: <43FB79E2.1040307@vilain.net>
+References: <Pine.LNX.4.63.0602201934270.28957@wbgn013.biozentrum.uni-wuerzburg.de>	 <20060220191011.GA18085@hand.yhbt.net>	 <7vr75xbs8w.fsf_-_@assigned-by-dhcp.cox.net> <81b0412b0602210930w5c1a71aage12bad2079dd515a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 21 21:29:53 2006
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 21 21:37:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBe8l-00063O-PJ
-	for gcvg-git@gmane.org; Tue, 21 Feb 2006 21:29:44 +0100
+	id 1FBeGN-0007mW-0r
+	for gcvg-git@gmane.org; Tue, 21 Feb 2006 21:37:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932322AbWBUU3k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Feb 2006 15:29:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932553AbWBUU3k
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 15:29:40 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:58510 "EHLO mx1.redhat.com")
-	by vger.kernel.org with ESMTP id S932322AbWBUU3k (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2006 15:29:40 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id k1LKTaSJ013122;
-	Tue, 21 Feb 2006 15:29:36 -0500
-Received: from nwo.kernelslacker.org (vpn83-122.boston.redhat.com [172.16.83.122])
-	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id k1LKTa127675;
-	Tue, 21 Feb 2006 15:29:36 -0500
-Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
-	by nwo.kernelslacker.org (8.13.5/8.13.5) with ESMTP id k1LKTaQq031245;
-	Tue, 21 Feb 2006 15:29:36 -0500
-Received: (from davej@localhost)
-	by nwo.kernelslacker.org (8.13.5/8.13.5/Submit) id k1LKTZZC031244;
-	Tue, 21 Feb 2006 15:29:35 -0500
-X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0602211153570.30245@g5.osdl.org>
-User-Agent: Mutt/1.4.2.1i
+	id S964781AbWBUUhE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Feb 2006 15:37:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932716AbWBUUhD
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 15:37:03 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:18084 "EHLO mail.utsl.gen.nz")
+	by vger.kernel.org with ESMTP id S932703AbWBUUhA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2006 15:37:00 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id BBA74555D; Wed, 22 Feb 2006 09:36:58 +1300 (NZDT)
+Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id A80D3454B;
+	Wed, 22 Feb 2006 09:36:51 +1300 (NZDT)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
+X-Accept-Language: en-us, en
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0602210930w5c1a71aage12bad2079dd515a@mail.gmail.com>
+X-Enigmail-Version: 0.92.1.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.watts.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16547>
 
-On Tue, Feb 21, 2006 at 12:03:04PM -0800, Linus Torvalds wrote:
+Alex Riesen wrote:
+> On 2/20/06, Junio C Hamano <junkio@cox.net> wrote:
+> 
+>> * Eric, thanks for the hint.  I have this four-patch series.
+>>   Could people with perl 5.6 please check them?
+> 
+> 
+> Does not work here (ActiveState Build 811, Perl 5.8.6):
+> 
+> $ perl -e 'open(F, "-|")'
+> '-' is not recognized as an internal or external command,
+> operable program or batch file.
 
- > That, in turn, is usually due to an aborted merge.
+Portability, Ease of Coding, Few CPAN Module Dependencies.  Pick any two.
 
-Hmm.  (Recalls a power outage a few days ago).
-I'll bet that's when it happened.
-
- > Do a "git checkout -f".
-
-Fixed, thanks.
-
-		Dave
+Sam.
