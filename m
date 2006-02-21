@@ -1,161 +1,61 @@
-From: Krzysiek Pawlik <krzysiek.pawlik@people.pl>
-Subject: Re: [PATCH] Add new git-rm command with documentation
-Date: Tue, 21 Feb 2006 23:07:45 +0100
-Message-ID: <43FB8F31.9090302@people.pl>
-References: <87u0ass7tj.wl%cworth@cworth.org>
+From: "Ron Parker" <rdparker@gmail.com>
+Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
+Date: Tue, 21 Feb 2006 16:13:12 -0600
+Message-ID: <1cf1c57a0602211413n22e77fd0l4e2846e7feb5429e@mail.gmail.com>
+References: <Pine.LNX.4.63.0602201934270.28957@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20060220191011.GA18085@hand.yhbt.net>
+	 <7vr75xbs8w.fsf_-_@assigned-by-dhcp.cox.net>
+	 <81b0412b0602210930w5c1a71aage12bad2079dd515a@mail.gmail.com>
+	 <20060221205618.GA23920@localdomain>
+	 <20060221220454.GB5948@steel.home>
+	 <1cf1c57a0602211412r1988b14ao435edd29207dc0d0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig1D5B3A52EB95E039356DE9CC"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 21 23:08:01 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Feb 21 23:13:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBffg-0002rM-MH
-	for gcvg-git@gmane.org; Tue, 21 Feb 2006 23:07:50 +0100
+	id 1FBfl1-00043b-Ed
+	for gcvg-git@gmane.org; Tue, 21 Feb 2006 23:13:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030204AbWBUWHo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Feb 2006 17:07:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932362AbWBUWHo
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 17:07:44 -0500
-Received: from people.pl ([212.85.96.54]:37858 "HELO v00054.home.net.pl")
-	by vger.kernel.org with SMTP id S932558AbWBUWHn (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2006 17:07:43 -0500
-Received: from localhost (HELO ?192.168.1.1?) (krzysiek.pawlik.people@home@127.0.0.1)
-  by matrix01.home.net.pl with SMTP; Tue, 21 Feb 2006 22:07:38 -0000
-User-Agent: Mail/News 1.5 (X11/20060206)
-To: Carl Worth <cworth@cworth.org>
-In-Reply-To: <87u0ass7tj.wl%cworth@cworth.org>
-X-Enigmail-Version: 0.94.0.0
-OpenPGP: id=BC555551
+	id S932478AbWBUWNQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Feb 2006 17:13:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932485AbWBUWNQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 17:13:16 -0500
+Received: from xproxy.gmail.com ([66.249.82.194]:20170 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932478AbWBUWNP convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2006 17:13:15 -0500
+Received: by xproxy.gmail.com with SMTP id h27so949829wxd
+        for <git@vger.kernel.org>; Tue, 21 Feb 2006 14:13:13 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dKgjZVulGzOB0ANCWoa6KTX62xW+opr9xPvUS6cKbekE3OxxfUY7OEBcP7V08KRj3YeSEnLTCVx1Ob6xuLWcjovvHVyvpjXgsw8qnGTB6t92EL5Kpe4mvkqAhEIoKxch2sw7zZAc/KLHcSEmPlCpXx4KgzMmWOHr22mF/8nPR7g=
+Received: by 10.70.130.7 with SMTP id c7mr5213435wxd;
+        Tue, 21 Feb 2006 14:13:12 -0800 (PST)
+Received: by 10.70.88.3 with HTTP; Tue, 21 Feb 2006 14:13:12 -0800 (PST)
+To: git@vger.kernel.org
+In-Reply-To: <1cf1c57a0602211412r1988b14ao435edd29207dc0d0@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16559>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig1D5B3A52EB95E039356DE9CC
-Content-Type: multipart/mixed;
- boundary="------------010908030703010204040402"
+On 2/21/06, Alex Riesen <raa.lkml@gmail.com> wrote:
 
-This is a multi-part message in MIME format.
---------------010908030703010204040402
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> AFAICS, it does not exist. There is emulation of it in that active-perl,
+> though so this works:
+>
+>     if ( !fork ) { something }
+>
+> but not "too well" (you have to be carefule not spawn too many (which
+> is around 50) processes. Perl'll crash otherwise).
 
-Carl Worth wrote:
-> This adds a git-rm command which provides convenience similar to
-> git-add
+IIRC this has to do with some child-process thread limits in Windows.
 
-I've modified it a little - it has now a '-f' option to delete files
-(much like cvs rm behaviour). It makes it a bit safer ;) I've fixed the
-`rm` - it wouldn't work for example for file named '--help'.
-
---=20
-Krzysiek Pawlik (Nelchael)
-RLU #322999 GPG Key ID: 0xBC555551
-
---------------010908030703010204040402
-Content-Type: text/plain;
- name="git-rm.patch"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="git-rm.patch"
-
-ZGlmZiAtTnJ1IGdpdC0xLjIuMi8uZ2l0aWdub3JlIGdpdC0xLjIuMi5wYXRjaGVkLy5naXRp
-Z25vcmUKLS0tIGdpdC0xLjIuMi8uZ2l0aWdub3JlCTIwMDYtMDItMTkgMDE6MTk6MDAuMDAw
-MDAwMDAwICswMTAwCisrKyBnaXQtMS4yLjIucGF0Y2hlZC8uZ2l0aWdub3JlCTIwMDYtMDIt
-MjEgMjI6NTY6MjMuMDAwMDAwMDAwICswMTAwCkBAIC04NCw2ICs4NCw3IEBACiBnaXQtcmV2
-LWxpc3QKIGdpdC1yZXYtcGFyc2UKIGdpdC1yZXZlcnQKK2dpdC1ybQogZ2l0LXNlbmQtZW1h
-aWwKIGdpdC1zZW5kLXBhY2sKIGdpdC1zaC1zZXR1cApkaWZmIC1OcnUgZ2l0LTEuMi4yL0Rv
-Y3VtZW50YXRpb24vZ2l0LXJtLnR4dCBnaXQtMS4yLjIucGF0Y2hlZC9Eb2N1bWVudGF0aW9u
-L2dpdC1ybS50eHQKLS0tIGdpdC0xLjIuMi9Eb2N1bWVudGF0aW9uL2dpdC1ybS50eHQJMTk3
-MC0wMS0wMSAwMTowMDowMC4wMDAwMDAwMDAgKzAxMDAKKysrIGdpdC0xLjIuMi5wYXRjaGVk
-L0RvY3VtZW50YXRpb24vZ2l0LXJtLnR4dAkyMDA2LTAyLTIxIDIzOjAwOjEzLjAwMDAwMDAw
-MCArMDEwMApAQCAtMCwwICsxLDgwIEBACitnaXQtcm0oMSkKKz09PT09PT09PQorCitOQU1F
-CistLS0tCitnaXQtcm0gLSBSZW1vdmUgZmlsZXMgZnJvbSB0aGUgaW5kZXguCisKK1NZTk9Q
-U0lTCistLS0tLS0tLQorJ2dpdC1ybScgWy1ufC1mXSBbLXZdIDxmaWxlPi4uLgorCitERVND
-UklQVElPTgorLS0tLS0tLS0tLS0KK0EgY29udmVuaWVuY2Ugd3JhcHBlciBmb3Igcm0gYW5k
-IGdpdC11cGRhdGUtaW5kZXggLS1yZW1vdmUuIEZvciB0aG9zZQorY29taW5nIGZyb20gY3Zz
-LCBnaXQtcm0gcHJvdmlkZXMgYW4gb3BlcmF0aW9uIHNpbWlsYXIgdG8gImN2cyBybSAtZiIu
-CisKKworT1BUSU9OUworLS0tLS0tLQorPGZpbGU+Li4uOjoKKwlGaWxlcyB0byByZW1vdmUg
-ZnJvbSB0aGUgd29ya2luZyB0cmVlIGFuZCB0aGUgaW5kZXguCisKKy1uOjoKKyAgICAgICAg
-RG9uJ3QgYWN0dWFsbHkgcmVtb3ZlIHRoZSBmaWxlKHMpLCBqdXN0IHNob3cgaWYgdGhleSBl
-eGlzdCBpbgorICAgICAgICB0aGUgaW5kZXguCisKKy1mOjoKKyAgICAgICAgRGVsZXRlIHRo
-ZSBmaWxlKHMpIGJlZm9yZSByZW1vdmluZyBpdC4KKworLXY6OgorICAgICAgICBCZSB2ZXJi
-b3NlLgorCisKK0RJU0NVU1NJT04KKy0tLS0tLS0tLS0KKworVGhlIGxpc3Qgb2YgPGZpbGU+
-IGdpdmVuIHRvIHRoZSBjb21tYW5kIGlzIGZlZCB0byBgZ2l0LWxzLWZpbGVzYAorY29tbWFu
-ZCB0byBsaXN0IGZpbGVzIHRoYXQgYXJlIHJlZ2lzdGVyZWQgaW4gdGhlIGluZGV4IGFuZAor
-YXJlIG5vdCBpZ25vcmVkL2V4Y2x1ZGVkIGJ5IGAkR0lUX0RJUi9pbmZvL2V4Y2x1ZGVgIGZp
-bGUgb3IKK2AuZ2l0aWdub3JlYCBmaWxlIGluIGVhY2ggZGlyZWN0b3J5LiAgVGhpcyBtZWFu
-cyB0d28gdGhpbmdzOgorCisuIFlvdSBjYW4gcHV0IHRoZSBuYW1lIG9mIGEgZGlyZWN0b3J5
-IG9uIHRoZSBjb21tYW5kIGxpbmUsIGFuZCB0aGUKKyAgY29tbWFuZCB3aWxsIHJlbW92ZSBh
-bGwgZmlsZXMgaW4gaXQgYW5kIGl0cyBzdWJkaXJlY3RvcmllcyAodGhlCisgIGRpcmVjdG9y
-aWVzIHRoZW1zZWx2ZXMgYXJlIG5vdCByZW1vdmVkKTsKKworLiBHaXZpbmcgdGhlIG5hbWUg
-b2YgYSBmaWxlIHRoYXQgaXMgbm90IGluIHRoZSBpbmRleCBkb2VzIG5vdAorICByZW1vdmUg
-dGhhdCBmaWxlLgorCisKK0VYQU1QTEVTCistLS0tLS0tLQorZ2l0LXJtIERvY3VtZW50YXRp
-b24vXFwqLnR4dDo6CisKKwlSZW1vdmVzIGFsbCBgXCoudHh0YCBmaWxlcyB0aGF0IGFyZSBp
-biB0aGUgaW5kZXggdW5kZXIKKwlgRG9jdW1lbnRhdGlvbmAgZGlyZWN0b3J5IGFuZCBpdHMg
-c3ViZGlyZWN0b3JpZXMuCisrCitOb3RlIHRoYXQgdGhlIGFzdGVyaXNrIGBcKmAgaXMgcXVv
-dGVkIGZyb20gdGhlIHNoZWxsIGluIHRoaXMKK2V4YW1wbGU7IHRoaXMgbGV0cyB0aGUgY29t
-bWFuZCBpbmNsdWRlIHRoZSBmaWxlcyBmcm9tCitzdWJkaXJlY3RvcmllcyBvZiBgRG9jdW1l
-bnRhdGlvbi9gIGRpcmVjdG9yeS4KKworZ2l0LXJtIGdpdC0qLnNoOjoKKworCVJlbW92ZSBh
-bGwgZ2l0LSouc2ggc2NyaXB0cyB0aGF0IGFyZSBpbiB0aGUgaW5kZXguCisJQmVjYXVzZSB0
-aGlzIGV4YW1wbGUgbGV0cyB0aGUgc2hlbGwgZXhwYW5kIHRoZSBhc3RlcmlzaworCShpLmUu
-IHlvdSBhcmUgbGlzdGluZyB0aGUgZmlsZXMgZXhwbGljaXRseSksIGl0IGRvZXMgbm90CisJ
-cmVtb3ZlIGBzdWJkaXIvZ2l0LWZvby5zaGAuCisKKworQXV0aG9yCistLS0tLS0KK1dyaXR0
-ZW4gYnkgTGludXMgVG9ydmFsZHMgPHRvcnZhbGRzQG9zZGwub3JnPgorCitEb2N1bWVudGF0
-aW9uCistLS0tLS0tLS0tLS0tLQorRG9jdW1lbnRhdGlvbiBieSBKdW5pbyBDIEhhbWFubyBh
-bmQgdGhlIGdpdC1saXN0IDxnaXRAdmdlci5rZXJuZWwub3JnPi4KKworR0lUCistLS0KK1Bh
-cnQgb2YgdGhlIGdpdGxpbms6Z2l0WzddIHN1aXRlCisKZGlmZiAtTnJ1IGdpdC0xLjIuMi9N
-YWtlZmlsZSBnaXQtMS4yLjIucGF0Y2hlZC9NYWtlZmlsZQotLS0gZ2l0LTEuMi4yL01ha2Vm
-aWxlCTIwMDYtMDItMTkgMDE6MTk6MDAuMDAwMDAwMDAwICswMTAwCisrKyBnaXQtMS4yLjIu
-cGF0Y2hlZC9NYWtlZmlsZQkyMDA2LTAyLTIxIDIyOjU2OjIzLjAwMDAwMDAwMCArMDEwMApA
-QCAtMTA3LDcgKzEwNyw3IEBACiAJZ2l0LW1lcmdlLW9uZS1maWxlLnNoIGdpdC1wYXJzZS1y
-ZW1vdGUuc2ggXAogCWdpdC1wcnVuZS5zaCBnaXQtcHVsbC5zaCBnaXQtcHVzaC5zaCBnaXQt
-cmViYXNlLnNoIFwKIAlnaXQtcmVwYWNrLnNoIGdpdC1yZXF1ZXN0LXB1bGwuc2ggZ2l0LXJl
-c2V0LnNoIFwKLQlnaXQtcmVzb2x2ZS5zaCBnaXQtcmV2ZXJ0LnNoIGdpdC1zaC1zZXR1cC5z
-aCBcCisJZ2l0LXJlc29sdmUuc2ggZ2l0LXJldmVydC5zaCBnaXQtcm0uc2ggZ2l0LXNoLXNl
-dHVwLnNoIFwKIAlnaXQtdGFnLnNoIGdpdC12ZXJpZnktdGFnLnNoIGdpdC13aGF0Y2hhbmdl
-ZC5zaCBcCiAJZ2l0LWFwcGx5bWJveC5zaCBnaXQtYXBwbHlwYXRjaC5zaCBnaXQtYW0uc2gg
-XAogCWdpdC1tZXJnZS5zaCBnaXQtbWVyZ2Utc3R1cGlkLnNoIGdpdC1tZXJnZS1vY3RvcHVz
-LnNoIFwKZGlmZiAtTnJ1IGdpdC0xLjIuMi9naXQtcm0uc2ggZ2l0LTEuMi4yLnBhdGNoZWQv
-Z2l0LXJtLnNoCi0tLSBnaXQtMS4yLjIvZ2l0LXJtLnNoCTE5NzAtMDEtMDEgMDE6MDA6MDAu
-MDAwMDAwMDAwICswMTAwCisrKyBnaXQtMS4yLjIucGF0Y2hlZC9naXQtcm0uc2gJMjAwNi0w
-Mi0yMSAyMzowMjoxMy4wMDAwMDAwMDAgKzAxMDAKQEAgLTAsMCArMSw2MiBAQAorIyEvYmlu
-L3NoCisKK1VTQUdFPSc8ZmlsZT4uLi4nCitTVUJESVJFQ1RPUllfT0s9J1llcycKKy4gZ2l0
-LXNoLXNldHVwCisKK3Nob3dfb25seT0KK3ZlcmJvc2U9CityZW1vdmVfZmlsZXM9Cit3aGls
-ZSA6IDsgZG8KKyAgY2FzZSAiJDEiIGluCisgICAgLW4pCisJc2hvd19vbmx5PXRydWUKKwk7
-OworICAgIC12KQorCXZlcmJvc2U9LS12ZXJib3NlCisJOzsKKwktZikKKwlyZW1vdmVfZmls
-ZXM9dHJ1ZQorCTs7CisgICAgLSopCisJdXNhZ2UKKwk7OworICAgICopCisJYnJlYWsKKwk7
-OworICBlc2FjCisgIHNoaWZ0Citkb25lCisKKyMgVGhpcyBpcyB0eXBvLXByb29maW5nLiBJ
-ZiBzb21lIHBhdGhzIG1hdGNoIGFuZCBzb21lIGRvIG5vdCwgd2Ugd2FudAorIyB0byBkbyBu
-b3RoaW5nLgorY2FzZSAiJCMiIGluCiswKQk7OworKikKKwlnaXQtbHMtZmlsZXMgLS1lcnJv
-ci11bm1hdGNoIC0tICIkQCIgPi9kZXYvbnVsbCB8fCB7CisJCWVjaG8gPiYyICJNYXliZSB5
-b3UgbWlzc3BlbGxlZCBpdD8iCisJCWV4aXQgMQorCX0KKwk7OworZXNhYworCitmaWxlcz0k
-KAorICAgIGlmIHRlc3QgLWYgIiRHSVRfRElSL2luZm8vZXhjbHVkZSIgOyB0aGVuCisJZ2l0
-LWxzLWZpbGVzIFwKKwkgICAgLS1leGNsdWRlLWZyb209IiRHSVRfRElSL2luZm8vZXhjbHVk
-ZSIgXAorCSAgICAtLWV4Y2x1ZGUtcGVyLWRpcmVjdG9yeT0uZ2l0aWdub3JlIC0tICIkQCIK
-KyAgICBlbHNlCisJZ2l0LWxzLWZpbGVzIFwKKwktLWV4Y2x1ZGUtcGVyLWRpcmVjdG9yeT0u
-Z2l0aWdub3JlIC0tICIkQCIKKyAgICBmaSB8IHNvcnQgfCB1bmlxCispCisKK2Nhc2UgIiRz
-aG93X29ubHkiIGluCit0cnVlKQorCWVjaG8gJGZpbGVzCisJOzsKKyopCisJW1sgIiRyZW1v
-dmVfZmlsZXMiID0gInRydWUiIF1dICYmIHJtIC1mIC0tICRmaWxlcworCWdpdC11cGRhdGUt
-aW5kZXggLS1yZW1vdmUgJHZlcmJvc2UgJGZpbGVzCisJOzsKK2VzYWMK
---------------010908030703010204040402--
-
---------------enig1D5B3A52EB95E039356DE9CC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.1 (GNU/Linux)
-
-iD8DBQFD+48xgo/w9rxVVVERAgtpAJ90DpuXRLrvfPQL7VKyLrPWE9NQxACgvVhJ
-3A0V8mPOwdNTbLef7mh16Y8=
-=xWUx
------END PGP SIGNATURE-----
-
---------------enig1D5B3A52EB95E039356DE9CC--
+--
+Windows, the multi-thrashing OS.
