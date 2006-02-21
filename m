@@ -1,165 +1,80 @@
-From: Krzysiek Pawlik <krzysiek.pawlik@people.pl>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: [PATCH] Add new git-rm command with documentation
-Date: Tue, 21 Feb 2006 23:29:41 +0100
-Message-ID: <43FB9455.6010402@people.pl>
-References: <87u0ass7tj.wl%cworth@cworth.org> <43FB8F31.9090302@people.pl> <20060221221446.GA20744@spearce.org>
+Date: Tue, 21 Feb 2006 17:32:54 -0500
+Message-ID: <20060221223254.GB20744@spearce.org>
+References: <87u0ass7tj.wl%cworth@cworth.org> <43FB8F31.9090302@people.pl> <20060221221446.GA20744@spearce.org> <43FB9455.6010402@people.pl>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigE980E006DB1A59C6B03900E5"
+Content-Type: text/plain; charset=us-ascii
 Cc: cworth@cworth.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 21 23:30:01 2006
+X-From: git-owner@vger.kernel.org Tue Feb 21 23:33:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBg12-0007iz-3C
-	for gcvg-git@gmane.org; Tue, 21 Feb 2006 23:29:52 +0100
+	id 1FBg46-0008RJ-8C
+	for gcvg-git@gmane.org; Tue, 21 Feb 2006 23:33:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964868AbWBUW3k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Feb 2006 17:29:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964882AbWBUW3j
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 17:29:39 -0500
-Received: from people.pl ([212.85.96.54]:53247 "HELO v00054.home.net.pl")
-	by vger.kernel.org with SMTP id S964868AbWBUW3i (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2006 17:29:38 -0500
-Received: from localhost (HELO ?192.168.1.1?) (krzysiek.pawlik.people@home@127.0.0.1)
-  by matrix01.home.net.pl with SMTP; Tue, 21 Feb 2006 22:29:33 -0000
-User-Agent: Mail/News 1.5 (X11/20060206)
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060221221446.GA20744@spearce.org>
-X-Enigmail-Version: 0.94.0.0
-OpenPGP: id=BC555551
+	id S964877AbWBUWc7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Feb 2006 17:32:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964882AbWBUWc7
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 17:32:59 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:57762 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S964877AbWBUWc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2006 17:32:58 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FBg3s-0005nr-Kf; Tue, 21 Feb 2006 17:32:48 -0500
+Received: by asimov.spearce.org (Postfix, from userid 1000)
+	id DFFF620FBA0; Tue, 21 Feb 2006 17:32:54 -0500 (EST)
+To: Krzysiek Pawlik <krzysiek.pawlik@people.pl>
+Content-Disposition: inline
+In-Reply-To: <43FB9455.6010402@people.pl>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16565>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigE980E006DB1A59C6B03900E5
-Content-Type: multipart/mixed;
- boundary="------------070306000204050108090604"
+Krzysiek Pawlik <krzysiek.pawlik@people.pl> wrote:
+[...]
+> +while : ; do
+> +  case "$1" in
+> +    -n)
+> +	show_only=true
+> +	;;
+> +    -v)
+> +	verbose=--verbose
+> +	;;
+> +    -f)
+> +	remove_files=true
+> +	;;
+> +    --)
+> +	break
+> +	;;
+> +    -*)
+> +	usage
+> +	;;
+> +    *)
+> +	break
+> +	;;
+> +  esac
+> +  shift
+> +done
+[...]
 
-This is a multi-part message in MIME format.
---------------070306000204050108090604
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+You are leaving -- in $@ for processing later, which means we'll
+try to delete the file '--'.  :-)
 
-Shawn Pearce wrote:
-> How about supporting -- to break out of the option loop?  The rest
-> of the script will support files named --help just fine but the
-> option parser will just spit out usage information.
+I think a shift before the break in the -- case would fix this.
 
-Yeah... forgot to add this.
-
-> Also I don't think the -f option's whitespace matches the others...
-
-Thanks, fixed :)
-
---=20
-Krzysiek Pawlik (Nelchael)
-RLU #322999 GPG Key ID: 0xBC555551
-
---------------070306000204050108090604
-Content-Type: text/plain;
- name="git-rm.patch"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="git-rm.patch"
-
-ZGlmZiAtTnJ1IGdpdC0xLjIuMi8uZ2l0aWdub3JlIGdpdC0xLjIuMi5wYXRjaGVkLy5naXRp
-Z25vcmUKLS0tIGdpdC0xLjIuMi8uZ2l0aWdub3JlCTIwMDYtMDItMTkgMDE6MTk6MDAuMDAw
-MDAwMDAwICswMTAwCisrKyBnaXQtMS4yLjIucGF0Y2hlZC8uZ2l0aWdub3JlCTIwMDYtMDIt
-MjEgMjI6NTY6MjMuMDAwMDAwMDAwICswMTAwCkBAIC04NCw2ICs4NCw3IEBACiBnaXQtcmV2
-LWxpc3QKIGdpdC1yZXYtcGFyc2UKIGdpdC1yZXZlcnQKK2dpdC1ybQogZ2l0LXNlbmQtZW1h
-aWwKIGdpdC1zZW5kLXBhY2sKIGdpdC1zaC1zZXR1cApkaWZmIC1OcnUgZ2l0LTEuMi4yL0Rv
-Y3VtZW50YXRpb24vZ2l0LXJtLnR4dCBnaXQtMS4yLjIucGF0Y2hlZC9Eb2N1bWVudGF0aW9u
-L2dpdC1ybS50eHQKLS0tIGdpdC0xLjIuMi9Eb2N1bWVudGF0aW9uL2dpdC1ybS50eHQJMTk3
-MC0wMS0wMSAwMTowMDowMC4wMDAwMDAwMDAgKzAxMDAKKysrIGdpdC0xLjIuMi5wYXRjaGVk
-L0RvY3VtZW50YXRpb24vZ2l0LXJtLnR4dAkyMDA2LTAyLTIxIDIzOjAwOjEzLjAwMDAwMDAw
-MCArMDEwMApAQCAtMCwwICsxLDgwIEBACitnaXQtcm0oMSkKKz09PT09PT09PQorCitOQU1F
-CistLS0tCitnaXQtcm0gLSBSZW1vdmUgZmlsZXMgZnJvbSB0aGUgaW5kZXguCisKK1NZTk9Q
-U0lTCistLS0tLS0tLQorJ2dpdC1ybScgWy1ufC1mXSBbLXZdIDxmaWxlPi4uLgorCitERVND
-UklQVElPTgorLS0tLS0tLS0tLS0KK0EgY29udmVuaWVuY2Ugd3JhcHBlciBmb3Igcm0gYW5k
-IGdpdC11cGRhdGUtaW5kZXggLS1yZW1vdmUuIEZvciB0aG9zZQorY29taW5nIGZyb20gY3Zz
-LCBnaXQtcm0gcHJvdmlkZXMgYW4gb3BlcmF0aW9uIHNpbWlsYXIgdG8gImN2cyBybSAtZiIu
-CisKKworT1BUSU9OUworLS0tLS0tLQorPGZpbGU+Li4uOjoKKwlGaWxlcyB0byByZW1vdmUg
-ZnJvbSB0aGUgd29ya2luZyB0cmVlIGFuZCB0aGUgaW5kZXguCisKKy1uOjoKKyAgICAgICAg
-RG9uJ3QgYWN0dWFsbHkgcmVtb3ZlIHRoZSBmaWxlKHMpLCBqdXN0IHNob3cgaWYgdGhleSBl
-eGlzdCBpbgorICAgICAgICB0aGUgaW5kZXguCisKKy1mOjoKKyAgICAgICAgRGVsZXRlIHRo
-ZSBmaWxlKHMpIGJlZm9yZSByZW1vdmluZyBpdC4KKworLXY6OgorICAgICAgICBCZSB2ZXJi
-b3NlLgorCisKK0RJU0NVU1NJT04KKy0tLS0tLS0tLS0KKworVGhlIGxpc3Qgb2YgPGZpbGU+
-IGdpdmVuIHRvIHRoZSBjb21tYW5kIGlzIGZlZCB0byBgZ2l0LWxzLWZpbGVzYAorY29tbWFu
-ZCB0byBsaXN0IGZpbGVzIHRoYXQgYXJlIHJlZ2lzdGVyZWQgaW4gdGhlIGluZGV4IGFuZAor
-YXJlIG5vdCBpZ25vcmVkL2V4Y2x1ZGVkIGJ5IGAkR0lUX0RJUi9pbmZvL2V4Y2x1ZGVgIGZp
-bGUgb3IKK2AuZ2l0aWdub3JlYCBmaWxlIGluIGVhY2ggZGlyZWN0b3J5LiAgVGhpcyBtZWFu
-cyB0d28gdGhpbmdzOgorCisuIFlvdSBjYW4gcHV0IHRoZSBuYW1lIG9mIGEgZGlyZWN0b3J5
-IG9uIHRoZSBjb21tYW5kIGxpbmUsIGFuZCB0aGUKKyAgY29tbWFuZCB3aWxsIHJlbW92ZSBh
-bGwgZmlsZXMgaW4gaXQgYW5kIGl0cyBzdWJkaXJlY3RvcmllcyAodGhlCisgIGRpcmVjdG9y
-aWVzIHRoZW1zZWx2ZXMgYXJlIG5vdCByZW1vdmVkKTsKKworLiBHaXZpbmcgdGhlIG5hbWUg
-b2YgYSBmaWxlIHRoYXQgaXMgbm90IGluIHRoZSBpbmRleCBkb2VzIG5vdAorICByZW1vdmUg
-dGhhdCBmaWxlLgorCisKK0VYQU1QTEVTCistLS0tLS0tLQorZ2l0LXJtIERvY3VtZW50YXRp
-b24vXFwqLnR4dDo6CisKKwlSZW1vdmVzIGFsbCBgXCoudHh0YCBmaWxlcyB0aGF0IGFyZSBp
-biB0aGUgaW5kZXggdW5kZXIKKwlgRG9jdW1lbnRhdGlvbmAgZGlyZWN0b3J5IGFuZCBpdHMg
-c3ViZGlyZWN0b3JpZXMuCisrCitOb3RlIHRoYXQgdGhlIGFzdGVyaXNrIGBcKmAgaXMgcXVv
-dGVkIGZyb20gdGhlIHNoZWxsIGluIHRoaXMKK2V4YW1wbGU7IHRoaXMgbGV0cyB0aGUgY29t
-bWFuZCBpbmNsdWRlIHRoZSBmaWxlcyBmcm9tCitzdWJkaXJlY3RvcmllcyBvZiBgRG9jdW1l
-bnRhdGlvbi9gIGRpcmVjdG9yeS4KKworZ2l0LXJtIGdpdC0qLnNoOjoKKworCVJlbW92ZSBh
-bGwgZ2l0LSouc2ggc2NyaXB0cyB0aGF0IGFyZSBpbiB0aGUgaW5kZXguCisJQmVjYXVzZSB0
-aGlzIGV4YW1wbGUgbGV0cyB0aGUgc2hlbGwgZXhwYW5kIHRoZSBhc3RlcmlzaworCShpLmUu
-IHlvdSBhcmUgbGlzdGluZyB0aGUgZmlsZXMgZXhwbGljaXRseSksIGl0IGRvZXMgbm90CisJ
-cmVtb3ZlIGBzdWJkaXIvZ2l0LWZvby5zaGAuCisKKworQXV0aG9yCistLS0tLS0KK1dyaXR0
-ZW4gYnkgTGludXMgVG9ydmFsZHMgPHRvcnZhbGRzQG9zZGwub3JnPgorCitEb2N1bWVudGF0
-aW9uCistLS0tLS0tLS0tLS0tLQorRG9jdW1lbnRhdGlvbiBieSBKdW5pbyBDIEhhbWFubyBh
-bmQgdGhlIGdpdC1saXN0IDxnaXRAdmdlci5rZXJuZWwub3JnPi4KKworR0lUCistLS0KK1Bh
-cnQgb2YgdGhlIGdpdGxpbms6Z2l0WzddIHN1aXRlCisKZGlmZiAtTnJ1IGdpdC0xLjIuMi9N
-YWtlZmlsZSBnaXQtMS4yLjIucGF0Y2hlZC9NYWtlZmlsZQotLS0gZ2l0LTEuMi4yL01ha2Vm
-aWxlCTIwMDYtMDItMTkgMDE6MTk6MDAuMDAwMDAwMDAwICswMTAwCisrKyBnaXQtMS4yLjIu
-cGF0Y2hlZC9NYWtlZmlsZQkyMDA2LTAyLTIxIDIyOjU2OjIzLjAwMDAwMDAwMCArMDEwMApA
-QCAtMTA3LDcgKzEwNyw3IEBACiAJZ2l0LW1lcmdlLW9uZS1maWxlLnNoIGdpdC1wYXJzZS1y
-ZW1vdGUuc2ggXAogCWdpdC1wcnVuZS5zaCBnaXQtcHVsbC5zaCBnaXQtcHVzaC5zaCBnaXQt
-cmViYXNlLnNoIFwKIAlnaXQtcmVwYWNrLnNoIGdpdC1yZXF1ZXN0LXB1bGwuc2ggZ2l0LXJl
-c2V0LnNoIFwKLQlnaXQtcmVzb2x2ZS5zaCBnaXQtcmV2ZXJ0LnNoIGdpdC1zaC1zZXR1cC5z
-aCBcCisJZ2l0LXJlc29sdmUuc2ggZ2l0LXJldmVydC5zaCBnaXQtcm0uc2ggZ2l0LXNoLXNl
-dHVwLnNoIFwKIAlnaXQtdGFnLnNoIGdpdC12ZXJpZnktdGFnLnNoIGdpdC13aGF0Y2hhbmdl
-ZC5zaCBcCiAJZ2l0LWFwcGx5bWJveC5zaCBnaXQtYXBwbHlwYXRjaC5zaCBnaXQtYW0uc2gg
-XAogCWdpdC1tZXJnZS5zaCBnaXQtbWVyZ2Utc3R1cGlkLnNoIGdpdC1tZXJnZS1vY3RvcHVz
-LnNoIFwKZGlmZiAtTnJ1IGdpdC0xLjIuMi9naXQtcm0uc2ggZ2l0LTEuMi4yLnBhdGNoZWQv
-Z2l0LXJtLnNoCi0tLSBnaXQtMS4yLjIvZ2l0LXJtLnNoCTE5NzAtMDEtMDEgMDE6MDA6MDAu
-MDAwMDAwMDAwICswMTAwCisrKyBnaXQtMS4yLjIucGF0Y2hlZC9naXQtcm0uc2gJMjAwNi0w
-Mi0yMSAyMzoyNTo0Ny4wMDAwMDAwMDAgKzAxMDAKQEAgLTAsMCArMSw2NSBAQAorIyEvYmlu
-L3NoCisKK1VTQUdFPSc8ZmlsZT4uLi4nCitTVUJESVJFQ1RPUllfT0s9J1llcycKKy4gZ2l0
-LXNoLXNldHVwCisKK3Nob3dfb25seT0KK3ZlcmJvc2U9CityZW1vdmVfZmlsZXM9Cit3aGls
-ZSA6IDsgZG8KKyAgY2FzZSAiJDEiIGluCisgICAgLW4pCisJc2hvd19vbmx5PXRydWUKKwk7
-OworICAgIC12KQorCXZlcmJvc2U9LS12ZXJib3NlCisJOzsKKyAgICAtZikKKwlyZW1vdmVf
-ZmlsZXM9dHJ1ZQorCTs7CisgICAgLS0pCisJYnJlYWsKKwk7OworICAgIC0qKQorCXVzYWdl
-CisJOzsKKyAgICAqKQorCWJyZWFrCisJOzsKKyAgZXNhYworICBzaGlmdAorZG9uZQorCisj
-IFRoaXMgaXMgdHlwby1wcm9vZmluZy4gSWYgc29tZSBwYXRocyBtYXRjaCBhbmQgc29tZSBk
-byBub3QsIHdlIHdhbnQKKyMgdG8gZG8gbm90aGluZy4KK2Nhc2UgIiQjIiBpbgorMCkJOzsK
-KyopCisJZ2l0LWxzLWZpbGVzIC0tZXJyb3ItdW5tYXRjaCAtLSAiJEAiID4vZGV2L251bGwg
-fHwgeworCQllY2hvID4mMiAiTWF5YmUgeW91IG1pc3NwZWxsZWQgaXQ/IgorCQlleGl0IDEK
-Kwl9CisJOzsKK2VzYWMKKworZmlsZXM9JCgKKyAgICBpZiB0ZXN0IC1mICIkR0lUX0RJUi9p
-bmZvL2V4Y2x1ZGUiIDsgdGhlbgorCWdpdC1scy1maWxlcyBcCisJICAgIC0tZXhjbHVkZS1m
-cm9tPSIkR0lUX0RJUi9pbmZvL2V4Y2x1ZGUiIFwKKwkgICAgLS1leGNsdWRlLXBlci1kaXJl
-Y3Rvcnk9LmdpdGlnbm9yZSAtLSAiJEAiCisgICAgZWxzZQorCWdpdC1scy1maWxlcyBcCisJ
-LS1leGNsdWRlLXBlci1kaXJlY3Rvcnk9LmdpdGlnbm9yZSAtLSAiJEAiCisgICAgZmkgfCBz
-b3J0IHwgdW5pcQorKQorCitjYXNlICIkc2hvd19vbmx5IiBpbgordHJ1ZSkKKwllY2hvICRm
-aWxlcworCTs7CisqKQorCVtbICIkcmVtb3ZlX2ZpbGVzIiA9ICJ0cnVlIiBdXSAmJiBybSAt
-ZiAtLSAkZmlsZXMKKwlnaXQtdXBkYXRlLWluZGV4IC0tcmVtb3ZlICR2ZXJib3NlICRmaWxl
-cworCTs7Citlc2FjCg==
---------------070306000204050108090604--
-
---------------enigE980E006DB1A59C6B03900E5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.1 (GNU/Linux)
-
-iD8DBQFD+5RVgo/w9rxVVVERArfKAKC71AoYBhxb2k8ZXhKZVdZYmXrfzACeKUzw
-UYihcA4GqzpwhH/RD6NLHRA=
-=tKDl
------END PGP SIGNATURE-----
-
---------------enigE980E006DB1A59C6B03900E5--
+-- 
+Shawn.
