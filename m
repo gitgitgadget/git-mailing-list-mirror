@@ -1,85 +1,66 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] git-mktree: reverse of git-ls-tree.
-Date: Tue, 21 Feb 2006 09:46:22 +0100
-Message-ID: <43FAD35E.5080401@op5.se>
-References: <7vk6bp43qm.fsf@assigned-by-dhcp.cox.net> <1140504750.16926.111.camel@evo.keithp.com>
+Date: Tue, 21 Feb 2006 01:49:40 -0800
+Message-ID: <7vr75x11or.fsf@assigned-by-dhcp.cox.net>
+References: <7vk6bp43qm.fsf@assigned-by-dhcp.cox.net>
+	<1140504750.16926.111.camel@evo.keithp.com> <43FAD35E.5080401@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>, Tommi Virtanen <tv@debian.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 21 09:46:39 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Keith Packard <keithp@keithp.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 10:50:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBTAH-0005Mm-Mv
-	for gcvg-git@gmane.org; Tue, 21 Feb 2006 09:46:34 +0100
+	id 1FBU9u-0002ZU-JI
+	for gcvg-git@gmane.org; Tue, 21 Feb 2006 10:50:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161435AbWBUIqY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 21 Feb 2006 03:46:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161436AbWBUIqY
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 03:46:24 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:53452 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161435AbWBUIqX
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2006 03:46:23 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 7BC846BCFF; Tue, 21 Feb 2006 09:46:22 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Keith Packard <keithp@keithp.com>
-In-Reply-To: <1140504750.16926.111.camel@evo.keithp.com>
+	id S932721AbWBUJtn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Feb 2006 04:49:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932722AbWBUJtn
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 04:49:43 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:9670 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932721AbWBUJtm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2006 04:49:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060221094807.UDGH6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 21 Feb 2006 04:48:07 -0500
+To: Andreas Ericsson <ae@op5.se>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16526>
 
-Keith Packard wrote:
-> <internationalization-pedant-mode>
-> On Mon, 2006-02-20 at 22:37 -0800, Junio C Hamano wrote:
->=20
->=20
->>+ * Copyright (c) Junio C Hamano, 2006
->=20
->=20
-> I've been told by at least two lawyers that the string '(c)' has no
-> legal meaning in the US. If you want to indicate copyright, the only
-> symbol which does carry legal weight is the c-in-a-circle mark '=C2=A9=
-'.=20
->=20
-> Of course, this does force the issue of what encoding to present sour=
-ce
-> files in. I suggest that sources should be UTF-8, which also provides
-> opportunities to encode author names correctly, rather than
-> transliterating them to Latin. X.org uses UTF-8 for source files now
-> without difficulty across a wide range of compilers. Of course,
-> non-ascii glyphs are present only in comments.
->=20
-> </internationalization-pedant-mode>
+Andreas Ericsson <ae@op5.se> writes:
 
+> Keith Packard wrote:
+>> <internationalization-pedant-mode>
+>> On Mon, 2006-02-20 at 22:37 -0800, Junio C Hamano wrote:
+>>
+>>>+ * Copyright (c) Junio C Hamano, 2006
+>> I've been told by at least two lawyers that the string '(c)' has no
+>> legal meaning in the US. If you want to indicate copyright, the only
+>> symbol which does carry legal weight is the c-in-a-circle mark
+>...
+> I'm not sure how mad such a law can be written, but what you describe
+> go against both common sense and common practice since it puts the
+> burden of protection on the victim-to-be before the crime is even
+> committed...
 
-In most countries the copyright is implied unless explicitly void by th=
-e=20
-author.
+Keith is saying that unlike ciecle-c, (c) is meaningless.  While
+he is right about that, it does not matter, as long as he is
+talking about "legal meaning in the US".  It is my understanding
+that spelled out "Copyright" (or its abbreviation, "Copr.")
+weighs as much as the circle-c mark.
 
-In other sane countries (I don't argue that USA is necessarily any such=
-=20
-country), the law is such that if the copier understands that there is =
-a=20
-copyright and violates it, he or she is in error and thus liable.
-
-I'm not sure how mad such a law can be written, but what you describe g=
-o=20
-against both common sense and common practice since it puts the burden=20
-of protection on the victim-to-be before the crime is even committed. I=
-t=20
-would be like a rapist being let off because his victims were where he=20
-happened to be.
-
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+And it matters even less these days.  US law traditionally
+required copyright notice to be protected, but after 1989 US
+Copyright Act, made in line with Berne convention, the notice is
+not even necessary.  It used to be that you would want circle-c,
+Copyright and "All Rights Reserved", if you really wanted to be
+anal.  Buenos Aires signatories are all Berne members these
+days, it became just obsolete inertia.
