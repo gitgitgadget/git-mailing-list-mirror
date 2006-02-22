@@ -1,157 +1,74 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: gitview: Use git ls-remote to find the tag and branch details
-Date: Wed, 22 Feb 2006 21:37:18 +0530
-Message-ID: <43FC8C36.5060309@gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
+Date: Wed, 22 Feb 2006 17:35:46 +0100
+Message-ID: <81b0412b0602220835p4c4243edm145ee827eb706121@mail.gmail.com>
+References: <Pine.LNX.4.63.0602201934270.28957@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20060220191011.GA18085@hand.yhbt.net>
+	 <7vr75xbs8w.fsf_-_@assigned-by-dhcp.cox.net>
+	 <81b0412b0602210930w5c1a71aage12bad2079dd515a@mail.gmail.com>
+	 <43FB79E2.1040307@vilain.net> <20060221215742.GA5948@steel.home>
+	 <43FB9656.8050308@vilain.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------050008080802010304030201"
-X-From: git-owner@vger.kernel.org Wed Feb 22 17:08:03 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 22 17:36:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBwWZ-0001n5-NE
-	for gcvg-git@gmane.org; Wed, 22 Feb 2006 17:07:32 +0100
+	id 1FBwyW-0000ZS-Uy
+	for gcvg-git@gmane.org; Wed, 22 Feb 2006 17:36:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932311AbWBVQH2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Feb 2006 11:07:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932324AbWBVQH2
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Feb 2006 11:07:28 -0500
-Received: from pproxy.gmail.com ([64.233.166.177]:46453 "EHLO pproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932311AbWBVQH1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Feb 2006 11:07:27 -0500
-Received: by pproxy.gmail.com with SMTP id w49so1786382pyg
-        for <git@vger.kernel.org>; Wed, 22 Feb 2006 08:07:26 -0800 (PST)
+	id S932310AbWBVQfu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Feb 2006 11:35:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932366AbWBVQft
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Feb 2006 11:35:49 -0500
+Received: from nproxy.gmail.com ([64.233.182.192]:39228 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932310AbWBVQfs convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2006 11:35:48 -0500
+Received: by nproxy.gmail.com with SMTP id m19so958460nfc
+        for <git@vger.kernel.org>; Wed, 22 Feb 2006 08:35:46 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type;
-        b=Q4YVuoeeTODilmImn27yAC2xedkACeZmaeQCKyIkHJW9czSDpRIut5RRJbNEL9QYhNnSXJZomUzxYW+0fGtzGdF7yc2Fp1/htzynauUU32Iubb1hZ3+At4SfxQsE7dFry/D6GcJhmWEPC6JGmIeSaY6N2Js9RX01WkXHt+lyU9A=
-Received: by 10.35.78.13 with SMTP id f13mr675745pyl;
-        Wed, 22 Feb 2006 08:07:26 -0800 (PST)
-Received: from ?192.168.2.11? ( [59.92.206.254])
-        by mx.gmail.com with ESMTP id m39sm178652pye.2006.02.22.08.07.22;
-        Wed, 22 Feb 2006 08:07:24 -0800 (PST)
-User-Agent: Mail/News 1.5 (X11/20060213)
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	aneesh.kumar@gmail.com
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mo4x5EtQW2mfP3qITzIf8cfjfMtM0n4S+16hcXPJcUvBQPS23/dlXjqKjz64Gm14YWTB0JE7kFZ5rEU8g6neyZKyRx8WCHGeY00EWQNOb0Ea29eEgqCO+0FtUEaV6agk0e5gbluYI0VHe+ftQaIOzERKJ0JUhb406+1BMofbzqs=
+Received: by 10.48.244.12 with SMTP id r12mr1922655nfh;
+        Wed, 22 Feb 2006 08:35:46 -0800 (PST)
+Received: by 10.49.88.16 with HTTP; Wed, 22 Feb 2006 08:35:46 -0800 (PST)
+To: "Sam Vilain" <sam@vilain.net>
+In-Reply-To: <43FB9656.8050308@vilain.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16602>
 
-This is a multi-part message in MIME format.
---------------050008080802010304030201
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-
-
---------------050008080802010304030201
-Content-Type: text/plain;
- name*0="0002-gitview-Use-git-ls-remote-to-find-the-tag-and-branch-detail";
- name*1="s.txt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename*0="0002-gitview-Use-git-ls-remote-to-find-the-tag-and-branch-de";
- filename*1="tails.txt"
-
-
-From: Junio C Hamano <junkio@cox.net>
-This fix the below bug
-
-Junio C Hamano <junkio@cox.net> writes:
-
+On 2/21/06, Sam Vilain <sam@vilain.net> wrote:
+> Alex Riesen wrote:
+> >>>Does not work here (ActiveState Build 811, Perl 5.8.6):
+> >>>$ perl -e 'open(F, "-|")'
+> >>>'-' is not recognized as an internal or external command,
+> >>>operable program or batch file.
+> >>Portability, Ease of Coding, Few CPAN Module Dependencies.  Pick any two.
+> > Sometimes an upgrade is just out of question. Besides, that'd mean an
+> > upgrade to another operating system, because very important scripts
+> > over here a just not portable to anything else but
+> >     "ActiveState Perl on Windows (TM)"
+> > I just have no choice.
 >
-> It does not work in my repository, since you do not seem to
-> handle branch and tag names with slashes in them.  All of my
-> topic branches live in directories with two-letter names
-> (e.g. ak/gitview).
+> Sure, but perhaps IPC::Open2 or some other CPAN module has solved this
+> problem already.
 
-Also use ${GIT_DIR} directly  so that it works with below environment setup
+IPC::Open2 works! Well "kind of": there are still strange segfaults regarding
+stack sometimes. And I don't know yet whether and how the arguments are escaped
+(Windows has no argument array. It has that bloody stupid one-line command line)
 
-GIT_DIR=/home/opensource/Test\ Output/git-devel/.git
+> I guess what I'm saying is that if you want to limit the modules that
+> Perl script uses, you end up either impacting on the portability of the
+> script or rediscovering problems with early wheel designs.
 
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
-
----
-
- contrib/gitview/gitview |   54 ++++++++++++-----------------------------------
- 1 files changed, 14 insertions(+), 40 deletions(-)
-
-ecd82bdd8399b84ada1f4fc0c720a88ae0735a94
-diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-index 0e52c78..76a1b67 100755
---- a/contrib/gitview/gitview
-+++ b/contrib/gitview/gitview
-@@ -56,20 +56,6 @@ def show_date(epoch, tz):
- 
- 	return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(secs))
- 
--def get_sha1_from_tags(line):
--	fp = os.popen("git cat-file -t " + line)
--	entry = string.strip(fp.readline())
--	fp.close()
--	if (entry == "commit"):
--		return line
--	elif (entry == "tag"):
--		fp = os.popen("git cat-file tag "+ line)
--		entry = string.strip(fp.readline())
--		fp.close()
--		obj = re.split(" ", entry)
--		if (obj[0] == "object"):
--			return obj[1]
--	return None
- 
- class CellRendererGraph(gtk.GenericCellRenderer):
- 	"""Cell renderer for directed graph.
-@@ -467,32 +453,20 @@ class GitView:
- 		respective sha1 details """
- 
- 		self.bt_sha1 = { }
--		git_dir = os.getenv("GIT_DIR")
--		if (git_dir == None):
--			git_dir = ".git"
--
--		#FIXME the path seperator
--		ref_files = os.listdir(git_dir + "/refs/tags")
--		for file in ref_files:
--			fp = open(git_dir + "/refs/tags/"+file)
--			sha1 = get_sha1_from_tags(string.strip(fp.readline()))
--			try:
--				self.bt_sha1[sha1].append(file)
--			except KeyError:
--				self.bt_sha1[sha1] = [file]
--			fp.close()
--
--
--		#FIXME the path seperator
--		ref_files = os.listdir(git_dir + "/refs/heads")
--		for file in ref_files:
--			fp = open(git_dir + "/refs/heads/" + file)
--			sha1 = get_sha1_from_tags(string.strip(fp.readline()))
--			try:
--				self.bt_sha1[sha1].append(file)
--			except KeyError:
--				self.bt_sha1[sha1] = [file]
--			fp.close()
-+		ls_remote = re.compile('^(.{40})\trefs/([^^]+)(?:\\^(..))?$');
-+		fp = os.popen('git ls-remote "${GIT_DIR:-.git}"')
-+		while 1:
-+			line = string.strip(fp.readline())
-+			if line == '':
-+				break
-+			m = ls_remote.match(line)
-+			if not m:
-+				continue
-+			(sha1, name) = (m.group(1), m.group(2))
-+			if not self.bt_sha1.has_key(sha1):
-+				self.bt_sha1[sha1] = []
-+			self.bt_sha1[sha1].append(name)
-+		fp.close()
- 
- 
- 	def construct(self):
--- 
-1.2.0-dirty
-
-
---------------050008080802010304030201--
+IPC::Open{2,3} seem to be installed on every system I have access to.
