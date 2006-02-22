@@ -1,52 +1,71 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: What's in git.git
-Date: Wed, 22 Feb 2006 14:46:46 +0100
-Message-ID: <81b0412b0602220546k95d3b6ar35bb770e6e9c43e4@mail.gmail.com>
-References: <7v8xs3pt8c.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] relax delta selection filtering in pack-objects
+Date: Wed, 22 Feb 2006 11:04:21 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602221058320.5606@localhost.localdomain>
+References: <Pine.LNX.4.64.0602212034180.5606@localhost.localdomain>
+ <7vpslgrkr0.fsf@assigned-by-dhcp.cox.net>
+ <7vhd6rsvqd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 22 14:46:58 2006
+X-From: git-owner@vger.kernel.org Wed Feb 22 17:05:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBuKV-0001WJ-HZ
-	for gcvg-git@gmane.org; Wed, 22 Feb 2006 14:46:55 +0100
+	id 1FBwU0-00018E-SE
+	for gcvg-git@gmane.org; Wed, 22 Feb 2006 17:04:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751282AbWBVNqs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Feb 2006 08:46:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbWBVNqs
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Feb 2006 08:46:48 -0500
-Received: from nproxy.gmail.com ([64.233.182.195]:29931 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751282AbWBVNqs convert rfc822-to-8bit
+	id S932248AbWBVQEX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Feb 2006 11:04:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932255AbWBVQEW
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Feb 2006 11:04:22 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:52939 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S932248AbWBVQEW
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2006 08:46:48 -0500
-Received: by nproxy.gmail.com with SMTP id l24so923898nfc
-        for <git@vger.kernel.org>; Wed, 22 Feb 2006 05:46:46 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Knwyc40KNISNHHAp17xg0N4jW3tY0E7jGzbyMC3a3/7CJamfdy62HMIDH0cJ2SwaGMvJkwzWQRS0KsuHF92177sCY4/75m7hA9xM9JNh2xkk4bXobZqbYHyooggLZOssPEdlWx3SRdjBNi7E0oWlwjaFS+VtVfh5TU7O73JeZT0=
-Received: by 10.49.18.20 with SMTP id v20mr1859889nfi;
-        Wed, 22 Feb 2006 05:46:46 -0800 (PST)
-Received: by 10.49.88.16 with HTTP; Wed, 22 Feb 2006 05:46:46 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7v8xs3pt8c.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	Wed, 22 Feb 2006 11:04:22 -0500
+Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IV3009TGJB9I420@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 22 Feb 2006 11:04:21 -0500 (EST)
+In-reply-to: <7vhd6rsvqd.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16599>
 
-On 2/22/06, Junio C Hamano <junkio@cox.net> wrote:
->  - Perl 5.6 backward compatibility.
->
->    Alex Riesen volunteered to further work on porting the
->    "allegedly 5.6 compatible" constructs these patches use to
->    work on ActiveState (whose 5.8 does not grok them).  We'll
->    see what happens.
+On Tue, 21 Feb 2006, Junio C Hamano wrote:
 
-Well, I'll have to.
-The alternative is Perforce which is too much pain to explain...
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+> > I haven't dug into the issue yet, but these four delta series
+> > seem to break the testsuite.
+> 
+> I bisected.  It is the adler32 one -- since it makes the
+> generated delta much smaller, it is understandable that it would
+> interact with the break/rename heuristics.  It is not strictly
+> breakage in that sense -- we just need to readjust the
+> heuristics thresholds for those algorithms.
+
+I had a quick look and that code rather looks like black magic to me atm.
+I however found a memory leak in diffcore-rename.c:estimate_similarity():
+
+        delta = diff_delta(src->data, src->size,
+                           dst->data, dst->size,
+                           &delta_size, delta_limit);
+        if (!delta)
+                /* If delta_limit is exceeded, we have too much differences */
+                return 0;
+
+        /* A delta that has a lot of literal additions would have
+         * big delta_size no matter what else it does.
+         */
+        if (base_size * (MAX_SCORE-minimum_score) < delta_size * MAX_SCORE)
+                return 0;
+                   \________ delta memory is leaked.
+
+
+Nicolas
