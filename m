@@ -1,66 +1,58 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] git-fetch: follow tag only when tracking remote branch.
-Date: Wed, 22 Feb 2006 22:19:42 +0100
-Message-ID: <43FCD56E.5090804@op5.se>
-References: <43FB6C42.5000208@gorzow.mm.pl>	<BAYC1-PASMTP03A58A4F389365AC85DA68AEFC0@CEZ.ICE>	<Pine.LNX.4.64.0602211635450.30245@g5.osdl.org>	<20060222011338.GL5000@delft.aura.cs.cmu.edu>	<7v3bicupgb.fsf@assigned-by-dhcp.cox.net>	<20060222031136.GN5000@delft.aura.cs.cmu.edu>	<7vacckt6vr.fsf@assigned-by-dhcp.cox.net> <7vfymbm72x.fsf_-_@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
+Date: Wed, 22 Feb 2006 23:00:45 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602222259480.6682@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0602201934270.28957@wbgn013.biozentrum.uni-wuerzburg.de>
+  <20060220191011.GA18085@hand.yhbt.net>  <7vr75xbs8w.fsf_-_@assigned-by-dhcp.cox.net>
+  <81b0412b0602210930w5c1a71aage12bad2079dd515a@mail.gmail.com> 
+ <43FB79E2.1040307@vilain.net> <20060221215742.GA5948@steel.home> 
+ <43FB9656.8050308@vilain.net> <81b0412b0602220835p4c4243edm145ee827eb706121@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Jan Harkes <jaharkes@cs.cmu.edu>
-X-From: git-owner@vger.kernel.org Wed Feb 22 22:20:27 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Eric Wong <normalperson@yhbt.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 22 23:01:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FC1Ol-0000Uz-9H
-	for gcvg-git@gmane.org; Wed, 22 Feb 2006 22:19:48 +0100
+	id 1FC22e-0001tr-Ul
+	for gcvg-git@gmane.org; Wed, 22 Feb 2006 23:01:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751303AbWBVVTo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Feb 2006 16:19:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbWBVVTo
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Feb 2006 16:19:44 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:59880 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751303AbWBVVTn
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2006 16:19:43 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id D0CB26BCBE; Wed, 22 Feb 2006 22:19:42 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfymbm72x.fsf_-_@assigned-by-dhcp.cox.net>
+	id S1750980AbWBVWAt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Feb 2006 17:00:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751005AbWBVWAt
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Feb 2006 17:00:49 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:4272 "EHLO
+	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750980AbWBVWAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2006 17:00:48 -0500
+Received: from virusscan.mail (mail03.mail [172.25.1.102])
+	by mailrelay.mail (Postfix) with ESMTP id 5F1C31A82;
+	Wed, 22 Feb 2006 23:00:45 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 533098F6;
+	Wed, 22 Feb 2006 23:00:45 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 369191112;
+	Wed, 22 Feb 2006 23:00:45 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0602220835p4c4243edm145ee827eb706121@mail.gmail.com>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16617>
 
-Junio C Hamano wrote:
-> Unless --no-tags flag was given, git-fetch tried to always
-> follow remote tags that point at the commits we picked up.
-> 
-> It is not very useful to pick up tags from remote unless storing
-> the fetched branch head in a local tracking branch.  This is
-> especially true if the fetch is done to merge the remote branch
-> into our current branch as one-shot basis (i.e. "please pull"),
-> and is even harmful if the remote repository has many irrelevant
-> tags.
-> 
-> This proposed update disables the automated tag following unless
-> we are storing the a fetched branch head in a local tracking
-> branch.
-> 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-> 
-> ---
-> 
->  * Likes, dislikes?
-> 
+Hi,
 
-Likes a lot. This is a Good Thing.
+On Wed, 22 Feb 2006, Alex Riesen wrote:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> IPC::Open2 works!
+
+Note that there is a notable decrease in performance in my preliminary 
+tests (about 10%).
+
+Ciao,
+Dscho
